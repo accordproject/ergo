@@ -4,7 +4,7 @@
   "description": "The Jura compiler",
   "repository": {
     "type": "git",
-    "url": "https://github.com/clauseHQ/jura-compiler"
+    "url": "https://github.com/accordproject/jura-compiler"
   },
   "contributors": [
     {
@@ -23,7 +23,6 @@
     "moment": "^2.18.1",
     "nearley": "^2.11.0",
     "pegjs": "^0.10.0",
-    "qcert": "^1.0.1",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
   },
