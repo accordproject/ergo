@@ -1,0 +1,8 @@
+{
+  "$class": "org.accordproject.volumediscount.TemplateModel",
+  "firstVolume": 1,
+  "secondVolume": 10,
+  "firstRate": 3,
+  "secondRate": 2.9,
+  "thirdRate": 2.8
+}

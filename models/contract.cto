@@ -1,0 +1,58 @@
+namespace org.accordproject.contract
+
+import org.accordproject.base.*
+
+/**
+ * Defines the data model for contracts
+ */
+/**
+ * Contract state
+ */
+enum State {
+  o CREATED
+  o PENDING_SIGNATURE
+  o SIGNED
+  o DEPLOYED
+  o TERMINATED
+}
+
+/**
+ * Defines a clause
+ */
+concept Contract {
+  /**
+   * Identifier
+   */
+  o String id
+
+  /**
+   * Name of the contract
+   */
+  o String name
+
+  /**
+   * State of the contract
+   */
+  o State state
+
+  /**
+   * Clause of the contract
+   */
+  o Clauses[] clauses
+
+}
+
+/**
+ * Defines a clause
+ */
+concept Clause {
+  /**
+   * Identifier
+   */
+  o String id
+
+  /**
+   * Name of the clause
+   */
+  o String name
+}

@@ -1,0 +1,16 @@
+Makefile.coq
+Makefile.coq.conf
+Makefile.config
+bin/jurac.native
+*~
+.#*
+*.vo
+*.v.d
+*.glob
+*.aux
+.DS_Store
+_CoqProject
+node_modules/
+dist/
+jura-*.tgz
+package-lock.json

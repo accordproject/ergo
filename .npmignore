@@ -1,0 +1,9 @@
+# NB: This file must exist, since otherwise the .gitignore preferences will be used,
+# which will ignore the libs directory
+Makefile*
+jura-*.tgz
+src
+mechanization
+extraction
+_CoqProject
+bin/jura.native
