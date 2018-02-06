@@ -46,7 +46,5 @@ Instructions for how to rebuild the compiler from the source can be found in [BU
 Jura is distributed under the terms of the Apache 2.0 License, see
 [LICENSE](LICENSE)
 
-## Copyright
-
 Copyright 2018 Clause, Inc.
 
