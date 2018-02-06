@@ -17,6 +17,7 @@
 Require Import String.
 Require Import List.
 Require Import Qcert.Common.CommonRuntime.
+Require Import Error.
 Require Import JuraBase.
 Require Import JuraCalculus.
 Require Import Qcert.NNRC.NNRCRuntime.
@@ -71,10 +72,14 @@ Section JuraCalculustoJavaScript.
                (coname:string) (clname:string) (p:jurac_package) : option jurac_clause :=
       lookup_clause_from_contract coname clname p.(package_contract).
 
+    Definition lookup_error (coname:string) (clname:string) :=
+      let msg := ("Clause " ++ clname ++ " in contract " ++ coname ++ " not found")%string in
+      CompilationError msg.
+    
     Definition lookup_clause_code_from_package
-               (coname:string) (clname:string) (p:jurac_package) : option nnrc :=
+               (coname:string) (clname:string) (p:jurac_package) : jresult nnrc :=
       let clause := lookup_clause_from_contract coname clname p.(package_contract) in
-      clause_code_from_clause clause.
+      jresult_of_option (clause_code_from_clause clause) (lookup_error coname clname).
   End lookup_clause.
 
   Section translate.
@@ -159,14 +164,11 @@ Section JuraCalculustoJavaScript.
       javascript_of_package eol_newline quotel_double c.
 
     Definition javascript_of_clause_code_in_package
-               (coname:string) (clname:string) (p:jurac_package) : option javascript :=
+               (coname:string) (clname:string) (p:jurac_package) : jresult javascript :=
       let expr_opt := lookup_clause_code_from_package coname clname p in
-      match expr_opt with
-      | None => None
-      | Some e =>
-        let fname := function_name_of_contract_clause_name coname clname in
-        Some (javascript_of_clause_code fname e)
-      end.
+      jlift (fun e =>
+               let fname := function_name_of_contract_clause_name coname clname in
+               javascript_of_clause_code fname e) expr_opt.
 
   End translate.
 End JuraCalculustoJavaScript.

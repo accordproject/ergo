@@ -17,6 +17,7 @@ Require String.
 Require QOperators.
 Require QData.
 Require Qcert.Compiler.QLib.QLang.
+Require Error.
 Require Jura.
 Require JuraCalculus.
 Require JuraSugar.
@@ -81,19 +82,19 @@ Module QJura(juramodel:JuraCompilerModel).
     := JuraSugar.JThis.
 
   Definition clause_calculus_from_jura_package :
-    String.string -> String.string -> jura_package -> option NNRC.nnrc
+    String.string -> String.string -> jura_package -> Error.jresult NNRC.nnrc
     := JuratoJavaScript.clause_calculus_from_package.
 
   Definition clause_code_from_jura_package :
-    String.string -> String.string -> jura_package -> option JavaScript.javascript
+    String.string -> String.string -> jura_package -> Error.jresult JavaScript.javascript
     := JuratoJavaScript.clause_code_from_package.
 
   Definition jura_calculus_package_from_jura_package :
-    jura_package -> jurac_package
+    jura_package -> Error.jresult jurac_package
     := JuratoJuraCalculus.package_to_calculus.
 
   Definition clause_code_from_jurac_package :
-    String.string -> String.string -> jurac_package -> option JavaScript.javascript
+    String.string -> String.string -> jurac_package -> Error.jresult JavaScript.javascript
     := JuraCalculustoJavaScript.javascript_of_clause_code_in_package.
 
   Definition javascript_from_jurac_package :
@@ -101,7 +102,7 @@ Module QJura(juramodel:JuraCompilerModel).
     := JuraCalculustoJavaScript.javascript_of_package_top.
 
   Definition javascript_from_jura_package :
-    jura_package -> JavaScript.javascript
+    jura_package -> Error.jresult JavaScript.javascript
     := JuratoJavaScript.javascript_from_package.
 
 End QJura.

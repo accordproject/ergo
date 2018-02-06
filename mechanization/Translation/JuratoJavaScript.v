@@ -20,6 +20,7 @@ Require Import Qcert.Common.CommonSystem.
 Require Import Qcert.Utils.OptimizerLogger.
 Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.Compiler.Driver.CompLang.
+Require Import Error.
 Require Import ForeignJura.
 Require Import Jura.
 Require Import JuratoJuraCalculus.
@@ -30,10 +31,10 @@ Section JuratoJavaScript.
   Context {fjura:foreign_jura}.
 
   Definition clause_calculus_from_package
-             (coname:string) (clname:string) (p:jura_package) : option nnrc :=
+             (coname:string) (clname:string) (p:jura_package) : jresult nnrc :=
     let pc := package_to_calculus p in
-    lookup_clause_code_from_package coname clname pc.
-  
+    jolift (lookup_clause_code_from_package coname clname) pc.
+
   (* Basic modules *)
   (* Foreign Datatypes Support *)
   Require Import Qcert.Translation.ForeignToJavaScript.
@@ -46,13 +47,13 @@ Section JuratoJavaScript.
   Context {ftojs:foreign_to_javascript}.
   Context {ftjson:foreign_to_JSON}.
 
-  Definition clause_code_from_package (coname:string) (clname:string) (p:jura_package) : option javascript :=
+  Definition clause_code_from_package (coname:string) (clname:string) (p:jura_package) : jresult javascript :=
     let pc := package_to_calculus p in
-    javascript_of_clause_code_in_package coname clname pc.
-
-  Definition javascript_from_package (p:jura_package) : javascript :=
+    jolift (javascript_of_clause_code_in_package coname clname) pc.
+  
+  Definition javascript_from_package (p:jura_package) : jresult javascript :=
     let pc := package_to_calculus p in
-    javascript_of_package_top pc.
+    jlift javascript_of_package_top pc.
 
 End JuratoJavaScript.
 

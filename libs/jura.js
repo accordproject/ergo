@@ -68,7 +68,7 @@ class Jura {
 
 	return (this.compile(dslText,null,null)).then((dslCode) => {
             // add immutables to the context
-	    const params = { 'this': jsonClause, 'request': jsonRequest, 'moment': moment() };
+	    const params = { 'this': jsonClause, 'request': jsonRequest, 'now': moment() };
             vm.freeze(params, 'params'); // Add the context
 	    vm.run(jurRuntime); // Load the runtime
 	    vm.run(dslCode); // Load the generated logic

@@ -21,6 +21,15 @@ type result_file = {
     res_content : string;
   }
 
+let wrap_jerrors f e =
+  begin match e with
+  | Failure (CompilationError cl) ->
+      raise (Jura_Error ("Compilation Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+  | Failure (ExecutionError cl) ->
+      raise (Jura_Error ("Execution Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+  | Success x -> f x
+  end
+
 let parse_jura file_content =
   ParseString.parse_jura_from_string file_content
 let parse_jurac file_content =
@@ -30,31 +39,25 @@ let compile_jura_to_javascript coname clname jura =
   let coname = Util.char_list_of_string coname in
   let clname = Util.char_list_of_string clname in
   let code = JuraCompiler.clause_code_from_jura_package coname clname jura in
-  begin match code with
-  | None -> None
-  | Some code -> Some (Util.string_of_char_list code)
-  end
+  wrap_jerrors Util.string_of_char_list code
 
 let compile_jura_to_calculus jura =
   let cal = JuraCompiler.jura_calculus_package_from_jura_package jura in
-  Some (SExp.sexp_to_string (AstsToSExp.jurac_package_to_sexp cal))
+  wrap_jerrors (fun cal -> SExp.sexp_to_string (AstsToSExp.jurac_package_to_sexp cal)) cal
 
 let compile_calculus_to_javascript coname clname jurac =
   let coname = Util.char_list_of_string coname in
   let clname = Util.char_list_of_string clname in
   let code = JuraCompiler.clause_code_from_jurac_package coname clname jurac in
-  begin match code with
-  | None -> None
-  | Some code -> Some (Util.string_of_char_list code)
-  end
+  wrap_jerrors Util.string_of_char_list code
 
 let compile_package_calculus_to_javascript jurac =
-  Some (Util.string_of_char_list
-	  (JuraCompiler.javascript_from_jurac_package jurac))
+  Util.string_of_char_list
+    (JuraCompiler.javascript_from_jurac_package jurac)
 
 let compile_package_to_javascript jura =
-  Some (Util.string_of_char_list
-	  (JuraCompiler.javascript_from_jura_package jura))
+  let code = JuraCompiler.javascript_from_jura_package jura in
+  wrap_jerrors Util.string_of_char_list code
 
 let force_contract_clause_names coname clname =
   begin match coname, clname with
@@ -100,10 +103,7 @@ let jura_compile gconf file_content =
   let target_lang = JuraConfig.get_target_lang gconf in
   let contract_name =  JuraConfig.get_contract_name gconf in
   let clause_name =  JuraConfig.get_clause_name gconf in
-  begin match compile source_lang target_lang contract_name clause_name file_content with
-  | None -> raise (Jura_Error "Error during compilation\n")
-  | Some code -> code
-  end
+  compile source_lang target_lang contract_name clause_name file_content
 
 let jura_proc gconf (file_name,file_content) =
   let target_lang = JuraConfig.get_target_lang gconf in

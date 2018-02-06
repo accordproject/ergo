@@ -16,7 +16,10 @@
 
 Require Import String.
 Require Import List.
+
 Require Import Qcert.Common.CommonRuntime.
+
+Require Import Error.
 Require Import JuraBase.
 Require Import JuraCalculus.
 Require Import Jura.
@@ -95,10 +98,8 @@ Section JuratoJavaScript.
     Definition new_expr (brand:string) (struct_expr:nnrc) : nnrc :=
       NNRCUnop (OpBrand (brand :: nil)) struct_expr.
 
-    Definition call_error (fname:string) : nnrc :=
-      let msg := "Function " ++ fname ++ " not found" in
-      let brand := "org.jura.Error" in
-      new_expr brand (NNRCUnop (OpRec "error") (NNRCConst (dstring msg))).
+    Definition call_error (fname:string) : string :=
+      "Function " ++ fname ++ " not found".
 
     (** New Array *)
     Definition new_array (el:list jurac_expr) : jurac_expr :=
@@ -108,91 +109,123 @@ Section JuratoJavaScript.
         fold_left (fun acc e => NNRCBinop OpBagUnion (NNRCUnop OpBag e) acc) erest e1
       end.
   End utils.
-    
+
   (** Translate expressions to calculus *)
-  Fixpoint jura_expr_to_calculus (local_package:string) (params:list string) (e:jura_expr) : jurac_expr :=
+  Fixpoint jura_expr_to_calculus
+           (local_package:string) (params:list string) (e:jura_expr) : jresult jurac_expr :=
     match e with
-    | JVar v => if in_dec string_dec v params then NNRCGetConstant v else NNRCVar v
-    | JConst d => NNRCConst d
+    | JVar v =>
+      if in_dec string_dec v params
+      then jsuccess (NNRCGetConstant v)
+      else jsuccess (NNRCVar v)
+    | JConst d =>
+      jsuccess (NNRCConst d)
     | JArray el =>
-      let elc := List.map (jura_expr_to_calculus local_package params) el in
-      new_array elc
+      let init_el := jsuccess nil in
+      let proc_one (e:jura_expr) (acc:jresult (list nnrc)) : jresult (list nnrc) :=
+          jlift2
+            cons
+            (jura_expr_to_calculus local_package params e)
+            acc
+      in
+      jlift new_array (fold_right proc_one init_el el)
     | JUnaryOp u e =>
-      NNRCUnop u (jura_expr_to_calculus local_package params e)
+      jlift (NNRCUnop u)
+            (jura_expr_to_calculus local_package params e)
     | JBinaryOp b e1 e2 =>
-      NNRCBinop b
-                (jura_expr_to_calculus local_package params e1)
-                (jura_expr_to_calculus local_package params e2)
+      jlift2 (NNRCBinop b)
+             (jura_expr_to_calculus local_package params e1)
+             (jura_expr_to_calculus local_package params e2)
     | JIf e1 e2 e3 =>
-      NNRCIf (jura_expr_to_calculus local_package params e1)
-             (jura_expr_to_calculus local_package params e2)
-             (jura_expr_to_calculus local_package params e3)
+      jlift3 NNRCIf
+        (jura_expr_to_calculus local_package params e1)
+        (jura_expr_to_calculus local_package params e2)
+        (jura_expr_to_calculus local_package params e3)
     | JGuard e1 e2 e3 =>
-      NNRCIf (NNRCUnop (OpNeg) (jura_expr_to_calculus local_package params e1))
-             (jura_expr_to_calculus local_package params e3)
-             (jura_expr_to_calculus local_package params e2)
+      jlift3 NNRCIf
+        (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus local_package params e1))
+        (jura_expr_to_calculus local_package params e3)
+        (jura_expr_to_calculus local_package params e2)
     | JLet v e1 e2 =>
-      NNRCLet v
+      jlift2 (NNRCLet v)
               (jura_expr_to_calculus local_package params e1)
               (jura_expr_to_calculus local_package params e2)
     | JNew cr nil =>
-      new_expr (brand_of_class_ref local_package cr) (NNRCConst (drec nil))
+      jsuccess
+        (new_expr (brand_of_class_ref local_package cr) (NNRCConst (drec nil)))
     | JNew cr ((s0,init)::rest) =>
-      let init_rec : nnrc := NNRCUnop (OpRec s0) (jura_expr_to_calculus local_package params init) in
-      let proc_one (att:string * jura_expr) (acc:nnrc) : nnrc :=
+      let init_rec : jresult nnrc :=
+          jlift (NNRCUnop (OpRec s0)) (jura_expr_to_calculus local_package params init)
+      in
+      let proc_one (att:string * jura_expr) (acc:jresult nnrc) : jresult nnrc :=
           let attname := fst att in
           let e := jura_expr_to_calculus local_package params (snd att) in
-          NNRCBinop OpRecConcat (NNRCUnop (OpRec attname) e) acc
+          jlift2 (NNRCBinop OpRecConcat)
+                 (jlift (NNRCUnop (OpRec attname)) e) acc
       in
-      new_expr (brand_of_class_ref local_package cr) (fold_right proc_one init_rec rest)
+      jlift (new_expr (brand_of_class_ref local_package cr)) (fold_right proc_one init_rec rest)
     | JThrow cr nil =>
-      new_expr (brand_of_class_ref local_package cr) (NNRCConst (drec nil))
+      jsuccess (new_expr (brand_of_class_ref local_package cr) (NNRCConst (drec nil)))
     | JThrow cr ((s0,init)::rest) =>
-      let init_rec : nnrc := NNRCUnop (OpRec s0) (jura_expr_to_calculus local_package params init) in
-      let proc_one (att:string * jura_expr) (acc:nnrc) : nnrc :=
+      let init_rec : jresult nnrc :=
+          jlift (NNRCUnop (OpRec s0)) (jura_expr_to_calculus local_package params init)
+      in
+      let proc_one (att:string * jura_expr) (acc:jresult nnrc) : jresult nnrc :=
           let attname := fst att in
           let e := jura_expr_to_calculus local_package params (snd att) in
-          NNRCBinop OpRecConcat (NNRCUnop (OpRec attname) e) acc
+          jlift2 (NNRCBinop OpRecConcat)
+                 (jlift (NNRCUnop (OpRec attname)) e)
+                 acc
       in
-      new_expr (brand_of_class_ref local_package cr) (fold_right proc_one init_rec rest)
+      jlift (new_expr (brand_of_class_ref local_package cr)) (fold_right proc_one init_rec rest)
     | JFunCall fname el =>
-      let elc := List.map (jura_expr_to_calculus local_package params) el in
-      match lookup_call fname elc with
-      | None => call_error fname
-      | Some e => e
-      end
+      let init_el := jsuccess nil in
+      let proc_one (e:jura_expr) (acc:jresult (list nnrc)) : jresult (list nnrc) :=
+          jlift2
+            cons
+            (jura_expr_to_calculus local_package params e)
+            acc
+      in
+      jolift (fun x =>
+               match lookup_call fname x with
+               | None => jfailure (CompilationError (call_error fname))
+               | Some e => jsuccess e
+               end) (fold_right proc_one init_el el)
     end.
   
   (** Translate a call to a clause to clause+calculus *)
   (** For a clause, add 'this' in the context *)
-  Definition clause_to_calculus local_package (c:jura_clause) : jurac_clause :=
+  Definition clause_to_calculus local_package (c:jura_clause) : jresult jurac_clause :=
     let params := "this"%string :: List.map fst c.(clause_params) in
-    mkClause
-      c.(clause_name)
-      c.(clause_params)
-      c.(clause_output)
-      c.(clause_throw)
+    jlift
+      (mkClause
+         c.(clause_name)
+         c.(clause_params)
+         c.(clause_output)
+         c.(clause_throw))
       (jura_expr_to_calculus local_package params c.(clause_code)).
 
   (** Translate a declaration to a declaration+calculus *)
-  Definition declaration_to_calculus local_package (d:jura_declaration) : jurac_declaration :=
+  Definition declaration_to_calculus local_package (d:jura_declaration) : jresult jurac_declaration :=
     match d with
-    | Clause c => Clause (clause_to_calculus local_package c)
+    | Clause c => jlift Clause (clause_to_calculus local_package c)
     end.
 
   (** Translate a congract to a contract+calculus *)
-  Definition contract_to_calculus local_package (c:jura_contract) : jurac_contract :=
-    mkContract
-      c.(contract_name)
-      c.(contract_template)
-      (List.map (declaration_to_calculus local_package) c.(contract_declarations)).
+  Definition contract_to_calculus local_package (c:jura_contract) : jresult jurac_contract :=
+    jlift
+      (mkContract
+         c.(contract_name)
+         c.(contract_template))
+      (jmaplift (declaration_to_calculus local_package) c.(contract_declarations)).
 
   (** Translate a package to a package+calculus *)
-  Definition package_to_calculus (p:package) : jurac_package :=
+  Definition package_to_calculus (p:package) : jresult jurac_package :=
     let local_package := p.(package_name) in
-    mkPackage
-      p.(package_name)
-      p.(package_imports)
+    jlift
+      (mkPackage
+         p.(package_name)
+         p.(package_imports))
       (contract_to_calculus local_package p.(package_contract)).
 
 End JuratoJavaScript.
