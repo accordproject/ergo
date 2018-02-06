@@ -6,4 +6,4 @@ src
 mechanization
 extraction
 _CoqProject
-bin/jura.native
+bin/jurac.native
