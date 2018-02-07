@@ -35,6 +35,7 @@
 %token AVG FAVG SUM FSUM COUNT MIN MAX
 
 %token NIL
+%token TRUE FALSE
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
@@ -136,6 +137,10 @@ expr:
 (* Constants *)
 | NIL
     { JuraCompiler.jconst JuraCompiler.Data.dunit }
+| TRUE
+    { JuraCompiler.jconst (JuraCompiler.Data.dbool true) }
+| FALSE
+    { JuraCompiler.jconst (JuraCompiler.Data.dbool false) }
 | i = INT
     { JuraCompiler.jconst (JuraCompiler.Data.dnat (Util.coq_Z_of_int i)) }
 | f = FLOAT
@@ -301,5 +306,6 @@ safeident_base:
 | MIN { "min" }
 | MAX { "max" }
 | NIL { "nil" }
-
+| TRUE { "true" }
+| FALSE { "false" }
 

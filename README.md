@@ -19,6 +19,11 @@ To install the Jura compiler and command-line, do:
 $ npm install jura-compiler -g
 ```
 
+To check that the compiler has been installed, and see which version number:
+```
+$ jurac --version
+```
+
 ### Compiling your first contract
 
 Once installed, you can compile your first Jura contract to JavaScript:

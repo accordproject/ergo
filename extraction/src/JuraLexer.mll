@@ -48,6 +48,8 @@
 	  "min", MIN;
 	  "max", MAX;
 	  (* Data *)
+	  "true", TRUE;
+	  "false", FALSE;
 	  "nil", NIL
 	]; tbl
     end

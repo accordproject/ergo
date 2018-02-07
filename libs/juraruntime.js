@@ -520,7 +520,6 @@ function sqlDatePointNe(date1, date2) {
 function sqlDatePointLt(date1, date2) {
     date1 = mustBeDate(date1);
     date2 = mustBeDate(date2);
-//    return compareDates(date1, date2) < 0;
     return date1.isBefore(date2);
 }
 
