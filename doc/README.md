@@ -29,6 +29,10 @@ The initial architecture for the Jura compiler is as follows:
 
 ![alt text](./compilerstack.jpg "Jura Compiler")
 
+## Language
+
+A few notes on the language can be found in [Language.md](Language.md).
+
 NOTE: The current implementation only supports the JavaScript backend
 and there is no type checker yet.
 
