@@ -1,7 +1,6 @@
 package org.accordproject.volumediscount
 
 import org.accordproject.contract.*
-import org.accordproject.late.*
 
 contract VolumeDiscount over TemplateModel {
    // Clause for volume discount

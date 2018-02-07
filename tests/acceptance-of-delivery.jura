@@ -8,17 +8,17 @@ import jura.moment.* // Date/Time library
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request InspectDeliverable) InspectionResponse throws Error {
     let received = request.deliverableRecievedAt;
-    guard (momentIsBefore(received,request.timestamp)) else {
-      throw Error{ error : "Timetamp of the transaction is before the deliverable date." }
+    guard (momentIsBefore(received,now())) else {
+      throw Error{ error : "Transaction time is before the deliverable date." }
     }
 
     let status =
       if momentIsAfter(now, momentAdd(received, momentDuration(data.businessDays, "DAY"))) {
-        OUTSIDE_INSPECTION_PERIOD
+        "OUTSIDE_INSPECTION_PERIOD"
       } else if request.inspectionPassed {
-        PASSED_TESTING
+        "PASSED_TESTING"
       } else {
-        FAILED_TESTING
+        "FAILED_TESTING"
       };
     return new InspectionResponse{
       status : status,
