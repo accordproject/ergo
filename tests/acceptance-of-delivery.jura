@@ -13,7 +13,7 @@ contract AcceptanceOfDelivery over TemplateModel {
     }
 
     let status =
-      if momentIsAfter(now, momentAdd(received, data.businessDays, "days")) {
+      if momentIsAfter(now, momentAdd(received, momentDuration(data.businessDays, "DAY"))) {
         OUTSIDE_INSPECTION_PERIOD
       } else if request.inspectionPassed {
         PASSED_TESTING
