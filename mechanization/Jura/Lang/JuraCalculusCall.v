@@ -48,10 +48,13 @@ Section JuraCalculusCall.
   Definition call_params_error (fname:string) : string :=
     "Parameter mistmatch when calling function '" ++ fname ++ "'".
 
+  (** assign each parameter to its effective value.
+      only succeeds if the number of parameters is correct.
+      Note: we do not support partial function application. *)
   Definition zip_params (params:list string) (el:list jurac_expr) : option (list (string * jurac_expr)) :=
     zip params el.
     
-  (* params are the effective parameters for the call,
+  (** params are the effective parameters for the call,
      i.e., a list of parameters with the expression that computes their values.
      body is the body of the function.
      after the call has been constructed, the function should have no free variables. *)
@@ -60,7 +63,9 @@ Section JuraCalculusCall.
         let (pv,pe) := param in
         (NNRCLet pv pe e)
     in fold_left one_param params body.
-    
+
+  (** Looks up a function with its parameters. If the function exists and the number of parameters
+      is correct, it returns a closed expression computing the call. *)
   Definition lookup_call (t:lookup_table) (fname:string) (el:list jurac_expr) : jresult jurac_expr :=
     match t fname with
     | None => jfailure (CompilationError (call_error fname))
