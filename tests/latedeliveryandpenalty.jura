@@ -18,7 +18,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) LateDeliveryAndPenaltyResponse throws Error {
     // Guard against calling late delivery clause too early
     let agreed = request.agreedDelivery;
-    guard isBefore(now(),agreed) else {
+    guard momentIsBefore(now(),agreed) else {
       throw Error{ message : "Cannot exercise late delivery before delivery date" }
     }
     // Guard against force majeure
@@ -30,7 +30,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     }
 
     // Calculate the time difference between current date and agreed upon date
-    let diff = timeMinusDuration(now,duration(agreed,this.penaltyDuration.unit));
+    let diff = momentSubtract(now,momentDuration(agreed,this.penaltyDuration.unit));
     // Penalty formula
     let penalty =
         (diff / this.penaltyDuration.amount)

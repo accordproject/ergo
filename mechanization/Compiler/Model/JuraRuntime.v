@@ -29,17 +29,23 @@ Module JuraRuntime <: JuraCompilerModel.
   Local Open Scope string.
   Definition foreign_unary_operator_table : lookup_table :=
     fun fname => None.
-
+            
   Definition foreign_binary_operator_table : lookup_table :=
     fun fname =>
       let binop :=
           match fname with
-          | "isAfter"%string =>
+          | "momentIsAfter"%string =>
             Some (OpForeignBinary (enhanced_binary_sql_date_op
                                      bop_sql_date_gt))
-          | "isBefore"%string =>
+          | "momentIsBefore"%string =>
             Some (OpForeignBinary (enhanced_binary_sql_date_op
                                      bop_sql_date_lt))
+          | "momentSubtract"%string =>
+            Some (OpForeignBinary (enhanced_binary_sql_date_op
+                                     bop_sql_date_minus))
+          | "momentAdd"%string =>
+            Some (OpForeignBinary (enhanced_binary_sql_date_op
+                                     bop_sql_date_plus))
           | _ => None
           end
       in
@@ -51,9 +57,32 @@ Module JuraRuntime <: JuraCompilerModel.
                          (NNRCBinop op (NNRCVar "p1") (NNRCVar "p2")))
       end.
 
+  Definition foreign_function_table : lookup_table :=
+    fun fname =>
+      match fname with
+      | "momentDuration"%string =>
+        let e :=
+            NNRCLet "v1"%string (NNRCUnop OpToString (NNRCVar "p1"%string))
+                    (NNRCLet "v2"%string
+                             (NNRCBinop OpStringConcat
+                                        (NNRCConst (dstring "-"%string))
+                                        (NNRCVar "p2"%string))
+                             (NNRCUnop
+                                (OpForeignUnary (enhanced_unary_sql_date_op uop_sql_date_interval_from_string))
+                                (NNRCBinop OpStringConcat
+                                           (NNRCVar "v1"%string)
+                                           (NNRCVar "v2"%string))))
+        in 
+        Some (@mkClosure _
+                         ("p1"::"p2"::nil)
+                         e)
+      | _ => None
+      end.
+
   Definition foreign_table : lookup_table :=
-    compose_table foreign_unary_operator_table
-                  foreign_binary_operator_table.
+    compose_table foreign_function_table
+                  (compose_table foreign_unary_operator_table
+                                 foreign_binary_operator_table).
 
   Definition jura_compiler_foreign_jura :=
     mk_foreign_jura _ foreign_table.
