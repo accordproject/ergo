@@ -16,6 +16,7 @@ MODULES = \
 	Utils/Error \
 	Jura/Lang/JuraBase \
 	Jura/Lang/JuraCalculus \
+	Jura/Lang/JuraCalculusCall \
 	Jura/Lang/Jura \
 	Jura/Lang/JuraSugar \
 	Translation/ForeignJura \

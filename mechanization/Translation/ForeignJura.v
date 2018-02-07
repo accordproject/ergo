@@ -15,9 +15,10 @@
 Require Import String.
 Require Import Qcert.Common.ForeignRuntime.
 Require Import JuraCalculus.
+Require Import JuraCalculusCall.
 
 Class foreign_jura {fruntime:foreign_runtime}: Type
   := mk_foreign_jura {
-         lookup_foreign (fname:string) (el:list jurac_expr) : option jurac_expr
+         foreign_table : lookup_table
        }.
 
