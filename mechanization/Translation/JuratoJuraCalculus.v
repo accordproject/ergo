@@ -193,9 +193,9 @@ Section JuratoJavaScript.
     end.
   
   (** Translate a call to a clause to clause+calculus *)
-  (** For a clause, add 'this' in the context *)
+  (** For a clause, add 'this' and 'now' to the context *)
   Definition clause_to_calculus (t:lookup_table) local_package (c:jura_clause) : jresult jurac_clause :=
-    let params := "this"%string :: List.map fst c.(clause_params) in
+    let params := "this"%string :: "now"%string :: List.map fst c.(clause_params) in
     jlift
       (mkClause
          c.(clause_name)

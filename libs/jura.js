@@ -63,7 +63,7 @@ class Jura {
 	
         const vm = new VM({
             timeout: 1000,
-            sandbox: {}
+            sandbox: { moment: moment }
         });
 
 	return (this.compile(dslText,null,null)).then((dslCode) => {

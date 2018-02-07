@@ -444,7 +444,7 @@ var MONTH = "MONTH";
 var YEAR = "YEAR";
 
 function sqlGetDateComponent(part, date) {
-    mustBeDate(date);
+    date = mustBeDate(date);
     switch(part) {
     case DAY:
 	return date.day;
@@ -482,7 +482,7 @@ function sqlDateDurationFromString(stringDuration) {
 }
 
 function sqlDatePointPlus(date, duration) {
-    mustBeDate(date);
+    date = mustBeDate(date);
     mustBeDuration(duration);
     switch(duration.unit) {
     case DAY:
@@ -497,7 +497,7 @@ function sqlDatePointPlus(date, duration) {
 }
 
 function sqlDatePointMinus(date, duration) {
-    mustBeDate(date);
+    date = mustBeDate(date);
     mustBeDuration(duration);
     switch(duration.unit) {
     case DAY:
@@ -512,32 +512,33 @@ function sqlDatePointMinus(date, duration) {
 }
 
 function sqlDatePointNe(date1, date2) {
-    mustBeDate(date1);
-    mustBeDate(date2);
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
     return compareDates(date1, date2) != 0;
 }
 
 function sqlDatePointLt(date1, date2) {
-    mustBeDate(date1);
-    mustBeDate(date2);
-    return compareDates(date1, date2) < 0;
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
+//    return compareDates(date1, date2) < 0;
+    return date1.isBefore(date2);
 }
 
 function sqlDatePointLe(date1, date2) {
-    mustBeDate(date1);
-    mustBeDate(date2);
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
     return compareDates(date1, date2) <= 0;
 }
 
 function sqlDatePointGt(date1, date2) {
-    mustBeDate(date1);
-    mustBeDate(date2);
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
     return compareDates(date1, date2) > 0;
 }
 
 function sqlDatePointGe(date1, date2) {
-    mustBeDate(date1);
-    mustBeDate(date2);
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
     return compareDates(date1, date2) >= 0;
 }
 
@@ -583,9 +584,14 @@ function makeDate(year, month, day) {
 }
 
 function mustBeDate(date) {
-    if (typeof date === "object" && "year" in date && "month" in date && "day" in date)
-	return;
-    throw new Error("Expected a date but got " + JSON.stringify(date));
+    if (typeof date == "string") {
+     	return moment(date);
+    } else {
+	return date;
+//     	if (typeof date === "object" && "year" in date && "month" in date && "day" in date)
+//     	    return;
+//     	throw new Error("Expected a date but got " + JSON.stringify(date));
+    }
 }
 
 function mustBeDuration(duration) {
