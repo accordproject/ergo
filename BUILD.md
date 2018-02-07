@@ -38,16 +38,6 @@ $ make cleanall
 $ make jura
 ```
 
-## NPM
-
-To package the Jura compiler for publication to npm, do:
-```
-make npm-package
-```
-
-This will create a tarball `./jura-0.X.X.tgz` which can be published
-to npm.
-
 ## License
 
 Jura is distributed under the terms of the Apache 2.0 License, see

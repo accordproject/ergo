@@ -10,25 +10,23 @@ This is the source code for the Jura compiler. Jura is a DSL for Smart *Legal* C
 
 The current target for that compiler is JavaScript.
 
-## Install for Node.js
+## Getting started
 
-To install the compiler and command-line interface for Node.js, do:
+### Install
 
+To install the Jura compiler and command-line, do:
 ```
-npm install -g
+$ npm install jura-compiler -g
 ```
 
-## Use
-
-### Compiling Jura to JavaScript
+### Compiling your first contract
 
 Once installed, you can compile your first Jura contract to JavaScript:
-
 ```
 $ jurac compile --jura ./tests/volumediscount.jura
 ```
 
-## Execute a contract clause
+### Execute a contract clause
 
 To compile and _execute_ a given clause in a contract:
 
@@ -38,6 +36,17 @@ $ jurac execute --jura ./tests/volumediscount.jura --contractname VolumeDiscount
 ```
 
 ## For developers
+
+### Install development version
+
+To install the latest development code, clone this git repository and do a local install:
+```
+$ git clone https://github.com/accordproject/jura-compiler.git
+$ cd ./jura-compiler
+$ npm install -g
+```
+
+### Build from source
 
 Instructions for how to rebuild the compiler from the source can be found in [BUILD.md](BUILD.md).
 
