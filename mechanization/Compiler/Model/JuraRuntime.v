@@ -46,6 +46,9 @@ Module JuraRuntime <: JuraCompilerModel.
           | "momentAdd"%string =>
             Some (OpForeignBinary (enhanced_binary_sql_date_op
                                      bop_sql_date_plus))
+          | "momentDiff"%string =>
+            Some (OpForeignBinary (enhanced_binary_sql_date_op
+                                     bop_sql_date_interval_between))
           | _ => None
           end
       in

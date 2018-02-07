@@ -541,8 +541,10 @@ function sqlDatePointGe(date1, date2) {
     return compareDates(date1, date2) >= 0;
 }
 
-function sqlDateDurationBetween(date1, date) {
-    throw new Error("We don't know how to do 'duration between' dates yet");
+function sqlDateDurationBetween(date1, date2) {
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
+    return date1.diff(date2,'days');
 }
 
 function compareDates(date1, date2) {

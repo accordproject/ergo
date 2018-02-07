@@ -49,7 +49,7 @@ Section JuratoJavaScript.
       match el with
       | nil => NNRCConst (dcoll nil)
       | e1::erest =>
-        fold_left (fun acc e => NNRCBinop OpBagUnion (NNRCUnop OpBag e) acc) erest e1
+        fold_left (fun acc e => NNRCBinop OpBagUnion (NNRCUnop OpBag e) acc) erest (NNRCUnop OpBag e1)
       end.
 
     (** [new Concept{ field1: expr1, ... fieldn: exprn }] creates a record and brands it with the concept name *)

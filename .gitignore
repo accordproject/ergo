@@ -12,5 +12,6 @@ bin/jurac.native
 _CoqProject
 node_modules/
 dist/
+log/
 jura-*.tgz
 package-lock.json
