@@ -24,6 +24,13 @@ To check that the compiler has been installed, and see which version number:
 $ jurac --version
 ```
 
+To get command line help:
+```
+$ jurac --help
+$ jurac compile --help
+$ jurac execute --help
+```
+
 ### Compiling your first contract
 
 Once installed, you can compile your first Jura contract to JavaScript:

@@ -1,0 +1,4 @@
+{
+    "$class": "io.clause.helloworld.Request",
+    "input": "Accord Project"
+}
