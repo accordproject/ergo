@@ -3,7 +3,6 @@ package org.accordproject.latedeliveryandpenalty
 // Imports CTO files
 import org.accordproject.contract.*
 import org.accordproject.latedeliveryandpenalty.*
-
 // Date and time library
 import jura.moment.*
 
@@ -15,13 +14,11 @@ Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeu
 contract LateDeliveryAndPenalty over TemplateModel {
   // Clause checking for late delivery and calculating penalty
   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) LateDeliveryAndPenaltyResponse throws Error {
-
     // Guard against calling late delivery clause too early
     let agreed = request.agreedDelivery;
     guard momentIsBefore(agreed,now()) else {
       throw Error{ message : "Cannot exercise late delivery before delivery date" }
     }
-
     // Guard against force majeure
     guard !this.forceMajeure || !request.forceMajeure else {
       return new LateDeliveryAndPenaltyResponse{
@@ -33,10 +30,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     // Calculate the time difference between current date and agreed upon date
     let diff = momentDiff(now,agreed);
     // Penalty formula
-    let penalty =
-        (diff / this.penaltyDuration.amount)
-      * this.penaltyPercentage/100
-      * request.goodsValue;
+    let penalty = (diff / this.penaltyDuration.amount) * this.penaltyPercentage/100 * request.goodsValue;
     // Penalty may be capped
     let capped = min([penalty,this.capPercentage * request.goodsValue / 100]);
     // Return the response with the penalty and termination determination
