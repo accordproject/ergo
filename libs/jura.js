@@ -73,7 +73,7 @@ class Jura {
 	    vm.run(jurRuntime); // Load the runtime
 	    vm.run(dslCode); // Load the generated logic
 	    const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
-	    const functionName = 'contract.' + contractName + '_' + clauseName;
+	    const functionName = 'contract.' + clauseName;
 	    const clauseCall = functionName+'(params);'; // Create the clause call
 	    const res = vm.run(contract + clauseCall); // Call the logic
 	    return res;

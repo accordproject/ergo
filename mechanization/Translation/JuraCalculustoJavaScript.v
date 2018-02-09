@@ -134,6 +134,20 @@ Section JuraCalculustoJavaScript.
 
     Local Open Scope string_scope.
 
+    Definition multi_append {A} separator (f:A -> string) (elems:list A) : string :=
+      match elems with
+      | nil => ""
+      | e :: elems' =>
+        (fold_left (fun acc e => acc ++ separator ++ (f e)) elems' (f e))%string
+      end.
+
+    Definition function_name_of_contract_clause_name (coname:option string) (clname:string) : string :=
+      match coname with
+      | None => clname
+      | Some coname => coname ++ "_" ++ clname
+      end.
+
+    (** Global expression *)
     Definition javascript_of_expression
                (e:jurac_expr)                  (* expression to translate *)
                (t : nat)                       (* next available unused temporary *)
@@ -145,6 +159,7 @@ Section JuraCalculustoJavaScript.
         * nat
       := nnrcToJSunshadow e t i eol quotel nil nil.
 
+    (** Global variable *)
     Definition javascript_of_global
                (v:string)                      (* global variable name *)
                (bind:jurac_expr)               (* expression for the global variable to translate *)
@@ -162,48 +177,81 @@ Section JuraCalculustoJavaScript.
          v0,
          t2).
 
+    (** Single method *)
     Definition javascript_method_of_body
-               (eol:string) (quotel:string) (fname:string) (e:jurac_expr) : javascript :=
-      let input_v := "constants" in
+               (e:jurac_expr)
+               (fname:string)
+               (eol:string)
+               (quotel:string) : javascript :=
+      let input_v := "context" in
       nnrcToJSMethod input_v e 1 eol quotel (input_v::nil) fname.
 
-    Definition javascript_function_of_body (fname:string) (e:jurac_expr) : javascript :=
-      lift_nnrc_core nnrc_to_js_top_with_name (nnrc_to_nnrc_core e) fname.
+    (** Single method *)
+    Definition javascript_function_of_body
+               (e:jurac_expr)
+               (fname:string)
+               (eol:string)
+               (quotel:string) : javascript :=
+      let input_v := "context" in
+      let init_indent := 0 in
+      lift_nnrc_core
+        (fun e => nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname)
+        (nnrc_to_nnrc_core e).
 
-    Definition javascript_of_clause_code (fname:string) (e:jurac_expr) : javascript :=
-      javascript_function_of_body fname e.
-
-    Definition function_name_of_contract_clause_name (coname:string) (clname:string) : string :=
-      coname ++ "_" ++ clname.
-
-    Definition javascript_of_clause (eol:string) (quotel:string) (coname:string) (c:jurac_clause) : javascript :=
+    Definition javascript_function_of_jura_clause
+               (c:jurac_clause)
+               (coname:option string)
+               (eol:string)
+               (quotel:string) : javascript :=
       let fname := function_name_of_contract_clause_name coname c.(clause_name) in
-      javascript_method_of_body eol quotel fname c.(clause_closure).(closure_body).
+      javascript_function_of_body c.(clause_closure).(closure_body) fname eol quotel.
     
-    Definition javascript_of_func (eol:string) (quotel:string) (c:jurac_func) : javascript :=
-      let fname := c.(func_name) in
-      javascript_function_of_body fname c.(func_closure).(closure_body).
+    Definition javascript_function_of_jura_func
+               (f:jurac_func)
+               (coname:option string)
+               (eol:string)
+               (quotel:string) : javascript :=
+      let fname := function_name_of_contract_clause_name coname f.(func_name) in
+      javascript_function_of_body f.(func_closure).(closure_body) fname eol quotel ++ eol.
     
-    Definition javascript_of_declaration (eol:string) (quotel:string) (coname:string) (d:jurac_declaration) : javascript :=
+    Definition javascript_method_of_jura_clause
+               (c:jurac_clause)
+               (eol:string)
+               (quotel:string) : javascript :=
+      let fname := c.(clause_name) in
+      javascript_method_of_body c.(clause_closure).(closure_body) fname eol quotel.
+    
+    Definition javascript_method_of_jura_func
+               (f:jurac_func)
+               (eol:string)
+               (quotel:string) : javascript :=
+      let fname := f.(func_name) in
+      javascript_method_of_body f.(func_closure).(closure_body) fname eol quotel.
+
+    Definition javascript_of_declaration
+               (d:jurac_declaration)
+               (coname:string)
+               (eol:string)
+               (quotel:string) : javascript :=
       match d with
-      | Clause c => javascript_of_clause eol quotel coname c
-      | Func f => javascript_of_func eol quotel f
+      | Clause c => javascript_method_of_jura_clause c eol quotel
+      | Func f => javascript_method_of_jura_func f eol quotel
       end.
 
-    Definition multi_append {A} separator (f:A -> string) (elems:list A) : string :=
-      match elems with
-      | nil => ""
-      | e :: elems' =>
-        (fold_left (fun acc e => acc ++ separator ++ (f e)) elems' (f e))%string
-      end.
+    Definition javascript_of_declaration_list
+               (dl:list declaration)
+               (coname:string)
+               (eol:string)
+               (quotel:string) : javascript :=
+      multi_append eol (fun d => javascript_of_declaration d coname eol quotel) dl.
 
-    Definition javascript_of_declaration_list (eol:string) (quotel:string) (coname:string) (dl:list declaration) : javascript :=
-      multi_append eol (javascript_of_declaration eol quotel coname) dl.
-
-    Definition javascript_of_contract (eol:string) (quotel:string) (c:jurac_contract) : javascript :=
+    Definition javascript_of_contract
+               (c:jurac_contract)
+               (eol:string)
+               (quotel:string) : javascript :=
       let coname := c.(contract_name) in
       "class " ++ coname ++ " {" ++ eol
-               ++ (javascript_of_declaration_list eol quotel coname c.(contract_declarations)) ++ eol
+               ++ (javascript_of_declaration_list c.(contract_declarations) coname eol quotel) ++ eol
                ++ "}" ++ eol.
 
     Definition preamble eol :=
@@ -234,9 +282,9 @@ Section JuraCalculustoJavaScript.
         | JGlobal v e => javascript_of_global v e t i eol quotel
         | JImport _ => ("","",t)
         | JFunc f =>
-          (javascript_of_func eol quotel f ++ eol,"null",t)
+          (javascript_function_of_jura_func f None eol quotel,"null",t)
         | JContract c =>
-          (javascript_of_contract eol quotel c,"null",t)
+          (javascript_of_contract c eol quotel,"null",t)
         end.
 
     Definition javascript_of_statements
@@ -255,20 +303,20 @@ Section JuraCalculustoJavaScript.
          let '(sn, tn) := fold_right proc_one ("",t) sl in
          sn.
     
-    Definition javascript_of_package (eol:string) (quotel:string) (c:jurac_package) : javascript :=
+    Definition javascript_of_package (p:jurac_package) (eol:string) (quotel:string) : javascript :=
       (preamble eol) ++ eol
-                     ++ (javascript_of_statements c.(package_statements) 0 0 eol quotel)
+                     ++ (javascript_of_statements p.(package_statements) 0 0 eol quotel)
                      ++ (postamble eol).
 
-    Definition javascript_of_package_top (c:jurac_package) : javascript :=
-      javascript_of_package eol_newline quotel_double c.
+    Definition javascript_of_package_top (p:jurac_package) : javascript :=
+      javascript_of_package p eol_newline quotel_double.
 
     Definition javascript_of_clause_code_in_package
                (coname:string) (clname:string) (p:jurac_package) : jresult javascript :=
       let expr_opt := lookup_clause_code_from_package coname clname p in
       jlift (fun e =>
-               let fname := function_name_of_contract_clause_name coname clname in
-               javascript_of_clause_code fname e) expr_opt.
+               let fname := function_name_of_contract_clause_name (Some coname) clname in
+               javascript_function_of_body e fname eol_newline quotel_double) expr_opt.
 
   End translate.
 End JuraCalculustoJavaScript.

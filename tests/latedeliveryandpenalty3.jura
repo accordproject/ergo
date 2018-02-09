@@ -15,17 +15,17 @@ contract LateDeliveryAndPenalty over TemplateModel {
   // Defines a function to calculate the penalty
   definition calculatePenalty(diff Double, goodsValue Double) Double {
     // penalty formula
-    let penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
+    let penalty = (diff / this.penaltyDuration.amount) * this.penaltyPercentage/100 * goodsValue;
     // penalty may be capped
-    if penalty > capPercentage/100 * goodsValue {
-       capPercentage/100 * goodsValue
+    if penalty > this.capPercentage/100 * goodsValue {
+       this.capPercentage/100 * goodsValue
     } else {
        penalty
     }
   }
 
   // Clause for volume discount
-  clause latedeliveryandpenalty(req LateDeliveryAndPenaltyRequest) LateDeliveryAndPenaltyResponse {
+  clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) LateDeliveryAndPenaltyResponse {
     // Guard against calling late delivery clause too early
     let agreed = request.agreedDelivery;
     guard momentIsBefore(agreed,now()) else {
@@ -41,7 +41,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
 
     // difference between current date and agreed upon date
     let diff = momentDiff(agreed,now());
-    let penalty = calculatePenalty(diff,req.goodsValue);
+    let penalty = calculatePenalty(diff,request.goodsValue);
     return new LateDeliveryAndPenaltyResponse{
 	penalty: capped,
 	buyerMayTerminate: diff > this.termination.amount
