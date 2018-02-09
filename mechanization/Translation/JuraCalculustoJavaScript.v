@@ -234,7 +234,7 @@ Section JuraCalculustoJavaScript.
         | JGlobal v e => javascript_of_global v e t i eol quotel
         | JImport _ => ("","",t)
         | JFunc f =>
-          (javascript_of_func eol quotel f,"null",t)
+          (javascript_of_func eol quotel f ++ eol,"null",t)
         | JContract c =>
           (javascript_of_contract eol quotel c,"null",t)
         end.
@@ -246,13 +246,13 @@ Section JuraCalculustoJavaScript.
                (eol : string)
                (quotel : string)
       : javascript
-      := let proc_one (acc:javascript * nat) (s:jurac_stmt) : javascript * nat :=
+      := let proc_one (s:jurac_stmt) (acc:javascript * nat) : javascript * nat :=
              let '(s0, t0) := acc in
              let '(s1, e1, t1) := javascript_of_statement s t0 i eol quotel in
-             (s0 ++ eol ++ s1,
+             (s0 ++ s1,
               t1) (* XXX Ignores e1! *)
          in
-         let '(sn, tn) := fold_left proc_one sl ("",t) in
+         let '(sn, tn) := fold_right proc_one ("",t) sl in
          sn.
     
     Definition javascript_of_package (eol:string) (quotel:string) (c:jurac_package) : javascript :=

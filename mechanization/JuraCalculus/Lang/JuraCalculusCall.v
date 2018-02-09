@@ -62,7 +62,7 @@ Section JuraCalculusCall.
   Definition create_call (params:list (string * jurac_expr)) (body:jurac_expr) : jurac_expr :=
     let one_param (e:jurac_expr) (param:string * jurac_expr) : jurac_expr :=
         let (pv,pe) := param in
-        (NNRCLet pv pe e)
+        (NNRCLet ("c$"++pv)%string pe e)
     in fold_left one_param params body.
 
   (** Looks up a function with its parameters. If the function exists and the number of parameters
