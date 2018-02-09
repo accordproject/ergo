@@ -18,7 +18,7 @@ Require Ascii.
 Require Import ZArith.
 Require Qcert.Common.Brands.BrandRelation.
 
-Module QOperators(juramodel:JuraCompilerModel).
+Module QJOperators(juramodel:JuraCompilerModel).
   
   Module Unary.
 
@@ -141,5 +141,5 @@ Module QOperators(juramodel:JuraCompilerModel).
     (* Note that foreign operators should be encapuslated and 
        exported as part of the model *)
   End Binary.
-End QOperators.
+End QJOperators.
 

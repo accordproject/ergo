@@ -22,7 +22,7 @@
 %token <string> STRING
 %token <string> IDENT
 
-%token PACKAGE IMPORT
+%token PACKAGE IMPORT DEFINE
 %token CONTRACT OVER CLAUSE THROWS
 
 %token IF GUARD ELSE
@@ -66,24 +66,43 @@ main:
     { p }
 
 package:
-| pname = packagedecl is = imports c = contract
+| pname = packagedecl ss = stmts
     { { package_name = pname;
-	package_imports = is;
-	package_contract = c; } }
+	package_statements = ss; } }
 
 packagedecl:
 | PACKAGE qn = qname_prefix
     { qn }
 
-imports:
-| 
+stmts:
+|
     { [] }
-| i = import is = imports
-    { i :: is }
+| s = stmt ss = stmts
+    { s :: ss }
 
-import:
+stmt:
+| DEFINE v = safeident EQUAL e = expr
+    { JGlobal (v, e) }
+| DEFINE cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+    { JFunc
+	{ func_name = Util.char_list_of_string cn;
+	  func_closure =
+	  { closure_params = [];
+            closure_output = Some (Util.char_list_of_string out);
+	    closure_throw = mt;
+	    closure_body = e; } } }
+| DEFINE cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+    { JFunc
+	{ func_name = Util.char_list_of_string cn;
+	  func_closure =
+	  { closure_params = ps;
+            closure_output = Some (Util.char_list_of_string out);
+	    closure_throw = mt;
+	    closure_body = e; } } }
 | IMPORT qn = qname_prefix
-    { qn }
+    { JImport qn }
+| c = contract
+    { JContract c }
 
 contract:
 | CONTRACT cn = IDENT OVER tn = IDENT LCURLY ds = declarations RCURLY
@@ -95,21 +114,23 @@ declarations:
 | 
     { [] }
 | cl = clause ds = declarations
-    { cl :: ds }
+    { (Clause cl) :: ds }
 
 clause:
 | CLAUSE cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = Util.char_list_of_string cn;
-	clause_params = [];
-        clause_output = Util.char_list_of_string out;
-	clause_throw = mt;
-	clause_code = e; } }
+	clause_closure =
+	  { closure_params = [];
+            closure_output = Some (Util.char_list_of_string out);
+	    closure_throw = mt;
+	    closure_body = e; } } }
 | CLAUSE cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = Util.char_list_of_string cn;
-	clause_params = ps;
-        clause_output = Util.char_list_of_string out;
-	clause_throw = mt;
-	clause_code = e; } }
+	clause_closure =
+	  { closure_params = ps;
+            closure_output = Some (Util.char_list_of_string out);
+	    closure_throw = mt;
+	    closure_body = e; } } }
 
 maythrow:
 |
@@ -125,7 +146,7 @@ params:
 
 param:
 | pn = IDENT pt = IDENT (* XXX Has to be fixed so type name is passed as well *)
-    { (Util.char_list_of_string pn,Util.char_list_of_string pt) }
+    { (Util.char_list_of_string pn,Some (Util.char_list_of_string pt)) }
 
 expr:
 (* Parenthesized expression *)
@@ -282,6 +303,7 @@ safeident_base:
 | i = IDENT { i }
 | PACKAGE { "package" }
 | IMPORT { "import" }
+| DEFINE { "define" }
 | CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }

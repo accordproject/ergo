@@ -19,6 +19,7 @@ Require Import ForeignJura.
 Require Import JuraModel.
 Require Import JuraCalculus.
 Require Import JuraCalculusCall.
+Require Import JuratoJuraCalculus.
 Require Import String.
 Require Import List.
 Require Import Qcert.Compiler.Model.EnhancedModel.
@@ -55,9 +56,9 @@ Module JuraRuntime <: JuraCompilerModel.
       match binop with
       | None => None
       | Some op =>
-        Some (@mkClosure _
-                         ("p1"::"p2"::nil)
-                         (NNRCBinop op (NNRCVar "p1") (NNRCVar "p2")))
+        Some (mk_naked_closure
+                ("p1"::"p2"::nil)
+                (NNRCBinop op (NNRCVar "p1") (NNRCVar "p2")))
       end.
 
   Definition foreign_function_table : lookup_table :=
@@ -76,9 +77,9 @@ Module JuraRuntime <: JuraCompilerModel.
                                            (NNRCVar "v1"%string)
                                            (NNRCVar "v2"%string))))
         in 
-        Some (@mkClosure _
-                         ("p1"::"p2"::nil)
-                         e)
+        Some (mk_naked_closure
+                ("p1"::"p2"::nil)
+                e)
       | _ => None
       end.
 

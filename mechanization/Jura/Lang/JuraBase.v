@@ -33,18 +33,31 @@ Section JuraBase.
         { class_package : package_ref;
           class_name : string; }.
 
+    (** Generic function closure over expressions in [A].
+        All free variables in A have to be declared in the list of parameters. *)
+    Record closure :=
+      mkClosure
+        { closure_params: list (string * option string);
+          closure_output : option string;
+          closure_throw : option string;
+          closure_body : A; }.
+
     (** Clause *)
     Record clause :=
       mkClause
         { clause_name : string;
-          clause_params : list (string * string);
-          clause_output : string;
-          clause_throw : option string;
-          clause_code : A; }.
+          clause_closure : closure; }.
+
+    (** Function *)
+    Record func :=
+      mkFunc
+        { func_name : string;
+          func_closure : closure; }.
     
     (** Declaration *)
     Inductive declaration :=
-    | Clause : clause -> declaration.
+    | Clause : clause -> declaration
+    | Func : func -> declaration.
     
     (** Contract *)
     Record contract :=
@@ -52,14 +65,20 @@ Section JuraBase.
         { contract_name : string;
           contract_template : string;
           contract_declarations : list declaration; }.
-    
-    (** A Jura package. *)
-   
+
+    (** Statement *)
+    Inductive stmt :=
+    | JExpr : A -> stmt
+    | JGlobal : string -> A -> stmt
+    | JImport : string -> stmt
+    | JFunc : func -> stmt
+    | JContract : contract -> stmt.
+ 
+    (** Package. *)
     Record package :=
       mkPackage
         { package_name : string;
-          package_imports : list string;
-          package_contract : contract }.
+          package_statements : list stmt; }.
 
   End Syntax.
 

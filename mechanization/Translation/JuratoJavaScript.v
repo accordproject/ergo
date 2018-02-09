@@ -32,9 +32,8 @@ Section JuratoJavaScript.
   Context {fjura:foreign_jura}.
 
   Definition clause_calculus_from_package
-             (t:lookup_table)
              (coname:string) (clname:string) (p:jura_package) : jresult nnrc :=
-    let pc := package_to_calculus t p in
+    let pc := package_to_calculus p in
     jolift (lookup_clause_code_from_package coname clname) pc.
 
   (* Basic modules *)
@@ -50,15 +49,13 @@ Section JuratoJavaScript.
   Context {ftjson:foreign_to_JSON}.
 
   Definition clause_code_from_package
-             (t:lookup_table)
              (coname:string) (clname:string) (p:jura_package) : jresult javascript :=
-    let pc := package_to_calculus t p in
+    let pc := package_to_calculus p in
     jolift (javascript_of_clause_code_in_package coname clname) pc.
   
   Definition javascript_from_package
-             (t:lookup_table)
              (p:jura_package) : jresult javascript :=
-    let pc := package_to_calculus t p in
+    let pc := package_to_calculus p in
     jlift javascript_of_package_top pc.
 
 End JuratoJavaScript.

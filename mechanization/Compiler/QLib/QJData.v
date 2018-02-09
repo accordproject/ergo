@@ -20,7 +20,7 @@ Require Qcert.Utils.JSON.
 Require Qcert.Common.Data.DatatoJSON.
 Require Qcert.Translation.NNRCtoJavaScript.
 
-Module QData(juramodel:JuraCompilerModel).
+Module QJData(juramodel:JuraCompilerModel).
   
   Definition json : Set 
     := JSON.json.
@@ -75,5 +75,5 @@ Module QData(juramodel:JuraCompilerModel).
       | _ => None
       end.
   End dist.
-End QData.
+End QJData.
 

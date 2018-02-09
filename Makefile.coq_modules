@@ -15,17 +15,17 @@
 MODULES = \
 	Utils/Error \
 	Jura/Lang/JuraBase \
-	Jura/Lang/JuraCalculus \
-	Jura/Lang/JuraCalculusCall \
 	Jura/Lang/Jura \
 	Jura/Lang/JuraSugar \
+	JuraCalculus/Lang/JuraCalculus \
+	JuraCalculus/Lang/JuraCalculusCall \
 	Translation/ForeignJura \
 	Translation/JuratoJuraCalculus \
 	Translation/JuraCalculustoJavaScript \
 	Translation/JuratoJavaScript \
 	Compiler/Model/JuraModel \
 	Compiler/Model/JuraRuntime \
-	Compiler/QLib/QData \
-	Compiler/QLib/QOperators \
+	Compiler/QLib/QJData \
+	Compiler/QLib/QJOperators \
 	Compiler/QLib/QJura \
 	Compiler/JuraCompiler

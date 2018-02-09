@@ -340,16 +340,28 @@ let rec sexp_to_nnrc (se:sexp) : nnrc =
 
 let name_to_sexp name =
   (SString (string_of_char_list name))
+let opt_name_to_sexp name =
+  begin match name with
+  | None -> STerm ("Name", [])
+  | Some name -> STerm ("Name", [(SString (string_of_char_list name))])
+  end
 let sexp_to_name (se:sexp) =
   begin match se with
   | SString s -> char_list_of_string s
   | _ -> 
       raise (Jura_Error "Not well-formed S-expr inside name")
   end
+let sexp_to_opt_name (se:sexp) =
+  begin match se with
+  | STerm ("Name", []) -> None
+  | STerm ("Name", [SString s]) -> Some (char_list_of_string s)
+  | _ -> 
+      raise (Jura_Error "Not well-formed S-expr inside optional name")
+  end
 
 let param_to_sexp (paramname,paramtypename) =
   let pname = name_to_sexp paramname in
-  let ptname = name_to_sexp paramtypename in
+  let ptname = opt_name_to_sexp paramtypename in
   STerm ("Param",[pname;ptname])
 let params_to_sexp params =
   let params = List.map param_to_sexp params in
@@ -358,7 +370,7 @@ let params_to_sexp params =
 let sexp_to_param (se:sexp) =
   begin match se with
   | STerm ("Param",[spname;sptname]) ->
-      (sexp_to_name spname, sexp_to_name sptname)
+      (sexp_to_name spname, sexp_to_opt_name sptname)
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside Param")
   end
@@ -370,50 +382,48 @@ let sexp_to_params (se:sexp) =
       raise (Jura_Error "Not well-formed S-expr inside Params")
   end
 
-let maythrow_to_sexp th : sexp =
-  begin match th with
-  | None -> STerm ("MayThrow",[])
-  | Some tn -> STerm ("MayThrow", [name_to_sexp tn])
-  end
-
-let sexp_to_maythrow (se:sexp) =
+let closure_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a closure) =
+  let clparams = params_to_sexp cl.closure_params in
+  let cloutput = opt_name_to_sexp cl.closure_output in
+  let clthrow = opt_name_to_sexp cl.closure_throw in
+  let clbody = expr_to_sexp cl.closure_body in
+  STerm ("Closure",[clparams;cloutput;clthrow;clbody])
+let sexp_to_closure (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a closure =
   begin match se with
-  | STerm ("MayThrow",[]) -> None
-  | STerm ("MayThrow",[stn]) -> Some (sexp_to_name stn)
+  | STerm ("Closure",[sclparams;scloutput;sclthrow;sclbody]) ->
+      { closure_params = sexp_to_params sclparams;
+	closure_output = sexp_to_opt_name scloutput;
+	closure_throw = sexp_to_opt_name sclthrow;
+	closure_body = sexp_to_expr sclbody }
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside MayThrow")
+      raise (Jura_Error "Not well-formed S-expr inside Closure")
   end
 
-let clause_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a clause) =
-  let clname = name_to_sexp cl.clause_name in
-  let clparams = params_to_sexp cl.clause_params in
-  let cloutput = name_to_sexp cl.clause_output in
-  let clthrow = maythrow_to_sexp cl.clause_throw in
-  let clcode = expr_to_sexp cl.clause_code in
-  STerm ("Clause",[clname;clparams;cloutput;clthrow;clcode])
-
-let sexp_to_clause (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a clause =
-  begin match se with
-  | STerm ("Clause",[sclname;sclparams;scloutput;sclthrow;sclcode]) ->
-      { clause_name = sexp_to_name sclname;
-	clause_params = sexp_to_params sclparams;
-	clause_output = sexp_to_name scloutput;
-	clause_throw = sexp_to_maythrow sclthrow;
-	clause_code = sexp_to_expr sclcode }
-  | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Clause")
+let declaration_to_sexp (expr_to_sexp : 'a -> sexp) (d:'a declaration) =
+  begin match d with
+  | Clause c ->
+      let clname = name_to_sexp c.clause_name in
+      let clclosure = closure_to_sexp expr_to_sexp c.clause_closure in
+      STerm ("Clause",[clname;clclosure])
+  | Func f ->
+      let fname = name_to_sexp f.func_name in
+      let fclosure = closure_to_sexp expr_to_sexp f.func_closure in
+      STerm ("Func",[fname;fclosure])
   end
-
-let declaration_to_sexp (expr_to_sexp : 'a -> sexp) (dl:'a declaration) =
-  STerm ("Declaration",[clause_to_sexp expr_to_sexp dl])
 let declarations_to_sexp (expr_to_sexp : 'a -> sexp) (dls:'a declaration list) =
   let decls = List.map (declaration_to_sexp expr_to_sexp) dls in
   STerm ("Declarations",decls)
 
 let sexp_to_declaration (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a declaration =
   begin match se with
-  | STerm ("Declaration",[secl]) ->
-      sexp_to_clause sexp_to_expr secl
+  | STerm ("Clause",[sclname;sclclosure]) ->
+      Clause
+	{ clause_name = sexp_to_name sclname;
+	  clause_closure = sexp_to_closure sexp_to_expr sclclosure }
+  | STerm ("Func",[sfname;sfclosure]) ->
+      Func
+	{ func_name = sexp_to_name sfname;
+	  func_closure = sexp_to_closure sexp_to_expr sfclosure }
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside Declaration")
   end
@@ -443,36 +453,67 @@ let sexp_to_contract (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a contract =
 
 let import_to_sexp i =
   SString (string_of_char_list i)
-let imports_to_sexp is =
-  let imports = List.map import_to_sexp is in
-  STerm ("Imports",imports)
-
 let sexp_to_import (se:sexp) =
   begin match se with
   | SString s -> char_list_of_string s
   | _ -> 
-      raise (Jura_Error "Not well-formed S-expr inside import")
+      raise (Jura_Error "Not well-formed S-expr inside Import")
   end
-let sexp_to_imports (se:sexp) =
+
+let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
+  begin match s with
+  | JExpr e ->
+      STerm ("JExpr",[expr_to_sexp e])
+  | JGlobal (v, e) ->
+      STerm ("JGlobal",[name_to_sexp v;expr_to_sexp e])
+  | JImport i ->
+      STerm ("JImport",[import_to_sexp i])
+  | JFunc f ->
+      let fname = name_to_sexp f.func_name in
+      let fclosure = closure_to_sexp expr_to_sexp f.func_closure in
+      STerm ("JFunc",[fname;fclosure])
+  | JContract c ->
+      STerm ("JContract",[contract_to_sexp expr_to_sexp c])
+  end
+let stmts_to_sexp (expr_to_sexp : 'a -> sexp) (ss:'a stmt list) =
+  let sss = List.map (stmt_to_sexp expr_to_sexp) ss in
+  STerm ("Stmts",sss)
+
+let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
   begin match se with
-  | STerm ("Imports",sis) ->
-      List.map sexp_to_import sis
+  | STerm ("JExpr",[se]) ->
+      JExpr (sexp_to_expr se)
+  | STerm ("JGlobal",[svname;se]) ->
+      JGlobal (sexp_to_name svname, sexp_to_expr se)
+  | STerm ("JImport",[si]) ->
+      JImport (sexp_to_import si)
+  | STerm ("JFunc",[sfname;sfclosure]) ->
+      JFunc
+	{ func_name = sexp_to_name sfname;
+	  func_closure = sexp_to_closure sexp_to_expr sfclosure }
+  | STerm ("JContract",[sc]) ->
+      JContract (sexp_to_contract sexp_to_expr sc)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Imports")
+      raise (Jura_Error "Not well-formed S-expr inside Stmt")
+  end
+let sexp_to_stmts (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt list =
+  begin match se with
+  | STerm ("Stmts",sss) ->
+      List.map (sexp_to_stmt sexp_to_expr) sss
+  | _ ->
+      raise (Jura_Error "Not well-formed S-expr inside Stmts")
   end
 
 let package_to_sexp (expr_to_sexp : 'a -> sexp) (p:'a package) =
   let pname = name_to_sexp p.package_name in
-  let imports = imports_to_sexp p.package_imports in
-  let contract = contract_to_sexp expr_to_sexp p.package_contract in
-  STerm ("Package", [pname;imports;contract])
+  let stmts = stmts_to_sexp expr_to_sexp p.package_statements in
+  STerm ("Package", [pname;stmts])
 
 let sexp_to_package (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a package =
   begin match se with
-  | STerm ("Package",[spname;simports;scontract]) ->
+  | STerm ("Package",[spname;sstmts]) ->
       { package_name = sexp_to_name spname;
-	package_imports = sexp_to_imports simports;
-	package_contract = sexp_to_contract sexp_to_expr scontract; }
+	package_statements = sexp_to_stmts sexp_to_expr sstmts; }
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside Package")
   end
@@ -490,4 +531,3 @@ let sexp_to_jurac_package (se:sexp) : jurac_package =
       raise (Jura_Error "Not well-formed S-expr inside JuraCalculus")
   end
   
-

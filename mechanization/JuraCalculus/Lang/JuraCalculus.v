@@ -32,14 +32,19 @@ Section JuraCalculus.
     (** Clause *)
     Definition jurac_clause := @clause jurac_expr.
     
+    (** Function *)
+    Definition jurac_func := @func jurac_expr.
+    
     (** Declaration *)
     Definition jurac_declaration := @declaration jurac_expr.
     
     (** Contract *)
     Definition jurac_contract := @contract jurac_expr.
     
-    (** A Jura package. *)
-   
+    (** Statement *)
+    Definition jurac_stmt := @stmt jurac_expr.
+
+    (** Package. *)
     Definition jurac_package := @package jurac_expr.
 
   End Syntax.

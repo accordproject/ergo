@@ -24,6 +24,7 @@
 	[ (* declarations *)
 	  "package", PACKAGE;
 	  "import", IMPORT;
+	  "define", DEFINE;
           (* contract *)
 	  "contract", CONTRACT;
 	  "over", OVER;

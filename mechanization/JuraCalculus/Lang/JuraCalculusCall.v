@@ -18,16 +18,10 @@ Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Common.CommonRuntime.
 Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Error.
+Require Import JuraBase.
 Require Import JuraCalculus.
 
 Section JuraCalculusCall.
-  (** Generic function closure over expressions in [A].
-      All free variables in A have to be declared in the list of parameters. *)
-  Record closure {A} :=
-    mkClosure
-      { closure_params: list string;
-        closure_body : A; }.
-
   Context {fruntime:foreign_runtime}.
   
   Definition jurac_expr_closure := @closure jurac_expr.
@@ -41,6 +35,13 @@ Section JuraCalculusCall.
       | Some cl => Some cl
       end.
 
+  Definition add_function_to_table
+             (t:lookup_table) (newfname:string) (newcl:@closure jurac_expr) : lookup_table :=
+    fun fname =>
+      if (string_dec fname newfname)
+      then Some newcl
+      else t fname.
+  
   (** Error for function calls *)
   Definition call_error (fname:string) : string :=
     "Function '" ++ fname ++ "' not found".
@@ -70,7 +71,7 @@ Section JuraCalculusCall.
     match t fname with
     | None => jfailure (CompilationError (call_error fname))
     | Some cl =>
-      match zip_params cl.(closure_params) el with
+      match zip_params (List.map fst cl.(closure_params)) el with
       | None => jfailure (CompilationError (call_params_error fname))
       | Some params => 
         jsuccess (create_call params cl.(closure_body))

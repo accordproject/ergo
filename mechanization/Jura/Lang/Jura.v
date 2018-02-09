@@ -43,14 +43,19 @@ Section Jura.
     (** Clause *)
     Definition jura_clause := @clause jura_expr.
     
+    (** Function *)
+    Definition jura_func := @func jura_expr.
+    
     (** Declaration *)
     Definition jura_declaration := @declaration jura_expr.
     
     (** Contract *)
     Definition jura_contract := @contract jura_expr.
     
-    (** A Jura package. *)
-   
+    (** Statement *)
+    Definition jura_stmt := @stmt jura_expr.
+
+    (** Package. *)
     Definition jura_package := @package jura_expr.
 
   End Syntax.
