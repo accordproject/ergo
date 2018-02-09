@@ -58,7 +58,7 @@ Module JuraRuntime <: JuraCompilerModel.
       | Some op =>
         Some (mk_naked_closure
                 ("p1"::"p2"::nil)
-                (NNRCBinop op (NNRCVar "p1") (NNRCVar "p2")))
+                (NNRCBinop op (NNRCGetConstant "p1") (NNRCGetConstant "p2")))
       end.
 
   Definition foreign_function_table : lookup_table :=
@@ -66,11 +66,11 @@ Module JuraRuntime <: JuraCompilerModel.
       match fname with
       | "momentDuration"%string =>
         let e :=
-            NNRCLet "v1"%string (NNRCUnop OpToString (NNRCVar "p1"%string))
+            NNRCLet "v1"%string (NNRCUnop OpToString (NNRCGetConstant "p1"%string))
                     (NNRCLet "v2"%string
                              (NNRCBinop OpStringConcat
                                         (NNRCConst (dstring "-"%string))
-                                        (NNRCVar "p2"%string))
+                                        (NNRCGetConstant "p2"%string))
                              (NNRCUnop
                                 (OpForeignUnary (enhanced_unary_sql_date_op uop_sql_date_interval_from_string))
                                 (NNRCBinop OpStringConcat

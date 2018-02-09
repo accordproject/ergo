@@ -22,7 +22,7 @@
 %token <string> STRING
 %token <string> IDENT
 
-%token PACKAGE IMPORT DEFINE
+%token PACKAGE IMPORT DEFINITION
 %token CONTRACT OVER CLAUSE THROWS
 
 %token IF GUARD ELSE
@@ -81,9 +81,9 @@ stmts:
     { s :: ss }
 
 stmt:
-| DEFINE v = safeident EQUAL e = expr
+| DEFINITION v = safeident EQUAL e = expr
     { JGlobal (v, e) }
-| DEFINE cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| DEFINITION cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
@@ -91,7 +91,7 @@ stmt:
             closure_output = Some (Util.char_list_of_string out);
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| DEFINE cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
@@ -113,8 +113,26 @@ contract:
 declarations:
 | 
     { [] }
+| f = func ds = declarations
+    { (Func f) :: ds }
 | cl = clause ds = declarations
     { (Clause cl) :: ds }
+
+func:
+| DEFINITION cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+    { { func_name = Util.char_list_of_string cn;
+	func_closure =
+	{ closure_params = [];
+          closure_output = Some (Util.char_list_of_string out);
+	  closure_throw = mt;
+	  closure_body = e; } } }
+| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+    { { func_name = Util.char_list_of_string cn;
+	func_closure =
+	{ closure_params = ps;
+          closure_output = Some (Util.char_list_of_string out);
+	  closure_throw = mt;
+	  closure_body = e; } } }
 
 clause:
 | CLAUSE cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
@@ -303,7 +321,7 @@ safeident_base:
 | i = IDENT { i }
 | PACKAGE { "package" }
 | IMPORT { "import" }
-| DEFINE { "define" }
+| DEFINITION { "definition" }
 | CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }

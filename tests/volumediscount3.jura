@@ -3,9 +3,9 @@ package org.accordproject.volumediscount
 import org.accordproject.contract.*
 import org.accordproject.late.*
 
-define fee = 3/10
-define addFee(rate Double) Double {
-   rate + fee
+definition fee = 1/10
+definition addFee(rate Double) Double {
+  rate + fee
 }
 
 contract VolumeDiscount over TemplateModel {

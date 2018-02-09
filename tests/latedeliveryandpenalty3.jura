@@ -1,6 +1,10 @@
+package org.accordproject.latedeliveryandpenalty
+
 // Imports CTO files
 import org.accordproject.contract.*
 import org.accordproject.latedeliveryandpenalty.*
+// Date and time library
+import jura.moment.*
 
 /* From template:
 Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeure cases,":? forceMajeure}] the Seller shall pay to the Buyer for every [{penaltyDuration}] of delay penalty amounting to [{penaltyPercentage}]% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a [{fractionalPart}] is to be considered a full [{fractionalPart}]. The total amount of penalty shall not however, exceed [{capPercentage}]% of the total value of the Equipment involved in late delivery. If the delay is more than [{termination}], the Buyer is entitled to terminate this Contract.
@@ -9,9 +13,9 @@ Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeu
 // Declare a contract over a template model
 contract LateDeliveryAndPenalty over TemplateModel {
   // Defines a function to calculate the penalty
-  definition calculatePenalty(diff float, goodsValue float) float {
+  definition calculatePenalty(diff Double, goodsValue Double) Double {
     // penalty formula
-    const penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
+    let penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
     // penalty may be capped
     if penalty > capPercentage/100 * goodsValue {
        capPercentage/100 * goodsValue
@@ -22,15 +26,25 @@ contract LateDeliveryAndPenalty over TemplateModel {
 
   // Clause for volume discount
   clause latedeliveryandpenalty(req LateDeliveryAndPenaltyRequest) LateDeliveryAndPenaltyResponse {
-    // difference between current date and agreed upon date
-    define diff = moment.diff(moment.now(),agreed,penaltyDuration.unit);
+    // Guard against calling late delivery clause too early
+    let agreed = request.agreedDelivery;
+    guard momentIsBefore(agreed,now()) else {
+      throw Error{ message : "Cannot exercise late delivery before delivery date" }
+    }
+    // Guard against force majeure
+    guard !this.forceMajeure || !request.forceMajeure else {
+      return new LateDeliveryAndPenaltyResponse{
+	penalty: 0,
+	buyerMayTerminate: true
+      }
+    }
 
-    if (!moment.isAfter(moment.now(),agreed) then
-    if forceMajeure && req.forceMajeure
-    then LateDeliveryAndPenaltyResponse{ 0, true }
-    else {
-      define penalty = calculatePenalty(diff,req.goodsValue);
-      LateDeliveryAndPenaltyResponse{ capped, diff > termination }
+    // difference between current date and agreed upon date
+    let diff = momentDiff(agreed,now());
+    let penalty = calculatePenalty(diff,req.goodsValue);
+    return new LateDeliveryAndPenaltyResponse{
+	penalty: capped,
+	buyerMayTerminate: diff > this.termination.amount
     }
   }
 }

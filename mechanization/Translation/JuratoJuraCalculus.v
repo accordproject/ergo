@@ -84,7 +84,7 @@ Section JuratoJavaScript.
         | Some op =>
           Some (mk_naked_closure
                   ("p1"::nil)
-                  (NNRCUnop op (NNRCVar "p1")))
+                  (NNRCUnop op (NNRCGetConstant "p1")))
         end.
 
     Definition binary_operator_table : lookup_table :=
@@ -100,7 +100,7 @@ Section JuratoJavaScript.
         | Some op =>
           Some (mk_naked_closure
                   ("p1"::"p2"::nil)
-                  (NNRCBinop op (NNRCVar "p1") (NNRCVar "p2")))
+                  (NNRCBinop op (NNRCGetConstant "p1") (NNRCGetConstant "p2")))
         end.
 
     Definition builtin_table : lookup_table :=
@@ -233,13 +233,13 @@ Section JuratoJavaScript.
       jlift (new_expr (brand_of_class_ref ctxt.(context_package) cr)) (fold_left proc_one rest init_rec)
     | JFunCall fname el =>
       let init_el := jsuccess nil in
-      let proc_one (acc:jresult (list jurac_expr)) (e:jura_expr) : jresult (list jurac_expr) :=
+      let proc_one (e:jura_expr) (acc:jresult (list jurac_expr)) : jresult (list jurac_expr) :=
           jlift2
             cons
             (jura_expr_to_calculus ctxt e)
             acc
       in
-      jolift (lookup_call ctxt.(context_table) fname) (fold_left proc_one el init_el)
+      jolift (lookup_call ctxt.(context_table) fname) (fold_right proc_one init_el el)
     end.
   
   (** Translate a clause to clause+calculus *)
@@ -280,20 +280,42 @@ Section JuratoJavaScript.
 
   (** Translate a declaration to a declaration+calculus *)
   Definition declaration_to_calculus
-             (ctxt:context) (d:jura_declaration) : jresult jurac_declaration :=
+             (ctxt:context) (d:jura_declaration) : jresult (context * jurac_declaration) :=
     match d with
-    | Clause c => jlift Clause (clause_to_calculus ctxt c)
-    | Func f => jlift Func (func_to_calculus ctxt f)
+    | Clause c =>
+      jlift
+        (fun x => (add_one_func ctxt x.(clause_name) x.(clause_closure), Clause x)) (* Add new function to context *)
+        (clause_to_calculus ctxt c)
+    | Func f =>
+      jlift
+        (fun x => (add_one_func ctxt x.(func_name) x.(func_closure), Func x)) (* Add new function to context *)
+        (func_to_calculus ctxt f)
     end.
 
   (** Translate a contract to a contract+calculus *)
   Definition contract_to_calculus
              (ctxt:context) (c:jura_contract) : jresult jurac_contract :=
+    let init := jsuccess (ctxt, nil) in
+    let proc_one
+          (acc:jresult (context * list jurac_declaration))
+          (s:jura_declaration)
+        : jresult (context * list jurac_declaration) :=
+        jolift
+          (fun acc : context * list jurac_declaration =>
+             let (ctxt,acc) := acc in
+             jlift (fun xy : context * jurac_declaration =>
+                      let (newctxt,news) := xy in
+                      (newctxt,news::acc))
+                   (declaration_to_calculus ctxt s))
+          acc
+    in
     jlift
-      (mkContract
-         c.(contract_name)
-         c.(contract_template))
-      (jmaplift (declaration_to_calculus ctxt) c.(contract_declarations)).
+      (fun xy =>
+         (mkContract
+            c.(contract_name)
+            c.(contract_template)
+           (snd xy)))
+      (List.fold_left proc_one c.(contract_declarations) init).
 
   (** Translate a statement to a statement+calculus *)
   Definition stmt_to_calculus
