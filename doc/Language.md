@@ -112,3 +112,14 @@ switch fruitcode {
   case 2: "Apricot"
   default: "Strange Fruit"
 }
+```
+
+For expressions allow to apply an expression of every element in an input array of values:
+```
+for x in [1,-2,3] { x+1 }
+```
+
+For expressions can have an optional condition of the values being iterated over:
+```
+for x in [1,-2,3] where x > 0 { x+1 }
+```
