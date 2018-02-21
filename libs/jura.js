@@ -30,12 +30,12 @@ const {
  */
 class Jura {
     /**
-     * Compile Jura
+     * Compile Jura to JavaScript
      *
      * @param {string} path to the Jura file
-     * @returns {object} Promise to the compiled JavaScript code
+     * @returns {string} The compiled JavaScript code
      */
-    static compile(dslText,contractName,clauseName) {
+    static compileToJavaScript(dslText,contractName,clauseName) {
 	// Built-in config
 	var config= {
 	    'source' : 'jura',
@@ -46,7 +46,16 @@ class Jura {
 	if (contractName != null) config.contract = contractName;
 	if (clauseName != null) config.clause = clauseName;
 	// Call compiler
-        return Promise.resolve(Engine.Jura.compile(config).result);
+        return Engine.Jura.compile(config).result;
+    }
+    /**
+     * Compile Jura
+     *
+     * @param {string} path to the Jura file
+     * @returns {object} Promise to the compiled JavaScript code
+     */
+    static compile(dslText,contractName,clauseName) {
+        return Promise.resolve(this.compileToJavaScript(dslText,contractName,clauseName));
     }
     /**
      * Execute Jura

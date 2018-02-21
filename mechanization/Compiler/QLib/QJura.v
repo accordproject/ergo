@@ -56,8 +56,11 @@ Module QJura(juramodel:JuraCompilerModel).
   Definition jvar : String.string -> jura_expr
     := Jura.JVar.
 
-  Definition jconst := Jura.JConst.
-  Definition jarray := Jura.JArray.
+  Definition jcasevalue : Data.data -> Jura.switch_case_kind := Jura.CaseValue.
+  Definition jcasetype : String.string -> Jura.switch_case_kind := Jura.CaseType.
+
+  Definition jconst : Data.data -> jura_expr := Jura.JConst.
+  Definition jarray : list jura_expr -> jura_expr := Jura.JArray.
   Definition junaryop : Ops.Unary.op -> jura_expr -> jura_expr
     := Jura.JUnaryOp.
   Definition jbinaryop : Ops.Binary.op -> jura_expr -> jura_expr -> jura_expr 
@@ -70,6 +73,8 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JLet.
   Definition jfuncall : String.string -> list jura_expr -> jura_expr
     := Jura.JFunCall.
+  Definition jswitch : jura_expr -> list (Jura.switch_case * jura_expr) -> jura_expr -> jura_expr
+    := Jura.JSwitch.
 
   Definition jdot : String.string -> jura_expr -> jura_expr 
     := JuraSugar.JDot.

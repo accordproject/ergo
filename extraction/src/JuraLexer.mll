@@ -39,6 +39,11 @@
 	  "new", NEW;
 	  "this", THIS;
 	  "let", LET;
+	  "as", AS;
+	  "switch", SWITCH;
+	  "typeswitch", TYPESWITCH;
+	  "case", CASE;
+	  "default", DEFAULT;
 	  (* Functions *)
 	  "flatten", FLATTEN;
 	  "avg", AVG;

@@ -52,7 +52,7 @@ Section JuratoJavaScript.
              (coname:string) (clname:string) (p:jura_package) : jresult javascript :=
     let pc := package_to_calculus p in
     jolift (javascript_of_clause_code_in_package coname clname) pc.
-  
+
   Definition javascript_from_package
              (p:jura_package) : jresult javascript :=
     let pc := package_to_calculus p in

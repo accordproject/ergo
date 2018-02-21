@@ -89,6 +89,7 @@ Section Error.
       | Some a => Success _ _ a
       | None => Failure _ _ e
       end.
+    
   End operations.
 
   Section jura.

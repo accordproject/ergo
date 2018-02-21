@@ -17,6 +17,7 @@
 Require Import String.
 Require Import List.
 
+Require Import Qcert.Utils.Utils.
 Require Import Qcert.Common.CommonRuntime.
 
 Require Import Error.
@@ -162,7 +163,24 @@ Section JuratoJavaScript.
       ctxt.(context_package)
       ctxt.(context_globals)
       ctxt.(context_params).
-  
+
+  Definition cswitch_cases :=
+    list (switch_case * jurac_expr).
+
+  Section fresh_vars.
+    Require Import Fresh.
+    Definition fresh_in_switch {A} (eccases:list (A * jurac_expr)) (ecdefault:jurac_expr) :=
+      fresh_var
+        "$switch"
+        (List.app
+           (List.concat
+              (List.map (fun eccase => nnrc_free_vars (snd eccase)) eccases))
+           (nnrc_free_vars ecdefault)).
+    Definition fresh_in_case (e:jurac_expr) :=
+      fresh_var "$case"
+                (nnrc_free_vars e).
+  End fresh_vars.
+
   (** Translate expressions to calculus *)
   Fixpoint jura_expr_to_calculus
            (ctxt:context) (e:jura_expr) : jresult jurac_expr :=
@@ -240,8 +258,74 @@ Section JuratoJavaScript.
             acc
       in
       jolift (lookup_call ctxt.(context_table) fname) (fold_right proc_one init_el el)
+    | JSwitch e0 ecases edefault =>
+      let ec0 := jura_expr_to_calculus ctxt e0 in
+      let eccases :=
+          let proc_one acc ecase :=
+              jolift
+                (fun acc =>
+                   jlift (fun x => (fst ecase, x)::acc)
+                         (jura_expr_to_calculus ctxt (snd ecase))) acc
+          in
+          fold_left proc_one ecases (jsuccess nil)
+      in
+      let ecdefault := jura_expr_to_calculus ctxt edefault in
+      jolift
+        (fun ec0 =>
+           jolift
+             (fun eccases =>
+                jolift
+                  (fun ecdefault =>
+                     let v0 := fresh_in_switch eccases ecdefault in
+                     let proc_one_case
+                           (acc:jresult jurac_expr)
+                           (ecase:switch_case * jurac_expr)
+                         : jresult jurac_expr :=
+                         match fst ecase with
+                         | (Some v, CaseValue d) =>
+                           jlift
+                             (fun acc =>
+                                NNRCIf (NNRCBinop OpEqual
+                                                  (NNRCVar v0)
+                                                  (NNRCConst d))
+                                       (NNRCLet v
+                                                (NNRCVar v0)
+                                                (snd ecase))
+                                       acc) acc
+                         | (None, CaseValue d) =>
+                           jlift
+                             (fun acc =>
+                                NNRCIf (NNRCBinop OpEqual
+                                                  (NNRCVar v0)
+                                                  (NNRCConst d))
+                                       (snd ecase)
+                                       acc) acc
+                         | (Some v, CaseType brand) =>
+                           jlift (fun acc =>
+                                    let v2 := fresh_in_case acc in
+                                    NNRCEither
+                                      (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
+                                      v (snd ecase)
+                                      v2 acc
+                                 ) acc
+                         | (None, CaseType brand) =>
+                           jlift (fun acc =>
+                                    let v1 := fresh_in_case (snd ecase) in
+                                    let v2 := fresh_in_case acc in
+                                    NNRCEither
+                                      (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
+                                      v1 (snd ecase)
+                                      v2 acc
+                                 ) acc
+                         end
+                     in
+                     let eccases_folded :=
+                         fold_left proc_one_case eccases (jsuccess ecdefault)
+                     in
+                     jlift (NNRCLet v0 ec0) eccases_folded)
+                  ecdefault) eccases) ec0
     end.
-  
+
   (** Translate a clause to clause+calculus *)
   (** For a clause, add 'this' and 'now' to the context *)
 
@@ -368,5 +452,47 @@ Section JuratoJavaScript.
             (snd xy)))
       (List.fold_left proc_one p.(package_statements) init).
 
+  Section tests.
+    Open Scope string.
+    Definition ctxt0 := initial_context "test".
+
+    Definition input1 := dnat 2.
+    
+    Example j1 :=
+      JSwitch (JConst input1)
+              (((Some "v1", CaseValue (dnat 1)), (JConst (dstring "1")))
+                 :: ((Some "v2", CaseValue (dnat 2)), (JConst (dstring "2")))
+                 :: nil)
+              (JConst (dstring "lots")).
+    Definition jc1 := jura_expr_to_calculus ctxt0 j1.
+    Eval vm_compute in jc1.
+    Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1.
+
+    Example j1' :=
+      JSwitch (JConst input1)
+              (((Some "v1", CaseValue (dnat 1)), (JConst (dstring "1")))
+                 :: ((Some "v2", CaseValue (dnat 2)), JVar "v2")
+                 :: nil)
+              (JConst (dstring "lots")).
+    Definition jc1' := jura_expr_to_calculus ctxt0 j1'.
+    (* Eval vm_compute in jc1'. *)
+    (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1'. *)
+
+    Definition input2 :=
+      dbrand ("C1"::nil) (dnat 1).
+    
+    Example j2 :=
+      JSwitch (JConst input2)
+              (((Some "v1", CaseType "C1"), (JConst (dstring "1")))
+                 :: ((Some "v2", CaseType "C2"), (JConst (dstring "2")))
+                 :: nil)
+              (JConst (dstring "lots")).
+
+    Definition jc2 := jura_expr_to_calculus ctxt0 j2.
+    (* Eval vm_compute in jc2. *)
+    (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc2. *)
+
+  End tests.
+  
 End JuratoJavaScript.
 

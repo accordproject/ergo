@@ -22,8 +22,16 @@ Require Import JuraBase.
 
 Section Jura.
   Context {fruntime:foreign_runtime}.
-  
+
   Section Syntax.
+
+    Inductive switch_case_kind :=
+    | CaseValue : data -> switch_case_kind    (**r match against value *)
+    | CaseType : string -> switch_case_kind   (**r match against type *)
+    .
+
+    Definition switch_case :=
+      (option string * switch_case_kind)%type. (**r optional variable and case kind *)
 
     (** Expression *)
     Inductive jura_expr :=
@@ -38,6 +46,7 @@ Section Jura.
     | JNew : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JThrow : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JFunCall : string -> list jura_expr -> jura_expr (**r function call *)
+    | JSwitch : jura_expr -> list (switch_case * jura_expr) -> jura_expr -> jura_expr
     .
 
     (** Clause *)

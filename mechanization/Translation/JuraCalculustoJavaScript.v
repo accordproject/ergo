@@ -302,10 +302,31 @@ Section JuraCalculustoJavaScript.
          in
          let '(sn, tn) := fold_right proc_one ("",t) sl in
          sn.
+
+    Definition dispatch_preamble (pname:string) (cname:string) (eol:string) (quotel:string) :=
+      "/**" ++ eol
+      ++ " * Execute the smart clause" ++ eol
+      ++ " * @param {Context} context - the Accord context" ++ eol
+      ++ " * @param {org.accordproject.latedeliveryandpenalty." ++ cname ++ "Request} context.request - the incoming request" ++ eol
+      ++ " * @param {org.accordproject.latedeliveryandpenalty." ++ cname ++ "Response} context.response - the response" ++ eol
+      ++ " * @AccordClauseLogic" ++ eol
+      ++ " */" ++ eol
+      ++ "function execute(context) {" ++ eol
+      ++ "" ++ eol
+      ++ "}".
+
+    Definition find_class (sl:list jurac_stmt) :=
+      "test".
     
+    Definition javascript_dispatch (p:jurac_package) (eol:string) (quotel:string) : javascript :=
+      let pname := p.(package_name) in
+      let cname := find_class p.(package_statements) in
+      dispatch_preamble pname "test" eol quotel.
+
     Definition javascript_of_package (p:jurac_package) (eol:string) (quotel:string) : javascript :=
       (preamble eol) ++ eol
                      ++ (javascript_of_statements p.(package_statements) 0 0 eol quotel)
+                     (* ++ (javascript_dispatch p eol quotel) *)
                      ++ (postamble eol).
 
     Definition javascript_of_package_top (p:jurac_package) : javascript :=
