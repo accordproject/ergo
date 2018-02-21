@@ -46,7 +46,8 @@ Section Jura.
     | JNew : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JThrow : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JFunCall : string -> list jura_expr -> jura_expr (**r function call *)
-    | JSwitch : jura_expr -> list (switch_case * jura_expr) -> jura_expr -> jura_expr
+    | JSwitch : jura_expr -> list (switch_case * jura_expr) -> jura_expr -> jura_expr (**r switch-case *)
+    | JFor : string -> jura_expr -> option jura_expr -> jura_expr -> jura_expr (**r for loop with optional where *)
     .
 
     (** Clause *)

@@ -71,6 +71,8 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JGuard.
   Definition jlet : String.string -> jura_expr -> jura_expr -> jura_expr
     := Jura.JLet.
+  Definition jfor : String.string -> jura_expr -> option jura_expr -> jura_expr -> jura_expr
+    := Jura.JFor.
   Definition jfuncall : String.string -> list jura_expr -> jura_expr
     := Jura.JFunCall.
   Definition jswitch : jura_expr -> list (Jura.switch_case * jura_expr) -> jura_expr -> jura_expr

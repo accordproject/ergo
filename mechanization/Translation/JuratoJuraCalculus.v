@@ -324,6 +324,19 @@ Section JuratoJavaScript.
                      in
                      jlift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
+    | JFor v e1 None e2 =>
+      jlift2 (NNRCFor v)
+              (jura_expr_to_calculus ctxt e1)
+              (jura_expr_to_calculus ctxt e2)
+    | JFor v e1 (Some econd) e2 =>
+      jlift3 (fun e1 econd e3 =>
+                NNRCUnop OpFlatten
+                         (NNRCFor v
+                                  (NNRCUnop OpBag e1)
+                                  (NNRCIf econd e3 (NNRCConst (dcoll nil)))))
+             (jura_expr_to_calculus ctxt e1)
+             (jura_expr_to_calculus ctxt econd)
+             (jura_expr_to_calculus ctxt e2)
     end.
 
   (** Translate a clause to clause+calculus *)
@@ -465,8 +478,8 @@ Section JuratoJavaScript.
                  :: nil)
               (JConst (dstring "lots")).
     Definition jc1 := jura_expr_to_calculus ctxt0 j1.
-    Eval vm_compute in jc1.
-    Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1.
+    (* Eval vm_compute in jc1. *)
+    (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1. *)
 
     Example j1' :=
       JSwitch (JConst input1)

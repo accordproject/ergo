@@ -34,6 +34,9 @@
 	  "if", IF;
 	  "guard", GUARD;
 	  "else", ELSE;
+	  "for", FOR;
+	  "in", IN;
+	  "where", WHERE;
 	  "return", RETURN;
 	  "throw", THROW;
 	  "new", NEW;

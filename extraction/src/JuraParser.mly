@@ -26,6 +26,7 @@
 %token CONTRACT OVER CLAUSE THROWS
 
 %token IF GUARD ELSE
+%token FOR IN WHERE
 %token RETURN THROW
 %token LET AS
 %token NEW THIS
@@ -50,12 +51,13 @@
 %left RCURLY
 %left SEMI
 %left RETURN
-%right AND OR
+%left OR
+%left AND
+%left EQUAL NEQUAL
+%left LT GT LTEQ GTEQ
+%left PLUS MINUS
+%left STAR SLASH
 %right NOT
-%right EQUAL NEQUAL
-%right LT GT LTEQ GTEQ
-%right PLUS MINUS
-%right STAR SLASH
 %left DOT
 
 %start <JComp.JuraCompiler.jura_package> main
@@ -164,8 +166,16 @@ params:
     { p :: ps }
 
 param:
-| pn = IDENT pt = IDENT (* XXX Has to be fixed so type name is passed as well *)
-    { (Util.char_list_of_string pn,Some (Util.char_list_of_string pt)) }
+| pn = IDENT pt = paramtype
+    { (Util.char_list_of_string pn, pt) }
+
+paramtype:
+|
+    { None }
+| pt = IDENT
+    { Some (Util.char_list_of_string pt) }
+| pt = IDENT LBRACKET RBRACKET
+    { Some (Util.char_list_of_string pt) }
 
 expr:
 (* Parenthesized expression *)
@@ -210,6 +220,10 @@ expr:
     { JuraCompiler.jlet v e1 e2 }
 | SWITCH e0 = expr LCURLY csd = cases RCURLY
     { JuraCompiler.jswitch e0 (fst csd) (snd csd) }
+| FOR v = safeident IN e1 = expr LCURLY e2 = expr RCURLY
+    { JuraCompiler.jfor v e1 None e2 }
+| FOR v = safeident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
+    { JuraCompiler.jfor v e1 (Some econd) e2 }
 (* Functions *)
 | NOT e = expr
     { JuraCompiler.junaryop JuraCompiler.Ops.Unary.opneg e }
@@ -352,6 +366,9 @@ safeident_base:
 | IF { "if" }
 | GUARD { "guard" }
 | ELSE { "else" }
+| FOR { "for" }
+| IN { "in" }
+| WHERE { "where" }
 | RETURN { "return" }
 | THROW { "throw" }
 | THROWS { "throws" }

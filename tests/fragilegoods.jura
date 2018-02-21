@@ -1,0 +1,29 @@
+package io.clause.demo.fragileGoods
+
+import org.accordproject.contract.*
+import io.clause.demo.fragileGoods.*
+
+import jura.moment.* // Date/Time library
+
+definition numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Double[]) Double {
+  count(
+     for r in accelerometerReadings
+     where r > maxAcc || r < minAcc { r }
+  )
+}
+
+contract FragileGoods over TemplateModel {
+  clause fragilegoods(request DeliveryUpdate) PayOut throws Error {
+    let shockPenalty =
+        this.accelerationBreachPenalty
+        * numberOfShocks(this.accelerationMax,
+			 this.accelerationMin,
+			 request.accelerometerReadings);
+    switch request.status {
+      case "ARRIVED" :
+        return new PayOut{ amount : this.deliveryPrice - shockPenalty }
+      default :
+        return new PayOut{ amount : this.deliveryPrice - shockPenalty }
+    }
+  }
+}
