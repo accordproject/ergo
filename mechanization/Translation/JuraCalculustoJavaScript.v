@@ -25,93 +25,14 @@ Require Import Qcert.NNRC.NNRCRuntime.
 Section JuraCalculustoJavaScript.
   Context {fruntime:foreign_runtime}.
 
-  Section lookup_clause.
-    (** Returns clause code *)
-    Definition lookup_from_clause (clname:string) (c:jurac_clause) : option jurac_clause :=
-      if (string_dec clname c.(clause_name))
-      then Some c
-      else None.
-
-    Definition lookup_from_func (clname:string) (c:jurac_func) : option jurac_func :=
-      if (string_dec clname c.(func_name))
-      then Some c
-      else None.
-
-    Definition code_from_clause (c:option jurac_clause) : option nnrc :=
-      match c with
-      | None => None
-      | Some c => Some c.(clause_closure).(closure_body)
-      end.
+  Definition lookup_error (coname:string) (clname:string) :=
+    let msg := ("Clause " ++ clname ++ " in contract " ++ coname ++ " not found")%string in
+    CompilationError msg.
     
-    Definition code_from_func (f:option jurac_func) : option nnrc :=
-      match f with
-      | None => None
-      | Some f => Some f.(func_closure).(closure_body)
-      end.
-    
-    Definition lookup_code_from_clause (clname:string) (c:jurac_clause) : option nnrc :=
-      code_from_clause (lookup_from_clause clname c).
-
-    Definition lookup_code_from_func (clname:string) (c:jurac_func) : option nnrc :=
-      code_from_func (lookup_from_func clname c).
-
-    Definition lookup_clause_from_declaration (clname:string) (d:jurac_declaration) : option jurac_clause :=
-      match d with
-      | Clause c => lookup_from_clause clname c
-      | Func f => None
-      end.
-
-    Definition lookup_clause_from_declarations (clname:string) (dl:list jurac_declaration) : option jurac_clause :=
-      List.fold_left
-        (fun acc d =>
-           match acc with
-           | Some e => Some e
-           | None => lookup_clause_from_declaration clname d
-           end
-        ) dl None.
-    
-    Definition lookup_contract_from_contract (coname:string) (c:jurac_contract) : option jurac_contract :=
-      if (string_dec coname c.(contract_name))
-      then Some c
-      else None.
-
-    Definition lookup_clause_from_contract
-               (coname:string) (clname:string) (c:jurac_contract) : option jurac_clause :=
-      match lookup_contract_from_contract coname c with
-      | None => None
-      | Some c =>
-        lookup_clause_from_declarations clname c.(contract_declarations)
-      end.
-
-    Definition lookup_clause_from_statement (coname:string) (clname:string) (d:jurac_stmt) : option jurac_clause :=
-      match d with
-      | JContract c => lookup_clause_from_contract coname clname c
-      | _ => None
-      end.
-
-    Definition lookup_clause_from_statements
-               (coname:string) (clname:string) (sl:list jurac_stmt) : option jurac_clause :=
-      List.fold_left
-        (fun acc d =>
-           match acc with
-           | Some e => Some e
-           | None => lookup_clause_from_statement coname clname d
-           end
-        ) sl None.
-    
-    Definition lookup_clause_from_package
-               (coname:string) (clname:string) (p:jurac_package) : option jurac_clause :=
-      lookup_clause_from_statements coname clname p.(package_statements).
-
-    Definition lookup_error (coname:string) (clname:string) :=
-      let msg := ("Clause " ++ clname ++ " in contract " ++ coname ++ " not found")%string in
-      CompilationError msg.
-    
-    Definition lookup_clause_code_from_package
-               (coname:string) (clname:string) (p:jurac_package) : jresult nnrc :=
-      let clause := lookup_clause_from_package coname clname p in
-      jresult_of_option (code_from_clause clause) (lookup_error coname clname).
-  End lookup_clause.
+  Definition lookup_clause_code_from_package
+             (coname:string) (clname:string) (p:jurac_package) : jresult nnrc :=
+    let clause := lookup_clause_from_package coname clname p in
+    jresult_of_option (code_from_clause clause) (lookup_error coname clname).
 
   Section translate.
     (* Basic modules *)

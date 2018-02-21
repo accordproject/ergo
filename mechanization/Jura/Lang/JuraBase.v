@@ -21,11 +21,10 @@ Require Import Qcert.Common.CommonRuntime.
 
 Section JuraBase.
   Context {fruntime:foreign_runtime}.
+  (* Type for plugged-in language *)
+  Context {A:Set}.
   
   Section Syntax.
-    (* Type for plugged-in language *)
-    Context {A:Set}.
-
     Definition package_ref := option string.
 
     Record class_ref :=
@@ -85,5 +84,86 @@ Section JuraBase.
   Section Semantics.
     (* XXX Nothing yet -- denotational semantics should go here *)
   End Semantics.
+
+  Section lookup_clause.
+    (** Returns clause code *)
+    Definition lookup_from_clause (clname:string) (c:clause) : option clause :=
+      if (string_dec clname c.(clause_name))
+      then Some c
+      else None.
+
+    Definition lookup_from_func (clname:string) (c:func) : option func :=
+      if (string_dec clname c.(func_name))
+      then Some c
+      else None.
+
+    Definition code_from_clause (c:option clause) : option A :=
+      match c with
+      | None => None
+      | Some c => Some c.(clause_closure).(closure_body)
+      end.
+    
+    Definition code_from_func (f:option func) : option A :=
+      match f with
+      | None => None
+      | Some f => Some f.(func_closure).(closure_body)
+      end.
+    
+    Definition lookup_code_from_clause (clname:string) (c:clause) : option A :=
+      code_from_clause (lookup_from_clause clname c).
+
+    Definition lookup_code_from_func (clname:string) (c:func) : option A :=
+      code_from_func (lookup_from_func clname c).
+
+    Definition lookup_clause_from_declaration (clname:string) (d:declaration) : option clause :=
+      match d with
+      | Clause c => lookup_from_clause clname c
+      | Func f => None
+      end.
+
+    Definition lookup_clause_from_declarations (clname:string) (dl:list declaration) : option clause :=
+      List.fold_left
+        (fun acc d =>
+           match acc with
+           | Some e => Some e
+           | None => lookup_clause_from_declaration clname d
+           end
+        ) dl None.
+    
+    Definition lookup_contract_from_contract (coname:string) (c:contract) : option contract :=
+      if (string_dec coname c.(contract_name))
+      then Some c
+      else None.
+
+    Definition lookup_clause_from_contract
+               (coname:string) (clname:string) (c:contract) : option clause :=
+      match lookup_contract_from_contract coname c with
+      | None => None
+      | Some c =>
+        lookup_clause_from_declarations clname c.(contract_declarations)
+      end.
+
+    Definition lookup_clause_from_statement (coname:string) (clname:string) (d:stmt) : option clause :=
+      match d with
+      | JContract c => lookup_clause_from_contract coname clname c
+      | _ => None
+      end.
+
+    Definition lookup_clause_from_statements
+               (coname:string) (clname:string) (sl:list stmt) : option clause :=
+      List.fold_left
+        (fun acc d =>
+           match acc with
+           | Some e => Some e
+           | None => lookup_clause_from_statement coname clname d
+           end
+        ) sl None.
+    
+    Definition lookup_clause_from_package
+               (coname:string) (clname:string) (p:package) : option clause :=
+      lookup_clause_from_statements coname clname p.(package_statements).
+
+  End lookup_clause.
+
 End JuraBase.
 
