@@ -47,6 +47,10 @@ $ jurac execute --jura ./tests/volumediscount.jura --contractname VolumeDiscount
 {"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}
 ```
 
+## Documentation
+
+There is no official documentation yet, but you can find a few notes on the language in [./doc/Language.md](./doc/Language.md)
+
 ## For developers
 
 ### Install development version

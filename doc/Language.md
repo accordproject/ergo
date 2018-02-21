@@ -61,6 +61,16 @@ Literal values:
 3.5e-10      // a floating point literal
 ```
 
+Operators:
+```
+1+2*3         // Arithmetic operators
+1 <= 3        // Comparison operators
+1 == 2
+2 > 1
+true || false // Boolean operators
+true && false
+```
+
 Let bindings:
 ```
 let x = 1;   // declares and initialize a variable
@@ -76,7 +86,7 @@ if x < 0 {   // Condition
 }
 ```
 
-Guards:
+Guards allow to make sure a specific condition is true.
 ```
 guard x >= 0 else {       // Condition
   "Something went wrong"  // Expression evaluated if condition is false
@@ -84,10 +94,21 @@ guard x >= 0 else {       // Condition
 ```
 Guards can be useful to check preconditions in a clause
 
-Creating objects (such as CTO concepts, transactions, or Jura errors):
+Creating objects (such as CTO concepts, transactions, or Jura errors)
+can be done using `new` with the name of the concept and the values
+for each fields:
 ```
 new Person{
   name: "John Smith",
   age: 32
 }
 ```
+
+Switch expressions allow to check an expression against multiple
+possible values:
+```
+switch fruitcode {
+  case 1: "Apple"
+  case 2: "Apricot"
+  default: "Strange Fruit"
+}
