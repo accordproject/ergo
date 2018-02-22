@@ -332,8 +332,10 @@ Section JuratoJavaScript.
       jlift3 (fun e1 econd e3 =>
                 NNRCUnop OpFlatten
                          (NNRCFor v
-                                  (NNRCUnop OpBag e1)
-                                  (NNRCIf econd e3 (NNRCConst (dcoll nil)))))
+                                  e1
+                                  (NNRCIf econd
+                                          (NNRCUnop OpBag e3)
+                                          (NNRCConst (dcoll nil)))))
              (jura_expr_to_calculus ctxt e1)
              (jura_expr_to_calculus ctxt econd)
              (jura_expr_to_calculus ctxt e2)
