@@ -16,12 +16,14 @@
 
 Require Import String.
 Require Import List.
+Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Common.CommonSystem.
 Require Import Qcert.Utils.OptimizerLogger.
 Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.Compiler.Driver.CompLang.
 Require Import Error.
 Require Import ForeignJura.
+Require Import JuraBase.
 Require Import Jura.
 Require Import JuraCalculusCall.
 Require Import JuratoJuraCalculus.
@@ -53,9 +55,91 @@ Section JuratoJavaScript.
     let pc := package_to_calculus p in
     jolift (javascript_of_clause_code_in_package coname clname) pc.
 
+  Definition dispatch_params_error (cname:string) : string :=
+    "Parameter mistmatch when dispatching to '" ++ cname ++ "'".
+
+  Definition create_call
+             (cname:string)
+             (v0:string)
+             (effparam0:jura_expr)
+             (effparamrest:list jura_expr)
+             (callparams:list (string * option string)) :=
+    let zipped := zip callparams (effparam0 :: effparamrest) in
+    match zipped with
+    | None => jfailure (CompilationError "Parameter mismatch during dispatch")
+    | Some _ =>
+      jsuccess (JFunCall cname (JVar v0 :: effparamrest))
+    end.
+
+  Definition case_of_sig
+             (v0:string)
+             (effparam0:jura_expr)
+             (effparamrest:list jura_expr)
+             (s:signature) : jresult (switch_case * jura_expr) :=
+    let (cname, callparams) := s in
+    match callparams with
+    | nil => jfailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
+    | (param0,None)::effparamsrest =>
+      jfailure (CompilationError ("No parameter can be used for dispatch in "++cname))
+    | (param0, Some type0)::otherparams =>
+      jlift (fun x =>
+               ((Some v0,CaseType type0),x))
+            (create_call cname v0 effparam0 effparamrest callparams)
+    end.
+
+  Definition switch_of_sigs
+             (v0:string)
+             (effparam0:jura_expr)
+             (effparamrest:list jura_expr)
+             (ss:list signature) :=
+    jlift (fun s =>
+             JSwitch effparam0
+                     s
+                     (JThrow (mkClassRef None "Error"%string)
+                             (("message"%string,JConst (dstring ""))::nil)))
+          (jmaplift (case_of_sig v0 effparam0 effparamrest) ss).
+
+  Definition switch_of_sigs_top
+             (effparams:list jura_expr)
+             (ss:list signature) :=
+    match effparams with
+    | nil => jfailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
+    | effparam0 :: effparamrest =>
+      let v0 := "$dispatch"%string in (** XXX To be worked on *)
+      switch_of_sigs v0 effparam0 effparamrest ss
+    end.
+
+  Definition add_dispatch_fun (oconame:option string) (p:jura_package) : jresult jura_package :=
+    let sigs := lookup_package_signatures_for_contract oconame p in
+    let effparams := JVar "request"%string :: nil in
+    let dispatch_fun_decl :=
+        jlift
+          (fun disp =>
+             (JFunc
+                (mkFunc "dispatch"
+                        (mkClosure
+                           (("request"%string,None)::nil)
+                           None
+                           None
+                           disp))))
+          (switch_of_sigs_top effparams sigs)
+    in
+    jlift (fun disp =>
+             mkPackage
+               p.(package_name)
+                   (p.(package_statements) ++ (disp::nil)))
+          dispatch_fun_decl.
+
   Definition javascript_from_package
              (p:jura_package) : jresult javascript :=
     let pc := package_to_calculus p in
+    jlift javascript_of_package_top pc.
+
+  Definition javascript_from_package_with_dispatch
+             (oconame:option string)
+             (p:jura_package) : jresult javascript :=
+    let p := add_dispatch_fun oconame p in
+    let pc := jolift package_to_calculus p in
     jlift javascript_of_package_top pc.
 
 End JuratoJavaScript.

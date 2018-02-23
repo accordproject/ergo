@@ -26,11 +26,14 @@ class Commands {
      * Compile Jura
      *
      * @param {string} path to the Jura file
+     * @param {string} name of the contract to execute
+     * @param {string} name of the clause to execute
+     * @param {bool} whether to generate dispatch function
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(dslPath,contractName,clauseName) {
+    static compile(dslPath,contractName,clauseName,withDispatch) {
         const jurText = Fs.readFileSync(dslPath, 'utf8');
-	return Jura.compile(jurText,contractName,clauseName);
+	return Jura.compile(jurText,contractName,clauseName,withDispatch);
     }
 
     /**
@@ -41,13 +44,14 @@ class Commands {
      * @param {object} input data for the request transaction
      * @param {string} name of the contract to execute
      * @param {string} name of the clause to execute
+     * @param {bool} whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(dslPath,clausePath,requestPath,contractName,clauseName) {
+    static execute(dslPath,clausePath,requestPath,contractName,clauseName,withDispatch) {
         const jurText = Fs.readFileSync(dslPath, 'utf8');
         const jsonClause = JSON.parse(Fs.readFileSync(clausePath, 'utf8'));
         const jsonRequest = JSON.parse(Fs.readFileSync(requestPath, 'utf8'));
-	return Jura.execute(jurText,jsonClause,jsonRequest,contractName,clauseName);
+	return Jura.execute(jurText,jsonClause,jsonRequest,contractName,clauseName,withDispatch);
     }
 }
 

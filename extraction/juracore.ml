@@ -17,25 +17,6 @@ open JuraCompile
 open JuraConfig
 
 (**********************************)
-(* Library functions              *)
-(**********************************)
-
-(* let compile source_lang_s target_lang_s contract_name_s clause_name_s j_s = *)
-(*   let result = *)
-(*     begin try *)
-(*       let source_lang = lang_of_name (Js.to_string source_lang_s) in *)
-(*       let target_lang = lang_of_name (Js.to_string target_lang_s) in *)
-(*       let contract_name = Some (Js.to_string contract_name_s) in *)
-(*       let clause_name = Some (Js.to_string clause_name_s) in *)
-(*       let j = Js.to_string j_s in *)
-(*       jura_compile source_lang target_lang contract_name clause_name j *)
-(*     with Jura_Error err -> "compilation error: "^err *)
-(*     | _ -> "compilation error" *)
-(*     end *)
-(*   in *)
-(*   Js.string result *)
-
-(**********************************)
 (* Configuration support          *)
 (**********************************)
 
@@ -54,6 +35,8 @@ let global_config_of_json j =
   (* Source/Target *)
   apply JuraConfig.set_source_lang j##.source;
   apply JuraConfig.set_target_lang j##.target;
+  (* Dispatch option *)
+  Js.Optdef.iter j##.withdispatch (fun b -> JuraConfig.set_with_dispatch gconf (Js.to_bool b));
   (* Contract/Clause Names *)
   Js.Optdef.iter j##.contract (fun s -> JuraConfig.set_contract_name gconf (Js.to_string s));
   Js.Optdef.iter j##.clause (fun s -> JuraConfig.set_clause_name gconf (Js.to_string s));

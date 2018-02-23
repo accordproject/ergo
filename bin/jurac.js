@@ -28,11 +28,16 @@ require('yargs')
         yargs.option('clausename', {
             describe: 'clause name'
         });
+        yargs.option('withdispatch', {
+            describe: 'generate dispatch function',
+	    type: 'boolean',
+	    default: true
+        });
     }, (argv) => {
         if (argv.verbose) {
             console.log(`compile Jura file ${argv.jura} with contract ${argv.contractname} and clause with contract ${argv.clausename}`);
         }
-        return Commands.compile(argv.jura,argv.contractname,argv.clausename)
+        return Commands.compile(argv.jura,argv.contractname,argv.clausename, argv.withdispatch)
             .then((result) => {
                 console.log(result);
             })
@@ -56,12 +61,17 @@ require('yargs')
         yargs.option('clausename', {
             describe: 'clause name'
         });
+        yargs.option('withdispatch', {
+            describe: 'generate dispatch function',
+	    type: 'boolean',
+	    default: true
+        });
     }, (argv) => {
         if (argv.verbose) {
             console.log(`execute Jura clause ${argv.jura} using clause data ${argv.clause} with request data ${argv.request}`);
         }
 
-        return Commands.execute(argv.jura, argv.clause, argv.request, argv.contractname, argv.clausename)
+        return Commands.execute(argv.jura, argv.clause, argv.request, argv.contractname, argv.clausename, argv.withdispatch)
             .then((result) => {
                 console.log(JSON.stringify(result));
             })

@@ -113,5 +113,9 @@ Module QJura(juramodel:JuraCompilerModel).
     jura_package -> Error.jresult JavaScript.javascript
     := JuratoJavaScript.javascript_from_package.
 
+  Definition javascript_from_jura_package_with_dispatch :
+    option String.string -> jura_package -> Error.jresult JavaScript.javascript
+    := JuratoJavaScript.javascript_from_package_with_dispatch.
+
 End QJura.
 

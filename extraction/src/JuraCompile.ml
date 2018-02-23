@@ -59,13 +59,17 @@ let compile_package_to_javascript jura =
   let code = JuraCompiler.javascript_from_jura_package jura in
   wrap_jerrors Util.string_of_char_list code
 
+let compile_package_to_javascript_with_dispatch coname jura =
+  let code = JuraCompiler.javascript_from_jura_package_with_dispatch coname jura in
+  wrap_jerrors Util.string_of_char_list code
+
 let force_contract_clause_names coname clname =
   begin match coname, clname with
   | Some coname, Some clname -> (coname, clname)
   | _ -> raise (Jura_Error "JavaScript target currently requires a contract name and a clause name")
   end
 
-let compile source target coname clname file_content =
+let compile source target coname clname with_dispatch file_content =
   begin match source,target with
   | _,Jura -> raise (Jura_Error "Target language cannot be Jura")
   | JavaScript,_ -> raise (Jura_Error "Source language cannot be JavaScript")
@@ -76,7 +80,18 @@ let compile source target coname clname file_content =
       | Some coname, Some clname ->
 	  compile_jura_to_javascript coname clname jura_parsed
       | None, Some _ | Some _, None | None, None ->
-	  compile_package_to_javascript jura_parsed
+	  if with_dispatch
+	  then
+	    begin match coname with
+	    | None ->
+		compile_package_to_javascript_with_dispatch
+		  None jura_parsed
+	    | Some coname ->		  
+		compile_package_to_javascript_with_dispatch
+		  (Some (Util.char_list_of_string coname)) jura_parsed
+	    end
+	  else
+	    compile_package_to_javascript jura_parsed
       end
   | Jura,Calculus ->
       let jura_parsed = parse_jura file_content in
@@ -101,9 +116,10 @@ let make_result_file target_lang source_file s =
 let jura_compile gconf file_content =
   let source_lang = JuraConfig.get_source_lang gconf in
   let target_lang = JuraConfig.get_target_lang gconf in
-  let contract_name =  JuraConfig.get_contract_name gconf in
-  let clause_name =  JuraConfig.get_clause_name gconf in
-  compile source_lang target_lang contract_name clause_name file_content
+  let contract_name = JuraConfig.get_contract_name gconf in
+  let clause_name = JuraConfig.get_clause_name gconf in
+  let with_dispatch = JuraConfig.get_with_dispatch gconf in
+  compile source_lang target_lang contract_name clause_name with_dispatch file_content
 
 let jura_proc gconf (file_name,file_content) =
   let target_lang = JuraConfig.get_target_lang gconf in

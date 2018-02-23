@@ -393,7 +393,7 @@ Section JuratoJavaScript.
 
   (** Translate a contract to a contract+calculus *)
   Definition contract_to_calculus
-             (ctxt:context) (c:jura_contract) : jresult jurac_contract :=
+             (ctxt:context) (c:jura_contract) : jresult (context * jurac_contract) :=
     let init := jsuccess (ctxt, nil) in
     let proc_one
           (acc:jresult (context * list jurac_declaration))
@@ -410,10 +410,11 @@ Section JuratoJavaScript.
     in
     jlift
       (fun xy =>
-         (mkContract
-            c.(contract_name)
-            c.(contract_template)
-           (snd xy)))
+         (fst xy,
+          (mkContract
+             c.(contract_name)
+             c.(contract_template)
+             (snd xy))))
       (List.fold_left proc_one c.(contract_declarations) init).
 
   (** Translate a statement to a statement+calculus *)
@@ -435,7 +436,7 @@ Section JuratoJavaScript.
         (fun x => (add_one_func ctxt x.(func_name) x.(func_closure), JFunc x)) (* Add new function to context *)
         (func_to_calculus ctxt f)
     | JContract c =>
-      jlift (fun x => (ctxt, JContract x))
+      jlift (fun xy => (fst xy, JContract (snd xy)))
             (contract_to_calculus ctxt c)
     end.
 

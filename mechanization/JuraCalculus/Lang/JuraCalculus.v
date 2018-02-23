@@ -50,7 +50,11 @@ Section JuraCalculus.
   End Syntax.
 
   Section Semantics.
-    (* XXX Nothing yet -- denotational semantics should go here *)
+    (* XXX Nothing yet -- relational semantics should go here *)
   End Semantics.
+
+  Section Evaluation.
+    (* XXX Nothing yet -- evaluation semantics should go here *)
+  End Evaluation.
 End JuraCalculus.
 

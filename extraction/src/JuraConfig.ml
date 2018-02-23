@@ -46,6 +46,7 @@ type global_config = {
     mutable jconf_target : lang;
     mutable jconf_contract_name : string option;
     mutable jconf_clause_name : string option;
+    mutable jconf_with_dispatch : bool;
   }
 
 let default_config () = {
@@ -53,15 +54,20 @@ let default_config () = {
     jconf_target = JavaScript;
     jconf_contract_name = None;
     jconf_clause_name = None;
+    jconf_with_dispatch = false;
 } 
 
 let get_source_lang gconf = gconf.jconf_source
 let get_target_lang gconf = gconf.jconf_target
 let get_contract_name gconf = gconf.jconf_contract_name
 let get_clause_name gconf = gconf.jconf_clause_name
+let get_with_dispatch gconf = gconf.jconf_with_dispatch
 
 let set_source_lang gconf s = gconf.jconf_source <- (lang_of_name s)
 let set_target_lang gconf s = gconf.jconf_target <- (lang_of_name s)
 let set_contract_name gconf s = gconf.jconf_contract_name <- Some s
 let set_clause_name gconf s = gconf.jconf_clause_name <- Some s
+let set_with_dispatch gconf b = gconf.jconf_with_dispatch <- b
+let set_with_dispatch_true gconf () = gconf.jconf_with_dispatch <- true
+let set_with_dispatch_false gconf () = gconf.jconf_with_dispatch <- false
 

@@ -30,6 +30,8 @@ let args_list gconf =
        "<lang> Indicates the language for the source (default: jura)");
       ("--target", Arg.String (JuraConfig.set_target_lang gconf),
        "<lang> Indicates the language for the target (default: javascript)");
+      ("--with-dispatch", Arg.Unit (JuraConfig.set_with_dispatch_true gconf),
+       " Generate dispatch function (default: false)");
    ]
 
 let anon_args input_files f = input_files := f :: !input_files

@@ -78,5 +78,22 @@ Section JuraCalculusCall.
       end
     end.
     
+  (** Looks up a clause with its parameters. If the function exists and the number of parameters
+      is correct, it returns a closed expression computing the call. *)
+  Definition lookup_clause_call
+             (t:lookup_table)
+             (cref:class_ref)
+             (fname:string)
+             (el:list jurac_expr) : jresult jurac_expr :=
+    match t fname with
+    | None => jfailure (CompilationError (call_error fname))
+    | Some cl =>
+      match zip_params (List.map fst cl.(closure_params)) el with
+      | None => jfailure (CompilationError (call_params_error fname))
+      | Some params => 
+        jsuccess (create_call params cl.(closure_body))
+      end
+    end.
+
 End JuraCalculusCall.
 

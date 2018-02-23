@@ -85,7 +85,7 @@ Section JuraBase.
     (* XXX Nothing yet -- denotational semantics should go here *)
   End Semantics.
 
-  Section lookup_clause.
+  Section lookup.
     (** Returns clause code *)
     Definition lookup_from_clause (clname:string) (c:clause) : option clause :=
       if (string_dec clname c.(clause_name))
@@ -163,7 +163,60 @@ Section JuraBase.
                (coname:string) (clname:string) (p:package) : option clause :=
       lookup_clause_from_statements coname clname p.(package_statements).
 
-  End lookup_clause.
+    Definition signature : Set := (string * list (string * option string)).
+
+    Require Import List.
+    Fixpoint lookup_declarations_signatures (dl:list declaration) : list signature :=
+      match dl with
+      | nil => nil
+      | Clause cl :: dl' =>
+        (cl.(clause_name), cl.(clause_closure).(closure_params)) :: lookup_declarations_signatures dl'
+      | Func f :: dl' =>
+        (f.(func_name), f.(func_closure).(closure_params)) :: lookup_declarations_signatures dl'
+      end.
+    
+    Definition lookup_contract_signatures (c:contract) : list signature :=
+      lookup_declarations_signatures c.(contract_declarations).
+    
+    Fixpoint lookup_statements_signatures (sl:list stmt) : list signature :=
+      match sl with
+      | nil => nil
+      | JExpr _ :: sl' => lookup_statements_signatures sl'
+      | JGlobal _ _ :: sl' => lookup_statements_signatures sl'
+      | JImport _ :: sl' => lookup_statements_signatures sl'
+      | JFunc f :: sl' =>
+        (f.(func_name), f.(func_closure).(closure_params)) :: lookup_statements_signatures sl'
+      | JContract c :: sl' =>
+        lookup_contract_signatures c ++ lookup_statements_signatures sl'
+      end.
+    
+    Fixpoint lookup_statements_signatures_for_contract (oconame:option string) (sl:list stmt) : list signature :=
+      match sl with
+      | nil => nil
+      | JExpr _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | JGlobal _ _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | JImport _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | JFunc f :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | JContract c :: sl' =>
+        match oconame with
+        | None =>
+            lookup_contract_signatures c (* XXX Only returns signatures in first contract *)
+        | Some coname =>
+          if (string_dec c.(contract_name) coname)
+          then
+            lookup_contract_signatures c (* XXX Assumes single contract with given name *)
+          else
+            lookup_statements_signatures_for_contract oconame sl'
+        end
+      end.
+    
+    Definition lookup_package_signatures_for_contract (oconame:option string) (p:package) : list signature :=
+      lookup_statements_signatures_for_contract oconame p.(package_statements).
+    
+    Definition lookup_package_signatures (p:package) : list signature :=
+      lookup_statements_signatures p.(package_statements).
+    
+  End lookup.
 
 End JuraBase.
 

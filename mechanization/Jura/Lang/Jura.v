@@ -52,16 +52,16 @@ Section Jura.
 
     (** Clause *)
     Definition jura_clause := @clause jura_expr.
-    
+
     (** Function *)
     Definition jura_func := @func jura_expr.
-    
+
     (** Declaration *)
     Definition jura_declaration := @declaration jura_expr.
-    
+
     (** Contract *)
     Definition jura_contract := @contract jura_expr.
-    
+
     (** Statement *)
     Definition jura_stmt := @stmt jura_expr.
 
@@ -71,7 +71,7 @@ Section Jura.
   End Syntax.
 
   Section Semantics.
-    (* XXX Nothing yet -- denotational semantics should go here *)
+    (* XXX Nothing yet -- relational semantics should go here *)
   End Semantics.
 
   Section Evaluation.

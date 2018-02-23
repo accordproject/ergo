@@ -35,11 +35,12 @@ class Jura {
      * @param {string} path to the Jura file
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(dslText,contractName,clauseName) {
+    static compileToJavaScript(dslText,contractName,clauseName,withDispatch) {
 	// Built-in config
 	var config= {
 	    'source' : 'jura',
-	    'target' : 'javascript'
+	    'target' : 'javascript',
+	    'withdispatch' : withDispatch
 	};
 	// Clean-up naming for Sexps
 	config.jura = dslText;
@@ -54,8 +55,8 @@ class Jura {
      * @param {string} path to the Jura file
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(dslText,contractName,clauseName) {
-        return Promise.resolve(this.compileToJavaScript(dslText,contractName,clauseName));
+    static compile(dslText,contractName,clauseName,withDispatch) {
+        return Promise.resolve(this.compileToJavaScript(dslText,contractName,clauseName,withDispatch));
     }
     /**
      * Execute Jura
@@ -67,7 +68,7 @@ class Jura {
      * @param {string} name of the clause to execute
      * @returns {object} Promise to the result of execution
      */
-    static execute(dslText,jsonClause,jsonRequest,contractName,clauseName) {
+    static execute(dslText,jsonClause,jsonRequest,contractName,clauseName,withDispatch) {
 	const jurRuntime = Fs.readFileSync(Path.join(__dirname,"juraruntime.js"), 'utf8');
 	
         const vm = new VM({
@@ -75,7 +76,7 @@ class Jura {
             sandbox: { moment: moment }
         });
 
-	return (this.compile(dslText,null,null)).then((dslCode) => {
+	return (this.compile(dslText,null,null,withDispatch)).then((dslCode) => {
             // add immutables to the context
 	    const params = { 'this': jsonClause, 'request': jsonRequest, 'now': moment() };
             vm.freeze(params, 'params'); // Add the context
