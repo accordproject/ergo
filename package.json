@@ -1,6 +1,6 @@
 {
   "name": "jura-compiler",
-  "version": "0.0.5-dev",
+  "version": "0.0.6",
   "description": "The Jura compiler",
   "repository": {
     "type": "git",
