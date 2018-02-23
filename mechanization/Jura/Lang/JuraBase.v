@@ -215,6 +215,26 @@ Section JuraBase.
     
     Definition lookup_package_signatures (p:package) : list signature :=
       lookup_statements_signatures p.(package_statements).
+
+    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : option stmt :=
+      match sl with
+      | nil => None
+      | JExpr _ :: sl' => lookup_statements_dispatch name sl'
+      | JGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
+      | JImport _ :: sl' => lookup_statements_dispatch name sl'
+      | JFunc f :: sl' =>
+        if (string_dec f.(func_name) name)
+        then Some (JFunc f)
+        else lookup_statements_dispatch name sl'
+      | JContract c :: sl' => lookup_statements_dispatch name sl'
+      end.
+
+    Definition lookup_dispatch (name:string) (p:package) : option package :=
+      match lookup_statements_dispatch name p.(package_statements) with
+      | None => None
+      | Some st =>
+        Some (mkPackage p.(package_name) (st::nil))
+      end.
     
   End lookup.
 

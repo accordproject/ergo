@@ -250,8 +250,17 @@ Section JuraCalculustoJavaScript.
                      (* ++ (javascript_dispatch p eol quotel) *)
                      ++ (postamble eol).
 
+    Definition javascript_of_package_with_dispatch (p:jurac_package) (eol:string) (quotel:string) : javascript :=
+      (preamble eol) ++ eol
+                     ++ (javascript_of_statements p.(package_statements) 0 0 eol quotel)
+                     (* ++ (javascript_dispatch p eol quotel) *)
+                     ++ (postamble eol).
+
     Definition javascript_of_package_top (p:jurac_package) : javascript :=
       javascript_of_package p eol_newline quotel_double.
+
+    Definition javascript_of_package_with_dispatch_top (p:jurac_package) : javascript :=
+      javascript_of_package_with_dispatch p eol_newline quotel_double.
 
     Definition javascript_of_clause_code_in_package
                (coname:string) (clname:string) (p:jurac_package) : jresult javascript :=

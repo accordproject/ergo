@@ -72,6 +72,7 @@ Section JuratoJavaScript.
     end.
 
   Definition case_of_sig
+             (pname:string)
              (v0:string)
              (effparam0:jura_expr)
              (effparamrest:list jura_expr)
@@ -83,11 +84,13 @@ Section JuratoJavaScript.
       jfailure (CompilationError ("No parameter can be used for dispatch in "++cname))
     | (param0, Some type0)::otherparams =>
       jlift (fun x =>
+               let type0 := brand_of_class_ref pname (mkClassRef None type0) in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     end.
 
   Definition switch_of_sigs
+             (pname:string)
              (v0:string)
              (effparam0:jura_expr)
              (effparamrest:list jura_expr)
@@ -97,16 +100,20 @@ Section JuratoJavaScript.
                      s
                      (JThrow (mkClassRef None "Error"%string)
                              (("message"%string,JConst (dstring ""))::nil)))
-          (jmaplift (case_of_sig v0 effparam0 effparamrest) ss).
+          (jmaplift (case_of_sig pname v0 effparam0 effparamrest) ss).
 
+  Definition dispatch_fun_name :=
+    "$dispatch"%string.
+  
   Definition switch_of_sigs_top
+             (pname:string)
              (effparams:list jura_expr)
              (ss:list signature) :=
     match effparams with
     | nil => jfailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
-      let v0 := "$dispatch"%string in (** XXX To be worked on *)
-      switch_of_sigs v0 effparam0 effparamrest ss
+      let v0 := dispatch_fun_name in (** XXX To be worked on *)
+      switch_of_sigs pname v0 effparam0 effparamrest ss
     end.
 
   Definition add_dispatch_fun (oconame:option string) (p:jura_package) : jresult jura_package :=
@@ -122,7 +129,7 @@ Section JuratoJavaScript.
                            None
                            None
                            disp))))
-          (switch_of_sigs_top effparams sigs)
+          (switch_of_sigs_top p.(package_name) effparams sigs)
     in
     jlift (fun disp =>
              mkPackage
@@ -140,7 +147,15 @@ Section JuratoJavaScript.
              (p:jura_package) : jresult javascript :=
     let p := add_dispatch_fun oconame p in
     let pc := jolift package_to_calculus p in
-    jlift javascript_of_package_top pc.
+    let pc :=
+        jolift
+          (fun pc =>
+             jresult_of_option
+               (lookup_dispatch "dispatch" pc)
+               (CompilationError ("Cannot lookup created dispatch")))
+          pc
+    in
+    jlift javascript_of_package_with_dispatch_top pc.
 
 End JuratoJavaScript.
 
