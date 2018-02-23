@@ -1,4 +1,4 @@
-# Jura
+![Jura](./doc/juralogo.png)
 
 Git: http://github.com/accordproject/jura-compiler
 
