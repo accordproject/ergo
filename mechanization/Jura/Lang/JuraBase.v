@@ -18,6 +18,7 @@
 
 Require Import String.
 Require Import Qcert.Common.CommonRuntime.
+Require Import Error.
 
 Section JuraBase.
   Context {fruntime:foreign_runtime}.
@@ -216,25 +217,36 @@ Section JuraBase.
     Definition lookup_package_signatures (p:package) : list signature :=
       lookup_statements_signatures p.(package_statements).
 
-    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : option stmt :=
+    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : jresult (string * string * func) :=
       match sl with
-      | nil => None
+      | nil => jfailure (CompilationError ("Cannot lookup created dispatch"))
       | JExpr _ :: sl' => lookup_statements_dispatch name sl'
       | JGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
       | JImport _ :: sl' => lookup_statements_dispatch name sl'
       | JFunc f :: sl' =>
         if (string_dec f.(func_name) name)
-        then Some (JFunc f)
+        then
+          let closure := f.(func_closure) in
+          let request :=
+              match closure.(closure_params) with
+              | nil => jfailure (CompilationError ("No parameter type in dispatch"))
+              | (_,Some reqtype) :: _ => jsuccess reqtype
+              | _ :: _ => jsuccess "Request"%string
+              end
+          in
+          let response :=
+              match closure.(closure_output) with
+              | Some resptype => resptype
+              | None => "Response"%string
+              end
+          in
+          jlift (fun request => (request, response, f)) request
         else lookup_statements_dispatch name sl'
       | JContract c :: sl' => lookup_statements_dispatch name sl'
       end.
 
-    Definition lookup_dispatch (name:string) (p:package) : option package :=
-      match lookup_statements_dispatch name p.(package_statements) with
-      | None => None
-      | Some st =>
-        Some (mkPackage p.(package_name) (st::nil))
-      end.
+    Definition lookup_dispatch (name:string) (p:package) : jresult (string * string * func) :=
+      lookup_statements_dispatch name p.(package_statements).
     
   End lookup.
 

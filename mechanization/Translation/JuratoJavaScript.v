@@ -103,7 +103,7 @@ Section JuratoJavaScript.
           (jmaplift (case_of_sig pname v0 effparam0 effparamrest) ss).
 
   Definition dispatch_fun_name :=
-    "$dispatch"%string.
+    "dispatch"%string.
   
   Definition switch_of_sigs_top
              (pname:string)
@@ -112,20 +112,20 @@ Section JuratoJavaScript.
     match effparams with
     | nil => jfailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
-      let v0 := dispatch_fun_name in (** XXX To be worked on *)
+      let v0 := ("$"++dispatch_fun_name)%string in (** XXX To be worked on *)
       switch_of_sigs pname v0 effparam0 effparamrest ss
     end.
 
   Definition add_dispatch_fun (oconame:option string) (p:jura_package) : jresult jura_package :=
     let sigs := lookup_package_signatures_for_contract oconame p in
-    let effparams := JVar "request"%string :: nil in
+    let effparams := JVar "context"%string :: nil in
     let dispatch_fun_decl :=
         jlift
           (fun disp =>
              (JFunc
-                (mkFunc "dispatch"
+                (mkFunc dispatch_fun_name
                         (mkClosure
-                           (("request"%string,None)::nil)
+                           (("context"%string,None)::nil)
                            None
                            None
                            disp))))
@@ -147,15 +147,10 @@ Section JuratoJavaScript.
              (p:jura_package) : jresult javascript :=
     let p := add_dispatch_fun oconame p in
     let pc := jolift package_to_calculus p in
-    let pc :=
-        jolift
-          (fun pc =>
-             jresult_of_option
-               (lookup_dispatch "dispatch" pc)
-               (CompilationError ("Cannot lookup created dispatch")))
-          pc
-    in
-    jlift javascript_of_package_with_dispatch_top pc.
+    let f := jolift (lookup_dispatch dispatch_fun_name) pc in
+    jlift (fun xyz =>
+             let '(request,response,f) := xyz in
+             javascript_of_package_with_dispatch_top request response f) f.
 
 End JuratoJavaScript.
 
