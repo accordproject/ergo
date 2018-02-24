@@ -118,14 +118,14 @@ Section JuratoJavaScript.
 
   Definition add_dispatch_fun (oconame:option string) (p:jura_package) : jresult jura_package :=
     let sigs := lookup_package_signatures_for_contract oconame p in
-    let effparams := JVar "context"%string :: nil in
+    let effparams := JVar "request"%string :: nil in
     let dispatch_fun_decl :=
         jlift
           (fun disp =>
              (JFunc
                 (mkFunc dispatch_fun_name
                         (mkClosure
-                           (("context"%string,None)::nil)
+                           (("request"%string,None)::nil)
                            None
                            None
                            disp))))

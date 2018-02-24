@@ -28,4 +28,5 @@ MODULES = \
 	Compiler/QLib/QJData \
 	Compiler/QLib/QJOperators \
 	Compiler/QLib/QJura \
-	Compiler/JuraCompiler
+	Compiler/JuraCompiler \
+	Tests/HelloWorld

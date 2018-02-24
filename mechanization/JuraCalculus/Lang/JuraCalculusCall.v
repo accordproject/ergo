@@ -60,10 +60,12 @@ Section JuraCalculusCall.
      body is the body of the function.
      after the call has been constructed, the function should have no free variables. *)
   Definition create_call (params:list (string * jurac_expr)) (body:jurac_expr) : jurac_expr :=
+    let unconsted_body := nnrc_subst_const_to_var (List.map fst params) body in
     let one_param (e:jurac_expr) (param:string * jurac_expr) : jurac_expr :=
         let (pv,pe) := param in
         (NNRCLet ("c$"++pv)%string pe e)
-    in fold_left one_param params body.
+    in
+    fold_left one_param params unconsted_body.
 
   (** Looks up a function with its parameters. If the function exists and the number of parameters
       is correct, it returns a closed expression computing the call. *)
