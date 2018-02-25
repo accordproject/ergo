@@ -19,8 +19,8 @@
 Require Import String.
 Require Import List.
 Require Import Qcert.Common.CommonRuntime.
-Require Import JuraBase.
-Require Import Jura.
+Require Import Jura.Jura.Lang.JuraBase.
+Require Import Jura.Jura.Lang.Jura.
 
 Section JuraSugar.
   Context {fruntime:foreign_runtime}.

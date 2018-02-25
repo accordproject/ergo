@@ -14,9 +14,9 @@
 
 Require Import String.
 Require Import List.
-Require Import CTO.
-Require Import JuraBase.
-Require Import Jura.
+Require Import Jura.Common.CTO.CTO.
+Require Import Jura.Lang.JuraBase.
+Require Import Jura.Lang.Jura.
 Require Import Jura.Compiler.Model.JuraRuntime.
 Require Import Jura.Compiler.JuraCompiler.
 

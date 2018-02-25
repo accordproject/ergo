@@ -12,11 +12,11 @@
  * limitations under the License.
  *)
 
-Require Import JuraRuntime.
-Require Import JuraModel.
-Require Ascii.
+Require Import Ascii.
 Require Import ZArith.
 Require Qcert.Common.Brands.BrandRelation.
+Require Import Jura.Compiler.Model.JuraRuntime.
+Require Import Jura.Compiler.Model.JuraModel.
 
 Module QJOperators(juramodel:JuraCompilerModel).
   

@@ -17,9 +17,9 @@ Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Common.CommonRuntime.
 Require Import Qcert.NNRC.NNRCRuntime.
-Require Import Error.
-Require Import JuraBase.
-Require Import JuraCalculus.
+Require Import Jura.Utils.JResult.
+Require Import Jura.Jura.Lang.JuraBase.
+Require Import Jura.JuraCalculus.Lang.JuraCalculus.
 
 Section JuraCalculusCall.
   Context {fruntime:foreign_runtime}.

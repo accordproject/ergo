@@ -20,13 +20,13 @@ Require Import List.
 Require Import Qcert.Utils.Utils.
 Require Import Qcert.Common.CommonRuntime.
 
-Require Import Error.
-Require Import JuraBase.
-Require Import JuraCalculus.
-Require Import JuraCalculusCall.
-Require Import Jura.
-Require Import JuraSugar.
-Require Import ForeignJura.
+Require Import Jura.Utils.JResult.
+Require Import Jura.Jura.Lang.JuraBase.
+Require Import Jura.Jura.Lang.Jura.
+Require Import Jura.Jura.Lang.JuraSugar.
+Require Import Jura.JuraCalculus.Lang.JuraCalculus.
+Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
+Require Import Jura.Translation.ForeignJura.
 
 Section JuratoJavaScript.
   Context {fruntime:foreign_runtime}.

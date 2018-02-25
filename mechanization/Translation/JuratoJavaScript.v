@@ -21,14 +21,14 @@ Require Import Qcert.Common.CommonSystem.
 Require Import Qcert.Utils.OptimizerLogger.
 Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.Compiler.Driver.CompLang.
-Require Import Error.
-Require Import CTO.
-Require Import ForeignJura.
-Require Import JuraBase.
-Require Import Jura.
-Require Import JuraCalculusCall.
-Require Import JuratoJuraCalculus.
-Require Import JuraCalculustoJavaScript.
+Require Import Jura.Utils.JResult.
+Require Import Jura.Common.CTO.CTO.
+Require Import Jura.Jura.Lang.JuraBase.
+Require Import Jura.Jura.Lang.Jura.
+Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
+Require Import Jura.Translation.JuratoJuraCalculus.
+Require Import Jura.Translation.ForeignJura.
+Require Import Jura.Translation.JuraCalculustoJavaScript.
 
 Section JuratoJavaScript.
   Context {fruntime:foreign_runtime}.

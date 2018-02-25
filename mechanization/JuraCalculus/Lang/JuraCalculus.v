@@ -19,7 +19,7 @@
 Require Import String.
 Require Import Qcert.Common.CommonRuntime.
 Require Import Qcert.NNRC.NNRCRuntime.
-Require Import JuraBase.
+Require Import Jura.Jura.Lang.JuraBase.
 
 Section JuraCalculus.
   Context {fruntime:foreign_runtime}.

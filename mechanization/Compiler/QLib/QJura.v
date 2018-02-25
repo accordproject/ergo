@@ -12,20 +12,21 @@
  * limitations under the License.
  *)
 
-Require Import Qcert.Compiler.Model.CompilerRuntime.
 Require String.
-Require Qcert.Compiler.QLib.QLang.
-Require QJOperators.
-Require QJData.
-Require Error.
-Require CTO.
-Require Jura.
-Require JuraCalculus.
-Require JuraCalculusCall.
-Require JuraSugar.
-Require JuratoJuraCalculus.
-Require JuratoJavaScript.
-Require Import JuraModel.
+Require Import Qcert.Compiler.Model.CompilerRuntime.
+Require Import Qcert.Compiler.QLib.QLang.
+
+Require Jura.Compiler.QLib.QJOperators.
+Require Jura.Compiler.QLib.QJData.
+Require Jura.Utils.JResult.
+Require Jura.Common.CTO.CTO.
+Require Jura.Jura.Lang.Jura.
+Require Jura.Jura.Lang.JuraSugar.
+Require Jura.JuraCalculus.Lang.JuraCalculus.
+Require Jura.JuraCalculus.Lang.JuraCalculusCall.
+Require Jura.Translation.JuratoJuraCalculus.
+Require Jura.Translation.JuratoJavaScript.
+Require Import Jura.Compiler.Model.JuraModel.
 
 Module QJura(juramodel:JuraCompilerModel).
 
@@ -125,19 +126,19 @@ Module QJura(juramodel:JuraCompilerModel).
 
   (** Compilation *)
   Definition clause_calculus_from_jura_package :
-    String.string -> String.string -> jura_package -> Error.jresult NNRC.nnrc
+    String.string -> String.string -> jura_package -> JResult.jresult NNRC.nnrc
     := JuratoJavaScript.clause_calculus_from_package.
 
   Definition clause_code_from_jura_package :
-    String.string -> String.string -> jura_package -> Error.jresult JavaScript.javascript
+    String.string -> String.string -> jura_package -> JResult.jresult JavaScript.javascript
     := JuratoJavaScript.clause_code_from_package.
 
   Definition jura_calculus_package_from_jura_package :
-    jura_package -> Error.jresult jurac_package
+    jura_package -> JResult.jresult jurac_package
     := JuratoJuraCalculus.package_to_calculus.
 
   Definition clause_code_from_jurac_package :
-    String.string -> String.string -> jurac_package -> Error.jresult JavaScript.javascript
+    String.string -> String.string -> jurac_package -> JResult.jresult JavaScript.javascript
     := JuraCalculustoJavaScript.javascript_of_clause_code_in_package.
 
   Definition javascript_from_jurac_package :
@@ -145,11 +146,11 @@ Module QJura(juramodel:JuraCompilerModel).
     := JuraCalculustoJavaScript.javascript_of_package_top.
 
   Definition javascript_from_jura_package :
-    jura_package -> Error.jresult JavaScript.javascript
+    jura_package -> JResult.jresult JavaScript.javascript
     := JuratoJavaScript.javascript_from_package.
 
   Definition javascript_from_jura_package_with_dispatch :
-    option String.string -> jura_package -> Error.jresult JavaScript.javascript
+    option String.string -> jura_package -> JResult.jresult JavaScript.javascript
     := JuratoJavaScript.javascript_from_package_with_dispatch.
 
 End QJura.

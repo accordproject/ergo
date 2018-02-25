@@ -12,13 +12,14 @@
  * limitations under the License.
  *)
 
-Require Import JuraRuntime.
-Require Import JuraModel.
 Require String.
 Require Qcert.Common.CommonRuntime.
 Require Qcert.Utils.JSON.
 Require Qcert.Common.Data.DatatoJSON.
 Require Qcert.Translation.NNRCtoJavaScript.
+
+Require Import Jura.Compiler.Model.JuraModel.
+Require Import Jura.Compiler.Model.JuraRuntime.
 
 Module QJData(juramodel:JuraCompilerModel).
   

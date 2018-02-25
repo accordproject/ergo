@@ -12,19 +12,19 @@
  * limitations under the License.
  *)
 
+Require Import String.
+Require Import List.
 Require Import Qcert.Common.CommonSystem.
 Require Import Qcert.Compiler.Model.CompilerRuntime.
 Require Import Qcert.Compiler.Model.DateTimeModelPart.
-Require Import ForeignJura.
-Require Import JuraModel.
-Require Import JuraCalculus.
-Require Import JuraCalculusCall.
-Require Import JuratoJuraCalculus.
-Require Import String.
-Require Import List.
 Require Import Qcert.Compiler.Model.EnhancedModel.
 Require Import Qcert.Compiler.Model.SqlDateModelPart.
 Require Import Qcert.cNNRC.Lang.cNNRC.
+Require Import Jura.JuraCalculus.Lang.JuraCalculus.
+Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
+Require Import Jura.Translation.ForeignJura.
+Require Import Jura.Translation.JuratoJuraCalculus.
+Require Import Jura.Compiler.Model.JuraModel.
 
 Module JuraRuntime <: JuraCompilerModel.
   Local Open Scope string.

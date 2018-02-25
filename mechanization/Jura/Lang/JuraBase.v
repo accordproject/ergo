@@ -18,8 +18,8 @@
 
 Require Import String.
 Require Import Qcert.Common.CommonRuntime.
-Require Import Error.
-Require Import CTO.
+Require Import Jura.Utils.JResult.
+Require Import Jura.Common.CTO.CTO.
 
 Section JuraBase.
   Context {fruntime:foreign_runtime}.

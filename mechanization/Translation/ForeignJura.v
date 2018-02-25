@@ -14,8 +14,8 @@
 
 Require Import String.
 Require Import Qcert.Common.ForeignRuntime.
-Require Import JuraCalculus.
-Require Import JuraCalculusCall.
+Require Import Jura.JuraCalculus.Lang.JuraCalculus.
+Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
 
 Class foreign_jura {fruntime:foreign_runtime}: Type
   := mk_foreign_jura {

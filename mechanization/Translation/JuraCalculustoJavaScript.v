@@ -17,10 +17,10 @@
 Require Import String.
 Require Import List.
 Require Import Qcert.Common.CommonRuntime.
-Require Import Error.
-Require Import JuraBase.
-Require Import JuraCalculus.
 Require Import Qcert.NNRC.NNRCRuntime.
+Require Import Jura.Utils.JResult.
+Require Import Jura.Jura.Lang.JuraBase.
+Require Import Jura.JuraCalculus.Lang.JuraCalculus.
 
 Section JuraCalculustoJavaScript.
   Context {fruntime:foreign_runtime}.

@@ -12,9 +12,9 @@
  * limitations under the License.
  *)
 
-Require QJura.
-Require JuraRuntime.
 Require Qcert.Compiler.Model.EnhancedModel.
+Require Jura.Compiler.QLib.QJura.
+Require Jura.Compiler.Model.JuraRuntime.
 
 Module JuraEnhancedRuntime
   := JuraRuntime.JuraRuntime <+ EnhancedModel.CompEnhanced.

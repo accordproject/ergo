@@ -33,8 +33,8 @@ Require Import Qcert.cNRAEnv.Lang.cNRAEnv.
 Require Import Qcert.NRAEnv.Lang.NRAEnv.
 Require Import Qcert.DNNRC.Lang.DNNRC.
 Require Import Qcert.tDNNRC.Lang.tDNNRC.
-Require Import ForeignJura.
 Require Import Qcert.Compiler.Model.EnhancedModel.
+Require Import Jura.Translation.ForeignJura.
 
 Module Type JuraCompilerModel.
   Axiom jura_compiler_foreign_jura : foreign_jura.
