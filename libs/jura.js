@@ -17,7 +17,8 @@
 const Engine=require("./juracore.js");
 const Fs = require('fs');
 const Path = require('path');
-const moment = require('moment');
+const Moment = require('moment');
+const CTOParser = require("composer-common/lib/introspect/parser");
 
 const {
     VM,
@@ -35,7 +36,7 @@ class Jura {
      * @param {string} path to the Jura file
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(dslText,contractName,clauseName,withDispatch) {
+    static compileToJavaScript(juraFile,contractName,clauseName,withDispatch) {
 	// Built-in config
 	var config= {
 	    'source' : 'jura',
@@ -43,21 +44,23 @@ class Jura {
 	    'withdispatch' : withDispatch
 	};
 	// Clean-up naming for Sexps
-	config.jura = dslText;
+	config.jura = juraFile;
 	if (contractName != null) config.contract = contractName;
 	if (clauseName != null) config.clause = clauseName;
 	// Call compiler
         return Engine.Jura.compile(config).result;
     }
+
     /**
      * Compile Jura
      *
      * @param {string} path to the Jura file
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(dslText,contractName,clauseName,withDispatch) {
-        return Promise.resolve(this.compileToJavaScript(dslText,contractName,clauseName,withDispatch));
+    static compile(juraFile,contractName,clauseName,withDispatch) {
+        return Promise.resolve(this.compileToJavaScript(juraFile,contractName,clauseName,withDispatch));
     }
+
     /**
      * Execute Jura
      *
@@ -68,15 +71,15 @@ class Jura {
      * @param {string} name of the clause to execute
      * @returns {object} Promise to the result of execution
      */
-    static execute(dslText,jsonClause,jsonRequest,contractName,clauseName,withDispatch) {
+    static execute(juraFile,jsonClause,jsonRequest,contractName,clauseName,withDispatch) {
 	const jurRuntime = Fs.readFileSync(Path.join(__dirname,"juraruntime.js"), 'utf8');
 	
         const vm = new VM({
             timeout: 1000,
-            sandbox: { moment: moment }
+            sandbox: { moment: Moment }
         });
 
-	return (this.compile(dslText,null,null,withDispatch)).then((dslCode) => {
+	return (this.compile(juraFile,null,null,withDispatch)).then((dslCode) => {
             // add immutables to the context
 	    const params = { 'this': jsonClause, 'request': jsonRequest, 'now': moment() };
             vm.freeze(params, 'params'); // Add the context
@@ -89,6 +92,19 @@ class Jura {
 	    return res;
 	});
     }
+
+    /**
+     * Parse CTO to JSON
+     *
+     * @param {string} path to the CTO file
+     * @returns {object} The parse CTO model
+     */
+    static parseCTO(ctoFile) {
+	const input = Fs.readFileSync(ctoFile, 'utf8');
+	const result = CTOParser.parse(input);
+	return Promise.resolve(result);
+    }
+
 }
 
 module.exports = Jura;
