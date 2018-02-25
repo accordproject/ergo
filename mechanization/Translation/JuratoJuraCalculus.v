@@ -168,7 +168,7 @@ Section JuratoJavaScript.
     list (switch_case * jurac_expr).
 
   Section fresh_vars.
-    Require Import Fresh.
+    Require Import Qcert.Utils.Fresh.
     Definition fresh_in_switch {A} (eccases:list (A * jurac_expr)) (ecdefault:jurac_expr) :=
       fresh_var
         "$switch"
