@@ -50,64 +50,6 @@ contract HelloWorld over TemplateModel {
     mkPackage "org.accordproject.helloworld"
               ((JContract c1)::nil).
 
-  (*
-  Section translate.
-    Eval vm_compute in (JuraCompiler.javascript_from_jura_package_with_dispatch None p1).
-
-    Definition t := JuraRuntime.jura_compiler_foreign_jura.
-    
-    Require Import JuratoJavaScript.
-    Require Import JuratoJuraCalculus.
-    Require Import Error.
-
-    Definition p := add_dispatch_fun None p1.
-    Definition pc := jolift (@package_to_calculus _ t) p.
-    Definition f1 := jolift (lookup_dispatch dispatch_fun_name) pc.
-    Eval vm_compute in f1.
-    Print jresult.
-    Require Import NNRCRuntime.
-    Definition ft :=
-      match f1 with | Success _ _ f => f | Failure _ _ _ => ("","",mkFunc "" (mkClosure nil None None (NNRCVar ""))) end.
-    Definition f := (snd ft).
-    Eval vm_compute in f.
-    
-    Definition coname : option string := None.
-    Require Import JuraCalculustoJavaScript.
-    Definition fname := function_name_of_contract_clause_name coname f.(func_name).
-    Definition quotel := """".
-    Definition eol := "\n".
-    Definition res := javascript_function_of_body f.(func_closure).(closure_body) fname eol quotel ++ eol.
-    Eval vm_compute in res.
-    Require Import NNRCtoJavaScript.
-    Definition input_v := "context".
-    Definition init_indent := 0.
-    Definition e := f.(func_closure).(closure_body).
-    Definition res1 := nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname.
-    Eval vm_compute in res1.
-    Definition ivs := (input_v::nil).
-    Definition e' := closeFreeVars jsSafeSeparator jsIdentifierSanitize (NNRCVar input_v) e ivs.
-    Eval vm_compute in e'.
-    Require Import Utils.
-    Definition all_free_vars := bdistinct (nnrc_global_vars e).
-    Eval vm_compute in all_free_vars.
-    Definition params := ivs.
-    Definition avoid := map (fun x => "c$" ++ x) all_free_vars.
-    Eval vm_compute in avoid.
-    Definition unshadowed_e := unshadow jsSafeSeparator jsIdentifierSanitize avoid e.
-    Eval vm_compute in unshadowed_e.
-    Definition unconsted_e := nnrc_subst_const_to_var all_free_vars unshadowed_e.
-    Eval vm_compute in unconsted_e.
-    Definition input_e := NNRCVar "context".
-    Definition wrap_one_free_var (e':nnrc) (fv:string) : nnrc :=
-          if (in_dec string_dec fv all_free_vars)
-          then e'
-          else
-            (* note that this is a bit hacky, and relies on the NNRCLet translation to turn this into "vc$", 
-               matching up with the translation of NNRCGetConstant *)
-            (NNRCLet ("c$" ++ fv) (NNRCUnop (OpDot fv) input_e) e').
-    Eval vm_compute in (fold_left wrap_one_free_var all_free_vars unconsted_e).
-    Definition i := init_indent.
-    Eval vm_compute in (nnrcToJSFunStubConstantsAsFunction e' i eol quotel ivs fname). *)
-    
+  (* Eval vm_compute in (JuraCompiler.javascript_from_jura_package_with_dispatch None p1). *)
 End HelloWorld.
 

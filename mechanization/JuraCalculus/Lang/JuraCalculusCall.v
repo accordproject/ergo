@@ -55,15 +55,13 @@ Section JuraCalculusCall.
   Definition zip_params (params:list string) (el:list jurac_expr) : option (list (string * jurac_expr)) :=
     zip params el.
     
-  (** params are the effective parameters for the call,
-     i.e., a list of parameters with the expression that computes their values.
-     body is the body of the function.
-     after the call has been constructed, the function should have no free variables. *)
   Definition create_call (params:list (string * jurac_expr)) (body:jurac_expr) : jurac_expr :=
-    let unconsted_body := nnrc_subst_const_to_var (List.map fst params) body in
+    let all_free_vars := map fst params in
+    let unshadowed_body := unshadow "_" (fun s => s) all_free_vars body in
+    let unconsted_body := nnrc_subst_const_to_var all_free_vars unshadowed_body in
     let one_param (e:jurac_expr) (param:string * jurac_expr) : jurac_expr :=
         let (pv,pe) := param in
-        (NNRCLet ("c$"++pv)%string pe e)
+        (NNRCLet pv pe e)
     in
     fold_left one_param params unconsted_body.
 
