@@ -15,7 +15,7 @@
 
 'use strict';
 
-const Commands = require('../libs/commands');
+const Commands = require('../lib/commands');
 
 require('yargs')
     .command('compile', 'compile Jura to JavaScript', (yargs) => {

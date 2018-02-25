@@ -12,4 +12,4 @@
  * limitations under the License.
  */
 
-export * from '../libs/jura';
+export * from '../lib/jura';

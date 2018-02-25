@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const Jura = require('../libs/jura');
+const Jura = require('../lib/jura');
 
 require('yargs')
     .command('parse', 'parse CTO file to JSON', (yargs) => {

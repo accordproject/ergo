@@ -1,5 +1,5 @@
 # NB: This file must exist, since otherwise the .gitignore preferences will be used,
-# which will ignore the libs directory
+# which will ignore the lib directory
 Makefile*
 jura-*.tgz
 src

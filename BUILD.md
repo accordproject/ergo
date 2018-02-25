@@ -12,7 +12,7 @@ in Coq to JavaScript.
 The code is located in the following directories:
 - in `mechanization` the Coq code (includes the abstract syntax tree, intermediate languages, and compiler to JavaScript)
 - in `extraction` support code in OCaml (includes the parser)
-- in `libs` the JavaScript API and command-line interface
+- in `lib` the JavaScript API and command-line interface
 
 ### Dependencies
 
