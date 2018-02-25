@@ -19,6 +19,7 @@
 Require Import String.
 Require Import Qcert.Common.CommonRuntime.
 Require Import Error.
+Require Import CTO.
 
 Section JuraBase.
   Context {fruntime:foreign_runtime}.
@@ -37,8 +38,8 @@ Section JuraBase.
         All free variables in A have to be declared in the list of parameters. *)
     Record closure :=
       mkClosure
-        { closure_params: list (string * option string);
-          closure_output : option string;
+        { closure_params: list (string * option cto_type);
+          closure_output : option cto_type;
           closure_throw : option string;
           closure_body : A; }.
 
@@ -164,7 +165,7 @@ Section JuraBase.
                (coname:string) (clname:string) (p:package) : option clause :=
       lookup_clause_from_statements coname clname p.(package_statements).
 
-    Definition signature : Set := (string * list (string * option string)).
+    Definition signature : Set := (string * list (string * option cto_type)).
 
     Require Import List.
     Fixpoint lookup_declarations_signatures (dl:list declaration) : list signature :=
@@ -217,7 +218,7 @@ Section JuraBase.
     Definition lookup_package_signatures (p:package) : list signature :=
       lookup_statements_signatures p.(package_statements).
 
-    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : jresult (string * string * func) :=
+    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : jresult (cto_type * cto_type * func) :=
       match sl with
       | nil => jfailure (CompilationError ("Cannot lookup created dispatch"))
       | JExpr _ :: sl' => lookup_statements_dispatch name sl'
@@ -231,13 +232,13 @@ Section JuraBase.
               match closure.(closure_params) with
               | nil => jfailure (CompilationError ("No parameter type in dispatch"))
               | (_,Some reqtype) :: _ => jsuccess reqtype
-              | _ :: _ => jsuccess "Request"%string
+              | _ :: _ => jsuccess (CTOClassRef "Request"%string)
               end
           in
           let response :=
               match closure.(closure_output) with
               | Some resptype => resptype
-              | None => "Response"%string
+              | None => (CTOClassRef "Response"%string)
               end
           in
           jlift (fun request => (request, response, f)) request
@@ -245,7 +246,7 @@ Section JuraBase.
       | JContract c :: sl' => lookup_statements_dispatch name sl'
       end.
 
-    Definition lookup_dispatch (name:string) (p:package) : jresult (string * string * func) :=
+    Definition lookup_dispatch (name:string) (p:package) : jresult (cto_type * cto_type * func) :=
       lookup_statements_dispatch name p.(package_statements).
     
   End lookup.

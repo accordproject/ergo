@@ -22,6 +22,7 @@ Require Import Qcert.Utils.OptimizerLogger.
 Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.Compiler.Driver.CompLang.
 Require Import Error.
+Require Import CTO.
 Require Import ForeignJura.
 Require Import JuraBase.
 Require Import Jura.
@@ -63,7 +64,7 @@ Section JuratoJavaScript.
              (v0:string)
              (effparam0:jura_expr)
              (effparamrest:list jura_expr)
-             (callparams:list (string * option string)) :=
+             (callparams:list (string * option cto_type)) :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
     | None => jfailure (CompilationError "Parameter mismatch during dispatch")
@@ -80,13 +81,15 @@ Section JuratoJavaScript.
     let (cname, callparams) := s in
     match callparams with
     | nil => jfailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
-    | (param0,None)::effparamsrest =>
+    | (param0,None)::otherparams =>
       jfailure (CompilationError ("No parameter can be used for dispatch in "++cname))
-    | (param0, Some type0)::otherparams =>
+    | (param0, Some (CTOClassRef type0))::otherparams =>
       jlift (fun x =>
                let type0 := brand_of_class_ref pname (mkClassRef None type0) in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
+    | (param0, Some _)::otherparams =>
+      jfailure (CompilationError ("Cannot dispatch on non-class type "++cname))
     end.
 
   Definition switch_of_sigs
@@ -142,15 +145,23 @@ Section JuratoJavaScript.
     let pc := package_to_calculus p in
     jlift javascript_of_package_top pc.
 
+  Definition cast_dispatch_to_classes request response :=
+    match request, response with
+    | CTOClassRef req, CTOClassRef resp =>
+      jsuccess (req, resp)
+    | _, _ => jfailure (CompilationError ("Cannot dispatch on non-class types"))
+    end.
+  
   Definition javascript_from_package_with_dispatch
              (oconame:option string)
              (p:jura_package) : jresult javascript :=
     let p := add_dispatch_fun oconame p in
     let pc := jolift package_to_calculus p in
     let f := jolift (lookup_dispatch dispatch_fun_name) pc in
-    jlift (fun xyz =>
+    jolift (fun xyz =>
              let '(request,response,f) := xyz in
-             javascript_of_package_with_dispatch_top request response f) f.
+             jlift (fun xy =>
+                      javascript_of_package_with_dispatch_top (fst xy) (snd xy) f) (cast_dispatch_to_classes request response)) f.
 
 End JuratoJavaScript.
 

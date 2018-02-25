@@ -18,6 +18,7 @@ Require Qcert.Compiler.QLib.QLang.
 Require QJOperators.
 Require QJData.
 Require Error.
+Require CTO.
 Require Jura.
 Require JuraCalculus.
 Require JuraCalculusCall.
@@ -31,6 +32,38 @@ Module QJura(juramodel:JuraCompilerModel).
   Module Data := QJData.QJData(juramodel).
   Module Ops := QJOperators.QJOperators(juramodel).
 
+  (** CTO *)
+  Definition cto_class : Set
+    := CTO.cto_class.
+
+  Definition cto_string : CTO.cto_type
+    := CTO.CTOString.
+  Definition cto_double : CTO.cto_type
+    := CTO.CTODouble.
+  Definition cto_long : CTO.cto_type
+    := CTO.CTOLong.
+  Definition cto_bool : CTO.cto_type
+    := CTO.CTOBool.
+  Definition cto_class_ref : CTO.cto_class -> CTO.cto_type
+    := CTO.CTOClassRef.
+  Definition cto_option : CTO.cto_type -> CTO.cto_type
+    := CTO.CTOOption.
+  Definition cto_array : CTO.cto_type -> CTO.cto_type
+    := CTO.CTOArray.
+
+  Definition cto_enum : list String.string -> CTO.cto_declaration_kind
+    := CTO.CTOEnum.
+  Definition cto_transaction : list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+    := CTO.CTOTransaction.
+  Definition cto_concept : list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+    := CTO.CTOConcept.
+
+  Definition mk_cto_declaration : CTO.cto_class -> CTO.cto_declaration_kind -> CTO.cto_declaration
+    := CTO.mkCTODeclaration.
+  Definition mk_cto_package : String.string -> list CTO.cto_declaration -> CTO.cto_package
+    := CTO.mkCTOPackage.
+  
+  (** Jura *)
   Definition jura_package : Set 
     := Jura.jura_package.
   Definition jura_contract : Set
@@ -41,18 +74,7 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.jura_clause.
   Definition jura_expr : Set 
     := Jura.jura_expr.
-  
-  Definition jurac_package : Set 
-    := JuraCalculus.jurac_package.
-  Definition jurac_contract : Set
-    := JuraCalculus.jurac_contract.
-  Definition jurac_declaration : Set
-    := JuraCalculus.jurac_declaration.
-  Definition jurac_clause : Set
-    := JuraCalculus.jurac_clause.
-  Definition jurac_expr : Set 
-    := JuraCalculus.jurac_expr.
-  
+
   Definition jvar : String.string -> jura_expr
     := Jura.JVar.
 
@@ -89,6 +111,19 @@ Module QJura(juramodel:JuraCompilerModel).
   Definition jthis : jura_expr
     := JuraSugar.JThis.
 
+  (** Jura Calculus *)
+  Definition jurac_package : Set 
+    := JuraCalculus.jurac_package.
+  Definition jurac_contract : Set
+    := JuraCalculus.jurac_contract.
+  Definition jurac_declaration : Set
+    := JuraCalculus.jurac_declaration.
+  Definition jurac_clause : Set
+    := JuraCalculus.jurac_clause.
+  Definition jurac_expr : Set 
+    := JuraCalculus.jurac_expr.
+
+  (** Compilation *)
   Definition clause_calculus_from_jura_package :
     String.string -> String.string -> jura_package -> Error.jresult NNRC.nnrc
     := JuratoJavaScript.clause_calculus_from_package.

@@ -359,10 +359,45 @@ let sexp_to_opt_name (se:sexp) =
       raise (Jura_Error "Not well-formed S-expr inside optional name")
   end
 
-let param_to_sexp (paramname,paramtypename) =
+let rec paramtype_to_sexp (pt:cto_type) =
+  begin match pt with
+  | CTOString -> STerm ("CTOString", [])
+  | CTODouble -> STerm ("CTODouble", [])
+  | CTOLong -> STerm ("CTOLong", [])
+  | CTOBool -> STerm ("CTBool", [])
+  | CTOClassRef cl -> STerm ("CTClassRef", [name_to_sexp cl])
+  | CTOOption pt -> STerm ("CTOption", [paramtype_to_sexp pt])
+  | CTOArray pt -> STerm ("CTArray", [paramtype_to_sexp pt])
+  end
+let rec sexp_to_paramtype (se:sexp) =
+  begin match se with
+  | STerm ("CTOString", []) -> CTOString
+  | STerm ("CTODouble", []) -> CTODouble
+  | STerm ("CTOLong", []) -> CTOLong
+  | STerm ("CTBool", []) -> CTOBool
+  | STerm ("CTClassRef", [cl]) -> CTOClassRef (sexp_to_name cl)
+  | STerm ("CTOption", [pt]) -> CTOOption (sexp_to_paramtype pt)
+  | STerm ("CTArray", [pt]) -> CTOArray  (sexp_to_paramtype pt)
+  | _ ->
+      raise (Jura_Error "Not well-formed S-expr inside ParamType")
+  end
+
+let opt_paramtype_to_sexp (opt:cto_type option) =
+  begin match opt with
+  | None -> STerm ("ParamType",[])
+  | Some pt -> STerm ("ParamType",[paramtype_to_sexp pt])
+  end
+let sexp_to_opt_paramtype (se:sexp) =
+  begin match se with
+  | STerm ("ParamType",[]) -> None
+  | STerm ("ParamType",[pt]) -> Some (sexp_to_paramtype pt)
+  | _ ->
+      raise (Jura_Error "Not well-formed S-expr inside OptParamType")
+  end
+
+let param_to_sexp (paramname,paramtype) =
   let pname = name_to_sexp paramname in
-  let ptname = opt_name_to_sexp paramtypename in
-  STerm ("Param",[pname;ptname])
+  STerm ("Param",[pname;opt_paramtype_to_sexp paramtype])
 let params_to_sexp params =
   let params = List.map param_to_sexp params in
   STerm ("Params",params)
@@ -370,7 +405,7 @@ let params_to_sexp params =
 let sexp_to_param (se:sexp) =
   begin match se with
   | STerm ("Param",[spname;sptname]) ->
-      (sexp_to_name spname, sexp_to_opt_name sptname)
+      (sexp_to_name spname, sexp_to_opt_paramtype sptname)
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside Param")
   end
@@ -384,7 +419,7 @@ let sexp_to_params (se:sexp) =
 
 let closure_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a closure) =
   let clparams = params_to_sexp cl.closure_params in
-  let cloutput = opt_name_to_sexp cl.closure_output in
+  let cloutput = opt_paramtype_to_sexp cl.closure_output in
   let clthrow = opt_name_to_sexp cl.closure_throw in
   let clbody = expr_to_sexp cl.closure_body in
   STerm ("Closure",[clparams;cloutput;clthrow;clbody])
@@ -392,7 +427,7 @@ let sexp_to_closure (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a closure =
   begin match se with
   | STerm ("Closure",[sclparams;scloutput;sclthrow;sclbody]) ->
       { closure_params = sexp_to_params sclparams;
-	closure_output = sexp_to_opt_name scloutput;
+	closure_output = sexp_to_opt_paramtype scloutput;
 	closure_throw = sexp_to_opt_name sclthrow;
 	closure_body = sexp_to_expr sclbody }
   | _ ->

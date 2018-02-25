@@ -42,7 +42,7 @@
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
 %token PLUS MINUS STAR SLASH
-%token DOT COMMA COLON SEMI
+%token DOT COMMA COLON SEMI QUESTION
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
 %token LCURLY RCURLY
@@ -86,20 +86,20 @@ stmts:
 stmt:
 | DEFINITION v = safeident EQUAL e = expr
     { JGlobal (v, e) }
-| DEFINITION cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| DEFINITION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
 	  { closure_params = [];
-            closure_output = Some (Util.char_list_of_string out);
+            closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
 	  { closure_params = ps;
-            closure_output = Some (Util.char_list_of_string out);
+            closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
 | IMPORT qn = qname_prefix
@@ -122,34 +122,34 @@ declarations:
     { (Clause cl) :: ds }
 
 func:
-| DEFINITION cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| DEFINITION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = Util.char_list_of_string cn;
 	func_closure =
 	{ closure_params = [];
-          closure_output = Some (Util.char_list_of_string out);
+          closure_output = Some out;
 	  closure_throw = mt;
 	  closure_body = e; } } }
-| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = Util.char_list_of_string cn;
 	func_closure =
 	{ closure_params = ps;
-          closure_output = Some (Util.char_list_of_string out);
+          closure_output = Some out;
 	  closure_throw = mt;
 	  closure_body = e; } } }
 
 clause:
-| CLAUSE cn = IDENT LPAREN RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| CLAUSE cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = Util.char_list_of_string cn;
 	clause_closure =
 	  { closure_params = [];
-            closure_output = Some (Util.char_list_of_string out);
+            closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| CLAUSE cn = IDENT LPAREN ps = params RPAREN out = IDENT mt = maythrow LCURLY e = expr RCURLY
+| CLAUSE cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = Util.char_list_of_string cn;
 	clause_closure =
 	  { closure_params = ps;
-            closure_output = Some (Util.char_list_of_string out);
+            closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
 
@@ -166,16 +166,24 @@ params:
     { p :: ps }
 
 param:
+| pn = IDENT
+    { (Util.char_list_of_string pn, None) }
 | pn = IDENT pt = paramtype
-    { (Util.char_list_of_string pn, pt) }
+    { (Util.char_list_of_string pn, Some pt) }
 
 paramtype:
-|
-    { None }
 | pt = IDENT
-    { Some (Util.char_list_of_string pt) }
-| pt = IDENT LBRACKET RBRACKET
-    { Some (Util.char_list_of_string pt) }
+    { begin match pt with
+      | "String" -> JuraCompiler.cto_string
+      | "Double" -> JuraCompiler.cto_double
+      | "Long" -> JuraCompiler.cto_long
+      | "Boolean" -> JuraCompiler.cto_bool
+      | _ -> JuraCompiler.cto_class_ref (Util.char_list_of_string pt)
+      end }
+| pt = paramtype LBRACKET RBRACKET
+    { JuraCompiler.cto_array pt }
+| pt = paramtype QUESTION
+    { JuraCompiler.cto_option pt }
 
 expr:
 (* Parenthesized expression *)

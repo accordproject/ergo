@@ -93,6 +93,7 @@ rule token sbuff = parse
 | ":" { COLON }
 | "." { DOT }
 | ";" { SEMI }
+| "?" { QUESTION }
 | "(" { LPAREN }
 | ")" { RPAREN }
 | "[" { LBRACKET }
