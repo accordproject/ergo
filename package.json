@@ -12,13 +12,7 @@
       "email": "jerome@clause.io"
     }
   ],
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "license": "Apache-2.0",
-  "scripts": {
-    "compile": "tsc",
-    "prepack": "tsc"
-  },
   "dependencies": {
     "composer-common": "0.17.4",
     "moment": "^2.18.1",
