@@ -79,6 +79,7 @@ require('yargs')
                 console.error(err.message + ' ' + JSON.stringify(err));
             });
     })
+    .demandCommand()
     .option('verbose', {
         alias: 'v',
         default: false
