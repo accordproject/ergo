@@ -38,13 +38,15 @@ type decorator = json
 type propType = {
     name : string;
 } <ocaml field_prefix="cto_prop_type_">
-
+type optional = {
+    ttype <json name="type"> : string;
+  }
 type declaration = {
     ttype <json name="type"> : string;
     id : id;
     ?propertyType : propType nullable;
-    ?array : bool nullable;
-    optional : bool nullable;
+    ?array : string nullable;
+    optional : optional nullable;
     decorators : decorator list;
     location : location;
   } <ocaml field_prefix="cto_decl_content_">

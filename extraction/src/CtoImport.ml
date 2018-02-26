@@ -40,16 +40,19 @@ let concept_field_of_decl d =
   let base_type =
     base_type_of_decl d.cto_decl_content_propertyType
   in
+  let field_type = base_type in
   let field_type =
-    begin match d.cto_decl_content_array, d.cto_decl_content_optional with
-    | Some true, Some true ->
+    begin match d.cto_decl_content_array with
+    | Some "[]" -> CTOArray field_type
+    | Some _ -> raise (Jura_Error "Mal-formed array option in CTO JSON representation")
+    | None -> field_type
+    end
+  in
+  let field_type =
+    begin match d.cto_decl_content_optional with
+    | None -> field_type
+    | Some opt ->
 	CTOOption (CTOArray base_type)
-    | Some true, _ ->
-	CTOArray base_type
-    | _, Some true ->
-	CTOOption base_type
-    | _,_ ->
-	base_type
     end
   in
   (field_name, field_type)
