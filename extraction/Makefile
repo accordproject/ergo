@@ -24,7 +24,7 @@ JURA_HOME=$(CURDIR)/..
 ############# Shouldn't have to be changed after this
 OCAMLBUILD= ocamlbuild \
 		-no-links -classic-display \
-		-tags annot -use-ocamlfind -package unix -package base64
+		-tags annot -use-ocamlfind -package atdgen -package unix -package base64
 
 MENHIRFLAG=-use-menhir
 #MENHIRFLAG=
@@ -59,19 +59,29 @@ else
 	(cd extracted; coqc -R ../../mechanization Jura ../JuraExtraction.v)
 endif
 
+## ATDs
+
+src/Cto_t.ml src/Cto_t.mli: src/Cto.atd
+	atdgen -t $<
+
+src/Cto_j.ml src/Cto_j.mli: src/Cto.atd
+	atdgen -j -j-std $<
+
+ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli
+
 ## Native
-../bin/$(MAIN).$(TARGET): extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli $(MAIN).$(TARGET)
+../bin/$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli $(MAIN).$(TARGET)
 	cp _build/$(MAIN).$(TARGET) ../bin/$(MAIN).$(TARGET)
 
-$(MAIN).$(TARGET): extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli
+$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(MAIN).$(TARGET)
 
 ## JavaScript
-../lib/$(MAIN2).js: extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli _build_js/$(MAIN2).byte
+../lib/$(MAIN2).js: $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli _build_js/$(MAIN2).byte
 	js_of_ocaml _build_js/$(MAIN2).byte
 	cp _build_js/$(MAIN2).js ../lib/$(MAIN2).js
 
-_build_js/$(MAIN2).byte: $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli $(MAIN2).ml
+_build_js/$(MAIN2).byte: $(ATDS) $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli $(MAIN2).ml
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(MAIN2).byte
 
 ## Clean
@@ -82,6 +92,7 @@ clean:
 	rm -rf _build_js
 	rm -f ../bin/$(MAIN).$(TARGET)
 	rm -f extracted/StaticConfig.ml
+	rm -f $(ATDS)
 
 cleanall: clean
 	rm -f JuraExtraction.glob JuraExtraction.vo .JuraExtraction.aux

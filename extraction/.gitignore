@@ -6,3 +6,7 @@
 extracted/StaticConfig.ml
 extracted/JComp.ml
 extracted/JComp.mli
+src/Cto_j.ml
+src/Cto_j.mli
+src/Cto_t.ml
+src/Cto_t.mli

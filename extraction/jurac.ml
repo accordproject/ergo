@@ -16,6 +16,7 @@ open Util
 open JComp
 open JuraConfig
 open JuraCompile
+open Cto_t
 
 (* Command line args *)
 
@@ -32,6 +33,8 @@ let args_list gconf =
        "<lang> Indicates the language for the target (default: javascript)");
       ("--with-dispatch", Arg.Unit (JuraConfig.set_with_dispatch_true gconf),
        " Generate dispatch function (default: false)");
+      ("--cto", Arg.String (JuraConfig.set_cto gconf),
+       "<file> CTO model");
    ]
 
 let anon_args input_files f = input_files := f :: !input_files

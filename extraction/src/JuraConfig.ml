@@ -47,14 +47,16 @@ type global_config = {
     mutable jconf_contract_name : string option;
     mutable jconf_clause_name : string option;
     mutable jconf_with_dispatch : bool;
+    mutable jconf_cto : string option;
   }
 
 let default_config () = {
-    jconf_source = Jura;
-    jconf_target = JavaScript;
-    jconf_contract_name = None;
-    jconf_clause_name = None;
-    jconf_with_dispatch = false;
+  jconf_source = Jura;
+  jconf_target = JavaScript;
+  jconf_contract_name = None;
+  jconf_clause_name = None;
+  jconf_with_dispatch = false;
+  jconf_cto = None;
 } 
 
 let get_source_lang gconf = gconf.jconf_source
@@ -62,6 +64,7 @@ let get_target_lang gconf = gconf.jconf_target
 let get_contract_name gconf = gconf.jconf_contract_name
 let get_clause_name gconf = gconf.jconf_clause_name
 let get_with_dispatch gconf = gconf.jconf_with_dispatch
+let get_cto gconf = gconf.jconf_cto
 
 let set_source_lang gconf s = gconf.jconf_source <- (lang_of_name s)
 let set_target_lang gconf s = gconf.jconf_target <- (lang_of_name s)
@@ -70,4 +73,9 @@ let set_clause_name gconf s = gconf.jconf_clause_name <- Some s
 let set_with_dispatch gconf b = gconf.jconf_with_dispatch <- b
 let set_with_dispatch_true gconf () = gconf.jconf_with_dispatch <- true
 let set_with_dispatch_false gconf () = gconf.jconf_with_dispatch <- false
+let set_cto gconf s =
+  begin
+    gconf.jconf_cto <- Some s;
+    ignore(CtoImport.cto_import (Cto_j.model_of_string (Util.string_of_file s)));
+  end
 
