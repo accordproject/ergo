@@ -1,4 +1,4 @@
-![Jura](./doc/juralogo.png)
+![Jura](./docs/juralogo.png)
 
 Git: http://github.com/accordproject/jura-compiler
 
@@ -49,7 +49,7 @@ $ jurac execute --jura ./tests/volumediscount.jura --contractname VolumeDiscount
 
 ## Documentation
 
-There is no official documentation yet, but you can find a few notes on the language in [./doc/Language.md](./doc/Language.md)
+There is no official documentation yet, but you can find a few notes on the language in [./docs/Language.md](./docs/Language.md)
 
 ## For developers
 
