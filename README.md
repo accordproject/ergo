@@ -1,7 +1,6 @@
 ![Jura](./docs/juralogo.png)
 
-Git: http://github.com/accordproject/jura-compiler
-Pages: https://accordproject.github.io/jura-compiler/
+Git: http://github.com/accordproject/jura-compiler / Pages: https://accordproject.github.io/jura-compiler/
 
 **_WARNING_ The content of this repository is work in progress and subject to change**
 
