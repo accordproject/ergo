@@ -25,7 +25,7 @@ To achieve those goals the design of Jura is based on the following principles:
 - Clauses are written in an expression language with limited expressiveness (it allows conditional and bounded iteration).
 - Part of the compiler is written in Coq as a stepping stone for formal specification and verification.
 
-## Compiler architecthre
+## Compiler architecture
 
 The initial architecture for the Jura compiler is as follows:
 
