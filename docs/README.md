@@ -1,4 +1,4 @@
-# Notes on Jura
+# What is Jura?
 
 Jura is a prototype for a domain specific language (DSL) aimed at
 capturing the execution logic of _legal_ contracts. It is a work in
@@ -16,7 +16,7 @@ Jura is a domain specific language designed to capture the execution logic of _l
 - to be formally specified: the meaning of contracts should be well defined so it can be verified, and preserved during execution
 - to be consistent with the AccordProject template specification
 
-## Design and architecture
+## Design choices
 
 To achieve those goals the design of Jura is based on the following principles:
 - It manipulates concepts and transations from CTO models as defined in the AccordProject specification
@@ -25,14 +25,19 @@ To achieve those goals the design of Jura is based on the following principles:
 - Clauses are written in an expression language with limited expressiveness (it allows conditional and bounded iteration).
 - Part of the compiler is written in Coq as a stepping stone for formal specification and verification.
 
+## Compiler architecthre
+
 The initial architecture for the Jura compiler is as follows:
 
 ![alt text](./compilerstack.jpg "Jura Compiler")
 
-## Language
+## Language design
 
-A few notes on the language can be found in [Language.md](Language.md).
+The language syntax and design are preliminary, but a few notes can be
+found in [Language.md](Language.md).
 
-NOTE: The current implementation only supports the JavaScript backend
-and there is no type checker yet.
+## Caveats
+
+- The current implementation only supports the JavaScript backend
+- There is no type checker yet.
 
