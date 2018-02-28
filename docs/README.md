@@ -31,6 +31,12 @@ The initial architecture for the Jura compiler is as follows:
 
 ![alt text](./compilerstack.jpg "Jura Compiler")
 
+## Relationship to Cicero
+
+One of the use for the Jura compiler is as an embedded component as part of the Cicero implementation of the AccordProject protocol. The following diagram describe how this works:
+
+![alt text](./ciceroembed.jpg "Jura inside Cicero")
+
 ## Language design
 
 The language syntax and design are preliminary, but a few notes can be
