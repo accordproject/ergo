@@ -1,5 +1,7 @@
 ![Jura](./docs/juralogo.png)
 
+#
+
 [![Build Status](https://travis-ci.org/accordproject/jura-compiler.svg?branch=master)](https://travis-ci.org/accordproject/jura-compiler)
 
 Git: http://github.com/accordproject/jura-compiler / Pages: https://accordproject.github.io/jura-compiler/
