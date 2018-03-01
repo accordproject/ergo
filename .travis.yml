@@ -13,14 +13,6 @@ install: |
   date
 script: npm run test 2>&1
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
-deploy:
-  - provider: script
-    script: "./.travis/stable.sh ${TRAVIS_TAG}"
-    skip_cleanup: true
-    on:
-      branch: master
-      tags: true
-      repo: accordproject/jura-compiler
 cache:
   directories:
   - node_modules
