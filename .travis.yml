@@ -4,12 +4,12 @@ node_js:
 dist: trusty
 before_install: |
   set -e
-  export PATH="./node_modules/.bin:$PATH"
+  export PATH="./$HOME/node_modules/.bin:$PATH"
   date
 install: |
   set -e
   date
-  npm install -g
+  npm install
   date
 script: npm run test 2>&1
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
