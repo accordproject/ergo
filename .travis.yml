@@ -4,6 +4,7 @@ node_js:
 dist: trusty
 before_install: |
   set -e
+  export PATH="./node_modules/.bin:$PATH"
   date
 install: |
   set -e
