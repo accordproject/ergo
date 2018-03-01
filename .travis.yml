@@ -8,6 +8,8 @@ before_install: |
 install: |
   set -e
   date
+  npm install -g
+  date
 script: npm run test 2>&1
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 deploy:
