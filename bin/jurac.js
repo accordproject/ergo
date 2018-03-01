@@ -16,6 +16,7 @@
 'use strict';
 
 const Commands = require('../lib/commands');
+const Logger = require('../lib/logger');
 
 require('yargs')
     .command('compile', 'compile Jura to JavaScript', (yargs) => {
@@ -30,19 +31,19 @@ require('yargs')
         });
         yargs.option('dispatch', {
             describe: 'generate dispatch function',
-	    type: 'boolean',
-	    default: false
+            type: 'boolean',
+            default: false
         });
     }, (argv) => {
         if (argv.verbose) {
-            console.log(`compile Jura file ${argv.jura} with contract ${argv.contractname} and clause with contract ${argv.clausename}`);
+            Logger.info(`compile Jura file ${argv.jura} with contract ${argv.contractname} and clause with contract ${argv.clausename}`);
         }
         return Commands.compile(argv.jura,argv.contractname,argv.clausename, argv.dispatch)
             .then((result) => {
-                console.log(result);
+                Logger.info(result);
             })
             .catch((err) => {
-                console.error(err.message + ' ' + JSON.stringify(err));
+                Logger.error(err.message + ' ' + JSON.stringify(err));
             });
     })
     .command('execute', 'execute a contract clause', (yargs) => {
@@ -63,20 +64,20 @@ require('yargs')
         });
         yargs.option('dispatch', {
             describe: 'generate dispatch function',
-	    type: 'boolean',
-	    default: false
+            type: 'boolean',
+            default: false
         });
     }, (argv) => {
         if (argv.verbose) {
-            console.log(`execute Jura clause ${argv.jura} using clause data ${argv.clause} with request data ${argv.request}`);
+            Logger.info(`execute Jura clause ${argv.jura} using clause data ${argv.clause} with request data ${argv.request}`);
         }
 
         return Commands.execute(argv.jura, argv.clause, argv.request, argv.contractname, argv.clausename, argv.dispatch)
             .then((result) => {
-                console.log(JSON.stringify(result));
+                Logger.info(JSON.stringify(result));
             })
             .catch((err) => {
-                console.error(err.message + ' ' + JSON.stringify(err));
+                Logger.error(err.message + ' ' + JSON.stringify(err));
             });
     })
     .demandCommand()

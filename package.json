@@ -1,10 +1,17 @@
 {
   "name": "jura-compiler",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "The Jura compiler",
   "repository": {
     "type": "git",
     "url": "https://github.com/accordproject/jura-compiler"
+  },
+  "scripts": {
+    "pretest": "npm run lint",
+    "lint": "eslint .",
+    "postlint": "npm run licchk",
+    "licchk": "license-check",
+    "test": "mocha && nyc mocha"
   },
   "contributors": [
     {
@@ -16,8 +23,6 @@
   "dependencies": {
     "composer-common": "0.17.4",
     "moment": "^2.18.1",
-    "nearley": "^2.11.0",
-    "pegjs": "^0.10.0",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
   },
@@ -25,7 +30,49 @@
     "jurac": "./bin/jurac.js"
   },
   "devDependencies": {
-    "@types/sortablejs": "^1.3.32",
-    "typescript": "^2.6.2"
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chai-things": "^0.2.0",
+    "eslint": "^4.6.1",
+    "jsdoc": "^3.5.5",
+    "license-check": "^1.1.5",
+    "mocha": "^3.4.2",
+    "nyc": "^11.3.0"
+  },
+  "license-check-config": {
+    "src": [
+      "**/*.js",
+      "!./test/data/**/*",
+      "!./coverage/**/*",
+      "!./node_modules/**/*",
+      "!./out/**/*",
+      "!bin/*",
+      "!**juracore*",
+      "!lib/juraruntime.js"
+    ],
+    "path": "header.txt",
+    "blocking": true,
+    "logInfo": false,
+    "logError": true
+  },
+  "nyc": {
+    "produce-source-map": "true",
+    "sourceMap": "inline",
+    "reporter": [
+      "lcov",
+      "text-summary",
+      "html",
+      "json"
+    ],
+    "include": [
+      "lib/**/jura.js"
+    ],
+    "exclude": [],
+    "all": true,
+    "check-coverage": true,
+    "statements": 93,
+    "branches": 70,
+    "functions": 92,
+    "lines": 93
   }
 }
