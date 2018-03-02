@@ -14,12 +14,12 @@ Jura is a domain specific language designed to capture the execution logic of _l
 - to ensure safe execution: the language should prevent run-time errors and non-terminating logic
 - to be blockchain neutral: the same contract logic can be deployed either on and off chain and to a variety of distributed ledger technologies
 - to be formally specified: the meaning of contracts should be well defined so it can be verified, and preserved during execution
-- to be consistent with the AccordProject template specification
+- to be consistent with the Accord Project template specification
 
 ## Design choices
 
 To achieve those goals the design of Jura is based on the following principles:
-- It manipulates concepts and transations from CTO models as defined in the AccordProject specification
+- It manipulates concepts and transations from CTO models as defined in the Accord Project specification
 - Contracts have a class-like structure with clauses as methods
 - It borrows from strongly-typed functional programming language: clauses have a well-defined signature (input and output), they are functions without side effects
 - Clauses are written in an expression language with limited expressiveness (it allows conditional and bounded iteration).
@@ -33,7 +33,7 @@ The initial architecture for the Jura compiler is as follows:
 
 ## Relationship to Cicero
 
-One of the use for the Jura compiler is as an embedded component as part of the Cicero implementation of the AccordProject protocol. The following diagram describe how this works:
+One of the use for the Jura compiler is as an embedded component as part of the Cicero implementation of the Accord Project protocol. The following diagram describe how this works:
 
 ![alt text](./ciceroembed.jpg "Jura inside Cicero")
 
