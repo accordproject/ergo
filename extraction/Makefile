@@ -36,11 +36,11 @@ MAIN2=juracore
 TARGET=native
 
 ## Toplevel
-all: ../bin/$(MAIN).$(TARGET) ../lib/$(MAIN2).js
+all: ../bin/$(MAIN).$(TARGET) ../packages/jura-compiler/lib/$(MAIN2).js
 
-all-refresh: extracted/JComp.ml extracted/JComp.mli ../bin/$(MAIN).$(TARGET) ../lib/$(MAIN2).js
+all-refresh: extracted/JComp.ml extracted/JComp.mli ../bin/$(MAIN).$(TARGET) ../packages/jura-compiler/lib/$(MAIN2).js
 
-js: ../lib/$(MAIN2).js
+js: ../packages/jura-compiler/lib/$(MAIN2).js
 
 ## Extraction
 VO_FILES = $(MODULES:%=../mechanization/%.vo)
@@ -77,9 +77,9 @@ $(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracte
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(MAIN).$(TARGET)
 
 ## JavaScript
-../lib/$(MAIN2).js: $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli _build_js/$(MAIN2).byte
+../packages/jura-compiler/lib/$(MAIN2).js: $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli _build_js/$(MAIN2).byte
 	js_of_ocaml _build_js/$(MAIN2).byte
-	cp _build_js/$(MAIN2).js ../lib/$(MAIN2).js
+	cp _build_js/$(MAIN2).js ../packages/jura-compiler/lib/$(MAIN2).js
 
 _build_js/$(MAIN2).byte: $(ATDS) $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli $(MAIN2).ml
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(MAIN2).byte
