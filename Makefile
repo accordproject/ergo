@@ -97,6 +97,10 @@ cleanall: Makefile.coq
 	- @$(MAKE) cleanall-mechanization
 	- @$(MAKE) cleanall-npm
 	- @rm -f *~
+	- @rm -rf .nyc_output
+	- @rm -rf coverage
+	- @rm -rf log
+	- @rm -rf node_modules
 
 ##
 _CoqProject: Makefile.config
