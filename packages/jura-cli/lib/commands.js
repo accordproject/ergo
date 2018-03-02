@@ -15,7 +15,7 @@
 'use strict';
 
 const Fs = require('fs');
-const Jura = require('./jura');
+const Jura = require('jura-compiler/lib/jura');
 
 /**
  * Utility class that implements the commands exposed by the Jura CLI.

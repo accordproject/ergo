@@ -62,8 +62,8 @@ documentation:
 	@$(MAKE) -C mechanization documentation
 
 ## Cleanup
-clean-mechanization:
-	- @$(MAKE) -f Makefile.coq all
+clean-mechanization: Makefile.coq
+	- @$(MAKE) -f Makefile.coq clean
 
 cleanall-mechanization:
 	- @$(MAKE) -f Makefile.coq cleanall
@@ -84,11 +84,16 @@ clean-npm:
 cleanall-npm: clean-npm
 	- @rm -f jura*.tgz
 	- @rm -rf node_modules
+	- @rm -rf .nyc_output
+	- @rm -rf coverage
+	- @rm -rf log
 
 clean: Makefile.coq
 	- @$(MAKE) clean-npm
 	- @$(MAKE) clean-extraction
 	- @$(MAKE) clean-mechanization
+	- @$(MAKE) -C packages/jura-compiler clean
+	- @$(MAKE) -C packages/jura-cli clean
 	- @rm -f *~
 
 cleanall: Makefile.coq
@@ -96,11 +101,9 @@ cleanall: Makefile.coq
 	- @$(MAKE) cleanall-extraction
 	- @$(MAKE) cleanall-mechanization
 	- @$(MAKE) cleanall-npm
+	- @$(MAKE) -C packages/jura-compiler cleanall
+	- @$(MAKE) -C packages/jura-cli cleanall
 	- @rm -f *~
-	- @rm -rf .nyc_output
-	- @rm -rf coverage
-	- @rm -rf log
-	- @rm -rf node_modules
 
 ##
 _CoqProject: Makefile.config
