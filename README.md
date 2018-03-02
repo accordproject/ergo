@@ -2,9 +2,9 @@
 
 #
 
-[![Build Status](https://travis-ci.org/accordproject/jura-compiler.svg?branch=master)](https://travis-ci.org/accordproject/jura-compiler)
+[![Build Status](https://travis-ci.org/accordproject/jura.svg?branch=master)](https://travis-ci.org/accordproject/jura)
 
-Git: http://github.com/accordproject/jura-compiler / Pages: https://accordproject.github.io/jura-compiler/
+Git: http://github.com/accordproject/jura / Pages: https://accordproject.github.io/jura
 
 **_WARNING_ The content of this repository is work in progress and subject to change**
 
