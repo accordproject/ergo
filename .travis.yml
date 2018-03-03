@@ -9,9 +9,10 @@ before_install: |
 install: |
   set -e
   date
-  npm install
+  npm install -g lerna
+  lerna bootstrap 2>&1
   date
-script: npm run test 2>&1
+script: lerna run test 2>&1
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 cache:
   directories:
