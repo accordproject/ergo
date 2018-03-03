@@ -1,7 +1,7 @@
 {
-  "name": "jura-compiler",
+  "name": "jura-engine",
   "version": "0.0.16",
-  "description": "Jura Compiler",
+  "description": "Jura Engine",
   "repository": {
     "type": "git",
     "url": "https://github.com/accordproject/jura"
@@ -22,7 +22,11 @@
   "license": "Apache-2.0",
   "dependencies": {
     "composer-common": "0.17.4",
-    "yargs": "^9.0.1"
+    "moment": "^2.18.1",
+    "vm2": "^3.5.0",
+    "yargs": "^9.0.1",
+    "composer-common": "0.17.4",
+    "jura-compiler": "0.0.16"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -42,8 +46,6 @@
       "!./coverage/**/*",
       "!./node_modules/**/*",
       "!./out/**/*",
-      "!bin/*",
-      "!**juracore*",
       "!lib/juraruntime.js"
     ],
     "path": "header.txt",
@@ -61,7 +63,7 @@
       "json"
     ],
     "include": [
-      "lib/**/jura.js"
+      "lib/**/jura-engine.js"
     ],
     "exclude": [],
     "all": true,

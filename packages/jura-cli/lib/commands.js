@@ -16,6 +16,7 @@
 
 const Fs = require('fs');
 const Jura = require('jura-compiler/lib/jura');
+const JuraEngine = require('jura-engine/lib/jura-engine');
 
 /**
  * Utility class that implements the commands exposed by the Jura CLI.
@@ -51,7 +52,7 @@ class Commands {
         const jurText = Fs.readFileSync(juraPath, 'utf8');
         const jsonClause = JSON.parse(Fs.readFileSync(clausePath, 'utf8'));
         const jsonRequest = JSON.parse(Fs.readFileSync(requestPath, 'utf8'));
-        return Jura.execute(jurText,jsonClause,jsonRequest,contractName,clauseName,withDispatch);
+        return JuraEngine.execute(jurText,jsonClause,jsonRequest,contractName,clauseName,withDispatch);
     }
 
     /**

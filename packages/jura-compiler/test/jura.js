@@ -23,20 +23,10 @@ Chai.use(require('chai-things'));
 const Fs = require('fs');
 const Path = require('path');
 
-describe('Execute', () => {
+describe('jura-compiler', () => {
 
     afterEach(() => {});
 
-    describe('#executehello', function () {
-        it('should execute a smart Jura clause', async function () {
-            const juraText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.jura'), 'utf8');
-            const jsonClause = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'clause.json'), 'utf8'));
-            const jsonRequest = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'request.json'), 'utf8'));
-            const result = await Jura.execute(juraText, jsonClause, jsonRequest, 'HelloWorld', 'helloworld', false);
-            //result.should.not.be.null;
-            result.output.should.equal('Hello Fred Blogs (Accord Project)');
-        });
-    });
     describe('#compilehello', function () {
         it('should compile a smart Jura clause', async function () {
             const juraText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.jura'), 'utf8');
