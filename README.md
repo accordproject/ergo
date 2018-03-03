@@ -11,9 +11,9 @@ Git: http://github.com/accordproject/jura / Pages: https://accordproject.github.
 
 ## About
 
-This is the source code for the Jura compiler. Jura is a DSL for Smart *Legal* Contracts.
+This is the source code for the Jura compiler. Jura is the DSL for Smart *Legal* Contracts.
 
-The current target for that compiler is JavaScript.
+The current target for the compiler is JavaScript.
 
 ## Getting started
 
