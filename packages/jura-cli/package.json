@@ -65,7 +65,7 @@
       "json"
     ],
     "include": [
-      "lib/**/jura.js"
+      "lib/**/*.js"
     ],
     "exclude": [],
     "all": true,
