@@ -1,0 +1,14 @@
+package org.accordproject.volumediscount
+
+import org.accordproject.contract.*
+
+contract VolumeDiscount over TemplateModel {
+   // Clause for volume discount
+   clause volumediscount(request VolumeDiscountRequest) VolumeDiscountResponse {
+    let rate = 
+      if request.netAnnualChargeVolume < this.firstVolume { this.firstRate }
+      else if request.netAnnualChargeVolume < this.secondVolume { this.secondRate }
+      else { this.thirdRate };
+    new VolumeDiscountResponse{ discountRate: rate }
+  }
+}

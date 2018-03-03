@@ -40,7 +40,7 @@ $ jurac execute --help
 
 Once installed, you can compile your first Jura contract to JavaScript:
 ```
-$ jurac compile --jura ./test/data/volumediscount/logic.jura
+$ jurac compile --jura ./samples/volumediscount/logic.jura
 ```
 
 ### Execute a contract clause
@@ -48,7 +48,7 @@ $ jurac compile --jura ./test/data/volumediscount/logic.jura
 To compile and _execute_ a given clause in a contract:
 
 ```
-$ jurac execute --jura ./test/data/volumediscount/logic.jura --contractname VolumeDiscount --clausename volumediscount --clause ./test/data/volumediscount/clause.json --request ./test/data/volumediscount/request.json 
+$ jurac execute --jura ./samples/volumediscount/logic.jura --contractname VolumeDiscount --clausename volumediscount --clause ./samples/volumediscount/clause.json --request ./samples/volumediscount/request.json 
 {"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}
 ```
 
@@ -62,8 +62,8 @@ There is no official documentation yet, but you can find a few notes on the lang
 
 To install the latest development code, clone this git repository and do a local install:
 ```
-$ git clone https://github.com/accordproject/jura-compiler.git
-$ cd ./jura-compiler
+$ git clone https://github.com/accordproject/jura.git
+$ cd ./jura/packages/jura-cli
 $ npm install -g
 ```
 
