@@ -21,7 +21,7 @@ The current target for that compiler is JavaScript.
 
 To install the Jura compiler and command-line, do:
 ```
-$ npm install jura-compiler -g
+$ npm install jura-cli -g
 ```
 
 To check that the compiler has been installed, and see which version number:
