@@ -1,0 +1,51 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Jura.Common.CTO.CTO</title>
+<meta name="description" content="Documentation of Coq module Jura.Common.CTO.CTO" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Jura.Common.CTO.CTO</h1>
+<div class="coq">
+<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="CTO">CTO</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="cto_class">cto_class</a></span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="cto_type">cto_type</a></span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOString">CTOString</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>                  <span class="docright">(* string atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTODouble">CTODouble</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>                  <span class="docright">(* double atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOLong">CTOLong</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>                    <span class="docright">(* long atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOBool">CTOBool</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>                    <span class="docright">(* bool atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOClassRef">CTOClassRef</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_class">cto_class</a></span> -&gt; <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>   <span class="docright">(* class reference  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOOption">CTOOption</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span> -&gt; <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>      <span class="docright">(* optional type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOArray">CTOArray</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span> -&gt; <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>.      <span class="docright">(* array type  *)</span><br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="cto_declaration_kind">cto_declaration_kind</a></span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOEnum">CTOEnum</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOTransaction">CTOTransaction</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> * <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>) -&gt; <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOConcept">CTOConcept</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> * <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_type">cto_type</a></span>) -&gt; <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="cto_declaration">cto_declaration</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="mkCTODeclaration">mkCTODeclaration</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id"><a name="cto_declaration_class">cto_declaration_class</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_class">cto_class</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="cto_declaration_type">cto_declaration_type</a></span> : <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span>; }.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="cto_package">cto_package</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="mkCTOPackage">mkCTOPackage</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id"><a name="cto_package_namespace">cto_package_namespace</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="cto_package_declarations">cto_package_declarations</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Jura.Common.CTO.CTO.html#cto_declaration">cto_declaration</a></span>; }.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Jura.Common.CTO.CTO.html#CTO">CTO</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

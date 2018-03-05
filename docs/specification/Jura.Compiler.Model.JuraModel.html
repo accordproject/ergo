@@ -1,0 +1,49 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Jura.Compiler.Model.JuraModel</title>
+<meta name="description" content="Documentation of Coq module Jura.Compiler.Model.JuraModel" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Jura.Compiler.Model.JuraModel</h1>
+<div class="coq">
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.ForeignRuntime.html">Qcert.Common.ForeignRuntime</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.CommonRuntime.html">Qcert.Common.CommonRuntime</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Translation.ForeignToJava.html">Qcert.Translation.ForeignToJava</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Translation.ForeignToJavaScript.html">Qcert.Translation.ForeignToJavaScript</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Translation.ForeignToScala.html">Qcert.Translation.ForeignToScala</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.ForeignDataToJSON.html">Qcert.Common.Data.ForeignDataToJSON</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.ForeignTypeToJSON.html">Qcert.Common.TypeSystem.ForeignTypeToJSON</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.NNRCMR.Lang.ForeignReduceOps.html">Qcert.NNRCMR.Lang.ForeignReduceOps</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Translation.ForeignToReduceOps.html">Qcert.Translation.ForeignToReduceOps</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Translation.ForeignToSpark.html">Qcert.Translation.ForeignToSpark</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.CldMR.Lang.ForeignCloudant.html">Qcert.CldMR.Lang.ForeignCloudant</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Translation.ForeignToCloudant.html">Qcert.Translation.ForeignToCloudant</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.OptimizerLogger.html">Qcert.Utils.OptimizerLogger</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.ForeignType.html">Qcert.Common.TypeSystem.ForeignType</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataTyping.ForeignDataTyping.html">Qcert.Common.DataTyping.ForeignDataTyping</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.cNNRC.Lang.cNNRC.html">Qcert.cNNRC.Lang.cNNRC</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.cNRAEnv.Lang.cNRAEnv.html">Qcert.cNRAEnv.Lang.cNRAEnv</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.NRAEnv.Lang.NRAEnv.html">Qcert.NRAEnv.Lang.NRAEnv</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.DNNRC.Lang.DNNRC.html">Qcert.DNNRC.Lang.DNNRC</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.tDNNRC.Lang.tDNNRC.html">Qcert.tDNNRC.Lang.tDNNRC</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Compiler.Model.EnhancedModel.html">Qcert.Compiler.Model.EnhancedModel</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Translation.ForeignJura.html">Jura.Translation.ForeignJura</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="JuraCompilerModel">JuraCompilerModel</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Axiom</span> <span class="id"><a name="JuraCompilerModel.jura_compiler_foreign_jura">jura_compiler_foreign_jura</a></span> : <span class="id"><a href="Jura.Translation.ForeignJura.html#foreign_jura">foreign_jura</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Jura.Compiler.Model.JuraModel.html#JuraCompilerModel">JuraCompilerModel</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

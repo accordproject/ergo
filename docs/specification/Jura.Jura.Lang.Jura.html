@@ -1,0 +1,86 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Jura.Jura.Lang.Jura</title>
+<meta name="description" content="Documentation of Coq module Jura.Jura.Lang.Jura" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Jura.Jura.Lang.Jura</h1>
+<div class="coq">
+<br/>
+<div class="doc">Jura is a language for expressing contract logic. </div>
+<br/>
+<h1> Abstract Syntax </h1>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.CommonRuntime.html">Qcert.Common.CommonRuntime</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html">Jura.Jura.Lang.JuraBase</a></span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="Jura">Jura</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Context</span> {<span class="id">fruntime</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.ForeignRuntime.html#foreign_runtime">foreign_runtime</a></span>}.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="kwd">Syntax</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="switch_case_kind">switch_case_kind</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CaseValue">CaseValue</a></span> : <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.Data.html#data">data</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#switch_case_kind">switch_case_kind</a></span>    <span class="docright">(* match against value  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CaseType">CaseType</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#switch_case_kind">switch_case_kind</a></span>   <span class="docright">(* match against type  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="switch_case">switch_case</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> * <span class="id"><a href="Jura.Jura.Lang.Jura.html#switch_case_kind">switch_case_kind</a></span>)%<span class="id">type</span>. <span class="docright">(* optional variable and case kind  *)</span><br/>
+<br/>
+<div class="doc">Expression </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="jura_expr">jura_expr</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JVar">JVar</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Local variable access  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JConst">JConst</a></span> : <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.Data.html#data">data</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Constant  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JArray">JArray</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Array constructor  *)</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JUnaryOp">JUnaryOp</a></span> : <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Operators.UnaryOperators.html#unary_op">unary_op</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Unary operator  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JBinaryOp">JBinaryOp</a></span> : <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Operators.BinaryOperators.html#binary_op">binary_op</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Binary operator  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JIf">JIf</a></span> : <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Conditional  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JGuard">JGuard</a></span> : <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Guard  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JLet">JLet</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Local variable binding  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JNew">JNew</a></span> : <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#class_ref">class_ref</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> * <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>) -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Create a new concept/object  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JThrow">JThrow</a></span> : <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#class_ref">class_ref</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> * <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>) -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* Create a new concept/object  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JFunCall">JFunCall</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* function call  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JSwitch">JSwitch</a></span> : <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="Jura.Jura.Lang.Jura.html#switch_case">switch_case</a></span> * <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>) -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* switch-case  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="JFor">JFor</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> -&gt; <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span> <span class="docright">(* for loop with optional where  *)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.<br/>
+<br/>
+<div class="doc">Clause </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_clause">jura_clause</a></span> := @<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#clause">clause</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>.<br/>
+<br/>
+<div class="doc">Function </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_func">jura_func</a></span> := @<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#func">func</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>.<br/>
+<br/>
+<div class="doc">Declaration </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_declaration">jura_declaration</a></span> := @<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#declaration">declaration</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>.<br/>
+<br/>
+<div class="doc">Contract </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_contract">jura_contract</a></span> := @<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#contract">contract</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>.<br/>
+<br/>
+<div class="doc">Statement </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_stmt">jura_stmt</a></span> := @<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#stmt">stmt</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>.<br/>
+<br/>
+<div class="doc">Package. </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_package">jura_package</a></span> := @<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#package">package</a></span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#jura_expr">jura_expr</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="kwd">Syntax</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="Jura.Semantics">Semantics</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#Jura.Semantics">Semantics</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="Jura.Evaluation">Evaluation</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#Jura.Evaluation">Evaluation</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Jura.Jura.Lang.Jura.html#Jura">Jura</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>
