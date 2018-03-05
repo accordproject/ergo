@@ -24,7 +24,7 @@
     "composer-common": "0.17.4",
     "jura-compiler": "^0.0.17",
     "jura-engine": "^0.0.17",
-    "moment": "^2.18.1",
+    "moment": "^2.20.1",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
   },
