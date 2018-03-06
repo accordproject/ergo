@@ -86,6 +86,7 @@ rule token sbuff = parse
 | "<=" { LTEQ }
 | ">=" { GTEQ }
 | "+" { PLUS }
+| "++" { PLUSPLUS }
 | "*" { STAR }
 | "/" { SLASH }
 | "-" { MINUS }

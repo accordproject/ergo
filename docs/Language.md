@@ -69,6 +69,7 @@ expressions. Here are the expressions Jura supports.
 2 > 1
 true || false // Boolean operators
 true && false
+"Hello" ++ " World!" // String concatenation
 ```
 
 ### Local variable declarations:
@@ -81,27 +82,32 @@ Local variables can also be declared with the shorter `let` form:
 let x = 1;             // declares and initialize a variable
 x+2                    // rest of the expression, with variable x in scope
 ```
+Local variables can also be declared with a type:
+```
+define variable name : String = "John"; // declares and initialize a string variable
+name ++ " Smith"                        // rest of the expression
+```
 
 ### Conditionals:
 ```
 if x < 0 {   // Condition
-  -x+1       // Expression evaluated if the condition is true
+  -x+1       // Expression if condition is true
 } else {
-  x+1        // Expression evaluated if the condition is false
+  x+1        // Expression if condition is false
 }
 ```
 
 ### Guards allow to make sure a specific condition is true.
 ```
 guard x >= 0 else {       // Condition
-  "Something went wrong"  // Expression evaluated if condition is false
+  "Something went wrong"  // Expression if condition is false
 };
-x+1                       // Expression evaluated if the condition is true
+x+1                       // Expression if condition is true
 ```
 Guards can be useful to check preconditions in a clause. The first expression can be ommitted in which case Jura returns an error by default.
 ```
 guard x >= 0;             // Condition
-x+1                       // Expression evaluated if the condition is true
+x+1                       // Expression if condition is true
 ```
 Guards can be useful to check preconditions in a clause
 

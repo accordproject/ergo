@@ -42,6 +42,7 @@
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
 %token PLUS MINUS STAR SLASH
+%token PLUSPLUS
 %token DOT COMMA COLON SEMI QUESTION
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
@@ -56,6 +57,7 @@
 %left LT GT LTEQ GTEQ
 %left PLUS MINUS
 %left STAR SLASH
+%left PLUSPLUS
 %right NOT
 %left DOT
 
@@ -285,6 +287,8 @@ expr:
     { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.opand e1 e2 }
 | e1 = expr OR e2 = expr
     { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.opor e1 e2 }
+| e1 = expr PLUSPLUS e2 = expr
+    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.opstringconcat e1 e2 }
 
 else_clause:
 | LCURLY e = expr RCURLY
