@@ -47,7 +47,7 @@ found in [Language.md](Language.md).
 The source code for the Jura compiler includes a mechanization in Coq
 from which (part of) the compiler is extracted. A version of the code
 in HTML format is available in
-[specification/index.md](specification/index.md).
+[specification](specification/index.md).
 
 ## Caveats
 
