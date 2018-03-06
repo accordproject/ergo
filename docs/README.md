@@ -42,6 +42,13 @@ One of the use for the Jura compiler is as an embedded component as part of the 
 The language syntax and design are preliminary, but a few notes can be
 found in [Language.md](Language.md).
 
+## Implementation
+
+The source code for the Jura compiler includes a mechanization in Coq
+from which (part of) the compiler is extracted. A version of the code
+in HTML format is available in
+[specification/index.md](specification/index.md).
+
 ## Caveats
 
 - The current implementation only supports the JavaScript backend
