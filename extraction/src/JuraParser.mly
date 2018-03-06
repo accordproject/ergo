@@ -48,7 +48,6 @@
 %token LCURLY RCURLY
 %token EOF
 
-%left RCURLY
 %left SEMI
 %left RETURN
 %left OR
@@ -214,8 +213,10 @@ expr:
     { JuraCompiler.jdot (Util.char_list_of_string a) e }
 | IF e1 = expr LCURLY e2 = expr RCURLY ELSE e3 = else_clause
     { JuraCompiler.jif e1 e2 e3 }
-| GUARD e1 = expr ELSE LCURLY e3 = expr RCURLY e2 = expr
+| GUARD e1 = expr ELSE LCURLY e3 = expr RCURLY SEMI e2 = expr
     { JuraCompiler.jguard e1 e2 e3 }
+| GUARD e1 = expr SEMI e3 = expr
+    { JuraCompiler.jguard_default_fail e1 e3 }
 | RETURN e = expr
     { JuraCompiler.jreturn e }
 | THROW qn = qname LCURLY r = reclist RCURLY

@@ -18,14 +18,14 @@ contract LateDeliveryAndPenalty over TemplateModel {
     define variable agreed = request.agreedDelivery;
     guard momentIsBefore(agreed,now()) else {
       throw Error{ message : "Cannot exercise late delivery before delivery date" }
-    }
+    };
     // Guard against force majeure
     guard !this.forceMajeure || !request.forceMajeure else {
       return new LateDeliveryAndPenaltyResponse{
 	penalty: 0,
 	buyerMayTerminate: true
       }
-    }
+    };
 
     // Calculate the time difference between current date and agreed upon date
     define variable diff = momentDiff(now,agreed);

@@ -251,5 +251,24 @@ Section JuraBase.
     
   End lookup.
 
+  Section utils.
+    Definition brand_of_class_ref (local_package:string) (cr:class_ref) :=
+      let pname := 
+          match cr.(class_package) with
+          | None => local_package
+          | Some ref_package => ref_package
+          end
+      in
+      (pname ++ "." ++ cr.(class_name))%string.
+  End utils.
+  
+  Section errors.
+    Definition jura_default_package := Some ("org.jura"%string).
+    Definition jura_default_error :=
+      mkClassRef
+        jura_default_package
+        "Error".
+        
+  End errors.
 End JuraBase.
 

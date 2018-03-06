@@ -36,15 +36,6 @@ Section JuratoJavaScript.
 
   Section utils.
     Open Scope string.
-    Definition brand_of_class_ref (local_package:string) (cr:class_ref) :=
-      let pname := 
-          match cr.(class_package) with
-          | None => local_package
-          | Some ref_package => ref_package
-          end
-      in
-      pname ++ "." ++ cr.(class_name).
-
     (** New Array *)
     Definition new_array (el:list jurac_expr) : jurac_expr :=
       match el with
@@ -56,6 +47,11 @@ Section JuratoJavaScript.
     (** [new Concept{ field1: expr1, ... fieldn: exprn }] creates a record and brands it with the concept name *)
     Definition new_expr (brand:string) (struct_expr:jurac_expr) : jurac_expr :=
       NNRCUnop (OpBrand (brand :: nil)) struct_expr.
+
+    Definition jura_guard_error (local_package:string) : jurac_expr :=
+      (NNRCUnop (OpBrand ((brand_of_class_ref local_package jura_default_error) :: nil))
+                (NNRCUnop (OpRec "message") (NNRCConst (dstring "Guard failed")))).
+    
   End utils.
 
   Section stdlib.
@@ -212,7 +208,12 @@ Section JuratoJavaScript.
         (jura_expr_to_calculus ctxt e1)
         (jura_expr_to_calculus ctxt e2)
         (jura_expr_to_calculus ctxt e3)
-    | JGuard e1 e2 e3 =>
+    | JGuard e1 None e3 =>
+      jlift3 NNRCIf
+        (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus ctxt e1))
+        (jsuccess (jura_guard_error ctxt.(context_package)))
+        (jura_expr_to_calculus ctxt e3)
+    | JGuard e1 (Some e2) e3 =>
       jlift3 NNRCIf
         (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus ctxt e1))
         (jura_expr_to_calculus ctxt e3)

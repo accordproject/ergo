@@ -90,8 +90,10 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JBinaryOp.
   Definition jif : jura_expr -> jura_expr -> jura_expr -> jura_expr 
     := Jura.JIf.
-  Definition jguard : jura_expr -> jura_expr -> jura_expr -> jura_expr 
-    := Jura.JGuard.
+  Definition jguard (e1 e2 e3:jura_expr) 
+    := Jura.JGuard e1 (Some e2) e3.
+  Definition jguard_default_fail (e1 e3:jura_expr) 
+    := Jura.JGuard e1 None e3.
   Definition jdefinevar : String.string -> jura_expr -> jura_expr -> jura_expr
     := Jura.JDefineVar.
   Definition jfor : String.string -> jura_expr -> option jura_expr -> jura_expr -> jura_expr

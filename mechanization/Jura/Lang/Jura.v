@@ -41,7 +41,7 @@ Section Jura.
     | JUnaryOp : unary_op -> jura_expr -> jura_expr (**r Unary operator *)
     | JBinaryOp : binary_op -> jura_expr -> jura_expr -> jura_expr (**r Binary operator *)
     | JIf : jura_expr -> jura_expr -> jura_expr -> jura_expr (**r Conditional *)
-    | JGuard : jura_expr -> jura_expr -> jura_expr -> jura_expr (**r Guard *)
+    | JGuard : jura_expr -> option jura_expr -> jura_expr -> jura_expr (**r Guard *)
     | JDefineVar : string -> jura_expr -> jura_expr -> jura_expr (**r Local variable binding *)
     | JNew : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JThrow : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)

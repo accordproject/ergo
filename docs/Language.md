@@ -71,10 +71,12 @@ true || false // Boolean operators
 true && false
 ```
 
-Let bindings:
+Local variable declarations:
 ```
-let x = 1;   // declares and initialize a variable
-x+2          // rest of the expression, with variable x in scope
+define variable x = 1; // declares and initialize a variable
+x+2                    // rest of the expression, with variable x in scope
+let x = 1;             // can also be written using the shorter form 'let'
+x+2
 ```
 
 Conditionals:
@@ -90,7 +92,13 @@ Guards allow to make sure a specific condition is true.
 ```
 guard x >= 0 else {       // Condition
   "Something went wrong"  // Expression evaluated if condition is false
-}
+};
+x+1                       // Expression evaluated if the condition is true
+```
+Guards can be useful to check preconditions in a clause. The first expression can be ommitted in which case Jura returns an error by default.
+```
+guard x >= 0;             // Condition
+x+1                       // Expression evaluated if the condition is true
 ```
 Guards can be useful to check preconditions in a clause
 

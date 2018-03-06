@@ -23,18 +23,18 @@ contract PerishableGoods over TemplateModel {
     // Guard against unitCount outside the bounds specified in the clause
     guard request.unitCount < this.minUnits || request.unitCount > this.maxUnits else {
       throw Error{ message : 'Units received out of range for the contract.' }
-    }
+    };
     // Guard against requests for payout after the dueDate
     guard momentIsAfter(this.dueDate,request.timestamp) else {
       return new PriceCalculation{
         totalPrice : 0,
         penalty : 0,
         late : true
-    }
+    };
     // Guard against missing temperature readings
     guard var readings = request.shipment.temperatureReadings! else {
       throw Error{ message : 'No temperature readings received.');
-    }
+    };
     // Calculates payout
     define variable payOut = this.unitPrice * request.unitCount;
     // Calculates penalty if any
