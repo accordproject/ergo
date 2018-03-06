@@ -6,7 +6,7 @@ import org.accordproject.acceptanceofdelivery.*
 import jura.moment.* // Date/Time library
 
 contract AcceptanceOfDelivery over TemplateModel {
-  clause acceptanceofdelivery(request InspectDeliverable) InspectionResponse throws Error {
+  clause acceptanceofdelivery(request InspectDeliverable) : InspectionResponse throws Error {
     define variable received = request.deliverableRecievedAt;
     guard (momentIsBefore(received,now())) else {
       throw Error{ error : "Transaction time is before the deliverable date." }

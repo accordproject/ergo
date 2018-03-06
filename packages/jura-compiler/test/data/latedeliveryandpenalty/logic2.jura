@@ -9,7 +9,7 @@ Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeu
 // Declare a contract over a template model
 contract LateDeliveryAndPenalty over TemplateModel {
     // Defines a function to calculate the penalty
-   define function calculatePenalty(diff float, goodsValue float) float {
+   define function calculatePenalty(diff Double, goodsValue Double) : Double {
       // penalty formula
       define variable penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
       
@@ -22,20 +22,20 @@ contract LateDeliveryAndPenalty over TemplateModel {
    }
 
    // Clause for volume discount
-   clause latedeliveryandpenalty(req LateDeliveryAndPenaltyRequest) LateDeliveryAndPenaltyResponse {
+   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse {
 
-     define variable agreed = req.agreedDelivery;
+     define variable agreed = request.agreedDelivery;
 
      // First check if the clause applies
      if !moment.isAfter(moment.now(),agreed) {
        error Error{ "This clause does not apply" }
-     } else if forceMajeure && req.forceMajeure { // Second check if forceMajeure is and can be claimed
+     } else if forceMajeure && request.forceMajeure { // Second check if forceMajeure is and can be claimed
        return LateDeliveryAndPenaltyResponse{ 0, true }
      } else { // If not, calculate the penalty and whether the contract can be terminated
        // difference between current date and agreed upon date
        define variable diff = moment.diff(moment.now(),agreed,penaltyDuration.unit);
        // Calls the function to calculate penalty
-       define variable penalty = calculatePenalty(diff,req.goodsValue);
+       define variable penalty = calculatePenalty(diff,request.goodsValue);
        // Return the response with the penalty and termination determination
        return LateDeliveryAndPenaltyResponse{ capped, diff > termination }
      }
