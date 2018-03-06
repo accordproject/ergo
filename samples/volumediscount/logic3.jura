@@ -3,8 +3,8 @@ package org.accordproject.volumediscount
 import org.accordproject.contract.*
 import org.accordproject.late.*
 
-definition fee = 1/10
-definition addFee(rate Double) Double {
+define function fee = 1/10
+define function addFee(rate Double) Double {
   rate + fee
 }
 

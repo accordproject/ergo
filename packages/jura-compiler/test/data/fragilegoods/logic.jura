@@ -5,7 +5,7 @@ import io.clause.demo.fragileGoods.*
 
 import jura.moment.* // Date/Time library
 
-definition numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Double[]) Double {
+define function numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Double[]) Double {
   count(
      for r in accelerometerReadings
      where r > maxAcc || r < minAcc { r }
@@ -14,7 +14,7 @@ definition numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Do
 
 contract FragileGoods over TemplateModel {
   clause fragilegoods(request DeliveryUpdate) PayOut throws Error {
-    let shockPenalty =
+    define variable shockPenalty =
         this.accelerationBreachPenalty
         * numberOfShocks(this.accelerationMax,
 			 this.accelerationMin,
@@ -27,3 +27,4 @@ contract FragileGoods over TemplateModel {
     }
   }
 }
+k

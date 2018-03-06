@@ -22,13 +22,13 @@
 %token <string> STRING
 %token <string> IDENT
 
-%token PACKAGE IMPORT DEFINITION
+%token PACKAGE IMPORT DEFINE FUNCTION
 %token CONTRACT OVER CLAUSE THROWS
 
 %token IF GUARD ELSE
-%token FOR IN WHERE
+%token LET FOR IN WHERE
 %token RETURN THROW
-%token LET AS
+%token VARIABLE AS
 %token NEW THIS
 %token SWITCH TYPESWITCH CASE DEFAULT
 
@@ -84,9 +84,9 @@ stmts:
     { s :: ss }
 
 stmt:
-| DEFINITION v = safeident EQUAL e = expr
+| DEFINE FUNCTION v = safeident EQUAL e = expr
     { JGlobal (v, e) }
-| DEFINITION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
@@ -94,7 +94,7 @@ stmt:
             closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
@@ -122,14 +122,14 @@ declarations:
     { (Clause cl) :: ds }
 
 func:
-| DEFINITION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = Util.char_list_of_string cn;
 	func_closure =
 	{ closure_params = [];
           closure_output = Some out;
 	  closure_throw = mt;
 	  closure_body = e; } } }
-| DEFINITION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = Util.char_list_of_string cn;
 	func_closure =
 	{ closure_params = ps;
@@ -224,8 +224,10 @@ expr:
     { JuraCompiler.jnew (fst qn) (snd qn) r }
 | THIS
     { JuraCompiler.jthis }
+| DEFINE VARIABLE v = safeident EQUAL e1 = expr SEMI e2 = expr
+    { JuraCompiler.jdefinevar v e1 e2 }
 | LET v = safeident EQUAL e1 = expr SEMI e2 = expr
-    { JuraCompiler.jlet v e1 e2 }
+    { JuraCompiler.jdefinevar v e1 e2 }
 | SWITCH e0 = expr LCURLY csd = cases RCURLY
     { JuraCompiler.jswitch e0 (fst csd) (snd csd) }
 | FOR v = safeident IN e1 = expr LCURLY e2 = expr RCURLY
@@ -367,20 +369,22 @@ safeident_base:
 | i = IDENT { i }
 | PACKAGE { "package" }
 | IMPORT { "import" }
-| DEFINITION { "definition" }
+| DEFINE { "define" }
+| FUNCTION { "function" }
 | CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }
 | IF { "if" }
 | GUARD { "guard" }
 | ELSE { "else" }
+| LET { "let" }
 | FOR { "for" }
 | IN { "in" }
 | WHERE { "where" }
 | RETURN { "return" }
 | THROW { "throw" }
 | THROWS { "throws" }
-| LET { "let" }
+| VARIABLE { "variable" }
 | AS { "as" }
 | NEW { "new" }
 | SWITCH { "switch" }

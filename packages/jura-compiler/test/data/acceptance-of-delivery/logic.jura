@@ -7,12 +7,12 @@ import jura.moment.* // Date/Time library
 
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request InspectDeliverable) InspectionResponse throws Error {
-    let received = request.deliverableRecievedAt;
+    define variable received = request.deliverableRecievedAt;
     guard (momentIsBefore(received,now())) else {
       throw Error{ error : "Transaction time is before the deliverable date." }
     }
 
-    let status =
+    define variable status =
       if momentIsAfter(now, momentAdd(received, momentDuration(data.businessDays, "DAY"))) {
         "OUTSIDE_INSPECTION_PERIOD"
       } else if request.inspectionPassed {

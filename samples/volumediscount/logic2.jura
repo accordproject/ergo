@@ -5,7 +5,7 @@ import org.accordproject.contract.*
 contract VolumeDiscount over TemplateModel {
    // Clause for volume discount
    clause volumediscount(request VolumeDiscountRequest) VolumeDiscountResponse {
-    let rate = 
+    define variable rate = 
       if request.netAnnualChargeVolume < this.firstVolume { this.firstRate }
       else if request.netAnnualChargeVolume < this.secondVolume { this.secondRate }
       else { this.thirdRate };

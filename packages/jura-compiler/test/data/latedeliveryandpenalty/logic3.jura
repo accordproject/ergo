@@ -13,9 +13,9 @@ Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeu
 // Declare a contract over a template model
 contract LateDeliveryAndPenalty over TemplateModel {
   // Defines a function to calculate the penalty
-  definition calculatePenalty(diff Double, goodsValue Double) Double {
+  define function calculatePenalty(diff Double, goodsValue Double) Double {
     // penalty formula
-    let penalty = (diff / this.penaltyDuration.amount) * this.penaltyPercentage/100 * goodsValue;
+    define variable penalty = (diff / this.penaltyDuration.amount) * this.penaltyPercentage/100 * goodsValue;
     // penalty may be capped
     if penalty > this.capPercentage/100 * goodsValue {
        this.capPercentage/100 * goodsValue
@@ -27,7 +27,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
   // Clause for volume discount
   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) LateDeliveryAndPenaltyResponse {
     // Guard against calling late delivery clause too early
-    let agreed = request.agreedDelivery;
+    define variable agreed = request.agreedDelivery;
     guard momentIsBefore(agreed,now()) else {
       throw Error{ message : "Cannot exercise late delivery before delivery date" }
     }
@@ -40,8 +40,8 @@ contract LateDeliveryAndPenalty over TemplateModel {
     }
 
     // difference between current date and agreed upon date
-    let diff = momentDiff(agreed,now());
-    let penalty = calculatePenalty(diff,request.goodsValue);
+    define variable diff = momentDiff(agreed,now());
+    define variable penalty = calculatePenalty(diff,request.goodsValue);
     return new LateDeliveryAndPenaltyResponse{
 	penalty: capped,
 	buyerMayTerminate: diff > this.termination.amount

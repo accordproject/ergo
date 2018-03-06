@@ -51,10 +51,10 @@ jura-extraction-refresh:
 	@$(MAKE) -C extraction all-refresh
 
 jura-npm:
-	npm install
+	lerna bootstrap
 
-npm-package:
-	npm install && npm pack
+publish:
+	lerna bootstrap && lerna publish
 
 
 ## Documentation

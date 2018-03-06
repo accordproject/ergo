@@ -24,7 +24,8 @@
 	[ (* declarations *)
 	  "package", PACKAGE;
 	  "import", IMPORT;
-	  "definition", DEFINITION;
+	  "define", DEFINE;
+	  "function", FUNCTION;
           (* contract *)
 	  "contract", CONTRACT;
 	  "over", OVER;
@@ -34,6 +35,7 @@
 	  "if", IF;
 	  "guard", GUARD;
 	  "else", ELSE;
+	  "let", LET;
 	  "for", FOR;
 	  "in", IN;
 	  "where", WHERE;
@@ -41,7 +43,7 @@
 	  "throw", THROW;
 	  "new", NEW;
 	  "this", THIS;
-	  "let", LET;
+	  "variable", VARIABLE;
 	  "as", AS;
 	  "switch", SWITCH;
 	  "typeswitch", TYPESWITCH;

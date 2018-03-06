@@ -217,7 +217,7 @@ Section JuratoJavaScript.
         (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus ctxt e1))
         (jura_expr_to_calculus ctxt e3)
         (jura_expr_to_calculus ctxt e2)
-    | JLet v e1 e2 =>
+    | JDefineVar v e1 e2 =>
       jlift2 (NNRCLet v)
               (jura_expr_to_calculus ctxt e1)
               (jura_expr_to_calculus ctxt e2)
