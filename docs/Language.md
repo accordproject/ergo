@@ -123,15 +123,15 @@ new Person{
 }
 ```
 
-### Switch expressions
+### Match expressions
 
-Switch expressions allow to check an expression against multiple
+Match expressions allow to check an expression against multiple
 possible values:
 ```
-switch fruitcode {
-  case 1: "Apple"
-  case 2: "Apricot"
-  default: "Strange Fruit"
+match fruitcode {
+  with 1: "Apple"
+  with 2: "Apricot"
+  otherwise: "Strange Fruit"
 }
 ```
 

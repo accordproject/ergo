@@ -19,10 +19,10 @@ contract FragileGoods over TemplateModel {
         * numberOfShocks(this.accelerationMax,
 			 this.accelerationMin,
 			 request.accelerometerReadings);
-    switch request.status {
-      case "ARRIVED" :
+    match request.status {
+      with "ARRIVED" :
         return new PayOut{ amount : this.deliveryPrice - shockPenalty }
-      default :
+      otherwise :
         return new PayOut{ amount : this.deliveryPrice - shockPenalty }
     }
   }

@@ -30,7 +30,7 @@
 %token RETURN THROW
 %token VARIABLE AS
 %token NEW THIS
-%token SWITCH TYPESWITCH CASE DEFAULT
+%token MATCH TYPEMATCH WITH OTHERWISE
 
 %token OR AND NOT
 %token FLATTEN
@@ -235,7 +235,7 @@ expr:
     { JuraCompiler.jdefinevar_typed v t e1 e2 }
 | LET v = safeident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jdefinevar_typed v t e1 e2 }
-| SWITCH e0 = expr LCURLY csd = cases RCURLY
+| MATCH e0 = expr LCURLY csd = cases RCURLY
     { JuraCompiler.jswitch e0 (fst csd) (snd csd) }
 | FOR v = safeident IN e1 = expr LCURLY e2 = expr RCURLY
     { JuraCompiler.jfor v e1 None e2 }
@@ -307,15 +307,15 @@ exprlist:
 
 (* cases *)
 cases:
-| DEFAULT COLON e = expr
+| OTHERWISE COLON e = expr
     { ([],e) }
-| CASE d = data COLON e = expr cs = cases
+| WITH d = data COLON e = expr cs = cases
     { (((None,JuraCompiler.jcasevalue d),e)::(fst cs), snd cs) }
-| CASE LET v = safeident EQUAL d = data COLON e = expr cs = cases
+| WITH LET v = safeident EQUAL d = data COLON e = expr cs = cases
     { (((Some v,JuraCompiler.jcasevalue d),e)::(fst cs), snd cs) }
-| CASE AS brand = STRING COLON e = expr tcs = cases
+| WITH AS brand = STRING COLON e = expr tcs = cases
     { (((None,JuraCompiler.jcasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
-| CASE LET v = safeident AS brand = STRING COLON e = expr tcs = cases
+| WITH LET v = safeident AS brand = STRING COLON e = expr tcs = cases
     { (((Some v,JuraCompiler.jcasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
 
 (* New struct *)
@@ -396,10 +396,10 @@ safeident_base:
 | VARIABLE { "variable" }
 | AS { "as" }
 | NEW { "new" }
-| SWITCH { "switch" }
-| TYPESWITCH { "typeswitch" }
-| CASE { "case" }
-| DEFAULT { "default" }
+| MATCH { "match" }
+| TYPEMATCH { "typematch" }
+| WITH { "with" }
+| OTHERWISE { "otherwise" }
 | THIS { "this" }
 | OR { "or" }
 | AND { "and" }

@@ -5,10 +5,10 @@ import org.accordproject.late.*
 
 define variable fee = 1
 define function addFee(rate Double) : Double {
-  switch fee {
-    case let v = 1 : rate + v/10
-    case let v = 2 : rate + fee/15
-    default : rate
+  match fee {
+    with let v = 1 : rate + v/10
+    with let v = 2 : rate + fee/15
+    otherwise : rate
   }
 }
 

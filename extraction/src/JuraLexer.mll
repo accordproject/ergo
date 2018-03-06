@@ -45,10 +45,10 @@
 	  "this", THIS;
 	  "variable", VARIABLE;
 	  "as", AS;
-	  "switch", SWITCH;
-	  "typeswitch", TYPESWITCH;
-	  "case", CASE;
-	  "default", DEFAULT;
+	  "match", MATCH;
+	  "typematch", TYPEMATCH;
+	  "with", WITH;
+	  "otherwise", OTHERWISE;
 	  (* Functions *)
 	  "flatten", FLATTEN;
 	  "avg", AVG;
