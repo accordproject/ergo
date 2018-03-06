@@ -85,7 +85,7 @@ stmts:
 stmt:
 | DEFINE FUNCTION v = safeident EQUAL e = expr
     { JGlobal (v, e) }
-| DEFINE FUNCTION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
@@ -93,7 +93,7 @@ stmt:
             closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = Util.char_list_of_string cn;
 	  func_closure =
@@ -121,14 +121,14 @@ declarations:
     { (Clause cl) :: ds }
 
 func:
-| DEFINE FUNCTION cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = Util.char_list_of_string cn;
 	func_closure =
 	{ closure_params = [];
           closure_output = Some out;
 	  closure_throw = mt;
 	  closure_body = e; } } }
-| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = Util.char_list_of_string cn;
 	func_closure =
 	{ closure_params = ps;
@@ -137,14 +137,14 @@ func:
 	  closure_body = e; } } }
 
 clause:
-| CLAUSE cn = IDENT LPAREN RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| CLAUSE cn = IDENT LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = Util.char_list_of_string cn;
 	clause_closure =
 	  { closure_params = [];
             closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| CLAUSE cn = IDENT LPAREN ps = params RPAREN out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| CLAUSE cn = IDENT LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = Util.char_list_of_string cn;
 	clause_closure =
 	  { closure_params = ps;
@@ -229,6 +229,10 @@ expr:
     { JuraCompiler.jdefinevar v e1 e2 }
 | LET v = safeident EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jdefinevar v e1 e2 }
+| DEFINE VARIABLE v = safeident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
+    { JuraCompiler.jdefinevar_typed v t e1 e2 }
+| LET v = safeident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
+    { JuraCompiler.jdefinevar_typed v t e1 e2 }
 | SWITCH e0 = expr LCURLY csd = cases RCURLY
     { JuraCompiler.jswitch e0 (fst csd) (snd csd) }
 | FOR v = safeident IN e1 = expr LCURLY e2 = expr RCURLY

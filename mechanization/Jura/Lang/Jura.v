@@ -19,6 +19,7 @@
 Require Import String.
 Require Import Qcert.Common.CommonRuntime.
 Require Import Jura.Jura.Lang.JuraBase.
+Require Import Jura.Common.CTO.CTO.
 
 Section Jura.
   Context {fruntime:foreign_runtime}.
@@ -42,7 +43,7 @@ Section Jura.
     | JBinaryOp : binary_op -> jura_expr -> jura_expr -> jura_expr (**r Binary operator *)
     | JIf : jura_expr -> jura_expr -> jura_expr -> jura_expr (**r Conditional *)
     | JGuard : jura_expr -> option jura_expr -> jura_expr -> jura_expr (**r Guard *)
-    | JDefineVar : string -> jura_expr -> jura_expr -> jura_expr (**r Local variable binding *)
+    | JDefineVar : string -> option cto_type -> jura_expr -> jura_expr -> jura_expr (**r Local variable binding *)
     | JNew : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JThrow : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JFunCall : string -> list jura_expr -> jura_expr (**r function call *)

@@ -53,7 +53,7 @@ Comments in Jura are written in a commonly used style:
 The logic for individual clauses in Jura is written using
 expressions. Here are the expressions Jura supports.
 
-Literal values:
+### Literal values:
 
 ```
 "John Smith" // a string literal
@@ -61,7 +61,7 @@ Literal values:
 3.5e-10      // a floating point literal
 ```
 
-Operators:
+### Operators:
 ```
 1+2*3         // Arithmetic operators
 1 <= 3        // Comparison operators
@@ -71,15 +71,18 @@ true || false // Boolean operators
 true && false
 ```
 
-Local variable declarations:
+### Local variable declarations:
 ```
 define variable x = 1; // declares and initialize a variable
 x+2                    // rest of the expression, with variable x in scope
-let x = 1;             // can also be written using the shorter form 'let'
-x+2
+```
+Local variables can also be declared with the shorter `let` form:
+```
+let x = 1;             // declares and initialize a variable
+x+2                    // rest of the expression, with variable x in scope
 ```
 
-Conditionals:
+### Conditionals:
 ```
 if x < 0 {   // Condition
   -x+1       // Expression evaluated if the condition is true
@@ -88,7 +91,7 @@ if x < 0 {   // Condition
 }
 ```
 
-Guards allow to make sure a specific condition is true.
+### Guards allow to make sure a specific condition is true.
 ```
 guard x >= 0 else {       // Condition
   "Something went wrong"  // Expression evaluated if condition is false
@@ -102,6 +105,8 @@ x+1                       // Expression evaluated if the condition is true
 ```
 Guards can be useful to check preconditions in a clause
 
+### Creating objects
+
 Creating objects (such as CTO concepts, transactions, or Jura errors)
 can be done using `new` with the name of the concept and the values
 for each fields:
@@ -111,6 +116,8 @@ new Person{
   age: 32
 }
 ```
+
+### Switch expressions
 
 Switch expressions allow to check an expression against multiple
 possible values:

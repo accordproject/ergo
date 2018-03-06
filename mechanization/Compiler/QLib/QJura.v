@@ -94,8 +94,10 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JGuard e1 (Some e2) e3.
   Definition jguard_default_fail (e1 e3:jura_expr) 
     := Jura.JGuard e1 None e3.
-  Definition jdefinevar : String.string -> jura_expr -> jura_expr -> jura_expr
-    := Jura.JDefineVar.
+  Definition jdefinevar (v:String.string) (e1 e2:jura_expr) : jura_expr
+    := Jura.JDefineVar v None e1 e2.
+  Definition jdefinevar_typed (v:String.string) (t:CTO.cto_type) (e1 e2:jura_expr) : jura_expr
+    := Jura.JDefineVar v (Some t) e1 e2.
   Definition jfor : String.string -> jura_expr -> option jura_expr -> jura_expr -> jura_expr
     := Jura.JFor.
   Definition jfuncall : String.string -> list jura_expr -> jura_expr
