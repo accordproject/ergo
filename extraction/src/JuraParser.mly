@@ -85,7 +85,7 @@ stmts:
     { s :: ss }
 
 stmt:
-| DEFINE FUNCTION v = safeident EQUAL e = expr
+| DEFINE VARIABLE v = safeident EQUAL e = expr
     { JGlobal (v, e) }
 | DEFINE FUNCTION cn = IDENT LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
