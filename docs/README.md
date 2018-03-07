@@ -43,13 +43,17 @@ One of the use for the Jura compiler is as an embedded component inside [Cicero]
 
 ![alt text](./juraincicero.jpg "Jura inside Cicero")
 
-## Implementation
+## Verification
 
 The source code for the Jura compiler includes a mechanization in Coq
-from which (part of) the compiler is extracted. A browsable version of
+from which part of the compiler is extracted. A browsable version of
 the Coq code (generated using
 [coq2html](https://github.com/xavierleroy/coq2html)) is available in
 [specification](specification/index.md).
+
+Ultimately, one of our goals is to provide a full formal semantics for
+Jura in Coq, and prove correct as much of the compilation pipeline as
+possible.
 
 ## Caveats
 
