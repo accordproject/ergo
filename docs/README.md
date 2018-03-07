@@ -31,11 +31,15 @@ To achieve those goals the design of Jura is based on the following principles:
 The language design and syntax are still in flux. A few notes on
 the current syntax can be found in [Language.md](Language.md).
 
-## Compiler architecture
+## Compiler
+
+### Architecture
 
 The initial architecture for the Jura compiler is as follows:
 
 ![alt text](./juracompiler.jpg "Jura Compiler")
+
+### Verification
 
 A large part of the source code for the Jura compiler is based on a
 mechanization in Coq from which part of the compiler is extracted. A
@@ -47,14 +51,15 @@ Ultimately, one of our goals is to provide a full formal semantics for
 Jura in Coq, and prove correct as much of the compilation pipeline as
 possible.
 
+### Status
+
+- The current implementation only supports the JavaScript backend for Cicero (and Hyperledger)
+- CTO models are imported, but not used for type checking yet (but stay tuned!)
+- Currently, code generation is done through [Q*cert](https://github.com/querycert/qcert) using the NNRC intermediate language
+
 ## Relationship to Cicero
 
 One of the use for the Jura compiler is as an embedded component inside [Cicero](https://github.com/accordproject/cicero), which implements of the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0). The following diagram describe how this works:
 
 ![alt text](./juraincicero.jpg "Jura inside Cicero")
-
-## Caveats
-
-- The current implementation only supports the JavaScript backend
-- There is no type checker yet.
 
