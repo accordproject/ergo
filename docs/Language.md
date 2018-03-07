@@ -15,8 +15,8 @@ package org.accordproject.helloworld
 
 contract HelloWorld over TemplateModel {
    // Simple Clause
-   clause helloworld(request Request) Response {
-       new Response{ output: "Hello " + this.name + " " + request.input }
+   clause helloworld(request Request) : Response {
+       new Response{ output: "Hello " ++ this.name ++ " " ++ request.input }
   }
 }
 ```
@@ -86,6 +86,8 @@ Local variables can also be declared with a type:
 ```
 define variable name : String = "John"; // declares and initialize a string variable
 name ++ " Smith"                        // rest of the expression
+let x : Double = 3.1416;                // declares and initialize a double variable
+sqrt(x)                                 // rest of the expression
 ```
 
 ### Conditionals:
@@ -109,7 +111,6 @@ Guards can be useful to check preconditions in a clause. The first expression ca
 guard x >= 0;             // Condition
 x+1                       // Expression if condition is true
 ```
-Guards can be useful to check preconditions in a clause
 
 ### Creating objects
 
@@ -143,4 +144,15 @@ for x in [1,-2,3] { x+1 }
 For expressions can have an optional condition of the values being iterated over:
 ```
 for x in [1,-2,3] where x > 0 { x+1 }
+```
+
+## Functions
+
+It is possible to declare functions in Jura:
+```
+define variable pi = 3.1416
+define function area(radius Double) : Double {
+  pi * r * r
+}
+area(1.5)
 ```
