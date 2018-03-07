@@ -251,6 +251,25 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<br/>
 &nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#JuraBase.lookup">lookup</a></span>.<br/>
 <br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="JuraBase.utils">utils</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="brand_of_class_ref">brand_of_class_ref</a></span> (<span class="id">local_package</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>) (<span class="id">cr</span>:<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#class_ref">class_ref</a></span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">pname</span> := <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#cr">cr</a></span>.(<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#class_package">class_package</a></span>) <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> =&gt; <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#local_package">local_package</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">ref_package</span> =&gt; <span class="id">ref_package</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#pname">pname</a></span> ++ "." ++ <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#cr">cr</a></span>.(<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#class_name">class_name</a></span>))%<span class="id">string</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#JuraBase.utils">utils</a></span>.<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="JuraBase.errors">errors</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_default_package">jura_default_package</a></span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> ("<span class="id">org.jura</span>"%<span class="id">string</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_default_error">jura_default_error</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#mkClassRef">mkClassRef</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#jura_default_package">jura_default_package</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<span class="id">Error</span>".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#JuraBase.errors">errors</a></span>.<br/>
 <span class="kwd">End</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html#JuraBase">JuraBase</a></span>.<br/>
 <br/>
 
