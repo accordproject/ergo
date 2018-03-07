@@ -37,7 +37,7 @@ One of the use for the Jura compiler is as an embedded component as part of the 
 
 ![alt text](./ciceroembed.jpg "Jura inside Cicero")
 
-## Language design
+## Language
 
 The language syntax and design are preliminary, but a few notes can be
 found in [Language.md](Language.md).
