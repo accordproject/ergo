@@ -14,16 +14,16 @@ Jura is a domain specific language designed to capture the execution logic of _l
 - to ensure safe execution: the language should prevent run-time errors and non-terminating logic
 - to be blockchain neutral: the same contract logic can be deployed either on and off chain and to a variety of distributed ledger technologies
 - to be formally specified: the meaning of contracts should be well defined so it can be verified, and preserved during execution
-- to be consistent with the Accord Project template specification
+- to be consistent with the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0)
 
 ## Design choices
 
 To achieve those goals the design of Jura is based on the following principles:
-- It manipulates concepts and transations from CTO models as defined in the Accord Project specification
-- Contracts have a class-like structure with clauses as methods
+- It can handle types (concepts, transations, etc) as defined with the [Hyperledger Composer Modeling Language](https://hyperledger.github.io/composer/reference/cto_language.html) as mandated by the Accord Prototype Template Specification
+- Contracts have a class-like structure with clauses akin to methods
 - It borrows from strongly-typed functional programming language: clauses have a well-defined signature (input and output), they are functions without side effects
 - Clauses are written in an expression language with limited expressiveness (it allows conditional and bounded iteration).
-- Part of the compiler is written in Coq as a stepping stone for formal specification and verification.
+- Most of the compiler is written in Coq as a stepping stone for formal specification and verification.
 
 ## Compiler architecture
 
