@@ -37,23 +37,21 @@ The initial architecture for the Jura compiler is as follows:
 
 ![alt text](./juracompiler.jpg "Jura Compiler")
 
-## Relationship to Cicero
-
-One of the use for the Jura compiler is as an embedded component inside [Cicero](https://github.com/accordproject/cicero), which implements of the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0). The following diagram describe how this works:
-
-![alt text](./juraincicero.jpg "Jura inside Cicero")
-
-## Verification
-
-The source code for the Jura compiler includes a mechanization in Coq
-from which part of the compiler is extracted. A browsable version of
-the Coq code (generated using
+A large part of the source code for the Jura compiler is based on a
+mechanization in Coq from which part of the compiler is extracted. A
+browsable version of the Coq code (generated using
 [coq2html](https://github.com/xavierleroy/coq2html)) is available in
 [specification](specification/index.md).
 
 Ultimately, one of our goals is to provide a full formal semantics for
 Jura in Coq, and prove correct as much of the compilation pipeline as
 possible.
+
+## Relationship to Cicero
+
+One of the use for the Jura compiler is as an embedded component inside [Cicero](https://github.com/accordproject/cicero), which implements of the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0). The following diagram describe how this works:
+
+![alt text](./juraincicero.jpg "Jura inside Cicero")
 
 ## Caveats
 
