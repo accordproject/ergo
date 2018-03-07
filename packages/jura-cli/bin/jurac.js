@@ -23,6 +23,9 @@ require('yargs')
         yargs.option('jura', {
             describe: 'path to the Jura source'
         });
+        yargs.option('cto', {
+            describe: 'path to the CTO model'
+        });
         yargs.option('contractname', {
             describe: 'contract name'
         });
@@ -38,7 +41,7 @@ require('yargs')
         if (argv.verbose) {
             Logger.info(`compile Jura file ${argv.jura} with contract ${argv.contractname} and clause with contract ${argv.clausename}`);
         }
-        return Commands.compile(argv.jura,argv.contractname,argv.clausename, argv.dispatch)
+        return Commands.compile(argv.jura,argv.cto,argv.contractname,argv.clausename, argv.dispatch)
             .then((result) => {
                 Logger.info(result);
             })
@@ -56,6 +59,9 @@ require('yargs')
         yargs.option('jura', {
             describe: 'path to the Jura file'
         });
+        yargs.option('cto', {
+            describe: 'path to the CTO model'
+        });
         yargs.option('contractname', {
             describe: 'contract name'
         });
@@ -72,7 +78,7 @@ require('yargs')
             Logger.info(`execute Jura clause ${argv.jura} using clause data ${argv.clause} with request data ${argv.request}`);
         }
 
-        return Commands.execute(argv.jura, argv.clause, argv.request, argv.contractname, argv.clausename, argv.dispatch)
+        return Commands.execute(argv.jura, argv.cto, argv.clause, argv.request, argv.contractname, argv.clausename, argv.dispatch)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })

@@ -27,20 +27,23 @@ class Commands {
      * Compile Jura
      *
      * @param {string} juraPath path to the Jura file
+     * @param {string} ctoPath pathto the CTO model
      * @param {string} contractName of the contract to execute
      * @param {string} clauseName of the clause to execute
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(juraPath,contractName,clauseName,withDispatch) {
+    static compile(juraPath,ctoPath,contractName,clauseName,withDispatch) {
         const jurText = Fs.readFileSync(juraPath, 'utf8');
-        return Jura.compile(jurText,contractName,clauseName,withDispatch);
+        const ctoText = Fs.readFileSync(ctoPath, 'utf8');
+        return Jura.compile(jurText,ctoText,contractName,clauseName,withDispatch);
     }
 
     /**
      * Execute Jura
      *
      * @param {string} juraPath path to the Jura file
+     * @param {string} ctoPath pathto the CTO model
      * @param {object} clausePath path to the clause data in JSON
      * @param {object} requestPath path to the request transaction in JSON
      * @param {string} contractName of the contract to execute
@@ -48,11 +51,12 @@ class Commands {
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(juraPath,clausePath,requestPath,contractName,clauseName,withDispatch) {
+    static execute(juraPath,ctoPath,clausePath,requestPath,contractName,clauseName,withDispatch) {
         const jurText = Fs.readFileSync(juraPath, 'utf8');
+        const ctoText = Fs.readFileSync(ctoPath, 'utf8');
         const jsonClause = JSON.parse(Fs.readFileSync(clausePath, 'utf8'));
         const jsonRequest = JSON.parse(Fs.readFileSync(requestPath, 'utf8'));
-        return JuraEngine.execute(jurText,jsonClause,jsonRequest,contractName,clauseName,withDispatch);
+        return JuraEngine.execute(jurText,ctoText,jsonClause,jsonRequest,contractName,clauseName,withDispatch);
     }
 
     /**
@@ -65,7 +69,6 @@ class Commands {
         const ctoText = Fs.readFileSync(ctoPath, 'utf8');
         return Jura.parseCTO(ctoText);
     }
-
 }
 
 module.exports = Commands;

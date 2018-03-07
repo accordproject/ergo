@@ -30,7 +30,8 @@ describe('jura-compiler', () => {
     describe('#compilehello', function () {
         it('should compile a smart Jura clause', async function () {
             const juraText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.jura'), 'utf8');
-            const result = await Jura.compile(juraText, null, null, false);
+            const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
+            const result = await Jura.compile(juraText, ctoText, null, null, false);
             result.should.not.be.null;
             //result.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
@@ -38,7 +39,8 @@ describe('jura-compiler', () => {
     describe('#compilehello', function () {
         it('should compile a smart Jura clause with contract/clause names', async function () {
             const juraText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.jura'), 'utf8');
-            const result = await Jura.compile(juraText, 'HelloWorld', 'helloworld', false);
+            const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
+            const result = await Jura.compile(juraText, ctoText, 'HelloWorld', 'helloworld', false);
             result.should.not.be.null;
             //result.output.should.equal('Hello Fred Blogs (Accord Project)');
         });

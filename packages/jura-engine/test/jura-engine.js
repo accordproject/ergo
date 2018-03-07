@@ -35,7 +35,7 @@ describe('Execute', () => {
         const name = test.name;
         const dir = test.dir;
         const jura = test.jura;
-        //const model = test.model;
+        const model = test.model;
         const contract = test.contract;
         const request = test.request;
         const contractname = test.contractname;
@@ -45,9 +45,10 @@ describe('Execute', () => {
         describe('#execute'+name, function () {
             it('should execute Jura clause ' + clausename + ' in contract ' + contractname, async function () {
                 const juraText = Fs.readFileSync(Path.resolve(__dirname, dir, jura), 'utf8');
+                const ctoText = Fs.readFileSync(Path.resolve(__dirname, dir, model), 'utf8');
                 const jsonClause = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const jsonRequest = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
-                const result = await JuraEngine.execute(juraText, jsonClause, jsonRequest, contractname, clausename, false);
+                const result = await JuraEngine.execute(juraText, ctoText, jsonClause, jsonRequest, contractname, clausename, false);
                 //console.log(JSON.stringify(result));
                 for (const key in expected) {
                     if (expected.hasOwnProperty(key)) {

@@ -28,16 +28,18 @@ describe('jurac', () => {
     describe('#compilehello', function () {
         it('should compile a smart Jura clause', async function () {
             const juraPath = Path.resolve(__dirname, 'data/helloworld', 'logic.jura');
-            const result = await Commands.compile(juraPath, 'HelloWorld', 'helloworld', false);
+            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
+            const result = await Commands.compile(juraPath, ctoPath, 'HelloWorld', 'helloworld', false);
             result.should.not.be.null;
         });
     });
     describe('#executehello', function () {
         it('should execute a smart Jura clause', async function () {
             const juraPath = Path.resolve(__dirname, 'data/helloworld', 'logic.jura');
+            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
             const clausePath = Path.resolve(__dirname, 'data/helloworld', 'clause.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
-            const result = await Commands.execute(juraPath, clausePath, requestPath, 'HelloWorld', 'helloworld', false);
+            const result = await Commands.execute(juraPath, ctoPath, clausePath, requestPath, 'HelloWorld', 'helloworld', false);
             result.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });

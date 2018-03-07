@@ -32,6 +32,8 @@ let global_config_of_json j =
   let gconf = default_config () in
   (* Specialize apply/iter for this given gconf *)
   let apply = apply gconf in
+  (* CTO *)
+  apply JuraConfig.set_cto j##.cto;
   (* Source/Target *)
   apply JuraConfig.set_source_lang j##.source;
   apply JuraConfig.set_target_lang j##.target;

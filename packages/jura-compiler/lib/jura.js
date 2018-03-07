@@ -23,15 +23,37 @@ const CTOParser = require('composer-common/lib/introspect/parser');
  */
 class Jura {
     /**
+     * Parse CTO to JSON
+     *
+     * @param {string} ctoText text for CTO model
+     * @returns {object} The parsed CTO model syntax tree in JSON
+     */
+    static parseCTOToJSON(ctoText) {
+        const result = CTOParser.parse(ctoText);
+        return result;
+    }
+
+    /**
+     * Parse CTO
+     *
+     * @param {string} ctoText text for CTO model
+     * @returns {object} The parsed CTO model syntax tree in JSON
+     */
+    static parseCTO(ctoText) {
+        return Promise.resolve(this.parseCTOToJSON(ctoText));
+    }
+
+    /**
      * Compile Jura to JavaScript
      *
      * @param {string} juraText text for Jura code
+     * @param {string} ctoText text for CTO model
      * @param {string} contractName of the contract to compile
      * @param {string} clauseName of the clause to compile
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(juraText,contractName,clauseName,withDispatch) {
+    static compileToJavaScript(juraText,ctoText,contractName,clauseName,withDispatch) {
         // Built-in config
         const config= {
             'source' : 'jura',
@@ -40,6 +62,7 @@ class Jura {
         };
         // Clean-up naming for Sexps
         config.jura = juraText;
+        config.cto = JSON.stringify(this.parseCTOToJSON(ctoText));
         if (contractName !== null) { config.contract = contractName; }
         if (clauseName !== null) { config.clause = clauseName; }
         // Call compiler
@@ -51,24 +74,14 @@ class Jura {
      * Compile Jura
      *
      * @param {string} juraText text for Jura code
+     * @param {string} ctoText text for CTO model
      * @param {string} contractName of the contract to compile
      * @param {string} clauseName of the clause to compile
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(juraText,contractName,clauseName,withDispatch) {
-        return Promise.resolve(this.compileToJavaScript(juraText,contractName,clauseName,withDispatch));
-    }
-
-    /**
-     * Parse CTO to JSON
-     *
-     * @param {string} ctoText text for CTO model
-     * @returns {object} The parsed CTO model syntax tree in JSON
-     */
-    static parseCTO(ctoText) {
-        const result = CTOParser.parse(ctoText);
-        return Promise.resolve(result);
+    static compile(juraText,ctoText,contractName,clauseName,withDispatch) {
+        return Promise.resolve(this.compileToJavaScript(juraText,ctoText,contractName,clauseName,withDispatch));
     }
 
 }

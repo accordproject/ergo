@@ -33,7 +33,7 @@ let args_list gconf =
        "<lang> Indicates the language for the target (default: javascript)");
       ("--with-dispatch", Arg.Unit (JuraConfig.set_with_dispatch_true gconf),
        " Generate dispatch function (default: false)");
-      ("--cto", Arg.String (JuraConfig.set_cto gconf),
+      ("--cto", Arg.String (JuraConfig.set_cto_file gconf),
        "<file> CTO model");
    ]
 

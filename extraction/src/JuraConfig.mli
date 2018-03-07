@@ -27,7 +27,8 @@ type global_config = {
     mutable jconf_contract_name : string option;
     mutable jconf_clause_name : string option;
     mutable jconf_with_dispatch : bool;
-    mutable jconf_cto : string option;
+    mutable jconf_cto_file : string option;
+    mutable jconf_cto : JComp.cto_package option;
   }
 
 val default_config : unit -> global_config
@@ -37,7 +38,8 @@ val get_target_lang : global_config -> lang
 val get_contract_name : global_config -> string option
 val get_clause_name : global_config -> string option
 val get_with_dispatch : global_config -> bool
-val get_cto : global_config -> string option
+val get_cto_file : global_config -> string option
+val get_cto : global_config -> JComp.cto_package option
 
 val set_source_lang : global_config -> string -> unit
 val set_target_lang : global_config -> string -> unit
@@ -46,5 +48,6 @@ val set_clause_name : global_config -> string -> unit
 val set_with_dispatch : global_config -> bool -> unit
 val set_with_dispatch_true : global_config -> unit -> unit
 val set_with_dispatch_false : global_config -> unit -> unit
+val set_cto_file : global_config -> string -> unit
 val set_cto : global_config -> string -> unit
 

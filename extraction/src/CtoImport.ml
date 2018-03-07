@@ -67,7 +67,7 @@ let cto_declaration_of_defn d =
     | "EnumDeclaration" ->
 	CTOEnum (cto_enum_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "TransactionDeclaration" ->
-	raise (Jura_Error "Can't import CTO Transaction")
+	CTOTransaction (cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "ConceptDeclaration" ->
 	CTOConcept (cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
