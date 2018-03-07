@@ -19,23 +19,24 @@ Jura is a domain specific language designed to capture the execution logic of _l
 ## Design choices
 
 To achieve those goals the design of Jura is based on the following principles:
-- It can handle types (concepts, transations, etc) as defined with the [Hyperledger Composer Modeling Language](https://hyperledger.github.io/composer/reference/cto_language.html) as mandated by the Accord Prototype Template Specification
+- It can handle types (concepts, transations, etc) defined with the [Hyperledger Composer Modeling Language](https://hyperledger.github.io/composer/reference/cto_language.html) as mandated by the Accord Prototype Template Specification
 - Contracts have a class-like structure with clauses akin to methods
-- It borrows from strongly-typed functional programming language: clauses have a well-defined signature (input and output), they are functions without side effects
-- Clauses are written in an expression language with limited expressiveness (it allows conditional and bounded iteration).
+- It borrows from strongly-typed functional programming languages: clauses have a well-defined type signature (input and output), they are functions without side effects
+- The compiler guarantees error-free execution for well-typed Jura programs
+- Clauses and functions are written in an expression language with limited expressiveness (it allows conditional and bounded iteration).
 - Most of the compiler is written in Coq as a stepping stone for formal specification and verification.
 
 ## Compiler architecture
 
 The initial architecture for the Jura compiler is as follows:
 
-![alt text](./compilerstack.jpg "Jura Compiler")
+![alt text](./juracompiler.jpg "Jura Compiler")
 
 ## Relationship to Cicero
 
 One of the use for the Jura compiler is as an embedded component inside [Cicero](https://github.com/accordproject/cicero), which implements of the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0). The following diagram describe how this works:
 
-![alt text](./ciceroembed.jpg "Jura inside Cicero")
+![alt text](./juraincicero.jpg "Jura inside Cicero")
 
 ## Language
 
