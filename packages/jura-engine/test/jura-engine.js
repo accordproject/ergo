@@ -23,18 +23,39 @@ Chai.use(require('chai-things'));
 const Fs = require('fs');
 const Path = require('path');
 
+// Set of tests
+const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.json'), 'utf8'));
+
 describe('Execute', () => {
 
     afterEach(() => {});
 
-    describe('#executehello', function () {
-        it('should execute a smart Jura clause', async function () {
-            const juraText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.jura'), 'utf8');
-            const jsonClause = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'clause.json'), 'utf8'));
-            const jsonRequest = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'request.json'), 'utf8'));
-            const result = await JuraEngine.execute(juraText, jsonClause, jsonRequest, 'HelloWorld', 'helloworld', false);
-            //result.should.not.be.null;
-            result.output.should.equal('Hello Fred Blogs (Accord Project)');
+    for (const i in workload) {
+        const test = workload[i];
+        const name = test.name;
+        const dir = test.dir;
+        const jura = test.jura;
+        //const model = test.model;
+        const contract = test.contract;
+        const request = test.request;
+        const contractname = test.contractname;
+        const clausename = test.clausename;
+        const expected = test.expected;
+
+        describe('#execute'+name, function () {
+            it('should execute a smart Jura clause', async function () {
+                const juraText = Fs.readFileSync(Path.resolve(__dirname, dir, jura), 'utf8');
+                const jsonClause = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
+                const jsonRequest = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
+                const result = await JuraEngine.execute(juraText, jsonClause, jsonRequest, contractname, clausename, false);
+                //console.log(JSON.stringify(result));
+                for (const i in expected) {
+                    const field = expected[i].field;
+                    const value = expected[i].value;
+                    //result.should.not.be.null;
+                    result[field].should.equal(value);
+                }
+            });
         });
-    });
+    }
 });

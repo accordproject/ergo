@@ -1,0 +1,42 @@
+// Imports CTO files
+import org.accordproject.contract.*
+import org.accordproject.latedeliveryandpenalty.*
+
+/* From template:
+Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeure cases,":? forceMajeure}] the Seller shall pay to the Buyer for every [{penaltyDuration}] of delay penalty amounting to [{penaltyPercentage}]% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a [{fractionalPart}] is to be considered a full [{fractionalPart}]. The total amount of penalty shall not however, exceed [{capPercentage}]% of the total value of the Equipment involved in late delivery. If the delay is more than [{termination}], the Buyer is entitled to terminate this Contract.
+ */
+
+// Declare a contract over a template model
+contract LateDeliveryAndPenalty over TemplateModel {
+    // Defines a function to calculate the penalty
+   define function calculatePenalty(diff Double, goodsValue Double) : Double {
+      // penalty formula
+      define variable penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
+      
+      // penalty may be capped
+      if penalty > capPercentage/100 * goodsValue {
+         return capPercentage/100 * goodsValue
+      } else {
+         return penalty
+      }
+   }
+
+   // Clause for volume discount
+   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse {
+
+     define variable agreed = request.agreedDelivery;
+
+     // First check if the clause applies
+     if !moment.isAfter(moment.now(),agreed) {
+       error Error{ "This clause does not apply" }
+     } else if forceMajeure && request.forceMajeure { // Second check if forceMajeure is and can be claimed
+       return LateDeliveryAndPenaltyResponse{ 0, true }
+     } else { // If not, calculate the penalty and whether the contract can be terminated
+       // difference between current date and agreed upon date
+       define variable diff = moment.diff(moment.now(),agreed,penaltyDuration.unit);
+       // Calls the function to calculate penalty
+       define variable penalty = calculatePenalty(diff,request.goodsValue);
+       // Return the response with the penalty and termination determination
+       return LateDeliveryAndPenaltyResponse{ capped, diff > termination }
+     }
+}

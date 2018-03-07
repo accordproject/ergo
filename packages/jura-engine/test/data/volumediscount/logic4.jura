@@ -1,0 +1,26 @@
+package org.accordproject.volumediscount
+
+import org.accordproject.contract.*
+import org.accordproject.late.*
+
+define variable fee = 1
+define function addFee(rate Double) : Double {
+  match fee {
+    with let v = 1 : rate + v/10
+    with let v = 2 : rate + fee/15
+    otherwise : rate
+  }
+}
+
+contract VolumeDiscount over TemplateModel {
+  // Clause for volume discount
+  clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
+    if request.netAnnualChargeVolume < this.firstVolume {
+	new VolumeDiscountResponse{ discountRate: addFee(this.firstRate) }
+    } else if request.netAnnualChargeVolume < this.secondVolume {
+	new VolumeDiscountResponse{ discountRate: addFee(this.secondRate) }
+    } else {
+        new VolumeDiscountResponse{ discountRate: addFee(this.thirdRate) }
+    }
+  }
+}
