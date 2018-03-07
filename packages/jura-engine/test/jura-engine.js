@@ -43,7 +43,7 @@ describe('Execute', () => {
         const expected = test.expected;
 
         describe('#execute'+name, function () {
-            it('should execute a smart Jura clause', async function () {
+            it('should execute Jura clause ' + clausename + ' in contract ' + contractname, async function () {
                 const juraText = Fs.readFileSync(Path.resolve(__dirname, dir, jura), 'utf8');
                 const jsonClause = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const jsonRequest = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
