@@ -49,11 +49,13 @@ describe('Execute', () => {
                 const jsonRequest = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 const result = await JuraEngine.execute(juraText, jsonClause, jsonRequest, contractname, clausename, false);
                 //console.log(JSON.stringify(result));
-                for (const i in expected) {
-                    const field = expected[i].field;
-                    const value = expected[i].value;
-                    //result.should.not.be.null;
-                    result[field].should.equal(value);
+                for (const key in expected) {
+                    if (expected.hasOwnProperty(key)) {
+                        const field = key;
+                        const value = expected[key];
+                        //result.should.not.be.null;
+                        result[field].should.equal(value);
+                    }
                 }
             });
         });
