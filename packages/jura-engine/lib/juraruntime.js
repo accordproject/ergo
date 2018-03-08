@@ -306,7 +306,6 @@ function mustBeArray(obj) {
     if (Array.isArray(obj))
 	return;
     var e = new Error("Expected an array but got: " + JSON.stringify(obj));
-    java.lang.System.err.println(e.stack);
     throw e;
 }
 function cast(brands,v) {
@@ -337,12 +336,9 @@ function enhanced_cast(brands,v) {
     if (brands.length != 1)
 	throw "Can't handle multiple brands yet";
     var brand = brands[0];
-    // java.lang.System.out.printf("Cast from %s to %s", type, brand);
     if (brand == type || brand == "Any" || sub_brand(type, brand)) {
-    	// java.lang.System.out.println(" ... succeeded");
     	return left(v);
     }
-    // java.lang.System.out.println(" ... failed");
     return right(null);
 }
 function singleton(v) {
@@ -353,7 +349,6 @@ function singleton(v) {
     }
 }
 function unbrand(v) {
-    //	if (verboseLibrary) java.lang.System.out.println("Unbranding " + JSON.stringify(v));
     if (typeof v === "object")
 	if ("$class" in v) {
 	    return remove(v,"$class");
@@ -367,7 +362,6 @@ function brand(b,v) {
     return v
 }
 function either(v) {
-    //	if (verboseLibrary) java.lang.System.out.println("Either called on " + JSON.stringify(v));
     if (v == null)
 	return false;
     if (typeof v === "object")
@@ -390,25 +384,20 @@ function toRight(v) {
 	return null;
     if (typeof v === "object" && "right" in v)
 	return v.right;
-    // java.lang.System.out.println("Possible problem: right applied to " + (typeof v));
     return undefined;
 }
 function deref(receiver, member) {
-    // java.lang.System.out.printf("deref of %s[%s]", receiver, member);
     if (typeof receiver === "object" && member in receiver) {
 	var ans = receiver[member];
 	if (ans === null) {
-	    // java.lang.System.out.println(" ... produced null");
 	    return null;
 	}
 	if (typeof ans === "object" && looksLikeRelationship(ans))
 	    ans = left(ans["key"]);
 	if (("$class" in receiver) && typeof ans === "object" && !("left" in ans) && !Array.isArray(ans))
 	    ans = left(ans);
-	// java.lang.System.out.println(" ... produced " + JSON.stringify(ans));
 	return ans;
     }
-    // java.lang.System.out.println(" ... is undefined");
     return undefined;
 }
 function looksLikeRelationship(v) {
@@ -548,7 +537,6 @@ function sqlDateDurationBetween(date1, date2) {
 }
 
 function compareDates(date1, date2) {
-    // java.lang.System.out.println("Comparing " + JSON.stringify(date1) + " and " + JSON.stringify(date2) + " = ");
     if (date1.year < date2.year)
 	return -1;
     if (date1.year > date2.year)
