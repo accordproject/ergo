@@ -11,11 +11,11 @@ contract PerishableGoods over TemplateModel {
     define variable lowestReading = min(tempReadings);
     // find the highest temperature reading
     define variable highestReading = max(tempReadings);
-    if lowestReading < this.minTemperature {
-      return (this.minTemperature - lowestReading) * this.minPenaltyFactor
-    } else if highestReading > this.maxTemperature {
-      return highestReading - this.maxTemperature) * this.maxPenaltyFactor
-    } else { return 0 };
+    if lowestReading < this.minTemperature
+    then (this.minTemperature - lowestReading) * this.minPenaltyFactor
+    else if highestReading > this.maxTemperature
+    then highestReading - this.maxTemperature) * this.maxPenaltyFactor
+    else 0
   }
 
   // Clause for volume discount

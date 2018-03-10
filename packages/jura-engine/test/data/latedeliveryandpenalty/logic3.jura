@@ -17,11 +17,9 @@ contract LateDeliveryAndPenalty over TemplateModel {
     // penalty formula
     define variable penalty = (diff / this.penaltyDuration.amount) * this.penaltyPercentage/100 * goodsValue;
     // penalty may be capped
-    if penalty > this.capPercentage/100 * goodsValue {
-       this.capPercentage/100 * goodsValue
-    } else {
-       penalty
-    }
+    if penalty > this.capPercentage/100 * goodsValue
+    then this.capPercentage/100 * goodsValue
+    else penalty
   }
 
   // Clause for volume discount
@@ -42,7 +40,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     // difference between current date and agreed upon date
     define variable diff = momentDiff(agreed,now());
     define variable penalty = calculatePenalty(diff,request.goodsValue);
-    return new LateDeliveryAndPenaltyResponse{
+    new LateDeliveryAndPenaltyResponse{
 	penalty: capped,
 	buyerMayTerminate: diff > this.termination.amount
     }

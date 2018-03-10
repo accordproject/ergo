@@ -25,12 +25,12 @@
 %token PACKAGE IMPORT DEFINE FUNCTION
 %token CONTRACT OVER CLAUSE THROWS
 
-%token IF GUARD ELSE
+%token IF GUARD THEN ELSE
 %token LET FOR IN WHERE
 %token RETURN THROW
 %token VARIABLE AS
 %token NEW THIS
-%token MATCH TYPEMATCH WITH OTHERWISE
+%token MATCH TYPEMATCH WITH
 
 %token OR AND NOT
 %token FLATTEN
@@ -60,6 +60,7 @@
 %left PLUSPLUS
 %right NOT
 %left DOT
+%left ELSE
 
 %start <JComp.JuraCompiler.jura_package> main
 
@@ -213,7 +214,7 @@ expr:
     { JuraCompiler.jvar (Util.char_list_of_string v) }
 | e = expr DOT a = IDENT
     { JuraCompiler.jdot (Util.char_list_of_string a) e }
-| IF e1 = expr LCURLY e2 = expr RCURLY ELSE e3 = else_clause
+| IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { JuraCompiler.jif e1 e2 e3 }
 | GUARD e1 = expr ELSE LCURLY e3 = expr RCURLY SEMI e2 = expr
     { JuraCompiler.jguard e1 e2 e3 }
@@ -235,7 +236,7 @@ expr:
     { JuraCompiler.jdefinevar_typed v t e1 e2 }
 | LET v = safeident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jdefinevar_typed v t e1 e2 }
-| MATCH e0 = expr LCURLY csd = cases RCURLY
+| MATCH e0 = expr csd = cases
     { JuraCompiler.jswitch e0 (fst csd) (snd csd) }
 | FOR v = safeident IN e1 = expr LCURLY e2 = expr RCURLY
     { JuraCompiler.jfor v e1 None e2 }
@@ -290,12 +291,6 @@ expr:
 | e1 = expr PLUSPLUS e2 = expr
     { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.opstringconcat e1 e2 }
 
-else_clause:
-| LCURLY e = expr RCURLY
-    { e }
-| IF e1 = expr LCURLY e2 = expr RCURLY ELSE e3 = else_clause
-    { JuraCompiler.jif e1 e2 e3 }
-
 (* expression list *)
 exprlist:
 | 
@@ -307,15 +302,15 @@ exprlist:
 
 (* cases *)
 cases:
-| OTHERWISE COLON e = expr
+| ELSE e = expr
     { ([],e) }
-| WITH d = data COLON e = expr cs = cases
+| WITH d = data THEN e = expr cs = cases
     { (((None,JuraCompiler.jcasevalue d),e)::(fst cs), snd cs) }
-| WITH LET v = safeident EQUAL d = data COLON e = expr cs = cases
+| WITH LET v = safeident EQUAL d = data THEN e = expr cs = cases
     { (((Some v,JuraCompiler.jcasevalue d),e)::(fst cs), snd cs) }
-| WITH AS brand = STRING COLON e = expr tcs = cases
+| WITH AS brand = STRING THEN e = expr tcs = cases
     { (((None,JuraCompiler.jcasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
-| WITH LET v = safeident AS brand = STRING COLON e = expr tcs = cases
+| WITH LET v = safeident AS brand = STRING THEN e = expr tcs = cases
     { (((Some v,JuraCompiler.jcasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
 
 (* New struct *)
@@ -385,6 +380,7 @@ safeident_base:
 | CLAUSE { "clause" }
 | IF { "if" }
 | GUARD { "guard" }
+| THEN { "then" }
 | ELSE { "else" }
 | LET { "let" }
 | FOR { "for" }
@@ -399,7 +395,6 @@ safeident_base:
 | MATCH { "match" }
 | TYPEMATCH { "typematch" }
 | WITH { "with" }
-| OTHERWISE { "otherwise" }
 | THIS { "this" }
 | OR { "or" }
 | AND { "and" }

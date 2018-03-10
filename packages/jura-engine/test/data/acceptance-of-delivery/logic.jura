@@ -13,14 +13,12 @@ contract AcceptanceOfDelivery over TemplateModel {
     };
 
     define variable status =
-      if momentIsAfter(now, momentAdd(received, momentDuration(data.businessDays, "DAY"))) {
-        "OUTSIDE_INSPECTION_PERIOD"
-      } else if request.inspectionPassed {
-        "PASSED_TESTING"
-      } else {
-        "FAILED_TESTING"
-      };
-    return new InspectionResponse{
+      if momentIsAfter(now, momentAdd(received, momentDuration(data.businessDays, "DAY")))
+      then "OUTSIDE_INSPECTION_PERIOD"
+      else if request.inspectionPassed
+      then "PASSED_TESTING"
+      else "FAILED_TESTING";
+    new InspectionResponse{
       status : status,
       shipper : this.shipper,   // This should be a relationship
       receiver : this.receiver  // This should be a relationship

@@ -92,19 +92,16 @@ sqrt(x)                                 // rest of the expression
 
 ### Conditionals:
 ```
-if x < 0 {   // Condition
-  -x+1       // Expression if condition is true
-} else {
-  x+1        // Expression if condition is false
-}
+if x < 0   // Condition
+then -x+1  // Expression if condition is true
+else x+1   // Expression if condition is false
 ```
 
 ### Guards allow to make sure a specific condition is true.
 ```
-guard x >= 0 else {       // Condition
-  "Something went wrong"  // Expression if condition is false
-};
-x+1                       // Expression if condition is true
+guard x >= 0                 // Condition
+else "Something went wrong"; // Expression if condition is false
+x+1                          // Expression if condition is true
 ```
 Guards can be useful to check preconditions in a clause. The first expression can be ommitted in which case Jura returns an error by default.
 ```
@@ -129,11 +126,10 @@ new Person{
 Match expressions allow to check an expression against multiple
 possible values:
 ```
-match fruitcode {
-  with 1: "Apple"
-  with 2: "Apricot"
-  otherwise: "Strange Fruit"
-}
+match fruitcode
+  with 1 then "Apple"
+  with 2 then "Apricot"
+  else "Strange Fruit"
 ```
 
 For expressions allow to apply an expression of every element in an input array of values:

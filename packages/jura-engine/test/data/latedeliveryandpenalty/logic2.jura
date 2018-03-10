@@ -17,9 +17,9 @@ contract LateDeliveryAndPenalty over TemplateModel {
       
       // penalty may be capped
       if penalty > capPercentage/100 * goodsValue {
-         return capPercentage/100 * goodsValue
+         capPercentage/100 * goodsValue
       } else {
-         return penalty
+         penalty
       }
    }
 
@@ -29,16 +29,15 @@ contract LateDeliveryAndPenalty over TemplateModel {
      define variable agreed = request.agreedDelivery;
 
      // First check if the clause applies
-     if !momentIsAfter(momentNow(),agreed) {
-       throw Error{ message : "This clause does not apply" }
-     } else if forceMajeure && request.forceMajeure { // Second check if forceMajeure is and can be claimed
-       return new LateDeliveryAndPenaltyResponse{ penalty : 0, buyerMayTerminate : true }
-     } else { // If not, calculate the penalty and whether the contract can be terminated
+     if !momentIsAfter(momentNow(),agreed)
+     then throw Error{ message : "This clause does not apply" }
+     else if forceMajeure && request.forceMajeure // Second check if forceMajeure is and can be claimed
+     then new LateDeliveryAndPenaltyResponse{ penalty : 0, buyerMayTerminate : true }
+     else // If not, calculate the penalty and whether the contract can be terminated
        // difference between current date and agreed upon date
        define variable diff = momentDiff(momentNow(),agreed,penaltyDuration.unit);
        // Calls the function to calculate penalty
        define variable penalty = calculatePenalty(diff,request.goodsValue);
        // Return the response with the penalty and termination determination
-       return LateDeliveryAndPenaltyResponse{ capped, diff > termination }
-     }
+       LateDeliveryAndPenaltyResponse{ capped, diff > termination }
 }

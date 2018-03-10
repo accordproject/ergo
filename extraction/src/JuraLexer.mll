@@ -34,6 +34,7 @@
 	  (* Expressions *)
 	  "if", IF;
 	  "guard", GUARD;
+	  "then", THEN;
 	  "else", ELSE;
 	  "let", LET;
 	  "for", FOR;
@@ -48,7 +49,6 @@
 	  "match", MATCH;
 	  "typematch", TYPEMATCH;
 	  "with", WITH;
-	  "otherwise", OTHERWISE;
 	  (* Functions *)
 	  "flatten", FLATTEN;
 	  "avg", AVG;
