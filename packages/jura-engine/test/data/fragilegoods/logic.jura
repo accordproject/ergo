@@ -8,7 +8,7 @@ import jura.moment.* // Date/Time library
 define function numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Double[]) : Double {
   count(
      for r in accelerometerReadings
-     where r > maxAcc || r < minAcc { r }
+     where r > maxAcc or r < minAcc { r }
   )
 }
 

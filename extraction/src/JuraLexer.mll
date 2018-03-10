@@ -49,6 +49,8 @@
 	  "match", MATCH;
 	  "typematch", TYPEMATCH;
 	  "with", WITH;
+          "or", OR;
+          "and", AND;
 	  (* Functions *)
 	  "flatten", FLATTEN;
 	  "avg", AVG;
@@ -90,8 +92,6 @@ rule token sbuff = parse
 | "*" { STAR }
 | "/" { SLASH }
 | "-" { MINUS }
-| "||" { OR }
-| "&&" { AND }
 | "," { COMMA }
 | ":" { COLON }
 | "." { DOT }

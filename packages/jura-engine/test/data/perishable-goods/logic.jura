@@ -21,7 +21,7 @@ contract PerishableGoods over TemplateModel {
   // Clause for volume discount
   clause payout(request ShipmentReceived) : PriceCalculation throws Error {
     // Ensures against unitCount outside the bounds specified in the clause
-    ensure request.unitCount < this.minUnits || request.unitCount > this.maxUnits
+    ensure request.unitCount < this.minUnits or request.unitCount > this.maxUnits
     else throw Error{ message : "Units received out of range for the contract." };
     // Ensures against requests for payout after the dueDate
     ensure momentIsAfter(this.dueDate,request.timestamp)

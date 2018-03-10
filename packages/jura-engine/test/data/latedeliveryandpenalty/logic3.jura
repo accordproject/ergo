@@ -29,7 +29,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     ensure momentIsBefore(agreed,now())
     else throw Error{ message : "Cannot exercise late delivery before delivery date" };
     // Ensures against force majeure
-    ensure !this.forceMajeure || !request.forceMajeure
+    ensure !this.forceMajeure or !request.forceMajeure
     else new LateDeliveryAndPenaltyResponse{
 	penalty: 0,
 	buyerMayTerminate: true
