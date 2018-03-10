@@ -86,19 +86,19 @@ stmts:
     { s :: ss }
 
 stmt:
-| DEFINE VARIABLE v = safeident EQUAL e = expr
+| DEFINE VARIABLE v = ident EQUAL e = expr
     { JGlobal (v, e) }
-| DEFINE FUNCTION cn = IDENT LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
-	{ func_name = Util.char_list_of_string cn;
+	{ func_name = cn;
 	  func_closure =
 	  { closure_params = [];
             closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
-	{ func_name = Util.char_list_of_string cn;
+	{ func_name = cn;
 	  func_closure =
 	  { closure_params = ps;
             closure_output = Some out;
@@ -110,9 +110,9 @@ stmt:
     { JContract c }
 
 contract:
-| CONTRACT cn = IDENT OVER tn = IDENT LCURLY ds = declarations RCURLY
-    { { contract_name = Util.char_list_of_string cn;
-        contract_template = Util.char_list_of_string tn;
+| CONTRACT cn = ident OVER tn = ident LCURLY ds = declarations RCURLY
+    { { contract_name = cn;
+        contract_template = tn;
         contract_declarations = ds; } }
 
 declarations:
@@ -124,15 +124,15 @@ declarations:
     { (Clause cl) :: ds }
 
 func:
-| DEFINE FUNCTION cn = IDENT LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { func_name = Util.char_list_of_string cn;
+| DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+    { { func_name = cn;
 	func_closure =
 	{ closure_params = [];
           closure_output = Some out;
 	  closure_throw = mt;
 	  closure_body = e; } } }
-| DEFINE FUNCTION cn = IDENT LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { func_name = Util.char_list_of_string cn;
+| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+    { { func_name = cn;
 	func_closure =
 	{ closure_params = ps;
           closure_output = Some out;
@@ -140,15 +140,15 @@ func:
 	  closure_body = e; } } }
 
 clause:
-| CLAUSE cn = IDENT LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { clause_name = Util.char_list_of_string cn;
+| CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+    { { clause_name = cn;
 	clause_closure =
 	  { closure_params = [];
             closure_output = Some out;
 	    closure_throw = mt;
 	    closure_body = e; } } }
-| CLAUSE cn = IDENT LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { clause_name = Util.char_list_of_string cn;
+| CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+    { { clause_name = cn;
 	clause_closure =
 	  { closure_params = ps;
             closure_output = Some out;
@@ -158,8 +158,8 @@ clause:
 maythrow:
 |
   { None }
-| THROWS en = IDENT
-  { Some (Util.char_list_of_string en) }
+| THROWS en = ident
+  { Some en }
     
 params:
 | p = param
@@ -212,8 +212,8 @@ expr:
 (* Expressions *)
 | v = IDENT
     { JuraCompiler.jvar (Util.char_list_of_string v) }
-| e = expr DOT a = IDENT
-    { JuraCompiler.jdot (Util.char_list_of_string a) e }
+| e = expr DOT a = safeident
+    { JuraCompiler.jdot a e }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { JuraCompiler.jif e1 e2 e3 }
 | ENSURE e1 = expr ELSE e3 = expr SEMI e2 = expr
@@ -228,19 +228,19 @@ expr:
     { JuraCompiler.jnew (fst qn) (snd qn) r }
 | THIS
     { JuraCompiler.jthis }
-| DEFINE VARIABLE v = safeident EQUAL e1 = expr SEMI e2 = expr
+| DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jdefinevar v e1 e2 }
-| LET v = safeident EQUAL e1 = expr SEMI e2 = expr
+| LET v = ident EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jdefinevar v e1 e2 }
-| DEFINE VARIABLE v = safeident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
+| DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jdefinevar_typed v t e1 e2 }
-| LET v = safeident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
+| LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jdefinevar_typed v t e1 e2 }
 | MATCH e0 = expr csd = cases
     { JuraCompiler.jswitch e0 (fst csd) (snd csd) }
-| FOR v = safeident IN e1 = expr LCURLY e2 = expr RCURLY
+| FOR v = ident IN e1 = expr LCURLY e2 = expr RCURLY
     { JuraCompiler.jfor v e1 None e2 }
-| FOR v = safeident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
+| FOR v = ident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
     { JuraCompiler.jfor v e1 (Some econd) e2 }
 (* Functions *)
 | NOT e = expr
@@ -306,11 +306,11 @@ cases:
     { ([],e) }
 | WITH d = data THEN e = expr cs = cases
     { (((None,JuraCompiler.jcasevalue d),e)::(fst cs), snd cs) }
-| WITH LET v = safeident EQUAL d = data THEN e = expr cs = cases
+| WITH LET v = ident EQUAL d = data THEN e = expr cs = cases
     { (((Some v,JuraCompiler.jcasevalue d),e)::(fst cs), snd cs) }
 | WITH AS brand = STRING THEN e = expr tcs = cases
     { (((None,JuraCompiler.jcasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
-| WITH LET v = safeident AS brand = STRING THEN e = expr tcs = cases
+| WITH LET v = ident AS brand = STRING THEN e = expr tcs = cases
     { (((Some v,JuraCompiler.jcasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
 
 (* New struct *)
@@ -364,6 +364,12 @@ data:
     { JuraCompiler.Data.dnat i }
 | f = FLOAT
     { JuraCompiler.Enhanced.Data.dfloat f }
+
+(* ident *)
+ident:
+| i = IDENT
+    { Util.char_list_of_string i }
+
 (* Safe identifier *)
 safeident:
 | i = safeident_base
