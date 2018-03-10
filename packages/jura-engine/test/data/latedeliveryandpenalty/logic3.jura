@@ -24,18 +24,16 @@ contract LateDeliveryAndPenalty over TemplateModel {
 
   // Clause for volume discount
   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse {
-    // Guard against calling late delivery clause too early
+    // Ensures against calling late delivery clause too early
     define variable agreed = request.agreedDelivery;
-    guard momentIsBefore(agreed,now()) else {
-      throw Error{ message : "Cannot exercise late delivery before delivery date" }
-    };
-    // Guard against force majeure
-    guard !this.forceMajeure || !request.forceMajeure else {
-      return new LateDeliveryAndPenaltyResponse{
+    ensure momentIsBefore(agreed,now())
+    else throw Error{ message : "Cannot exercise late delivery before delivery date" };
+    // Ensures against force majeure
+    ensure !this.forceMajeure || !request.forceMajeure
+    else new LateDeliveryAndPenaltyResponse{
 	penalty: 0,
 	buyerMayTerminate: true
-      }
-    };
+      };
 
     // difference between current date and agreed upon date
     define variable diff = momentDiff(agreed,now());

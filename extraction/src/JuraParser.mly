@@ -25,7 +25,7 @@
 %token PACKAGE IMPORT DEFINE FUNCTION
 %token CONTRACT OVER CLAUSE THROWS
 
-%token IF GUARD THEN ELSE
+%token ENSURE IF THEN ELSE
 %token LET FOR IN WHERE
 %token RETURN THROW
 %token VARIABLE AS
@@ -50,6 +50,7 @@
 %token EOF
 
 %left SEMI
+%left ELSE
 %left RETURN
 %left OR
 %left AND
@@ -60,7 +61,6 @@
 %left PLUSPLUS
 %right NOT
 %left DOT
-%left ELSE
 
 %start <JComp.JuraCompiler.jura_package> main
 
@@ -216,10 +216,10 @@ expr:
     { JuraCompiler.jdot (Util.char_list_of_string a) e }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { JuraCompiler.jif e1 e2 e3 }
-| GUARD e1 = expr ELSE LCURLY e3 = expr RCURLY SEMI e2 = expr
-    { JuraCompiler.jguard e1 e2 e3 }
-| GUARD e1 = expr SEMI e3 = expr
-    { JuraCompiler.jguard_default_fail e1 e3 }
+| ENSURE e1 = expr ELSE e3 = expr SEMI e2 = expr
+    { JuraCompiler.jensure e1 e2 e3 }
+| ENSURE e1 = expr SEMI e3 = expr
+    { JuraCompiler.jensure_default_fail e1 e3 }
 | RETURN e = expr
     { JuraCompiler.jreturn e }
 | THROW qn = qname LCURLY r = reclist RCURLY
@@ -378,8 +378,8 @@ safeident_base:
 | CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }
+| ENSURE { "ensure" }
 | IF { "if" }
-| GUARD { "guard" }
 | THEN { "then" }
 | ELSE { "else" }
 | LET { "let" }

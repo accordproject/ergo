@@ -14,18 +14,17 @@ Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeu
 contract LateDeliveryAndPenalty over TemplateModel {
   // Clause checking for late delivery and calculating penalty
   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse throws Error {
-    // Guard against calling late delivery clause too early
+    // Ensures against calling late delivery clause too early
     define variable agreed = request.agreedDelivery;
-    guard momentIsBefore(agreed,now()) else {
-      throw Error{ message : "Cannot exercise late delivery before delivery date" }
-    };
-    // Guard against force majeure
-    guard !this.forceMajeure || !request.forceMajeure else {
-      return new LateDeliveryAndPenaltyResponse{
+    ensure momentIsBefore(agreed,now())
+    else throw Error{ message : "Cannot exercise late delivery before delivery date" };
+    // Ensures against force majeure
+    ensure !this.forceMajeure || !request.forceMajeure
+    else
+      new LateDeliveryAndPenaltyResponse{
 	penalty: 0,
 	buyerMayTerminate: true
-      }
-    };
+      };
 
     // Calculate the time difference between current date and agreed upon date
     define variable diff = momentDiff(now,agreed);

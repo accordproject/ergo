@@ -32,8 +32,8 @@
 	  "clause", CLAUSE;
 	  "throws", THROWS;
 	  (* Expressions *)
+ 	  "ensure", ENSURE;
 	  "if", IF;
-	  "guard", GUARD;
 	  "then", THEN;
 	  "else", ELSE;
 	  "let", LET;
