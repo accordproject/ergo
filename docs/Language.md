@@ -63,12 +63,12 @@ expressions. Here are the expressions Jura supports.
 
 ### Operators:
 ```
-1+2*3         // Arithmetic operators
-1 <= 3        // Comparison operators
+1+2*3                // Arithmetic operators
+1 <= 3               // Comparison operators
 1 == 2
 2 > 1
-true || false // Boolean operators
-true && false
+true or false        // Boolean operators
+true and false
 "Hello" ++ " World!" // String concatenation
 ```
 
@@ -97,15 +97,16 @@ then -x+1  // Expression if condition is true
 else x+1   // Expression if condition is false
 ```
 
-### Guards allow to make sure a specific condition is true.
+### Ensure expressions
+One can check preconditions in a clause using ensure expressions, as follows:
 ```
-guard x >= 0                 // Condition
+ensure x >= 0                // Condition
 else "Something went wrong"; // Expression if condition is false
 x+1                          // Expression if condition is true
 ```
-Guards can be useful to check preconditions in a clause. The first expression can be ommitted in which case Jura returns an error by default.
+The else part of the expression can be ommitted in which case Jura returns an error by default.
 ```
-guard x >= 0;             // Condition
+ensure x >= 0;            // Condition
 x+1                       // Expression if condition is true
 ```
 
