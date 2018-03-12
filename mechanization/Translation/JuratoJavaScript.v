@@ -77,7 +77,7 @@ Section JuratoJavaScript.
              (v0:string)
              (effparam0:jura_expr)
              (effparamrest:list jura_expr)
-             (s:signature) : jresult (switch_case * jura_expr) :=
+             (s:signature) : jresult (match_case * jura_expr) :=
     let (cname, callparams) := s in
     match callparams with
     | nil => jfailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
@@ -92,14 +92,14 @@ Section JuratoJavaScript.
       jfailure (CompilationError ("Cannot dispatch on non-class type "++cname))
     end.
 
-  Definition switch_of_sigs
+  Definition match_of_sigs
              (pname:string)
              (v0:string)
              (effparam0:jura_expr)
              (effparamrest:list jura_expr)
              (ss:list signature) :=
     jlift (fun s =>
-             JSwitch effparam0
+             JMatch effparam0
                      s
                      (JThrow (mkClassRef None "Error"%string)
                              (("message"%string,JConst (dstring ""))::nil)))
@@ -108,7 +108,7 @@ Section JuratoJavaScript.
   Definition dispatch_fun_name :=
     "dispatch"%string.
   
-  Definition switch_of_sigs_top
+  Definition match_of_sigs_top
              (pname:string)
              (effparams:list jura_expr)
              (ss:list signature) :=
@@ -116,7 +116,7 @@ Section JuratoJavaScript.
     | nil => jfailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
       let v0 := ("$"++dispatch_fun_name)%string in (** XXX To be worked on *)
-      switch_of_sigs pname v0 effparam0 effparamrest ss
+      match_of_sigs pname v0 effparam0 effparamrest ss
     end.
 
   Definition add_dispatch_fun (oconame:option string) (p:jura_package) : jresult jura_package :=
@@ -132,7 +132,7 @@ Section JuratoJavaScript.
                            None
                            None
                            disp))))
-          (switch_of_sigs_top p.(package_name) effparams sigs)
+          (match_of_sigs_top p.(package_name) effparams sigs)
     in
     jlift (fun disp =>
              mkPackage

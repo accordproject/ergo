@@ -160,14 +160,14 @@ Section JuratoJavaScript.
       ctxt.(context_globals)
       ctxt.(context_params).
 
-  Definition cswitch_cases :=
-    list (switch_case * jurac_expr).
+  Definition cmatch_cases :=
+    list (match_case * jurac_expr).
 
   Section fresh_vars.
     Require Import Qcert.Utils.Fresh.
-    Definition fresh_in_switch {A} (eccases:list (A * jurac_expr)) (ecdefault:jurac_expr) :=
+    Definition fresh_in_match {A} (eccases:list (A * jurac_expr)) (ecdefault:jurac_expr) :=
       fresh_var
-        "$switch"
+        "$match"
         (List.app
            (List.concat
               (List.map (fun eccase => nnrc_free_vars (snd eccase)) eccases))
@@ -263,7 +263,7 @@ Section JuratoJavaScript.
             acc
       in
       jolift (lookup_call ctxt.(context_table) fname) (fold_right proc_one init_el el)
-    | JSwitch e0 ecases edefault =>
+    | JMatch e0 ecases edefault =>
       let ec0 := jura_expr_to_calculus ctxt e0 in
       let eccases :=
           let proc_one acc ecase :=
@@ -281,10 +281,10 @@ Section JuratoJavaScript.
              (fun eccases =>
                 jolift
                   (fun ecdefault =>
-                     let v0 := fresh_in_switch eccases ecdefault in
+                     let v0 := fresh_in_match eccases ecdefault in
                      let proc_one_case
                            (acc:jresult jurac_expr)
-                           (ecase:switch_case * jurac_expr)
+                           (ecase:match_case * jurac_expr)
                          : jresult jurac_expr :=
                          match fst ecase with
                          | (Some v, CaseValue d) =>
@@ -480,7 +480,7 @@ Section JuratoJavaScript.
     Definition input1 := dnat 2.
     
     Example j1 :=
-      JSwitch (JConst input1)
+      JMatch (JConst input1)
               (((Some "v1", CaseValue (dnat 1)), (JConst (dstring "1")))
                  :: ((Some "v2", CaseValue (dnat 2)), (JConst (dstring "2")))
                  :: nil)
@@ -490,7 +490,7 @@ Section JuratoJavaScript.
     (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1. *)
 
     Example j1' :=
-      JSwitch (JConst input1)
+      JMatch (JConst input1)
               (((Some "v1", CaseValue (dnat 1)), (JConst (dstring "1")))
                  :: ((Some "v2", CaseValue (dnat 2)), JVar "v2")
                  :: nil)
@@ -503,7 +503,7 @@ Section JuratoJavaScript.
       dbrand ("C1"::nil) (dnat 1).
     
     Example j2 :=
-      JSwitch (JConst input2)
+      JMatch (JConst input2)
               (((Some "v1", CaseType "C1"), (JConst (dstring "1")))
                  :: ((Some "v2", CaseType "C2"), (JConst (dstring "2")))
                  :: nil)
