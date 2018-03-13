@@ -3,6 +3,7 @@
 #
 
 [![Build Status](https://travis-ci.org/accordproject/jura.svg?branch=master)](https://travis-ci.org/accordproject/jura)
+[![CircleCI](https://circleci.com/gh/accordproject/jura.svg?style=svg)](https://circleci.com/gh/accordproject/jura)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 Git: http://github.com/accordproject/jura / Pages: https://accordproject.github.io/jura

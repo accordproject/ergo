@@ -30,7 +30,6 @@ all:
 jura: _CoqProject Makefile.coq
 	@$(MAKE) jura-mechanization
 	@$(MAKE) MAKEFLAGS= jura-extraction-refresh
-	@$(MAKE) jura-npm
 
 jura-mechanization: _CoqProject Makefile.coq
 	@echo "[Jura] "

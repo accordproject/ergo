@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/accordproject/jura
+    parallelism: 1
+    shell: /bin/bash --login
+    environment:
+    docker:
+    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
+    steps:
+    - run: echo 'export PATH=~/jura/bin/:$PATH' >> $BASH_ENV 
+    - checkout
+    - restore_cache:
+        keys:
+        - v1-dep-{{ .Branch }}-
+        - v1-dep-master-
+        - v1-dep-
+    - run: sudo add-apt-repository -y ppa:avsm/ppa
+    - run: sudo apt-get -qq update
+    - run: sudo apt-get install -y ocaml-nox ocaml-native-compilers opam
+    - run: export TERM=dumb && opam init -a
+    - run: export TERM=dumb && opam switch 4.06.1
+    - run: eval `opam config env`
+    - run: export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released
+    - run:
+        command: export TERM=dumb && opam install -y ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx
+        no_output_timeout: 1200s
+    - run:
+        command: export TERM=dumb && opam install -y coq.8.7.2 coq-qcert.1.0.6
+        no_output_timeout: 1200s
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/.opam
+    - run: eval `opam config env` && make cleanall && make jura
