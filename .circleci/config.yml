@@ -27,7 +27,7 @@ jobs:
     - run:
         command: export TERM=dumb && opam install -y ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx
     - run:
-        command: export TERM=dumb && opam install -y coq.8.7.2 coq-qcert.1.0.6
+        command: export TERM=dumb && opam install -yv coq.8.7.2 coq-qcert.1.0.6
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
