@@ -18,8 +18,8 @@
 
 Require Import String.
 Require Import Qcert.Common.CommonRuntime.
-Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.Common.CTO.CTO.
+Require Import Jura.Jura.Lang.JuraBase.
 
 Section Jura.
   Context {fruntime:foreign_runtime}.
@@ -75,6 +75,7 @@ Section Jura.
     Require Import EquivDec.
     Require Import Qcert.Utils.Utils.
     Require Import Jura.Utils.JResult.
+    Require Import Jura.Utils.JError.
 
     Definition env := list (string * data).
     Definition mod_context := list jura_package.
@@ -155,10 +156,21 @@ Section Jura.
     | sem_JEnsure_false_some : forall mc env e1 e2 e3 d,
         jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
         jura_expr_sem mc env e2 (jsuccess d) ->
-        jura_expr_sem mc env (JIf e1 (Some e2) e3) (jsuccess d)
-    | sem_JEnsure_false_none : forall mc env e1 e2 e3 d,
+        jura_expr_sem mc env (JEnsure e1 (Some e2) e3) (jsuccess d)
+    | sem_JEnsure_false_none : forall mc env e1 e3,
         jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
-        jura_expr_sem mc env (JIf e1 None e3) default_error
+        jura_expr_sem mc env (JEnsure e1 None e3) (jfailure ensure_error)
+    | sem_JEnsure_fail : forall mc env e1 opte2 e3 err,
+        jura_expr_sem mc env e1 (jfailure err) ->
+        jura_expr_sem mc env (JEnsure e1 opte2 e3) (jfailure err)
+    | sem_JEnsure_fail_left : forall mc env e1 opte2 e3 err,
+        jura_expr_sem mc env e1 (jsuccess (dbool true)) ->
+        jura_expr_sem mc env e3 (jfailure err) ->
+        jura_expr_sem mc env (JEnsure e1 opte2 e3) (jfailure err)
+    | sem_JEnsure_fail_right : forall mc env e1 e2 e3 err,
+        jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
+        jura_expr_sem mc env e3 (jfailure err) ->
+        jura_expr_sem mc env (JEnsure e1 (Some e2) e3) (jfailure err)
     .
   End Semantics.
 

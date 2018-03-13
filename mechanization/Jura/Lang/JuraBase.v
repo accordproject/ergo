@@ -19,6 +19,7 @@
 Require Import String.
 Require Import Qcert.Common.CommonRuntime.
 Require Import Jura.Utils.JResult.
+Require Import Jura.Utils.JError.
 Require Import Jura.Common.CTO.CTO.
 
 Section JuraBase.
@@ -220,7 +221,7 @@ Section JuraBase.
 
     Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : jresult (cto_type * cto_type * func) :=
       match sl with
-      | nil => jfailure (CompilationError ("Cannot lookup created dispatch"))
+      | nil => dispatch_lookup_error
       | JExpr _ :: sl' => lookup_statements_dispatch name sl'
       | JGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
       | JImport _ :: sl' => lookup_statements_dispatch name sl'
@@ -230,7 +231,7 @@ Section JuraBase.
           let closure := f.(func_closure) in
           let request :=
               match closure.(closure_params) with
-              | nil => jfailure (CompilationError ("No parameter type in dispatch"))
+              | nil => dispatch_parameter_error
               | (_,Some reqtype) :: _ => jsuccess reqtype
               | _ :: _ => jsuccess (CTOClassRef "Request"%string)
               end
@@ -262,13 +263,5 @@ Section JuraBase.
       (pname ++ "." ++ cr.(class_name))%string.
   End utils.
   
-  Section errors.
-    Definition jura_default_package := Some ("org.jura"%string).
-    Definition jura_default_error :=
-      mkClassRef
-        jura_default_package
-        "Error".
-        
-  End errors.
 End JuraBase.
 

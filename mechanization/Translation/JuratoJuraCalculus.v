@@ -21,6 +21,7 @@ Require Import Qcert.Utils.Utils.
 Require Import Qcert.Common.CommonRuntime.
 
 Require Import Jura.Utils.JResult.
+Require Import Jura.Utils.JError.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.Jura.Lang.Jura.
 Require Import Jura.Jura.Lang.JuraSugar.
@@ -48,9 +49,8 @@ Section JuratoJavaScript.
     Definition new_expr (brand:string) (struct_expr:jurac_expr) : jurac_expr :=
       NNRCUnop (OpBrand (brand :: nil)) struct_expr.
 
-    Definition jura_ensure_error (local_package:string) : jurac_expr :=
-      (NNRCUnop (OpBrand ((brand_of_class_ref local_package jura_default_error) :: nil))
-                (NNRCUnop (OpRec "message") (NNRCConst (dstring "Ensure condition failed")))).
+    Definition jura_ensure_error : jurac_expr :=
+      NNRCConst ensure_error_content.
     
   End utils.
 
@@ -211,7 +211,7 @@ Section JuratoJavaScript.
     | JEnsure e1 None e3 =>
       jlift3 NNRCIf
         (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus ctxt e1))
-        (jsuccess (jura_ensure_error ctxt.(context_package)))
+        (jsuccess jura_ensure_error)
         (jura_expr_to_calculus ctxt e3)
     | JEnsure e1 (Some e2) e3 =>
       jlift3 NNRCIf
