@@ -17,11 +17,15 @@
 <br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Result.html">Qcert.Utils.Result</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.CommonRuntime.html">Qcert.Common.CommonRuntime</a></span>.<br/>
 <br/>
 <span class="kwd">Section</span> <span class="id"><a name="JResult">JResult</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Context</span> {<span class="id">fruntime</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.ForeignRuntime.html#foreign_runtime">foreign_runtime</a></span>}.<br/>
+<br/>
 &nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="jerror">jerror</a></span> : <span class="kwd">Set</span> :=<br/>
 &nbsp;&nbsp;| <span class="id"><a name="CompilationError">CompilationError</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Utils.JResult.html#jerror">jerror</a></span><br/>
-&nbsp;&nbsp;| <span class="id"><a name="ExecutionError">ExecutionError</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Utils.JResult.html#jerror">jerror</a></span>.<br/>
+&nbsp;&nbsp;| <span class="id"><a name="TypeError">TypeError</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="Jura.Utils.JResult.html#jerror">jerror</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="UserError">UserError</a></span> : <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.Data.html#data">data</a></span> -&gt; <span class="id"><a href="Jura.Utils.JResult.html#jerror">jerror</a></span>.<br/>
 <br/>
 &nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jresult">jresult</a></span> (<span class="id">A</span>:<span class="kwd">Set</span>) := <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Result.html#Result">Result</a></span> <span class="id"><a href="Jura.Utils.JResult.html#A">A</a></span> <span class="id"><a href="Jura.Utils.JResult.html#jerror">jerror</a></span>.<br/>
 &nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jsuccess">jsuccess</a></span> {<span class="id">A</span>:<span class="kwd">Set</span>} (<span class="id">a</span>:<span class="id"><a href="Jura.Utils.JResult.html#A">A</a></span>) : <span class="id"><a href="Jura.Utils.JResult.html#jresult">jresult</a></span> <span class="id"><a href="Jura.Utils.JResult.html#A">A</a></span> :=<br/>
