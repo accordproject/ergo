@@ -72,7 +72,94 @@ Section Jura.
   End Syntax.
 
   Section Semantics.
-    (* XXX Nothing yet -- relational semantics should go here *)
+    Require Import EquivDec.
+    Require Import Qcert.Utils.Utils.
+    Require Import Jura.Utils.JResult.
+
+    Definition env := list (string * data).
+    Definition mod_context := list jura_package.
+    Definition jtypeerror msg : jresult data := jfailure (TypeError msg).
+    Definition variable_not_found : jresult data := jtypeerror "variable not found"%string.
+
+    Context (h:brand_relation_t).
+
+    Inductive jura_expr_sem : mod_context -> env -> jura_expr -> jresult data -> Prop :=
+    | sem_JVar : forall mc env v d,
+        lookup equiv_dec env v = Some d ->              (**r   [Γ(v) = d] *)
+        jura_expr_sem mc env (JVar v) (jsuccess d)      
+    | sem_JVar_fail : forall mc env v,
+        lookup equiv_dec env v = None ->
+        jura_expr_sem mc env (JVar v) variable_not_found
+    | sem_JConst : forall mc env d,
+        jura_expr_sem mc env (JConst d) (jsuccess d)
+    | sem_JArray_nil : forall mc env,
+        jura_expr_sem mc env (JArray nil) (jsuccess (dcoll nil))
+    | sem_JArray_cons : forall mc env e1 el d1 dl,
+        jura_expr_sem mc env e1 (jsuccess d1) ->
+        jura_expr_sem mc env (JArray el) (jsuccess (dcoll dl)) ->
+        jura_expr_sem mc env (JArray (e1::el)) (jsuccess (dcoll (d1::dl)))
+    | sem_JArray_cons_fail : forall mc env e1 el err,
+        jura_expr_sem mc env e1 (jfailure err) ->
+        jura_expr_sem mc env (JArray (e1::el)) (jfailure err)
+    | sem_JUnaryOp : forall uop mc env e1 d1 d2,
+        jura_expr_sem mc env e1 (jsuccess d1) ->
+        unary_op_eval h uop d1 = Some d2 ->             (**r ∧ [⊞ d₁ = d₂] *)
+        jura_expr_sem mc env (JUnaryOp uop e1) (jsuccess d2)
+    | sem_JUnaryOp_wrongtype : forall uop mc env e1 d1,
+        jura_expr_sem mc env e1 (jsuccess d1) ->
+        unary_op_eval h uop d1 = None ->
+        jura_expr_sem mc env (JUnaryOp uop e1) (jtypeerror "UnaryOp")
+    | sem_JUnaryOp_fail : forall uop mc env e1 err,
+        jura_expr_sem mc env e1 (jfailure err) ->
+        jura_expr_sem mc env (JUnaryOp uop e1) (jfailure err)
+    | sem_JBinnaryOp : forall bop mc env e1 e2 d1 d2 d3,
+        jura_expr_sem mc env e1 (jsuccess d1) ->
+        jura_expr_sem mc env e2 (jsuccess d2) ->
+        binary_op_eval h bop d1 d2 = Some d3 ->
+        jura_expr_sem mc env (JBinaryOp bop e1 e2) (jsuccess d2)
+    | sem_JBinaryOp_wrongtype : forall bop mc env e1 e2 d1 d2,
+        jura_expr_sem mc env e1 (jsuccess d1) ->
+        jura_expr_sem mc env e2 (jsuccess d2) ->
+        binary_op_eval h bop d1 d2 = None ->
+        jura_expr_sem mc env (JBinaryOp bop e1 e2) (jtypeerror "BinaryOp")
+    | sem_JUnaryOp_fail_left : forall bop mc env e1 e2 err,
+        jura_expr_sem mc env e1 (jfailure err) ->
+        jura_expr_sem mc env (JBinaryOp bop e1 e2) (jfailure err)
+    | sem_JUnaryOp_fail_right : forall bop mc env e1 e2 d1 err,
+        jura_expr_sem mc env e1 (jsuccess d1) -> (** XXX Not sure we need/want this precondition *)
+        jura_expr_sem mc env e2 (jfailure err) ->
+        jura_expr_sem mc env (JBinaryOp bop e1 e2) (jfailure err)
+    | sem_JIf_true : forall mc env e1 e2 e3 d,
+        jura_expr_sem mc env e1 (jsuccess (dbool true)) ->
+        jura_expr_sem mc env e2 (jsuccess d) ->
+        jura_expr_sem mc env (JIf e1 e2 e3) (jsuccess d)
+    | sem_JIf_false : forall mc env e1 e2 e3 d,
+        jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
+        jura_expr_sem mc env e3 (jsuccess d) ->
+        jura_expr_sem mc env (JIf e1 e2 e3) (jsuccess d)
+    | sem_JIf_fail : forall mc env e1 e2 e3 err,
+        jura_expr_sem mc env e1 (jfailure err) ->
+        jura_expr_sem mc env (JIf e1 e2 e3) (jfailure err)
+    | sem_JIf_true_fail : forall mc env e1 e2 e3 err,
+        jura_expr_sem mc env e1 (jsuccess (dbool true)) ->
+        jura_expr_sem mc env e2 (jfailure err) ->
+        jura_expr_sem mc env (JIf e1 e2 e3) (jfailure err)
+    | sem_JIf_false_fail : forall mc env e1 e2 e3 err,
+        jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
+        jura_expr_sem mc env e3 (jfailure err) ->
+        jura_expr_sem mc env (JIf e1 e2 e3) (jfailure err)
+    | sem_JEnsure_true : forall mc env e1 e2 e3 d,
+        jura_expr_sem mc env e1 (jsuccess (dbool true)) ->
+        jura_expr_sem mc env e3 (jsuccess d) ->
+        jura_expr_sem mc env (JEnsure e1 e2 e3) (jsuccess d)
+    | sem_JEnsure_false_some : forall mc env e1 e2 e3 d,
+        jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
+        jura_expr_sem mc env e2 (jsuccess d) ->
+        jura_expr_sem mc env (JIf e1 (Some e2) e3) (jsuccess d)
+    | sem_JEnsure_false_none : forall mc env e1 e2 e3 d,
+        jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
+        jura_expr_sem mc env (JIf e1 None e3) default_error
+    .
   End Semantics.
 
   Section Evaluation.

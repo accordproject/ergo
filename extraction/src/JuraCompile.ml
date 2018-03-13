@@ -24,9 +24,12 @@ type result_file = {
 let wrap_jerrors f e =
   begin match e with
   | Failure (CompilationError cl) ->
-      raise (Jura_Error ("Compilation Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
-  | Failure (ExecutionError cl) ->
-      raise (Jura_Error ("Execution Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+    raise (Jura_Error ("Compilation Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+  | Failure (TypeError cl) ->
+    raise (Jura_Error ("Type Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+  | Failure (UserError d) ->
+    let cl = JuraCompiler.Data.qdataToJS [] d in
+    raise (Jura_Error ("User Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
   | Success x -> f x
   end
 

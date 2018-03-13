@@ -62,7 +62,10 @@ Module QJData(juramodel:JuraCompilerModel).
   Definition dbrand b : qdata -> qdata 
     := Data.dbrand b.
   (* foreign data is supported via the model *)
-  
+
+  (** data -> JSON *string* conversion *)
+  Definition qdataToJS s : qdata -> String.string 
+    := NNRCtoJavaScript.dataToJS s.
   Definition jsonToJS s : JSON.json -> String.string 
     := JSON.jsonToJS s.
 
