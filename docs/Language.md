@@ -157,7 +157,12 @@ area(1.5)
 ## Types *NEW*
 
 One either import an existing CTO file, or declare types within Jura
-itself. Here are atomic types:
+itself.
+
+As we have seen in previous examples, one can refer to types in
+variable declarations or in functions/clauses signatures.
+
+Here are atomic types:
 
 ```
 String                    // Atomic types
@@ -198,7 +203,4 @@ define transaction Response {
    penalty: Double
 }
 ```
-
-As we have seen in previous examples, one can refer to types in
-variable declarations or in functions/clauses signatures.
 
