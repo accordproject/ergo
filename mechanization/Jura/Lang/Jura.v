@@ -84,6 +84,11 @@ Section Jura.
 
     Context (h:brand_relation_t).
 
+    (* Currently, this is written as a big-step semantics. There is
+       some amount of duplication in rules due to error handling. This
+       might benefit to be written in a pretty-big-step semantic
+       style.  See [] *)
+
     Inductive jura_expr_sem : mod_context -> env -> jura_expr -> jresult data -> Prop :=
     | sem_JVar : forall mc env v d,
         lookup equiv_dec env v = Some d ->              (**r   [Γ(v) = d] *)
