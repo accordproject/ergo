@@ -229,13 +229,13 @@ expr:
 | THIS
     { JuraCompiler.jthis }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI e2 = expr
-    { JuraCompiler.jdefinevar v e1 e2 }
+    { JuraCompiler.jlet v e1 e2 }
 | LET v = ident EQUAL e1 = expr SEMI e2 = expr
-    { JuraCompiler.jdefinevar v e1 e2 }
+    { JuraCompiler.jlet v e1 e2 }
 | DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
-    { JuraCompiler.jdefinevar_typed v t e1 e2 }
+    { JuraCompiler.jlet_typed v t e1 e2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
-    { JuraCompiler.jdefinevar_typed v t e1 e2 }
+    { JuraCompiler.jlet_typed v t e1 e2 }
 | MATCH e0 = expr csd = cases
     { JuraCompiler.jmatch e0 (fst csd) (snd csd) }
 | FOR v = ident IN e1 = expr LCURLY e2 = expr RCURLY

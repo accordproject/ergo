@@ -94,10 +94,10 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JEnsure e1 (Some e2) e3.
   Definition jensure_default_fail (e1 e3:jura_expr) 
     := Jura.JEnsure e1 None e3.
-  Definition jdefinevar (v:String.string) (e1 e2:jura_expr) : jura_expr
-    := Jura.JDefineVar v None e1 e2.
-  Definition jdefinevar_typed (v:String.string) (t:CTO.cto_type) (e1 e2:jura_expr) : jura_expr
-    := Jura.JDefineVar v (Some t) e1 e2.
+  Definition jlet (v:String.string) (e1 e2:jura_expr) : jura_expr
+    := Jura.JLet v None e1 e2.
+  Definition jlet_typed (v:String.string) (t:CTO.cto_type) (e1 e2:jura_expr) : jura_expr
+    := Jura.JLet v (Some t) e1 e2.
   Definition jfor : String.string -> jura_expr -> option jura_expr -> jura_expr -> jura_expr
     := Jura.JFor.
   Definition jfuncall : String.string -> list jura_expr -> jura_expr

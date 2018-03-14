@@ -218,11 +218,11 @@ Section JuratoJavaScript.
         (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus ctxt e1))
         (jura_expr_to_calculus ctxt e3)
         (jura_expr_to_calculus ctxt e2)
-    | JDefineVar v None e1 e2 =>
+    | JLet v None e1 e2 =>
       jlift2 (NNRCLet v)
               (jura_expr_to_calculus ctxt e1)
               (jura_expr_to_calculus ctxt e2)
-    | JDefineVar v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
+    | JLet v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
       jlift2 (NNRCLet v)
               (jura_expr_to_calculus ctxt e1)
               (jura_expr_to_calculus ctxt e2)
