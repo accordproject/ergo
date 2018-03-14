@@ -43,4 +43,11 @@ Section CTO.
     mkCTOPackage
       { cto_package_namespace : string;
         cto_package_declarations : list cto_declaration; }.
+
+  Section Semantics.
+  (** A semantics for CTO packages is obtained through translation
+      into branded types. *)
+  (** TBD *)
+
+  End Semantics.
 End CTO.
