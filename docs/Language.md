@@ -61,7 +61,7 @@ expressions. Here are the expressions Jura supports.
 3.5e-10      // a floating point literal
 ```
 
-### Operators *CHANGED*
+### Operators
 ```
 1+2*3                // Arithmetic operators
 1 <= 3               // Comparison operators
@@ -90,14 +90,14 @@ let x : Double = 3.1416;                // declares and initialize a double vari
 sqrt(x)                                 // rest of the expression
 ```
 
-### Conditionals *CHANGED*
+### Conditionals
 ```
 if x < 0   // Condition
 then -x+1  // Expression if condition is true
 else x+1   // Expression if condition is false
 ```
 
-### Ensure expressions *CHANGED*
+### Ensure expressions
 One can check preconditions in a clause using ensure expressions, as follows:
 ```
 ensure x >= 0                // Condition
@@ -110,7 +110,7 @@ ensure x >= 0;            // Condition
 x+1                       // Expression if condition is true
 ```
 
-### Match expressions *CHANGED*
+### Match expressions
 
 Match expressions allow to check an expression against multiple
 possible values:
@@ -120,6 +120,8 @@ match fruitcode
   with 2 then "Apricot"
   else "Strange Fruit"
 ```
+
+### For expressions
 
 For expressions allow to apply an expression of every element in an input array of values:
 ```
@@ -173,12 +175,12 @@ Boolean
 
 Here is a structure (sometimes called struct or record in other languages):
 ```
-{ name: string, age: Long }   // Structure with two attributes, name and age
+{ name: String, age: Long }   // Structure with two attributes, name and age
 ```
 Here are array types:
 ```
 String[]                      // Array of string values
-Person[]                      // Array of Persons, where Person is a type or CTO class
+Product[]                     // Array of Product (can be either a type or CTO class)
 { name: String, age: Long }[] // Array of structures
 ```
 Here is how to declare a type to be referenced in other places:
@@ -195,12 +197,12 @@ CTO terminology):
 define concept Product { 
    id : String
 }
-concept Car extends Product {
+define concept Car extends Product {
    range : String
 }
 define transaction Response { 
    rate : Double,
-   penalty: Double
+   penalty : Double
 }
 ```
 
