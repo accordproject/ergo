@@ -85,7 +85,7 @@ Section Jura.
 
     Context (h:brand_relation_t).
 
-    (* Currently, this is written as a big-step semantics. There is
+    (** Currently, this is written as a big-step semantics. There is
        some amount of duplication in rules preconditions due to error
        handling. This might benefit to be written in a pretty-big-step
        semantic style.  See [Charguéraud ESOP 2013]
@@ -184,18 +184,18 @@ Section Jura.
         jura_expr_sem mc env (JLet v None e1 e2) (jsuccess d2)
     | sem_JLet_typed : forall mc env v t e1 e2 d1 d2,
         jura_expr_sem mc env e1 (jsuccess d1) ->
-        (* instance_of d1 t1 = true -> *) (* XXX TBD!! *)
+        (** instance_of d1 t1 = true -> *) (* XXX TBD!! *)
         jura_expr_sem mc ((v,d1)::env) e2 (jsuccess d2) ->
         jura_expr_sem mc env (JLet v (Some t) e1 e2) (jsuccess d2)
     | sem_JLet_fail_left : forall mc env v optt e1 e2 err,
         jura_expr_sem mc env e1 (jfailure err) ->
         jura_expr_sem mc env (JLet v optt e1 e2) (jfailure err)
- (*
+ (**
     | sem_JLet_typed_fail : forall mc env v t e1 e2 d1 d2,
         jura_expr_sem mc env e1 (jsuccess d1) ->
         (* instance_of d1 t1 = false -> *) (* XXX TBD!! *)
         jura_expr_sem mc env (JLet v (Some t) e1 e2) (jfailure type_match_error)
-*)
+   *)
     | sem_JLet_fail_right : forall mc env v None e1 e2 d1 err,
         jura_expr_sem mc env e1 (jsuccess d1) ->
         jura_expr_sem mc ((v,d1)::env) e2 (jfailure err) ->
