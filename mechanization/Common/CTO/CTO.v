@@ -31,8 +31,8 @@ Section CTO.
 
   Inductive cto_declaration_kind :=
   | CTOEnum : list string -> cto_declaration_kind
-  | CTOTransaction : list (string * cto_type) -> cto_declaration_kind
-  | CTOConcept : list (string * cto_type) -> cto_declaration_kind.
+  | CTOTransaction : option string -> list (string * cto_type) -> cto_declaration_kind
+  | CTOConcept : option string -> list (string * cto_type) -> cto_declaration_kind.
 
   Record cto_declaration :=
     mkCTODeclaration

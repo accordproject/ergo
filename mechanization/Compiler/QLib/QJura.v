@@ -56,9 +56,9 @@ Module QJura(juramodel:JuraCompilerModel).
 
   Definition cto_enum : list String.string -> CTO.cto_declaration_kind
     := CTO.CTOEnum.
-  Definition cto_transaction : list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+  Definition cto_transaction : option String.string -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
     := CTO.CTOTransaction.
-  Definition cto_concept : list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+  Definition cto_concept : option String.string -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
     := CTO.CTOConcept.
 
   Definition mk_cto_declaration : CTO.cto_class -> CTO.cto_declaration_kind -> CTO.cto_declaration
