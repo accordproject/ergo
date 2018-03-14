@@ -1,0 +1,49 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Jura.Utils.JError</title>
+<meta name="description" content="Documentation of Coq module Jura.Utils.JError" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Jura.Utils.JError</h1>
+<div class="coq">
+<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Result.html">Qcert.Utils.Result</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.CommonRuntime.html">Qcert.Common.CommonRuntime</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Utils.JResult.html">Jura.Utils.JResult</a></span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="JError">JError</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Context</span> {<span class="id">fruntime</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.ForeignRuntime.html#foreign_runtime">foreign_runtime</a></span>}.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="dispatch_lookup_error">dispatch_lookup_error</a></span> {<span class="id">A</span>} : <span class="id"><a href="Jura.Utils.JResult.html#jresult">jresult</a></span> <span class="id"><a href="Jura.Utils.JError.html#A">A</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Utils.JResult.html#jfailure">jfailure</a></span> (<span class="id"><a href="Jura.Utils.JResult.html#CompilationError">CompilationError</a></span> ("<span class="id">Cannot</span> <span class="id">lookup</span> <span class="id">created</span> <span class="id">dispatch</span>")).<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="dispatch_parameter_error">dispatch_parameter_error</a></span> {<span class="id">A</span>} : <span class="id"><a href="Jura.Utils.JResult.html#jresult">jresult</a></span> <span class="id"><a href="Jura.Utils.JError.html#A">A</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Utils.JResult.html#jfailure">jfailure</a></span> (<span class="id"><a href="Jura.Utils.JResult.html#CompilationError">CompilationError</a></span> ("<span class="id">No</span> <span class="id">parameter</span> <span class="id">type</span> <span class="kwd">in</span> <span class="id">dispatch</span>")).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_default_package">jura_default_package</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> := "<span class="id">org.accordproject.jura</span>".<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_default_error_local_name">jura_default_error_local_name</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> := "<span class="id">Error</span>".<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jura_default_error_name">jura_default_error_name</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Utils.JError.html#jura_default_package">jura_default_package</a></span> ++ "." ++ <span class="id"><a href="Jura.Utils.JError.html#jura_default_error_local_name">jura_default_error_local_name</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ensure_error_content">ensure_error_content</a></span> : <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.Data.html#data">data</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.Data.html#dbrand">dbrand</a></span> (<span class="id"><a href="Jura.Utils.JError.html#jura_default_error_name">jura_default_error_name</a></span>::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.Data.html#drec">drec</a></span> (("<span class="id">message</span>"%<span class="id">string</span>, <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.Data.html#dstring">dstring</a></span> "<span class="id">Ensure</span> <span class="id">condition</span> <span class="id">failed</span>")::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)).<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ensure_error">ensure_error</a></span> : <span class="id"><a href="Jura.Utils.JResult.html#jerror">jerror</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Utils.JResult.html#UserError">UserError</a></span> <span class="id"><a href="Jura.Utils.JError.html#ensure_error_content">ensure_error_content</a></span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Jura.Utils.JError.html#JError">JError</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>
