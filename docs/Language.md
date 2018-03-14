@@ -169,7 +169,7 @@ Boolean
 Here is a structure (sometimes called struct or record in other languages):
 ```
 { name: string, age: Long }   // Structure with two attributes, name and age
-
+```
 Here are array types:
 ```
 String[]                      // Array of string values
