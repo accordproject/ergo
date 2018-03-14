@@ -175,12 +175,13 @@ Boolean
 
 Here is a structure (sometimes called struct or record in other languages):
 ```
-{ name: String, age: Long }   // Structure with two attributes, name and age
+{ name: String, age: Long } // Structure with two attributes:
+                            // a name and an age
 ```
 Here are array types:
 ```
-String[]                      // Array of string values
-Product[]                     // Array of Product (can be either a type or CTO class)
+String[]                      // Array of String values
+Product[]                     // Array of Product (a declared type)
 { name: String, age: Long }[] // Array of structures
 ```
 Here is how to declare a type to be referenced in other places:
@@ -194,13 +195,13 @@ define type Person {      // An alias for a structure
 Here is how to declare CTO classes (either concepts or transactions in
 CTO terminology):
 ```
-define concept Product { 
+define concept Product {
    id : String
 }
 define concept Car extends Product {
    range : String
 }
-define transaction Response { 
+define transaction Response {
    rate : Double,
    penalty : Double
 }
