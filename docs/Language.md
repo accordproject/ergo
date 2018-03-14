@@ -53,7 +53,7 @@ Comments in Jura are written in a commonly used style:
 The logic for individual clauses in Jura is written using
 expressions. Here are the expressions Jura supports.
 
-### Literal values:
+### Literal values
 
 ```
 "John Smith" // a string literal
@@ -61,7 +61,7 @@ expressions. Here are the expressions Jura supports.
 3.5e-10      // a floating point literal
 ```
 
-### Operators:
+### Operators *CHANGED*
 ```
 1+2*3                // Arithmetic operators
 1 <= 3               // Comparison operators
@@ -72,7 +72,7 @@ true and false
 "Hello" ++ " World!" // String concatenation
 ```
 
-### Local variable declarations:
+### Local variable declarations
 ```
 define variable x = 1; // declares and initialize a variable
 x+2                    // rest of the expression, with variable x in scope
@@ -90,14 +90,14 @@ let x : Double = 3.1416;                // declares and initialize a double vari
 sqrt(x)                                 // rest of the expression
 ```
 
-### Conditionals:
+### Conditionals *CHANGED*
 ```
 if x < 0   // Condition
 then -x+1  // Expression if condition is true
 else x+1   // Expression if condition is false
 ```
 
-### Ensure expressions
+### Ensure expressions *CHANGED*
 One can check preconditions in a clause using ensure expressions, as follows:
 ```
 ensure x >= 0                // Condition
@@ -110,19 +110,7 @@ ensure x >= 0;            // Condition
 x+1                       // Expression if condition is true
 ```
 
-### Creating objects
-
-Creating objects (such as CTO concepts, transactions, or Jura errors)
-can be done using `new` with the name of the concept and the values
-for each fields:
-```
-new Person{
-  name: "John Smith",
-  age: 32
-}
-```
-
-### Match expressions
+### Match expressions *CHANGED*
 
 Match expressions allow to check an expression against multiple
 possible values:
@@ -143,6 +131,18 @@ For expressions can have an optional condition of the values being iterated over
 for x in [1,-2,3] where x > 0 { x+1 }
 ```
 
+### Creating objects
+
+Creating objects (such as CTO concepts, transactions, or Jura errors)
+can be done using `new` with the name of the concept and the values
+for each fields:
+```
+new Person{
+  name: "John Smith",
+  age: 32
+}
+```
+
 ## Functions
 
 It is possible to declare functions in Jura:
@@ -153,3 +153,4 @@ define function area(radius Double) : Double {
 }
 area(1.5)
 ```
+
