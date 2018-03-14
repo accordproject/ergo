@@ -13,11 +13,11 @@ define function addFee(rate Double) : Double {
 
 contract VolumeDiscount over TemplateModel {
   // Clause for volume discount
-  clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
+  clause volumediscount(request VolumeDiscountRequest) : { discountRate: Double } {
     if request.netAnnualChargeVolume < this.firstVolume
-    then new VolumeDiscountResponse{ discountRate: addFee(this.firstRate) }
+    then { discountRate: addFee(this.firstRate) }
     else if request.netAnnualChargeVolume < this.secondVolume
-    then new VolumeDiscountResponse{ discountRate: addFee(this.secondRate) }
-    else new VolumeDiscountResponse{ discountRate: addFee(this.thirdRate) }
+    then { discountRate: addFee(this.secondRate) }
+    else { discountRate: addFee(this.thirdRate) }
   }
 }

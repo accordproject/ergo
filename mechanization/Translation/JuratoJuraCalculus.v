@@ -240,6 +240,20 @@ Section JuratoJavaScript.
                  (jlift (NNRCUnop (OpRec attname)) e) acc
       in
       jlift (new_expr (brand_of_class_ref ctxt.(context_package) cr)) (fold_left proc_one rest init_rec)
+    | JStructure nil =>
+      jsuccess
+        (NNRCConst (drec nil))
+    | JStructure ((s0,init)::rest) =>
+      let init_rec : jresult nnrc :=
+          jlift (NNRCUnop (OpRec s0)) (jura_expr_to_calculus ctxt init)
+      in
+      let proc_one (acc:jresult nnrc) (att:string * jura_expr) : jresult nnrc :=
+          let attname := fst att in
+          let e := jura_expr_to_calculus ctxt (snd att) in
+          jlift2 (NNRCBinop OpRecConcat)
+                 (jlift (NNRCUnop (OpRec attname)) e) acc
+      in
+      fold_left proc_one rest init_rec
     | JThrow cr nil =>
       jsuccess (new_expr (brand_of_class_ref ctxt.(context_package) cr) (NNRCConst (drec nil)))
     | JThrow cr ((s0,init)::rest) =>

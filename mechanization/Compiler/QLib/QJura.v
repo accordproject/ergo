@@ -49,6 +49,8 @@ Module QJura(juramodel:JuraCompilerModel).
     := CTO.CTOClassRef.
   Definition cto_option : CTO.cto_type -> CTO.cto_type
     := CTO.CTOOption.
+  Definition cto_structure : list(String.string * CTO.cto_type) -> CTO.cto_type
+    := CTO.CTOStructure.
   Definition cto_array : CTO.cto_type -> CTO.cto_type
     := CTO.CTOArray.
 
@@ -104,6 +106,8 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JFunCall.
   Definition jmatch : jura_expr -> list (Jura.match_case * jura_expr) -> jura_expr -> jura_expr
     := Jura.JMatch.
+  Definition jstructure : list (String.string * jura_expr) -> jura_expr 
+    := Jura.JStructure.
 
   Definition jdot : String.string -> jura_expr -> jura_expr 
     := JuraSugar.JDot.

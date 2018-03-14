@@ -364,23 +364,33 @@ let rec paramtype_to_sexp (pt:cto_type) =
   | CTOString -> STerm ("CTOString", [])
   | CTODouble -> STerm ("CTODouble", [])
   | CTOLong -> STerm ("CTOLong", [])
-  | CTOBool -> STerm ("CTBool", [])
-  | CTOClassRef cl -> STerm ("CTClassRef", [name_to_sexp cl])
+  | CTOBool -> STerm ("CTOBool", [])
+  | CTOClassRef cl -> STerm ("CTOClassRef", [name_to_sexp cl])
   | CTOOption pt -> STerm ("CTOption", [paramtype_to_sexp pt])
-  | CTOArray pt -> STerm ("CTArray", [paramtype_to_sexp pt])
+  | CTOStructure rl -> STerm ("CTOStructure", List.map rectype_to_sexp rl)
+  | CTOArray pt -> STerm ("CTOArray", [paramtype_to_sexp pt])
   end
+and rectype_to_sexp (at : char list * cto_type) : sexp =
+  STerm ("tatt", (SString (string_of_char_list (fst at))) :: (paramtype_to_sexp (snd at)) :: [])
 let rec sexp_to_paramtype (se:sexp) =
   begin match se with
   | STerm ("CTOString", []) -> CTOString
   | STerm ("CTODouble", []) -> CTODouble
   | STerm ("CTOLong", []) -> CTOLong
-  | STerm ("CTBool", []) -> CTOBool
-  | STerm ("CTClassRef", [cl]) -> CTOClassRef (sexp_to_name cl)
+  | STerm ("CTOBool", []) -> CTOBool
+  | STerm ("CTOClassRef", [cl]) -> CTOClassRef (sexp_to_name cl)
   | STerm ("CTOption", [pt]) -> CTOOption (sexp_to_paramtype pt)
-  | STerm ("CTArray", [pt]) -> CTOArray  (sexp_to_paramtype pt)
+  | STerm ("CTOStructure", rl) -> CTOStructure (List.map sexp_to_rectype rl)
+  | STerm ("CTOArray", [pt]) -> CTOArray (sexp_to_paramtype pt)
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside ParamType")
   end
+and sexp_to_rectype (sel:sexp) : (char list * cto_type) =
+  match sel with
+  | STerm ("tatt", (SString s) :: se :: []) ->
+      (char_list_of_string s, sexp_to_paramtype se)
+  | _ ->
+      raise (Jura_Error "Not well-formed S-expr inside CTOStructure")
 
 let opt_paramtype_to_sexp (opt:cto_type option) =
   begin match opt with

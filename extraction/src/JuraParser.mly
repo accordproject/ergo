@@ -182,10 +182,24 @@ paramtype:
       | "Boolean" -> JuraCompiler.cto_bool
       | _ -> JuraCompiler.cto_class_ref (Util.char_list_of_string pt)
       end }
+| LCURLY rt = rectype RCURLY
+    { JuraCompiler.cto_structure rt }
 | pt = paramtype LBRACKET RBRACKET
     { JuraCompiler.cto_array pt }
 | pt = paramtype QUESTION
     { JuraCompiler.cto_option pt }
+
+rectype:
+| 
+    { [] }
+| at = atttype
+    { [at] }
+| at = atttype COMMA rt = rectype
+    { at :: rt }
+
+atttype:
+| an = IDENT COLON pt = paramtype
+    { (Util.char_list_of_string an, pt) }
 
 expr:
 (* Parenthesized expression *)
@@ -226,6 +240,8 @@ expr:
     { JuraCompiler.jthrow (fst qn) (snd qn) r }
 | NEW qn = qname LCURLY r = reclist RCURLY
     { JuraCompiler.jnew (fst qn) (snd qn) r }
+| LCURLY r = reclist RCURLY
+    { JuraCompiler.jstructure r }
 | THIS
     { JuraCompiler.jthis }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI e2 = expr
@@ -317,14 +333,14 @@ cases:
 reclist:
 | 
     { [] }
-| r = recatt
-    { [r] }
-| r = recatt COMMA rl = reclist
-    { r :: rl }
+| a = att
+    { [a] }
+| a = att COMMA rl = reclist
+    { a :: rl }
 
-recatt:
-| a = IDENT COLON e = expr
-    { (Util.char_list_of_string a, e) }
+att:
+| an = IDENT COLON e = expr
+    { (Util.char_list_of_string an, e) }
 
 (* Qualified name *)
 qname_base:
