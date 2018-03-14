@@ -154,3 +154,51 @@ define function area(radius Double) : Double {
 area(1.5)
 ```
 
+## Types *NEW*
+
+One either import an existing CTO file, or declare types within Jura
+itself. Here are atomic types:
+
+```
+String                    // Atomic types
+Double
+Long
+Boolean
+```
+
+Here is a structure (sometimes called struct or record in other languages):
+```
+{ name: string, age: Long }   // Structure with two attributes, name and age
+
+Here are array types:
+```
+String[]                      // Array of string values
+Person[]                      // Array of Persons, where Person is a type or CTO class
+{ name: String, age: Long }[] // Array of structures
+```
+Here is how to declare a type to be referenced in other places:
+```
+define type ISBN String   // An alias for String
+define type Person {      // An alias for a structure
+   name : String,
+   age : Long
+}
+```
+Here is how to declare CTO classes (either concepts or transactions in
+CTO terminology):
+```
+define concept Product { 
+   id : String
+}
+concept Car extends Product {
+   range : String
+}
+define transaction Response { 
+   rate : Double,
+   penalty: Double
+}
+```
+
+As we have seen in previous examples, one can refer to types in
+variable declarations or in functions/clauses signatures.
+
