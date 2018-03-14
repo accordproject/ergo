@@ -41,7 +41,7 @@ $ jurac execute --help
 
 Once installed, you can compile your first Jura contract to JavaScript:
 ```
-$ jurac compile --jura ./samples/volumediscount/logic.jura --cto ./samples/volumediscount/model.cto
+$ jurac compile --jura ./examples/volumediscount/logic.jura --cto ./examples/volumediscount/model.cto
 ```
 
 ### Execute a contract clause
@@ -49,7 +49,7 @@ $ jurac compile --jura ./samples/volumediscount/logic.jura --cto ./samples/volum
 To compile and _execute_ a given clause in a contract:
 
 ```
-$ jurac execute --jura ./samples/volumediscount/logic.jura --contractname VolumeDiscount --clausename volumediscount --clause ./samples/volumediscount/clause.json --request ./samples/volumediscount/request.json --cto ./samples/volumediscount/model.cto
+$ jurac execute --jura ./examples/volumediscount/logic.jura --contractname VolumeDiscount --clausename volumediscount --clause ./examples/volumediscount/clause.json --request ./examples/volumediscount/request.json --cto ./examples/volumediscount/model.cto
 {"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}
 ```
 
