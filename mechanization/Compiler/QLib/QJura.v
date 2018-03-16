@@ -16,8 +16,7 @@ Require String.
 Require Import Qcert.Compiler.Model.CompilerRuntime.
 Require Import Qcert.Compiler.QLib.QLang.
 
-Require Jura.Compiler.QLib.QJOperators.
-Require Jura.Compiler.QLib.QJData.
+Require Jura.Version.
 Require Jura.Utils.JResult.
 Require Jura.Common.CTO.CTO.
 Require Jura.Jura.Lang.Jura.
@@ -26,10 +25,14 @@ Require Jura.JuraCalculus.Lang.JuraCalculus.
 Require Jura.JuraCalculus.Lang.JuraCalculusCall.
 Require Jura.Translation.JuratoJuraCalculus.
 Require Jura.Translation.JuratoJavaScript.
+Require Jura.Compiler.QLib.QJOperators.
+Require Jura.Compiler.QLib.QJData.
 Require Import Jura.Compiler.Model.JuraModel.
 
 Module QJura(juramodel:JuraCompilerModel).
 
+  Definition jura_version := Version.jura_version.
+  
   Module Data := QJData.QJData(juramodel).
   Module Ops := QJOperators.QJOperators(juramodel).
 

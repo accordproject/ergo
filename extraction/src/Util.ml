@@ -227,4 +227,3 @@ let global_replace const_expr repl text =
   in
   String.concat "" (List.rev (replace [] 0 false))
 
-  

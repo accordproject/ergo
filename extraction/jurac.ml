@@ -23,6 +23,8 @@ open Cto_t
 let args_list gconf =
   Arg.align
     [
+      ("-version", Arg.Unit JuraUtil.get_version,
+       " Prints the compiler version");
       ("--contractname", Arg.String (JuraConfig.set_contract_name gconf),
        " <name> contract name");
       ("--clausename", Arg.String (JuraConfig.set_clause_name gconf),

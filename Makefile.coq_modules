@@ -13,6 +13,7 @@
 #
 
 MODULES = \
+	Version \
 	Utils/JResult \
 	Utils/JError \
 	Common/CTO/CTO \

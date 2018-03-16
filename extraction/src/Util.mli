@@ -78,4 +78,3 @@ been replaced by [templ]. This is intended as a replacement for the
 corresponding function in Str when matching against a constant
 string. *)
 
-
