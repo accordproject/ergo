@@ -1,6 +1,6 @@
 {
   "name": "jura-cli",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Jura CLI",
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "composer-common": "0.17.4",
-    "jura-compiler": "^0.0.20",
-    "jura-engine": "^0.0.20",
+    "jura-compiler": "^0.0.21",
+    "jura-engine": "^0.0.21",
     "moment": "^2.20.1",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
