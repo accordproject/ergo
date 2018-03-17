@@ -55,10 +55,13 @@ jura-npm:
 publish:
 	lerna bootstrap && lerna publish
 
-
 ## Documentation
 documentation:
 	@$(MAKE) -C mechanization documentation
+
+## Testing
+test:
+	lerna run test
 
 ## Cleanup
 clean-mechanization: Makefile.coq

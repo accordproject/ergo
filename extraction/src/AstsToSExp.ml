@@ -550,14 +550,14 @@ let sexp_to_stmts (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt list =
   end
 
 let package_to_sexp (expr_to_sexp : 'a -> sexp) (p:'a package) =
-  let pname = name_to_sexp p.package_name in
+  let namespace = opt_name_to_sexp p.package_namespace in
   let stmts = stmts_to_sexp expr_to_sexp p.package_statements in
-  STerm ("Package", [pname;stmts])
+  STerm ("Package", [namespace;stmts])
 
 let sexp_to_package (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a package =
   begin match se with
-  | STerm ("Package",[spname;sstmts]) ->
-      { package_name = sexp_to_name spname;
+  | STerm ("Package",[snamespace;sstmts]) ->
+      { package_namespace = sexp_to_opt_name snamespace;
 	package_statements = sexp_to_stmts sexp_to_expr sstmts; }
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside Package")

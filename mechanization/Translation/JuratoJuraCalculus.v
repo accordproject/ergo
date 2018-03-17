@@ -120,7 +120,7 @@ Section JuratoJavaScript.
   Record context :=
     mkContext {
         context_table: lookup_table;
-        context_package: string;
+        context_namespace: option string;
         context_globals: list string;
         context_params: list string;
       }.
@@ -128,35 +128,35 @@ Section JuratoJavaScript.
   Definition add_globals (ctxt:context) (params:list string) : context :=
     mkContext
       ctxt.(context_table)
-      ctxt.(context_package)
+      ctxt.(context_namespace)
       (List.app params ctxt.(context_globals))
       ctxt.(context_params).
 
   Definition add_params (ctxt:context) (params:list string) : context :=
     mkContext
       ctxt.(context_table)
-      ctxt.(context_package)
+      ctxt.(context_namespace)
       ctxt.(context_globals)
       (List.app params ctxt.(context_params)).
 
   Definition add_one_global (ctxt:context) (param:string) : context :=
     mkContext
       ctxt.(context_table)
-      ctxt.(context_package)
+      ctxt.(context_namespace)
       (List.cons param ctxt.(context_globals))
       ctxt.(context_params).
 
   Definition add_one_param (ctxt:context) (param:string) : context :=
     mkContext
       ctxt.(context_table)
-      ctxt.(context_package)
+      ctxt.(context_namespace)
       ctxt.(context_globals)
       (List.cons param ctxt.(context_params)).
 
   Definition add_one_func (ctxt:context) (fname:string) (fclosure:closure) :=
     mkContext
       (add_function_to_table ctxt.(context_table) fname fclosure)
-      ctxt.(context_package)
+      ctxt.(context_namespace)
       ctxt.(context_globals)
       ctxt.(context_params).
 
@@ -228,7 +228,7 @@ Section JuratoJavaScript.
               (jura_expr_to_calculus ctxt e2)
     | JNew cr nil =>
       jsuccess
-        (new_expr (brand_of_class_ref ctxt.(context_package) cr) (NNRCConst (drec nil)))
+        (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
     | JNew cr ((s0,init)::rest) =>
       let init_rec : jresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (jura_expr_to_calculus ctxt init)
@@ -239,7 +239,7 @@ Section JuratoJavaScript.
           jlift2 (NNRCBinop OpRecConcat)
                  (jlift (NNRCUnop (OpRec attname)) e) acc
       in
-      jlift (new_expr (brand_of_class_ref ctxt.(context_package) cr)) (fold_left proc_one rest init_rec)
+      jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
     | JStructure nil =>
       jsuccess
         (NNRCConst (drec nil))
@@ -255,7 +255,7 @@ Section JuratoJavaScript.
       in
       fold_left proc_one rest init_rec
     | JThrow cr nil =>
-      jsuccess (new_expr (brand_of_class_ref ctxt.(context_package) cr) (NNRCConst (drec nil)))
+      jsuccess (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
     | JThrow cr ((s0,init)::rest) =>
       let init_rec : jresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (jura_expr_to_calculus ctxt init)
@@ -267,7 +267,7 @@ Section JuratoJavaScript.
                  (jlift (NNRCUnop (OpRec attname)) e)
                  acc
       in
-      jlift (new_expr (brand_of_class_ref ctxt.(context_package) cr)) (fold_left proc_one rest init_rec)
+      jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
     | JFunCall fname el =>
       let init_el := jsuccess nil in
       let proc_one (e:jura_expr) (acc:jresult (list jurac_expr)) : jresult (list jurac_expr) :=
@@ -459,13 +459,13 @@ Section JuratoJavaScript.
             (contract_to_calculus ctxt c)
     end.
 
-  Definition initial_context (p:string) :=
+  Definition initial_context (p:option string) :=
     mkContext stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
   Definition package_to_calculus (p:package) : jresult jurac_package :=
-    let local_package := p.(package_name) in
-    let ctxt := initial_context local_package in
+    let local_namespace := p.(package_namespace) in
+    let ctxt := initial_context local_namespace in
     let init := jsuccess (ctxt, nil) in
     let proc_one
           (acc:jresult (context * list jurac_stmt))
@@ -483,13 +483,13 @@ Section JuratoJavaScript.
     jlift
       (fun xy =>
          (mkPackage
-            p.(package_name)
+            p.(package_namespace)
             (snd xy)))
       (List.fold_left proc_one p.(package_statements) init).
 
   Section tests.
     Open Scope string.
-    Definition ctxt0 := initial_context "test".
+    Definition ctxt0 := initial_context None.
 
     Definition input1 := dnat 2.
     

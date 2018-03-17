@@ -1,4 +1,4 @@
-package org.accordproject.volumediscount
+namespace org.accordproject.volumediscount
 
 import org.accordproject.contract.*
 import org.accordproject.late.*

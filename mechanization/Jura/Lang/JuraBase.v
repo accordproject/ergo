@@ -28,11 +28,11 @@ Section JuraBase.
   Context {A:Set}.
   
   Section Syntax.
-    Definition package_ref := option string.
+    Definition namespace_ref := option string.
 
     Record class_ref :=
       mkClassRef
-        { class_package : package_ref;
+        { class_namespace : namespace_ref;
           class_name : string; }.
 
     (** Generic function closure over expressions in [A].
@@ -79,7 +79,7 @@ Section JuraBase.
     (** Package. *)
     Record package :=
       mkPackage
-        { package_name : string;
+        { package_namespace : option string;
           package_statements : list stmt; }.
 
   End Syntax.
@@ -253,10 +253,14 @@ Section JuraBase.
   End lookup.
 
   Section utils.
-    Definition brand_of_class_ref (local_package:string) (cr:class_ref) :=
+    Definition brand_of_class_ref (local_namespace:option string) (cr:class_ref) :=
       let pname := 
-          match cr.(class_package) with
-          | None => local_package
+          match cr.(class_namespace) with
+          | None =>
+            match local_namespace with
+            | None => ""%string
+            | Some namespace => namespace
+            end
           | Some ref_package => ref_package
           end
       in

@@ -48,7 +48,7 @@ contract HelloWorld over TemplateModel {
                ((Clause cl1)::nil).
   
   Definition p1 :=
-    mkPackage "org.accordproject.helloworld"
+    mkPackage (Some "org.accordproject.helloworld")
               ((JContract c1)::nil).
 
   (* Eval vm_compute in (JuraCompiler.javascript_from_jura_package_with_dispatch None p1). *)

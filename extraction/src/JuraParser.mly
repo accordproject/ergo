@@ -22,7 +22,7 @@
 %token <string> STRING
 %token <string> IDENT
 
-%token PACKAGE IMPORT DEFINE FUNCTION
+%token NAMESPACE IMPORT DEFINE FUNCTION
 %token CONTRACT OVER CLAUSE THROWS
 
 %token ENSURE IF THEN ELSE
@@ -70,14 +70,17 @@ main:
 | p = package EOF
     { p }
 
+
 package:
-| pname = packagedecl ss = stmts
-    { { package_name = pname;
+| ns = namespacedecl ss = stmts
+    { { package_namespace = ns;
 	package_statements = ss; } }
 
-packagedecl:
-| PACKAGE qn = qname_prefix
-    { qn }
+namespacedecl:
+| /* empty */
+    { None }
+| NAMESPACE qn = qname_prefix
+    { Some qn }
 
 stmts:
 |
@@ -393,7 +396,7 @@ safeident:
 
 safeident_base:
 | i = IDENT { i }
-| PACKAGE { "package" }
+| NAMESPACE { "namespace" }
 | IMPORT { "import" }
 | DEFINE { "define" }
 | FUNCTION { "function" }

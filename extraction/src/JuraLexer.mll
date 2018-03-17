@@ -22,7 +22,7 @@
     begin
       List.iter (fun (key, data) -> Hashtbl.add tbl key data)
 	[ (* declarations *)
-	  "package", PACKAGE;
+	  "namespace", NAMESPACE;
 	  "import", IMPORT;
 	  "define", DEFINE;
 	  "function", FUNCTION;

@@ -73,7 +73,7 @@ Section JuratoJavaScript.
     end.
 
   Definition case_of_sig
-             (pname:string)
+             (namespace:option string)
              (v0:string)
              (effparam0:jura_expr)
              (effparamrest:list jura_expr)
@@ -85,7 +85,7 @@ Section JuratoJavaScript.
       jfailure (CompilationError ("No parameter can be used for dispatch in "++cname))
     | (param0, Some (CTOClassRef type0))::otherparams =>
       jlift (fun x =>
-               let type0 := brand_of_class_ref pname (mkClassRef None type0) in
+               let type0 := brand_of_class_ref namespace (mkClassRef None type0) in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, Some _)::otherparams =>
@@ -93,7 +93,7 @@ Section JuratoJavaScript.
     end.
 
   Definition match_of_sigs
-             (pname:string)
+             (namespace:option string)
              (v0:string)
              (effparam0:jura_expr)
              (effparamrest:list jura_expr)
@@ -103,20 +103,20 @@ Section JuratoJavaScript.
                      s
                      (JThrow (mkClassRef None "Error"%string)
                              (("message"%string,JConst (dstring ""))::nil)))
-          (jmaplift (case_of_sig pname v0 effparam0 effparamrest) ss).
+          (jmaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
   Definition dispatch_fun_name :=
     "dispatch"%string.
   
   Definition match_of_sigs_top
-             (pname:string)
+             (namespace:option string)
              (effparams:list jura_expr)
              (ss:list signature) :=
     match effparams with
     | nil => jfailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
       let v0 := ("$"++dispatch_fun_name)%string in (** XXX To be worked on *)
-      match_of_sigs pname v0 effparam0 effparamrest ss
+      match_of_sigs namespace v0 effparam0 effparamrest ss
     end.
 
   Definition add_dispatch_fun (oconame:option string) (p:jura_package) : jresult jura_package :=
@@ -132,11 +132,11 @@ Section JuratoJavaScript.
                            None
                            None
                            disp))))
-          (match_of_sigs_top p.(package_name) effparams sigs)
+          (match_of_sigs_top p.(package_namespace) effparams sigs)
     in
     jlift (fun disp =>
              mkPackage
-               p.(package_name)
+               p.(package_namespace)
                    (p.(package_statements) ++ (disp::nil)))
           dispatch_fun_decl.
 
