@@ -53,7 +53,7 @@ jura-npm:
 	lerna bootstrap
 
 publish:
-	lerna bootstrap && lerna publish
+	lerna bootstrap && lerna publish --force-publish=*
 
 ## Documentation
 documentation:
