@@ -88,7 +88,11 @@ let jura_compile input =
   | exn -> json_of_error ("[Main error: "^(Printexc.to_string exn)^"]")
   end
 
+let jura_version unit =
+  JuraUtil.jura_version
+
 let _ =
   Js.export "Jura" (object%js
     val compile  = Js.wrap_callback jura_compile
+    val version = Js.wrap_callback jura_version
    end)

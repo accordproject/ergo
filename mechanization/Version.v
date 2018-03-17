@@ -18,7 +18,7 @@ Require Import String.
 
 Section Version.
   (** Variables are defined as strings *)
-  Definition jura_version := "0.0.21"%string.
+  Definition jura_version := "0.0.23"%string.
 
 End Version.
 

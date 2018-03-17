@@ -96,7 +96,6 @@ clean: Makefile.coq
 	- @$(MAKE) clean-mechanization
 	- @$(MAKE) -C packages/jura-compiler clean
 	- @$(MAKE) -C packages/jura-cli clean
-	- @rm -f *~
 
 cleanall: Makefile.coq
 	- @$(MAKE) cleanall-npm
@@ -105,7 +104,6 @@ cleanall: Makefile.coq
 	- @$(MAKE) cleanall-npm
 	- @$(MAKE) -C packages/jura-compiler cleanall
 	- @$(MAKE) -C packages/jura-cli cleanall
-	- @rm -f *~
 
 ##
 _CoqProject: Makefile.config
