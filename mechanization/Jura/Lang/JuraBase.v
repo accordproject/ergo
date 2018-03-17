@@ -253,18 +253,18 @@ Section JuraBase.
   End lookup.
 
   Section utils.
+    Require Import String.
+    Local Open Scope string.
+
     Definition brand_of_class_ref (local_namespace:option string) (cr:class_ref) :=
-      let pname := 
-          match cr.(class_namespace) with
-          | None =>
-            match local_namespace with
-            | None => ""%string
-            | Some namespace => namespace
-            end
-          | Some ref_package => ref_package
-          end
-      in
-      (pname ++ "." ++ cr.(class_name))%string.
+      match cr.(class_namespace) with
+      | None =>
+        match local_namespace with
+        | None => cr.(class_name)
+        | Some namespace => namespace ++ "." ++ cr.(class_name)
+        end
+      | Some ref_package => ref_package ++ "." ++ cr.(class_name)
+      end.
   End utils.
   
 End JuraBase.
