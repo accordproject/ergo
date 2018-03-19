@@ -35,7 +35,7 @@
 
 %token OR AND NOT
 %token FLATTEN
-%token AVG FAVG SUM FSUM COUNT MIN MAX
+%token AVG SUM COUNT MIN MAX
 
 %token NIL
 %token TRUE FALSE
@@ -240,7 +240,7 @@ expr:
 | i = INT
     { JuraCompiler.jconst (JuraCompiler.Data.dnat (Util.coq_Z_of_int i)) }
 | f = FLOAT
-    { JuraCompiler.jconst (JuraCompiler.Enhanced.Data.dfloat f) }
+    { JuraCompiler.jconst (JuraCompiler.Data.dfloat f) }
 | s = STRING
     { JuraCompiler.jconst (JuraCompiler.Data.dstring (Util.char_list_of_string s)) }
 | LBRACKET el = exprlist RBRACKET
@@ -289,14 +289,8 @@ expr:
     { JuraCompiler.junaryop JuraCompiler.Ops.Unary.opflatten e }
 | AVG LPAREN e = expr RPAREN
     { JuraCompiler.junaryop JuraCompiler.Ops.Unary.opnummean e }
-| FAVG LPAREN e = expr RPAREN
-    { JuraCompiler.junaryop (OpForeignUnary
-		    (Obj.magic (Enhanced_unary_float_op
-				  (Uop_float_arithmean)))) e }
 | SUM LPAREN e = expr RPAREN
     { JuraCompiler.junaryop JuraCompiler.Ops.Unary.opsum e }
-| FSUM LPAREN e = expr RPAREN
-    { JuraCompiler.junaryop JuraCompiler.Enhanced.Ops.Unary.float_sum e }
 | COUNT LPAREN e = expr RPAREN
     { JuraCompiler.junaryop JuraCompiler.Ops.Unary.opcount e }
 | MAX LPAREN e = expr RPAREN
@@ -317,13 +311,13 @@ expr:
 | e1 = expr GTEQ e2 = expr
     { JuraCompiler.junaryop JuraCompiler.Ops.Unary.opneg (JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.oplt e1 e2) }
 | e1 = expr MINUS e2 = expr
-    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.ZArith.opminus e1 e2 }
+    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.Float.opminus e1 e2 }
 | e1 = expr PLUS e2 = expr
-    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.ZArith.opplus e1 e2 }
+    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.Float.opplus e1 e2 }
 | e1 = expr STAR e2 = expr
-    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.ZArith.opmult e1 e2 }
+    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.Float.opmult e1 e2 }
 | e1 = expr SLASH e2 = expr
-    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.ZArith.opdiv e1 e2 }
+    { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.Float.opdiv e1 e2 }
 | e1 = expr AND e2 = expr
     { JuraCompiler.jbinaryop JuraCompiler.Ops.Binary.opand e1 e2 }
 | e1 = expr OR e2 = expr
@@ -403,7 +397,7 @@ data:
 | i = INT
     { JuraCompiler.Data.dnat i }
 | f = FLOAT
-    { JuraCompiler.Enhanced.Data.dfloat f }
+    { JuraCompiler.Data.dfloat f }
 
 (* ident *)
 ident:
@@ -457,9 +451,7 @@ safeident_base:
 | NOT { "not" }
 | FLATTEN { "flatten" }
 | AVG { "avg" }
-| FAVG { "favg" }
 | SUM { "sum" }
-| FSUM { "fsum" }
 | COUNT { "count" }
 | MIN { "min" }
 | MAX { "max" }

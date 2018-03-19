@@ -73,8 +73,8 @@ Section JuratoJavaScript.
       fun fname =>
         let unop :=
             match fname with
-            | "max" => Some OpNumMax
-            | "min" => Some OpNumMin
+            | "max" => Some OpFloatBagMax
+            | "min" => Some OpFloatBagMin
             | "flatten" => Some OpFlatten
             | "toString" => Some OpToString
             | _ => None

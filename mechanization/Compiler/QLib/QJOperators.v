@@ -27,14 +27,14 @@ Module QJOperators(juramodel:JuraCompilerModel).
     Definition t : Set 
       := op.
 
-    Module ZArith.
+    Module Float.
       Definition opabs : op 
-        := UnaryOperators.OpArithUnary UnaryOperators.ArithAbs.
+        := UnaryOperators.OpFloatUnary UnaryOperators.FloatAbs.
       Definition oplog2 : op 
-        := UnaryOperators.OpArithUnary UnaryOperators.ArithLog2.
+        := UnaryOperators.OpFloatUnary UnaryOperators.FloatLog.
       Definition opsqrt : op 
-        := UnaryOperators.OpArithUnary UnaryOperators.ArithSqrt.
-    End ZArith.
+        := UnaryOperators.OpFloatUnary UnaryOperators.FloatSqrt.
+    End Float.
 
     Definition opidentity : op 
       := UnaryOperators.OpIdentity.
@@ -59,13 +59,13 @@ Module QJOperators(juramodel:JuraCompilerModel).
     Definition opcount : op 
       := UnaryOperators.OpCount.
     Definition opsum : op 
-      := UnaryOperators.OpSum.
+      := UnaryOperators.OpFloatSum.
     Definition opnummin : op 
-      := UnaryOperators.OpNumMin.
+      := UnaryOperators.OpFloatBagMin.
     Definition opnummax : op 
-      := UnaryOperators.OpNumMax.
+      := UnaryOperators.OpFloatBagMax.
     Definition opnummean : op 
-      := UnaryOperators.OpNumMean.
+      := UnaryOperators.OpFloatMean.
     Definition optostring : op 
       := UnaryOperators.OpToString.
     Definition opsubstring : Z -> option Z -> op 
@@ -94,22 +94,22 @@ Module QJOperators(juramodel:JuraCompilerModel).
     Definition t : Set 
       := op.
 
-    Module ZArith.
+    Module Float.
       Definition opplus : op 
-        := BinaryOperators.OpArithBinary BinaryOperators.ArithPlus.
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatPlus.
       Definition opminus : op 
-        := BinaryOperators.OpArithBinary BinaryOperators.ArithMinus.
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatMinus.
       Definition opmult : op 
-        := BinaryOperators.OpArithBinary BinaryOperators.ArithMult.
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatMult.
       Definition opmin : op 
-        := BinaryOperators.OpArithBinary BinaryOperators.ArithMin.
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatMin.
       Definition opmax : op 
-        := BinaryOperators.OpArithBinary BinaryOperators.ArithMax.
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatMax.
       Definition opdiv : op 
-        := BinaryOperators.OpArithBinary BinaryOperators.ArithDivide.
-      Definition oprem : op 
-        := BinaryOperators.OpArithBinary BinaryOperators.ArithRem.
-    End ZArith.
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatDiv.
+(*      Definition oprem : op 
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatRem. *)
+    End Float.
     
     Definition opequal : op 
       := BinaryOperators.OpEqual.

@@ -47,6 +47,8 @@ Module QJData(juramodel:JuraCompilerModel).
     := Data.dunit.
   Definition dnat z : qdata 
     := Data.dnat z.
+  Definition dfloat f : qdata 
+    := Data.dfloat f.
   Definition dbool b : qdata 
     := Data.dbool b.
   Definition dstring s : qdata 

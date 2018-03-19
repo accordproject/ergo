@@ -60,10 +60,8 @@
 	  (* Functions *)
 	  "flatten", FLATTEN;
 	  "avg", AVG;
-	  "favg", FAVG;
 	  "sum", SUM;
-          "fsum", FSUM;
-	  "count", COUNT;
+          "count", COUNT;
 	  "min", MIN;
 	  "max", MAX;
 	  (* Data *)

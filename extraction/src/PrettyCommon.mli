@@ -24,15 +24,19 @@ val string_of_foreign_data : enhanced_data -> string
 val foreign_data_of_string : string -> enhanced_data
 
 val string_of_foreign_unary_op : enhanced_unary_op -> string
-val string_of_arith_unary_op : arith_unary_op -> string
+val string_of_nat_arith_unary_op : nat_arith_unary_op -> string
+val string_of_float_arith_unary_op : float_arith_unary_op -> string
 
 val foreign_unary_op_of_string : string -> enhanced_unary_op
-val arith_unary_op_of_string : string -> arith_unary_op
+val nat_arith_unary_op_of_string : string -> nat_arith_unary_op
+val float_arith_unary_op_of_string : string -> float_arith_unary_op
 
 val string_of_foreign_binary_op : enhanced_binary_op -> string
-val string_of_arith_binary_op : arith_binary_op -> string
+val string_of_nat_arith_binary_op : nat_arith_binary_op -> string
+val string_of_float_arith_binary_op : float_arith_binary_op -> string
 
-val arith_binary_op_of_string : string -> arith_binary_op
+val nat_arith_binary_op_of_string : string -> nat_arith_binary_op
+val float_arith_binary_op_of_string : string -> float_arith_binary_op
 val foreign_binary_op_of_string : string -> enhanced_binary_op
 
 val string_of_binary_op : binary_op -> string

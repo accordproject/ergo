@@ -28,7 +28,6 @@ let timescale_as_string ts =
 
 let string_of_foreign_data (fd:enhanced_data) : string =
   match fd with
-  | Enhancedfloat f -> string_of_float f
   | Enhancedstring s -> "S\"" ^ s ^ "\""
   | Enhancedtimescale ts -> timescale_as_string ts
   | Enhancedtimeduration td -> raise Not_found
@@ -37,43 +36,63 @@ let string_of_foreign_data (fd:enhanced_data) : string =
   | Enhancedsqldateinterval tp -> raise Not_found
 
 let foreign_data_of_string s =
-  try
-    Enhancedfloat (float_of_string s)
-  with
-  | Failure _ ->
-      begin
-	match s with
-	| "SECOND" -> Enhancedtimescale Ts_second
-	| "MINUTE" -> Enhancedtimescale Ts_minute
-	| "HOUR" -> Enhancedtimescale Ts_hour
-	| "DAY" -> Enhancedtimescale Ts_day
-	| "WEEK" -> Enhancedtimescale Ts_week
-	| "MONTH" -> Enhancedtimescale Ts_month
-	| "YEAR" -> Enhancedtimescale Ts_year
-	| _ ->
-	    try
-	      if (s.[0] = 'S' && s.[1] = '"')
-	      then
-		Enhancedstring (String.sub s 2 ((String.length s) - 3))
-	      else
-		raise Not_found
-	    with
-	    | _ ->
-		raise Not_found
-      end
+  begin
+    match s with
+    | "SECOND" -> Enhancedtimescale Ts_second
+    | "MINUTE" -> Enhancedtimescale Ts_minute
+    | "HOUR" -> Enhancedtimescale Ts_hour
+    | "DAY" -> Enhancedtimescale Ts_day
+    | "WEEK" -> Enhancedtimescale Ts_week
+    | "MONTH" -> Enhancedtimescale Ts_month
+    | "YEAR" -> Enhancedtimescale Ts_year
+    | _ ->
+      try
+        if (s.[0] = 'S' && s.[1] = '"')
+        then
+	  Enhancedstring (String.sub s 2 ((String.length s) - 3))
+        else
+	  raise Not_found
+      with
+      | _ ->
+        raise Not_found
+  end
 
-let string_of_arith_unary_op ua =
+let string_of_nat_arith_unary_op ua =
   match ua with
-  | ArithAbs -> "abs"
-  | ArithLog2 -> "log2"
-  | ArithSqrt -> "sqrt"
+  | NatAbs -> "abs"
+  | NatLog2 -> "log2"
+  | NatSqrt -> "sqrt"
 
-let arith_unary_op_of_string s =
+let nat_arith_unary_op_of_string s =
   match s with
-  | "abs" -> ArithAbs
-  | "log2" -> ArithLog2
-  | "sqrt" -> ArithSqrt
+  | "abs" -> NatAbs
+  | "log2" -> NatLog2
+  | "sqrt" -> NatSqrt
   | _ -> raise Not_found
+
+let string_of_float_arith_unary_op ua =
+  begin match ua with
+  | FloatNeg -> "Fneg"
+  | FloatSqrt -> "Fsqrt"
+  | FloatExp -> "Fexp"
+  | FloatLog -> "Flog"
+  | FloatLog10 -> "Flog10"
+  | FloatCeil -> "Fceil"
+  | FloatFloor -> "Ffloor"
+  | FloatAbs -> "Fabs"
+  end
+
+let float_arith_unary_op_of_string s =
+  begin match s with
+  | "Fneg" -> FloatNeg
+  | "Fsqrt" -> FloatSqrt
+  | "Fexp" -> FloatExp
+  | "Flog" -> FloatLog
+  | "Flog10" -> FloatLog10
+  | "Fceil" -> FloatCeil
+  | "Ffloor" -> FloatFloor
+  | _ -> raise Not_found
+  end
 
 let sql_date_component_to_string part =
   match part with
@@ -83,20 +102,6 @@ let sql_date_component_to_string part =
 
 let string_of_foreign_unary_op fu : string =
   match fu with
-  | Enhanced_unary_float_op Uop_float_neg -> "Fneg"
-  | Enhanced_unary_float_op Uop_float_sqrt -> "Fsqrt"
-  | Enhanced_unary_float_op Uop_float_exp -> "Fexp"
-  | Enhanced_unary_float_op Uop_float_log -> "Flog"
-  | Enhanced_unary_float_op Uop_float_log10 -> "Flog10"
-  | Enhanced_unary_float_op Uop_float_of_int -> "Fof_int"
-  | Enhanced_unary_float_op Uop_float_ceil -> "Fceil"
-  | Enhanced_unary_float_op Uop_float_floor -> "floor"
-  | Enhanced_unary_float_op Uop_float_truncate -> "Ftruncate"
-  | Enhanced_unary_float_op Uop_float_abs -> "Fabs"
-  | Enhanced_unary_float_op Uop_float_sum -> "Fsum"
-  | Enhanced_unary_float_op Uop_float_arithmean -> "Favg"
-  | Enhanced_unary_float_op Uop_float_listmin -> "Flist_min"
-  | Enhanced_unary_float_op Uop_float_listmax -> "Flist_max"
   | Enhanced_unary_time_op Uop_time_to_scale -> "TimeToScale"
   | Enhanced_unary_time_op Uop_time_from_string -> "TimeFromString"
   | Enhanced_unary_time_op Uop_time_duration_from_string -> "TimeDurationFromString"
@@ -106,20 +111,6 @@ let string_of_foreign_unary_op fu : string =
 									    
 let foreign_unary_op_of_string s =
   match s with
-  | "Fneg" -> Enhanced_unary_float_op Uop_float_neg
-  | "Fsqrt" -> Enhanced_unary_float_op Uop_float_sqrt
-  | "Fexp" -> Enhanced_unary_float_op Uop_float_exp
-  | "Flog" -> Enhanced_unary_float_op Uop_float_log
-  | "Flog10" -> Enhanced_unary_float_op Uop_float_log10
-  | "Fof_int" -> Enhanced_unary_float_op Uop_float_of_int
-  | "Fceil" -> Enhanced_unary_float_op Uop_float_ceil
-  | "floor" -> Enhanced_unary_float_op Uop_float_floor
-  | "Ftruncate" -> Enhanced_unary_float_op Uop_float_truncate
-  | "Fabs" -> Enhanced_unary_float_op Uop_float_abs
-  | "Fsum" -> Enhanced_unary_float_op Uop_float_sum
-  | "Favg" -> Enhanced_unary_float_op Uop_float_arithmean
-  | "Flist_min" -> Enhanced_unary_float_op Uop_float_listmin
-  | "Flist_max" -> Enhanced_unary_float_op Uop_float_listmax
   | "TimeToScale" -> Enhanced_unary_time_op Uop_time_to_scale
   | "TimeFromString" -> Enhanced_unary_time_op Uop_time_from_string
   | "TimeDurationFromString" -> Enhanced_unary_time_op Uop_time_duration_from_string
@@ -131,41 +122,52 @@ let foreign_unary_op_of_string s =
 
   | _ -> raise Not_found
 
-let string_of_arith_binary_op ba =
+let string_of_nat_arith_binary_op ba =
   match ba with
-  | ArithPlus -> "plus"
-  | ArithMinus -> "minus"
-  | ArithMult -> "mult"
-  | ArithMin -> "min"
-  | ArithMax -> "max"
-  | ArithDivide -> "divide"
-  | ArithRem -> "rem"
+  | NatPlus -> "plus"
+  | NatMinus -> "minus"
+  | NatMult -> "mult"
+  | NatMin -> "min"
+  | NatMax -> "max"
+  | NatDiv -> "div"
+  | NatRem -> "rem"
 
-let arith_binary_op_of_string s =
+let nat_arith_binary_op_of_string s =
   match s with
-  | "plus" -> ArithPlus
-  | "minus" -> ArithMinus
-  | "mult" -> ArithMult
-  | "min" -> ArithMin
-  | "max" -> ArithMax
-  | "divide" -> ArithDivide
-  | "rem" -> ArithRem
+  | "plus" -> NatPlus
+  | "minus" -> NatMinus
+  | "mult" -> NatMult
+  | "min" -> NatMin
+  | "max" -> NatMax
+  | "div" -> NatDiv
+  | "rem" -> NatRem
   | _ -> raise Not_found
+
+let string_of_float_arith_binary_op ba =
+  begin match ba with
+  | FloatPlus -> "float_plus"
+  | FloatMinus -> "float_minus"
+  | FloatMult -> "float_mult"
+  | FloatDiv -> "float_div"
+  | FloatPow -> "float_pow"
+  | FloatMin -> "float_min"
+  | FloatMax -> "float_max"
+  end
+
+let float_arith_binary_op_of_string ba =
+  begin match ba with
+  | "float_plus" -> FloatPlus
+  | "float_minus" -> FloatMinus
+  | "float_mult" -> FloatMult
+  | "float_div" -> FloatDiv
+  | "float_pow" -> FloatPow
+  | "float_min" -> FloatMin
+  | "float_max" -> FloatMax
+  | _ -> raise Not_found
+  end
 
 let string_of_foreign_binary_op fb =
   match fb with
-  | Enhanced_binary_float_op Bop_float_plus -> "float_plus"
-  | Enhanced_binary_float_op Bop_float_minus -> "float_minus"
-  | Enhanced_binary_float_op Bop_float_mult -> "float_mult"
-  | Enhanced_binary_float_op Bop_float_div -> "float_div"
-  | Enhanced_binary_float_op Bop_float_pow -> "float_pow"
-  | Enhanced_binary_float_op Bop_float_min -> "float_min"
-  | Enhanced_binary_float_op Bop_float_max -> "float_max"
-  | Enhanced_binary_float_op Bop_float_ne -> "float_ne"
-  | Enhanced_binary_float_op Bop_float_lt -> "float_lt"
-  | Enhanced_binary_float_op Bop_float_le -> "float_le"
-  | Enhanced_binary_float_op Bop_float_gt -> "float_gt"
-  | Enhanced_binary_float_op Bop_float_ge -> "float_ge"
   | Enhanced_binary_time_op Bop_time_as -> "time_as"
   | Enhanced_binary_time_op Bop_time_shift -> "time_shift"
   | Enhanced_binary_time_op Bop_time_ne -> "time_ne"
@@ -186,18 +188,6 @@ let string_of_foreign_binary_op fb =
 
 let foreign_binary_op_of_string fb =
   match fb with
-  | "float_plus" -> Enhanced_binary_float_op Bop_float_plus
-  | "float_minus" -> Enhanced_binary_float_op Bop_float_minus
-  | "float_mult" -> Enhanced_binary_float_op Bop_float_mult
-  | "float_div" -> Enhanced_binary_float_op Bop_float_div
-  | "float_pow" -> Enhanced_binary_float_op Bop_float_pow
-  | "float_min" -> Enhanced_binary_float_op Bop_float_min
-  | "float_max" -> Enhanced_binary_float_op Bop_float_max
-  | "float_ne" -> Enhanced_binary_float_op Bop_float_ne
-  | "float_lt" -> Enhanced_binary_float_op Bop_float_lt
-  | "float_le" -> Enhanced_binary_float_op Bop_float_le
-  | "float_gt" -> Enhanced_binary_float_op Bop_float_gt
-  | "float_ge" -> Enhanced_binary_float_op Bop_float_ge
   | "time_as" -> Enhanced_binary_time_op Bop_time_as
   | "time_shift" -> Enhanced_binary_time_op Bop_time_shift
   | "time_ne" -> Enhanced_binary_time_op Bop_time_ne
@@ -224,7 +214,8 @@ let string_of_binary_op b =
   | OpRecMerge -> "amergeconcat"
   | OpAnd -> "aand"
   | OpOr -> "aor"
-  | OpArithBinary ba -> string_of_arith_binary_op ba
+  | OpNatBinary ba -> string_of_nat_arith_binary_op ba
+  | OpFloatBinary ba -> string_of_float_arith_binary_op ba
   | OpLt -> "alt"
   | OpLe -> "ale"
   | OpBagDiff -> "aminus"

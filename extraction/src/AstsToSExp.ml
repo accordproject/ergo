@@ -58,7 +58,6 @@ let rec sstring_list_with_order_to_coq_string_list sl =
 
 let foreign_data_to_sexp (fd:enhanced_data) : sexp =
   match fd with
-  | Enhancedfloat f -> SFloat f
   | Enhancedstring s -> STerm ("enhanced_string", (SString s)::[])
   | Enhancedtimescale ts -> STerm ("dtime_scale", (SString (PrettyCommon.timescale_as_string ts))::[])
   | Enhancedtimeduration td -> raise Not_found
@@ -70,6 +69,7 @@ let rec data_to_sexp (d : Data.qdata) : sexp =
   match d with
   | Dunit -> STerm ("dunit", [])
   | Dnat n -> SInt n
+  | Dfloat f -> SFloat f
   | Dbool b -> SBool b
   | Dstring s -> SString (string_of_char_list s)
   | Dcoll dl -> STerm ("dcoll", List.map data_to_sexp dl)
@@ -86,7 +86,7 @@ let rec sexp_to_data (se:sexp) : Data.qdata =
   | STerm ("dunit", []) -> Dunit
   | SBool b -> Dbool b
   | SInt n -> Dnat n
-  | SFloat f -> (Dforeign (Obj.magic (Enhancedfloat f)))
+  | SFloat f -> Dfloat f
   | SString s -> Dstring (char_list_of_string s)
   | STerm ("dcoll", sel) ->
       Dcoll (List.map sexp_to_data sel)
@@ -111,14 +111,23 @@ and sexp_to_drec (sel:sexp) : (char list * Data.qdata) =
 
 (* Operators Section *)
 
-let arithbop_to_sexp (b:arith_binary_op) : sexp =
-  STerm (PrettyCommon.string_of_arith_binary_op b,[])
+let nat_arith_bop_to_sexp (b:nat_arith_binary_op) : sexp =
+  STerm (PrettyCommon.string_of_nat_arith_binary_op b,[])
   
-let sexp_to_arithbop (se:sexp) : arith_binary_op =
+let sexp_to_nat_arith_bop (se:sexp) : nat_arith_binary_op =
   match se with
-  | STerm (s,[]) -> PrettyCommon.arith_binary_op_of_string s
+  | STerm (s,[]) -> PrettyCommon.nat_arith_binary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith binary_op")
+      raise  (Jura_Error "Not well-formed S-expr inside arith nat binary_op")
+  
+let float_arith_bop_to_sexp (b:float_arith_binary_op) : sexp =
+  STerm (PrettyCommon.string_of_float_arith_binary_op b,[])
+  
+let sexp_to_float_arith_bop (se:sexp) : float_arith_binary_op =
+  match se with
+  | STerm (s,[]) -> PrettyCommon.float_arith_binary_op_of_string s
+  | _ ->
+      raise  (Jura_Error "Not well-formed S-expr inside arith float binary_op")
   
 let binary_op_to_sexp (b:binary_op) : sexp =
   match b with
@@ -128,7 +137,8 @@ let binary_op_to_sexp (b:binary_op) : sexp =
   | OpRecMerge -> STerm ("AMergeConcat",[])
   | OpAnd -> STerm ("AAnd",[])
   | OpOr -> STerm ("AOr",[])
-  | OpArithBinary ab -> STerm ("ABArith",[arithbop_to_sexp ab])
+  | OpNatBinary ab -> STerm ("ABNat",[nat_arith_bop_to_sexp ab])
+  | OpFloatBinary ab -> STerm ("ABFloat",[float_arith_bop_to_sexp ab])
   | OpLt -> STerm ("ALt",[])
   | OpLe -> STerm ("ALe",[])
   | OpBagDiff -> STerm ("AMinus",[])
@@ -146,7 +156,8 @@ let sexp_to_binary_op (se:sexp) : binary_op =
   | STerm ("AMergeConcat",[]) -> OpRecMerge
   | STerm ("AAnd",[]) -> OpAnd
   | STerm ("AOr",[]) -> OpOr
-  | STerm ("ABArith",[se']) -> OpArithBinary (sexp_to_arithbop se')
+  | STerm ("ABNat",[se']) -> OpNatBinary (sexp_to_nat_arith_bop se')
+  | STerm ("ABFloat",[se']) -> OpFloatBinary (sexp_to_float_arith_bop se')
   | STerm ("ALt",[]) -> OpLt
   | STerm ("ALe",[]) -> OpLe
   | STerm ("AMinus",[]) -> OpBagDiff
@@ -156,18 +167,6 @@ let sexp_to_binary_op (se:sexp) : binary_op =
   | STerm ("ASConcat",[]) -> OpStringConcat
   | SString fbop -> OpForeignBinary (Obj.magic (PrettyCommon.foreign_binary_op_of_string fbop))
   (* WARNING: Those are not printed, only parsed *)
-  | STerm ("AFloatPlus",[]) -> Enhanced.Ops.Binary.coq_OpFloatPlus
-  | STerm ("AFloatMinus",[]) -> Enhanced.Ops.Binary.coq_OpFloatMinus
-  | STerm ("AFloatMult",[]) -> Enhanced.Ops.Binary.coq_OpFloatMult
-  | STerm ("AFloatDiv",[]) -> Enhanced.Ops.Binary.coq_OpFloatDiv
-  | STerm ("AFloatPow",[]) -> Enhanced.Ops.Binary.coq_OpFloatPow
-  | STerm ("AFloatMin",[]) -> Enhanced.Ops.Binary.coq_OpFloatMin
-  | STerm ("AFloatMax",[]) -> Enhanced.Ops.Binary.coq_OpFloatMax
-  | STerm ("AFloatNe",[]) -> Enhanced.Ops.Binary.coq_OpFloatNe
-  | STerm ("AFloatLt",[]) -> Enhanced.Ops.Binary.coq_OpFloatLt
-  | STerm ("AFloatLe",[]) -> Enhanced.Ops.Binary.coq_OpFloatLe
-  | STerm ("AFloatGt",[]) -> Enhanced.Ops.Binary.coq_OpFloatGt
-  | STerm ("AFloatGe",[]) -> Enhanced.Ops.Binary.coq_OpFloatGe
   | STerm ("ATimeAs",[]) -> Enhanced.Ops.Binary.coq_OpTimeAs
   | STerm ("ATimeShift",[]) -> Enhanced.Ops.Binary.coq_OpTimeShift
   | STerm ("ATimeNe",[]) -> Enhanced.Ops.Binary.coq_OpTimeNe
@@ -189,19 +188,29 @@ let sexp_to_binary_op (se:sexp) : binary_op =
       raise (Jura_Error ("Not well-formed S-expr inside arith binary_op with name " ^ t))
   | _ -> raise  (Jura_Error "Not well-formed S-expr inside arith binary_op")
 
-let arith_unary_op_to_sexp (b:arith_unary_op) : sexp =
-  STerm (PrettyCommon.string_of_arith_unary_op b,[])
+let nat_arith_unary_op_to_sexp (b:nat_arith_unary_op) : sexp =
+  STerm (PrettyCommon.string_of_nat_arith_unary_op b,[])
 
-let sexp_to_arith_unary_op (se:sexp) : arith_unary_op =
+let sexp_to_nat_arith_unary_op (se:sexp) : nat_arith_unary_op =
   match se with
-  | STerm (s,[]) -> PrettyCommon.arith_unary_op_of_string s
+  | STerm (s,[]) -> PrettyCommon.nat_arith_unary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith unary_op")
+      raise  (Jura_Error "Not well-formed S-expr inside arith nat unary_op")
+
+let float_arith_unary_op_to_sexp (b:float_arith_unary_op) : sexp =
+  STerm (PrettyCommon.string_of_float_arith_unary_op b,[])
+
+let sexp_to_float_arith_unary_op (se:sexp) : float_arith_unary_op =
+  match se with
+  | STerm (s,[]) -> PrettyCommon.float_arith_unary_op_of_string s
+  | _ ->
+      raise  (Jura_Error "Not well-formed S-expr inside arith float unary_op")
 
 let unary_op_to_sexp (u:unary_op) : sexp =
   match u with
   | OpIdentity -> STerm ("AIdOp",[])
-  | OpArithUnary au -> STerm ("AUArith", [arith_unary_op_to_sexp au])
+  | OpNatUnary au -> STerm ("AUNat", [nat_arith_unary_op_to_sexp au])
+  | OpFloatUnary au -> STerm ("AUFloat", [float_arith_unary_op_to_sexp au])
   | OpNeg -> STerm ("ANeg",[])
   | OpBag -> STerm ("AColl",[])
   | OpCount -> STerm ("ACount",[])
@@ -215,8 +224,16 @@ let unary_op_to_sexp (u:unary_op) : sexp =
   | OpRecProject sl -> STerm ("ARecProject", coq_string_list_to_sstring_list sl)
   | OpDistinct -> STerm ("ADistinct",[])
   | OpOrderBy sl -> STerm ("AOrderBy", coq_string_list_to_sstring_list_with_order sl)
-  | OpSum -> STerm ("ASum",[])
-  | OpNumMean -> STerm ("AArithMean",[])
+  | OpNatSum -> STerm ("ANatSum",[])
+  | OpNatMean -> STerm ("ANatMean",[])
+  | OpNatMin -> STerm ("ANatMin",[])
+  | OpNatMax -> STerm ("ANatMax",[])
+  | OpFloatOfNat -> STerm ("AFloatOfNat",[])
+  | OpFloatTruncate -> STerm ("AFloatTruncate",[])
+  | OpFloatSum -> STerm ("AFloatSum",[])
+  | OpFloatMean -> STerm ("AFloatMean",[])
+  | OpFloatBagMin -> STerm ("AFloatBagMin",[])
+  | OpFloatBagMax -> STerm ("AFloatBagMax",[])
   | OpToString -> STerm ("AToString",[])
   | OpSubstring (n,None) -> STerm ("ASubstring",[SInt n])
   | OpSubstring (n1,(Some n2)) -> STerm ("ASubstring",[SInt n1;SInt n2])
@@ -225,8 +242,6 @@ let unary_op_to_sexp (u:unary_op) : sexp =
   | OpCast bl -> STerm ("ACast", dbrands_to_sexp bl)
   | OpUnbrand -> STerm ("AUnbrand",[])
   | OpSingleton -> STerm ("ASingleton",[])
-  | OpNumMin -> STerm ("ANumMin",[])
-  | OpNumMax -> STerm ("ANumMax",[])
   | OpForeignUnary fuop -> SString (PrettyCommon.string_of_foreign_unary_op (Obj.magic fuop))
 
 let sstring_to_sql_date_component (part:sexp) : Enhanced.Data.sql_date_part =
@@ -239,9 +254,12 @@ let sstring_to_sql_date_component (part:sexp) : Enhanced.Data.sql_date_part =
 let sexp_to_unary_op (se:sexp) : unary_op =
   match se with
   | STerm ("AIdOp",[]) -> OpIdentity
-  | STerm ("AUArith", [se']) ->
-      let au = sexp_to_arith_unary_op se' in
-      OpArithUnary au
+  | STerm ("AUNat", [se']) ->
+      let au = sexp_to_nat_arith_unary_op se' in
+      OpNatUnary au
+  | STerm ("AUFloat", [se']) ->
+      let au = sexp_to_float_arith_unary_op se' in
+      OpFloatUnary au
   | STerm ("ANeg",[]) -> OpNeg
   | STerm ("AColl",[]) -> OpBag
   | STerm ("ACount",[]) -> OpCount
@@ -255,8 +273,6 @@ let sexp_to_unary_op (se:sexp) : unary_op =
   | STerm ("ARecProject", sl) -> OpRecProject (sstring_list_to_coq_string_list sl)
   | STerm ("ADistinct",[]) -> OpDistinct
   | STerm ("AOrderBy",sl) -> OpOrderBy (sstring_list_with_order_to_coq_string_list sl)
-  | STerm ("ASum",[]) -> OpSum
-  | STerm ("AArithMean",[]) -> OpNumMean
   | STerm ("AToString",[]) -> OpToString
   | STerm ("ASubstring",[SInt n1]) -> OpSubstring (n1,None)
   | STerm ("ASubstring",[SInt n1;SInt n2]) -> OpSubstring (n1,Some n2)
@@ -266,24 +282,18 @@ let sexp_to_unary_op (se:sexp) : unary_op =
   | STerm ("ACast", bl) -> OpCast (sexp_to_dbrands bl)
   | STerm ("AUnbrand",[]) -> OpUnbrand
   | STerm ("ASingleton",[]) -> OpSingleton
-  | STerm ("ANumMin",[]) -> OpNumMin
-  | STerm ("ANumMax",[]) -> OpNumMax
+  | STerm ("ANatSum",[]) -> OpNatSum
+  | STerm ("ANatMean",[]) -> OpNatMean
+  | STerm ("ANatMin",[]) -> OpNatMin
+  | STerm ("ANatMax",[]) -> OpNatMax
   | SString s -> OpForeignUnary (Obj.magic (PrettyCommon.foreign_unary_op_of_string s))
+  | STerm ("AFloatOfNat",[]) -> OpFloatOfNat
+  | STerm ("AFloatTruncate",[]) -> OpFloatTruncate
+  | STerm ("AFloatSum",[]) -> OpFloatSum
+  | STerm ("AFloatMean",[]) -> OpFloatMean
+  | STerm ("AFloatBagMin",[]) -> OpFloatBagMin
+  | STerm ("AFloatBagMax",[]) -> OpFloatBagMax
   (* WARNING: Those are not printed, only parsed *)
-  | STerm ("AFloatNeg",[]) -> Enhanced.Ops.Unary.coq_OpFloatNeg
-  | STerm ("AFloatSqrt",[]) -> Enhanced.Ops.Unary.coq_OpFloatSqrt
-  | STerm ("AFloatExp",[]) -> Enhanced.Ops.Unary.coq_OpFloatExp
-  | STerm ("AFloatLog",[]) -> Enhanced.Ops.Unary.coq_OpFloatLog
-  | STerm ("AFloatLog10",[]) -> Enhanced.Ops.Unary.coq_OpFloatLog10
-  | STerm ("AFloatOfInt",[]) -> Enhanced.Ops.Unary.coq_OpFloatOfInt
-  | STerm ("AFloatCeil",[]) -> Enhanced.Ops.Unary.coq_OpFloatCeil
-  | STerm ("AFloatFloor",[]) -> Enhanced.Ops.Unary.coq_OpFloatFloor
-  | STerm ("AFloatTruncate",[]) -> Enhanced.Ops.Unary.coq_OpFloatTruncate
-  | STerm ("AFloatAbs",[]) -> Enhanced.Ops.Unary.coq_OpFloatAbs
-  | STerm ("AFloatSum",[]) -> Enhanced.Ops.Unary.coq_OpFloatSum
-  | STerm ("AFloatArithMean",[]) -> Enhanced.Ops.Unary.coq_OpFloatArithMean
-  | STerm ("AFloatListMin",[]) -> Enhanced.Ops.Unary.coq_OpFloatListMin
-  | STerm ("AFloatListMax",[]) -> Enhanced.Ops.Unary.coq_OpFloatListMax
   | STerm ("ATimeToSscale",[]) -> Enhanced.Ops.Unary.coq_OpTimeToSscale
   | STerm ("ATimeFromString",[]) -> Enhanced.Ops.Unary.coq_OpTimeFromString
   | STerm ("ATimeDurationFromString",[]) -> Enhanced.Ops.Unary.coq_OpTimeDurationFromString

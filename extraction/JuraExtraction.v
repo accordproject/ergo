@@ -19,6 +19,7 @@
 Require Extraction.
 Extraction Language Ocaml.
 Require Import ExtrOcamlBasic ExtrOcamlString ExtrOcamlNatInt ExtrOcamlZInt.
+Require Import Qcert.Extraction.ExtrOcamlFloatNatIntZInt.
 Extraction Blacklist String List.
 
 Require Import Qcert.Utils.Digits.
