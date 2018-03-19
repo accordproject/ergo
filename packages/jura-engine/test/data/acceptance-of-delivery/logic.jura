@@ -1,4 +1,4 @@
-package org.accordproject.acceptanceofdelivery
+namespace org.accordproject.acceptanceofdelivery
 
 import org.accordproject.contract.*
 import org.accordproject.acceptanceofdelivery.*

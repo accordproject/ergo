@@ -1,4 +1,4 @@
-package org.accordproject.helloworld
+namespace org.accordproject.helloworld
 
 contract HelloWorld over TemplateModel {
    // Simple Clause

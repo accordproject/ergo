@@ -1,4 +1,4 @@
-package org.accordproject.perishablegoods
+namespace org.accordproject.perishablegoods
 
 import org.accordproject.contract.*
 import org.accordproject.perishablegoods.*

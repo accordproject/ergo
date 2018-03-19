@@ -1,4 +1,4 @@
-package org.accordproject.latedeliveryandpenalty
+namespace org.accordproject.latedeliveryandpenalty
 
 // Imports CTO files
 import org.accordproject.contract.*
