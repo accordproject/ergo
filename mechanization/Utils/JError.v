@@ -33,11 +33,11 @@ Section JError.
   Definition jura_default_error_name : string :=
     jura_default_package ++ "." ++ jura_default_error_local_name.
 
-  Definition ensure_error_content : data :=
+  Definition enforce_error_content : data :=
     dbrand (jura_default_error_name::nil)
-           (drec (("message"%string, dstring "Ensure condition failed")::nil)).
-  Definition ensure_error : jerror :=
-    UserError ensure_error_content.
+           (drec (("message"%string, dstring "Enforce condition failed")::nil)).
+  Definition enforce_error : jerror :=
+    UserError enforce_error_content.
 
 End JError.
 

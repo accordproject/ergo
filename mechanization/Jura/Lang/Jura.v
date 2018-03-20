@@ -42,7 +42,7 @@ Section Jura.
     | JUnaryOp : unary_op -> jura_expr -> jura_expr (**r Unary operator *)
     | JBinaryOp : binary_op -> jura_expr -> jura_expr -> jura_expr (**r Binary operator *)
     | JIf : jura_expr -> jura_expr -> jura_expr -> jura_expr (**r Conditional *)
-    | JEnsure : jura_expr -> option jura_expr -> jura_expr -> jura_expr (**r Ensure *)
+    | JEnforce : jura_expr -> option jura_expr -> jura_expr -> jura_expr (**r Enforce *)
     | JLet : string -> option cto_type -> jura_expr -> jura_expr -> jura_expr (**r Local variable binding *)
     | JStructure : list (string * jura_expr) -> jura_expr (**r Create a new structure *)
     | JNew : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
@@ -157,28 +157,28 @@ Section Jura.
         jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
         jura_expr_sem mc env e3 (jfailure err) ->
         jura_expr_sem mc env (JIf e1 e2 e3) (jfailure err)
-    | sem_JEnsure_true : forall mc env e1 e2 e3 d,
+    | sem_JEnforce_true : forall mc env e1 e2 e3 d,
         jura_expr_sem mc env e1 (jsuccess (dbool true)) ->
         jura_expr_sem mc env e3 (jsuccess d) ->
-        jura_expr_sem mc env (JEnsure e1 e2 e3) (jsuccess d)
-    | sem_JEnsure_false_some : forall mc env e1 e2 e3 d,
+        jura_expr_sem mc env (JEnforce e1 e2 e3) (jsuccess d)
+    | sem_JEnforce_false_some : forall mc env e1 e2 e3 d,
         jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
         jura_expr_sem mc env e2 (jsuccess d) ->
-        jura_expr_sem mc env (JEnsure e1 (Some e2) e3) (jsuccess d)
-    | sem_JEnsure_false_none : forall mc env e1 e3,
+        jura_expr_sem mc env (JEnforce e1 (Some e2) e3) (jsuccess d)
+    | sem_JEnforce_false_none : forall mc env e1 e3,
         jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
-        jura_expr_sem mc env (JEnsure e1 None e3) (jfailure ensure_error)
-    | sem_JEnsure_fail : forall mc env e1 opte2 e3 err,
+        jura_expr_sem mc env (JEnforce e1 None e3) (jfailure enforce_error)
+    | sem_JEnforce_fail : forall mc env e1 opte2 e3 err,
         jura_expr_sem mc env e1 (jfailure err) ->
-        jura_expr_sem mc env (JEnsure e1 opte2 e3) (jfailure err)
-    | sem_JEnsure_fail_left : forall mc env e1 opte2 e3 err,
+        jura_expr_sem mc env (JEnforce e1 opte2 e3) (jfailure err)
+    | sem_JEnforce_fail_left : forall mc env e1 opte2 e3 err,
         jura_expr_sem mc env e1 (jsuccess (dbool true)) ->
         jura_expr_sem mc env e3 (jfailure err) ->
-        jura_expr_sem mc env (JEnsure e1 opte2 e3) (jfailure err)
-    | sem_JEnsure_fail_right : forall mc env e1 e2 e3 err,
+        jura_expr_sem mc env (JEnforce e1 opte2 e3) (jfailure err)
+    | sem_JEnforce_fail_right : forall mc env e1 e2 e3 err,
         jura_expr_sem mc env e1 (jsuccess (dbool false)) ->
         jura_expr_sem mc env e3 (jfailure err) ->
-        jura_expr_sem mc env (JEnsure e1 (Some e2) e3) (jfailure err)
+        jura_expr_sem mc env (JEnforce e1 (Some e2) e3) (jfailure err)
     | sem_JLet : forall mc env v e1 e2 d1 d2,
         jura_expr_sem mc env e1 (jsuccess d1) ->
         jura_expr_sem mc ((v,d1)::env) e2 (jsuccess d2) ->

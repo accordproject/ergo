@@ -95,10 +95,10 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JBinaryOp.
   Definition jif : jura_expr -> jura_expr -> jura_expr -> jura_expr 
     := Jura.JIf.
-  Definition jensure (e1 e2 e3:jura_expr) 
-    := Jura.JEnsure e1 (Some e2) e3.
-  Definition jensure_default_fail (e1 e3:jura_expr) 
-    := Jura.JEnsure e1 None e3.
+  Definition jenforce (e1 e2 e3:jura_expr) 
+    := Jura.JEnforce e1 (Some e2) e3.
+  Definition jenforce_default_fail (e1 e3:jura_expr) 
+    := Jura.JEnforce e1 None e3.
   Definition jlet (v:String.string) (e1 e2:jura_expr) : jura_expr
     := Jura.JLet v None e1 e2.
   Definition jlet_typed (v:String.string) (t:CTO.cto_type) (e1 e2:jura_expr) : jura_expr

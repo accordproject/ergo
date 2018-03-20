@@ -25,7 +25,7 @@
 %token NAMESPACE IMPORT DEFINE FUNCTION
 %token CONTRACT OVER CLAUSE THROWS
 
-%token ENSURE IF THEN ELSE
+%token ENFORCE IF THEN ELSE
 %token LET FOR IN WHERE
 %token RETURN THROW
 %token VARIABLE AS
@@ -233,10 +233,10 @@ expr:
     { JuraCompiler.jdot a e }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { JuraCompiler.jif e1 e2 e3 }
-| ENSURE e1 = expr ELSE e3 = expr SEMI e2 = expr
-    { JuraCompiler.jensure e1 e2 e3 }
-| ENSURE e1 = expr SEMI e3 = expr
-    { JuraCompiler.jensure_default_fail e1 e3 }
+| ENFORCE e1 = expr ELSE e3 = expr SEMI e2 = expr
+    { JuraCompiler.jenforce e1 e2 e3 }
+| ENFORCE e1 = expr SEMI e3 = expr
+    { JuraCompiler.jenforce_default_fail e1 e3 }
 | RETURN e = expr
     { JuraCompiler.jreturn e }
 | THROW qn = qname LCURLY r = reclist RCURLY
@@ -403,7 +403,7 @@ safeident_base:
 | CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }
-| ENSURE { "ensure" }
+| ENFORCE { "enforce" }
 | IF { "if" }
 | THEN { "then" }
 | ELSE { "else" }

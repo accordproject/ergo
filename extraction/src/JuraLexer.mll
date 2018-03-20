@@ -32,7 +32,7 @@
 	  "clause", CLAUSE;
 	  "throws", THROWS;
 	  (* Expressions *)
- 	  "ensure", ENSURE;
+ 	  "enforce", ENFORCE;
 	  "if", IF;
 	  "then", THEN;
 	  "else", ELSE;

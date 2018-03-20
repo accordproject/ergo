@@ -21,17 +21,17 @@ contract PerishableGoods over TemplateModel {
   // Clause for volume discount
   clause payout(request ShipmentReceived) : PriceCalculation throws Error {
     // Ensures against unitCount outside the bounds specified in the clause
-    ensure request.unitCount < this.minUnits or request.unitCount > this.maxUnits
+    enforce request.unitCount < this.minUnits or request.unitCount > this.maxUnits
     else throw Error{ message : "Units received out of range for the contract." };
     // Ensures against requests for payout after the dueDate
-    ensure momentIsAfter(this.dueDate,request.timestamp)
+    enforce momentIsAfter(this.dueDate,request.timestamp)
     else new PriceCalculation{
         totalPrice : 0,
         penalty : 0,
         late : true
     };
     // Ensures against missing temperature readings
-    ensure let readings = request.shipment.temperatureReadings!
+    enforce let readings = request.shipment.temperatureReadings!
     else throw Error{ message : "No temperature readings received." };
 
     // Calculates payout

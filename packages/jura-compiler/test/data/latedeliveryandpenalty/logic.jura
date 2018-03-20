@@ -1,4 +1,4 @@
-package org.accordproject.latedeliveryandpenalty
+namespace org.accordproject.latedeliveryandpenalty
 
 // Imports CTO files
 import org.accordproject.contract.*
@@ -16,11 +16,11 @@ contract LateDeliveryAndPenalty over TemplateModel {
   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse throws Error {
     // Guard against calling late delivery clause too early
     define variable agreed = request.agreedDelivery;
-    guard momentIsBefore(agreed,now()) else {
+    enforce momentIsBefore(agreed,now()) else {
       throw Error{ message : "Cannot exercise late delivery before delivery date" }
     };
     // Guard against force majeure
-    guard !this.forceMajeure || !request.forceMajeure else {
+    enforce !this.forceMajeure || !request.forceMajeure else {
       return new LateDeliveryAndPenaltyResponse{
 	penalty: 0,
 	buyerMayTerminate: true

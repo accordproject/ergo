@@ -97,16 +97,16 @@ then -x+1  // Expression if condition is true
 else x+1   // Expression if condition is false
 ```
 
-### Ensure expressions
-One can check preconditions in a clause using ensure expressions, as follows:
+### Enforce expressions
+One can check preconditions in a clause using enforce expressions, as follows:
 ```
-ensure x >= 0                // Condition
+enforce x >= 0               // Condition
 else "Something went wrong"; // Expression if condition is false
 x+1                          // Expression if condition is true
 ```
 The else part of the expression can be ommitted in which case Jura returns an error by default.
 ```
-ensure x >= 0;            // Condition
+enforce x >= 0;           // Condition
 x+1                       // Expression if condition is true
 ```
 

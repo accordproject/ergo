@@ -8,7 +8,7 @@ import jura.moment.* // Date/Time library
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request InspectDeliverable) : InspectionResponse throws Error {
     define variable received = request.deliverableRecievedAt;
-    ensure (momentIsBefore(received,now()))
+    enforce (momentIsBefore(received,now()))
     else throw Error{ error : "Transaction time is before the deliverable date." };
 
     define variable status =

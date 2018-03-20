@@ -49,8 +49,8 @@ Section JuratoJavaScript.
     Definition new_expr (brand:string) (struct_expr:jurac_expr) : jurac_expr :=
       NNRCUnop (OpBrand (brand :: nil)) struct_expr.
 
-    Definition jura_ensure_error : jurac_expr :=
-      NNRCConst ensure_error_content.
+    Definition jura_enforce_error : jurac_expr :=
+      NNRCConst enforce_error_content.
     
   End utils.
 
@@ -208,12 +208,12 @@ Section JuratoJavaScript.
         (jura_expr_to_calculus ctxt e1)
         (jura_expr_to_calculus ctxt e2)
         (jura_expr_to_calculus ctxt e3)
-    | JEnsure e1 None e3 =>
+    | JEnforce e1 None e3 =>
       jlift3 NNRCIf
         (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus ctxt e1))
-        (jsuccess jura_ensure_error)
+        (jsuccess jura_enforce_error)
         (jura_expr_to_calculus ctxt e3)
-    | JEnsure e1 (Some e2) e3 =>
+    | JEnforce e1 (Some e2) e3 =>
       jlift3 NNRCIf
         (jlift (NNRCUnop (OpNeg)) (jura_expr_to_calculus ctxt e1))
         (jura_expr_to_calculus ctxt e3)
