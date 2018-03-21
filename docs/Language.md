@@ -97,7 +97,7 @@ then -x+1  // Expression if condition is true
 else x+1   // Expression if condition is false
 ```
 
-### Enforce expressions
+### Enforce expressions *CHANGED*
 One can check preconditions in a clause using enforce expressions, as follows:
 ```
 enforce x >= 0               // Condition
