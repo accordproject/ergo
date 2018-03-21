@@ -70,6 +70,7 @@ Section JuraBase.
 
     (** Statement *)
     Inductive stmt :=
+    | JType : cto_declaration -> stmt
     | JExpr : A -> stmt
     | JGlobal : string -> A -> stmt
     | JImport : string -> stmt
@@ -184,6 +185,7 @@ Section JuraBase.
     Fixpoint lookup_statements_signatures (sl:list stmt) : list signature :=
       match sl with
       | nil => nil
+      | JType _ :: sl' => lookup_statements_signatures sl'
       | JExpr _ :: sl' => lookup_statements_signatures sl'
       | JGlobal _ _ :: sl' => lookup_statements_signatures sl'
       | JImport _ :: sl' => lookup_statements_signatures sl'
@@ -196,6 +198,7 @@ Section JuraBase.
     Fixpoint lookup_statements_signatures_for_contract (oconame:option string) (sl:list stmt) : list signature :=
       match sl with
       | nil => nil
+      | JType _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
       | JExpr _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
       | JGlobal _ _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
       | JImport _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
@@ -222,6 +225,7 @@ Section JuraBase.
     Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : jresult (cto_type * cto_type * func) :=
       match sl with
       | nil => dispatch_lookup_error
+      | JType _ :: sl' => lookup_statements_dispatch name sl'
       | JExpr _ :: sl' => lookup_statements_dispatch name sl'
       | JGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
       | JImport _ :: sl' => lookup_statements_dispatch name sl'

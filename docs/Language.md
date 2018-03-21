@@ -184,14 +184,6 @@ String[]                      // Array of String values
 Product[]                     // Array of Product (a declared type)
 { name: String, age: Long }[] // Array of structures
 ```
-Here is how to declare a type to be referenced in other places:
-```
-define type ISBN String   // An alias for String
-define type Person {      // An alias for a structure
-   name : String,
-   age : Long
-}
-```
 Here is how to declare CTO classes (either concepts or transactions in
 CTO terminology):
 ```
@@ -204,6 +196,11 @@ define concept Car extends Product {
 define transaction Response {
    rate : Double,
    penalty : Double
+}
+define enum ProductType {
+ DAIRY,
+ BEEF,
+ VEGETABLES
 }
 ```
 

@@ -23,6 +23,7 @@
 %token <string> IDENT
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
+%token CONCEPT TRANSACTION ENUM EXTENDS
 %token CONTRACT OVER CLAUSE THROWS
 
 %token ENFORCE IF THEN ELSE
@@ -89,6 +90,12 @@ stmts:
     { s :: ss }
 
 stmt:
+| DEFINE CONCEPT cn = ident dt = cto_class_decl
+    { let (oe,ctype) = dt in JType (JuraCompiler.mk_cto_declaration cn (CTOConcept (oe,ctype))) }
+| DEFINE TRANSACTION cn = ident dt = cto_class_decl
+    { let (oe,ctype) = dt in JType (JuraCompiler.mk_cto_declaration cn (CTOTransaction (oe,ctype))) }
+| DEFINE ENUM cn = ident et = cto_enum_decl
+    { JType (JuraCompiler.mk_cto_declaration cn (CTOEnum et)) }
 | DEFINE VARIABLE v = ident EQUAL e = expr
     { JGlobal (v, e) }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
@@ -111,6 +118,16 @@ stmt:
     { JImport qn }
 | c = contract
     { JContract c }
+
+cto_class_decl:
+| LCURLY rt = rectype RCURLY
+    { (None, rt) }
+| EXTENDS en = ident LCURLY rt = rectype RCURLY
+    { (Some en, rt) }
+
+cto_enum_decl:
+| LCURLY il = identlist RCURLY
+    { il }
 
 contract:
 | CONTRACT cn = ident OVER tn = ident LCURLY ds = declarations RCURLY
@@ -389,6 +406,13 @@ ident:
 | i = IDENT
     { Util.char_list_of_string i }
 
+(* identlist *)
+identlist:
+| i = IDENT
+    { (Util.char_list_of_string i)::[] }
+| i = IDENT COMMA il = identlist
+    { (Util.char_list_of_string i)::il }
+
 (* Safe identifier *)
 safeident:
 | i = safeident_base
@@ -401,6 +425,10 @@ safeident_base:
 | DEFINE { "define" }
 | FUNCTION { "function" }
 | CONTRACT { "contract" }
+| CONCEPT { "concept" }
+| TRANSACTION { "transaction" }
+| ENUM { "enum" }
+| EXTENDS { "extends" }
 | OVER { "over" }
 | CLAUSE { "clause" }
 | ENFORCE { "enforce" }

@@ -199,6 +199,7 @@ Section JuraCalculustoJavaScript.
         * nat                                (* next available unused temporary *)
       :=
         match s with
+        | JType _ =>  ("","",t)
         | JExpr e => javascript_of_expression e t i eol quotel
         | JGlobal v e => javascript_of_global v e t i eol quotel
         | JImport _ => ("","",t)

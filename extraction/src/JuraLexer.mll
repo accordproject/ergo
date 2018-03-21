@@ -26,6 +26,11 @@
 	  "import", IMPORT;
 	  "define", DEFINE;
 	  "function", FUNCTION;
+          (* types *)
+	  "concept", CONCEPT;
+	  "transaction", TRANSACTION;
+	  "enum", ENUM;
+	  "extends", EXTENDS;
           (* contract *)
 	  "contract", CONTRACT;
 	  "over", OVER;

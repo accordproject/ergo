@@ -440,6 +440,7 @@ Section JuratoJavaScript.
   Definition stmt_to_calculus
              (ctxt:context) (s:jura_stmt) : jresult (context * jurac_stmt) :=
     match s with
+    | JType cto_type => jsuccess (ctxt, JType cto_type) (* XXX TO BE REVISED -- add type to context *)
     | JExpr e =>
       jlift
         (fun x => (ctxt, JExpr x))
