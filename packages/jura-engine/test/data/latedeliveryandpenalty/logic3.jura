@@ -15,10 +15,10 @@ contract LateDeliveryAndPenalty over TemplateModel {
   // Defines a function to calculate the penalty
   define function calculatePenalty(diff Double, goodsValue Double) : Double {
     // penalty formula
-    define variable penalty = (diff / this.penaltyDuration.amount) * this.penaltyPercentage/100 * goodsValue;
+    define variable penalty = (diff / contract.penaltyDuration.amount) * contract.penaltyPercentage/100 * goodsValue;
     // penalty may be capped
-    if penalty > this.capPercentage/100 * goodsValue
-    then this.capPercentage/100 * goodsValue
+    if penalty > contract.capPercentage/100 * goodsValue
+    then contract.capPercentage/100 * goodsValue
     else penalty
   }
 
@@ -29,7 +29,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     enforce momentIsBefore(agreed,now())
     else throw Error{ message : "Cannot exercise late delivery before delivery date" };
     // Ensures against force majeure
-    enforce !this.forceMajeure or !request.forceMajeure
+    enforce !contract.forceMajeure or !request.forceMajeure
     else new LateDeliveryAndPenaltyResponse{
 	penalty: 0,
 	buyerMayTerminate: true
@@ -40,7 +40,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     define variable penalty = calculatePenalty(diff,request.goodsValue);
     new LateDeliveryAndPenaltyResponse{
 	penalty: capped,
-	buyerMayTerminate: diff > this.termination.amount
+	buyerMayTerminate: diff > contract.termination.amount
     }
   }
 }

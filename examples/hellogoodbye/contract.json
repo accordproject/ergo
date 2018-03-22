@@ -1,0 +1,10 @@
+{
+    "$class": "org.accordproject.hellogoodbye.TemplateModel",
+    "name": "Fred Blogs",
+    "hello": {
+	"greeting": "Hello"
+    },
+    "goodbye": {
+	"greeting": "Farewell"
+    }
+}

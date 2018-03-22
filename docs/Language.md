@@ -16,7 +16,7 @@ package org.accordproject.helloworld
 contract HelloWorld over TemplateModel {
    // Simple Clause
    clause helloworld(request Request) : Response {
-       new Response{ output: "Hello " ++ this.name ++ " " ++ request.input }
+       new Response{ output: "Hello " ++ contract.name ++ " " ++ request.input }
   }
 }
 ```
@@ -35,8 +35,8 @@ The clause takes a `Request` as input and returns a `Response`.
 
 The code for the clause just constructs a new `Response` with a
 property `output` which is a string containing the property `name` of
-from the contract (`this`) and the property `input` from the request
-(`request`).
+from the contract (`contract`) and the property `input` from the
+request (`request`).
 
 ## Comments
 
@@ -205,4 +205,25 @@ define enum ProductType {
  VEGETABLES
 }
 ```
+
+## Contracts *NEW*
+
+You can declare a contract over a template model as follows:
+```
+contract ContractName over TemplateModel {
+  clause C1(request ReqType1) : RespType1 {
+    // Expression
+  }
+
+  clause C2(request ReqType2) : RespType2 {
+    // Expression
+  }
+}
+```
+
+When inside a contract, the `contract` variable contains the instance
+of the Template for the current contract.
+
+When inside a clause, the `clause` variable contains the
+part of the Template instance specific to that clause.
 

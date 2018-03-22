@@ -22,8 +22,8 @@ contract AcceptanceOfDelivery over TemplateModel {
       };
     return new InspectionResponse{
       status : status,
-      shipper : this.shipper,   // This should be a relationship
-      receiver : this.receiver  // This should be a relationship
+      shipper : contract.shipper,   // This should be a relationship
+      receiver : contract.receiver  // This should be a relationship
     }
   }
 }

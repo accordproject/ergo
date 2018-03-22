@@ -48,7 +48,8 @@
 	  "return", RETURN;
 	  "throw", THROW;
 	  "new", NEW;
-	  "this", THIS;
+	  "contract", CONTRACT;
+	  "clause", CLAUSE;
 	  "variable", VARIABLE;
 	  "as", AS;
 	  "match", MATCH;

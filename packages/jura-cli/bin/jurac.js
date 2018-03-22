@@ -50,8 +50,8 @@ require('yargs')
             });
     })
     .command('execute', 'execute a contract clause', (yargs) => {
-        yargs.option('clause', {
-            describe: 'path to the clause data'
+        yargs.option('contract', {
+            describe: 'path to the contract data'
         });
         yargs.option('request', {
             describe: 'path to the request data'
@@ -75,10 +75,10 @@ require('yargs')
         });
     }, (argv) => {
         if (argv.verbose) {
-            Logger.info(`execute Jura clause ${argv.jura} using clause data ${argv.clause} with request data ${argv.request}`);
+            Logger.info(`execute Jura logic ${argv.jura} on contract data ${argv.contract} with request data ${argv.request}`);
         }
 
-        return Commands.execute(argv.jura, argv.cto, argv.clause, argv.request, argv.contractname, argv.clausename, argv.dispatch)
+        return Commands.execute(argv.jura, argv.cto, argv.contract, argv.request, argv.contractname, argv.clausename, argv.dispatch)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })

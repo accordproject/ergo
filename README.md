@@ -49,7 +49,7 @@ $ jurac compile --jura ./examples/volumediscount/logic.jura --cto ./examples/vol
 To compile and _execute_ a given clause in a contract:
 
 ```
-$ jurac execute --jura ./examples/volumediscount/logic.jura --contractname VolumeDiscount --clausename volumediscount --clause ./examples/volumediscount/clause.json --request ./examples/volumediscount/request.json --cto ./examples/volumediscount/model.cto
+$ jurac execute --jura ./examples/volumediscount/logic.jura --contractname VolumeDiscount --clausename volumediscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --cto ./examples/volumediscount/model.cto
 {"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}
 ```
 

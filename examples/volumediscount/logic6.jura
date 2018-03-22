@@ -18,10 +18,10 @@ define function makeResponse(x { discountRate: Double }) : VolumeDiscountRespons
 contract VolumeDiscount over TemplateModel {
   // Clause for volume discount
   clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
-    if request.netAnnualChargeVolume < this.firstVolume
-    then makeResponse({ discountRate: addFee(this.firstRate) })
-    else if request.netAnnualChargeVolume < this.secondVolume
-    then makeResponse({ discountRate: addFee(this.secondRate) })
-    else makeResponse({ discountRate: addFee(this.thirdRate) })
+    if request.netAnnualChargeVolume < contract.firstVolume
+    then makeResponse({ discountRate: addFee(contract.firstRate) })
+    else if request.netAnnualChargeVolume < contract.secondVolume
+    then makeResponse({ discountRate: addFee(contract.secondRate) })
+    else makeResponse({ discountRate: addFee(contract.thirdRate) })
   }
 }

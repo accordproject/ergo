@@ -11,21 +11,21 @@ contract PerishableGoods over TemplateModel {
     define variable lowestReading = min(tempReadings);
     // find the highest temperature reading
     define variable highestReading = max(tempReadings);
-    if lowestReading < this.minTemperature {
-      return (this.minTemperature - lowestReading) * this.minPenaltyFactor
-    } else if highestReading > this.maxTemperature {
-      return highestReading - this.maxTemperature) * this.maxPenaltyFactor
+    if lowestReading < contract.minTemperature {
+      return (contract.minTemperature - lowestReading) * contract.minPenaltyFactor
+    } else if highestReading > contract.maxTemperature {
+      return highestReading - contract.maxTemperature) * contract.maxPenaltyFactor
     } else { return 0 };
   }
 
   // Clause for volume discount
   clause payout(request ShipmentReceived) : PriceCalculation throws Error {
     // Guard against unitCount outside the bounds specified in the clause
-    enforce request.unitCount < this.minUnits || request.unitCount > this.maxUnits else {
+    enforce request.unitCount < contract.minUnits || request.unitCount > contract.maxUnits else {
       throw Error{ message : 'Units received out of range for the contract.' }
     };
     // Guard against requests for payout after the dueDate
-    enforce momentIsAfter(this.dueDate,request.timestamp) else {
+    enforce momentIsAfter(contract.dueDate,request.timestamp) else {
       return new PriceCalculation{
         totalPrice : 0,
         penalty : 0,
@@ -36,7 +36,7 @@ contract PerishableGoods over TemplateModel {
       throw Error{ message : 'No temperature readings received.');
     };
     // Calculates payout
-    define variable payOut = this.unitPrice * request.unitCount;
+    define variable payOut = contract.unitPrice * request.unitCount;
     // Calculates penalty if any
     define variable totalPenalty = calculatePenalty(readings) * request.unitCount;
     // Returns a Price calculation, applying any penalities

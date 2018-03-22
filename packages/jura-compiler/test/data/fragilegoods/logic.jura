@@ -15,15 +15,15 @@ define function numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadin
 contract FragileGoods over TemplateModel {
   clause fragilegoods(request DeliveryUpdate) : PayOut throws Error {
     define variable shockPenalty =
-        this.accelerationBreachPenalty
-        * numberOfShocks(this.accelerationMax,
-			 this.accelerationMin,
+        contract.accelerationBreachPenalty
+        * numberOfShocks(contract.accelerationMax,
+			 contract.accelerationMin,
 			 request.accelerometerReadings);
     match request.status {
       with "ARRIVED" :
-        return new PayOut{ amount : this.deliveryPrice - shockPenalty }
+        return new PayOut{ amount : contract.deliveryPrice - shockPenalty }
       otherwise :
-        return new PayOut{ amount : this.deliveryPrice - shockPenalty }
+        return new PayOut{ amount : contract.deliveryPrice - shockPenalty }
     }
   }
 }

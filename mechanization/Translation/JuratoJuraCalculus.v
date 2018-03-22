@@ -37,6 +37,10 @@ Section JuratoJavaScript.
 
   Section utils.
     Open Scope string.
+    (** This *)
+    Definition this_contract := "contract"%string. (* Contains all contract data and clause data *)
+    Definition current_time := "now"%string.
+
     (** New Array *)
     Definition new_array (el:list jurac_expr) : jurac_expr :=
       match el with
@@ -119,6 +123,8 @@ Section JuratoJavaScript.
 
   Record context :=
     mkContext {
+        context_current_contract : option string;
+        context_current_clause : option string;
         context_table: lookup_table;
         context_namespace: option string;
         context_globals: list string;
@@ -127,6 +133,8 @@ Section JuratoJavaScript.
 
   Definition add_globals (ctxt:context) (params:list string) : context :=
     mkContext
+      ctxt.(context_current_contract)
+      ctxt.(context_current_clause)
       ctxt.(context_table)
       ctxt.(context_namespace)
       (List.app params ctxt.(context_globals))
@@ -134,6 +142,8 @@ Section JuratoJavaScript.
 
   Definition add_params (ctxt:context) (params:list string) : context :=
     mkContext
+      ctxt.(context_current_contract)
+      ctxt.(context_current_clause)
       ctxt.(context_table)
       ctxt.(context_namespace)
       ctxt.(context_globals)
@@ -141,6 +151,8 @@ Section JuratoJavaScript.
 
   Definition add_one_global (ctxt:context) (param:string) : context :=
     mkContext
+      ctxt.(context_current_contract)
+      ctxt.(context_current_clause)
       ctxt.(context_table)
       ctxt.(context_namespace)
       (List.cons param ctxt.(context_globals))
@@ -148,18 +160,40 @@ Section JuratoJavaScript.
 
   Definition add_one_param (ctxt:context) (param:string) : context :=
     mkContext
+      ctxt.(context_current_contract)
+      ctxt.(context_current_clause)
       ctxt.(context_table)
       ctxt.(context_namespace)
       ctxt.(context_globals)
       (List.cons param ctxt.(context_params)).
 
-  Definition add_one_func (ctxt:context) (fname:string) (fclosure:closure) :=
+  Definition add_one_func (ctxt:context) (fname:string) (fclosure:closure) : context :=
     mkContext
+      ctxt.(context_current_contract)
+      ctxt.(context_current_clause)
       (add_function_to_table ctxt.(context_table) fname fclosure)
       ctxt.(context_namespace)
       ctxt.(context_globals)
       ctxt.(context_params).
 
+  Definition set_current_contract (ctxt:context) (cname:string) : context :=
+    mkContext
+      (Some cname)
+      ctxt.(context_current_clause)
+      ctxt.(context_table)
+      ctxt.(context_namespace)
+      ctxt.(context_globals)
+      ctxt.(context_params).
+  
+  Definition set_current_clause (ctxt:context) (cname:string) : context :=
+    mkContext
+      ctxt.(context_current_contract)
+      (Some cname)
+      ctxt.(context_table)
+      ctxt.(context_namespace)
+      ctxt.(context_globals)
+      ctxt.(context_params).
+  
   Definition cmatch_cases :=
     list (match_case * jurac_expr).
 
@@ -181,6 +215,16 @@ Section JuratoJavaScript.
   Fixpoint jura_expr_to_calculus
            (ctxt:context) (e:jura_expr) : jresult jurac_expr :=
     match e with
+    | JThisContract =>
+      match ctxt.(context_current_contract) with
+      | None => not_in_contract_error
+      | Some _ => jsuccess (NNRCGetConstant this_contract)
+      end
+    | JThisClause => 
+      match ctxt.(context_current_clause) with
+      | None => not_in_clause_error
+      | Some cname => jsuccess (NNRCUnop (OpDot cname) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
+      end
     | JVar v =>
       if in_dec string_dec v ctxt.(context_params)
       then jsuccess (NNRCGetConstant v)
@@ -361,14 +405,15 @@ Section JuratoJavaScript.
     end.
 
   (** Translate a clause to clause+calculus *)
-  (** For a clause, add 'this' and 'now' to the context *)
-
   Definition clause_to_calculus
              (ctxt:context) (c:jura_clause) : jresult jurac_clause :=
     let ctxt : context :=
+        set_current_clause ctxt c.(clause_name)
+    in
+    let ctxt : context :=
         add_params
           ctxt
-          ("this"%string :: "now"%string :: List.map fst c.(clause_closure).(closure_params))
+          (List.map fst c.(clause_closure).(closure_params))
     in
     jlift
       (mkClause
@@ -411,8 +456,17 @@ Section JuratoJavaScript.
     end.
 
   (** Translate a contract to a contract+calculus *)
+  (** For a contract, add 'contract' and 'now' to the context *)
   Definition contract_to_calculus
              (ctxt:context) (c:jura_contract) : jresult (context * jurac_contract) :=
+    let ctxt :=
+        set_current_contract ctxt c.(contract_name)
+    in
+    let ctxt : context :=
+        add_params
+          ctxt
+          (this_contract :: current_time :: nil)
+    in
     let init := jsuccess (ctxt, nil) in
     let proc_one
           (acc:jresult (context * list jurac_declaration))
@@ -461,7 +515,7 @@ Section JuratoJavaScript.
     end.
 
   Definition initial_context (p:option string) :=
-    mkContext stdlib p nil nil.
+    mkContext None None stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
   Definition package_to_calculus (p:package) : jresult jurac_package :=

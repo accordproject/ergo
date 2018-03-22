@@ -32,9 +32,6 @@ Section JuraSugar.
   (* XXX This will have to be revised/fixed *)
   Definition JReturn (e:jura_expr) : jura_expr := e.
 
-  (** [this] is a reserved variable *)
-  Definition JThis : jura_expr := JVar "this".
-
   Definition JNewSugar pname cname el :jura_expr :=
     JNew (mkClassRef pname cname) el.
 

@@ -33,14 +33,14 @@ class JuraEngine {
      *
      * @param {string} juraText text for Jura code
      * @param {string} ctoText text for CTO model
-     * @param {object} clauseJson path to the clause data in JSON
+     * @param {object} contractJson path to the contract data in JSON
      * @param {object} requestJson path to the request transaction in JSON
      * @param {string} contractName of the contract to execute
      * @param {string} clauseName of the clause to execute
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(juraText,ctoText,clauseJson,requestJson,contractName,clauseName,withDispatch) {
+    static execute(juraText,ctoText,contractJson,requestJson,contractName,clauseName,withDispatch) {
         const jurRuntime = Fs.readFileSync(Path.join(__dirname,'juraruntime.js'), 'utf8');
 
         const vm = new VM({
@@ -50,7 +50,7 @@ class JuraEngine {
 
         return (Jura.compile(juraText,ctoText,null,null,withDispatch)).then((juraCode) => {
             // add immutables to the context
-            const params = { 'this': clauseJson, 'request': requestJson, 'now': Moment() };
+            const params = { 'contract': contractJson, 'request': requestJson, 'now': Moment() };
             vm.freeze(params, 'params'); // Add the context
             vm.run(jurRuntime); // Load the runtime
             vm.run(juraCode); // Load the generated logic

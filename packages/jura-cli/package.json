@@ -30,7 +30,7 @@
   },
   "bin": {
     "jurac": "./bin/jurac.js",
-    "jurac": "./bin/jurap.js"
+    "jurap": "./bin/jurap.js"
   },
   "devDependencies": {
     "chai": "^3.5.0",

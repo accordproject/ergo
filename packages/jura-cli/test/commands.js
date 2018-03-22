@@ -37,7 +37,7 @@ describe('jurac', () => {
         it('should execute a smart Jura clause', async function () {
             const juraPath = Path.resolve(__dirname, 'data/helloworld', 'logic.jura');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const clausePath = Path.resolve(__dirname, 'data/helloworld', 'clause.json');
+            const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const result = await Commands.execute(juraPath, ctoPath, clausePath, requestPath, 'HelloWorld', 'helloworld', false);
             result.output.should.equal('Hello Fred Blogs (Accord Project)');

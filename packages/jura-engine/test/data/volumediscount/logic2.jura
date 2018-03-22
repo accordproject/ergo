@@ -6,9 +6,9 @@ contract VolumeDiscount over TemplateModel {
    // Clause for volume discount
    clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
     let rate = 
-      if request.netAnnualChargeVolume < this.firstVolume then this.firstRate
-      else if request.netAnnualChargeVolume < this.secondVolume then this.secondRate
-      else this.thirdRate;
+      if request.netAnnualChargeVolume < contract.firstVolume then contract.firstRate
+      else if request.netAnnualChargeVolume < contract.secondVolume then contract.secondRate
+      else contract.thirdRate;
     new VolumeDiscountResponse{ discountRate: rate }
   }
 }

@@ -124,8 +124,10 @@ Module QJura(juramodel:JuraCompilerModel).
     := JuraSugar.JNewSugar.
   Definition jthrow : option String.string -> String.string -> list (String.string * jura_expr) -> jura_expr 
     := JuraSugar.JThrowSugar.
-  Definition jthis : jura_expr
-    := JuraSugar.JThis.
+  Definition jthis_contract : jura_expr
+    := Jura.JThisContract.
+  Definition jthis_clause : jura_expr
+    := Jura.JThisClause.
 
   (** Jura Calculus *)
   Definition jurac_package : Set 

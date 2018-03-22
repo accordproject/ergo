@@ -6,10 +6,10 @@ import org.accordproject.late.*
 contract VolumeDiscount over TemplateModel {
    // Clause for volume discount
    clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
-    if request.netAnnualChargeVolume < this.firstVolume
-    then new VolumeDiscountResponse{ discountRate: this.firstRate }
-    else if request.netAnnualChargeVolume < this.secondVolume
-    then new VolumeDiscountResponse{ discountRate: this.secondRate }
-    else new VolumeDiscountResponse{ discountRate: this.thirdRate }
+    if request.netAnnualChargeVolume < contract.firstVolume
+    then new VolumeDiscountResponse{ discountRate: contract.firstRate }
+    else if request.netAnnualChargeVolume < contract.secondVolume
+    then new VolumeDiscountResponse{ discountRate: contract.secondRate }
+    else new VolumeDiscountResponse{ discountRate: contract.thirdRate }
   }
 }

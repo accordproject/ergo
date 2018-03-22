@@ -27,6 +27,10 @@ Section JError.
     jfailure (CompilationError ("Cannot lookup created dispatch")).
   Definition dispatch_parameter_error {A} : jresult A :=
     jfailure (CompilationError ("No parameter type in dispatch")).
+  Definition not_in_contract_error {A} : jresult A :=
+    jfailure (CompilationError ("Cannot use 'contract' variable outside of a contract")).
+  Definition not_in_clause_error {A} : jresult A :=
+    jfailure (CompilationError ("Cannot use 'clause' variable outside of a clause")).
 
   Definition jura_default_package : string := "org.accordproject.jura".
   Definition jura_default_error_local_name : string := "Error".

@@ -30,7 +30,7 @@
 %token LET FOR IN WHERE
 %token RETURN THROW
 %token VARIABLE AS
-%token NEW THIS
+%token NEW
 %token MATCH TYPEMATCH WITH
 
 %token OR AND NOT
@@ -264,8 +264,10 @@ expr:
     { JuraCompiler.jnew (fst qn) (snd qn) r }
 | LCURLY r = reclist RCURLY
     { JuraCompiler.jrecord r }
-| THIS
-    { JuraCompiler.jthis }
+| CONTRACT
+    { JuraCompiler.jthis_contract }
+| CLAUSE
+    { JuraCompiler.jthis_clause }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jlet v e1 e2 }
 | LET v = ident EQUAL e1 = expr SEMI e2 = expr
@@ -450,7 +452,6 @@ safeident_base:
 | MATCH { "match" }
 | TYPEMATCH { "typematch" }
 | WITH { "with" }
-| THIS { "this" }
 | OR { "or" }
 | AND { "and" }
 | NOT { "not" }
