@@ -1,6 +1,6 @@
 {
   "name": "jura-engine",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "Jura Engine",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "composer-common": "0.17.4",
-    "jura-compiler": "^0.0.28",
+    "jura-compiler": "^0.0.29",
     "moment": "^2.20.1",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
