@@ -240,10 +240,10 @@ Section JuratoJavaScript.
                  (jlift (NNRCUnop (OpRec attname)) e) acc
       in
       jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | JStructure nil =>
+    | JRecord nil =>
       jsuccess
         (NNRCConst (drec nil))
-    | JStructure ((s0,init)::rest) =>
+    | JRecord ((s0,init)::rest) =>
       let init_rec : jresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (jura_expr_to_calculus ctxt init)
       in

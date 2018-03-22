@@ -20,13 +20,15 @@ Section CTO.
   Definition cto_class := string.
 
   Inductive cto_type :=
+  | CTOBoolean : cto_type                             (**r bool atomic type *)
   | CTOString : cto_type                              (**r string atomic type *)
   | CTODouble : cto_type                              (**r double atomic type *)
   | CTOLong : cto_type                                (**r long atomic type *)
-  | CTOBool : cto_type                                (**r bool atomic type *)
+  | CTOInteger : cto_type                             (**r integer atomic type *)
+  | CTODateTime : cto_type                            (**r date and time atomic type *)
   | CTOClassRef : cto_class -> cto_type               (**r class reference *)
   | CTOOption : cto_type -> cto_type                  (**r optional type *)
-  | CTOStructure : list (string*cto_type) -> cto_type (**r structure type *)
+  | CTORecord : list (string*cto_type) -> cto_type    (**r record type *)
   | CTOArray : cto_type -> cto_type.                  (**r array type *)
 
   Inductive cto_declaration_kind :=

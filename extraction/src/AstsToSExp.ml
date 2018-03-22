@@ -340,57 +340,75 @@ let rec sexp_to_nnrc (se:sexp) : nnrc =
 
 let name_to_sexp name =
   (SString (string_of_char_list name))
-let opt_name_to_sexp name =
-  begin match name with
-  | None -> STerm ("Name", [])
-  | Some name -> STerm ("Name", [(SString (string_of_char_list name))])
-  end
 let sexp_to_name (se:sexp) =
   begin match se with
   | SString s -> char_list_of_string s
   | _ -> 
       raise (Jura_Error "Not well-formed S-expr inside name")
   end
+
+let opt_name_to_sexp name =
+  begin match name with
+  | None -> STerm ("Name", [])
+  | Some name -> STerm ("Name", [(SString (string_of_char_list name))])
+  end
 let sexp_to_opt_name (se:sexp) =
   begin match se with
   | STerm ("Name", []) -> None
   | STerm ("Name", [SString s]) -> Some (char_list_of_string s)
-  | _ -> 
+  | _ ->
       raise (Jura_Error "Not well-formed S-expr inside optional name")
+  end
+
+let list_name_to_sexp names =
+  STerm ("Names",List.map name_to_sexp names)
+let sexp_to_list_name (se:sexp) =
+  begin match se with
+  | STerm ("Names", senames) -> List.map sexp_to_name senames
+  | _ ->
+      raise (Jura_Error "Not well-formed S-expr inside list name")
   end
 
 let rec paramtype_to_sexp (pt:cto_type) =
   begin match pt with
+  | CTOBoolean -> STerm ("CTOBoolean", [])
   | CTOString -> STerm ("CTOString", [])
   | CTODouble -> STerm ("CTODouble", [])
   | CTOLong -> STerm ("CTOLong", [])
-  | CTOBool -> STerm ("CTOBool", [])
-  | CTOClassRef cl -> STerm ("CTOClassRef", [name_to_sexp cl])
+  | CTOInteger -> STerm ("CTOInteger", [])
+  | CTODateTime -> STerm ("CTODateTime", [])
+  | CTOClassRef clt -> STerm ("CTOClassRef", [name_to_sexp clt])
   | CTOOption pt -> STerm ("CTOption", [paramtype_to_sexp pt])
-  | CTOStructure rl -> STerm ("CTOStructure", List.map rectype_to_sexp rl)
+  | CTORecord rt -> STerm ("CTORecord", rectype_to_sexp rt)
   | CTOArray pt -> STerm ("CTOArray", [paramtype_to_sexp pt])
   end
-and rectype_to_sexp (at : char list * cto_type) : sexp =
+and rectype_to_sexp (rt : (char list * cto_type) list) : sexp list =
+  List.map atttype_to_sexp rt
+and atttype_to_sexp (at : char list * cto_type) : sexp =
   STerm ("tatt", (SString (string_of_char_list (fst at))) :: (paramtype_to_sexp (snd at)) :: [])
 let rec sexp_to_paramtype (se:sexp) =
   begin match se with
+  | STerm ("CTOBoolean", []) -> CTOBoolean
   | STerm ("CTOString", []) -> CTOString
   | STerm ("CTODouble", []) -> CTODouble
   | STerm ("CTOLong", []) -> CTOLong
-  | STerm ("CTOBool", []) -> CTOBool
+  | STerm ("CTOInteger", []) -> CTOInteger
+  | STerm ("CTODateTime", []) -> CTODateTime
   | STerm ("CTOClassRef", [cl]) -> CTOClassRef (sexp_to_name cl)
   | STerm ("CTOption", [pt]) -> CTOOption (sexp_to_paramtype pt)
-  | STerm ("CTOStructure", rl) -> CTOStructure (List.map sexp_to_rectype rl)
+  | STerm ("CTORecord", rt) -> CTORecord (sexp_to_rectype rt)
   | STerm ("CTOArray", [pt]) -> CTOArray (sexp_to_paramtype pt)
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside ParamType")
   end
-and sexp_to_rectype (sel:sexp) : (char list * cto_type) =
-  match sel with
+and sexp_to_rectype (ser:sexp list) : (char list * cto_type) list =
+  List.map sexp_to_atttype ser
+and sexp_to_atttype (sea:sexp) : (char list * cto_type) =
+  match sea with
   | STerm ("tatt", (SString s) :: se :: []) ->
       (char_list_of_string s, sexp_to_paramtype se)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside CTOStructure")
+      raise (Jura_Error "Not well-formed S-expr inside CTORecord")
 
 let opt_paramtype_to_sexp (opt:cto_type option) =
   begin match opt with
@@ -505,8 +523,34 @@ let sexp_to_import (se:sexp) =
       raise (Jura_Error "Not well-formed S-expr inside Import")
   end
 
+let cto_type_to_sexp t =
+  begin match t with
+  | CTOEnum ln -> STerm ("CTOEnum", [list_name_to_sexp ln])
+  | CTOTransaction (oe,rectype) ->
+    STerm ("CTOTransaction",[opt_name_to_sexp oe;
+                             STerm ("CTORecord",rectype_to_sexp rectype)])
+  | CTOConcept (oe,rectype) ->
+    STerm ("CTOConcept",[opt_name_to_sexp oe;
+                         STerm ("CTORecord",rectype_to_sexp rectype)])
+  end
+let sexp_to_cto_type (se:sexp) =
+  begin match se with
+  | STerm ("CTOEnum", [seln]) -> CTOEnum (sexp_to_list_name seln)
+  | STerm ("CTOTransaction",[sen;STerm ("CTORecord",serectype)]) ->
+    CTOTransaction (sexp_to_opt_name sen,
+                    sexp_to_rectype serectype)
+  | STerm ("CTOConcept",[sen;STerm ("CTORecord",serectype)]) ->
+    CTOConcept (sexp_to_opt_name sen,
+                sexp_to_rectype serectype)
+  | _ -> 
+    raise (Jura_Error "Not well-formed S-expr inside CTO type declaration")
+  end
+
 let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
   begin match s with
+  | JType cto_decl ->
+    STerm ("JType",[name_to_sexp cto_decl.cto_declaration_class;
+                    cto_type_to_sexp cto_decl.cto_declaration_type])
   | JExpr e ->
       STerm ("JExpr",[expr_to_sexp e])
   | JGlobal (v, e) ->
@@ -526,6 +570,8 @@ let stmts_to_sexp (expr_to_sexp : 'a -> sexp) (ss:'a stmt list) =
 
 let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
   begin match se with
+  | STerm ("JType",[soname; scto_type]) ->
+      JType (JuraCompiler.mk_cto_declaration (sexp_to_name soname) (sexp_to_cto_type scto_type))
   | STerm ("JExpr",[se]) ->
       JExpr (sexp_to_expr se)
   | STerm ("JGlobal",[svname;se]) ->

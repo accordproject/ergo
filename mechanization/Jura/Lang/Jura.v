@@ -44,7 +44,7 @@ Section Jura.
     | JIf : jura_expr -> jura_expr -> jura_expr -> jura_expr (**r Conditional *)
     | JEnforce : jura_expr -> option jura_expr -> jura_expr -> jura_expr (**r Enforce *)
     | JLet : string -> option cto_type -> jura_expr -> jura_expr -> jura_expr (**r Local variable binding *)
-    | JStructure : list (string * jura_expr) -> jura_expr (**r Create a new structure *)
+    | JRecord : list (string * jura_expr) -> jura_expr (**r Create a new record *)
     | JNew : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JThrow : class_ref -> list (string * jura_expr) -> jura_expr (**r Create a new concept/object *)
     | JFunCall : string -> list jura_expr -> jura_expr (**r function call *)

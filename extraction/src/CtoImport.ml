@@ -27,10 +27,10 @@ let base_type_of_decl d =
   | None -> raise (Jura_Error "Missing propertyType in CTO")
   | Some d ->
       begin match d.cto_prop_type_name with
+      | "Bool" -> CTOBoolean
       | "String" -> CTOString
       | "Double" -> CTODouble
       | "Long" -> CTOLong
-      | "Bool" -> CTOBool
       | s -> CTOClassRef (char_list_of_string s)
       end
   end

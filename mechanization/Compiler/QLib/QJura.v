@@ -40,20 +40,24 @@ Module QJura(juramodel:JuraCompilerModel).
   Definition cto_class : Set
     := CTO.cto_class.
 
+  Definition cto_boolean : CTO.cto_type
+    := CTO.CTOBoolean.
   Definition cto_string : CTO.cto_type
     := CTO.CTOString.
   Definition cto_double : CTO.cto_type
     := CTO.CTODouble.
   Definition cto_long : CTO.cto_type
     := CTO.CTOLong.
-  Definition cto_bool : CTO.cto_type
-    := CTO.CTOBool.
+  Definition cto_integer : CTO.cto_type
+    := CTO.CTOInteger.
+  Definition cto_dateTime : CTO.cto_type
+    := CTO.CTODateTime.
   Definition cto_class_ref : CTO.cto_class -> CTO.cto_type
     := CTO.CTOClassRef.
   Definition cto_option : CTO.cto_type -> CTO.cto_type
     := CTO.CTOOption.
-  Definition cto_structure : list(String.string * CTO.cto_type) -> CTO.cto_type
-    := CTO.CTOStructure.
+  Definition cto_record : list(String.string * CTO.cto_type) -> CTO.cto_type
+    := CTO.CTORecord.
   Definition cto_array : CTO.cto_type -> CTO.cto_type
     := CTO.CTOArray.
 
@@ -109,8 +113,8 @@ Module QJura(juramodel:JuraCompilerModel).
     := Jura.JFunCall.
   Definition jmatch : jura_expr -> list (Jura.match_case * jura_expr) -> jura_expr -> jura_expr
     := Jura.JMatch.
-  Definition jstructure : list (String.string * jura_expr) -> jura_expr 
-    := Jura.JStructure.
+  Definition jrecord : list (String.string * jura_expr) -> jura_expr 
+    := Jura.JRecord.
 
   Definition jdot : String.string -> jura_expr -> jura_expr 
     := JuraSugar.JDot.

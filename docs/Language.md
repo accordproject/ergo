@@ -167,22 +167,24 @@ variable declarations or in functions/clauses signatures.
 Here are atomic types:
 
 ```
-String                    // Atomic types
+Boolean                   // Atomic types
+String
 Double
 Long
-Boolean
+Integer
+DateTime
 ```
 
-Here is a structure (sometimes called struct or record in other languages):
+Here is a record (sometimes called a struct in other languages):
 ```
-{ name: String, age: Long } // Structure with two attributes:
+{ name: String, age: Long } // Record with two attributes:
                             // a name and an age
 ```
 Here are array types:
 ```
 String[]                      // Array of String values
 Product[]                     // Array of Product (a declared type)
-{ name: String, age: Long }[] // Array of structures
+{ name: String, age: Long }[] // Array of records
 ```
 Here is how to declare CTO classes (either concepts or transactions in
 CTO terminology):

@@ -29,7 +29,8 @@
     "yargs": "^9.0.1"
   },
   "bin": {
-    "jurac": "./bin/jurac.js"
+    "jurac": "./bin/jurac.js",
+    "jurac": "./bin/jurap.js"
   },
   "devDependencies": {
     "chai": "^3.5.0",
