@@ -25,8 +25,8 @@ necessary libraries as follow:
 
 ```
 $ opam repo add coq-released https://coq.inria.fr/opam/released
-$ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen
-$ opam install coq.8.7.2 coq-qcert.1.0.7
+$ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen coq.8.7.2
+$ opam install coq-qcert.1.0.7
 ```
 
 ### Build the Jura Compiler
