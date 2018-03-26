@@ -118,17 +118,26 @@ let sexp_to_nat_arith_bop (se:sexp) : nat_arith_binary_op =
   match se with
   | STerm (s,[]) -> PrettyCommon.nat_arith_binary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith nat binary_op")
+      raise  (Jura_Error "Not well-formed S-expr inside arith nat arith binary_op")
   
 let float_arith_bop_to_sexp (b:float_arith_binary_op) : sexp =
   STerm (PrettyCommon.string_of_float_arith_binary_op b,[])
+  
+let float_compare_bop_to_sexp (b:float_compare_binary_op) : sexp =
+  STerm (PrettyCommon.string_of_float_compare_binary_op b,[])
   
 let sexp_to_float_arith_bop (se:sexp) : float_arith_binary_op =
   match se with
   | STerm (s,[]) -> PrettyCommon.float_arith_binary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith float binary_op")
+      raise  (Jura_Error "Not well-formed S-expr inside arith float arith binary_op")
   
+let sexp_to_float_compare_bop (se:sexp) : float_compare_binary_op =
+  match se with
+  | STerm (s,[]) -> PrettyCommon.float_compare_binary_op_of_string s
+  | _ ->
+      raise  (Jura_Error "Not well-formed S-expr inside arith float compare binary_op")
+
 let binary_op_to_sexp (b:binary_op) : sexp =
   match b with
   | OpEqual -> STerm ("AEq",[])
@@ -139,6 +148,7 @@ let binary_op_to_sexp (b:binary_op) : sexp =
   | OpOr -> STerm ("AOr",[])
   | OpNatBinary ab -> STerm ("ABNat",[nat_arith_bop_to_sexp ab])
   | OpFloatBinary ab -> STerm ("ABFloat",[float_arith_bop_to_sexp ab])
+  | OpFloatCompare ab -> STerm ("ABFloatCompare",[float_compare_bop_to_sexp ab])
   | OpLt -> STerm ("ALt",[])
   | OpLe -> STerm ("ALe",[])
   | OpBagDiff -> STerm ("AMinus",[])
@@ -158,6 +168,7 @@ let sexp_to_binary_op (se:sexp) : binary_op =
   | STerm ("AOr",[]) -> OpOr
   | STerm ("ABNat",[se']) -> OpNatBinary (sexp_to_nat_arith_bop se')
   | STerm ("ABFloat",[se']) -> OpFloatBinary (sexp_to_float_arith_bop se')
+  | STerm ("ABFloatCompare",[se']) -> OpFloatCompare (sexp_to_float_compare_bop se')
   | STerm ("ALt",[]) -> OpLt
   | STerm ("ALe",[]) -> OpLe
   | STerm ("AMinus",[]) -> OpBagDiff

@@ -22,7 +22,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     enforce !contract.forceMajeure or !request.forceMajeure
     else
       new LateDeliveryAndPenaltyResponse{
-	penalty: 0,
+	penalty: 0.0,
 	buyerMayTerminate: true
       };
 
@@ -30,9 +30,9 @@ contract LateDeliveryAndPenalty over TemplateModel {
     define variable diff = momentDiff(now,agreed);
     // Penalty formula
     define variable penalty =
-      (diff / contract.penaltyDuration.amount) * contract.penaltyPercentage/100 * request.goodsValue;
+      (diff / contract.penaltyDuration.amount) * contract.penaltyPercentage/100.0 * request.goodsValue;
     // Penalty may be capped
-    define variable capped = min([penalty,contract.capPercentage * request.goodsValue / 100]);
+    define variable capped = min([penalty,contract.capPercentage * request.goodsValue / 100.0]);
     // Return the response with the penalty and termination determination
     return new LateDeliveryAndPenaltyResponse{
       penalty: capped,

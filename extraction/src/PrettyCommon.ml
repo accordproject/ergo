@@ -166,6 +166,23 @@ let float_arith_binary_op_of_string ba =
   | _ -> raise Not_found
   end
 
+let string_of_float_compare_binary_op ua =
+  begin match ua with
+  | FloatLt -> "Flt"
+  | FloatLe -> "Fle"
+  | FloatGt -> "Fgt"
+  | FloatGe -> "Fge"
+  end
+
+let float_compare_binary_op_of_string s =
+  begin match s with
+  | "Flt" -> FloatLt
+  | "Fle" -> FloatLe
+  | "Fgt" -> FloatGt
+  | "Fge" -> FloatGe
+  | _ -> raise Not_found
+  end
+
 let string_of_foreign_binary_op fb =
   match fb with
   | Enhanced_binary_time_op Bop_time_as -> "time_as"
@@ -216,6 +233,7 @@ let string_of_binary_op b =
   | OpOr -> "aor"
   | OpNatBinary ba -> string_of_nat_arith_binary_op ba
   | OpFloatBinary ba -> string_of_float_arith_binary_op ba
+  | OpFloatCompare ba -> string_of_float_compare_binary_op ba
   | OpLt -> "alt"
   | OpLe -> "ale"
   | OpBagDiff -> "aminus"

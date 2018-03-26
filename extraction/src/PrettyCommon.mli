@@ -34,10 +34,12 @@ val float_arith_unary_op_of_string : string -> float_arith_unary_op
 val string_of_foreign_binary_op : enhanced_binary_op -> string
 val string_of_nat_arith_binary_op : nat_arith_binary_op -> string
 val string_of_float_arith_binary_op : float_arith_binary_op -> string
+val string_of_float_compare_binary_op : float_compare_binary_op -> string
 
 val nat_arith_binary_op_of_string : string -> nat_arith_binary_op
 val float_arith_binary_op_of_string : string -> float_arith_binary_op
 val foreign_binary_op_of_string : string -> enhanced_binary_op
+val float_compare_binary_op_of_string : string -> float_compare_binary_op
 
 val string_of_binary_op : binary_op -> string
 

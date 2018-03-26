@@ -3,11 +3,11 @@ namespace org.accordproject.volumediscount
 import org.accordproject.contract.*
 import org.accordproject.late.*
 
-define variable fee = 1
+define variable fee = 1.0
 define function addFee(rate Double) : Double {
   match fee {
-    with let v = 1 : rate + v/10
-    with let v = 2 : rate + fee/15
+    with let v = 1.0 : rate + v/10.0
+    with let v = 2.0 : rate + fee/15.0
     otherwise : rate
   }
 }
