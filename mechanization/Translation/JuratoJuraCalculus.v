@@ -18,20 +18,18 @@ Require Import String.
 Require Import List.
 
 Require Import Qcert.Utils.Utils.
-Require Import Qcert.Common.CommonRuntime.
 
-Require Import Jura.Utils.JResult.
-Require Import Jura.Utils.JError.
+Require Import Jura.Common.Utils.JResult.
+Require Import Jura.Common.Utils.JError.
+Require Import Jura.Backend.ForeignJura.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.Jura.Lang.Jura.
 Require Import Jura.Jura.Lang.JuraSugar.
 Require Import Jura.JuraCalculus.Lang.JuraCalculus.
 Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
-Require Import Jura.Translation.ForeignJura.
+Require Import Jura.Backend.JuraBackend.
 
 Section JuratoJavaScript.
-  Context {fruntime:foreign_runtime}.
-  Context {fjura:foreign_jura}.
 
   Require Import Qcert.NNRC.NNRCRuntime.
 
@@ -57,69 +55,6 @@ Section JuratoJavaScript.
       NNRCConst enforce_error_content.
     
   End utils.
-
-  Section stdlib.
-    Local Open Scope string.
-
-    Definition mk_naked_closure (params:list string) (body:jurac_expr) :=
-      let params := List.map (fun x => (x,None)) params in
-      mkClosure
-        params
-        None
-        None
-        body.
-    
-    Definition unary_operator_table : lookup_table :=
-      fun fname =>
-        let unop :=
-            match fname with
-            | "max" => Some OpFloatBagMax
-            | "min" => Some OpFloatBagMin
-            | "flatten" => Some OpFlatten
-            | "toString" => Some OpToString
-            | _ => None
-            end
-        in
-        match unop with
-        | None => None
-        | Some op =>
-          Some (mk_naked_closure
-                  ("p1"::nil)
-                  (NNRCUnop op (NNRCGetConstant "p1")))
-        end.
-
-    Definition binary_operator_table : lookup_table :=
-      fun fname =>
-        let binop :=
-            match fname with
-            | "concat" => Some OpStringConcat
-            | _ => None
-            end
-        in
-        match binop with
-        | None => None
-        | Some op =>
-          Some (mk_naked_closure
-                  ("p1"::"p2"::nil)
-                  (NNRCBinop op (NNRCGetConstant "p1") (NNRCGetConstant "p2")))
-        end.
-
-    Definition builtin_table : lookup_table :=
-      fun fname =>
-        match fname with
-        | "now" =>
-          Some (mk_naked_closure
-                  nil
-                  (NNRCGetConstant "now"))
-        | _ => None
-        end.
-
-    Definition stdlib :=
-      compose_table foreign_table
-                    (compose_table builtin_table
-                                   (compose_table unary_operator_table binary_operator_table)).
-
-  End stdlib.
 
   Record context :=
     mkContext {
@@ -515,7 +450,7 @@ Section JuratoJavaScript.
     end.
 
   Definition initial_context (p:option string) :=
-    mkContext None None stdlib p nil nil.
+    mkContext None None jurac_stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
   Definition package_to_calculus (p:package) : jresult jurac_package :=

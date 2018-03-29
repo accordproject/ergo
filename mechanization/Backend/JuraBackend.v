@@ -12,13 +12,14 @@
  * limitations under the License.
  *)
 
-Require Import String.
-Require Import Qcert.Common.ForeignRuntime.
-Require Import Jura.JuraCalculus.Lang.JuraCalculus.
-Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
+Require Qcert.Compiler.Model.EnhancedModel.
+Require Jura.Backend.Model.JuraBackendRuntime.
+Require Jura.Backend.Lib.JType.
+Require Jura.Backend.Lib.JData.
+Require Jura.Backend.Lib.JOperators.
 
-Class foreign_jura {fruntime:foreign_runtime}: Type
-  := mk_foreign_jura {
-         foreign_table : lookup_table
-       }.
+Module JuraEnhancedBackend := JuraBackendRuntime.JuraBackendRuntime <+ EnhancedModel.CompEnhanced.
+Module JuraType := JType.JType(JuraEnhancedBackend).
+Module JuraData := JData.JData(JuraEnhancedBackend).
+Module JuraOps := JOperators.JOperators(JuraEnhancedBackend).
 

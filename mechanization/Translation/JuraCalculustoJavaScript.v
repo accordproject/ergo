@@ -16,14 +16,12 @@
 
 Require Import String.
 Require Import List.
-Require Import Qcert.Common.CommonRuntime.
 Require Import Qcert.NNRC.NNRCRuntime.
-Require Import Jura.Utils.JResult.
+Require Import Jura.Common.Utils.JResult.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.JuraCalculus.Lang.JuraCalculus.
 
 Section JuraCalculustoJavaScript.
-  Context {fruntime:foreign_runtime}.
 
   Definition lookup_error (coname:string) (clname:string) :=
     let msg := ("Clause " ++ clname ++ " in contract " ++ coname ++ " not found")%string in
@@ -36,23 +34,10 @@ Section JuraCalculustoJavaScript.
 
   Section translate.
     (* Basic modules *)
-    Require Import Qcert.Common.CommonSystem.
-    Require Import Qcert.Utils.OptimizerLogger.
-    Require Import Qcert.NNRC.NNRCRuntime.
     Require Import Qcert.Translation.NNRCtoJavaScript.
     Require Import Qcert.Compiler.Driver.CompLang.
 
-    (* Foreign Datatypes Support *)
-    Require Import Qcert.Translation.ForeignToJavaScript.
-
     (* Context *)
-    Context {ft:foreign_type}.
-    Context {bm:brand_model}.
-    Context {ftyping: foreign_typing}.
-    Context {nnrc_logger:optimizer_logger string nnrc}.
-    Context {ftojs:foreign_to_javascript}.
-    Context {ftjson:foreign_to_JSON}.
-
     Local Open Scope string_scope.
 
     Definition multi_append {A} separator (f:A -> string) (elems:list A) : string :=

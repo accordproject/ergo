@@ -102,18 +102,18 @@ stmt:
     { JFunc
 	{ func_name = cn;
 	  func_closure =
-	  { closure_params = [];
-            closure_output = Some out;
+	  { closure_params0 = [];
+            closure_output0 = Some out;
 	    closure_throw = mt;
-	    closure_body = e; } } }
+	    closure_body0 = e; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { JFunc
 	{ func_name = cn;
 	  func_closure =
-	  { closure_params = ps;
-            closure_output = Some out;
+	  { closure_params0 = ps;
+            closure_output0 = Some out;
 	    closure_throw = mt;
-	    closure_body = e; } } }
+	    closure_body0 = e; } } }
 | IMPORT qn = qname_prefix
     { JImport qn }
 | c = contract
@@ -147,33 +147,33 @@ func:
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = cn;
 	func_closure =
-	{ closure_params = [];
-          closure_output = Some out;
+	{ closure_params0 = [];
+          closure_output0 = Some out;
 	  closure_throw = mt;
-	  closure_body = e; } } }
+	  closure_body0 = e; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { func_name = cn;
 	func_closure =
-	{ closure_params = ps;
-          closure_output = Some out;
+	{ closure_params0 = ps;
+          closure_output0 = Some out;
 	  closure_throw = mt;
-	  closure_body = e; } } }
+	  closure_body0 = e; } } }
 
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
 	clause_closure =
-	  { closure_params = [];
-            closure_output = Some out;
+	  { closure_params0 = [];
+            closure_output0 = Some out;
 	    closure_throw = mt;
-	    closure_body = e; } } }
+	    closure_body0 = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
 	clause_closure =
-	  { closure_params = ps;
-            closure_output = Some out;
+	  { closure_params0 = ps;
+            closure_output0 = Some out;
 	    closure_throw = mt;
-	    closure_body = e; } } }
+	    closure_body0 = e; } } }
 
 maythrow:
 |

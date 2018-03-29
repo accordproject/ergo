@@ -17,13 +17,11 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import Qcert.Common.CommonRuntime.
 Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Jura.Jura.Lang.JuraBase.
 
 Section JuraCalculus.
-  Context {fruntime:foreign_runtime}.
-  
+
   Section Syntax.
 
     (** Expression *)

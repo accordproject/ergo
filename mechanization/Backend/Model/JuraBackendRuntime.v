@@ -14,24 +14,44 @@
 
 Require Import String.
 Require Import List.
+Require Import Qcert.Utils.Closure.
 Require Import Qcert.Common.CommonSystem.
 Require Import Qcert.Compiler.Model.CompilerRuntime.
 Require Import Qcert.Compiler.Model.DateTimeModelPart.
 Require Import Qcert.Compiler.Model.EnhancedModel.
 Require Import Qcert.Compiler.Model.SqlDateModelPart.
+Require Import Qcert.Translation.NNRCtoJavaScript.
 Require Import Qcert.cNNRC.Lang.cNNRC.
-Require Import Jura.JuraCalculus.Lang.JuraCalculus.
-Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
-Require Import Jura.Translation.ForeignJura.
-Require Import Jura.Translation.JuratoJuraCalculus.
-Require Import Jura.Compiler.Model.JuraModel.
+Require Import Jura.Backend.ForeignJura.
+Require Import Jura.Backend.Model.JuraBackendModel.
 
-Module JuraRuntime <: JuraCompilerModel.
+Definition mk_naked_closure (params:list string) (body:nnrc) : backend_closure :=
+  let params := List.map (fun x => (x,None)) params in
+  mkClosure
+    params
+    None
+    body.
+
+Definition backend_compose_table (t1 t2:backend_lookup_table) : backend_lookup_table :=
+  fun fname =>
+    match t1 fname with
+    | None => t2 fname
+    | Some cl => Some cl
+    end.
+
+Module JuraBackendRuntime <: JuraBackendModel.
   Local Open Scope string.
-  Definition foreign_unary_operator_table : lookup_table :=
+
+  Definition jura_foreign_data := enhanced_foreign_data.
+  Definition jura_data_to_json_string := NNRCtoJavaScript.dataToJS.
+
+  Definition jura_backend_closure := backend_closure.
+  Definition jura_backend_lookup_table := backend_lookup_table.
+  
+  Definition foreign_unary_operator_table : jura_backend_lookup_table :=
     fun fname => None.
-            
-  Definition foreign_binary_operator_table : lookup_table :=
+
+  Definition foreign_binary_operator_table : backend_lookup_table :=
     fun fname =>
       let binop :=
           match fname with
@@ -61,7 +81,7 @@ Module JuraRuntime <: JuraCompilerModel.
                 (NNRCBinop op (NNRCGetConstant "p1") (NNRCGetConstant "p2")))
       end.
 
-  Definition foreign_function_table : lookup_table :=
+  Definition foreign_function_table : backend_lookup_table :=
     fun fname =>
       match fname with
       | "momentDuration"%string =>
@@ -83,12 +103,62 @@ Module JuraRuntime <: JuraCompilerModel.
       | _ => None
       end.
 
-  Definition foreign_table : lookup_table :=
-    compose_table foreign_function_table
-                  (compose_table foreign_unary_operator_table
-                                 foreign_binary_operator_table).
+  Definition foreign_table : backend_lookup_table :=
+    backend_compose_table foreign_function_table
+                          (backend_compose_table foreign_unary_operator_table
+                                                 foreign_binary_operator_table).
 
-  Definition jura_compiler_foreign_jura :=
-    mk_foreign_jura _ foreign_table.
-End JuraRuntime.
+  Definition jura_backend_foreign_jura :=
+    mk_foreign_jura foreign_table.
 
+  Definition unary_operator_table : backend_lookup_table :=
+    fun fname =>
+      let unop :=
+          match fname with
+          | "max" => Some OpFloatBagMax
+          | "min" => Some OpFloatBagMin
+          | "flatten" => Some OpFlatten
+          | "toString" => Some OpToString
+          | _ => None
+          end
+      in
+      match unop with
+      | None => None
+      | Some op =>
+        Some (mk_naked_closure
+                ("p1"::nil)
+                (NNRCUnop op (NNRCGetConstant "p1")))
+      end.
+
+    Definition binary_operator_table : backend_lookup_table :=
+      fun fname =>
+        let binop :=
+            match fname with
+            | "concat" => Some OpStringConcat
+            | _ => None
+            end
+        in
+        match binop with
+        | None => None
+        | Some op =>
+          Some (mk_naked_closure
+                  ("p1"::"p2"::nil)
+                  (NNRCBinop op (NNRCGetConstant "p1") (NNRCGetConstant "p2")))
+        end.
+
+    Definition builtin_table : backend_lookup_table :=
+      fun fname =>
+        match fname with
+        | "now" =>
+          Some (mk_naked_closure
+                  nil
+                  (NNRCGetConstant "now"))
+        | _ => None
+        end.
+
+    Definition jura_backend_stdlib : backend_lookup_table :=
+      backend_compose_table foreign_table
+     (backend_compose_table builtin_table
+     (backend_compose_table unary_operator_table binary_operator_table)).
+
+End JuraBackendRuntime.

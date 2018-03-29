@@ -15,25 +15,18 @@
 Require Import String.
 Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
-Require Import Qcert.Common.CommonRuntime.
+Require Import Qcert.Utils.Lift.
 Require Import Qcert.NNRC.NNRCRuntime.
-Require Import Jura.Utils.JResult.
+Require Import Jura.Common.Utils.JResult.
+Require Import Jura.Common.CTO.CTO.
+Require Import Jura.Backend.JuraBackend.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.JuraCalculus.Lang.JuraCalculus.
 
-Section JuraCalculusCall.
-  Context {fruntime:foreign_runtime}.
-  
+Section Closure.
   Definition jurac_expr_closure := @closure jurac_expr.
 
   Definition lookup_table := string -> option jurac_expr_closure.
-
-  Definition compose_table (t1 t2:lookup_table) : lookup_table :=
-    fun fname =>
-      match t1 fname with
-      | None => t2 fname
-      | Some cl => Some cl
-      end.
 
   Definition add_function_to_table
              (t:lookup_table) (newfname:string) (newcl:@closure jurac_expr) : lookup_table :=
@@ -42,6 +35,35 @@ Section JuraCalculusCall.
       then Some newcl
       else t fname.
   
+End Closure.
+
+Section Patch.
+  Require Qcert.Utils.Closure.
+
+  Definition jurac_closure_type_of_closure_type (t:option unit) : option cto_type :=
+    None.
+  
+  Definition jurac_closure_params_of_closure_params
+             (params:list (string * option unit)) : list (string * option cto_type) :=
+    List.map (fun xy => (fst xy, jurac_closure_type_of_closure_type (snd xy))) params.
+    
+  Definition jurac_expr_closure_of_backend_closure
+             (cl:JuraEnhancedBackend.jura_backend_closure) : jurac_expr_closure :=
+    mkClosure
+      (jurac_closure_params_of_closure_params cl.(Closure.closure_params))
+      (jurac_closure_type_of_closure_type cl.(Closure.closure_output))
+      None
+      cl.(Closure.closure_body).
+
+  Definition lookup_table_of_backend_lookup_table (tbl:JuraEnhancedBackend.jura_backend_lookup_table) :=
+    fun name => lift jurac_expr_closure_of_backend_closure (tbl name).
+
+  Definition jurac_stdlib : lookup_table :=
+    lookup_table_of_backend_lookup_table JuraEnhancedBackend.jura_backend_stdlib.
+
+End Patch.
+
+Section JuraCalculusCall.
   (** Error for function calls *)
   Definition call_error (fname:string) : string :=
     "Function '" ++ fname ++ "' not found".

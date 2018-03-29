@@ -18,15 +18,14 @@
 
 Require Import String.
 Require Import List.
-Require Import Qcert.Common.CommonRuntime.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.Jura.Lang.Jura.
+Require Import Jura.Backend.JuraBackend.
 
 Section JuraSugar.
-  Context {fruntime:foreign_runtime}.
-
   (** [expr.field] is a macro for unbranding followed by field access in a record *)
-  Definition JDot (s:string) (e:jura_expr) : jura_expr := JUnaryOp (OpDot s) (JUnaryOp OpUnbrand e).
+  Definition JDot (s:string) (e:jura_expr) : jura_expr :=
+    JUnaryOp (JuraOps.Unary.opdot s) (JUnaryOp JuraOps.Unary.opunbrand e).
 
   (** [return expr] is a no-op at the moment *)
   (* XXX This will have to be revised/fixed *)
@@ -39,7 +38,9 @@ Section JuraSugar.
     JThrow (mkClassRef pname cname) el.
 
   Definition JThrowJuraCompilerError (msg:string) : jura_expr :=
-    (JThrowSugar (Some "org.jura") "Error" (("error", JConst (dstring msg))::nil))%string.
+    (JThrowSugar (Some "org.jura")
+                 "Error"
+                 (("error", JConst (JuraData.dstring msg))::nil))%string.
 
 End JuraSugar.
 

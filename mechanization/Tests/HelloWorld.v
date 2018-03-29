@@ -17,7 +17,6 @@ Require Import List.
 Require Import Jura.Common.CTO.CTO.
 Require Import Jura.Lang.JuraBase.
 Require Import Jura.Lang.Jura.
-Require Import Jura.Compiler.Model.JuraRuntime.
 Require Import Jura.Compiler.JuraCompiler.
 
 Section HelloWorld.

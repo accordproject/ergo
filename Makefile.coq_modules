@@ -14,22 +14,23 @@
 
 MODULES = \
 	Version \
-	Utils/JResult \
-	Utils/JError \
+	Backend/ForeignJura \
+	Backend/Model/JuraBackendModel \
+	Backend/Model/JuraBackendRuntime \
+	Backend/Lib/JType \
+	Backend/Lib/JData \
+	Backend/Lib/JOperators \
+	Backend/JuraBackend \
+	Common/Utils/JResult \
+	Common/Utils/JError \
 	Common/CTO/CTO \
 	Jura/Lang/JuraBase \
 	Jura/Lang/Jura \
 	Jura/Lang/JuraSugar \
 	JuraCalculus/Lang/JuraCalculus \
 	JuraCalculus/Lang/JuraCalculusCall \
-	Translation/ForeignJura \
 	Translation/JuratoJuraCalculus \
 	Translation/JuraCalculustoJavaScript \
 	Translation/JuratoJavaScript \
-	Compiler/Model/JuraModel \
-	Compiler/Model/JuraRuntime \
-	Compiler/QLib/QJData \
-	Compiler/QLib/QJOperators \
-	Compiler/QLib/QJura \
 	Compiler/JuraCompiler \
 	Tests/HelloWorld

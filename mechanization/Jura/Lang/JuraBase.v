@@ -17,16 +17,14 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import Qcert.Common.CommonRuntime.
-Require Import Jura.Utils.JResult.
-Require Import Jura.Utils.JError.
+Require Import Jura.Common.Utils.JResult.
+Require Import Jura.Common.Utils.JError.
 Require Import Jura.Common.CTO.CTO.
 
 Section JuraBase.
-  Context {fruntime:foreign_runtime}.
   (* Type for plugged-in language *)
   Context {A:Set}.
-  
+
   Section Syntax.
     Definition namespace_ref := option string.
 
@@ -232,16 +230,16 @@ Section JuraBase.
       | JFunc f :: sl' =>
         if (string_dec f.(func_name) name)
         then
-          let closure := f.(func_closure) in
+          let fclosure := f.(func_closure) in
           let request :=
-              match closure.(closure_params) with
+              match fclosure.(closure_params) with
               | nil => dispatch_parameter_error
               | (_,Some reqtype) :: _ => jsuccess reqtype
               | _ :: _ => jsuccess (CTOClassRef "Request"%string)
               end
           in
           let response :=
-              match closure.(closure_output) with
+              match fclosure.(closure_output) with
               | Some resptype => resptype
               | None => (CTOClassRef "Response"%string)
               end

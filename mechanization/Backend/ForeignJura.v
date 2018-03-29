@@ -12,18 +12,21 @@
  * limitations under the License.
  *)
 
-(* This module contains parsing utilities *)
+Require Import String.
+Require Import Qcert.Utils.Closure.
+Require Import Qcert.Common.CommonSystem.
+Require Import Qcert.NNRC.Lang.NNRC.
 
-open SExp
-open JComp
-open JuraCompiler
+Section ForeignJura.
+  Context {fruntime:foreign_runtime}.
 
-val sexp_to_data : sexp -> JuraData.data
-val data_to_sexp : JuraData.data -> sexp
+  Definition backend_closure : Set := @closure nnrc unit.
+  Definition backend_lookup_table : Set := string -> option backend_closure.
 
-val sexp_to_nnrc : sexp -> nnrc
-val nnrc_to_sexp : nnrc -> sexp
+  Class foreign_jura : Type
+    := mk_foreign_jura {
+           foreign_table : backend_lookup_table
+         }.
 
-val sexp_to_jurac_package : sexp -> jurac_package
-val jurac_package_to_sexp : jurac_package -> sexp
+End ForeignJura.
 

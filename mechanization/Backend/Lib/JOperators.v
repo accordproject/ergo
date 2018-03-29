@@ -15,10 +15,10 @@
 Require Import Ascii.
 Require Import ZArith.
 Require Qcert.Common.Brands.BrandRelation.
-Require Import Jura.Compiler.Model.JuraRuntime.
-Require Import Jura.Compiler.Model.JuraModel.
+Require Import Jura.Backend.Model.JuraBackendModel.
+Require Import Jura.Backend.Model.JuraBackendRuntime.
 
-Module QJOperators(juramodel:JuraCompilerModel).
+Module JOperators(juramodel:JuraBackendModel).
   
   Module Unary.
 
@@ -83,6 +83,9 @@ Module QJOperators(juramodel:JuraCompilerModel).
     Definition opcast : BrandRelation.brands -> op 
       := UnaryOperators.OpCast.
 
+    Definition eval
+      := UnaryOperatorsSem.unary_op_eval.
+
   (* Note that foreign operators should be encapuslated and 
      exported as part of the model *)
   End Unary.
@@ -138,8 +141,11 @@ Module QJOperators(juramodel:JuraCompilerModel).
     Definition opstringconcat : op 
       := BinaryOperators.OpStringConcat.
 
-    (* Note that foreign operators should be encapuslated and 
+    Definition eval
+      := BinaryOperatorsSem.binary_op_eval.
+
+  (* Note that foreign operators should be encapuslated and 
        exported as part of the model *)
   End Binary.
-End QJOperators.
+End JOperators.
 

@@ -97,7 +97,7 @@ then -x+1  // Expression if condition is true
 else x+1   // Expression if condition is false
 ```
 
-### Enforce expressions *CHANGED*
+### Enforce expressions
 One can check preconditions in a clause using enforce expressions, as follows:
 ```
 enforce x >= 0               // Condition
@@ -156,7 +156,7 @@ define function area(radius Double) : Double {
 area(1.5)
 ```
 
-## Types *NEW*
+## Types
 
 One either import an existing CTO file, or declare types within Jura
 itself.

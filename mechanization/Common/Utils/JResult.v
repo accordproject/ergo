@@ -16,15 +16,13 @@
 
 Require Import String.
 Require Import Qcert.Utils.Result.
-Require Import Qcert.Common.CommonRuntime.
+Require Import Jura.Backend.JuraBackend.
 
 Section JResult.
-  Context {fruntime:foreign_runtime}.
-
   Inductive jerror : Set :=
   | CompilationError : string -> jerror
   | TypeError : string -> jerror
-  | UserError : data -> jerror.
+  | UserError : JuraData.data -> jerror.
 
   Definition jresult (A:Set) := Result A jerror.
   Definition jsuccess {A:Set} (a:A) : jresult A :=

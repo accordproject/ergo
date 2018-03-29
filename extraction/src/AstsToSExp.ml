@@ -18,6 +18,7 @@ open Util
 open SExp
 
 open JComp
+open JuraEnhancedBackend
 open JuraCompiler
 
 (****************
@@ -65,7 +66,7 @@ let foreign_data_to_sexp (fd:enhanced_data) : sexp =
   | Enhancedsqldate td -> raise Not_found
   | Enhancedsqldateinterval tp -> raise Not_found
 
-let rec data_to_sexp (d : Data.qdata) : sexp =
+let rec data_to_sexp (d : JuraData.data) : sexp =
   match d with
   | Dunit -> STerm ("dunit", [])
   | Dnat n -> SInt n
@@ -78,10 +79,10 @@ let rec data_to_sexp (d : Data.qdata) : sexp =
   | Dright d -> STerm ("dright", data_to_sexp d :: [])
   | Dbrand (bs,d) -> STerm ("dbrand", (STerm ("brands", dbrands_to_sexp bs)) :: (STerm ("value", (data_to_sexp d) :: [])) :: [])
   | Dforeign fdt -> foreign_data_to_sexp (Obj.magic fdt)
-and drec_to_sexp (ad : char list * Data.qdata) : sexp =
+and drec_to_sexp (ad : char list * JuraData.data) : sexp =
   STerm ("datt", (SString (string_of_char_list (fst ad))) :: (data_to_sexp (snd ad)) :: [])
 
-let rec sexp_to_data (se:sexp) : Data.qdata =
+let rec sexp_to_data (se:sexp) : JuraData.data =
   match se with
   | STerm ("dunit", []) -> Dunit
   | SBool b -> Dbool b
@@ -102,7 +103,7 @@ let rec sexp_to_data (se:sexp) : Data.qdata =
       Dforeign (Obj.magic (PrettyCommon.foreign_data_of_string s))
   | STerm (t, _) ->
       raise (Jura_Error ("Not well-formed S-expr with name " ^ t))
-and sexp_to_drec (sel:sexp) : (char list * Data.qdata) =
+and sexp_to_drec (sel:sexp) : (char list * JuraData.data) =
   match sel with
   | STerm ("datt", (SString s) :: se :: []) ->
       (char_list_of_string s, sexp_to_data se)
@@ -466,19 +467,19 @@ let sexp_to_params (se:sexp) =
       raise (Jura_Error "Not well-formed S-expr inside Params")
   end
 
-let closure_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a closure) =
-  let clparams = params_to_sexp cl.closure_params in
-  let cloutput = opt_paramtype_to_sexp cl.closure_output in
+let closure_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a closure0) =
+  let clparams = params_to_sexp cl.closure_params0 in
+  let cloutput = opt_paramtype_to_sexp cl.closure_output0 in
   let clthrow = opt_name_to_sexp cl.closure_throw in
-  let clbody = expr_to_sexp cl.closure_body in
+  let clbody = expr_to_sexp cl.closure_body0 in
   STerm ("Closure",[clparams;cloutput;clthrow;clbody])
-let sexp_to_closure (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a closure =
+let sexp_to_closure (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a closure0 =
   begin match se with
   | STerm ("Closure",[sclparams;scloutput;sclthrow;sclbody]) ->
-      { closure_params = sexp_to_params sclparams;
-	closure_output = sexp_to_opt_paramtype scloutput;
+      { closure_params0 = sexp_to_params sclparams;
+	closure_output0 = sexp_to_opt_paramtype scloutput;
 	closure_throw = sexp_to_opt_name sclthrow;
-	closure_body = sexp_to_expr sclbody }
+	closure_body0 = sexp_to_expr sclbody }
   | _ ->
       raise (Jura_Error "Not well-formed S-expr inside Closure")
   end

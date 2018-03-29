@@ -28,7 +28,7 @@ let wrap_jerrors f e =
   | Failure (TypeError cl) ->
     raise (Jura_Error ("Type Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
   | Failure (UserError d) ->
-    let cl = JuraCompiler.Data.qdataToJS [] d in
+    let cl = JuraCompiler.Data.data_to_json_string [] d in
     raise (Jura_Error ("User Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
   | Success x -> f x
   end

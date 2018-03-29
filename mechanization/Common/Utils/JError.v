@@ -15,12 +15,10 @@
 (* Built-in errors *)
 
 Require Import String.
-Require Import Qcert.Utils.Result.
-Require Import Qcert.Common.CommonRuntime.
-Require Import Jura.Utils.JResult.
+Require Import Jura.Common.Utils.JResult.
+Require Import Jura.Backend.JuraBackend.
 
 Section JError.
-  Context {fruntime:foreign_runtime}.
   Require Import List.
 
   Definition dispatch_lookup_error {A} : jresult A :=
@@ -37,9 +35,9 @@ Section JError.
   Definition jura_default_error_name : string :=
     jura_default_package ++ "." ++ jura_default_error_local_name.
 
-  Definition enforce_error_content : data :=
-    dbrand (jura_default_error_name::nil)
-           (drec (("message"%string, dstring "Enforce condition failed")::nil)).
+  Definition enforce_error_content : JuraData.data :=
+    JuraData.dbrand (jura_default_error_name::nil)
+                    (JuraData.drec (("message"%string, JuraData.dstring "Enforce condition failed")::nil)).
   Definition enforce_error : jerror :=
     UserError enforce_error_content.
 

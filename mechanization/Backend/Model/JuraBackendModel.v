@@ -12,18 +12,16 @@
  * limitations under the License.
  *)
 
-(* This module contains parsing utilities *)
+Require Import Qcert.Common.CommonSystem.
+Require Import Qcert.Compiler.Model.EnhancedModel.
+Require Import Jura.Backend.ForeignJura.
 
-open SExp
-open JComp
-open JuraCompiler
-
-val sexp_to_data : sexp -> JuraData.data
-val data_to_sexp : JuraData.data -> sexp
-
-val sexp_to_nnrc : sexp -> nnrc
-val nnrc_to_sexp : nnrc -> sexp
-
-val sexp_to_jurac_package : sexp -> jurac_package
-val jurac_package_to_sexp : jurac_package -> sexp
+Module Type JuraBackendModel.
+  Definition jura_foreign_data : foreign_data := enhanced_foreign_data.
+  Axiom jura_data_to_json_string : String.string -> data -> String.string.
+  Axiom jura_backend_closure : Set.
+  Axiom jura_backend_lookup_table : Set.
+  Axiom jura_backend_foreign_jura : foreign_jura.
+  Axiom jura_backend_stdlib : backend_lookup_table.
+End JuraBackendModel.
 

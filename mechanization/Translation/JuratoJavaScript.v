@@ -17,40 +17,25 @@
 Require Import String.
 Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
-Require Import Qcert.Common.CommonSystem.
-Require Import Qcert.Utils.OptimizerLogger.
-Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.Compiler.Driver.CompLang.
-Require Import Jura.Utils.JResult.
+
+Require Import Jura.Backend.ForeignJura.
+Require Import Jura.Backend.JuraBackend.
+Require Import Jura.Common.Utils.JResult.
 Require Import Jura.Common.CTO.CTO.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.Jura.Lang.Jura.
 Require Import Jura.JuraCalculus.Lang.JuraCalculusCall.
 Require Import Jura.Translation.JuratoJuraCalculus.
-Require Import Jura.Translation.ForeignJura.
 Require Import Jura.Translation.JuraCalculustoJavaScript.
 
 Section JuratoJavaScript.
-  Context {fruntime:foreign_runtime}.
-  Context {fjura:foreign_jura}.
-
   Definition clause_calculus_from_package
              (coname:string) (clname:string) (p:jura_package) : jresult nnrc :=
     let pc := package_to_calculus p in
     jolift (lookup_clause_code_from_package coname clname) pc.
 
-  (* Basic modules *)
-  (* Foreign Datatypes Support *)
-  Require Import Qcert.Translation.ForeignToJavaScript.
-
   (* Context *)
-  Context {ft:foreign_type}.
-  Context {bm:brand_model}.
-  Context {ftyping: foreign_typing}.
-  Context {nnrc_logger:optimizer_logger string nnrc}.
-  Context {ftojs:foreign_to_javascript}.
-  Context {ftjson:foreign_to_JSON}.
-
   Definition clause_code_from_package
              (coname:string) (clname:string) (p:jura_package) : jresult javascript :=
     let pc := package_to_calculus p in
@@ -102,7 +87,7 @@ Section JuratoJavaScript.
              JMatch effparam0
                      s
                      (JThrow (mkClassRef None "Error"%string)
-                             (("message"%string,JConst (dstring ""))::nil)))
+                             (("message"%string,JConst (JuraData.dstring ""))::nil)))
           (jmaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
   Definition dispatch_fun_name :=

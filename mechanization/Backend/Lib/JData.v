@@ -18,17 +18,17 @@ Require Qcert.Utils.JSON.
 Require Qcert.Common.Data.DatatoJSON.
 Require Qcert.Translation.NNRCtoJavaScript.
 
-Require Import Jura.Compiler.Model.JuraModel.
-Require Import Jura.Compiler.Model.JuraRuntime.
+Require Import Jura.Backend.Model.JuraBackendModel.
+Require Import Jura.Backend.Model.JuraBackendRuntime.
 
-Module QJData(juramodel:JuraCompilerModel).
+Module JData(juramodel:JuraBackendModel).
   
   Definition json : Set 
     := JSON.json.
-  Definition qdata : Set 
+  Definition data : Set 
     := Data.data.
   Definition t : Set 
-    := qdata.
+    := data.
   
   Definition jnil : json
     := JSON.jnil.
@@ -43,43 +43,33 @@ Module QJData(juramodel:JuraCompilerModel).
   Definition jobject jl : json
     := JSON.jobject jl.
 
-  Definition dunit : qdata 
+  Definition dunit : data 
     := Data.dunit.
-  Definition dnat z : qdata 
+  Definition dnat z : data 
     := Data.dnat z.
-  Definition dfloat f : qdata 
+  Definition dfloat f : data 
     := Data.dfloat f.
-  Definition dbool b : qdata 
+  Definition dbool b : data 
     := Data.dbool b.
-  Definition dstring s : qdata 
+  Definition dstring s : data 
     := Data.dstring s.
-  Definition dcoll dl : qdata 
+  Definition dcoll dl : data 
     := Data.dcoll dl.
-  Definition drec dl : qdata 
+  Definition drec dl : data 
     := Data.drec dl.
-  Definition dleft : qdata -> qdata 
+  Definition dleft : data -> data 
     := Data.dleft.
-  Definition dright : qdata -> qdata 
+  Definition dright : data -> data 
     := Data.dright.
-  Definition dbrand b : qdata -> qdata 
+  Definition dbrand b : data -> data 
     := Data.dbrand b.
   (* foreign data is supported via the model *)
 
   (** data -> JSON *string* conversion *)
-  Definition qdataToJS s : qdata -> String.string 
-    := NNRCtoJavaScript.dataToJS s.
-  Definition jsonToJS s : JSON.json -> String.string 
+  Definition data_to_json_string s : data -> String.string 
+    := juramodel.jura_data_to_json_string s.
+  Definition json_to_json_string s : json -> String.string 
     := JSON.jsonToJS s.
 
-  Section dist.
-    Import DData.
-    Definition qddata : Set := DData.ddata.
-    Definition dlocal : qdata -> qddata := DData.Dlocal.
-    Definition ddistr (x:qdata) : option qddata :=
-      match x with
-      | Data.dcoll c => Some (DData.Ddistr c)
-      | _ => None
-      end.
-  End dist.
-End QJData.
+End JData.
 
