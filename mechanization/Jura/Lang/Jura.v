@@ -108,24 +108,24 @@ Section Jura.
     | sem_JArray_cons_fail : forall mc env e1 el err,
         jura_expr_sem mc env e1 (jfailure err) ->
         jura_expr_sem mc env (JArray (e1::el)) (jfailure err)
- (* | sem_JUnaryOp : forall uop mc env e1 h d1 d2,
+    | sem_JUnaryOp : forall uop mc env e1 h d1 d2,
         jura_expr_sem mc env e1 (jsuccess d1) ->
-        JuraOps.Unary.eval uop h d1 = Some d2 ->             (**r ∧ [⊞ d₁ = d₂] *)
+        JuraOps.Unary.eval h uop d1 = Some d2 ->             (**r ∧ [⊞ d₁ = d₂] *)
         jura_expr_sem mc env (JUnaryOp uop e1) (jsuccess d2)
     | sem_JUnaryOp_wrongtype : forall uop mc env h e1 d1,
         jura_expr_sem mc env e1 (jsuccess d1) ->
-        JuraOps.Unary.eval uop h d1 = None ->
+        JuraOps.Unary.eval h uop d1 = None ->
         jura_expr_sem mc env (JUnaryOp uop e1) (jtypeerror "UnaryOp")
     | sem_JBinnaryOp : forall bop mc env e1 e2 h d1 d2 d3,
         jura_expr_sem mc env e1 (jsuccess d1) ->
         jura_expr_sem mc env e2 (jsuccess d2) ->
-        JuraOps.Binary.eval bop h d1 d2 = Some d3 ->
+        JuraOps.Binary.eval h bop d1 d2 = Some d3 ->
         jura_expr_sem mc env (JBinaryOp bop e1 e2) (jsuccess d2)
     | sem_JBinaryOp_wrongtype : forall bop mc env e1 e2 h d1 d2,
         jura_expr_sem mc env e1 (jsuccess d1) ->
         jura_expr_sem mc env e2 (jsuccess d2) ->
-        JuraOps.Binary.eval bop h d1 d2 = None ->
-        jura_expr_sem mc env (JBinaryOp bop e1 e2) (jtypeerror "BinaryOp") *)
+        JuraOps.Binary.eval h bop d1 d2 = None ->
+        jura_expr_sem mc env (JBinaryOp bop e1 e2) (jtypeerror "BinaryOp")
     | sem_JIf_true : forall mc env e1 e2 e3 d,
         jura_expr_sem mc env e1 (jsuccess (JuraData.dbool true)) ->
         jura_expr_sem mc env e2 (jsuccess d) ->

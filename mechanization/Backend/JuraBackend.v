@@ -17,9 +17,11 @@ Require Jura.Backend.Model.JuraBackendRuntime.
 Require Jura.Backend.Lib.JType.
 Require Jura.Backend.Lib.JData.
 Require Jura.Backend.Lib.JOperators.
+Require Jura.Backend.Lib.JCodeGen.
 
 Module JuraEnhancedBackend := JuraBackendRuntime.JuraBackendRuntime <+ EnhancedModel.CompEnhanced.
 Module JuraType := JType.JType(JuraEnhancedBackend).
 Module JuraData := JData.JData(JuraEnhancedBackend).
 Module JuraOps := JOperators.JOperators(JuraEnhancedBackend).
+Module JuraCodeGen := JCodeGen.JCodeGen(JuraEnhancedBackend).
 

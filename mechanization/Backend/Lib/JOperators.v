@@ -17,11 +17,12 @@ Require Import ZArith.
 Require Qcert.Common.Brands.BrandRelation.
 Require Import Jura.Backend.Model.JuraBackendModel.
 Require Import Jura.Backend.Model.JuraBackendRuntime.
+Require Import Jura.Backend.Lib.JData.
 
 Module JOperators(juramodel:JuraBackendModel).
+  Module JuraData := JData.JData juramodel.
   
   Module Unary.
-
     Definition op : Set  
       := UnaryOperators.unary_op.
     Definition t : Set 
@@ -84,7 +85,10 @@ Module JOperators(juramodel:JuraBackendModel).
       := UnaryOperators.OpCast.
 
     Definition eval
-      := UnaryOperatorsSem.unary_op_eval.
+               (h:BrandRelation.brand_relation_t)
+               (uop:UnaryOperators.unary_op)
+               (d:JuraData.data) : option JuraData.data
+      := UnaryOperatorsSem.unary_op_eval h uop d.
 
   (* Note that foreign operators should be encapuslated and 
      exported as part of the model *)
@@ -113,36 +117,76 @@ Module JOperators(juramodel:JuraBackendModel).
 (*      Definition oprem : op 
         := BinaryOperators.OpFloatBinary BinaryOperators.FloatRem. *)
     End Float.
-    
-    Definition opequal : op 
+
+    Module DateTime.
+      Definition optimeas : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeAs.
+      Definition optimeshift : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeShift.
+      Definition optimene : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeNe.
+      Definition optimelt : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeLt.
+      Definition optimele : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeLe.
+      Definition optimegt : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeGt.
+      Definition optimege : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeGe.
+      Definition optimedurationfromscale : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeDurationFromScale.
+      Definition optimedurationbetween : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeDurationBetween.
+      Definition opdateplus : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDatePlus.
+      Definition opdateminus : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateMinus.
+      Definition opdatene : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateNe.
+      Definition opdatelt : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateLt.
+      Definition opdatele : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateLe.
+      Definition opdategt : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateGt.
+      Definition opdatege : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateGe.
+      Definition opdateintervalbetween : op
+        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateIntervalBetween.
+    End DateTime.
+
+    Definition opequal : op
       := BinaryOperators.OpEqual.
-    Definition oprecconcat : op 
+    Definition oprecconcat : op
       := BinaryOperators.OpRecConcat.
-    Definition oprecmerge : op 
+    Definition oprecmerge : op
       := BinaryOperators.OpRecMerge.
     Definition opand : op
       := BinaryOperators.OpAnd.
-    Definition opor : op 
+    Definition opor : op
       := BinaryOperators.OpOr.
-    Definition oplt : op 
+    Definition oplt : op
       := BinaryOperators.OpLt.
-    Definition ople : op 
+    Definition ople : op
       := BinaryOperators.OpLe.
-    Definition opbagunion : op 
+    Definition opbagunion : op
       := BinaryOperators.OpBagUnion.
-    Definition opbagdiff : op 
+    Definition opbagdiff : op
       := BinaryOperators.OpBagDiff.
-    Definition opbagmin : op 
+    Definition opbagmin : op
       := BinaryOperators.OpBagMin.
-    Definition opbagmax : op 
+    Definition opbagmax : op
       := BinaryOperators.OpBagMax.
-    Definition opcontains : op 
+    Definition opcontains : op
       := BinaryOperators.OpContains.
-    Definition opstringconcat : op 
+    Definition opstringconcat : op
       := BinaryOperators.OpStringConcat.
 
     Definition eval
-      := BinaryOperatorsSem.binary_op_eval.
+               (h:BrandRelation.brand_relation_t)
+               (bop:BinaryOperators.binary_op)
+               (d1 d2:JuraData.data) : option JuraData.data
+      := BinaryOperatorsSem.binary_op_eval h bop d1 d2.
 
   (* Note that foreign operators should be encapuslated and 
        exported as part of the model *)

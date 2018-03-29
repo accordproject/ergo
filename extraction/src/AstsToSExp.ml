@@ -179,23 +179,23 @@ let sexp_to_binary_op (se:sexp) : binary_op =
   | STerm ("ASConcat",[]) -> OpStringConcat
   | SString fbop -> OpForeignBinary (Obj.magic (PrettyCommon.foreign_binary_op_of_string fbop))
   (* WARNING: Those are not printed, only parsed *)
-  | STerm ("ATimeAs",[]) -> Enhanced.Ops.Binary.coq_OpTimeAs
-  | STerm ("ATimeShift",[]) -> Enhanced.Ops.Binary.coq_OpTimeShift
-  | STerm ("ATimeNe",[]) -> Enhanced.Ops.Binary.coq_OpTimeNe
-  | STerm ("ATimeLt",[]) -> Enhanced.Ops.Binary.coq_OpTimeLt
-  | STerm ("ATimeLe",[]) -> Enhanced.Ops.Binary.coq_OpTimeLe
-  | STerm ("ATimeGt",[]) -> Enhanced.Ops.Binary.coq_OpTimeGt
-  | STerm ("ATimeGe",[]) -> Enhanced.Ops.Binary.coq_OpTimeGe
-  | STerm ("ATimeDurationFromScale",[]) -> Enhanced.Ops.Binary.coq_OpTimeDurationFromScale
-  | STerm ("ATimeDurationBetween",[]) -> Enhanced.Ops.Binary.coq_OpTimeDurationBetween
-  | STerm ("ADatePlus",[]) -> Enhanced.Ops.Binary.coq_OpSqlDatePlus
-  | STerm ("ADateMinus",[]) -> Enhanced.Ops.Binary.coq_OpSqlDateMinus
-  | STerm ("ADateNe",[]) -> Enhanced.Ops.Binary.coq_OpSqlDateNe
-  | STerm ("ADateLt",[]) -> Enhanced.Ops.Binary.coq_OpSqlDateLt
-  | STerm ("ADateLe",[]) -> Enhanced.Ops.Binary.coq_OpSqlDateLe
-  | STerm ("ADateGt",[]) -> Enhanced.Ops.Binary.coq_OpSqlDateGt
-  | STerm ("ADateGe",[]) -> Enhanced.Ops.Binary.coq_OpSqlDateGe
-  | STerm ("ADateIntervalBetween",[]) -> Enhanced.Ops.Binary.coq_OpSqlDateIntervalBetween
+  | STerm ("ATimeAs",[]) -> JuraOps.Binary.DateTime.optimeas
+  | STerm ("ATimeShift",[]) -> JuraOps.Binary.DateTime.optimeshift
+  | STerm ("ATimeNe",[]) -> JuraOps.Binary.DateTime.optimene
+  | STerm ("ATimeLt",[]) -> JuraOps.Binary.DateTime.optimelt
+  | STerm ("ATimeLe",[]) -> JuraOps.Binary.DateTime.optimele
+  | STerm ("ATimeGt",[]) -> JuraOps.Binary.DateTime.optimegt
+  | STerm ("ATimeGe",[]) -> JuraOps.Binary.DateTime.optimege
+  | STerm ("ATimeDurationFromScale",[]) -> JuraOps.Binary.DateTime.optimedurationfromscale
+  | STerm ("ATimeDurationBetween",[]) -> JuraOps.Binary.DateTime.optimedurationbetween
+  | STerm ("ADatePlus",[]) -> JuraOps.Binary.DateTime.opdateplus
+  | STerm ("ADateMinus",[]) -> JuraOps.Binary.DateTime.opdateminus
+  | STerm ("ADateNe",[]) -> JuraOps.Binary.DateTime.opdatene
+  | STerm ("ADateLt",[]) -> JuraOps.Binary.DateTime.opdatelt
+  | STerm ("ADateLe",[]) -> JuraOps.Binary.DateTime.opdatele
+  | STerm ("ADateGt",[]) -> JuraOps.Binary.DateTime.opdategt
+  | STerm ("ADateGe",[]) -> JuraOps.Binary.DateTime.opdatege
+  | STerm ("ADateIntervalBetween",[]) -> JuraOps.Binary.DateTime.opdateintervalbetween
   | STerm (t, _) ->
       raise (Jura_Error ("Not well-formed S-expr inside arith binary_op with name " ^ t))
   | _ -> raise  (Jura_Error "Not well-formed S-expr inside arith binary_op")

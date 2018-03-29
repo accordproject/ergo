@@ -19,17 +19,15 @@
 <h1> Abstract Syntax </h1>
 <br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
-<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.CommonRuntime.html">Qcert.Common.CommonRuntime</a></span>.<br/>
-<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.NNRC.NNRCRuntime.html">Qcert.NNRC.NNRCRuntime</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html">Jura.Jura.Lang.JuraBase</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Backend.JuraBackend.html">Jura.Backend.JuraBackend</a></span>.<br/>
 <br/>
 <span class="kwd">Section</span> <span class="id"><a name="JuraCalculus">JuraCalculus</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Context</span> {<span class="id">fruntime</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.ForeignRuntime.html#foreign_runtime">foreign_runtime</a></span>}.<br/>
-&nbsp;&nbsp;<br/>
+<br/>
 &nbsp;&nbsp;<span class="kwd">Section</span> <span class="kwd">Syntax</span>.<br/>
 <br/>
 <div class="doc">Expression </div>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jurac_expr">jurac_expr</a></span> := <span class="id"><a href="https://querycert.github.io/html/Qcert.NNRC.Lang.NNRC.html#nnrc">nnrc</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jurac_expr">jurac_expr</a></span> := <span class="id"><a href="Jura.Backend.JuraBackend.html#JuraCodeGen.jurac_expr">JuraCodeGen.jurac_expr</a></span>.<br/>
 <br/>
 <div class="doc">Clause </div>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="jurac_clause">jurac_clause</a></span> := @<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#clause">clause</a></span> <span class="id"><a href="Jura.JuraCalculus.Lang.JuraCalculus.html#jurac_expr">jurac_expr</a></span>.<br/>

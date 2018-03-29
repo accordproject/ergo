@@ -1,0 +1,80 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Jura.Backend.Lib.JType</title>
+<meta name="description" content="Documentation of Coq module Jura.Backend.Lib.JType" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Jura.Backend.Lib.JType</h1>
+<div class="coq">
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.CommonTypes.html">Qcert.Common.CommonTypes</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypingRuntime.html">Qcert.Common.TypingRuntime</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Backend.Model.JuraBackendModel.html">Jura.Backend.Model.JuraBackendModel</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Backend.Model.JuraBackendRuntime.html">Jura.Backend.Model.JuraBackendRuntime</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="JType">JType</a></span>(<span class="id">juramodel</span>:<span class="id"><a href="Jura.Backend.Model.JuraBackendModel.html#JuraBackendModel">JuraBackendModel</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.empty_brand_model">empty_brand_model</a></span> (<span class="id">x</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#unit">unit</a></span>) := <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.TBrandModel.html#empty_brand_model">TBrandModel.empty_brand_model</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.record_kind">record_kind</a></span> : <span class="kwd">Set</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#record_kind">RType.record_kind</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.open_kind">open_kind</a></span> : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.record_kind">record_kind</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Open">RType.Open</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.closed_kind">closed_kind</a></span> : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.record_kind">record_kind</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Closed">RType.Closed</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.jtype_struct">jtype_struct</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="kwd">Set</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">RType.rtype</span>₀.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.jtype">jtype</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="kwd">Set</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#rtype">RType.rtype</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.t">t</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="kwd">Set</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.sorted_pf_type">sorted_pf_type</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} <span class="id">srl</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.SortingAdd.html#is_list_sorted">SortingAdd.is_list_sorted</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Bindings.html#ODT_lt_dec">Bindings.ODT_lt_dec</a></span> (@<span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Assoc.html#domain">Assoc.domain</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span> <span class="id"><a href="Jura.Backend.Lib.JType.html#srl">srl</a></span>) = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.bottom">bottom</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Bottom">RType.Bottom</a></span>.  <br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.top">top</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Top">RType.Top</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.unit">unit</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Unit">RType.Unit</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.nat">nat</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Nat">RType.Nat</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.bool">bool</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Bool">RType.Bool</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.string">string</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#String">RType.String</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.bag">bag</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span> -&gt; <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Coll">RType.Coll</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.record">record</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.record_kind">record_kind</a></span> -&gt; <span class="kwd">forall</span> (<span class="id">r</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span>*<span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span>)), <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.sorted_pf_type">sorted_pf_type</a></span> <span class="id"><a href="Jura.Backend.Lib.JType.html#r">r</a></span> -&gt; <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Rec">RType.Rec</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.either">either</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span> -&gt; <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span> -&gt; <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Either">RType.Either</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.arrow">arrow</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span> -&gt; <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span> -&gt; <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Arrow">RType.Arrow</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.brand">brand</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="Jura.Backend.Lib.JType.html#JType.jtype">jtype</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.RType.html#Brand">RType.Brand</a></span>.<br/>
+<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.brand_model">brand_model</a></span> : <span class="kwd">Set</span> := <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.TBrandModel.html#brand_model">brand_model</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.make_brand_model">make_brand_model</a></span> := <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypeSystem.TBrandModel.html#make_brand_model_fails">make_brand_model_fails</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JType.typing_runtime">typing_runtime</a></span> : <span class="kwd">Set</span> := <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypingRuntime.html#typing_runtime">typing_runtime</a></span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Jura.Backend.Lib.JType.html#JType">JType</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

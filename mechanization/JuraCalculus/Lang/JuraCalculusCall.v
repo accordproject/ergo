@@ -16,7 +16,6 @@ Require Import String.
 Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Utils.Lift.
-Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Jura.Common.Utils.JResult.
 Require Import Jura.Common.CTO.CTO.
 Require Import Jura.Backend.JuraBackend.
@@ -79,11 +78,11 @@ Section JuraCalculusCall.
     
   Definition create_call (params:list (string * jurac_expr)) (body:jurac_expr) : jurac_expr :=
     let all_free_vars := map fst params in
-    let unshadowed_body := unshadow "_" (fun s => s) all_free_vars body in
-    let unconsted_body := nnrc_subst_const_to_var all_free_vars unshadowed_body in
+    let unshadowed_body := JuraCodeGen.jurac_expr_unshadow "_" (fun s => s) all_free_vars body in
+    let unconsted_body := JuraCodeGen.jurac_expr_subst_const_to_var all_free_vars unshadowed_body in
     let one_param (e:jurac_expr) (param:string * jurac_expr) : jurac_expr :=
         let (pv,pe) := param in
-        (NNRCLet pv pe e)
+        (JuraCodeGen.jurac_expr_let pv pe e)
     in
     fold_left one_param params unconsted_body.
 

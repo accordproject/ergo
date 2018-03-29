@@ -17,15 +17,15 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Jura.Jura.Lang.JuraBase.
+Require Import Jura.Backend.JuraBackend.
 
 Section JuraCalculus.
 
   Section Syntax.
 
     (** Expression *)
-    Definition jurac_expr := nnrc.
+    Definition jurac_expr := JuraCodeGen.jurac_expr.
 
     (** Clause *)
     Definition jurac_clause := @clause jurac_expr.

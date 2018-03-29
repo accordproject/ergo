@@ -19,7 +19,6 @@
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Common.CTO.CTO.html">Jura.Common.CTO.CTO</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Jura.Lang.JuraBase.html">Jura.Lang.JuraBase</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Jura.Lang.Jura.html">Jura.Lang.Jura</a></span>.<br/>
-<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Compiler.Model.JuraRuntime.html">Jura.Compiler.Model.JuraRuntime</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Jura.Compiler.JuraCompiler.html">Jura.Compiler.JuraCompiler</a></span>.<br/>
 <br/>
 <span class="kwd">Section</span> <span class="id"><a name="HelloWorld">HelloWorld</a></span>.<br/>
@@ -40,7 +39,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#Clause">Clause</a></span> <span class="id"><a href="Jura.Tests.HelloWorld.html#cl1">cl1</a></span>)::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>).<br/>
 &nbsp;&nbsp;<br/>
 &nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="p1">p1</a></span> :=<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#mkPackage">mkPackage</a></span> "<span class="id">org.accordproject.helloworld</span>"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#mkPackage">mkPackage</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> "<span class="id">org.accordproject.helloworld</span>")<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id"><a href="Jura.Jura.Lang.JuraBase.html#JContract">JContract</a></span> <span class="id"><a href="Jura.Tests.HelloWorld.html#c1">c1</a></span>)::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>).<br/>
 <br/>
 <span class="kwd">End</span> <span class="id"><a href="Jura.Tests.HelloWorld.html#HelloWorld">HelloWorld</a></span>.<br/>
