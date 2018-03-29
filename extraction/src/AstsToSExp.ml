@@ -391,6 +391,19 @@ let sexp_to_list_name (se:sexp) =
       raise (Jura_Error "Not well-formed S-expr inside list name")
   end
 
+let class_ref_to_sexp cr =
+  let ns = cr.class_namespace in
+  let cln = cr.class_name in
+  STerm ("ClassRef",[opt_name_to_sexp ns; name_to_sexp cln])
+let sexp_to_class_ref se =
+  begin match se with
+  | STerm ("ClassRef",[sens;secln]) ->
+    { class_namespace = sexp_to_opt_name sens;
+      class_name = sexp_to_name secln }
+  | _ ->
+      raise (Jura_Error "Not well-formed S-expr inside class ref")
+  end
+
 let rec paramtype_to_sexp (pt:cto_type) =
   begin match pt with
   | CTOBoolean -> STerm ("CTOBoolean", [])
@@ -399,7 +412,7 @@ let rec paramtype_to_sexp (pt:cto_type) =
   | CTOLong -> STerm ("CTOLong", [])
   | CTOInteger -> STerm ("CTOInteger", [])
   | CTODateTime -> STerm ("CTODateTime", [])
-  | CTOClassRef clt -> STerm ("CTOClassRef", [name_to_sexp clt])
+  | CTOClassRef clt -> STerm ("CTOClassRef", [class_ref_to_sexp clt])
   | CTOOption pt -> STerm ("CTOption", [paramtype_to_sexp pt])
   | CTORecord rt -> STerm ("CTORecord", rectype_to_sexp rt)
   | CTOArray pt -> STerm ("CTOArray", [paramtype_to_sexp pt])
@@ -416,7 +429,7 @@ let rec sexp_to_paramtype (se:sexp) =
   | STerm ("CTOLong", []) -> CTOLong
   | STerm ("CTOInteger", []) -> CTOInteger
   | STerm ("CTODateTime", []) -> CTODateTime
-  | STerm ("CTOClassRef", [cl]) -> CTOClassRef (sexp_to_name cl)
+  | STerm ("CTOClassRef", [cl]) -> CTOClassRef (sexp_to_class_ref cl)
   | STerm ("CTOption", [pt]) -> CTOOption (sexp_to_paramtype pt)
   | STerm ("CTORecord", rt) -> CTORecord (sexp_to_rectype rt)
   | STerm ("CTOArray", [pt]) -> CTOArray (sexp_to_paramtype pt)
@@ -571,7 +584,7 @@ let sexp_to_cto_type (se:sexp) =
 let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
   begin match s with
   | JType cto_decl ->
-    STerm ("JType",[name_to_sexp cto_decl.cto_declaration_class;
+    STerm ("JType",[class_ref_to_sexp cto_decl.cto_declaration_class;
                     cto_type_to_sexp cto_decl.cto_declaration_type])
   | JExpr e ->
       STerm ("JExpr",[expr_to_sexp e])
@@ -593,7 +606,7 @@ let stmts_to_sexp (expr_to_sexp : 'a -> sexp) (ss:'a stmt list) =
 let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
   begin match se with
   | STerm ("JType",[soname; scto_type]) ->
-      JType (JuraCompiler.mk_cto_declaration (sexp_to_name soname) (sexp_to_cto_type scto_type))
+      JType (JuraCompiler.mk_cto_declaration (sexp_to_class_ref soname) (sexp_to_cto_type scto_type))
   | STerm ("JExpr",[se]) ->
       JExpr (sexp_to_expr se)
   | STerm ("JGlobal",[svname;se]) ->

@@ -22,6 +22,7 @@ MODULES = \
 	Backend/Lib/JOperators \
 	Backend/Lib/JCodeGen \
 	Backend/JuraBackend \
+	Common/Utils/JNames \
 	Common/Utils/JResult \
 	Common/Utils/JError \
 	Common/CTO/CTO \

@@ -31,7 +31,7 @@ let base_type_of_decl d =
       | "String" -> CTOString
       | "Double" -> CTODouble
       | "Long" -> CTOLong
-      | s -> CTOClassRef (char_list_of_string s)
+      | s -> CTOClassRef (JuraCompiler.mk_class_ref None (char_list_of_string s))
       end
   end
 
@@ -76,7 +76,7 @@ let cto_declaration_of_defn d =
 	raise (Jura_Error ("Can't import CTO kind: " ^ other))
     end
   in
-  { cto_declaration_class = char_list_of_string decl_class;
+  { cto_declaration_class = JuraCompiler.mk_class_ref None (char_list_of_string decl_class);
     cto_declaration_type = decl_type; }
 
 let cto_declarations_of_body dl =

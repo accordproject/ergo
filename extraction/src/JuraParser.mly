@@ -91,11 +91,11 @@ stmts:
 
 stmt:
 | DEFINE CONCEPT cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in JType (JuraCompiler.mk_cto_declaration cn (CTOConcept (oe,ctype))) }
+    { let (oe,ctype) = dt in JType (JuraCompiler.mk_cto_declaration (JuraCompiler.mk_class_ref None cn) (CTOConcept (oe,ctype))) }
 | DEFINE TRANSACTION cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in JType (JuraCompiler.mk_cto_declaration cn (CTOTransaction (oe,ctype))) }
+    { let (oe,ctype) = dt in JType (JuraCompiler.mk_cto_declaration (JuraCompiler.mk_class_ref None cn) (CTOTransaction (oe,ctype))) }
 | DEFINE ENUM cn = ident et = cto_enum_decl
-    { JType (JuraCompiler.mk_cto_declaration cn (CTOEnum et)) }
+    { JType (JuraCompiler.mk_cto_declaration (JuraCompiler.mk_class_ref None cn) (CTOEnum et)) }
 | DEFINE VARIABLE v = ident EQUAL e = expr
     { JGlobal (v, e) }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
@@ -202,7 +202,7 @@ paramtype:
       | "Long" -> JuraCompiler.cto_long
       | "Integer" -> JuraCompiler.cto_integer
       | "DateTime" -> JuraCompiler.cto_dateTime
-      | _ -> JuraCompiler.cto_class_ref (Util.char_list_of_string pt)
+      | _ -> JuraCompiler.cto_class_ref (JuraCompiler.mk_class_ref None (Util.char_list_of_string pt))
       end }
 | LCURLY rt = rectype RCURLY
     { JuraCompiler.cto_record rt }

@@ -14,6 +14,7 @@
 
 Require Import String.
 Require Import List.
+Require Import Jura.Common.Utils.JNames.
 Require Import Jura.Common.CTO.CTO.
 Require Import Jura.Lang.JuraBase.
 Require Import Jura.Lang.Jura.
@@ -36,8 +37,8 @@ contract HelloWorld over TemplateModel {
   Definition cl1 :=
     mkClause "helloworld"
              (mkClosure
-                (("request", Some (CTOClassRef "Request"))::nil)
-                (Some (CTOClassRef "Response"))
+                (("request", Some (CTOClassRef (mkClassRef None "Request")))::nil)
+                (Some (CTOClassRef (mkClassRef None "Response")))
                 None
                 (JVar "request")).
 

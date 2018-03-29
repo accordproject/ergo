@@ -21,6 +21,7 @@ Require Import Qcert.Compiler.Driver.CompLang.
 
 Require Import Jura.Backend.ForeignJura.
 Require Import Jura.Backend.JuraBackend.
+Require Import Jura.Common.Utils.JNames.
 Require Import Jura.Common.Utils.JResult.
 Require Import Jura.Common.CTO.CTO.
 Require Import Jura.Jura.Lang.JuraBase.
@@ -70,7 +71,7 @@ Section JuratoJavaScript.
       jfailure (CompilationError ("No parameter can be used for dispatch in "++cname))
     | (param0, Some (CTOClassRef type0))::otherparams =>
       jlift (fun x =>
-               let type0 := brand_of_class_ref namespace (mkClassRef None type0) in
+               let type0 := brand_of_class_ref namespace type0 in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, Some _)::otherparams =>
@@ -132,7 +133,7 @@ Section JuratoJavaScript.
 
   Definition cast_dispatch_to_classes request response :=
     match request, response with
-    | CTOClassRef req, CTOClassRef resp =>
+    | CTOClassRef (mkClassRef None req), CTOClassRef (mkClassRef None resp) =>
       jsuccess (req, resp)
     | _, _ => jfailure (CompilationError ("Cannot dispatch on non-class types"))
     end.

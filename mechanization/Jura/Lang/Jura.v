@@ -17,6 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import Jura.Common.Utils.JNames.
 Require Import Jura.Common.CTO.CTO.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.Backend.JuraBackend.

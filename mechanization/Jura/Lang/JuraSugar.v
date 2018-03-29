@@ -18,6 +18,7 @@
 
 Require Import String.
 Require Import List.
+Require Import Jura.Common.Utils.JNames.
 Require Import Jura.Jura.Lang.JuraBase.
 Require Import Jura.Jura.Lang.Jura.
 Require Import Jura.Backend.JuraBackend.

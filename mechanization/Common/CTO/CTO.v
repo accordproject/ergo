@@ -16,8 +16,11 @@
 
 Section CTO.
   Require Import String.
+  Require Import Qcert.Utils.Utils.
+  Require Import Qcert.Common.TypingRuntime.
 
-  Definition cto_class := string.
+  Require Import Jura.Backend.JuraBackend.
+  Require Import Jura.Common.Utils.JNames.
 
   Inductive cto_type :=
   | CTOBoolean : cto_type                             (**r bool atomic type *)
@@ -26,7 +29,7 @@ Section CTO.
   | CTOLong : cto_type                                (**r long atomic type *)
   | CTOInteger : cto_type                             (**r integer atomic type *)
   | CTODateTime : cto_type                            (**r date and time atomic type *)
-  | CTOClassRef : cto_class -> cto_type               (**r class reference *)
+  | CTOClassRef : class_ref -> cto_type               (**r class reference *)
   | CTOOption : cto_type -> cto_type                  (**r optional type *)
   | CTORecord : list (string*cto_type) -> cto_type    (**r record type *)
   | CTOArray : cto_type -> cto_type.                  (**r array type *)
@@ -38,7 +41,7 @@ Section CTO.
 
   Record cto_declaration :=
     mkCTODeclaration
-      { cto_declaration_class : cto_class;
+      { cto_declaration_class : class_ref;
         cto_declaration_type : cto_declaration_kind; }.
 
   Record cto_package :=
@@ -47,9 +50,32 @@ Section CTO.
         cto_package_declarations : list cto_declaration; }.
 
   Section Semantics.
-  (** A semantics for CTO packages is obtained through translation
-      into branded types. *)
-  (** TBD *)
+    (** A semantics for CTO packages is obtained through translation
+        into branded types. *)
+
+    Program Fixpoint cto_type_to_jtype {m:brand_relation} (scope:option string) (t:cto_type) :=
+      match t with
+      | CTOBoolean => JuraType.bool
+      | CTOString => JuraType.string
+      | CTODouble => JuraType.float
+      | CTOLong => JuraType.nat
+      | CTOInteger => JuraType.nat
+      | CTODateTime => JuraType.unit
+      | CTOClassRef cr =>
+        JuraType.brand ((brand_of_class_ref scope cr)::nil)
+      | CTOOption t =>
+        JuraType.option (cto_type_to_jtype scope t)
+      | CTORecord rtl =>
+        JuraType.record
+          JuraType.open_kind
+          (rec_sort (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl))
+          (rec_sort_sorted
+             (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl)
+             (rec_sort (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl))
+             eq_refl)
+      | CTOArray t =>
+        JuraType.bag (cto_type_to_jtype scope t)
+      end.
 
   End Semantics.
 End CTO.

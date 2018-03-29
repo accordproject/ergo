@@ -49,6 +49,8 @@ Module JType(juramodel:JuraBackendModel).
     := RType.Top.
   Definition unit {m:brand_relation} : jtype
     := RType.Unit.
+  Definition float {m:brand_relation} : jtype
+    := RType.Float.
   Definition nat {m:brand_relation} : jtype
     := RType.Nat.
   Definition bool {m:brand_relation} : jtype
@@ -63,9 +65,12 @@ Module JType(juramodel:JuraBackendModel).
     := RType.Either.
   Definition arrow {m:brand_relation} : jtype -> jtype -> jtype
     := RType.Arrow.
-  Definition brand {m:brand_relation} : list String.string -> jtype
+  Definition brand {m:brand_relation} : list String.string -> jtype 
     := RType.Brand.
 
+  Definition option {m:brand_relation} : jtype -> jtype
+    := RType.Option.
+  
   (* Additional support for brand models extraction -- will have to be tested/consolidated *)
 
   Definition brand_model : Set := brand_model.

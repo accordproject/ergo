@@ -19,6 +19,7 @@ Require Import List.
 
 Require Import Qcert.Utils.Utils.
 
+Require Import Jura.Common.Utils.JNames.
 Require Import Jura.Common.Utils.JResult.
 Require Import Jura.Common.Utils.JError.
 Require Import Jura.Backend.ForeignJura.

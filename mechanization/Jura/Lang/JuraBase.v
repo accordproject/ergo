@@ -17,6 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import Jura.Common.Utils.JNames.
 Require Import Jura.Common.Utils.JResult.
 Require Import Jura.Common.Utils.JError.
 Require Import Jura.Common.CTO.CTO.
@@ -26,13 +27,6 @@ Section JuraBase.
   Context {A:Set}.
 
   Section Syntax.
-    Definition namespace_ref := option string.
-
-    Record class_ref :=
-      mkClassRef
-        { class_namespace : namespace_ref;
-          class_name : string; }.
-
     (** Generic function closure over expressions in [A].
         All free variables in A have to be declared in the list of parameters. *)
     Record closure :=
@@ -235,13 +229,13 @@ Section JuraBase.
               match fclosure.(closure_params) with
               | nil => dispatch_parameter_error
               | (_,Some reqtype) :: _ => jsuccess reqtype
-              | _ :: _ => jsuccess (CTOClassRef "Request"%string)
+              | _ :: _ => jsuccess (CTOClassRef (mkClassRef None "Request"%string))
               end
           in
           let response :=
               match fclosure.(closure_output) with
               | Some resptype => resptype
-              | None => (CTOClassRef "Response"%string)
+              | None => (CTOClassRef (mkClassRef None "Response"%string))
               end
           in
           jlift (fun request => (request, response, f)) request
@@ -254,20 +248,5 @@ Section JuraBase.
     
   End lookup.
 
-  Section utils.
-    Require Import String.
-    Local Open Scope string.
-
-    Definition brand_of_class_ref (local_namespace:option string) (cr:class_ref) :=
-      match cr.(class_namespace) with
-      | None =>
-        match local_namespace with
-        | None => cr.(class_name)
-        | Some namespace => namespace ++ "." ++ cr.(class_name)
-        end
-      | Some ref_package => ref_package ++ "." ++ cr.(class_name)
-      end.
-  End utils.
-  
 End JuraBase.
 

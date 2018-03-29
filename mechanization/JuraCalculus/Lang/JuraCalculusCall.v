@@ -16,6 +16,7 @@ Require Import String.
 Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Utils.Lift.
+Require Import Jura.Common.Utils.JNames.
 Require Import Jura.Common.Utils.JResult.
 Require Import Jura.Common.CTO.CTO.
 Require Import Jura.Backend.JuraBackend.

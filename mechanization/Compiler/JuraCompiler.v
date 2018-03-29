@@ -15,6 +15,7 @@
 Require String.
 
 Require Jura.Version.
+Require Jura.Common.Utils.JNames.
 Require Jura.Common.Utils.JResult.
 Require Jura.Common.CTO.CTO.
 Require Jura.Jura.Lang.Jura.
@@ -34,7 +35,9 @@ Module JuraCompiler.
 
   (** CTO *)
   Definition cto_class : Set
-    := CTO.cto_class.
+    := JNames.class_ref.
+  Definition mk_class_ref : option String.string -> String.string -> cto_class
+    := JNames.mkClassRef.
 
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
@@ -48,7 +51,7 @@ Module JuraCompiler.
     := CTO.CTOInteger.
   Definition cto_dateTime : CTO.cto_type
     := CTO.CTODateTime.
-  Definition cto_class_ref : CTO.cto_class -> CTO.cto_type
+  Definition cto_class_ref : cto_class -> CTO.cto_type
     := CTO.CTOClassRef.
   Definition cto_option : CTO.cto_type -> CTO.cto_type
     := CTO.CTOOption.
@@ -64,7 +67,7 @@ Module JuraCompiler.
   Definition cto_concept : option String.string -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
     := CTO.CTOConcept.
 
-  Definition mk_cto_declaration : CTO.cto_class -> CTO.cto_declaration_kind -> CTO.cto_declaration
+  Definition mk_cto_declaration : cto_class -> CTO.cto_declaration_kind -> CTO.cto_declaration
     := CTO.mkCTODeclaration.
   Definition mk_cto_package : String.string -> list CTO.cto_declaration -> CTO.cto_package
     := CTO.mkCTOPackage.
