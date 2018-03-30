@@ -73,8 +73,12 @@ Module JType(juramodel:JuraBackendModel).
   
   (* Additional support for brand models extraction -- will have to be tested/consolidated *)
 
+  Definition brand_context_type {m:brand_relation} : Set := (String.string*jtype).
+  
+  Definition brand_relation : Set := brand_relation.
+  Definition make_brand_relation := Schema.mk_brand_relation.
   Definition brand_model : Set := brand_model.
-  Definition make_brand_model := make_brand_model_fails.
+  Definition make_brand_model := Schema.make_brand_model_from_decls_fails.
   Definition typing_runtime : Set := typing_runtime.
 
 End JType.
