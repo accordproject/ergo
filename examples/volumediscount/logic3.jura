@@ -3,7 +3,7 @@ namespace org.accordproject.volumediscount
 import org.accordproject.contract.*
 import org.accordproject.late.*
 
-define variable fee = 1/10
+define variable fee = 0.1
 define function addFee(rate Double) : Double {
   rate + fee
 }
@@ -13,7 +13,7 @@ contract VolumeDiscount over TemplateModel {
    clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
     if request.netAnnualChargeVolume < contract.firstVolume
     then new VolumeDiscountResponse{ discountRate: addFee(contract.firstRate) }
-    else if request.netAnnualChargeVolume < contract.secondVolume {
+    else if request.netAnnualChargeVolume < contract.secondVolume
     then new VolumeDiscountResponse{ discountRate: addFee(contract.secondRate) }
     else new VolumeDiscountResponse{ discountRate: addFee(contract.thirdRate) }
   }

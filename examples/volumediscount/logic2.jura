@@ -7,7 +7,7 @@ contract VolumeDiscount over TemplateModel {
    clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
     define variable rate = 
       if request.netAnnualChargeVolume < contract.firstVolume then contract.firstRate
-      then if request.netAnnualChargeVolume < contract.secondVolume then contract.secondRate
+      else if request.netAnnualChargeVolume < contract.secondVolume then contract.secondRate
       else contract.thirdRate;
     new VolumeDiscountResponse{ discountRate: rate }
   }
