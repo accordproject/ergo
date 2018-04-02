@@ -37,6 +37,7 @@ Section Jura.
     Inductive jura_expr :=
     | JThisContract : jura_expr (**r this contract *)
     | JThisClause : jura_expr (**r this clause *)
+    | JThisState : jura_expr (**r this state *)
     | JVar : string -> jura_expr (**r variable *)
     | JConst : JuraData.data -> jura_expr (**r constant *)
     | JArray : list jura_expr -> jura_expr (**r array constructor *) 

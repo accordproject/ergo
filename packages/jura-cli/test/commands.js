@@ -39,7 +39,8 @@ describe('jurac', () => {
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
             const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
-            const result = await Commands.execute(juraPath, ctoPath, clausePath, requestPath, 'HelloWorld', 'helloworld', false);
+            const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
+            const result = await Commands.execute(juraPath, ctoPath, clausePath, requestPath, statePath, 'HelloWorld', 'helloworld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });

@@ -46,17 +46,19 @@ class Commands {
      * @param {string} ctoPath pathto the CTO model
      * @param {object} contractPath path to the contract data in JSON
      * @param {object} requestPath path to the request transaction in JSON
+     * @param {object} statePath path to the state in JSON
      * @param {string} contractName of the contract to execute
      * @param {string} clauseName of the clause to execute
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(juraPath,ctoPath,contractPath,requestPath,contractName,clauseName,withDispatch) {
+    static execute(juraPath,ctoPath,contractPath,requestPath,statePath,contractName,clauseName,withDispatch) {
         const jurText = Fs.readFileSync(juraPath, 'utf8');
         const ctoText = Fs.readFileSync(ctoPath, 'utf8');
         const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
         const requestJson = JSON.parse(Fs.readFileSync(requestPath, 'utf8'));
-        return JuraEngine.execute(jurText,ctoText,contractJson,requestJson,contractName,clauseName,withDispatch);
+        const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
+        return JuraEngine.execute(jurText,ctoText,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch);
     }
 
     /**

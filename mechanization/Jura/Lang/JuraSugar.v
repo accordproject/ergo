@@ -36,7 +36,7 @@ Section JuraSugar.
 
   (** [return expr] is a no-op at the moment *)
   Definition JReturn e1 :=
-    mk_result e1 JThisContract.
+    mk_result e1 JThisState.
 
   Definition JReturnSetState e1 e2 :=
     mk_result e1 e2.

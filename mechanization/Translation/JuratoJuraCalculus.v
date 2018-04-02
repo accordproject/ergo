@@ -38,6 +38,7 @@ Section JuratoJavaScript.
     Open Scope string.
     (** This *)
     Definition this_contract := "contract"%string. (* Contains all contract data and clause data *)
+    Definition this_state := "state"%string. (* Contains state *)
     Definition current_time := "now"%string.
 
     (** New Array *)
@@ -160,6 +161,11 @@ Section JuratoJavaScript.
       match ctxt.(context_current_clause) with
       | None => not_in_clause_error
       | Some cname => jsuccess (NNRCUnop (OpDot cname) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
+      end
+    | JThisState =>
+      match ctxt.(context_current_contract) with
+      | None => not_in_contract_error
+      | Some _ => jsuccess (NNRCGetConstant this_state)
       end
     | JVar v =>
       if in_dec string_dec v ctxt.(context_params)
@@ -401,7 +407,7 @@ Section JuratoJavaScript.
     let ctxt : context :=
         add_params
           ctxt
-          (this_contract :: current_time :: nil)
+          (current_time :: this_contract :: this_state :: nil)
     in
     let init := jsuccess (ctxt, nil) in
     let proc_one
