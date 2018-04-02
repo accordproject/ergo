@@ -55,7 +55,7 @@ describe('Execute', () => {
                         const field = key;
                         const value = expected[key];
                         //result.should.not.be.null;
-                        result[field].should.equal(value);
+                        result.response[field].should.equal(value);
                     }
                 }
             });

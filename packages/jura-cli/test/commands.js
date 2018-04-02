@@ -40,7 +40,7 @@ describe('jurac', () => {
             const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const result = await Commands.execute(juraPath, ctoPath, clausePath, requestPath, 'HelloWorld', 'helloworld', false);
-            result.output.should.equal('Hello Fred Blogs (Accord Project)');
+            result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });
     describe('#parsecto', function () {

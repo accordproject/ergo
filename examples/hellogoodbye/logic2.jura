@@ -1,11 +1,11 @@
 namespace org.accordproject.hellogoodbye
 
 contract HelloGoodbye over TemplateModel {
-   // Simple Clause
-   clause hello(request Request) : Response {
-       new Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++")" }
+  // Simple Clause
+  clause hello(request Request) : Response {
+    return new Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++")" }
   }
   clause goodbye(request Request) : Response {
-       new Response{ output: clause.greeting ++ " " ++ contract.name ++ " (" ++ request.input ++")" }
+    return new Response{ output: clause.greeting ++ " " ++ contract.name ++ " (" ++ request.input ++")" }
   }
 }

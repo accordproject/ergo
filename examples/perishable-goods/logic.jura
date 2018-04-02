@@ -6,16 +6,16 @@ import org.accordproject.perishablegoods.*
 contract PerishableGoods over TemplateModel {
   // Auxiliary function calculating penalty from temperature readings
   define function calculatePenalty(readings TemperatureReading[]) : Double {
-    define variable tempReadings = for x in readings return x.centigrade;
+    define variable tempReadings = for x in readings { x.centigrade };
     // find the lowest temperature reading
     define variable lowestReading = min(tempReadings);
     // find the highest temperature reading
     define variable highestReading = max(tempReadings);
     if lowestReading < contract.minTemperature {
-      return (contract.minTemperature - lowestReading) * contract.minPenaltyFactor
+      (contract.minTemperature - lowestReading) * contract.minPenaltyFactor
     } else if highestReading > contract.maxTemperature {
-      return highestReading - contract.maxTemperature) * contract.maxPenaltyFactor
-    } else { return 0 };
+      highestReading - contract.maxTemperature) * contract.maxPenaltyFactor
+    } else { 0 };
   }
 
   // Clause for volume discount
