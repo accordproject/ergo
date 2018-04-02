@@ -28,7 +28,7 @@
 
 %token ENFORCE IF THEN ELSE
 %token LET FOR IN WHERE
-%token RETURN THROW
+%token RETURN THROW STATE
 %token VARIABLE AS
 %token NEW
 %token MATCH TYPEMATCH WITH
@@ -53,6 +53,7 @@
 %left SEMI
 %left ELSE
 %left RETURN
+%left STATE
 %left OR
 %left AND
 %left EQUAL NEQUAL
@@ -256,8 +257,10 @@ expr:
     { JuraCompiler.jenforce e1 e2 e3 }
 | ENFORCE e1 = expr SEMI e3 = expr
     { JuraCompiler.jenforce_default_fail e1 e3 }
-| RETURN e = expr
-    { JuraCompiler.jreturn e }
+| RETURN e1 = expr
+    { JuraCompiler.jreturn e1 }
+| RETURN e1 = expr STATE e2 = expr
+    { JuraCompiler.jreturnsetstate e1 e2 }
 | THROW qn = qname LCURLY r = reclist RCURLY
     { JuraCompiler.jthrow (fst qn) (snd qn) r }
 | NEW qn = qname LCURLY r = reclist RCURLY
@@ -440,6 +443,7 @@ safeident_base:
 | RETURN { "return" }
 | THROW { "throw" }
 | THROWS { "throws" }
+| STATE { "state" }
 | VARIABLE { "variable" }
 | AS { "as" }
 | NEW { "new" }

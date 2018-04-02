@@ -29,9 +29,18 @@ Section JuraSugar.
     JUnaryOp (JuraOps.Unary.opdot s) (JUnaryOp JuraOps.Unary.opunbrand e).
 
   (** [return expr] is a no-op at the moment *)
-  (* XXX This will have to be revised/fixed *)
-  Definition JReturn (e:jura_expr) : jura_expr := e.
+  Definition mk_result e1 e2 :=
+    JBinaryOp JuraOps.Binary.oprecconcat
+              (JUnaryOp (JuraOps.Unary.oprec "response") e1)
+              (JUnaryOp (JuraOps.Unary.oprec "state") e2).
 
+  (** [return expr] is a no-op at the moment *)
+  Definition JReturn e1 :=
+    mk_result e1 JThisContract.
+
+  Definition JReturnSetState e1 e2 :=
+    mk_result e1 e2.
+  
   Definition JNewSugar pname cname el :jura_expr :=
     JNew (mkClassRef pname cname) el.
 

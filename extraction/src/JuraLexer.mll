@@ -36,6 +36,7 @@
 	  "over", OVER;
 	  "clause", CLAUSE;
 	  "throws", THROWS;
+	  "state", STATE;
 	  (* Expressions *)
  	  "enforce", ENFORCE;
 	  "if", IF;

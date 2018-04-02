@@ -119,6 +119,8 @@ Module JuraCompiler.
     := JuraSugar.JDot.
   Definition jreturn : jura_expr -> jura_expr
     := JuraSugar.JReturn.
+  Definition jreturnsetstate : jura_expr -> jura_expr -> jura_expr
+    := JuraSugar.JReturnSetState.
   Definition jnew : option String.string -> String.string -> list (String.string * jura_expr) -> jura_expr 
     := JuraSugar.JNewSugar.
   Definition jthrow : option String.string -> String.string -> list (String.string * jura_expr) -> jura_expr 
