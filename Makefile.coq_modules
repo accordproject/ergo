@@ -14,25 +14,25 @@
 
 MODULES = \
 	Version \
-	Backend/ForeignJura \
-	Backend/Model/JuraBackendModel \
-	Backend/Model/JuraBackendRuntime \
+	Backend/ForeignErgo \
+	Backend/Model/ErgoBackendModel \
+	Backend/Model/ErgoBackendRuntime \
 	Backend/Lib/JType \
 	Backend/Lib/JData \
 	Backend/Lib/JOperators \
 	Backend/Lib/JCodeGen \
-	Backend/JuraBackend \
+	Backend/ErgoBackend \
 	Common/Utils/JNames \
 	Common/Utils/JResult \
 	Common/Utils/JError \
 	Common/CTO/CTO \
-	Jura/Lang/JuraBase \
-	Jura/Lang/Jura \
-	Jura/Lang/JuraSugar \
-	JuraCalculus/Lang/JuraCalculus \
-	JuraCalculus/Lang/JuraCalculusCall \
-	Translation/JuratoJuraCalculus \
-	Translation/JuraCalculustoJavaScript \
-	Translation/JuratoJavaScript \
-	Compiler/JuraCompiler \
+	Ergo/Lang/ErgoBase \
+	Ergo/Lang/Ergo \
+	Ergo/Lang/ErgoSugar \
+	ErgoCalculus/Lang/ErgoCalculus \
+	ErgoCalculus/Lang/ErgoCalculusCall \
+	Translation/ErgotoErgoCalculus \
+	Translation/ErgoCalculustoJavaScript \
+	Translation/ErgotoJavaScript \
+	Compiler/ErgoCompiler \
 	Tests/HelloWorld

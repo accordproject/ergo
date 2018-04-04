@@ -17,10 +17,10 @@
 Require Import String.
 Require Import Qcert.Common.CommonTypes.
 Require Import Qcert.Common.TypingRuntime.
-Require Import Jura.Backend.Model.JuraBackendModel.
-Require Import Jura.Backend.Model.JuraBackendRuntime.
+Require Import Ergo.Backend.Model.ErgoBackendModel.
+Require Import Ergo.Backend.Model.ErgoBackendRuntime.
 
-Module JType(juramodel:JuraBackendModel).
+Module JType(ergomodel:ErgoBackendModel).
 
   Definition empty_brand_model (x:unit) := TBrandModel.empty_brand_model.
 

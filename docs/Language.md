@@ -1,14 +1,14 @@
-# Jura Language
+# Ergo Language
 
-This contains a few notes on the Jura language.
+This contains a few notes on the Ergo language.
 
 ## General
 
-Jura files have the `.jura` extension.
+Ergo files have the `.ergo` extension.
 
 ## Hello World
 
-Jura files are packages and can contain contracts. The following is a
+Ergo files are packages and can contain contracts. The following is a
 simple "Hello World!" contract:
 ```
 package org.accordproject.helloworld
@@ -40,7 +40,7 @@ request (`request`).
 
 ## Comments
 
-Comments in Jura are written in a commonly used style:
+Comments in Ergo are written in a commonly used style:
 
 ```
 // This is a single line comment
@@ -50,8 +50,8 @@ Comments in Jura are written in a commonly used style:
 
 ## Expressions
 
-The logic for individual clauses in Jura is written using
-expressions. Here are the expressions Jura supports.
+The logic for individual clauses in Ergo is written using
+expressions. Here are the expressions Ergo supports.
 
 ### Literal values
 
@@ -104,7 +104,7 @@ enforce x >= 0               // Condition
 else "Something went wrong"; // Expression if condition is false
 x+1                          // Expression if condition is true
 ```
-The else part of the expression can be ommitted in which case Jura returns an error by default.
+The else part of the expression can be ommitted in which case Ergo returns an error by default.
 ```
 enforce x >= 0;           // Condition
 x+1                       // Expression if condition is true
@@ -135,7 +135,7 @@ for x in [1,-2,3] where x > 0 { x+1 }
 
 ### Creating objects
 
-Creating objects (such as CTO concepts, transactions, or Jura errors)
+Creating objects (such as CTO concepts, transactions, or Ergo errors)
 can be done using `new` with the name of the concept and the values
 for each fields:
 ```
@@ -147,7 +147,7 @@ new Person{
 
 ## Functions
 
-It is possible to declare functions in Jura:
+It is possible to declare functions in Ergo:
 ```
 define variable pi = 3.1416
 define function area(radius Double) : Double {
@@ -158,7 +158,7 @@ area(1.5)
 
 ## Types
 
-One either import an existing CTO file, or declare types within Jura
+One either import an existing CTO file, or declare types within Ergo
 itself.
 
 As we have seen in previous examples, one can refer to types in

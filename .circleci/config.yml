@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/accordproject/jura
+    working_directory: ~/accordproject/ergo
     parallelism: 1
     shell: /bin/bash --login
     environment:
@@ -10,7 +10,7 @@ jobs:
     - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
       command: /sbin/init
     steps:
-    - run: echo 'export PATH=~/jura/bin/:$PATH' >> $BASH_ENV 
+    - run: echo 'export PATH=~/ergo/bin/:$PATH' >> $BASH_ENV 
     - checkout
     - restore_cache:
         keys:
@@ -35,7 +35,7 @@ jobs:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
         - ~/.opam
-    - run: eval `opam config env` && make cleanall && make jura
+    - run: eval `opam config env` && make cleanall && make ergo
     # Save test results
     - store_test_results:
         path: /tmp/circleci-test-results

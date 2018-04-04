@@ -14,7 +14,7 @@
 
 open Util
 open Cto_j
-open JComp
+open ErgoComp
 
 let enum_case_of_decl d =
   char_list_of_string d.cto_decl_content_id.cto_id_name
@@ -24,14 +24,14 @@ let cto_enum_of_decls dl =
 
 let base_type_of_decl d =
   begin match d with
-  | None -> raise (Jura_Error "Missing propertyType in CTO")
+  | None -> raise (Ergo_Error "Missing propertyType in CTO")
   | Some d ->
       begin match d.cto_prop_type_name with
       | "Bool" -> CTOBoolean
       | "String" -> CTOString
       | "Double" -> CTODouble
       | "Long" -> CTOLong
-      | s -> CTOClassRef (JuraCompiler.mk_class_ref None (char_list_of_string s))
+      | s -> CTOClassRef (ErgoCompiler.mk_class_ref None (char_list_of_string s))
       end
   end
 
@@ -44,7 +44,7 @@ let concept_field_of_decl d =
   let field_type =
     begin match d.cto_decl_content_array with
     | Some "[]" -> CTOArray field_type
-    | Some _ -> raise (Jura_Error "Mal-formed array option in CTO JSON representation")
+    | Some _ -> raise (Ergo_Error "Mal-formed array option in CTO JSON representation")
     | None -> field_type
     end
   in
@@ -73,10 +73,10 @@ let cto_declaration_of_defn d =
         (* XXX First parameter is inheritance TBD *)
 	CTOConcept (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
-	raise (Jura_Error ("Can't import CTO kind: " ^ other))
+	raise (Ergo_Error ("Can't import CTO kind: " ^ other))
     end
   in
-  { cto_declaration_class = JuraCompiler.mk_class_ref None (char_list_of_string decl_class);
+  { cto_declaration_class = ErgoCompiler.mk_class_ref None (char_list_of_string decl_class);
     cto_declaration_type = decl_type; }
 
 let cto_declarations_of_body dl =

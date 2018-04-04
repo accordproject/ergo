@@ -12,6 +12,6 @@
  * limitations under the License.
  *)
 
-val cto_import: Cto_j.model -> JComp.cto_package
+val cto_import: Cto_j.model -> ErgoComp.cto_package
 
 

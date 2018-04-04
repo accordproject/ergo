@@ -19,8 +19,8 @@ Section CTO.
   Require Import Qcert.Utils.Utils.
   Require Import Qcert.Common.TypingRuntime.
 
-  Require Import Jura.Backend.JuraBackend.
-  Require Import Jura.Common.Utils.JNames.
+  Require Import Ergo.Backend.ErgoBackend.
+  Require Import Ergo.Common.Utils.JNames.
 
   Inductive cto_type :=
   | CTOBoolean : cto_type                             (**r bool atomic type *)
@@ -55,26 +55,26 @@ Section CTO.
 
     Program Fixpoint cto_type_to_jtype {m:brand_relation} (scope:option string) (t:cto_type) :=
       match t with
-      | CTOBoolean => JuraType.bool
-      | CTOString => JuraType.string
-      | CTODouble => JuraType.float
-      | CTOLong => JuraType.nat
-      | CTOInteger => JuraType.nat
-      | CTODateTime => JuraType.unit
+      | CTOBoolean => ErgoType.bool
+      | CTOString => ErgoType.string
+      | CTODouble => ErgoType.float
+      | CTOLong => ErgoType.nat
+      | CTOInteger => ErgoType.nat
+      | CTODateTime => ErgoType.unit
       | CTOClassRef cr =>
-        JuraType.brand ((brand_of_class_ref scope cr)::nil)
+        ErgoType.brand ((brand_of_class_ref scope cr)::nil)
       | CTOOption t =>
-        JuraType.option (cto_type_to_jtype scope t)
+        ErgoType.option (cto_type_to_jtype scope t)
       | CTORecord rtl =>
-        JuraType.record
-          JuraType.open_kind
+        ErgoType.record
+          ErgoType.open_kind
           (rec_sort (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl))
           (rec_sort_sorted
              (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl)
              (rec_sort (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl))
              eq_refl)
       | CTOArray t =>
-        JuraType.bag (cto_type_to_jtype scope t)
+        ErgoType.bag (cto_type_to_jtype scope t)
       end.
 
   End Semantics.

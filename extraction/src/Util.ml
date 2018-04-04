@@ -14,9 +14,9 @@
 
 (* This module contains a few basic utilities *)
 
-(* Jura Exception *)
+(* Ergo Exception *)
 
-exception Jura_Error of string
+exception Ergo_Error of string
 
 (* this can't go in Logger, since that creates a circular dependency *)
 type nra_logger_token_type = string
@@ -113,7 +113,7 @@ let get_data x io =
   try List.assoc x io
   with Not_found ->
     Printf.fprintf stderr "Unbound variable %s\n" x;
-    raise (Jura_Error ("Unbound variable" ^ x))
+    raise (Ergo_Error ("Unbound variable" ^ x))
 
 let get_data_raise x io =
   List.assoc x io

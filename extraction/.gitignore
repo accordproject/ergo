@@ -4,8 +4,8 @@
 /*.aux
 /.paths
 extracted/StaticConfig.ml
-extracted/JComp.ml
-extracted/JComp.mli
+extracted/ErgoComp.ml
+extracted/ErgoComp.mli
 src/Cto_j.ml
 src/Cto_j.mli
 src/Cto_t.ml

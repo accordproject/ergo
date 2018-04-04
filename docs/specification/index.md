@@ -1,9 +1,9 @@
-# Jura Specification
+# Ergo Specification
 
-## Jura
+## Ergo
 
-[Abstract syntax tree](Jura.Jura.Lang.Jura.html)
+[Abstract syntax tree](Ergo.Ergo.Lang.Ergo.html)
 
-## Jura Calculus
+## Ergo Calculus
 
-[Abstract syntax tree](Jura.JuraCalculus.Lang.JuraCalculus.html)
+[Abstract syntax tree](Ergo.ErgoCalculus.Lang.ErgoCalculus.html)

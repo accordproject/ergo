@@ -1,0 +1,51 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Ergo.Common.Utils.JError</title>
+<meta name="description" content="Documentation of Coq module Ergo.Common.Utils.JError" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Ergo.Common.Utils.JError</h1>
+<div class="coq">
+<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Ergo.Common.Utils.JResult.html">Ergo.Common.Utils.JResult</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Ergo.Backend.ErgoBackend.html">Ergo.Backend.ErgoBackend</a></span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="JError">JError</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="dispatch_lookup_error">dispatch_lookup_error</a></span> {<span class="id">A</span>} : <span class="id"><a href="Ergo.Common.Utils.JResult.html#jresult">jresult</a></span> <span class="id"><a href="Ergo.Common.Utils.JError.html#A">A</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Ergo.Common.Utils.JResult.html#jfailure">jfailure</a></span> (<span class="id"><a href="Ergo.Common.Utils.JResult.html#CompilationError">CompilationError</a></span> ("<span class="id">Cannot</span> <span class="id">lookup</span> <span class="id">created</span> <span class="id">dispatch</span>")).<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="dispatch_parameter_error">dispatch_parameter_error</a></span> {<span class="id">A</span>} : <span class="id"><a href="Ergo.Common.Utils.JResult.html#jresult">jresult</a></span> <span class="id"><a href="Ergo.Common.Utils.JError.html#A">A</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Ergo.Common.Utils.JResult.html#jfailure">jfailure</a></span> (<span class="id"><a href="Ergo.Common.Utils.JResult.html#CompilationError">CompilationError</a></span> ("<span class="id">No</span> <span class="id">parameter</span> <span class="id">type</span> <span class="kwd">in</span> <span class="id">dispatch</span>")).<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="not_in_contract_error">not_in_contract_error</a></span> {<span class="id">A</span>} : <span class="id"><a href="Ergo.Common.Utils.JResult.html#jresult">jresult</a></span> <span class="id"><a href="Ergo.Common.Utils.JError.html#A">A</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Ergo.Common.Utils.JResult.html#jfailure">jfailure</a></span> (<span class="id"><a href="Ergo.Common.Utils.JResult.html#CompilationError">CompilationError</a></span> ("<span class="id">Cannot</span> <span class="id">use</span> '<span class="id">contract</span>' <span class="id">variable</span> <span class="id">outside</span> <span class="id">of</span> <span class="id">a</span> <span class="id">contract</span>")).<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="not_in_clause_error">not_in_clause_error</a></span> {<span class="id">A</span>} : <span class="id"><a href="Ergo.Common.Utils.JResult.html#jresult">jresult</a></span> <span class="id"><a href="Ergo.Common.Utils.JError.html#A">A</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Ergo.Common.Utils.JResult.html#jfailure">jfailure</a></span> (<span class="id"><a href="Ergo.Common.Utils.JResult.html#CompilationError">CompilationError</a></span> ("<span class="id">Cannot</span> <span class="id">use</span> '<span class="id">clause</span>' <span class="id">variable</span> <span class="id">outside</span> <span class="id">of</span> <span class="id">a</span> <span class="id">clause</span>")).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ergo_default_package">ergo_default_package</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> := "<span class="id">org.accordproject.ergo</span>".<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ergo_default_error_local_name">ergo_default_error_local_name</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> := "<span class="id">Error</span>".<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ergo_default_error_name">ergo_default_error_name</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Ergo.Common.Utils.JError.html#ergo_default_package">ergo_default_package</a></span> ++ "." ++ <span class="id"><a href="Ergo.Common.Utils.JError.html#ergo_default_error_local_name">ergo_default_error_local_name</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="enforce_error_content">enforce_error_content</a></span> : <span class="id"><a href="Ergo.Backend.ErgoBackend.html#ErgoData.data">ErgoData.data</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Ergo.Backend.ErgoBackend.html#ErgoData.dbrand">ErgoData.dbrand</a></span> (<span class="id"><a href="Ergo.Common.Utils.JError.html#ergo_default_error_name">ergo_default_error_name</a></span>::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="Ergo.Backend.ErgoBackend.html#ErgoData.drec">ErgoData.drec</a></span> (("<span class="id">message</span>"%<span class="id">string</span>, <span class="id"><a href="Ergo.Backend.ErgoBackend.html#ErgoData.dstring">ErgoData.dstring</a></span> "<span class="id">Enforce</span> <span class="id">condition</span> <span class="id">failed</span>")::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)).<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="enforce_error">enforce_error</a></span> : <span class="id"><a href="Ergo.Common.Utils.JResult.html#jerror">jerror</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Ergo.Common.Utils.JResult.html#UserError">UserError</a></span> <span class="id"><a href="Ergo.Common.Utils.JError.html#enforce_error_content">enforce_error_content</a></span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Ergo.Common.Utils.JError.html#JError">JError</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

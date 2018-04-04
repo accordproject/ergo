@@ -1,13 +1,13 @@
-# What is Jura?
+# What is Ergo?
 
-Jura is a prototype for a domain specific language (DSL) aimed at
+Ergo is a prototype for a domain specific language (DSL) aimed at
 capturing the execution logic of _legal_ contracts. It is a work in
 progress. Here are some thoughts and notes on requirements and on the
 initial design.
 
 ## Overview
 
-Jura is a domain specific language designed to capture the execution logic of _legal_ contracts. Among some of the goals for the language are:
+Ergo is a domain specific language designed to capture the execution logic of _legal_ contracts. Among some of the goals for the language are:
 - to have contracts and clauses as first-class elements of the language
 - to help legal-tech developer to quickly and safely develop computable legal contracts
 - to be modular, facilitating reuse of existing contract or clause logic
@@ -18,11 +18,11 @@ Jura is a domain specific language designed to capture the execution logic of _l
 
 ## Design choices
 
-To achieve those goals the design of Jura is based on the following principles:
+To achieve those goals the design of Ergo is based on the following principles:
 - It can handle types (concepts, transations, etc) defined with the [Hyperledger Composer Modeling Language](https://hyperledger.github.io/composer/reference/cto_language.html) (so called CTO models), as mandated by the Accord Prototype Template Specification.
 - Contracts have a class-like structure with clauses akin to methods
 - It borrows from strongly-typed functional programming languages: clauses have a well-defined type signature (input and output), they are functions without side effects
-- The compiler guarantees error-free execution for well-typed Jura programs
+- The compiler guarantees error-free execution for well-typed Ergo programs
 - Clauses and functions are written in an expression language with limited expressiveness (it allows conditional and bounded iteration).
 - Most of the compiler is written in Coq as a stepping stone for formal specification and verification.
 
@@ -35,20 +35,20 @@ the current syntax can be found in [Language.md](Language.md).
 
 ### Architecture
 
-The initial architecture for the Jura compiler is as follows:
+The initial architecture for the Ergo compiler is as follows:
 
-![alt text](./juracompiler.jpg "Jura Compiler")
+![alt text](./ergocompiler.jpg "Ergo Compiler")
 
 ### Verification
 
-A large part of the source code for the Jura compiler is based on a
+A large part of the source code for the Ergo compiler is based on a
 mechanization in Coq from which part of the compiler is extracted. A
 browsable version of the Coq code (generated using
 [coq2html](https://github.com/xavierleroy/coq2html)) is available in
 [specification](specification/index.md).
 
 Ultimately, one of our goals is to provide a full formal semantics for
-Jura in Coq, and prove correct as much of the compilation pipeline as
+Ergo in Coq, and prove correct as much of the compilation pipeline as
 possible.
 
 ### Status
@@ -59,7 +59,7 @@ possible.
 
 ## Relationship to Cicero
 
-One of the use for the Jura compiler is as an embedded component inside [Cicero](https://github.com/accordproject/cicero), which implements of the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0). The following diagram describe how this works:
+One of the use for the Ergo compiler is as an embedded component inside [Cicero](https://github.com/accordproject/cicero), which implements of the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0). The following diagram describe how this works:
 
-![alt text](./juraincicero.jpg "Jura inside Cicero")
+![alt text](./ergoincicero.jpg "Ergo inside Cicero")
 

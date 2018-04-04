@@ -13,8 +13,8 @@
  *)
 
 open Format
-open JComp
-open JuraCompiler
+open ErgoComp
+open ErgoCompiler
 
 let timescale_as_string ts =
   match ts with

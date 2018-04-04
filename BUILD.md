@@ -1,12 +1,12 @@
-# Jura
+# Ergo
 
-Git: http://github.com/accordproject/jura-compiler
+Git: http://github.com/accordproject/ergo-compiler
 
 **_WARNING_ The content of this repository is work in progress and subject to change**
 
-## Rebuild Jura from the source
+## Rebuild Ergo from the source
 
-The core of the Jura compiler is extracted from a formal specification
+The core of the Ergo compiler is extracted from a formal specification
 in Coq to JavaScript.
 
 The code is located in the following directories:
@@ -29,18 +29,18 @@ $ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdge
 $ opam install coq-qcert.1.0.7
 ```
 
-### Build the Jura Compiler
+### Build the Ergo Compiler
 
-To recompile Jura from its source, do:
+To recompile Ergo from its source, do:
 
 ```
 $ make cleanall
-$ make jura
+$ make ergo
 ```
 
 ## License
 
-Jura is distributed under the terms of the Apache 2.0 License, see
+Ergo is distributed under the terms of the Apache 2.0 License, see
 [LICENSE](LICENSE)
 
 Copyright 2018 Clause, Inc.

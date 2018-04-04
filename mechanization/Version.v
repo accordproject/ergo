@@ -12,13 +12,13 @@
  * limitations under the License.
  *)
 
-(** This module defines Jura version number *)
+(** This module defines Ergo version number *)
 
 Require Import String.
 
 Section Version.
   (** Variables are defined as strings *)
-  Definition jura_version := "0.0.32"%string.
+  Definition ergo_version := "0.0.32"%string.
 
 End Version.
 

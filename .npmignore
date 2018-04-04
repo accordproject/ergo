@@ -1,9 +1,9 @@
 # NB: This file must exist, since otherwise the .gitignore preferences will be used,
 # which will ignore the lib directory
 Makefile*
-jura-*.tgz
+ergo-*.tgz
 src
 mechanization
 extraction
 _CoqProject
-bin/jurac.native
+bin/ergoc.native

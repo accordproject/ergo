@@ -17,7 +17,7 @@
 open Util
 open LexUtil
 
-open JComp.JuraCompiler
+open ErgoComp.ErgoCompiler
 
 
 (*****************)
@@ -41,8 +41,8 @@ let parse parser lexer buf =
 	  raise (LexError msg)
 	end
 
-let parse_jura f : jura_package = parse JuraParser.main (JuraLexer.token (string_buff ())) f
+let parse_ergo f : ergo_package = parse ErgoParser.main (ErgoLexer.token (string_buff ())) f
 
 let parse_sexp f : SExp.sexp = parse SExpParser.main (SExpLexer.token (string_buff ())) f
-let parse_jurac_sexp f : jurac_package = AstsToSExp.sexp_to_jurac_package (parse_sexp f)
+let parse_ergoc_sexp f : ergoc_package = AstsToSExp.sexp_to_ergoc_package (parse_sexp f)
 

@@ -15,8 +15,8 @@
 (* Built-in errors *)
 
 Require Import String.
-Require Import Jura.Common.Utils.JResult.
-Require Import Jura.Backend.JuraBackend.
+Require Import Ergo.Common.Utils.JResult.
+Require Import Ergo.Backend.ErgoBackend.
 
 Section JError.
   Require Import List.
@@ -30,14 +30,14 @@ Section JError.
   Definition not_in_clause_error {A} : jresult A :=
     jfailure (CompilationError ("Cannot use 'clause' variable outside of a clause")).
 
-  Definition jura_default_package : string := "org.accordproject.jura".
-  Definition jura_default_error_local_name : string := "Error".
-  Definition jura_default_error_name : string :=
-    jura_default_package ++ "." ++ jura_default_error_local_name.
+  Definition ergo_default_package : string := "org.accordproject.ergo".
+  Definition ergo_default_error_local_name : string := "Error".
+  Definition ergo_default_error_name : string :=
+    ergo_default_package ++ "." ++ ergo_default_error_local_name.
 
-  Definition enforce_error_content : JuraData.data :=
-    JuraData.dbrand (jura_default_error_name::nil)
-                    (JuraData.drec (("message"%string, JuraData.dstring "Enforce condition failed")::nil)).
+  Definition enforce_error_content : ErgoData.data :=
+    ErgoData.dbrand (ergo_default_error_name::nil)
+                    (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
   Definition enforce_error : jerror :=
     UserError enforce_error_content.
 

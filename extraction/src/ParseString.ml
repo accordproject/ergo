@@ -18,7 +18,7 @@ open Util
 open LexUtil
 open ParseUtil
 
-open JComp.JuraCompiler
+open ErgoComp.ErgoCompiler
 
 (*****************)
 (* Generic Parse *)
@@ -29,14 +29,14 @@ let parse_string p_fun s =
   begin try
     p_fun buf
   with
-  | Jura_Error msg -> raise (Jura_Error msg)
+  | Ergo_Error msg -> raise (Ergo_Error msg)
   | LexError msg ->
-      Printf.fprintf stderr "[%s] in string%!\n" msg; raise (Jura_Error ("Parse error ["^ msg ^"] in string [" ^ s ^ "]"))
+      Printf.fprintf stderr "[%s] in string%!\n" msg; raise (Ergo_Error ("Parse error ["^ msg ^"] in string [" ^ s ^ "]"))
   | _ ->
-      Printf.fprintf stderr "Error in string%!\n"; raise (Jura_Error ("Parse error [???] in string"))
+      Printf.fprintf stderr "Error in string%!\n"; raise (Ergo_Error ("Parse error [???] in string"))
   end
 
-let parse_jura_from_string s : jura_package = parse_string parse_jura s
-let parse_jurac_sexp_from_string s : jurac_package = parse_string parse_jurac_sexp s
+let parse_ergo_from_string s : ergo_package = parse_string parse_ergo s
+let parse_ergoc_sexp_from_string s : ergoc_package = parse_string parse_ergoc_sexp s
 
 

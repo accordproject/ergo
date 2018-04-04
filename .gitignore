@@ -11,7 +11,7 @@ Makefile.config
 _CoqProject
 node_modules/
 log/
-jura-*.tgz
+ergo-*.tgz
 package-lock.json
 .nyc_output
 coverage

@@ -14,9 +14,9 @@
 
 (* This module contains a few basic utilities *)
 
-(* Jura Exception *)
+(* Ergo Exception *)
 
-exception Jura_Error of string
+exception Ergo_Error of string
 
 (* this can't go in Logger, since that creates a circular dependency *)
 type nra_logger_token_type = string

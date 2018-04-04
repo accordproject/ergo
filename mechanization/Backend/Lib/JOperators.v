@@ -15,12 +15,12 @@
 Require Import Ascii.
 Require Import ZArith.
 Require Qcert.Common.Brands.BrandRelation.
-Require Import Jura.Backend.Model.JuraBackendModel.
-Require Import Jura.Backend.Model.JuraBackendRuntime.
-Require Import Jura.Backend.Lib.JData.
+Require Import Ergo.Backend.Model.ErgoBackendModel.
+Require Import Ergo.Backend.Model.ErgoBackendRuntime.
+Require Import Ergo.Backend.Lib.JData.
 
-Module JOperators(juramodel:JuraBackendModel).
-  Module JuraData := JData.JData juramodel.
+Module JOperators(ergomodel:ErgoBackendModel).
+  Module ErgoData := JData.JData ergomodel.
   
   Module Unary.
     Definition op : Set  
@@ -87,7 +87,7 @@ Module JOperators(juramodel:JuraBackendModel).
     Definition eval
                (h:BrandRelation.brand_relation_t)
                (uop:UnaryOperators.unary_op)
-               (d:JuraData.data) : option JuraData.data
+               (d:ErgoData.data) : option ErgoData.data
       := UnaryOperatorsSem.unary_op_eval h uop d.
 
   (* Note that foreign operators should be encapuslated and 
@@ -185,7 +185,7 @@ Module JOperators(juramodel:JuraBackendModel).
     Definition eval
                (h:BrandRelation.brand_relation_t)
                (bop:BinaryOperators.binary_op)
-               (d1 d2:JuraData.data) : option JuraData.data
+               (d1 d2:ErgoData.data) : option ErgoData.data
       := BinaryOperatorsSem.binary_op_eval h bop d1 d2.
 
   (* Note that foreign operators should be encapuslated and 

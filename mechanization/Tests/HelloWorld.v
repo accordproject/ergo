@@ -14,11 +14,11 @@
 
 Require Import String.
 Require Import List.
-Require Import Jura.Common.Utils.JNames.
-Require Import Jura.Common.CTO.CTO.
-Require Import Jura.Lang.JuraBase.
-Require Import Jura.Lang.Jura.
-Require Import Jura.Compiler.JuraCompiler.
+Require Import Ergo.Common.Utils.JNames.
+Require Import Ergo.Common.CTO.CTO.
+Require Import Ergo.Lang.ErgoBase.
+Require Import Ergo.Lang.Ergo.
+Require Import Ergo.Compiler.ErgoCompiler.
 
 Section HelloWorld.
   Open Scope string_scope.
@@ -51,6 +51,6 @@ contract HelloWorld over TemplateModel {
     mkPackage (Some "org.accordproject.helloworld")
               ((JContract c1)::nil).
 
-  (* Eval vm_compute in (JuraCompiler.javascript_from_jura_package_with_dispatch None p1). *)
+  (* Eval vm_compute in (ErgoCompiler.javascript_from_ergo_package_with_dispatch None p1). *)
 End HelloWorld.
 

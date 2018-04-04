@@ -1,9 +1,0 @@
-coverage
-mechanization
-extraction
-lib/juracore.js
-lib/juraruntime.js
-docs
-node_modules
-out
-test/data

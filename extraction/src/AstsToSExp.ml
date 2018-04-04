@@ -17,9 +17,9 @@
 open Util
 open SExp
 
-open JComp
-open JuraEnhancedBackend
-open JuraCompiler
+open ErgoComp
+open ErgoEnhancedBackend
+open ErgoCompiler
 
 (****************
  * AST <-> SExp *
@@ -42,7 +42,7 @@ let coq_string_list_to_sstring_list_with_order l =
 let sstring_to_coq_string (se:sexp) : char list =
   begin match se with
   | SString s -> char_list_of_string s
-  | _ -> raise (Jura_Error "Not well-formed S-expr for Coq string")
+  | _ -> raise (Ergo_Error "Not well-formed S-expr for Coq string")
   end
 let sexp_to_dbrands (bs:sexp list) : (char list) list =
   List.map sstring_to_coq_string bs
@@ -52,7 +52,7 @@ let rec sstring_list_with_order_to_coq_string_list sl =
   | [] -> []
   | SString att :: SString "asc" :: sl' -> (char_list_of_string att, Ascending) :: (sstring_list_with_order_to_coq_string_list sl')
   | SString att :: SString "desc" :: sl' -> (char_list_of_string att, Descending) :: (sstring_list_with_order_to_coq_string_list sl')
-  | _ -> raise (Jura_Error "Not well-formed S-expr for Coq orderBy")
+  | _ -> raise (Ergo_Error "Not well-formed S-expr for Coq orderBy")
   end
 
 (* Data Section *)
@@ -66,7 +66,7 @@ let foreign_data_to_sexp (fd:enhanced_data) : sexp =
   | Enhancedsqldate td -> raise Not_found
   | Enhancedsqldateinterval tp -> raise Not_found
 
-let rec data_to_sexp (d : JuraData.data) : sexp =
+let rec data_to_sexp (d : ErgoData.data) : sexp =
   match d with
   | Dunit -> STerm ("dunit", [])
   | Dnat n -> SInt n
@@ -79,10 +79,10 @@ let rec data_to_sexp (d : JuraData.data) : sexp =
   | Dright d -> STerm ("dright", data_to_sexp d :: [])
   | Dbrand (bs,d) -> STerm ("dbrand", (STerm ("brands", dbrands_to_sexp bs)) :: (STerm ("value", (data_to_sexp d) :: [])) :: [])
   | Dforeign fdt -> foreign_data_to_sexp (Obj.magic fdt)
-and drec_to_sexp (ad : char list * JuraData.data) : sexp =
+and drec_to_sexp (ad : char list * ErgoData.data) : sexp =
   STerm ("datt", (SString (string_of_char_list (fst ad))) :: (data_to_sexp (snd ad)) :: [])
 
-let rec sexp_to_data (se:sexp) : JuraData.data =
+let rec sexp_to_data (se:sexp) : ErgoData.data =
   match se with
   | STerm ("dunit", []) -> Dunit
   | SBool b -> Dbool b
@@ -102,13 +102,13 @@ let rec sexp_to_data (se:sexp) : JuraData.data =
   | STerm ("dtime_scale", [SString s]) ->
       Dforeign (Obj.magic (PrettyCommon.foreign_data_of_string s))
   | STerm (t, _) ->
-      raise (Jura_Error ("Not well-formed S-expr with name " ^ t))
-and sexp_to_drec (sel:sexp) : (char list * JuraData.data) =
+      raise (Ergo_Error ("Not well-formed S-expr with name " ^ t))
+and sexp_to_drec (sel:sexp) : (char list * ErgoData.data) =
   match sel with
   | STerm ("datt", (SString s) :: se :: []) ->
       (char_list_of_string s, sexp_to_data se)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside drec")
+      raise (Ergo_Error "Not well-formed S-expr inside drec")
 
 (* Operators Section *)
 
@@ -119,7 +119,7 @@ let sexp_to_nat_arith_bop (se:sexp) : nat_arith_binary_op =
   match se with
   | STerm (s,[]) -> PrettyCommon.nat_arith_binary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith nat arith binary_op")
+      raise  (Ergo_Error "Not well-formed S-expr inside arith nat arith binary_op")
   
 let float_arith_bop_to_sexp (b:float_arith_binary_op) : sexp =
   STerm (PrettyCommon.string_of_float_arith_binary_op b,[])
@@ -131,13 +131,13 @@ let sexp_to_float_arith_bop (se:sexp) : float_arith_binary_op =
   match se with
   | STerm (s,[]) -> PrettyCommon.float_arith_binary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith float arith binary_op")
+      raise  (Ergo_Error "Not well-formed S-expr inside arith float arith binary_op")
   
 let sexp_to_float_compare_bop (se:sexp) : float_compare_binary_op =
   match se with
   | STerm (s,[]) -> PrettyCommon.float_compare_binary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith float compare binary_op")
+      raise  (Ergo_Error "Not well-formed S-expr inside arith float compare binary_op")
 
 let binary_op_to_sexp (b:binary_op) : sexp =
   match b with
@@ -179,26 +179,26 @@ let sexp_to_binary_op (se:sexp) : binary_op =
   | STerm ("ASConcat",[]) -> OpStringConcat
   | SString fbop -> OpForeignBinary (Obj.magic (PrettyCommon.foreign_binary_op_of_string fbop))
   (* WARNING: Those are not printed, only parsed *)
-  | STerm ("ATimeAs",[]) -> JuraOps.Binary.DateTime.optimeas
-  | STerm ("ATimeShift",[]) -> JuraOps.Binary.DateTime.optimeshift
-  | STerm ("ATimeNe",[]) -> JuraOps.Binary.DateTime.optimene
-  | STerm ("ATimeLt",[]) -> JuraOps.Binary.DateTime.optimelt
-  | STerm ("ATimeLe",[]) -> JuraOps.Binary.DateTime.optimele
-  | STerm ("ATimeGt",[]) -> JuraOps.Binary.DateTime.optimegt
-  | STerm ("ATimeGe",[]) -> JuraOps.Binary.DateTime.optimege
-  | STerm ("ATimeDurationFromScale",[]) -> JuraOps.Binary.DateTime.optimedurationfromscale
-  | STerm ("ATimeDurationBetween",[]) -> JuraOps.Binary.DateTime.optimedurationbetween
-  | STerm ("ADatePlus",[]) -> JuraOps.Binary.DateTime.opdateplus
-  | STerm ("ADateMinus",[]) -> JuraOps.Binary.DateTime.opdateminus
-  | STerm ("ADateNe",[]) -> JuraOps.Binary.DateTime.opdatene
-  | STerm ("ADateLt",[]) -> JuraOps.Binary.DateTime.opdatelt
-  | STerm ("ADateLe",[]) -> JuraOps.Binary.DateTime.opdatele
-  | STerm ("ADateGt",[]) -> JuraOps.Binary.DateTime.opdategt
-  | STerm ("ADateGe",[]) -> JuraOps.Binary.DateTime.opdatege
-  | STerm ("ADateIntervalBetween",[]) -> JuraOps.Binary.DateTime.opdateintervalbetween
+  | STerm ("ATimeAs",[]) -> ErgoOps.Binary.DateTime.optimeas
+  | STerm ("ATimeShift",[]) -> ErgoOps.Binary.DateTime.optimeshift
+  | STerm ("ATimeNe",[]) -> ErgoOps.Binary.DateTime.optimene
+  | STerm ("ATimeLt",[]) -> ErgoOps.Binary.DateTime.optimelt
+  | STerm ("ATimeLe",[]) -> ErgoOps.Binary.DateTime.optimele
+  | STerm ("ATimeGt",[]) -> ErgoOps.Binary.DateTime.optimegt
+  | STerm ("ATimeGe",[]) -> ErgoOps.Binary.DateTime.optimege
+  | STerm ("ATimeDurationFromScale",[]) -> ErgoOps.Binary.DateTime.optimedurationfromscale
+  | STerm ("ATimeDurationBetween",[]) -> ErgoOps.Binary.DateTime.optimedurationbetween
+  | STerm ("ADatePlus",[]) -> ErgoOps.Binary.DateTime.opdateplus
+  | STerm ("ADateMinus",[]) -> ErgoOps.Binary.DateTime.opdateminus
+  | STerm ("ADateNe",[]) -> ErgoOps.Binary.DateTime.opdatene
+  | STerm ("ADateLt",[]) -> ErgoOps.Binary.DateTime.opdatelt
+  | STerm ("ADateLe",[]) -> ErgoOps.Binary.DateTime.opdatele
+  | STerm ("ADateGt",[]) -> ErgoOps.Binary.DateTime.opdategt
+  | STerm ("ADateGe",[]) -> ErgoOps.Binary.DateTime.opdatege
+  | STerm ("ADateIntervalBetween",[]) -> ErgoOps.Binary.DateTime.opdateintervalbetween
   | STerm (t, _) ->
-      raise (Jura_Error ("Not well-formed S-expr inside arith binary_op with name " ^ t))
-  | _ -> raise  (Jura_Error "Not well-formed S-expr inside arith binary_op")
+      raise (Ergo_Error ("Not well-formed S-expr inside arith binary_op with name " ^ t))
+  | _ -> raise  (Ergo_Error "Not well-formed S-expr inside arith binary_op")
 
 let nat_arith_unary_op_to_sexp (b:nat_arith_unary_op) : sexp =
   STerm (PrettyCommon.string_of_nat_arith_unary_op b,[])
@@ -207,7 +207,7 @@ let sexp_to_nat_arith_unary_op (se:sexp) : nat_arith_unary_op =
   match se with
   | STerm (s,[]) -> PrettyCommon.nat_arith_unary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith nat unary_op")
+      raise  (Ergo_Error "Not well-formed S-expr inside arith nat unary_op")
 
 let float_arith_unary_op_to_sexp (b:float_arith_unary_op) : sexp =
   STerm (PrettyCommon.string_of_float_arith_unary_op b,[])
@@ -216,7 +216,7 @@ let sexp_to_float_arith_unary_op (se:sexp) : float_arith_unary_op =
   match se with
   | STerm (s,[]) -> PrettyCommon.float_arith_unary_op_of_string s
   | _ ->
-      raise  (Jura_Error "Not well-formed S-expr inside arith float unary_op")
+      raise  (Ergo_Error "Not well-formed S-expr inside arith float unary_op")
 
 let unary_op_to_sexp (u:unary_op) : sexp =
   match u with
@@ -261,7 +261,7 @@ let sstring_to_sql_date_component (part:sexp) : Enhanced.Data.sql_date_part =
   | SString "DAY" ->   Enhanced.Data.sql_date_day
   | SString "MONTH" -> Enhanced.Data.sql_date_month
   | SString "YEAR" ->  Enhanced.Data.sql_date_year
-  | _ -> raise (Jura_Error "Not well-formed S-expr for sql date component")
+  | _ -> raise (Ergo_Error "Not well-formed S-expr for sql date component")
 			  
 let sexp_to_unary_op (se:sexp) : unary_op =
   match se with
@@ -313,9 +313,9 @@ let sexp_to_unary_op (se:sexp) : unary_op =
   | STerm ("ADateIntervalromString",[]) -> Enhanced.Ops.Unary.coq_OpSqlDateIntervalFromString
   | STerm ("AGetDateComponent",[part]) -> Enhanced.Ops.Unary.coq_OpSqlGetDateComponent (sstring_to_sql_date_component part)
   | STerm (t, _) ->
-      raise (Jura_Error ("Not well-formed S-expr inside unary_op with name " ^ t))
+      raise (Ergo_Error ("Not well-formed S-expr inside unary_op with name " ^ t))
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside unary_op")
+      raise (Ergo_Error "Not well-formed S-expr inside unary_op")
 
 
 (* NNRC Section *)
@@ -354,11 +354,11 @@ let rec sexp_to_nnrc (se:sexp) : nnrc =
   | STerm ("GroupBy", (SString v1) :: (STerm ("keys", v2)) :: [n1]) ->
       NNRCGroupBy (char_list_of_string v1,sstring_list_to_coq_string_list v2,sexp_to_nnrc n1)
   | STerm (t, _) ->
-      raise (Jura_Error ("Not well-formed S-expr inside nnrc with name " ^ t))
+      raise (Ergo_Error ("Not well-formed S-expr inside nnrc with name " ^ t))
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside nnrc")
+      raise (Ergo_Error "Not well-formed S-expr inside nnrc")
 
-(* JuraC section *)
+(* ErgoC section *)
 
 let name_to_sexp name =
   (SString (string_of_char_list name))
@@ -366,7 +366,7 @@ let sexp_to_name (se:sexp) =
   begin match se with
   | SString s -> char_list_of_string s
   | _ -> 
-      raise (Jura_Error "Not well-formed S-expr inside name")
+      raise (Ergo_Error "Not well-formed S-expr inside name")
   end
 
 let opt_name_to_sexp name =
@@ -379,7 +379,7 @@ let sexp_to_opt_name (se:sexp) =
   | STerm ("Name", []) -> None
   | STerm ("Name", [SString s]) -> Some (char_list_of_string s)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside optional name")
+      raise (Ergo_Error "Not well-formed S-expr inside optional name")
   end
 
 let list_name_to_sexp names =
@@ -388,7 +388,7 @@ let sexp_to_list_name (se:sexp) =
   begin match se with
   | STerm ("Names", senames) -> List.map sexp_to_name senames
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside list name")
+      raise (Ergo_Error "Not well-formed S-expr inside list name")
   end
 
 let class_ref_to_sexp cr =
@@ -401,7 +401,7 @@ let sexp_to_class_ref se =
     { class_namespace = sexp_to_opt_name sens;
       class_name = sexp_to_name secln }
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside class ref")
+      raise (Ergo_Error "Not well-formed S-expr inside class ref")
   end
 
 let rec paramtype_to_sexp (pt:cto_type) =
@@ -434,7 +434,7 @@ let rec sexp_to_paramtype (se:sexp) =
   | STerm ("CTORecord", rt) -> CTORecord (sexp_to_rectype rt)
   | STerm ("CTOArray", [pt]) -> CTOArray (sexp_to_paramtype pt)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside ParamType")
+      raise (Ergo_Error "Not well-formed S-expr inside ParamType")
   end
 and sexp_to_rectype (ser:sexp list) : (char list * cto_type) list =
   List.map sexp_to_atttype ser
@@ -443,7 +443,7 @@ and sexp_to_atttype (sea:sexp) : (char list * cto_type) =
   | STerm ("tatt", (SString s) :: se :: []) ->
       (char_list_of_string s, sexp_to_paramtype se)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside CTORecord")
+      raise (Ergo_Error "Not well-formed S-expr inside CTORecord")
 
 let opt_paramtype_to_sexp (opt:cto_type option) =
   begin match opt with
@@ -455,7 +455,7 @@ let sexp_to_opt_paramtype (se:sexp) =
   | STerm ("ParamType",[]) -> None
   | STerm ("ParamType",[pt]) -> Some (sexp_to_paramtype pt)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside OptParamType")
+      raise (Ergo_Error "Not well-formed S-expr inside OptParamType")
   end
 
 let param_to_sexp (paramname,paramtype) =
@@ -470,14 +470,14 @@ let sexp_to_param (se:sexp) =
   | STerm ("Param",[spname;sptname]) ->
       (sexp_to_name spname, sexp_to_opt_paramtype sptname)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Param")
+      raise (Ergo_Error "Not well-formed S-expr inside Param")
   end
 let sexp_to_params (se:sexp) =
   begin match se with
   | STerm ("Params", sparams) ->
       List.map sexp_to_param sparams
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Params")
+      raise (Ergo_Error "Not well-formed S-expr inside Params")
   end
 
 let closure_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a closure0) =
@@ -494,7 +494,7 @@ let sexp_to_closure (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a closure0 =
 	closure_throw = sexp_to_opt_name sclthrow;
 	closure_body0 = sexp_to_expr sclbody }
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Closure")
+      raise (Ergo_Error "Not well-formed S-expr inside Closure")
   end
 
 let declaration_to_sexp (expr_to_sexp : 'a -> sexp) (d:'a declaration) =
@@ -523,14 +523,14 @@ let sexp_to_declaration (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a declaration =
 	{ func_name = sexp_to_name sfname;
 	  func_closure = sexp_to_closure sexp_to_expr sfclosure }
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Declaration")
+      raise (Ergo_Error "Not well-formed S-expr inside Declaration")
   end
 let sexp_to_declarations (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a declaration list =
   begin match se with
   | STerm ("Declarations",sdecls) ->
       List.map (sexp_to_declaration sexp_to_expr) sdecls
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Declarations")
+      raise (Ergo_Error "Not well-formed S-expr inside Declarations")
   end
 
 let contract_to_sexp (expr_to_sexp : 'a -> sexp) (c:'a contract) =
@@ -546,7 +546,7 @@ let sexp_to_contract (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a contract =
 	contract_template = sexp_to_name stname;
         contract_declarations = sexp_to_declarations sexp_to_expr sdecls; }
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Contract")
+      raise (Ergo_Error "Not well-formed S-expr inside Contract")
   end
 
 let import_to_sexp i =
@@ -555,7 +555,7 @@ let sexp_to_import (se:sexp) =
   begin match se with
   | SString s -> char_list_of_string s
   | _ -> 
-      raise (Jura_Error "Not well-formed S-expr inside Import")
+      raise (Ergo_Error "Not well-formed S-expr inside Import")
   end
 
 let cto_type_to_sexp t =
@@ -578,7 +578,7 @@ let sexp_to_cto_type (se:sexp) =
     CTOConcept (sexp_to_opt_name sen,
                 sexp_to_rectype serectype)
   | _ -> 
-    raise (Jura_Error "Not well-formed S-expr inside CTO type declaration")
+    raise (Ergo_Error "Not well-formed S-expr inside CTO type declaration")
   end
 
 let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
@@ -606,7 +606,7 @@ let stmts_to_sexp (expr_to_sexp : 'a -> sexp) (ss:'a stmt list) =
 let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
   begin match se with
   | STerm ("JType",[soname; scto_type]) ->
-      JType (JuraCompiler.mk_cto_declaration (sexp_to_class_ref soname) (sexp_to_cto_type scto_type))
+      JType (ErgoCompiler.mk_cto_declaration (sexp_to_class_ref soname) (sexp_to_cto_type scto_type))
   | STerm ("JExpr",[se]) ->
       JExpr (sexp_to_expr se)
   | STerm ("JGlobal",[svname;se]) ->
@@ -620,14 +620,14 @@ let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
   | STerm ("JContract",[sc]) ->
       JContract (sexp_to_contract sexp_to_expr sc)
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Stmt")
+      raise (Ergo_Error "Not well-formed S-expr inside Stmt")
   end
 let sexp_to_stmts (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt list =
   begin match se with
   | STerm ("Stmts",sss) ->
       List.map (sexp_to_stmt sexp_to_expr) sss
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Stmts")
+      raise (Ergo_Error "Not well-formed S-expr inside Stmts")
   end
 
 let package_to_sexp (expr_to_sexp : 'a -> sexp) (p:'a package) =
@@ -641,19 +641,19 @@ let sexp_to_package (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a package =
       { package_namespace = sexp_to_opt_name snamespace;
 	package_statements = sexp_to_stmts sexp_to_expr sstmts; }
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside Package")
+      raise (Ergo_Error "Not well-formed S-expr inside Package")
   end
 
-let jurac_expr_to_sexp = nnrc_to_sexp
-let jurac_package_to_sexp (p:jurac_package) : sexp =
-  STerm ("JuraCalculus", [package_to_sexp jurac_expr_to_sexp p])
+let ergoc_expr_to_sexp = nnrc_to_sexp
+let ergoc_package_to_sexp (p:ergoc_package) : sexp =
+  STerm ("ErgoCalculus", [package_to_sexp ergoc_expr_to_sexp p])
 
-let sexp_to_jurac_expr = sexp_to_nnrc
-let sexp_to_jurac_package (se:sexp) : jurac_package =
+let sexp_to_ergoc_expr = sexp_to_nnrc
+let sexp_to_ergoc_package (se:sexp) : ergoc_package =
   begin match se with
-  | STerm ("JuraCalculus",[spackage]) ->
-      sexp_to_package sexp_to_jurac_expr spackage
+  | STerm ("ErgoCalculus",[spackage]) ->
+      sexp_to_package sexp_to_ergoc_expr spackage
   | _ ->
-      raise (Jura_Error "Not well-formed S-expr inside JuraCalculus")
+      raise (Ergo_Error "Not well-formed S-expr inside ErgoCalculus")
   end
   

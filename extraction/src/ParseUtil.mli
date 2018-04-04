@@ -14,8 +14,8 @@
 
 (* This module contains parsing utilities *)
 
-open JComp.JuraCompiler
+open ErgoComp.ErgoCompiler
 
-val parse_jura : Lexing.lexbuf -> jura_package
-val parse_jurac_sexp : Lexing.lexbuf -> jurac_package
+val parse_ergo : Lexing.lexbuf -> ergo_package
+val parse_ergoc_sexp : Lexing.lexbuf -> ergoc_package
 

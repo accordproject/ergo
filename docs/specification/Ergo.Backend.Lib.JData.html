@@ -1,0 +1,81 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Ergo.Backend.Lib.JData</title>
+<meta name="description" content="Documentation of Coq module Ergo.Backend.Lib.JData" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Ergo.Backend.Lib.JData</h1>
+<div class="coq">
+<br/>
+<span class="kwd">Require</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.CommonRuntime.html">Qcert.Common.CommonRuntime</a></span>.<br/>
+<span class="kwd">Require</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html">Qcert.Utils.JSON</a></span>.<br/>
+<span class="kwd">Require</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Data.DatatoJSON.html">Qcert.Common.Data.DatatoJSON</a></span>.<br/>
+<span class="kwd">Require</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Translation.NNRCtoJavaScript.html">Qcert.Translation.NNRCtoJavaScript</a></span>.<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Ergo.Backend.Model.ErgoBackendModel.html">Ergo.Backend.Model.ErgoBackendModel</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Ergo.Backend.Model.ErgoBackendRuntime.html">Ergo.Backend.Model.ErgoBackendRuntime</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="JData">JData</a></span>(<span class="id">ergomodel</span>:<span class="id"><a href="Ergo.Backend.Model.ErgoBackendModel.html#ErgoBackendModel">ErgoBackendModel</a></span>).<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.json">json</a></span> : <span class="kwd">Set</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#json">JSON.json</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.data">data</a></span> : <span class="kwd">Set</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#data">Data.data</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.t">t</a></span> : <span class="kwd">Set</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span>.<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.jnil">jnil</a></span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.json">json</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#jnil">JSON.jnil</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.jnumber">jnumber</a></span> <span class="id">z</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.json">json</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#jnumber">JSON.jnumber</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#z">z</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.jbool">jbool</a></span> <span class="id">b</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.json">json</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#jbool">JSON.jbool</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#b">b</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.jstring">jstring</a></span> <span class="id">s</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.json">json</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#jstring">JSON.jstring</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#s">s</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.jarray">jarray</a></span> <span class="id">jl</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.json">json</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#jarray">JSON.jarray</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#jl">jl</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.jobject">jobject</a></span> <span class="id">jl</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.json">json</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#jobject">JSON.jobject</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#jl">jl</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dunit">dunit</a></span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dunit">Data.dunit</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dnat">dnat</a></span> <span class="id">z</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dnat">Data.dnat</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#z">z</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dfloat">dfloat</a></span> <span class="id">f</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dfloat">Data.dfloat</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#f">f</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dbool">dbool</a></span> <span class="id">b</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dbool">Data.dbool</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#b">b</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dstring">dstring</a></span> <span class="id">s</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dstring">Data.dstring</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#s">s</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dcoll">dcoll</a></span> <span class="id">dl</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dcoll">Data.dcoll</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#dl">dl</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.drec">drec</a></span> <span class="id">dl</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#drec">Data.drec</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#dl">dl</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dleft">dleft</a></span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> -&gt; <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dleft">Data.dleft</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dright">dright</a></span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> -&gt; <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dright">Data.dright</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.dbrand">dbrand</a></span> <span class="id">b</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> -&gt; <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dbrand">Data.dbrand</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#b">b</a></span>.<br/>
+<br/>
+<div class="doc">data -&gt; JSON *string* conversion </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.data_to_json_string">data_to_json_string</a></span> <span class="id">s</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.data">data</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="Ergo.Backend.Lib.JData.html#ergomodel.ergo_data_to_json_string">ergomodel.ergo_data_to_json_string</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#s">s</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="JData.json_to_json_string">json_to_json_string</a></span> <span class="id">s</span> : <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData.json">json</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.JSON.html#jsonToJS">JSON.jsonToJS</a></span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#s">s</a></span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Ergo.Backend.Lib.JData.html#JData">JData</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

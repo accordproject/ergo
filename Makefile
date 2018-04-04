@@ -24,32 +24,32 @@ FILES = $(addprefix mechanization/,$(MODULES:%=%.v))
 
 ## Compiler
 all:
-	@$(MAKE) MAKEFLAGS= jura
+	@$(MAKE) MAKEFLAGS= ergo
 
 # Regenerate the npm directory
-jura: _CoqProject Makefile.coq
-	@$(MAKE) jura-mechanization
-	@$(MAKE) MAKEFLAGS= jura-extraction-refresh
+ergo: _CoqProject Makefile.coq
+	@$(MAKE) ergo-mechanization
+	@$(MAKE) MAKEFLAGS= ergo-extraction-refresh
 
-jura-mechanization: _CoqProject Makefile.coq
-	@echo "[Jura] "
-	@echo "[Jura] Compiling Coq Mechanization"
-	@echo "[Jura] "
+ergo-mechanization: _CoqProject Makefile.coq
+	@echo "[Ergo] "
+	@echo "[Ergo] Compiling Coq Mechanization"
+	@echo "[Ergo] "
 	@$(MAKE) -f Makefile.coq
 
-jura-extraction:
-	@echo "[Jura] "
-	@echo "[Jura] Compiling the extracted OCaml"
-	@echo "[Jura] "
+ergo-extraction:
+	@echo "[Ergo] "
+	@echo "[Ergo] Compiling the extracted OCaml"
+	@echo "[Ergo] "
 	@$(MAKE) -C extraction all
 
-jura-extraction-refresh:
-	@echo "[Jura] "
-	@echo "[Jura] Extracting mechanization to OCaml"
-	@echo "[Jura] "
+ergo-extraction-refresh:
+	@echo "[Ergo] "
+	@echo "[Ergo] Extracting mechanization to OCaml"
+	@echo "[Ergo] "
 	@$(MAKE) -C extraction all-refresh
 
-jura-npm:
+ergo-npm:
 	lerna bootstrap
 
 publish:
@@ -84,37 +84,38 @@ clean-npm:
 	- @rm -rf dist
 
 cleanall-npm: clean-npm
-	- @rm -f jura*.tgz
+	- @rm -f ergo*.tgz
 	- @rm -rf node_modules
 	- @rm -rf .nyc_output
 	- @rm -rf coverage
 	- @rm -rf log
+	- @rm -f lerna-debug.log
 
 clean: Makefile.coq
 	- @$(MAKE) clean-npm
 	- @$(MAKE) clean-extraction
 	- @$(MAKE) clean-mechanization
-	- @$(MAKE) -C packages/jura-compiler clean
-	- @$(MAKE) -C packages/jura-cli clean
+	- @$(MAKE) -C packages/ergo-compiler clean
+	- @$(MAKE) -C packages/ergo-cli clean
 
 cleanall: Makefile.coq
 	- @$(MAKE) cleanall-npm
 	- @$(MAKE) cleanall-extraction
 	- @$(MAKE) cleanall-mechanization
 	- @$(MAKE) cleanall-npm
-	- @$(MAKE) -C packages/jura-compiler cleanall
-	- @$(MAKE) -C packages/jura-cli cleanall
+	- @$(MAKE) -C packages/ergo-compiler cleanall
+	- @$(MAKE) -C packages/ergo-cli cleanall
 
 ##
 _CoqProject: Makefile.config
 ifneq ($(QCERT),)
-	(echo "-R mechanization Jura -R $(QCERT)/coq Qcert";) > _CoqProject
+	(echo "-R mechanization Ergo -R $(QCERT)/coq Qcert";) > _CoqProject
 else
-	(echo "-R mechanization Jura";) > _CoqProject
+	(echo "-R mechanization Ergo";) > _CoqProject
 endif
 
 Makefile.coq: _CoqProject Makefile $(FILES)
 	coq_makefile -f _CoqProject $(FILES) -o Makefile.coq
 
-.PHONY: all clean documentation npm jura
+.PHONY: all clean documentation npm ergo
 

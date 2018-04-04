@@ -15,15 +15,15 @@
 (* This module contains parsing utilities *)
 
 open SExp
-open JComp
-open JuraCompiler
+open ErgoComp
+open ErgoCompiler
 
-val sexp_to_data : sexp -> JuraData.data
-val data_to_sexp : JuraData.data -> sexp
+val sexp_to_data : sexp -> ErgoData.data
+val data_to_sexp : ErgoData.data -> sexp
 
 val sexp_to_nnrc : sexp -> nnrc
 val nnrc_to_sexp : nnrc -> sexp
 
-val sexp_to_jurac_package : sexp -> jurac_package
-val jurac_package_to_sexp : jurac_package -> sexp
+val sexp_to_ergoc_package : sexp -> ergoc_package
+val ergoc_package_to_sexp : ergoc_package -> sexp
 

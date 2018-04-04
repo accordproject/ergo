@@ -16,13 +16,13 @@
 
 Require Import String.
 Require Import Qcert.Utils.Result.
-Require Import Jura.Backend.JuraBackend.
+Require Import Ergo.Backend.ErgoBackend.
 
 Section JResult.
   Inductive jerror : Set :=
   | CompilationError : string -> jerror
   | TypeError : string -> jerror
-  | UserError : JuraData.data -> jerror.
+  | UserError : ErgoData.data -> jerror.
 
   Definition jresult (A:Set) := Result A jerror.
   Definition jsuccess {A:Set} (a:A) : jresult A :=

@@ -18,10 +18,10 @@ Require Qcert.Utils.JSON.
 Require Qcert.Common.Data.DatatoJSON.
 Require Qcert.Translation.NNRCtoJavaScript.
 
-Require Import Jura.Backend.Model.JuraBackendModel.
-Require Import Jura.Backend.Model.JuraBackendRuntime.
+Require Import Ergo.Backend.Model.ErgoBackendModel.
+Require Import Ergo.Backend.Model.ErgoBackendRuntime.
 
-Module JData(juramodel:JuraBackendModel).
+Module JData(ergomodel:ErgoBackendModel).
   
   Definition json : Set 
     := JSON.json.
@@ -67,7 +67,7 @@ Module JData(juramodel:JuraBackendModel).
 
   (** data -> JSON *string* conversion *)
   Definition data_to_json_string s : data -> String.string 
-    := juramodel.jura_data_to_json_string s.
+    := ergomodel.ergo_data_to_json_string s.
   Definition json_to_json_string s : json -> String.string 
     := JSON.jsonToJS s.
 

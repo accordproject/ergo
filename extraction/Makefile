@@ -19,7 +19,7 @@ include ../Makefile.coq_modules
 
 ## Configuraton
 QCERT_HOME=$(QCERT)
-JURA_HOME=$(CURDIR)/..
+ERGO_HOME=$(CURDIR)/..
 
 ############# Shouldn't have to be changed after this
 OCAMLBUILD= ocamlbuild \
@@ -30,17 +30,17 @@ MENHIRFLAG=-use-menhir
 #MENHIRFLAG=
 
 ## Mains
-MAIN=jurac
-MAIN2=juracore
+MAIN=ergoc
+MAIN2=ergocore
 
 TARGET=native
 
 ## Toplevel
-all: ../bin/$(MAIN).$(TARGET) ../packages/jura-compiler/lib/$(MAIN2).js
+all: ../bin/$(MAIN).$(TARGET) ../packages/ergo-compiler/lib/$(MAIN2).js
 
-all-refresh: extracted/JComp.ml extracted/JComp.mli ../bin/$(MAIN).$(TARGET) ../packages/jura-compiler/lib/$(MAIN2).js
+all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli ../bin/$(MAIN).$(TARGET) ../packages/ergo-compiler/lib/$(MAIN2).js
 
-js: ../packages/jura-compiler/lib/$(MAIN2).js
+js: ../packages/ergo-compiler/lib/$(MAIN2).js
 
 ## Extraction
 VO_FILES = $(MODULES:%=../mechanization/%.vo)
@@ -49,14 +49,14 @@ extracted/StaticConfig.ml:
 	mkdir -p extracted
 	echo "(* This file is generated *)" > extracted/StaticConfig.ml
 	echo "let qcert_home = \"$(QCERT_HOME)\"" >> extracted/StaticConfig.ml
-	echo "let jura_home = \"$(JURA_HOME)\"" >> extracted/StaticConfig.ml
+	echo "let ergo_home = \"$(ERGO_HOME)\"" >> extracted/StaticConfig.ml
 
-extracted/JComp.ml extracted/JComp.mli: $(VO_FILES)
+extracted/ErgoComp.ml extracted/ErgoComp.mli: $(VO_FILES)
 	mkdir -p extracted
 ifneq ($(QCERT),)
-	(cd extracted; coqc -R ../../mechanization Jura -R ../../$(QCERT)/coq Qcert ../JuraExtraction.v)
+	(cd extracted; coqc -R ../../mechanization Ergo -R ../../$(QCERT)/coq Qcert ../ErgoExtraction.v)
 else
-	(cd extracted; coqc -R ../../mechanization Jura ../JuraExtraction.v)
+	(cd extracted; coqc -R ../../mechanization Ergo ../ErgoExtraction.v)
 endif
 
 ## ATDs
@@ -70,18 +70,18 @@ src/Cto_j.ml src/Cto_j.mli: src/Cto.atd
 ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli
 
 ## Native
-../bin/$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli $(MAIN).$(TARGET)
+../bin/$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN).$(TARGET)
 	cp _build/$(MAIN).$(TARGET) ../bin/$(MAIN).$(TARGET)
 
-$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli
+$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(MAIN).$(TARGET)
 
 ## JavaScript
-../packages/jura-compiler/lib/$(MAIN2).js: $(ATDS) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli _build_js/$(MAIN2).byte
+../packages/ergo-compiler/lib/$(MAIN2).js: $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(MAIN2).byte
 	js_of_ocaml _build_js/$(MAIN2).byte
-	cp _build_js/$(MAIN2).js ../packages/jura-compiler/lib/$(MAIN2).js
+	cp _build_js/$(MAIN2).js ../packages/ergo-compiler/lib/$(MAIN2).js
 
-_build_js/$(MAIN2).byte: $(ATDS) $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/JComp.ml extracted/JComp.mli $(MAIN2).ml
+_build_js/$(MAIN2).byte: $(ATDS) $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN2).ml
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(MAIN2).byte
 
 ## Clean
@@ -95,9 +95,9 @@ clean:
 	rm -f $(ATDS)
 
 cleanall: clean
-	rm -f JuraExtraction.glob JuraExtraction.vo .JuraExtraction.aux
+	rm -f ErgoExtraction.glob ErgoExtraction.vo .ErgoExtraction.aux
 	rm -rf *~
-	rm -f extracted/JComp.ml extracted/JComp.mli
+	rm -f extracted/ErgoComp.ml extracted/ErgoComp.mli
 
 .NOTPARALLEL: 
 

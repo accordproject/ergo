@@ -14,11 +14,11 @@
 
 (* This module contains parsing utilities *)
 
-open JComp.JuraCompiler
+open ErgoComp.ErgoCompiler
 
 open ParseUtil
 
-val parse_jura_from_string : string -> jura_package
-val parse_jurac_sexp_from_string : string -> jurac_package
+val parse_ergo_from_string : string -> ergo_package
+val parse_ergoc_sexp_from_string : string -> ergoc_package
 
 

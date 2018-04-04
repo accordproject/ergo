@@ -14,8 +14,8 @@
 
 (** This module contains common code for pretty-printers *)
 
-open JComp
-open JuraCompiler
+open ErgoComp
+open ErgoCompiler
 
 (* Useful for SExp support *)
 val timescale_as_string : time_scale -> string
