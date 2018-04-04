@@ -1,7 +1,7 @@
 {
-  "name": "ergo",
+  "name": "@accordproject/ergo-cli",
   "version": "0.0.35",
-  "description": "The Ergo Language for Smart Legal Contracts",
+  "description": "Ergo CLI",
   "repository": {
     "type": "git",
     "url": "https://github.com/accordproject/ergo"
@@ -20,6 +20,9 @@
     }
   ],
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "composer-common": "0.17.4",
     "ergo-compiler": "^0.0.35",
