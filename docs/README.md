@@ -37,7 +37,7 @@ the current syntax can be found in [Language.md](Language.md).
 
 The initial architecture for the Ergo compiler is as follows:
 
-![alt text](./ergocompiler.jpg "Ergo Compiler")
+![alt text](./ergocompiler.png "Ergo Compiler")
 
 ### Verification
 
@@ -61,5 +61,5 @@ possible.
 
 One of the use for the Ergo compiler is as an embedded component inside [Cicero](https://github.com/accordproject/cicero), which implements of the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0). The following diagram describe how this works:
 
-![alt text](./ergoincicero.jpg "Ergo inside Cicero")
+![alt text](./ergoincicero.png "Ergo inside Cicero")
 
