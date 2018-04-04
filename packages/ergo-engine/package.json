@@ -1,6 +1,6 @@
 {
   "name": "ergo-engine",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Ergo Engine",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "composer-common": "0.17.4",
-    "ergo-compiler": "^0.0.33",
+    "ergo-compiler": "^0.0.34",
     "moment": "^2.20.1",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
