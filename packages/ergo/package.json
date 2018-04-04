@@ -1,7 +1,7 @@
 {
-  "name": "ergo-cli",
+  "name": "ergo",
   "version": "0.0.34",
-  "description": "Ergo CLI",
+  "description": "The Ergo Language for Smart Legal Contracts",
   "repository": {
     "type": "git",
     "url": "https://github.com/accordproject/ergo"
