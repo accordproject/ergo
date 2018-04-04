@@ -271,6 +271,8 @@ expr:
     { JuraCompiler.jthis_contract }
 | CLAUSE
     { JuraCompiler.jthis_clause }
+| STATE
+    { JuraCompiler.jthis_state }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI e2 = expr
     { JuraCompiler.jlet v e1 e2 }
 | LET v = ident EQUAL e1 = expr SEMI e2 = expr

@@ -129,6 +129,8 @@ Module JuraCompiler.
     := Jura.JThisContract.
   Definition jthis_clause : jura_expr
     := Jura.JThisClause.
+  Definition jthis_state : jura_expr
+    := Jura.JThisState.
 
   (** Jura Calculus *)
   Definition jurac_package : Set 
