@@ -1,6 +1,6 @@
 {
   "name": "ergo-cli",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "Ergo CLI",
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "composer-common": "0.17.4",
-    "ergo-compiler": "^0.0.32",
-    "ergo-engine": "^0.0.32",
+    "ergo-compiler": "^0.0.33",
+    "ergo-engine": "^0.0.33",
     "moment": "^2.20.1",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
