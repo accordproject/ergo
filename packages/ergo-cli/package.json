@@ -25,8 +25,8 @@
   },
   "dependencies": {
     "composer-common": "0.17.4",
-    "ergo-compiler": "^0.0.35",
-    "ergo-engine": "^0.0.35",
+    "@accordproject/ergo-compiler": "^0.0.36",
+    "@accordproject/ergo-engine": "^0.0.36",
     "moment": "^2.20.1",
     "vm2": "^3.5.0",
     "yargs": "^9.0.1"
