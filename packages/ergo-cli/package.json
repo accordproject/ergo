@@ -24,11 +24,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/ergo-compiler": "^0.0.37",
-    "@accordproject/ergo-engine": "^0.0.37",
-    "composer-common": "0.17.4",
-    "moment": "^2.20.1",
-    "vm2": "^3.5.0",
+    "@accordproject/ergo-compiler": "0.0.37",
+    "@accordproject/ergo-engine": "0.0.37",
     "yargs": "^9.0.1"
   },
   "bin": {
@@ -37,11 +34,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
     "chai-things": "^0.2.0",
     "eslint": "^4.6.1",
-    "jsdoc": "^3.5.5",
-    "lerna": "^2.5.1",
     "license-check": "^1.1.5",
     "mocha": "^3.4.2",
     "nyc": "^11.3.0"

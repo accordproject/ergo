@@ -15,8 +15,8 @@
 'use strict';
 
 const Fs = require('fs');
-const Ergo = require('ergo-compiler/lib/ergo');
-const ErgoEngine = require('ergo-engine/lib/ergo-engine');
+const Ergo = require('@accordproject/ergo-compiler/lib/ergo');
+const ErgoEngine = require('@accordproject/ergo-engine/lib/ergo-engine');
 
 /**
  * Utility class that implements the commands exposed by the Ergo CLI.

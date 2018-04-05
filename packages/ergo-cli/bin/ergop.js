@@ -16,7 +16,7 @@
 'use strict';
 
 const Commands = require('../lib/commands');
-const Logger = require('ergo-compiler/lib/logger');
+const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 require('yargs')
     .command('parse', 'parse CTO file to JSON', (yargs) => {

@@ -14,7 +14,7 @@
 
 'use strict';
 
-const Ergo=require('ergo-compiler/lib/ergo');
+const Ergo=require('@accordproject/ergo-compiler/lib/ergo');
 const Fs = require('fs');
 const Path = require('path');
 const Moment = require('moment');
