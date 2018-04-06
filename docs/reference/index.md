@@ -5,3 +5,4 @@ The documentation on the pages listed below provide descriptions of each of the 
 * [Contracts](Contracts.md)
 * [Clauses](Clauses.md)
 * [Conditional Expressions](ConditionalExpressions.md)
+* [Declaring Variables](VariableDeclarations.md)
