@@ -59,18 +59,9 @@ There is no official documentation yet, but you can find a few notes on the lang
 
 ## For developers
 
-### Install development version
+[Contributing Guidelines](CONTRIBUTING.md)
 
-To install the latest development code, clone this git repository and do a local install:
-```
-$ git clone https://github.com/accordproject/ergo.git
-$ cd ./ergo/packages/ergo-cli
-$ npm install -g
-```
-
-### Build from source
-
-Instructions for how to rebuild the compiler from the source can be found in [BUILD.md](BUILD.md).
+[Developer Guidance](DEVELOPERS.md)
 
 ## License
 
