@@ -1,4 +1,4 @@
-Accord Ergo Documentation
+Ergo Documentation
 ===================================
 
 .. toctree::
@@ -7,16 +7,16 @@ Accord Ergo Documentation
 
    README
    Language Guide <Language>
-   reference/index
+
+.. toctree::
+   :glob:
+   :maxdepth: 2
+   :caption: Reference
+
+   reference/*
 
 .. toctree::
    :maxdepth: 2
    :caption: Specification
 
-   AST & Calculus <specification/index>
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
+   AST & Calculus <Specification>

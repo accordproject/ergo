@@ -45,7 +45,7 @@ Language
 --------
 
 The language design and syntax are still in flux. A few notes on the
-current syntax can be found in `Language.md <Language.md>`__.
+current syntax can be found in the :doc:`Language Guide <Language>`.
 
 Compiler
 --------
@@ -67,7 +67,7 @@ A large part of the source code for the Ergo compiler is based on a
 mechanization in Coq from which part of the compiler is extracted. A
 browsable version of the Coq code (generated using
 `coq2html <https://github.com/xavierleroy/coq2html>`__) is available in
-`specification <specification/index.md>`__.
+:doc:`specification <Specification>`.
 
 Ultimately, one of our goals is to provide a full formal semantics for
 Ergo in Coq, and prove correct as much of the compilation pipeline as
@@ -95,5 +95,3 @@ The following diagram describe how this works:
 
 .. figure:: ./ergoincicero.png
    :alt: Ergo inside Cicero
-
-   alt text
