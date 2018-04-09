@@ -1,4 +1,4 @@
-# Conditional Expressions
+# Match Expressions
 
 Match expressions allow us to check an expression against multiple possible values or patterns. If a match is found, then Ergo will evaluate the corresponding expression.
 
