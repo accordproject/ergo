@@ -16,3 +16,6 @@ package-lock.json
 .nyc_output
 coverage
 *.log
+docs/_build/
+generator-ergo-serverless/
+
