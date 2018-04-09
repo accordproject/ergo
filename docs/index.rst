@@ -8,17 +8,11 @@ Accord Ergo Documentation
    README
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Language Guide
 
    Language
    
-.. toctree::
-   :maxdepth: 2
-   :caption: Tutorials
-
-   tutorial_001
-
 .. toctree::
    :maxdepth: 2
    :caption: Reference
