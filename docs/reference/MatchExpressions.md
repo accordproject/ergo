@@ -35,12 +35,12 @@ match expression1
 
 You can use a match expression to look for patterns based on the type of an expression.
 
-```
-match myProduct
-    with let c : Car then
-	    // Do something with c
-    with let o : Oven then
-	    // Do something else
+```js
+match response
+    with let b1 : BuyerMayTerminateResponse then
+	    // Do something with b1
+    with let b2 : BuyerMayNotTerminateResponse then
+	    // Do something with b2
     else
 	    // Do a default action
 ```
