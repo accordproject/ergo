@@ -1,3 +1,6 @@
+Variable Declarations
+=======================
+
 We haven't got around to writing this page yet! 
 
 Do you think that you could help?
