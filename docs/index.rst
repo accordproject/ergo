@@ -3,28 +3,17 @@ Accord Ergo Documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: What is Ergo?
+   :caption: Language
 
    README
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Language Guide
-
-   Language
-   
-.. toctree::
-   :maxdepth: 2
-   :caption: Reference
-
+   Language Guide <Language>
    reference/index
 
 .. toctree::
    :maxdepth: 2
    :caption: Specification
 
-   specification/index
-
+   AST & Calculus <specification/index>
 
 Indices and tables
 ==================
