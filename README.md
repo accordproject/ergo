@@ -6,7 +6,7 @@
 [![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)](https://circleci.com/gh/accordproject/ergo)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
-Git: http://github.com/accordproject/ergo / Pages: https://accordproject.github.io/ergo
+Git: http://github.com/accordproject/ergo / Documentation: http://ergo.readthedocs.io
 
 **_WARNING_ The content of this repository is work in progress and subject to change**
 
@@ -55,7 +55,7 @@ $ ergoc execute --ergo ./examples/volumediscount/logic.ergo --contractname Volum
 
 ## Documentation
 
-There is no official documentation yet, but you can find a few notes on the language in [./docs/Language.md](./docs/Language.md)
+Documentation is work in progress. The latest documentation release is available at http://ergo.readthedocs.io
 
 ## For developers
 
