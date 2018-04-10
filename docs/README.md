@@ -20,16 +20,16 @@ be blockchain neutral: the same contract logic can be deployed either on
 and off chain and to a variety of distributed ledger technologies - to
 be formally specified: the meaning of contracts should be well defined
 so it can be verified, and preserved during execution - to be consistent
-with the `Accord Protocol Template
-Specification <https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0>`__
+with the [Accord Protocol Template
+Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0)
 
 Design choices
 --------------
 
 To achieve those goals the design of Ergo is based on the following
 principles: - It can handle types (concepts, transations, etc) defined
-with the `Hyperledger Composer Modeling
-Language <https://hyperledger.github.io/composer/reference/cto_language.html>`__
+with the [Hyperledger Composer Modeling
+Language](https://hyperledger.github.io/composer/reference/cto_language.html)
 (so called CTO models), as mandated by the Accord Prototype Template
 Specification. - Contracts have a class-like structure with clauses akin
 to methods - It borrows from strongly-typed functional programming
@@ -45,53 +45,47 @@ Language
 --------
 
 The language design and syntax are still in flux. A few notes on the
-current syntax can be found in the :doc:`Language Guide <Language>`.
+current syntax can be found in the
+[Language Guide \<Language\>]{role="doc"}.
 
 Compiler
 --------
 
-Architecture
-~~~~~~~~~~~~
+### Architecture
 
 The initial architecture for the Ergo compiler is as follows:
 
-.. figure:: ./ergocompiler.png
-   :alt: Ergo Compiler
+![alt text](./ergocompiler.png)
 
-   alt text
-
-Verification
-~~~~~~~~~~~~
+### Verification
 
 A large part of the source code for the Ergo compiler is based on a
 mechanization in Coq from which part of the compiler is extracted. A
 browsable version of the Coq code (generated using
-`coq2html <https://github.com/xavierleroy/coq2html>`__) is available in
-:doc:`specification <Specification>`.
+[coq2html](https://github.com/xavierleroy/coq2html)) is available in
+[specification \<Specification\>]{role="doc"}.
 
 Ultimately, one of our goals is to provide a full formal semantics for
 Ergo in Coq, and prove correct as much of the compilation pipeline as
 possible.
 
-Status
-~~~~~~
+### Status
 
--  The current implementation only supports the JavaScript backend for
-   Cicero (and Hyperledger)
--  CTO models are imported, but not used for type checking yet (but stay
-   tuned!)
--  Currently, code generation is done through
-   `Q*cert <https://github.com/querycert/qcert>`__ using the NNRC
-   intermediate language
+-   The current implementation only supports the JavaScript backend for
+    Cicero (and Hyperledger)
+-   CTO models are imported, but not used for type checking yet (but
+    stay tuned!)
+-   Currently, code generation is done through
+    [Q\*cert](https://github.com/querycert/qcert) using the NNRC
+    intermediate language
 
 Relationship to Cicero
 ----------------------
 
 One of the use for the Ergo compiler is as an embedded component inside
-`Cicero <https://github.com/accordproject/cicero>`__, which implements
-of the `Accord Protocol Template
-Specification <https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0>`__.
+[Cicero](https://github.com/accordproject/cicero), which implements of
+the [Accord Protocol Template
+Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0).
 The following diagram describe how this works:
 
-.. figure:: ./ergoincicero.png
-   :alt: Ergo inside Cicero
+![](./ergoincicero.png)

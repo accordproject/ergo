@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Ergo'
+project = 'Accord Ergo'
 copyright = '2018, Clause Inc.'
 author = 'Jerome Simeon'
 
@@ -105,7 +105,7 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
-html_logo = 'ergologo.png'
+html_logo = 'accord_logo.png'
 
 
 # -- Options for HTMLHelp output ---------------------------------------------
