@@ -1,11 +1,13 @@
-Ergo Documentation
+Accord Ergo Documentation
 ===================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Language
+   :caption: Getting Started
 
    README
+   Installation
+   Tutorial
    Language Guide <Language>
 
 .. toctree::
