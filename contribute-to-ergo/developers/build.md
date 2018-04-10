@@ -1,4 +1,4 @@
-# Ergo
+# Build from source
 
 Git: [http://github.com/accordproject/ergo-compiler](http://github.com/accordproject/ergo-compiler)
 

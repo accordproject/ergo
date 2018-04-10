@@ -1,9 +1,9 @@
 # Developing Ergo
 
-* [Development Setup](developers.md#setup)
-* [Coding Rules](developers.md#rules)
-* [Commit Message Guidelines](developers.md#commits)
-* [Writing Documentation](developers.md#documentation)
+* [Development Setup](./#setup)
+* [Coding Rules](./#rules)
+* [Commit Message Guidelines](./#commits)
+* [Writing Documentation](./#documentation)
 
 ##  Development Setup
 
@@ -61,7 +61,7 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 * All features or bug fixes **must be tested** by one or more \[specs\]\[unit-testing\].
 * All public API methods **must be documented** with jsdoc. To see how we document our APIs, please check
 
-  out the existing source code and see the section about [writing documentation](developers.md#documentation)
+  out the existing source code and see the section about [writing documentation](./#documentation)
 
 * With the exceptions listed below, we follow the rules contained in
 

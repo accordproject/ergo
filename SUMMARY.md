@@ -1,15 +1,14 @@
 # Table of contents
 
 * [README](README.md)
-* docs
-  * [Ergo Specification](docs/specification.md)
-  * [Notes](docs/notes.md)
-  * reference
-    * [Variable Declarations](docs/reference/variabledeclarations.md)
-    * [Clauses](docs/reference/clauses.md)
-    * [Contracts](docs/reference/contracts.md)
-* [Ergo](build.md)
-* [Contributing to Ergo](contributing.md)
-* [Developing Ergo](developers.md)
-* [CHANGELOG](changelog.md)
+* Language Reference
+  * [Variable Declarations](reference/variabledeclarations.md)
+  * [Clauses](reference/clauses.md)
+  * [Contracts](reference/contracts.md)
+* Contribute to Ergo
+  * [Contributing to Ergo](contribute-to-ergo/contributing.md)
+  * [Developing Ergo](contribute-to-ergo/developers/README.md)
+    * [Build from source](contribute-to-ergo/developers/build.md)
+  * [Changelog](contribute-to-ergo/changelog.md)
+* [Ergo Specification](specification.md)
 

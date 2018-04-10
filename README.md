@@ -65,9 +65,9 @@ Documentation is work in progress. The latest documentation release is available
 
 ## For developers
 
-[Contributing Guidelines](contributing.md)
+[Contributing Guidelines](contribute-to-ergo/contributing.md)
 
-[Developer Guidance](developers.md)
+[Developer Guidance](contribute-to-ergo/developers/)
 
 ## License
 
