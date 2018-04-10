@@ -1,6 +1,6 @@
 # Table of contents
 
-* [README](README.md)
+* [Ergo Documentation](README.md)
 * Language Reference
   * [Variable Declarations](reference/variabledeclarations.md)
   * [Clauses](reference/clauses.md)

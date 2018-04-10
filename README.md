@@ -1,4 +1,4 @@
-# README
+# Ergo Documentation
 
 ![Ergo](.gitbook/assets/ergologo.png)
 
