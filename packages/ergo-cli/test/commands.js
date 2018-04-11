@@ -29,7 +29,7 @@ describe('ergoc', () => {
         it('should compile a smart Ergo clause', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile(ergoPath, ctoPath, 'HelloWorld', 'helloworld', false);
+            const result = await Commands.compile(ergoPath, [ctoPath], 'HelloWorld', 'helloworld', false);
             result.should.not.be.null;
         });
     });
@@ -40,7 +40,7 @@ describe('ergoc', () => {
             const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
-            const result = await Commands.execute(ergoPath, ctoPath, clausePath, requestPath, statePath, 'HelloWorld', 'helloworld', false);
+            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, requestPath, statePath, 'HelloWorld', 'helloworld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });

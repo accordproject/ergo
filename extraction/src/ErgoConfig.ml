@@ -47,8 +47,8 @@ type global_config = {
     mutable jconf_contract_name : string option;
     mutable jconf_clause_name : string option;
     mutable jconf_with_dispatch : bool;
-    mutable jconf_cto_file : string option;
-    mutable jconf_cto : ErgoComp.cto_package option;
+    mutable jconf_cto_files : string list;
+    mutable jconf_ctos : ErgoComp.cto_package list;
   }
 
 let default_config () = {
@@ -57,8 +57,8 @@ let default_config () = {
   jconf_contract_name = None;
   jconf_clause_name = None;
   jconf_with_dispatch = false;
-  jconf_cto_file = None;
-  jconf_cto = None;
+  jconf_cto_files = [];
+  jconf_ctos = [];
 } 
 
 let get_source_lang gconf = gconf.jconf_source
@@ -66,8 +66,8 @@ let get_target_lang gconf = gconf.jconf_target
 let get_contract_name gconf = gconf.jconf_contract_name
 let get_clause_name gconf = gconf.jconf_clause_name
 let get_with_dispatch gconf = gconf.jconf_with_dispatch
-let get_cto_file gconf = gconf.jconf_cto_file
-let get_cto gconf = gconf.jconf_cto
+let get_cto_files gconf = gconf.jconf_cto_files
+let get_ctos gconf = gconf.jconf_ctos
 
 let set_source_lang gconf s = gconf.jconf_source <- (lang_of_name s)
 let set_target_lang gconf s = gconf.jconf_target <- (lang_of_name s)
@@ -76,10 +76,10 @@ let set_clause_name gconf s = gconf.jconf_clause_name <- Some s
 let set_with_dispatch gconf b = gconf.jconf_with_dispatch <- b
 let set_with_dispatch_true gconf () = gconf.jconf_with_dispatch <- true
 let set_with_dispatch_false gconf () = gconf.jconf_with_dispatch <- false
-let set_cto gconf s =
-  gconf.jconf_cto <- Some (CtoImport.cto_import (Cto_j.model_of_string s))
-let set_cto_file gconf s =
+let add_cto gconf s =
+  gconf.jconf_ctos <- gconf.jconf_ctos @ [CtoImport.cto_import (Cto_j.model_of_string s)]
+let add_cto_file gconf s =
   begin
-    gconf.jconf_cto_file <- Some s;
-    set_cto gconf (Util.string_of_file s)
+    gconf.jconf_cto_files <- gconf.jconf_cto_files @ [s];
+    add_cto gconf (Util.string_of_file s)
   end

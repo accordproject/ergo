@@ -27,23 +27,27 @@ class Commands {
      * Compile Ergo
      *
      * @param {string} ergoPath path to the Ergo file
-     * @param {string} ctoPath pathto the CTO model
+     * @param {string} ctoPaths paths to CTO models
      * @param {string} contractName of the contract to execute
      * @param {string} clauseName of the clause to execute
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoPath,ctoPath,contractName,clauseName,withDispatch) {
+    static compile(ergoPath,ctoPaths,contractName,clauseName,withDispatch) {
         const ergoText = Fs.readFileSync(ergoPath, 'utf8');
-        const ctoText = Fs.readFileSync(ctoPath, 'utf8');
-        return Ergo.compile(ergoText,ctoText,contractName,clauseName,withDispatch);
+        let ctoTexts = [];
+        for (let i = 0; i < ctoPaths.length; i++) {
+            const ctoText = Fs.readFileSync(ctoPaths[i], 'utf8');
+            ctoTexts.push(ctoText);
+        }
+        return Ergo.compile(ergoText,ctoTexts,contractName,clauseName,withDispatch);
     }
 
     /**
      * Execute Ergo
      *
      * @param {string} ergoPath path to the Ergo file
-     * @param {string} ctoPath pathto the CTO model
+     * @param {string} ctoPaths paths to CTO models
      * @param {object} contractPath path to the contract data in JSON
      * @param {object} requestPath path to the request transaction in JSON
      * @param {object} statePath path to the state in JSON
@@ -52,13 +56,17 @@ class Commands {
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPath,ctoPath,contractPath,requestPath,statePath,contractName,clauseName,withDispatch) {
+    static execute(ergoPath,ctoPaths,contractPath,requestPath,statePath,contractName,clauseName,withDispatch) {
         const ergoText = Fs.readFileSync(ergoPath, 'utf8');
-        const ctoText = Fs.readFileSync(ctoPath, 'utf8');
+        let ctoTexts = [];
+        for (let i = 0; i < ctoPaths.length; i++) {
+            const ctoText = Fs.readFileSync(ctoPaths[i], 'utf8');
+            ctoTexts.push(ctoText);
+        }
         const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
         const requestJson = JSON.parse(Fs.readFileSync(requestPath, 'utf8'));
         const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-        return ErgoEngine.execute(ergoText,ctoText,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch);
+        return ErgoEngine.execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch);
     }
 
     /**

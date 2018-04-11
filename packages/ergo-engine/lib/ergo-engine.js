@@ -32,7 +32,7 @@ class ErgoEngine {
      * Execute Ergo
      *
      * @param {string} ergoText text for Ergo code
-     * @param {string} ctoText text for CTO model
+     * @param {string} ctoTexts texts for CTO models
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
@@ -41,7 +41,7 @@ class ErgoEngine {
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoText,ctoText,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch) {
+    static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch) {
         const ergoRuntime = Fs.readFileSync(Path.join(__dirname,'ergoruntime.js'), 'utf8');
 
         const vm = new VM({
@@ -49,7 +49,7 @@ class ErgoEngine {
             sandbox: { moment: Moment }
         });
 
-        return (Ergo.compile(ergoText,ctoText,null,null,withDispatch)).then((ergoCode) => {
+        return (Ergo.compile(ergoText,ctoTexts,null,null,withDispatch)).then((ergoCode) => {
             // add immutables to the context
             const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'now': Moment() };
             vm.freeze(params, 'params'); // Add the context

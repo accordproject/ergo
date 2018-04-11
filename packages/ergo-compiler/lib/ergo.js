@@ -47,13 +47,13 @@ class Ergo {
      * Compile Ergo to JavaScript
      *
      * @param {string} ergoText text for Ergo code
-     * @param {string} ctoText text for CTO model
+     * @param {string} ctoTexts texts for CTO models
      * @param {string} contractName of the contract to compile
      * @param {string} clauseName of the clause to compile
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(ergoText,ctoText,contractName,clauseName,withDispatch) {
+    static compileToJavaScript(ergoText,ctoTexts,contractName,clauseName,withDispatch) {
         // Built-in config
         const config= {
             'source' : 'ergo',
@@ -62,7 +62,10 @@ class Ergo {
         };
         // Clean-up naming for Sexps
         config.ergo = ergoText;
-        config.cto = JSON.stringify(this.parseCTOToJSON(ctoText));
+        config.cto = [];
+        for (let i = 0; i < ctoTexts.length; i++) {
+            config.cto.push(JSON.stringify(this.parseCTOToJSON(ctoTexts[i])));
+        }
         if (contractName !== null) { config.contract = contractName; }
         if (clauseName !== null) { config.clause = clauseName; }
         // Call compiler
@@ -74,14 +77,14 @@ class Ergo {
      * Compile Ergo
      *
      * @param {string} ergoText text for Ergo code
-     * @param {string} ctoText text for CTO model
+     * @param {string} ctoTexts texts for CTO models
      * @param {string} contractName of the contract to compile
      * @param {string} clauseName of the clause to compile
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoText,ctoText,contractName,clauseName,withDispatch) {
-        return Promise.resolve(this.compileToJavaScript(ergoText,ctoText,contractName,clauseName,withDispatch));
+    static compile(ergoText,ctoTexts,contractName,clauseName,withDispatch) {
+        return Promise.resolve(this.compileToJavaScript(ergoText,ctoTexts,contractName,clauseName,withDispatch));
     }
 
 }

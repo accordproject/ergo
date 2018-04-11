@@ -24,8 +24,8 @@ require('yargs')
             describe: 'path to the Ergo source'
         });
         yargs.option('cto', {
-            describe: 'path to the CTO model'
-        });
+            describe: 'path to CTO models'
+        }).array('cto');
         yargs.option('contractname', {
             describe: 'contract name'
         });
@@ -39,7 +39,7 @@ require('yargs')
         });
     }, (argv) => {
         if (argv.verbose) {
-            Logger.info(`compile Ergo file ${argv.ergo} with contract ${argv.contractname} and clause with contract ${argv.clausename}`);
+            Logger.info(`compile Ergo file ${argv.ergo} with contract ${argv.contractname} and clause with contract ${argv.clausename} and CTOs ${argv.cto}`);
         }
         return Commands.compile(argv.ergo,argv.cto,argv.contractname,argv.clausename, argv.dispatch)
             .then((result) => {
@@ -63,8 +63,8 @@ require('yargs')
             describe: 'path to the Ergo file'
         });
         yargs.option('cto', {
-            describe: 'path to the CTO model'
-        });
+            describe: 'path to CTO models'
+        }).array('cto');
         yargs.option('contractname', {
             describe: 'contract name'
         });
@@ -78,7 +78,7 @@ require('yargs')
         });
     }, (argv) => {
         if (argv.verbose) {
-            Logger.info(`execute Ergo logic ${argv.ergo} on contract data ${argv.contract} with request data ${argv.request}`);
+            Logger.info(`execute Ergo file ${argv.ergo} on contract data ${argv.contract} with request data ${argv.request} and CTOs ${argv.cto}`);
         }
 
         return Commands.execute(argv.ergo, argv.cto, argv.contract, argv.request, argv.state, argv.contractname, argv.clausename, argv.dispatch)

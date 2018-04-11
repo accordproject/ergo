@@ -23,6 +23,12 @@ open ErgoConfig
 (* XXX g is applied to json value if it exists, f is the configuration setter, taking the result of g XXX *)
 let apply_gen gconf f g o = Js.Optdef.iter o (fun j -> f gconf (g j))
 let apply gconf f o = apply_gen gconf f Js.to_string o
+let iter_array_gen gconf f o = Js.Optdef.iter o (fun a -> f gconf a)
+let iter_array gconf f o =
+  iter_array_gen gconf
+    (fun gconf a ->
+      let a = Js.str_array a in
+      ignore (Js.array_map (fun s -> f gconf (Js.to_string s)) a)) o
 
 (**********************************)
 (* Equivalent to qcert cmd        *)
@@ -32,8 +38,9 @@ let global_config_of_json j =
   let gconf = default_config () in
   (* Specialize apply/iter for this given gconf *)
   let apply = apply gconf in
+  let iter_array = iter_array gconf in
   (* CTO *)
-  apply ErgoConfig.set_cto j##.cto;
+  iter_array ErgoConfig.add_cto j##.cto;
   (* Source/Target *)
   apply ErgoConfig.set_source_lang j##.source;
   apply ErgoConfig.set_target_lang j##.target;
