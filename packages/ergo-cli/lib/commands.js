@@ -35,6 +35,7 @@ class Commands {
      */
     static compile(ergoPath,ctoPaths,contractName,clauseName,withDispatch) {
         const ergoText = Fs.readFileSync(ergoPath, 'utf8');
+        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
         let ctoTexts = [];
         for (let i = 0; i < ctoPaths.length; i++) {
             const ctoText = Fs.readFileSync(ctoPaths[i], 'utf8');
@@ -58,6 +59,7 @@ class Commands {
      */
     static execute(ergoPath,ctoPaths,contractPath,requestPath,statePath,contractName,clauseName,withDispatch) {
         const ergoText = Fs.readFileSync(ergoPath, 'utf8');
+        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
         let ctoTexts = [];
         for (let i = 0; i < ctoPaths.length; i++) {
             const ctoText = Fs.readFileSync(ctoPaths[i], 'utf8');

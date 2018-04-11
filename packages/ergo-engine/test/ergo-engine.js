@@ -50,7 +50,7 @@ describe('Execute', () => {
                 const clauseJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                const result = await ErgoEngine.execute(ergoText, ctoText, clauseJson, requestJson, stateJson, contractname, clausename, false);
+                const result = await ErgoEngine.execute(ergoText, [ctoText], clauseJson, requestJson, stateJson, contractname, clausename, false);
                 //console.log(JSON.stringify(result));
                 for (const key in expected) {
                     if (expected.hasOwnProperty(key)) {

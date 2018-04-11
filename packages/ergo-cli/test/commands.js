@@ -32,6 +32,11 @@ describe('ergoc', () => {
             const result = await Commands.compile(ergoPath, [ctoPath], 'HelloWorld', 'helloworld', false);
             result.should.not.be.null;
         });
+        it('should compile a smart Ergo clause without cto', async function () {
+            const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
+            const result = await Commands.compile(ergoPath, undefined, 'HelloWorld', 'helloworld', false);
+            result.should.not.be.null;
+        });
     });
     describe('#executehello', function () {
         it('should execute a smart Ergo clause', async function () {
@@ -41,6 +46,14 @@ describe('ergoc', () => {
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
             const result = await Commands.execute(ergoPath, [ctoPath], clausePath, requestPath, statePath, 'HelloWorld', 'helloworld', false);
+            result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
+        });
+        it('should execute a smart Ergo clause without cto', async function () {
+            const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
+            const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
+            const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
+            const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
+            const result = await Commands.execute(ergoPath, undefined, clausePath, requestPath, statePath, 'HelloWorld', 'helloworld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });
