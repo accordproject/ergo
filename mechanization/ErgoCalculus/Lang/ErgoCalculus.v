@@ -17,8 +17,8 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import Ergo.Ergo.Lang.ErgoBase.
-Require Import Ergo.Backend.ErgoBackend.
+Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoCalculus.
 

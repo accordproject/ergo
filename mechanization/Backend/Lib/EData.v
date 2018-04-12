@@ -18,10 +18,10 @@ Require Qcert.Utils.JSON.
 Require Qcert.Common.Data.DatatoJSON.
 Require Qcert.Translation.NNRCtoJavaScript.
 
-Require Import Ergo.Backend.Model.ErgoBackendModel.
-Require Import Ergo.Backend.Model.ErgoBackendRuntime.
+Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
+Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
 
-Module JData(ergomodel:ErgoBackendModel).
+Module EData(ergomodel:ErgoBackendModel).
   
   Definition json : Set 
     := JSON.json.
@@ -71,5 +71,5 @@ Module JData(ergomodel:ErgoBackendModel).
   Definition json_to_json_string s : json -> String.string 
     := JSON.jsonToJS s.
 
-End JData.
+End EData.
 

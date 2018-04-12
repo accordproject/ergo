@@ -17,14 +17,14 @@ MODULES = \
 	Backend/ForeignErgo \
 	Backend/Model/ErgoBackendModel \
 	Backend/Model/ErgoBackendRuntime \
-	Backend/Lib/JType \
-	Backend/Lib/JData \
-	Backend/Lib/JOperators \
-	Backend/Lib/JCodeGen \
+	Backend/Lib/EType \
+	Backend/Lib/EData \
+	Backend/Lib/EOperators \
+	Backend/Lib/ECodeGen \
 	Backend/ErgoBackend \
-	Common/Utils/JNames \
-	Common/Utils/JResult \
-	Common/Utils/JError \
+	Common/Utils/ENames \
+	Common/Utils/EResult \
+	Common/Utils/EError \
 	Common/CTO/CTO \
 	Ergo/Lang/ErgoBase \
 	Ergo/Lang/Ergo \

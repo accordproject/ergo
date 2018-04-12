@@ -14,7 +14,7 @@
 
 Require Import Qcert.Common.CommonSystem.
 Require Import Qcert.Compiler.Model.EnhancedModel.
-Require Import Ergo.Backend.ForeignErgo.
+Require Import ErgoSpec.Backend.ForeignErgo.
 
 Module Type ErgoBackendModel.
   Definition ergo_foreign_data : foreign_data := enhanced_foreign_data.

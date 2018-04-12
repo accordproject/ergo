@@ -22,8 +22,8 @@ Require Import Qcert.Compiler.Model.EnhancedModel.
 Require Import Qcert.Compiler.Model.SqlDateModelPart.
 Require Import Qcert.Translation.NNRCtoJavaScript.
 Require Import Qcert.cNNRC.Lang.cNNRC.
-Require Import Ergo.Backend.ForeignErgo.
-Require Import Ergo.Backend.Model.ErgoBackendModel.
+Require Import ErgoSpec.Backend.ForeignErgo.
+Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 
 Definition mk_naked_closure (params:list string) (body:nnrc) : backend_closure :=
   let params := List.map (fun x => (x,None)) params in

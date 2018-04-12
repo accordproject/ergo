@@ -19,8 +19,8 @@ Section CTO.
   Require Import Qcert.Utils.Utils.
   Require Import Qcert.Common.TypingRuntime.
 
-  Require Import Ergo.Backend.ErgoBackend.
-  Require Import Ergo.Common.Utils.JNames.
+  Require Import ErgoSpec.Backend.ErgoBackend.
+  Require Import ErgoSpec.Common.Utils.ENames.
 
   Inductive cto_type :=
   | CTOBoolean : cto_type                             (**r bool atomic type *)

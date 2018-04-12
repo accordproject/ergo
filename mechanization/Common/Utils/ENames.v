@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-Section JNames.
+Section ENames.
   Require Import String.
   Local Open Scope string.
   
@@ -33,4 +33,4 @@ Section JNames.
     | Some ref_package => ref_package ++ "." ++ cr.(class_name)
     end.
 
-End JNames.
+End ENames.

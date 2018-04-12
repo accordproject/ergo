@@ -18,39 +18,39 @@
 
 Require Import String.
 Require Import List.
-Require Import Ergo.Common.Utils.JNames.
-Require Import Ergo.Ergo.Lang.ErgoBase.
-Require Import Ergo.Ergo.Lang.Ergo.
-Require Import Ergo.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoSugar.
   (** [expr.field] is a macro for unbranding followed by field access in a record *)
-  Definition JDot (s:string) (e:ergo_expr) : ergo_expr :=
-    JUnaryOp (ErgoOps.Unary.opdot s) (JUnaryOp ErgoOps.Unary.opunbrand e).
+  Definition EDot (s:string) (e:ergo_expr) : ergo_expr :=
+    EUnaryOp (ErgoOps.Unary.opdot s) (EUnaryOp ErgoOps.Unary.opunbrand e).
 
   (** [return expr] is a no-op at the moment *)
   Definition mk_result e1 e2 :=
-    JBinaryOp ErgoOps.Binary.oprecconcat
-              (JUnaryOp (ErgoOps.Unary.oprec "response") e1)
-              (JUnaryOp (ErgoOps.Unary.oprec "state") e2).
+    EBinaryOp ErgoOps.Binary.oprecconcat
+              (EUnaryOp (ErgoOps.Unary.oprec "response") e1)
+              (EUnaryOp (ErgoOps.Unary.oprec "state") e2).
 
   (** [return expr] is a no-op at the moment *)
-  Definition JReturn e1 :=
-    mk_result e1 JThisState.
+  Definition EReturn e1 :=
+    mk_result e1 EThisState.
 
-  Definition JReturnSetState e1 e2 :=
+  Definition EReturnSetState e1 e2 :=
     mk_result e1 e2.
   
-  Definition JNewSugar pname cname el :ergo_expr :=
-    JNew (mkClassRef pname cname) el.
+  Definition ENewSugar pname cname el :ergo_expr :=
+    ENew (mkClassRef pname cname) el.
 
-  Definition JThrowSugar pname cname el : ergo_expr :=
-    JThrow (mkClassRef pname cname) el.
+  Definition EThrowSugar pname cname el : ergo_expr :=
+    EThrow (mkClassRef pname cname) el.
 
-  Definition JThrowErgoCompilerError (msg:string) : ergo_expr :=
-    (JThrowSugar (Some "org.ergo")
+  Definition EThrowErgoCompilerError (msg:string) : ergo_expr :=
+    (EThrowSugar (Some "org.ergo")
                  "Error"
-                 (("error", JConst (ErgoData.dstring msg))::nil))%string.
+                 (("error", EConst (ErgoData.dstring msg))::nil))%string.
 
 End ErgoSugar.
 

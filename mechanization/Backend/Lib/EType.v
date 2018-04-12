@@ -17,10 +17,10 @@
 Require Import String.
 Require Import Qcert.Common.CommonTypes.
 Require Import Qcert.Common.TypingRuntime.
-Require Import Ergo.Backend.Model.ErgoBackendModel.
-Require Import Ergo.Backend.Model.ErgoBackendRuntime.
+Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
+Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
 
-Module JType(ergomodel:ErgoBackendModel).
+Module EType(ergomodel:ErgoBackendModel).
 
   Definition empty_brand_model (x:unit) := TBrandModel.empty_brand_model.
 
@@ -81,5 +81,5 @@ Module JType(ergomodel:ErgoBackendModel).
   Definition make_brand_model := Schema.make_brand_model_from_decls_fails.
   Definition typing_runtime : Set := typing_runtime.
 
-End JType.
+End EType.
 

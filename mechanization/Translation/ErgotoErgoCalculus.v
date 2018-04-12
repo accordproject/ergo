@@ -19,16 +19,16 @@ Require Import List.
 
 Require Import Qcert.Utils.Utils.
 
-Require Import Ergo.Common.Utils.JNames.
-Require Import Ergo.Common.Utils.JResult.
-Require Import Ergo.Common.Utils.JError.
-Require Import Ergo.Backend.ForeignErgo.
-Require Import Ergo.Ergo.Lang.ErgoBase.
-Require Import Ergo.Ergo.Lang.Ergo.
-Require Import Ergo.Ergo.Lang.ErgoSugar.
-Require Import Ergo.ErgoCalculus.Lang.ErgoCalculus.
-Require Import Ergo.ErgoCalculus.Lang.ErgoCalculusCall.
-Require Import Ergo.Backend.ErgoBackend.
+Require Import ErgoSpec.Backend.ForeignErgo.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EError.
+Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.Ergo.Lang.ErgoSugar.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
+Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgotoJavaScript.
 
@@ -150,103 +150,103 @@ Section ErgotoJavaScript.
 
   (** Translate expressions to calculus *)
   Fixpoint ergo_expr_to_calculus
-           (ctxt:context) (e:ergo_expr) : jresult ergoc_expr :=
+           (ctxt:context) (e:ergo_expr) : eresult ergoc_expr :=
     match e with
-    | JThisContract =>
+    | EThisContract =>
       match ctxt.(context_current_contract) with
       | None => not_in_contract_error
-      | Some _ => jsuccess (NNRCGetConstant this_contract)
+      | Some _ => esuccess (NNRCGetConstant this_contract)
       end
-    | JThisClause => 
+    | EThisClause => 
       match ctxt.(context_current_clause) with
       | None => not_in_clause_error
-      | Some cname => jsuccess (NNRCUnop (OpDot cname) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
+      | Some cname => esuccess (NNRCUnop (OpDot cname) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
       end
-    | JThisState =>
+    | EThisState =>
       match ctxt.(context_current_contract) with
       | None => not_in_contract_error
-      | Some _ => jsuccess (NNRCGetConstant this_state)
+      | Some _ => esuccess (NNRCGetConstant this_state)
       end
-    | JVar v =>
+    | EVar v =>
       if in_dec string_dec v ctxt.(context_params)
-      then jsuccess (NNRCGetConstant v)
-      else jsuccess (NNRCVar v)
-    | JConst d =>
-      jsuccess (NNRCConst d)
-    | JArray el =>
-      let init_el := jsuccess nil in
-      let proc_one (acc:jresult (list ergoc_expr)) (e:ergo_expr) : jresult (list ergoc_expr) :=
+      then esuccess (NNRCGetConstant v)
+      else esuccess (NNRCVar v)
+    | EConst d =>
+      esuccess (NNRCConst d)
+    | EArray el =>
+      let init_el := esuccess nil in
+      let proc_one (acc:eresult (list ergoc_expr)) (e:ergo_expr) : eresult (list ergoc_expr) :=
           jlift2
             cons
             (ergo_expr_to_calculus ctxt e)
             acc
       in
       jlift new_array (fold_left proc_one el init_el)
-    | JUnaryOp u e =>
+    | EUnaryOp u e =>
       jlift (NNRCUnop u)
             (ergo_expr_to_calculus ctxt e)
-    | JBinaryOp b e1 e2 =>
+    | EBinaryOp b e1 e2 =>
       jlift2 (NNRCBinop b)
              (ergo_expr_to_calculus ctxt e1)
              (ergo_expr_to_calculus ctxt e2)
-    | JIf e1 e2 e3 =>
+    | EIf e1 e2 e3 =>
       jlift3 NNRCIf
         (ergo_expr_to_calculus ctxt e1)
         (ergo_expr_to_calculus ctxt e2)
         (ergo_expr_to_calculus ctxt e3)
-    | JEnforce e1 None e3 =>
+    | EEnforce e1 None e3 =>
       jlift3 NNRCIf
         (jlift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
-        (jsuccess ergo_enforce_error)
+        (esuccess ergo_enforce_error)
         (ergo_expr_to_calculus ctxt e3)
-    | JEnforce e1 (Some e2) e3 =>
+    | EEnforce e1 (Some e2) e3 =>
       jlift3 NNRCIf
         (jlift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
         (ergo_expr_to_calculus ctxt e3)
         (ergo_expr_to_calculus ctxt e2)
-    | JLet v None e1 e2 =>
+    | ELet v None e1 e2 =>
       jlift2 (NNRCLet v)
               (ergo_expr_to_calculus ctxt e1)
               (ergo_expr_to_calculus ctxt e2)
-    | JLet v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
+    | ELet v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
       jlift2 (NNRCLet v)
               (ergo_expr_to_calculus ctxt e1)
               (ergo_expr_to_calculus ctxt e2)
-    | JNew cr nil =>
-      jsuccess
+    | ENew cr nil =>
+      esuccess
         (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
-    | JNew cr ((s0,init)::rest) =>
-      let init_rec : jresult nnrc :=
+    | ENew cr ((s0,init)::rest) =>
+      let init_rec : eresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
       in
-      let proc_one (acc:jresult nnrc) (att:string * ergo_expr) : jresult nnrc :=
+      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
           let e := ergo_expr_to_calculus ctxt (snd att) in
           jlift2 (NNRCBinop OpRecConcat)
                  (jlift (NNRCUnop (OpRec attname)) e) acc
       in
       jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | JRecord nil =>
-      jsuccess
+    | ERecord nil =>
+      esuccess
         (NNRCConst (drec nil))
-    | JRecord ((s0,init)::rest) =>
-      let init_rec : jresult nnrc :=
+    | ERecord ((s0,init)::rest) =>
+      let init_rec : eresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
       in
-      let proc_one (acc:jresult nnrc) (att:string * ergo_expr) : jresult nnrc :=
+      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
           let e := ergo_expr_to_calculus ctxt (snd att) in
           jlift2 (NNRCBinop OpRecConcat)
                  (jlift (NNRCUnop (OpRec attname)) e) acc
       in
       fold_left proc_one rest init_rec
-    | JThrow cr nil =>
-      jsuccess (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
-    | JThrow cr ((s0,init)::rest) =>
-      let init_rec : jresult nnrc :=
+    | EThrow cr nil =>
+      esuccess (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
+    | EThrow cr ((s0,init)::rest) =>
+      let init_rec : eresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
       in
-      let proc_one (acc:jresult nnrc) (att:string * ergo_expr) : jresult nnrc :=
+      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
           let e := ergo_expr_to_calculus ctxt (snd att) in
           jlift2 (NNRCBinop OpRecConcat)
@@ -254,16 +254,16 @@ Section ErgotoJavaScript.
                  acc
       in
       jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | JFunCall fname el =>
-      let init_el := jsuccess nil in
-      let proc_one (e:ergo_expr) (acc:jresult (list ergoc_expr)) : jresult (list ergoc_expr) :=
+    | EFunCall fname el =>
+      let init_el := esuccess nil in
+      let proc_one (e:ergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
           jlift2
             cons
             (ergo_expr_to_calculus ctxt e)
             acc
       in
       jolift (lookup_call ctxt.(context_table) fname) (fold_right proc_one init_el el)
-    | JMatch e0 ecases edefault =>
+    | EMatch e0 ecases edefault =>
       let ec0 := ergo_expr_to_calculus ctxt e0 in
       let eccases :=
           let proc_one acc ecase :=
@@ -272,7 +272,7 @@ Section ErgotoJavaScript.
                    jlift (fun x => (fst ecase, x)::acc)
                          (ergo_expr_to_calculus ctxt (snd ecase))) acc
           in
-          fold_left proc_one ecases (jsuccess nil)
+          fold_left proc_one ecases (esuccess nil)
       in
       let ecdefault := ergo_expr_to_calculus ctxt edefault in
       jolift
@@ -283,9 +283,9 @@ Section ErgotoJavaScript.
                   (fun ecdefault =>
                      let v0 := fresh_in_match eccases ecdefault in
                      let proc_one_case
-                           (acc:jresult ergoc_expr)
+                           (acc:eresult ergoc_expr)
                            (ecase:match_case * ergoc_expr)
-                         : jresult ergoc_expr :=
+                         : eresult ergoc_expr :=
                          match fst ecase with
                          | (Some v, CaseValue d) =>
                            jlift
@@ -325,15 +325,15 @@ Section ErgotoJavaScript.
                          end
                      in
                      let eccases_folded :=
-                         fold_left proc_one_case eccases (jsuccess ecdefault)
+                         fold_left proc_one_case eccases (esuccess ecdefault)
                      in
                      jlift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
-    | JFor v e1 None e2 =>
+    | EFor v e1 None e2 =>
       jlift2 (NNRCFor v)
               (ergo_expr_to_calculus ctxt e1)
               (ergo_expr_to_calculus ctxt e2)
-    | JFor v e1 (Some econd) e2 =>
+    | EFor v e1 (Some econd) e2 =>
       jlift3 (fun e1 econd e3 =>
                 NNRCUnop OpFlatten
                          (NNRCFor v
@@ -348,7 +348,7 @@ Section ErgotoJavaScript.
 
   (** Translate a clause to clause+calculus *)
   Definition clause_to_calculus
-             (ctxt:context) (c:ergo_clause) : jresult ergoc_clause :=
+             (ctxt:context) (c:ergo_clause) : eresult ergoc_clause :=
     let ctxt : context :=
         set_current_clause ctxt c.(clause_name)
     in
@@ -369,7 +369,7 @@ Section ErgotoJavaScript.
 
   (** Translate a function to function+calculus *)
   Definition func_to_calculus
-             (ctxt:context) (f:ergo_func) : jresult ergoc_func :=
+             (ctxt:context) (f:ergo_func) : eresult ergoc_func :=
     let ctxt :=
         add_params ctxt (List.map fst f.(func_closure).(closure_params))
     in
@@ -385,7 +385,7 @@ Section ErgotoJavaScript.
 
   (** Translate a declaration to a declaration+calculus *)
   Definition declaration_to_calculus
-             (ctxt:context) (d:ergo_declaration) : jresult (context * ergoc_declaration) :=
+             (ctxt:context) (d:ergo_declaration) : eresult (context * ergoc_declaration) :=
     match d with
     | Clause c =>
       jlift
@@ -400,7 +400,7 @@ Section ErgotoJavaScript.
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the context *)
   Definition contract_to_calculus
-             (ctxt:context) (c:ergo_contract) : jresult (context * ergoc_contract) :=
+             (ctxt:context) (c:ergo_contract) : eresult (context * ergoc_contract) :=
     let ctxt :=
         set_current_contract ctxt c.(contract_name)
     in
@@ -409,11 +409,11 @@ Section ErgotoJavaScript.
           ctxt
           (current_time :: this_contract :: this_state :: nil)
     in
-    let init := jsuccess (ctxt, nil) in
+    let init := esuccess (ctxt, nil) in
     let proc_one
-          (acc:jresult (context * list ergoc_declaration))
+          (acc:eresult (context * list ergoc_declaration))
           (s:ergo_declaration)
-        : jresult (context * list ergoc_declaration) :=
+        : eresult (context * list ergoc_declaration) :=
         jolift
           (fun acc : context * list ergoc_declaration =>
              let (ctxt,acc) := acc in
@@ -434,25 +434,25 @@ Section ErgotoJavaScript.
 
   (** Translate a statement to a statement+calculus *)
   Definition stmt_to_calculus
-             (ctxt:context) (s:ergo_stmt) : jresult (context * ergoc_stmt) :=
+             (ctxt:context) (s:ergo_stmt) : eresult (context * ergoc_stmt) :=
     match s with
-    | JType cto_type => jsuccess (ctxt, JType cto_type) (* XXX TO BE REVISED -- add type to context *)
-    | JExpr e =>
+    | EType cto_type => esuccess (ctxt, EType cto_type) (* XXX TO BE REVISED -- add type to context *)
+    | EExpr e =>
       jlift
-        (fun x => (ctxt, JExpr x))
+        (fun x => (ctxt, EExpr x))
         (ergo_expr_to_calculus ctxt e)
-    | JGlobal v e =>
+    | EGlobal v e =>
       jlift
-        (fun x => (add_one_global ctxt v, JGlobal v x)) (* Add new variable to context *)
+        (fun x => (add_one_global ctxt v, EGlobal v x)) (* Add new variable to context *)
         (ergo_expr_to_calculus ctxt e)
-    | JImport s =>
-      jsuccess (ctxt, JImport s)
-    | JFunc f =>
+    | EImport s =>
+      esuccess (ctxt, EImport s)
+    | EFunc f =>
       jlift
-        (fun x => (add_one_func ctxt x.(func_name) x.(func_closure), JFunc x)) (* Add new function to context *)
+        (fun x => (add_one_func ctxt x.(func_name) x.(func_closure), EFunc x)) (* Add new function to context *)
         (func_to_calculus ctxt f)
-    | JContract c =>
-      jlift (fun xy => (fst xy, JContract (snd xy)))
+    | EContract c =>
+      jlift (fun xy => (fst xy, EContract (snd xy)))
             (contract_to_calculus ctxt c)
     end.
 
@@ -460,14 +460,14 @@ Section ErgotoJavaScript.
     mkContext None None ergoc_stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
-  Definition package_to_calculus (p:package) : jresult ergoc_package :=
+  Definition package_to_calculus (p:package) : eresult ergoc_package :=
     let local_namespace := p.(package_namespace) in
     let ctxt := initial_context local_namespace in
-    let init := jsuccess (ctxt, nil) in
+    let init := esuccess (ctxt, nil) in
     let proc_one
-          (acc:jresult (context * list ergoc_stmt))
+          (acc:eresult (context * list ergoc_stmt))
           (s:ergo_stmt)
-        : jresult (context * list ergoc_stmt) :=
+        : eresult (context * list ergoc_stmt) :=
         jolift
           (fun acc : context * list ergoc_stmt =>
              let (ctxt,acc) := acc in
@@ -491,21 +491,21 @@ Section ErgotoJavaScript.
     Definition input1 := dnat 2.
     
     Example j1 :=
-      JMatch (JConst input1)
-              (((Some "v1", CaseValue (dnat 1)), (JConst (dstring "1")))
-                 :: ((Some "v2", CaseValue (dnat 2)), (JConst (dstring "2")))
+      EMatch (EConst input1)
+              (((Some "v1", CaseValue (dnat 1)), (EConst (dstring "1")))
+                 :: ((Some "v2", CaseValue (dnat 2)), (EConst (dstring "2")))
                  :: nil)
-              (JConst (dstring "lots")).
+              (EConst (dstring "lots")).
     Definition jc1 := ergo_expr_to_calculus ctxt0 j1.
     (* Eval vm_compute in jc1. *)
     (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1. *)
 
     Example j1' :=
-      JMatch (JConst input1)
-              (((Some "v1", CaseValue (dnat 1)), (JConst (dstring "1")))
-                 :: ((Some "v2", CaseValue (dnat 2)), JVar "v2")
+      EMatch (EConst input1)
+              (((Some "v1", CaseValue (dnat 1)), (EConst (dstring "1")))
+                 :: ((Some "v2", CaseValue (dnat 2)), EVar "v2")
                  :: nil)
-              (JConst (dstring "lots")).
+              (EConst (dstring "lots")).
     Definition jc1' := ergo_expr_to_calculus ctxt0 j1'.
     (* Eval vm_compute in jc1'. *)
     (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1'. *)
@@ -514,11 +514,11 @@ Section ErgotoJavaScript.
       dbrand ("C1"::nil) (dnat 1).
     
     Example j2 :=
-      JMatch (JConst input2)
-              (((Some "v1", CaseType "C1"), (JConst (dstring "1")))
-                 :: ((Some "v2", CaseType "C2"), (JConst (dstring "2")))
+      EMatch (EConst input2)
+              (((Some "v1", CaseType "C1"), (EConst (dstring "1")))
+                 :: ((Some "v2", CaseType "C2"), (EConst (dstring "2")))
                  :: nil)
-              (JConst (dstring "lots")).
+              (EConst (dstring "lots")).
 
     Definition jc2 := ergo_expr_to_calculus ctxt0 j2.
     (* Eval vm_compute in jc2. *)

@@ -15,20 +15,20 @@
 (* Built-in errors *)
 
 Require Import String.
-Require Import Ergo.Common.Utils.JResult.
-Require Import Ergo.Backend.ErgoBackend.
+Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.EResult.
 
-Section JError.
+Section EError.
   Require Import List.
 
-  Definition dispatch_lookup_error {A} : jresult A :=
-    jfailure (CompilationError ("Cannot lookup created dispatch")).
-  Definition dispatch_parameter_error {A} : jresult A :=
-    jfailure (CompilationError ("No parameter type in dispatch")).
-  Definition not_in_contract_error {A} : jresult A :=
-    jfailure (CompilationError ("Cannot use 'contract' variable outside of a contract")).
-  Definition not_in_clause_error {A} : jresult A :=
-    jfailure (CompilationError ("Cannot use 'clause' variable outside of a clause")).
+  Definition dispatch_lookup_error {A} : eresult A :=
+    efailure (CompilationError ("Cannot lookup created dispatch")).
+  Definition dispatch_parameter_error {A} : eresult A :=
+    efailure (CompilationError ("No parameter type in dispatch")).
+  Definition not_in_contract_error {A} : eresult A :=
+    efailure (CompilationError ("Cannot use 'contract' variable outside of a contract")).
+  Definition not_in_clause_error {A} : eresult A :=
+    efailure (CompilationError ("Cannot use 'clause' variable outside of a clause")).
 
   Definition ergo_default_package : string := "org.accordproject.ergo".
   Definition ergo_default_error_local_name : string := "Error".
@@ -38,8 +38,8 @@ Section JError.
   Definition enforce_error_content : ErgoData.data :=
     ErgoData.dbrand (ergo_default_error_name::nil)
                     (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
-  Definition enforce_error : jerror :=
+  Definition enforce_error : eerror :=
     UserError enforce_error_content.
 
-End JError.
+End EError.
 

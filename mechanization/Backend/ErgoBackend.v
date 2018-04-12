@@ -1,4 +1,4 @@
-(*
+ (*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,15 +13,15 @@
  *)
 
 Require Qcert.Compiler.Model.EnhancedModel.
-Require Ergo.Backend.Model.ErgoBackendRuntime.
-Require Ergo.Backend.Lib.JType.
-Require Ergo.Backend.Lib.JData.
-Require Ergo.Backend.Lib.JOperators.
-Require Ergo.Backend.Lib.JCodeGen.
+Require ErgoSpec.Backend.Model.ErgoBackendRuntime.
+Require ErgoSpec.Backend.Lib.EType.
+Require ErgoSpec.Backend.Lib.EData.
+Require ErgoSpec.Backend.Lib.EOperators.
+Require ErgoSpec.Backend.Lib.ECodeGen.
 
 Module ErgoEnhancedBackend := ErgoBackendRuntime.ErgoBackendRuntime <+ EnhancedModel.CompEnhanced.
-Module ErgoType := JType.JType(ErgoEnhancedBackend).
-Module ErgoData := JData.JData(ErgoEnhancedBackend).
-Module ErgoOps := JOperators.JOperators(ErgoEnhancedBackend).
-Module ErgoCodeGen := JCodeGen.JCodeGen(ErgoEnhancedBackend).
+Module ErgoType := EType.EType(ErgoEnhancedBackend).
+Module ErgoData := EData.EData(ErgoEnhancedBackend).
+Module ErgoOps := EOperators.EOperators(ErgoEnhancedBackend).
+Module ErgoCodeGen := ECodeGen.ECodeGen(ErgoEnhancedBackend).
 

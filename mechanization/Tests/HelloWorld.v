@@ -14,11 +14,11 @@
 
 Require Import String.
 Require Import List.
-Require Import Ergo.Common.Utils.JNames.
-Require Import Ergo.Common.CTO.CTO.
-Require Import Ergo.Lang.ErgoBase.
-Require Import Ergo.Lang.Ergo.
-Require Import Ergo.Compiler.ErgoCompiler.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.Compiler.ErgoCompiler.
 
 Section HelloWorld.
   Open Scope string_scope.
@@ -29,7 +29,7 @@ package org.accordproject.helloworld
 contract HelloWorld over TemplateModel {
    // Simple Clause
    clause helloworld(request Request) Response {
-       new Response{ output: "Hello " + this.name + " (" + request.input +")" }
+     return new Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")" }
   }
 }
 *)
@@ -40,7 +40,7 @@ contract HelloWorld over TemplateModel {
                 (("request", Some (CTOClassRef (mkClassRef None "Request")))::nil)
                 (Some (CTOClassRef (mkClassRef None "Response")))
                 None
-                (JVar "request")).
+                (EVar "request")).
 
   Definition c1 :=
     mkContract "HelloWorld"
@@ -49,7 +49,7 @@ contract HelloWorld over TemplateModel {
   
   Definition p1 :=
     mkPackage (Some "org.accordproject.helloworld")
-              ((JContract c1)::nil).
+              ((EContract c1)::nil).
 
   (* Eval vm_compute in (ErgoCompiler.javascript_from_ergo_package_with_dispatch None p1). *)
 End HelloWorld.

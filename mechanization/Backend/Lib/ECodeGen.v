@@ -16,10 +16,10 @@ Require String.
 
 Require Qcert.Compiler.Driver.CompLang.
 
-Require Import Ergo.Backend.Model.ErgoBackendModel.
-Require Import Ergo.Backend.Model.ErgoBackendRuntime.
+Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
+Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
 
-Module JCodeGen(ergomodel:ErgoBackendModel).
+Module ECodeGen(ergomodel:ErgoBackendModel).
   (* NNRC *)
   Definition ergoc_expr := NNRC.nnrc.
 
@@ -53,5 +53,5 @@ Module JCodeGen(ergomodel:ErgoBackendModel).
         (fun e => NNRCtoJavaScript.nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname)
         (NNRC.nnrc_to_nnrc_core e).
 
-End JCodeGen.
+End ECodeGen.
 

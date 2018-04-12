@@ -19,26 +19,26 @@ Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Compiler.Driver.CompLang.
 
-Require Import Ergo.Backend.ForeignErgo.
-Require Import Ergo.Backend.ErgoBackend.
-Require Import Ergo.Common.Utils.JNames.
-Require Import Ergo.Common.Utils.JResult.
-Require Import Ergo.Common.CTO.CTO.
-Require Import Ergo.Ergo.Lang.ErgoBase.
-Require Import Ergo.Ergo.Lang.Ergo.
-Require Import Ergo.ErgoCalculus.Lang.ErgoCalculusCall.
-Require Import Ergo.Translation.ErgotoErgoCalculus.
-Require Import Ergo.Translation.ErgoCalculustoJavaScript.
+Require Import ErgoSpec.Backend.ForeignErgo.
+Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
+Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
+Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
 
 Section ErgotoJavaScript.
   Definition clause_calculus_from_package
-             (coname:string) (clname:string) (p:ergo_package) : jresult nnrc :=
+             (coname:string) (clname:string) (p:ergo_package) : eresult nnrc :=
     let pc := package_to_calculus p in
     jolift (lookup_clause_code_from_package coname clname) pc.
 
   (* Context *)
   Definition clause_code_from_package
-             (coname:string) (clname:string) (p:ergo_package) : jresult javascript :=
+             (coname:string) (clname:string) (p:ergo_package) : eresult javascript :=
     let pc := package_to_calculus p in
     jolift (javascript_of_clause_code_in_package coname clname) pc.
 
@@ -53,9 +53,9 @@ Section ErgotoJavaScript.
              (callparams:list (string * option cto_type)) :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
-    | None => jfailure (CompilationError "Parameter mismatch during dispatch")
+    | None => efailure (CompilationError "Parameter mismatch during dispatch")
     | Some _ =>
-      jsuccess (JFunCall cname (JVar v0 :: effparamrest))
+      esuccess (EFunCall cname (EVar v0 :: effparamrest))
     end.
 
   Definition case_of_sig
@@ -63,19 +63,19 @@ Section ErgotoJavaScript.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (s:signature) : jresult (match_case * ergo_expr) :=
+             (s:signature) : eresult (match_case * ergo_expr) :=
     let (cname, callparams) := s in
     match callparams with
-    | nil => jfailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
+    | nil => efailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
     | (param0,None)::otherparams =>
-      jfailure (CompilationError ("No parameter can be used for dispatch in "++cname))
+      efailure (CompilationError ("No parameter can be used for dispatch in "++cname))
     | (param0, Some (CTOClassRef type0))::otherparams =>
       jlift (fun x =>
                let type0 := brand_of_class_ref namespace type0 in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, Some _)::otherparams =>
-      jfailure (CompilationError ("Cannot dispatch on non-class type "++cname))
+      efailure (CompilationError ("Cannot dispatch on non-class type "++cname))
     end.
 
   Definition match_of_sigs
@@ -85,10 +85,10 @@ Section ErgotoJavaScript.
              (effparamrest:list ergo_expr)
              (ss:list signature) :=
     jlift (fun s =>
-             JMatch effparam0
+             EMatch effparam0
                      s
-                     (JThrow (mkClassRef None "Error"%string)
-                             (("message"%string,JConst (ErgoData.dstring ""))::nil)))
+                     (EThrow (mkClassRef None "Error"%string)
+                             (("message"%string, EConst (ErgoData.dstring ""))::nil)))
           (jmaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
   Definition dispatch_fun_name :=
@@ -99,19 +99,19 @@ Section ErgotoJavaScript.
              (effparams:list ergo_expr)
              (ss:list signature) :=
     match effparams with
-    | nil => jfailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
+    | nil => efailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
       let v0 := ("$"++dispatch_fun_name)%string in (** XXX To be worked on *)
       match_of_sigs namespace v0 effparam0 effparamrest ss
     end.
 
-  Definition add_dispatch_fun (oconame:option string) (p:ergo_package) : jresult ergo_package :=
+  Definition add_dispatch_fun (oconame:option string) (p:ergo_package) : eresult ergo_package :=
     let sigs := lookup_package_signatures_for_contract oconame p in
-    let effparams := JVar "request"%string :: nil in
+    let effparams := EVar "request"%string :: nil in
     let dispatch_fun_decl :=
         jlift
           (fun disp =>
-             (JFunc
+             (EFunc
                 (mkFunc dispatch_fun_name
                         (mkClosure
                            (("request"%string,None)::nil)
@@ -127,20 +127,20 @@ Section ErgotoJavaScript.
           dispatch_fun_decl.
 
   Definition javascript_from_package
-             (p:ergo_package) : jresult javascript :=
+             (p:ergo_package) : eresult javascript :=
     let pc := package_to_calculus p in
     jlift javascript_of_package_top pc.
 
   Definition cast_dispatch_to_classes request response :=
     match request, response with
     | CTOClassRef (mkClassRef None req), CTOClassRef (mkClassRef None resp) =>
-      jsuccess (req, resp)
-    | _, _ => jfailure (CompilationError ("Cannot dispatch on non-class types"))
+      esuccess (req, resp)
+    | _, _ => efailure (CompilationError ("Cannot dispatch on non-class types"))
     end.
   
   Definition javascript_from_package_with_dispatch
              (oconame:option string)
-             (p:ergo_package) : jresult javascript :=
+             (p:ergo_package) : eresult javascript :=
     let p := add_dispatch_fun oconame p in
     let pc := jolift package_to_calculus p in
     let f := jolift (lookup_dispatch dispatch_fun_name) pc in

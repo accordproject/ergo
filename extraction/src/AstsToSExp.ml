@@ -583,21 +583,21 @@ let sexp_to_cto_type (se:sexp) =
 
 let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
   begin match s with
-  | JType cto_decl ->
-    STerm ("JType",[class_ref_to_sexp cto_decl.cto_declaration_class;
+  | EType cto_decl ->
+    STerm ("EType",[class_ref_to_sexp cto_decl.cto_declaration_class;
                     cto_type_to_sexp cto_decl.cto_declaration_type])
-  | JExpr e ->
-      STerm ("JExpr",[expr_to_sexp e])
-  | JGlobal (v, e) ->
-      STerm ("JGlobal",[name_to_sexp v;expr_to_sexp e])
-  | JImport i ->
-      STerm ("JImport",[import_to_sexp i])
-  | JFunc f ->
+  | EExpr e ->
+      STerm ("EExpr",[expr_to_sexp e])
+  | EGlobal (v, e) ->
+      STerm ("EGlobal",[name_to_sexp v;expr_to_sexp e])
+  | EImport i ->
+      STerm ("EImport",[import_to_sexp i])
+  | EFunc f ->
       let fname = name_to_sexp f.func_name in
       let fclosure = closure_to_sexp expr_to_sexp f.func_closure in
-      STerm ("JFunc",[fname;fclosure])
-  | JContract c ->
-      STerm ("JContract",[contract_to_sexp expr_to_sexp c])
+      STerm ("EFunc",[fname;fclosure])
+  | EContract c ->
+      STerm ("EContract",[contract_to_sexp expr_to_sexp c])
   end
 let stmts_to_sexp (expr_to_sexp : 'a -> sexp) (ss:'a stmt list) =
   let sss = List.map (stmt_to_sexp expr_to_sexp) ss in
@@ -605,20 +605,20 @@ let stmts_to_sexp (expr_to_sexp : 'a -> sexp) (ss:'a stmt list) =
 
 let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
   begin match se with
-  | STerm ("JType",[soname; scto_type]) ->
-      JType (ErgoCompiler.mk_cto_declaration (sexp_to_class_ref soname) (sexp_to_cto_type scto_type))
-  | STerm ("JExpr",[se]) ->
-      JExpr (sexp_to_expr se)
-  | STerm ("JGlobal",[svname;se]) ->
-      JGlobal (sexp_to_name svname, sexp_to_expr se)
-  | STerm ("JImport",[si]) ->
-      JImport (sexp_to_import si)
-  | STerm ("JFunc",[sfname;sfclosure]) ->
-      JFunc
+  | STerm ("EType",[soname; scto_type]) ->
+      EType (ErgoCompiler.mk_cto_declaration (sexp_to_class_ref soname) (sexp_to_cto_type scto_type))
+  | STerm ("EExpr",[se]) ->
+      EExpr (sexp_to_expr se)
+  | STerm ("EGlobal",[svname;se]) ->
+      EGlobal (sexp_to_name svname, sexp_to_expr se)
+  | STerm ("EImport",[si]) ->
+      EImport (sexp_to_import si)
+  | STerm ("EFunc",[sfname;sfclosure]) ->
+      EFunc
 	{ func_name = sexp_to_name sfname;
 	  func_closure = sexp_to_closure sexp_to_expr sfclosure }
-  | STerm ("JContract",[sc]) ->
-      JContract (sexp_to_contract sexp_to_expr sc)
+  | STerm ("EContract",[sc]) ->
+      EContract (sexp_to_contract sexp_to_expr sc)
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside Stmt")
   end

@@ -17,10 +17,10 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import Ergo.Common.Utils.JNames.
-Require Import Ergo.Common.Utils.JResult.
-Require Import Ergo.Common.Utils.JError.
-Require Import Ergo.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EError.
+Require Import ErgoSpec.Common.CTO.CTO.
 
 Section ErgoBase.
   (* Type for plugged-in language *)
@@ -62,12 +62,12 @@ Section ErgoBase.
 
     (** Statement *)
     Inductive stmt :=
-    | JType : cto_declaration -> stmt
-    | JExpr : A -> stmt
-    | JGlobal : string -> A -> stmt
-    | JImport : string -> stmt
-    | JFunc : func -> stmt
-    | JContract : contract -> stmt.
+    | EType : cto_declaration -> stmt
+    | EExpr : A -> stmt
+    | EGlobal : string -> A -> stmt
+    | EImport : string -> stmt
+    | EFunc : func -> stmt
+    | EContract : contract -> stmt.
  
     (** Package. *)
     Record package :=
@@ -141,7 +141,7 @@ Section ErgoBase.
 
     Definition lookup_clause_from_statement (coname:string) (clname:string) (d:stmt) : option clause :=
       match d with
-      | JContract c => lookup_clause_from_contract coname clname c
+      | EContract c => lookup_clause_from_contract coname clname c
       | _ => None
       end.
 
@@ -177,25 +177,25 @@ Section ErgoBase.
     Fixpoint lookup_statements_signatures (sl:list stmt) : list signature :=
       match sl with
       | nil => nil
-      | JType _ :: sl' => lookup_statements_signatures sl'
-      | JExpr _ :: sl' => lookup_statements_signatures sl'
-      | JGlobal _ _ :: sl' => lookup_statements_signatures sl'
-      | JImport _ :: sl' => lookup_statements_signatures sl'
-      | JFunc f :: sl' =>
+      | EType _ :: sl' => lookup_statements_signatures sl'
+      | EExpr _ :: sl' => lookup_statements_signatures sl'
+      | EGlobal _ _ :: sl' => lookup_statements_signatures sl'
+      | EImport _ :: sl' => lookup_statements_signatures sl'
+      | EFunc f :: sl' =>
         (f.(func_name), f.(func_closure).(closure_params)) :: lookup_statements_signatures sl'
-      | JContract c :: sl' =>
+      | EContract c :: sl' =>
         lookup_contract_signatures c ++ lookup_statements_signatures sl'
       end.
     
     Fixpoint lookup_statements_signatures_for_contract (oconame:option string) (sl:list stmt) : list signature :=
       match sl with
       | nil => nil
-      | JType _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
-      | JExpr _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
-      | JGlobal _ _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
-      | JImport _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
-      | JFunc f :: sl' => lookup_statements_signatures_for_contract oconame sl'
-      | JContract c :: sl' =>
+      | EType _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | EExpr _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | EGlobal _ _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | EImport _ :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | EFunc f :: sl' => lookup_statements_signatures_for_contract oconame sl'
+      | EContract c :: sl' =>
         match oconame with
         | None =>
             lookup_contract_signatures c (* XXX Only returns signatures in first contract *)
@@ -214,22 +214,22 @@ Section ErgoBase.
     Definition lookup_package_signatures (p:package) : list signature :=
       lookup_statements_signatures p.(package_statements).
 
-    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : jresult (cto_type * cto_type * func) :=
+    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : eresult (cto_type * cto_type * func) :=
       match sl with
       | nil => dispatch_lookup_error
-      | JType _ :: sl' => lookup_statements_dispatch name sl'
-      | JExpr _ :: sl' => lookup_statements_dispatch name sl'
-      | JGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
-      | JImport _ :: sl' => lookup_statements_dispatch name sl'
-      | JFunc f :: sl' =>
+      | EType _ :: sl' => lookup_statements_dispatch name sl'
+      | EExpr _ :: sl' => lookup_statements_dispatch name sl'
+      | EGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
+      | EImport _ :: sl' => lookup_statements_dispatch name sl'
+      | EFunc f :: sl' =>
         if (string_dec f.(func_name) name)
         then
           let fclosure := f.(func_closure) in
           let request :=
               match fclosure.(closure_params) with
               | nil => dispatch_parameter_error
-              | (_,Some reqtype) :: _ => jsuccess reqtype
-              | _ :: _ => jsuccess (CTOClassRef (mkClassRef None "Request"%string))
+              | (_,Some reqtype) :: _ => esuccess reqtype
+              | _ :: _ => esuccess (CTOClassRef (mkClassRef None "Request"%string))
               end
           in
           let response :=
@@ -240,10 +240,10 @@ Section ErgoBase.
           in
           jlift (fun request => (request, response, f)) request
         else lookup_statements_dispatch name sl'
-      | JContract c :: sl' => lookup_statements_dispatch name sl'
+      | EContract c :: sl' => lookup_statements_dispatch name sl'
       end.
 
-    Definition lookup_dispatch (name:string) (p:package) : jresult (cto_type * cto_type * func) :=
+    Definition lookup_dispatch (name:string) (p:package) : eresult (cto_type * cto_type * func) :=
       lookup_statements_dispatch name p.(package_statements).
     
   End lookup.

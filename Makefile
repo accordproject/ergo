@@ -109,9 +109,9 @@ cleanall: Makefile.coq
 ##
 _CoqProject: Makefile.config
 ifneq ($(QCERT),)
-	(echo "-R mechanization Ergo -R $(QCERT)/coq Qcert";) > _CoqProject
+	(echo "-R mechanization ErgoSpec -R $(QCERT)/coq Qcert";) > _CoqProject
 else
-	(echo "-R mechanization Ergo";) > _CoqProject
+	(echo "-R mechanization ErgoSpec";) > _CoqProject
 endif
 
 Makefile.coq: _CoqProject Makefile $(FILES)

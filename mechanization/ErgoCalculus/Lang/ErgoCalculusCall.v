@@ -16,12 +16,12 @@ Require Import String.
 Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Utils.Lift.
-Require Import Ergo.Common.Utils.JNames.
-Require Import Ergo.Common.Utils.JResult.
-Require Import Ergo.Common.CTO.CTO.
-Require Import Ergo.Backend.ErgoBackend.
-Require Import Ergo.Ergo.Lang.ErgoBase.
-Require Import Ergo.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 
 Section Closure.
   Definition ergoc_expr_closure := @closure ergoc_expr.
@@ -89,14 +89,14 @@ Section ErgoCalculusCall.
 
   (** Looks up a function with its parameters. If the function exists and the number of parameters
       is correct, it returns a closed expression computing the call. *)
-  Definition lookup_call (t:lookup_table) (fname:string) (el:list ergoc_expr) : jresult ergoc_expr :=
+  Definition lookup_call (t:lookup_table) (fname:string) (el:list ergoc_expr) : eresult ergoc_expr :=
     match t fname with
-    | None => jfailure (CompilationError (call_error fname))
+    | None => efailure (CompilationError (call_error fname))
     | Some cl =>
       match zip_params (List.map fst cl.(closure_params)) el with
-      | None => jfailure (CompilationError (call_params_error fname))
+      | None => efailure (CompilationError (call_params_error fname))
       | Some params => 
-        jsuccess (create_call params cl.(closure_body))
+        esuccess (create_call params cl.(closure_body))
       end
     end.
     
@@ -106,14 +106,14 @@ Section ErgoCalculusCall.
              (t:lookup_table)
              (cref:class_ref)
              (fname:string)
-             (el:list ergoc_expr) : jresult ergoc_expr :=
+             (el:list ergoc_expr) : eresult ergoc_expr :=
     match t fname with
-    | None => jfailure (CompilationError (call_error fname))
+    | None => efailure (CompilationError (call_error fname))
     | Some cl =>
       match zip_params (List.map fst cl.(closure_params)) el with
-      | None => jfailure (CompilationError (call_params_error fname))
+      | None => efailure (CompilationError (call_params_error fname))
       | Some params => 
-        jsuccess (create_call params cl.(closure_body))
+        esuccess (create_call params cl.(closure_body))
       end
     end.
 

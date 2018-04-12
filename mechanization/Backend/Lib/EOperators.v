@@ -15,12 +15,12 @@
 Require Import Ascii.
 Require Import ZArith.
 Require Qcert.Common.Brands.BrandRelation.
-Require Import Ergo.Backend.Model.ErgoBackendModel.
-Require Import Ergo.Backend.Model.ErgoBackendRuntime.
-Require Import Ergo.Backend.Lib.JData.
+Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
+Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
+Require Import ErgoSpec.Backend.Lib.EData.
 
-Module JOperators(ergomodel:ErgoBackendModel).
-  Module ErgoData := JData.JData ergomodel.
+Module EOperators(ergomodel:ErgoBackendModel).
+  Module ErgoData := EData.EData ergomodel.
   
   Module Unary.
     Definition op : Set  
@@ -191,5 +191,5 @@ Module JOperators(ergomodel:ErgoBackendModel).
   (* Note that foreign operators should be encapuslated and 
        exported as part of the model *)
   End Binary.
-End JOperators.
+End EOperators.
 

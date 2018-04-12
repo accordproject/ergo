@@ -16,10 +16,10 @@
 
 Require Import String.
 Require Import List.
-Require Import Ergo.Common.Utils.JResult.
-Require Import Ergo.Ergo.Lang.ErgoBase.
-Require Import Ergo.ErgoCalculus.Lang.ErgoCalculus.
-Require Import Ergo.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoCalculustoJavaScript.
 
@@ -28,9 +28,9 @@ Section ErgoCalculustoJavaScript.
     CompilationError msg.
     
   Definition lookup_clause_code_from_package
-             (coname:string) (clname:string) (p:ergoc_package) : jresult ergoc_expr :=
+             (coname:string) (clname:string) (p:ergoc_package) : eresult ergoc_expr :=
     let clause := lookup_clause_from_package coname clname p in
-    jresult_of_option (code_from_clause clause) (lookup_error coname clname).
+    eresult_of_option (code_from_clause clause) (lookup_error coname clname).
 
   Section translate.
     (* Context *)
@@ -178,13 +178,13 @@ Section ErgoCalculustoJavaScript.
         * nat                                (* next available unused temporary *)
       :=
         match s with
-        | JType _ =>  ("","",t)
-        | JExpr e => javascript_of_expression e t i eol quotel
-        | JGlobal v e => javascript_of_global v e t i eol quotel
-        | JImport _ => ("","",t)
-        | JFunc f =>
+        | EType _ =>  ("","",t)
+        | EExpr e => javascript_of_expression e t i eol quotel
+        | EGlobal v e => javascript_of_global v e t i eol quotel
+        | EImport _ => ("","",t)
+        | EFunc f =>
           (javascript_function_of_ergo_func f None eol quotel,"null",t)
-        | JContract c =>
+        | EContract c =>
           (javascript_of_contract c eol quotel,"null",t)
         end.
 
@@ -246,7 +246,7 @@ Section ErgoCalculustoJavaScript.
       javascript_of_package_with_dispatch request response f ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
 
     Definition javascript_of_clause_code_in_package
-               (coname:string) (clname:string) (p:ergoc_package) : jresult ErgoCodeGen.ergoc_javascript :=
+               (coname:string) (clname:string) (p:ergoc_package) : eresult ErgoCodeGen.ergoc_javascript :=
       let expr_opt := lookup_clause_code_from_package coname clname p in
       jlift (fun e =>
                let fname := function_name_of_contract_clause_name (Some coname) clname in

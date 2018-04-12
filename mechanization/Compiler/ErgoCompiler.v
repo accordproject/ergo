@@ -14,17 +14,17 @@
 
 Require String.
 
-Require Ergo.Version.
-Require Ergo.Common.Utils.JNames.
-Require Ergo.Common.Utils.JResult.
-Require Ergo.Common.CTO.CTO.
-Require Ergo.Ergo.Lang.Ergo.
-Require Ergo.Ergo.Lang.ErgoSugar.
-Require Ergo.ErgoCalculus.Lang.ErgoCalculus.
-Require Ergo.ErgoCalculus.Lang.ErgoCalculusCall.
-Require Ergo.Translation.ErgotoErgoCalculus.
-Require Ergo.Translation.ErgotoJavaScript.
-Require Ergo.Backend.ErgoBackend.
+Require ErgoSpec.Version.
+Require ErgoSpec.Backend.ErgoBackend.
+Require ErgoSpec.Common.Utils.ENames.
+Require ErgoSpec.Common.Utils.EResult.
+Require ErgoSpec.Common.CTO.CTO.
+Require ErgoSpec.Ergo.Lang.Ergo.
+Require ErgoSpec.Ergo.Lang.ErgoSugar.
+Require ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
+Require ErgoSpec.Translation.ErgotoErgoCalculus.
+Require ErgoSpec.Translation.ErgotoJavaScript.
 
 Module ErgoCompiler.
 
@@ -35,9 +35,9 @@ Module ErgoCompiler.
 
   (** CTO *)
   Definition cto_class : Set
-    := JNames.class_ref.
+    := ENames.class_ref.
   Definition mk_class_ref : option String.string -> String.string -> cto_class
-    := JNames.mkClassRef.
+    := ENames.mkClassRef.
 
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
@@ -84,53 +84,53 @@ Module ErgoCompiler.
   Definition ergo_expr : Set 
     := Ergo.ergo_expr.
 
-  Definition jvar : String.string -> ergo_expr
-    := Ergo.JVar.
+  Definition evar : String.string -> ergo_expr
+    := Ergo.EVar.
 
-  Definition jcasevalue : Data.data -> Ergo.match_case_kind := Ergo.CaseValue.
-  Definition jcasetype : String.string -> Ergo.match_case_kind := Ergo.CaseType.
+  Definition ecasevalue : Data.data -> Ergo.match_case_kind := Ergo.CaseValue.
+  Definition ecasetype : String.string -> Ergo.match_case_kind := Ergo.CaseType.
 
-  Definition jconst : Data.data -> ergo_expr := Ergo.JConst.
-  Definition jarray : list ergo_expr -> ergo_expr := Ergo.JArray.
-  Definition junaryop : Ops.Unary.op -> ergo_expr -> ergo_expr
-    := Ergo.JUnaryOp.
-  Definition jbinaryop : Ops.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr 
-    := Ergo.JBinaryOp.
-  Definition jif : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr 
-    := Ergo.JIf.
-  Definition jenforce (e1 e2 e3:ergo_expr) 
-    := Ergo.JEnforce e1 (Some e2) e3.
-  Definition jenforce_default_fail (e1 e3:ergo_expr) 
-    := Ergo.JEnforce e1 None e3.
-  Definition jlet (v:String.string) (e1 e2:ergo_expr) : ergo_expr
-    := Ergo.JLet v None e1 e2.
-  Definition jlet_typed (v:String.string) (t:CTO.cto_type) (e1 e2:ergo_expr) : ergo_expr
-    := Ergo.JLet v (Some t) e1 e2.
-  Definition jfor : String.string -> ergo_expr -> option ergo_expr -> ergo_expr -> ergo_expr
-    := Ergo.JFor.
-  Definition jfuncall : String.string -> list ergo_expr -> ergo_expr
-    := Ergo.JFunCall.
-  Definition jmatch : ergo_expr -> list (Ergo.match_case * ergo_expr) -> ergo_expr -> ergo_expr
-    := Ergo.JMatch.
-  Definition jrecord : list (String.string * ergo_expr) -> ergo_expr 
-    := Ergo.JRecord.
+  Definition econst : Data.data -> ergo_expr := Ergo.EConst.
+  Definition earray : list ergo_expr -> ergo_expr := Ergo.EArray.
+  Definition eunaryop : Ops.Unary.op -> ergo_expr -> ergo_expr
+    := Ergo.EUnaryOp.
+  Definition ebinaryop : Ops.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr 
+    := Ergo.EBinaryOp.
+  Definition eif : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr 
+    := Ergo.EIf.
+  Definition eenforce (e1 e2 e3:ergo_expr) 
+    := Ergo.EEnforce e1 (Some e2) e3.
+  Definition eenforce_default_fail (e1 e3:ergo_expr) 
+    := Ergo.EEnforce e1 None e3.
+  Definition elet (v:String.string) (e1 e2:ergo_expr) : ergo_expr
+    := Ergo.ELet v None e1 e2.
+  Definition elet_typed (v:String.string) (t:CTO.cto_type) (e1 e2:ergo_expr) : ergo_expr
+    := Ergo.ELet v (Some t) e1 e2.
+  Definition efor : String.string -> ergo_expr -> option ergo_expr -> ergo_expr -> ergo_expr
+    := Ergo.EFor.
+  Definition efuncall : String.string -> list ergo_expr -> ergo_expr
+    := Ergo.EFunCall.
+  Definition ematch : ergo_expr -> list (Ergo.match_case * ergo_expr) -> ergo_expr -> ergo_expr
+    := Ergo.EMatch.
+  Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
+    := Ergo.ERecord.
 
-  Definition jdot : String.string -> ergo_expr -> ergo_expr 
-    := ErgoSugar.JDot.
-  Definition jreturn : ergo_expr -> ergo_expr
-    := ErgoSugar.JReturn.
-  Definition jreturnsetstate : ergo_expr -> ergo_expr -> ergo_expr
-    := ErgoSugar.JReturnSetState.
-  Definition jnew : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
-    := ErgoSugar.JNewSugar.
-  Definition jthrow : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
-    := ErgoSugar.JThrowSugar.
-  Definition jthis_contract : ergo_expr
-    := Ergo.JThisContract.
-  Definition jthis_clause : ergo_expr
-    := Ergo.JThisClause.
-  Definition jthis_state : ergo_expr
-    := Ergo.JThisState.
+  Definition edot : String.string -> ergo_expr -> ergo_expr 
+    := ErgoSugar.EDot.
+  Definition ereturn : ergo_expr -> ergo_expr
+    := ErgoSugar.EReturn.
+  Definition ereturnsetstate : ergo_expr -> ergo_expr -> ergo_expr
+    := ErgoSugar.EReturnSetState.
+  Definition enew : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
+    := ErgoSugar.ENewSugar.
+  Definition ethrow : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
+    := ErgoSugar.EThrowSugar.
+  Definition ethis_contract : ergo_expr
+    := Ergo.EThisContract.
+  Definition ethis_clause : ergo_expr
+    := Ergo.EThisClause.
+  Definition ethis_state : ergo_expr
+    := Ergo.EThisState.
 
   (** Ergo Calculus *)
   Definition ergoc_package : Set 
@@ -146,19 +146,19 @@ Module ErgoCompiler.
 
   (** Compilation *)
   Definition clause_calculus_from_ergo_package :
-    String.string -> String.string -> ergo_package -> JResult.jresult NNRC.nnrc
+    String.string -> String.string -> ergo_package -> EResult.eresult NNRC.nnrc
     := ErgotoJavaScript.clause_calculus_from_package.
 
   Definition clause_code_from_ergo_package :
-    String.string -> String.string -> ergo_package -> JResult.jresult JavaScript.javascript
+    String.string -> String.string -> ergo_package -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.clause_code_from_package.
 
   Definition ergo_calculus_package_from_ergo_package :
-    ergo_package -> JResult.jresult ergoc_package
+    ergo_package -> EResult.eresult ergoc_package
     := ErgotoErgoCalculus.package_to_calculus.
 
   Definition clause_code_from_ergoc_package :
-    String.string -> String.string -> ergoc_package -> JResult.jresult JavaScript.javascript
+    String.string -> String.string -> ergoc_package -> EResult.eresult JavaScript.javascript
     := ErgoCalculustoJavaScript.javascript_of_clause_code_in_package.
 
   Definition javascript_from_ergoc_package :
@@ -166,11 +166,11 @@ Module ErgoCompiler.
     := ErgoCalculustoJavaScript.javascript_of_package_top.
 
   Definition javascript_from_ergo_package :
-    ergo_package -> JResult.jresult JavaScript.javascript
+    ergo_package -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.javascript_from_package.
 
   Definition javascript_from_ergo_package_with_dispatch :
-    option String.string -> ergo_package -> JResult.jresult JavaScript.javascript
+    option String.string -> ergo_package -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.javascript_from_package_with_dispatch.
 
 End ErgoCompiler.

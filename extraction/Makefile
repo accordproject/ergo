@@ -54,9 +54,9 @@ extracted/StaticConfig.ml:
 extracted/ErgoComp.ml extracted/ErgoComp.mli: $(VO_FILES)
 	mkdir -p extracted
 ifneq ($(QCERT),)
-	(cd extracted; coqc -R ../../mechanization Ergo -R ../../$(QCERT)/coq Qcert ../ErgoExtraction.v)
+	(cd extracted; coqc -R ../../mechanization ErgoSpec -R ../../$(QCERT)/coq Qcert ../ErgoExtraction.v)
 else
-	(cd extracted; coqc -R ../../mechanization Ergo ../ErgoExtraction.v)
+	(cd extracted; coqc -R ../../mechanization ErgoSpec ../ErgoExtraction.v)
 endif
 
 ## ATDs
