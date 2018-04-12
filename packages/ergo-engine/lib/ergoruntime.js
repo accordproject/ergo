@@ -289,9 +289,11 @@ function bmax(b1, b2) {
 function sub_brand(b1,b2) {
     var bsub=null;
     var bsup=null;
-    for (var i=0; i<inheritance.length; i++) {
-	bsub = inheritance[i].sub;
-	bsup = inheritance[i].sup;
+    var inh = []
+    if (inheritance) { inh = inheritance; };
+    for (var i=0; i<inh.length; i++) {
+	bsub = inh[i].sub;
+	bsup = inh[i].sup;
 	if ((b1 == bsub) && (b2 == bsup)) return true;
     }
     return false;
