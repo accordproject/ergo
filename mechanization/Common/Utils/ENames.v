@@ -15,22 +15,29 @@
 Section ENames.
   Require Import String.
   Local Open Scope string.
-  
-  Definition namespace_ref := option string.
 
-  Record class_ref :=
-    mkClassRef
-      { class_namespace : namespace_ref;
-        class_name : string; }.
+  Section ScopedNames.
+    Definition namespace_ref := option string.
 
-  Definition brand_of_class_ref (local_namespace:option string) (cr:class_ref) :=
-    match cr.(class_namespace) with
-    | None =>
-      match local_namespace with
-      | None => cr.(class_name)
-      | Some namespace => namespace ++ "." ++ cr.(class_name)
-      end
-    | Some ref_package => ref_package ++ "." ++ cr.(class_name)
-    end.
+    Record class_ref :=
+      mkClassRef
+        { class_namespace : namespace_ref;
+          class_name : string; }.
 
+  End ScopedNames.
+
+  Section AbsoluteNames.
+    Definition absolute_ref := string.
+
+    Definition absolute_ref_of_class_ref (local_namespace:option string) (cr:class_ref) :=
+      match cr.(class_namespace) with
+      | None =>
+        match local_namespace with
+        | None => cr.(class_name)
+        | Some namespace => namespace ++ "." ++ cr.(class_name)
+        end
+      | Some ref_package => ref_package ++ "." ++ cr.(class_name)
+      end.
+  End AbsoluteNames.    
+    
 End ENames.

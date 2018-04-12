@@ -47,13 +47,13 @@ Section CTO.
   Record cto_package :=
     mkCTOPackage
       { cto_package_namespace : string;
+        cto_package_imports : list string;
         cto_package_declarations : list cto_declaration; }.
 
   Section Semantics.
     (** A semantics for CTO packages is obtained through translation
         into branded types. *)
-
-    Program Fixpoint cto_type_to_jtype {m:brand_relation} (scope:option string) (t:cto_type) :=
+    Program Fixpoint cto_type_to_etype {m:brand_relation} (scope:option string) (t:cto_type) : ErgoType.etype :=
       match t with
       | CTOBoolean => ErgoType.bool
       | CTOString => ErgoType.string
@@ -62,19 +62,19 @@ Section CTO.
       | CTOInteger => ErgoType.nat
       | CTODateTime => ErgoType.unit
       | CTOClassRef cr =>
-        ErgoType.brand ((brand_of_class_ref scope cr)::nil)
+        ErgoType.brand ((absolute_ref_of_class_ref scope cr)::nil)
       | CTOOption t =>
-        ErgoType.option (cto_type_to_jtype scope t)
+        ErgoType.option (cto_type_to_etype scope t)
       | CTORecord rtl =>
         ErgoType.record
           ErgoType.open_kind
-          (rec_sort (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl))
+          (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype scope (snd xy))) rtl))
           (rec_sort_sorted
-             (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl)
-             (rec_sort (List.map (fun xy => (fst xy, cto_type_to_jtype scope (snd xy))) rtl))
+             (List.map (fun xy => (fst xy, cto_type_to_etype scope (snd xy))) rtl)
+             (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype scope (snd xy))) rtl))
              eq_refl)
       | CTOArray t =>
-        ErgoType.bag (cto_type_to_jtype scope t)
+        ErgoType.bag (cto_type_to_etype scope t)
       end.
 
   End Semantics.

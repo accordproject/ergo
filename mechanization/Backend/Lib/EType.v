@@ -33,47 +33,47 @@ Module EType(ergomodel:ErgoBackendModel).
   Definition closed_kind : record_kind
     := RType.Closed.
 
-  Definition jtype_struct {m:brand_relation} : Set
+  Definition etype_struct {m:brand_relation} : Set
     := RType.rtype₀.
-  Definition jtype {m:brand_relation} : Set
+  Definition etype {m:brand_relation} : Set
     := RType.rtype.
   Definition t {m:brand_relation} : Set
-    := jtype.
+    := etype.
 
   Definition sorted_pf_type {m:brand_relation} srl
-      := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string jtype srl) = true.
+      := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string etype srl) = true.
 
-  Definition bottom {m:brand_relation} : jtype
+  Definition bottom {m:brand_relation} : etype
     := RType.Bottom.  
-  Definition top {m:brand_relation} : jtype
+  Definition top {m:brand_relation} : etype
     := RType.Top.
-  Definition unit {m:brand_relation} : jtype
+  Definition unit {m:brand_relation} : etype
     := RType.Unit.
-  Definition float {m:brand_relation} : jtype
+  Definition float {m:brand_relation} : etype
     := RType.Float.
-  Definition nat {m:brand_relation} : jtype
+  Definition nat {m:brand_relation} : etype
     := RType.Nat.
-  Definition bool {m:brand_relation} : jtype
+  Definition bool {m:brand_relation} : etype
     := RType.Bool.
-  Definition string {m:brand_relation} : jtype
+  Definition string {m:brand_relation} : etype
     := RType.String.
-  Definition bag {m:brand_relation} : jtype -> jtype
+  Definition bag {m:brand_relation} : etype -> etype
     := RType.Coll.
-  Definition record {m:brand_relation} : record_kind -> forall (r:list (String.string*jtype)), sorted_pf_type r -> jtype
+  Definition record {m:brand_relation} : record_kind -> forall (r:list (String.string*etype)), sorted_pf_type r -> etype
     := RType.Rec.
-  Definition either {m:brand_relation} : jtype -> jtype -> jtype
+  Definition either {m:brand_relation} : etype -> etype -> etype
     := RType.Either.
-  Definition arrow {m:brand_relation} : jtype -> jtype -> jtype
+  Definition arrow {m:brand_relation} : etype -> etype -> etype
     := RType.Arrow.
-  Definition brand {m:brand_relation} : list String.string -> jtype 
+  Definition brand {m:brand_relation} : list String.string -> etype 
     := RType.Brand.
 
-  Definition option {m:brand_relation} : jtype -> jtype
+  Definition option {m:brand_relation} : etype -> etype
     := RType.Option.
   
   (* Additional support for brand models extraction -- will have to be tested/consolidated *)
 
-  Definition brand_context_type {m:brand_relation} : Set := (String.string*jtype).
+  Definition brand_context_type {m:brand_relation} : Set := (String.string*etype).
   
   Definition brand_relation : Set := brand_relation.
   Definition make_brand_relation := Schema.mk_brand_relation.

@@ -214,7 +214,7 @@ Section ErgotoJavaScript.
               (ergo_expr_to_calculus ctxt e2)
     | ENew cr nil =>
       esuccess
-        (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
+        (new_expr (absolute_ref_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
     | ENew cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
@@ -225,7 +225,7 @@ Section ErgotoJavaScript.
           jlift2 (NNRCBinop OpRecConcat)
                  (jlift (NNRCUnop (OpRec attname)) e) acc
       in
-      jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
+      jlift (new_expr (absolute_ref_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
     | ERecord nil =>
       esuccess
         (NNRCConst (drec nil))
@@ -241,7 +241,7 @@ Section ErgotoJavaScript.
       in
       fold_left proc_one rest init_rec
     | EThrow cr nil =>
-      esuccess (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
+      esuccess (new_expr (absolute_ref_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
     | EThrow cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
@@ -253,7 +253,7 @@ Section ErgotoJavaScript.
                  (jlift (NNRCUnop (OpRec attname)) e)
                  acc
       in
-      jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
+      jlift (new_expr (absolute_ref_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
     | EFunCall fname el =>
       let init_el := esuccess nil in
       let proc_one (e:ergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=

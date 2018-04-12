@@ -71,7 +71,7 @@ Section ErgotoJavaScript.
       efailure (CompilationError ("No parameter can be used for dispatch in "++cname))
     | (param0, Some (CTOClassRef type0))::otherparams =>
       jlift (fun x =>
-               let type0 := brand_of_class_ref namespace type0 in
+               let type0 := absolute_ref_of_class_ref namespace type0 in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, Some _)::otherparams =>

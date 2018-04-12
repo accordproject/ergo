@@ -69,7 +69,7 @@ Module ErgoCompiler.
 
   Definition mk_cto_declaration : cto_class -> CTO.cto_declaration_kind -> CTO.cto_declaration
     := CTO.mkCTODeclaration.
-  Definition mk_cto_package : String.string -> list CTO.cto_declaration -> CTO.cto_package
+  Definition mk_cto_package : String.string -> list String.string -> list CTO.cto_declaration -> CTO.cto_package
     := CTO.mkCTOPackage.
   
   (** Ergo *)

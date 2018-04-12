@@ -82,9 +82,14 @@ let cto_declaration_of_defn d =
 let cto_declarations_of_body dl =
   List.map cto_declaration_of_defn dl
 
+let cto_import_of_import i =
+  char_list_of_string i.cto_import_namespace
+
 let cto_import (m:model) : cto_package =
   let namespace = char_list_of_string m.cto_namespace in
+  let imports = List.map cto_import_of_import m.cto_imports in
   let decls = cto_declarations_of_body m.cto_body in
   { cto_package_namespace = namespace;
+    cto_package_imports = imports;
     cto_package_declarations = decls; }
 
