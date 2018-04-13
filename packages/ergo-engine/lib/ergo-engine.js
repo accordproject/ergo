@@ -29,6 +29,46 @@ const {
  */
 class ErgoEngine {
     /**
+     * Link runtime to compiled Ergo code
+     *
+     * @param {string} ergoCode compiled Ergo code in JavaScript
+     * @returns {string} compiled Ergo code in JavaScript linked to Ergo runtime
+     */
+    static linkErgoRuntime(ergoCode) {
+        const ergoRuntime = Fs.readFileSync(Path.join(__dirname,'ergoruntime.js'), 'utf8');
+        return ergoRuntime + '\n' + ergoCode;
+    }
+
+    /**
+     * Execute compiled Ergo code
+     *
+     * @param {string} ergoCode JavaScript code for ergo logic
+     * @param {object} contractJson the contract data in JSON
+     * @param {object} requestJson the request transaction in JSON
+     * @param {object} stateJson the state in JSON
+     * @param {string} contractName of the contract to execute
+     * @param {string} clauseName of the clause to execute
+     * @returns {object} Promise to the result of execution
+     */
+    static executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName,clauseName) {
+        const vm = new VM({
+            timeout: 1000,
+            sandbox: { moment: Moment }
+        });
+
+        // add immutables to the context
+        const linkedErgoCode = this.linkErgoRuntime(ergoCode);
+        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'now': Moment() };
+        vm.freeze(params, 'params'); // Add the context
+        vm.run(linkedErgoCode); // Load the generated logic
+        const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
+        const functionName = 'contract.' + clauseName;
+        const clauseCall = functionName+'(params);'; // Create the clause call
+        const res = vm.run(contract + clauseCall); // Call the logic
+        return Promise.resolve(res);
+    }
+
+    /**
      * Execute Ergo
      *
      * @param {string} ergoText text for Ergo code
@@ -42,24 +82,8 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch) {
-        const ergoRuntime = Fs.readFileSync(Path.join(__dirname,'ergoruntime.js'), 'utf8');
-
-        const vm = new VM({
-            timeout: 1000,
-            sandbox: { moment: Moment }
-        });
-
         return (Ergo.compile(ergoText,ctoTexts,null,null,withDispatch)).then((ergoCode) => {
-            // add immutables to the context
-            const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'now': Moment() };
-            vm.freeze(params, 'params'); // Add the context
-            vm.run(ergoRuntime); // Load the runtime
-            vm.run(ergoCode); // Load the generated logic
-            const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
-            const functionName = 'contract.' + clauseName;
-            const clauseCall = functionName+'(params);'; // Create the clause call
-            const res = vm.run(contract + clauseCall); // Call the logic
-            return res;
+            return this.executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName,clauseName);
         });
     }
 }
