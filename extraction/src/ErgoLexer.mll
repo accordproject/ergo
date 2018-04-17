@@ -58,13 +58,6 @@
 	  "with", WITH;
           "or", OR;
           "and", AND;
-	  (* Functions *)
-	  "flatten", FLATTEN;
-	  "avg", AVG;
-	  "sum", SUM;
-          "count", COUNT;
-	  "min", MIN;
-	  "max", MAX;
 	  (* Data *)
 	  "true", TRUE;
 	  "false", FALSE;
