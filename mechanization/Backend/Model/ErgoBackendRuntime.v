@@ -119,6 +119,9 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
           | "min" => Some OpFloatBagMin
           | "flatten" => Some OpFlatten
           | "toString" => Some OpToString
+          | "count" => Some OpCount
+          | "avg" => Some OpFloatMean
+          | "sum" => Some OpFloatSum
           | _ => None
           end
       in

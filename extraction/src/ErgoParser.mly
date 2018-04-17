@@ -34,8 +34,6 @@
 %token MATCH TYPEMATCH WITH
 
 %token OR AND NOT
-%token FLATTEN
-%token AVG SUM COUNT MIN MAX
 
 %token NIL
 %token TRUE FALSE
@@ -287,21 +285,9 @@ expr:
     { ErgoCompiler.efor v e1 None e2 }
 | FOR v = ident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
     { ErgoCompiler.efor v e1 (Some econd) e2 }
-(* Functions *)
+(* Unary operators *)
 | NOT e = expr
     { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg e }
-| FLATTEN LPAREN e = expr RPAREN
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opflatten e }
-| AVG LPAREN e = expr RPAREN
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opnummean e }
-| SUM LPAREN e = expr RPAREN
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opsum e }
-| COUNT LPAREN e = expr RPAREN
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opcount e }
-| MAX LPAREN e = expr RPAREN
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opnummax e }
-| MIN LPAREN e = expr RPAREN
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opnummin e }
 (* Binary operators *)
 | e1 = expr EQUAL e2 = expr
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opequal e1 e2 }
@@ -454,13 +440,6 @@ safeident_base:
 | WITH { "with" }
 | OR { "or" }
 | AND { "and" }
-| NOT { "not" }
-| FLATTEN { "flatten" }
-| AVG { "avg" }
-| SUM { "sum" }
-| COUNT { "count" }
-| MIN { "min" }
-| MAX { "max" }
 | NIL { "nil" }
 | TRUE { "true" }
 | FALSE { "false" }
