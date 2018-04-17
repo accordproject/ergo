@@ -97,6 +97,7 @@ Before you submit your pull request consider the following guidelines:
 
 * Create your patch commit, **including appropriate test cases**.
 * Follow our [Coding Rules](developers/#rules).
+* All commits require DCO sign-off
 * If the changes affect public APIs, change or add relevant [documentation](developers/#documentation).
 * Run the [unit](developers/#unit-tests) and [E2E test](developers/#e2e-tests) suites, and ensure that all tests
 
