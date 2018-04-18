@@ -46,7 +46,7 @@ Language
 
 The language design and syntax are still in flux. A few notes on the
 current syntax can be found in the
-[Language Guide](Language.rst).
+[Language Guide](Language.html).
 
 Compiler
 --------
@@ -63,7 +63,7 @@ A large part of the source code for the Ergo compiler is based on a
 mechanization in Coq from which part of the compiler is extracted. A
 browsable version of the Coq code (generated using
 [coq2html](https://github.com/xavierleroy/coq2html)) is available in
-[specification](Specification.md).
+[specification](Specification.html).
 
 Ultimately, one of our goals is to provide a full formal semantics for
 Ergo in Coq, and prove correct as much of the compilation pipeline as
