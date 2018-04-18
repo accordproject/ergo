@@ -1,0 +1,50 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.Common.Utils.ENames</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.Common.Utils.ENames" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.Common.Utils.ENames</h1>
+<div class="coq">
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="ENames">ENames</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Local</span> <span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">string</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="ENames.ScopedNames">ScopedNames</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="namespace_ref">namespace_ref</a></span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="class_ref">class_ref</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="mkClassRef">mkClassRef</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id"><a name="class_namespace">class_namespace</a></span> : <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#namespace_ref">namespace_ref</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="class_name">class_name</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>; }.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#ENames.ScopedNames">ScopedNames</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="ENames.AbsoluteNames">AbsoluteNames</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="absolute_ref">absolute_ref</a></span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="absolute_ref_of_class_ref">absolute_ref_of_class_ref</a></span> (<span class="id">local_namespace</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>) (<span class="id">cr</span>:<span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#class_ref">class_ref</a></span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#cr">cr</a></span>.(<span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#class_namespace">class_namespace</a></span>) <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#local_namespace">local_namespace</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> =&gt; <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#cr">cr</a></span>.(<span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#class_name">class_name</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">namespace</span> =&gt; <span class="id">namespace</span> ++ "." ++ <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#cr">cr</a></span>.(<span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#class_name">class_name</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">ref_package</span> =&gt; <span class="id">ref_package</span> ++ "." ++ <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#cr">cr</a></span>.(<span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#class_name">class_name</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#ENames.AbsoluteNames">AbsoluteNames</a></span>.    <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#ENames">ENames</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

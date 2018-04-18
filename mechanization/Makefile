@@ -26,6 +26,6 @@ GLOB_FILES = $(MODULES:%=%.glob)
 documentation: $(GLOB_FILES) $(COQ_FILES)
 	mkdir -p ../docs/_static/specification
 	rm -f ../docs/_static/specification/*.html
-	coq2html -d ../docs/_static/specification -external https://querycert.github.io/html Qcert -base Ergo $^
+	coq2html -d ../docs/_static/specification -external https://querycert.github.io/html Qcert -base ErgoSpec $^
 
 .PHONY: documentation
