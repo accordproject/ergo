@@ -71,7 +71,7 @@ Documentation is work in progress. The latest documentation release is available
 
 ## License
 
-Ergo is distributed under the terms of the Apache 2.0 License, see [LICENSE](https://github.com/accordproject/ergo/tree/222afd03ba7533f77af4b8a3949f599dde434ced/LICENSE/README.md)
+Ergo is distributed under the terms of the Apache 2.0 License, see [LICENSE](https://github.com/accordproject/ergo/blob/master/LICENSE)
 
 Copyright 2018 Clause, Inc.
 
