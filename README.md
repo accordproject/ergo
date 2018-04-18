@@ -56,7 +56,7 @@ To compile and _execute_ a given clause in a contract:
 
 ```text
 $ ergoc execute --ergo ./examples/volumediscount/logic.ergo --contractname VolumeDiscount --clausename volumediscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json --cto ./examples/volumediscount/model.cto
-{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}
+{"response":{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"},"state":{"$class":"org.accordproject.contract.State","status":"EXECUTORY"}}
 ```
 
 ## Documentation

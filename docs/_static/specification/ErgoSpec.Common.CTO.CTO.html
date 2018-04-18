@@ -1,0 +1,87 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.Common.CTO.CTO</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.Common.CTO.CTO" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.Common.CTO.CTO</h1>
+<div class="coq">
+<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="CTO">CTO</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Utils.html">Qcert.Utils.Utils</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.TypingRuntime.html">Qcert.Common.TypingRuntime</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html">ErgoSpec.Backend.ErgoBackend</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html">ErgoSpec.Common.Utils.ENames</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="cto_type">cto_type</a></span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOBoolean">CTOBoolean</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                             <span class="docright">(* bool atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOString">CTOString</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                              <span class="docright">(* string atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTODouble">CTODouble</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                              <span class="docright">(* double atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOLong">CTOLong</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                                <span class="docright">(* long atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOInteger">CTOInteger</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                             <span class="docright">(* integer atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTODateTime">CTODateTime</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                            <span class="docright">(* date and time atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOClassRef">CTOClassRef</a></span> : <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#class_ref">class_ref</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>               <span class="docright">(* class reference  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOOption">CTOOption</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                  <span class="docright">(* optional type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTORecord">CTORecord</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>*<span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>) -&gt; <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>    <span class="docright">(* record type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOArray">CTOArray</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>.                  <span class="docright">(* array type  *)</span><br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="cto_declaration_kind">cto_declaration_kind</a></span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOEnum">CTOEnum</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOTransaction">CTOTransaction</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> * <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>) -&gt; <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOConcept">CTOConcept</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> * <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>) -&gt; <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="cto_declaration">cto_declaration</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="mkCTODeclaration">mkCTODeclaration</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id"><a name="cto_declaration_class">cto_declaration_class</a></span> : <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#class_ref">class_ref</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="cto_declaration_type">cto_declaration_type</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_declaration_kind">cto_declaration_kind</a></span>; }.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="cto_package">cto_package</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="mkCTOPackage">mkCTOPackage</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id"><a name="cto_package_namespace">cto_package_namespace</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="cto_package_imports">cto_package_imports</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="cto_package_declarations">cto_package_declarations</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_declaration">cto_declaration</a></span>; }.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="CTO.Semantics">Semantics</a></span>.<br/>
+<div class="doc">A semantics for CTO packages is obtained through translation
+        into branded types. </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Program</span> <span class="kwd">Fixpoint</span> <span class="id"><a name="cto_type_to_etype">cto_type_to_etype</a></span> {<span class="id">m</span>:<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Brands.BrandRelation.html#brand_relation">brand_relation</a></span>} (<span class="id">scope</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>) (<span class="id">t</span>:<span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>) : <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.etype">ErgoType.etype</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#t">t</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOBoolean">CTOBoolean</a></span> =&gt; <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.bool">ErgoType.bool</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOString">CTOString</a></span> =&gt; <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.string">ErgoType.string</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTODouble">CTODouble</a></span> =&gt; <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.float">ErgoType.float</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOLong">CTOLong</a></span> =&gt; <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.nat">ErgoType.nat</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOInteger">CTOInteger</a></span> =&gt; <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.nat">ErgoType.nat</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTODateTime">CTODateTime</a></span> =&gt; <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.unit">ErgoType.unit</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOClassRef">CTOClassRef</a></span> <span class="id">cr</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.brand">ErgoType.brand</a></span> ((<span class="id"><a href="ErgoSpec.Common.Utils.ENames.html#absolute_ref_of_class_ref">absolute_ref_of_class_ref</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#scope">scope</a></span> <span class="id">cr</span>)::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOOption">CTOOption</a></span> <span class="id">t</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.option">ErgoType.option</a></span> (<span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type_to_etype">cto_type_to_etype</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#scope">scope</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#t">t</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTORecord">CTORecord</a></span> <span class="id">rtl</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.record">ErgoType.record</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.open_kind">ErgoType.open_kind</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Bindings.html#rec_sort">rec_sort</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">List.map</a></span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#xy">xy</a></span>, <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type_to_etype">cto_type_to_etype</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#scope">scope</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#snd">snd</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#xy">xy</a></span>))) <span class="id">rtl</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Bindings.html#rec_sort_sorted">rec_sort_sorted</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">List.map</a></span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#xy">xy</a></span>, <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type_to_etype">cto_type_to_etype</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#scope">scope</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#snd">snd</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#xy">xy</a></span>))) <span class="id">rtl</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Bindings.html#rec_sort">rec_sort</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">List.map</a></span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#xy">xy</a></span>, <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type_to_etype">cto_type_to_etype</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#scope">scope</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#snd">snd</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#xy">xy</a></span>))) <span class="id">rtl</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#eq_refl">eq_refl</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOArray">CTOArray</a></span> <span class="id">t</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html#ErgoType.bag">ErgoType.bag</a></span> (<span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type_to_etype">cto_type_to_etype</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#scope">scope</a></span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#t">t</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTO.Semantics">Semantics</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTO">CTO</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>
