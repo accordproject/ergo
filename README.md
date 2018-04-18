@@ -25,7 +25,7 @@ The current target for the compiler is JavaScript.
 To install the Ergo compiler and command-line, do:
 
 ```text
-$ npm install ergo-cli -g
+$ npm install @accordproject/ergo-cli -g
 ```
 
 To check that the compiler has been installed, and see which version number:
