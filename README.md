@@ -1,12 +1,10 @@
 # Ergo Documentation
 
 ![Ergo](.gitbook/assets/ergologo.png)
-
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
-
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
-
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
+[![Documentation Status](https://readthedocs.org/projects/ergo/badge/?version=latest)](http://ergo.readthedocs.io/en/latest/?badge=latest)
 
 Git: [http://github.com/accordproject/ergo](http://github.com/accordproject/ergo) / Documentation: [http://ergo.readthedocs.io](http://ergo.readthedocs.io)
 
