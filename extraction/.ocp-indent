@@ -1,0 +1,45 @@
+JaneStreet
+
+# match_clause=INT (default=2)
+#     Indentation for clauses inside a pattern-match (after arrows).
+#
+#         match foo with
+#         | _ ->
+#         ..bar
+
+match_clause = 4
+
+# strict_with=<always|never|auto> (default=never)
+#     If `never', match bars are indented, superseding `with', whenever
+#     `match with' doesn't start its line. If `auto', there are
+#     exceptions for constructs like `begin match with'. If `always',
+#     `with' is always strictly respected.
+#
+#     Example with `strict_with=never,with=0':
+#         begin match foo with
+#         ..| _ -> bar
+#         end
+
+strict_with=always
+
+# max_indent=<INT|none> (default=4)
+#     When nesting expressions on the same line, their indentations are
+#     stacked in some cases so that they remain correct if you close them
+#     one per line. However, this can lead to large indentations in
+#     complex code, so this parameter sets a maximum indentation. Note
+#     that it only affects indentation after function arrows and opening
+#     parens at the ends of lines.
+#
+#         let f = g (h (i (fun x ->
+#         ....x)
+#           )
+#         )
+
+max_indent = 2
+
+# strict_comments=BOOL (default=false)
+#     In-comment indentation is normally preserved, as long as it
+#     respects the left margin or the comments starts with a newline.
+#     Setting this to `true' forces alignment within comments. Lines
+#     starting with `*' are always aligned
+strict_comments = false

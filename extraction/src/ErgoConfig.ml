@@ -40,16 +40,16 @@ let extension_of_lang lang =
   | JavaScript -> ".js"
   | Calculus -> ".ergoc"
   end
-    
+
 type global_config = {
-    mutable jconf_source : lang;
-    mutable jconf_target : lang;
-    mutable jconf_contract_name : string option;
-    mutable jconf_clause_name : string option;
-    mutable jconf_with_dispatch : bool;
-    mutable jconf_cto_files : string list;
-    mutable jconf_ctos : ErgoComp.cto_package list;
-  }
+  mutable jconf_source : lang;
+  mutable jconf_target : lang;
+  mutable jconf_contract_name : string option;
+  mutable jconf_clause_name : string option;
+  mutable jconf_with_dispatch : bool;
+  mutable jconf_cto_files : string list;
+  mutable jconf_ctos : ErgoComp.cto_package list;
+}
 
 let default_config () = {
   jconf_source = Ergo;

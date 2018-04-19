@@ -17,7 +17,7 @@ open ErgoComp
 open ErgoCompiler
 
 let timescale_as_string ts =
-  match ts with
+  begin match ts with
   | Ts_second -> "SECOND"
   | Ts_minute ->  "MINUTE"
   | Ts_hour -> "HOUR"
@@ -25,15 +25,17 @@ let timescale_as_string ts =
   | Ts_week -> "WEEK"
   | Ts_month -> "MONTH"
   | Ts_year -> "YEAR"
+  end
 
 let string_of_foreign_data (fd:enhanced_data) : string =
-  match fd with
+  begin match fd with
   | Enhancedstring s -> "S\"" ^ s ^ "\""
   | Enhancedtimescale ts -> timescale_as_string ts
   | Enhancedtimeduration td -> raise Not_found
   | Enhancedtimepoint tp -> raise Not_found
   | Enhancedsqldate td -> raise Not_found
   | Enhancedsqldateinterval tp -> raise Not_found
+  end
 
 let foreign_data_of_string s =
   begin
@@ -46,29 +48,31 @@ let foreign_data_of_string s =
     | "MONTH" -> Enhancedtimescale Ts_month
     | "YEAR" -> Enhancedtimescale Ts_year
     | _ ->
-      try
-        if (s.[0] = 'S' && s.[1] = '"')
-        then
-	  Enhancedstring (String.sub s 2 ((String.length s) - 3))
-        else
-	  raise Not_found
-      with
-      | _ ->
-        raise Not_found
+        try
+          if (s.[0] = 'S' && s.[1] = '"')
+          then
+            Enhancedstring (String.sub s 2 ((String.length s) - 3))
+          else
+            raise Not_found
+        with
+        | _ ->
+            raise Not_found
   end
 
 let string_of_nat_arith_unary_op ua =
-  match ua with
+  begin match ua with
   | NatAbs -> "abs"
   | NatLog2 -> "log2"
   | NatSqrt -> "sqrt"
+  end
 
 let nat_arith_unary_op_of_string s =
-  match s with
+  begin match s with
   | "abs" -> NatAbs
   | "log2" -> NatLog2
   | "sqrt" -> NatSqrt
   | _ -> raise Not_found
+  end
 
 let string_of_float_arith_unary_op ua =
   begin match ua with
@@ -95,22 +99,24 @@ let float_arith_unary_op_of_string s =
   end
 
 let sql_date_component_to_string part =
-  match part with
+  begin match part with
   | Sql_date_DAY -> "DAY"
   | Sql_date_MONTH -> "MONTH"
   | Sql_date_YEAR -> "YEAR"
+  end
 
 let string_of_foreign_unary_op fu : string =
-  match fu with
+  begin match fu with
   | Enhanced_unary_time_op Uop_time_to_scale -> "TimeToScale"
   | Enhanced_unary_time_op Uop_time_from_string -> "TimeFromString"
   | Enhanced_unary_time_op Uop_time_duration_from_string -> "TimeDurationFromString"
   | Enhanced_unary_sql_date_op (Uop_sql_get_date_component part) -> "(SqlGetDateComponent " ^ (sql_date_component_to_string part) ^ ")"
   | Enhanced_unary_sql_date_op Uop_sql_date_from_string -> "SqlDateFromString"
   | Enhanced_unary_sql_date_op Uop_sql_date_interval_from_string -> "SqlDateIntervalFromString"
-									    
+  end
+
 let foreign_unary_op_of_string s =
-  match s with
+  begin match s with
   | "TimeToScale" -> Enhanced_unary_time_op Uop_time_to_scale
   | "TimeFromString" -> Enhanced_unary_time_op Uop_time_from_string
   | "TimeDurationFromString" -> Enhanced_unary_time_op Uop_time_duration_from_string
@@ -119,11 +125,11 @@ let foreign_unary_op_of_string s =
   | "(SqlGetDateComponent YEAR)"->  Enhanced_unary_sql_date_op (Uop_sql_get_date_component Sql_date_YEAR)
   | "SqlDateFromString" -> Enhanced_unary_sql_date_op Uop_sql_date_from_string
   | "SqlDateIntervalFromString" -> Enhanced_unary_sql_date_op Uop_sql_date_interval_from_string
-
   | _ -> raise Not_found
+  end
 
 let string_of_nat_arith_binary_op ba =
-  match ba with
+  begin match ba with
   | NatPlus -> "plus"
   | NatMinus -> "minus"
   | NatMult -> "mult"
@@ -131,9 +137,10 @@ let string_of_nat_arith_binary_op ba =
   | NatMax -> "max"
   | NatDiv -> "div"
   | NatRem -> "rem"
+  end
 
 let nat_arith_binary_op_of_string s =
-  match s with
+  begin match s with
   | "plus" -> NatPlus
   | "minus" -> NatMinus
   | "mult" -> NatMult
@@ -142,6 +149,7 @@ let nat_arith_binary_op_of_string s =
   | "div" -> NatDiv
   | "rem" -> NatRem
   | _ -> raise Not_found
+  end
 
 let string_of_float_arith_binary_op ba =
   begin match ba with
@@ -184,7 +192,7 @@ let float_compare_binary_op_of_string s =
   end
 
 let string_of_foreign_binary_op fb =
-  match fb with
+  begin match fb with
   | Enhanced_binary_time_op Bop_time_as -> "time_as"
   | Enhanced_binary_time_op Bop_time_shift -> "time_shift"
   | Enhanced_binary_time_op Bop_time_ne -> "time_ne"
@@ -202,9 +210,10 @@ let string_of_foreign_binary_op fb =
   | Enhanced_binary_sql_date_op Bop_sql_date_gt -> "sql_date_gt"
   | Enhanced_binary_sql_date_op Bop_sql_date_ge -> "sql_date_ge"
   | Enhanced_binary_sql_date_op Bop_sql_date_interval_between -> "sql_date_interval_between"
+  end
 
 let foreign_binary_op_of_string fb =
-  match fb with
+  begin match fb with
   | "time_as" -> Enhanced_binary_time_op Bop_time_as
   | "time_shift" -> Enhanced_binary_time_op Bop_time_shift
   | "time_ne" -> Enhanced_binary_time_op Bop_time_ne
@@ -222,9 +231,10 @@ let foreign_binary_op_of_string fb =
   | "sql_date_ge" -> Enhanced_binary_sql_date_op Bop_sql_date_ge
   | "sql_date_interval_between" -> Enhanced_binary_sql_date_op Bop_sql_date_interval_between
   | _ -> raise Not_found
+  end
 
 let string_of_binary_op b =
-  match b with
+  begin match b with
   | OpEqual -> "aeq"
   | OpBagUnion -> "aunion"
   | OpRecConcat -> "aconcat"
@@ -242,4 +252,4 @@ let string_of_binary_op b =
   | OpContains -> "acontains"
   | OpStringConcat -> "asconcat"
   | OpForeignBinary fb -> string_of_foreign_binary_op (Obj.magic fb)
-
+  end

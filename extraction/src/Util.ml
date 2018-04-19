@@ -30,9 +30,10 @@ type dnrc_logger_token_type = string
 (* Data type conversions between Coq and OCaml *)
 
 let rec string_of_char_list l =
-  match l with
+  begin match l with
   | [] -> ""
   | c :: l -> (String.make 1 c) ^ (string_of_char_list l)
+  end
 
 let char_list_of_string s =
   let l = ref [] in
@@ -43,20 +44,20 @@ let string = string_of_char_list
 
 (* coq Z's are now replaced by native OCaml ints, but here is the way to get things back to coq Z's:
 
-open BinNums
+   open BinNums
 
-let rec coq_nat_of_pos i =
-  if i = 0 then Datatypes.O else Datatypes.S (coq_nat_of_pos (i-1))
+   let rec coq_nat_of_pos i =
+   if i = 0 then Datatypes.O else Datatypes.S (coq_nat_of_pos (i-1))
 
-let coq_positive_of_pos i =
-  BinPos.Pos.of_nat (coq_nat_of_pos i)
+   let coq_positive_of_pos i =
+   BinPos.Pos.of_nat (coq_nat_of_pos i)
 
-let coq_Z_of_int i =
-  if (i = 0) then Z0
-  else if (i < 0)
-  then (Zneg (coq_positive_of_pos (-i)))
-  else (Zpos (coq_positive_of_pos i))
- *)
+   let coq_Z_of_int i =
+   if (i = 0) then Z0
+   else if (i < 0)
+   then (Zneg (coq_positive_of_pos (-i)))
+   else (Zpos (coq_positive_of_pos i))
+*)
 
 let coq_Z_of_int i = i
 
@@ -97,10 +98,11 @@ let make_file fout scomp =
 (* Make up target file name *)
 
 let target_f dir f =
-  match dir with
+  begin match dir with
   | None -> f
   | Some d ->
-    Filename.concat d (Filename.basename f)
+      Filename.concat d (Filename.basename f)
+  end
 
 let outname f suff = f ^ suff
 
@@ -134,35 +136,40 @@ let float_arithmean l =
   else List.fold_left (+.) 0. l /. (float ll)
 
 let rec float_listmin_aux l x =
-  match l with
+  begin match l with
   | [] -> x
   | c :: ls -> float_listmin_aux ls (if x<c then x else c)
+  end
 
 let float_listmin l =
-  match l with
+  begin match l with
   | [] -> infinity
   | c :: ls -> float_listmin_aux ls c
+  end
 
 let rec float_listmax_aux l x =
-  match l with
+  begin match l with
   | [] -> x
   | c :: ls -> float_listmax_aux ls (if x>c then x else c)
+  end
 
 let float_listmax l =
-  match l with
+  begin match l with
   | [] -> neg_infinity
   | c :: ls -> float_listmax_aux ls c
+  end
 
 let qcert_string_of_float f =
   let ocaml_string = string_of_float f in
   let last_char = ocaml_string.[(String.length ocaml_string)-1] in
-  match last_char with
+  begin match last_char with
   | '.' -> ocaml_string ^ "0"
   | _ -> ocaml_string
+  end
 
 let string_of_enhanced_float f = char_list_of_string (string_of_float f)
 let string_of_enhanced_string s = char_list_of_string ("S\"" ^ s ^ "\"")
-	
+
 (**********************************)
 (* Timing function for CompStat   *)
 (**********************************)
@@ -188,15 +195,15 @@ let re_match re s pos =
       if pos_re >= String.length re
       then true
       else
-	try
-	  if re.[pos_re] = s.[pos_s]
-	  then pos_match re s (pos_re+1) (pos_s+1)
-	  else false
-	with
-	| _ -> false
+        try
+          if re.[pos_re] = s.[pos_s]
+          then pos_match re s (pos_re+1) (pos_s+1)
+          else false
+        with
+        | _ -> false
     in
     pos_match re s 0 pos
-  
+
 let search_forward re s pos =
   if re = "" then raise (Invalid_argument "Matching string should not be empty")
   else
@@ -216,14 +223,15 @@ let global_replace const_expr repl text =
     if startpos > String.length text then
       string_after text start :: accu
     else
-      match opt_search_forward const_expr text startpos with
+      begin match opt_search_forward const_expr text startpos with
       | None ->
           string_after text start :: accu
       | Some pos ->
           let end_pos = pos + String.length const_expr in
           let repl_text = repl in
           replace (repl_text :: String.sub text start (pos-start) :: accu)
-                  end_pos (end_pos = pos)
+            end_pos (end_pos = pos)
+      end
   in
   String.concat "" (List.rev (replace [] 0 false))
 

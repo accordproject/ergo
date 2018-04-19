@@ -18,7 +18,7 @@ open ErgoComp
 
 let enum_case_of_decl d =
   char_list_of_string d.cto_decl_content_id.cto_id_name
-    
+
 let cto_enum_of_decls dl =
   List.map enum_case_of_decl dl
 
@@ -52,7 +52,7 @@ let concept_field_of_decl d =
     begin match d.cto_decl_content_optional with
     | None -> field_type
     | Some opt ->
-	CTOOption (CTOArray base_type)
+        CTOOption (CTOArray base_type)
     end
   in
   (field_name, field_type)
@@ -65,15 +65,15 @@ let cto_declaration_of_defn d =
   let decl_type = 
     begin match d.cto_defn_ttype with
     | "EnumDeclaration" ->
-	CTOEnum (cto_enum_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOEnum (cto_enum_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "TransactionDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-	CTOTransaction (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOTransaction (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "ConceptDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-	CTOConcept (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOConcept (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
-	raise (Ergo_Error ("Can't import CTO kind: " ^ other))
+        raise (Ergo_Error ("Can't import CTO kind: " ^ other))
     end
   in
   { cto_declaration_class = ErgoCompiler.mk_class_ref None (char_list_of_string decl_class);
