@@ -15,7 +15,6 @@
 (* Error monad *)
 
 Require Import String.
-Require Import Qcert.Utils.Result.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section EResult.

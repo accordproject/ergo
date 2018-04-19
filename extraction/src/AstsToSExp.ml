@@ -480,33 +480,33 @@ let sexp_to_params (se:sexp) =
       raise (Ergo_Error "Not well-formed S-expr inside Params")
   end
 
-let closure_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a closure0) =
-  let clparams = params_to_sexp cl.closure_params0 in
-  let cloutput = opt_paramtype_to_sexp cl.closure_output0 in
-  let clthrow = opt_name_to_sexp cl.closure_throw in
-  let clbody = expr_to_sexp cl.closure_body0 in
-  STerm ("Closure",[clparams;cloutput;clthrow;clbody])
-let sexp_to_closure (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a closure0 =
+let lambda_to_sexp (expr_to_sexp : 'a -> sexp) (cl:'a lambda) =
+  let clparams = params_to_sexp cl.lambda_params in
+  let cloutput = opt_paramtype_to_sexp cl.lambda_output in
+  let clthrow = opt_name_to_sexp cl.lambda_throw in
+  let clbody = expr_to_sexp cl.lambda_body in
+  STerm ("Lambda",[clparams;cloutput;clthrow;clbody])
+let sexp_to_lambda (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a lambda =
   begin match se with
-  | STerm ("Closure",[sclparams;scloutput;sclthrow;sclbody]) ->
-      { closure_params0 = sexp_to_params sclparams;
-	closure_output0 = sexp_to_opt_paramtype scloutput;
-	closure_throw = sexp_to_opt_name sclthrow;
-	closure_body0 = sexp_to_expr sclbody }
+  | STerm ("Lambda",[sclparams;scloutput;sclthrow;sclbody]) ->
+      { lambda_params = sexp_to_params sclparams;
+	lambda_output = sexp_to_opt_paramtype scloutput;
+	lambda_throw = sexp_to_opt_name sclthrow;
+	lambda_body = sexp_to_expr sclbody }
   | _ ->
-      raise (Ergo_Error "Not well-formed S-expr inside Closure")
+      raise (Ergo_Error "Not well-formed S-expr inside Lambda")
   end
 
 let declaration_to_sexp (expr_to_sexp : 'a -> sexp) (d:'a declaration) =
   begin match d with
   | Clause c ->
       let clname = name_to_sexp c.clause_name in
-      let clclosure = closure_to_sexp expr_to_sexp c.clause_closure in
-      STerm ("Clause",[clname;clclosure])
-  | Func f ->
-      let fname = name_to_sexp f.func_name in
-      let fclosure = closure_to_sexp expr_to_sexp f.func_closure in
-      STerm ("Func",[fname;fclosure])
+      let cllambda = lambda_to_sexp expr_to_sexp c.clause_lambda in
+      STerm ("Clause",[clname;cllambda])
+  | Function f ->
+      let fname = name_to_sexp f.function_name in
+      let flambda = lambda_to_sexp expr_to_sexp f.function_lambda in
+      STerm ("Func",[fname;flambda])
   end
 let declarations_to_sexp (expr_to_sexp : 'a -> sexp) (dls:'a declaration list) =
   let decls = List.map (declaration_to_sexp expr_to_sexp) dls in
@@ -514,14 +514,14 @@ let declarations_to_sexp (expr_to_sexp : 'a -> sexp) (dls:'a declaration list) =
 
 let sexp_to_declaration (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a declaration =
   begin match se with
-  | STerm ("Clause",[sclname;sclclosure]) ->
+  | STerm ("Clause",[sclname;scllambda]) ->
       Clause
 	{ clause_name = sexp_to_name sclname;
-	  clause_closure = sexp_to_closure sexp_to_expr sclclosure }
-  | STerm ("Func",[sfname;sfclosure]) ->
-      Func
-	{ func_name = sexp_to_name sfname;
-	  func_closure = sexp_to_closure sexp_to_expr sfclosure }
+	  clause_lambda = sexp_to_lambda sexp_to_expr scllambda }
+  | STerm ("Func",[sfname;sflambda]) ->
+      Function
+	{ function_name = sexp_to_name sfname;
+	  function_lambda = sexp_to_lambda sexp_to_expr sflambda }
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside Declaration")
   end
@@ -593,9 +593,9 @@ let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
   | EImport i ->
       STerm ("EImport",[import_to_sexp i])
   | EFunc f ->
-      let fname = name_to_sexp f.func_name in
-      let fclosure = closure_to_sexp expr_to_sexp f.func_closure in
-      STerm ("EFunc",[fname;fclosure])
+      let fname = name_to_sexp f.function_name in
+      let flambda = lambda_to_sexp expr_to_sexp f.function_lambda in
+      STerm ("EFunc",[fname;flambda])
   | EContract c ->
       STerm ("EContract",[contract_to_sexp expr_to_sexp c])
   end
@@ -613,10 +613,10 @@ let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
       EGlobal (sexp_to_name svname, sexp_to_expr se)
   | STerm ("EImport",[si]) ->
       EImport (sexp_to_import si)
-  | STerm ("EFunc",[sfname;sfclosure]) ->
+  | STerm ("EFunc",[sfname;sflambda]) ->
       EFunc
-	{ func_name = sexp_to_name sfname;
-	  func_closure = sexp_to_closure sexp_to_expr sfclosure }
+	{ function_name = sexp_to_name sfname;
+	  function_lambda = sexp_to_lambda sexp_to_expr sflambda }
   | STerm ("EContract",[sc]) ->
       EContract (sexp_to_contract sexp_to_expr sc)
   | _ ->

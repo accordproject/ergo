@@ -108,8 +108,8 @@ Module ErgoCompiler.
     := Ergo.ELet v (Some t) e1 e2.
   Definition efor : String.string -> ergo_expr -> option ergo_expr -> ergo_expr -> ergo_expr
     := Ergo.EFor.
-  Definition efuncall : String.string -> list ergo_expr -> ergo_expr
-    := Ergo.EFunCall.
+  Definition ecall : String.string -> list ergo_expr -> ergo_expr
+    := Ergo.ECall.
   Definition ematch : ergo_expr -> list (Ergo.match_case * ergo_expr) -> ergo_expr -> ergo_expr
     := Ergo.EMatch.
   Definition erecord : list (String.string * ergo_expr) -> ergo_expr 

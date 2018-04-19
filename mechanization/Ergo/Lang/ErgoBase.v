@@ -31,29 +31,29 @@ Section ErgoBase.
   Section Syntax.
     (** Generic function closure over expressions in [A].
         All free variables in A have to be declared in the list of parameters. *)
-    Record closure :=
-      mkClosure
-        { closure_params: list (string * option cto_type);
-          closure_output : option cto_type;
-          closure_throw : option string;
-          closure_body : A; }.
+    Record lambda :=
+      mkLambda
+        { lambda_params: list (string * option cto_type);
+          lambda_output : option cto_type;
+          lambda_throw : option string;
+          lambda_body : A; }.
 
     (** Clause *)
     Record clause :=
       mkClause
         { clause_name : string;
-          clause_closure : closure; }.
+          clause_lambda : lambda; }.
 
     (** Function *)
-    Record func :=
+    Record function :=
       mkFunc
-        { func_name : string;
-          func_closure : closure; }.
+        { function_name : string;
+          function_lambda : lambda; }.
     
     (** Declaration *)
     Inductive declaration :=
     | Clause : clause -> declaration
-    | Func : func -> declaration.
+    | Function : function -> declaration.
     
     (** Contract *)
     Record contract :=
@@ -68,7 +68,7 @@ Section ErgoBase.
     | EExpr : A -> stmt
     | EGlobal : string -> A -> stmt
     | EImport : string -> stmt
-    | EFunc : func -> stmt
+    | EFunc : function -> stmt
     | EContract : contract -> stmt.
  
     (** Package. *)
@@ -90,33 +90,33 @@ Section ErgoBase.
       then Some c
       else None.
 
-    Definition lookup_from_func (clname:string) (c:func) : option func :=
-      if (string_dec clname c.(func_name))
+    Definition lookup_from_func (clname:string) (c:function) : option function :=
+      if (string_dec clname c.(function_name))
       then Some c
       else None.
 
     Definition code_from_clause (c:option clause) : option A :=
       match c with
       | None => None
-      | Some c => Some c.(clause_closure).(closure_body)
+      | Some c => Some c.(clause_lambda).(lambda_body)
       end.
     
-    Definition code_from_func (f:option func) : option A :=
+    Definition code_from_function (f:option function) : option A :=
       match f with
       | None => None
-      | Some f => Some f.(func_closure).(closure_body)
+      | Some f => Some f.(function_lambda).(lambda_body)
       end.
     
     Definition lookup_code_from_clause (clname:string) (c:clause) : option A :=
       code_from_clause (lookup_from_clause clname c).
 
-    Definition lookup_code_from_func (clname:string) (c:func) : option A :=
-      code_from_func (lookup_from_func clname c).
+    Definition lookup_code_from_func (clname:string) (c:function) : option A :=
+      code_from_function (lookup_from_func clname c).
 
     Definition lookup_clause_from_declaration (clname:string) (d:declaration) : option clause :=
       match d with
       | Clause c => lookup_from_clause clname c
-      | Func f => None
+      | Function f => None
       end.
 
     Definition lookup_clause_from_declarations (clname:string) (dl:list declaration) : option clause :=
@@ -167,9 +167,9 @@ Section ErgoBase.
       match dl with
       | nil => nil
       | Clause cl :: dl' =>
-        (cl.(clause_name), cl.(clause_closure).(closure_params)) :: lookup_declarations_signatures dl'
-      | Func f :: dl' =>
-        (f.(func_name), f.(func_closure).(closure_params)) :: lookup_declarations_signatures dl'
+        (cl.(clause_name), cl.(clause_lambda).(lambda_params)) :: lookup_declarations_signatures dl'
+      | Function f :: dl' =>
+        (f.(function_name), f.(function_lambda).(lambda_params)) :: lookup_declarations_signatures dl'
       end.
     
     Definition lookup_contract_signatures (c:contract) : list signature :=
@@ -183,7 +183,7 @@ Section ErgoBase.
       | EGlobal _ _ :: sl' => lookup_statements_signatures sl'
       | EImport _ :: sl' => lookup_statements_signatures sl'
       | EFunc f :: sl' =>
-        (f.(func_name), f.(func_closure).(closure_params)) :: lookup_statements_signatures sl'
+        (f.(function_name), f.(function_lambda).(lambda_params)) :: lookup_statements_signatures sl'
       | EContract c :: sl' =>
         lookup_contract_signatures c ++ lookup_statements_signatures sl'
       end.
@@ -215,7 +215,7 @@ Section ErgoBase.
     Definition lookup_package_signatures (p:package) : list signature :=
       lookup_statements_signatures p.(package_statements).
 
-    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : eresult (cto_type * cto_type * func) :=
+    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : eresult (cto_type * cto_type * function) :=
       match sl with
       | nil => dispatch_lookup_error
       | EType _ :: sl' => lookup_statements_dispatch name sl'
@@ -223,18 +223,18 @@ Section ErgoBase.
       | EGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
       | EImport _ :: sl' => lookup_statements_dispatch name sl'
       | EFunc f :: sl' =>
-        if (string_dec f.(func_name) name)
+        if (string_dec f.(function_name) name)
         then
-          let fclosure := f.(func_closure) in
+          let flambda := f.(function_lambda) in
           let request :=
-              match fclosure.(closure_params) with
+              match flambda.(lambda_params) with
               | nil => dispatch_parameter_error
               | (_,Some reqtype) :: _ => esuccess reqtype
               | _ :: _ => esuccess (CTOClassRef (mkClassRef None "Request"%string))
               end
           in
           let response :=
-              match fclosure.(closure_output) with
+              match flambda.(lambda_output) with
               | Some resptype => resptype
               | None => (CTOClassRef (mkClassRef None "Response"%string))
               end
@@ -244,7 +244,7 @@ Section ErgoBase.
       | EContract c :: sl' => lookup_statements_dispatch name sl'
       end.
 
-    Definition lookup_dispatch (name:string) (p:package) : eresult (cto_type * cto_type * func) :=
+    Definition lookup_dispatch (name:string) (p:package) : eresult (cto_type * cto_type * function) :=
       lookup_statements_dispatch name p.(package_statements).
     
   End lookup.

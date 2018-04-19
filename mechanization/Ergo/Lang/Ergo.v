@@ -17,6 +17,11 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import List.
+Require Import EquivDec.
+
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EError.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Backend.ErgoBackend.
@@ -48,7 +53,7 @@ Section Ergo.
   | ERecord : list (string * ergo_expr) -> ergo_expr (**r create a new record *)
   | ENew : class_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
   | EThrow : class_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
-  | EFunCall : string -> list ergo_expr -> ergo_expr (**r function call *)
+  | ECall : string -> list ergo_expr -> ergo_expr (**r function call *)
   | EMatch : ergo_expr -> list (match_case * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
   | EFor : string -> ergo_expr -> option ergo_expr -> ergo_expr -> ergo_expr (**r for loop with optional where *)
   .

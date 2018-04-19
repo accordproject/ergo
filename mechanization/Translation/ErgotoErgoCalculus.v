@@ -32,7 +32,6 @@ Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgotoJavaScript.
-
   Section utils.
     Open Scope string.
     (** This *)
@@ -103,11 +102,11 @@ Section ErgotoJavaScript.
       ctxt.(context_globals)
       (List.cons param ctxt.(context_params)).
 
-  Definition add_one_func (ctxt:context) (fname:string) (fclosure:closure) : context :=
+  Definition add_one_function (ctxt:context) (fname:string) (flambda:lambda) : context :=
     mkContext
       ctxt.(context_current_contract)
       ctxt.(context_current_clause)
-      (add_function_to_table ctxt.(context_table) fname fclosure)
+      (add_function_to_table ctxt.(context_table) fname flambda)
       ctxt.(context_namespace)
       ctxt.(context_globals)
       ctxt.(context_params).
@@ -252,7 +251,7 @@ Section ErgotoJavaScript.
                  acc
       in
       jlift (new_expr (absolute_ref_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | EFunCall fname el =>
+    | ECall fname el =>
       let init_el := esuccess nil in
       let proc_one (e:ergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
           jlift2
@@ -353,33 +352,33 @@ Section ErgotoJavaScript.
     let ctxt : context :=
         add_params
           ctxt
-          (List.map fst c.(clause_closure).(closure_params))
+          (List.map fst c.(clause_lambda).(lambda_params))
     in
     jlift
       (mkClause
          c.(clause_name))
       (jlift
-         (mkClosure
-            c.(clause_closure).(closure_params)
-            c.(clause_closure).(closure_output)
-            c.(clause_closure).(closure_throw))
-         (ergo_expr_to_calculus ctxt c.(clause_closure).(closure_body))).
+         (mkLambda
+            c.(clause_lambda).(lambda_params)
+            c.(clause_lambda).(lambda_output)
+            c.(clause_lambda).(lambda_throw))
+         (ergo_expr_to_calculus ctxt c.(clause_lambda).(lambda_body))).
 
   (** Translate a function to function+calculus *)
-  Definition func_to_calculus
-             (ctxt:context) (f:ergo_func) : eresult ergoc_func :=
+  Definition function_to_calculus
+             (ctxt:context) (f:ergo_function) : eresult ergoc_function :=
     let ctxt :=
-        add_params ctxt (List.map fst f.(func_closure).(closure_params))
+        add_params ctxt (List.map fst f.(function_lambda).(lambda_params))
     in
     jlift
       (mkFunc
-         f.(func_name))
+         f.(function_name))
       (jlift
-         (mkClosure
-            f.(func_closure).(closure_params)
-            f.(func_closure).(closure_output)
-            f.(func_closure).(closure_throw))
-         (ergo_expr_to_calculus ctxt f.(func_closure).(closure_body))).
+         (mkLambda
+            f.(function_lambda).(lambda_params)
+            f.(function_lambda).(lambda_output)
+            f.(function_lambda).(lambda_throw))
+         (ergo_expr_to_calculus ctxt f.(function_lambda).(lambda_body))).
 
   (** Translate a declaration to a declaration+calculus *)
   Definition declaration_to_calculus
@@ -387,12 +386,12 @@ Section ErgotoJavaScript.
     match d with
     | Clause c =>
       jlift
-        (fun x => (add_one_func ctxt x.(clause_name) x.(clause_closure), Clause x)) (* Add new function to context *)
+        (fun x => (add_one_function ctxt x.(clause_name) x.(clause_lambda), Clause x)) (* Add new function to context *)
         (clause_to_calculus ctxt c)
-    | Func f =>
+    | Function f =>
       jlift
-        (fun x => (add_one_func ctxt x.(func_name) x.(func_closure), Func x)) (* Add new function to context *)
-        (func_to_calculus ctxt f)
+        (fun x => (add_one_function ctxt x.(function_name) x.(function_lambda), Function x)) (* Add new function to context *)
+        (function_to_calculus ctxt f)
     end.
 
   (** Translate a contract to a contract+calculus *)
@@ -447,8 +446,8 @@ Section ErgotoJavaScript.
       esuccess (ctxt, EImport s)
     | EFunc f =>
       jlift
-        (fun x => (add_one_func ctxt x.(func_name) x.(func_closure), EFunc x)) (* Add new function to context *)
-        (func_to_calculus ctxt f)
+        (fun x => (add_one_function ctxt x.(function_name) x.(function_lambda), EFunc x)) (* Add new function to context *)
+        (function_to_calculus ctxt f)
     | EContract c =>
       jlift (fun xy => (fst xy, EContract (snd xy)))
             (contract_to_calculus ctxt c)

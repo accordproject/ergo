@@ -99,20 +99,20 @@ stmt:
     { EGlobal (v, e) }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { EFunc
-	{ func_name = cn;
-	  func_closure =
-	  { closure_params0 = [];
-            closure_output0 = Some out;
-	    closure_throw = mt;
-	    closure_body0 = e; } } }
+	{ function_name = cn;
+	  function_lambda =
+	  { lambda_params = [];
+            lambda_output = Some out;
+	    lambda_throw = mt;
+	    lambda_body = e; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { EFunc
-	{ func_name = cn;
-	  func_closure =
-	  { closure_params0 = ps;
-            closure_output0 = Some out;
-	    closure_throw = mt;
-	    closure_body0 = e; } } }
+	{ function_name = cn;
+	  function_lambda =
+	  { lambda_params = ps;
+            lambda_output = Some out;
+	    lambda_throw = mt;
+	    lambda_body = e; } } }
 | IMPORT qn = qname_prefix
     { EImport qn }
 | c = contract
@@ -138,41 +138,41 @@ declarations:
 | 
     { [] }
 | f = func ds = declarations
-    { (Func f) :: ds }
+    { (Function f) :: ds }
 | cl = clause ds = declarations
     { (Clause cl) :: ds }
 
 func:
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { func_name = cn;
-	func_closure =
-	{ closure_params0 = [];
-          closure_output0 = Some out;
-	  closure_throw = mt;
-	  closure_body0 = e; } } }
+    { { function_name = cn;
+	function_lambda =
+	{ lambda_params = [];
+          lambda_output = Some out;
+	  lambda_throw = mt;
+	  lambda_body = e; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { func_name = cn;
-	func_closure =
-	{ closure_params0 = ps;
-          closure_output0 = Some out;
-	  closure_throw = mt;
-	  closure_body0 = e; } } }
+    { { function_name = cn;
+	function_lambda =
+	{ lambda_params = ps;
+          lambda_output = Some out;
+	  lambda_throw = mt;
+	  lambda_body = e; } } }
 
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
-	clause_closure =
-	  { closure_params0 = [];
-            closure_output0 = Some out;
-	    closure_throw = mt;
-	    closure_body0 = e; } } }
+	clause_lambda =
+	  { lambda_params = [];
+            lambda_output = Some out;
+	    lambda_throw = mt;
+	    lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
-	clause_closure =
-	  { closure_params0 = ps;
-            closure_output0 = Some out;
-	    closure_throw = mt;
-	    closure_body0 = e; } } }
+	clause_lambda =
+	  { lambda_params = ps;
+            lambda_output = Some out;
+	    lambda_throw = mt;
+	    lambda_body = e; } } }
 
 maythrow:
 |
@@ -228,7 +228,7 @@ expr:
     { e }
 (* Call *)
 | fn = IDENT LPAREN el = exprlist RPAREN
-    { ErgoCompiler.efuncall (Util.char_list_of_string fn) el }
+    { ErgoCompiler.ecall (Util.char_list_of_string fn) el }
 (* Constants *)
 | NIL
     { ErgoCompiler.econst ErgoCompiler.Data.dunit }

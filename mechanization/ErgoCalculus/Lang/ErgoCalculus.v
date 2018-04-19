@@ -31,7 +31,7 @@ Section ErgoCalculus.
     Definition ergoc_clause := @clause ergoc_expr.
     
     (** Function *)
-    Definition ergoc_func := @func ergoc_expr.
+    Definition ergoc_function := @function ergoc_expr.
     
     (** Declaration *)
     Definition ergoc_declaration := @declaration ergoc_expr.
