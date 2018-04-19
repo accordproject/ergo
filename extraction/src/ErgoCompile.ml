@@ -17,19 +17,19 @@ open ErgoComp
 open ErgoConfig
 
 type result_file = {
-    res_file : string;
-    res_content : string;
-  }
+  res_file : string;
+  res_content : string;
+}
 
 let wrap_jerrors f e =
   begin match e with
   | Failure (CompilationError cl) ->
-    raise (Ergo_Error ("Compilation Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+      raise (Ergo_Error ("Compilation Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
   | Failure (TypeError cl) ->
-    raise (Ergo_Error ("Type Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+      raise (Ergo_Error ("Type Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
   | Failure (UserError d) ->
-    let cl = ErgoCompiler.Data.data_to_json_string [] d in
-    raise (Ergo_Error ("User Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+      let cl = ErgoCompiler.Data.data_to_json_string [] d in
+      raise (Ergo_Error ("User Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
   | Success x -> f x
   end
 
@@ -81,20 +81,20 @@ let compile source target coname clname with_dispatch file_content =
       let ergo_parsed = parse_ergo file_content in
       begin match coname,clname with
       | Some coname, Some clname ->
-	  compile_ergo_to_javascript coname clname ergo_parsed
+          compile_ergo_to_javascript coname clname ergo_parsed
       | None, Some _ | Some _, None | None, None ->
-	  if with_dispatch
-	  then
-	    begin match coname with
-	    | None ->
-		compile_package_to_javascript_with_dispatch
-		  None ergo_parsed
-	    | Some coname ->		  
-		compile_package_to_javascript_with_dispatch
-		  (Some (Util.char_list_of_string coname)) ergo_parsed
-	    end
-	  else
-	    compile_package_to_javascript ergo_parsed
+          if with_dispatch
+          then
+            begin match coname with
+            | None ->
+                compile_package_to_javascript_with_dispatch
+                  None ergo_parsed
+            | Some coname ->		  
+                compile_package_to_javascript_with_dispatch
+                  (Some (Util.char_list_of_string coname)) ergo_parsed
+            end
+          else
+            compile_package_to_javascript ergo_parsed
       end
   | Ergo,Calculus ->
       let ergo_parsed = parse_ergo file_content in
@@ -103,9 +103,9 @@ let compile source target coname clname with_dispatch file_content =
       let ergoc_parsed = parse_ergoc file_content in
       begin match coname,clname with
       | Some coname, Some clname ->
-	  compile_calculus_to_javascript coname clname ergoc_parsed
+          compile_calculus_to_javascript coname clname ergoc_parsed
       | None, Some _ | Some _, None | None, None ->
-	  compile_package_calculus_to_javascript ergoc_parsed
+          compile_package_calculus_to_javascript ergoc_parsed
       end
   end
 

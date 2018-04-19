@@ -58,16 +58,17 @@ let rec sstring_list_with_order_to_coq_string_list sl =
 (* Data Section *)
 
 let foreign_data_to_sexp (fd:enhanced_data) : sexp =
-  match fd with
+  begin match fd with
   | Enhancedstring s -> STerm ("enhanced_string", (SString s)::[])
   | Enhancedtimescale ts -> STerm ("dtime_scale", (SString (PrettyCommon.timescale_as_string ts))::[])
   | Enhancedtimeduration td -> raise Not_found
   | Enhancedtimepoint tp -> raise Not_found
   | Enhancedsqldate td -> raise Not_found
   | Enhancedsqldateinterval tp -> raise Not_found
+  end
 
 let rec data_to_sexp (d : ErgoData.data) : sexp =
-  match d with
+  begin match d with
   | Dunit -> STerm ("dunit", [])
   | Dnat n -> SInt n
   | Dfloat f -> SFloat f
@@ -79,11 +80,12 @@ let rec data_to_sexp (d : ErgoData.data) : sexp =
   | Dright d -> STerm ("dright", data_to_sexp d :: [])
   | Dbrand (bs,d) -> STerm ("dbrand", (STerm ("brands", dbrands_to_sexp bs)) :: (STerm ("value", (data_to_sexp d) :: [])) :: [])
   | Dforeign fdt -> foreign_data_to_sexp (Obj.magic fdt)
+  end
 and drec_to_sexp (ad : char list * ErgoData.data) : sexp =
   STerm ("datt", (SString (string_of_char_list (fst ad))) :: (data_to_sexp (snd ad)) :: [])
 
 let rec sexp_to_data (se:sexp) : ErgoData.data =
-  match se with
+  begin match se with
   | STerm ("dunit", []) -> Dunit
   | SBool b -> Dbool b
   | SInt n -> Dnat n
@@ -103,44 +105,49 @@ let rec sexp_to_data (se:sexp) : ErgoData.data =
       Dforeign (Obj.magic (PrettyCommon.foreign_data_of_string s))
   | STerm (t, _) ->
       raise (Ergo_Error ("Not well-formed S-expr with name " ^ t))
+  end
 and sexp_to_drec (sel:sexp) : (char list * ErgoData.data) =
-  match sel with
+  begin match sel with
   | STerm ("datt", (SString s) :: se :: []) ->
       (char_list_of_string s, sexp_to_data se)
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside drec")
+  end
 
 (* Operators Section *)
 
 let nat_arith_bop_to_sexp (b:nat_arith_binary_op) : sexp =
   STerm (PrettyCommon.string_of_nat_arith_binary_op b,[])
-  
+
 let sexp_to_nat_arith_bop (se:sexp) : nat_arith_binary_op =
-  match se with
+  begin match se with
   | STerm (s,[]) -> PrettyCommon.nat_arith_binary_op_of_string s
   | _ ->
       raise  (Ergo_Error "Not well-formed S-expr inside arith nat arith binary_op")
-  
+  end
+
 let float_arith_bop_to_sexp (b:float_arith_binary_op) : sexp =
   STerm (PrettyCommon.string_of_float_arith_binary_op b,[])
-  
+
 let float_compare_bop_to_sexp (b:float_compare_binary_op) : sexp =
   STerm (PrettyCommon.string_of_float_compare_binary_op b,[])
-  
+
 let sexp_to_float_arith_bop (se:sexp) : float_arith_binary_op =
-  match se with
+  begin match se with
   | STerm (s,[]) -> PrettyCommon.float_arith_binary_op_of_string s
   | _ ->
       raise  (Ergo_Error "Not well-formed S-expr inside arith float arith binary_op")
-  
+  end
+
 let sexp_to_float_compare_bop (se:sexp) : float_compare_binary_op =
-  match se with
+  begin match se with
   | STerm (s,[]) -> PrettyCommon.float_compare_binary_op_of_string s
   | _ ->
       raise  (Ergo_Error "Not well-formed S-expr inside arith float compare binary_op")
+  end
 
 let binary_op_to_sexp (b:binary_op) : sexp =
-  match b with
+  begin match b with
   | OpEqual -> STerm ("AEq",[])
   | OpBagUnion -> STerm ("AUnion",[])
   | OpRecConcat -> STerm ("AConcat",[])
@@ -158,9 +165,10 @@ let binary_op_to_sexp (b:binary_op) : sexp =
   | OpContains -> STerm ("AContains",[])
   | OpStringConcat -> STerm ("ASConcat",[])
   | OpForeignBinary fbop -> SString (PrettyCommon.string_of_foreign_binary_op (Obj.magic fbop))
+  end
 
 let sexp_to_binary_op (se:sexp) : binary_op =
-  match se with
+  begin match se with
   | STerm ("AEq",[]) -> OpEqual
   | STerm ("AUnion",[]) -> OpBagUnion
   | STerm ("AConcat",[]) -> OpRecConcat
@@ -199,27 +207,30 @@ let sexp_to_binary_op (se:sexp) : binary_op =
   | STerm (t, _) ->
       raise (Ergo_Error ("Not well-formed S-expr inside arith binary_op with name " ^ t))
   | _ -> raise  (Ergo_Error "Not well-formed S-expr inside arith binary_op")
+  end
 
 let nat_arith_unary_op_to_sexp (b:nat_arith_unary_op) : sexp =
   STerm (PrettyCommon.string_of_nat_arith_unary_op b,[])
 
 let sexp_to_nat_arith_unary_op (se:sexp) : nat_arith_unary_op =
-  match se with
+  begin match se with
   | STerm (s,[]) -> PrettyCommon.nat_arith_unary_op_of_string s
   | _ ->
       raise  (Ergo_Error "Not well-formed S-expr inside arith nat unary_op")
+  end
 
 let float_arith_unary_op_to_sexp (b:float_arith_unary_op) : sexp =
   STerm (PrettyCommon.string_of_float_arith_unary_op b,[])
 
 let sexp_to_float_arith_unary_op (se:sexp) : float_arith_unary_op =
-  match se with
+  begin match se with
   | STerm (s,[]) -> PrettyCommon.float_arith_unary_op_of_string s
   | _ ->
       raise  (Ergo_Error "Not well-formed S-expr inside arith float unary_op")
+  end
 
 let unary_op_to_sexp (u:unary_op) : sexp =
-  match u with
+  begin match u with
   | OpIdentity -> STerm ("AIdOp",[])
   | OpNatUnary au -> STerm ("AUNat", [nat_arith_unary_op_to_sexp au])
   | OpFloatUnary au -> STerm ("AUFloat", [float_arith_unary_op_to_sexp au])
@@ -255,16 +266,18 @@ let unary_op_to_sexp (u:unary_op) : sexp =
   | OpUnbrand -> STerm ("AUnbrand",[])
   | OpSingleton -> STerm ("ASingleton",[])
   | OpForeignUnary fuop -> SString (PrettyCommon.string_of_foreign_unary_op (Obj.magic fuop))
+  end
 
 let sstring_to_sql_date_component (part:sexp) : Enhanced.Data.sql_date_part =
-  match part with
+  begin match part with
   | SString "DAY" ->   Enhanced.Data.sql_date_day
   | SString "MONTH" -> Enhanced.Data.sql_date_month
   | SString "YEAR" ->  Enhanced.Data.sql_date_year
   | _ -> raise (Ergo_Error "Not well-formed S-expr for sql date component")
-			  
+  end
+
 let sexp_to_unary_op (se:sexp) : unary_op =
-  match se with
+  begin match se with
   | STerm ("AIdOp",[]) -> OpIdentity
   | STerm ("AUNat", [se']) ->
       let au = sexp_to_nat_arith_unary_op se' in
@@ -290,7 +303,7 @@ let sexp_to_unary_op (se:sexp) : unary_op =
   | STerm ("ASubstring",[SInt n1;SInt n2]) -> OpSubstring (n1,Some n2)
   | STerm ("ALike",[p]) -> OpLike (sstring_to_coq_string p,None)
   | STerm ("ALike",[p;SString esc]) ->
-     OpLike (sstring_to_coq_string p,Some (esc.[0]))
+      OpLike (sstring_to_coq_string p,Some (esc.[0]))
   | STerm ("ACast", bl) -> OpCast (sexp_to_dbrands bl)
   | STerm ("AUnbrand",[]) -> OpUnbrand
   | STerm ("ASingleton",[]) -> OpSingleton
@@ -316,12 +329,13 @@ let sexp_to_unary_op (se:sexp) : unary_op =
       raise (Ergo_Error ("Not well-formed S-expr inside unary_op with name " ^ t))
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside unary_op")
+  end
 
 
 (* NNRC Section *)
 
 let rec nnrc_to_sexp (n : nnrc) : sexp =
-  match n with
+  begin match n with
   | NNRCGetConstant v -> STerm ("GetConstant", [SString (string_of_char_list v)])
   | NNRCVar v -> STerm ("Var", [SString (string_of_char_list v)])
   | NNRCConst d -> STerm ("Const", [data_to_sexp d])
@@ -330,17 +344,20 @@ let rec nnrc_to_sexp (n : nnrc) : sexp =
   | NNRCLet (v, n1, n2) -> STerm ("Let", (SString (string_of_char_list v)) :: [nnrc_to_sexp n1;nnrc_to_sexp n2])
   | NNRCFor (v, n1, n2) -> STerm ("For", (SString (string_of_char_list v)) :: [nnrc_to_sexp n1;nnrc_to_sexp n2])
   | NNRCIf (n1, n2, n3) -> STerm ("If", [nnrc_to_sexp n1;nnrc_to_sexp n2;nnrc_to_sexp n3])
-  | NNRCEither (n1,v1,n2,v2,n3) -> STerm ("Either",
-					 (SString (string_of_char_list v1))
-					 :: (SString (string_of_char_list v2))
-					 :: [nnrc_to_sexp n1;nnrc_to_sexp n2;nnrc_to_sexp n3])
-  | NNRCGroupBy (g,sl,n1) -> STerm ("GroupBy",
-				    (SString (string_of_char_list g))
-				    :: (STerm ("keys",coq_string_list_to_sstring_list sl))
-				    :: [nnrc_to_sexp n1])
+  | NNRCEither (n1,v1,n2,v2,n3) ->
+      STerm ("Either",
+             (SString (string_of_char_list v1))
+             :: (SString (string_of_char_list v2))
+             :: [nnrc_to_sexp n1;nnrc_to_sexp n2;nnrc_to_sexp n3])
+  | NNRCGroupBy (g,sl,n1) ->
+      STerm ("GroupBy",
+             (SString (string_of_char_list g))
+             :: (STerm ("keys",coq_string_list_to_sstring_list sl))
+             :: [nnrc_to_sexp n1])
+  end
 
 let rec sexp_to_nnrc (se:sexp) : nnrc =
-  match se with
+  begin match se with
   | STerm ("GetConstant", [SString v]) -> NNRCGetConstant (char_list_of_string v)
   | STerm ("Var", [SString v]) -> NNRCVar (char_list_of_string v)
   | STerm ("Const", [d]) -> NNRCConst (sexp_to_data d)
@@ -357,6 +374,7 @@ let rec sexp_to_nnrc (se:sexp) : nnrc =
       raise (Ergo_Error ("Not well-formed S-expr inside nnrc with name " ^ t))
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside nnrc")
+  end
 
 (* ErgoC section *)
 
@@ -398,8 +416,8 @@ let class_ref_to_sexp cr =
 let sexp_to_class_ref se =
   begin match se with
   | STerm ("ClassRef",[sens;secln]) ->
-    { class_namespace = sexp_to_opt_name sens;
-      class_name = sexp_to_name secln }
+      { class_namespace = sexp_to_opt_name sens;
+        class_name = sexp_to_name secln }
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside class ref")
   end
@@ -490,9 +508,9 @@ let sexp_to_lambda (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a lambda =
   begin match se with
   | STerm ("Lambda",[sclparams;scloutput;sclthrow;sclbody]) ->
       { lambda_params = sexp_to_params sclparams;
-	lambda_output = sexp_to_opt_paramtype scloutput;
-	lambda_throw = sexp_to_opt_name sclthrow;
-	lambda_body = sexp_to_expr sclbody }
+        lambda_output = sexp_to_opt_paramtype scloutput;
+        lambda_throw = sexp_to_opt_name sclthrow;
+        lambda_body = sexp_to_expr sclbody }
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside Lambda")
   end
@@ -516,12 +534,12 @@ let sexp_to_declaration (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a declaration =
   begin match se with
   | STerm ("Clause",[sclname;scllambda]) ->
       Clause
-	{ clause_name = sexp_to_name sclname;
-	  clause_lambda = sexp_to_lambda sexp_to_expr scllambda }
+        { clause_name = sexp_to_name sclname;
+          clause_lambda = sexp_to_lambda sexp_to_expr scllambda }
   | STerm ("Func",[sfname;sflambda]) ->
       Function
-	{ function_name = sexp_to_name sfname;
-	  function_lambda = sexp_to_lambda sexp_to_expr sflambda }
+        { function_name = sexp_to_name sfname;
+          function_lambda = sexp_to_lambda sexp_to_expr sflambda }
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside Declaration")
   end
@@ -543,7 +561,7 @@ let sexp_to_contract (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a contract =
   begin match se with
   | STerm ("Contract",[scname;stname;sdecls]) ->
       { contract_name = sexp_to_name scname;
-	contract_template = sexp_to_name stname;
+        contract_template = sexp_to_name stname;
         contract_declarations = sexp_to_declarations sexp_to_expr sdecls; }
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside Contract")
@@ -562,30 +580,30 @@ let cto_type_to_sexp t =
   begin match t with
   | CTOEnum ln -> STerm ("CTOEnum", [list_name_to_sexp ln])
   | CTOTransaction (oe,rectype) ->
-    STerm ("CTOTransaction",[opt_name_to_sexp oe;
-                             STerm ("CTORecord",rectype_to_sexp rectype)])
+      STerm ("CTOTransaction",[opt_name_to_sexp oe;
+                               STerm ("CTORecord",rectype_to_sexp rectype)])
   | CTOConcept (oe,rectype) ->
-    STerm ("CTOConcept",[opt_name_to_sexp oe;
-                         STerm ("CTORecord",rectype_to_sexp rectype)])
+      STerm ("CTOConcept",[opt_name_to_sexp oe;
+                           STerm ("CTORecord",rectype_to_sexp rectype)])
   end
 let sexp_to_cto_type (se:sexp) =
   begin match se with
   | STerm ("CTOEnum", [seln]) -> CTOEnum (sexp_to_list_name seln)
   | STerm ("CTOTransaction",[sen;STerm ("CTORecord",serectype)]) ->
-    CTOTransaction (sexp_to_opt_name sen,
-                    sexp_to_rectype serectype)
+      CTOTransaction (sexp_to_opt_name sen,
+                      sexp_to_rectype serectype)
   | STerm ("CTOConcept",[sen;STerm ("CTORecord",serectype)]) ->
-    CTOConcept (sexp_to_opt_name sen,
-                sexp_to_rectype serectype)
+      CTOConcept (sexp_to_opt_name sen,
+                  sexp_to_rectype serectype)
   | _ -> 
-    raise (Ergo_Error "Not well-formed S-expr inside CTO type declaration")
+      raise (Ergo_Error "Not well-formed S-expr inside CTO type declaration")
   end
 
 let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
   begin match s with
   | EType cto_decl ->
-    STerm ("EType",[class_ref_to_sexp cto_decl.cto_declaration_class;
-                    cto_type_to_sexp cto_decl.cto_declaration_type])
+      STerm ("EType",[class_ref_to_sexp cto_decl.cto_declaration_class;
+                      cto_type_to_sexp cto_decl.cto_declaration_type])
   | EExpr e ->
       STerm ("EExpr",[expr_to_sexp e])
   | EGlobal (v, e) ->
@@ -615,8 +633,8 @@ let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
       EImport (sexp_to_import si)
   | STerm ("EFunc",[sfname;sflambda]) ->
       EFunc
-	{ function_name = sexp_to_name sfname;
-	  function_lambda = sexp_to_lambda sexp_to_expr sflambda }
+        { function_name = sexp_to_name sfname;
+          function_lambda = sexp_to_lambda sexp_to_expr sflambda }
   | STerm ("EContract",[sc]) ->
       EContract (sexp_to_contract sexp_to_expr sc)
   | _ ->
@@ -639,7 +657,7 @@ let sexp_to_package (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a package =
   begin match se with
   | STerm ("Package",[snamespace;sstmts]) ->
       { package_namespace = sexp_to_opt_name snamespace;
-	package_statements = sexp_to_stmts sexp_to_expr sstmts; }
+        package_statements = sexp_to_stmts sexp_to_expr sstmts; }
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside Package")
   end
@@ -656,4 +674,4 @@ let sexp_to_ergoc_package (se:sexp) : ergoc_package =
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside ErgoCalculus")
   end
-  
+

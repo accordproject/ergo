@@ -37,7 +37,7 @@ let args_list gconf =
        " Generate dispatch function (default: false)");
       ("--cto", Arg.String (ErgoConfig.add_cto_file gconf),
        "<file> CTO model");
-   ]
+    ]
 
 let anon_args input_files f = input_files := f :: !input_files
 
@@ -66,8 +66,8 @@ let () =
   let output_res file_res =
     if file_res.res_file <> "" then
       begin
-	Format.printf " compiled to: %s\n" file_res.res_file;
-	make_file file_res.res_file file_res.res_content
+        Format.printf " compiled to: %s\n" file_res.res_file;
+        make_file file_res.res_file file_res.res_content
       end
   in
   List.iter output_res results

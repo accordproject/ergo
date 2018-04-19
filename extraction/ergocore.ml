@@ -27,8 +27,8 @@ let iter_array_gen gconf f o = Js.Optdef.iter o (fun a -> f gconf a)
 let iter_array gconf f o =
   iter_array_gen gconf
     (fun gconf a ->
-      let a = Js.str_array a in
-      ignore (Js.array_map (fun s -> f gconf (Js.to_string s)) a)) o
+       let a = Js.str_array a in
+       ignore (Js.array_map (fun s -> f gconf (Js.to_string s)) a)) o
 
 (**********************************)
 (* Equivalent to qcert cmd        *)
@@ -70,14 +70,14 @@ let ergo_compile input =
   begin try
     let gconf =
       begin try
-	global_config_of_json input
+        global_config_of_json input
       with exn ->
         raise (Ergo_Error ("[Couldn't load configuration: "^(Printexc.to_string exn)^"]"))
       end
     in
     let j_s =
       begin try
-       Js.to_string input##.ergo
+        Js.to_string input##.ergo
       with exn ->
         raise (Ergo_Error ("[Couldn't load contract: "^(Printexc.to_string exn)^"]"))
       end
@@ -86,7 +86,7 @@ let ergo_compile input =
       begin try
         ErgoCompile.ergo_compile gconf j_s
       with Ergo_Error err -> raise (Ergo_Error ("[Compilation error: "^err^"]"))
-      | exn -> raise (Ergo_Error ("[Compilation error: "^(Printexc.to_string exn)^"]"))
+         | exn -> raise (Ergo_Error ("[Compilation error: "^(Printexc.to_string exn)^"]"))
       end
     in
     json_of_result res
@@ -102,4 +102,4 @@ let _ =
   Js.export "Ergo" (object%js
     val compile  = Js.wrap_callback ergo_compile
     val version = Js.wrap_callback ergo_version
-   end)
+  end)
