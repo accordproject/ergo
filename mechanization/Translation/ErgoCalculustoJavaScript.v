@@ -25,8 +25,8 @@ Section ErgoCalculustoJavaScript.
 
   Definition lookup_error (coname:string) (clname:string) :=
     let msg := ("Clause " ++ clname ++ " in contract " ++ coname ++ " not found")%string in
-    CompilationError msg.
-    
+    EResult.CompilationError msg.
+
   Definition lookup_clause_code_from_package
              (coname:string) (clname:string) (p:ergoc_package) : eresult ergoc_expr :=
     let clause := lookup_clause_from_package coname clname p in
@@ -104,29 +104,29 @@ Section ErgoCalculustoJavaScript.
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       let fname := function_name_of_contract_clause_name coname c.(clause_name) in
-      javascript_function_of_body c.(clause_closure).(closure_body) fname eol quotel.
+      javascript_function_of_body c.(clause_lambda).(lambda_body) fname eol quotel.
     
     Definition javascript_function_of_ergo_func
-               (f:ergoc_func)
+               (f:ergoc_function)
                (coname:option string)
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-      let fname := function_name_of_contract_clause_name coname f.(func_name) in
-      javascript_function_of_body f.(func_closure).(closure_body) fname eol quotel ++ eol.
+      let fname := function_name_of_contract_clause_name coname f.(function_name) in
+      javascript_function_of_body f.(function_lambda).(lambda_body) fname eol quotel ++ eol.
     
     Definition javascript_method_of_ergo_clause
                (c:ergoc_clause)
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       let fname := c.(clause_name) in
-      javascript_method_of_body c.(clause_closure).(closure_body) fname eol quotel.
+      javascript_method_of_body c.(clause_lambda).(lambda_body) fname eol quotel.
     
     Definition javascript_method_of_ergo_func
-               (f:ergoc_func)
+               (f:ergoc_function)
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-      let fname := f.(func_name) in
-      javascript_method_of_body f.(func_closure).(closure_body) fname eol quotel.
+      let fname := f.(function_name) in
+      javascript_method_of_body f.(function_lambda).(lambda_body) fname eol quotel.
 
     Definition javascript_of_declaration
                (d:ergoc_declaration)
@@ -135,7 +135,7 @@ Section ErgoCalculustoJavaScript.
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       match d with
       | Clause c => javascript_method_of_ergo_clause c eol quotel
-      | Func f => javascript_method_of_ergo_func f eol quotel
+      | Function f => javascript_method_of_ergo_func f eol quotel
       end.
 
     Definition javascript_of_declaration_list
@@ -227,7 +227,7 @@ Section ErgoCalculustoJavaScript.
     Definition javascript_of_package_with_dispatch
                (request:string)
                (response:string)
-               (f:ergoc_func)
+               (f:ergoc_function)
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       (preamble eol) ++ eol
@@ -242,7 +242,7 @@ Section ErgoCalculustoJavaScript.
     Definition javascript_of_package_with_dispatch_top
                (request:string)
                (response:string)
-               (f:ergoc_func) : ErgoCodeGen.ergoc_javascript :=
+               (f:ergoc_function) : ErgoCodeGen.ergoc_javascript :=
       javascript_of_package_with_dispatch request response f ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
 
     Definition javascript_of_clause_code_in_package

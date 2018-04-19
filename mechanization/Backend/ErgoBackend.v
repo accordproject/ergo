@@ -12,6 +12,9 @@
  * limitations under the License.
  *)
 
+Require Export Qcert.Utils.Utils.
+Require Export Qcert.Common.TypingRuntime.
+
 Require Qcert.Compiler.Model.EnhancedModel.
 Require ErgoSpec.Backend.Model.ErgoBackendRuntime.
 Require ErgoSpec.Backend.Lib.EType.

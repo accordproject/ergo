@@ -55,7 +55,7 @@ Section ErgotoJavaScript.
     match zipped with
     | None => efailure (CompilationError "Parameter mismatch during dispatch")
     | Some _ =>
-      esuccess (EFunCall cname (EVar v0 :: effparamrest))
+      esuccess (ECall cname (EVar v0 :: effparamrest))
     end.
 
   Definition case_of_sig
@@ -113,7 +113,7 @@ Section ErgotoJavaScript.
           (fun disp =>
              (EFunc
                 (mkFunc dispatch_fun_name
-                        (mkClosure
+                        (mkLambda
                            (("request"%string,None)::nil)
                            None
                            None
