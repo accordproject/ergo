@@ -20,11 +20,11 @@ are:
 
 ## Status and Contributions
 
-Ergo is developed as an open standard as part of the <a href="https://www.accordproject.org">Accord Project</a>, along with an open-source implementation is available as an npm package. The source code for Ergo can be found on [github](https://github.com/accordproject/ergo). Installation instructions can be found [here](http://ergo.readthedocs.io/en/latest/Installation.html).
-
-Both the design and implementation of the language are still in early stages, and we encourage you to visit this site regularly for updates and release information.
+Ergo is developed as an open standard as part of the <a href="https://www.accordproject.org">Accord Project</a>. An open-source implementation is tracking the standard closesly, and is available as an npm package. The source code for Ergo can be found on [github](https://github.com/accordproject/ergo). Installation instructions can be found [here](http://ergo.readthedocs.io/en/latest/Installation.html).
 
 Information about how to contribute to Ergo can be found in [contributing.md](https://github.com/accordproject/ergo/blob/master/contribute-to-ergo/contributing.md).
+
+_Both the design and implementation of the language are still in early stages. We encourage you to visit this site regularly for updates and future releases information._
 
 ## Technical Material
 
