@@ -38,14 +38,14 @@ let parse_ergo file_content =
 let parse_ergoc file_content =
   ParseString.parse_ergoc_sexp_from_string file_content
 
-let compile_ergo_to_javascript coname clname ergo =
+let compile_ergo_to_javascript ctos coname clname ergo =
   let coname = Util.char_list_of_string coname in
   let clname = Util.char_list_of_string clname in
-  let code = ErgoCompiler.clause_code_from_ergo_package coname clname ergo in
+  let code = ErgoCompiler.clause_code_from_ergo_package ctos coname clname ergo in
   wrap_jerrors Util.string_of_char_list code
 
-let compile_ergo_to_calculus ergo =
-  let cal = ErgoCompiler.ergo_calculus_package_from_ergo_package ergo in
+let compile_ergo_to_calculus ctos ergo =
+  let cal = ErgoCompiler.ergo_calculus_package_from_ergo_package ctos ergo in
   wrap_jerrors (fun cal -> SExp.sexp_to_string (AstsToSExp.ergoc_package_to_sexp cal)) cal
 
 let compile_calculus_to_javascript coname clname ergoc =
@@ -58,12 +58,12 @@ let compile_package_calculus_to_javascript ergoc =
   Util.string_of_char_list
     (ErgoCompiler.javascript_from_ergoc_package ergoc)
 
-let compile_package_to_javascript ergo =
-  let code = ErgoCompiler.javascript_from_ergo_package ergo in
+let compile_package_to_javascript ctos ergo =
+  let code = ErgoCompiler.javascript_from_ergo_package ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
-let compile_package_to_javascript_with_dispatch coname ergo =
-  let code = ErgoCompiler.javascript_from_ergo_package_with_dispatch coname ergo in
+let compile_package_to_javascript_with_dispatch ctos coname ergo =
+  let code = ErgoCompiler.javascript_from_ergo_package_with_dispatch ctos coname ergo in
   wrap_jerrors Util.string_of_char_list code
 
 let force_contract_clause_names coname clname =
@@ -72,7 +72,7 @@ let force_contract_clause_names coname clname =
   | _ -> raise (Ergo_Error "JavaScript target currently requires a contract name and a clause name")
   end
 
-let compile source target coname clname with_dispatch file_content =
+let compile source target coname clname with_dispatch ctos file_content =
   begin match source,target with
   | _,Ergo -> raise (Ergo_Error "Target language cannot be Ergo")
   | JavaScript,_ -> raise (Ergo_Error "Source language cannot be JavaScript")
@@ -81,24 +81,24 @@ let compile source target coname clname with_dispatch file_content =
       let ergo_parsed = parse_ergo file_content in
       begin match coname,clname with
       | Some coname, Some clname ->
-          compile_ergo_to_javascript coname clname ergo_parsed
+          compile_ergo_to_javascript ctos coname clname ergo_parsed
       | None, Some _ | Some _, None | None, None ->
           if with_dispatch
           then
             begin match coname with
             | None ->
                 compile_package_to_javascript_with_dispatch
-                  None ergo_parsed
+                  ctos None ergo_parsed
             | Some coname ->		  
                 compile_package_to_javascript_with_dispatch
-                  (Some (Util.char_list_of_string coname)) ergo_parsed
+                  ctos (Some (Util.char_list_of_string coname)) ergo_parsed
             end
           else
-            compile_package_to_javascript ergo_parsed
+            compile_package_to_javascript ctos ergo_parsed
       end
   | Ergo,Calculus ->
       let ergo_parsed = parse_ergo file_content in
-      compile_ergo_to_calculus ergo_parsed
+      compile_ergo_to_calculus ctos ergo_parsed
   | Calculus,JavaScript ->
       let ergoc_parsed = parse_ergoc file_content in
       begin match coname,clname with
@@ -122,7 +122,8 @@ let ergo_compile gconf file_content =
   let contract_name = ErgoConfig.get_contract_name gconf in
   let clause_name = ErgoConfig.get_clause_name gconf in
   let with_dispatch = ErgoConfig.get_with_dispatch gconf in
-  compile source_lang target_lang contract_name clause_name with_dispatch file_content
+  let ctos = ErgoConfig.get_ctos gconf in
+  compile source_lang target_lang contract_name clause_name with_dispatch ctos file_content
 
 let ergo_proc gconf (file_name,file_content) =
   let target_lang = ErgoConfig.get_target_lang gconf in

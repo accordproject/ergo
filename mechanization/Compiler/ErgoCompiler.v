@@ -146,15 +146,25 @@ Module ErgoCompiler.
 
   (** Compilation *)
   Definition clause_calculus_from_ergo_package :
-    String.string -> String.string -> ergo_package -> EResult.eresult NNRC.nnrc
+    list CTO.cto_package
+    -> String.string
+    -> String.string
+    -> ergo_package
+    -> EResult.eresult NNRC.nnrc
     := ErgotoJavaScript.clause_calculus_from_package.
 
   Definition clause_code_from_ergo_package :
-    String.string -> String.string -> ergo_package -> EResult.eresult JavaScript.javascript
+    list CTO.cto_package
+    -> String.string
+    -> String.string
+    -> ergo_package
+    -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.clause_code_from_package.
 
   Definition ergo_calculus_package_from_ergo_package :
-    ergo_package -> EResult.eresult ergoc_package
+    list CTO.cto_package
+    -> ergo_package
+    -> EResult.eresult ergoc_package
     := ErgotoErgoCalculus.package_to_calculus.
 
   Definition clause_code_from_ergoc_package :
@@ -166,11 +176,16 @@ Module ErgoCompiler.
     := ErgoCalculustoJavaScript.javascript_of_package_top.
 
   Definition javascript_from_ergo_package :
-    ergo_package -> EResult.eresult JavaScript.javascript
+    list CTO.cto_package
+    -> ergo_package
+    -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.javascript_from_package.
 
   Definition javascript_from_ergo_package_with_dispatch :
-    option String.string -> ergo_package -> EResult.eresult JavaScript.javascript
+    list CTO.cto_package
+    -> option String.string
+    -> ergo_package
+    -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.javascript_from_package_with_dispatch.
 
 End ErgoCompiler.

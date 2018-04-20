@@ -33,7 +33,8 @@ Require Import ErgoSpec.Ergo.Lang.Ergo.
 Section ErgoSem.
   Definition env := list (string * ErgoData.data).
   Definition mod_context := list ergo_package.
-  Definition etypeerror msg : eresult ErgoData.data := efailure (TypeError msg).
+
+  Definition etypeerror msg : eresult ErgoData.data := efailure (EResult.TypeError msg).
   Definition variable_not_found : eresult ErgoData.data := etypeerror "variable not found"%string.
 
   (** Currently, this is written as a big-step semantics. There is

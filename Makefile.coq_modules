@@ -26,6 +26,7 @@ MODULES = \
 	Common/Utils/EResult \
 	Common/Utils/EError \
 	Common/CTO/CTO \
+	Common/CTO/ETypeContext \
 	Ergo/Lang/ErgoBase \
 	Ergo/Lang/Ergo \
 	Ergo/Lang/ErgoSem \
