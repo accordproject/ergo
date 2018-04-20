@@ -1,3 +1,4 @@
 theme: jekyll-theme-minimal
 title: Ergo
 description: A Domain Specific Language for Smart Legal Contracts
+exclude: [manual]
