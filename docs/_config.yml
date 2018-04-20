@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
 title: Ergo
-description: The DSL for Smart Legal Contracts
+description: The Ergo Language for Smart Legal Contracts
 exclude: [manual]
