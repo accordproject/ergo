@@ -110,72 +110,72 @@
 &nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#ELet">Ergo.ELet</a></span> <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#v">v</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#t">t</a></span>) <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#e1">e1</a></span> <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#e2">e2</a></span>.<br/>
 &nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.efor">efor</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EFor">Ergo.EFor</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.efuncall">efuncall</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EFunCall">Ergo.EFunCall</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ematch">ematch</a></span> : <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#match_case">Ergo.match_case</a></span> * <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span>) -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EMatch">Ergo.EMatch</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.erecord">erecord</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> * <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span>) -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#ERecord">Ergo.ERecord</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ecall">efuncall</a></span> : <span class="id">String.string</span> -&gt; <span class="id">list</span> <span class="id">ergo_expr</span> -&gt; <span class="id">ergo_expr</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">Ergo.EFunCall</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ematch</span> : <span class="id">ergo_expr</span> -&gt; <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#match_case">list</a></span> (<span class="id">Ergo.match_case</span> * <span class="id">ergo_expr</span>) -&gt; <span class="id">ergo_expr</span> -&gt; <span class="id">ergo_expr</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">Ergo.EMatch</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">erecord</span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">list</a></span> (<span class="id">String.string</span> * <span class="id">ergo_expr</span>) -&gt; <span class="id">ergo_expr</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">Ergo.ERecord</span>.<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.edot">edot</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#EDot">ErgoSugar.EDot</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ereturn">ereturn</a></span> : <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#EReturn">ErgoSugar.EReturn</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ereturnsetstate">ereturnsetstate</a></span> : <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#EReturnSetState">ErgoSugar.EReturnSetState</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.enew">enew</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> * <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span>) -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#ENewSugar">ErgoSugar.ENewSugar</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ethrow">ethrow</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> * <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span>) -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#EThrowSugar">ErgoSugar.EThrowSugar</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ethis_contract">ethis_contract</a></span> : <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EThisContract">Ergo.EThisContract</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ethis_clause">ethis_clause</a></span> : <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EThisClause">Ergo.EThisClause</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ethis_state">ethis_state</a></span> : <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_expr">ergo_expr</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EThisState">Ergo.EThisState</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">edot</span> : <span class="id">String.string</span> -&gt; <span class="id">ergo_expr</span> -&gt; <span class="id">ergo_expr</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoSugar.EDot</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ereturn</span> : <span class="id">ergo_expr</span> -&gt; <span class="id">ergo_expr</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoSugar.EReturn</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ereturnsetstate</span> : <span class="id">ergo_expr</span> -&gt; <span class="id">ergo_expr</span> -&gt; <span class="id">ergo_expr</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoSugar.EReturnSetState</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">enew</span> : <span class="id">option</span> <span class="id">String.string</span> -&gt; <span class="id">String.string</span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">list</a></span> (<span class="id">String.string</span> * <span class="id">ergo_expr</span>) -&gt; <span class="id">ergo_expr</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoSugar.ENewSugar</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ethrow</span> : <span class="id">option</span> <span class="id">String.string</span> -&gt; <span class="id">String.string</span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">list</a></span> (<span class="id">String.string</span> * <span class="id">ergo_expr</span>) -&gt; <span class="id">ergo_expr</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoSugar.EThrowSugar</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ethis_contract</span> : <span class="id">ergo_expr</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">Ergo.EThisContract</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ethis_clause</span> : <span class="id">ergo_expr</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">Ergo.EThisClause</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ethis_state</span> : <span class="id">ergo_expr</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">Ergo.EThisState</span>.<br/>
 <br/>
 <div class="doc">Ergo Calculus </div>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ergoc_package">ergoc_package</a></span> : <span class="kwd">Set</span> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_package">ErgoCalculus.ergoc_package</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ergoc_contract">ergoc_contract</a></span> : <span class="kwd">Set</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_contract">ErgoCalculus.ergoc_contract</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ergoc_declaration">ergoc_declaration</a></span> : <span class="kwd">Set</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_declaration">ErgoCalculus.ergoc_declaration</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ergoc_clause">ergoc_clause</a></span> : <span class="kwd">Set</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_clause">ErgoCalculus.ergoc_clause</a></span>.<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ergoc_expr">ergoc_expr</a></span> : <span class="kwd">Set</span> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_expr">ErgoCalculus.ergoc_expr</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_package</span> : <span class="kwd">Set</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCalculus.ergoc_package</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_contract</span> : <span class="kwd">Set</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCalculus.ergoc_contract</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_declaration</span> : <span class="kwd">Set</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCalculus.ergoc_declaration</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_clause</span> : <span class="kwd">Set</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCalculus.ergoc_clause</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_expr</span> : <span class="kwd">Set</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCalculus.ergoc_expr</span>.<br/>
 <br/>
 <div class="doc">Compilation </div>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.clause_calculus_from_ergo_package">clause_calculus_from_ergo_package</a></span> :<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_package">ergo_package</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">EResult.eresult</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.NNRC.Lang.NNRC.html#nnrc">NNRC.nnrc</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Translation.ErgotoJavaScript.html#clause_calculus_from_package">ErgotoJavaScript.clause_calculus_from_package</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">clause_calculus_from_ergo_package</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">String.string</span> -&gt; <span class="id">String.string</span> -&gt; <span class="id">ergo_package</span> -&gt; <span class="id">EResult.eresult</span> <span class="id">NNRC.nnrc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgotoJavaScript.clause_calculus_from_package</span>.<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.clause_code_from_ergo_package">clause_code_from_ergo_package</a></span> :<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_package">ergo_package</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">EResult.eresult</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.JavaScript.Lang.JavaScript.html#javascript">JavaScript.javascript</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Translation.ErgotoJavaScript.html#clause_code_from_package">ErgotoJavaScript.clause_code_from_package</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">clause_code_from_ergo_package</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">String.string</span> -&gt; <span class="id">String.string</span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">ergo_package</a></span> -&gt; <span class="id">EResult.eresult</span> <span class="id">JavaScript.javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgotoJavaScript.clause_code_from_package</span>.<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.ergo_calculus_package_from_ergo_package">ergo_calculus_package_from_ergo_package</a></span> :<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_package">ergo_package</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">EResult.eresult</a></span> <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergoc_package">ergoc_package</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#package_to_calculus">ErgotoErgoCalculus.package_to_calculus</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergo_calculus_package_from_ergo_package</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ergo_package</span> -&gt; <span class="id">EResult.eresult</span> <span class="id">ergoc_package</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgotoErgoCalculus.package_to_calculus</span>.<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.clause_code_from_ergoc_package">clause_code_from_ergoc_package</a></span> :<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergoc_package">ergoc_package</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">EResult.eresult</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.JavaScript.Lang.JavaScript.html#javascript">JavaScript.javascript</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#javascript_of_clause_code_in_package">ErgoCalculustoJavaScript.javascript_of_clause_code_in_package</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">clause_code_from_ergoc_package</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">String.string</span> -&gt; <span class="id">String.string</span> -&gt; <span class="id">ergoc_package</span> -&gt; <span class="id">EResult.eresult</span> <span class="id">JavaScript.javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCalculustoJavaScript.javascript_of_clause_code_in_package</span>.<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.javascript_from_ergoc_package">javascript_from_ergoc_package</a></span> :<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergoc_package">ergoc_package</a></span> -&gt; <span class="id"><a href="https://querycert.github.io/html/Qcert.JavaScript.Lang.JavaScript.html#javascript">JavaScript.javascript</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#javascript_of_package_top">ErgoCalculustoJavaScript.javascript_of_package_top</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.JavaScript.Lang.JavaScript.html#javascript">javascript_from_ergoc_package</a></span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ergoc_package</span> -&gt; <span class="id">JavaScript.javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCalculustoJavaScript.javascript_of_package_top</span>.<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.javascript_from_ergo_package">javascript_from_ergo_package</a></span> :<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_package">ergo_package</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">EResult.eresult</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.JavaScript.Lang.JavaScript.html#javascript">JavaScript.javascript</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Translation.ErgotoJavaScript.html#javascript_from_package">ErgotoJavaScript.javascript_from_package</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_from_ergo_package</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ergo_package</span> -&gt; <span class="id">EResult.eresult</span> <span class="id">JavaScript.javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgotoJavaScript.javascript_from_package</span>.<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="ErgoCompiler.javascript_from_ergo_package_with_dispatch">javascript_from_ergo_package_with_dispatch</a></span> :<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler.ergo_package">ergo_package</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">EResult.eresult</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.JavaScript.Lang.JavaScript.html#javascript">JavaScript.javascript</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Translation.ErgotoJavaScript.html#javascript_from_package_with_dispatch">ErgotoJavaScript.javascript_from_package_with_dispatch</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_from_ergo_package_with_dispatch</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">option</span> <span class="id">String.string</span> -&gt; <span class="id">ergo_package</span> -&gt; <span class="id">EResult.eresult</span> <span class="id">JavaScript.javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgotoJavaScript.javascript_from_package_with_dispatch</span>.<br/>
 <br/>
-<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Compiler.ErgoCompiler.html#ErgoCompiler">ErgoCompiler</a></span>.<br/>
+<span class="kwd">End</span> <span class="id">ErgoCompiler</span>.<br/>
 <br/>
 
 </div>

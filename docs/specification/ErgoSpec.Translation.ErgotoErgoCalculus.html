@@ -1,0 +1,531 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.Translation.ErgotoErgoCalculus</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.Translation.ErgotoErgoCalculus" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.Translation.ErgotoErgoCalculus</h1>
+<div class="coq">
+<br/>
+<div class="doc">Translates contract logic to calculus </div>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Backend.ForeignErgo.html">Qcert.Utils.Utils</a></span>.<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Backend.ForeignErgo</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Common.Utils.ENames</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Common.Utils.EResult</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Common.Utils.EError</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Ergo.Lang.ErgoBase</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Ergo.Lang.Ergo</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Ergo.Lang.ErgoSugar</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.ErgoCalculus.Lang.ErgoCalculus</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Backend.ErgoBackend</span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id">ErgotoJavaScript</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">Qcert.NNRC.NNRCRuntime</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">utils</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">string</span>.<br/>
+<div class="doc">This </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">this_contract</span> := "<span class="id">contract</span>"%<span class="id">string</span>. <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">this_state</span> := "<span class="id">state</span>"%<span class="id">string</span>. <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">current_time</span> := "<span class="id">now</span>"%<span class="id">string</span>.<br/>
+<br/>
+<div class="doc">New Array </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">new_array</span> (<span class="id">el</span>:<span class="id">list</span> <span class="id">ergoc_expr</span>) : <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">el</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">nil</span> =&gt; <span class="id">NNRCConst</span> (<span class="id">dcoll</span> <span class="id">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">e1</span>::<span class="id">erest</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">fold_left</span> (<span class="kwd">fun</span> <span class="id">acc</span> <span class="id">e</span> =&gt; <span class="id">NNRCBinop</span> <span class="id">OpBagUnion</span> (<span class="id">NNRCUnop</span> <span class="id">OpBag</span> <span class="id">e</span>) <span class="id">acc</span>) <span class="id">erest</span> (<span class="id">NNRCUnop</span> <span class="id">OpBag</span> <span class="id">e1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<div class="doc"><span class="bracket"><span class="id">new</span> <span class="id">Concept</span>{ <span class="id">field1</span>: <span class="id">expr1</span>, ... <span class="id">fieldn</span>: <span class="id">exprn</span> }</span> creates a record and brands it with the concept name </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">new_expr</span> (<span class="id">brand</span>:<span class="id">string</span>) (<span class="id">struct_expr</span>:<span class="id">ergoc_expr</span>) : <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">NNRCUnop</span> (<span class="id">OpBrand</span> (<span class="id">brand</span> :: <span class="id">nil</span>)) <span class="id">struct_expr</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergo_enforce_error</span> : <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">NNRCConst</span> <span class="id">enforce_error_content</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">utils</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">context_current_contract</span> : <span class="id">option</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">context_current_clause</span> : <span class="id">option</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">context_table</a></span>: <span class="id">lookup_table</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">context_namespace</span>: <span class="id">option</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">context_globals</span>: <span class="id">list</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">context_params</span>: <span class="id">list</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">add_globals</span> (<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">params</span>:<span class="id">list</span> <span class="id">string</span>) : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_contract</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_table</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_namespace</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.app</span> <span class="id">params</span> <span class="id">ctxt</span>.(<span class="id">context_globals</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_params</span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">add_params</span> (<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">params</span>:<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">list</a></span> <span class="id">string</span>) : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#params">ctxt</a></span>.(<span class="id">context_current_contract</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_table</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context">ctxt</a></span>.(<span class="id">context_namespace</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context">context_globals</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.app</span> <span class="id">params</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">ctxt</a></span>.(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context_ctos">context_params</a></span>)).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">add_one_global</span> (<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">param</span>:<span class="id">string</span>) : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_contract</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_table</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_namespace</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.cons</span> <span class="id">param</span> <span class="id">ctxt</span>.(<span class="id">context_globals</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_params</span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">add_one_param</span> (<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">param</span>:<span class="id">string</span>) : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_contract</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_table</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">context_namespace</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_globals</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.cons</span> <span class="id">param</span> <span class="id">ctxt</span>.(<span class="id">context_params</span>)).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">add_one_func</span> (<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">fname</span>:<span class="id">string</span>) (<span class="id">fclosure</span>:<span class="id">closure</span>) : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_contract</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">add_function_to_table</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context_current_clause">ctxt</a></span>.(<span class="id">context_table</span>) <span class="id">fname</span> <span class="id">fclosure</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_namespace</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_globals</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">ctxt</a></span>.(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context_globals">context_params</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">set_current_contract</span> (<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">cname</span>:<span class="id">string</span>) : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Some</span> <span class="id">cname</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_current_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_table</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_namespace</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_globals</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_params</span>).<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">set_current_clause</span> (<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">cname</span>:<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">string</a></span>) : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">context_current_contract</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Some</span> <span class="id">cname</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_table</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_namespace</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_globals</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span>.(<span class="id">context_params</span>).<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">cmatch_cases</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">list</span> (<span class="id">match_case</span> * <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context_ctos">ergoc_expr</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">fresh_vars</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">Qcert.Utils.Fresh</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">fresh_in_match</span> {<span class="id">A</span>} (<span class="id">eccases</span>:<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">list</a></span> (<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context_namespace">A</a></span> * <span class="id">ergoc_expr</span>)) (<span class="id">ecdefault</span>:<span class="id">ergoc_expr</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">fresh_var</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"$<span class="kwd">match</span>"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.app</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.concat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context">List.map</a></span> (<span class="kwd">fun</span> <span class="id">eccase</span> =&gt; <span class="id">nnrc_free_vars</span> (<span class="id">snd</span> <span class="id">eccase</span>)) <span class="id">eccases</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">nnrc_free_vars</span> <span class="id">ecdefault</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">fresh_in_case</span> (<span class="id">e</span>:<span class="id">ergoc_expr</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">fresh_var</span> "$<span class="tactic">case</span>"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">nnrc_free_vars</span> <span class="id">e</span>).<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">fresh_vars</span>.<br/>
+<br/>
+<div class="doc">Translate expressions to calculus </div>
+&nbsp;&nbsp;<span class="kwd">Fixpoint</span> <span class="id">ergo_expr_to_calculus</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">e</span>:<span class="id">ergo_expr</span>) : <span class="id">eresult</span> <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">e</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EThisContract</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">ctxt</span>.(<span class="id">context_current_contract</span>) <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">not_in_contract_error</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">_</span> =&gt; <span class="id">esuccess</span> (<span class="id">NNRCGetConstant</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#concat">this_contract</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EThisClause</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">ctxt</span>.(<span class="id">context_current_clause</span>) <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="https://querycert.github.io/html/Qcert.cNNRC.Lang.cNNRCVars.html#nnrc_free_vars">None</a></span> =&gt; <span class="id">not_in_clause_error</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">cname</span> =&gt; <span class="id">esuccess</span> (<span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_expr">NNRCUnop</a></span> (<span class="id">OpDot</span> <span class="id">cname</span>) (<span class="id">NNRCUnop</span> <span class="id">OpUnbrand</span> (<span class="id">NNRCGetConstant</span> <span class="id">this_contract</span>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EThisState</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">ctxt</span>.(<span class="id">context_current_contract</span>) <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">not_in_contract_error</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">_</span> =&gt; <span class="id">esuccess</span> (<span class="id">NNRCGetConstant</span> <span class="id">this_state</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EVar</span> <span class="id">v</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">if</span> <span class="id">in_dec</span> <span class="id">string_dec</span> <span class="id">v</span> <span class="id">ctxt</span>.(<span class="id">context_params</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span> <span class="id">esuccess</span> (<span class="id">NNRCGetConstant</span> <span class="id">v</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">else</span> <span class="id">esuccess</span> (<span class="id">NNRCVar</span> <span class="id">v</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EConst</span> <span class="id">d</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">esuccess</span> (<span class="id">NNRCConst</span> <span class="id">d</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EArray</span> <span class="id">el</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init_el</span> := <span class="id">esuccess</span> <span class="id">nil</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">acc</a></span>:<span class="id">eresult</span> (<span class="id">list</span> <span class="id">ergoc_expr</span>)) (<span class="id">e</span>:<span class="id">ergo_expr</span>) : <span class="id">eresult</span> (<span class="id">list</span> <span class="id">ergoc_expr</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cons</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> <span class="id">new_array</span> (<span class="id">fold_left</span> <span class="id">proc_one</span> <span class="id">el</span> <span class="id">init_el</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EUnaryOp</span> <span class="id">u</span> <span class="id">e</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">NNRCUnop</a></span> <span class="id">u</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EBinaryOp</span> <span class="id">b</span> <span class="id">e1</span> <span class="id">e2</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span> (<span class="id">NNRCBinop</span> <span class="id">b</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EIf</span> <span class="id">e1</span> <span class="id">e2</span> <span class="id">e3</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift3</span> <span class="id">NNRCIf</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e3</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EEnforce</span> <span class="id">e1</span> <span class="id">None</span> <span class="id">e3</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift3</span> <span class="id">NNRCIf</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpNeg</span>)) (<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e1</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">esuccess</span> <span class="id">ergo_enforce_error</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e3</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EEnforce</span> <span class="id">e1</span> (<span class="id">Some</span> <span class="id">e2</span>) <span class="id">e3</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift3</span> <span class="id">NNRCIf</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpNeg</span>)) (<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#e">ergo_expr_to_calculus</a></span> <span class="id">ctxt</span> <span class="id">e1</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e3</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">ELet</span> <span class="id">v</span> <span class="id">None</span> <span class="id">e1</span> <span class="id">e2</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span> (<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EIf">NNRCLet</a></span> <span class="id">v</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">ELet</span> <span class="id">v</span> (<span class="id">Some</span> <span class="id">t1</span>) <span class="id">e1</span> <span class="id">e2</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span> (<span class="id">NNRCLet</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.cNNRC.Lang.cNNRC.html#NNRCIf">v</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">ergo_expr_to_calculus</a></span> <span class="id">ctxt</span> <span class="id">e2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">ENew</span> <span class="id">cr</span> <span class="id">nil</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">esuccess</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">new_expr</span> (<span class="id">absolute_ref_of_class_ref</span> <span class="id">ctxt</span>.(<span class="id">context_namespace</span>) <span class="id">cr</span>) (<span class="id">NNRCConst</span> (<span class="id">drec</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.cNNRC.Lang.cNNRC.html#NNRCUnop">nil</a></span>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">ENew</span> <span class="id">cr</span> ((<span class="id">s0</span>,<span class="id">init</span>)::<span class="id">rest</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init_rec</span> : <span class="id">eresult</span> <span class="id">nnrc</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpRec</span> <span class="id">s0</span>)) (<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">init</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span> (<span class="id">acc</span>:<span class="id">eresult</span> <span class="id">nnrc</span>) (<span class="id">att</span>:<span class="id">string</span> * <span class="id">ergo_expr</span>) : <span class="id">eresult</span> <span class="id">nnrc</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">attname</span> := <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">fst</a></span> <span class="id">att</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">e</span> := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> (<span class="id">snd</span> <span class="id">att</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span> (<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#jlift2">NNRCBinop</a></span> <span class="id">OpRecConcat</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpRec</span> <span class="id">attname</span>)) <span class="id">e</span>) <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="id">new_expr</span> (<span class="id">absolute_ref_of_class_ref</span> <span class="id">ctxt</span>.(<span class="id">context_namespace</span>) <span class="id">cr</span>)) (<span class="id">fold_left</span> <span class="id">proc_one</span> <span class="id">rest</span> <span class="id">init_rec</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">ERecord</span> <span class="id">nil</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">esuccess</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCConst</span> (<span class="id">drec</span> <span class="id">nil</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">ERecord</span> ((<span class="id">s0</span>,<span class="id">init</span>)::<span class="id">rest</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init_rec</span> : <span class="id">eresult</span> <span class="id">nnrc</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpRec</span> <span class="id">s0</span>)) (<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">init</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span> (<span class="id">acc</span>:<span class="id">eresult</span> <span class="id">nnrc</span>) (<span class="id">att</span>:<span class="id">string</span> * <span class="id"><a href="https://querycert.github.io/html/Qcert.NNRC.Lang.NNRC.html#nnrc">ergo_expr</a></span>) : <span class="id">eresult</span> <span class="id">nnrc</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">attname</span> := <span class="id">fst</span> <span class="id">att</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">e</span> := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> (<span class="id">snd</span> <span class="id">att</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span> (<span class="id">NNRCBinop</span> <span class="id">OpRecConcat</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpRec</span> <span class="id">attname</span>)) <span class="id">e</span>) <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">fold_left</span> <span class="id">proc_one</span> <span class="id">rest</span> <span class="id">init_rec</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EThrow</span> <span class="id">cr</span> <span class="id">nil</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">esuccess</span> (<span class="id">new_expr</span> (<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#init_rec">absolute_ref_of_class_ref</a></span> <span class="id">ctxt</span>.(<span class="id">context_namespace</span>) <span class="id">cr</span>) (<span class="id">NNRCConst</span> (<span class="id">drec</span> <span class="id">nil</span>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EThrow</span> <span class="id">cr</span> ((<span class="id">s0</span>,<span class="id">init</span>)::<span class="id">rest</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init_rec</span> : <span class="id">eresult</span> <span class="id">nnrc</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpRec</span> <span class="id">s0</span>)) (<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">init</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span> (<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">acc</a></span>:<span class="id">eresult</span> <span class="id">nnrc</span>) (<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">att</a></span>:<span class="id">string</span> * <span class="id">ergo_expr</span>) : <span class="id">eresult</span> <span class="id">nnrc</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">attname</span> := <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#att">fst</a></span> <span class="id">att</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">e</span> := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> (<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#att">snd</a></span> <span class="id">att</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span> (<span class="id">NNRCBinop</span> <span class="id">OpRecConcat</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">jlift</span> (<span class="id">NNRCUnop</span> (<span class="id">OpRec</span> <span class="id">attname</span>)) <span class="id">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="id">new_expr</span> (<span class="id">absolute_ref_of_class_ref</span> <span class="id">ctxt</span>.(<span class="id">context_namespace</span>) <span class="id">cr</span>)) (<span class="id">fold_left</span> <span class="id">proc_one</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#comp_context_namespace">rest</a></span> <span class="id">init_rec</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFunCall</span> <span class="id">fname</span> <span class="id">el</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init_el</span> := <span class="id">esuccess</span> <span class="id">nil</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span> (<span class="id">e</span>:<span class="id">ergo_expr</span>) (<span class="id">acc</span>:<span class="id">eresult</span> (<span class="id">list</span> <span class="id">ergoc_expr</span>)) : <span class="id">eresult</span> (<span class="id">list</span> <span class="id">ergoc_expr</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cons</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jolift</span> (<span class="id">lookup_call</span> <span class="id">ctxt</span>.(<span class="id">context_table</span>) <span class="id">fname</span>) (<span class="id">fold_right</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ergo_expr_to_calculus">proc_one</a></span> <span class="id">init_el</span> <span class="id">el</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EMatch</span> <span class="id">e0</span> <span class="id">ecases</span> <span class="id">edefault</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ec0</span> := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e0</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Operators.UnaryOperators.html#OpRec">eccases</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span> <span class="id">acc</span> <span class="id">ecase</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jolift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">acc</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="kwd">fun</span> <span class="id">x</span> =&gt; (<span class="id">fst</span> <span class="id">ecase</span>, <span class="id">x</span>)::<span class="id">acc</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> (<span class="id">snd</span> <span class="id">ecase</span>))) <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">fold_left</span> <span class="id">proc_one</span> <span class="id">ecases</span> (<span class="id">esuccess</span> <span class="id">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ecdefault</span> := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">edefault</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jolift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">ec0</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jolift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">eccases</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jolift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">ecdefault</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">v0</span> := <span class="id">fresh_in_match</span> <span class="id">eccases</span> <span class="id">ecdefault</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one_case</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">acc</span>:<span class="id">eresult</span> <span class="id">ergoc_expr</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ecase</span>:<span class="id">match_case</span> * <span class="id">ergoc_expr</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id">eresult</span> <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">fst</span> <span class="id">ecase</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| (<span class="id">Some</span> <span class="id">v</span>, <span class="id">CaseValue</span> <span class="id">d</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">acc</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">NNRCIf</span> (<span class="id">NNRCBinop</span> <span class="id">OpEqual</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCVar</span> <span class="id">v0</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCConst</span> <span class="id">d</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCLet</span> <span class="id">v</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCVar</span> <span class="id">v0</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">snd</span> <span class="id">ecase</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">acc</span>) <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| (<span class="id">None</span>, <span class="id">CaseValue</span> <span class="id">d</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">acc</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">NNRCIf</span> (<span class="id">NNRCBinop</span> <span class="id">OpEqual</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCVar</span> <span class="id">v0</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCConst</span> <span class="id">d</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">snd</span> <span class="id">ecase</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">acc</span>) <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| (<span class="id">Some</span> <span class="id">v</span>, <span class="id">CaseType</span> <span class="id">brand</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="kwd">fun</span> <span class="id">acc</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">v2</span> := <span class="id">fresh_in_case</span> <span class="id">acc</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">NNRCEither</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCUnop</span> (<span class="id">OpCast</span> (<span class="id">brand</span>::<span class="id">nil</span>)) (<span class="id">NNRCVar</span> <span class="id">v0</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">v</span> (<span class="id">snd</span> <span class="id">ecase</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">v2</span> <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| (<span class="id">None</span>, <span class="id">CaseType</span> <span class="id">brand</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="kwd">fun</span> <span class="id">acc</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">v1</span> := <span class="id">fresh_in_case</span> (<span class="id">snd</span> <span class="id">ecase</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">v2</span> := <span class="id">fresh_in_case</span> <span class="id">acc</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">NNRCEither</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#fresh_in_case">NNRCUnop</a></span> (<span class="id">OpCast</span> (<span class="id">brand</span>::<span class="id">nil</span>)) (<span class="id">NNRCVar</span> <span class="id">v0</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">v1</span> (<span class="id">snd</span> <span class="id">ecase</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">v2</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.cNNRC.Lang.cNNRC.html#NNRCVar">acc</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) <span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">eccases_folded</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">fold_left</span> <span class="id">proc_one_case</span> <span class="id">eccases</span> (<span class="id">esuccess</span> <span class="id">ecdefault</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="id">NNRCLet</span> <span class="id">v0</span> <span class="id">ec0</span>) <span class="id">eccases_folded</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ecdefault</span>) <span class="id">eccases</span>) <span class="id">ec0</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFor</span> <span class="id">v</span> <span class="id">e1</span> <span class="id">None</span> <span class="id">e2</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift2</span> (<span class="id">NNRCFor</span> <span class="id">v</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFor</span> <span class="id">v</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">e1</a></span> (<span class="id">Some</span> <span class="id">econd</span>) <span class="id">e2</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift3</span> (<span class="kwd">fun</span> <span class="id">e1</span> <span class="id">econd</span> <span class="id">e3</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">NNRCUnop</span> <span class="id">OpFlatten</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCFor</span> <span class="id">v</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">e1</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCIf</span> <span class="id">econd</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCUnop</span> <span class="id">OpBag</span> <span class="id">e3</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NNRCConst</span> (<span class="id">dcoll</span> <span class="id">nil</span>)))))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.cNNRC.Lang.cNNRC.html#NNRCLet">e1</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">econd</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<div class="doc">Translate a clause to clause+calculus </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">clause_to_calculus</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">c</span>:<span class="id">ergo_clause</span>) : <span class="id">eresult</span> <span class="id">ergoc_clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ctxt</span> : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">set_current_clause</span> <span class="id">ctxt</span> <span class="id">c</span>.(<span class="id">clause_name</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ctxt</span> : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">add_params</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.map</span> <span class="id">fst</span> <span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_params</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">mkClause</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#e3">c</a></span>.(<span class="id">clause_name</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">mkClosure</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_params</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_output</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_throw</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_body</span>))).<br/>
+<br/>
+<div class="doc">Translate a function to function+calculus </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">func_to_calculus</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">f</span>:<span class="id">ergo_func</span>) : <span class="id">eresult</span> <span class="id">ergoc_func</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ctxt</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">add_params</span> <span class="id">ctxt</span> (<span class="id">List.map</span> <span class="id">fst</span> <span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id">closure_params</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">mkFunc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">f</span>.(<span class="id">func_name</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">mkClosure</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id">closure_params</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#jlift">f</a></span>.(<span class="id">func_closure</span>).(<span class="id">closure_output</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id">closure_throw</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id">closure_body</span>))).<br/>
+<br/>
+<div class="doc">Translate a declaration to a declaration+calculus </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">declaration_to_calculus</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">d</span>:<span class="id">ergo_declaration</span>) : <span class="id"><a name="function_to_calculus">eresult</a></span> (<span class="id">context</span> * <span class="id">ergoc_declaration</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">d</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Clause</span> <span class="id">c</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_function">jlift</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">x</span> =&gt; (<span class="id">add_one_func</span> <span class="id">ctxt</span> <span class="id">x</span>.(<span class="id">clause_name</span>) <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">x</a></span>.(<span class="id">clause_closure</span>), <span class="id">Clause</span> <span class="id">x</span>)) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#mkFunc">clause_to_calculus</a></span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#function_name">ctxt</a></span> <span class="id">c</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Func</span> <span class="id">f</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">x</span> =&gt; (<span class="id">add_one_func</span> <span class="id">ctxt</span> <span class="id">x</span>.(<span class="id">func_name</span>) <span class="id">x</span>.(<span class="id">func_closure</span>), <span class="id">Func</span> <span class="id">x</span>)) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">func_to_calculus</span> <span class="id">ctxt</span> <span class="id">f</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<div class="doc">Translate a contract to a contract+calculus </div>
+<div class="doc">For a contract, add 'contract' and 'now' to the context </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">contract_to_calculus</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">c</span>:<span class="id">ergo_contract</span>) : <span class="id">eresult</span> (<span class="id">context</span> * <span class="id">ergoc_contract</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ctxt</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">set_current_contract</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#d">ctxt</a></span> <span class="id">c</span>.(<span class="id">contract_name</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ctxt</span> : <span class="id">context</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">add_params</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ctxt</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">current_time</span> :: <span class="id">this_contract</span> :: <span class="id">this_state</span> :: <span class="id">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init</span> := <span class="id">esuccess</span> (<span class="id">ctxt</span>, <span class="id">nil</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">acc</span>:<span class="id">eresult</span> (<span class="id">context</span> * <span class="id">list</span> <span class="id">ergoc_declaration</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">s</span>:<span class="id">ergo_declaration</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id">eresult</span> (<span class="id">context</span> * <span class="id">list</span> <span class="id">ergoc_declaration</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jolift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt">acc</a></span> : <span class="id">context</span> * <span class="id">list</span> <span class="id">ergoc_declaration</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">ctxt</span>,<span class="id">acc</span>) := <span class="id">acc</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="kwd">fun</span> <span class="id">xy</span> : <span class="id">context</span> * <span class="id">ergoc_declaration</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">newctxt</span>,<span class="id">news</span>) := <span class="id">xy</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">newctxt</span>,<span class="id">news</span>::<span class="id">acc</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">declaration_to_calculus</span> <span class="id">ctxt</span> <span class="id">s</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">xy</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">fst</span> <span class="id">xy</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">mkContract</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">c</span>.(<span class="id">contract_name</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">c</span>.(<span class="id">contract_template</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">snd</span> <span class="id">xy</span>))))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.fold_left</span> <span class="id">proc_one</span> <span class="id">c</span>.(<span class="id">contract_declarations</span>) <span class="id">init</span>).<br/>
+<br/>
+<div class="doc">Translate a statement to a statement+calculus </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">stmt_to_calculus</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ctxt</span>:<span class="id">context</span>) (<span class="id">s</span>:<span class="id">ergo_stmt</span>) : <span class="id">eresult</span> (<span class="id">context</span> * <span class="id">ergoc_stmt</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">s</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EType</span> <span class="id">cto_type</span> =&gt; <span class="id">esuccess</span> (<span class="id">ctxt</span>, <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_declaration">EType</a></span> <span class="id">cto_type</span>) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EExpr</span> <span class="id">e</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">x</span> =&gt; (<span class="id">ctxt</span>, <span class="id">EExpr</span> <span class="id">x</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EGlobal</span> <span class="id">v</span> <span class="id">e</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">x</span> =&gt; (<span class="id">add_one_global</span> <span class="id">ctxt</span> <span class="id">v</span>, <span class="id">EGlobal</span> <span class="id">v</span> <span class="id">x</span>)) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt</span> <span class="id">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EImport</span> <span class="id">s</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">esuccess</span> (<span class="id">ctxt</span>, <span class="id">EImport</span> <span class="id">s</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFunc</span> <span class="id">f</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">x</span> =&gt; (<span class="id">add_one_func</span> <span class="id">ctxt</span> <span class="id">x</span>.(<span class="id">func_name</span>) <span class="id">x</span>.(<span class="id">func_closure</span>), <span class="id">EFunc</span> <span class="id">x</span>)) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">func_to_calculus</span> <span class="id">ctxt</span> <span class="id">f</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EContract</span> <span class="id">c</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id">fst</span> <span class="id">xy</span>, <span class="id">EContract</span> (<span class="id">snd</span> <span class="id">xy</span>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">contract_to_calculus</span> <span class="id">ctxt</span> <span class="id">c</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">initial_context</span> (<span class="id">p</span>:<span class="id">option</span> <span class="id">string</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContext</span> <span class="id">None</span> <span class="id">None</span> <span class="id">ergoc_stdlib</span> <span class="id">p</span> <span class="id">nil</span> <span class="id">nil</span>.<br/>
+<br/>
+<div class="doc">Translate a package to a package+calculus </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">package_to_calculus</span> (<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#EExpr">p</a></span>:<span class="id">package</span>) : <span class="id">eresult</span> <span class="id">ergoc_package</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">local_namespace</span> := <span class="id">p</span>.(<span class="id">package_namespace</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">ctxt</span> := <span class="id">initial_context</span> <span class="id">local_namespace</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init</span> := <span class="id">esuccess</span> (<span class="id">ctxt</span>, <span class="id">nil</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">proc_one</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">acc</span>:<span class="id">eresult</span> (<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#EImport">context</a></span> * <span class="id">list</span> <span class="id">ergoc_stmt</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">s</span>:<span class="id">ergo_stmt</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id">eresult</span> (<span class="id">context</span> * <span class="id">list</span> <span class="id">ergoc_stmt</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jolift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">acc</span> : <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#function_lambda">context</a></span> * <span class="id">list</span> <span class="id">ergoc_stmt</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">ctxt</span>,<span class="id">acc</span>) := <span class="id">acc</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="kwd">fun</span> <span class="id">xy</span> : <span class="id">context</span> * <span class="id">ergoc_stmt</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">newctxt</span>,<span class="id">news</span>) := <span class="id">xy</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">newctxt</span>,<span class="id">news</span>::<span class="id">acc</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">stmt_to_calculus</span> <span class="id">ctxt</span> <span class="id">s</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">acc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">xy</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">mkPackage</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">p</span>.(<span class="id">package_namespace</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">snd</span> <span class="id">xy</span>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.fold_left</span> <span class="id">proc_one</span> <span class="id">p</span>.(<span class="id">package_statements</span>) <span class="id">init</span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">tests</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">string</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ctxt0</span> := <span class="id">initial_context</span> <span class="id">None</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">input1</span> := <span class="id">dnat</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Example</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#initial_comp_context">j1</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">EMatch</span> (<span class="id">EConst</span> <span class="id">input1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(((<span class="id">Some</span> "<span class="id">v1</span>", <span class="id">CaseValue</span> (<span class="id">dnat</span> 1)), (<span class="id">EConst</span> (<span class="id">dstring</span> "1")))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:: ((<span class="id">Some</span> "<span class="id">v2</span>", <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">CaseValue</a></span> (<span class="id">dnat</span> 2)), (<span class="id">EConst</span> (<span class="id">dstring</span> "2")))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:: <span class="id">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">EConst</span> (<span class="id">dstring</span> "<span class="id">lots</span>")).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">jc1</span> := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt0</span> <span class="id">j1</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Example</span> <span class="id">j1</span>' :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">EMatch</span> (<span class="id">EConst</span> <span class="id">input1</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(((<span class="id">Some</span> "<span class="id">v1</span>", <span class="id">CaseValue</span> (<span class="id">dnat</span> 1)), (<span class="id">EConst</span> (<span class="id">dstring</span> "1")))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:: ((<span class="id">Some</span> "<span class="id">v2</span>", <span class="id">CaseValue</span> (<span class="id">dnat</span> 2)), <span class="id">EVar</span> "<span class="id">v2</span>")<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:: <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#p">nil</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">EConst</span> (<span class="id">dstring</span> "<span class="id">lots</span>")).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">jc1</span>' := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt0</span> <span class="id">j1</span>'.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">input2</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">dbrand</span> ("<span class="id">C1</span>"::<span class="id">nil</span>) (<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EMatch">dnat</a></span> 1).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Example</span> <span class="id">j2</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">EMatch</span> (<span class="id">EConst</span> <span class="id">input2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(((<span class="id">Some</span> "<span class="id">v1</span>", <span class="id">CaseType</span> "<span class="id">C1</span>"), (<span class="id">EConst</span> (<span class="id">dstring</span> "1")))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:: ((<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EConst">Some</a></span> "<span class="id">v2</span>", <span class="id">CaseType</span> "<span class="id">C2</span>"), (<span class="id">EConst</span> (<span class="id">dstring</span> "2")))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:: <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dstring">nil</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">EConst</span> (<span class="id">dstring</span> "<span class="id">lots</span>")).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a href="ErgoSpec.Translation.ErgotoErgoCalculus.html#ctxt0">jc2</a></span> := <span class="id">ergo_expr_to_calculus</span> <span class="id">ctxt0</span> <span class="id">j2</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">tests</span>.<br/>
+&nbsp;&nbsp;<br/>
+<span class="kwd">End</span> <span class="id">ErgotoJavaScript</span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

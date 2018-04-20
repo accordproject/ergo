@@ -1,0 +1,87 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.Common.CTO.CTO</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.Common.CTO.CTO" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.Common.CTO.CTO</h1>
+<div class="coq">
+<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="CTO">CTO</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">Qcert.Utils.Utils</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">Qcert.Common.TypingRuntime</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Backend.ErgoBackend</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Common.Utils.ENames</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id">cto_type</span> :=<br/>
+&nbsp;&nbsp;| <span class="id">CTOBoolean</span> : <span class="id">cto_type</span>                             <span class="docright">(* bool atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTODouble">CTOString</a></span> : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#cto_type">cto_type</a></span>                              <span class="docright">(* string atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CTOLong">CTODouble</a></span> : <span class="id">cto_type</span>                              <span class="docright">(* double atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id">CTOLong</span> : <span class="id">cto_type</span>                                <span class="docright">(* long atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id">CTOInteger</span> : <span class="id">cto_type</span>                             <span class="docright">(* integer atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id">CTODateTime</span> : <span class="id">cto_type</span>                            <span class="docright">(* date and time atomic type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id">CTOClassRef</span> : <span class="id">class_ref</span> -&gt; <span class="id">cto_type</span>               <span class="docright">(* class reference  *)</span><br/>
+&nbsp;&nbsp;| <span class="id">CTOOption</span> : <span class="id">cto_type</span> -&gt; <span class="id">cto_type</span>                  <span class="docright">(* optional type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id">CTORecord</span> : <span class="id">list</span> (<span class="id">string</span>*<span class="id">cto_type</span>) -&gt; <span class="id">cto_type</span>    <span class="docright">(* record type  *)</span><br/>
+&nbsp;&nbsp;| <span class="id">CTOArray</span> : <span class="id">cto_type</span> -&gt; <span class="id">cto_type</span>.                  <span class="docright">(* array type  *)</span><br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id">cto_declaration_kind</span> :=<br/>
+&nbsp;&nbsp;| <span class="id">CTOEnum</span> : <span class="id">list</span> <span class="id">string</span> -&gt; <span class="id">cto_declaration_kind</span><br/>
+&nbsp;&nbsp;| <span class="id">CTOTransaction</span> : <span class="id">option</span> <span class="id">string</span> -&gt; <span class="id">list</span> (<span class="id">string</span> * <span class="id">cto_type</span>) -&gt; <span class="id">cto_declaration_kind</span><br/>
+&nbsp;&nbsp;| <span class="id">CTOConcept</span> : <span class="id">option</span> <span class="id">string</span> -&gt; <span class="id">list</span> (<span class="id">string</span> * <span class="id">cto_type</span>) -&gt; <span class="id">cto_declaration_kind</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id">cto_declaration</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkCTODeclaration</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">cto_declaration_class</span> : <span class="id">class_ref</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cto_declaration_type</span> : <span class="id">cto_declaration_kind</span>; }.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id">cto_package</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkCTOPackage</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">cto_package_namespace</span> : <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cto_package_imports</span> : <span class="id">list</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cto_package_declarations</span> : <span class="id">list</span> <span class="id">cto_declaration</span>; }.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">Semantics</span>.<br/>
+<div class="doc">A semantics for CTO packages is obtained through translation
+        into branded types. </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Program</span> <span class="kwd">Fixpoint</span> <span class="id">cto_type_to_etype</span> {<span class="id">m</span>:<span class="id">brand_relation</span>} (<span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOBoolean">scope</a></span>:<span class="id">option</span> <span class="id">string</span>) (<span class="id">t</span>:<span class="id">cto_type</span>) : <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOString">ErgoType.etype</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">t</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTOBoolean</span> =&gt; <span class="id">ErgoType.bool</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTOString</span> =&gt; <span class="id">ErgoType.string</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTODouble</span> =&gt; <span class="id">ErgoType.float</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTOLong</span> =&gt; <span class="id">ErgoType.nat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTOInteger</span> =&gt; <span class="id">ErgoType.nat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTODateTime</span> =&gt; <span class="id">ErgoType.unit</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTOClassRef</span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOOption">cr</a></span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoType.brand</span> ((<span class="id">absolute_ref_of_class_ref</span> <span class="id">scope</span> <span class="id">cr</span>)::<span class="id">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">CTOOption</span> <span class="id">t</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoType.option</span> (<span class="id">cto_type_to_etype</span> <span class="id">scope</span> <span class="id">t</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Bindings.html#rec_sort">CTORecord</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">rtl</a></span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoType.record</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoType.open_kind</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">rec_sort</span> (<span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Bindings.html#rec_sort_sorted">List.map</a></span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id">fst</span> <span class="id">xy</span>, <span class="id">cto_type_to_etype</span> <span class="id">scope</span> (<span class="id">snd</span> <span class="id">xy</span>))) <span class="id">rtl</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">rec_sort_sorted</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">List.map</span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id">fst</span> <span class="id">xy</span>, <span class="id">cto_type_to_etype</span> <span class="id">scope</span> (<span class="id">snd</span> <span class="id">xy</span>))) <span class="id">rtl</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">rec_sort</span> (<span class="id">List.map</span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id">fst</span> <span class="id">xy</span>, <span class="id">cto_type_to_etype</span> <span class="id">scope</span> (<span class="id">snd</span> <span class="id">xy</span>))) <span class="id">rtl</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">eq_refl</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTO.Semantics">CTOArray</a></span> <span class="id">t</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoType.bag</span> (<span class="id">cto_type_to_etype</span> <span class="id">scope</span> <span class="id">t</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">Semantics</span>.<br/>
+<span class="kwd">End</span> <span class="id">CTO</span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>
