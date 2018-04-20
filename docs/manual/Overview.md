@@ -24,19 +24,14 @@ Design choices
 --------------
 
 To achieve those goals the design of Ergo is based on the following
-principles: - It can handle types (concepts, transations, etc) defined
-with the [Hyperledger Composer Modeling
-Language](https://hyperledger.github.io/composer/reference/cto_language.html)
-(so called CTO models), as mandated by the Accord Prototype Template
-Specification. - Contracts have a class-like structure with clauses akin
-to methods - It borrows from strongly-typed functional programming
-languages: clauses have a well-defined type signature (input and
-output), they are functions without side effects - The compiler
-guarantees error-free execution for well-typed Ergo programs - Clauses
-and functions are written in an expression language with limited
-expressiveness (it allows conditional and bounded iteration). - Most of
-the compiler is written in Coq as a stepping stone for formal
-specification and verification.
+principles:
+
+- Ergo contracts have a class-like structure with clauses akin to methods
+- Ergo can handle types (concepts, transations, etc) defined with the [Hyperledger Composer Modeling Language](https://hyperledger.github.io/composer/reference/cto_language.html) (so called CTO models), as mandated by the Accord Prototype Template Specification
+- Ergo borrows from strongly-typed functional programming languages: clauses have a well-defined type signature (input and output), they are functions without side effects
+- The compiler guarantees error-free execution for well-typed Ergo programs
+- Clauses and functions are written in an expression language with limited expressiveness (it allows conditional and bounded iteration)
+- Most of the compiler is written in Coq as a stepping stone for formal specification and verification
 
 The Ergo Compiler
 -----------------
