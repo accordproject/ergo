@@ -1,0 +1,263 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.Translation.ErgoCalculustoJavaScript</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.Translation.ErgoCalculustoJavaScript" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.Translation.ErgoCalculustoJavaScript</h1>
+<div class="coq">
+<br/>
+<div class="doc">Translates contract logic to calculus </div>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html">ErgoSpec.Common.Utils.EResult</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html">ErgoSpec.Ergo.Lang.ErgoBase</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html">ErgoSpec.ErgoCalculus.Lang.ErgoCalculus</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html">ErgoSpec.Backend.ErgoBackend</a></span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="ErgoCalculustoJavaScript">ErgoCalculustoJavaScript</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="lookup_error">lookup_error</a></span> (<span class="id">coname</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>) (<span class="id">clname</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">msg</span> := ("<span class="id">Clause</span> " ++ <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#clname">clname</a></span> ++ " <span class="kwd">in</span> <span class="id">contract</span> " ++ <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#coname">coname</a></span> ++ " <span class="id">not</span> <span class="id">found</span>")%<span class="id">string</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#CompilationError">CompilationError</a></span> <span class="id">msg</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_clause_code_from_package</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">string</span>) (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">p</span>:<span class="id">ergoc_package</span>) : <span class="id">eresult</span> <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">clause</span> := <span class="id">lookup_clause_from_package</span> <span class="id">coname</span> <span class="id">clname</span> <span class="id">p</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">eresult_of_option</span> (<span class="id">code_from_clause</span> <span class="id">clause</span>) (<span class="id">lookup_error</span> <span class="id">coname</span> <span class="id">clname</span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">translate</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Local</span> <span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">string_scope</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">multi_append</span> {<span class="id">A</span>} <span class="id">separator</span> (<span class="id">f</span>:<span class="id">A</span> -&gt; <span class="id">string</span>) (<span class="id">elems</span>:<span class="id">list</span> <span class="id">A</span>) : <span class="id">string</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">elems</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">nil</span> =&gt; ""<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">e</span> :: <span class="id">elems</span>' =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">fold_left</span> (<span class="kwd">fun</span> <span class="id">acc</span> <span class="id">e</span> =&gt; <span class="id">acc</span> ++ <span class="id">separator</span> ++ (<span class="id">f</span> <span class="id">e</span>)) <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#e">elems</a></span>' (<span class="id">f</span> <span class="id">e</span>))%<span class="id">string</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">function_name_of_contract_clause_name</span> (<span class="id">coname</span>:<span class="id">option</span> <span class="id">string</span>) (<span class="id">clname</span>:<span class="id">string</span>) : <span class="id">string</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">coname</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">clname</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">coname</span> =&gt; <span class="id">coname</span> ++ "<span class="id">_</span>" ++ <span class="id">clname</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<div class="doc">Global expression </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_expression</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">e</span>:<span class="id">ergoc_expr</span>)                  <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">t</span> : <span class="id">nat</span>)                       <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">i</span> : <span class="id">nat</span>)                       <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)                    <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>)                 <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id">ErgoCodeGen.ergoc_javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id">ErgoCodeGen.ergoc_javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id">nat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id">ErgoCodeGen.ergoc_expr_javascript_unshadow</span> <span class="id">e</span> <span class="id">t</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#e">i</a></span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#t">eol</a></span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#eol">quotel</a></span> <span class="id">nil</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>.<br/>
+<br/>
+<div class="doc">Global variable </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_global</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">v</span>:<span class="id">string</span>)                      <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">bind</span>:<span class="id">ergoc_expr</span>)               <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">t</span> : <span class="id">nat</span>)                       <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">i</span> : <span class="id">nat</span>)                       <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)                    <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>)                 <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id">ErgoCodeGen.ergoc_javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id">ErgoCodeGen.ergoc_javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id">nat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> '(<span class="id">s1</span>, <span class="id">e1</span>, <span class="id">t2</span>) := <span class="id">ErgoCodeGen.ergoc_expr_to_javascript</span> <span class="id">bind</span> <span class="id">t</span> <span class="id">i</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#t">eol</a></span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#eol">quotel</a></span> <span class="id">nil</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">v0</span> := "<span class="id">v</span>" ++ <span class="id">v</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">s1</span> ++ (<span class="id">ErgoCodeGen.ergoc_javascript_indent</span> <span class="id">i</span>) ++ "<span class="id">var</span> " ++ <span class="id">v0</span> ++ " = " ++ <span class="id">e1</span> ++ ";" ++ <span class="id">eol</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">v0</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">t2</span>).<br/>
+<br/>
+<div class="doc">Single method </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_method_of_body</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">e</span>:<span class="id">ergoc_expr</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">fname</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">input_v</span> := "<span class="id">context</span>" <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoCodeGen.ergoc_expr_to_javascript_method</span> <span class="id">input_v</span> <span class="id">e</span> 1 <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#e">eol</a></span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#eol">quotel</a></span> (<span class="id">input_v</span>::<span class="id">nil</span>) <span class="id">fname</span>.<br/>
+<br/>
+<div class="doc">Single method </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_function_of_body</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">e</span>:<span class="id">ergoc_expr</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">fname</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">input_v</span> := "<span class="id">context</span>" <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">init_indent</span> := 0 <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoCodeGen.ergoc_expr_to_javascript_fun_lift</span> <span class="id">e</span> <span class="id">fname</span> <span class="id">input_v</span> <span class="id">init_indent</span> <span class="id">eol</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#eol">quotel</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_function_of_ergo_clause</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">c</span>:<span class="id">ergoc_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">option</span> <span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">fname</span> := <span class="id">function_name_of_contract_clause_name</span> <span class="id">coname</span> <span class="id">c</span>.(<span class="id">clause_name</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">javascript_function_of_body</span> <span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_body</span>) <span class="id">fname</span> <span class="id">eol</span> <span class="id">quotel</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_function_of_ergo_func</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">f</span>:<span class="id">ergoc_func</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">option</span> <span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">fname</span> := <span class="id">function_name_of_contract_clause_name</span> <span class="id">coname</span> <span class="id">f</span>.(<span class="id">func_name</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">javascript_function_of_body</span> <span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id">closure_body</span>) <span class="id">fname</span> <span class="id">eol</span> <span class="id">quotel</span> ++ <span class="id">eol</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_method_of_ergo_clause</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">c</span>:<span class="id">ergoc_clause</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">fname</span> := <span class="id">c</span>.(<span class="id">clause_name</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">javascript_method_of_body</span> <span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_body</span>) <span class="id">fname</span> <span class="id">eol</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#fname">quotel</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_method_of_ergo_func</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">f</span>:<span class="id">ergoc_func</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">fname</span> := <span class="id">f</span>.(<span class="id">func_name</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">javascript_method_of_body</span> <span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#f">closure_body</a></span>) <span class="id">fname</span> <span class="id">eol</span> <span class="id">quotel</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_declaration</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">d</span>:<span class="id">ergoc_declaration</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">d</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Clause</span> <span class="id">c</span> =&gt; <span class="id">javascript_method_of_ergo_clause</span> <span class="id">c</span> <span class="id">eol</span> <span class="id">quotel</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Func</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#quotel">f</a></span> =&gt; <span class="id">javascript_method_of_ergo_func</span> <span class="id">f</span> <span class="id">eol</span> <span class="id">quotel</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_declaration_list</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">dl</span>:<span class="id">list</span> <span class="id">declaration</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">eol</a></span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">quotel</a></span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">multi_append</span> <span class="id">eol</span> (<span class="kwd">fun</span> <span class="id">d</span> =&gt; <span class="id">javascript_of_declaration</span> <span class="id">d</span> <span class="id">coname</span> <span class="id">eol</span> <span class="id">quotel</span>) <span class="id">dl</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_contract</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">c</span>:<span class="id">ergoc_contract</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">quotel</a></span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">coname</span> := <span class="id">c</span>.(<span class="id">contract_name</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<span class="id">class</span> " ++ <span class="id">coname</span> ++ " {" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ (<span class="id">javascript_of_declaration_list</span> <span class="id">c</span>.(<span class="id">contract_declarations</span>) <span class="id">coname</span> <span class="id">eol</span> <span class="id">quotel</span>) ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ "}" ++ <span class="id">eol</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">preamble</span> <span class="id">eol</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"" ++ "'<span class="id">use</span> <span class="id">strict</span>';" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ "/*<span class="id">eslint</span>-<span class="id">disable</span> <span class="id">no</span>-<span class="id">unused</span>-<span class="id">vars</span>*/" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ "/*<span class="id">eslint</span>-<span class="id">disable</span> <span class="id">no</span>-<span class="id">undef</span>*/" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ "/*<span class="id">eslint</span>-<span class="id">disable</span> <span class="id">no</span>-<span class="id">var</span>*/" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ <span class="id">eol</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">postamble</span> <span class="id">eol</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ "/*<span class="id">eslint</span>-<span class="id">enable</span> <span class="id">no</span>-<span class="id">unused</span>-<span class="id">vars</span>*/" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ "/*<span class="id">eslint</span>-<span class="id">enable</span> <span class="id">no</span>-<span class="id">undef</span>*/" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ <span class="id">eol</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_statement</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">s</span> : <span class="id">ergoc_stmt</span>)              <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">t</span> : <span class="id">nat</span>)                     <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">i</span> : <span class="id">nat</span>)                     <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span> : <span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">quotel</a></span> : <span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id">ErgoCodeGen.ergoc_javascript</span>         <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id">ErgoCodeGen.ergoc_javascript</span>       <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id">nat</span>                                <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">s</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EType</span> <span class="id">_</span> =&gt;  ("","",<span class="id">t</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EExpr</span> <span class="id">e</span> =&gt; <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#t">javascript_of_expression</a></span> <span class="id">e</span> <span class="id">t</span> <span class="id">i</span> <span class="id">eol</span> <span class="id">quotel</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EGlobal</span> <span class="id">v</span> <span class="id">e</span> =&gt; <span class="id">javascript_of_global</span> <span class="id">v</span> <span class="id">e</span> <span class="id">t</span> <span class="id">i</span> <span class="id">eol</span> <span class="id">quotel</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EImport</span> <span class="id">_</span> =&gt; ("","",<span class="id">t</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFunc</span> <span class="id">f</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">javascript_function_of_ergo_func</span> <span class="id">f</span> <span class="id">None</span> <span class="id">eol</span> <span class="id">quotel</span>,"<span class="id">null</span>",<span class="id">t</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EContract</span> <span class="id">c</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">javascript_of_contract</span> <span class="id">c</span> <span class="id">eol</span> <span class="id">quotel</span>,"<span class="id">null</span>",<span class="id">t</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_statements</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">sl</span> : <span class="id">list</span> <span class="id">ergoc_stmt</span>)        <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">t</span> : <span class="id">nat</span>)                     <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">i</span> : <span class="id">nat</span>)                     <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span> : <span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">quotel</a></span> : <span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id">ErgoCodeGen.ergoc_javascript</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="kwd">let</span> <span class="id">proc_one</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">s</span>:<span class="id">ergoc_stmt</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">acc</span>:<span class="id">ErgoCodeGen.ergoc_javascript</span> * <span class="id">nat</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> * <span class="id">nat</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> '(<span class="id">s0</span>, <span class="id">t0</span>) := <span class="id">acc</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> '(<span class="id">s1</span>, <span class="id">e1</span>, <span class="id">t1</span>) := <span class="id">javascript_of_statement</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#javascript_of_statement">s</a></span> <span class="id">t0</span> <span class="id">i</span> <span class="id">eol</span> <span class="id">quotel</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#quotel">s0</a></span> ++ <span class="id">s1</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">t1</span>) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> '(<span class="id">sn</span>, <span class="id">tn</span>) := <span class="id">fold_right</span> <span class="id">proc_one</span> ("",<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#fold_right">t</a></span>) <span class="id">sl</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sn</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">dispatch_preamble</span> (<span class="id">request</span>:<span class="id">string</span>) (<span class="id">response</span>:<span class="id">string</span>) (<span class="id">eol</span>:<span class="id">string</span>) (<span class="id">quotel</span>:<span class="id">string</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"/**" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ " * <span class="id">Execute</span> <span class="id">the</span> <span class="id">smart</span> <span class="id">clause</span>" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ " * @<span class="id">param</span> {<span class="kwd">Context</span>} <span class="id">context</span> - <span class="id">the</span> <span class="id">Accord</span> <span class="id">context</span>" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ " * @<span class="id">param</span> {" ++ <span class="id">request</span> ++ "} <span class="id">context.request</span> - <span class="id">the</span> <span class="id">incoming</span> <span class="id">request</span>" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ " * @<span class="id">param</span> {" ++ <span class="id">response</span> ++ "} <span class="id">context.response</span> - <span class="id">the</span> <span class="id">response</span>" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ " * @<span class="id">AccordClauseLogic</span>" ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ " */" ++ <span class="id">eol</span><br/>
+.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">find_class</span> (<span class="id">sl</span>:<span class="id">list</span> <span class="id">ergoc_stmt</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<span class="id">test</span>".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_package</span> (<span class="id">p</span>:<span class="id">ergoc_package</span>) (<span class="id">eol</span>:<span class="id">string</span>) (<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">preamble</span> <span class="id">eol</span>) ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ (<span class="id">javascript_of_statements</span> <span class="id">p</span>.(<span class="id">package_statements</span>) 0 0 <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#package_statements">eol</a></span> <span class="id">quotel</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ (<span class="id">postamble</span> <span class="id">eol</span>).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_package_with_dispatch</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">request</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">response</a></span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">f</a></span>:<span class="id">ergoc_func</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">eol</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">quotel</span>:<span class="id">string</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">preamble</span> <span class="id">eol</span>) ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ (<span class="id">dispatch_preamble</span> <span class="id">request</span> <span class="id">response</span> <span class="id">eol</span> <span class="id">quotel</span>) ++ <span class="id">eol</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ (<span class="id">javascript_function_of_ergo_func</span> <span class="id">f</span> <span class="id">None</span> <span class="id">eol</span> <span class="id">quotel</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++ (<span class="id">postamble</span> <span class="id">eol</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_package_top</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">p</span>:<span class="id">ergoc_package</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">javascript_of_package</span> <span class="id">p</span> <span class="id">ErgoCodeGen.ergoc_javascript_eol_newline</span> <span class="id">ErgoCodeGen.ergoc_javascript_quotel_double</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_package_with_dispatch_top</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">request</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">response</span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">f</span>:<span class="id">ergoc_func</span>) : <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">javascript_of_package_with_dispatch</span> <span class="id">request</span> <span class="id">response</span> <span class="id">f</span> <span class="id">ErgoCodeGen.ergoc_javascript_eol_newline</span> <span class="id">ErgoCodeGen.ergoc_javascript_quotel_double</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">javascript_of_clause_code_in_package</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">string</span>) (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">p</span>:<span class="id">ergoc_package</span>) : <span class="id">eresult</span> <span class="id">ErgoCodeGen.ergoc_javascript</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">expr_opt</span> := <span class="id">lookup_clause_code_from_package</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#lookup_clause_code_from_package">coname</a></span> <span class="id">clname</span> <span class="id">p</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">jlift</span> (<span class="kwd">fun</span> <span class="id">e</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">fname</span> := <span class="id">function_name_of_contract_clause_name</span> (<span class="id">Some</span> <span class="id">coname</span>) <span class="id">clname</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">javascript_function_of_body</span> <span class="id">e</span> <span class="id">fname</span> <span class="id">ErgoCodeGen.ergoc_javascript_eol_newline</span> <span class="id">ErgoCodeGen.ergoc_javascript_quotel_double</span>) <span class="id">expr_opt</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">translate</span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Translation.ErgoCalculustoJavaScript.html#expr_opt">ErgoCalculustoJavaScript</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall</h1>
+<div class="coq">
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html">Qcert.Utils.ListAdd</a></span>. <br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">Qcert.Utils.Lift</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Backend.ErgoBackend</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Common.Utils.ENames</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Common.Utils.EResult</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Common.CTO.CTO</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.Ergo.Lang.ErgoBase</span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">ErgoSpec.ErgoCalculus.Lang.ErgoCalculus</span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id">Closure</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_expr_closure</span> := @<span class="id">closure</span> <span class="id">ergoc_expr</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_table</span> := <span class="id">string</span> -&gt; <span class="id">option</span> <span class="id">ergoc_expr_closure</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">add_function_to_table</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">t</span>:<span class="id">lookup_table</span>) (<span class="id">newfname</span>:<span class="id">string</span>) (<span class="id">newcl</span>:@<span class="id">closure</span> <span class="id">ergoc_expr</span>) : <span class="id">lookup_table</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">fun</span> <span class="id">fname</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">if</span> (<span class="id">string_dec</span> <span class="id">fname</span> <span class="id">newfname</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span> <span class="id">Some</span> <span class="id">newcl</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">else</span> <span class="id">t</span> <span class="id">fname</span>.<br/>
+&nbsp;&nbsp;<br/>
+<span class="kwd">End</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">Closure</a></span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id">Patch</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Require</span> <span class="id">Qcert.Utils.Closure</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_closure_type_of_closure_type</span> (<span class="id">t</span>:<span class="id">option</span> <span class="id">unit</span>) : <span class="id">option</span> <span class="id">cto_type</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">None</span>.<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_closure_params_of_closure_params</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">params</span>:<span class="id">list</span> (<span class="id">string</span> * <span class="id">option</span> <span class="id">unit</span>)) : <span class="id">list</span> (<span class="id">string</span> * <span class="id">option</span> <span class="id">cto_type</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">List.map</span> (<span class="kwd">fun</span> <span class="id">xy</span> =&gt; (<span class="id">fst</span> <span class="id">xy</span>, <span class="id">ergoc_closure_type_of_closure_type</span> (<span class="id">snd</span> <span class="id">xy</span>))) <span class="id">params</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_expr_closure_of_backend_closure</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">cl</span>:<span class="id">ErgoEnhancedBackend.ergo_backend_closure</span>) : <span class="id">ergoc_expr_closure</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkClosure</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergoc_closure_params_of_closure_params</span> <span class="id">cl</span>.(<span class="id">Closure.closure_params</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ergoc_closure_type_of_closure_type</span> <span class="id">cl</span>.(<span class="id">Closure.closure_output</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">None</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cl</span>.(<span class="id">Closure.closure_body</span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_table_of_backend_lookup_table</span> (<span class="id">tbl</span>:<span class="id"><a name="ergoc_stdlib">ErgoEnhancedBackend.ergo_backend_lookup_table</a></span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">fun</span> <span class="id">name</span> =&gt; <span class="id">lift</span> <span class="id">ergoc_expr_closure_of_backend_closure</span> (<span class="id">tbl</span> <span class="id">name</span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergoc_stdlib</span> : <span class="id">lookup_table</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_table_of_backend_lookup_table</span> <span class="id">ErgoEnhancedBackend.ergo_backend_stdlib</span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id">Patch</span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id">ErgoCalculusCall</span>.<br/>
+<div class="doc">Error for function calls </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">call_error</span> (<span class="id">fname</span>:<span class="id">string</span>) : <span class="id">string</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"<span class="id">Function</span> '" ++ <span class="id">fname</span> ++ "' <span class="id">not</span> <span class="id">found</span>".<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">call_params_error</span> (<span class="id">fname</span>:<span class="id">string</span>) : <span class="id">string</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"<span class="kwd">Parameter</span> <span class="id">mistmatch</span> <span class="id">when</span> <span class="id">calling</span> <span class="id">function</span> '" ++ <span class="id">fname</span> ++ "'".<br/>
+<br/>
+<div class="doc">assign each parameter to its effective value.
+      only succeeds if the number of parameters is correct.
+      Note: we do not support partial function application. </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">zip_params</span> (<span class="id">params</span>:<span class="id">list</span> <span class="id">string</span>) (<span class="id">el</span>:<span class="id">list</span> <span class="id">ergoc_expr</span>) : <span class="id">option</span> (<span class="id">list</span> (<span class="id">string</span> * <span class="id">ergoc_expr</span>)) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">zip</span> <span class="id">params</span> <span class="id">el</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">create_call</span> (<span class="id">params</span>:<span class="id">list</span> (<span class="id">string</span> * <span class="id">ergoc_expr</span>)) (<span class="id">body</span>:<span class="id">ergoc_expr</span>) : <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">all_free_vars</span> := <span class="id">map</span> <span class="id">fst</span> <span class="id">params</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">unshadowed_body</span> := <span class="id">ErgoCodeGen.ergoc_expr_unshadow</span> "<span class="id">_</span>" (<span class="kwd">fun</span> <span class="id">s</span> =&gt; <span class="id">s</span>) <span class="id">all_free_vars</span> <span class="id">body</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">unconsted_body</span> := <span class="id">ErgoCodeGen.ergoc_expr_subst_const_to_var</span> <span class="id">all_free_vars</span> <span class="id">unshadowed_body</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">one_param</span> (<span class="id">e</span>:<span class="id">ergoc_expr</span>) (<span class="id">param</span>:<span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.html#one_param">string</a></span> * <span class="id">ergoc_expr</span>) : <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">pv</span>,<span class="id">pe</span>) := <span class="id">param</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ErgoCodeGen.ergoc_expr_let</span> <span class="id">pv</span> <span class="id">pe</span> <span class="id">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">fold_left</span> <span class="id">one_param</span> <span class="id">params</span> <span class="id">unconsted_body</span>.<br/>
+<br/>
+<div class="doc">Looks up a function with its parameters. If the function exists and the number of parameters
+      is correct, it returns a closed expression computing the call. </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_call</span> (<span class="id">t</span>:<span class="id">lookup_table</span>) (<span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.html#fname">fname</a></span>:<span class="id">string</span>) (<span class="id">el</span>:<span class="id">list</span> <span class="id">ergoc_expr</span>) : <span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.html#zip_params">eresult</a></span> <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">t</span> <span class="id">fname</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">efailure</span> (<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#efailure">CompilationError</a></span> (<span class="id">call_error</span> <span class="id">fname</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">cl</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">zip_params</span> (<span class="id">List.map</span> <span class="id">fst</span> <span class="id">cl</span>.(<span class="id">closure_params</span>)) <span class="id">el</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">efailure</span> (<span class="id">CompilationError</span> (<span class="id">call_params_error</span> <span class="id">fname</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">params</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">esuccess</span> (<span class="id">create_call</span> <span class="id">params</span> <span class="id">cl</span>.(<span class="id">closure_body</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+<div class="doc">Looks up a clause with its parameters. If the function exists and the number of parameters
+      is correct, it returns a closed expression computing the call. </div>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_clause_call</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">t</span>:<span class="id">lookup_table</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">cref</span>:<span class="id">class_ref</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.html#call_error">fname</a></span>:<span class="id">string</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">el</span>:<span class="id">list</span> <span class="id">ergoc_expr</span>) : <span class="id">eresult</span> <span class="id">ergoc_expr</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">t</span> <span class="id">fname</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">efailure</a></span> (<span class="id">CompilationError</span> (<span class="id">call_error</span> <span class="id">fname</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">cl</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">zip_params</span> (<span class="id">List.map</span> <span class="id">fst</span> <span class="id">cl</span>.(<span class="id">closure_params</span>)) <span class="id">el</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">efailure</span> (<span class="id">CompilationError</span> (<span class="id">call_params_error</span> <span class="id">fname</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">params</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">esuccess</span> (<span class="id">create_call</span> <span class="id">params</span> <span class="id">cl</span>.(<span class="id">closure_body</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id">ErgoCalculusCall</span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

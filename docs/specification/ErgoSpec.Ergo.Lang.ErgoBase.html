@@ -1,0 +1,257 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.Ergo.Lang.ErgoBase</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.Ergo.Lang.ErgoBase" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.Ergo.Lang.ErgoBase</h1>
+<div class="coq">
+<br/>
+<div class="doc">Ergo is a language for expressing contract logic. </div>
+<br/>
+<h1> Abstract Syntax </h1>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html">ErgoSpec.Common.Utils.ENames</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html">ErgoSpec.Common.Utils.EResult</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Common.Utils.EError.html">ErgoSpec.Common.Utils.EError</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html">ErgoSpec.Common.CTO.CTO</a></span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="ErgoBase">ErgoBase</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Context</span> {<span class="id">A</span>:<span class="kwd">Set</span>}.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="kwd">Syntax</span>.<br/>
+<div class="doc">Generic function closure over expressions in <span class="bracket"><span class="id">A</span></span>.
+        All free variables in A have to be declared in the list of parameters. </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="lambda">closure</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkClosure</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">closure_params</span>: <span class="id">list</span> (<span class="id">string</span> * <span class="id">option</span> <span class="id">cto_type</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">closure_output</span> : <span class="id">option</span> <span class="id">cto_type</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">closure_throw</span> : <span class="id">option</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">closure_body</span> : <span class="id">A</span>; }.<br/>
+<br/>
+<div class="doc">Clause </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id">clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkClause</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">clause_name</span> : <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">clause_closure</span> : <span class="id">closure</span>; }.<br/>
+<br/>
+<div class="doc">Function </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id">func</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkFunc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">func_name</span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="function_lambda">func_closure</a></span> : <span class="id">closure</span>; }.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+<div class="doc">Declaration </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id">declaration</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Clause</span> : <span class="id">clause</span> -&gt; <span class="id">declaration</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Func</span> : <span class="id">func</span> -&gt; <span class="id">declaration</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+<div class="doc">Contract </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id">contract</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkContract</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">contract_name</span> : <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">contract_template</span> : <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">contract_declarations</span> : <span class="id">list</span> <span class="id">declaration</span>; }.<br/>
+<br/>
+<div class="doc">Statement </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id">stmt</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EType</span> : <span class="id">cto_declaration</span> -&gt; <span class="id">stmt</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EExpr</span> : <span class="id">A</span> -&gt; <span class="id">stmt</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EGlobal</span> : <span class="id"><a name="EGlobal">string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">A</a></span> -&gt; <span class="id">stmt</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EImport</span> : <span class="id"><a name="EImport">string</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">stmt</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFunc</span> : <span class="id">func</span> -&gt; <span class="id">stmt</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EContract</span> : <span class="id">contract</span> -&gt; <span class="id">stmt</span>.<br/>
+&nbsp;<br/>
+<div class="doc">Package. </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id">package</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">mkPackage</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">package_namespace</span> : <span class="id">option</span> <span class="id">string</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">package_statements</span> : <span class="id">list</span> <span class="id">stmt</span>; }.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="kwd">Syntax</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">Semantics</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">Semantics</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">lookup</span>.<br/>
+<div class="doc">Returns clause code </div>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_from_clause</span> (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">c</span>:<span class="id">clause</span>) : <span class="id">option</span> <span class="id">clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">if</span> (<span class="id">string_dec</span> <span class="id">clname</span> <span class="id">c</span>.(<span class="id">clause_name</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span> <span class="id">Some</span> <span class="id">c</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">else</span> <span class="id">None</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_from_func</span> (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">c</span>:<span class="id">func</span>) : <span class="id">option</span> <span class="id">func</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">if</span> (<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#function">string_dec</a></span> <span class="id">clname</span> <span class="id">c</span>.(<span class="id">func_name</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span> <span class="id">Some</span> <span class="id">c</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">else</span> <span class="id">None</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">code_from_clause</span> (<span class="id">c</span>:<span class="id">option</span> <span class="id">clause</span>) : <span class="id">option</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">c</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">None</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">c</a></span> =&gt; <span class="id">Some</span> <span class="id">c</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_body</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">code_from_func</span> (<span class="id">f</span>:<span class="id">option</span> <span class="id">func</span>) : <span class="id">option</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">f</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#ErgoBase.A">None</a></span> =&gt; <span class="id">None</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">f</span> =&gt; <span class="id">Some</span> <span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id">closure_body</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_code_from_clause</span> (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">c</span>:<span class="id">clause</span>) : <span class="id">option</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">code_from_clause</span> (<span class="id">lookup_from_clause</span> <span class="id">clname</span> <span class="id">c</span>).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_code_from_func</span> (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">c</span>:<span class="id">func</span>) : <span class="id">option</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">code_from_func</span> (<span class="id">lookup_from_func</span> <span class="id">clname</span> <span class="id">c</span>).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_clause_from_declaration</span> (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">d</span>:<span class="id">declaration</span>) : <span class="id">option</span> <span class="id">clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">d</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Clause</span> <span class="id">c</span> =&gt; <span class="id">lookup_from_clause</span> <span class="id">clname</span> <span class="id">c</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Func</span> <span class="id">f</span> =&gt; <span class="id">None</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#Function">lookup_clause_from_declarations</a></span> (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">dl</span>:<span class="id">list</span> <span class="id">declaration</span>) : <span class="id">option</span> <span class="id">clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">List.fold_left</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">acc</span> <span class="id">d</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">acc</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">e</span> =&gt; <span class="id">Some</span> <span class="id">e</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">lookup_clause_from_declaration</span> <span class="id">clname</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">d</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) <span class="id">dl</span> <span class="id">None</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_contract_from_contract</span> (<span class="id">coname</span>:<span class="id">string</span>) (<span class="id">c</span>:<span class="id">contract</span>) : <span class="id">option</span> <span class="id">contract</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">if</span> (<span class="id">string_dec</span> <span class="id">coname</span> <span class="id">c</span>.(<span class="id">contract_name</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span> <span class="id">Some</span> <span class="id">c</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">else</span> <span class="id">None</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_clause_from_contract</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">string</span>) (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">c</span>:<span class="id">contract</span>) : <span class="id">option</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">clause</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">lookup_contract_from_contract</span> <span class="id">coname</span> <span class="id">c</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">None</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">c</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_clause_from_declarations</span> <span class="id">clname</span> <span class="id">c</span>.(<span class="id">contract_declarations</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_clause_from_statement</span> (<span class="id">coname</span>:<span class="id">string</span>) (<span class="id"><a name="lookup_clause_from_statement">clname</a></span>:<span class="id">string</span>) (<span class="id">d</span>:<span class="id">stmt</span>) : <span class="id">option</span> <span class="id">clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">d</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EContract</span> <span class="id">c</span> =&gt; <span class="id">lookup_clause_from_contract</span> <span class="id">coname</span> <span class="id">clname</span> <span class="id">c</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">_</span> =&gt; <span class="id">None</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_clause_from_statements</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a name="lookup_clause_from_statements">coname</a></span>:<span class="id">string</span>) (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">sl</span>:<span class="id">list</span> <span class="id">stmt</span>) : <span class="id">option</span> <span class="id">clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">List.fold_left</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">acc</span> <span class="id">d</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">acc</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">e</span> =&gt; <span class="id">Some</span> <span class="id">e</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; <span class="id">lookup_clause_from_statement</span> <span class="id">coname</span> <span class="id">clname</span> <span class="id">d</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) <span class="id">sl</span> <span class="id">None</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_clause_from_package</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">coname</span>:<span class="id">string</span>) (<span class="id">clname</span>:<span class="id">string</span>) (<span class="id">p</span>:<span class="id">package</span>) : <span class="id">option</span> <span class="id">clause</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_clause_from_statements</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#clause">coname</a></span> <span class="id">clname</span> <span class="id">p</span>.(<span class="id">package_statements</span>).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">signature</span> : <span class="kwd">Set</span> := (<span class="id">string</span> * <span class="id">list</span> (<span class="id">string</span> * <span class="id">option</span> <span class="id">cto_type</span>)).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id">List</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Fixpoint</span> <span class="id">lookup_declarations_signatures</span> (<span class="id">dl</span>:<span class="id">list</span> <span class="id">declaration</span>) : <span class="id">list</span> <span class="id">signature</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">dl</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">nil</a></span> =&gt; <span class="id">nil</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Clause</span> <span class="id">cl</span> :: <span class="id">dl</span>' =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">cl</span>.(<span class="id">clause_name</span>), <span class="id">cl</span>.(<span class="id">clause_closure</span>).(<span class="id">closure_params</span>)) :: <span class="id">lookup_declarations_signatures</span> <span class="id">dl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Func</span> <span class="id">f</span> :: <span class="id">dl</span>' =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">f</span>.(<span class="id">func_name</span>), <span class="id">f</span>.(<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#Function">func_closure</a></span>).(<span class="id">closure_params</span>)) :: <span class="id">lookup_declarations_signatures</span> <span class="id">dl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_contract_signatures</span> (<span class="id">c</span>:<span class="id">contract</span>) : <span class="id">list</span> <span class="id">signature</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_declarations_signatures</span> <span class="id">c</span>.(<span class="id">contract_declarations</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Fixpoint</span> <span class="id">lookup_statements_signatures</span> (<span class="id">sl</span>:<span class="id">list</span> <span class="id">stmt</span>) : <span class="id">list</span> <span class="id">signature</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">sl</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#stmt">nil</a></span> =&gt; <span class="id">nil</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EType</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EExpr</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EGlobal</span> <span class="id">_</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EImport</span> <span class="id">_</span> :: <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#lookup_statements_signatures">sl</a></span>' =&gt; <span class="id">lookup_statements_signatures</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFunc</span> <span class="id">f</span> :: <span class="id">sl</span>' =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">f</span>.(<span class="id">func_name</span>), <span class="id">f</span>.(<span class="id">func_closure</span>).(<span class="id">closure_params</span>)) :: <span class="id">lookup_statements_signatures</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#lambda_params">EContract</a></span> <span class="id">c</span> :: <span class="id">sl</span>' =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_contract_signatures</span> <span class="id">c</span> ++ <span class="id">lookup_statements_signatures</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Fixpoint</span> <span class="id">lookup_statements_signatures_for_contract</span> (<span class="id">oconame</span>:<span class="id">option</span> <span class="id">string</span>) (<span class="id">sl</span>:<span class="id">list</span> <span class="id">stmt</span>) : <span class="id">list</span> <span class="id">signature</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">sl</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">nil</span> =&gt; <span class="id">nil</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#signature">EType</a></span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures_for_contract</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#EType">oconame</a></span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EExpr</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures_for_contract</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#EExpr">oconame</a></span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EGlobal</span> <span class="id">_</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures_for_contract</span> <span class="id">oconame</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EImport</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures_for_contract</span> <span class="id">oconame</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EFunc</span> <span class="id">f</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_signatures_for_contract</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#EFunc">oconame</a></span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EContract</span> <span class="id">c</span> :: <span class="id">sl</span>' =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">oconame</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_contract_signatures</span> <span class="id">c</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">coname</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">if</span> (<span class="id">string_dec</span> <span class="id">c</span>.(<span class="id">contract_name</span>) <span class="id">coname</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_contract_signatures</span> <span class="id">c</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">else</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_statements_signatures_for_contract</span> <span class="id">oconame</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_package_signatures_for_contract</span> (<span class="id">oconame</span>:<span class="id">option</span> <span class="id">string</span>) (<span class="id">p</span>:<span class="id">package</span>) : <span class="id">list</span> <span class="id">signature</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_statements_signatures_for_contract</span> <span class="id">oconame</span> <span class="id">p</span>.(<span class="id">package_statements</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_package_signatures</span> (<span class="id">p</span>:<span class="id">package</span>) : <span class="id">list</span> <span class="id">signature</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_statements_signatures</span> <span class="id">p</span>.(<span class="id">package_statements</span>).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Fixpoint</span> <span class="id">lookup_statements_dispatch</span> (<span class="id">name</span>:<span class="id">string</span>) (<span class="id">sl</span>:<span class="id">list</span> <span class="id">stmt</span>) : <span class="id">eresult</span> (<span class="id">cto_type</span> * <span class="id">cto_type</span> * <span class="id">func</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#stmt">sl</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">nil</span> =&gt; <span class="id">dispatch_lookup_error</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EType</span> <span class="id">_</span> :: <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#sl">sl</a></span>' =&gt; <span class="id">lookup_statements_dispatch</span> <span class="id">name</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EExpr</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_dispatch</span> <span class="id">name</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EGlobal</span> <span class="id">_</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id">lookup_statements_dispatch</span> <span class="id">name</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EImport</span> <span class="id">_</span> :: <span class="id">sl</span>' =&gt; <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#lookup_statements_dispatch">lookup_statements_dispatch</a></span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#name">name</a></span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#EImport">EFunc</a></span> <span class="id">f</span> :: <span class="id">sl</span>' =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">if</span> (<span class="id">string_dec</span> <span class="id">f</span>.(<span class="id">func_name</span>) <span class="id">name</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">fclosure</span> := <span class="id">f</span>.(<span class="id">func_closure</span>) <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">request</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">fclosure</span>.(<span class="id">closure_params</span>) <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">nil</span> =&gt; <span class="id">dispatch_parameter_error</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| (<span class="id">_</span>,<span class="id">Some</span> <span class="id">reqtype</span>) :: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">_</a></span> =&gt; <span class="id">esuccess</span> <span class="id">reqtype</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">_</span> :: <span class="id">_</span> =&gt; <span class="id">esuccess</span> (<span class="id">CTOClassRef</span> (<span class="id">mkClassRef</span> <span class="id">None</span> "<span class="id">Request</span>"%<span class="id">string</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">response</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">fclosure</span>.(<span class="id">closure_output</span>) <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">Some</span> <span class="id">resptype</span> =&gt; <span class="id">resptype</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">None</span> =&gt; (<span class="id">CTOClassRef</span> (<span class="id">mkClassRef</span> <span class="id">None</span> "<span class="id">Response</span>"%<span class="id">string</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">jlift</a></span> (<span class="kwd">fun</span> <span class="id">request</span> =&gt; (<span class="id">request</span>, <span class="id">response</span>, <span class="id">f</span>)) <span class="id">request</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">else</span> <span class="id">lookup_statements_dispatch</span> <span class="id">name</span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">EContract</span> <span class="id">c</span> :: <span class="id">sl</span>' =&gt; <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#lookup_statements_dispatch">lookup_statements_dispatch</a></span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#name">name</a></span> <span class="id">sl</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">lookup_dispatch</span> (<span class="id">name</span>:<span class="id">string</span>) (<span class="id">p</span>:<span class="id">package</span>) : <span class="id">eresult</span> (<span class="id">cto_type</span> * <span class="id">cto_type</span> * <span class="id">func</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lookup_statements_dispatch</span> <span class="id">name</span> <span class="id">p</span>.(<span class="id">package_statements</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">lookup</span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id">ErgoBase</span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>
