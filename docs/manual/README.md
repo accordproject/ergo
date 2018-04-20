@@ -63,7 +63,7 @@ A large part of the source code for the Ergo compiler is based on a
 mechanization in Coq from which part of the compiler is extracted. A
 browsable version of the Coq code (generated using
 [coq2html](https://github.com/xavierleroy/coq2html)) is available in
-[specification](Specification.html).
+[specification](https://accordproject.github.io/ergo/Specification.html).
 
 Ultimately, one of our goals is to provide a full formal semantics for
 Ergo in Coq, and prove correct as much of the compilation pipeline as
@@ -79,13 +79,14 @@ possible.
     [Q\*cert](https://github.com/querycert/qcert) using the NNRC
     intermediate language
 
-Relationship to Cicero
-----------------------
+Relationship to the Accord Project
+----------------------------------
 
-One of the use for the Ergo compiler is as an embedded component inside
-[Cicero](https://github.com/accordproject/cicero), which implements of
-the [Accord Protocol Template
+One of the use for the Ergo compiler is as an embedded component
+inside [Cicero](https://github.com/accordproject/cicero), which
+implements the [Accord Protocol Template
 Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0).
 The following diagram describe how this works:
 
-![](./ergoincicero.png)
+![](./manual/ergoincicero.png)
+

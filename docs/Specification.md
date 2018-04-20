@@ -11,5 +11,5 @@ The Coq source serves a dual purpose: as Ergo's formal semantics and as part of 
 
 ## Translation passes
 
-- Ergo to Ergo Calculus: [Translation](ErgoSpec.Translation.ErgotoErgoCalculus.html)
+- Ergo to Ergo Calculus: [Translation](specification/ErgoSpec.Translation.ErgotoErgoCalculus.html)
 
