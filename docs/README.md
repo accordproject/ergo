@@ -23,6 +23,6 @@ The following material is available:
 
 - Ergo Language Manual: [http://ergo.readthedocs.io/en/latest/index.html](http://ergo.readthedocs.io/en/latest/index.html)
 - Ergo Tutorial: [http://ergo.readthedocs.io/en/latest/index.html](http://ergo.readthedocs.io/en/latest/index.html)
-- Ergo Formal Specification: [./Specification.md]
+- Ergo Formal Specification: [Specification.md](Specification.md)
 - Ergo playground: [https://accordproject.github.io/ergo-playground/](https://accordproject.github.io/ergo-playground/)
 
