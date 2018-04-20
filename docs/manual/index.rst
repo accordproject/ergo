@@ -5,9 +5,15 @@ Ergo Language Manual
    :maxdepth: 2
    :caption: Getting Started
 
-   README
+   Overview
    Installation
-   Language Guide <Language>
+   Examples
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Language Guide
+
+   Language
 
 .. toctree::
    :glob:

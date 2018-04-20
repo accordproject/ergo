@@ -1,5 +1,8 @@
 Installation
-=======================
+============
+
+Install with npm
+----------------
 
 Before you can run Ergo, you must install and configure the following dependencies on your
 machine:
@@ -28,3 +31,4 @@ $ ergoc --help
 $ ergoc compile --help
 $ ergoc execute --help
 ```
+
