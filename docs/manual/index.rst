@@ -1,5 +1,5 @@
-Accord Ergo Documentation
-===================================
+Ergo Language Reference Manual
+==============================
 
 .. toctree::
    :maxdepth: 2
@@ -17,8 +17,3 @@ Accord Ergo Documentation
 
    reference/*
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Specification
-
-   AST & Calculus <Specification>
