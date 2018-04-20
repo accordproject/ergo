@@ -1,13 +1,13 @@
-What is Ergo?
-=============
+Overview
+========
 
 Ergo is a prototype for a domain specific language (DSL) aimed at
 capturing the execution logic of *legal* contracts. It is a work in
 progress. Here are some thoughts and notes on requirements and on the
 initial design.
 
-Overview
---------
+What is Ergo?
+-------------
 
 Ergo is a domain specific language designed to capture the execution
 logic of *legal* contracts. Among some of the goals for the language
@@ -41,15 +41,8 @@ expressiveness (it allows conditional and bounded iteration). - Most of
 the compiler is written in Coq as a stepping stone for formal
 specification and verification.
 
-Language
---------
-
-The language design and syntax are still in flux. A few notes on the
-current syntax can be found in the
-[Language Guide](Language.html).
-
-Compiler
---------
+The Ergo Compiler
+-----------------
 
 ### Architecture
 
@@ -69,16 +62,6 @@ Ultimately, one of our goals is to provide a full formal semantics for
 Ergo in Coq, and prove correct as much of the compilation pipeline as
 possible.
 
-### Status
-
--   The current implementation only supports the JavaScript backend for
-    Cicero (and Hyperledger)
--   CTO models are imported, but not used for type checking yet (but
-    stay tuned!)
--   Currently, code generation is done through
-    [Q\*cert](https://github.com/querycert/qcert) using the NNRC
-    intermediate language
-
 Relationship to the Accord Project
 ----------------------------------
 
@@ -89,4 +72,10 @@ Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh
 The following diagram describe how this works:
 
 ![](./ergoincicero.png)
+
+Status
+------
+
+- The current implementation only supports the JavaScript backend for Cicero (and Hyperledger)
+- CTO models are imported, but not used for type checking yet (but stay tuned!)
 
