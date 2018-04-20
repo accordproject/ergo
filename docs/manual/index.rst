@@ -1,5 +1,5 @@
-Ergo Language Reference Manual
-==============================
+Ergo Language Manual
+====================
 
 .. toctree::
    :maxdepth: 2
@@ -7,13 +7,12 @@ Ergo Language Reference Manual
 
    README
    Installation
-   Tutorial
    Language Guide <Language>
 
 .. toctree::
    :glob:
    :maxdepth: 2
-   :caption: Reference
+   :caption: Language Reference
 
    reference/*
 
