@@ -32,14 +32,16 @@ Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
 
 Section ErgotoJavaScript.
   Definition clause_calculus_from_package
+             (ctos:list cto_package)
              (coname:string) (clname:string) (p:ergo_package) : eresult nnrc :=
-    let pc := package_to_calculus p in
+    let pc := package_to_calculus ctos p in
     jolift (lookup_clause_code_from_package coname clname) pc.
 
   (* Context *)
   Definition clause_code_from_package
+             (ctos:list cto_package)
              (coname:string) (clname:string) (p:ergo_package) : eresult javascript :=
-    let pc := package_to_calculus p in
+    let pc := package_to_calculus ctos p in
     jolift (javascript_of_clause_code_in_package coname clname) pc.
 
   Definition dispatch_params_error (cname:string) : string :=
@@ -127,8 +129,9 @@ Section ErgotoJavaScript.
           dispatch_fun_decl.
 
   Definition javascript_from_package
+             (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
-    let pc := package_to_calculus p in
+    let pc := package_to_calculus ctos p in
     jlift javascript_of_package_top pc.
 
   Definition cast_dispatch_to_classes request response :=
@@ -139,10 +142,11 @@ Section ErgotoJavaScript.
     end.
   
   Definition javascript_from_package_with_dispatch
+             (ctos:list cto_package)
              (oconame:option string)
              (p:ergo_package) : eresult javascript :=
     let p := add_dispatch_fun oconame p in
-    let pc := jolift package_to_calculus p in
+    let pc := jolift (package_to_calculus ctos) p in
     let f := jolift (lookup_dispatch dispatch_fun_name) pc in
     jolift (fun xyz =>
              let '(request,response,f) := xyz in

@@ -62,7 +62,7 @@ Section Ergo.
   Definition ergo_clause := @clause ergo_expr.
 
   (** Function *)
-  Definition ergo_func := @func ergo_expr.
+  Definition ergo_function := @function ergo_expr.
 
   (** Declaration *)
   Definition ergo_declaration := @declaration ergo_expr.

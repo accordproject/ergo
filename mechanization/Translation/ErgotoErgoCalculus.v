@@ -24,6 +24,7 @@ Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EError.
+Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoSugar.
@@ -457,7 +458,7 @@ Section ErgotoJavaScript.
     mkContext None None ergoc_stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
-  Definition package_to_calculus (p:package) : eresult ergoc_package :=
+  Definition package_to_calculus (ctos:list cto_package) (p:package) : eresult ergoc_package :=
     let local_namespace := p.(package_namespace) in
     let ctxt := initial_context local_namespace in
     let init := esuccess (ctxt, nil) in
