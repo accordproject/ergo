@@ -11,7 +11,8 @@ Ergo is a domain specific language designed to capture the execution
 logic of *legal* contracts. Among some of the goals for the language
 are:
 - to have contracts and clauses as first-class elements of the language
-- to help legal-tech developer to quickly and safely develop computable legal contracts - to be modular, facilitating reuse of existing contract or clause logic
+- to help legal-tech developer to quickly and safely develop computable legal contracts
+- to be modular, facilitating reuse of existing contract or clause logic
 - to ensure safe execution: the language should prevent run-time errors and non-terminating logic
 - to be blockchain neutral: the same contract logic can be deployed either on and off chain and to a variety of distributed ledger technologies
 - to be formally specified: the meaning of contracts should be well defined so it can be verified, and preserved during execution
