@@ -25,7 +25,7 @@ Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh
 
 The following material is available:
 
-- Ergo Language Manual: http://ergo.readthedocs.io/en/latest/index.html
-- Ergo Formal Specification: https://accordproject.github.io/ergo/Specification.html
-- Ergo playground: https://accordproject.github.io/ergo-playground/
+- Ergo Language Manual: [http://ergo.readthedocs.io/en/latest/index.html](http://ergo.readthedocs.io/en/latest/index.html)
+- Ergo Formal Specification: [https://accordproject.github.io/ergo/Specification.html](https://accordproject.github.io/ergo/Specification.html)
+- Ergo playground: [https://accordproject.github.io/ergo-playground/](https://accordproject.github.io/ergo-playground/)
 
