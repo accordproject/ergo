@@ -3,7 +3,7 @@
 Ergo is a domain specific language (DSL) to capture the logic of
 *legal* contracts.
 
-**_Both the design and implementation of the language are still in early stages. We encourage you to visit this site regularly for updates and future releases information._**
+_Both the design and implementation of the language are still in early stages. We encourage you to visit this site regularly for updates and future releases information._
 
 ## Overview
 
