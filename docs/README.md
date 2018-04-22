@@ -16,7 +16,7 @@ are:
 - to ensure safe execution: the language should prevent run-time errors and non-terminating logic
 - to be blockchain neutral: the same contract logic can be executed either on and off chain on a variety of distributed ledger technologies
 - to be formally specified: the meaning of contracts should be well defined so it can be verified, and preserved during execution
-- to be consistent with the [Accord Protocol Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0)
+- to be consistent with the [Accord Project Template Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0)
 
 ## Status and Contributions
 
