@@ -6,7 +6,7 @@
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 [![Documentation Status](https://readthedocs.org/projects/ergo/badge/?version=latest)](http://ergo.readthedocs.io/en/latest/?badge=latest)
 
-Git: [http://github.com/accordproject/ergo](http://github.com/accordproject/ergo) / Website: [http://accordproject.github.io/ergo](http://accordproject.github.io/ergo)
+Git: [http://github.com/accordproject/ergo](http://github.com/accordproject/ergo) / Website: [http://ergo.accordproject.org](http://ergo.accordproject.org)
 
 _**WARNING**_** The content of this repository is work in progress and subject to change**
 
