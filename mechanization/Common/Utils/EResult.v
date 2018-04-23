@@ -28,16 +28,16 @@ Section EResult.
     Success A eerror a.
   Definition efailure {A:Set} (e:eerror) : eresult A :=
     Failure A eerror e.
-  Definition jolift {A B:Set} (f:A -> eresult B) (a:eresult A) : eresult B :=
+  Definition eolift {A B:Set} (f:A -> eresult B) (a:eresult A) : eresult B :=
     lift_failure f a.
-  Definition jlift {A B:Set} (f:A -> B) (a:eresult A) : eresult B :=
+  Definition elift {A B:Set} (f:A -> B) (a:eresult A) : eresult B :=
     lift_failure_in f a.
-  Definition jlift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
+  Definition elift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
     lift_failure_in_two f a b.
-  Definition jlift3 {A B C D:Set} (f:A -> B -> C ->D)
+  Definition elift3 {A B C D:Set} (f:A -> B -> C ->D)
              (a:eresult A) (b:eresult B) (c:eresult C) : eresult D :=
     lift_failure_in_three f a b c.
-  Definition jmaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
+  Definition emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
     lift_failure_map f al.
   Definition eresult_of_option {A:Set} (a:option A) (e:eerror) :=
     result_of_option a e.

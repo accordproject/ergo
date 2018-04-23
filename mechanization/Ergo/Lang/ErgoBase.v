@@ -22,6 +22,7 @@ Require Import List.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EError.
+Require Import ErgoSpec.Common.Utils.EImport.
 Require Import ErgoSpec.Common.CTO.CTO.
 
 Section ErgoBase.
@@ -67,7 +68,7 @@ Section ErgoBase.
     | EType : cto_declaration -> stmt
     | EExpr : A -> stmt
     | EGlobal : string -> A -> stmt
-    | EImport : string -> stmt
+    | EImport : import_decl -> stmt
     | EFunc : function -> stmt
     | EContract : contract -> stmt.
  
@@ -230,16 +231,16 @@ Section ErgoBase.
               match flambda.(lambda_params) with
               | nil => dispatch_parameter_error
               | (_,Some reqtype) :: _ => esuccess reqtype
-              | _ :: _ => esuccess (CTOClassRef (mkClassRef None "Request"%string))
+              | _ :: _ => esuccess (CTOClassRef "Request"%string)
               end
           in
           let response :=
               match flambda.(lambda_output) with
               | Some resptype => resptype
-              | None => (CTOClassRef (mkClassRef None "Response"%string))
+              | None => (CTOClassRef "Response"%string)
               end
           in
-          jlift (fun request => (request, response, f)) request
+          elift (fun request => (request, response, f)) request
         else lookup_statements_dispatch name sl'
       | EContract c :: sl' => lookup_statements_dispatch name sl'
       end.
