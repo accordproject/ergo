@@ -35,14 +35,14 @@ Section ErgotoJavaScript.
              (ctos:list cto_package)
              (coname:string) (clname:string) (p:ergo_package) : eresult nnrc :=
     let pc := package_to_calculus ctos p in
-    jolift (lookup_clause_code_from_package coname clname) pc.
+    eolift (lookup_clause_code_from_package coname clname) pc.
 
   (* Context *)
   Definition clause_code_from_package
              (ctos:list cto_package)
              (coname:string) (clname:string) (p:ergo_package) : eresult javascript :=
     let pc := package_to_calculus ctos p in
-    jolift (javascript_of_clause_code_in_package coname clname) pc.
+    eolift (javascript_of_clause_code_in_package coname clname) pc.
 
   Definition dispatch_params_error (cname:string) : string :=
     "Parameter mistmatch when dispatching to '" ++ cname ++ "'".
@@ -72,8 +72,8 @@ Section ErgotoJavaScript.
     | (param0,None)::otherparams =>
       efailure (CompilationError ("No parameter can be used for dispatch in "++cname))
     | (param0, Some (CTOClassRef type0))::otherparams =>
-      jlift (fun x =>
-               let type0 := absolute_ref_of_class_ref namespace type0 in
+      elift (fun x =>
+               let type0 := absolute_ref_of_relative_ref namespace type0 in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, Some _)::otherparams =>
@@ -86,12 +86,12 @@ Section ErgotoJavaScript.
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
              (ss:list signature) :=
-    jlift (fun s =>
+    elift (fun s =>
              EMatch effparam0
                      s
                      (EThrow (mkClassRef None "Error"%string)
                              (("message"%string, EConst (ErgoData.dstring ""))::nil)))
-          (jmaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
+          (emaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
   Definition dispatch_fun_name :=
     "dispatch"%string.
@@ -111,7 +111,7 @@ Section ErgotoJavaScript.
     let sigs := lookup_package_signatures_for_contract oconame p in
     let effparams := EVar "request"%string :: nil in
     let dispatch_fun_decl :=
-        jlift
+        elift
           (fun disp =>
              (EFunc
                 (mkFunc dispatch_fun_name
@@ -122,7 +122,7 @@ Section ErgotoJavaScript.
                            disp))))
           (match_of_sigs_top p.(package_namespace) effparams sigs)
     in
-    jlift (fun disp =>
+    elift (fun disp =>
              mkPackage
                p.(package_namespace)
                    (p.(package_statements) ++ (disp::nil)))
@@ -132,11 +132,11 @@ Section ErgotoJavaScript.
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
     let pc := package_to_calculus ctos p in
-    jlift javascript_of_package_top pc.
+    elift javascript_of_package_top pc.
 
   Definition cast_dispatch_to_classes request response :=
     match request, response with
-    | CTOClassRef (mkClassRef None req), CTOClassRef (mkClassRef None resp) =>
+    | CTOClassRef req, CTOClassRef resp =>
       esuccess (req, resp)
     | _, _ => efailure (CompilationError ("Cannot dispatch on non-class types"))
     end.
@@ -146,11 +146,11 @@ Section ErgotoJavaScript.
              (oconame:option string)
              (p:ergo_package) : eresult javascript :=
     let p := add_dispatch_fun oconame p in
-    let pc := jolift (package_to_calculus ctos) p in
-    let f := jolift (lookup_dispatch dispatch_fun_name) pc in
-    jolift (fun xyz =>
+    let pc := eolift (package_to_calculus ctos) p in
+    let f := eolift (lookup_dispatch dispatch_fun_name) pc in
+    eolift (fun xyz =>
              let '(request,response,f) := xyz in
-             jlift (fun xy =>
+             elift (fun xy =>
                       javascript_of_package_with_dispatch_top (fst xy) (snd xy) f) (cast_dispatch_to_classes request response)) f.
 
 End ErgotoJavaScript.

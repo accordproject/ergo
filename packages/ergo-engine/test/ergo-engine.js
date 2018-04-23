@@ -35,7 +35,7 @@ describe('Execute', () => {
         const name = test.name;
         const dir = test.dir;
         const ergo = test.ergo;
-        const model = test.model;
+        const models = test.models;
         const contract = test.contract;
         const request = test.request;
         const state = test.state;
@@ -46,11 +46,14 @@ describe('Execute', () => {
         describe('#execute'+name, function () {
             it('should execute Ergo clause ' + clausename + ' in contract ' + contractname, async function () {
                 const ergoText = Fs.readFileSync(Path.resolve(__dirname, dir, ergo), 'utf8');
-                const ctoText = Fs.readFileSync(Path.resolve(__dirname, dir, model), 'utf8');
+                let ctoTexts = [];
+                for (let i = 0; i < models.length; i++) {
+                    ctoTexts.push(Fs.readFileSync(Path.resolve(__dirname, dir, models[i]), 'utf8'));
+                }
                 const clauseJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                const result = await ErgoEngine.execute(ergoText, [ctoText], clauseJson, requestJson, stateJson, contractname, clausename, false);
+                const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename, false);
                 //console.log(JSON.stringify(result));
                 for (const key in expected) {
                     if (expected.hasOwnProperty(key)) {

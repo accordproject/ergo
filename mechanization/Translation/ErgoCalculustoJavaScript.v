@@ -248,7 +248,7 @@ Section ErgoCalculustoJavaScript.
     Definition javascript_of_clause_code_in_package
                (coname:string) (clname:string) (p:ergoc_package) : eresult ErgoCodeGen.ergoc_javascript :=
       let expr_opt := lookup_clause_code_from_package coname clname p in
-      jlift (fun e =>
+      elift (fun e =>
                let fname := function_name_of_contract_clause_name (Some coname) clname in
                javascript_function_of_body e fname ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double) expr_opt.
 

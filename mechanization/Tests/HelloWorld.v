@@ -37,8 +37,8 @@ contract HelloWorld over TemplateModel {
   Definition cl1 :=
     mkClause "helloworld"
              (mkLambda
-                (("request", Some (CTOClassRef (mkClassRef None "Request")))::nil)
-                (Some (CTOClassRef (mkClassRef None "Response")))
+                (("request", Some (CTOClassRef "Request"))::nil)
+                (Some (CTOClassRef "Response"))
                 None
                 (EVar "request")).
 

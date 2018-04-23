@@ -73,7 +73,7 @@ main:
 
 package:
 | NAMESPACE qn = qname_prefix ss = stmts
-    { { package_namespace = qn;
+    { { package_namespace = Util.char_list_of_string qn;
 	package_statements = ss; } }
 
 stmts:
@@ -108,7 +108,7 @@ stmt:
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 | IMPORT qn = qname_prefix
-    { EImport qn }
+    { EImport (ErgoUtil.cto_import_decl_of_import_namespace qn) }
 | c = contract
     { EContract c }
 
@@ -195,7 +195,7 @@ paramtype:
       | "Long" -> ErgoCompiler.cto_long
       | "Integer" -> ErgoCompiler.cto_integer
       | "DateTime" -> ErgoCompiler.cto_dateTime
-      | _ -> ErgoCompiler.cto_class_ref (ErgoCompiler.mk_class_ref None (Util.char_list_of_string pt))
+      | _ -> ErgoCompiler.cto_class_ref (Util.char_list_of_string pt)
       end }
 | LCURLY rt = rectype RCURLY
     { ErgoCompiler.cto_record rt }
@@ -371,8 +371,8 @@ qname:
 qname_prefix:
 | qn = qname_base
     { begin match qn with
-      | (None,last) -> Util.char_list_of_string last
-      | (Some prefix, last) -> Util.char_list_of_string (prefix ^ "." ^ last)
+      | (None,last) -> last
+      | (Some prefix, last) -> prefix ^ "." ^ last
       end }
 
 (* data *)

@@ -59,7 +59,7 @@ Section ErgotoJavaScript.
 
   Record comp_context :=
     mkCompContext {
-        comp_context_ctos : list cto_package;
+        comp_context_ctos : list cto_declaration;
         comp_context_current_contract : option string;
         comp_context_current_clause : option string;
         comp_context_table: lookup_table;
@@ -182,40 +182,40 @@ Section ErgotoJavaScript.
     | EArray el =>
       let init_el := esuccess nil in
       let proc_one (acc:eresult (list ergoc_expr)) (e:ergo_expr) : eresult (list ergoc_expr) :=
-          jlift2
+          elift2
             cons
             (ergo_expr_to_calculus ctxt e)
             acc
       in
-      jlift new_array (fold_left proc_one el init_el)
+      elift new_array (fold_left proc_one el init_el)
     | EUnaryOp u e =>
-      jlift (NNRCUnop u)
+      elift (NNRCUnop u)
             (ergo_expr_to_calculus ctxt e)
     | EBinaryOp b e1 e2 =>
-      jlift2 (NNRCBinop b)
+      elift2 (NNRCBinop b)
              (ergo_expr_to_calculus ctxt e1)
              (ergo_expr_to_calculus ctxt e2)
     | EIf e1 e2 e3 =>
-      jlift3 NNRCIf
+      elift3 NNRCIf
         (ergo_expr_to_calculus ctxt e1)
         (ergo_expr_to_calculus ctxt e2)
         (ergo_expr_to_calculus ctxt e3)
     | EEnforce e1 None e3 =>
-      jlift3 NNRCIf
-        (jlift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
+      elift3 NNRCIf
+        (elift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
         (esuccess ergo_enforce_error)
         (ergo_expr_to_calculus ctxt e3)
     | EEnforce e1 (Some e2) e3 =>
-      jlift3 NNRCIf
-        (jlift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
+      elift3 NNRCIf
+        (elift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
         (ergo_expr_to_calculus ctxt e3)
         (ergo_expr_to_calculus ctxt e2)
     | ELet v None e1 e2 =>
-      jlift2 (NNRCLet v)
+      elift2 (NNRCLet v)
               (ergo_expr_to_calculus ctxt e1)
               (ergo_expr_to_calculus ctxt e2)
     | ELet v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
-      jlift2 (NNRCLet v)
+      elift2 (NNRCLet v)
               (ergo_expr_to_calculus ctxt e1)
               (ergo_expr_to_calculus ctxt e2)
     | ENew cr nil =>
@@ -223,69 +223,69 @@ Section ErgotoJavaScript.
         (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
     | ENew cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
-          jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
+          elift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
       in
       let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
           let e := ergo_expr_to_calculus ctxt (snd att) in
-          jlift2 (NNRCBinop OpRecConcat)
-                 (jlift (NNRCUnop (OpRec attname)) e) acc
+          elift2 (NNRCBinop OpRecConcat)
+                 (elift (NNRCUnop (OpRec attname)) e) acc
       in
-      jlift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
+      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
     | ERecord nil =>
       esuccess
         (NNRCConst (drec nil))
     | ERecord ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
-          jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
+          elift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
       in
       let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
           let e := ergo_expr_to_calculus ctxt (snd att) in
-          jlift2 (NNRCBinop OpRecConcat)
-                 (jlift (NNRCUnop (OpRec attname)) e) acc
+          elift2 (NNRCBinop OpRecConcat)
+                 (elift (NNRCUnop (OpRec attname)) e) acc
       in
       fold_left proc_one rest init_rec
     | EThrow cr nil =>
       esuccess (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
     | EThrow cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
-          jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
+          elift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
       in
       let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
           let e := ergo_expr_to_calculus ctxt (snd att) in
-          jlift2 (NNRCBinop OpRecConcat)
-                 (jlift (NNRCUnop (OpRec attname)) e)
+          elift2 (NNRCBinop OpRecConcat)
+                 (elift (NNRCUnop (OpRec attname)) e)
                  acc
       in
-      jlift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
+      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
     | ECall fname el =>
       let init_el := esuccess nil in
       let proc_one (e:ergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
-          jlift2
+          elift2
             cons
             (ergo_expr_to_calculus ctxt e)
             acc
       in
-      jolift (lookup_call ctxt.(comp_context_table) fname) (fold_right proc_one init_el el)
+      eolift (lookup_call ctxt.(comp_context_table) fname) (fold_right proc_one init_el el)
     | EMatch e0 ecases edefault =>
       let ec0 := ergo_expr_to_calculus ctxt e0 in
       let eccases :=
           let proc_one acc ecase :=
-              jolift
+              eolift
                 (fun acc =>
-                   jlift (fun x => (fst ecase, x)::acc)
+                   elift (fun x => (fst ecase, x)::acc)
                          (ergo_expr_to_calculus ctxt (snd ecase))) acc
           in
           fold_left proc_one ecases (esuccess nil)
       in
       let ecdefault := ergo_expr_to_calculus ctxt edefault in
-      jolift
+      eolift
         (fun ec0 =>
-           jolift
+           eolift
              (fun eccases =>
-                jolift
+                eolift
                   (fun ecdefault =>
                      let v0 := fresh_in_match eccases ecdefault in
                      let proc_one_case
@@ -294,7 +294,7 @@ Section ErgotoJavaScript.
                          : eresult ergoc_expr :=
                          match fst ecase with
                          | (Some v, CaseValue d) =>
-                           jlift
+                           elift
                              (fun acc =>
                                 NNRCIf (NNRCBinop OpEqual
                                                   (NNRCVar v0)
@@ -304,7 +304,7 @@ Section ErgotoJavaScript.
                                                 (snd ecase))
                                        acc) acc
                          | (None, CaseValue d) =>
-                           jlift
+                           elift
                              (fun acc =>
                                 NNRCIf (NNRCBinop OpEqual
                                                   (NNRCVar v0)
@@ -312,7 +312,7 @@ Section ErgotoJavaScript.
                                        (snd ecase)
                                        acc) acc
                          | (Some v, CaseType brand) =>
-                           jlift (fun acc =>
+                           elift (fun acc =>
                                     let v2 := fresh_in_case acc in
                                     NNRCEither
                                       (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
@@ -320,7 +320,7 @@ Section ErgotoJavaScript.
                                       v2 acc
                                  ) acc
                          | (None, CaseType brand) =>
-                           jlift (fun acc =>
+                           elift (fun acc =>
                                     let v1 := fresh_in_case (snd ecase) in
                                     let v2 := fresh_in_case acc in
                                     NNRCEither
@@ -333,14 +333,14 @@ Section ErgotoJavaScript.
                      let eccases_folded :=
                          fold_left proc_one_case eccases (esuccess ecdefault)
                      in
-                     jlift (NNRCLet v0 ec0) eccases_folded)
+                     elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
     | EFor v e1 None e2 =>
-      jlift2 (NNRCFor v)
+      elift2 (NNRCFor v)
               (ergo_expr_to_calculus ctxt e1)
               (ergo_expr_to_calculus ctxt e2)
     | EFor v e1 (Some econd) e2 =>
-      jlift3 (fun e1 econd e3 =>
+      elift3 (fun e1 econd e3 =>
                 NNRCUnop OpFlatten
                          (NNRCFor v
                                   e1
@@ -363,10 +363,10 @@ Section ErgotoJavaScript.
           ctxt
           (List.map fst c.(clause_lambda).(lambda_params))
     in
-    jlift
+    elift
       (mkClause
          c.(clause_name))
-      (jlift
+      (elift
          (mkLambda
             c.(clause_lambda).(lambda_params)
             c.(clause_lambda).(lambda_output)
@@ -379,10 +379,10 @@ Section ErgotoJavaScript.
     let ctxt :=
         add_params ctxt (List.map fst f.(function_lambda).(lambda_params))
     in
-    jlift
+    elift
       (mkFunc
          f.(function_name))
-      (jlift
+      (elift
          (mkLambda
             f.(function_lambda).(lambda_params)
             f.(function_lambda).(lambda_output)
@@ -394,11 +394,11 @@ Section ErgotoJavaScript.
              (ctxt:comp_context) (d:ergo_declaration) : eresult (comp_context * ergoc_declaration) :=
     match d with
     | Clause c =>
-      jlift
+      elift
         (fun x => (add_one_function ctxt x.(clause_name) x.(clause_lambda), Clause x)) (* Add new function to comp_context *)
         (clause_to_calculus ctxt c)
     | Function f =>
-      jlift
+      elift
         (fun x => (add_one_function ctxt x.(function_name) x.(function_lambda), Function x)) (* Add new function to comp_context *)
         (function_to_calculus ctxt f)
     end.
@@ -420,16 +420,16 @@ Section ErgotoJavaScript.
           (acc:eresult (comp_context * list ergoc_declaration))
           (s:ergo_declaration)
         : eresult (comp_context * list ergoc_declaration) :=
-        jolift
+        eolift
           (fun acc : comp_context * list ergoc_declaration =>
              let (ctxt,acc) := acc in
-             jlift (fun xy : comp_context * ergoc_declaration =>
+             elift (fun xy : comp_context * ergoc_declaration =>
                       let (newctxt,news) := xy in
                       (newctxt,news::acc))
                    (declaration_to_calculus ctxt s))
           acc
     in
-    jlift
+    elift
       (fun xy =>
          (fst xy,
           (mkContract
@@ -444,51 +444,56 @@ Section ErgotoJavaScript.
     match s with
     | EType cto_type => esuccess (ctxt, EType cto_type) (* XXX TO BE REVISED -- add type to comp_context *)
     | EExpr e =>
-      jlift
+      elift
         (fun x => (ctxt, EExpr x))
         (ergo_expr_to_calculus ctxt e)
     | EGlobal v e =>
-      jlift
+      elift
         (fun x => (add_one_global ctxt v, EGlobal v x)) (* Add new variable to comp_context *)
         (ergo_expr_to_calculus ctxt e)
     | EImport s =>
       esuccess (ctxt, EImport s)
     | EFunc f =>
-      jlift
+      elift
         (fun x => (add_one_function ctxt x.(function_name) x.(function_lambda), EFunc x)) (* Add new function to comp_context *)
         (function_to_calculus ctxt f)
     | EContract c =>
-      jlift (fun xy => (fst xy, EContract (snd xy)))
+      elift (fun xy => (fst xy, EContract (snd xy)))
             (contract_to_calculus ctxt c)
     end.
 
-  Definition initial_comp_context (ctos:list cto_package) (p:string) :=
+  Definition initial_comp_context (ctos:list cto_declaration) (p:string) :=
     mkCompContext ctos None None ergoc_stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
-  Definition package_to_calculus (ctos:list cto_package) (p:package) : eresult ergoc_package :=
-    let local_namespace := p.(package_namespace) in
-    let ctxt := initial_comp_context ctos local_namespace in
+  Definition package_to_calculus_with_table
+             (cto_decls:list cto_declaration) (local_namespace:string) (p:package) : eresult ergoc_package :=
+    let ctxt := initial_comp_context cto_decls local_namespace in
     let init := esuccess (ctxt, nil) in
     let proc_one
           (acc:eresult (comp_context * list ergoc_stmt))
           (s:ergo_stmt)
         : eresult (comp_context * list ergoc_stmt) :=
-        jolift
+        eolift
           (fun acc : comp_context * list ergoc_stmt =>
              let (ctxt,acc) := acc in
-             jlift (fun xy : comp_context * ergoc_stmt =>
+             elift (fun xy : comp_context * ergoc_stmt =>
                       let (newctxt,news) := xy in
                       (newctxt,news::acc))
                    (stmt_to_calculus ctxt s))
           acc
     in
-    jlift
+    elift
       (fun xy =>
          (mkPackage
             p.(package_namespace)
             (snd xy)))
       (List.fold_left proc_one p.(package_statements) init).
+
+  Definition package_to_calculus (ctos:list cto_package) (p:package) : eresult ergoc_package :=
+    let local_namespace := p.(package_namespace) in
+    let ectos := cto_resolved_tbl_for_package ctos in
+    eolift (fun ctos_decls => package_to_calculus_with_table ctos_decls local_namespace p) ectos.
 
   Section tests.
     Open Scope string.
@@ -504,7 +509,7 @@ Section ErgotoJavaScript.
               (EConst (dstring "lots")).
     Definition jc1 := ergo_expr_to_calculus ctxt0 j1.
     (* Eval vm_compute in jc1. *)
-    (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1. *)
+    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc1. *)
 
     Example j1' :=
       EMatch (EConst input1)
@@ -514,7 +519,7 @@ Section ErgotoJavaScript.
               (EConst (dstring "lots")).
     Definition jc1' := ergo_expr_to_calculus ctxt0 j1'.
     (* Eval vm_compute in jc1'. *)
-    (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc1'. *)
+    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc1'. *)
 
     Definition input2 :=
       dbrand ("C1"::nil) (dnat 1).
@@ -528,7 +533,7 @@ Section ErgotoJavaScript.
 
     Definition jc2 := ergo_expr_to_calculus ctxt0 j2.
     (* Eval vm_compute in jc2. *)
-    (* Eval vm_compute in jlift (fun x => nnrc_eval_top nil x nil) jc2. *)
+    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc2. *)
 
   End tests.
   

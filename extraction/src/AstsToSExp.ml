@@ -430,7 +430,7 @@ let rec paramtype_to_sexp (pt:cto_type) =
   | CTOLong -> STerm ("CTOLong", [])
   | CTOInteger -> STerm ("CTOInteger", [])
   | CTODateTime -> STerm ("CTODateTime", [])
-  | CTOClassRef clt -> STerm ("CTOClassRef", [class_ref_to_sexp clt])
+  | CTOClassRef clt -> STerm ("CTOClassRef", [name_to_sexp clt])
   | CTOOption pt -> STerm ("CTOption", [paramtype_to_sexp pt])
   | CTORecord rt -> STerm ("CTORecord", rectype_to_sexp rt)
   | CTOArray pt -> STerm ("CTOArray", [paramtype_to_sexp pt])
@@ -447,7 +447,7 @@ let rec sexp_to_paramtype (se:sexp) =
   | STerm ("CTOLong", []) -> CTOLong
   | STerm ("CTOInteger", []) -> CTOInteger
   | STerm ("CTODateTime", []) -> CTODateTime
-  | STerm ("CTOClassRef", [cl]) -> CTOClassRef (sexp_to_class_ref cl)
+  | STerm ("CTOClassRef", [cl]) -> CTOClassRef (sexp_to_name cl)
   | STerm ("CTOption", [pt]) -> CTOOption (sexp_to_paramtype pt)
   | STerm ("CTORecord", rt) -> CTORecord (sexp_to_rectype rt)
   | STerm ("CTOArray", [pt]) -> CTOArray (sexp_to_paramtype pt)
@@ -568,10 +568,10 @@ let sexp_to_contract (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a contract =
   end
 
 let import_to_sexp i =
-  SString (string_of_char_list i)
+  SString (ErgoUtil.import_namespace_of_cto_import_decl i)
 let sexp_to_import (se:sexp) =
   begin match se with
-  | SString s -> char_list_of_string s
+  | SString s -> ErgoUtil.cto_import_decl_of_import_namespace s
   | _ -> 
       raise (Ergo_Error "Not well-formed S-expr inside Import")
   end

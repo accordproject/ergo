@@ -31,6 +31,14 @@ Section EError.
   Definition not_in_clause_error {A} : eresult A :=
     efailure (CompilationError ("Cannot use 'clause' variable outside of a clause")).
 
+  (* CTO errors *)
+  Definition import_not_found {A} (import:string) : eresult A :=
+    efailure (CompilationError ("Import not found: " ++ import)).
+  Definition resolve_name_not_found {A} (namespace:string) (name_ref:string) : eresult A :=
+    efailure (CompilationError ("Cannot resolve name '" ++ name_ref++ "' not found in CTO with namespace " ++ namespace)).
+  Definition import_name_not_found {A} (namespace:string) (name_ref:string) : eresult A :=
+    efailure (CompilationError ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
+  
   Definition ergo_default_package : string := "org.accordproject.ergo".
   Definition ergo_default_error_local_name : string := "Error".
   Definition ergo_default_error_name : string :=

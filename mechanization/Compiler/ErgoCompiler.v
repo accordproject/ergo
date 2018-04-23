@@ -18,6 +18,7 @@ Require ErgoSpec.Version.
 Require ErgoSpec.Backend.ErgoBackend.
 Require ErgoSpec.Common.Utils.ENames.
 Require ErgoSpec.Common.Utils.EResult.
+Require ErgoSpec.Common.Utils.EImport.
 Require ErgoSpec.Common.CTO.CTO.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
@@ -51,7 +52,7 @@ Module ErgoCompiler.
     := CTO.CTOInteger.
   Definition cto_dateTime : CTO.cto_type
     := CTO.CTODateTime.
-  Definition cto_class_ref : cto_class -> CTO.cto_type
+  Definition cto_class_ref : String.string -> CTO.cto_type
     := CTO.CTOClassRef.
   Definition cto_option : CTO.cto_type -> CTO.cto_type
     := CTO.CTOOption.
@@ -69,9 +70,9 @@ Module ErgoCompiler.
 
   Definition mk_cto_declaration : String.string -> CTO.cto_declaration_kind -> CTO.cto_declaration
     := CTO.mkCTODeclaration.
-  Definition mk_cto_package : String.string -> list String.string -> list CTO.cto_declaration -> CTO.cto_package
+  Definition mk_cto_package : String.string -> list EImport.import_decl -> list CTO.cto_declaration -> CTO.cto_package
     := CTO.mkCTOPackage.
-  
+
   (** Ergo *)
   Definition ergo_package : Set 
     := Ergo.ergo_package.

@@ -31,7 +31,7 @@ let base_type_of_decl d =
       | "String" -> CTOString
       | "Double" -> CTODouble
       | "Long" -> CTOLong
-      | s -> CTOClassRef (ErgoCompiler.mk_class_ref None (char_list_of_string s))
+      | s -> CTOClassRef (char_list_of_string s)
       end
   end
 
@@ -83,7 +83,7 @@ let cto_declarations_of_body dl =
   List.map cto_declaration_of_defn dl
 
 let cto_import_of_import i =
-  char_list_of_string i.cto_import_namespace
+  ErgoUtil.cto_import_decl_of_import_namespace i.cto_import_namespace
 
 let cto_import (m:model) : cto_package =
   let namespace = char_list_of_string m.cto_namespace in
