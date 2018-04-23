@@ -15,6 +15,7 @@
 (* Support for CTO models *)
 
 Require Import String.
+Require Import List.
 Require Import Qcert.Utils.Utils.
 Require Import Qcert.Common.TypingRuntime.
 
@@ -42,7 +43,7 @@ Section CTO.
 
   Record cto_declaration :=
     mkCTODeclaration
-      { cto_declaration_class : class_ref;
+      { cto_declaration_class : relative_ref;
         cto_declaration_type : cto_declaration_kind; }.
 
   Record cto_package :=
@@ -51,10 +52,23 @@ Section CTO.
         cto_package_imports : list string;
         cto_package_declarations : list cto_declaration; }.
 
+  Locate absolute_ref.
+
+  (*
+  Section ImportResolution.
+    Definition cto_package_resolve_declaration_names (cto: cto_package) : cto_package :=
+      
+
+    Definition cto_resolve_declaration_names (ctos: list cto_package) : list cto_package :=
+      map cto_package_resolve_declaration_names ctos.
+  End ImportResolution.
+   *)
+  
   Section Semantics.
     (** A semantics for CTO packages is obtained through translation
         into branded types. *)
-    Program Fixpoint cto_type_to_etype {m:brand_relation} (scope:option string) (t:cto_type) : ErgoType.etype :=
+    Program Fixpoint cto_type_to_etype {m:brand_relation}
+            (namespace_scope:string) (t:cto_type) : ErgoType.etype :=
       match t with
       | CTOBoolean => ErgoType.bool
       | CTOString => ErgoType.string
@@ -63,19 +77,19 @@ Section CTO.
       | CTOInteger => ErgoType.nat
       | CTODateTime => ErgoType.unit
       | CTOClassRef cr =>
-        ErgoType.brand ((absolute_ref_of_class_ref scope cr)::nil)
+        ErgoType.brand ((absolute_ref_of_class_ref namespace_scope cr)::nil)
       | CTOOption t =>
-        ErgoType.option (cto_type_to_etype scope t)
+        ErgoType.option (cto_type_to_etype namespace_scope t)
       | CTORecord rtl =>
         ErgoType.record
           ErgoType.open_kind
-          (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype scope (snd xy))) rtl))
+          (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype namespace_scope (snd xy))) rtl))
           (rec_sort_sorted
-             (List.map (fun xy => (fst xy, cto_type_to_etype scope (snd xy))) rtl)
-             (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype scope (snd xy))) rtl))
+             (List.map (fun xy => (fst xy, cto_type_to_etype namespace_scope (snd xy))) rtl)
+             (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype namespace_scope (snd xy))) rtl))
              eq_refl)
       | CTOArray t =>
-        ErgoType.bag (cto_type_to_etype scope t)
+        ErgoType.bag (cto_type_to_etype namespace_scope t)
       end.
 
   End Semantics.

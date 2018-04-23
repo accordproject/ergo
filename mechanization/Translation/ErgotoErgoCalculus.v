@@ -63,7 +63,7 @@ Section ErgotoJavaScript.
         comp_context_current_contract : option string;
         comp_context_current_clause : option string;
         comp_context_table: lookup_table;
-        comp_context_namespace: option string;
+        comp_context_namespace: string;
         comp_context_globals: list string;
         comp_context_params: list string;
       }.
@@ -462,7 +462,7 @@ Section ErgotoJavaScript.
             (contract_to_calculus ctxt c)
     end.
 
-  Definition initial_comp_context (ctos:list cto_package) (p:option string) :=
+  Definition initial_comp_context (ctos:list cto_package) (p:string) :=
     mkCompContext ctos None None ergoc_stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
@@ -492,7 +492,7 @@ Section ErgotoJavaScript.
 
   Section tests.
     Open Scope string.
-    Definition ctxt0 := initial_comp_context nil None.
+    Definition ctxt0 := initial_comp_context nil "org.accordproject".
 
     Definition input1 := dnat 2.
     

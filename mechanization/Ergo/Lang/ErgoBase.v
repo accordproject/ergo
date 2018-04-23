@@ -74,7 +74,7 @@ Section ErgoBase.
     (** Package. *)
     Record package :=
       mkPackage
-        { package_namespace : option string;
+        { package_namespace : string;
           package_statements : list stmt; }.
 
   End Syntax.

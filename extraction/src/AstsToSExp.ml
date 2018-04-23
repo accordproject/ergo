@@ -602,7 +602,7 @@ let sexp_to_cto_type (se:sexp) =
 let stmt_to_sexp (expr_to_sexp : 'a -> sexp) (s:'a stmt) =
   begin match s with
   | EType cto_decl ->
-      STerm ("EType",[class_ref_to_sexp cto_decl.cto_declaration_class;
+      STerm ("EType",[name_to_sexp cto_decl.cto_declaration_class;
                       cto_type_to_sexp cto_decl.cto_declaration_type])
   | EExpr e ->
       STerm ("EExpr",[expr_to_sexp e])
@@ -624,7 +624,7 @@ let stmts_to_sexp (expr_to_sexp : 'a -> sexp) (ss:'a stmt list) =
 let sexp_to_stmt (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt =
   begin match se with
   | STerm ("EType",[soname; scto_type]) ->
-      EType (ErgoCompiler.mk_cto_declaration (sexp_to_class_ref soname) (sexp_to_cto_type scto_type))
+      EType (ErgoCompiler.mk_cto_declaration (sexp_to_name soname) (sexp_to_cto_type scto_type))
   | STerm ("EExpr",[se]) ->
       EExpr (sexp_to_expr se)
   | STerm ("EGlobal",[svname;se]) ->
@@ -649,14 +649,14 @@ let sexp_to_stmts (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a stmt list =
   end
 
 let package_to_sexp (expr_to_sexp : 'a -> sexp) (p:'a package) =
-  let namespace = opt_name_to_sexp p.package_namespace in
+  let namespace = name_to_sexp p.package_namespace in
   let stmts = stmts_to_sexp expr_to_sexp p.package_statements in
   STerm ("Package", [namespace;stmts])
 
 let sexp_to_package (sexp_to_expr : sexp -> 'a) (se:sexp) : 'a package =
   begin match se with
   | STerm ("Package",[snamespace;sstmts]) ->
-      { package_namespace = sexp_to_opt_name snamespace;
+      { package_namespace = sexp_to_name snamespace;
         package_statements = sexp_to_stmts sexp_to_expr sstmts; }
   | _ ->
       raise (Ergo_Error "Not well-formed S-expr inside Package")

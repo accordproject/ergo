@@ -18,27 +18,31 @@ Section ENames.
   Local Open Scope string.
 
   Section ScopedNames.
+    Definition relative_ref := string.
     Definition namespace_ref := option string.
 
     Record class_ref :=
       mkClassRef
         { class_namespace : namespace_ref;
-          class_name : string; }.
+          class_name : relative_ref; }.
 
   End ScopedNames.
 
   Section AbsoluteNames.
     Definition absolute_ref := string.
 
-    Definition absolute_ref_of_class_ref (local_namespace:option string) (cr:class_ref) :=
-      match cr.(class_namespace) with
-      | None =>
-        match local_namespace with
-        | None => cr.(class_name)
-        | Some namespace => namespace ++ "." ++ cr.(class_name)
-        end
-      | Some ref_package => ref_package ++ "." ++ cr.(class_name)
-      end.
+    Definition absolute_ref_of_relative_ref (namespace: string) (rr: relative_ref) : absolute_ref :=
+      namespace ++ "." ++ rr.
+
+    Definition absolute_ref_of_class_ref (local_namespace:string) (cr:class_ref) : absolute_ref :=
+      let namespace :=
+          match cr.(class_namespace) with
+          | None => local_namespace
+          | Some namespace_ref => namespace_ref
+          end
+      in
+      absolute_ref_of_relative_ref namespace cr.(class_name).
+      
   End AbsoluteNames.    
     
 End ENames.

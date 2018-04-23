@@ -48,7 +48,7 @@ contract HelloWorld over TemplateModel {
                ((Clause cl1)::nil).
   
   Definition p1 :=
-    mkPackage (Some "org.accordproject.helloworld")
+    mkPackage "org.accordproject.helloworld"
               ((EContract c1)::nil).
 
   (* Eval vm_compute in (ErgoCompiler.javascript_from_ergo_package_with_dispatch None p1). *)

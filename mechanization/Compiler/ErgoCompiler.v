@@ -67,7 +67,7 @@ Module ErgoCompiler.
   Definition cto_concept : option String.string -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
     := CTO.CTOConcept.
 
-  Definition mk_cto_declaration : cto_class -> CTO.cto_declaration_kind -> CTO.cto_declaration
+  Definition mk_cto_declaration : String.string -> CTO.cto_declaration_kind -> CTO.cto_declaration
     := CTO.mkCTODeclaration.
   Definition mk_cto_package : String.string -> list String.string -> list CTO.cto_declaration -> CTO.cto_package
     := CTO.mkCTOPackage.
