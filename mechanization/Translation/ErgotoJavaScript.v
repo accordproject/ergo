@@ -61,7 +61,7 @@ Section ErgotoJavaScript.
     end.
 
   Definition case_of_sig
-             (namespace:option string)
+             (namespace:string)
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
@@ -81,7 +81,7 @@ Section ErgotoJavaScript.
     end.
 
   Definition match_of_sigs
-             (namespace:option string)
+             (namespace:string)
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
@@ -97,7 +97,7 @@ Section ErgotoJavaScript.
     "dispatch"%string.
   
   Definition match_of_sigs_top
-             (namespace:option string)
+             (namespace:string)
              (effparams:list ergo_expr)
              (ss:list signature) :=
     match effparams with

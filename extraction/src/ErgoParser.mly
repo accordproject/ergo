@@ -72,15 +72,9 @@ main:
 
 
 package:
-| ns = namespacedecl ss = stmts
-    { { package_namespace = ns;
+| NAMESPACE qn = qname_prefix ss = stmts
+    { { package_namespace = qn;
 	package_statements = ss; } }
-
-namespacedecl:
-| /* empty */
-    { None }
-| NAMESPACE qn = qname_prefix
-    { Some qn }
 
 stmts:
 |
@@ -90,11 +84,11 @@ stmts:
 
 stmt:
 | DEFINE CONCEPT cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration (ErgoCompiler.mk_class_ref None cn) (CTOConcept (oe,ctype))) }
+    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration cn (CTOConcept (oe,ctype))) }
 | DEFINE TRANSACTION cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration (ErgoCompiler.mk_class_ref None cn) (CTOTransaction (oe,ctype))) }
+    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration cn (CTOTransaction (oe,ctype))) }
 | DEFINE ENUM cn = ident et = cto_enum_decl
-    { EType (ErgoCompiler.mk_cto_declaration (ErgoCompiler.mk_class_ref None cn) (CTOEnum et)) }
+    { EType (ErgoCompiler.mk_cto_declaration cn (CTOEnum et)) }
 | DEFINE VARIABLE v = ident EQUAL e = expr
     { EGlobal (v, e) }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY

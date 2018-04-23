@@ -76,7 +76,7 @@ let cto_declaration_of_defn d =
         raise (Ergo_Error ("Can't import CTO kind: " ^ other))
     end
   in
-  { cto_declaration_class = ErgoCompiler.mk_class_ref None (char_list_of_string decl_class);
+  { cto_declaration_class = char_list_of_string decl_class;
     cto_declaration_type = decl_type; }
 
 let cto_declarations_of_body dl =
