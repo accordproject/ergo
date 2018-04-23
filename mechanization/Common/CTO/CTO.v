@@ -14,13 +14,14 @@
 
 (* Support for CTO models *)
 
-Section CTO.
-  Require Import String.
-  Require Import Qcert.Utils.Utils.
-  Require Import Qcert.Common.TypingRuntime.
+Require Import String.
+Require Import Qcert.Utils.Utils.
+Require Import Qcert.Common.TypingRuntime.
 
-  Require Import ErgoSpec.Backend.ErgoBackend.
-  Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.ENames.
+
+Section CTO.
 
   Inductive cto_type :=
   | CTOBoolean : cto_type                             (**r bool atomic type *)

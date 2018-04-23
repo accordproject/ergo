@@ -9,6 +9,7 @@ Makefile.config
 *.aux
 .DS_Store
 _CoqProject
+.coqdeps.d
 ergo-*.tgz
 *.log
 **/_build

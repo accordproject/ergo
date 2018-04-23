@@ -28,6 +28,7 @@ MODULES = \
 	Common/CTO/CTO \
 	Ergo/Lang/ErgoBase \
 	Ergo/Lang/Ergo \
+	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \
 	ErgoCalculus/Lang/ErgoCalculus \
 	ErgoCalculus/Lang/ErgoCalculusCall \
