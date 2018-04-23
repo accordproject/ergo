@@ -17,6 +17,8 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import List.
+
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EError.
@@ -161,7 +163,6 @@ Section ErgoBase.
 
     Definition signature : Set := (string * list (string * option cto_type)).
 
-    Require Import List.
     Fixpoint lookup_declarations_signatures (dl:list declaration) : list signature :=
       match dl with
       | nil => nil

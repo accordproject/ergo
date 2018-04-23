@@ -15,11 +15,12 @@
 (* Built-in errors *)
 
 Require Import String.
+Require Import List.
+
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EResult.
 
 Section EError.
-  Require Import List.
 
   Definition dispatch_lookup_error {A} : eresult A :=
     efailure (CompilationError ("Cannot lookup created dispatch")).

@@ -14,8 +14,11 @@
 
 Require Import String.
 Require Import List.
+
 Require Import Qcert.Utils.ListAdd. (* For zip *)
 Require Import Qcert.Utils.Lift.
+Require Qcert.Utils.Closure.
+
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
@@ -38,8 +41,6 @@ Section Closure.
 End Closure.
 
 Section Patch.
-  Require Qcert.Utils.Closure.
-
   Definition ergoc_closure_type_of_closure_type (t:option unit) : option cto_type :=
     None.
   

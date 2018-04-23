@@ -12,8 +12,9 @@
  * limitations under the License.
  *)
 
+Require Import String.
+
 Section ENames.
-  Require Import String.
   Local Open Scope string.
 
   Section ScopedNames.

@@ -18,6 +18,7 @@ Require Import String.
 Require Import List.
 
 Require Import Qcert.Utils.Utils.
+Require Import Qcert.NNRC.NNRCRuntime.
 
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Common.Utils.ENames.
@@ -31,8 +32,6 @@ Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgotoJavaScript.
-
-  Require Import Qcert.NNRC.NNRCRuntime.
 
   Section utils.
     Open Scope string.
@@ -135,7 +134,6 @@ Section ErgotoJavaScript.
     list (match_case * ergoc_expr).
 
   Section fresh_vars.
-    Require Import Qcert.Utils.Fresh.
     Definition fresh_in_match {A} (eccases:list (A * ergoc_expr)) (ecdefault:ergoc_expr) :=
       fresh_var
         "$match"
