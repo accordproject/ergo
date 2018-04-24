@@ -36,11 +36,11 @@ MAIN2=ergocore
 TARGET=native
 
 ## Toplevel
-all: ../bin/$(MAIN).$(TARGET) ../packages/ergo-compiler/lib/$(MAIN2).js
+all: ../bin/$(MAIN).$(TARGET) ../bin/$(MAIN).js ../packages/ergo-compiler/lib/$(MAIN2).js
 
-all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli ../bin/$(MAIN).$(TARGET) ../packages/ergo-compiler/lib/$(MAIN2).js
+all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli ../bin/$(MAIN).$(TARGET) ../bin/$(MAIN).js ../packages/ergo-compiler/lib/$(MAIN2).js
 
-js: ../packages/ergo-compiler/lib/$(MAIN2).js
+js: ../bin/$(MAIN).js ../packages/ergo-compiler/lib/$(MAIN2).js
 
 ## Extraction
 VO_FILES = $(MODULES:%=../mechanization/%.vo)
@@ -77,6 +77,13 @@ $(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extra
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(MAIN).$(TARGET)
 
 ## JavaScript
+../bin/$(MAIN).js: $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(MAIN).byte
+	js_of_ocaml _build_js/$(MAIN).byte
+	cp _build_js/$(MAIN).js ../bin/$(MAIN).js
+
+_build_js/$(MAIN).byte: $(ATDS) $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN).ml
+	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(MAIN).byte
+
 ../packages/ergo-compiler/lib/$(MAIN2).js: $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(MAIN2).byte
 	js_of_ocaml _build_js/$(MAIN2).byte
 	cp _build_js/$(MAIN2).js ../packages/ergo-compiler/lib/$(MAIN2).js
