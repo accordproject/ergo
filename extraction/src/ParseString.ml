@@ -37,6 +37,6 @@ let parse_string p_fun s =
   end
 
 let parse_ergo_from_string s : ergo_package = parse_string parse_ergo s
-let parse_ergoc_sexp_from_string s : ergoc_package = parse_string parse_ergoc_sexp s
+
 
 

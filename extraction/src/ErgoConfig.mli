@@ -15,7 +15,6 @@
 type lang =
   | Ergo
   | JavaScript
-  | Calculus
 
 val lang_of_name : string -> lang
 val name_of_lang : lang -> string
