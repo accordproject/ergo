@@ -17,13 +17,11 @@ open Util
 type lang =
   | Ergo
   | JavaScript
-  | Calculus
 
 let lang_of_name s =
   begin match s with
   | "ergo" -> Ergo
   | "javascript" -> JavaScript
-  | "calculus" -> Calculus
   | _ -> raise (Ergo_Error ("Unknown language: " ^ s))
   end
 
@@ -31,14 +29,12 @@ let name_of_lang s =
   begin match s with
   | Ergo -> "ergo"
   | JavaScript -> "javascript"
-  | Calculus -> "calculus"
   end
 
 let extension_of_lang lang =
   begin match lang with
   | Ergo -> ".ergo"
   | JavaScript -> ".js"
-  | Calculus -> ".ergoc"
   end
 
 type global_config = {

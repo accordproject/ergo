@@ -35,8 +35,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "chai-things": "^0.2.0",
     "eslint": "^4.6.1",
+    "jsdoc": "^3.5.5",
+    "lerna": "^2.5.1",
     "license-check": "^1.1.5",
     "mocha": "^3.4.2",
     "nyc": "^11.3.0"
@@ -48,7 +51,8 @@
       "!./coverage/**/*",
       "!./node_modules/**/*",
       "!./out/**/*",
-      "!bin/*"
+      "!bin/*",
+      "!**ergoccore*"
     ],
     "path": "header.txt",
     "blocking": true,
@@ -65,7 +69,7 @@
       "json"
     ],
     "include": [
-      "lib/**/*.js"
+      "lib/**/commands.js"
     ],
     "exclude": [],
     "all": true,

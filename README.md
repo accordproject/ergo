@@ -29,15 +29,15 @@ $ npm install @accordproject/ergo-cli -g
 To check that the compiler has been installed, and see which version number:
 
 ```text
-$ ergoc --version
+$ ergo --version
 ```
 
 To get command line help:
 
 ```text
-$ ergoc --help
-$ ergoc compile --help
-$ ergoc execute --help
+$ ergo --help
+$ ergo compile --help
+$ ergo execute --help
 ```
 
 ### Compiling your first contract
@@ -45,7 +45,7 @@ $ ergoc execute --help
 Once installed, you can compile your first Ergo contract to JavaScript:
 
 ```text
-$ ergoc compile --ergo ./examples/volumediscount/logic.ergo --cto ./examples/volumediscount/model.cto
+$ ergo compile --ergo ./examples/volumediscount/logic.ergo --cto ./examples/volumediscount/model.cto
 ```
 
 ### Execute a contract clause
@@ -53,7 +53,7 @@ $ ergoc compile --ergo ./examples/volumediscount/logic.ergo --cto ./examples/vol
 To compile and _execute_ a given clause in a contract:
 
 ```text
-$ ergoc execute --ergo ./examples/volumediscount/logic.ergo --contractname VolumeDiscount --clausename volumediscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json --cto ./examples/volumediscount/model.cto
+$ ergo execute --ergo ./examples/volumediscount/logic.ergo --contractname VolumeDiscount --clausename volumediscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json --cto ./examples/volumediscount/model.cto
 {"response":{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"},"state":{"$class":"org.accordproject.contract.State","status":"EXECUTORY"}}
 ```
 

@@ -1,8 +1,7 @@
 coverage
 mechanization
 extraction
-lib/ergocore.js
-lib/ergoruntime.js
+lib/ergoccore.js
 docs
 node_modules
 out

@@ -21,7 +21,7 @@ Chai.should();
 Chai.use(require('chai-things'));
 const Path = require('path');
 
-describe('ergoc', () => {
+describe('ergo', () => {
 
     afterEach(() => {});
 

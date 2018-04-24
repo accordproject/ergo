@@ -46,7 +46,7 @@ let usage =
   "Usage: "^Sys.argv.(0)^" [options] contract1 contract2 ..."
 
 let process_file f file_name =
-  Format.printf "Processing Ergo file: %s --" file_name;
+  Format.printf "Processing file: %s --" file_name;
   let file_content = string_of_file file_name in
   try f (file_name,file_content) with
   | Ergo_Error msg ->

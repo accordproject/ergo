@@ -17,5 +17,4 @@
 open ErgoComp.ErgoCompiler
 
 val parse_ergo : Lexing.lexbuf -> ergo_package
-val parse_ergoc_sexp : Lexing.lexbuf -> ergoc_package
 
