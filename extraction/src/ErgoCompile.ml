@@ -24,12 +24,12 @@ type result_file = {
 let wrap_jerrors f e =
   begin match e with
   | Failure (CompilationError cl) ->
-      raise (Ergo_Error ("Compilation Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+      raise (Ergo_Error ("[Compilation Error] " ^ (Util.string_of_char_list cl)))
   | Failure (TypeError cl) ->
-      raise (Ergo_Error ("Type Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+      raise (Ergo_Error ("[Type Error] " ^ (Util.string_of_char_list cl)))
   | Failure (UserError d) ->
       let cl = ErgoCompiler.Data.data_to_json_string [] d in
-      raise (Ergo_Error ("User Error: [" ^ (Util.string_of_char_list cl) ^ "]"))
+      raise (Ergo_Error ("[User Error] " ^ (Util.string_of_char_list cl)))
   | Success x -> f x
   end
 

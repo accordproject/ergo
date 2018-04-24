@@ -126,13 +126,29 @@ Section CTO.
       end.
     
     (** This is the name resolution *)
-    Definition resolve_cto_type (namespace:string) (tbl:cto_names_table) (t:cto_type) : eresult cto_type :=
-      esuccess t.
+    Fixpoint resolve_cto_type (namespace:string) (tbl:cto_names_table) (t:cto_type) : eresult cto_type :=
+      match t with
+      | CTOBoolean => esuccess CTOBoolean
+      | CTOString => esuccess CTOString
+      | CTODouble => esuccess CTODouble
+      | CTOLong => esuccess CTOLong
+      | CTOInteger => esuccess CTOInteger
+      | CTODateTime => esuccess CTODateTime
+      | CTOClassRef r => elift CTOClassRef (local_name_lookup namespace tbl r)
+      | CTOOption t => elift CTOOption (resolve_cto_type namespace tbl t)
+      | CTORecord r =>
+        let initial_map := map (fun xy => (fst xy, resolve_cto_type namespace tbl (snd xy))) r in
+        let lifted_map := emaplift (fun xy => elift (fun t => (fst xy, t)) (snd xy)) initial_map in
+        elift CTORecord lifted_map
+      | CTOArray t => elift CTOArray (resolve_cto_type namespace tbl t)
+      end.
+
     Definition resolve_cto_struct
                (namespace:string)
                (tbl:cto_names_table)
                (t:list (string * cto_type)) : eresult (list (string * cto_type)) :=
-      esuccess t.
+      emaplift (fun xy =>
+                  elift (fun t => (fst xy, t)) (resolve_cto_type namespace tbl (snd xy))) t.
 
     Definition resolve_extend_name
                (namespace:string) (tbl:cto_names_table) (extend_name:option string) : eresult (option string) :=
@@ -167,7 +183,8 @@ Section CTO.
     Definition resolve_names_in_package
                (tbls:cto_names_tables)
                (pkg:cto_package) : eresult (list cto_declaration) :=
-      let imports := pkg.(cto_package_imports) in
+      (** Make sure to add current namespace to the list of imports - i.e., import self. *)
+      let imports := app pkg.(cto_package_imports) ((pkg.(cto_package_namespace),ImportAll)::nil) in
       let namespace := pkg.(cto_package_namespace) in
       let in_scope_names := apply_imports_to_names_tables namespace tbls imports in
       eolift (fun tbls => resolve_declarations
@@ -182,7 +199,35 @@ Section CTO.
       elift (@List.concat _) (emaplift (resolve_names_in_package tbls) pkgs).
 
   End NamesResolution.
-  
+
+  Section SampleCTO.
+    Local Open Scope string.
+    Definition ctod1 :=
+      mkCTODeclaration "c1" (CTOConcept None (("a", CTOBoolean)::("b",CTOClassRef "c3")::nil)).
+    
+    Definition ctod2 :=
+      mkCTODeclaration "c2" (CTOConcept None (("c", CTOBoolean)::("d",CTOClassRef "c1")::nil)).
+    
+
+    Definition cto1 :=
+      mkCTOPackage
+        "n1" (("n2",ImportAll)::nil) (ctod1::ctod2::nil).
+    
+    Definition ctod3 :=
+      mkCTODeclaration "c3" (CTOConcept None (("a", CTOBoolean)::("b",CTOString)::nil)).
+    
+    Definition cto2 :=
+      mkCTOPackage
+        "n2" nil (ctod3::nil).
+
+    Definition pkgs := cto2 :: cto1 :: nil.
+
+    Definition tbls := names_tables_of_cto_packages pkgs.
+    (* Eval vm_compute in tbls. *)
+    Definition res := elift (@List.concat _) (emaplift (resolve_names_in_package tbls) pkgs).
+    (* Eval vm_compute in res. *)
+  End SampleCTO.
+    
   Section Semantics.
     (** A semantics for CTO packages is obtained through translation
         into branded types. *)

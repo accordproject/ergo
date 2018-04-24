@@ -42,9 +42,15 @@ describe('Execute', () => {
         const contractname = test.contractname;
         const clausename = test.clausename;
         const expected = test.expected;
+        let resultKind;
+        if (expected.error) {
+            resultKind = 'fail';
+        } else {
+            resultKind = 'succeed';
+        }
 
         describe('#execute'+name, function () {
-            it('should execute Ergo clause ' + clausename + ' in contract ' + contractname, async function () {
+            it('should ' + resultKind + ' executing Ergo clause ' + clausename + ' in contract ' + contractname, async function () {
                 const ergoText = Fs.readFileSync(Path.resolve(__dirname, dir, ergo), 'utf8');
                 let ctoTexts = [];
                 for (let i = 0; i < models.length; i++) {
@@ -53,14 +59,18 @@ describe('Execute', () => {
                 const clauseJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename, false);
-                //console.log(JSON.stringify(result));
-                for (const key in expected) {
-                    if (expected.hasOwnProperty(key)) {
-                        const field = key;
-                        const value = expected[key];
-                        //result.should.not.be.null;
-                        result.response[field].should.equal(value);
+                if (expected.error) {
+                    const result = ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename, false);
+                    return result.catch(function(m) { m.should.deep.equal(new Error(expected.error)); });
+                } else {
+                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename, false);
+                    for (const key in expected) {
+                        if (expected.hasOwnProperty(key)) {
+                            const field = key;
+                            const value = expected[key];
+                            //result.should.not.be.null;
+                            result.response[field].should.equal(value);
+                        }
                     }
                 }
             });
