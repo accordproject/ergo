@@ -83,7 +83,13 @@ class ErgoEngine {
      */
     static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch) {
         return (Ergo.compile(ergoText,ctoTexts,null,null,withDispatch)).then((ergoCode) => {
-            return this.executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName,clauseName);
+            if (ergoCode.error) {
+                throw new Error(ergoCode.error);
+            } else {
+                const result =
+                      this.executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName,clauseName);
+                return result;
+            }
         });
     }
 }

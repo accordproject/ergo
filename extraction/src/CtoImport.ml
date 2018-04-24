@@ -27,10 +27,11 @@ let base_type_of_decl d =
   | None -> raise (Ergo_Error "Missing propertyType in CTO")
   | Some d ->
       begin match d.cto_prop_type_name with
-      | "Bool" -> CTOBoolean
+      | "Boolean" -> CTOBoolean
       | "String" -> CTOString
       | "Double" -> CTODouble
       | "Long" -> CTOLong
+      | "DateTime" -> CTODateTime
       | s -> CTOClassRef (char_list_of_string s)
       end
   end

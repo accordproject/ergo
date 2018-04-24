@@ -63,5 +63,15 @@
     "clausename" : "latedeliveryandpenalty",
     "expected" : { "buyerMayTerminate" : true,
                    "penalty" : 110,
-                   "$class" : "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse" } }
+                   "$class" : "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse" } },
+  { "name" : "test7",
+    "dir" : "data/latedeliveryandpenalty",
+    "ergo" : "logic.ergo",
+    "models" : ["model.cto"],
+    "contract" : "contract.json",
+    "request" : "request.json",
+    "state" : "state.json",
+    "contractname" : "LateDeliveryAndPenalty",
+    "clausename" : "latedeliveryandpenalty",
+    "expected" : { "error" : "[Compilation Error] Import not found: org.accordproject.base" } }
 ]

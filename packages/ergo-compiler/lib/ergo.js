@@ -69,8 +69,12 @@ class Ergo {
         if (contractName !== null) { config.contract = contractName; }
         if (clauseName !== null) { config.clause = clauseName; }
         // Call compiler
-        const compiled = Engine.Ergo.compile(config).result;
-        return compiled;
+        const compiled = Engine.Ergo.compile(config);
+        if (compiled.error) {
+            return { 'error' : compiled.result };
+        } else {
+            return compiled.result;
+        }
     }
 
     /**
@@ -84,7 +88,8 @@ class Ergo {
      * @returns {object} Promise to the compiled JavaScript code
      */
     static compile(ergoText,ctoTexts,contractName,clauseName,withDispatch) {
-        return Promise.resolve(this.compileToJavaScript(ergoText,ctoTexts,contractName,clauseName,withDispatch));
+        const result = this.compileToJavaScript(ergoText,ctoTexts,contractName,clauseName,withDispatch);
+        return Promise.resolve(result);
     }
 
 }

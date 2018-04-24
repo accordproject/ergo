@@ -59,11 +59,13 @@ let wrap_all wrap_f l =
 let json_of_result res =
   object%js
     val result = Js.string res
+    val error = Js.bool false
   end
 
 let json_of_error msg =
   object%js
     val result = Js.string msg
+    val error = Js.bool true
   end
 
 let ergo_compile input =
@@ -72,21 +74,20 @@ let ergo_compile input =
       begin try
         global_config_of_json input
       with exn ->
-        raise (Ergo_Error ("[Couldn't load configuration: "^(Printexc.to_string exn)^"]"))
+        raise (Ergo_Error ("[Compilation Error] Couldn't load configuration: "^(Printexc.to_string exn)))
       end
     in
     let j_s =
       begin try
         Js.to_string input##.ergo
       with exn ->
-        raise (Ergo_Error ("[Couldn't load contract: "^(Printexc.to_string exn)^"]"))
+        raise (Ergo_Error ("[Compilation Error] Couldn't load contract: "^(Printexc.to_string exn)))
       end
     in
     let res =
-      begin try
-        ErgoCompile.ergo_compile gconf j_s
-      with Ergo_Error err -> raise (Ergo_Error ("[Compilation error: "^err^"]"))
-         | exn -> raise (Ergo_Error ("[Compilation error: "^(Printexc.to_string exn)^"]"))
+      begin try ErgoCompile.ergo_compile gconf j_s
+        with Ergo_Error err -> raise (Ergo_Error err)
+        | exn -> raise (Ergo_Error ("[Compilation Error] "^(Printexc.to_string exn)))
       end
     in
     json_of_result res
