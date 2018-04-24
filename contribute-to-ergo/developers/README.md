@@ -46,7 +46,7 @@ The code is located in the following directories:
 
 #### Dependencies
 
-To rebuild the compiler from the source, you will need Coq 8.7 \(or later\) and OCaml 4.05 \(or later\) with some additional libraries.
+To rebuild the compiler from the source, you will need Coq 8.8 \(or later\) and OCaml 4.05 \(or later\) with some additional libraries.
 
 We recommend to install those using opam \([https://opam.ocaml.org](https://opam.ocaml.org)\), the OCaml package manager. Once you have installed opam, you can add the necessary libraries as follow:
 
