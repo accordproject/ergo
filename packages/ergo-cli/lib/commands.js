@@ -81,6 +81,30 @@ class Commands {
         const ctoText = Fs.readFileSync(ctoPath, 'utf8');
         return Ergo.parseCTO(ctoText);
     }
+
+    /**
+     * Parse CTO to JSON File
+     *
+     * @param {string} ctoPath path to CTO model file
+     * @returns {string} The name of the generated CTOJ model file
+     */
+    static parseCTOtoFileSync(ctoPath) {
+        const ctoText = Fs.readFileSync(ctoPath, 'utf8');
+        const result = Ergo.parseCTOtoJSON(ctoText);
+        const outFile = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
+        Fs.writeFileSync(outFile, JSON.stringify(result));
+        return outFile;
+    }
+
+    /**
+     * Parse CTO to JSON File
+     *
+     * @param {string} ctoPath path to CTO model file
+     * @returns {string} The name of the generated CTOJ model file
+     */
+    static parseCTOtoFile(ctoPath) {
+        return Promise.resolve(this.parseCTOtoFileSync(ctoPath));
+    }
 }
 
 module.exports = Commands;

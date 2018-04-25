@@ -74,11 +74,11 @@ let set_with_dispatch_true gconf () = gconf.jconf_with_dispatch <- true
 let set_with_dispatch_false gconf () = gconf.jconf_with_dispatch <- false
 let add_cto gconf s =
   gconf.jconf_ctos <- gconf.jconf_ctos @ [CtoImport.cto_import (Cto_j.model_of_string s)]
-let add_cto_file gconf s =
+let add_cto_file gconf (f,s) =
   begin
     gconf.jconf_cto_files <- gconf.jconf_cto_files @ [s];
-    begin try add_cto gconf (Util.string_of_file s) with
+    begin try add_cto gconf s with
     | _ ->
-        raise (Ergo_Error ("Cannot load CTO file: " ^ s))
+        raise (Ergo_Error ("Cannot load CTO file: " ^ f))
     end
   end

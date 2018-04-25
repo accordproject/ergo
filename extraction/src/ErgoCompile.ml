@@ -106,3 +106,17 @@ let ergo_proc gconf (file_name,file_content) =
   let result = ergo_compile gconf file_content in
   make_result_file target_lang file_name result
 
+let batch_compile_top gconf cto_files input_files =
+  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
+  let results =
+    List.map (Util.process_file (ergo_proc gconf)) input_files
+  in
+  let output_res file_res =
+    if file_res.res_file <> "" then
+      begin
+        Format.printf " compiled to: %s\n" file_res.res_file;
+        make_file file_res.res_file file_res.res_content
+      end
+  in
+  List.iter output_res results
+

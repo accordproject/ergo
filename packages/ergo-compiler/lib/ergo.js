@@ -28,7 +28,7 @@ class Ergo {
      * @param {string} ctoText text for CTO model
      * @returns {object} The parsed CTO model syntax tree in JSON
      */
-    static parseCTOToJSON(ctoText) {
+    static parseCTOtoJSON(ctoText) {
         const result = CTOParser.parse(ctoText);
         return result;
     }
@@ -40,7 +40,7 @@ class Ergo {
      * @returns {object} The parsed CTO model syntax tree in JSON
      */
     static parseCTO(ctoText) {
-        return Promise.resolve(this.parseCTOToJSON(ctoText));
+        return Promise.resolve(this.parseCTOtoJSON(ctoText));
     }
 
     /**
@@ -64,7 +64,7 @@ class Ergo {
         config.ergo = ergoText;
         config.cto = [];
         for (let i = 0; i < ctoTexts.length; i++) {
-            config.cto.push(JSON.stringify(this.parseCTOToJSON(ctoTexts[i])));
+            config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctoTexts[i])));
         }
         if (contractName !== null) { config.contract = contractName; }
         if (clauseName !== null) { config.clause = clauseName; }

@@ -47,6 +47,6 @@ val set_clause_name : global_config -> string -> unit
 val set_with_dispatch : global_config -> bool -> unit
 val set_with_dispatch_true : global_config -> unit -> unit
 val set_with_dispatch_false : global_config -> unit -> unit
-val add_cto_file : global_config -> string -> unit
+val add_cto_file : global_config -> string * string -> unit
 val add_cto : global_config -> string -> unit
 

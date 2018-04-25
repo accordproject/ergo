@@ -20,20 +20,19 @@ const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 require('yargs')
     .command('parse', 'parse CTO file to JSON', (yargs) => {
-        yargs.option('cto', {
-            describe: 'path to the CTO file'
-        });
     }, (argv) => {
-        if (argv.verbose) {
-            Logger.info(`parse CTO file ${argv.cto}`);
+        const files = argv._.slice(1);
+        for (let i = 0; i < files.length; i++) {
+            const inFile = files[i];
+            Logger.info(`Parse CTO file ${inFile}`);
+            Commands.parseCTOtoFile(inFile)
+                .then((outFile) => {
+                    Logger.info(`Create CTOJ file ${outFile}`);
+                })
+                .catch((err) => {
+                    Logger.error(err.message + ' ' + JSON.stringify(err));
+                });
         }
-        return Commands.parseCTO(argv.cto)
-            .then((result) => {
-                Logger.info(JSON.stringify(result));
-            })
-            .catch((err) => {
-                Logger.error(err.message + ' ' + JSON.stringify(err));
-            });
     })
     .demandCommand()
     .option('verbose', {
