@@ -34,34 +34,31 @@ let args_list gconf =
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
        "<lang> Indicates the language for the target (default: javascript)");
       ("--with-dispatch", Arg.Unit (ErgoConfig.set_with_dispatch_true gconf),
-       " Generate dispatch function (default: false)");
-      ("--cto", Arg.String (ErgoConfig.add_cto_file gconf),
-       "<file> CTO model");
+       " Generate dispatch function (default: false)")
     ]
 
-let anon_args input_files f = input_files := f :: !input_files
+let anon_args gconf input_files f =
+  let extension = Filename.extension f in
+  if extension = ".cto"
+  then ErgoConfig.add_cto_file gconf f
+  else if extension = ".ergo"
+  then input_files := f :: !input_files
+  else raise (Ergo_Error (f ^ " is neither cto nor ergo file"))
 
 let usage =
-  "Ergo - Contract compiler\n"^
+  "Ergo Compiler\n"^
   "Usage: "^Sys.argv.(0)^" [options] contract1 contract2 ..."
-
-let process_file f file_name =
-  Format.printf "Processing file: %s --" file_name;
-  let file_content = string_of_file file_name in
-  try f (file_name,file_content) with
-  | Ergo_Error msg ->
-      raise (Ergo_Error ("In file [" ^ file_name ^ "] " ^ msg))
 
 let parse_args gconf =
   let input_files = ref [] in
-  Arg.parse (args_list gconf) (anon_args input_files) usage;
+  Arg.parse (args_list gconf) (anon_args gconf input_files) usage;
   List.rev !input_files
 
 let () =
   let gconf = ErgoConfig.default_config () in
   let input_files = parse_args gconf in
   let results =
-    List.map (process_file (ergo_proc gconf)) input_files
+    List.map (Util.process_file (ergo_proc gconf)) input_files
   in
   let output_res file_res =
     if file_res.res_file <> "" then

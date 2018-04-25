@@ -31,6 +31,7 @@
   "bin": {
     "ergo": "./bin/ergo.js",
     "ergoc": "./bin/ergoc.js",
+    "ergoc.native": "./bin/ergoc.native",
     "ergop": "./bin/ergop.js"
   },
   "devDependencies": {

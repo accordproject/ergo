@@ -77,5 +77,8 @@ let add_cto gconf s =
 let add_cto_file gconf s =
   begin
     gconf.jconf_cto_files <- gconf.jconf_cto_files @ [s];
-    add_cto gconf (Util.string_of_file s)
+    begin try add_cto gconf (Util.string_of_file s) with
+    | _ ->
+        raise (Ergo_Error ("Cannot load CTO file: " ^ s))
+    end
   end
