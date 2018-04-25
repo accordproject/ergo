@@ -16,15 +16,19 @@
 'use strict';
 
 const Commands = require('../lib/commands');
-const args = process.argv;
+const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
-for (let i = 0; i < args.length; i++) {
-    if (args[i].split('.').pop() === 'cto') {
-        const ctoPath = args[i];
-        Commands.parseCTOtoFile(ctoPath);
-        args[i] = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
+try {
+    const args = process.argv;
+    for (let i = 0; i < args.length; i++) {
+        if (args[i].split('.').pop() === 'cto') {
+            const ctoPath = args[i];
+            Commands.parseCTOtoFile(ctoPath);
+            args[i] = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
+        }
     }
+    //Logger.info(process.argv);
+    require('../lib/ergoccore.js');
+} catch (err) {
+    Logger.error(JSON.stringify(err[2].c));
 }
-//Logger.info(process.argv);
-require('../lib/ergoccore.js');
-
