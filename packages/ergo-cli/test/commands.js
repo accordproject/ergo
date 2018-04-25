@@ -65,4 +65,12 @@ describe('ergo', () => {
             //result.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });
+    describe('#parsectotofile', function () {
+        it('should parse CTO to CTOJ', async function () {
+            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
+            const result = await Commands.parseCTOtoFile(ctoPath);
+            result.should.not.be.null;
+            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
+        });
+    });
 });

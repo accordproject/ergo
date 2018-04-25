@@ -37,13 +37,13 @@ let args_list gconf =
        " Generate dispatch function (default: false)")
     ]
 
-let anon_args gconf input_files f =
+let anon_args gconf cto_files input_files f =
   let extension = Filename.extension f in
-  if extension = ".cto"
-  then ErgoConfig.add_cto_file gconf f
+  if extension = ".ctoj"
+  then cto_files := (f, Util.string_of_file f) :: !cto_files
   else if extension = ".ergo"
   then input_files := f :: !input_files
-  else raise (Ergo_Error (f ^ " is neither cto nor ergo file"))
+  else raise (Ergo_Error (f ^ " is neither ctoj nor ergo file"))
 
 let usage =
   "Ergo Compiler\n"^
@@ -51,21 +51,12 @@ let usage =
 
 let parse_args gconf =
   let input_files = ref [] in
-  Arg.parse (args_list gconf) (anon_args gconf input_files) usage;
-  List.rev !input_files
+  let cto_files = ref [] in
+  Arg.parse (args_list gconf) (anon_args gconf cto_files input_files) usage;
+  (List.rev !cto_files, List.rev !input_files)
 
 let () =
   let gconf = ErgoConfig.default_config () in
-  let input_files = parse_args gconf in
-  let results =
-    List.map (Util.process_file (ergo_proc gconf)) input_files
-  in
-  let output_res file_res =
-    if file_res.res_file <> "" then
-      begin
-        Format.printf " compiled to: %s\n" file_res.res_file;
-        make_file file_res.res_file file_res.res_content
-      end
-  in
-  List.iter output_res results
+  let (cto_files,input_files) = parse_args gconf in
+  batch_compile_top gconf cto_files input_files
 

@@ -15,5 +15,16 @@
 
 'use strict';
 
+const Commands = require('../lib/commands');
+const args = process.argv;
+
+for (let i = 0; i < args.length; i++) {
+    if (args[i].split('.').pop() === 'cto') {
+        const ctoPath = args[i];
+        Commands.parseCTOtoFile(ctoPath);
+        args[i] = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
+    }
+}
+//Logger.info(process.argv);
 require('../lib/ergoccore.js');
 

@@ -7,6 +7,7 @@ Makefile.config
 *.v.d
 *.glob
 *.aux
+*.ctoj
 .DS_Store
 _CoqProject
 .coqdeps.d
