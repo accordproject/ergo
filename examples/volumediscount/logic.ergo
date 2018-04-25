@@ -1,3 +1,6 @@
+/* Volume discount logic in Ergo
+*/
+
 namespace org.accordproject.volumediscount
 
 import org.accordproject.contract.*

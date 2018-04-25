@@ -235,3 +235,12 @@ let global_replace const_expr repl text =
   in
   String.concat "" (List.rev (replace [] 0 false))
 
+(** Additional utility functions *)
+
+let process_file f file_name =
+  Format.printf "Processing file: %s --" file_name;
+  let file_content = string_of_file file_name in
+  try f (file_name,file_content) with
+  | Ergo_Error msg ->
+      raise (Ergo_Error ("In file [" ^ file_name ^ "] " ^ msg))
+
