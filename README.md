@@ -1,6 +1,5 @@
 # Ergo Documentation
 
-![Ergo](.gitbook/assets/ergologo.png)
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
