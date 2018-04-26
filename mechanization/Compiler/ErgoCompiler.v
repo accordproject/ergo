@@ -146,36 +146,6 @@ Module ErgoCompiler.
     := ErgoCalculus.ergoc_expr.
 
   (** Compilation *)
-  Definition clause_calculus_from_ergo_package :
-    list CTO.cto_package
-    -> String.string
-    -> String.string
-    -> ergo_package
-    -> EResult.eresult NNRC.nnrc
-    := ErgotoJavaScript.clause_calculus_from_package.
-
-  Definition clause_code_from_ergo_package :
-    list CTO.cto_package
-    -> String.string
-    -> String.string
-    -> ergo_package
-    -> EResult.eresult JavaScript.javascript
-    := ErgotoJavaScript.clause_code_from_package.
-
-  Definition ergo_calculus_package_from_ergo_package :
-    list CTO.cto_package
-    -> ergo_package
-    -> EResult.eresult ergoc_package
-    := ErgotoErgoCalculus.package_to_calculus.
-
-  Definition clause_code_from_ergoc_package :
-    String.string -> String.string -> ergoc_package -> EResult.eresult JavaScript.javascript
-    := ErgoCalculustoJavaScript.javascript_of_clause_code_in_package.
-
-  Definition javascript_from_ergoc_package :
-    ergoc_package -> JavaScript.javascript
-    := ErgoCalculustoJavaScript.javascript_of_package_top.
-
   Definition javascript_from_ergo_package :
     list CTO.cto_package
     -> ergo_package

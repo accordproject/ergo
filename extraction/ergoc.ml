@@ -25,12 +25,6 @@ let args_list gconf =
     [
       ("-version", Arg.Unit ErgoUtil.get_version,
        " Prints the compiler version");
-      ("--contractname", Arg.String (ErgoConfig.set_contract_name gconf),
-       " <name> contract name");
-      ("--clausename", Arg.String (ErgoConfig.set_clause_name gconf),
-       " <name> clause name");
-      ("--source", Arg.String (ErgoConfig.set_source_lang gconf),
-       "<lang> Indicates the language for the source (default: ergo)");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
        "<lang> Indicates the language for the target (default: javascript)");
       ("--with-dispatch", Arg.Unit (ErgoConfig.set_with_dispatch_true gconf),

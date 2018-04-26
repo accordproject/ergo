@@ -26,12 +26,6 @@ require('yargs')
         yargs.option('cto', {
             describe: 'path to CTO models'
         }).array('cto');
-        yargs.option('contractname', {
-            describe: 'contract name'
-        });
-        yargs.option('clausename', {
-            describe: 'clause name'
-        });
         yargs.option('dispatch', {
             describe: 'generate dispatch function',
             type: 'boolean',
@@ -39,9 +33,9 @@ require('yargs')
         });
     }, (argv) => {
         if (argv.verbose) {
-            Logger.info(`compile Ergo file ${argv.ergo} with contract ${argv.contractname} and clause with contract ${argv.clausename} and CTOs ${argv.cto}`);
+            Logger.info(`compile Ergo file ${argv.ergo} and CTOs ${argv.cto}`);
         }
-        return Commands.compile(argv.ergo,argv.cto,argv.contractname,argv.clausename, argv.dispatch)
+        return Commands.compile(argv.ergo,argv.cto,argv.dispatch)
             .then((result) => {
                 Logger.info(result);
             })

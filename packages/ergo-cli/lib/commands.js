@@ -28,12 +28,10 @@ class Commands {
      *
      * @param {string} ergoPath path to the Ergo file
      * @param {string} ctoPaths paths to CTO models
-     * @param {string} contractName of the contract to execute
-     * @param {string} clauseName of the clause to execute
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoPath,ctoPaths,contractName,clauseName,withDispatch) {
+    static compile(ergoPath,ctoPaths,withDispatch) {
         const ergoText = Fs.readFileSync(ergoPath, 'utf8');
         if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
         let ctoTexts = [];
@@ -41,7 +39,7 @@ class Commands {
             const ctoText = Fs.readFileSync(ctoPaths[i], 'utf8');
             ctoTexts.push(ctoText);
         }
-        return Ergo.compile(ergoText,ctoTexts,contractName,clauseName,withDispatch);
+        return Ergo.compile(ergoText,ctoTexts,withDispatch);
     }
 
     /**

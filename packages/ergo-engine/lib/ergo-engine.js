@@ -82,7 +82,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch) {
-        return (Ergo.compile(ergoText,ctoTexts,null,null,withDispatch)).then((ergoCode) => {
+        return (Ergo.compile(ergoText,ctoTexts,withDispatch)).then((ergoCode) => {
             if (ergoCode.error) {
                 throw new Error(ergoCode.error);
             } else {

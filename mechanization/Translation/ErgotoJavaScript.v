@@ -31,19 +31,7 @@ Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
 Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
 
 Section ErgotoJavaScript.
-  Definition clause_calculus_from_package
-             (ctos:list cto_package)
-             (coname:string) (clname:string) (p:ergo_package) : eresult nnrc :=
-    let pc := package_to_calculus ctos p in
-    eolift (lookup_clause_code_from_package coname clname) pc.
-
   (* Context *)
-  Definition clause_code_from_package
-             (ctos:list cto_package)
-             (coname:string) (clname:string) (p:ergo_package) : eresult javascript :=
-    let pc := package_to_calculus ctos p in
-    eolift (javascript_of_clause_code_in_package coname clname) pc.
-
   Definition dispatch_params_error (cname:string) : string :=
     "Parameter mistmatch when dispatching to '" ++ cname ++ "'".
 
