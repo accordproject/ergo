@@ -41,14 +41,10 @@ let global_config_of_json j =
   let iter_array = iter_array gconf in
   (* CTO *)
   iter_array ErgoConfig.add_cto j##.cto;
-  (* Source/Target *)
-  apply ErgoConfig.set_source_lang j##.source;
+  (* Target *)
   apply ErgoConfig.set_target_lang j##.target;
   (* Dispatch option *)
   Js.Optdef.iter j##.withdispatch (fun b -> ErgoConfig.set_with_dispatch gconf (Js.to_bool b));
-  (* Contract/Clause Names *)
-  Js.Optdef.iter j##.contract (fun s -> ErgoConfig.set_contract_name gconf (Js.to_string s));
-  Js.Optdef.iter j##.clause (fun s -> ErgoConfig.set_clause_name gconf (Js.to_string s));
   gconf
 
 let wrap_all wrap_f l =

@@ -48,12 +48,10 @@ class Ergo {
      *
      * @param {string} ergoText text for Ergo code
      * @param {string} ctoTexts texts for CTO models
-     * @param {string} contractName of the contract to compile
-     * @param {string} clauseName of the clause to compile
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(ergoText,ctoTexts,contractName,clauseName,withDispatch) {
+    static compileToJavaScript(ergoText,ctoTexts,withDispatch) {
         // Built-in config
         const config= {
             'source' : 'ergo',
@@ -66,8 +64,6 @@ class Ergo {
         for (let i = 0; i < ctoTexts.length; i++) {
             config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctoTexts[i])));
         }
-        if (contractName !== null) { config.contract = contractName; }
-        if (clauseName !== null) { config.clause = clauseName; }
         // Call compiler
         const compiled = Engine.Ergo.compile(config);
         if (compiled.error) {
@@ -82,13 +78,11 @@ class Ergo {
      *
      * @param {string} ergoText text for Ergo code
      * @param {string} ctoTexts texts for CTO models
-     * @param {string} contractName of the contract to compile
-     * @param {string} clauseName of the clause to compile
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoText,ctoTexts,contractName,clauseName,withDispatch) {
-        const result = this.compileToJavaScript(ergoText,ctoTexts,contractName,clauseName,withDispatch);
+    static compile(ergoText,ctoTexts,withDispatch) {
+        const result = this.compileToJavaScript(ergoText,ctoTexts,withDispatch);
         return Promise.resolve(result);
     }
 

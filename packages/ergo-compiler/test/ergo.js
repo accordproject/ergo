@@ -31,16 +31,7 @@ describe('ergo-compiler', () => {
         it('should compile a smart Ergo contract', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
-            const result = await Ergo.compile(ergoText, [ctoText], null, null, false);
-            result.should.not.be.null;
-            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
-        });
-    });
-    describe('#compilehello', function () {
-        it('should compile a smart Ergo contract with contract/clause names', async function () {
-            const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
-            const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
-            const result = await Ergo.compile(ergoText, [ctoText], 'HelloWorld', 'helloworld', false);
+            const result = await Ergo.compile(ergoText, [ctoText], false);
             result.should.not.be.null;
             //result.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
@@ -49,7 +40,7 @@ describe('ergo-compiler', () => {
         it('should fail when compiling a smart Ergo contract', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'model.cto'), 'utf8');
-            const result = await Ergo.compile(ergoText, [ctoText], 'LateDeliveryAndPenalty', 'latedeliveryandpenalty', false);
+            const result = await Ergo.compile(ergoText, [ctoText], false);
             result.should.deep.equal({ 'error' : '[Compilation Error] Import not found: org.accordproject.base' });
             //result.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
