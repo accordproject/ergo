@@ -27,7 +27,7 @@
 %token CONTRACT OVER CLAUSE THROWS
 
 %token ENFORCE IF THEN ELSE
-%token LET FOR IN WHERE
+%token LET FOREACH IN WHERE
 %token RETURN THROW STATE
 %token VARIABLE AS
 %token NEW
@@ -275,9 +275,9 @@ expr:
     { ErgoCompiler.elet_typed v t e1 e2 }
 | MATCH e0 = expr csd = cases
     { ErgoCompiler.ematch e0 (fst csd) (snd csd) }
-| FOR v = ident IN e1 = expr LCURLY e2 = expr RCURLY
+| FOREACH v = ident IN e1 = expr LCURLY e2 = expr RCURLY
     { ErgoCompiler.efor v e1 None e2 }
-| FOR v = ident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
+| FOREACH v = ident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
     { ErgoCompiler.efor v e1 (Some econd) e2 }
 (* Unary operators *)
 | NOT e = expr
@@ -419,7 +419,7 @@ safeident_base:
 | THEN { "then" }
 | ELSE { "else" }
 | LET { "let" }
-| FOR { "for" }
+| FOREACH { "foreach" }
 | IN { "in" }
 | WHERE { "where" }
 | RETURN { "return" }
