@@ -81,6 +81,14 @@ Conditionals
 
 Enforce expressions
 ~~~~~~~~~~~~~~~~~~~
+Before  a contract is enforceable some preconditions must be satisfied:
+●	Competent parties who have the legal capacity to contract
+●	Lawful subject matter
+●	Mutuality of obligation
+●	Consideration
+The constructs below will be used to determine if the preconditions have been met and what actions to take if they are not
+Example Prose
+    Do the parties have adequate funds to execute this contract?  
 
 One can check preconditions in a clause using enforce expressions, as
 follows:
@@ -158,8 +166,7 @@ It is possible to declare functions in Ergo:
 
 Types
 -----
-
-One either import an existing CTO file, or declare types within Ergo
+In Ergo, types are based on the Hyperledger Composer Modeling Language (referred to in this document as CTO models). https://hyperledger.github.io/composer/reference/cto_language.htm. One can either import an existing CTO file, or declare types within Ergo itself. One can either import an existing CTO file, or declare types within Ergo
 itself.
 
 As we have seen in previous examples, one can refer to types in variable
