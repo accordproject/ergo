@@ -22,13 +22,13 @@ $ npm install @accordproject/ergo-cli -g
 
 To check that the compiler has been installed, and see which version number:
 ```
-$ ergoc --version
+$ ergo --version
 ```
 
 To get command line help:
 ```
-$ ergoc --help
-$ ergoc compile --help
-$ ergoc execute --help
+$ ergo --help
+$ ergo compile --help
+$ ergo execute --help
 ```
 
