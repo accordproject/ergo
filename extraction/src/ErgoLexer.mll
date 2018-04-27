@@ -43,7 +43,8 @@
 	  "then", THEN;
 	  "else", ELSE;
 	  "let", LET;
-	  "for", FOR;
+	  "foreach", FOREACH;
+	  "return", RETURN;
 	  "in", IN;
 	  "where", WHERE;
 	  "return", RETURN;
