@@ -275,9 +275,9 @@ expr:
     { ErgoCompiler.elet_typed v t e1 e2 }
 | MATCH e0 = expr csd = cases
     { ErgoCompiler.ematch e0 (fst csd) (snd csd) }
-| FOREACH fl = foreachlist LCURLY e2 = expr RCURLY
+| FOREACH fl = foreachlist RETURN e2 = expr
     { ErgoCompiler.eforeach fl None e2 }
-| FOREACH fl = foreachlist WHERE econd = expr LCURLY e2 = expr RCURLY
+| FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach fl (Some econd) e2 }
 (* Unary operators *)
 | NOT e = expr
