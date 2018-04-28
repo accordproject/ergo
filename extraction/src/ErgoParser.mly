@@ -275,10 +275,10 @@ expr:
     { ErgoCompiler.elet_typed v t e1 e2 }
 | MATCH e0 = expr csd = cases
     { ErgoCompiler.ematch e0 (fst csd) (snd csd) }
-| FOREACH v = ident IN e1 = expr LCURLY e2 = expr RCURLY
-    { ErgoCompiler.efor v e1 None e2 }
-| FOREACH v = ident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
-    { ErgoCompiler.efor v e1 (Some econd) e2 }
+| FOREACH fl = foreachlist LCURLY e2 = expr RCURLY
+    { ErgoCompiler.eforeach fl None e2 }
+| FOREACH fl = foreachlist WHERE econd = expr LCURLY e2 = expr RCURLY
+    { ErgoCompiler.eforeach fl (Some econd) e2 }
 (* Unary operators *)
 | NOT e = expr
     { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg e }
@@ -309,6 +309,16 @@ expr:
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opor e1 e2 }
 | e1 = expr PLUSPLUS e2 = expr
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opstringconcat e1 e2 }
+
+(* foreach list *)
+foreachlist:
+| v = ident IN e = expr
+    { (v,e) :: [] }
+| v = ident IN e = expr COMMA fl = foreachlist
+    { (v,e) :: fl }
+| v = ident IN e = expr FOREACH fl = foreachlist
+    { (v,e) :: fl }
+
 
 (* expression list *)
 exprlist:

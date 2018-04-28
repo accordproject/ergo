@@ -1,0 +1,54 @@
+namespace io.clause.demo.fragileGoods
+
+/**
+ * A duration. For example, 6 hours.
+ */
+concept Duration {
+  o Long amount
+  o TemporalUnit unit
+}
+
+/**
+ * Units for a duration. 24 hour days are assumed.
+ */
+enum TemporalUnit {
+  o seconds
+  o minutes
+  o hours
+  o days
+  o weeks
+  o years
+}
+
+/**
+ * The status of a shipment
+ */
+enum ShipmentStatus {
+  o CREATED
+  o IN_TRANSIT
+  o ARRIVED
+}
+
+transaction DeliveryUpdate {
+  o DateTime startTime
+  o DateTime finishTime optional
+  o ShipmentStatus status
+  o Double[] accelerometerReadings
+}
+
+transaction PayOut {
+  o Double amount
+}
+
+/**
+ * The template model
+ */
+@AccordTemplateModel("fragile-goods")
+concept TemplateModel {
+  o Double deliveryPrice
+  o Double accelerationMin
+  o Double accelerationMax
+  o Double accelerationBreachPenalty
+  o Duration deliveryLimitDuration
+  o Double lateDeliveryPenalty
+}

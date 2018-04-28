@@ -136,5 +136,22 @@
       "status": "PASSED_TESTING",
       "$class": "org.accordproject.acceptanceofdelivery.InspectionResponse"
     }
+  },
+  {
+    "name": "test9",
+    "dir": "data/fragilegoods",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "FragileGoods",
+    "clausename": "fragilegoods",
+    "expected": {
+      "amount": 990,
+      "$class": "io.clause.demo.fragileGoods.PayOut"
+    }
   }
 ]

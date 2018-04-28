@@ -8,23 +8,23 @@ import ergo.moment.* // Date/Time library
 define function numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Double[]) : Double {
   count(
      foreach r in accelerometerReadings
-     where r > maxAcc || r < minAcc { r }
+     where r > maxAcc or r < minAcc { r }
   )
 }
 
 contract FragileGoods over TemplateModel {
   clause fragilegoods(request DeliveryUpdate) : PayOut throws Error {
+    define variable shocks =
+        numberOfShocks(contract.accelerationMax,
+		       contract.accelerationMin,
+		       request.accelerometerReadings);
     define variable shockPenalty =
         contract.accelerationBreachPenalty
-        * numberOfShocks(contract.accelerationMax,
-			 contract.accelerationMin,
-			 request.accelerometerReadings);
-    match request.status {
-      with "ARRIVED" :
+        * shocks;
+    match request.status
+      with "ARRIVED" then
         return new PayOut{ amount : contract.deliveryPrice - shockPenalty }
-      otherwise :
-        return new PayOut{ amount : contract.deliveryPrice - shockPenalty }
-    }
-  }
+      else
+	return new PayOut{ amount : contract.deliveryPrice - shockPenalty }
+  }  
 }
-k
