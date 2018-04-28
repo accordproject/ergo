@@ -55,7 +55,8 @@ Section Ergo.
   | EThrow : class_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
   | ECall : string -> list ergo_expr -> ergo_expr (**r function call *)
   | EMatch : ergo_expr -> list (match_case * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
-  | EFor : string -> ergo_expr -> option ergo_expr -> ergo_expr -> ergo_expr (**r for loop with optional where *)
+  | EForeach : list (string * ergo_expr)
+               -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
   .
 
   (** Clause *)

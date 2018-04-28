@@ -335,21 +335,35 @@ Section ErgotoJavaScript.
                      in
                      elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
-    | EFor v e1 None e2 =>
-      elift2 (NNRCFor v)
-              (ergo_expr_to_calculus ctxt e1)
-              (ergo_expr_to_calculus ctxt e2)
-    | EFor v e1 (Some econd) e2 =>
-      elift3 (fun e1 econd e3 =>
-                NNRCUnop OpFlatten
-                         (NNRCFor v
-                                  e1
-                                  (NNRCIf econd
-                                          (NNRCUnop OpBag e3)
-                                          (NNRCConst (dcoll nil)))))
-             (ergo_expr_to_calculus ctxt e1)
-             (ergo_expr_to_calculus ctxt econd)
-             (ergo_expr_to_calculus ctxt e2)
+    | EForeach foreachs None e2 =>
+      let init_e := ergo_expr_to_calculus ctxt e2 in
+      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
+          let v := fst foreach in
+          let e := ergo_expr_to_calculus ctxt (snd foreach) in
+          elift2 (NNRCFor v)
+                 e
+                 acc
+      in
+      fold_left proc_one foreachs init_e
+    | EForeach foreachs (Some econd) e2 =>
+      let init_e :=
+          elift2
+            (fun econd e2 =>
+               NNRCIf econd
+                     (NNRCUnop OpBag e2)
+                     (NNRCConst (dcoll nil)))
+            (ergo_expr_to_calculus ctxt econd)
+            (ergo_expr_to_calculus ctxt e2)
+      in
+      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
+          let v := fst foreach in
+          let e := ergo_expr_to_calculus ctxt (snd foreach) in
+          elift2 (NNRCFor v)
+                 e
+                 acc
+      in
+      elift (NNRCUnop OpFlatten)
+            (fold_left proc_one foreachs init_e)
     end.
 
   (** Translate a clause to clause+calculus *)
