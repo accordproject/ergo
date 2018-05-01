@@ -1,0 +1,9 @@
+figure.out
+figure.log
+figure.aux
+figure.dvi
+cleansvg.js
+figure.svg.gen
+node_modules/
+*.map
+*~
