@@ -96,7 +96,7 @@ stmt:
 	{ function_name = cn;
 	  function_lambda =
 	  { lambda_params = [];
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
@@ -104,7 +104,7 @@ stmt:
 	{ function_name = cn;
 	  function_lambda =
 	  { lambda_params = ps;
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 | IMPORT qn = qname_prefix
@@ -131,40 +131,22 @@ contract:
 declarations:
 | 
     { [] }
-| f = func ds = declarations
-    { (Function f) :: ds }
 | cl = clause ds = declarations
-    { (Clause cl) :: ds }
-
-func:
-| DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { function_name = cn;
-	function_lambda =
-	{ lambda_params = [];
-          lambda_output = Some out;
-	  lambda_throw = mt;
-	  lambda_body = e; } } }
-| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { function_name = cn;
-	function_lambda =
-	{ lambda_params = ps;
-          lambda_output = Some out;
-	  lambda_throw = mt;
-	  lambda_body = e; } } }
+    { cl :: ds }
 
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
 	clause_lambda =
 	  { lambda_params = [];
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
 	clause_lambda =
 	  { lambda_params = ps;
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 
@@ -182,9 +164,9 @@ params:
 
 param:
 | pn = IDENT
-    { (Util.char_list_of_string pn, None) }
+    { (Util.char_list_of_string pn, ErgoCompiler.cto_any) }
 | pn = IDENT pt = paramtype
-    { (Util.char_list_of_string pn, Some pt) }
+    { (Util.char_list_of_string pn, pt) }
 
 paramtype:
 | pt = IDENT

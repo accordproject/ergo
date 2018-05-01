@@ -34,8 +34,8 @@ Section ErgoBase.
         All free variables in A have to be declared in the list of parameters. *)
     Record lambda :=
       mkLambda
-        { lambda_params: list (string * option cto_type);
-          lambda_output : option cto_type;
+        { lambda_params: list (string * cto_type);
+          lambda_output : cto_type;
           lambda_throw : option string;
           lambda_body : A; }.
 
@@ -53,8 +53,7 @@ Section ErgoBase.
     
     (** Declaration *)
     Inductive declaration :=
-    | Clause : clause -> declaration
-    | Function : function -> declaration.
+    | Clause : clause -> declaration.
     
     (** Contract *)
     Record contract :=
@@ -117,7 +116,6 @@ Section ErgoBase.
     Definition lookup_clause_from_declaration (clname:string) (d:declaration) : option clause :=
       match d with
       | Clause c => lookup_from_clause clname c
-      | Function f => None
       end.
 
     Definition lookup_clause_from_declarations (clname:string) (dl:list declaration) : option clause :=
@@ -162,15 +160,13 @@ Section ErgoBase.
                (coname:string) (clname:string) (p:package) : option clause :=
       lookup_clause_from_statements coname clname p.(package_statements).
 
-    Definition signature : Set := (string * list (string * option cto_type)).
+    Definition signature : Set := (string * list (string * cto_type)).
 
     Fixpoint lookup_declarations_signatures (dl:list declaration) : list signature :=
       match dl with
       | nil => nil
       | Clause cl :: dl' =>
         (cl.(clause_name), cl.(clause_lambda).(lambda_params)) :: lookup_declarations_signatures dl'
-      | Function f :: dl' =>
-        (f.(function_name), f.(function_lambda).(lambda_params)) :: lookup_declarations_signatures dl'
       end.
     
     Definition lookup_contract_signatures (c:contract) : list signature :=
@@ -230,16 +226,10 @@ Section ErgoBase.
           let request :=
               match flambda.(lambda_params) with
               | nil => dispatch_parameter_error
-              | (_,Some reqtype) :: _ => esuccess reqtype
-              | _ :: _ => esuccess (CTOClassRef "Request"%string)
+              | (_,reqtype) :: _ => esuccess reqtype
               end
           in
-          let response :=
-              match flambda.(lambda_output) with
-              | Some resptype => resptype
-              | None => (CTOClassRef "Response"%string)
-              end
-          in
+          let response := flambda.(lambda_output) in
           elift (fun request => (request, response, f)) request
         else lookup_statements_dispatch name sl'
       | EContract c :: sl' => lookup_statements_dispatch name sl'

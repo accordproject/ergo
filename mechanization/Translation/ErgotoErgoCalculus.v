@@ -411,10 +411,6 @@ Section ErgotoJavaScript.
       elift
         (fun x => (add_one_function ctxt x.(clause_name) x.(clause_lambda), Clause x)) (* Add new function to comp_context *)
         (clause_to_calculus ctxt c)
-    | Function f =>
-      elift
-        (fun x => (add_one_function ctxt x.(function_name) x.(function_lambda), Function x)) (* Add new function to comp_context *)
-        (function_to_calculus ctxt f)
     end.
 
   (** Translate a contract to a contract+calculus *)

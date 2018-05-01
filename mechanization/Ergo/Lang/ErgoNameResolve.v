@@ -17,8 +17,11 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EError.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
@@ -26,118 +29,129 @@ Require Import ErgoSpec.Ergo.Lang.Ergo.
 Section ErgoNameResolve.
 
   (** Resolve names in expressions *)
-  Fixpoint ergo_name_resolve
-           (ctxt:context) (e:ergo_expr) : ergo_expr :=
+  Fixpoint ergo_name_resolve (ctxt:list cto_declaration) (e:ergo_expr) : ergo_expr :=
     match e with
-    | JThisContract => JThisContract
-    | JThisClause => JThisClause
-    | JThisState => JThisState
-    | JVar v => JVar v
-    | JConst d => JConst d
-    | JArray el => JArray (List.map (ergo_name_resolve ctxt) el)
-    | JUnaryOp u e =>
-      JUnaryOp u (ergo_name_resolve e)
-    | JBinaryOp b e1 e2 =>
-      JBinaryOp b
-                (ergo_name_resolve e1)
-                (ergo_name_resolve e2)
-    | JIf e1 e2 e3 =>
-      JIf (ergo_name_resolve e1)
-          (ergo_name_resolve e2)
-          (ergo_name_resolve e3)
-    | JEnforce e1 None e3 =>
-      JEnforce (ergo_name_resolve e1)
-               None
-               (ergo_name_resolve e3)
-    | JEnforce e1 (Some e2) e3 =>
-      JEnforce (ergo_name_resolve e1)
-               (Some (ergo_name_resolve e2))
-               (ergo_name_resolve e3)
-    | JLet v None e1 e2 =>
-      JLet v None
-           (ergo_name_resolve e1)
-           (ergo_name_resolve e2)
-    | JLet v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
-      JLet v (Some (resolve_type_name ctxt t1))
-           (ergo_name_resolve e1)
-           (ergo_name_resolve e2)
-    | JNew cr nil =>
-      jsuccess
-        (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
-    | JNew cr ((s0,init)::rest) =>
-      let init_rec : jresult nnrc :=
-          jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
-      in
-      let proc_one (acc:jresult nnrc) (att:string * ergo_expr) : jresult nnrc :=
-          let attname := fst att in
-          let e := ergo_expr_to_calculus ctxt (snd att) in
-          jlift2 (NNRCBinop OpRecConcat)
-                 (jlift (NNRCUnop (OpRec attname)) e) acc
-      in
-      jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | JRecord nil =>
-      jsuccess
-        (NNRCConst (drec nil))
-    | JRecord ((s0,init)::rest) =>
-      let init_rec : jresult nnrc :=
-          jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
-      in
-      let proc_one (acc:jresult nnrc) (att:string * ergo_expr) : jresult nnrc :=
-          let attname := fst att in
-          let e := ergo_expr_to_calculus ctxt (snd att) in
-          jlift2 (NNRCBinop OpRecConcat)
-                 (jlift (NNRCUnop (OpRec attname)) e) acc
-      in
-      fold_left proc_one rest init_rec
-    | JThrow cr nil =>
-      jsuccess (new_expr (brand_of_class_ref ctxt.(context_namespace) cr) (NNRCConst (drec nil)))
-    | JThrow cr ((s0,init)::rest) =>
-      let init_rec : jresult nnrc :=
-          jlift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
-      in
-      let proc_one (acc:jresult nnrc) (att:string * ergo_expr) : jresult nnrc :=
-          let attname := fst att in
-          let e := ergo_expr_to_calculus ctxt (snd att) in
-          jlift2 (NNRCBinop OpRecConcat)
-                 (jlift (NNRCUnop (OpRec attname)) e)
-                 acc
-      in
-      jlift (new_expr (brand_of_class_ref ctxt.(context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | JFunCall fname el =>
-      let init_el := jsuccess nil in
-      let proc_one (e:ergo_expr) (acc:jresult (list ergoc_expr)) : jresult (list ergoc_expr) :=
-          jlift2
+    | EThisContract => esuccess EThisContract
+    | EThisClause => esuccess EThisClause
+    | EThisState => esuccess EThisState
+    | EVar v => esuccess (EVar v)
+    | EConst d => esuccess (EConst d)
+    | EArray el =>
+      let init_el := esuccess nil in
+      let proc_one (acc:eresult (list ergo_expr)) (e:ergo_expr) : eresult (list ergo_expr) :=
+          elift2
             cons
-            (ergo_expr_to_calculus ctxt e)
+            (ergo_name_resolve ctxt e)
             acc
       in
-      jolift (lookup_call ctxt.(context_table) fname) (fold_right proc_one init_el el)
-    | JMatch e0 ecases edefault =>
-      let ec0 := ergo_expr_to_calculus ctxt e0 in
+      elift EArray (fold_left proc_one el init_el)
+    | EUnaryOp u e =>
+      elift (EUnaryOp u)
+            (ergo_name_resolve ctxt e)
+    | EBinaryOp b e1 e2 =>
+      elift2 (EBinaryOp b)
+             (ergo_name_resolve ctxt e1)
+             (ergo_name_resolve ctxt e2)
+    | EIf e1 e2 e3 =>
+      elift3 EIf
+        (ergo_name_resolve ctxt e1)
+        (ergo_name_resolve ctxt e2)
+        (ergo_name_resolve ctxt e3)
+    | EEnforce e1 None e3 =>
+      elift3 EEnforce
+        (ergo_name_resolve ctxt e1)
+        (esuccess None)
+        (ergo_name_resolve ctxt e3)
+    | EEnforce e1 (Some e2) e3 =>
+      elift3 EEnforce
+        (ergo_name_resolve ctxt e1)
+        (ergo_name_resolve ctxt e3)
+        (ergo_name_resolve ctxt e2)
+    | ELet v None e1 e2 =>
+      elift2 (ELet v None)
+             (ergo_name_resolve ctxt e1)
+             (ergo_name_resolve ctxt e2)
+    | ELet v (Some t1) e1 e2 =>
+      elift2 (ELet v (Some t1))
+              (ergo_name_resolve ctxt e1)
+              (ergo_name_resolve ctxt e2)
+    | ENew cr nil =>
+      esuccess
+        (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
+    | ENew cr ((s0,init)::rest) =>
+      let init_rec : eresult nnrc :=
+          elift (NNRCUnop (OpRec s0)) (ergo_name_resolve ctxt init)
+      in
+      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
+          let attname := fst att in
+          let e := ergo_name_resolve ctxt (snd att) in
+          elift2 (NNRCBinop OpRecConcat)
+                 (elift (NNRCUnop (OpRec attname)) e) acc
+      in
+      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
+    | ERecord nil =>
+      esuccess
+        (NNRCConst (drec nil))
+    | ERecord ((s0,init)::rest) =>
+      let init_rec : eresult nnrc :=
+          elift (NNRCUnop (OpRec s0)) (ergo_name_resolve ctxt init)
+      in
+      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
+          let attname := fst att in
+          let e := ergo_name_resolve ctxt (snd att) in
+          elift2 (NNRCBinop OpRecConcat)
+                 (elift (NNRCUnop (OpRec attname)) e) acc
+      in
+      fold_left proc_one rest init_rec
+    | EThrow cr nil =>
+      esuccess (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
+    | EThrow cr ((s0,init)::rest) =>
+      let init_rec : eresult nnrc :=
+          elift (NNRCUnop (OpRec s0)) (ergo_name_resolve ctxt init)
+      in
+      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
+          let attname := fst att in
+          let e := ergo_name_resolve ctxt (snd att) in
+          elift2 (NNRCBinop OpRecConcat)
+                 (elift (NNRCUnop (OpRec attname)) e)
+                 acc
+      in
+      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
+    | ECall fname el =>
+      let init_el := esuccess nil in
+      let proc_one (e:ergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
+          elift2
+            cons
+            (ergo_name_resolve ctxt e)
+            acc
+      in
+      eolift (lookup_call ctxt.(comp_context_table) fname) (fold_right proc_one init_el el)
+    | EMatch e0 ecases edefault =>
+      let ec0 := ergo_name_resolve ctxt e0 in
       let eccases :=
           let proc_one acc ecase :=
-              jolift
+              eolift
                 (fun acc =>
-                   jlift (fun x => (fst ecase, x)::acc)
-                         (ergo_expr_to_calculus ctxt (snd ecase))) acc
+                   elift (fun x => (fst ecase, x)::acc)
+                         (ergo_name_resolve ctxt (snd ecase))) acc
           in
-          fold_left proc_one ecases (jsuccess nil)
+          fold_left proc_one ecases (esuccess nil)
       in
-      let ecdefault := ergo_expr_to_calculus ctxt edefault in
-      jolift
+      let ecdefault := ergo_name_resolve ctxt edefault in
+      eolift
         (fun ec0 =>
-           jolift
+           eolift
              (fun eccases =>
-                jolift
+                eolift
                   (fun ecdefault =>
                      let v0 := fresh_in_match eccases ecdefault in
                      let proc_one_case
-                           (acc:jresult ergoc_expr)
+                           (acc:eresult ergoc_expr)
                            (ecase:match_case * ergoc_expr)
-                         : jresult ergoc_expr :=
+                         : eresult ergoc_expr :=
                          match fst ecase with
                          | (Some v, CaseValue d) =>
-                           jlift
+                           elift
                              (fun acc =>
                                 NNRCIf (NNRCBinop OpEqual
                                                   (NNRCVar v0)
@@ -147,7 +161,7 @@ Section ErgoNameResolve.
                                                 (snd ecase))
                                        acc) acc
                          | (None, CaseValue d) =>
-                           jlift
+                           elift
                              (fun acc =>
                                 NNRCIf (NNRCBinop OpEqual
                                                   (NNRCVar v0)
@@ -155,7 +169,7 @@ Section ErgoNameResolve.
                                        (snd ecase)
                                        acc) acc
                          | (Some v, CaseType brand) =>
-                           jlift (fun acc =>
+                           elift (fun acc =>
                                     let v2 := fresh_in_case acc in
                                     NNRCEither
                                       (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
@@ -163,7 +177,7 @@ Section ErgoNameResolve.
                                       v2 acc
                                  ) acc
                          | (None, CaseType brand) =>
-                           jlift (fun acc =>
+                           elift (fun acc =>
                                     let v1 := fresh_in_case (snd ecase) in
                                     let v2 := fresh_in_case acc in
                                     NNRCEither
@@ -174,24 +188,37 @@ Section ErgoNameResolve.
                          end
                      in
                      let eccases_folded :=
-                         fold_left proc_one_case eccases (jsuccess ecdefault)
+                         fold_left proc_one_case eccases (esuccess ecdefault)
                      in
-                     jlift (NNRCLet v0 ec0) eccases_folded)
+                     elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
-    | JFor v e1 None e2 =>
-      jlift2 (NNRCFor v)
-              (ergo_expr_to_calculus ctxt e1)
-              (ergo_expr_to_calculus ctxt e2)
-    | JFor v e1 (Some econd) e2 =>
-      jlift3 (fun e1 econd e3 =>
-                NNRCUnop OpFlatten
-                         (NNRCFor v
-                                  e1
-                                  (NNRCIf econd
-                                          (NNRCUnop OpBag e3)
-                                          (NNRCConst (dcoll nil)))))
-             (ergo_expr_to_calculus ctxt e1)
-             (ergo_expr_to_calculus ctxt econd)
-             (ergo_expr_to_calculus ctxt e2)
+    | EForeach foreachs None e2 =>
+      let init_e := ergo_name_resolve ctxt e2 in
+      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
+          let v := fst foreach in
+          let e := ergo_name_resolve ctxt (snd foreach) in
+          elift2 (NNRCFor v)
+                 e
+                 acc
+      in
+      fold_left proc_one foreachs init_e
+    | EForeach foreachs (Some econd) e2 =>
+      let init_e :=
+          elift2
+            (fun econd e2 =>
+               NNRCIf econd
+                     (NNRCUnop OpBag e2)
+                     (NNRCConst (dcoll nil)))
+            (ergo_name_resolve ctxt econd)
+            (ergo_name_resolve ctxt e2)
+      in
+      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
+          let v := fst foreach in
+          let e := ergo_name_resolve ctxt (snd foreach) in
+          elift2 (NNRCFor v)
+                 e
+                 acc
+      in
+      elift (NNRCUnop OpFlatten)
+            (fold_left proc_one foreachs init_e)
     end.
-

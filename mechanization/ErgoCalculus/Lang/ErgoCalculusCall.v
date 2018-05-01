@@ -41,11 +41,11 @@ Section Lambda.
 End Lambda.
 
 Section Patch.
-  Definition ergoc_lambda_type_of_lambda_type (t:option unit) : option cto_type :=
-    None.
+  Definition ergoc_lambda_type_of_lambda_type (t:option unit) : cto_type :=
+    CTOAny.
   
   Definition ergoc_lambda_params_of_lambda_params
-             (params:list (string * option unit)) : list (string * option cto_type) :=
+             (params:list (string * option unit)) : list (string * cto_type) :=
     List.map (fun xy => (fst xy, ergoc_lambda_type_of_lambda_type (snd xy))) params.
     
   Definition ergoc_expr_lambda_of_backend_closure
