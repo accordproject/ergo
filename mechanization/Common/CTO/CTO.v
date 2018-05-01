@@ -171,8 +171,6 @@ Section CTO.
       | Some n => elift Some (local_name_lookup namespace tbl n)
       end.
 
-    Check lift.
-    
     Definition resolve_cto_signature
                (namespace:string)
                (tbl:cto_names_table)
