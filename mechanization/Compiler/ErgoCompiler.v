@@ -40,6 +40,8 @@ Module ErgoCompiler.
   Definition mk_class_ref : option String.string -> String.string -> cto_class
     := ENames.mkClassRef.
 
+  Definition cto_any : CTO.cto_type
+    := CTO.CTOAny.
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
   Definition cto_string : CTO.cto_type
