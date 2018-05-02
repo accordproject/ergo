@@ -1,6 +1,6 @@
 \begin{tikzpicture}[
    align=center,
-   node distance=0.2em and 0.6em,
+   node distance=0.4em and 0.8em,
    font=\footnotesize,
    every loop/.style={latex-},
  ]
@@ -10,7 +10,6 @@
       (ergoast) {Ergo\\Syntax Tree};
 
  % Transition
-
  \node[lang,
        above=3em of ergoast]
       (parsing) {Parsing};
@@ -24,18 +23,18 @@
 
  \node[lang, hyperlink node=\coqurl{Ergo.Lang}{Ergo}{run_nraenv_optims},
        right=of ergoast]
-      (naming) {Namespace\\Resolution};
+      (naming) {Name\\Resolution};
 
  \node[lang, coqc, hyperlink node=\coqurl{Common.CTO}{CTO}{cto_type},
-       above=3em of naming] (cto_type) {CTO\\ Types};
+       above=3em of naming] (cto_type) {Resolved\\CTO Types};
 
  \node[lang, source,
-       right=1.875em of ergo] (cto) {CTO};
+       right=1.95em of ergo] (cto) {CTO};
 
  % AST
  \node[lang, coqc, hyperlink node=\coqurl{Ergo.Lang}{Ergo}{ergo_package},
        right=of naming]
-      (ergoastresolved) {Ergo\\Syntax Tree};
+      (ergoastresolved) {Resolved Ergo\\Syntax Tree};
 
  % Transition
 
@@ -54,11 +53,11 @@
        right=of ergoc] (typing) {Type\\Checking};
 
  \node[lang, coqc, hyperlink node=\coqurl{Common.TypeSystem}{ErgoType}{ergo_type},
-       above=3em of typing] (ergo_type) {Ergo\\ Types};
+       above=3em of typing] (ergo_type) {Ergo\\Types};
 
  % Typed Calculus
  \node[lang, coqc, hyperlink node=\coqurl{ErgoCalculus.Typing}{TErgoCalculus}{tergoc_package},
-       right=of typing] (tergoc) {Typed Ergo\\ Calculus};
+       right=of typing] (tergoc) {Typed Ergo\\Calculus};
 
  % Transition
 
@@ -91,13 +90,13 @@
  \path[trans] (translation.east) -- (ergoc.west);
  \path[-,thick] (ergoc.east) edge (typing.west);
  \path[trans] (typing.east) -- (tergoc.west);
- \path[trans] (cto.south) -- (cto_type.north);
+ \path[trans,dashed] (cto.south) -- (cto_type.north);
  \path[trans] (cto_type.south) -- (naming.north);
  \path[trans] (ergo_type.south) -- (typing.north);
  \path[trans,dashed] (cto_type.east) -- node [text width=2.5cm,midway,above=0.2em ] {Type Processing} (ergo_type.west);
- \path[trans,dashed] (tergoc.east) -- node [text width=2.5cm,midway,above=0.2em ] {Code\\ Generation} (javascript.west);
+ \path[trans,dashed] (tergoc.east) -- node [text width=2.5cm,midway,above=0.2em ] {Code\\Generation} (javascript.west);
 
  % Loops
- %\tikzloop[ccoqc]{ergoast}{\coqurl{Ergo.Lang}{Ergo}{run_nraenv_optims}}{Namespace\\ Resolution}
+ %\tikzloop[ccoqc]{ergoast}{\coqurl{Ergo.Lang}{Ergo}{run_nraenv_optims}}{Namespace\\Resolution}
 \end{tikzpicture}
 

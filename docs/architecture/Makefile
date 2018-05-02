@@ -14,7 +14,7 @@
 
 PDF2SVG=pdf2svg
 
-all: frontend.pdf frontend.svg frontend.png
+all: frontend.pdf frontend.svg frontend.png types.pdf types.svg types.png codegen.pdf codegen.svg codegen.png
 
 %.svg.gen: %.dvi
 	dvisvgm $< -o "%f.svg.gen"
@@ -31,20 +31,24 @@ node_modules:
 %.png: %.pdf
 	convert $< $@
 
-%.pdf: %.tex frontend-coq.tex tikzmacros.tex
+%.pdf: %.tex %-coq.tex tikzmacros.tex
 	pdflatex --shell-escape $<
 	pdflatex --shell-escape $<
 	pdflatex --shell-escape $<
 
-%.dvi: %.tex frontend-coq.tex tikzmacros.tex
+%.dvi: %.tex %-coq.tex tikzmacros.tex
 	latex $<
 	latex $<
 
 clean:
 	rm -f *~ frontend.out frontend.log frontend.aux frontend.dvi frontend.svg.gen frontend.lg frontend.js frontend.js.map
+	rm -f *~ types.out types.log types.aux types.dvi types.svg.gen types.lg types.js types.js.map
+	rm -f *~ codegen.out codegen.log codegen.aux codegen.dvi codegen.svg.gen codegen.lg codegen.js codegen.js.map
 
 cleanall: clean
 	rm -f frontend.pdf frontend.png frontend.svg
+	rm -f types.pdf types.png types.svg
+	rm -f codegen.pdf codegen.png codegen.svg
 
 cleandist: cleanall
 	rm -rf node_modules
