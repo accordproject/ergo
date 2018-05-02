@@ -27,7 +27,7 @@
 %token CONTRACT OVER CLAUSE THROWS
 
 %token ENFORCE IF THEN ELSE
-%token LET FOR IN WHERE
+%token LET FOREACH IN WHERE
 %token RETURN THROW STATE
 %token VARIABLE AS
 %token NEW
@@ -96,7 +96,7 @@ stmt:
 	{ function_name = cn;
 	  function_lambda =
 	  { lambda_params = [];
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
@@ -104,7 +104,7 @@ stmt:
 	{ function_name = cn;
 	  function_lambda =
 	  { lambda_params = ps;
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 | IMPORT qn = qname_prefix
@@ -131,40 +131,22 @@ contract:
 declarations:
 | 
     { [] }
-| f = func ds = declarations
-    { (Function f) :: ds }
 | cl = clause ds = declarations
-    { (Clause cl) :: ds }
-
-func:
-| DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { function_name = cn;
-	function_lambda =
-	{ lambda_params = [];
-          lambda_output = Some out;
-	  lambda_throw = mt;
-	  lambda_body = e; } } }
-| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
-    { { function_name = cn;
-	function_lambda =
-	{ lambda_params = ps;
-          lambda_output = Some out;
-	  lambda_throw = mt;
-	  lambda_body = e; } } }
+    { cl :: ds }
 
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
 	clause_lambda =
 	  { lambda_params = [];
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { { clause_name = cn;
 	clause_lambda =
 	  { lambda_params = ps;
-            lambda_output = Some out;
+            lambda_output = out;
 	    lambda_throw = mt;
 	    lambda_body = e; } } }
 
@@ -182,9 +164,9 @@ params:
 
 param:
 | pn = IDENT
-    { (Util.char_list_of_string pn, None) }
+    { (Util.char_list_of_string pn, ErgoCompiler.cto_any) }
 | pn = IDENT pt = paramtype
-    { (Util.char_list_of_string pn, Some pt) }
+    { (Util.char_list_of_string pn, pt) }
 
 paramtype:
 | pt = IDENT
@@ -275,10 +257,10 @@ expr:
     { ErgoCompiler.elet_typed v t e1 e2 }
 | MATCH e0 = expr csd = cases
     { ErgoCompiler.ematch e0 (fst csd) (snd csd) }
-| FOR v = ident IN e1 = expr LCURLY e2 = expr RCURLY
-    { ErgoCompiler.efor v e1 None e2 }
-| FOR v = ident IN e1 = expr WHERE econd = expr LCURLY e2 = expr RCURLY
-    { ErgoCompiler.efor v e1 (Some econd) e2 }
+| FOREACH fl = foreachlist RETURN e2 = expr
+    { ErgoCompiler.eforeach fl None e2 }
+| FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
+    { ErgoCompiler.eforeach fl (Some econd) e2 }
 (* Unary operators *)
 | NOT e = expr
     { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg e }
@@ -309,6 +291,16 @@ expr:
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opor e1 e2 }
 | e1 = expr PLUSPLUS e2 = expr
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opstringconcat e1 e2 }
+
+(* foreach list *)
+foreachlist:
+| v = ident IN e = expr
+    { (v,e) :: [] }
+| v = ident IN e = expr COMMA fl = foreachlist
+    { (v,e) :: fl }
+| v = ident IN e = expr FOREACH fl = foreachlist
+    { (v,e) :: fl }
+
 
 (* expression list *)
 exprlist:
@@ -419,7 +411,7 @@ safeident_base:
 | THEN { "then" }
 | ELSE { "else" }
 | LET { "let" }
-| FOR { "for" }
+| FOREACH { "foreach" }
 | IN { "in" }
 | WHERE { "where" }
 | RETURN { "return" }

@@ -182,7 +182,6 @@ function sum(b) {
 	result += b[i];
     return result;
 }
-
 function arithMean(b) {
     var len = b.length;
     if(len == 0) {
@@ -191,7 +190,6 @@ function arithMean(b) {
 	return sum(b)/len;
     }
 }
-
 function toString(v) {
     return toStringQ(v, "");
 }
@@ -201,8 +199,12 @@ function toStringQ(v, quote) {
     var t = typeof v;
     if (t == "string")
 	return quote + v + quote;
-    if (t == "number" || t == "boolean")
+    if (t == "boolean")
 	return "" + v;
+    if (t == "number") {
+	if (Math.floor(v) == v) return (new Number(v)).toFixed(1); // Make sure there is always decimal point
+	else return "" + v;
+    }
     if ({}.toString.apply(v) == "[object Array]") {
 	v = v.slice();
 	v.sort();
@@ -214,7 +216,9 @@ function toStringQ(v, quote) {
 	}
 	return result + "]";
     }
-    var fs = Object.keys(v);
+    if(v.hasOwnProperty('nat')){
+	return "" + v.nat;
+    }
     var result2 = "{";
     var first = true;
     for (var key in v) {
@@ -289,7 +293,7 @@ function bmax(b1, b2) {
 function sub_brand(b1,b2) {
     var bsub=null;
     var bsup=null;
-    var inh = []
+    var inh = [];
     if (inheritance) { inh = inheritance; };
     for (var i=0; i<inh.length; i++) {
 	bsub = inh[i].sub;
@@ -316,7 +320,7 @@ function cast(brands,v) {
 	return enhanced_cast(brands,v);
     var type = v.type;
     mustBeArray(type);
-    if (brands.length == 1 && brands[0] == "Any") { /* cast to top of hierarchy is built-in */
+    if (brands.length == 1 && brands[0] == "Any") { /* cast to top of inheritance is built-in */
     	return left(v);
     }
     brands:
@@ -428,6 +432,80 @@ function escapeRegExp(string){
     return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 }
 
+// Nat operations
+
+function natPlus(v1, v2) {
+    return { "nat" : v1.nat + v2.nat };
+}
+function natMinus(v1, v2) {
+    return { "nat" : v1.nat - v2.nat };
+}
+function natMult(v1, v2) {
+    return { "nat" : v1.nat * v2.nat };
+}
+function natDiv(v1, v2) {
+    return { "nat" : Math.floor(v1.nat / v2.nat) };
+}
+function natDiv(v1, v2) {
+    return { "nat" : Math.floor(v1.nat / v2.nat) };
+}
+function natRem(v1, v2) {
+    return { "nat" : Math.floor(v1.nat % v2.nat) };
+}
+function natMin(v1, v2) {
+    return { "nat" : Math.min(v1.nat,v2.nat) };
+}
+function natMax(v1, v2) {
+    return { "nat" : Math.max(v1.nat,v2.nat) };
+}
+function natAbs(v) {
+    return { "nat" : Math.abs(v.nat) };
+}
+function natLog2(v) {
+    return { "nat" : Math.floor(Math.log2(v.nat)) }; // Default Z.log2 is log_inf, biggest integer lower than log2
+}
+function natSqrt(v) {
+    return { "nat" : Math.floor(Math.sqrt(v.nat)) }; // See Z.sqrt biggest integer lower than sqrt
+}
+function natSum(b) {
+    var result = 0;
+    for (var i=0; i<b.length; i++)
+	result += b[i].nat;
+    return { "nat" : result };
+}
+function natMinApply(b) {
+    var numbers = [ ];
+    for (var i=0; i<b.length; i++)
+	numbers.push(b[i].nat);
+    return { "nat" : Math.min.apply(Math,numbers) };
+}
+function natMaxApply(b) {
+    var numbers = [ ];
+    for (var i=0; i<b.length; i++)
+	numbers.push(b[i].nat);
+    return { "nat" : Math.max.apply(Math,numbers) };
+}
+function natArithMean(b) {
+    var len = b.length;
+    if(len == 0) {
+	return { "nat" : 0 };
+    } else {
+	return { "nat" : Math.floor(natSum(b)/len) };
+    }
+}
+function count(v) {
+    //return { "nat" : v.length };
+    return v.length; /* XXX To be fixed */
+}
+function floatOfNat(v) {
+    return v.nat;
+}
+function substring(v, start, len) {
+    return v.substring(start,len);
+}
+function substringNoLength(v, start) {
+    return v.substring(start);
+}
 /* Addendum to "standard library" with limited support for SQL-style dates and durations (aka "intervals") */
 
 var DAY = "DAY";

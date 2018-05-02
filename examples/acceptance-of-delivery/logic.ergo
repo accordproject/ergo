@@ -7,19 +7,18 @@ import ergo.moment.* // Date/Time library
 
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request InspectDeliverable) : InspectionResponse throws Error {
-    define variable received = request.deliverableRecievedAt;
-    enforce momentIsBefore(received,now()) else {
+    define variable received = request.deliverableReceivedAt;
+    enforce momentIsBefore(received,now()) else
       throw Error{ error : "Transaction time is before the deliverable date." }
-    };
+    ;
 
     define variable status =
-      if momentIsAfter(now, momentAdd(received, momentDuration(data.businessDays, "DAY"))) {
-        "OUTSIDE_INSPECTION_PERIOD"
-      } else if request.inspectionPassed {
-        "PASSED_TESTING"
-      } else {
-        "FAILED_TESTING"
-      };
+      if momentIsAfter(now(), momentAdd(received, momentDuration(contract.businessDays, "DAY")))
+      then "OUTSIDE_INSPECTION_PERIOD"
+      else if request.inspectionPassed
+      then "PASSED_TESTING"
+      else "FAILED_TESTING"
+    ;
     return new InspectionResponse{
       status : status,
       shipper : contract.shipper,   // This should be a relationship

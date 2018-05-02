@@ -1,0 +1,8 @@
+{
+  "$class": "org.accordproject.acceptanceofdelivery.TemplateModel",
+  "shipper": "Party A",
+  "receiver": "Party B",
+  "deliverable": "Widgets",
+  "businessDays": 10,
+  "attachment": "Attachment X"
+}

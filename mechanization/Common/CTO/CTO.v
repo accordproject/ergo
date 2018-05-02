@@ -28,6 +28,7 @@ Require Import ErgoSpec.Common.Utils.EImport.
 Section CTO.
 
   Inductive cto_type :=
+  | CTOAny : cto_type                                 (**r any *)
   | CTOBoolean : cto_type                             (**r bool atomic type *)
   | CTOString : cto_type                              (**r string atomic type *)
   | CTODouble : cto_type                              (**r double atomic type *)
@@ -39,14 +40,26 @@ Section CTO.
   | CTORecord : list (string*cto_type) -> cto_type    (**r record type *)
   | CTOArray : cto_type -> cto_type.                  (**r array type *)
 
+  Record cto_signature : Set :=
+    mkCTOSignature
+      { cto_signature_params : list (string * cto_type);
+        cto_signature_output : cto_type;
+        cto_signature_throw : option cto_type }.
+
   Inductive cto_declaration_kind :=
   | CTOEnum : list string -> cto_declaration_kind
   | CTOTransaction : option string -> list (string * cto_type) -> cto_declaration_kind
-  | CTOConcept : option string -> list (string * cto_type) -> cto_declaration_kind.
+  | CTOConcept : option string -> list (string * cto_type) -> cto_declaration_kind
+  | CTOGlobal : cto_type -> cto_declaration_kind
+  | CTOFunction : cto_signature -> cto_declaration_kind
+  | CTOContract :
+      cto_type                         (**r template type *)
+      -> list (string * cto_signature) (**r clauses signatures *)
+      -> cto_declaration_kind.
 
   Record cto_declaration :=
     mkCTODeclaration
-      { cto_declaration_class : string;
+      { cto_declaration_name : string;
         cto_declaration_type : cto_declaration_kind; }.
 
   Record cto_package :=
@@ -68,7 +81,7 @@ Section CTO.
     Definition cto_names_tables : Set := list (string * cto_names_table).
 
     Definition name_entry_of_cto_declaration (namespace:string) (decl:cto_declaration) : string * string :=
-      let relative_ref := decl.(cto_declaration_class) in
+      let relative_ref := decl.(cto_declaration_name) in
       (relative_ref, absolute_ref_of_relative_ref namespace relative_ref).
 
     Definition names_table_of_cto_package (namespace:string) (pkg:cto_package) : cto_names_table :=
@@ -128,6 +141,7 @@ Section CTO.
     (** This is the name resolution *)
     Fixpoint resolve_cto_type (namespace:string) (tbl:cto_names_table) (t:cto_type) : eresult cto_type :=
       match t with
+      | CTOAny => esuccess CTOAny
       | CTOBoolean => esuccess CTOBoolean
       | CTOString => esuccess CTOString
       | CTODouble => esuccess CTODouble
@@ -157,22 +171,56 @@ Section CTO.
       | Some n => elift Some (local_name_lookup namespace tbl n)
       end.
 
+    Definition resolve_cto_signature
+               (namespace:string)
+               (tbl:cto_names_table)
+               (sig:cto_signature) :=
+      let params_types := resolve_cto_struct namespace tbl (sig.(cto_signature_params)) in
+      let output_type := resolve_cto_type namespace tbl sig.(cto_signature_output) in
+      let throw_type :=
+          match sig.(cto_signature_throw) with
+          | None => esuccess None
+          | Some throw_ty =>
+            elift Some (resolve_cto_type namespace tbl throw_ty)
+          end
+      in
+      elift3 mkCTOSignature
+             params_types
+             output_type
+             throw_type.
+
+    Definition resolve_cto_clauses
+               (namespace:string)
+               (tbl:cto_names_table)
+               (cls:list (string * cto_signature)) : eresult (list (string * cto_signature)) :=
+      emaplift (fun xy => elift (fun r => (fst xy, r))
+                                (resolve_cto_signature namespace tbl (snd xy))) cls.
+
     Definition resolve_decl_kind (namespace:string) (tbl:cto_names_table)
                (k:cto_declaration_kind) : eresult cto_declaration_kind :=
       match k with
       | CTOEnum l => esuccess (CTOEnum l)
       | CTOTransaction extend_name cto_struct =>
-        elift2 (fun x y => CTOTransaction x y)
+        elift2 CTOTransaction
                (resolve_extend_name namespace tbl extend_name)
                (resolve_cto_struct namespace tbl cto_struct)
       | CTOConcept extend_name cto_struct =>
-        elift2 (fun x y => CTOConcept x y)
+        elift2 CTOConcept
                (resolve_extend_name namespace tbl extend_name)
                (resolve_cto_struct namespace tbl cto_struct)
+      | CTOGlobal cto_type =>
+        elift CTOGlobal (resolve_cto_type namespace tbl cto_type)
+      | CTOFunction cto_signature =>
+        elift CTOFunction
+              (resolve_cto_signature namespace tbl cto_signature)
+      | CTOContract template_type clauses_sigs =>
+        elift2 CTOContract
+               (resolve_cto_type namespace tbl template_type)
+               (resolve_cto_clauses namespace tbl clauses_sigs)
       end.
 
     Definition resolve_declaration (namespace:string) (tbl:cto_names_table) (decl: cto_declaration) : eresult cto_declaration :=
-      let name := absolute_ref_of_relative_ref namespace decl.(cto_declaration_class) in
+      let name := absolute_ref_of_relative_ref namespace decl.(cto_declaration_name) in
       let edecl_kind := resolve_decl_kind namespace tbl decl.(cto_declaration_type) in
       elift (fun k => mkCTODeclaration name k) edecl_kind.
     
@@ -233,6 +281,7 @@ Section CTO.
         into branded types. *)
     Program Fixpoint cto_type_to_etype {m:brand_relation} (t:cto_type) : ErgoType.etype :=
       match t with
+      | CTOAny => ErgoType.top
       | CTOBoolean => ErgoType.bool
       | CTOString => ErgoType.string
       | CTODouble => ErgoType.float
