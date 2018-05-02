@@ -1,0 +1,59 @@
+namespace org.accordproject.acceptanceofdelivery
+
+/**
+ * Sent by the receiver of the goods, indicates when the goods were
+ * received, as well as if they passed inspection
+ */
+transaction InspectDeliverable {
+  o DateTime deliverableReceivedAt
+  o Boolean inspectionPassed
+}
+
+/**
+ * The inspection status
+ */
+enum InspectionStatus {
+  o PASSED_TESTING
+  o FAILED_TESTING
+  o OUTSIDE_INSPECTION_PERIOD
+}
+
+/**
+ * The clause response
+ */
+transaction InspectionResponse {
+  o InspectionStatus status
+  o String shipper
+  o String receiver
+}
+
+/**
+ * The template model
+ */
+@AccordTemplateModel("acceptance-of-delivery")
+concept TemplateModel {
+  /**
+   * the shipper of the goods
+   */
+  o String shipper
+
+  /**
+   * the receiver of the goods
+   */
+  o String receiver
+
+  /**
+   * what are we delivering
+   */
+  o String deliverable
+
+  /**
+   * how long does the receiver have to inspect the goods
+   */
+  o Long businessDays
+
+  /**
+   * additional information
+   */
+  o String attachment
+}

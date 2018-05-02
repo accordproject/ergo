@@ -135,7 +135,6 @@ Section ErgoCalculustoJavaScript.
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       match d with
       | Clause c => javascript_method_of_ergo_clause c eol quotel
-      | Function f => javascript_method_of_ergo_func f eol quotel
       end.
 
     Definition javascript_of_declaration_list

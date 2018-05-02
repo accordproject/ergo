@@ -1,77 +1,157 @@
-[ { "name" : "test1",
-    "dir" : "data/helloworld",
-    "ergo" : "logic.ergo",
-    "models" : ["model.cto"],
-    "contract" : "contract.json",
-    "request" : "request.json",
-    "state" : "state.json",
-    "contractname" : "HelloWorld",
-    "clausename" : "helloworld",
-    "expected" : { "output" : "Hello Fred Blogs (Accord Project)" } },
-  { "name" : "test2",
-    "dir" : "data/volumediscount",
-    "ergo" : "logic.ergo",
-    "models" : ["model.cto"],
-    "contract" : "contract.json",
-    "request" : "request.json",
-    "state" : "state.json",
-    "contractname" : "VolumeDiscount",
-    "clausename" : "volumediscount",
-    "expected" : { "discountRate" : 2.8,
-                   "$class" : "org.accordproject.volumediscount.VolumeDiscountResponse" } },
-  { "name" : "test3",
-    "dir" : "data/volumediscount",
-    "ergo" : "logic2.ergo",
-    "models" : ["model.cto"],
-    "contract" : "contract.json",
-    "request" : "request.json",
-    "state" : "state.json",
-    "contractname" : "VolumeDiscount",
-    "clausename" : "volumediscount",
-    "expected" : { "discountRate" : 2.8,
-                   "$class" : "org.accordproject.volumediscount.VolumeDiscountResponse" } },
-  { "name" : "test4",
-    "dir" : "data/volumediscount",
-    "ergo" : "logic3.ergo",
-    "models" : ["model.cto"],
-    "contract" : "contract.json",
-    "request" : "request.json",
-    "state" : "state.json",
-    "contractname" : "VolumeDiscount",
-    "clausename" : "volumediscount",
-    "expected" : { "discountRate" : 2.9,
-                   "$class" : "org.accordproject.volumediscount.VolumeDiscountResponse" } },
-  { "name" : "test5",
-    "dir" : "data/volumediscount",
-    "ergo" : "logic4.ergo",
-    "models" : ["model.cto"],
-    "contract" : "contract.json",
-    "request" : "request.json",
-    "state" : "state.json",
-    "contractname" : "VolumeDiscount",
-    "clausename" : "volumediscount",
-    "expected" : { "discountRate" : 2.9,
-                   "$class" : "org.accordproject.volumediscount.VolumeDiscountResponse" } },
-  { "name" : "test6",
-    "dir" : "data/latedeliveryandpenalty",
-    "ergo" : "logic.ergo",
-    "models" : ["base.cto","model.cto"],
-    "contract" : "contract.json",
-    "request" : "request.json",
-    "state" : "state.json",
-    "contractname" : "LateDeliveryAndPenalty",
-    "clausename" : "latedeliveryandpenalty",
-    "expected" : { "buyerMayTerminate" : true,
-                   "penalty" : 110,
-                   "$class" : "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse" } },
-  { "name" : "test7",
-    "dir" : "data/latedeliveryandpenalty",
-    "ergo" : "logic.ergo",
-    "models" : ["model.cto"],
-    "contract" : "contract.json",
-    "request" : "request.json",
-    "state" : "state.json",
-    "contractname" : "LateDeliveryAndPenalty",
-    "clausename" : "latedeliveryandpenalty",
-    "expected" : { "error" : "[Compilation Error] Import not found: org.accordproject.base" } }
+[
+  {
+    "name": "test1",
+    "dir": "data/helloworld",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "HelloWorld",
+    "clausename": "helloworld",
+    "expected": {
+      "output": "Hello Fred Blogs (Accord Project)"
+    }
+  },
+  {
+    "name": "test2",
+    "dir": "data/volumediscount",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "VolumeDiscount",
+    "clausename": "volumediscount",
+    "expected": {
+      "discountRate": 2.8,
+      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+    }
+  },
+  {
+    "name": "test3",
+    "dir": "data/volumediscount",
+    "ergo": "logic2.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "VolumeDiscount",
+    "clausename": "volumediscount",
+    "expected": {
+      "discountRate": 2.8,
+      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+    }
+  },
+  {
+    "name": "test4",
+    "dir": "data/volumediscount",
+    "ergo": "logic3.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "VolumeDiscount",
+    "clausename": "volumediscount",
+    "expected": {
+      "discountRate": 2.9,
+      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+    }
+  },
+  {
+    "name": "test5",
+    "dir": "data/volumediscount",
+    "ergo": "logic4.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "VolumeDiscount",
+    "clausename": "volumediscount",
+    "expected": {
+      "discountRate": 2.9,
+      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+    }
+  },
+  {
+    "name": "test6",
+    "dir": "data/latedeliveryandpenalty",
+    "ergo": "logic.ergo",
+    "models": [
+      "base.cto",
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "LateDeliveryAndPenalty",
+    "clausename": "latedeliveryandpenalty",
+    "expected": {
+      "buyerMayTerminate": true,
+      "penalty": 110,
+      "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse"
+    }
+  },
+  {
+    "name": "test7",
+    "dir": "data/latedeliveryandpenalty",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "LateDeliveryAndPenalty",
+    "clausename": "latedeliveryandpenalty",
+    "expected": {
+      "error": "[Compilation Error] Import not found: org.accordproject.base"
+    }
+  },
+  {
+    "name": "test8",
+    "dir": "data/acceptance-of-delivery",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "AcceptanceOfDelivery",
+    "clausename": "acceptanceofdelivery",
+    "expected": {
+      "receiver": "Party B",
+      "shipper": "Party A",
+      "status": "PASSED_TESTING",
+      "$class": "org.accordproject.acceptanceofdelivery.InspectionResponse"
+    }
+  },
+  {
+    "name": "test9",
+    "dir": "data/fragilegoods",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "FragileGoods",
+    "clausename": "fragilegoods",
+    "expected": {
+      "amount": 990,
+      "$class": "io.clause.demo.fragileGoods.PayOut"
+    }
+  }
 ]

@@ -40,7 +40,7 @@ Section ErgotoJavaScript.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (callparams:list (string * option cto_type)) :=
+             (callparams:list (string * cto_type)) :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
     | None => efailure (CompilationError "Parameter mismatch during dispatch")
@@ -57,14 +57,12 @@ Section ErgotoJavaScript.
     let (cname, callparams) := s in
     match callparams with
     | nil => efailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
-    | (param0,None)::otherparams =>
-      efailure (CompilationError ("No parameter can be used for dispatch in "++cname))
-    | (param0, Some (CTOClassRef type0))::otherparams =>
+    | (param0, CTOClassRef type0)::otherparams =>
       elift (fun x =>
                let type0 := absolute_ref_of_relative_ref namespace type0 in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
-    | (param0, Some _)::otherparams =>
+    | (param0, _)::otherparams =>
       efailure (CompilationError ("Cannot dispatch on non-class type "++cname))
     end.
 
@@ -104,8 +102,8 @@ Section ErgotoJavaScript.
              (EFunc
                 (mkFunc dispatch_fun_name
                         (mkLambda
-                           (("request"%string,None)::nil)
-                           None
+                           (("request"%string,(CTOClassRef "Request"))::nil)
+                           (CTOClassRef "Response")
                            None
                            disp))))
           (match_of_sigs_top p.(package_namespace) effparams sigs)
@@ -124,11 +122,10 @@ Section ErgotoJavaScript.
 
   Definition cast_dispatch_to_classes request response :=
     match request, response with
-    | CTOClassRef req, CTOClassRef resp =>
-      esuccess (req, resp)
+    | CTOClassRef req, CTOClassRef resp => esuccess (req, resp)
     | _, _ => efailure (CompilationError ("Cannot dispatch on non-class types"))
     end.
-  
+
   Definition javascript_from_package_with_dispatch
              (ctos:list cto_package)
              (oconame:option string)

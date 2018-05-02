@@ -40,6 +40,8 @@ Module ErgoCompiler.
   Definition mk_class_ref : option String.string -> String.string -> cto_class
     := ENames.mkClassRef.
 
+  Definition cto_any : CTO.cto_type
+    := CTO.CTOAny.
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
   Definition cto_string : CTO.cto_type
@@ -107,8 +109,8 @@ Module ErgoCompiler.
     := Ergo.ELet v None e1 e2.
   Definition elet_typed (v:String.string) (t:CTO.cto_type) (e1 e2:ergo_expr) : ergo_expr
     := Ergo.ELet v (Some t) e1 e2.
-  Definition efor : String.string -> ergo_expr -> option ergo_expr -> ergo_expr -> ergo_expr
-    := Ergo.EFor.
+  Definition eforeach : list (String.string * ergo_expr) -> option ergo_expr -> ergo_expr -> ergo_expr
+    := Ergo.EForeach.
   Definition ecall : String.string -> list ergo_expr -> ergo_expr
     := Ergo.ECall.
   Definition ematch : ergo_expr -> list (Ergo.match_case * ergo_expr) -> ergo_expr -> ergo_expr

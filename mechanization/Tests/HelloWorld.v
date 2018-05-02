@@ -37,8 +37,8 @@ contract HelloWorld over TemplateModel {
   Definition cl1 :=
     mkClause "helloworld"
              (mkLambda
-                (("request", Some (CTOClassRef "Request"))::nil)
-                (Some (CTOClassRef "Response"))
+                (("request", CTOClassRef "Request")::nil)
+                (CTOClassRef "Response")
                 None
                 (EVar "request")).
 
@@ -51,6 +51,6 @@ contract HelloWorld over TemplateModel {
     mkPackage "org.accordproject.helloworld"
               ((EContract c1)::nil).
 
-  (* Eval vm_compute in (ErgoCompiler.javascript_from_ergo_package_with_dispatch None p1). *)
+  (* Eval vm_compute in (ErgoCompiler.javascript_from_ergo_package_with_dispatch nil p1). *)
 End HelloWorld.
 

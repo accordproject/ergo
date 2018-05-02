@@ -23,12 +23,3 @@ Ergo is developed as an open standard as part of the <a href="https://www.accord
 
 Information about how to contribute to Ergo can be found in [contributing.md](https://github.com/accordproject/ergo/blob/master/contribute-to-ergo/contributing.md).
 
-## Technical Material
-
-To learn more about Ergo:
-
-- Ergo Language Manual: [http://ergo.readthedocs.io/en/latest/index.html](http://ergo.readthedocs.io/)
-- Ergo Tutorial: [Tutorial.md](Tutorial.md)
-- Ergo Formal Specification: [Specification.md](Specification.md)
-- Ergo playground: [https://accordproject.github.io/ergo-playground/](https://accordproject.github.io/ergo-playground/)
-
