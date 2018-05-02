@@ -103,3 +103,48 @@
        java] ([xshift=-0.75em] #1.south) -- ([xshift=-0.75em] #1-java.north);
 }
 
+\makeatletter
+\tikzset{
+  box/.style={
+    minimum height=0.8cm,
+    draw,
+    rounded corners,
+    rectangle
+  },
+  moveable rectangle/condition/.code={%
+    \pgfmathparse{(\mrwidth > 1cm ? "(a.north east)" : "(a.south west)")}
+    \let\mrvector=\pgfmathresult
+  },
+  moveable/.is if=mr@moveable,
+}
+\def\mrvector{(0,0)}
+\newif\ifmr@moveable
+\pgfdeclareshape{moveable rectangle}{%
+  \inheritsavedanchors[from=rectangle]%
+  \anchor{north west}{%
+    \ifmr@moveable
+    \northeast
+    \pgf@xa=\pgf@x
+    \southwest
+    \advance\pgf@xa by -\pgf@x
+    \edef\mrwidth{\the\pgf@xa}%
+    \pgfkeys{/tikz/moveable rectangle/condition}%
+    \tikz@scan@one@point\pgfutil@firstofone\mrvector
+    \pgf@xa=-\pgf@x
+    \pgf@ya=-\pgf@y
+    \northeast
+    \advance\pgf@ya by \pgf@y
+    \southwest
+    \advance\pgf@xa by \pgf@x
+    \pgf@x=\pgf@xa
+    \pgf@y=\pgf@ya
+    \else
+    \northeast
+    \pgf@ya=\pgf@y
+    \southwest
+    \pgf@y=\pgf@ya
+    \fi
+  }
+  \inheritbackgroundpath[from=rectangle]
+}
+\makeatother
