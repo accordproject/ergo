@@ -1,0 +1,4 @@
+{ "$class": "org.accordproject.installmentsale.ContractState",
+  "status" : "WaitingForFirstDayOfNextMonth",
+  "balance_remaining" : 11240.00,
+  "next_payment_month" : 3 }

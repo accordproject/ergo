@@ -1,0 +1,31 @@
+namespace org.accordproject.installmentsale
+
+transaction Payment {
+  o Double amount
+}
+
+transaction Balance {
+  o Double balance
+}
+
+enum ContractStatus {
+  o WaitingForFirstDayOfNextMonth
+  o Fulfilled
+}
+
+concept ContractState {
+  o ContractStatus status
+  o Double balance_remaining
+  o Integer next_payment_month
+}
+
+/**
+ * The template model
+ */
+@AccordTemplateModel("installment")
+concept TemplateModel {
+  o Double INTEREST_RATE
+  o Double TOTAL_DUE_BEFORE_CLOSING
+  o Double MIN_PAYMENT
+  o Double DUE_AT_CLOSING
+}
