@@ -30,6 +30,7 @@ let base_type_of_decl d =
       | "Boolean" -> CTOBoolean
       | "String" -> CTOString
       | "Double" -> CTODouble
+      | "Integer" -> CTOInteger
       | "Long" -> CTOLong
       | "DateTime" -> CTODateTime
       | s -> CTOClassRef (char_list_of_string s)
