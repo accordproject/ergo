@@ -1,0 +1,4 @@
+{
+    "$class": "org.accordproject.installmentsale.Payment",
+    "amount": 500.00
+}
