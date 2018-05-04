@@ -11,7 +11,7 @@ contract InstallmentSale over TemplateModel {
 		return new Balance{
 			amount: balance
 		}
-		state new ContractState {
+		set state new ContractState {
 			status: "WaitingForFirstDayOfNextMonth",
 			balance_remaining: balance,
 			next_payment_month: state.next_payment_month + 1.0
@@ -23,7 +23,7 @@ contract InstallmentSale over TemplateModel {
 		return new Balance{
 			amount: balance
 		}
-		state new ContractState {
+		set state new ContractState {
 			status: "Fulfilled",
 			balance_remaining: balance,
 			next_payment_month: 0.0 // ???
