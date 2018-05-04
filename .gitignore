@@ -16,7 +16,6 @@ ergo-*.tgz
 **/_build
 **/node_modules
 **/log
-**/package-lock.json
 **/.nyc_output
 **/coverage
 generator-ergo-serverless/
