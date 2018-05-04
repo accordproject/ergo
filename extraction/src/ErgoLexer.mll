@@ -21,49 +21,51 @@
     let tbl = Hashtbl.create 39 in
     begin
       List.iter (fun (key, data) -> Hashtbl.add tbl key data)
-	[ (* declarations *)
-	  "namespace", NAMESPACE;
-	  "import", IMPORT;
-	  "define", DEFINE;
-	  "function", FUNCTION;
-          (* types *)
-	  "concept", CONCEPT;
-	  "transaction", TRANSACTION;
-	  "enum", ENUM;
-	  "extends", EXTENDS;
-          (* contract *)
-	  "contract", CONTRACT;
-	  "over", OVER;
-	  "clause", CLAUSE;
-	  "throws", THROWS;
-	  "state", STATE;
-	  (* Expressions *)
- 	  "enforce", ENFORCE;
-	  "if", IF;
-	  "then", THEN;
-	  "else", ELSE;
-	  "let", LET;
-	  "foreach", FOREACH;
-	  "return", RETURN;
-	  "in", IN;
-	  "where", WHERE;
-	  "return", RETURN;
-	  "throw", THROW;
-	  "new", NEW;
-	  "contract", CONTRACT;
-	  "clause", CLAUSE;
-	  "variable", VARIABLE;
-	  "as", AS;
-	  "match", MATCH;
-	  "typematch", TYPEMATCH;
-	  "with", WITH;
-          "or", OR;
-          "and", AND;
-	  (* Data *)
-	  "true", TRUE;
-	  "false", FALSE;
-	  "nil", NIL
-	]; tbl
+	      [ (* declarations *)
+	       "namespace", NAMESPACE;
+	      "import", IMPORT;
+	      "define", DEFINE;
+	      "function", FUNCTION;
+        (* types *)
+	      "concept", CONCEPT;
+	      "transaction", TRANSACTION;
+	      "enum", ENUM;
+	      "extends", EXTENDS;
+        (* contract *)
+	      "contract", CONTRACT;
+	      "over", OVER;
+	      "clause", CLAUSE;
+	      "throws", THROWS;
+	      "state", STATE;
+	      (* Expressions *)
+ 	      "enforce", ENFORCE;
+	      "if", IF;
+	      "then", THEN;
+	      "else", ELSE;
+	      "let", LET;
+	      "foreach", FOREACH;
+	      "return", RETURN;
+	      "in", IN;
+	      "where", WHERE;
+	      "return", RETURN;
+	      "throw", THROW;
+	      "new", NEW;
+	      "contract", CONTRACT;
+	      "clause", CLAUSE;
+	      "variable", VARIABLE;
+	      "as", AS;
+	      "match", MATCH;
+	      "typematch", TYPEMATCH;
+        "set",SET;
+        "emit",EMIT;
+	      "with", WITH;
+        "or", OR;
+        "and", AND;
+	      (* Data *)
+	      "true", TRUE;
+	      "false", FALSE;
+	      "nil", NIL
+	    ]; tbl
     end
 
 }

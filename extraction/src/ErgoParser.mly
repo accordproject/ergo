@@ -32,6 +32,7 @@
 %token VARIABLE AS
 %token NEW
 %token MATCH TYPEMATCH WITH
+%token SET EMIT
 
 %token OR AND NOT
 
@@ -233,7 +234,11 @@ expr:
     { ErgoCompiler.eenforce_default_fail e1 e3 }
 | RETURN e1 = expr
     { ErgoCompiler.ereturn e1 }
-| RETURN e1 = expr STATE e2 = expr
+| RETURN e1 = expr SET STATE e2 = expr
+    { ErgoCompiler.ereturnsetstate e1 e2 }
+| RETURN e1 = expr EMIT em = expr
+    { ErgoCompiler.ereturn e1 }
+| RETURN e1 = expr SET STATE e2 = expr EMIT em = expr
     { ErgoCompiler.ereturnsetstate e1 e2 }
 | THROW qn = qname LCURLY r = reclist RCURLY
     { ErgoCompiler.ethrow (fst qn) (snd qn) r }
@@ -418,6 +423,8 @@ safeident_base:
 | THROW { "throw" }
 | THROWS { "throws" }
 | STATE { "state" }
+| SET { "set" }
+| EMIT { "emit" }
 | VARIABLE { "variable" }
 | AS { "as" }
 | NEW { "new" }
