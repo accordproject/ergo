@@ -1,32 +1,32 @@
 namespace org.accordproject.installmentsale
 
 contract InstallmentSale over TemplateModel {
-	clause PayInstallment(request Payment) : Balance {
-		enforce (state.status = "WaitingForFirstDayOfNextMonth"); // Make sure this is only called in the right state
-		enforce (contract.MIN_PAYMENT <= state.balance_remaining) and (state.next_payment_month < 23);
-		enforce (contract.MIN_PAYMENT <= request.amount ) and (request.amount <= state.balance_remaining);
-		enforce (request.amount <= state.balance_remaining); // overpaying is forbidden. this is NOT checked statically.
-		define variable before_interest = state.balance_remaining - request.amount;
-		define variable balance = before_interest * (1.0 + contract.INTEREST_RATE/100.00);
-		return new Balance{
-			amount: balance
-		}
-		set state new ContractState {
-			status: "WaitingForFirstDayOfNextMonth",
-			balance_remaining: balance,
-			next_payment_month: state.next_payment_month + 1.0
-		}
-	}
-	clause PayLastInstallment(request Payment) : Balance {
-		enforce (request.amount = state.balance_remaining + contract.DUE_AT_CLOSING);
-		define variable balance = 0.0;
-		return new Balance{
-			amount: balance
-		}
-		set state new ContractState {
-			status: "Fulfilled",
-			balance_remaining: balance,
-			next_payment_month: 0.0 // ???
-		}
-	}
+  clause PayInstallment(request Payment) : Balance {
+    enforce (state.status = "WaitingForFirstDayOfNextMonth"); // Make sure this is only called in the right state
+    enforce (contract.MIN_PAYMENT <= state.balance_remaining) and (state.next_payment_month < 23);
+    enforce (contract.MIN_PAYMENT <= request.amount) and (request.amount <= state.balance_remaining);
+    enforce (request.amount <= state.balance_remaining); // overpaying is forbidden. this is NOT checked statically.
+    define variable before_interest = state.balance_remaining - request.amount;
+    define variable balance = before_interest * (1.0 + contract.INTEREST_RATE/100.00);
+    set state new ContractState {
+      status: "WaitingForFirstDayOfNextMonth",
+      balance_remaining: balance,
+      next_payment_month: state.next_payment_month + 1.0
+    };
+    return new Balance{
+      amount: balance
+    }
+  }
+  clause PayLastInstallment(request Payment) : Balance {
+    enforce (request.amount = state.balance_remaining + contract.DUE_AT_CLOSING);
+    define variable balance = 0.0;
+    set state new ContractState {
+      status: "Fulfilled",
+      balance_remaining: balance,
+      next_payment_month: 0.0 // ???
+    };
+    return new Balance{
+      amount: balance
+    }
+  }
 }

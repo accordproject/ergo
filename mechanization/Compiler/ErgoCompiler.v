@@ -86,6 +86,8 @@ Module ErgoCompiler.
     := Ergo.ergo_clause.
   Definition ergo_expr : Set 
     := Ergo.ergo_expr.
+  Definition ergo_stmt : Set 
+    := Ergo.ergo_stmt.
 
   Definition evar : String.string -> ergo_expr
     := Ergo.EVar.
@@ -101,10 +103,6 @@ Module ErgoCompiler.
     := Ergo.EBinaryOp.
   Definition eif : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr 
     := Ergo.EIf.
-  Definition eenforce (e1 e2 e3:ergo_expr) 
-    := Ergo.EEnforce e1 (Some e2) e3.
-  Definition eenforce_default_fail (e1 e3:ergo_expr) 
-    := Ergo.EEnforce e1 None e3.
   Definition elet (v:String.string) (e1 e2:ergo_expr) : ergo_expr
     := Ergo.ELet v None e1 e2.
   Definition elet_typed (v:String.string) (t:CTO.cto_type) (e1 e2:ergo_expr) : ergo_expr
@@ -118,12 +116,29 @@ Module ErgoCompiler.
   Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
     := Ergo.ERecord.
 
+  Definition sreturn : ergo_expr -> ergo_stmt :=
+    Ergo.SReturn.
+  Definition sthrow : ergo_expr -> ergo_stmt :=
+    Ergo.SThrow.
+  Definition ssetstate : ergo_expr -> ergo_stmt -> ergo_stmt :=
+    Ergo.SSetState.
+  Definition semit : ergo_expr -> ergo_stmt -> ergo_stmt :=
+    Ergo.SEmit.
+  Definition slet (v:String.string) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt
+    := Ergo.SLet v None e1 s2.
+  Definition slet_typed (v:String.string) (t:CTO.cto_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt
+    := Ergo.SLet v (Some t) e1 s2.
+  Definition sif : ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt :=
+    Ergo.SIf.
+  Definition senforce (e1:ergo_expr) (s2: option ergo_stmt) (s3:ergo_stmt) : ergo_stmt
+    := Ergo.SEnforce e1 s2 s3.
+  Definition smatch : ergo_expr -> list (Ergo.match_case * ergo_stmt) -> ergo_stmt -> ergo_stmt
+    := Ergo.SMatch.
+  
   Definition edot : String.string -> ergo_expr -> ergo_expr 
     := ErgoSugar.EDot.
-  Definition ereturn : ergo_expr -> ergo_expr
+  Definition ereturn : option ergo_expr -> option ergo_expr -> option ergo_expr -> ergo_expr
     := ErgoSugar.EReturn.
-  Definition ereturnsetstate : ergo_expr -> ergo_expr -> ergo_expr
-    := ErgoSugar.EReturnSetState.
   Definition enew : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
     := ErgoSugar.ENewSugar.
   Definition ethrow : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 

@@ -9,7 +9,7 @@ contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request InspectDeliverable) : InspectionResponse throws Error {
     define variable received = request.deliverableReceivedAt;
     enforce momentIsBefore(received,now()) else
-      throw Error{ error : "Transaction time is before the deliverable date." }
+      throw new Error{ error : "Transaction time is before the deliverable date." }
     ;
 
     define variable status =

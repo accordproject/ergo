@@ -33,17 +33,14 @@ Section ErgoCalculus.
     (** Function *)
     Definition ergoc_function := @function ergoc_expr.
     
-    (** Declaration *)
-    Definition ergoc_declaration := @declaration ergoc_expr.
-    
     (** Contract *)
     Definition ergoc_contract := @contract ergoc_expr.
     
-    (** Statement *)
-    Definition ergoc_stmt := @stmt ergoc_expr.
-
+    (** Declaration *)
+    Definition ergoc_declaration := @declaration ergoc_expr ergoc_expr.
+    
     (** Package. *)
-    Definition ergoc_package := @package ergoc_expr.
+    Definition ergoc_package := @package ergoc_expr ergoc_expr.
 
   End Syntax.
 

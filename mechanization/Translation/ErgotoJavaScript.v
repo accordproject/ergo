@@ -101,7 +101,7 @@ Section ErgotoJavaScript.
           (fun disp =>
              (EFunc
                 (mkFunc dispatch_fun_name
-                        (mkLambda
+                        (mkLambdaA
                            (("request"%string,(CTOClassRef "Request"))::nil)
                            (CTOClassRef "Response")
                            None
@@ -111,7 +111,7 @@ Section ErgotoJavaScript.
     elift (fun disp =>
              mkPackage
                p.(package_namespace)
-                   (p.(package_statements) ++ (disp::nil)))
+                   (p.(package_declarations) ++ (disp::nil)))
           dispatch_fun_decl.
 
   Definition javascript_from_package
