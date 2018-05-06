@@ -29,19 +29,23 @@ Section ErgoSugar.
     EUnaryOp (ErgoOps.Unary.opdot s) (EUnaryOp ErgoOps.Unary.opunbrand e).
 
   (** [return expr] is a no-op at the moment *)
-  Definition mk_result e1 e2 :=
-    EBinaryOp ErgoOps.Binary.oprecconcat
-              (EUnaryOp (ErgoOps.Unary.oprec "response") e1)
-              (EUnaryOp (ErgoOps.Unary.oprec "state") e2).
+  Definition mk_result e1 e2 e3 : ergo_expr :=
+    ERecord (("response", e1)
+               :: ("state", e2)
+               :: ("emit", e3)
+               :: nil)%string.
 
-  (** [return expr] is a no-op at the moment *)
-  Definition EReturn e1 :=
-    mk_result e1 EThisState.
+  Definition set_state e1 e2 : ergo_expr :=
+    ELet "lstate" None e1 e2.
 
-  Definition EReturnSetState e1 e2 :=
-    mk_result e1 e2.
+  Definition push_emit e1 e2 : ergo_expr :=
+    ELet "lemit" None
+         (EBinaryOp OpBagUnion
+                    e1
+                    (EVar "lemit"))
+         e2.
   
-  Definition ENewSugar pname cname el :ergo_expr :=
+  Definition ENewSugar pname cname el : ergo_expr :=
     ENew (mkClassRef pname cname) el.
 
   Definition EThrowSugar pname cname el : ergo_expr :=
@@ -52,5 +56,30 @@ Section ErgoSugar.
                  "Error"
                  (("error", EConst (ErgoData.dstring msg))::nil))%string.
 
+  Definition default_return := EConst (ErgoData.dunit).
+  Definition default_set_state := EThisState.
+  Definition default_emit := EConst (ErgoData.dcoll nil).
+  
+  Definition EReturn (e1 e2 e3: option ergo_expr) :=
+    let e1 :=
+        match e1 with
+        | None => default_return
+        | Some e => e
+        end
+    in
+    let e2 :=
+        match e2 with
+        | None => default_set_state
+        | Some e => e
+        end
+    in
+    let e3 :=
+        match e3  with
+        | None => default_emit
+        | Some e => e
+        end
+    in
+    mk_result e1 e2 e3.
+  
 End ErgoSugar.
 

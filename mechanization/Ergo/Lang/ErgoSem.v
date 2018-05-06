@@ -98,28 +98,6 @@ Section ErgoSem.
       ergo_expr_sem mc env e1 (esuccess (ErgoData.dbool false)) ->
       ergo_expr_sem mc env e3 (efailure err) ->
       ergo_expr_sem mc env (EIf e1 e2 e3) (efailure err)
-  | sem_EEnforce_true : forall mc env e1 e2 e3 d,
-      ergo_expr_sem mc env e1 (esuccess (ErgoData.dbool true)) ->
-      ergo_expr_sem mc env e3 (esuccess d) ->
-      ergo_expr_sem mc env (EEnforce e1 e2 e3) (esuccess d)
-  | sem_EEnforce_false_some : forall mc env e1 e2 e3 d,
-      ergo_expr_sem mc env e1 (esuccess (ErgoData.dbool false)) ->
-      ergo_expr_sem mc env e2 (esuccess d) ->
-      ergo_expr_sem mc env (EEnforce e1 (Some e2) e3) (esuccess d)
-  | sem_EEnforce_false_none : forall mc env e1 e3,
-      ergo_expr_sem mc env e1 (esuccess (ErgoData.dbool false)) ->
-      ergo_expr_sem mc env (EEnforce e1 None e3) (efailure enforce_error)
-  | sem_EEnforce_fail : forall mc env e1 opte2 e3 err,
-      ergo_expr_sem mc env e1 (efailure err) ->
-      ergo_expr_sem mc env (EEnforce e1 opte2 e3) (efailure err)
-  | sem_EEnforce_fail_left : forall mc env e1 opte2 e3 err,
-      ergo_expr_sem mc env e1 (esuccess (ErgoData.dbool true)) ->
-      ergo_expr_sem mc env e3 (efailure err) ->
-      ergo_expr_sem mc env (EEnforce e1 opte2 e3) (efailure err)
-  | sem_EEnforce_fail_right : forall mc env e1 e2 e3 err,
-      ergo_expr_sem mc env e1 (esuccess (ErgoData.dbool false)) ->
-      ergo_expr_sem mc env e3 (efailure err) ->
-      ergo_expr_sem mc env (EEnforce e1 (Some e2) e3) (efailure err)
   | sem_ELet : forall mc env v e1 e2 d1 d2,
       ergo_expr_sem mc env e1 (esuccess d1) ->
       ergo_expr_sem mc ((v,d1)::env) e2 (esuccess d2) ->

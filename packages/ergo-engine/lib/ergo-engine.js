@@ -58,14 +58,18 @@ class ErgoEngine {
 
         // add immutables to the context
         const linkedErgoCode = this.linkErgoRuntime(ergoCode);
-        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'now': Moment() };
+        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': Moment() };
         vm.freeze(params, 'params'); // Add the context
         vm.run(linkedErgoCode); // Load the generated logic
         const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
         const functionName = 'contract.' + clauseName;
         const clauseCall = functionName+'(params);'; // Create the clause call
         const res = vm.run(contract + clauseCall); // Call the logic
-        return Promise.resolve(res);
+        if (res.hasOwnProperty('left')) {
+            return Promise.resolve(res.left);
+        } else {
+            return Promise.resolve(res.right);
+        }
     }
 
     /**

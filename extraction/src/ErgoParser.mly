@@ -52,7 +52,6 @@
 %left SEMI
 %left ELSE
 %left RETURN
-%left STATE
 %left OR
 %left AND
 %left EQUAL NEQUAL
@@ -73,17 +72,17 @@ main:
 
 
 package:
-| NAMESPACE qn = qname_prefix ss = stmts
+| NAMESPACE qn = qname_prefix ss = decls
     { { package_namespace = Util.char_list_of_string qn;
-	package_statements = ss; } }
+				package_declarations = ss; } }
 
-stmts:
+decls:
 |
     { [] }
-| s = stmt ss = stmts
+| s = decl ss = decls
     { s :: ss }
 
-stmt:
+decl:
 | DEFINE CONCEPT cn = ident dt = cto_class_decl
     { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration cn (CTOConcept (oe,ctype))) }
 | DEFINE TRANSACTION cn = ident dt = cto_class_decl
@@ -94,20 +93,20 @@ stmt:
     { EGlobal (v, e) }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { EFunc
-	{ function_name = cn;
-	  function_lambda =
-	  { lambda_params = [];
-            lambda_output = out;
-	    lambda_throw = mt;
-	    lambda_body = e; } } }
+  { function_name = cn;
+    function_lambda =
+    { lambdaa_params = [];
+      lambdaa_output = out;
+      lambdaa_throw = mt;
+      lambdaa_body = e; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
     { EFunc
-	{ function_name = cn;
-	  function_lambda =
-	  { lambda_params = ps;
-            lambda_output = out;
-	    lambda_throw = mt;
-	    lambda_body = e; } } }
+  { function_name = cn;
+    function_lambda =
+    { lambdaa_params = ps;
+      lambdaa_output = out;
+      lambdaa_throw = mt;
+      lambdaa_body = e; } } }
 | IMPORT qn = qname_prefix
     { EImport (ErgoUtil.cto_import_decl_of_import_namespace qn) }
 | c = contract
@@ -124,32 +123,32 @@ cto_enum_decl:
     { il }
 
 contract:
-| CONTRACT cn = ident OVER tn = ident LCURLY ds = declarations RCURLY
+| CONTRACT cn = ident OVER tn = ident LCURLY ds = clauses RCURLY
     { { contract_name = cn;
         contract_template = tn;
-        contract_declarations = ds; } }
+        contract_clauses = ds; } }
 
-declarations:
+clauses:
 | 
     { [] }
-| cl = clause ds = declarations
-    { cl :: ds }
+| c = clause cl = clauses
+    { c :: cl }
 
 clause:
-| CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = stmt RCURLY
     { { clause_name = cn;
-	clause_lambda =
-	  { lambda_params = [];
-            lambda_output = out;
-	    lambda_throw = mt;
-	    lambda_body = e; } } }
-| CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+				clause_lambda =
+				{ lambdab_params = [];
+					lambdab_output = out;
+					lambdab_throw = mt;
+					lambdab_body = e; } } }
+| CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
     { { clause_name = cn;
-	clause_lambda =
-	  { lambda_params = ps;
-            lambda_output = out;
-	    lambda_throw = mt;
-	    lambda_body = e; } } }
+        clause_lambda =
+        { lambdab_params = ps;
+          lambdab_output = out;
+          lambdab_throw = mt;
+          lambdab_body = s; } } }
 
 maythrow:
 |
@@ -199,6 +198,42 @@ atttype:
 | an = IDENT COLON pt = paramtype
     { (Util.char_list_of_string an, pt) }
 
+stmt:
+(* Statments *)
+| RETURN e1 = expr
+		{ ErgoCompiler.sreturn e1 }
+| THROW e1 = expr
+    { ErgoCompiler.sthrow e1 }
+| DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = stmt
+    { ErgoCompiler.slet v e1 s2 }
+| DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
+    { ErgoCompiler.slet_typed v t e1 s2 }
+| IF e1 = expr THEN s2 = stmt ELSE s3 = stmt
+    { ErgoCompiler.sif e1 s2 s3 }
+| ENFORCE e1 = expr ELSE s2 = stmt SEMI s3 = stmt
+    { ErgoCompiler.senforce e1 (Some s2) s3 }
+| ENFORCE e1 = expr SEMI s3 = stmt
+    { ErgoCompiler.senforce e1 None s3 }
+| SET STATE e1 = expr SEMI s2 = stmt
+    { ErgoCompiler.ssetstate e1 s2 }
+| EMIT e1 = expr SEMI s2 = stmt
+    { ErgoCompiler.semit e1 s2 }
+| MATCH e0 = expr csd = cases_stmt
+    { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
+
+(* cases *)
+cases_stmt:
+| ELSE s = stmt
+    { ([],s) }
+| WITH d = data THEN s = stmt cs = cases_stmt
+    { (((None,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
+| WITH LET v = ident EQUAL d = data THEN s = stmt cs = cases_stmt
+    { (((Some v,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
+| WITH AS brand = STRING THEN s = stmt tcs = cases_stmt
+    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+| WITH LET v = ident AS brand = STRING THEN s = stmt tcs = cases_stmt
+    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+
 expr:
 (* Parenthesized expression *)
 | LPAREN e = expr RPAREN
@@ -228,20 +263,6 @@ expr:
     { ErgoCompiler.edot a e }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { ErgoCompiler.eif e1 e2 e3 }
-| ENFORCE e1 = expr ELSE e3 = expr SEMI e2 = expr
-    { ErgoCompiler.eenforce e1 e2 e3 }
-| ENFORCE e1 = expr SEMI e3 = expr
-    { ErgoCompiler.eenforce_default_fail e1 e3 }
-| RETURN e1 = expr
-    { ErgoCompiler.ereturn e1 }
-| RETURN e1 = expr SET STATE e2 = expr
-    { ErgoCompiler.ereturnsetstate e1 e2 }
-| RETURN e1 = expr EMIT em = expr
-    { ErgoCompiler.ereturn e1 }
-| RETURN e1 = expr SET STATE e2 = expr EMIT em = expr
-    { ErgoCompiler.ereturnsetstate e1 e2 }
-| THROW qn = qname LCURLY r = reclist RCURLY
-    { ErgoCompiler.ethrow (fst qn) (snd qn) r }
 | NEW qn = qname LCURLY r = reclist RCURLY
     { ErgoCompiler.enew (fst qn) (snd qn) r }
 | LCURLY r = reclist RCURLY
@@ -252,12 +273,8 @@ expr:
     { ErgoCompiler.ethis_clause }
 | STATE
     { ErgoCompiler.ethis_state }
-| DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet v e1 e2 }
 | LET v = ident EQUAL e1 = expr SEMI e2 = expr
     { ErgoCompiler.elet v e1 e2 }
-| DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet_typed v t e1 e2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
     { ErgoCompiler.elet_typed v t e1 e2 }
 | MATCH e0 = expr csd = cases
@@ -353,16 +370,16 @@ qname_base:
       then raise (Ergo_Error "'*' can only be last in a qualified name")
       else
         begin match q with
-	| (None, last) -> (Some i, last)
-	| (Some prefix, last) -> (Some (i ^ "." ^ prefix), last)
-	end }
+  | (None, last) -> (Some i, last)
+  | (Some prefix, last) -> (Some (i ^ "." ^ prefix), last)
+  end }
 
 qname:
 | qn = qname_base
     { begin match qn with
       | (None,last) -> (None,Util.char_list_of_string last)
       | (Some prefix, last) ->
-	  (Some (Util.char_list_of_string prefix), Util.char_list_of_string last)
+    (Some (Util.char_list_of_string prefix), Util.char_list_of_string last)
       end }
 
 qname_prefix:

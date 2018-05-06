@@ -38,6 +38,10 @@ Section ErgotoJavaScript.
     (** This *)
     Definition this_contract := "contract"%string. (* Contains all contract data and clause data *)
     Definition this_state := "state"%string. (* Contains state *)
+    Definition this_emit := "emit"%string. (* Contains state *)
+    Definition local_contract := "lcontract"%string. (* Contains all contract data and clause data *)
+    Definition local_state := "lstate"%string. (* Contains state *)
+    Definition local_emit := "lemit"%string. (* Contains state *)
     Definition current_time := "now"%string.
 
     (** New Array *)
@@ -108,7 +112,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_globals)
       (List.cons param ctxt.(comp_context_params)).
 
-  Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambda) : comp_context :=
+  Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambdaa) : comp_context :=
     mkCompContext
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
@@ -118,6 +122,14 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_globals)
       ctxt.(comp_context_params).
 
+  Definition lambdaa_of_lambdab (x:@lambdab ergoc_expr) : @lambdaa ergoc_expr :=
+    mkLambdaA
+      x.(lambdab_params)
+      x.(lambdab_output)
+      x.(lambdab_throw)
+      x.(lambdab_body).
+      
+  
   Definition set_current_contract (ctxt:comp_context) (cname:string) : comp_context :=
     mkCompContext
       ctxt.(comp_context_ctos)
@@ -161,17 +173,22 @@ Section ErgotoJavaScript.
     | EThisContract =>
       match ctxt.(comp_context_current_contract) with
       | None => not_in_contract_error
-      | Some _ => esuccess (NNRCGetConstant this_contract)
+      | Some _ => esuccess (NNRCVar local_contract)
       end
     | EThisClause => 
       match ctxt.(comp_context_current_clause) with
       | None => not_in_clause_error
-      | Some cname => esuccess (NNRCUnop (OpDot cname) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
+      | Some cname => esuccess (NNRCUnop (OpDot cname) (NNRCUnop OpUnbrand (NNRCVar local_contract)))
       end
     | EThisState =>
       match ctxt.(comp_context_current_contract) with
       | None => not_in_contract_error
-      | Some _ => esuccess (NNRCGetConstant this_state)
+      | Some _ => esuccess (NNRCVar local_state)
+      end
+    | EThisEmit =>
+      match ctxt.(comp_context_current_contract) with
+      | None => not_in_contract_error
+      | Some _ => esuccess (NNRCVar local_emit)
       end
     | EVar v =>
       if in_dec string_dec v ctxt.(comp_context_params)
@@ -200,16 +217,6 @@ Section ErgotoJavaScript.
         (ergo_expr_to_calculus ctxt e1)
         (ergo_expr_to_calculus ctxt e2)
         (ergo_expr_to_calculus ctxt e3)
-    | EEnforce e1 None e3 =>
-      elift3 NNRCIf
-        (elift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
-        (esuccess ergo_enforce_error)
-        (ergo_expr_to_calculus ctxt e3)
-    | EEnforce e1 (Some e2) e3 =>
-      elift3 NNRCIf
-        (elift (NNRCUnop (OpNeg)) (ergo_expr_to_calculus ctxt e1))
-        (ergo_expr_to_calculus ctxt e3)
-        (ergo_expr_to_calculus ctxt e2)
     | ELet v None e1 e2 =>
       elift2 (NNRCLet v)
               (ergo_expr_to_calculus ctxt e1)
@@ -366,7 +373,50 @@ Section ErgotoJavaScript.
             (fold_left proc_one foreachs init_e)
     end.
 
+  (** Translate an Ergo statement to an Ergo expression *)
+
+  Definition mk_throw (e:ergo_expr) : ergo_expr :=
+    EUnaryOp OpRight e.
+  
+  Fixpoint ergo_stmt_to_expr (s:ergo_stmt) : ergo_expr :=
+    match s with
+    | SReturn e =>
+      EUnaryOp OpLeft (mk_result e (EVar local_state) (EVar local_emit))
+    | SThrow e =>
+      EUnaryOp OpRight e
+    | SSetState e1 s2 =>
+      set_state e1 (ergo_stmt_to_expr s2)
+    | SEmit e1 s2 =>
+      push_emit e1 (ergo_stmt_to_expr s2)
+    | SLet vname vtype e1 s2 =>
+      ELet vname vtype
+           e1
+           (ergo_stmt_to_expr s2)
+    | SIf e1 s2 s3 =>
+      EIf e1
+          (ergo_stmt_to_expr s2)
+          (ergo_stmt_to_expr s3)
+    | SEnforce e1 None s3 =>
+      EIf (EUnaryOp OpNeg e1)
+          (mk_throw (EConst enforce_error_content))
+          (ergo_stmt_to_expr s3)
+    | SEnforce e1 (Some s2) s3 =>
+      EIf (EUnaryOp OpNeg e1)
+          (ergo_stmt_to_expr s2)
+          (ergo_stmt_to_expr s3)
+    | SMatch e sl sdefault =>
+      EMatch e
+             (map (fun xy => (fst xy, (ergo_stmt_to_expr (snd xy)))) sl)
+             (ergo_stmt_to_expr sdefault)
+    end.
+
+  Definition ergoc_expr_top (e:ergoc_expr) : ergoc_expr :=
+    NNRCLet local_contract (NNRCGetConstant this_contract)
+            (NNRCLet local_state (NNRCGetConstant this_state)
+                     (NNRCLet local_emit (NNRCGetConstant this_emit) e)).
+  
   (** Translate a clause to clause+calculus *)
+
   Definition clause_to_calculus
              (ctxt:comp_context) (c:ergo_clause) : eresult ergoc_clause :=
     let ctxt : comp_context :=
@@ -375,46 +425,47 @@ Section ErgotoJavaScript.
     let ctxt : comp_context :=
         add_params
           ctxt
-          (List.map fst c.(clause_lambda).(lambda_params))
+          (List.map fst c.(clause_lambda).(lambdab_params))
     in
     elift
       (mkClause
          c.(clause_name))
       (elift
-         (mkLambda
-            c.(clause_lambda).(lambda_params)
-            c.(clause_lambda).(lambda_output)
-            c.(clause_lambda).(lambda_throw))
-         (ergo_expr_to_calculus ctxt c.(clause_lambda).(lambda_body))).
+         (mkLambdaB
+            c.(clause_lambda).(lambdab_params)
+            c.(clause_lambda).(lambdab_output)
+            c.(clause_lambda).(lambdab_throw))
+         (elift ergoc_expr_top (ergo_expr_to_calculus ctxt (ergo_stmt_to_expr c.(clause_lambda).(lambdab_body))))).
 
   (** Translate a function to function+calculus *)
   Definition function_to_calculus
              (ctxt:comp_context) (f:ergo_function) : eresult ergoc_function :=
     let ctxt :=
-        add_params ctxt (List.map fst f.(function_lambda).(lambda_params))
+        add_params ctxt (List.map fst f.(function_lambda).(lambdaa_params))
     in
     elift
       (mkFunc
          f.(function_name))
       (elift
-         (mkLambda
-            f.(function_lambda).(lambda_params)
-            f.(function_lambda).(lambda_output)
-            f.(function_lambda).(lambda_throw))
-         (ergo_expr_to_calculus ctxt f.(function_lambda).(lambda_body))).
+         (mkLambdaA
+            f.(function_lambda).(lambdaa_params)
+            f.(function_lambda).(lambdaa_output)
+            f.(function_lambda).(lambdaa_throw))
+         (ergo_expr_to_calculus ctxt f.(function_lambda).(lambdaa_body))).
 
   (** Translate a declaration to a declaration+calculus *)
-  Definition declaration_to_calculus
-             (ctxt:comp_context) (d:ergo_declaration) : eresult (comp_context * ergoc_declaration) :=
-    match d with
-    | Clause c =>
-      elift
-        (fun x => (add_one_function ctxt x.(clause_name) x.(clause_lambda), Clause x)) (* Add new function to comp_context *)
-        (clause_to_calculus ctxt c)
-    end.
+  Definition clause_declaration_to_calculus
+             (ctxt:comp_context) (c:ergo_clause) : eresult (comp_context * ergoc_clause) :=
+    elift
+      (fun x => (add_one_function
+                   ctxt
+                   x.(clause_name)
+                   (lambdaa_of_lambdab x.(clause_lambda)), x)) (* Add new function to comp_context *)
+      (clause_to_calculus ctxt c).
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the comp_context *)
+
   Definition contract_to_calculus
              (ctxt:comp_context) (c:ergo_contract) : eresult (comp_context * ergoc_contract) :=
     let ctxt :=
@@ -423,22 +474,23 @@ Section ErgotoJavaScript.
     let ctxt : comp_context :=
         add_params
           ctxt
-          (current_time :: this_contract :: this_state :: nil)
+          (current_time :: this_contract :: this_state :: this_emit :: nil)
     in
     let init := esuccess (ctxt, nil) in
     let proc_one
-          (acc:eresult (comp_context * list ergoc_declaration))
-          (s:ergo_declaration)
-        : eresult (comp_context * list ergoc_declaration) :=
+          (acc:eresult (comp_context * list ergoc_clause))
+          (s:ergo_clause)
+        : eresult (comp_context * list ergoc_clause) :=
         eolift
-          (fun acc : comp_context * list ergoc_declaration =>
+          (fun acc : comp_context * list ergoc_clause =>
              let (ctxt,acc) := acc in
-             elift (fun xy : comp_context * ergoc_declaration =>
+             elift (fun xy : comp_context * ergoc_clause =>
                       let (newctxt,news) := xy in
                       (newctxt,news::acc))
-                   (declaration_to_calculus ctxt s))
+                   (clause_declaration_to_calculus ctxt s))
           acc
     in
+    let cl : list ergo_clause := c.(contract_clauses) in
     elift
       (fun xy =>
          (fst xy,
@@ -446,11 +498,11 @@ Section ErgotoJavaScript.
              c.(contract_name)
              c.(contract_template)
              (snd xy))))
-      (List.fold_left proc_one c.(contract_declarations) init).
+      (List.fold_left proc_one cl init).
 
   (** Translate a statement to a statement+calculus *)
   Definition stmt_to_calculus
-             (ctxt:comp_context) (s:ergo_stmt) : eresult (comp_context * ergoc_stmt) :=
+             (ctxt:comp_context) (s:ergo_declaration) : eresult (comp_context * ergoc_declaration) :=
     match s with
     | EType cto_type => esuccess (ctxt, EType cto_type) (* XXX TO BE REVISED -- add type to comp_context *)
     | EExpr e =>
@@ -481,13 +533,13 @@ Section ErgotoJavaScript.
     let ctxt := initial_comp_context cto_decls local_namespace in
     let init := esuccess (ctxt, nil) in
     let proc_one
-          (acc:eresult (comp_context * list ergoc_stmt))
-          (s:ergo_stmt)
-        : eresult (comp_context * list ergoc_stmt) :=
+          (acc:eresult (comp_context * list ergoc_declaration))
+          (s:ergo_declaration)
+        : eresult (comp_context * list ergoc_declaration) :=
         eolift
-          (fun acc : comp_context * list ergoc_stmt =>
+          (fun acc : comp_context * list ergoc_declaration =>
              let (ctxt,acc) := acc in
-             elift (fun xy : comp_context * ergoc_stmt =>
+             elift (fun xy : comp_context * ergoc_declaration =>
                       let (newctxt,news) := xy in
                       (newctxt,news::acc))
                    (stmt_to_calculus ctxt s))
@@ -498,7 +550,7 @@ Section ErgotoJavaScript.
          (mkPackage
             p.(package_namespace)
             (snd xy)))
-      (List.fold_left proc_one p.(package_statements) init).
+      (List.fold_left proc_one p.(package_declarations) init).
 
   Definition package_to_calculus (ctos:list cto_package) (p:package) : eresult ergoc_package :=
     let local_namespace := p.(package_namespace) in

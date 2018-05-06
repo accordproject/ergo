@@ -34,20 +34,20 @@ contract HelloWorld over TemplateModel {
 }
 *)
 
-  Definition cl1 :=
+  Definition cl1 : ergo_clause :=
     mkClause "helloworld"
-             (mkLambda
+             (mkLambdaB
                 (("request", CTOClassRef "Request")::nil)
                 (CTOClassRef "Response")
                 None
-                (EVar "request")).
+                (SReturn (EVar "request"))).
 
-  Definition c1 :=
+  Definition c1 : ergo_contract :=
     mkContract "HelloWorld"
                "TemplateModel"
-               ((Clause cl1)::nil).
+               (cl1::nil).
   
-  Definition p1 :=
+  Definition p1 : ergo_package :=
     mkPackage "org.accordproject.helloworld"
               ((EContract c1)::nil).
 
