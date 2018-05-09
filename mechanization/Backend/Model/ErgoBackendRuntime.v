@@ -115,13 +115,30 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
     fun fname =>
       let unop :=
           match fname with
+          (* Polymorphic *)
+          | "toString" => Some OpToString
+          (* Natural numbers // Integer or Long *)
+          | "integerAbs" => Some (OpNatUnary NatAbs)
+          | "integerlog2" => Some (OpNatUnary NatLog2)
+          | "integerSqrt" => Some (OpNatUnary NatSqrt)
+          | "integerToDouble" => Some OpFloatOfNat
+          (* Floating point numbers // Double *)
+          | "sqrt" => Some (OpFloatUnary FloatSqrt)
+          | "exp" => Some (OpFloatUnary FloatExp)
+          | "log" => Some (OpFloatUnary FloatLog)
+          | "log10" => Some (OpFloatUnary FloatLog10)
+          | "ceil" => Some (OpFloatUnary FloatCeil)
+          | "floor" => Some (OpFloatUnary FloatFloor)
+          | "abs" => Some (OpFloatUnary FloatAbs)
           | "max" => Some OpFloatBagMax
           | "min" => Some OpFloatBagMin
-          | "flatten" => Some OpFlatten
-          | "toString" => Some OpToString
-          | "count" => Some OpCount
           | "average" => Some OpFloatMean
           | "sum" => Some OpFloatSum
+          | "doubletoInteger" | "truncate" => Some OpFloatTruncate
+          (* Arrays *)
+          | "distinct" => Some OpDistinct
+          | "count" => Some OpCount
+          | "flatten" => Some OpFlatten
           | _ => None
           end
       in
@@ -137,7 +154,16 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
       fun fname =>
         let binop :=
             match fname with
-            | "concat" => Some OpStringConcat
+            (* Natural numbers // Integer or Long *)
+            | "integerMod" => Some (OpNatBinary NatRem)
+            | "integerMin" => Some (OpNatBinary NatMin)
+            | "integerMax" => Some (OpNatBinary NatMax)
+            (* Floating point numbers // Double *)
+            | "min" => Some (OpFloatBinary FloatMin)
+            | "max" => Some (OpFloatBinary FloatMax)
+            (* Arrays *)
+            | "arrayAdd" => Some OpBagUnion
+            | "arraySubstract" => Some OpBagDiff
             | _ => None
             end
         in
