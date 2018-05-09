@@ -47,21 +47,21 @@ Module EType(ergomodel:ErgoBackendModel).
     := RType.Bottom.  
   Definition top {m:brand_relation} : etype
     := RType.Top.
-  Definition unit {m:brand_relation} : etype
+  Definition empty {m:brand_relation} : etype
     := RType.Unit.
-  Definition float {m:brand_relation} : etype
+  Definition double {m:brand_relation} : etype
     := RType.Float.
-  Definition nat {m:brand_relation} : etype
+  Definition integer {m:brand_relation} : etype
     := RType.Nat.
   Definition bool {m:brand_relation} : etype
     := RType.Bool.
   Definition string {m:brand_relation} : etype
     := RType.String.
-  Definition bag {m:brand_relation} : etype -> etype
+  Definition array {m:brand_relation} : etype -> etype
     := RType.Coll.
   Definition record {m:brand_relation} : record_kind -> forall (r:list (String.string*etype)), sorted_pf_type r -> etype
     := RType.Rec.
-  Definition either {m:brand_relation} : etype -> etype -> etype
+  Definition sum {m:brand_relation} : etype -> etype -> etype
     := RType.Either.
   Definition arrow {m:brand_relation} : etype -> etype -> etype
     := RType.Arrow.

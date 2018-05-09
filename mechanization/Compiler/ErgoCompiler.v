@@ -42,6 +42,8 @@ Module ErgoCompiler.
 
   Definition cto_any : CTO.cto_type
     := CTO.CTOAny.
+  Definition cto_empty : CTO.cto_type
+    := CTO.CTOEmpty.
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
   Definition cto_string : CTO.cto_type
@@ -122,6 +124,8 @@ Module ErgoCompiler.
     Ergo.SFunReturn.
   Definition sreturnempty : ergo_stmt :=
     ErgoSugar.SReturnEmpty.
+  Definition sfunreturnempty : ergo_stmt :=
+    ErgoSugar.SFunReturnEmpty.
   Definition sthrow : ergo_expr -> ergo_stmt :=
     Ergo.SThrow.
   Definition ssetstate : ergo_expr -> ergo_stmt -> ergo_stmt :=

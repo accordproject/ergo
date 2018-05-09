@@ -64,7 +64,10 @@
 	      (* Data *)
 	      "true", TRUE;
 	      "false", FALSE;
-	      "nil", NIL
+	      "nil", NIL;
+        (* Types *)
+        "Any", ANY;
+        "Empty", EMPTY;
 	    ]; tbl
     end
 
