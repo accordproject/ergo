@@ -50,6 +50,7 @@ Section CTO.
   | CTOEnum : list string -> cto_declaration_kind
   | CTOTransaction : option string -> list (string * cto_type) -> cto_declaration_kind
   | CTOConcept : option string -> list (string * cto_type) -> cto_declaration_kind
+  | CTOEvent : option string -> list (string * cto_type) -> cto_declaration_kind
   | CTOGlobal : cto_type -> cto_declaration_kind
   | CTOFunction : cto_signature -> cto_declaration_kind
   | CTOContract :
@@ -206,6 +207,10 @@ Section CTO.
                (resolve_cto_struct namespace tbl cto_struct)
       | CTOConcept extend_name cto_struct =>
         elift2 CTOConcept
+               (resolve_extend_name namespace tbl extend_name)
+               (resolve_cto_struct namespace tbl cto_struct)
+      | CTOEvent extend_name cto_struct =>
+        elift2 CTOEvent
                (resolve_extend_name namespace tbl extend_name)
                (resolve_cto_struct namespace tbl cto_struct)
       | CTOGlobal cto_type =>

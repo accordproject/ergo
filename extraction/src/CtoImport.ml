@@ -37,7 +37,7 @@ let base_type_of_decl d =
       end
   end
 
-let concept_field_of_decl d =
+let field_of_decl d =
   let field_name = char_list_of_string d.cto_decl_content_id.cto_id_name in
   let base_type =
     base_type_of_decl d.cto_decl_content_propertyType
@@ -60,7 +60,10 @@ let concept_field_of_decl d =
   (field_name, field_type)
 
 let cto_concept_of_decls dl =
-  List.map concept_field_of_decl dl
+  List.map field_of_decl dl
+
+let cto_event_of_decls dl =
+  List.map field_of_decl dl
 
 let cto_declaration_of_defn d =
   let decl_class = d.cto_defn_id.cto_id_name in
@@ -74,6 +77,9 @@ let cto_declaration_of_defn d =
     | "ConceptDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
         CTOConcept (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+    | "EventDeclaration" ->
+        (* XXX First parameter is inheritance TBD *)
+        CTOEvent (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
         raise (Ergo_Error ("Can't import CTO kind: " ^ other))
     end
