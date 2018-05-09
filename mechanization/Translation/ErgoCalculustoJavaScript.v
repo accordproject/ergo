@@ -104,7 +104,7 @@ Section ErgoCalculustoJavaScript.
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       let fname := function_name_of_contract_clause_name coname c.(clause_name) in
-      javascript_function_of_body c.(clause_lambda).(lambdab_body) fname eol quotel.
+      javascript_function_of_body c.(clause_lambda).(lambda_body) fname eol quotel.
     
     Definition javascript_function_of_ergo_func
                (f:ergoc_function)
@@ -112,21 +112,21 @@ Section ErgoCalculustoJavaScript.
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       let fname := function_name_of_contract_clause_name coname f.(function_name) in
-      javascript_function_of_body f.(function_lambda).(lambdaa_body) fname eol quotel ++ eol.
+      javascript_function_of_body f.(function_lambda).(lambda_body) fname eol quotel ++ eol.
     
     Definition javascript_method_of_ergo_clause
                (c:ergoc_clause)
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       let fname := c.(clause_name) in
-      javascript_method_of_body c.(clause_lambda).(lambdab_body) fname eol quotel.
+      javascript_method_of_body c.(clause_lambda).(lambda_body) fname eol quotel.
     
     Definition javascript_method_of_ergo_func
                (f:ergoc_function)
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       let fname := f.(function_name) in
-      javascript_method_of_body f.(function_lambda).(lambdaa_body) fname eol quotel.
+      javascript_method_of_body f.(function_lambda).(lambda_body) fname eol quotel.
 
     Definition javascript_of_clause_list
                (cl:list clause)

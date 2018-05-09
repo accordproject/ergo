@@ -118,6 +118,10 @@ Module ErgoCompiler.
 
   Definition sreturn : ergo_expr -> ergo_stmt :=
     Ergo.SReturn.
+  Definition sfunreturn : ergo_expr -> ergo_stmt :=
+    Ergo.SFunReturn.
+  Definition sreturnempty : ergo_stmt :=
+    ErgoSugar.SReturnEmpty.
   Definition sthrow : ergo_expr -> ergo_stmt :=
     Ergo.SThrow.
   Definition ssetstate : ergo_expr -> ergo_stmt -> ergo_stmt :=
@@ -137,8 +141,6 @@ Module ErgoCompiler.
   
   Definition edot : String.string -> ergo_expr -> ergo_expr 
     := ErgoSugar.EDot.
-  Definition ereturn : option ergo_expr -> option ergo_expr -> option ergo_expr -> ergo_expr
-    := ErgoSugar.EReturn.
   Definition enew : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
     := ErgoSugar.ENewSugar.
   Definition ethrow : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 

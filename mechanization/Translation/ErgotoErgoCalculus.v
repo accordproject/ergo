@@ -112,7 +112,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_globals)
       (List.cons param ctxt.(comp_context_params)).
 
-  Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambdaa) : comp_context :=
+  Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambda) : comp_context :=
     mkCompContext
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
@@ -122,14 +122,6 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_globals)
       ctxt.(comp_context_params).
 
-  Definition lambdaa_of_lambdab (x:@lambdab ergoc_expr) : @lambdaa ergoc_expr :=
-    mkLambdaA
-      x.(lambdab_params)
-      x.(lambdab_output)
-      x.(lambdab_throw)
-      x.(lambdab_body).
-      
-  
   Definition set_current_contract (ctxt:comp_context) (cname:string) : comp_context :=
     mkCompContext
       ctxt.(comp_context_ctos)
@@ -382,6 +374,8 @@ Section ErgotoJavaScript.
     match s with
     | SReturn e =>
       EUnaryOp OpLeft (mk_result e (EVar local_state) (EVar local_emit))
+    | SFunReturn e =>
+      e (* Returning from a function does not have state or emit, just the result *)
     | SThrow e =>
       EUnaryOp OpRight e
     | SSetState e1 s2 =>
@@ -425,33 +419,33 @@ Section ErgotoJavaScript.
     let ctxt : comp_context :=
         add_params
           ctxt
-          (List.map fst c.(clause_lambda).(lambdab_params))
+          (List.map fst c.(clause_lambda).(lambda_params))
     in
     elift
       (mkClause
          c.(clause_name))
       (elift
-         (mkLambdaB
-            c.(clause_lambda).(lambdab_params)
-            c.(clause_lambda).(lambdab_output)
-            c.(clause_lambda).(lambdab_throw))
-         (elift ergoc_expr_top (ergo_expr_to_calculus ctxt (ergo_stmt_to_expr c.(clause_lambda).(lambdab_body))))).
+         (mkLambda
+            c.(clause_lambda).(lambda_params)
+            c.(clause_lambda).(lambda_output)
+            c.(clause_lambda).(lambda_throw))
+         (elift ergoc_expr_top (ergo_expr_to_calculus ctxt (ergo_stmt_to_expr c.(clause_lambda).(lambda_body))))).
 
   (** Translate a function to function+calculus *)
   Definition function_to_calculus
              (ctxt:comp_context) (f:ergo_function) : eresult ergoc_function :=
     let ctxt :=
-        add_params ctxt (List.map fst f.(function_lambda).(lambdaa_params))
+        add_params ctxt (List.map fst f.(function_lambda).(lambda_params))
     in
     elift
       (mkFunc
          f.(function_name))
       (elift
-         (mkLambdaA
-            f.(function_lambda).(lambdaa_params)
-            f.(function_lambda).(lambdaa_output)
-            f.(function_lambda).(lambdaa_throw))
-         (ergo_expr_to_calculus ctxt f.(function_lambda).(lambdaa_body))).
+         (mkLambda
+            f.(function_lambda).(lambda_params)
+            f.(function_lambda).(lambda_output)
+            f.(function_lambda).(lambda_throw))
+         (ergo_expr_to_calculus ctxt (ergo_stmt_to_expr f.(function_lambda).(lambda_body)))).
 
   (** Translate a declaration to a declaration+calculus *)
   Definition clause_declaration_to_calculus
@@ -460,7 +454,7 @@ Section ErgotoJavaScript.
       (fun x => (add_one_function
                    ctxt
                    x.(clause_name)
-                   (lambdaa_of_lambdab x.(clause_lambda)), x)) (* Add new function to comp_context *)
+                   x.(clause_lambda), x)) (* Add new function to comp_context *)
       (clause_to_calculus ctxt c).
 
   (** Translate a contract to a contract+calculus *)

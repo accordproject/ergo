@@ -101,11 +101,11 @@ Section ErgotoJavaScript.
           (fun disp =>
              (EFunc
                 (mkFunc dispatch_fun_name
-                        (mkLambdaA
+                        (mkLambda
                            (("request"%string,(CTOClassRef "Request"))::nil)
                            (CTOClassRef "Response")
                            None
-                           disp))))
+                           (SFunReturn disp))))) (* XXX Make sure it's a return-from-function style? *)
           (match_of_sigs_top p.(package_namespace) effparams sigs)
     in
     elift (fun disp =>

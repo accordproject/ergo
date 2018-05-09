@@ -1,7 +1,7 @@
 namespace org.accordproject.hellogoodbye
 
 define function error(v Double) : Double {
-  v + clause.rate // Cannot access clause variable output of a contract
+  return v + clause.rate // Cannot access clause variable output of a contract
 }
 
 contract HelloGoodbye over TemplateModel {
