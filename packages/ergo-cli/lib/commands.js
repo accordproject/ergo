@@ -46,16 +46,16 @@ class Commands {
      * Execute Ergo
      *
      * @param {string} ergoPath path to the Ergo file
-     * @param {string} ctoPaths paths to CTO models
-     * @param {object} contractPath path to the contract data in JSON
-     * @param {object} requestPath path to the request transaction in JSON
-     * @param {object} statePath path to the state in JSON
+     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} contractPath path to the contract data in JSON
+     * @param {string[]} requestsPath path to the request transaction in JSON
+     * @param {string} statePath path to the state in JSON
      * @param {string} contractName of the contract to execute
      * @param {string} clauseName of the clause to execute
      * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPath,ctoPaths,contractPath,requestPath,statePath,contractName,clauseName,withDispatch) {
+    static execute(ergoPath,ctoPaths,contractPath,requestsPath,statePath,contractName,clauseName,withDispatch) {
         const ergoText = Fs.readFileSync(ergoPath, 'utf8');
         if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
         let ctoTexts = [];
@@ -64,9 +64,20 @@ class Commands {
             ctoTexts.push(ctoText);
         }
         const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
-        const requestJson = JSON.parse(Fs.readFileSync(requestPath, 'utf8'));
+        let requestsJson = [];
+        for (let i = 0; i < requestsPath.length; i++) {
+            requestsJson.push(JSON.parse(Fs.readFileSync(requestsPath[i], 'utf8')));
+        }
         const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-        return ErgoEngine.execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch);
+        const firstRequest = requestsJson[0];
+        const initResponse = ErgoEngine.execute(ergoText,ctoTexts,contractJson,firstRequest,stateJson,contractName,clauseName,withDispatch);
+        // Get all the other requests and chain execution through Promise.reduce()
+        const otherRequests = requestsJson.slice(1, requestsJson.length);
+        return otherRequests.reduce((promise,requestJson) => {
+            return promise.then((result) => {
+                return ErgoEngine.execute(ergoText,ctoTexts,contractJson,requestJson,result.state,contractName,clauseName,withDispatch);
+            });
+        }, initResponse);
     }
 
     /**
