@@ -89,10 +89,15 @@ rule token sbuff = parse
 | "<=" { LTEQ }
 | ">=" { GTEQ }
 | "+" { PLUS }
+| "+i" { PLUSI }
 | "++" { PLUSPLUS }
 | "*" { STAR }
+| "*i" { STARI }
+| "**" { STARSTAR }
 | "/" { SLASH }
+| "/i" { SLASHI }
 | "-" { MINUS }
+| "-i" { MINUSI }
 | "," { COMMA }
 | ":" { COLON }
 | "." { DOT }

@@ -28,14 +28,22 @@ Module EOperators(ergomodel:ErgoBackendModel).
     Definition t : Set 
       := op.
 
-    Module Float.
+    Module Double.
       Definition opabs : op 
         := UnaryOperators.OpFloatUnary UnaryOperators.FloatAbs.
       Definition oplog2 : op 
         := UnaryOperators.OpFloatUnary UnaryOperators.FloatLog.
       Definition opsqrt : op 
         := UnaryOperators.OpFloatUnary UnaryOperators.FloatSqrt.
-    End Float.
+      Definition opsum : op 
+        := UnaryOperators.OpFloatSum.
+      Definition opnummin : op 
+        := UnaryOperators.OpFloatBagMin.
+      Definition opnummax : op 
+        := UnaryOperators.OpFloatBagMax.
+      Definition opnummean : op 
+        := UnaryOperators.OpFloatMean.
+    End Double.
 
     Definition opidentity : op 
       := UnaryOperators.OpIdentity.
@@ -59,14 +67,6 @@ Module EOperators(ergomodel:ErgoBackendModel).
       := UnaryOperators.OpDistinct.
     Definition opcount : op 
       := UnaryOperators.OpCount.
-    Definition opsum : op 
-      := UnaryOperators.OpFloatSum.
-    Definition opnummin : op 
-      := UnaryOperators.OpFloatBagMin.
-    Definition opnummax : op 
-      := UnaryOperators.OpFloatBagMax.
-    Definition opnummean : op 
-      := UnaryOperators.OpFloatMean.
     Definition optostring : op 
       := UnaryOperators.OpToString.
     Definition opsubstring : Z -> option Z -> op 
@@ -101,7 +101,7 @@ Module EOperators(ergomodel:ErgoBackendModel).
     Definition t : Set 
       := op.
 
-    Module Float.
+    Module Double.
       Definition opplus : op 
         := BinaryOperators.OpFloatBinary BinaryOperators.FloatPlus.
       Definition opminus : op 
@@ -114,9 +114,20 @@ Module EOperators(ergomodel:ErgoBackendModel).
         := BinaryOperators.OpFloatBinary BinaryOperators.FloatMax.
       Definition opdiv : op 
         := BinaryOperators.OpFloatBinary BinaryOperators.FloatDiv.
-(*      Definition oprem : op 
-        := BinaryOperators.OpFloatBinary BinaryOperators.FloatRem. *)
-    End Float.
+      Definition oppow : op 
+        := BinaryOperators.OpFloatBinary BinaryOperators.FloatPow.
+    End Double.
+
+    Module Integer.
+      Definition opplusi : op 
+        := BinaryOperators.OpNatBinary BinaryOperators.NatPlus.
+      Definition opminusi : op 
+        := BinaryOperators.OpNatBinary BinaryOperators.NatMinus.
+      Definition opmulti : op 
+        := BinaryOperators.OpNatBinary BinaryOperators.NatMult.
+      Definition opdivi : op 
+        := BinaryOperators.OpNatBinary BinaryOperators.NatDiv.
+    End Integer.
 
     Module DateTime.
       Definition optimeas : op

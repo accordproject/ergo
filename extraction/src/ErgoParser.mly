@@ -41,7 +41,8 @@
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
-%token PLUS MINUS STAR SLASH
+%token PLUS MINUS STAR SLASH STARSTAR
+%token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
 %token DOT COMMA COLON SEMI QUESTION
 %token LPAREN RPAREN
@@ -56,8 +57,9 @@
 %left AND
 %left EQUAL NEQUAL
 %left LT GT LTEQ GTEQ
-%left PLUS MINUS
-%left STAR SLASH
+%left PLUS MINUS PLUSI MINUSI
+%left STAR SLASH STARI SLASHI
+%left STARSTAR
 %left PLUSPLUS
 %right NOT
 %left DOT
@@ -300,13 +302,23 @@ expr:
 | e1 = expr GTEQ e2 = expr
     { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.oplt e1 e2) }
 | e1 = expr MINUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Float.opminus e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opminus e1 e2 }
 | e1 = expr PLUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Float.opplus e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opplus e1 e2 }
 | e1 = expr STAR e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Float.opmult e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opmult e1 e2 }
 | e1 = expr SLASH e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Float.opdiv e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opdiv e1 e2 }
+| e1 = expr STARSTAR e2 = expr
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.oppow e1 e2 }
+| e1 = expr MINUSI e2 = expr
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opminusi e1 e2 }
+| e1 = expr PLUSI e2 = expr
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opplusi e1 e2 }
+| e1 = expr STARI e2 = expr
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opmulti e1 e2 }
+| e1 = expr SLASHI e2 = expr
+    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opdivi e1 e2 }
 | e1 = expr AND e2 = expr
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opand e1 e2 }
 | e1 = expr OR e2 = expr
