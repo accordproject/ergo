@@ -33,31 +33,24 @@ Section ErgoBase.
   Section Syntax.
     (** Generic function closure over expressions in [A].
         All free variables in A have to be declared in the list of parameters. *)
-    Record lambdaa :=
-      mkLambdaA
-        { lambdaa_params: list (string * cto_type);
-          lambdaa_output : cto_type;
-          lambdaa_throw : option string;
-          lambdaa_body : A; }.
-
-    Record lambdab :=
-      mkLambdaB
-        { lambdab_params: list (string * cto_type);
-          lambdab_output : cto_type;
-          lambdab_throw : option string;
-          lambdab_body : B; }.
+    Record lambda :=
+      mkLambda
+        { lambda_params: list (string * cto_type);
+          lambda_output : cto_type;
+          lambda_throw : option string;
+          lambda_body : B; }.
 
     (** Function *)
     Record function :=
       mkFunc
         { function_name : string;
-          function_lambda : lambdaa; }.
+          function_lambda : lambda; }.
     
     (** Clause *)
     Record clause :=
       mkClause
         { clause_name : string;
-          clause_lambda : lambdab; }.
+          clause_lambda : lambda; }.
 
     (** Contract *)
     Record contract :=
@@ -102,19 +95,19 @@ Section ErgoBase.
     Definition code_from_clause (c:option clause) : option B :=
       match c with
       | None => None
-      | Some c => Some c.(clause_lambda).(lambdab_body)
+      | Some c => Some c.(clause_lambda).(lambda_body)
       end.
     
-    Definition code_from_function (f:option function) : option A :=
+    Definition code_from_function (f:option function) : option B :=
       match f with
       | None => None
-      | Some f => Some f.(function_lambda).(lambdaa_body)
+      | Some f => Some f.(function_lambda).(lambda_body)
       end.
     
     Definition lookup_code_from_clause (clname:string) (c:clause) : option B :=
       code_from_clause (lookup_from_clause clname c).
 
-    Definition lookup_code_from_func (clname:string) (c:function) : option A :=
+    Definition lookup_code_from_func (clname:string) (c:function) : option B :=
       code_from_function (lookup_from_func clname c).
 
     Definition lookup_from_clauses (clname:string) (dl:list clause) : option clause :=
@@ -165,7 +158,7 @@ Section ErgoBase.
       match dl with
       | nil => nil
       | cl :: dl' =>
-        (cl.(clause_name), cl.(clause_lambda).(lambdab_params)) :: lookup_clauses_signatures dl'
+        (cl.(clause_name), cl.(clause_lambda).(lambda_params)) :: lookup_clauses_signatures dl'
       end.
     
     Definition lookup_contract_signatures (c:contract) : list signature :=
@@ -179,7 +172,7 @@ Section ErgoBase.
       | EGlobal _ _ :: sl' => lookup_statements_signatures sl'
       | EImport _ :: sl' => lookup_statements_signatures sl'
       | EFunc f :: sl' =>
-        (f.(function_name), f.(function_lambda).(lambdaa_params)) :: lookup_statements_signatures sl'
+        (f.(function_name), f.(function_lambda).(lambda_params)) :: lookup_statements_signatures sl'
       | EContract c :: sl' =>
         lookup_contract_signatures c ++ lookup_statements_signatures sl'
       end.
@@ -223,12 +216,12 @@ Section ErgoBase.
         then
           let flambda := f.(function_lambda) in
           let request :=
-              match flambda.(lambdaa_params) with
+              match flambda.(lambda_params) with
               | nil => dispatch_parameter_error
               | (_,reqtype) :: _ => esuccess reqtype
               end
           in
-          let response := flambda.(lambdaa_output) in
+          let response := flambda.(lambda_output) in
           elift (fun request => (request, response, f)) request
         else lookup_statements_dispatch name dl'
       | EContract c :: dl' => lookup_statements_dispatch name dl'

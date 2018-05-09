@@ -44,7 +44,7 @@ Section ErgoSugar.
                     (EUnaryOp OpBag e1)
                     (EVar "lemit"))
          e2.
-  
+
   Definition ENewSugar pname cname el : ergo_expr :=
     ENew (mkClassRef pname cname) el.
 
@@ -56,30 +56,8 @@ Section ErgoSugar.
                  "Error"
                  (("error", EConst (ErgoData.dstring msg))::nil))%string.
 
-  Definition default_return := EConst (ErgoData.dunit).
-  Definition default_set_state := EThisState.
-  Definition default_emit := EConst (ErgoData.dcoll nil).
-  
-  Definition EReturn (e1 e2 e3: option ergo_expr) :=
-    let e1 :=
-        match e1 with
-        | None => default_return
-        | Some e => e
-        end
-    in
-    let e2 :=
-        match e2 with
-        | None => default_set_state
-        | Some e => e
-        end
-    in
-    let e3 :=
-        match e3  with
-        | None => default_emit
-        | Some e => e
-        end
-    in
-    mk_result e1 e2 e3.
+  Definition SReturnEmpty :=
+    SReturn (EConst dunit).
   
 End ErgoSugar.
 

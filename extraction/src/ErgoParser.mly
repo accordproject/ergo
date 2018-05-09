@@ -93,22 +93,22 @@ decl:
     { EType (ErgoCompiler.mk_cto_declaration cn (CTOEnum et)) }
 | DEFINE VARIABLE v = ident EQUAL e = expr
     { EGlobal (v, e) }
-| DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+| DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
     { EFunc
   { function_name = cn;
     function_lambda =
-    { lambdaa_params = [];
-      lambdaa_output = out;
-      lambdaa_throw = mt;
-      lambdaa_body = e; } } }
-| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY e = expr RCURLY
+    { lambda_params = [];
+      lambda_output = out;
+      lambda_throw = mt;
+      lambda_body = fs; } } }
+| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
     { EFunc
   { function_name = cn;
     function_lambda =
-    { lambdaa_params = ps;
-      lambdaa_output = out;
-      lambdaa_throw = mt;
-      lambdaa_body = e; } } }
+    { lambda_params = ps;
+      lambda_output = out;
+      lambda_throw = mt;
+      lambda_body = fs; } } }
 | IMPORT qn = qname_prefix
     { EImport (ErgoUtil.cto_import_decl_of_import_namespace qn) }
 | c = contract
@@ -140,17 +140,17 @@ clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = stmt RCURLY
     { { clause_name = cn;
 				clause_lambda =
-				{ lambdab_params = [];
-					lambdab_output = out;
-					lambdab_throw = mt;
-					lambdab_body = e; } } }
+				{ lambda_params = [];
+					lambda_output = out;
+					lambda_throw = mt;
+					lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
     { { clause_name = cn;
         clause_lambda =
-        { lambdab_params = ps;
-          lambdab_output = out;
-          lambdab_throw = mt;
-          lambdab_body = s; } } }
+        { lambda_params = ps;
+          lambda_output = out;
+          lambda_throw = mt;
+          lambda_body = s; } } }
 
 maythrow:
 |
@@ -223,6 +223,29 @@ stmt:
 | MATCH e0 = expr csd = cases_stmt
     { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
 
+fstmt:
+(* Statments *)
+| RETURN e1 = expr
+		{ ErgoCompiler.sfunreturn e1 }
+| THROW e1 = expr
+    { ErgoCompiler.sthrow e1 }
+| DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = fstmt
+    { ErgoCompiler.slet v e1 s2 }
+| DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
+    { ErgoCompiler.slet_typed v t e1 s2 }
+| IF e1 = expr THEN s2 = fstmt ELSE s3 = fstmt
+    { ErgoCompiler.sif e1 s2 s3 }
+| ENFORCE e1 = expr ELSE s2 = fstmt SEMI s3 = fstmt
+    { ErgoCompiler.senforce e1 (Some s2) s3 }
+| ENFORCE e1 = expr SEMI s3 = fstmt
+    { ErgoCompiler.senforce e1 None s3 }
+| SET STATE e1 = expr SEMI s2 = fstmt
+    { raise (Ergo_Error ("Cannot set state in a function, you have to be in a Clause")) }
+| EMIT e1 = expr SEMI s2 = fstmt
+    { raise (Ergo_Error ("Cannot emit in a function, you have to be in a Clause")) }
+| MATCH e0 = expr csd = cases_fstmt
+    { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
+
 (* cases *)
 cases_stmt:
 | ELSE s = stmt
@@ -234,6 +257,18 @@ cases_stmt:
 | WITH AS brand = STRING THEN s = stmt tcs = cases_stmt
     { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
 | WITH LET v = ident AS brand = STRING THEN s = stmt tcs = cases_stmt
+    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+
+cases_fstmt:
+| ELSE s = fstmt
+    { ([],s) }
+| WITH d = data THEN s = fstmt cs = cases_fstmt
+    { (((None,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
+| WITH LET v = ident EQUAL d = data THEN s = fstmt cs = cases_fstmt
+    { (((Some v,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
+| WITH AS brand = STRING THEN s = fstmt tcs = cases_fstmt
+    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+| WITH LET v = ident AS brand = STRING THEN s = fstmt tcs = cases_fstmt
     { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
 
 expr:

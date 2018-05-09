@@ -18,9 +18,9 @@ contract LateDeliveryAndPenalty over TemplateModel {
     define variable penalty = (diff / contract.penaltyDuration.amount) * contract.penaltyPercentage/100 * goodsValue;
     // penalty may be capped
     if penalty > contract.capPercentage/100 * goodsValue {
-       contract.capPercentage/100 * goodsValue
+       return contract.capPercentage/100 * goodsValue
     } else {
-       penalty
+       return penalty
     }
   }
 

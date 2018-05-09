@@ -5,14 +5,15 @@ import org.accordproject.late.*
 
 define variable fee = 1.0
 define function addFee(rate Double) : Double {
-  match fee
-    with let v = 1.0 then rate + v/10.0
-    with let v = 2.0 then rate + fee/15.0
-    else rate
+  return
+	  match fee
+      with let v = 1.0 then rate + v/10.0
+      with let v = 2.0 then rate + fee/15.0
+      else rate
 }
 
 define function makeResponse(x { discountRate: Double }) : VolumeDiscountResponse {
-  new VolumeDiscountResponse{ discountRate: x.discountRate }
+  return new VolumeDiscountResponse{ discountRate: x.discountRate }
 }
 
 contract VolumeDiscount over TemplateModel {

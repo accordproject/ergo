@@ -62,6 +62,7 @@ Section Ergo.
   (** Statement *)
   Inductive ergo_stmt :=
   | SReturn : ergo_expr -> ergo_stmt
+  | SFunReturn : ergo_expr -> ergo_stmt
   | SThrow : ergo_expr -> ergo_stmt
   | SSetState : ergo_expr -> ergo_stmt -> ergo_stmt
   | SEmit : ergo_expr -> ergo_stmt -> ergo_stmt
@@ -74,7 +75,7 @@ Section Ergo.
   Definition ergo_clause := @clause ergo_stmt.
 
   (** Function *)
-  Definition ergo_function := @function ergo_expr.
+  Definition ergo_function := @function ergo_stmt.
 
   (** Contract *)
   Definition ergo_contract := @contract ergo_stmt.

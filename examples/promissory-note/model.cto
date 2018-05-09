@@ -1,0 +1,40 @@
+namespace org.accordproject.promissorynote
+
+transaction Request {
+  o Double amountPaid
+}
+
+transaction Response {
+  o Double outstandingBalance
+}
+
+enum LegalEntity {
+  o PLC
+  o LLC
+  o INC
+  o Corporation
+}
+
+/**
+ * The template model
+ */
+@AccordTemplateModel("promissory-note")
+concept TemplateModel {
+  /**
+   * The name for the clause
+   */
+  o Double dollarAmount
+  o DateTime date
+  o String maker
+  o Double interestRate
+  o Boolean individual
+  o String makerAddress
+  o String lender
+  o LegalEntity legalEntity
+  o String lenderAddress
+  o Double principal
+  o DateTime maturityDate
+  o Integer defaultDays
+  o Integer insolvencyDays
+  o String jurisdiction
+}

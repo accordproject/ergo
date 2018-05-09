@@ -17,9 +17,9 @@ contract LateDeliveryAndPenalty over TemplateModel {
       
       // penalty may be capped
       if penalty > capPercentage/100 * goodsValue {
-         capPercentage/100 * goodsValue
+         return capPercentage/100 * goodsValue
       } else {
-         penalty
+         return penalty
       }
    }
 

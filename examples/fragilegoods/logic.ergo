@@ -6,11 +6,12 @@ import io.clause.demo.fragileGoods.*
 import ergo.moment.* // Date/Time library
 
 define function numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Double[]) : Double {
-  count(
-     foreach r in accelerometerReadings
-     where r > maxAcc or r < minAcc
-     return r
-  )
+  return
+    count(
+       foreach r in accelerometerReadings
+       where r > maxAcc or r < minAcc
+       return r
+    )
 }
 
 contract FragileGoods over TemplateModel {
