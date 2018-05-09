@@ -49,7 +49,7 @@ require('yargs')
         });
         yargs.option('request', {
             describe: 'path to the request data'
-        });
+        }).array('request');
         yargs.option('state', {
             describe: 'path to the state data'
         });

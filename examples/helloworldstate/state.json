@@ -1,0 +1,4 @@
+{
+    "$class": "org.accordproject.contract.State",
+		"counter" : 0
+}
