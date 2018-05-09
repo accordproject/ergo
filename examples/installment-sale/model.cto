@@ -25,7 +25,7 @@ concept ContractState {
 	o Double total_paid
 }
 
-concept PaymentObligation {
+event PaymentObligation {
   o String from
 	o String to
 	o Double amount
