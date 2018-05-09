@@ -1,6 +1,9 @@
 {
-  "$class": "io.clause.demo.installmentsale.TemplateModel",
-  "INTEREST_RATE": 4.5,
+  "$class": "org.accordproject.installmentsale.TemplateModel",
+  "BUYER": "Dan",
+  "SELLER": "Ned",
+  "INITIAL_DUE": 10000,
+  "INTEREST_RATE": 1.5,
   "TOTAL_DUE_BEFORE_CLOSING": 9500,
   "MIN_PAYMENT": 500,
   "DUE_AT_CLOSING": 500

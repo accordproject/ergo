@@ -1,11 +1,16 @@
 namespace org.accordproject.installmentsale
 
-transaction Payment {
+transaction Installment {
+  o Double amount
+}
+
+transaction ClosingPayment {
   o Double amount
 }
 
 transaction Balance {
   o Double balance
+	o Double total_paid
 }
 
 enum ContractStatus {
@@ -17,15 +22,26 @@ concept ContractState {
   o ContractStatus status
   o Double balance_remaining
   o Integer next_payment_month
+	o Double total_paid
+}
+
+event PaymentObligation {
+  o String from
+	o String to
+	o Double amount
 }
 
 /**
  * The template model
  */
-@AccordTemplateModel("installment")
+@AccordTemplateModel("installment-sale")
 concept TemplateModel {
+  o String BUYER
+	o String SELLER
+  o Double INITIAL_DUE
   o Double INTEREST_RATE
   o Double TOTAL_DUE_BEFORE_CLOSING
   o Double MIN_PAYMENT
   o Double DUE_AT_CLOSING
 }
+
