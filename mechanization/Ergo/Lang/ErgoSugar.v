@@ -59,5 +59,8 @@ Section ErgoSugar.
   Definition SReturnEmpty :=
     SReturn (EConst dunit).
   
+  Definition SFunReturnEmpty :=
+    SFunReturn (EConst dunit).
+  
 End ErgoSugar.
 

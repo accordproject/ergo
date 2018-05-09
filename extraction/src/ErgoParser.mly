@@ -38,6 +38,7 @@
 
 %token NIL
 %token TRUE FALSE
+%token ANY EMPTY
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
@@ -171,6 +172,10 @@ param:
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
+| EMPTY
+		{ ErgoCompiler.cto_empty }
+| ANY
+		{ ErgoCompiler.cto_any }
 | pt = IDENT
     { begin match pt with
       | "Boolean" -> ErgoCompiler.cto_boolean
@@ -202,6 +207,8 @@ atttype:
 
 stmt:
 (* Statments *)
+| RETURN
+		{ ErgoCompiler.sreturnempty }
 | RETURN e1 = expr
 		{ ErgoCompiler.sreturn e1 }
 | THROW e1 = expr
@@ -225,6 +232,8 @@ stmt:
 
 fstmt:
 (* Statments *)
+| RETURN
+		{ ErgoCompiler.sfunreturnempty }
 | RETURN e1 = expr
 		{ ErgoCompiler.sfunreturn e1 }
 | THROW e1 = expr

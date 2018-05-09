@@ -29,6 +29,7 @@ Section CTO.
 
   Inductive cto_type :=
   | CTOAny : cto_type                                 (**r any *)
+  | CTOEmpty : cto_type                               (**r any *)
   | CTOBoolean : cto_type                             (**r bool atomic type *)
   | CTOString : cto_type                              (**r string atomic type *)
   | CTODouble : cto_type                              (**r double atomic type *)
@@ -143,6 +144,7 @@ Section CTO.
     Fixpoint resolve_cto_type (namespace:string) (tbl:cto_names_table) (t:cto_type) : eresult cto_type :=
       match t with
       | CTOAny => esuccess CTOAny
+      | CTOEmpty => esuccess CTOEmpty
       | CTOBoolean => esuccess CTOBoolean
       | CTOString => esuccess CTOString
       | CTODouble => esuccess CTODouble
@@ -287,12 +289,13 @@ Section CTO.
     Program Fixpoint cto_type_to_etype {m:brand_relation} (t:cto_type) : ErgoType.etype :=
       match t with
       | CTOAny => ErgoType.top
+      | CTOEmpty => ErgoType.empty
       | CTOBoolean => ErgoType.bool
       | CTOString => ErgoType.string
-      | CTODouble => ErgoType.float
-      | CTOLong => ErgoType.nat
-      | CTOInteger => ErgoType.nat
-      | CTODateTime => ErgoType.unit
+      | CTODouble => ErgoType.double
+      | CTOLong => ErgoType.integer (* XXX To be decided *)
+      | CTOInteger => ErgoType.integer
+      | CTODateTime => ErgoType.empty (* XXX TBD *)
       | CTOClassRef cr =>
         ErgoType.brand (cr::nil)
       | CTOOption t =>
@@ -306,7 +309,7 @@ Section CTO.
              (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype (snd xy))) rtl))
              eq_refl)
       | CTOArray t =>
-        ErgoType.bag (cto_type_to_etype t)
+        ErgoType.array (cto_type_to_etype t)
       end.
 
   End Semantics.
