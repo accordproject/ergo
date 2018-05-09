@@ -41,7 +41,7 @@ Section ErgoSugar.
   Definition push_emit e1 e2 : ergo_expr :=
     ELet "lemit" None
          (EBinaryOp OpBagUnion
-                    e1
+                    (EUnaryOp OpBag e1)
                     (EVar "lemit"))
          e2.
   
