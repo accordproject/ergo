@@ -8,23 +8,23 @@ import org.accordproject.latedeliveryandpenalty.*
 Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeure cases,":? forceMajeure}] the Seller shall pay to the Buyer for every [{penaltyDuration}] of delay penalty amounting to [{penaltyPercentage}]% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a [{fractionalPart}] is to be considered a full [{fractionalPart}]. The total amount of penalty shall not however, exceed [{capPercentage}]% of the total value of the Equipment involved in late delivery. If the delay is more than [{termination}], the Buyer is entitled to terminate this Contract.
  */
 
-// Declare a contract over a template model
-contract LateDeliveryAndPenalty over TemplateModel {
-    // Defines a function to calculate the penalty
-   define function calculatePenalty(diff Double, goodsValue Double) : Double {
-      // penalty formula
-      define variable penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
-      
-      // penalty may be capped
-      if penalty > capPercentage/100 * goodsValue {
-         return capPercentage/100 * goodsValue
-      } else {
-         return penalty
-      }
+define function calculatePenalty(diff : Double, goodsValue : Double) : Double {
+   // penalty formula
+   define variable penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
+   
+   // penalty may be capped
+   if penalty > capPercentage/100 * goodsValue {
+      return capPercentage/100 * goodsValue
+   } else {
+      return penalty
    }
+}
 
+// Declare a contract over a template model
+contract LateDeliveryAndPenalty over TemplateModel throws Error {
+    // Defines a function to calculate the penalty
    // Clause for volume discount
-   clause latedeliveryandpenalty(request LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse {
+   clause latedeliveryandpenalty(request : LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse {
 
      define variable agreed = request.agreedDelivery;
 

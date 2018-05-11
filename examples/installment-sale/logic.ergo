@@ -1,7 +1,7 @@
 namespace org.accordproject.installmentsale
 
 contract InstallmentSale over TemplateModel {
-  clause PayInstallment(request Installment) : Balance {
+  clause PayInstallment(request : Installment) : Balance {
     enforce (state.status = "WaitingForFirstDayOfNextMonth"); // Make sure this is only called in the right state
     enforce (contract.MIN_PAYMENT <= state.balance_remaining) and (state.next_payment_month < 23);
     enforce (contract.MIN_PAYMENT <= request.amount); // Underpaying is forbidden
@@ -27,7 +27,7 @@ contract InstallmentSale over TemplateModel {
 			total_paid: total_paid
     }
   }
-  clause PayLastInstallment(request ClosingPayment) : Balance {
+  clause PayLastInstallment(request : ClosingPayment) : Balance {
     //enforce (request.amount = state.balance_remaining + contract.DUE_AT_CLOSING);
     define variable balance = state.balance_remaining + contract.DUE_AT_CLOSING - request.amount;
 		define variable total_paid = state.total_paid + request.amount;

@@ -5,7 +5,7 @@ import io.clause.demo.fragileGoods.*
 
 import ergo.moment.* // Date/Time library
 
-define function numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadings Double[]) : Double {
+define function numberOfShocks(maxAcc : Double, minAcc : Double, accelerometerReadings : Double[]) : Double {
   return
     count(
        foreach r in accelerometerReadings
@@ -15,7 +15,7 @@ define function numberOfShocks(maxAcc Double, minAcc Double, accelerometerReadin
 }
 
 contract FragileGoods over TemplateModel {
-  clause fragilegoods(request DeliveryUpdate) : PayOut throws Error {
+  clause fragilegoods(request : DeliveryUpdate) : PayOut throws Error {
     define variable shocks =
         numberOfShocks(contract.accelerationMax,
 		       contract.accelerationMin,

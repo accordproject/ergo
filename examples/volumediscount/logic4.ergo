@@ -4,7 +4,7 @@ import org.accordproject.contract.*
 import org.accordproject.late.*
 
 define variable fee = 1.0
-define function addFee(rate Double) : Double {
+define function addFee(rate : Double) : Double {
 	return
     match fee
       with let v = 1.0 then rate + v/10.0
@@ -14,7 +14,7 @@ define function addFee(rate Double) : Double {
 
 contract VolumeDiscount over TemplateModel {
   // Clause for volume discount
-  clause volumediscount(request VolumeDiscountRequest) : VolumeDiscountResponse {
+  clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
     if request.netAnnualChargeVolume < contract.firstVolume
     then return new VolumeDiscountResponse{ discountRate: addFee(contract.firstRate) }
     else if request.netAnnualChargeVolume < contract.secondVolume

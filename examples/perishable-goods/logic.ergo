@@ -5,7 +5,7 @@ import org.accordproject.perishablegoods.*
 
 contract PerishableGoods over TemplateModel {
   // Auxiliary function calculating penalty from temperature readings
-  define function calculatePenalty(readings TemperatureReading[]) : Double {
+  define function calculatePenalty(readings : TemperatureReading[]) : Double {
     define variable tempReadings = for x in readings { x.centigrade };
     // find the lowest temperature reading
     define variable lowestReading = min(tempReadings);
@@ -19,7 +19,7 @@ contract PerishableGoods over TemplateModel {
   }
 
   // Clause for volume discount
-  clause payout(request ShipmentReceived) : PriceCalculation throws Error {
+  clause payout(request : ShipmentReceived) : PriceCalculation throws Error {
     // Guard against unitCount outside the bounds specified in the clause
     enforce request.unitCount < contract.minUnits || request.unitCount > contract.maxUnits else {
       throw Error{ message : 'Units received out of range for the contract.' }
