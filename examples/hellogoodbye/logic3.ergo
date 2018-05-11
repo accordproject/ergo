@@ -1,15 +1,15 @@
 namespace org.accordproject.hellogoodbye
 
-define function error(v Double) : Double {
+define function error(v : Double) : Double {
   return v + clause.rate // Cannot access clause variable output of a contract
 }
 
 contract HelloGoodbye over TemplateModel {
   // Simple Clause
-  clause hello(request Request) : Response {
+  clause hello(request : Request) : Response {
      return new Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++")" }
   }
-  clause goodbye(request Request) : Response {
+  clause goodbye(request : Request) : Response {
      return new Response{ output: clause.greeting ++ " " ++ contract.name ++ " (" ++ request.input ++")" }
   }
 }

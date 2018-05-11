@@ -42,7 +42,7 @@
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
-%token PLUS MINUS STAR SLASH STARSTAR
+%token PLUS MINUS STAR SLASH CARROT
 %token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
 %token DOT COMMA COLON SEMI QUESTION
@@ -60,7 +60,7 @@
 %left LT GT LTEQ GTEQ
 %left PLUS MINUS PLUSI MINUSI
 %left STAR SLASH STARI SLASHI
-%left STARSTAR
+%left CARROT
 %left PLUSPLUS
 %right NOT
 %left DOT
@@ -168,7 +168,7 @@ params:
 param:
 | pn = IDENT
     { (Util.char_list_of_string pn, ErgoCompiler.cto_any) }
-| pn = IDENT pt = paramtype
+| pn = IDENT COLON pt = paramtype
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
@@ -237,7 +237,7 @@ fstmt:
 | RETURN e1 = expr
 		{ ErgoCompiler.sfunreturn e1 }
 | THROW e1 = expr
-    { ErgoCompiler.sthrow e1 }
+    { raise (Ergo_Error ("Cannot throw inside a function, you have to be in a Clause")) }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = fstmt
     { ErgoCompiler.slet v e1 s2 }
 | DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
@@ -245,13 +245,13 @@ fstmt:
 | IF e1 = expr THEN s2 = fstmt ELSE s3 = fstmt
     { ErgoCompiler.sif e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = fstmt SEMI s3 = fstmt
-    { ErgoCompiler.senforce e1 (Some s2) s3 }
+    { raise (Ergo_Error ("Cannot use enforce inside a function, you have to be in a Clause")) }
 | ENFORCE e1 = expr SEMI s3 = fstmt
-    { ErgoCompiler.senforce e1 None s3 }
+    { raise (Ergo_Error ("Cannot use enforce inside a function, you have to be in a Clause")) }
 | SET STATE e1 = expr SEMI s2 = fstmt
-    { raise (Ergo_Error ("Cannot set state in a function, you have to be in a Clause")) }
+    { raise (Ergo_Error ("Cannot set state inside a function, you have to be in a Clause")) }
 | EMIT e1 = expr SEMI s2 = fstmt
-    { raise (Ergo_Error ("Cannot emit in a function, you have to be in a Clause")) }
+    { raise (Ergo_Error ("Cannot emit inside a function, you have to be in a Clause")) }
 | MATCH e0 = expr csd = cases_fstmt
     { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
 
@@ -353,7 +353,7 @@ expr:
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opmult e1 e2 }
 | e1 = expr SLASH e2 = expr
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opdiv e1 e2 }
-| e1 = expr STARSTAR e2 = expr
+| e1 = expr CARROT e2 = expr
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.oppow e1 e2 }
 | e1 = expr MINUSI e2 = expr
     { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opminusi e1 e2 }

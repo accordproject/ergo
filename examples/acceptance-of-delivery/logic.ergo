@@ -6,7 +6,7 @@ import org.accordproject.acceptanceofdelivery.*
 import ergo.moment.* // Date/Time library
 
 contract AcceptanceOfDelivery over TemplateModel {
-  clause acceptanceofdelivery(request InspectDeliverable) : InspectionResponse throws Error {
+  clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse throws Error {
     define variable received = request.deliverableReceivedAt;
     enforce momentIsBefore(received,now()) else
       throw new Error{ error : "Transaction time is before the deliverable date." }

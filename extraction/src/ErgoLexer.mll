@@ -96,7 +96,7 @@ rule token sbuff = parse
 | "++" { PLUSPLUS }
 | "*" { STAR }
 | "*i" { STARI }
-| "**" { STARSTAR }
+| "^" { CARROT }
 | "/" { SLASH }
 | "/i" { SLASHI }
 | "-" { MINUS }
