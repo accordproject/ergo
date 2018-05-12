@@ -196,29 +196,39 @@ Section ErgoCalculustoJavaScript.
          let '(sn, tn) := fold_right proc_one ("",t) sl in
          sn.
 
-    Definition dispatch_preamble (request:string) (response:string) (eol:string) (quotel:string) :=
+    Definition dispatch_preamble
+               (coname:string)
+               (request:string)
+               (response:string)
+               (eol:string)
+               (quotel:string) :=
       "/**" ++ eol
       ++ " * Execute the smart clause" ++ eol
       ++ " * @param {Context} context - the Accord context" ++ eol
       ++ " * @param {" ++ request ++ "} context.request - the incoming request" ++ eol
       ++ " * @param {" ++ response ++ "} context.response - the response" ++ eol
       ++ " * @AccordClauseLogic" ++ eol
-      ++ " */" ++ eol.
+      ++ " */" ++ eol
+      ++ "function __dispatch(context) { return new " ++ coname ++ "().dispatch(context); }" ++ eol ++ eol.
 
-    Definition javascript_of_package (p:ergoc_package) (eol:string) (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+    Definition javascript_of_package
+               (p:ergoc_package)
+               (eol:string)
+               (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       (preamble eol) ++ eol
                      ++ (javascript_of_declarations p.(package_declarations) 0 0 eol quotel)
                      ++ (postamble eol).
 
     Definition javascript_of_package_with_dispatch
+               (coname:string)
                (request:string)
                (response:string)
-               (f:ergoc_function)
+               (p:ergoc_package)
                (eol:string)
                (quotel:string) : ErgoCodeGen.ergoc_javascript :=
       (preamble eol) ++ eol
-                     ++ (dispatch_preamble request response eol quotel) ++ eol
-                     ++ (javascript_function_of_ergo_func f None eol quotel)
+                     ++ (dispatch_preamble coname request response eol quotel) ++ eol
+                     ++ (javascript_of_declarations p.(package_declarations) 0 0 eol quotel)
                      ++ (postamble eol).
     
     Definition javascript_of_package_top
@@ -226,17 +236,11 @@ Section ErgoCalculustoJavaScript.
       javascript_of_package p ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
 
     Definition javascript_of_package_with_dispatch_top
+               (coname:string)
                (request:string)
                (response:string)
-               (f:ergoc_function) : ErgoCodeGen.ergoc_javascript :=
-      javascript_of_package_with_dispatch request response f ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
-
-    Definition javascript_of_clause_code_in_package
-               (coname:string) (clname:string) (p:ergoc_package) : eresult ErgoCodeGen.ergoc_javascript :=
-      let expr_opt := lookup_clause_code_from_package coname clname p in
-      elift (fun e =>
-               let fname := function_name_of_contract_clause_name (Some coname) clname in
-               javascript_function_of_body e fname ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double) expr_opt.
+               (p:ergoc_package) : ErgoCodeGen.ergoc_javascript :=
+      javascript_of_package_with_dispatch coname request response p ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
 
   End translate.
 End ErgoCalculustoJavaScript.

@@ -40,12 +40,12 @@ Section ErgotoJavaScript.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (callparams:list (string * cto_type)) :=
+             (callparams:list (string * cto_type)) : eresult ergo_stmt :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
     | None => efailure (CompilationError "Parameter mismatch during dispatch")
     | Some _ =>
-      esuccess (ECall cname (EVar v0 :: effparamrest))
+      esuccess (SCallClause cname (EVar v0 :: effparamrest))
     end.
 
   Definition case_of_sig
@@ -53,7 +53,7 @@ Section ErgotoJavaScript.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (s:signature) : eresult (match_case * ergo_expr) :=
+             (s:signature) : eresult (match_case * ergo_stmt) :=
     let (cname, callparams) := s in
     match callparams with
     | nil => efailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
@@ -71,15 +71,16 @@ Section ErgotoJavaScript.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (ss:list signature) :=
+             (ss:list signature) : eresult ergo_stmt :=
     elift (fun s =>
-             EMatch effparam0
+             SMatch effparam0
                      s
-                     (EThrow (mkClassRef None "Error"%string)
-                             (("message"%string, EConst (ErgoData.dstring ""))::nil)))
+                     (SThrow
+                        (ENew (mkClassRef None "Error"%string)
+                              (("message"%string, EConst (ErgoData.dstring ""))::nil))))
           (emaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
-  Definition dispatch_fun_name :=
+  Definition dispatch_clause_name :=
     "dispatch"%string.
   
   Definition match_of_sigs_top
@@ -89,54 +90,76 @@ Section ErgotoJavaScript.
     match effparams with
     | nil => efailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
-      let v0 := ("$"++dispatch_fun_name)%string in (** XXX To be worked on *)
+      let v0 := ("$"++dispatch_clause_name)%string in (** XXX To be worked on *)
       match_of_sigs namespace v0 effparam0 effparamrest ss
     end.
 
-  Definition add_dispatch_fun (oconame:option string) (p:ergo_package) : eresult ergo_package :=
-    let sigs := lookup_package_signatures_for_contract oconame p in
+  Definition create_dispatch_clause_for_contract (namespace:string) (c:ergo_contract) : eresult ergo_clause :=
+    let sigs := lookup_contract_signatures c in
     let effparams := EVar "request"%string :: nil in
-    let dispatch_fun_decl :=
-        elift
-          (fun disp =>
-             (EFunc
-                (mkFunc dispatch_fun_name
-                        (mkLambda
-                           (("request"%string,(CTOClassRef "Request"))::nil)
-                           (CTOClassRef "Response")
-                           None
-                           (SFunReturn disp))))) (* XXX Make sure it's a return-from-function style? *)
-          (match_of_sigs_top p.(package_namespace) effparams sigs)
-    in
-    elift (fun disp =>
-             mkPackage
-               p.(package_namespace)
-                   (p.(package_declarations) ++ (disp::nil)))
-          dispatch_fun_decl.
+    elift
+      (fun disp =>
+         (mkClause dispatch_clause_name
+                   (mkLambda
+                      (("request"%string,(CTOClassRef "Request"))::nil)
+                      (CTOClassRef "Response")
+                      None
+                      disp)))
+      (match_of_sigs_top namespace effparams sigs).
 
+  Definition add_dispatch_clause_to_contract (namespace:string) (c:ergo_contract) : eresult ergo_contract :=
+    if in_dec string_dec dispatch_clause_name
+              (map (fun cl => cl.(clause_name)) c.(contract_clauses))
+    then esuccess c
+    else
+      elift
+        (fun dispatch_clause =>
+           mkContract
+             c.(contract_name)
+             c.(contract_template)
+             (c.(contract_clauses) ++ (dispatch_clause::nil)))
+        (create_dispatch_clause_for_contract namespace c).
+  
+  Definition add_dispatch_clause_to_declaration (namespace:string) (d:ergo_declaration) : eresult declaration :=
+    match d with
+    | EType td => esuccess (EType td)
+    | EExpr e => esuccess (EExpr e)
+    | EGlobal v e => esuccess (EGlobal v e)
+    | EImport id => esuccess (EImport id)
+    | EFunc fd => esuccess (EFunc fd)
+    | EContract cd =>
+      elift EContract (add_dispatch_clause_to_contract namespace cd)
+    end.
+    
+  
+  Definition add_dispatch_clauses_to_declarations
+             (namespace:string) (dl:list ergo_declaration) : eresult (list ergo_declaration) :=
+    emaplift (add_dispatch_clause_to_declaration namespace) dl.
+    
+  Definition add_dispatch_clauses_to_package (p:ergo_package) : eresult ergo_package :=
+    elift
+      (mkPackage
+         p.(package_namespace))
+      (add_dispatch_clauses_to_declarations p.(package_namespace) p.(package_declarations)).
+  
   Definition javascript_from_package
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
-    let pc := package_to_calculus ctos p in
+    let p := add_dispatch_clauses_to_package p in
+    let pc := eolift (package_to_calculus ctos) p in
     elift javascript_of_package_top pc.
-
-  Definition cast_dispatch_to_classes request response :=
-    match request, response with
-    | CTOClassRef req, CTOClassRef resp => esuccess (req, resp)
-    | _, _ => efailure (CompilationError ("Cannot dispatch on non-class types"))
-    end.
 
   Definition javascript_from_package_with_dispatch
              (ctos:list cto_package)
-             (oconame:option string)
              (p:ergo_package) : eresult javascript :=
-    let p := add_dispatch_fun oconame p in
+    let p := add_dispatch_clauses_to_package p in
+    let econame := eolift lookup_coname p in
     let pc := eolift (package_to_calculus ctos) p in
-    let f := eolift (lookup_dispatch dispatch_fun_name) pc in
-    eolift (fun xyz =>
-             let '(request,response,f) := xyz in
-             elift (fun xy =>
-                      javascript_of_package_with_dispatch_top (fst xy) (snd xy) f) (cast_dispatch_to_classes request response)) f.
+    let request := "Request"%string in
+    let response := "Response"%string in
+    eolift (fun coname =>
+              elift (javascript_of_package_with_dispatch_top coname request response) pc)
+           econame.
 
 End ErgotoJavaScript.
 

@@ -37,8 +37,8 @@ let compile_package_to_javascript ctos ergo =
   let code = ErgoCompiler.javascript_from_ergo_package ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
-let compile_package_to_javascript_with_dispatch ctos coname ergo =
-  let code = ErgoCompiler.javascript_from_ergo_package_with_dispatch ctos coname ergo in
+let compile_package_to_javascript_with_dispatch ctos ergo =
+  let code = ErgoCompiler.javascript_from_ergo_package_with_dispatch ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
 let compile_inner target with_dispatch ctos file_content =
@@ -49,7 +49,7 @@ let compile_inner target with_dispatch ctos file_content =
       if with_dispatch
       then
         compile_package_to_javascript_with_dispatch
-          ctos None ergo_parsed
+          ctos ergo_parsed
       else
         compile_package_to_javascript ctos ergo_parsed
   | Java ->

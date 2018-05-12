@@ -105,13 +105,14 @@ rule token sbuff = parse
 | ":" { COLON }
 | "." { DOT }
 | ";" { SEMI }
-| "?" { QUESTION }
 | "(" { LPAREN }
 | ")" { RPAREN }
 | "[" { LBRACKET }
 | "]" { RBRACKET }
 | "{" { LCURLY }
 | "}" { RCURLY }
+| "?" { QUESTION }
+| "!" { BANG }
 | [' ' '\t']
     { token sbuff lexbuf }
 | newline

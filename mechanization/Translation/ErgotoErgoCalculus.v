@@ -33,6 +33,10 @@ Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgotoJavaScript.
+
+  Section errorPreProc.
+  End errorPreProc.
+  
   Section utils.
     Open Scope string.
     (** This *)
@@ -66,7 +70,7 @@ Section ErgotoJavaScript.
         comp_context_ctos : list cto_declaration;
         comp_context_current_contract : option string;
         comp_context_current_clause : option string;
-        comp_context_table: lookup_table;
+        comp_context_fun_table: lookup_table;
         comp_context_namespace: string;
         comp_context_globals: list string;
         comp_context_params: list string;
@@ -77,7 +81,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
       ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_table)
+      ctxt.(comp_context_fun_table)
       ctxt.(comp_context_namespace)
       (List.app params ctxt.(comp_context_globals))
       ctxt.(comp_context_params).
@@ -87,7 +91,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
       ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_table)
+      ctxt.(comp_context_fun_table)
       ctxt.(comp_context_namespace)
       ctxt.(comp_context_globals)
       (List.app params ctxt.(comp_context_params)).
@@ -97,7 +101,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
       ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_table)
+      ctxt.(comp_context_fun_table)
       ctxt.(comp_context_namespace)
       (List.cons param ctxt.(comp_context_globals))
       ctxt.(comp_context_params).
@@ -107,7 +111,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
       ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_table)
+      ctxt.(comp_context_fun_table)
       ctxt.(comp_context_namespace)
       ctxt.(comp_context_globals)
       (List.cons param ctxt.(comp_context_params)).
@@ -117,7 +121,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
       ctxt.(comp_context_current_clause)
-      (add_function_to_table ctxt.(comp_context_table) fname flambda)
+      (add_function_to_table ctxt.(comp_context_fun_table) fname flambda)
       ctxt.(comp_context_namespace)
       ctxt.(comp_context_globals)
       ctxt.(comp_context_params).
@@ -127,7 +131,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_ctos)
       (Some cname)
       ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_table)
+      ctxt.(comp_context_fun_table)
       ctxt.(comp_context_namespace)
       ctxt.(comp_context_globals)
       ctxt.(comp_context_params).
@@ -137,7 +141,7 @@ Section ErgotoJavaScript.
       ctxt.(comp_context_ctos)
       ctxt.(comp_context_current_contract)
       (Some cname)
-      ctxt.(comp_context_table)
+      ctxt.(comp_context_fun_table)
       ctxt.(comp_context_namespace)
       ctxt.(comp_context_globals)
       ctxt.(comp_context_params).
@@ -156,6 +160,13 @@ Section ErgotoJavaScript.
     Definition fresh_in_case (e:ergoc_expr) :=
       fresh_var "$case"
                 (nnrc_free_vars e).
+
+    Definition fresh_in_lift_error (e:ergoc_expr) :=
+      fresh_var2 "$lifte" "$lifte"
+                 (nnrc_free_vars e).
+    Definition fresh_in_lift_optional (e:ergoc_expr) :=
+      fresh_var2 "$lifto" "$lifto"
+                 (nnrc_free_vars e).
   End fresh_vars.
 
   (** Translate expressions to calculus *)
@@ -245,21 +256,7 @@ Section ErgotoJavaScript.
                  (elift (NNRCUnop (OpRec attname)) e) acc
       in
       fold_left proc_one rest init_rec
-    | EThrow cr nil =>
-      esuccess (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
-    | EThrow cr ((s0,init)::rest) =>
-      let init_rec : eresult nnrc :=
-          elift (NNRCUnop (OpRec s0)) (ergo_expr_to_calculus ctxt init)
-      in
-      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
-          let attname := fst att in
-          let e := ergo_expr_to_calculus ctxt (snd att) in
-          elift2 (NNRCBinop OpRecConcat)
-                 (elift (NNRCUnop (OpRec attname)) e)
-                 acc
-      in
-      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | ECall fname el =>
+    | ECallFun fname el =>
       let init_el := esuccess nil in
       let proc_one (e:ergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
           elift2
@@ -267,7 +264,7 @@ Section ErgotoJavaScript.
             (ergo_expr_to_calculus ctxt e)
             acc
       in
-      eolift (lookup_call ctxt.(comp_context_table) fname) (fold_right proc_one init_el el)
+      eolift (lookup_call ctxt.(comp_context_fun_table) fname) (fold_right proc_one init_el el)
     | EMatch e0 ecases edefault =>
       let ec0 := ergo_expr_to_calculus ctxt e0 in
       let eccases :=
@@ -363,6 +360,26 @@ Section ErgotoJavaScript.
       in
       elift (NNRCUnop OpFlatten)
             (fold_left proc_one foreachs init_e)
+    | ELiftError e e1 =>
+      elift2
+        (fun ec ec1 =>
+           let (v1,v2) := fresh_in_lift_error ec1 in
+           NNRCEither
+             ec
+             v1 ec1
+             v2 (NNRCVar v2))
+        (ergo_expr_to_calculus ctxt e)
+        (ergo_expr_to_calculus ctxt e1)
+    | ELiftOptional e e1 =>
+      elift2
+        (fun ec ec1 =>
+           let (v1,v2) := fresh_in_lift_optional ec1 in
+           NNRCEither
+             ec
+             v1 ec1
+             v2 (NNRCVar v2))
+        (ergo_expr_to_calculus ctxt e)
+        (ergo_expr_to_calculus ctxt e1)
     end.
 
   (** Translate an Ergo statement to an Ergo expression *)
@@ -373,11 +390,13 @@ Section ErgotoJavaScript.
   Fixpoint ergo_stmt_to_expr (s:ergo_stmt) : ergo_expr :=
     match s with
     | SReturn e =>
-      EUnaryOp OpLeft (mk_result e (EVar local_state) (EVar local_emit))
+      ESuccess (mk_result e (EVar local_state) (EVar local_emit))
     | SFunReturn e =>
       e (* Returning from a function does not have state or emit, just the result *)
     | SThrow e =>
-      EUnaryOp OpRight e
+      EError e
+    | SCallClause fname el =>
+      ECallFun fname el
     | SSetState e1 s2 =>
       set_state e1 (ergo_stmt_to_expr s2)
     | SEmit e1 s2 =>
