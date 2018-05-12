@@ -111,8 +111,8 @@ Module ErgoCompiler.
     := Ergo.ELet v (Some t) e1 e2.
   Definition eforeach : list (String.string * ergo_expr) -> option ergo_expr -> ergo_expr -> ergo_expr
     := Ergo.EForeach.
-  Definition ecall : String.string -> list ergo_expr -> ergo_expr
-    := Ergo.ECall.
+  Definition ecallfun : String.string -> list ergo_expr -> ergo_expr
+    := Ergo.ECallFun.
   Definition ematch : ergo_expr -> list (Ergo.match_case * ergo_expr) -> ergo_expr -> ergo_expr
     := Ergo.EMatch.
   Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
@@ -128,6 +128,8 @@ Module ErgoCompiler.
     ErgoSugar.SFunReturnEmpty.
   Definition sthrow : ergo_expr -> ergo_stmt :=
     Ergo.SThrow.
+  Definition scallclause : String.string -> list ergo_expr -> ergo_stmt
+    := Ergo.SCallClause.
   Definition ssetstate : ergo_expr -> ergo_stmt -> ergo_stmt :=
     Ergo.SSetState.
   Definition semit : ergo_expr -> ergo_stmt -> ergo_stmt :=
@@ -147,14 +149,16 @@ Module ErgoCompiler.
     := ErgoSugar.EDot.
   Definition enew : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
     := ErgoSugar.ENewSugar.
-  Definition ethrow : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
-    := ErgoSugar.EThrowSugar.
   Definition ethis_contract : ergo_expr
     := Ergo.EThisContract.
   Definition ethis_clause : ergo_expr
     := Ergo.EThisClause.
   Definition ethis_state : ergo_expr
     := Ergo.EThisState.
+  Definition eliftoptional : ergo_expr -> ergo_expr -> ergo_expr
+    := Ergo.ELiftOptional.
+  Definition elifterror : ergo_expr -> ergo_expr -> ergo_expr
+    := Ergo.ELiftError.
 
   (** Ergo Calculus *)
   Definition ergoc_package : Set 
@@ -177,7 +181,6 @@ Module ErgoCompiler.
 
   Definition javascript_from_ergo_package_with_dispatch :
     list CTO.cto_package
-    -> option String.string
     -> ergo_package
     -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.javascript_from_package_with_dispatch.

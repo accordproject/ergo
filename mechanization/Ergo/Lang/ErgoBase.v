@@ -164,71 +164,26 @@ Section ErgoBase.
     Definition lookup_contract_signatures (c:contract) : list signature :=
       lookup_clauses_signatures c.(contract_clauses).
     
-    Fixpoint lookup_statements_signatures (sl:list declaration) : list signature :=
-      match sl with
-      | nil => nil
-      | EType _ :: sl' => lookup_statements_signatures sl'
-      | EExpr _ :: sl' => lookup_statements_signatures sl'
-      | EGlobal _ _ :: sl' => lookup_statements_signatures sl'
-      | EImport _ :: sl' => lookup_statements_signatures sl'
-      | EFunc f :: sl' =>
-        (f.(function_name), f.(function_lambda).(lambda_params)) :: lookup_statements_signatures sl'
-      | EContract c :: sl' =>
-        lookup_contract_signatures c ++ lookup_statements_signatures sl'
-      end.
-    
-    Fixpoint lookup_statements_signatures_for_contract (oconame:option string) (dl:list declaration) : list signature :=
+    Fixpoint lookup_conames_in_declarations (dl:list declaration) : list string :=
       match dl with
       | nil => nil
-      | EType _ :: dl' => lookup_statements_signatures_for_contract oconame dl'
-      | EExpr _ :: dl' => lookup_statements_signatures_for_contract oconame dl'
-      | EGlobal _ _ :: dl' => lookup_statements_signatures_for_contract oconame dl'
-      | EImport _ :: dl' => lookup_statements_signatures_for_contract oconame dl'
-      | EFunc f :: dl' => lookup_statements_signatures_for_contract oconame dl'
-      | EContract c :: dl' =>
-        match oconame with
-        | None =>
-            lookup_contract_signatures c (* XXX Only returns signatures in first contract *)
-        | Some coname =>
-          if (string_dec c.(contract_name) coname)
-          then
-            lookup_contract_signatures c (* XXX Assumes single contract with given name *)
-          else
-            lookup_statements_signatures_for_contract oconame dl'
-        end
-      end.
-    
-    Definition lookup_package_signatures_for_contract (oconame:option string) (p:package) : list signature :=
-      lookup_statements_signatures_for_contract oconame p.(package_declarations).
-    
-    Definition lookup_package_signatures (p:package) : list signature :=
-      lookup_statements_signatures p.(package_declarations).
-
-    Fixpoint lookup_statements_dispatch (name:string) (dl:list declaration) : eresult (cto_type * cto_type * function) :=
-      match dl with
-      | nil => dispatch_lookup_error
-      | EType _ :: dl' => lookup_statements_dispatch name dl'
-      | EExpr _ :: dl' => lookup_statements_dispatch name dl'
-      | EGlobal _ _ :: dl' => lookup_statements_dispatch name dl'
-      | EImport _ :: dl' => lookup_statements_dispatch name dl'
-      | EFunc f :: dl' =>
-        if (string_dec f.(function_name) name)
-        then
-          let flambda := f.(function_lambda) in
-          let request :=
-              match flambda.(lambda_params) with
-              | nil => dispatch_parameter_error
-              | (_,reqtype) :: _ => esuccess reqtype
-              end
-          in
-          let response := flambda.(lambda_output) in
-          elift (fun request => (request, response, f)) request
-        else lookup_statements_dispatch name dl'
-      | EContract c :: dl' => lookup_statements_dispatch name dl'
+      | EType _ :: dl' => lookup_conames_in_declarations dl'
+      | EExpr _ :: dl' => lookup_conames_in_declarations dl'
+      | EGlobal _ _ :: dl' => lookup_conames_in_declarations dl'
+      | EImport _ :: dl' => lookup_conames_in_declarations dl'
+      | EFunc f :: dl' => lookup_conames_in_declarations dl'
+      | EContract c :: dl' => c.(contract_name) :: lookup_conames_in_declarations dl'
       end.
 
-    Definition lookup_dispatch (name:string) (p:package) : eresult (cto_type * cto_type * function) :=
-      lookup_statements_dispatch name p.(package_declarations).
+    Definition lookup_coname_in_declarations (dl:list declaration) : eresult string :=
+      match lookup_conames_in_declarations dl with
+      | nil => efailure (CompilationError ("Cannot dispatch without at least one contract"))
+      | coname :: nil => esuccess coname
+      | coname :: _ => efailure (CompilationError ("Cannot dispatch with more than one contract"))
+      end.
+      
+    Definition lookup_coname (p:package) : eresult string :=
+      lookup_coname_in_declarations p.(package_declarations).
     
   End lookup.
 

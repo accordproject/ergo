@@ -48,11 +48,11 @@ Section ErgoSugar.
   Definition ENewSugar pname cname el : ergo_expr :=
     ENew (mkClassRef pname cname) el.
 
-  Definition EThrowSugar pname cname el : ergo_expr :=
-    EThrow (mkClassRef pname cname) el.
+  Definition SThrowSugar pname cname el : ergo_stmt :=
+    SThrow (ENew (mkClassRef pname cname) el).
 
-  Definition EThrowErgoCompilerError (msg:string) : ergo_expr :=
-    (EThrowSugar (Some "org.ergo")
+  Definition SThrowErgoCompilerError (msg:string) : ergo_stmt :=
+    (SThrowSugar (Some "org.ergo")
                  "Error"
                  (("error", EConst (ErgoData.dstring msg))::nil))%string.
 
@@ -61,6 +61,15 @@ Section ErgoSugar.
   
   Definition SFunReturnEmpty :=
     SFunReturn (EConst dunit).
+
+  Section Errors.
+    Definition EError (e:ergo_expr) : ergo_expr :=
+      EUnaryOp OpRight e.
+
+    Definition ESuccess (e:ergo_expr) : ergo_expr :=
+      EUnaryOp OpRight e.
+      
+  End Errors.
   
 End ErgoSugar.
 

@@ -52,11 +52,12 @@ Section Ergo.
   | ELet : string -> option cto_type -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
   | ERecord : list (string * ergo_expr) -> ergo_expr (**r create a new record *)
   | ENew : class_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
-  | EThrow : class_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
-  | ECall : string -> list ergo_expr -> ergo_expr (**r function call *)
+  | ECallFun : string -> list ergo_expr -> ergo_expr (**r function call *)
   | EMatch : ergo_expr -> list (match_case * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
   | EForeach : list (string * ergo_expr)
                -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
+  | ELiftError : ergo_expr -> ergo_expr -> ergo_expr
+  | ELiftOptional : ergo_expr -> ergo_expr -> ergo_expr
   .
 
   (** Statement *)
@@ -64,6 +65,7 @@ Section Ergo.
   | SReturn : ergo_expr -> ergo_stmt
   | SFunReturn : ergo_expr -> ergo_stmt
   | SThrow : ergo_expr -> ergo_stmt
+  | SCallClause : string -> list ergo_expr -> ergo_stmt (**r clause call *)
   | SSetState : ergo_expr -> ergo_stmt -> ergo_stmt
   | SEmit : ergo_expr -> ergo_stmt -> ergo_stmt
   | SLet : string -> option cto_type -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable binding *)

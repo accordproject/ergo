@@ -65,6 +65,16 @@ Module EData(ergomodel:ErgoBackendModel).
     := Data.dbrand b.
   (* foreign data is supported via the model *)
 
+  Definition dsome : data -> data
+    := Data.dsome.
+  Definition dnone : data
+    := Data.dnone.
+  
+  Definition dsuccess : data -> data
+    := Data.dleft.
+  Definition derror : data -> data
+    := Data.dright.
+  
   (** data -> JSON *string* conversion *)
   Definition data_to_json_string s : data -> String.string 
     := ergomodel.ergo_data_to_json_string s.

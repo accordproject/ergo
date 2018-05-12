@@ -45,7 +45,8 @@
 %token PLUS MINUS STAR SLASH CARROT
 %token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
-%token DOT COMMA COLON SEMI QUESTION
+%token DOT COMMA COLON SEMI
+%token QUESTION BANG
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
 %token LCURLY RCURLY
@@ -64,6 +65,7 @@
 %left PLUSPLUS
 %right NOT
 %left DOT
+%left QUESTION BANG
 
 %start <ErgoComp.ErgoCompiler.ergo_package> main
 
@@ -213,6 +215,9 @@ stmt:
 		{ ErgoCompiler.sreturn e1 }
 | THROW e1 = expr
     { ErgoCompiler.sthrow e1 }
+(* Call *)
+| fn = IDENT LPAREN el = exprlist RPAREN
+    { ErgoCompiler.scallclause (Util.char_list_of_string fn) el }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = stmt
     { ErgoCompiler.slet v e1 s2 }
 | DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
@@ -286,7 +291,7 @@ expr:
     { e }
 (* Call *)
 | fn = IDENT LPAREN el = exprlist RPAREN
-    { ErgoCompiler.ecall (Util.char_list_of_string fn) el }
+    { ErgoCompiler.ecallfun (Util.char_list_of_string fn) el }
 (* Constants *)
 | NIL
     { ErgoCompiler.econst ErgoCompiler.Data.dunit }
@@ -329,6 +334,10 @@ expr:
     { ErgoCompiler.eforeach fl None e2 }
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach fl (Some econd) e2 }
+| e1 = expr QUESTION e2 = expr
+    { ErgoCompiler.eliftoptional e1 e2 }
+| e1 = expr BANG e2 = expr
+    { ErgoCompiler.elifterror e1 e2 }
 (* Unary operators *)
 | NOT e = expr
     { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg e }
