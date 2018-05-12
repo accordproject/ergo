@@ -44,5 +44,11 @@ Section ENames.
       absolute_ref_of_relative_ref namespace cr.(class_name).
       
   End AbsoluteNames.    
-    
+
+  Section ReservedNames.
+    Definition clause_main_name : relative_ref :=
+      "main".
+  
+  End ReservedNames.
+  
 End ENames.

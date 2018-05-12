@@ -17,6 +17,7 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 Require Import ErgoSpec.Backend.ErgoBackend.
@@ -209,7 +210,9 @@ Section ErgoCalculustoJavaScript.
       ++ " * @param {" ++ response ++ "} context.response - the response" ++ eol
       ++ " * @AccordClauseLogic" ++ eol
       ++ " */" ++ eol
-      ++ "function __dispatch(context) { return new " ++ coname ++ "().dispatch(context); }" ++ eol ++ eol.
+      ++ "function __dispatch(context) {" ++ eol
+      ++ "  return new " ++ coname ++ "()." ++ clause_main_name ++ "(context);" ++ eol
+      ++ "}" ++ eol.
 
     Definition javascript_of_package
                (p:ergoc_package)

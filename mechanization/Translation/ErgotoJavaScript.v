@@ -32,9 +32,6 @@ Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
 
 Section ErgotoJavaScript.
   (* Context *)
-  Definition dispatch_params_error (cname:string) : string :=
-    "Parameter mistmatch when dispatching to '" ++ cname ++ "'".
-
   Definition create_call
              (cname:string)
              (v0:string)
@@ -43,7 +40,7 @@ Section ErgotoJavaScript.
              (callparams:list (string * cto_type)) : eresult ergo_stmt :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
-    | None => efailure (CompilationError "Parameter mismatch during dispatch")
+    | None => efailure (CompilationError "Parameter mismatch during main creation")
     | Some _ =>
       esuccess (SCallClause cname (EVar v0 :: effparamrest))
     end.
@@ -56,14 +53,14 @@ Section ErgotoJavaScript.
              (s:signature) : eresult (match_case * ergo_stmt) :=
     let (cname, callparams) := s in
     match callparams with
-    | nil => efailure (CompilationError ("Cannot dispatch if not at least one parameter "++cname))
+    | nil => efailure (CompilationError ("Cannot create main if not at least one parameter in "++cname))
     | (param0, CTOClassRef type0)::otherparams =>
       elift (fun x =>
                let type0 := absolute_ref_of_relative_ref namespace type0 in
                ((Some v0,CaseType type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, _)::otherparams =>
-      efailure (CompilationError ("Cannot dispatch on non-class type "++cname))
+      efailure (CompilationError ("Cannot create main for non-class type "++cname))
     end.
 
   Definition match_of_sigs
@@ -80,26 +77,23 @@ Section ErgotoJavaScript.
                               (("message"%string, EConst (ErgoData.dstring ""))::nil))))
           (emaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
-  Definition dispatch_clause_name :=
-    "dispatch"%string.
-  
   Definition match_of_sigs_top
              (namespace:string)
              (effparams:list ergo_expr)
              (ss:list signature) :=
     match effparams with
-    | nil => efailure (CompilationError ("Cannot dispatch if not at least one effective parameter"))
+    | nil => efailure (CompilationError ("Cannot create main if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
-      let v0 := ("$"++dispatch_clause_name)%string in (** XXX To be worked on *)
+      let v0 := ("$"++clause_main_name)%string in (** XXX To be worked on *)
       match_of_sigs namespace v0 effparam0 effparamrest ss
     end.
 
-  Definition create_dispatch_clause_for_contract (namespace:string) (c:ergo_contract) : eresult ergo_clause :=
+  Definition create_main_clause_for_contract (namespace:string) (c:ergo_contract) : eresult ergo_clause :=
     let sigs := lookup_contract_signatures c in
     let effparams := EVar "request"%string :: nil in
     elift
       (fun disp =>
-         (mkClause dispatch_clause_name
+         (mkClause clause_main_name
                    (mkLambda
                       (("request"%string,(CTOClassRef "Request"))::nil)
                       (CTOClassRef "Response")
@@ -107,8 +101,8 @@ Section ErgotoJavaScript.
                       disp)))
       (match_of_sigs_top namespace effparams sigs).
 
-  Definition add_dispatch_clause_to_contract (namespace:string) (c:ergo_contract) : eresult ergo_contract :=
-    if in_dec string_dec dispatch_clause_name
+  Definition add_main_clause_to_contract (namespace:string) (c:ergo_contract) : eresult ergo_contract :=
+    if in_dec string_dec clause_main_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
     then esuccess c
     else
@@ -118,9 +112,9 @@ Section ErgotoJavaScript.
              c.(contract_name)
              c.(contract_template)
              (c.(contract_clauses) ++ (dispatch_clause::nil)))
-        (create_dispatch_clause_for_contract namespace c).
+        (create_main_clause_for_contract namespace c).
   
-  Definition add_dispatch_clause_to_declaration (namespace:string) (d:ergo_declaration) : eresult declaration :=
+  Definition add_main_clause_to_declaration (namespace:string) (d:ergo_declaration) : eresult declaration :=
     match d with
     | EType td => esuccess (EType td)
     | EExpr e => esuccess (EExpr e)
@@ -128,31 +122,31 @@ Section ErgotoJavaScript.
     | EImport id => esuccess (EImport id)
     | EFunc fd => esuccess (EFunc fd)
     | EContract cd =>
-      elift EContract (add_dispatch_clause_to_contract namespace cd)
+      elift EContract (add_main_clause_to_contract namespace cd)
     end.
     
   
-  Definition add_dispatch_clauses_to_declarations
+  Definition add_main_clauses_to_declarations
              (namespace:string) (dl:list ergo_declaration) : eresult (list ergo_declaration) :=
-    emaplift (add_dispatch_clause_to_declaration namespace) dl.
+    emaplift (add_main_clause_to_declaration namespace) dl.
     
-  Definition add_dispatch_clauses_to_package (p:ergo_package) : eresult ergo_package :=
+  Definition add_main_clauses_to_package (p:ergo_package) : eresult ergo_package :=
     elift
       (mkPackage
          p.(package_namespace))
-      (add_dispatch_clauses_to_declarations p.(package_namespace) p.(package_declarations)).
+      (add_main_clauses_to_declarations p.(package_namespace) p.(package_declarations)).
   
   Definition javascript_from_package
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
-    let p := add_dispatch_clauses_to_package p in
+    let p := add_main_clauses_to_package p in
     let pc := eolift (package_to_calculus ctos) p in
     elift javascript_of_package_top pc.
 
   Definition javascript_from_package_with_dispatch
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
-    let p := add_dispatch_clauses_to_package p in
+    let p := add_main_clauses_to_package p in
     let econame := eolift lookup_coname p in
     let pc := eolift (package_to_calculus ctos) p in
     let request := "Request"%string in
