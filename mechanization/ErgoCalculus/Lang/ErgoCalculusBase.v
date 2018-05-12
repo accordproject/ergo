@@ -217,38 +217,6 @@ Section ErgoCalculusBase.
     Definition lookup_package_signatures (p:package) : list signature :=
       lookup_statements_signatures p.(package_statements).
 
-    Fixpoint lookup_statements_dispatch (name:string) (sl:list stmt) : eresult (cto_type * cto_type * func) :=
-      match sl with
-      | nil => dispatch_lookup_error
-      | EType _ :: sl' => lookup_statements_dispatch name sl'
-      | EExpr _ :: sl' => lookup_statements_dispatch name sl'
-      | EGlobal _ _ :: sl' => lookup_statements_dispatch name sl'
-      | EImport _ :: sl' => lookup_statements_dispatch name sl'
-      | EFunc f :: sl' =>
-        if (string_dec f.(func_name) name)
-        then
-          let flambda := f.(func_lambda) in
-          let request :=
-              match flambda.(lambda_params) with
-              | nil => dispatch_parameter_error
-              | (_,Some reqtype) :: _ => esuccess reqtype
-              | _ :: _ => esuccess (CTOClassRef (mkClassRef None "Request"%string))
-              end
-          in
-          let response :=
-              match flambda.(lambda_output) with
-              | Some resptype => resptype
-              | None => (CTOClassRef (mkClassRef None "Response"%string))
-              end
-          in
-          jlift (fun request => (request, response, f)) request
-        else lookup_statements_dispatch name sl'
-      | EContract c :: sl' => lookup_statements_dispatch name sl'
-      end.
-
-    Definition lookup_dispatch (name:string) (p:package) : eresult (cto_type * cto_type * func) :=
-      lookup_statements_dispatch name p.(package_statements).
-    
   End lookup.
 
 End ErgoBase.

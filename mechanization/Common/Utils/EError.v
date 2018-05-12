@@ -21,11 +21,6 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EResult.
 
 Section EError.
-
-  Definition dispatch_lookup_error {A} : eresult A :=
-    efailure (CompilationError ("Cannot lookup created dispatch")).
-  Definition dispatch_parameter_error {A} : eresult A :=
-    efailure (CompilationError ("No parameter type in dispatch")).
   Definition not_in_contract_error {A} : eresult A :=
     efailure (CompilationError ("Cannot use 'contract' variable outside of a contract")).
   Definition not_in_clause_error {A} : eresult A :=
