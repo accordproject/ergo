@@ -28,15 +28,19 @@ Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
-Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
+Require Import ErgoSpec.Translation.ErgoCalculustoJavaScriptCicero.
 
-Section ErgotoJavaScript.
-  Definition ergo_package_to_javascript
+Section ErgotoJavaScriptCicero.
+  Definition ergo_package_to_javascript_cicero
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
+    let ec := lookup_single_contract p in
+    let econame := elift (fun c => c.(contract_name)) ec in
     let p := ergo_package_expand p in
     let pc := eolift (package_to_calculus ctos) p in
-    elift javascript_of_package_top pc.
+    eolift (fun coname =>
+              elift (ergoc_package_to_javascript_cicero coname) pc)
+           econame.
 
-End ErgotoJavaScript.
+End ErgotoJavaScriptCicero.
 

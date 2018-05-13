@@ -313,4 +313,9 @@ Section CTO.
       end.
 
   End Semantics.
+
+  Section Builtin.
+    Definition request_type := "Request"%string.
+    Definition response_type := "Response"%string.
+  End Builtin.
 End CTO.

@@ -61,7 +61,6 @@ describe('Execute', () => {
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
                 if (expected.hasOwnProperty('compilationerror')) {
-                    console.info('Expecting: ' + JSON.stringify(expected));
                     return ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename).should.be.rejectedWith(expected.error);
                 } else if (expected.hasOwnProperty('error')) {
                     const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename);

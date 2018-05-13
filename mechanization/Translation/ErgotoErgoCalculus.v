@@ -29,146 +29,96 @@ Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoSugar.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusSugar.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgotoJavaScript.
 
-  Section errorPreProc.
-  End errorPreProc.
+  Section TranslationContext.
+    Record comp_context :=
+      mkCompContext {
+          comp_context_ctos : list cto_declaration;
+          comp_context_current_contract : option string;
+          comp_context_current_clause : option string;
+          comp_context_fun_table: lookup_table;
+          comp_context_namespace: string;
+          comp_context_globals: list string;
+          comp_context_params: list string;
+        }.
+
+    Definition add_globals (ctxt:comp_context) (params:list string) : comp_context :=
+      mkCompContext
+        ctxt.(comp_context_ctos)
+        ctxt.(comp_context_current_contract)
+        ctxt.(comp_context_current_clause)
+        ctxt.(comp_context_fun_table)
+        ctxt.(comp_context_namespace)
+        (List.app params ctxt.(comp_context_globals))
+        ctxt.(comp_context_params).
+
+    Definition add_params (ctxt:comp_context) (params:list string) : comp_context :=
+      mkCompContext
+        ctxt.(comp_context_ctos)
+        ctxt.(comp_context_current_contract)
+        ctxt.(comp_context_current_clause)
+        ctxt.(comp_context_fun_table)
+        ctxt.(comp_context_namespace)
+        ctxt.(comp_context_globals)
+        (List.app params ctxt.(comp_context_params)).
+
+    Definition add_one_global (ctxt:comp_context) (param:string) : comp_context :=
+      mkCompContext
+        ctxt.(comp_context_ctos)
+        ctxt.(comp_context_current_contract)
+        ctxt.(comp_context_current_clause)
+        ctxt.(comp_context_fun_table)
+        ctxt.(comp_context_namespace)
+        (List.cons param ctxt.(comp_context_globals))
+        ctxt.(comp_context_params).
+
+    Definition add_one_param (ctxt:comp_context) (param:string) : comp_context :=
+      mkCompContext
+        ctxt.(comp_context_ctos)
+        ctxt.(comp_context_current_contract)
+        ctxt.(comp_context_current_clause)
+        ctxt.(comp_context_fun_table)
+        ctxt.(comp_context_namespace)
+        ctxt.(comp_context_globals)
+        (List.cons param ctxt.(comp_context_params)).
+
+    Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambda) : comp_context :=
+      mkCompContext
+        ctxt.(comp_context_ctos)
+        ctxt.(comp_context_current_contract)
+        ctxt.(comp_context_current_clause)
+        (add_function_to_table ctxt.(comp_context_fun_table) fname flambda)
+        ctxt.(comp_context_namespace)
+        ctxt.(comp_context_globals)
+        ctxt.(comp_context_params).
+
+    Definition set_current_contract (ctxt:comp_context) (cname:string) : comp_context :=
+      mkCompContext
+        ctxt.(comp_context_ctos)
+        (Some cname)
+        ctxt.(comp_context_current_clause)
+        ctxt.(comp_context_fun_table)
+        ctxt.(comp_context_namespace)
+        ctxt.(comp_context_globals)
+        ctxt.(comp_context_params).
   
-  Section utils.
-    Open Scope string.
-    (** This *)
-    Definition this_contract := "contract"%string. (* Contains all contract data and clause data *)
-    Definition this_state := "state"%string. (* Contains state *)
-    Definition this_emit := "emit"%string. (* Contains state *)
-    Definition local_contract := "lcontract"%string. (* Contains all contract data and clause data *)
-    Definition local_state := "lstate"%string. (* Contains state *)
-    Definition local_emit := "lemit"%string. (* Contains state *)
-    Definition current_time := "now"%string.
+    Definition set_current_clause (ctxt:comp_context) (cname:string) : comp_context :=
+      mkCompContext
+        ctxt.(comp_context_ctos)
+        ctxt.(comp_context_current_contract)
+        (Some cname)
+        ctxt.(comp_context_fun_table)
+        ctxt.(comp_context_namespace)
+        ctxt.(comp_context_globals)
+        ctxt.(comp_context_params).
 
-    (** New Array *)
-    Definition new_array (el:list ergoc_expr) : ergoc_expr :=
-      match el with
-      | nil => NNRCConst (dcoll nil)
-      | e1::erest =>
-        fold_left (fun acc e => NNRCBinop OpBagUnion (NNRCUnop OpBag e) acc) erest (NNRCUnop OpBag e1)
-      end.
-
-    (** [new Concept{ field1: expr1, ... fieldn: exprn }] creates a record and brands it with the concept name *)
-    Definition new_expr (brand:string) (struct_expr:ergoc_expr) : ergoc_expr :=
-      NNRCUnop (OpBrand (brand :: nil)) struct_expr.
-
-    Definition ergo_enforce_error : ergoc_expr :=
-      NNRCConst enforce_error_content.
-    
-  End utils.
-
-  Record comp_context :=
-    mkCompContext {
-        comp_context_ctos : list cto_declaration;
-        comp_context_current_contract : option string;
-        comp_context_current_clause : option string;
-        comp_context_fun_table: lookup_table;
-        comp_context_namespace: string;
-        comp_context_globals: list string;
-        comp_context_params: list string;
-      }.
-
-  Definition add_globals (ctxt:comp_context) (params:list string) : comp_context :=
-    mkCompContext
-      ctxt.(comp_context_ctos)
-      ctxt.(comp_context_current_contract)
-      ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_fun_table)
-      ctxt.(comp_context_namespace)
-      (List.app params ctxt.(comp_context_globals))
-      ctxt.(comp_context_params).
-
-  Definition add_params (ctxt:comp_context) (params:list string) : comp_context :=
-    mkCompContext
-      ctxt.(comp_context_ctos)
-      ctxt.(comp_context_current_contract)
-      ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_fun_table)
-      ctxt.(comp_context_namespace)
-      ctxt.(comp_context_globals)
-      (List.app params ctxt.(comp_context_params)).
-
-  Definition add_one_global (ctxt:comp_context) (param:string) : comp_context :=
-    mkCompContext
-      ctxt.(comp_context_ctos)
-      ctxt.(comp_context_current_contract)
-      ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_fun_table)
-      ctxt.(comp_context_namespace)
-      (List.cons param ctxt.(comp_context_globals))
-      ctxt.(comp_context_params).
-
-  Definition add_one_param (ctxt:comp_context) (param:string) : comp_context :=
-    mkCompContext
-      ctxt.(comp_context_ctos)
-      ctxt.(comp_context_current_contract)
-      ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_fun_table)
-      ctxt.(comp_context_namespace)
-      ctxt.(comp_context_globals)
-      (List.cons param ctxt.(comp_context_params)).
-
-  Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambda) : comp_context :=
-    mkCompContext
-      ctxt.(comp_context_ctos)
-      ctxt.(comp_context_current_contract)
-      ctxt.(comp_context_current_clause)
-      (add_function_to_table ctxt.(comp_context_fun_table) fname flambda)
-      ctxt.(comp_context_namespace)
-      ctxt.(comp_context_globals)
-      ctxt.(comp_context_params).
-
-  Definition set_current_contract (ctxt:comp_context) (cname:string) : comp_context :=
-    mkCompContext
-      ctxt.(comp_context_ctos)
-      (Some cname)
-      ctxt.(comp_context_current_clause)
-      ctxt.(comp_context_fun_table)
-      ctxt.(comp_context_namespace)
-      ctxt.(comp_context_globals)
-      ctxt.(comp_context_params).
+  End TranslationContext.
   
-  Definition set_current_clause (ctxt:comp_context) (cname:string) : comp_context :=
-    mkCompContext
-      ctxt.(comp_context_ctos)
-      ctxt.(comp_context_current_contract)
-      (Some cname)
-      ctxt.(comp_context_fun_table)
-      ctxt.(comp_context_namespace)
-      ctxt.(comp_context_globals)
-      ctxt.(comp_context_params).
-  
-  Definition cmatch_cases :=
-    list (match_case * ergoc_expr).
-
-  Section fresh_vars.
-    Definition fresh_in_match {A} (eccases:list (A * ergoc_expr)) (ecdefault:ergoc_expr) :=
-      fresh_var
-        "$match"
-        (List.app
-           (List.concat
-              (List.map (fun eccase => nnrc_free_vars (snd eccase)) eccases))
-           (nnrc_free_vars ecdefault)).
-    Definition fresh_in_case (e:ergoc_expr) :=
-      fresh_var "$case"
-                (nnrc_free_vars e).
-
-    Definition fresh_in_lift_error (e:ergoc_expr) :=
-      fresh_var2 "$lifte" "$lifte"
-                 (nnrc_free_vars e).
-    Definition fresh_in_lift_optional (e:ergoc_expr) :=
-      fresh_var2 "$lifto" "$lifto"
-                 (nnrc_free_vars e).
-  End fresh_vars.
-
   (** Translate expressions to calculus *)
   Fixpoint ergo_expr_to_calculus
            (ctxt:comp_context) (e:ergo_expr) : eresult ergoc_expr :=
