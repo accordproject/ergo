@@ -32,10 +32,14 @@ MODULES = \
 	Ergo/Lang/Ergo \
 	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \
+  Ergo/Lang/ErgoExpand \
 	ErgoCalculus/Lang/ErgoCalculus \
+	ErgoCalculus/Lang/ErgoCalculusSugar \
 	ErgoCalculus/Lang/ErgoCalculusCall \
 	Translation/ErgotoErgoCalculus \
 	Translation/ErgoCalculustoJavaScript \
+	Translation/ErgoCalculustoJavaScriptCicero \
 	Translation/ErgotoJavaScript \
+	Translation/ErgotoJavaScriptCicero \
 	Compiler/ErgoCompiler \
 	Tests/HelloWorld

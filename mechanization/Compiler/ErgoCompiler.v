@@ -26,6 +26,7 @@ Require ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 Require ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
 Require ErgoSpec.Translation.ErgotoErgoCalculus.
 Require ErgoSpec.Translation.ErgotoJavaScript.
+Require ErgoSpec.Translation.ErgotoJavaScriptCicero.
 
 Module ErgoCompiler.
 
@@ -173,17 +174,17 @@ Module ErgoCompiler.
     := ErgoCalculus.ergoc_expr.
 
   (** Compilation *)
-  Definition javascript_from_ergo_package :
+  Definition ergo_package_to_javascript :
     list CTO.cto_package
     -> ergo_package
     -> EResult.eresult JavaScript.javascript
-    := ErgotoJavaScript.javascript_from_package.
+    := ErgotoJavaScript.ergo_package_to_javascript.
 
-  Definition javascript_from_ergo_package_with_dispatch :
+  Definition ergo_package_to_javascript_cicero :
     list CTO.cto_package
     -> ergo_package
     -> EResult.eresult JavaScript.javascript
-    := ErgotoJavaScript.javascript_from_package_with_dispatch.
+    := ErgotoJavaScriptCicero.ergo_package_to_javascript_cicero.
 
 End ErgoCompiler.
 

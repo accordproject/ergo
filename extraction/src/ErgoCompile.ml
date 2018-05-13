@@ -34,11 +34,11 @@ let wrap_jerrors f e =
   end
 
 let compile_package_to_javascript ctos ergo =
-  let code = ErgoCompiler.javascript_from_ergo_package ctos ergo in
+  let code = ErgoCompiler.ergo_package_to_javascript ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
 let compile_package_to_javascript_cicero ctos ergo =
-  let code = ErgoCompiler.javascript_from_ergo_package_with_dispatch ctos ergo in
+  let code = ErgoCompiler.ergo_package_to_javascript_cicero ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
 let compile_inner target ctos file_content =
