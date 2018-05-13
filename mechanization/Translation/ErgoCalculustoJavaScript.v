@@ -210,8 +210,14 @@ Section ErgoCalculustoJavaScript.
       ++ " * @param {" ++ response ++ "} context.response - the response" ++ eol
       ++ " * @AccordClauseLogic" ++ eol
       ++ " */" ++ eol
-      ++ "function __dispatch(context) {" ++ eol
-      ++ "  return new " ++ coname ++ "()." ++ clause_main_name ++ "(context);" ++ eol
+      ++ "function __dispatch(contract,request,state,now) {" ++ eol
+      ++ "  let context = { 'request' : serializer.toJSON(request), 'state': state, 'contract': contract, 'now': now};" ++ eol
+      ++ "  let result = new " ++ coname ++ "()." ++ clause_main_name ++ "(context);" ++ eol
+      ++ "  if (result.hasOwnProperty('left')) {" ++ eol
+      ++ "    return result.left;" ++ eol
+      ++ "  } else {" ++ eol
+      ++ "    return { 'response' : serializer.fromJSON(result.right.response), 'state' :result.right.state, 'emit' : result.right.emit };" ++ eol
+      ++ "  }" ++ eol
       ++ "}" ++ eol.
 
     Definition javascript_of_package
