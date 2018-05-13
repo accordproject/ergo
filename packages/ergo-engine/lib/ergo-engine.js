@@ -64,11 +64,11 @@ class ErgoEngine {
         const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
         const functionName = 'contract.' + clauseName;
         const clauseCall = functionName+'(params);'; // Create the clause call
-        const res = vm.run(contract + clauseCall); // Call the logic
-        if (res.hasOwnProperty('left')) {
-            return Promise.resolve(res.left);
+        const result = vm.run(contract + clauseCall); // Call the logic
+        if (result.hasOwnProperty('left')) {
+            return Promise.resolve(result.left);
         } else {
-            return Promise.resolve(res.right);
+            return Promise.resolve(result.right);
         }
     }
 
