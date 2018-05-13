@@ -63,12 +63,12 @@ Section ErgoSugar.
     SFunReturn (EConst dunit).
 
   Section Errors.
+    Definition ESuccess (e:ergo_expr) : ergo_expr :=
+      EUnaryOp OpLeft e.
+      
     Definition EError (e:ergo_expr) : ergo_expr :=
       EUnaryOp OpRight e.
 
-    Definition ESuccess (e:ergo_expr) : ergo_expr :=
-      EUnaryOp OpRight e.
-      
   End Errors.
   
 End ErgoSugar.

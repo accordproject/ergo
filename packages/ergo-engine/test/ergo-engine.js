@@ -19,6 +19,7 @@ const Chai = require('chai');
 
 Chai.should();
 Chai.use(require('chai-things'));
+Chai.use(require('chai-as-promised'));
 
 const Fs = require('fs');
 const Path = require('path');
@@ -43,7 +44,7 @@ describe('Execute', () => {
         const clausename = test.clausename;
         const expected = test.expected;
         let resultKind;
-        if (expected.error) {
+        if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
             resultKind = 'fail';
         } else {
             resultKind = 'succeed';
@@ -59,17 +60,20 @@ describe('Execute', () => {
                 const clauseJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                if (expected.error) {
-                    const result = ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename, false);
-                    return result.catch(function(m) { m.should.deep.equal(new Error(expected.error)); });
+                if (expected.hasOwnProperty('compilationerror')) {
+                    console.info('Expecting: ' + JSON.stringify(expected));
+                    return ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename).should.be.rejectedWith(expected.error);
+                } else if (expected.hasOwnProperty('error')) {
+                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename);
+                    return result.should.deep.equal(expected);
                 } else {
-                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename, false);
+                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename);
                     for (const key in expected) {
                         if (expected.hasOwnProperty(key)) {
                             const field = key;
                             const value = expected[key];
-                            //result.should.not.be.null;
-                            result.response[field].should.equal(value);
+                            result.response[field].should.not.be.null;
+                            result.response[field].should.deep.equal(value);
                         }
                     }
                 }
