@@ -384,9 +384,6 @@ Section ErgotoJavaScript.
 
   (** Translate an Ergo statement to an Ergo expression *)
 
-  Definition mk_throw (e:ergo_expr) : ergo_expr :=
-    EUnaryOp OpRight e.
-  
   Fixpoint ergo_stmt_to_expr (s:ergo_stmt) : ergo_expr :=
     match s with
     | SReturn e =>
@@ -411,7 +408,7 @@ Section ErgotoJavaScript.
           (ergo_stmt_to_expr s3)
     | SEnforce e1 None s3 =>
       EIf (EUnaryOp OpNeg e1)
-          (mk_throw (EConst enforce_error_content))
+          (EError (EConst enforce_error_content))
           (ergo_stmt_to_expr s3)
     | SEnforce e1 (Some s2) s3 =>
       EIf (EUnaryOp OpNeg e1)

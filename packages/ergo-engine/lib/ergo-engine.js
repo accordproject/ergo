@@ -68,12 +68,13 @@ class ErgoEngine {
         if (result.hasOwnProperty('left')) {
             return Promise.resolve(result.left);
         } else {
-            return Promise.resolve(result.right);
+            console.info('RIGHT RESULT'+JSON.stringify({ 'error' : result.right }));
+            return Promise.resolve({ 'error' : result.right });
         }
     }
 
     /**
-     * Execute Ergo
+     * Execute Ergo (JavaScript)
      *
      * @param {string} ergoText text for Ergo code
      * @param {string} ctoTexts texts for CTO models
@@ -82,12 +83,11 @@ class ErgoEngine {
      * @param {object} stateJson the state in JSON
      * @param {string} contractName of the contract to execute
      * @param {string} clauseName of the clause to execute
-     * @param {bool} withDispatch whether to generate dispatch function
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName,withDispatch) {
-        return (Ergo.compile(ergoText,ctoTexts,withDispatch)).then((ergoCode) => {
-            if (ergoCode.error) {
+    static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName) {
+        return (Ergo.compile(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
+            if (ergoCode.hasOwnProperty('error')) {
                 throw new Error(ergoCode.error);
             } else {
                 const result =

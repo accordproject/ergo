@@ -48,15 +48,14 @@ class Ergo {
      *
      * @param {string} ergoText text for Ergo code
      * @param {string} ctoTexts texts for CTO models
-     * @param {bool} withDispatch whether to generate dispatch function
+     * @param {string} target language (javascript|javascript_cicero)
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(ergoText,ctoTexts,withDispatch) {
+    static compileToJavaScript(ergoText,ctoTexts,target) {
         // Built-in config
         const config= {
             'source' : 'ergo',
-            'target' : 'javascript',
-            'withdispatch' : withDispatch
+            'target' : target
         };
         // Clean-up naming for Sexps
         config.ergo = ergoText;
@@ -78,11 +77,11 @@ class Ergo {
      *
      * @param {string} ergoText text for Ergo code
      * @param {string} ctoTexts texts for CTO models
-     * @param {bool} withDispatch whether to generate dispatch function
+     * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoText,ctoTexts,withDispatch) {
-        const result = this.compileToJavaScript(ergoText,ctoTexts,withDispatch);
+    static compile(ergoText,ctoTexts,target) {
+        const result = this.compileToJavaScript(ergoText,ctoTexts,target);
         return Promise.resolve(result);
     }
 

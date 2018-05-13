@@ -26,9 +26,7 @@ let args_list gconf =
       ("-version", Arg.Unit ErgoUtil.get_version,
        " Prints the compiler version");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
-       "<lang> Indicates the language for the target (default: javascript)");
-      ("--with-dispatch", Arg.Unit (ErgoConfig.set_with_dispatch_true gconf),
-       " Generate dispatch function (default: false)")
+       "<lang> Indicates the language for the target (default: javascript) " ^ available_targets)
     ]
 
 let anon_args gconf cto_files input_files f =

@@ -15,16 +15,18 @@
 type lang =
   | Ergo
   | JavaScript
+  | JavaScriptCicero
   | Java
 
 val lang_of_name : string -> lang
 val name_of_lang : lang -> string
 val extension_of_lang : lang -> string
 
+val available_targets : string
+
 type global_config = {
   mutable jconf_source : lang;
   mutable jconf_target : lang;
-  mutable jconf_with_dispatch : bool;
   mutable jconf_cto_files : string list;
   mutable jconf_ctos : ErgoComp.cto_package list;
 }
@@ -33,15 +35,11 @@ val default_config : unit -> global_config
 
 val get_source_lang : global_config -> lang
 val get_target_lang : global_config -> lang
-val get_with_dispatch : global_config -> bool
 val get_cto_files : global_config -> string list
 val get_ctos : global_config -> ErgoComp.cto_package list
 
 val set_source_lang : global_config -> string -> unit
 val set_target_lang : global_config -> string -> unit
-val set_with_dispatch : global_config -> bool -> unit
-val set_with_dispatch_true : global_config -> unit -> unit
-val set_with_dispatch_false : global_config -> unit -> unit
 val add_cto_file : global_config -> string * string -> unit
 val add_cto : global_config -> string -> unit
 

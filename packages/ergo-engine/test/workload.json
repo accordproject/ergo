@@ -115,7 +115,27 @@
     "contractname": "LateDeliveryAndPenalty",
     "clausename": "latedeliveryandpenalty",
     "expected": {
-      "error": "[Compilation Error] Import not found: org.accordproject.base"
+      "compilationerror": "[Compilation Error] Import not found: org.accordproject.base"
+    }
+  },
+  {
+    "name": "test7early",
+    "dir": "data/latedeliveryandpenalty",
+    "ergo": "logic.ergo",
+    "models": [
+      "base.cto",
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request-early.json",
+    "state": "state.json",
+    "contractname": "LateDeliveryAndPenalty",
+    "clausename": "latedeliveryandpenalty",
+    "expected": {
+      "error": {
+        "$class": "org.accordproject.latedeliveryandpenalty.Error",
+        "message": "Cannot exercise late delivery before delivery date"
+      }
     }
   },
   {

@@ -37,21 +37,18 @@ let compile_package_to_javascript ctos ergo =
   let code = ErgoCompiler.javascript_from_ergo_package ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
-let compile_package_to_javascript_with_dispatch ctos ergo =
+let compile_package_to_javascript_cicero ctos ergo =
   let code = ErgoCompiler.javascript_from_ergo_package_with_dispatch ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
-let compile_inner target with_dispatch ctos file_content =
+let compile_inner target ctos file_content =
   let ergo_parsed = ParseString.parse_ergo_from_string file_content in
   begin match target with
   | Ergo -> raise (Ergo_Error "Target language cannot be Ergo")
   | JavaScript ->
-      if with_dispatch
-      then
-        compile_package_to_javascript_with_dispatch
-          ctos ergo_parsed
-      else
-        compile_package_to_javascript ctos ergo_parsed
+      compile_package_to_javascript ctos ergo_parsed
+  | JavaScriptCicero ->
+      compile_package_to_javascript_cicero ctos ergo_parsed
   | Java ->
       raise (Ergo_Error "JavaScript backend now available yet")
   end
@@ -65,9 +62,8 @@ let make_result_file target_lang source_file s =
 
 let ergo_compile gconf file_content =
   let target_lang = ErgoConfig.get_target_lang gconf in
-  let with_dispatch = ErgoConfig.get_with_dispatch gconf in
   let ctos = ErgoConfig.get_ctos gconf in
-  compile_inner target_lang with_dispatch ctos file_content
+  compile_inner target_lang ctos file_content
 
 let ergo_proc gconf (file_name,file_content) =
   let target_lang = ErgoConfig.get_target_lang gconf in

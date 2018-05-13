@@ -39,12 +39,10 @@ let global_config_of_json j =
   (* Specialize apply/iter for this given gconf *)
   let apply = apply gconf in
   let iter_array = iter_array gconf in
-  (* CTO *)
+  (* CTOs *)
   iter_array ErgoConfig.add_cto j##.cto;
   (* Target *)
   apply ErgoConfig.set_target_lang j##.target;
-  (* Dispatch option *)
-  Js.Optdef.iter j##.withdispatch (fun b -> ErgoConfig.set_with_dispatch gconf (Js.to_bool b));
   gconf
 
 let wrap_all wrap_f l =
