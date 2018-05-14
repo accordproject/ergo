@@ -15,8 +15,6 @@
 'use strict';
 
 const Ergo=require('@accordproject/ergo-compiler/lib/ergo');
-const Fs = require('fs');
-const Path = require('path');
 const Moment = require('moment');
 
 const {
@@ -28,17 +26,6 @@ const {
  * @class
  */
 class ErgoEngine {
-    /**
-     * Link runtime to compiled Ergo code
-     *
-     * @param {string} ergoCode compiled Ergo code in JavaScript
-     * @returns {string} compiled Ergo code in JavaScript linked to Ergo runtime
-     */
-    static linkErgoRuntime(ergoCode) {
-        const ergoRuntime = Fs.readFileSync(Path.join(__dirname,'ergoruntime.js'), 'utf8');
-        return ergoRuntime + '\n' + ergoCode;
-    }
-
     /**
      * Execute compiled Ergo code
      *
@@ -57,10 +44,9 @@ class ErgoEngine {
         });
 
         // add immutables to the context
-        const linkedErgoCode = this.linkErgoRuntime(ergoCode);
         const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': Moment() };
         vm.freeze(params, 'params'); // Add the context
-        vm.run(linkedErgoCode); // Load the generated logic
+        vm.run(ergoCode); // Load the generated logic
         const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
         const functionName = 'contract.' + clauseName;
         const clauseCall = functionName+'(params);'; // Create the clause call
@@ -85,7 +71,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName) {
-        return (Ergo.compile(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
+        return (Ergo.compileAndLink(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 throw new Error(ergoCode.error);
             } else {

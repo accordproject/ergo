@@ -26,8 +26,13 @@ require('yargs')
         yargs.option('cto', {
             describe: 'path to CTO models'
         }).array('cto');
-        yargs.option('dispatch', {
-            describe: 'generate dispatch function',
+        yargs.option('target', {
+            describe: 'target language (javascript|javascript_cicero)',
+            type: 'string',
+            default: 'javascript'
+        });
+        yargs.option('link', {
+            describe: 'link to JavaScript runtime',
             type: 'boolean',
             default: false
         });
@@ -35,7 +40,7 @@ require('yargs')
         if (argv.verbose) {
             Logger.info(`compile Ergo file ${argv.ergo} and CTOs ${argv.cto}`);
         }
-        return Commands.compile(argv.ergo,argv.cto,argv.dispatch)
+        return Commands.compile(argv.ergo,argv.cto,argv.target,argv.link)
             .then((result) => {
                 Logger.info(result);
             })
@@ -65,17 +70,12 @@ require('yargs')
         yargs.option('clausename', {
             describe: 'clause name'
         });
-        yargs.option('dispatch', {
-            describe: 'generate dispatch function',
-            type: 'boolean',
-            default: false
-        });
     }, (argv) => {
         if (argv.verbose) {
             Logger.info(`execute Ergo file ${argv.ergo} on contract data ${argv.contract} with request data ${argv.request} and CTOs ${argv.cto}`);
         }
 
-        return Commands.execute(argv.ergo, argv.cto, argv.contract, argv.request, argv.state, argv.contractname, argv.clausename, argv.dispatch)
+        return Commands.execute(argv.ergo, argv.cto, argv.contract, argv.request, argv.state, argv.contractname, argv.clausename)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })

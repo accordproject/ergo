@@ -14,6 +14,8 @@
 
 'use strict';
 
+const Fs = require('fs');
+const Path = require('path');
 const Engine=require('./ergocore.js');
 const CTOParser = require('composer-common/lib/introspect/parser');
 
@@ -73,6 +75,25 @@ class Ergo {
     }
 
     /**
+     * Compile and Link Ergo to JavaScript
+     *
+     * @param {string} ergoText text for Ergo code
+     * @param {string} ctoTexts texts for CTO models
+     * @param {string} target language (javascript|javascript_cicero)
+     * @returns {object} Promise to the compiled and linked JavaScript code
+     */
+    static compileToJavaScriptAndLink(ergoText,ctoTexts,target) {
+        const ergoCode = this.compileToJavaScript(ergoText,ctoTexts,target);
+        if (ergoCode.hasOwnProperty('error')) {
+            const result = ergoCode;
+            return result;
+        } else {
+            const result = this.linkErgoRuntime(ergoCode);
+            return result;
+        }
+    }
+
+    /**
      * Compile Ergo
      *
      * @param {string} ergoText text for Ergo code
@@ -83,6 +104,30 @@ class Ergo {
     static compile(ergoText,ctoTexts,target) {
         const result = this.compileToJavaScript(ergoText,ctoTexts,target);
         return Promise.resolve(result);
+    }
+
+    /**
+     * Compile and Link Ergo
+     *
+     * @param {string} ergoText text for Ergo code
+     * @param {string} ctoTexts texts for CTO models
+     * @param {string} target language (javascript|javascript_cicero)
+     * @returns {object} Promise to the compiled and linked JavaScript code
+     */
+    static compileAndLink(ergoText,ctoTexts,target) {
+        const result = this.compileToJavaScriptAndLink(ergoText,ctoTexts,target);
+        return Promise.resolve(result);
+    }
+
+    /**
+     * Link runtime to compiled Ergo code
+     *
+     * @param {string} ergoCode compiled Ergo code in JavaScript
+     * @returns {string} compiled Ergo code in JavaScript linked to Ergo runtime
+     */
+    static linkErgoRuntime(ergoCode) {
+        const ergoRuntime = Fs.readFileSync(Path.join(__dirname,'ergoruntime.js'), 'utf8');
+        return ergoRuntime + '\n' + ergoCode;
     }
 
 }
