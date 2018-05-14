@@ -35,12 +35,12 @@ Section ErgotoJavaScriptCicero.
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
     let ec := lookup_single_contract p in
-    let econame := elift (fun c => c.(contract_name)) ec in
+    let exy := elift (fun c => (c.(contract_name), lookup_contract_signatures c)) ec in
     let p := ergo_package_expand p in
     let pc := eolift (package_to_calculus ctos) p in
-    eolift (fun coname =>
-              elift (ergoc_package_to_javascript_cicero coname) pc)
-           econame.
+    eolift (fun xy =>
+              elift (ergoc_package_to_javascript_cicero (fst xy) (snd xy)) pc)
+           exy.
 
 End ErgotoJavaScriptCicero.
 

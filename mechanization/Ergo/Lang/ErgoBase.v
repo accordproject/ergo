@@ -81,13 +81,13 @@ Section ErgoBase.
   End Semantics.
 
   Section Lookup.
-    Definition signature : Set := (string * list (string * cto_type)).
+    Definition signature : Set := (string * list (string * cto_type) * cto_type).
 
     Fixpoint lookup_clauses_signatures (dl:list clause) : list signature :=
       match dl with
       | nil => nil
       | cl :: dl' =>
-        (cl.(clause_name), cl.(clause_lambda).(lambda_params)) :: lookup_clauses_signatures dl'
+        (cl.(clause_name), cl.(clause_lambda).(lambda_params), cl.(clause_lambda).(lambda_output)) :: lookup_clauses_signatures dl'
       end.
     
     Definition lookup_contract_signatures (c:contract) : list signature :=
