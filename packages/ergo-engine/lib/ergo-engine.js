@@ -68,7 +68,6 @@ class ErgoEngine {
         if (result.hasOwnProperty('left')) {
             return Promise.resolve(result.left);
         } else {
-            console.info('RIGHT RESULT'+JSON.stringify({ 'error' : result.right }));
             return Promise.resolve({ 'error' : result.right });
         }
     }

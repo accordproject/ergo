@@ -48,7 +48,7 @@ Section ErgoExpand.
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
              (s:signature) : eresult (match_case * ergo_stmt) :=
-    let (cname, callparams) := s in
+    let '(cname, callparams, _) := s in
     match callparams with
     | nil => efailure (CompilationError ("Cannot create main if not at least one parameter in "++cname))
     | (param0, CTOClassRef type0)::otherparams =>
