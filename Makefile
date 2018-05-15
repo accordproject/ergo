@@ -96,6 +96,7 @@ clean: Makefile.coq
 	- @$(MAKE) clean-extraction
 	- @$(MAKE) clean-mechanization
 	- @$(MAKE) -C packages/ergo-compiler clean
+	- @$(MAKE) -C packages/ergo-engine clean
 	- @$(MAKE) -C packages/ergo-cli clean
 
 cleanall: Makefile.coq
@@ -104,6 +105,7 @@ cleanall: Makefile.coq
 	- @$(MAKE) cleanall-mechanization
 	- @$(MAKE) cleanall-npm
 	- @$(MAKE) -C packages/ergo-compiler cleanall
+	- @$(MAKE) -C packages/ergo-engine cleanall
 	- @$(MAKE) -C packages/ergo-cli cleanall
 
 ##
