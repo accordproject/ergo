@@ -28,6 +28,7 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
   Definition ergoc_expr_unshadow := cNNRCShadow.unshadow.
   Definition ergoc_expr_subst_const_to_var := cNNRCShadow.nnrc_subst_const_to_var.
   Definition ergoc_expr_javascript_unshadow := NNRCtoJavaScript.nnrcToJSunshadow.
+  Definition ergoc_expr_java_unshadow := NNRCtoJava.nnrcToJavaunshadow.
 
   (* JavaScript code generation *)
   Definition ergoc_javascript_indent := NNRCtoJavaScript.indent.
@@ -52,6 +53,31 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
     cNNRC.lift_nnrc_core
         (fun e => NNRCtoJavaScript.nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname)
         (NNRC.nnrc_to_nnrc_core e).
+
+  (* Java code generation *)
+  Definition ergoc_java_indent := NNRCtoJava.indent.
+  Definition ergoc_java_quotel_double := NNRCtoJava.quotel_double.
+  Definition ergoc_java_eol_newline := NNRCtoJava.eol_newline.
+
+  Definition ergoc_java := CompLang.java.
+  
+  Definition ergoc_expr_to_java := NNRCtoJava.nnrcToJava.
+
+  (* XXX Should be fixed Qcert-side *)
+  Definition ergoc_expr_to_java_method
+             (input_v:String.string)
+             (e:ergoc_expr)
+             (i:nat)
+             (eol:String.string)
+             (quotel:String.string)
+             (ivs:list (String.string * String.string))
+    := NNRCtoJava.nnrcToJavaFun
+         i input_v e eol quotel ivs.
+
+  (** java_data -- Internally data is kept as JSON *)
+  Definition java_data := ForeignToJava.java_json.
+  Definition mk_java_data := ForeignToJava.mk_java_json.
+  Definition from_java_data : java_data -> String.string := NNRCtoJava.from_java_json.
 
 End ECodeGen.
 

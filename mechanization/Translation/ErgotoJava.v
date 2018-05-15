@@ -28,15 +28,15 @@ Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
-Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
+Require Import ErgoSpec.Translation.ErgoCalculustoJava.
 
-Section ErgotoJavaScript.
-  Definition ergo_package_to_javascript
+Section ErgotoJava.
+  Definition ergo_package_to_java
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
     let p := ergo_package_expand p in
     let pc := eolift (package_to_calculus ctos) p in
-    elift ergoc_package_to_javascript_top pc.
+    elift ergoc_package_to_java_top pc.
 
-End ErgotoJavaScript.
+End ErgotoJava.
 
