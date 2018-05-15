@@ -138,11 +138,6 @@ Section ErgotoJavaScript.
       | None => not_in_contract_error
       | Some _ => esuccess (NNRCVar local_state)
       end
-    | EThisEmit =>
-      match ctxt.(comp_context_current_contract) with
-      | None => not_in_contract_error
-      | Some _ => esuccess (NNRCVar local_emit)
-      end
     | EVar v =>
       if in_dec string_dec v ctxt.(comp_context_params)
       then esuccess (NNRCGetConstant v)

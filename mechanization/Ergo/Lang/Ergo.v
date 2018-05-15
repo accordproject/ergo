@@ -42,7 +42,6 @@ Section Ergo.
   | EThisContract : ergo_expr (**r this contract *)
   | EThisClause : ergo_expr (**r this clause *)
   | EThisState : ergo_expr (**r this state *)
-  | EThisEmit : ergo_expr (**r this emit *)
   | EVar : string -> ergo_expr (**r variable *)
   | EConst : ErgoData.data -> ergo_expr (**r constant *)
   | EArray : list ergo_expr -> ergo_expr (**r array constructor *) 
