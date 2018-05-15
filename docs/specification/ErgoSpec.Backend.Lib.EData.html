@@ -66,6 +66,16 @@
 &nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EData.dbrand">dbrand</a></span> <span class="id">b</span> : <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span> -&gt; <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span> <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dbrand">Data.dbrand</a></span> <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#b">b</a></span>.<br/>
 <br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EData.dsome">dsome</a></span> : <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span> -&gt; <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dsome">Data.dsome</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EData.dnone">dnone</a></span> : <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dnone">Data.dnone</a></span>.<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EData.dsuccess">dsuccess</a></span> : <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span> -&gt; <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dleft">Data.dleft</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EData.derror">derror</a></span> : <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span> -&gt; <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dright">Data.dright</a></span>.<br/>
+&nbsp;&nbsp;<br/>
 <div class="doc">data -&gt; JSON *string* conversion </div>
 &nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EData.data_to_json_string">data_to_json_string</a></span> <span class="id">s</span> : <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#EData.data">data</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">String.string</a></span> <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#ergomodel.ergo_data_to_json_string">ergomodel.ergo_data_to_json_string</a></span> <span class="id"><a href="ErgoSpec.Backend.Lib.EData.html#s">s</a></span>.<br/>

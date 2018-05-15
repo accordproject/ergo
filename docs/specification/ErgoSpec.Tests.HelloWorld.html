@@ -26,20 +26,20 @@
 &nbsp;&nbsp;<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">string_scope</span>.<br/>
 &nbsp;&nbsp;<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="cl1">cl1</a></span> :=<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="cl1">cl1</a></span> : <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#ergo_clause">ergo_clause</a></span> :=<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#mkClause">mkClause</a></span> "<span class="id">helloworld</span>"<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#mkLambda">mkLambda</a></span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(("<span class="id">request</span>", <span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOClassRef">CTOClassRef</a></span> "<span class="id">Request</span>")::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Common.CTO.CTO.html#CTOClassRef">CTOClassRef</a></span> "<span class="id">Response</span>")<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EVar">EVar</a></span> "<span class="id">request</span>")).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#SReturn">SReturn</a></span> (<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EVar">EVar</a></span> "<span class="id">request</span>"))).<br/>
 <br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="c1">c1</a></span> :=<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="c1">c1</a></span> : <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#ergo_contract">ergo_contract</a></span> :=<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#mkContract">mkContract</a></span> "<span class="id">HelloWorld</span>"<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<span class="id">TemplateModel</span>"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#Clause">Clause</a></span> <span class="id"><a href="ErgoSpec.Tests.HelloWorld.html#cl1">cl1</a></span>)::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Tests.HelloWorld.html#cl1">cl1</a></span>::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>).<br/>
 &nbsp;&nbsp;<br/>
-&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="p1">p1</a></span> :=<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="p1">p1</a></span> : <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#ergo_package">ergo_package</a></span> :=<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#mkPackage">mkPackage</a></span> "<span class="id">org.accordproject.helloworld</span>"<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html#EContract">EContract</a></span> <span class="id"><a href="ErgoSpec.Tests.HelloWorld.html#c1">c1</a></span>)::<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>).<br/>
 <br/>
