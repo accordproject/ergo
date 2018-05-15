@@ -61,13 +61,13 @@ Often a match expression is a more consise way to represent a
 conditional expression with a repeating, regular condition. For example:
 
 ```
-    if x == 1 then
+    if x = 1 then
       ...
-    else if x == 2 then
+    else if x = 2 then
       ...
-    else if x == 3 then
+    else if x = 3 then
       ...
-    else if x == 4 then
+    else if x = 4 then
       ...
     else
       ...
