@@ -41,6 +41,10 @@ let compile_package_to_javascript_cicero ctos ergo =
   let code = ErgoCompiler.ergo_package_to_javascript_cicero ctos ergo in
   wrap_jerrors Util.string_of_char_list code
 
+let compile_package_to_java ctos ergo =
+  let code = ErgoCompiler.ergo_package_to_java ctos ergo in
+  wrap_jerrors Util.string_of_char_list code
+
 let compile_inner target ctos file_content =
   let ergo_parsed = ParseString.parse_ergo_from_string file_content in
   begin match target with
@@ -50,7 +54,7 @@ let compile_inner target ctos file_content =
   | JavaScriptCicero ->
       compile_package_to_javascript_cicero ctos ergo_parsed
   | Java ->
-      raise (Ergo_Error "JavaScript backend now available yet")
+      compile_package_to_java ctos ergo_parsed
   end
 
 let make_result_file target_lang source_file s =

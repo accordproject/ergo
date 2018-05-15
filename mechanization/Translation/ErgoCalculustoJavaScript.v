@@ -16,6 +16,7 @@
 
 Require Import String.
 Require Import List.
+Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Ergo.Lang.ErgoBase.
@@ -24,13 +25,6 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoCalculustoJavaScript.
   Local Open Scope string_scope.
-
-  Definition multi_append {A} separator (f:A -> string) (elems:list A) : string :=
-    match elems with
-    | nil => ""
-    | e :: elems' =>
-      (fold_left (fun acc e => acc ++ separator ++ (f e)) elems' (f e))%string
-    end.
 
   Definition function_name_of_contract_clause_name (coname:option string) (clname:string) : string :=
     match coname with
@@ -133,14 +127,14 @@ Section ErgoCalculustoJavaScript.
              ++ (javascript_of_clause_list c.(contract_clauses) coname eol quotel) ++ eol
              ++ "}" ++ eol.
 
-  Definition preamble eol :=
+  Definition preamble (eol:string) :=
     "" ++ "'use strict';" ++ eol
        ++ "/*eslint-disable no-unused-vars*/" ++ eol
        ++ "/*eslint-disable no-undef*/" ++ eol
        ++ "/*eslint-disable no-var*/" ++ eol
        ++ eol.
 
-  Definition postamble eol :=
+  Definition postamble (eol:string) :=
     "" ++ eol
        ++ "/*eslint-enable no-unused-vars*/" ++ eol
        ++ "/*eslint-enable no-undef*/" ++ eol
@@ -185,7 +179,7 @@ Section ErgoCalculustoJavaScript.
        let '(sn, tn) := fold_right proc_one ("",t) sl in
        sn.
 
-  Definition javascript_of_package
+  Definition ergoc_package_to_javascript
              (p:ergoc_package)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
@@ -193,9 +187,9 @@ Section ErgoCalculustoJavaScript.
                    ++ (javascript_of_declarations p.(package_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
   
-  Definition javascript_of_package_top
+  Definition ergoc_package_to_javascript_top
              (p:ergoc_package) : ErgoCodeGen.ergoc_javascript :=
-    javascript_of_package p ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
+    ergoc_package_to_javascript p ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
 
 End ErgoCalculustoJavaScript.
 

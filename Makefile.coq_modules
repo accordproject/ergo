@@ -22,6 +22,7 @@ MODULES = \
 	Backend/Lib/EOperators \
 	Backend/Lib/ECodeGen \
 	Backend/ErgoBackend \
+	Common/Utils/EUtil \
 	Common/Utils/ENames \
 	Common/Utils/EResult \
 	Common/Utils/EError \
@@ -39,7 +40,9 @@ MODULES = \
 	Translation/ErgotoErgoCalculus \
 	Translation/ErgoCalculustoJavaScript \
 	Translation/ErgoCalculustoJavaScriptCicero \
+	Translation/ErgoCalculustoJava \
 	Translation/ErgotoJavaScript \
 	Translation/ErgotoJavaScriptCicero \
+	Translation/ErgotoJava \
 	Compiler/ErgoCompiler \
 	Tests/HelloWorld
