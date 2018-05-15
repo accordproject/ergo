@@ -59,12 +59,17 @@ Section ErgoCalculustoJavaScriptCicero.
        eol
        quotel)
       ++ "function " ++ fun_name ++ "(context) {" ++ eol
-      ++ "  let pcontext = { 'request' : serializer.toJSON(context.request), 'state': context.state, 'contract': context.contract, 'now': context.now};" ++ eol
+      ++ "  let pcontext = { 'request' : serializer.toJSON(context.request), 'state': serializer.toJSON(context.state), 'contract': context.contract, 'emit': context.emit, 'now': context.now};" ++ eol
       ++ "  let result = new " ++ contract_name ++ "()." ++ clause_name ++ "(pcontext);" ++ eol
       ++ "  if (result.hasOwnProperty('left')) {" ++ eol
+      ++ "    //logger.info('ergo result'+JSON.stringify(result))" ++ eol
       ++ "    context.response = serializer.fromJSON(result.left.response);" ++ eol
-      ++ "    context.state = result.left.state;" ++ eol
-      ++ "    context.emit = result.left.emit;" ++ eol
+      ++ "    context.state = serializer.fromJSON(result.left.state);" ++ eol
+      ++ "    let emitResult = [];" ++ eol
+      ++ "    for (let i = 0; i < result.left.emit.length; i++) {" ++ eol
+      ++ "      emitResult.push(serializer.fromJSON(result.left.emit[i]));" ++ eol
+      ++ "    }" ++ eol
+      ++ "    context.emit = emitResult;" ++ eol
       ++ "    return context;" ++ eol
       ++ "  } else {" ++ eol
       ++ "    throw new Error(result.right);" ++ eol
@@ -81,10 +86,10 @@ Section ErgoCalculustoJavaScriptCicero.
        eol
        quotel)
       ++ "function __dispatch(contract,request,state,now) {" ++ eol
-      ++ "  let context = { 'request' : serializer.toJSON(request), 'state': state, 'contract': contract, 'now': now};" ++ eol
+      ++ "  let context = { 'request' : serializer.toJSON(request), 'state': serializer.toJSON(state), 'contract': contract, 'emit': [], 'now': now};" ++ eol
       ++ "  let result = new " ++ contract_name ++ "()." ++ clause_main_name ++ "(context);" ++ eol
       ++ "  if (result.hasOwnProperty('left')) {" ++ eol
-      ++ "    return { 'response' : serializer.fromJSON(result.left.response), 'state' :result.left.state, 'emit' : result.left.emit };" ++ eol
+      ++ "    return { 'response' : serializer.fromJSON(result.left.response), 'state' :serializer.fromJSON(result.left.state), 'emit' : result.left.emit };" ++ eol
       ++ "  } else {" ++ eol
       ++ "    return { 'error' : result.right };" ++ eol
       ++ "  }" ++ eol
