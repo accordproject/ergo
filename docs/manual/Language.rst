@@ -65,7 +65,7 @@ Local variables can also be declared with a type:
 
     define variable name : String = "John"; // declares and initialize a string variable
     name ++ " Smith"                        // rest of the expression
-    let x : Double = 3.1416;                // declares and initialize a double variable
+    define variable x : Double = 3.1416     // declares and initialize a double variable
     sqrt(x)                                 // rest of the expression
 
 Conditionals
@@ -124,18 +124,18 @@ For expressions
 ~~~~~~~~~~~~~~~
 
 For expressions allow to apply an expression of every element in an
-input array of values:
+input array of values and returns a new array:
 
 ::
 
-    for x in [1,-2,3] { x+1 }
+    foreach x in [1,-2,3] return x+1
 
 For expressions can have an optional condition of the values being
 iterated over:
 
 ::
 
-    for x in [1,-2,3] where x > 0 { x+1 }
+    foreach x in [1,-2,3] where x > 0 return x+1
 
 Creating objects
 ~~~~~~~~~~~~~~~~
@@ -154,7 +154,7 @@ for each fields:
 Functions
 ---------
 
-It is possible to declare functions in Ergo:
+It is possible to declare global variables and functions in Ergo:
 
 ::
 
@@ -227,11 +227,11 @@ You can declare a contract over a template model as follows:
 ::
 
     contract ContractName over TemplateModel {
-      clause C1(request ReqType1) : RespType1 {
+      clause C1(request : ReqType1) : RespType1 {
         // Expression
       }
 
-      clause C2(request ReqType2) : RespType2 {
+      clause C2(request : ReqType2) : RespType2 {
         // Expression
       }
     }

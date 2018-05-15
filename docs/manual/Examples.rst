@@ -13,7 +13,7 @@ simple “Hello World!” contract:
 
     contract HelloWorld over TemplateModel {
        // Simple Clause
-       clause helloworld(request Request) : Response {
+       clause helloworld(request : Request) : Response {
            new Response{ output: "Hello " ++ contract.name ++ " " ++ request.input }
       }
     }
