@@ -23,9 +23,9 @@ Require Import EquivDec.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EError.
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EImport.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 
 Section Ergo.
 
@@ -72,20 +72,84 @@ Section Ergo.
   | SEnforce : ergo_expr -> option ergo_stmt -> ergo_stmt -> ergo_stmt (**r enforce *)
   | SMatch : ergo_expr -> (list (match_case * ergo_stmt)) -> ergo_stmt -> ergo_stmt.
 
-  (** Clause *)
-  Definition ergo_clause := @clause ergo_stmt.
-
   (** Function *)
-  Definition ergo_function := @function ergo_stmt.
+  Record lambda :=
+    mkLambda
+      { lambda_params: list (string * cto_type);
+        lambda_output : cto_type;
+        lambda_throw : option cto_type;
+        lambda_body : ergo_stmt; }.
 
-  (** Contract *)
-  Definition ergo_contract := @contract ergo_stmt.
+  Record ergo_function :=
+    mkFunc
+      { function_name : string;
+        function_lambda : lambda; }.
+    
+    (** Clause *)
+    Record ergo_clause :=
+      mkClause
+        { clause_name : string;
+          clause_lambda : lambda; }.
 
-  (** Declaration *)
-  Definition ergo_declaration := @declaration ergo_expr ergo_stmt.
+    (** Contract *)
+    Record ergo_contract :=
+      mkContract
+        { contract_name : string;
+          contract_template : string;
+          contract_clauses : list ergo_clause; }.
 
-  (** Package. *)
-  Definition ergo_package := @package ergo_expr ergo_stmt.
+    (** Declaration *)
+    Inductive ergo_declaration :=
+    | EType : cto_declaration -> ergo_declaration
+    | EExpr : ergo_expr -> ergo_declaration
+    | EGlobal : string -> ergo_expr -> ergo_declaration
+    | EImport : import_decl -> ergo_declaration
+    | EFunc : ergo_function -> ergo_declaration
+    | EContract : ergo_contract -> ergo_declaration.
+ 
+    (** Package. *)
+    Record ergo_package :=
+      mkPackage
+        { package_namespace : string;
+          package_declarations : list ergo_declaration; }.
+
+  Section Lookup.
+    Fixpoint lookup_clauses_signatures (dl:list ergo_clause) : list cto_signature :=
+      match dl with
+      | nil => nil
+      | cl :: dl' =>
+        (mkCTOSignature
+           cl.(clause_name)
+           cl.(clause_lambda).(lambda_params)
+           cl.(clause_lambda).(lambda_output)
+           cl.(clause_lambda).(lambda_throw)) :: lookup_clauses_signatures dl'
+      end.
+    
+    Definition lookup_contract_signatures (c:ergo_contract) : list cto_signature :=
+      lookup_clauses_signatures c.(contract_clauses).
+    
+    Fixpoint lookup_contracts_in_declarations (dl:list ergo_declaration) : list ergo_contract :=
+      match dl with
+      | nil => nil
+      | EType _ :: dl' => lookup_contracts_in_declarations dl'
+      | EExpr _ :: dl' => lookup_contracts_in_declarations dl'
+      | EGlobal _ _ :: dl' => lookup_contracts_in_declarations dl'
+      | EImport _ :: dl' => lookup_contracts_in_declarations dl'
+      | EFunc f :: dl' => lookup_contracts_in_declarations dl'
+      | EContract c :: dl' => c :: lookup_contracts_in_declarations dl'
+      end.
+
+    Definition lookup_single_contract_in_declarations (dl:list ergo_declaration) : eresult ergo_contract :=
+      match lookup_contracts_in_declarations dl with
+      | nil => efailure (EResult.CompilationError ("Cannot compile without at least one contract"))
+      | c :: nil => esuccess c
+      | _ :: _ => efailure (EResult.CompilationError ("Cannot compile with more than one contract"))
+      end.
+      
+    Definition lookup_single_contract (p:ergo_package) : eresult ergo_contract :=
+      lookup_single_contract_in_declarations p.(package_declarations).
+    
+  End Lookup.
 
 End Ergo.
 

@@ -24,7 +24,6 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.Translation.ErgotoErgoCalculus.

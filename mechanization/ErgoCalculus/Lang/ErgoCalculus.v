@@ -17,7 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoCalculus.
@@ -27,20 +27,44 @@ Section ErgoCalculus.
     (** Expression *)
     Definition ergoc_expr := ErgoCodeGen.ergoc_expr.
 
+    Record lambdac :=
+      mkLambdaC
+        { lambdac_params: list (string * cto_type);
+          lambdac_output : cto_type;
+          lambdac_throw : option cto_type;
+          lambdac_body : ergoc_expr; }.
+
     (** Clause *)
-    Definition ergoc_clause := @clause ergoc_expr.
-    
+    Record ergoc_clause :=
+      mkClauseC
+        { clausec_name : string;
+          clausec_lambda : lambdac; }.
+
     (** Function *)
-    Definition ergoc_function := @function ergoc_expr.
+    Record ergoc_function :=
+      mkFuncC
+        { functionc_name : string;
+          functionc_lambda : lambdac; }.
     
     (** Contract *)
-    Definition ergoc_contract := @contract ergoc_expr.
-    
+    Record ergoc_contract :=
+      mkContractC
+        { contractc_name : string;
+          contractc_template : string;
+          contractc_clauses : list ergoc_clause; }.
+
     (** Declaration *)
-    Definition ergoc_declaration := @declaration ergoc_expr ergoc_expr.
+    Inductive ergoc_declaration :=
+    | ECExpr : ergoc_expr -> ergoc_declaration
+    | ECGlobal : string -> ergoc_expr -> ergoc_declaration
+    | ECFunc : ergoc_function -> ergoc_declaration
+    | ECContract : ergoc_contract -> ergoc_declaration.
     
     (** Package. *)
-    Definition ergoc_package := @package ergoc_expr ergoc_expr.
+    Record ergoc_package :=
+      mkPackageC
+        { packagec_namespace : string;
+          packagec_declarations : list ergoc_declaration; }.
 
   End Syntax.
 

@@ -24,7 +24,6 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoExpand.
@@ -47,8 +46,9 @@ Section ErgoExpand.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (s:signature) : eresult (match_case * ergo_stmt) :=
-    let '(cname, callparams, _) := s in
+             (s:cto_signature) : eresult (match_case * ergo_stmt) :=
+    let cname := s.(cto_signature_name) in
+    let callparams := s.(cto_signature_params) in
     match callparams with
     | nil => efailure (CompilationError ("Cannot create main if not at least one parameter in "++cname))
     | (param0, CTOClassRef type0)::otherparams =>
@@ -65,7 +65,7 @@ Section ErgoExpand.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (ss:list signature) : eresult ergo_stmt :=
+             (ss:list cto_signature) : eresult ergo_stmt :=
     elift (fun s =>
              SMatch effparam0
                      s
@@ -77,7 +77,7 @@ Section ErgoExpand.
   Definition match_of_sigs_top
              (namespace:string)
              (effparams:list ergo_expr)
-             (ss:list signature) :=
+             (ss:list cto_signature) :=
     match effparams with
     | nil => efailure (CompilationError ("Cannot create main if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
@@ -111,7 +111,7 @@ Section ErgoExpand.
              (c.(contract_clauses) ++ (main_clause::nil)))
         (create_main_clause_for_contract namespace c).
   
-  Definition add_main_clause_to_declaration (namespace:string) (d:ergo_declaration) : eresult declaration :=
+  Definition add_main_clause_to_declaration (namespace:string) (d:ergo_declaration) : eresult ergo_declaration :=
     match d with
     | EType td => esuccess (EType td)
     | EExpr e => esuccess (EExpr e)

@@ -19,7 +19,7 @@ Require Import List.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
@@ -121,14 +121,16 @@ Section ErgoCalculustoJavaScriptCicero.
     (preamble eol) ++ eol
                    ++ (wrapper_functions contract_name signatures eol quotel)
                    (* ++ (dispatch_function contract_name eol quotel) ++ eol *)
-                   ++ (javascript_of_declarations p.(package_declarations) 0 0 eol quotel)
+                   ++ (javascript_of_declarations p.(packagec_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
-  Fixpoint filter_signatures (namespace:string) (sigs:list signature) : list (string * string * string) :=
+  Fixpoint filter_signatures (namespace:string) (sigs:list cto_signature) : list (string * string * string) :=
     match sigs with
     | nil => nil
     | sig :: rest =>
-      let '(fname, params, outtype) := sig in
+      let fname := sig.(cto_signature_name) in
+      let params := sig.(cto_signature_params) in
+      let outtype := sig.(cto_signature_output) in
       match params with
       | nil => filter_signatures namespace rest
       | (_,reqtype)::nil =>
@@ -146,11 +148,11 @@ Section ErgoCalculustoJavaScriptCicero.
 
   Definition ergoc_package_to_javascript_cicero
              (coname:string)
-             (sigs: list signature)
+             (sigs: list cto_signature)
              (p:ergoc_package) : ErgoCodeGen.ergoc_javascript :=
     javascript_of_package_with_dispatch
       coname
-      (filter_signatures p.(package_namespace) sigs)
+      (filter_signatures p.(packagec_namespace) sigs)
       p
       ErgoCodeGen.ergoc_javascript_eol_newline
       ErgoCodeGen.ergoc_javascript_quotel_double.

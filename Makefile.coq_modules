@@ -29,7 +29,6 @@ MODULES = \
 	Common/Utils/EImport \
 	Common/CTO/CTO \
 	Common/CTO/ETypeContext \
-	Ergo/Lang/ErgoBase \
 	Ergo/Lang/Ergo \
 	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \

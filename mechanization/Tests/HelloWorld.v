@@ -16,7 +16,6 @@ Require Import String.
 Require Import List.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Compiler.ErgoCompiler.
 

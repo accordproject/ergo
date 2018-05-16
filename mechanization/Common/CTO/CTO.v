@@ -43,7 +43,8 @@ Section CTO.
 
   Record cto_signature : Set :=
     mkCTOSignature
-      { cto_signature_params : list (string * cto_type);
+      { cto_signature_name:string;
+        cto_signature_params : list (string * cto_type);
         cto_signature_output : cto_type;
         cto_signature_throw : option cto_type }.
 
@@ -187,7 +188,8 @@ Section CTO.
             elift Some (resolve_cto_type namespace tbl throw_ty)
           end
       in
-      elift3 mkCTOSignature
+      elift3 (mkCTOSignature
+                sig.(cto_signature_name))
              params_types
              output_type
              throw_type.
