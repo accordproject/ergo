@@ -23,16 +23,15 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 
 Section Lambda.
-  Definition ergoc_expr_lambda := @lambda ergoc_expr.
+  Definition ergoc_expr_lambda := lambdac.
 
   Definition lookup_table := string -> option ergoc_expr_lambda.
 
   Definition add_function_to_table
-             (t:lookup_table) (newfname:string) (newcl:@lambda ergoc_expr) : lookup_table :=
+             (t:lookup_table) (newfname:string) (newcl:lambdac) : lookup_table :=
     fun fname =>
       if (string_dec fname newfname)
       then Some newcl
@@ -50,7 +49,7 @@ Section Patch.
     
   Definition ergoc_expr_lambda_of_backend_closure
              (cl:ErgoEnhancedBackend.ergo_backend_closure) : ergoc_expr_lambda :=
-    mkLambda
+    mkLambdaC
       (ergoc_lambda_params_of_lambda_params cl.(Closure.closure_params))
       (ergoc_lambda_type_of_lambda_type cl.(Closure.closure_output))
       None
@@ -94,10 +93,10 @@ Section ErgoCalculusCall.
     match t fname with
     | None => efailure (CompilationError (call_error fname))
     | Some cl =>
-      match zip_params (List.map fst cl.(lambda_params)) el with
+      match zip_params (List.map fst cl.(lambdac_params)) el with
       | None => efailure (CompilationError (call_params_error fname))
       | Some params => 
-        esuccess (create_call params cl.(lambda_body))
+        esuccess (create_call params cl.(lambdac_body))
       end
     end.
     
@@ -111,10 +110,10 @@ Section ErgoCalculusCall.
     match t fname with
     | None => efailure (CompilationError (call_error fname))
     | Some cl =>
-      match zip_params (List.map fst cl.(lambda_params)) el with
+      match zip_params (List.map fst cl.(lambdac_params)) el with
       | None => efailure (CompilationError (call_params_error fname))
       | Some params => 
-        esuccess (create_call params cl.(lambda_body))
+        esuccess (create_call params cl.(lambdac_body))
       end
     end.
 

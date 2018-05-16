@@ -158,8 +158,8 @@ clause:
 maythrow:
 |
   { None }
-| THROWS en = ident
-  { Some en }
+| THROWS pt = paramtype
+  { Some pt }
     
 params:
 | p = param

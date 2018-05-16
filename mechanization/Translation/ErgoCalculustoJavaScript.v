@@ -19,7 +19,6 @@ Require Import List.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
@@ -86,33 +85,33 @@ Section ErgoCalculustoJavaScript.
              (coname:option string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := function_name_of_contract_clause_name coname c.(clause_name) in
-    javascript_function_of_body c.(clause_lambda).(lambda_body) fname eol quotel.
+    let fname := function_name_of_contract_clause_name coname c.(clausec_name) in
+    javascript_function_of_body c.(clausec_lambda).(lambdac_body) fname eol quotel.
     
   Definition javascript_function_of_ergo_func
              (f:ergoc_function)
              (coname:option string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := function_name_of_contract_clause_name coname f.(function_name) in
-    javascript_function_of_body f.(function_lambda).(lambda_body) fname eol quotel ++ eol.
+    let fname := function_name_of_contract_clause_name coname f.(functionc_name) in
+    javascript_function_of_body f.(functionc_lambda).(lambdac_body) fname eol quotel ++ eol.
     
   Definition javascript_method_of_ergo_clause
              (c:ergoc_clause)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := c.(clause_name) in
-    javascript_method_of_body c.(clause_lambda).(lambda_body) fname eol quotel.
+    let fname := c.(clausec_name) in
+    javascript_method_of_body c.(clausec_lambda).(lambdac_body) fname eol quotel.
     
   Definition javascript_method_of_ergo_func
              (f:ergoc_function)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := f.(function_name) in
-    javascript_method_of_body f.(function_lambda).(lambda_body) fname eol quotel.
+    let fname := f.(functionc_name) in
+    javascript_method_of_body f.(functionc_lambda).(lambdac_body) fname eol quotel.
 
   Definition javascript_of_clause_list
-             (cl:list clause)
+             (cl:list ergoc_clause)
              (coname:string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
@@ -122,9 +121,9 @@ Section ErgoCalculustoJavaScript.
              (c:ergoc_contract)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let coname := c.(contract_name) in
+    let coname := c.(contractc_name) in
     "class " ++ coname ++ " {" ++ eol
-             ++ (javascript_of_clause_list c.(contract_clauses) coname eol quotel) ++ eol
+             ++ (javascript_of_clause_list c.(contractc_clauses) coname eol quotel) ++ eol
              ++ "}" ++ eol.
 
   Definition preamble (eol:string) :=
@@ -151,13 +150,11 @@ Section ErgoCalculustoJavaScript.
       * nat                                (* next available unused temporary *)
     :=
       match s with
-      | EType _ =>  ("","",t)
-      | EExpr e => javascript_of_expression e t i eol quotel
-      | EGlobal v e => javascript_of_global v e t i eol quotel
-      | EImport _ => ("","",t)
-      | EFunc f =>
+      | ECExpr e => javascript_of_expression e t i eol quotel
+      | ECGlobal v e => javascript_of_global v e t i eol quotel
+      | ECFunc f =>
         (javascript_function_of_ergo_func f None eol quotel,"null",t)
-      | EContract c =>
+      | ECContract c =>
         (javascript_of_contract c eol quotel,"null",t)
       end.
 
@@ -184,7 +181,7 @@ Section ErgoCalculustoJavaScript.
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
     (preamble eol) ++ eol
-                   ++ (javascript_of_declarations p.(package_declarations) 0 0 eol quotel)
+                   ++ (javascript_of_declarations p.(packagec_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
   
   Definition ergoc_package_to_javascript_top

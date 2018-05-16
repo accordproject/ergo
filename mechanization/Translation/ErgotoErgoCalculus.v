@@ -25,7 +25,6 @@ Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EError.
 Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoSugar.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
@@ -87,7 +86,7 @@ Section ErgotoJavaScript.
         ctxt.(comp_context_globals)
         (List.cons param ctxt.(comp_context_params)).
 
-    Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambda) : comp_context :=
+    Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambdac) : comp_context :=
       mkCompContext
         ctxt.(comp_context_ctos)
         ctxt.(comp_context_current_contract)
@@ -383,10 +382,10 @@ Section ErgotoJavaScript.
           (List.map fst c.(clause_lambda).(lambda_params))
     in
     elift
-      (mkClause
+      (mkClauseC
          c.(clause_name))
       (elift
-         (mkLambda
+         (mkLambdaC
             c.(clause_lambda).(lambda_params)
             c.(clause_lambda).(lambda_output)
             c.(clause_lambda).(lambda_throw))
@@ -399,10 +398,10 @@ Section ErgotoJavaScript.
         add_params ctxt (List.map fst f.(function_lambda).(lambda_params))
     in
     elift
-      (mkFunc
+      (mkFuncC
          f.(function_name))
       (elift
-         (mkLambda
+         (mkLambdaC
             f.(function_lambda).(lambda_params)
             f.(function_lambda).(lambda_output)
             f.(function_lambda).(lambda_throw))
@@ -414,8 +413,8 @@ Section ErgotoJavaScript.
     elift
       (fun x => (add_one_function
                    ctxt
-                   x.(clause_name)
-                   x.(clause_lambda), x)) (* Add new function to comp_context *)
+                   x.(clausec_name)
+                   x.(clausec_lambda), x)) (* Add new function to comp_context *)
       (clause_to_calculus ctxt c).
 
   (** Translate a contract to a contract+calculus *)
@@ -449,42 +448,46 @@ Section ErgotoJavaScript.
     elift
       (fun xy =>
          (fst xy,
-          (mkContract
+          (mkContractC
              c.(contract_name)
              c.(contract_template)
              (snd xy))))
       (List.fold_left proc_one cl init).
 
   (** Translate a statement to a statement+calculus *)
-  Definition stmt_to_calculus
-             (ctxt:comp_context) (s:ergo_declaration) : eresult (comp_context * ergoc_declaration) :=
+  Definition declaration_to_calculus
+             (ctxt:comp_context) (s:ergo_declaration) : option (eresult (comp_context * ergoc_declaration)) :=
     match s with
-    | EType cto_type => esuccess (ctxt, EType cto_type) (* XXX TO BE REVISED -- add type to comp_context *)
+    | EType cto_type => None
     | EExpr e =>
-      elift
-        (fun x => (ctxt, EExpr x))
-        (ergo_expr_to_calculus ctxt e)
+      Some
+        (elift
+           (fun x => (ctxt, ECExpr x))
+           (ergo_expr_to_calculus ctxt e))
     | EGlobal v e =>
-      elift
-        (fun x => (add_one_global ctxt v, EGlobal v x)) (* Add new variable to comp_context *)
-        (ergo_expr_to_calculus ctxt e)
-    | EImport s =>
-      esuccess (ctxt, EImport s)
+      Some
+        (elift
+           (fun x => (add_one_global ctxt v, ECGlobal v x)) (* Add new variable to comp_context *)
+           (ergo_expr_to_calculus ctxt e))
+    | EImport s => None
     | EFunc f =>
-      elift
-        (fun x => (add_one_function ctxt x.(function_name) x.(function_lambda), EFunc x)) (* Add new function to comp_context *)
-        (function_to_calculus ctxt f)
+      Some
+        (elift
+           (fun x => (add_one_function ctxt x.(functionc_name) x.(functionc_lambda), ECFunc x)) (* Add new function to comp_context *)
+           (function_to_calculus ctxt f))
     | EContract c =>
-      elift (fun xy => (fst xy, EContract (snd xy)))
-            (contract_to_calculus ctxt c)
+      Some
+        (elift (fun xy => (fst xy, ECContract (snd xy)))
+               (contract_to_calculus ctxt c))
     end.
 
   Definition initial_comp_context (ctos:list cto_declaration) (p:string) :=
     mkCompContext ctos None None ergoc_stdlib p nil nil.
 
   (** Translate a package to a package+calculus *)
-  Definition package_to_calculus_with_table
-             (cto_decls:list cto_declaration) (local_namespace:string) (p:package) : eresult ergoc_package :=
+  Definition declarations_calculus_with_table
+             (cto_decls:list cto_declaration) (local_namespace:string) (dl:list ergo_declaration)
+    : eresult (comp_context * list ergoc_declaration) :=
     let ctxt := initial_comp_context cto_decls local_namespace in
     let init := esuccess (ctxt, nil) in
     let proc_one
@@ -494,20 +497,29 @@ Section ErgotoJavaScript.
         eolift
           (fun acc : comp_context * list ergoc_declaration =>
              let (ctxt,acc) := acc in
-             elift (fun xy : comp_context * ergoc_declaration =>
-                      let (newctxt,news) := xy in
-                      (newctxt,news::acc))
-                   (stmt_to_calculus ctxt s))
+             match declaration_to_calculus ctxt s with
+             | None => esuccess (ctxt,acc)
+             | Some edecl =>
+               elift (fun xy : comp_context * ergoc_declaration =>
+                        let (newctxt,news) := xy in
+                        (newctxt,news::acc))
+                     edecl
+             end)
           acc
     in
+    List.fold_left proc_one dl init.
+
+  (** Translate a package to a package+calculus *)
+  Definition package_to_calculus_with_table
+             (cto_decls:list cto_declaration) (local_namespace:string) (p:ergo_package) : eresult ergoc_package :=
     elift
       (fun xy =>
-         (mkPackage
+         (mkPackageC
             p.(package_namespace)
-            (snd xy)))
-      (List.fold_left proc_one p.(package_declarations) init).
+                (snd xy)))
+      (declarations_calculus_with_table cto_decls local_namespace p.(package_declarations)).
 
-  Definition package_to_calculus (ctos:list cto_package) (p:package) : eresult ergoc_package :=
+  Definition package_to_calculus (ctos:list cto_package) (p:ergo_package) : eresult ergoc_package :=
     let local_namespace := p.(package_namespace) in
     let ectos := cto_resolved_tbl_for_package ctos in
     eolift (fun ctos_decls => package_to_calculus_with_table ctos_decls local_namespace p) ectos.

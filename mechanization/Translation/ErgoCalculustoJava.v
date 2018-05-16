@@ -19,7 +19,6 @@ Require Import List.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Ergo.Lang.ErgoBase.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
@@ -75,11 +74,11 @@ Section ErgoCalculustoJava.
              (c:ergoc_clause)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_java :=
-    let fname := c.(clause_name) in
-    java_method_of_body c.(clause_lambda).(lambda_body) fname eol quotel.
+    let fname := c.(clausec_name) in
+    java_method_of_body c.(clausec_lambda).(lambdac_body) fname eol quotel.
     
   Definition java_of_clause_list
-             (cl:list clause)
+             (cl:list ergoc_clause)
              (coname:string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_java :=
@@ -89,9 +88,9 @@ Section ErgoCalculustoJava.
              (c:ergoc_contract)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_java :=
-    let coname := c.(contract_name) in
+    let coname := c.(contractc_name) in
     "class " ++ coname ++ " {" ++ eol
-             ++ (java_of_clause_list c.(contract_clauses) coname eol quotel) ++ eol
+             ++ (java_of_clause_list c.(contractc_clauses) coname eol quotel) ++ eol
              ++ "}" ++ eol.
 
   Definition preamble (eol:string) := eol.
@@ -109,12 +108,10 @@ Section ErgoCalculustoJava.
       * nat                                (* next available unused temporary *)
     :=
       match s with
-      | EType _ =>  ("",ErgoCodeGen.mk_java_data "",t)
-      | EExpr e => java_of_expression e t i eol quotel
-      | EGlobal v e => java_of_global v e t i eol quotel
-      | EImport _ => ("",ErgoCodeGen.mk_java_data "",t)
-      | EFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
-      | EContract c =>
+      | ECExpr e => java_of_expression e t i eol quotel
+      | ECGlobal v e => java_of_global v e t i eol quotel
+      | ECFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
+      | ECContract c =>
         (java_of_contract c eol quotel,ErgoCodeGen.mk_java_data "null",t)
       end.
 
@@ -141,7 +138,7 @@ Section ErgoCalculustoJava.
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_java :=
     (preamble eol) ++ eol
-                   ++ (java_of_declarations p.(package_declarations) 0 0 eol quotel)
+                   ++ (java_of_declarations p.(packagec_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
   Definition ergoc_package_to_java_top
