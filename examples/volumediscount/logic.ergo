@@ -1,10 +1,7 @@
-/* Volume discount logic in Ergo
-*/
-
+/* Volume discount logic in Ergo */
 namespace org.accordproject.volumediscount
 
-import org.accordproject.contract.*
-import org.accordproject.late.*
+import org.accordproject.volumediscount.*
 
 contract VolumeDiscount over TemplateModel {
    // Clause for volume discount

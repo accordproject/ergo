@@ -173,5 +173,22 @@
       "amount": 990,
       "$class": "io.clause.demo.fragileGoods.PayOut"
     }
+  },
+  {
+    "name": "test10",
+    "dir": "data/promissory-note",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "PromissoryNote",
+    "clausename": "check",
+    "expected": {
+      "outstandingBalance":1425.4396822450633,
+      "$class": "org.accordproject.promissorynote.Response"
+    }
   }
 ]
