@@ -20,8 +20,8 @@ define function compoundInterestMultiple(annualInterest : Double, numberOfDays :
     return (1.0 + annualInterest) ^ (numberOfDays / 365.0)
 }
 
-contract PromissoryNote over TemplateModel throws Error {
-  clause check(request : Request) : Response {
+contract PromissoryNote over TemplateModel {
+  clause check(request : Request) : Response throws Error {
     enforce contract.annualInterest >= 0.0;
     enforce contract.dollarAmount >= 0.0;
     define variable outstanding = contract.dollarAmount - request.amountPaid;
