@@ -27,7 +27,7 @@ contract PromissoryNote over TemplateModel {
     define variable outstanding = contract.dollarAmount - request.amountPaid;
     enforce outstanding >= 0.0;
 
-    define variable numberOfDays = momentDiff(moment("May 17 2018 23:53:33 EDT"),contract.date);
+    define variable numberOfDays = momentDiff(moment("17 May 2018 13:53:33 EST"),contract.date);
     enforce numberOfDays >= 0.0;
     define variable compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
 
