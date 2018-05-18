@@ -13,7 +13,8 @@
  *)
 
 Require Import Qcert.Common.CommonSystem.
-Require Import Qcert.Compiler.Model.EnhancedModel.
+
+Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require Import ErgoSpec.Backend.ForeignErgo.
 
 Module Type ErgoBackendModel.

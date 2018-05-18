@@ -130,40 +130,22 @@ Module EOperators(ergomodel:ErgoBackendModel).
     End Integer.
 
     Module DateTime.
-      Definition optimeas : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeAs.
-      Definition optimeshift : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeShift.
-      Definition optimene : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeNe.
-      Definition optimelt : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeLt.
-      Definition optimele : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeLe.
-      Definition optimegt : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeGt.
-      Definition optimege : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeGe.
-      Definition optimedurationfromscale : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeDurationFromScale.
-      Definition optimedurationbetween : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpTimeDurationBetween.
       Definition opdateplus : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDatePlus.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimePlus.
       Definition opdateminus : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateMinus.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeMinus.
       Definition opdatene : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateNe.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeNe.
       Definition opdatelt : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateLt.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeLt.
       Definition opdatele : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateLe.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeLe.
       Definition opdategt : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateGt.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeGt.
       Definition opdatege : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateGe.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeGe.
       Definition opdateintervalbetween : op
-        := EnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpSqlDateIntervalBetween.
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIntervalBetween.
     End DateTime.
 
     Definition opequal : op
