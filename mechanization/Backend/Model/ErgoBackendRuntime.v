@@ -17,11 +17,11 @@ Require Import List.
 Require Import Qcert.Utils.Closure.
 Require Import Qcert.Common.CommonSystem.
 Require Import Qcert.Compiler.Model.CompilerRuntime.
-Require Import Qcert.Compiler.Model.DateTimeModelPart.
-Require Import Qcert.Compiler.Model.EnhancedModel.
-Require Import Qcert.Compiler.Model.SqlDateModelPart.
 Require Import Qcert.Translation.NNRCtoJavaScript.
 Require Import Qcert.cNNRC.Lang.cNNRC.
+
+Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
+Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 
@@ -49,27 +49,53 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
   Definition ergo_backend_lookup_table := backend_lookup_table.
   
   Definition foreign_unary_operator_table : ergo_backend_lookup_table :=
-    fun fname => None.
+    fun fname =>
+      let binop :=
+          match fname with
+          | "momentDayOfMonth"%string =>
+            Some (OpForeignUnary (enhanced_unary_date_time_op
+                                     (uop_date_time_component date_time_DAY)))
+          | "momentMonth"%string =>
+            Some (OpForeignUnary (enhanced_unary_date_time_op
+                                     (uop_date_time_component date_time_MONTH)))
+          | "momentQuarter"%string =>
+            Some (OpForeignUnary (enhanced_unary_date_time_op
+                                     (uop_date_time_component date_time_QUARTER)))
+          | "momentYear"%string =>
+            Some (OpForeignUnary (enhanced_unary_date_time_op
+                                     (uop_date_time_component date_time_YEAR))) 
+         | _ => None
+          end
+      in
+      match binop with
+      | None => None
+      | Some op =>
+        Some (mk_naked_closure
+                ("p1"::nil)
+                (NNRCUnop op (NNRCGetConstant "p1")))
+      end.
+
+
 
   Definition foreign_binary_operator_table : backend_lookup_table :=
     fun fname =>
       let binop :=
           match fname with
           | "momentIsAfter"%string =>
-            Some (OpForeignBinary (enhanced_binary_sql_date_op
-                                     bop_sql_date_gt))
+            Some (OpForeignBinary (enhanced_binary_date_time_op
+                                     bop_date_time_gt))
           | "momentIsBefore"%string =>
-            Some (OpForeignBinary (enhanced_binary_sql_date_op
-                                     bop_sql_date_lt))
+            Some (OpForeignBinary (enhanced_binary_date_time_op
+                                     bop_date_time_lt))
           | "momentSubtract"%string =>
-            Some (OpForeignBinary (enhanced_binary_sql_date_op
-                                     bop_sql_date_minus))
+            Some (OpForeignBinary (enhanced_binary_date_time_op
+                                     bop_date_time_minus))
           | "momentAdd"%string =>
-            Some (OpForeignBinary (enhanced_binary_sql_date_op
-                                     bop_sql_date_plus))
+            Some (OpForeignBinary (enhanced_binary_date_time_op
+                                     bop_date_time_plus))
           | "momentDiff"%string =>
-            Some (OpForeignBinary (enhanced_binary_sql_date_op
-                                     bop_sql_date_interval_between))
+            Some (OpForeignBinary (enhanced_binary_date_time_op
+                                     bop_date_time_duration_between))
           | _ => None
           end
       in
@@ -84,6 +110,18 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
   Definition foreign_function_table : backend_lookup_table :=
     fun fname =>
       match fname with
+      | "momentIsSame"%string =>
+        let e :=
+            NNRCUnop
+              OpNeg
+              (NNRCBinop
+                 (OpForeignBinary (enhanced_binary_date_time_op
+                                     bop_date_time_ne))
+                 (NNRCGetConstant "p1") (NNRCGetConstant "p2"))
+        in
+        Some (mk_naked_closure
+                ("p1"::"p2"::nil)
+                e)
       | "momentDuration"%string =>
         let e :=
             NNRCLet "v1"%string (NNRCUnop OpToString (NNRCGetConstant "p1"%string))
@@ -92,7 +130,7 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
                                         (NNRCConst (dstring "-"%string))
                                         (NNRCGetConstant "p2"%string))
                              (NNRCUnop
-                                (OpForeignUnary (enhanced_unary_sql_date_op uop_sql_date_interval_from_string))
+                                (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_duration_from_string))
                                 (NNRCBinop OpStringConcat
                                            (NNRCVar "v1"%string)
                                            (NNRCVar "v2"%string))))

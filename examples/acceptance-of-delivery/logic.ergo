@@ -13,7 +13,7 @@ contract AcceptanceOfDelivery over TemplateModel {
     ;
 
     define variable status =
-      if momentIsAfter(now(), momentAdd(received, momentDuration(contract.businessDays, "DAY")))
+      if momentIsAfter(now(), momentAdd(received, momentDuration(contract.businessDays, "day")))
       then "OUTSIDE_INSPECTION_PERIOD"
       else if request.inspectionPassed
       then "PASSED_TESTING"

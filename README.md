@@ -4,6 +4,7 @@
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 [![Documentation Status](https://readthedocs.org/projects/ergo/badge/?version=latest)](http://ergo.readthedocs.io/en/latest/?badge=latest)
+[![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
 
 Git: [http://github.com/accordproject/ergo](http://github.com/accordproject/ergo) / Website: [http://ergo.accordproject.org](http://ergo.accordproject.org)
 

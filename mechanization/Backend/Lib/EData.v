@@ -76,7 +76,7 @@ Module EData(ergomodel:ErgoBackendModel).
     := Data.dright.
   
   (** data -> JSON *string* conversion *)
-  Definition data_to_json_string s : data -> String.string 
+  Definition data_to_json_string s : Data.data -> String.string 
     := ergomodel.ergo_data_to_json_string s.
   Definition json_to_json_string s : json -> String.string 
     := JSON.jsonToJS s.
