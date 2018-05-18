@@ -52,6 +52,9 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
     fun fname =>
       let binop :=
           match fname with
+          | "moment"%string =>
+            Some (OpForeignUnary (enhanced_unary_date_time_op
+                                    uop_date_time_from_string))
           | "momentDayOfMonth"%string =>
             Some (OpForeignUnary (enhanced_unary_date_time_op
                                      (uop_date_time_component date_time_DAY)))
