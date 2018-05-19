@@ -29,35 +29,15 @@ type dnrc_logger_token_type = string
 
 (* Data type conversions between Coq and OCaml *)
 
-let rec string_of_char_list l =
-  begin match l with
-  | [] -> ""
-  | c :: l -> (String.make 1 c) ^ (string_of_char_list l)
-  end
+let string_of_char_list l =
+  let s = ref "" in
+  List.iter (fun c -> s := !s ^ (String.make 1 c)) l;
+  !s
 
 let char_list_of_string s =
   let l = ref [] in
   String.iter (fun c -> l := c :: !l) s;
   List.rev !l
-
-let string = string_of_char_list
-
-(* coq Z's are now replaced by native OCaml ints, but here is the way to get things back to coq Z's:
-
-   open BinNums
-
-   let rec coq_nat_of_pos i =
-   if i = 0 then Datatypes.O else Datatypes.S (coq_nat_of_pos (i-1))
-
-   let coq_positive_of_pos i =
-   BinPos.Pos.of_nat (coq_nat_of_pos i)
-
-   let coq_Z_of_int i =
-   if (i = 0) then Z0
-   else if (i < 0)
-   then (Zneg (coq_positive_of_pos (-i)))
-   else (Zpos (coq_positive_of_pos i))
-*)
 
 let coq_Z_of_int i = i
 
@@ -66,10 +46,7 @@ let coq_Z_of_int i = i
 (* I/O *)
 (*******)
 
-(* Temporarily disabled -- JS
-   let os_newline = if Sys.win32 then "\r\n" else "\n" *)
 let os_newline = "\n"
-
 let string_of_file file =
   try
     let inchan = open_in_bin file in
