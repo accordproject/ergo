@@ -30,5 +30,7 @@ try {
     //Logger.info(process.argv);
     require('../lib/ergoccore.js');
 } catch (err) {
-    Logger.error(JSON.stringify(err[2].c));
+    for (let i = 0; i < err.length; i++) {
+        Logger.error(JSON.stringify(err[i].c));
+    }
 }

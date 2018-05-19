@@ -1,9 +1,7 @@
 namespace org.accordproject.acceptanceofdelivery
 
-import org.accordproject.contract.*
+import org.accordproject.common.*
 import org.accordproject.acceptanceofdelivery.*
-
-import ergo.moment.* // Date/Time library
 
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse throws Error {

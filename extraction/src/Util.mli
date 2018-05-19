@@ -30,7 +30,6 @@ type dnrc_logger_token_type = string
 (* Data type conversions between Coq and OCaml *)
 
 val string_of_char_list : char list -> string
-val string : char list -> string
 val char_list_of_string : string -> char list
 val coq_Z_of_int : int -> int
 

@@ -6,7 +6,7 @@ import org.accordproject.perishablegoods.*
 contract PerishableGoods over TemplateModel {
   // Auxiliary function calculating penalty from temperature readings
   define function calculatePenalty(readings : TemperatureReading[]) : Double {
-    define variable tempReadings = for x in readings { x.centigrade };
+    define variable tempReadings = foreach x in readings return x.centigrade;
     // find the lowest temperature reading
     define variable lowestReading = min(tempReadings);
     // find the highest temperature reading
