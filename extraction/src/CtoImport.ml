@@ -80,6 +80,12 @@ let cto_declaration_of_defn d =
     | "EventDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
         CTOEvent (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+    | "AssetDeclaration" ->
+        (* XXX First parameter is inheritance TBD *)
+        CTOAsset (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+    | "ParticipantDeclaration" ->
+        (* XXX First parameter is inheritance TBD *)
+        CTOParticipant (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
         raise (Ergo_Error ("Can't import CTO kind: " ^ other))
     end

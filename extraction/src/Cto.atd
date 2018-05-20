@@ -61,10 +61,18 @@ type id = {
     name : string;
   } <ocaml field_prefix="cto_id_">
 
+type classRef = {
+    ttype <json name="type"> : string;
+    name : string;
+  } <ocaml field_prefix="cto_extends_">
+type classExtension = {
+    ttype <json name="type"> : string;
+    class : classRef;    
+  } <ocaml field_prefix="cto_extends_">
 type definition = {
     ttype <json name="type"> : string;
     id : id;
-    ?classExtension : string nullable;
+    ?classExtension : classExtension nullable;
     body : definition_content;
 } <ocaml field_prefix="cto_defn_">
 type import = {

@@ -34,10 +34,9 @@ class ErgoEngine {
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
      * @param {string} contractName of the contract to execute
-     * @param {string} clauseName of the clause to execute
      * @returns {object} Promise to the result of execution
      */
-    static executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName,clauseName) {
+    static executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName) {
         const vm = new VM({
             timeout: 1000,
             sandbox: { moment: Moment }
@@ -48,8 +47,7 @@ class ErgoEngine {
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
         const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
-        const functionName = 'contract.' + clauseName;
-        const clauseCall = functionName+'(params);'; // Create the clause call
+        const clauseCall = 'contract.main(params);'; // Create the clause call
         const result = vm.run(contract + clauseCall); // Call the logic
         if (result.hasOwnProperty('left')) {
             return Promise.resolve(result.left);
@@ -67,20 +65,20 @@ class ErgoEngine {
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
      * @param {string} contractName of the contract to execute
-     * @param {string} clauseName of the clause to execute
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName,clauseName) {
+    static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName) {
         return (Ergo.compileAndLink(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 throw new Error(ergoCode.error);
             } else {
                 const result =
-                      this.executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName,clauseName);
+                      this.executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName);
                 return result;
             }
         });
     }
+
 }
 
 module.exports = ErgoEngine;

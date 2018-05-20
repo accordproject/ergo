@@ -51,7 +51,7 @@ describe('ergo', () => {
             const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath], statePath, 'HelloWorld', 'helloworld', false);
+            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath], statePath, 'HelloWorld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
         it('should execute a smart Ergo clause without cto', async function () {
@@ -59,7 +59,7 @@ describe('ergo', () => {
             const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
-            const result = await Commands.execute(ergoPath, undefined, clausePath, [requestPath], statePath, 'HelloWorld', 'helloworld', false);
+            const result = await Commands.execute(ergoPath, undefined, clausePath, [requestPath], statePath, 'HelloWorld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });
@@ -70,7 +70,7 @@ describe('ergo', () => {
             const clausePath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath], statePath, 'HelloWorldState', 'helloworldstate', false);
+            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath], statePath, 'HelloWorldState', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1)');
         });
         it('should execute a smart Ergo clause with state thrice', async function () {
@@ -79,7 +79,7 @@ describe('ergo', () => {
             const clausePath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath,requestPath,requestPath], statePath, 'HelloWorldState', 'helloworldstate', false);
+            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath,requestPath,requestPath], statePath, 'HelloWorldState', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (3)');
         });
     });
