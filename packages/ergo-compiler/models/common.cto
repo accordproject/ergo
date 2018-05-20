@@ -1,0 +1,56 @@
+namespace org.accordproject.common
+
+import org.hyperledger.composer.system.*
+
+/**
+ * Contract data
+ * -- This is the result of matching a template
+ */
+
+/* A state is a concept with a contract status */
+asset ContractState identified by stateId {
+  o String stateId
+  --> ContractModel contract optional
+}
+/* A contract is a concept -- This contains the contract data */
+asset ContractModel identified by contractId {
+  o String contractId
+}
+/* A clause is a concept -- This contains the clause data */
+asset ClauseModel identified by clauseId {
+  o String clauseId
+}
+
+/**
+ * Contract API
+ * -- Describes input and output of calls to a contract's clause
+ */
+
+/* A request is a transaction */
+transaction Request {}
+/* A response is a transaction */
+transaction Response {}
+/* An Error is a transaction */
+transaction ErrorResponse {}
+/* A payload has contract data, a request and a state */
+concept Payload {
+  o ContractModel contract  // the contract data
+  o Request request
+  o ContractState state
+}
+
+/* If the call to a contract's clause succeeds, it returns a response, a list of events and a new state */
+concept Success {
+  o Response response
+  o ContractState state
+  o Event[] emit
+}
+/* If the call to a contract's clause fails, it returns and error */ 
+concept Failure {
+  o ErrorResponse error
+}
+
+/**
+ * The functional signature for a contract call is as follows:
+ * clausecall : String contractName -> String clauseName -> Payload payload -> Success | Failure
+ */

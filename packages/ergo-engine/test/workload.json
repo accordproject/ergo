@@ -10,7 +10,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "HelloWorld",
-    "clausename": "helloworld",
     "expected": {
       "output": "Hello Fred Blogs (Accord Project)"
     }
@@ -26,7 +25,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "VolumeDiscount",
-    "clausename": "volumediscount",
     "expected": {
       "discountRate": 2.8,
       "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
@@ -43,7 +41,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "VolumeDiscount",
-    "clausename": "volumediscount",
     "expected": {
       "discountRate": 2.8,
       "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
@@ -60,7 +57,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "VolumeDiscount",
-    "clausename": "volumediscount",
     "expected": {
       "discountRate": 2.9,
       "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
@@ -77,7 +73,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "VolumeDiscount",
-    "clausename": "volumediscount",
     "expected": {
       "discountRate": 2.9,
       "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
@@ -95,7 +90,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "LateDeliveryAndPenalty",
-    "clausename": "latedeliveryandpenalty",
     "expected": {
       "buyerMayTerminate": true,
       "penalty": 110,
@@ -113,7 +107,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "LateDeliveryAndPenalty",
-    "clausename": "latedeliveryandpenalty",
     "expected": {
       "compilationerror": "[Compilation Error] Import not found: org.accordproject.base"
     }
@@ -130,7 +123,6 @@
     "request": "request-early.json",
     "state": "state.json",
     "contractname": "LateDeliveryAndPenalty",
-    "clausename": "latedeliveryandpenalty",
     "expected": {
       "error": {
         "$class": "org.accordproject.latedeliveryandpenalty.Error",
@@ -149,7 +141,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "AcceptanceOfDelivery",
-    "clausename": "acceptanceofdelivery",
     "expected": {
       "receiver": "Party B",
       "shipper": "Party A",
@@ -168,7 +159,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "FragileGoods",
-    "clausename": "fragilegoods",
     "expected": {
       "amount": 990,
       "$class": "io.clause.demo.fragileGoods.PayOut"
@@ -185,7 +175,6 @@
     "request": "request.json",
     "state": "state.json",
     "contractname": "PromissoryNote",
-    "clausename": "check",
     "expected": {
       "outstandingBalance":1425.4396822450633,
       "$class": "org.accordproject.promissorynote.Response"

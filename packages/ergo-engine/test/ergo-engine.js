@@ -41,7 +41,6 @@ describe('Execute', () => {
         const request = test.request;
         const state = test.state;
         const contractname = test.contractname;
-        const clausename = test.clausename;
         const expected = test.expected;
         let resultKind;
         if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
@@ -51,7 +50,7 @@ describe('Execute', () => {
         }
 
         describe('#execute'+name, function () {
-            it('should ' + resultKind + ' executing Ergo clause ' + clausename + ' in contract ' + contractname, async function () {
+            it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
                 const ergoText = Fs.readFileSync(Path.resolve(__dirname, dir, ergo), 'utf8');
                 let ctoTexts = [];
                 for (let i = 0; i < models.length; i++) {
@@ -61,12 +60,12 @@ describe('Execute', () => {
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
                 if (expected.hasOwnProperty('compilationerror')) {
-                    return ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename).should.be.rejectedWith(expected.error);
+                    return ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname).should.be.rejectedWith(expected.error);
                 } else if (expected.hasOwnProperty('error')) {
-                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename);
+                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname);
                     return result.should.deep.equal(expected);
                 } else {
-                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname, clausename);
+                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname);
                     for (const key in expected) {
                         if (expected.hasOwnProperty(key)) {
                             const field = key;

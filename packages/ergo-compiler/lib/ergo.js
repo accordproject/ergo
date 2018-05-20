@@ -19,6 +19,9 @@ const Path = require('path');
 const Engine=require('./ergocore.js');
 const CTOParser = require('composer-common/lib/introspect/parser');
 
+const HyperledgerCTO = Fs.readFileSync(Path.join(__dirname,'..','models','org.hyperledger.composer.system.cto'), 'utf8');
+const CommonCTO = Fs.readFileSync(Path.join(__dirname,'..','models','common.cto'), 'utf8');
+
 /**
  * Utility class that implements the internals for Ergo.
  * @class
@@ -61,7 +64,8 @@ class Ergo {
         };
         // Clean-up naming for Sexps
         config.ergo = ergoText;
-        config.cto = [];
+        config.cto = [JSON.stringify(this.parseCTOtoJSON(HyperledgerCTO)),
+            JSON.stringify(this.parseCTOtoJSON(CommonCTO))];
         for (let i = 0; i < ctoTexts.length; i++) {
             config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctoTexts[i])));
         }

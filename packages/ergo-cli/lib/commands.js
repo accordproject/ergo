@@ -56,10 +56,9 @@ class Commands {
      * @param {string[]} requestsPath path to the request transaction in JSON
      * @param {string} statePath path to the state in JSON
      * @param {string} contractName of the contract to execute
-     * @param {string} clauseName of the clause to execute
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPath,ctoPaths,contractPath,requestsPath,statePath,contractName,clauseName) {
+    static execute(ergoPath,ctoPaths,contractPath,requestsPath,statePath,contractName) {
         const ergoText = Fs.readFileSync(ergoPath, 'utf8');
         if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
         let ctoTexts = [];
@@ -74,12 +73,12 @@ class Commands {
         }
         const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
         const firstRequest = requestsJson[0];
-        const initResponse = ErgoEngine.execute(ergoText,ctoTexts,contractJson,firstRequest,stateJson,contractName,clauseName);
+        const initResponse = ErgoEngine.execute(ergoText,ctoTexts,contractJson,firstRequest,stateJson,contractName);
         // Get all the other requests and chain execution through Promise.reduce()
         const otherRequests = requestsJson.slice(1, requestsJson.length);
         return otherRequests.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.execute(ergoText,ctoTexts,contractJson,requestJson,result.state,contractName,clauseName);
+                return ErgoEngine.execute(ergoText,ctoTexts,contractJson,requestJson,result.state,contractName);
             });
         }, initResponse);
     }
