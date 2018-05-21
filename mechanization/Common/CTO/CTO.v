@@ -251,7 +251,9 @@ Section CTO.
                (tbls:cto_names_tables)
                (pkg:cto_package) : eresult (list cto_declaration) :=
       (** Make sure to add current namespace to the list of imports - i.e., import self. *)
-      let imports := app pkg.(cto_package_imports) ((pkg.(cto_package_namespace),ImportAll)::nil) in
+      let imports := app pkg.(cto_package_imports)
+                               (("org.hyperledger.composer.system"%string, ImportAll)
+                                  ::(pkg.(cto_package_namespace),ImportAll)::nil) in
       let namespace := pkg.(cto_package_namespace) in
       let in_scope_names := apply_imports_to_names_tables namespace tbls imports in
       eolift (fun tbls => resolve_declarations
