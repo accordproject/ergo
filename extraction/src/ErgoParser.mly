@@ -14,6 +14,7 @@
 
 %{
   open Util
+  open LexUtil
   open ErgoUtil
   open ErgoComp
 %}
@@ -243,7 +244,7 @@ fstmt:
 | RETURN e1 = expr
 		{ ErgoCompiler.sfunreturn e1 }
 | THROW e1 = expr
-    { ergo_raise (ergo_parse_error ("Cannot throw inside a function, you have to be in a Clause")) }
+    { raise (LexError ("Cannot throw inside a function, you have to be in a Clause")) }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = fstmt
     { ErgoCompiler.slet v e1 s2 }
 | DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
@@ -251,13 +252,13 @@ fstmt:
 | IF e1 = expr THEN s2 = fstmt ELSE s3 = fstmt
     { ErgoCompiler.sif e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = fstmt SEMI s3 = fstmt
-    { ergo_raise (ergo_parse_error ("Cannot use enforce inside a function, you have to be in a Clause")) }
+    { raise (LexError ("Cannot use enforce inside a function, you have to be in a Clause")) }
 | ENFORCE e1 = expr SEMI s3 = fstmt
-    { ergo_raise (ergo_parse_error ("Cannot use enforce inside a function, you have to be in a Clause")) }
+    { raise (LexError ("Cannot use enforce inside a function, you have to be in a Clause")) }
 | SET STATE e1 = expr SEMI s2 = fstmt
-    { ergo_raise (ergo_parse_error ("Cannot set state inside a function, you have to be in a Clause")) }
+    { raise (LexError ("Cannot set state inside a function, you have to be in a Clause")) }
 | EMIT e1 = expr SEMI s2 = fstmt
-    { ergo_raise (ergo_parse_error ("Cannot emit inside a function, you have to be in a Clause")) }
+    { raise (LexError ("Cannot emit inside a function, you have to be in a Clause")) }
 | MATCH e0 = expr csd = cases_fstmt
     { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
 
@@ -433,7 +434,7 @@ qname_base:
     { (None,i) }
 | i = safeident_base DOT q = qname_base
     { if i = "*"
-      then ergo_raise (ergo_parse_error "'*' can only be last in a qualified name")
+      then raise (LexError "'*' can only be last in a qualified name")
       else
         begin match q with
   | (None, last) -> (Some i, last)
