@@ -41,6 +41,12 @@ describe('ergo-compiler', () => {
             result.should.deep.equal('Parse error at line 3 character 25');
         });
     });
+    describe('#compilationerrormessage', function () {
+        it('should format parse error', async function () {
+            const result = await Ergo.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
+            result.should.deep.equal('Import not found: org.accordproject.base');
+        });
+    });
     describe('#compilehellojs', function () {
         it('should compile a smart Ergo contract to JavaScript', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
