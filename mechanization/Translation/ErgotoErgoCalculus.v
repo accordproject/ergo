@@ -23,7 +23,6 @@ Require Import Qcert.NNRC.NNRCRuntime.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EError.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoSugar.

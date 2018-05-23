@@ -14,7 +14,7 @@
 
 (* This module contains parsing utilities *)
 
-open Util
+open ErgoUtil
 open LexUtil
 
 open ErgoComp.ErgoCompiler
@@ -32,13 +32,13 @@ let parse parser lexer buf =
       begin
         let pos = buf.Lexing.lex_start_p in
         let msg = Printf.sprintf "At line %d column %d: %s%!" pos.Lexing.pos_lnum (pos.Lexing.pos_cnum - pos.Lexing.pos_bol) msg in
-        raise (LexError msg)
+        ergo_raise (ergo_parse_error msg)
       end
   | _ ->
       begin
         let pos = buf.Lexing.lex_start_p in
         let msg = Printf.sprintf "At line %d column %d: syntax error%!" pos.Lexing.pos_lnum (pos.Lexing.pos_cnum - pos.Lexing.pos_bol) in
-        raise (LexError msg)
+        ergo_raise (ergo_parse_error msg)
       end
 
 let parse_ergo f : ergo_package = parse ErgoParser.main (ErgoLexer.token (string_buff ())) f

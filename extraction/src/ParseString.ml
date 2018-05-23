@@ -26,15 +26,7 @@ open ErgoComp.ErgoCompiler
 
 let parse_string p_fun s =
   let buf = Lexing.from_string s in
-  begin try
-    p_fun buf
-  with
-  | Ergo_Error msg -> raise (Ergo_Error msg)
-  | LexError msg ->
-      Printf.fprintf stderr "[%s] in string%!\n" msg; raise (Ergo_Error ("Parse error ["^ msg ^"] in string [" ^ s ^ "]"))
-  | _ ->
-      Printf.fprintf stderr "Error in string%!\n"; raise (Ergo_Error ("Parse error [???] in string"))
-  end
+  p_fun buf
 
 let parse_ergo_from_string s : ergo_package = parse_string parse_ergo s
 

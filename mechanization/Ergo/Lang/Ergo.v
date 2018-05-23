@@ -21,7 +21,6 @@ Require Import List.
 Require Import EquivDec.
 
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EError.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EImport.
 Require Import ErgoSpec.Common.CTO.CTO.

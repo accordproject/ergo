@@ -22,7 +22,6 @@ Require Import Qcert.Common.TypingRuntime.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EError.
 Require Import ErgoSpec.Common.Utils.EImport.
 
 Section CTO.

@@ -13,8 +13,9 @@
  *)
 
 open Util
-open Cto_j
+open ErgoUtil
 open ErgoComp
+open Cto_j
 
 let enum_case_of_decl d =
   char_list_of_string d.cto_decl_content_id.cto_id_name
@@ -24,7 +25,7 @@ let cto_enum_of_decls dl =
 
 let base_type_of_decl d =
   begin match d with
-  | None -> raise (Ergo_Error "Missing propertyType in CTO")
+  | None -> ergo_raise (ergo_system_error "Missing propertyType in CTO")
   | Some d ->
       begin match d.cto_prop_type_name with
       | "Boolean" -> CTOBoolean
@@ -46,7 +47,7 @@ let field_of_decl d =
   let field_type =
     begin match d.cto_decl_content_array with
     | Some "[]" -> CTOArray field_type
-    | Some _ -> raise (Ergo_Error "Mal-formed array option in CTO JSON representation")
+    | Some _ -> ergo_raise (ergo_system_error "Mal-formed array option in CTO JSON representation")
     | None -> field_type
     end
   in
@@ -87,7 +88,7 @@ let cto_declaration_of_defn d =
         (* XXX First parameter is inheritance TBD *)
         CTOParticipant (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
-        raise (Ergo_Error ("Can't import CTO kind: " ^ other))
+        ergo_raise (ergo_system_error ("Can't import CTO kind: " ^ other))
     end
   in
   { cto_declaration_name = char_list_of_string decl_class;

@@ -14,10 +14,6 @@
 
 (* This module contains a few basic utilities *)
 
-(* Ergo Exception *)
-
-exception Ergo_Error of string
-
 (* this can't go in Logger, since that creates a circular dependency *)
 type nra_logger_token_type = string
 type nrc_logger_token_type = string
@@ -61,7 +57,7 @@ let string_of_file file =
         "Could not read the file %s, got error Sys_error %s\n@?"
         file
         err;
-      raise(Sys_error err)
+      raise (Sys_error err)
 
 (* File print *)
 
@@ -82,20 +78,6 @@ let target_f dir f =
   end
 
 let outname f suff = f ^ suff
-
-
-(**********)
-(* Lookup *)
-(**********)
-
-let get_data x io =
-  try List.assoc x io
-  with Not_found ->
-    Printf.fprintf stderr "Unbound variable %s\n" x;
-    raise (Ergo_Error ("Unbound variable" ^ x))
-
-let get_data_raise x io =
-  List.assoc x io
 
 
 (**********************************)
@@ -211,13 +193,4 @@ let global_replace const_expr repl text =
       end
   in
   String.concat "" (List.rev (replace [] 0 false))
-
-(** Additional utility functions *)
-
-let process_file f file_name =
-  Format.printf "Processing file: %s --" file_name;
-  let file_content = string_of_file file_name in
-  try f (file_name,file_content) with
-  | Ergo_Error msg ->
-      raise (Ergo_Error ("In file [" ^ file_name ^ "] " ^ msg))
 

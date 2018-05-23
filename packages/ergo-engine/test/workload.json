@@ -108,7 +108,10 @@
     "state": "state.json",
     "contractname": "LateDeliveryAndPenalty",
     "expected": {
-      "compilationerror": "[Compilation Error] Import not found: org.accordproject.base"
+      "error": {
+        "kind": "CompilationError",
+        "message": "Import not found: org.accordproject.base"
+      }
     }
   },
   {
@@ -125,8 +128,11 @@
     "contractname": "LateDeliveryAndPenalty",
     "expected": {
       "error": {
-        "$class": "org.accordproject.latedeliveryandpenalty.Error",
-        "message": "Cannot exercise late delivery before delivery date"
+          "kind": "ErgoError",
+          "message": {
+              "$class": "org.accordproject.latedeliveryandpenalty.Error",
+              "message": "Cannot exercise late delivery before delivery date"
+          }
       }
     }
   },
@@ -176,7 +182,7 @@
     "state": "state.json",
     "contractname": "PromissoryNote",
     "expected": {
-      "outstandingBalance":1425.4396822450633,
+      "outstandingBalance": 1425.4396822450633,
       "$class": "org.accordproject.promissorynote.Response"
     }
   }

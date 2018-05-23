@@ -52,7 +52,7 @@ class ErgoEngine {
         if (result.hasOwnProperty('left')) {
             return Promise.resolve(result.left);
         } else {
-            return Promise.resolve({ 'error' : result.right });
+            return Promise.resolve({ 'error' : { 'kind' : 'ErgoError', 'message' : result.right } });
         }
     }
 
@@ -70,11 +70,9 @@ class ErgoEngine {
     static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName) {
         return (Ergo.compileAndLink(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
-                throw new Error(ergoCode.error);
+                return ergoCode;
             } else {
-                const result =
-                      this.executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName);
-                return result;
+                return this.executeErgoCode(ergoCode.success,contractJson,requestJson,stateJson,contractName);
             }
         });
     }

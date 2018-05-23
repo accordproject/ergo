@@ -14,15 +14,6 @@
 
 (* This module contains a few basic utilities *)
 
-(* Ergo Exception *)
-
-exception Ergo_Error of string
-
-(* this can't go in Logger, since that creates a circular dependency *)
-type nra_logger_token_type = string
-type nrc_logger_token_type = string
-type dnrc_logger_token_type = string
-
 (**************)
 (* Data types *)
 (**************)
@@ -76,8 +67,4 @@ val global_replace : string -> string -> string -> string
     been replaced by [templ]. This is intended as a replacement for the
     corresponding function in Str when matching against a constant
     string. *)
-
-(** Additional utility functions *)
-
-val process_file : ((string * string) -> 'a) -> string -> 'a
 

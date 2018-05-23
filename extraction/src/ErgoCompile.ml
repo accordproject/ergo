@@ -13,6 +13,7 @@
  *)
 
 open Util
+open ErgoUtil
 open ErgoComp
 open ErgoConfig
 
@@ -21,34 +22,22 @@ type result_file = {
   res_content : string;
 }
 
-let wrap_jerrors f e =
-  begin match e with
-  | Failure (CompilationError cl) ->
-      raise (Ergo_Error ("[Compilation Error] " ^ (Util.string_of_char_list cl)))
-  | Failure (TypeError cl) ->
-      raise (Ergo_Error ("[Type Error] " ^ (Util.string_of_char_list cl)))
-  | Failure (UserError d) ->
-      let cl = ErgoCompiler.Data.data_to_json_string [] d in
-      raise (Ergo_Error ("[User Error] " ^ (Util.string_of_char_list cl)))
-  | Success x -> f x
-  end
-
 let compile_package_to_javascript ctos ergo =
   let code = ErgoCompiler.ergo_package_to_javascript ctos ergo in
-  wrap_jerrors Util.string_of_char_list code
+  wrap_jerrors string_of_char_list code
 
 let compile_package_to_javascript_cicero ctos ergo =
   let code = ErgoCompiler.ergo_package_to_javascript_cicero ctos ergo in
-  wrap_jerrors Util.string_of_char_list code
+  wrap_jerrors string_of_char_list code
 
 let compile_package_to_java ctos ergo =
   let code = ErgoCompiler.ergo_package_to_java ctos ergo in
-  wrap_jerrors Util.string_of_char_list code
+  wrap_jerrors string_of_char_list code
 
 let compile_inner target ctos file_content =
   let ergo_parsed = ParseString.parse_ergo_from_string file_content in
   begin match target with
-  | Ergo -> raise (Ergo_Error "Target language cannot be Ergo")
+  | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
   | JavaScript ->
       compile_package_to_javascript ctos ergo_parsed
   | JavaScriptCicero ->
@@ -77,7 +66,7 @@ let ergo_proc gconf (file_name,file_content) =
 let batch_compile_top gconf cto_files input_files =
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   let results =
-    List.map (Util.process_file (ergo_proc gconf)) input_files
+    List.map (process_file (ergo_proc gconf)) input_files
   in
   let output_res file_res =
     if file_res.res_file <> "" then
