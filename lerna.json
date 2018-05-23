@@ -3,7 +3,7 @@
   "packages": [
     "packages/*"
   ],
-  "version": "0.0.47",
+  "version": "0.0.48",
   "hoist": true,
   "command": {
     "publish": {
