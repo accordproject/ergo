@@ -14,6 +14,7 @@
 
 open Util
 open ErgoUtil
+open ErgoComp
 open ErgoCompile
 open ErgoConfig
 
@@ -51,16 +52,28 @@ let wrap_all wrap_f l =
   List.iter (fun x -> ignore (a##push (wrap_f x))) l;
   a
 
+let json_loc_of_loc loc =
+  object%js
+    val line = loc.line
+    val character = loc.character
+  end
+
+let json_loc_missing () = json_loc_of_loc loc_empty
+
 let json_of_ergo_error error =
   object%js
     val kind = Js.string (error_kind error)
     val message= Js.string (error_message error)
+    val locstart = json_loc_of_loc (error_loc_start error)
+    val locend = json_loc_of_loc (error_loc_end error)
   end
 
 let json_of_ergo_success () =
   object%js
     val kind = Js.string ""
     val message= Js.string ""
+    val locstart = json_loc_missing ()
+    val locend = json_loc_missing ()
   end
 
 let json_of_result res =

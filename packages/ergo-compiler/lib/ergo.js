@@ -132,6 +132,20 @@ class Ergo {
         return ergoRuntime + '\n' + ergoCode;
     }
 
+    /**
+     * Error message
+     *
+     * @param {object} error object returned by Ergo compiler
+     * @returns {string} error message
+     */
+    static ergoErrorToString(error) {
+        switch (error.kind) {
+        case 'ParseError':
+            return error.message + ' at line ' + error.locstart.line + ' character ' + error.locstart.character;
+        default:
+            return error.message;
+        }
+    }
 }
 
 module.exports = Ergo;

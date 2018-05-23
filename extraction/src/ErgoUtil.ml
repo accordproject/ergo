@@ -20,8 +20,13 @@ open ErgoComp
 exception Ergo_Error of eerror
 let ergo_system_error msg =
   SystemError (char_list_of_string msg)
-let ergo_parse_error msg =
-  ParseError (char_list_of_string msg)
+let ergo_parse_error msg line1 char1 line2 char2 =
+  ParseError
+    { message = char_list_of_string msg;
+      loc_start = { line = line1;
+                    character = char1 };
+      loc_end = { line = line2;
+                  character = char2 } }
 let ergo_compilation_error msg =
   CompilationError (char_list_of_string msg)
 let ergo_type_error msg =
@@ -45,12 +50,30 @@ let error_message error =
   let msg = 
     begin match error with
     | SystemError msg -> msg
-    | ParseError msg -> msg
+    | ParseError pe -> pe.message
     | CompilationError msg -> msg
     | TypeError msg -> msg
     | RuntimeError msg -> msg
     end
   in string_of_char_list msg
+
+let loc_empty = { line = -1; character = -1; }
+let error_loc_start error =
+  begin match error with
+  | SystemError _ -> loc_empty
+  | ParseError pe -> pe.loc_start
+  | CompilationError _ -> loc_empty
+  | TypeError _ -> loc_empty
+  | RuntimeError _ -> loc_empty
+  end
+let error_loc_end error =
+  begin match error with
+  | SystemError _ -> loc_empty
+  | ParseError pe -> pe.loc_end
+  | CompilationError _ -> loc_empty
+  | TypeError _ -> loc_empty
+  | RuntimeError _ -> loc_empty
+  end
 
 (* Version number *)
 let ergo_version = string_of_char_list ergo_version
@@ -62,7 +85,7 @@ let get_version () =
 let cto_import_decl_of_import_namespace ns =
   begin match String.rindex_opt ns '.' with
   | None ->
-      ergo_raise (ergo_parse_error ("Malformed import: '" ^ ns ^ "' (should have at least one '.')"))
+      ergo_raise (ergo_system_error ("Malformed import: '" ^ ns ^ "' (should have at least one '.')"))
   | Some i ->
       let namespace = char_list_of_string (String.sub ns 0 i) in
       let criteria_str = String.sub ns (i+1) (String.length ns - (i+1)) in

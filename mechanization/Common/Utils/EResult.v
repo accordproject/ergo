@@ -19,9 +19,22 @@ Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section EResult.
+  Record location :=
+    mkLocation {
+        line : nat;
+        character : nat;
+      }.
+    
+  Record parse_error :=
+    mkParseError {
+        message: string;
+        loc_start: location;
+        loc_end: location;
+      }.
+  
   Inductive eerror : Set :=
   | SystemError : string -> eerror
-  | ParseError : string -> eerror
+  | ParseError : parse_error -> eerror
   | CompilationError : string -> eerror
   | TypeError : string -> eerror
   | RuntimeError : string -> eerror.
