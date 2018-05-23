@@ -71,10 +71,10 @@ class Ergo {
         }
         // Call compiler
         const compiled = Engine.Ergo.compile(config);
-        if (compiled.error) {
-            return { 'error' : compiled.result };
+        if (compiled.code) {
+            return { 'error' : compiled.error };
         } else {
-            return compiled.result;
+            return { 'success' : compiled.result };
         }
     }
 
@@ -89,11 +89,9 @@ class Ergo {
     static compileToJavaScriptAndLink(ergoText,ctoTexts,target) {
         const ergoCode = this.compileToJavaScript(ergoText,ctoTexts,target);
         if (ergoCode.hasOwnProperty('error')) {
-            const result = ergoCode;
-            return result;
+            return ergoCode;
         } else {
-            const result = this.linkErgoRuntime(ergoCode);
-            return result;
+            return { 'success' : this.linkErgoRuntime(ergoCode.success) };
         }
     }
 

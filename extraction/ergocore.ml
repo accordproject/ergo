@@ -13,6 +13,7 @@
  *)
 
 open Util
+open ErgoUtil
 open ErgoCompile
 open ErgoConfig
 
@@ -50,16 +51,30 @@ let wrap_all wrap_f l =
   List.iter (fun x -> ignore (a##push (wrap_f x))) l;
   a
 
-let json_of_result res =
+let json_of_ergo_error error =
   object%js
-    val result = Js.string res
-    val error = Js.bool false
+    val kind = Js.string (error_kind error)
+    val message= Js.string (error_message error)
   end
 
-let json_of_error msg =
+let json_of_ergo_success () =
   object%js
-    val result = Js.string msg
-    val error = Js.bool true
+    val kind = Js.string ""
+    val message= Js.string ""
+  end
+
+let json_of_result res =
+  object%js
+    val error = json_of_ergo_success ()
+    val result = Js.string res
+    val code = Js.bool false
+  end
+
+let json_of_error error =
+  object%js
+    val error = json_of_ergo_error error
+    val result = Js.string ""
+    val code = Js.bool true
   end
 
 let ergo_compile input =
@@ -68,26 +83,21 @@ let ergo_compile input =
       begin try
         global_config_of_json input
       with exn ->
-        raise (Ergo_Error ("[Compilation Error] Couldn't load configuration: "^(Printexc.to_string exn)))
+        ergo_raise (ergo_system_error ("Couldn't load configuration: "^(Printexc.to_string exn)))
       end
     in
     let j_s =
       begin try
         Js.to_string input##.ergo
       with exn ->
-        raise (Ergo_Error ("[Compilation Error] Couldn't load contract: "^(Printexc.to_string exn)))
+        ergo_raise (ergo_system_error ("[Compilation Error] Couldn't load contract: "^(Printexc.to_string exn)))
       end
     in
-    let res =
-      begin try ErgoCompile.ergo_compile gconf j_s
-        with Ergo_Error err -> raise (Ergo_Error err)
-        | exn -> raise (Ergo_Error ("[Compilation Error] "^(Printexc.to_string exn)))
-      end
-    in
+    let res = ErgoCompile.ergo_compile gconf j_s in
     json_of_result res
   with
-  | Ergo_Error msg -> json_of_error msg
-  | exn -> json_of_error ("[Main error: "^(Printexc.to_string exn)^"]")
+  | Ergo_Error error -> json_of_error error
+  | exn -> json_of_error (ergo_system_error (Printexc.to_string exn))
   end
 
 let ergo_version unit =

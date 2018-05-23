@@ -12,9 +12,48 @@
  * limitations under the License.
  *)
 
+open Util
 open ErgoComp
 
-let ergo_version = Util.string_of_char_list ergo_version
+(* Ergo Exception *)
+
+exception Ergo_Error of eerror
+let ergo_system_error msg =
+  SystemError (char_list_of_string msg)
+let ergo_parse_error msg =
+  ParseError (char_list_of_string msg)
+let ergo_compilation_error msg =
+  CompilationError (char_list_of_string msg)
+let ergo_type_error msg =
+  TypeError (char_list_of_string msg)
+let ergo_runtime_error msg =
+  RuntimeError (char_list_of_string msg)
+
+let ergo_raise error =
+  raise (Ergo_Error error)
+
+let error_kind error =
+  begin match error with
+  | SystemError _ -> "SystemError"
+  | ParseError _ -> "ParseError"
+  | CompilationError _ -> "CompilationError"
+  | TypeError _ -> "TypeError"
+  | RuntimeError _ -> "RuntimeError"
+  end
+
+let error_message error =
+  let msg = 
+    begin match error with
+    | SystemError msg -> msg
+    | ParseError msg -> msg
+    | CompilationError msg -> msg
+    | TypeError msg -> msg
+    | RuntimeError msg -> msg
+    end
+  in string_of_char_list msg
+
+(* Version number *)
+let ergo_version = string_of_char_list ergo_version
 
 let get_version () =
   print_endline ("Ergo compiler version " ^ ergo_version);
@@ -23,26 +62,29 @@ let get_version () =
 let cto_import_decl_of_import_namespace ns =
   begin match String.rindex_opt ns '.' with
   | None ->
-      raise (Util.Ergo_Error ("Malformed import: '" ^ ns ^ "' (should have at least one '.')"))
+      ergo_raise (ergo_parse_error ("Malformed import: '" ^ ns ^ "' (should have at least one '.')"))
   | Some i ->
-      let namespace = Util.char_list_of_string (String.sub ns 0 i) in
+      let namespace = char_list_of_string (String.sub ns 0 i) in
       let criteria_str = String.sub ns (i+1) (String.length ns - (i+1)) in
       let criteria =
         begin match criteria_str with
         | "*" -> ImportAll
-        | _ -> ImportName (Util.char_list_of_string criteria_str)
+        | _ -> ImportName (char_list_of_string criteria_str)
         end
       in
       (namespace, criteria)
   end
 
-let import_namespace_of_cto_import_decl i =
-  let namespace_str = Util.string_of_char_list (fst i) in
-  let criteria_str =
-    begin match snd i with
-    | ImportAll -> "*"
-    | ImportName n -> Util.string_of_char_list n
-    end
-  in
-  namespace_str ^ "." ^ criteria_str
+(** Additional utility functions *)
+
+let process_file f file_name =
+  Format.printf "Processing file: %s --" file_name;
+  let file_content = string_of_file file_name in
+  f (file_name,file_content)
+
+let wrap_jerrors f e =
+  begin match e with
+  | Failure e -> ergo_raise e
+  | Success x -> f x
+  end
 

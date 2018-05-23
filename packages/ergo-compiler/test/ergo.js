@@ -32,8 +32,7 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
             const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
-            result.should.not.be.null;
-            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
+            result.success.should.not.be.null;
         });
     });
     describe('#compileandlinkhellojs', function () {
@@ -41,8 +40,7 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
             const result = await Ergo.compileAndLink(ergoText, [ctoText], 'javascript');
-            result.should.not.be.null;
-            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
+            result.success.should.not.be.null;
         });
     });
     describe('#compilehellocicero', function () {
@@ -50,8 +48,7 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
             const result = await Ergo.compile(ergoText, [ctoText], 'javascript_cicero');
-            result.should.not.be.null;
-            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
+            result.success.should.not.be.null;
         });
     });
     describe('#compilehellofail', function () {
@@ -59,8 +56,7 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'model.cto'), 'utf8');
             const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
-            result.should.deep.equal({ 'error' : '[Compilation Error] Import not found: org.accordproject.base' });
-            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
+            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base' } });
         });
     });
     describe('#compilehelloandlinkfail', function () {
@@ -68,8 +64,7 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'model.cto'), 'utf8');
             const result = await Ergo.compileAndLink(ergoText, [ctoText], 'javascript');
-            result.should.deep.equal({ 'error' : '[Compilation Error] Import not found: org.accordproject.base' });
-            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
+            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base' } });
         });
     });
     describe('#parsecto', function () {
@@ -77,7 +72,6 @@ describe('ergo-compiler', () => {
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
             const result = await Ergo.parseCTO(ctoText);
             result.should.not.be.null;
-            //result.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });
 });

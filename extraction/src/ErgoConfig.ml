@@ -13,6 +13,7 @@
  *)
 
 open Util
+open ErgoUtil
 
 type lang =
   | Ergo
@@ -26,7 +27,7 @@ let lang_of_name s =
   | "javascript" -> JavaScript
   | "javascript_cicero" -> JavaScriptCicero
   | "java" -> Java
-  | _ -> raise (Ergo_Error ("Unknown language: " ^ s))
+  | _ -> ergo_raise (ergo_system_error ("Unknown language: " ^ s))
   end
 
 let name_of_lang s =
@@ -76,8 +77,5 @@ let add_cto gconf s =
 let add_cto_file gconf (f,s) =
   begin
     gconf.jconf_cto_files <- gconf.jconf_cto_files @ [s];
-    begin try add_cto gconf s with
-    | _ ->
-        raise (Ergo_Error ("Cannot load CTO file: " ^ f))
-    end
+    add_cto gconf s
   end

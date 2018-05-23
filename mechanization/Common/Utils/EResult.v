@@ -15,13 +15,16 @@
 (* Error monad *)
 
 Require Import String.
+Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section EResult.
   Inductive eerror : Set :=
+  | SystemError : string -> eerror
+  | ParseError : string -> eerror
   | CompilationError : string -> eerror
   | TypeError : string -> eerror
-  | UserError : ErgoData.data -> eerror.
+  | RuntimeError : string -> eerror.
 
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
@@ -43,5 +46,30 @@ Section EResult.
     result_of_option a e.
   Definition option_of_eresult {A:Set} (a:eresult A) : option A :=
     option_of_result a.
-End EResult.
 
+  (** Built-in errors *)
+  Section Builtin.
+    Definition not_in_contract_error {A} : eresult A :=
+      efailure (CompilationError ("Cannot use 'contract' variable outside of a contract")).
+    Definition not_in_clause_error {A} : eresult A :=
+      efailure (CompilationError ("Cannot use 'clause' variable outside of a clause")).
+
+    (* CTO errors *)
+    Definition import_not_found {A} (import:string) : eresult A :=
+      efailure (CompilationError ("Import not found: " ++ import)).
+    Definition resolve_name_not_found {A} (namespace:string) (name_ref:string) : eresult A :=
+      efailure (CompilationError ("Cannot resolve name '" ++ name_ref++ "' not found in CTO with namespace " ++ namespace)).
+    Definition import_name_not_found {A} (namespace:string) (name_ref:string) : eresult A :=
+      efailure (CompilationError ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
+  
+    Definition ergo_default_package : string := "org.accordproject.ergo".
+    Definition ergo_default_error_local_name : string := "Error".
+    Definition ergo_default_error_name : string :=
+      ergo_default_package ++ "." ++ ergo_default_error_local_name.
+
+    Definition enforce_error_content : ErgoData.data :=
+      ErgoData.dbrand (ergo_default_error_name::nil)
+                      (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
+  End Builtin.
+
+End EResult.

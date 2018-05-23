@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-open Util
+open ErgoUtil
 open ErgoComp
 open ErgoConfig
 open ErgoCompile
@@ -35,7 +35,7 @@ let anon_args gconf cto_files input_files f =
   then cto_files := (f, Util.string_of_file f) :: !cto_files
   else if extension = ".ergo"
   then input_files := f :: !input_files
-  else raise (Ergo_Error (f ^ " is neither ctoj nor ergo file"))
+  else ergo_raise (ergo_system_error (f ^ " is neither ctoj nor ergo file"))
 
 let usage =
   "Ergo Compiler\n"^
