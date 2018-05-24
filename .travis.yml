@@ -16,7 +16,8 @@ install: |
 script: lerna run test 2>&1
 deploy:
     provider: script
-    script: ./.travis/deploy.sh
+    script: 
+      - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./.travis/deploy.sh; fi'
     skip_cleanup: true
     on:
         all_branches: true
