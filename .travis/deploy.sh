@@ -54,29 +54,11 @@ if [[ "${BUILD_RELEASE}" == "unstable" ]]; then
     # Set the prerelease version.
     npm run pkgstamp
    
-    if [[ "${BUILD_FOCUS}" == "latest" ]]; then
-        PLAYGROUND_SUFFIX="-unstable"      
-        WEB_CFG="{\"webonly\":true}"
-        TAG="unstable"
-    elif [[ "${BUILD_FOCUS}" == "next" ]]; then
-        PLAYGROUND_SUFFIX="-next-unstable"
-        WEB_CFG="{\"webonly\":true}"      
-        TAG="next-unstable"
-    else 
-        _exit "Unknown build focus" 1 
-    fi
+    TAG="unstable"
 elif  [[ "${BUILD_RELEASE}" == "stable" ]]; then
-    if [[ "${BUILD_FOCUS}" == "latest" ]]; then
-        PLAYGROUND_SUFFIX=""      
-        WEB_CFG="{\"webonly\":true}"
-        TAG="latest"
-    elif [[ "${BUILD_FOCUS}" == "next" ]]; then
-        PLAYGROUND_SUFFIX="-next"
-        WEB_CFG="{\"webonly\":true}"
-        TAG="next"
-    else 
-        _exit "Unknown build focus" 1 
-    fi
+    TAG="latest"
+else 
+    _exit "Unknown build focus" 1 
 fi
 
 # Hold onto the version number
@@ -84,7 +66,7 @@ export VERSION=$(node -e "console.log(require('${DIR}/package.json').version)")
 
 # Publish with tag
 echo "Pushing with tag ${TAG}"
-lerna exec --ignore '@(composer-tests-integration|composer-tests-functional|composer-website)' -- npm publish --tag="${TAG}" 2>&1
+lerna exec -- npm publish --tag="${TAG}" 2>&1
 
 # Check that all required modules have been published to npm and are retrievable
 for j in ${NPM_MODULES}; do
@@ -94,35 +76,8 @@ for j in ${NPM_MODULES}; do
     done
 done
 
-# Build, tag, and publish Docker images.
-for i in ${DOCKER_IMAGES}; do
-
-    # Build the image and tag it with the version and unstable.
-    docker build --build-arg VERSION=${VERSION} -t hyperledger/${i}:${VERSION} ${DIR}/packages/${i}/docker
-    docker tag hyperledger/${i}:${VERSION} hyperledger/${i}:"${TAG}"
-
-    # Push both the version and unstable.
-    docker push hyperledger/${i}:${VERSION}
-    docker push hyperledger/${i}:${TAG}
-
-done
-
-# Push to public Bluemix for stable and unstable, latest and next release builds
-if [[ "${BUILD_FOCUS}" != "v0.16" ]]; then
-    pushd ${DIR}/packages/composer-playground
-    rm -rf ${DIR}/packages/composer-playground/node_modules
-    cf login -a https://api.ng.bluemix.net -u ${CF_USERNAME} -p ${CF_PASSWORD} -o ${CF_ORGANIZATION} -s ${CF_SPACE}
-    cf push "composer-playground${PLAYGROUND_SUFFIX}" --docker-image hyperledger/composer-playground:${VERSION} -i 2 -m 128M --no-start
-    cf set-env "composer-playground${PLAYGROUND_SUFFIX}" COMPOSER_CONFIG "${WEB_CFG}"
-    cf start "composer-playground${PLAYGROUND_SUFFIX}"
-    popd
-fi
-
-
-
 ## Stable releases only; both latest and next then clean up git, and bump version number
 if [[ "${BUILD_RELEASE}" = "stable" ]]; then
-
 
     # Configure the Git repository and clean any untracked and unignored build files.
     git config user.name "${GH_USER_NAME}"
@@ -142,18 +97,4 @@ if [[ "${BUILD_RELEASE}" = "stable" ]]; then
 
 fi
 
-
 _exit "All complete" 0
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
-Press h to open a hovercard with more details.
