@@ -27,15 +27,16 @@ RELEASE_BRANCH="release-${TARGET_VERSION}"
 git checkout -b ${RELEASE_BRANCH}
 
 lerna publish --conventional-commits -m 'chore(release): publish %s' --force-publish=* --allow-branch ${RELEASE_BRANCH} --repo-version ${TARGET_VERSION} --yes
-
-# Fix DCO sign-off
-git filter-branch --msg-filter "cat - && echo && echo 'Signed-off-by: Matt Roberts <matt@clause.io>'" HEAD~1..HEAD
-git push -f origin
-
 git add mechanization/Version.v
 git add package.json
-git commit -m "chore(release): Bump Ergo source version" -s
+git commit -m "chore(release): Bump Ergo source version"
+
+# Fix DCO sign-off
+git filter-branch --msg-filter "cat - && echo && echo 'Signed-off-by: Matt Roberts <matt@clause.io>'" HEAD~2..HEAD
+
 git push --set-upstream origin ${RELEASE_BRANCH}
+
+git push -f origin
 
 echo "Publish of ${TARGET_VERSION} successful."
 echo "Now open a pull request to merge branch ${RELEASE_BRANCH} into master."
