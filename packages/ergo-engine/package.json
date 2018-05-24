@@ -24,22 +24,22 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/ergo-compiler": "^0.0.51",
+    "@accordproject/ergo-compiler": "0.0.51",
     "composer-common": "0.17.4",
-    "moment": "^2.20.1",
-    "vm2": "^3.5.0",
-    "yargs": "^9.0.1"
+    "moment": "2.20.1",
+    "vm2": "3.5.0",
+    "yargs": "9.0.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "chai-things": "^0.2.0",
-    "eslint": "^4.19.1",
-    "jsdoc": "^3.5.5",
-    "lerna": "^2.5.1",
-    "license-check": "^1.1.5",
-    "mocha": "^5.1.1",
-    "nyc": "^11.8.0"
+    "chai": "3.5.0",
+    "chai-as-promised": "6.0.0",
+    "chai-things": "0.2.0",
+    "eslint": "4.19.1",
+    "jsdoc": "3.5.5",
+    "lerna": "2.5.1",
+    "license-check": "1.1.5",
+    "mocha": "5.1.1",
+    "nyc": "11.8.0"
   },
   "license-check-config": {
     "src": [

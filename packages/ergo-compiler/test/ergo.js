@@ -32,13 +32,13 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'model.cto'), 'utf8');
             const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
-            result.should.deep.equal({ 'error' : { 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 3, 'character' : 25 }, 'locend' : { 'line' : 3, 'character' : 26 } } });
+            result.should.deep.equal({ 'error' : { 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } } });
         });
     });
     describe('#parseerrormessage', function () {
         it('should format parse error', async function () {
-            const result = await Ergo.ergoErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 3, 'character' : 25 }, 'locend' : { 'line' : 3, 'character' : 26 } });
-            result.should.deep.equal('Parse error at line 3 character 25');
+            const result = await Ergo.ergoErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } });
+            result.should.deep.equal('Parse error at line 16 character 25');
         });
     });
     describe('#compilationerrormessage', function () {

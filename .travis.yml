@@ -5,6 +5,7 @@ dist: trusty
 before_install: |
   set -e
   export PATH="./$HOME/node_modules/.bin:$PATH"
+  npm install -g @alrra/travis-scripts
   date
 install: |
   set -e
@@ -13,8 +14,16 @@ install: |
   lerna bootstrap 2>&1
   date
 script: lerna run test 2>&1
+deploy:
+    provider: script
+    script: 
+      - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./.travis/deploy.sh; fi'
+    skip_cleanup: true
+    on:
+        all_branches: true
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 cache:
   directories:
   - node_modules
+sudo: required
 services: 
