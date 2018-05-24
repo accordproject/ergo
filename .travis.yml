@@ -5,6 +5,7 @@ dist: trusty
 before_install: |
   set -e
   export PATH="./$HOME/node_modules/.bin:$PATH"
+  npm install -g @alrra/travis-scripts
   date
 install: |
   set -e
