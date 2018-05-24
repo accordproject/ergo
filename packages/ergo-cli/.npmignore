@@ -1,0 +1,14 @@
+# NB: This file must exist, since otherwise the .gitignore preferences will be used,
+# which will ignore the lib directory
+Makefile*
+ergo-*.tgz
+src
+_CoqProject
+*~
+.#*
+.nyc_output
+.DS_Store
+node_modules/
+log/
+coverage/
+test/
