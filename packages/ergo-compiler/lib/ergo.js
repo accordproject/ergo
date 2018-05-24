@@ -16,7 +16,7 @@
 
 const Fs = require('fs');
 const Path = require('path');
-const Engine=require('./ergocore.js');
+const Engine=require('./ergo-core.js');
 const CTOParser = require('composer-common/lib/introspect/parser');
 
 const HyperledgerCTO = Fs.readFileSync(Path.join(__dirname,'..','models','org.hyperledger.composer.system.cto'), 'utf8');
@@ -70,7 +70,7 @@ class Ergo {
             config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctoTexts[i])));
         }
         // Call compiler
-        const compiled = Engine.Ergo.compile(config);
+        const compiled = Engine.compile(config);
         if (compiled.code) {
             return { 'error' : compiled.error };
         } else {
@@ -128,7 +128,7 @@ class Ergo {
      * @returns {string} compiled Ergo code in JavaScript linked to Ergo runtime
      */
     static linkErgoRuntime(ergoCode) {
-        const ergoRuntime = Fs.readFileSync(Path.join(__dirname,'ergoruntime.js'), 'utf8');
+        const ergoRuntime = Fs.readFileSync(Path.join(__dirname,'ergo-runtime.js'), 'utf8');
         return ergoRuntime + '\n' + ergoCode;
     }
 

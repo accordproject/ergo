@@ -30,18 +30,36 @@ MENHIRFLAG=-use-menhir
 #MENHIRFLAG=
 
 ## Mains
-MAIN=ergoc
-MAIN2=ergocore
-MAIN3=ergoccore
+NATIVE=native
+BYTE=byte
+JS=js
+ML=ml
 
-TARGET=native
+TARGET1=ergoc.$(NATIVE)
+MAIN1=ergocML
+BYTE1=$(MAIN1).$(BYTE)
+BIN1=$(MAIN1).$(NATIVE)
+DIST1=../bin/$(TARGET1)
+
+TARGET2=ergo-core.$(JS)
+MAIN2=ergocoreJS
+BYTE2=$(MAIN2).$(BYTE)
+BIN2=$(MAIN2).$(JS)
+DIST2=../packages/ergo-compiler/lib/$(TARGET2)
+
+TARGET3=ergoc-lib.$(JS)
+MAIN3=ergocJS
+BYTE3=$(MAIN3).$(BYTE)
+BIN3=$(MAIN3).$(JS)
+DIST3=../packages/ergo-cli/lib/$(TARGET3)
+
 
 ## Toplevel
-all: ../bin/$(MAIN).$(TARGET) ../packages/ergo-compiler/lib/$(MAIN2).js ../packages/ergo-cli/lib/$(MAIN3).js
+all: $(DIST1) $(DIST2) $(DIST3)
 
-all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli ../bin/$(MAIN).$(TARGET) ../packages/ergo-compiler/lib/$(MAIN2).js ../packages/ergo-cli/lib/$(MAIN3).js
+all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli $(DIST1) $(DIST2) $(DIST3)
 
-js: ../packages/ergo-compiler/lib/$(MAIN2).js ../packages/ergo-cli/lib/$(MAIN3).js
+js: $(DIST2) $(DIST3)
 
 ## Extraction
 VO_FILES = $(MODULES:%=../mechanization/%.vo)
@@ -61,7 +79,6 @@ else
 endif
 
 ## ATDs
-
 src/Cto_t.ml src/Cto_t.mli: src/Cto.atd
 	atdgen -t $<
 
@@ -71,26 +88,26 @@ src/Cto_j.ml src/Cto_j.mli: src/Cto.atd
 ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli
 
 ## Native
-../bin/$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN).$(TARGET)
-	cp _build/$(MAIN).$(TARGET) ../bin/$(MAIN).$(TARGET)
+$(DIST1): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN1)
+	cp _build/$(BIN1) $(DIST1)
 
-$(MAIN).$(TARGET): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli
-	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(MAIN).$(TARGET)
+$(BIN1): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN1).$(ML)
+	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN1)
 
 ## JavaScript
-../packages/ergo-compiler/lib/$(MAIN2).js: $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(MAIN2).byte
-	js_of_ocaml _build_js/$(MAIN2).byte
-	cp _build_js/$(MAIN2).js ../packages/ergo-compiler/lib/$(MAIN2).js
+$(DIST2): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE2)
+	js_of_ocaml _build_js/$(BYTE2) -o _build_js/$(BIN2)
+	cp _build_js/$(BIN2) $(DIST2)
 
-_build_js/$(MAIN2).byte: $(ATDS) $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN2).ml
-	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(MAIN2).byte
+_build_js/$(BYTE2): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN2).$(ML)
+	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE2)
 
-../packages/ergo-cli/lib/$(MAIN3).js: $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(MAIN).byte
-	js_of_ocaml _build_js/$(MAIN).byte
-	cp _build_js/$(MAIN).js ../packages/ergo-cli/lib/$(MAIN3).js
+$(DIST3): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE3)
+	js_of_ocaml _build_js/$(BYTE3) -o _build_js/$(BIN3)
+	cp _build_js/$(BIN3) $(DIST3)
 
-_build_js/$(MAIN).byte: $(ATDS) $(MAIN).$(TARGET) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN).ml
-	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(MAIN).byte
+_build_js/$(BYTE3): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN3).$(ML)
+	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE3)
 
 ## Clean
 
@@ -98,7 +115,7 @@ clean:
 	ocamlbuild -clean -no-log
 	rm -rf _build
 	rm -rf _build_js
-	rm -f ../bin/$(MAIN).$(TARGET)
+	rm -f $(DIST1)
 	rm -f extracted/StaticConfig.ml
 	rm -f $(ATDS)
 

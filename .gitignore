@@ -33,3 +33,4 @@ ergo-*.tgz
 **/.nyc_output
 **/coverage
 generator-ergo-serverless/
+bin/ergoc.native

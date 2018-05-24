@@ -1,4 +1,4 @@
-# Ergo Documentation
+# Ergo
 
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
@@ -12,9 +12,7 @@ _**WARNING**_** The content of this repository is work in progress and subject t
 
 ## About
 
-This is the source code for the Ergo compiler. Ergo is the DSL for Smart _Legal_ Contracts.
-
-The current target for the compiler is JavaScript.
+This is the source code for the Ergo compiler. Ergo is the Accord Project language for Smart _Legal_ Contracts.
 
 ## Getting started
 
@@ -45,7 +43,7 @@ $ ergo execute --help
 Once installed, you can compile your first Ergo contract to JavaScript:
 
 ```text
-$ ergo compile --ergo ./examples/volumediscount/logic.ergo --cto ./examples/volumediscount/model.cto
+$ ergoc --ergo ./examples/volumediscount/logic.ergo --cto ./examples/volumediscount/model.cto
 ```
 
 ### Execute a contract clause
