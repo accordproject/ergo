@@ -12,5 +12,45 @@
  * limitations under the License.
  *)
 
-let () = Ergoc.main ()
+open ErgoUtil
+
+let patch_cto_extension f =
+  begin try
+    let extension = Filename.extension f in
+    if extension = ".cto"
+    then
+      (Filename.chop_suffix f ".cto") ^ ".ctoj"
+    else f
+  with
+  | _ -> f
+  end
+
+let modelsDir =
+  Util.filename_append
+    StaticConfig.ergo_home
+    ["packages";"ergo-compiler";"models"]
+let commonCTOs = [|
+  Filename.concat modelsDir "org.hyperledger.composer.system.cto";
+  Filename.concat modelsDir "common.cto";
+|]
+
+let patch_argv argv =
+  let argv = Array.append argv commonCTOs in
+  Array.map patch_cto_extension argv
+
+let wrap_error e =
+  begin match e with
+  | Ergo_Error error ->
+      Printf.eprintf "%s\n" (string_of_error error); exit 2
+  | exn ->
+      Printf.eprintf "%s\n" (string_of_error (ergo_system_error (Printexc.to_string exn))); exit 2
+  end
+
+let () =
+  begin try
+    Ergoc.main (fun x -> x) (patch_argv Sys.argv)
+  with
+  | e ->
+      wrap_error e
+  end
 
