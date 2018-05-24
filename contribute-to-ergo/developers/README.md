@@ -172,9 +172,8 @@ This means that all the docs are stored inline in the source code and so are kep
 
 This means that since we generate the documentation from the source code, we can easily provide version-specific documentation by simply checking out a version of Ergo and running the build.
 
-## License
-
-Ergo is distributed under the terms of the Apache 2.0 License, see [LICENSE](https://github.com/accordproject/ergo/tree/222afd03ba7533f77af4b8a3949f599dde434ced/LICENSE/README.md)
+## License <a name="license"></a>
+Accord Project source code files are made available under the Apache License, Version 2.0 (Apache-2.0), located in the LICENSE file. Accord Project documentation files are made available under the Creative Commons Attribution 4.0 International License (CC-BY-4.0), available at http://creativecommons.org/licenses/by/4.0/.
 
 Copyright 2018 Clause, Inc.
 
