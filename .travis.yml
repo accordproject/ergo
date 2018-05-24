@@ -13,6 +13,12 @@ install: |
   lerna bootstrap 2>&1
   date
 script: lerna run test 2>&1
+deploy:
+    provider: script
+    script: ./.travis/deploy.sh
+    skip_cleanup: true
+    on:
+        all_branches: true
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 cache:
   directories:
