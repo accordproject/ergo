@@ -1,4 +1,4 @@
-# Ergo
+![Ergo](./docs/ergologo.png)
 
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
@@ -43,7 +43,9 @@ $ ergo execute --help
 Once installed, you can compile your first Ergo contract to JavaScript:
 
 ```text
-$ ergoc --ergo ./examples/volumediscount/logic.ergo --cto ./examples/volumediscount/model.cto
+$ ergoc ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo
+15:17:08 - info: Logging initialized. 2018-05-24T19:17:08.024Z
+Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples/volumediscount/logic.js
 ```
 
 ### Execute a contract clause
@@ -51,13 +53,14 @@ $ ergoc --ergo ./examples/volumediscount/logic.ergo --cto ./examples/volumedisco
 To compile and _execute_ a given clause in a contract:
 
 ```text
-$ ergo execute --ergo ./examples/volumediscount/logic.ergo --contractname VolumeDiscount --clausename volumediscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json --cto ./examples/volumediscount/model.cto
-{"response":{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"},"state":{"$class":"org.accordproject.contract.State","status":"EXECUTORY"}}
+$ ergo execute --ergo ./examples/volumediscount/logic.ergo --contractname VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json --cto ./examples/volumediscount/model.cto
+15:18:41 - info: Logging initialized. 2018-05-24T19:18:41.009Z
+15:18:41 - info: {"emit":[],"state":{"$class":"org.accordproject.contract.State","status":"EXECUTORY"},"response":{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}}
 ```
 
 ## Documentation
 
-Documentation is work in progress. The latest documentation release is available at [http://ergo.readthedocs.io](http://ergo.readthedocs.io)
+The most recent documentation is available at [http://ergo.readthedocs.io](http://ergo.readthedocs.io)
 
 ## For developers
 

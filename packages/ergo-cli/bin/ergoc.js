@@ -23,7 +23,7 @@ try {
     const args = process.argv;
     const commonCTOs = Ergo.commonCTOs();
     for (let i = 0; i < commonCTOs.length; i++) {
-        Logger.info();
+        //Logger.info();
         args.push(commonCTOs[i]);
     }
     for (let i = 0; i < args.length; i++) {
