@@ -17,14 +17,14 @@ open ErgoUtil
 let wrap_error e =
   begin match e with
   | Ergo_Error error ->
-      new%js Js.error_constr (Js.string (error_message error))
-  | e ->
-      new%js Js.error_constr (Js.string (Printexc.to_string e))
+      new%js Js.error_constr (Js.string (string_of_error error))
+  | exn ->
+      new%js Js.error_constr (Js.string (string_of_error (ergo_system_error (Printexc.to_string exn))))
   end
 
 let () =
   begin try
-    Ergoc.main ()
+    Ergoc.main (fun x -> x) Sys.argv
   with
   | e ->
       Js.raise_js_error (wrap_error e)

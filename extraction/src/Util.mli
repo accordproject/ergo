@@ -68,3 +68,6 @@ val global_replace : string -> string -> string -> string
     corresponding function in Str when matching against a constant
     string. *)
 
+val filename_append : string -> string list -> string
+(** [filename_append dir subdirlist] Append sub-directories to a root directory *)
+

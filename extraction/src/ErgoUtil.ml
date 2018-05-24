@@ -75,6 +75,19 @@ let error_loc_end error =
   | RuntimeError _ -> loc_empty
   end
 
+let string_of_error_loc perror =
+  "line " ^ (string_of_int perror.loc_start.line)
+  ^ " character " ^ (string_of_int perror.loc_start.character)
+
+let string_of_error error =
+  begin match error with
+  | SystemError _ -> "[SystemError] " ^ (error_message error)
+  | ParseError pe -> "[ParseError at " ^ (string_of_error_loc pe) ^ "] " ^ (error_message error)
+  | CompilationError _ -> "[CompilationError] " ^  (error_message error)
+  | TypeError _ -> "[TypeError]" ^ (error_message error)
+  | RuntimeError _ -> "[RuntimeError]" ^  (error_message error)
+  end
+
 (* Version number *)
 let ergo_version = string_of_char_list ergo_version
 

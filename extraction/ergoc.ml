@@ -35,20 +35,27 @@ let anon_args gconf cto_files input_files f =
   then cto_files := (f, Util.string_of_file f) :: !cto_files
   else if extension = ".ergo"
   then input_files := f :: !input_files
-  else ergo_raise (ergo_system_error (f ^ " is neither ctoj nor ergo file"))
+  else ergo_raise (ergo_system_error (f ^ " is not cto, ctoj or ergo file"))
 
 let usage =
   "Ergo Compiler\n"^
-  "Usage: "^Sys.argv.(0)^" [options] contract1 contract2 ..."
+  "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
 
-let parse_args gconf =
+let parse fa args l f msg =
+  try
+    Arg.parse_argv (fa args) l f msg
+  with
+  | Arg.Bad msg -> Printf.eprintf "%s" msg; exit 2
+  | Arg.Help msg -> Printf.printf "%s" msg; exit 0
+
+let parse_args fa args gconf =
   let input_files = ref [] in
   let cto_files = ref [] in
-  Arg.parse (args_list gconf) (anon_args gconf cto_files input_files) usage;
+  parse fa args (args_list gconf) (anon_args gconf cto_files input_files) usage;
   (List.rev !cto_files, List.rev !input_files)
 
-let main () =
+let main fa args =
   let gconf = ErgoConfig.default_config () in
-  let (cto_files,input_files) = parse_args gconf in
+  let (cto_files,input_files) = parse_args fa args gconf in
   batch_compile_top gconf cto_files input_files
 

@@ -19,8 +19,10 @@ const Path = require('path');
 const Engine=require('./ergo-core.js');
 const CTOParser = require('composer-common/lib/introspect/parser');
 
-const HyperledgerCTO = Fs.readFileSync(Path.join(__dirname,'..','models','org.hyperledger.composer.system.cto'), 'utf8');
-const CommonCTO = Fs.readFileSync(Path.join(__dirname,'..','models','common.cto'), 'utf8');
+const HyperledgerCTO = Path.join(__dirname,'..','models','org.hyperledger.composer.system.cto');
+const AccordCommonCTO = Path.join(__dirname,'..','models','common.cto');
+const CommonCTOs = [HyperledgerCTO, AccordCommonCTO];
+const CommonCTOTexts = [Fs.readFileSync(HyperledgerCTO, 'utf8'), Fs.readFileSync(AccordCommonCTO, 'utf8')];
 
 /**
  * Utility class that implements the internals for Ergo.
@@ -52,7 +54,7 @@ class Ergo {
      * Compile Ergo to JavaScript
      *
      * @param {string} ergoText text for Ergo code
-     * @param {string} ctoTexts texts for CTO models
+     * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {string} The compiled JavaScript code
      */
@@ -64,10 +66,10 @@ class Ergo {
         };
         // Clean-up naming for Sexps
         config.ergo = ergoText;
-        config.cto = [JSON.stringify(this.parseCTOtoJSON(HyperledgerCTO)),
-            JSON.stringify(this.parseCTOtoJSON(CommonCTO))];
-        for (let i = 0; i < ctoTexts.length; i++) {
-            config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctoTexts[i])));
+        const ctos = CommonCTOTexts.concat(ctoTexts);
+        config.cto = [];
+        for (let i = 0; i < ctos.length; i++) {
+            config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctos[i])));
         }
         // Call compiler
         const compiled = Engine.compile(config);
@@ -82,7 +84,7 @@ class Ergo {
      * Compile and Link Ergo to JavaScript
      *
      * @param {string} ergoText text for Ergo code
-     * @param {string} ctoTexts texts for CTO models
+     * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
@@ -99,7 +101,7 @@ class Ergo {
      * Compile Ergo
      *
      * @param {string} ergoText text for Ergo code
-     * @param {string} ctoTexts texts for CTO models
+     * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled JavaScript code
      */
@@ -112,7 +114,7 @@ class Ergo {
      * Compile and Link Ergo
      *
      * @param {string} ergoText text for Ergo code
-     * @param {string} ctoTexts texts for CTO models
+     * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
@@ -145,6 +147,15 @@ class Ergo {
         default:
             return error.message;
         }
+    }
+
+    /**
+     * Common CTOs
+     *
+     * @returns {string[]} Built-in CTO models
+     */
+    static commonCTOs() {
+        return CommonCTOs;
     }
 }
 
