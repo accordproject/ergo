@@ -70,3 +70,29 @@ for (const i in packages) {
     const packageFile = path.resolve(packagesDirectory, i, 'package.json');
     fs.writeFileSync(packageFile, JSON.stringify(currentPackage, null, 2), 'utf8');
 }
+
+const mechanizationVersionFileContents =`(*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*)
+
+(** This module defines Ergo version number *)
+
+Require Import String.
+
+Section Version.
+    Definition ergo_version := "${targetVersion}"%string.
+
+End Version.
+
+`;
+const mechanizationVersionFile = fs.writeFileSync(path.resolve(lernaDirectory, 'mechanization/Version.v'),mechanizationVersionFileContents, 'utf8');
