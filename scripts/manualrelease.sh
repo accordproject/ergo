@@ -15,10 +15,21 @@
 # Exit on first error, print all commands.
 set -ev
 set -o pipefail
-CURRENT_VERSION=$( jq ".version" lerna.json )
+
+git checkout master
+git pull origin master
+
 npm run pkgbump
-TARGET_VERSION=$( jq ".version" lerna.json )
+TARGET_VERSION=$( jq -r '.version' lerna.json )
 RELEASE_BRANCH="release-${TARGET_VERSION}"
 git checkout -b ${RELEASE_BRANCH}
+
 lerna publish --conventional-commits -m 'chore(release): publish %s' --force-publish=* --allow-branch ${RELEASE_BRANCH} --repo-version ${TARGET_VERSION} --yes
 
+git add mechanization/Version.v
+git commit -m "chore(release): Bump Ergo source version" -s
+git push --set-upstream origin ${RELEASE_BRANCH}
+
+echo "Publish of ${TARGET_VERSION} successful."
+echo "Now open a pull request to merge branch ${RELEASE_BRANCH} into master."
+echo "https://github.com/accordproject/ergo/compare/${RELEASE_BRANCH}?expand=1"
