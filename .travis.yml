@@ -26,4 +26,5 @@ after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 cache:
   directories:
   - node_modules
+sudo: required
 services: 
