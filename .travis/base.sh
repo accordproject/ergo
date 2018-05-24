@@ -42,7 +42,7 @@ if [ ! -f ${DIR}/build.cfg ]; then
         BUILD_FOCUS="latest"
     else
         BUILD_RELEASE="stable"
-        BUILD_FOCUS="latest"∂
+        BUILD_FOCUS="latest"
     fi
 
     echo "BUILD_FOCUS=${BUILD_FOCUS}" >> ${DIR}/build.cfg
