@@ -46,8 +46,8 @@
       "!./node_modules/**/*",
       "!./out/**/*",
       "!bin/*",
-      "!**ergocore*",
-      "!lib/ergoruntime.js"
+      "!lib/ergo-core.js",
+      "!lib/ergo-runtime.js"
     ],
     "path": "header.txt",
     "blocking": true,

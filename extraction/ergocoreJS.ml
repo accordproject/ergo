@@ -117,7 +117,7 @@ let ergo_version unit =
   ErgoUtil.ergo_version
 
 let _ =
-  Js.export "Ergo" (object%js
+  Js.export_all (object%js
     val compile  = Js.wrap_callback ergo_compile
     val version = Js.wrap_callback ergo_version
   end)

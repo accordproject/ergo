@@ -28,9 +28,7 @@ try {
         }
     }
     //Logger.info(process.argv);
-    require('../lib/ergoccore.js');
+    require('../lib/ergoc-lib.js');
 } catch (err) {
-    for (let i = 0; i < err.length; i++) {
-        Logger.error(JSON.stringify(err[i].c));
-    }
+    Logger.info(err);
 }

@@ -47,7 +47,7 @@ let parse_args gconf =
   Arg.parse (args_list gconf) (anon_args gconf cto_files input_files) usage;
   (List.rev !cto_files, List.rev !input_files)
 
-let () =
+let main () =
   let gconf = ErgoConfig.default_config () in
   let (cto_files,input_files) = parse_args gconf in
   batch_compile_top gconf cto_files input_files
