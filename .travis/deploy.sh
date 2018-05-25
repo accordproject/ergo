@@ -31,11 +31,6 @@ if [[ "${TRAVIS_REPO_SLUG}" != accordproject* ]]; then
     _exit "Skipping deploy; wrong repository slug." 0
 fi
 
-# Check that this is the main repository.
-if [[ "${TRAVIS_BRANCH}" != master ]]; then
-    _exit "Skipping deploy; Not a master branch build." 0
-fi
-
 ## Start of release process
 
 # Set the NPM access token we will use to publish.
@@ -97,7 +92,7 @@ if [[ "${BUILD_RELEASE}" = "stable" ]]; then
 
     # Add the version number changes and push them to Git.
     git add .
-    git commit -m "Automatic version bump to ${NEW_VERSION}"
+    git commit -m "Automatic version bump to ${NEW_VERSION}" -s
     git push origin master
 
 fi
