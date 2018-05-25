@@ -61,7 +61,7 @@ implements the [Accord Protocol Template
 Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0).
 The following diagram describe how this works:
 
-![](./ergoincicero.png)
+![Ergo Cicero](./ergoincicero.png)
 
 Status
 ------

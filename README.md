@@ -3,7 +3,6 @@
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
-[![Documentation Status](https://readthedocs.org/projects/ergo/badge/?version=latest)](http://ergo.readthedocs.io/en/latest/?badge=latest)
 [![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
 
 Git: [http://github.com/accordproject/ergo](http://github.com/accordproject/ergo) / Website: [http://ergo.accordproject.org](http://ergo.accordproject.org)
@@ -60,7 +59,7 @@ $ ergo execute --ergo ./examples/volumediscount/logic.ergo --contractname Volume
 
 ## Documentation
 
-The most recent documentation is available at [http://ergo.readthedocs.io](http://ergo.readthedocs.io)
+The most recent documentation is available at [https://accordproject.netlify.com/docs/ergo.html](https://accordproject.netlify.com/docs/ergo.html)
 
 ## For developers
 
