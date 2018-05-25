@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.0.57"></a>
+## [0.0.57](https://github.com/accordproject/ergo/compare/v0.0.48...v0.0.57) (2018-05-25)
+
+
+### Bug Fixes
+
+* [#170](https://github.com/accordproject/ergo/issues/170) ([8edc2fb](https://github.com/accordproject/ergo/commit/8edc2fb))
+
+
+
+
 <a name="0.0.56"></a>
 ## [0.0.56](https://github.com/accordproject/ergo/compare/v0.0.48...v0.0.56) (2018-05-25)
 
