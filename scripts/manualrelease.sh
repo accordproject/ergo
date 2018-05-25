@@ -16,28 +16,38 @@
 set -ev
 set -o pipefail
 
-# Make sure we have the latest code from master
+# Make sure we have the latest code from origin/master on our fork
+git fetch --all --prune
 git checkout master
+git merge --ff-only upstream/master
 git pull origin master
 
-# Get and then increase he version number
+# Increase the version number
 npm run pkgbump
 TARGET_VERSION=$( jq -r '.version' lerna.json )
-RELEASE_BRANCH="release-${TARGET_VERSION}"
-git checkout -b ${RELEASE_BRANCH}
-
-lerna publish --conventional-commits -m 'chore(release): publish %s' --force-publish=* --allow-branch ${RELEASE_BRANCH} --repo-version ${TARGET_VERSION} --yes
 git add mechanization/Version.v
 git add package.json
-git commit -m "chore(release): Bump Ergo source version"
+git commit -m "chore(release): Bump Ergo source version" -s
+
+lerna publish --conventional-commits -m 'chore(release): publish %s' --force-publish=* --allow-branch ${RELEASE_BRANCH} --repo-version ${TARGET_VERSION} --yes
 
 # Fix DCO sign-off
-git filter-branch --msg-filter "cat - && echo && echo 'Signed-off-by: Matt Roberts <matt@clause.io>'" HEAD~2..HEAD
+NAME=$(git config user.name)
+EMAIL=$(git config user.email)
 
-git push --set-upstream origin ${RELEASE_BRANCH}
+if [ -z "$NAME" ]; then
+    echo "empty git config user.name"
+    exit 1
+fi
 
-git push -f origin
+if [ -z "$EMAIL" ]; then
+    echo "empty git config user.email"
+    exit 1
+fi
+git filter-branch --msg-filter "cat - && echo && echo 'Signed-off-by: ${NAME} <${EMAIL}>'" HEAD
+
+# Merge into upstrea/master
+git rebase -i upstream/master
 
 echo "Publish of ${TARGET_VERSION} successful."
-echo "Now open a pull request to merge branch ${RELEASE_BRANCH} into master."
-echo "https://github.com/accordproject/ergo/compare/${RELEASE_BRANCH}?expand=1"
+echo "Now open a pull request to merge ${RELEASE_BRANCH} into master."
