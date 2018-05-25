@@ -17,7 +17,7 @@
 Require Import String.
 
 Section Version.
-    Definition ergo_version := "0.0.56"%string.
+    Definition ergo_version := "0.0.57"%string.
 
 End Version.
 
