@@ -12,6 +12,10 @@
 # limitations under the License.
 #
 
+# This script assumes that 
+# - the remote origin is set to a fork of the repo
+# - the remote upstream is set to the original repo
+
 # Exit on first error, print all commands.
 set -ev
 set -o pipefail
@@ -29,7 +33,8 @@ git add mechanization/Version.v
 git add package.json
 git commit -m "chore(release): Bump Ergo source version" -s
 
-lerna publish --conventional-commits -m 'chore(release): publish %s' --force-publish=* --allow-branch ${RELEASE_BRANCH} --repo-version ${TARGET_VERSION} --yes
+# Publish each package to NPM registry. Generate changelog and update package.json files
+lerna publish --conventional-commits -m 'chore(release): publish %s' --force-publish=* --repo-version ${TARGET_VERSION} --yes
 
 # Fix DCO sign-off
 git commit --amend -s --no-edit
