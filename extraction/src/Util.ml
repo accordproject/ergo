@@ -26,9 +26,10 @@ type dnrc_logger_token_type = string
 (* Data type conversions between Coq and OCaml *)
 
 let string_of_char_list l =
-  let s = ref "" in
-  List.iter (fun c -> s := !s ^ (String.make 1 c)) l;
-  !s
+  let b = Bytes.create (List.length l) in
+  let i = ref 0 in
+  List.iter (fun c -> Bytes.set b !i c; incr i) l;
+  Bytes.to_string b
 
 let char_list_of_string s =
   let l = ref [] in
