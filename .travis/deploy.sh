@@ -92,7 +92,7 @@ if [[ "${BUILD_RELEASE}" = "stable" ]]; then
 
     # Add the version number changes and push them to Git.
     git add .
-    git commit -m "Automatic version bump to ${NEW_VERSION}"
+    git commit -m "Automatic version bump to ${NEW_VERSION}" -s
     git push origin master
 
 fi
