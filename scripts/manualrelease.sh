@@ -32,22 +32,9 @@ git commit -m "chore(release): Bump Ergo source version" -s
 lerna publish --conventional-commits -m 'chore(release): publish %s' --force-publish=* --allow-branch ${RELEASE_BRANCH} --repo-version ${TARGET_VERSION} --yes
 
 # Fix DCO sign-off
-NAME=$(git config user.name)
-EMAIL=$(git config user.email)
+git commit --amend -s --no-edit
+git push -f origin master
 
-if [ -z "$NAME" ]; then
-    echo "empty git config user.name"
-    exit 1
-fi
-
-if [ -z "$EMAIL" ]; then
-    echo "empty git config user.email"
-    exit 1
-fi
-git filter-branch --msg-filter "cat - && echo && echo 'Signed-off-by: ${NAME} <${EMAIL}>'" HEAD
-
-# Merge into upstrea/master
-git rebase -i upstream/master
-
+# Merge into upstream/master
 echo "Publish of ${TARGET_VERSION} successful."
-echo "Now open a pull request to merge ${RELEASE_BRANCH} into master."
+echo "Now open a pull request to merge origin/master into upstream/master."

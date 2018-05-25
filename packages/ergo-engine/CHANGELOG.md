@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.0.56"></a>
+## [0.0.56](https://github.com/accordproject/ergo/compare/v0.0.48...v0.0.56) (2018-05-25)
+
+
+
+
+**Note:** Version bump only for package @accordproject/ergo-engine
+
 <a name="0.0.54"></a>
 ## [0.0.54](https://github.com/accordproject/ergo/compare/v0.0.48...v0.0.54) (2018-05-24)
 
