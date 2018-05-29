@@ -26,23 +26,18 @@ type dnrc_logger_token_type = string
 (* Data type conversions between Coq and OCaml *)
 
 let string_of_char_list l =
-  begin try
-    let b = Bytes.create (List.length l) in
-    let i = ref 0 in
-    List.iter (fun c -> Bytes.set b !i c; incr i) l;
-    Bytes.to_string b
-  with
-  | exn -> raise (Failure ("Error in string_of_char_list: " ^ (Printexc.to_string exn)))
-  end
+  let b = Bytes.create (List.length l) in
+  let i = ref 0 in
+  List.iter (fun c -> Bytes.set b !i c; incr i) l;
+  Bytes.to_string b
 
 let char_list_of_string s =
-  begin try
-    let rec exp i l =
-      if i < 0 then l else exp (i - 1) (s.[i] :: l) in
-    exp (String.length s - 1) []
-  with
-  | exn -> raise (Failure ("Error in char_list_of_string: " ^ (Printexc.to_string exn)))
-  end
+  let rec exp i l =
+    if i < 0 then l else exp (i - 1) (s.[i] :: l) in
+  exp (String.length s - 1) []
+
+let char_list_append s1 s2 =
+  char_list_of_string ((string_of_char_list s1) ^ (string_of_char_list s2))
 
 let coq_Z_of_int i = i
 
@@ -205,3 +200,9 @@ let global_replace const_expr repl text =
 
 let filename_append dir path =
   List.fold_left Filename.concat dir path
+
+let loc_error s f x =
+  begin try f x with
+  | Failure exn -> raise (Failure exn)
+  | exn -> raise (Failure ("[In " ^ s ^ "]" ^ (Printexc.to_string exn)))
+  end
