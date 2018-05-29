@@ -102,7 +102,7 @@ let ergo_compile input =
     begin try
       Js.to_string input##.ergo
     with exn ->
-      ergo_raise (ergo_system_error ("[Compilation Error] Couldn't load contract: "^(Printexc.to_string exn)))
+      ergo_raise (ergo_system_error ("Couldn't load contract: "^(Printexc.to_string exn)))
     end
   in
   begin try

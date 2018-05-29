@@ -94,7 +94,6 @@ cleanall-npm: clean-npm
 clean: Makefile.coq
 	- @$(MAKE) clean-npm
 	- @$(MAKE) clean-extraction
-	- @$(MAKE) clean-mechanization
 	- @$(MAKE) -C packages/ergo-compiler clean
 	- @$(MAKE) -C packages/ergo-engine clean
 	- @$(MAKE) -C packages/ergo-cli clean

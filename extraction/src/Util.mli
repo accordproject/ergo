@@ -22,6 +22,7 @@
 
 val string_of_char_list : char list -> string
 val char_list_of_string : string -> char list
+val char_list_append : char list -> char list -> char list
 val coq_Z_of_int : int -> int
 
 (*******)
@@ -70,4 +71,6 @@ val global_replace : string -> string -> string -> string
 
 val filename_append : string -> string list -> string
 (** [filename_append dir subdirlist] Append sub-directories to a root directory *)
+
+val loc_error : string -> ('a -> 'b) -> 'a -> 'b
 
