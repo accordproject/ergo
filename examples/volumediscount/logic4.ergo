@@ -20,8 +20,8 @@ define variable fee = 1.0
 define function addFee(rate : Double) : Double {
 	return
     match fee
-      with let v = 1.0 then rate + v/10.0
-      with let v = 2.0 then rate + fee/15.0
+      with 1.0 then rate + 1.0/10.0
+      with 2.0 then rate + 2.0/15.0
       else rate
 }
 

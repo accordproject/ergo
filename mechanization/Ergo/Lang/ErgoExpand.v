@@ -46,7 +46,7 @@ Section ErgoExpand.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (s:cto_signature) : eresult (match_case * ergo_stmt) :=
+             (s:cto_signature) : eresult (ergo_pattern * ergo_stmt) :=
     let cname := s.(cto_signature_name) in
     let callparams := s.(cto_signature_params) in
     match callparams with
@@ -54,7 +54,7 @@ Section ErgoExpand.
     | (param0, CTOClassRef type0)::otherparams =>
       elift (fun x =>
                let type0 := absolute_ref_of_relative_ref namespace type0 in
-               ((Some v0,CaseType type0),x))
+               (CaseLet v0 (Some type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, _)::otherparams =>
       efailure (CompilationError ("Cannot create main for non-class type "++cname))

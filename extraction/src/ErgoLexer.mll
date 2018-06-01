@@ -103,6 +103,7 @@ rule token sbuff = parse
 | "-i" { MINUSI }
 | "," { COMMA }
 | ":" { COLON }
+| ".?" { DOTQUESTION }
 | "." { DOT }
 | ";" { SEMI }
 | "(" { LPAREN }
@@ -111,7 +112,9 @@ rule token sbuff = parse
 | "]" { RBRACKET }
 | "{" { LCURLY }
 | "}" { RCURLY }
+| "??" { QUESTIONQUESTION }
 | "?" { QUESTION }
+| "_" { UNDERSCORE }
 | "!" { BANG }
 | [' ' '\t']
     { token sbuff lexbuf }

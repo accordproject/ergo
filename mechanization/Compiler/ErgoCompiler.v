@@ -96,8 +96,10 @@ Module ErgoCompiler.
   Definition evar : String.string -> ergo_expr
     := Ergo.EVar.
 
-  Definition ecasevalue : Data.data -> Ergo.match_case_kind := Ergo.CaseValue.
-  Definition ecasetype : String.string -> Ergo.match_case_kind := Ergo.CaseType.
+  Definition ecasedata : Data.data -> Ergo.ergo_pattern := Ergo.CaseData.
+  Definition ecasewildcard : Ergo.type_annotation -> Ergo.ergo_pattern := Ergo.CaseWildcard.
+  Definition ecaselet : String.string -> Ergo.type_annotation -> Ergo.ergo_pattern := Ergo.CaseLet.
+  Definition ecaseletoption : String.string -> Ergo.type_annotation -> Ergo.ergo_pattern := Ergo.CaseLetOption.
 
   Definition econst : Data.data -> ergo_expr := Ergo.EConst.
   Definition earray : list ergo_expr -> ergo_expr := Ergo.EArray.
@@ -115,7 +117,7 @@ Module ErgoCompiler.
     := Ergo.EForeach.
   Definition ecallfun : String.string -> list ergo_expr -> ergo_expr
     := Ergo.ECallFun.
-  Definition ematch : ergo_expr -> list (Ergo.match_case * ergo_expr) -> ergo_expr -> ergo_expr
+  Definition ematch : ergo_expr -> list (Ergo.ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr
     := Ergo.EMatch.
   Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
     := Ergo.ERecord.
@@ -144,7 +146,7 @@ Module ErgoCompiler.
     Ergo.SIf.
   Definition senforce (e1:ergo_expr) (s2: option ergo_stmt) (s3:ergo_stmt) : ergo_stmt
     := Ergo.SEnforce e1 s2 s3.
-  Definition smatch : ergo_expr -> list (Ergo.match_case * ergo_stmt) -> ergo_stmt -> ergo_stmt
+  Definition smatch : ergo_expr -> list (Ergo.ergo_pattern * ergo_stmt) -> ergo_stmt -> ergo_stmt
     := Ergo.SMatch.
   
   Definition edot : String.string -> ergo_expr -> ergo_expr 
@@ -157,11 +159,14 @@ Module ErgoCompiler.
     := Ergo.EThisClause.
   Definition ethis_state : ergo_expr
     := Ergo.EThisState.
-  Definition eliftoptional : ergo_expr -> ergo_expr -> ergo_expr
-    := Ergo.ELiftOptional.
   Definition elifterror : ergo_expr -> ergo_expr -> ergo_expr
     := Ergo.ELiftError.
 
+  Definition eoptionaldot : String.string -> ergo_expr -> ergo_expr
+    := ErgoSugar.EOptionalDot.
+  Definition eoptionaldefault : ergo_expr -> ergo_expr -> ergo_expr
+    := ErgoSugar.EOptionalDefault.
+  
   (** Ergo Calculus *)
   Definition ergoc_package : Set 
     := ErgoCalculus.ergoc_package.
