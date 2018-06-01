@@ -116,7 +116,69 @@ Section ErgotoJavaScript.
         ctxt.(comp_context_params).
 
   End TranslationContext.
-  
+
+  Definition ergo_pattern_to_calculus (input_expr:ergoc_expr) (p:ergo_pattern) : (list string * ergoc_expr) :=
+    match p with
+    | CaseData d =>
+      (nil, NNRCIf (NNRCBinop OpEqual input_expr (NNRCConst d))
+                   (NNRCUnop OpLeft (NNRCConst (drec nil)))
+                   (NNRCUnop OpRight (NNRCConst dunit)))
+    | CaseWildcard None =>
+      (nil, NNRCUnop OpLeft (NNRCConst (drec nil)))
+    | CaseWildcard (Some type_name) =>
+      let (v1,v2) := fresh_var2 "$case" "$case" nil in
+      (nil, NNRCEither
+              (NNRCUnop (OpCast (type_name::nil)) input_expr)
+              v1 (NNRCUnop OpLeft (NNRCConst (drec nil)))
+              v2 (NNRCUnop OpRight (NNRCConst dunit)))
+    | CaseLet v None =>
+      (v::nil, NNRCUnop OpLeft (NNRCUnop (OpRec v) input_expr))
+    | CaseLet v (Some type_name) =>
+      let (v1,v2) := fresh_var2 "$case" "$case" nil in
+      (v::nil, NNRCEither
+                 (NNRCUnop (OpCast (type_name::nil)) input_expr)
+                 v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
+                 v2 (NNRCUnop OpRight (NNRCConst dunit)))
+    | CaseLetOption v None =>
+      let (v1,v2) := fresh_var2 "$case" "$case" nil in
+      (v::nil, NNRCEither
+                 input_expr
+                 v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
+                 v2 (NNRCUnop OpRight (NNRCConst dunit)))
+    | CaseLetOption v (Some type_name) =>
+      let (v1,v2) := fresh_var2 "$case" "$case" nil in
+      (v::nil, NNRCEither
+                 input_expr
+                 v1 (NNRCEither
+                       (NNRCUnop (OpCast (type_name::nil)) (NNRCVar v1))
+                       v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
+                       v2 (NNRCUnop OpRight (NNRCConst dunit)))
+                 v2 (NNRCUnop OpRight (NNRCConst dunit)))
+    end.
+
+  Definition pack_pattern
+             (vars:list string)
+             (pattern_expr:ergoc_expr)
+             (else_expr:ergoc_expr)
+             (cont_expr:ergoc_expr)
+    : ergoc_expr :=
+    let v_rec := fresh_in_case pattern_expr else_expr in
+    let init_expr := else_expr in
+    let proc_one (acc:ergoc_expr) (v:string) :=
+        NNRCLet v (NNRCUnop (OpDot v) (NNRCVar v_rec)) acc
+    in
+    let inner_expr :=
+        fold_left proc_one vars init_expr
+    in
+    let (v1,v2) := fresh_var2 "$case" "$case" nil in
+    NNRCEither
+      pattern_expr
+      v1 (NNRCLet v_rec
+                  (NNRCVar v1)
+                  inner_expr)
+      v2 cont_expr
+  .
+
   (** Translate expressions to calculus *)
   Fixpoint ergo_expr_to_calculus
            (ctxt:comp_context) (e:ergo_expr) : eresult ergoc_expr :=
@@ -221,55 +283,27 @@ Section ErgotoJavaScript.
       in
       let ecdefault := ergo_expr_to_calculus ctxt edefault in
       eolift
-        (fun ec0 =>
+        (fun ec0 : ergoc_expr =>
            eolift
              (fun eccases =>
                 eolift
                   (fun ecdefault =>
-                     let v0 := fresh_in_match eccases ecdefault in
+                     let v0 : string := fresh_in_match eccases ecdefault in
                      let proc_one_case
                            (acc:eresult ergoc_expr)
-                           (ecase:match_case * ergoc_expr)
+                           (ecase:ergo_pattern * ergoc_expr)
                          : eresult ergoc_expr :=
-                         match fst ecase with
-                         | (Some v, CaseValue d) =>
-                           elift
-                             (fun acc =>
-                                NNRCIf (NNRCBinop OpEqual
-                                                  (NNRCVar v0)
-                                                  (NNRCConst d))
-                                       (NNRCLet v
-                                                (NNRCVar v0)
-                                                (snd ecase))
-                                       acc) acc
-                         | (None, CaseValue d) =>
-                           elift
-                             (fun acc =>
-                                NNRCIf (NNRCBinop OpEqual
-                                                  (NNRCVar v0)
-                                                  (NNRCConst d))
-                                       (snd ecase)
-                                       acc) acc
-                         | (Some v, CaseType brand) =>
-                           elift (fun acc =>
-                                    let v2 := fresh_in_case acc in
-                                    NNRCEither
-                                      (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
-                                      v (snd ecase)
-                                      v2 acc
-                                 ) acc
-                         | (None, CaseType brand) =>
-                           elift (fun acc =>
-                                    let v1 := fresh_in_case (snd ecase) in
-                                    let v2 := fresh_in_case acc in
-                                    NNRCEither
-                                      (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
-                                      v1 (snd ecase)
-                                      v2 acc
-                                 ) acc
-                         end
+                         let (vars, pattern_expr) := ergo_pattern_to_calculus (NNRCVar v0) (fst ecase) in
+                         elift
+                           (fun cont_expr : ergoc_expr =>
+                              pack_pattern
+                                vars
+                                pattern_expr
+                                (snd ecase)
+                                cont_expr)
+                           acc
                      in
-                     let eccases_folded :=
+                     let eccases_folded : eresult ergoc_expr :=
                          fold_left proc_one_case eccases (esuccess ecdefault)
                      in
                      elift (NNRCLet v0 ec0) eccases_folded)
@@ -307,16 +341,6 @@ Section ErgotoJavaScript.
       elift2
         (fun ec ec1 =>
            let (v1,v2) := fresh_in_lift_error ec1 in
-           NNRCEither
-             ec
-             v1 ec1
-             v2 (NNRCVar v2))
-        (ergo_expr_to_calculus ctxt e)
-        (ergo_expr_to_calculus ctxt e1)
-    | ELiftOptional e e1 =>
-      elift2
-        (fun ec ec1 =>
-           let (v1,v2) := fresh_in_lift_optional ec1 in
            NNRCEither
              ec
              v1 ec1
@@ -527,12 +551,13 @@ Section ErgotoJavaScript.
     Open Scope string.
     Definition ctxt0 := initial_comp_context nil "org.accordproject".
 
+    (**r Test pattern matching on values *)
     Definition input1 := dnat 2.
     
     Example j1 :=
       EMatch (EConst input1)
-              (((Some "v1", CaseValue (dnat 1)), (EConst (dstring "1")))
-                 :: ((Some "v2", CaseValue (dnat 2)), (EConst (dstring "2")))
+              ((CaseData (dnat 1), (EConst (dstring "1")))
+                 :: (CaseData (dnat 2), (EConst (dstring "2")))
                  :: nil)
               (EConst (dstring "lots")).
     Definition jc1 := ergo_expr_to_calculus ctxt0 j1.
@@ -541,27 +566,48 @@ Section ErgotoJavaScript.
 
     Example j1' :=
       EMatch (EConst input1)
-              (((Some "v1", CaseValue (dnat 1)), (EConst (dstring "1")))
-                 :: ((Some "v2", CaseValue (dnat 2)), EVar "v2")
+              ((CaseData (dnat 1), (EConst (dstring "1")))
+                 :: (CaseLet "v2" None, EVar "v2")
                  :: nil)
               (EConst (dstring "lots")).
     Definition jc1' := ergo_expr_to_calculus ctxt0 j1'.
     (* Eval vm_compute in jc1'. *)
     (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc1'. *)
 
+    (**r Test pattern matching on type names *)
     Definition input2 :=
-      dbrand ("C1"::nil) (dnat 1).
+      dbrand ("C2"::nil) (dnat 1).
     
     Example j2 :=
       EMatch (EConst input2)
-              (((Some "v1", CaseType "C1"), (EConst (dstring "1")))
-                 :: ((Some "v2", CaseType "C2"), (EConst (dstring "2")))
-                 :: nil)
+             ((CaseLet "v1" (Some "C1"), (EConst (dstring "1")))
+                :: (CaseLet "v2" (Some "C2"), (EConst (dstring "2")))
+                :: nil)
               (EConst (dstring "lots")).
 
     Definition jc2 := ergo_expr_to_calculus ctxt0 j2.
     (* Eval vm_compute in jc2. *)
     (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc2. *)
+
+    (**r Test pattern matching on optional *)
+    Definition input3 :=
+      dsome (dnat 1).
+    
+    Definition input3none :=
+      dnone.
+    
+    Example j3 input :=
+      EMatch (EConst input)
+             ((CaseLetOption "v1" None, (EConst (dstring "1")))
+                :: nil)
+              (EConst (dstring "nothing")).
+
+    Definition jc3 := ergo_expr_to_calculus ctxt0 (j3 input3).
+    Definition jc3none := ergo_expr_to_calculus ctxt0 (j3 input3none).
+    (* Eval vm_compute in jc3. *)
+    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc3. *)
+    (* Eval vm_compute in jc3none. *)
+    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc3none. *)
 
   End tests.
   

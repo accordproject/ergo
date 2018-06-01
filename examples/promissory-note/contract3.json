@@ -1,0 +1,17 @@
+{
+  "$class": "org.accordproject.promissorynote.TemplateModel",
+  "dollarAmount": 1000,
+  "date": "2018-01-30",
+  "maker": "Daniel Selman",
+  "interestRate": null,
+  "individual": true,
+  "makerAddress": "1 Main Street",
+  "lender": "Clause",
+  "legalEntity": "Corporation",
+  "lenderAddress": "246 5th Ave, 3rd Fl, New York, NY 10001",
+  "principal": 500,
+  "maturityDate": "2019-01-20",
+  "defaultDays": 90,
+  "insolvencyDays": 90,
+  "jurisdiction": "New York, NY"
+}

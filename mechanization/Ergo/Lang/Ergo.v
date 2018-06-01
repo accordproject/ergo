@@ -28,13 +28,14 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section Ergo.
 
-  Inductive match_case_kind :=
-  | CaseValue : ErgoData.data -> match_case_kind    (**r match against value *)
-  | CaseType : string -> match_case_kind   (**r match against type *)
+  Definition type_annotation : Set := option string.
+  
+  Inductive ergo_pattern :=
+  | CaseData : ErgoData.data -> ergo_pattern            (**r match against value *)
+  | CaseWildcard : type_annotation -> ergo_pattern      (**r match anything *)
+  | CaseLet : string -> type_annotation -> ergo_pattern (**r match against type *)
+  | CaseLetOption : string -> type_annotation -> ergo_pattern (**r match against type *)
   .
-
-  Definition match_case :=
-    (option string * match_case_kind)%type. (**r optional variable and case kind *)
 
   (** Expression *)
   Inductive ergo_expr :=
@@ -51,11 +52,10 @@ Section Ergo.
   | ERecord : list (string * ergo_expr) -> ergo_expr (**r create a new record *)
   | ENew : class_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
   | ECallFun : string -> list ergo_expr -> ergo_expr (**r function call *)
-  | EMatch : ergo_expr -> list (match_case * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
+  | EMatch : ergo_expr -> list (ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
   | EForeach : list (string * ergo_expr)
                -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
   | ELiftError : ergo_expr -> ergo_expr -> ergo_expr
-  | ELiftOptional : ergo_expr -> ergo_expr -> ergo_expr
   .
 
   (** Statement *)
@@ -69,7 +69,7 @@ Section Ergo.
   | SLet : string -> option cto_type -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable binding *)
   | SIf : ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt
   | SEnforce : ergo_expr -> option ergo_stmt -> ergo_stmt -> ergo_stmt (**r enforce *)
-  | SMatch : ergo_expr -> (list (match_case * ergo_stmt)) -> ergo_stmt -> ergo_stmt.
+  | SMatch : ergo_expr -> (list (ergo_pattern * ergo_stmt)) -> ergo_stmt -> ergo_stmt.
 
   (** Function *)
   Record lambda :=

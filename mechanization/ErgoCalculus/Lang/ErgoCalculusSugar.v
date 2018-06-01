@@ -34,9 +34,10 @@ Section ErgoCalculusSugar.
          (List.concat
             (List.map (fun eccase => nnrc_free_vars (snd eccase)) eccases))
          (nnrc_free_vars ecdefault)).
-  Definition fresh_in_case (e:ergoc_expr) :=
+
+  Definition fresh_in_case (pattern_expr:ergoc_expr) (else_expr:ergoc_expr) : string :=
     fresh_var "$case"
-              (nnrc_free_vars e).
+              (List.app (nnrc_free_vars pattern_expr) (nnrc_free_vars else_expr)).
 
   Definition fresh_in_lift_error (e:ergoc_expr) :=
     fresh_var2 "$lifte" "$lifte"

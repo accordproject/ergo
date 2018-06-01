@@ -193,5 +193,37 @@
       "outstandingBalance": 1425.4396822450633,
       "$class": "org.accordproject.promissorynote.Response"
     }
+  },
+  {
+    "name": "test11",
+    "dir": "data/promissory-note",
+    "ergo": "logic2.ergo",
+    "models": [
+      "model2.cto"
+    ],
+    "contract": "contract2.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "PromissoryNote",
+    "expected": {
+      "outstandingBalance": 1425.4396822450633,
+      "$class": "org.accordproject.promissorynote.Response"
+    }
+  },
+  {
+    "name": "test12",
+    "dir": "data/promissory-note",
+    "ergo": "logic2.ergo",
+    "models": [
+      "model2.cto"
+    ],
+    "contract": "contract3.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "PromissoryNote",
+    "expected": {
+      "outstandingBalance": 1389.540157284947,
+      "$class": "org.accordproject.promissorynote.Response"
+    }
   }
 ]

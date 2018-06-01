@@ -69,6 +69,16 @@ Section ErgoSugar.
       EUnaryOp OpRight e.
 
   End Errors.
-  
-End ErgoSugar.
 
+  Section Optional.
+    Definition EOptionalDot (pname:string) (e:ergo_expr) :=
+      EMatch e
+             ((CaseLetOption "$option" None, EUnaryOp (OpDot pname) (EVar "$option")) :: nil)
+             (EConst dnone).
+    Definition EOptionalDefault (e1 e2:ergo_expr) :=
+      EMatch e1
+             ((CaseLetOption "$option" None, EVar "$option") :: nil)
+             e2.
+  End Optional.
+
+End ErgoSugar.

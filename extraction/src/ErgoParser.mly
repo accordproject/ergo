@@ -47,8 +47,8 @@
 %token PLUS MINUS STAR SLASH CARROT
 %token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
-%token DOT COMMA COLON SEMI
-%token QUESTION BANG
+%token DOT DOTQUESTION COMMA COLON SEMI
+%token QUESTION QUESTIONQUESTION BANG UNDERSCORE
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
 %token LCURLY RCURLY
@@ -57,6 +57,7 @@
 %left SEMI
 %left ELSE
 %left RETURN
+%left QUESTIONQUESTION
 %left OR
 %left AND
 %left EQUAL NEQUAL
@@ -66,8 +67,8 @@
 %left CARROT
 %left PLUSPLUS
 %right NOT
-%left DOT
-%left QUESTION BANG
+%left DOT DOTQUESTION
+%left BANG
 
 %start <ErgoComp.ErgoCompiler.ergo_package> main
 
@@ -263,29 +264,35 @@ fstmt:
     { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
 
 (* cases *)
+type_annotation:
+| (* Empty *)
+    { None }
+| COLON tn = IDENT
+    { Some (Util.char_list_of_string tn) }
+
 cases_stmt:
 | ELSE s = stmt
     { ([],s) }
 | WITH d = data THEN s = stmt cs = cases_stmt
-    { (((None,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH LET v = ident EQUAL d = data THEN s = stmt cs = cases_stmt
-    { (((Some v,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH AS brand = STRING THEN s = stmt tcs = cases_stmt
-    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
-| WITH LET v = ident AS brand = STRING THEN s = stmt tcs = cases_stmt
-    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+    { ((ErgoCompiler.ecasedata d,s)::(fst cs), snd cs) }
+| WITH LET v = ident ta = type_annotation THEN s = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecaselet v ta,s)::(fst cs), snd cs) }
+| WITH UNDERSCORE ta = type_annotation THEN e = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecasewildcard ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident QUESTION ta = type_annotation THEN s = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecaseletoption v ta,s)::(fst cs), snd cs) }
 
 cases_fstmt:
 | ELSE s = fstmt
     { ([],s) }
 | WITH d = data THEN s = fstmt cs = cases_fstmt
-    { (((None,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH LET v = ident EQUAL d = data THEN s = fstmt cs = cases_fstmt
-    { (((Some v,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH AS brand = STRING THEN s = fstmt tcs = cases_fstmt
-    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
-| WITH LET v = ident AS brand = STRING THEN s = fstmt tcs = cases_fstmt
-    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+    { ((ErgoCompiler.ecasedata d,s)::(fst cs), snd cs) }
+| WITH LET v = ident ta = type_annotation THEN s = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecaselet v ta,s)::(fst cs), snd cs) }
+| WITH UNDERSCORE ta = type_annotation THEN e = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecasewildcard ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident QUESTION ta = type_annotation THEN s = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecaseletoption v ta ,s)::(fst cs), snd cs) }
 
 expr:
 (* Parenthesized expression *)
@@ -314,6 +321,10 @@ expr:
     { ErgoCompiler.evar (Util.char_list_of_string v) }
 | e = expr DOT a = safeident
     { ErgoCompiler.edot a e }
+| e = expr DOTQUESTION a = safeident
+    { ErgoCompiler.eoptionaldot a e }
+| e1 = expr QUESTIONQUESTION e2 = expr
+    { ErgoCompiler.eoptionaldefault e1 e2 }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { ErgoCompiler.eif e1 e2 e3 }
 | NEW qn = qname LCURLY r = reclist RCURLY
@@ -336,8 +347,6 @@ expr:
     { ErgoCompiler.eforeach fl None e2 }
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach fl (Some econd) e2 }
-| e1 = expr QUESTION e2 = expr
-    { ErgoCompiler.eliftoptional e1 e2 }
 | e1 = expr BANG e2 = expr
     { ErgoCompiler.elifterror e1 e2 }
 (* Unary operators *)
@@ -405,13 +414,13 @@ cases:
 | ELSE e = expr
     { ([],e) }
 | WITH d = data THEN e = expr cs = cases
-    { (((None,ErgoCompiler.ecasevalue d),e)::(fst cs), snd cs) }
-| WITH LET v = ident EQUAL d = data THEN e = expr cs = cases
-    { (((Some v,ErgoCompiler.ecasevalue d),e)::(fst cs), snd cs) }
-| WITH AS brand = STRING THEN e = expr tcs = cases
-    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
-| WITH LET v = ident AS brand = STRING THEN e = expr tcs = cases
-    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
+    { ((ErgoCompiler.ecasedata d,e)::(fst cs), snd cs) }
+| WITH UNDERSCORE ta = type_annotation THEN e = expr cs = cases
+    { ((ErgoCompiler.ecasewildcard ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident ta = type_annotation THEN e = expr cs = cases
+    { ((ErgoCompiler.ecaselet v ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident QUESTION ta = type_annotation THEN e = expr tcs = cases
+    { ((ErgoCompiler.ecaseletoption v ta,e)::(fst tcs), snd tcs) }
 
 (* New struct *)
 reclist:
