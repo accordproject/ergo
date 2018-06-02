@@ -578,10 +578,15 @@ function dateTimePointGe(date1, date2) {
     return compareDates(date1, date2) >= 0;
 }
 
-function dateTimeDurationBetween(date1, date2) {
+function dateTimeDurationDays(date1, date2) {
     date1 = mustBeDate(date1);
     date2 = mustBeDate(date2);
     return date1.diff(date2,'days');
+}
+function dateTimeDurationSeconds(date1, date2) {
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
+    return date1.diff(date2,'seconds');
 }
 
 function compareDates(date1, date2) {

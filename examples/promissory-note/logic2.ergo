@@ -28,7 +28,7 @@ contract PromissoryNote over TemplateModel {
 		define variable interestRate = contract.interestRate ?? 3.4;
     enforce outstanding >= 0.0;
 
-    define variable numberOfDays = momentDiff(moment("17 May 2018 13:53:33 EST"),contract.date);
+    define variable numberOfDays = momentDiffDays(moment("17 May 2018 13:53:33 EST"),contract.date);
     enforce numberOfDays >= 0.0;
     define variable compounded =  outstanding * compoundInterestMultiple(interestRate, numberOfDays);
 
