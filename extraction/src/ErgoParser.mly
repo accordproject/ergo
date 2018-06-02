@@ -47,7 +47,7 @@
 %token PLUS MINUS STAR SLASH CARROT
 %token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
-%token DOT DOTQUESTION COMMA COLON SEMI
+%token DOT QUESTIONDOT COMMA COLON SEMI
 %token QUESTION QUESTIONQUESTION BANG UNDERSCORE
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
@@ -57,17 +57,17 @@
 %left SEMI
 %left ELSE
 %left RETURN
-%left QUESTIONQUESTION
 %left OR
 %left AND
 %left EQUAL NEQUAL
 %left LT GT LTEQ GTEQ
+%left QUESTIONQUESTION
 %left PLUS MINUS PLUSI MINUSI
 %left STAR SLASH STARI SLASHI
 %left CARROT
 %left PLUSPLUS
 %right NOT
-%left DOT DOTQUESTION
+%left DOT QUESTIONDOT
 %left BANG
 
 %start <ErgoComp.ErgoCompiler.ergo_package> main
@@ -321,7 +321,7 @@ expr:
     { ErgoCompiler.evar (Util.char_list_of_string v) }
 | e = expr DOT a = safeident
     { ErgoCompiler.edot a e }
-| e = expr DOTQUESTION a = safeident
+| e = expr QUESTIONDOT a = safeident
     { ErgoCompiler.eoptionaldot a e }
 | e1 = expr QUESTIONQUESTION e2 = expr
     { ErgoCompiler.eoptionaldefault e1 e2 }
