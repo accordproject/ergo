@@ -53,7 +53,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     };
 
     // difference between current date and agreed upon date
-    define variable diff = momentDiff(agreed,now());
+    define variable diff = momentDiffDay(agreed,now());
     define variable penalty = calculatePenalty(diff,request.goodsValue);
     return new LateDeliveryAndPenaltyResponse{
 	penalty: capped,
