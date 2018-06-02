@@ -103,7 +103,7 @@ rule token sbuff = parse
 | "-i" { MINUSI }
 | "," { COMMA }
 | ":" { COLON }
-| ".?" { DOTQUESTION }
+| "?." { QUESTIONDOT }
 | "." { DOT }
 | ";" { SEMI }
 | "(" { LPAREN }

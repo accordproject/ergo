@@ -1,5 +1,20 @@
 [
   {
+    "name": "smoketest",
+    "dir": "data/smoke",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "Smoke",
+    "expected": {
+      "output": "Smoke.test successful"
+    }
+  },
+  {
     "name": "test1",
     "dir": "data/helloworld",
     "ergo": "logic.ergo",

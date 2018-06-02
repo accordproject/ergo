@@ -158,6 +158,8 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
           match fname with
           (* Polymorphic *)
           | "toString" => Some OpToString
+          (* Data *)
+          | "some" => Some OpLeft
           (* Natural numbers // Integer or Long *)
           | "integerAbs" => Some (OpNatUnary NatAbs)
           | "integerlog2" => Some (OpNatUnary NatLog2)

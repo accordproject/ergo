@@ -1,0 +1,18 @@
+namespace org.accordproject
+
+contract Smoke over TemplateModel {
+	clause test(request : Request) : Response {
+		enforce(1.0 + 1.0 = 2.0);
+		enforce(1.0 + 1.0 = 2.0);
+		enforce("Hello" ++ " " ++ "World!" = "Hello World!");
+		enforce(some(1) ?? 2 = 1);
+		enforce({ a : some(1) }?.a = some(1));
+		enforce({ a : some(1) }?.a != nil);
+		enforce({ a : nil }?.a = nil);
+		enforce({ a : nil }?.a ?? 2 = 2);
+		enforce({ a : some(1) }?.a ?? 2 = 1);
+		return new Response{
+			output: "Smoke.test successful"
+		}
+	}
+}
