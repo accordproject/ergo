@@ -59,7 +59,7 @@ Section ErgoCalculustoJavaScriptCicero.
        eol
        quotel)
       ++ "function " ++ fun_name ++ "(context) {" ++ eol
-      ++ "  let pcontext = { 'request' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': serializer.toJSON(context.state,{permitResourcesForRelationships:true}), 'contract': context.contract, 'emit': context.emit, 'now': context.now};" ++ eol
+      ++ "  let pcontext = { 'request' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': serializer.toJSON(context.state,{permitResourcesForRelationships:true}), 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" ++ eol
       ++ "  let result = new " ++ contract_name ++ "()." ++ clause_name ++ "(pcontext);" ++ eol
       ++ "  if (result.hasOwnProperty('left')) {" ++ eol
       ++ "    //logger.info('ergo result'+JSON.stringify(result))" ++ eol
@@ -73,25 +73,6 @@ Section ErgoCalculustoJavaScriptCicero.
       ++ "    return context;" ++ eol
       ++ "  } else {" ++ eol
       ++ "    throw new Error(result.right);" ++ eol
-      ++ "  }" ++ eol
-      ++ "}" ++ eol.
-
-  Definition dispatch_function
-             (contract_name:string)
-             (eol:string)
-             (quotel:string) : string :=
-    (accord_annotation
-       CTO.request_type
-       CTO.response_type
-       eol
-       quotel)
-      ++ "function __dispatch(contract,request,state,now) {" ++ eol
-      ++ "  let context = { 'request' : serializer.toJSON(request,{permitResourcesForRelationships:true}), 'state': serializer.toJSON(state,{permitResourcesForRelationships:true}), 'contract': contract, 'emit': [], 'now': now};" ++ eol
-      ++ "  let result = new " ++ contract_name ++ "()." ++ clause_main_name ++ "(context);" ++ eol
-      ++ "  if (result.hasOwnProperty('left')) {" ++ eol
-      ++ "    return { 'response' : serializer.fromJSON(result.left.response,{permitResourcesForRelationships:true}), 'state' :serializer.fromJSON(result.left.state,{permitResourcesForRelationships:true}), 'emit' : result.left.emit };" ++ eol
-      ++ "  } else {" ++ eol
-      ++ "    return { 'error' : result.right };" ++ eol
       ++ "  }" ++ eol
       ++ "}" ++ eol.
 
@@ -120,7 +101,6 @@ Section ErgoCalculustoJavaScriptCicero.
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
     (preamble eol) ++ eol
                    ++ (wrapper_functions contract_name signatures eol quotel)
-                   (* ++ (dispatch_function contract_name eol quotel) ++ eol *)
                    ++ (javascript_of_declarations p.(packagec_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
