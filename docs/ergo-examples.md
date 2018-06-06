@@ -8,7 +8,7 @@ title: Examples
 Ergo files are packages and can contain contracts. The following is a
 simple “Hello World!” contract:
 
-```
+```javascript
 package org.accordproject.helloworld
 
 contract HelloWorld over TemplateModel {
@@ -82,7 +82,7 @@ event Bill {
 
 The last component of a smart legal template is the Ergo logic. In our example it is a single clause `eathealthy` which can be used to process a `Food` request.
 
-```
+```javascript
 namespace org.accordproject.canteen
 
 contract EatApples over CanteenContract {
@@ -109,8 +109,9 @@ indicating termination of employment.
 
 If the condition is true, the contract proceeds by emitting a bill for
 the purchase of the apple. The employee to be billed is obtained from
-the contract `contract.employee`. The total amount is calculated by
-adding the tax, which is obtained from the contract, to the purchase
-price, which is obtained from the request. The calculation is done
-using a arithmetic expression.
+the contract (`contract.employee`). The total amount is calculated by
+adding the tax, which is obtained from the contract (`contract.tax`),
+to the purchase price, which is obtained from the request
+(`request.price`). The calculation is done using a simple arithmetic
+expression (`request.price * (1.0 + contract.tax / 100.0)`).
 
