@@ -46,7 +46,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 <g id='page1'>
 <path d='M-71.6016 38.4727H-27.9219V17.6641H-71.6016Z' fill='#a1bbd7'/>
 <path d='M-71.6016 38.4727H-27.9219V17.6641H-71.6016Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package'>
 <text class='f0' transform='matrix(1 0 0 1 -18.5187 5.7286)' x='-38.4359' y='20.0986'>E<tspan x='-33.9924'>r</tspan>
 <tspan x='-31.462'>g</tspan>
 <tspan x='-27.7571'>o</tspan>
@@ -71,7 +71,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </text>
 <path d='M-64.707 -57.6563H-34.8164V-71.6016H-64.707Z' fill='#dea8a7'/>
 <path d='M-64.707 -57.6563H-34.8164V-71.6016H-64.707Z' fill='none' stroke='#cd7c7b' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#run_nraenv_optims' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#run_nraenv_optims'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#run_nraenv_optims' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#run_nraenv_optims'>
 <text class='f0' transform='matrix(1 0 0 1 -7.192 -90.9541)' x='-49.7625' y='28.0688'>E<tspan x='-45.319'>r</tspan>
 <tspan x='-42.7886'>g</tspan>
 <tspan x='-39.0837'>o</tspan>
@@ -93,7 +93,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </a>
 <path d='M-20.9375 -12.3438H21.4648V-33.1523H-20.9375Z' fill='#a1bbd7'/>
 <path d='M-20.9375 -12.3438H21.4648V-33.1523H-20.9375Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.Common.CTO.CTO.html#cto_type' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.Common.CTO.CTO.html#cto_type'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Common.CTO.CTO.html#cto_type' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Common.CTO.CTO.html#cto_type'>
 <text class='f0' transform='matrix(1 0 0 1 32.1472 -45.0891)' x='-45.3493' y='20.0986'>R<tspan x='-40.5547'>e</tspan>
 <tspan x='-37.2615'>s</tspan>
 <tspan x='-34.421'>o</tspan>
@@ -118,7 +118,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </text>
 <path d='M28.4531 38.4727H78.8825V17.6641H28.4531Z' fill='#a1bbd7'/>
 <path d='M28.4531 38.4727H78.8825V17.6641H28.4531Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package'>
 <text class='f0' transform='matrix(1 0 0 1 81.537 5.7286)' x='-49.7625' y='20.0986'>R<tspan x='-44.9679'>e</tspan>
 <tspan x='-41.6747'>s</tspan>
 <tspan x='-38.8342'>o</tspan>
@@ -142,7 +142,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 <tspan x='-12.6432'>e</tspan>
 </text>
 </a>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.Translation.ErgotoErgoCalculus.html#package_to_calculus' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.Translation.ErgotoErgoCalculus.html#package_to_calculus'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Translation.ErgotoErgoCalculus.html#package_to_calculus' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Translation.ErgotoErgoCalculus.html#package_to_calculus'>
 <text class='f0' transform='matrix(1 0 0 1 140.734 2.4215)' x='-49.7625' y='28.0688'>T<tspan x='-45.3191'>r</tspan>
 <tspan x='-42.7886'>a</tspan>
 <tspan x='-39.229'>n</tspan>
@@ -157,7 +157,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </a>
 <path d='M137.562 37.7969H169.817V18.3398H137.562Z' fill='#a1bbd7'/>
 <path d='M137.562 37.7969H169.817V18.3398H137.562Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.html#ergoc_package'>
 <text class='f0' transform='matrix(1 0 0 1 190.644 6.4066)' x='-44.1471' y='20.0986'>E<tspan x='-39.7036'>r</tspan>
 <tspan x='-37.1731'>g</tspan>
 <tspan x='-33.4682'>o</tspan>
@@ -171,7 +171,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 <tspan x='-26.9882'>s</tspan>
 </text>
 </a>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
 <text class='f0' transform='matrix(1 0 0 1 231.668 5.7286)' x='-43.3213' y='20.0986'>T<tspan x='-38.8778'>y</tspan>
 <tspan x='-35.4635'>p</tspan>
 <tspan x='-31.4317'>e</tspan>
@@ -187,7 +187,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </a>
 <path d='M180.993 -13.0234H210.882V-33.832H180.993Z' fill='#a1bbd7'/>
 <path d='M180.993 -13.0234H210.882V-33.832H180.993Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.Common.TypeSystem.ErgoType.html#ergo_type' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.Common.TypeSystem.ErgoType.html#ergo_type'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Common.TypeSystem.ErgoType.html#ergo_type' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Common.TypeSystem.ErgoType.html#ergo_type'>
 <text class='f0' transform='matrix(1 0 0 1 236.688 -45.7672)' x='-47.9428' y='20.0986'>E<tspan x='-43.4993'>r</tspan>
 <tspan x='-40.9688'>g</tspan>
 <tspan x='-37.2639'>o</tspan>
@@ -200,7 +200,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </a>
 <path d='M222.059 37.7969H264.562V18.3398H222.059Z' fill='#a1bbd7'/>
 <path d='M222.059 37.7969H264.562V18.3398H222.059Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
 <text class='f0' transform='matrix(1 0 0 1 275.142 6.4066)' x='-49.7625' y='20.0986'>T<tspan x='-45.3191'>y</tspan>
 <tspan x='-41.9047'>p</tspan>
 <tspan x='-37.8729'>e</tspan>
@@ -219,7 +219,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 <tspan x='-21.8643'>s</tspan>
 </text>
 </a>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
 <text class='f0' transform='matrix(1 0 0 1 231.668 5.7286)' x='-43.3213' y='20.0986'>T<tspan x='-38.8778'>y</tspan>
 <tspan x='-35.4635'>p</tspan>
 <tspan x='-31.4317'>e</tspan>
