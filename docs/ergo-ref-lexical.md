@@ -34,9 +34,8 @@ The following are reserved as keywords in Ergo. They cannot be used as identifie
 
 ```markdown
 namespace, import, define, function, concept, transaction, enum,
-extends, contract, over, clause, throws, state, enforce, if,
-then, else, let, foreach, return, in, where, return, throw, new,
-contract, clause, variable, as, match, set, emit, with, or, and,
-true, false, nil
+extends, contract, over, clause, throws, emits, state, enforce,
+if, then, else, let, foreach, return, in, where, throw, new,
+variable, match, set, emit, with, or, and, true, false, nil
 ```
 
