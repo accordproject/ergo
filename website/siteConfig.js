@@ -84,8 +84,8 @@ const siteConfig = {
   },
 
   algolia: {
-    apiKey: '1679802ddfc315329d6b5f4616b30e51',
-    indexName: 'accordproject_api',
+    apiKey: '9825ab5738b905935d9baa9cd194d38e',
+    indexName: 'accordproject_ergo',
     algoliaOptions: {} // Optional, if provided by Algolia
   },
 
