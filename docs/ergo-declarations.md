@@ -3,7 +3,7 @@ id: ergo-declarations
 title: Declarations
 ---
 
-# Global Variables Declarations
+## Global Variables Declarations
 
 It is possible to declare global variables and functions in Ergo:
 
@@ -15,7 +15,7 @@ It is possible to declare global variables and functions in Ergo:
     area(1.5)
 ```
 
-# Contracts Declarations
+## Contracts Declarations
 
 You can declare a contract over a template model as follows:
 
