@@ -41,7 +41,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 <g id='page1'>
 <path d='M-71.6016 -1.375H-27.9219V-22.1875H-71.6016Z' fill='#a1bbd7'/>
 <path d='M-71.6016 -1.375H-27.9219V-22.1875H-71.6016Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.Ergo.Lang.Ergo.html#ergo_package'>
 <text class='f0' transform='matrix(1 0 0 1 -18.5187 5.72859)' x='-38.4359' y='-19.752'>E<tspan x='-33.9924'>r</tspan>
 <tspan x='-31.462'>g</tspan>
 <tspan x='-27.7571'>o</tspan>
@@ -72,7 +72,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </text>
 <path d='M32.6523 -2.05469H75.1565V-21.5078H32.6523Z' fill='#a1bbd7'/>
 <path d='M32.6523 -2.05469H75.1565V-21.5078H32.6523Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
 <text class='f0' transform='matrix(1 0 0 1 85.7335 6.40659)' x='-49.7625' y='-19.752'>T<tspan x='-45.3191'>y</tspan>
 <tspan x='-41.9047'>p</tspan>
 <tspan x='-37.8729'>e</tspan>
@@ -93,7 +93,7 @@ text.f0 {font-family:cmss8;font-size:6.97385px}
 </a>
 <path d='M32.6523 -2.05469H75.1565V-21.5078H32.6523Z' fill='#a1bbd7'/>
 <path d='M32.6523 -2.05469H75.1565V-21.5078H32.6523Z' fill='none' stroke='#7299c3' stroke-miterlimit='10.0375' stroke-width='0.799999'/>
-<a target='_top' xlink:href='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
+<a target='_top' xlink:href='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package' xlink:title='https://ergo.accordproject.org/docs/assets/specification/ErgoSpec.ErgoCalculus.Typing.TErgoCalculus.html#tergoc_package'>
 <text class='f0' transform='matrix(1 0 0 1 85.7335 6.40659)' x='-49.7625' y='-19.752'>T<tspan x='-45.3191'>y</tspan>
 <tspan x='-41.9047'>p</tspan>
 <tspan x='-37.8729'>e</tspan>
