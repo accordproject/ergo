@@ -3,6 +3,7 @@
     "Intro": ["ergo-overview","ergo-compiler","ergo-cicero"],
     "Language Guide": ["ergo-language"],
     "Reference Manual": ["ergo-conditional-expressions", "ergo-match-expressions"],
-    "Node.js": ["ergo-node"]
+    "Node.js": ["ergo-node"],
+    "API Documentation": ["ergo-api"]
   }
 }

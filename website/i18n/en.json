@@ -8,6 +8,7 @@
     "CHANGELOG": "CHANGELOG",
     "AUTHORS": "AUTHORS",
     "CONTRIBUTING": "CONTRIBUTING",
+    "ergo-api": "Ergo API Documentation",
     "ergo-cicero": "Use from Cicero",
     "ergo-compiler": "Ergo Compiler",
     "ergo-conditional-expressions": "Conditional Expressions",
@@ -23,7 +24,8 @@
     "Intro": "Intro",
     "Language Guide": "Language Guide",
     "Reference Manual": "Reference Manual",
-    "Node.js": "Node.js"
+    "Node.js": "Node.js",
+    "API Documentation": "API Documentation"
   },
   "pages-strings": {
     "Help Translate|recruit community translators for your project": "Help Translate",

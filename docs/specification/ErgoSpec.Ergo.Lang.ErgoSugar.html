@@ -21,7 +21,6 @@
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Common.Utils.ENames.html">ErgoSpec.Common.Utils.ENames</a></span>.<br/>
-<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoBase.html">ErgoSpec.Ergo.Lang.ErgoBase</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html">ErgoSpec.Ergo.Lang.Ergo</a></span>.<br/>
 <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html">ErgoSpec.Backend.ErgoBackend</a></span>.<br/>
 <br/>
@@ -72,9 +71,19 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EUnaryOp">EUnaryOp</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Operators.UnaryOperators.html#OpRight">OpRight</a></span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#e">e</a></span>.<br/>
 <br/>
 &nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#ErgoSugar.Errors">Errors</a></span>.<br/>
-&nbsp;&nbsp;<br/>
-<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#ErgoSugar">ErgoSugar</a></span>.<br/>
 <br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="ErgoSugar.Optional">Optional</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EOptionalDot">EOptionalDot</a></span> (<span class="id">pname</span>:<span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>) (<span class="id">e</span>:<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#ergo_expr">ergo_expr</a></span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EMatch">EMatch</a></span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#e">e</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#CaseLetOption">CaseLetOption</a></span> "$<span class="id">option</span>" <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span>, <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EUnaryOp">EUnaryOp</a></span> (<span class="id"><a href="https://querycert.github.io/html/Qcert.Common.Operators.UnaryOperators.html#OpDot">OpDot</a></span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#pname">pname</a></span>) (<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EVar">EVar</a></span> "$<span class="id">option</span>")) :: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EConst">EConst</a></span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Common.DataModel.Data.html#dnone">dnone</a></span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="EOptionalDefault">EOptionalDefault</a></span> (<span class="id">e1</span> <span class="id">e2</span>:<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#ergo_expr">ergo_expr</a></span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EMatch">EMatch</a></span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#e1">e1</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#CaseLetOption">CaseLetOption</a></span> "$<span class="id">option</span>" <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span>, <span class="id"><a href="ErgoSpec.Ergo.Lang.Ergo.html#EVar">EVar</a></span> "$<span class="id">option</span>") :: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#e2">e2</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#ErgoSugar.Optional">Optional</a></span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="ErgoSpec.Ergo.Lang.ErgoSugar.html#ErgoSugar">ErgoSugar</a></span>.<br/>
 
 </div>
 <div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
