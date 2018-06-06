@@ -31,16 +31,6 @@ principles:
 - Clauses and functions are written in an expression language with limited expressiveness (it allows conditional and bounded iteration)
 - Most of the compiler is written in Coq as a stepping stone for formal specification and verification
 
-## Relationship to the Accord Project
-
-One of the use for the Ergo compiler is as an embedded component
-inside [Cicero](https://github.com/accordproject/cicero), which
-implements the [Accord Protocol Template
-Specification](https://docs.google.com/document/d/1UacA_r2KGcBA2D4voDgGE8jqid-Uh4Dt09AE-shBKR0).
-The following diagram describe how this works:
-
-![Ergo Cicero](./ergoincicero.png)
-
 ## Status
 
 - The current implementation only supports the JavaScript backend for Cicero (and Hyperledger)
