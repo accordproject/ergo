@@ -8,7 +8,7 @@
     "CHANGELOG": "CHANGELOG",
     "AUTHORS": "AUTHORS",
     "CONTRIBUTING": "CONTRIBUTING",
-    "ergo-api": "Ergo API Documentation",
+    "ergo-api": "JavaScript API",
     "ergo-cicero": "Use from Cicero",
     "ergo-compiler": "Ergo Compiler",
     "ergo-conditional-expressions": "Conditional Expressions",
