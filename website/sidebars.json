@@ -1,6 +1,6 @@
 {
   "docs": {
-    "Intro": ["ergo-overview","ergo-compiler","ergo-cicero"],
+    "Intro": ["ergo-overview","ergo-examples","ergo-compiler","ergo-cicero"],
     "Language Guide": ["ergo-language"],
     "Reference Manual": ["ergo-conditional-expressions", "ergo-match-expressions"],
     "Node.js": ["ergo-node"],
