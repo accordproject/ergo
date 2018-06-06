@@ -42,7 +42,7 @@ const siteConfig = {
     {doc: 'ergo-overview', label: 'Docs'},
     { href: "https://accordproject.github.io/ergo-playground", label: "Try" },
     { search: true },
-    { href: "https://docs.accordproject.org", label: "Accord Project" },
+    { href: "https://docs.accordproject.org", label: "Accord" },
     { href: "https://github.com/accordproject/ergo", label: "GitHub" },
   ],
 
@@ -81,6 +81,12 @@ const siteConfig = {
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks
     theme: 'default',
+  },
+
+  algolia: {
+    apiKey: '1679802ddfc315329d6b5f4616b30e51',
+    indexName: 'accordproject_api',
+    algoliaOptions: {} // Optional, if provided by Algolia
   },
 
   // Add custom scripts here that would be placed in <script> tags

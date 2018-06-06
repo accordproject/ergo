@@ -1,8 +1,8 @@
 {
   "docs": {
     "Intro": ["ergo-overview","ergo-examples","ergo-compiler","ergo-cicero"],
-    "Language Guide": ["ergo-language"],
-    "Reference Manual": ["ergo-conditional-expressions", "ergo-match-expressions"],
+    "Language Guide": ["ergo-types", "ergo-expressions", "ergo-language"],
+    "Reference Manual": ["ergo-ref-lexical", "ergo-ref-conditional-expressions", "ergo-ref-match-expressions"],
     "Node.js": ["ergo-node"],
     "API Documentation": ["ergo-api"]
   }
