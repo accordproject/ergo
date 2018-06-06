@@ -39,6 +39,8 @@ Section EResult.
   | TypeError : string -> eerror
   | RuntimeError : string -> eerror.
 
+  Locate lift_failure_in_three.
+  
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
     Success A eerror a.
@@ -50,9 +52,12 @@ Section EResult.
     lift_failure_in f a.
   Definition elift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
     lift_failure_in_two f a b.
-  Definition elift3 {A B C D:Set} (f:A -> B -> C ->D)
+  Definition elift3 {A B C D:Set} (f:A -> B -> C -> D)
              (a:eresult A) (b:eresult B) (c:eresult C) : eresult D :=
     lift_failure_in_three f a b c.
+  Definition elift4 {A B C D E:Set} (f:A -> B -> C -> D -> E)
+             (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) : eresult E :=
+    eolift (fun x => elift (fun g => g x) (elift3 f a b c)) d.
   Definition emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
     lift_failure_map f al.
   Definition eresult_of_option {A:Set} (a:option A) (e:eerror) :=

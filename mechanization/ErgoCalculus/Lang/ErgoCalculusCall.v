@@ -52,7 +52,8 @@ Section Patch.
     mkLambdaC
       (ergoc_lambda_params_of_lambda_params cl.(Closure.closure_params))
       (ergoc_lambda_type_of_lambda_type cl.(Closure.closure_output))
-      None
+      None (* XXX Has to be fixed XXX *)
+      None (* XXX Has to be fixed XXX *)
       cl.(Closure.closure_body).
 
   Definition lookup_table_of_backend_lookup_table (tbl:ErgoEnhancedBackend.ergo_backend_lookup_table) :=

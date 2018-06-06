@@ -22,7 +22,7 @@
     begin
       List.iter (fun (key, data) -> Hashtbl.add tbl key data)
 	      [ (* declarations *)
-	       "namespace", NAMESPACE;
+	      "namespace", NAMESPACE;
 	      "import", IMPORT;
 	      "define", DEFINE;
 	      "function", FUNCTION;
@@ -36,6 +36,7 @@
 	      "over", OVER;
 	      "clause", CLAUSE;
 	      "throws", THROWS;
+	      "emits", EMITS;
 	      "state", STATE;
 	      (* Expressions *)
  	      "enforce", ENFORCE;
@@ -47,16 +48,11 @@
 	      "return", RETURN;
 	      "in", IN;
 	      "where", WHERE;
-	      "return", RETURN;
 	      "throw", THROW;
 	      "new", NEW;
-	      "contract", CONTRACT;
-	      "clause", CLAUSE;
 	      "variable", VARIABLE;
-	      "as", AS;
 	      "match", MATCH;
-	      "typematch", TYPEMATCH;
-        "set",SET;
+	      "set",SET;
         "emit",EMIT;
 	      "with", WITH;
         "or", OR;
@@ -65,9 +61,6 @@
 	      "true", TRUE;
 	      "false", FALSE;
 	      "nil", NIL;
-        (* Types *)
-        "Any", ANY;
-        "Empty", EMPTY;
 	    ]; tbl
     end
 
