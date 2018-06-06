@@ -24,6 +24,7 @@ const siteConfig = {
   title: 'Ergo' /* title for your website */,
   tagline: 'The Accord Project language for smart legal contracts. Ergo lets you write safe and portable logic for your legal clause and contract templates.',
   url: 'https://ergo.accordproject.org' /* your website url */,
+  cname: 'ergo.accordproject.org' /* CNAME */,
   baseUrl: '/' /* base url for your project */,
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
