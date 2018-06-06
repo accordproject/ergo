@@ -1,11 +1,9 @@
-Installation
-============
+---
+id: ergo-node
+title: Quickstart
+---
 
-Install with npm
-----------------
-
-Before you can run Ergo, you must install and configure the following dependencies on your
-machine:
+Before you can run Ergo, you must install and configure the following dependencies on your machine:
 
 * [Node.js v8.x (LTS)](http://nodejs.org): We use Node to generate the documentation, run a
   development web server, run tests, and generate distributable files. Depending on your system,
