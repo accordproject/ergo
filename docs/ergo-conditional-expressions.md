@@ -1,5 +1,7 @@
-Conditional Expressions
-=======================
+---
+id: ergo-conditional-expressions
+title: Conditional Expressions
+---
 
 Conditional expressions (also known as `if` statements) allow us to
 conditionally execute Ergo code depending on the value of a test
@@ -57,8 +59,7 @@ else
   return new VolumeDiscountResponse{ discountRate: contract.thirdRate }
 ```
 
-Conditional expressions can also be used in [variable
-declarations \<VariableDeclarations\>]{role="doc"}.
+Conditional expressions can also be used in [variable declarations](ergo-variable-declarations.md).
 
 ``` {.sourceCode .js}
 define variable price = 42;
@@ -71,5 +72,5 @@ The value of message after running this code will be `"Low Price"`.
 Related
 -------
 
--   [Match expression](MatchExpressions.md) - where many
+-   [Match expression](ergo-match-expressions.md) - where many
     alternative conditions check the same variable
