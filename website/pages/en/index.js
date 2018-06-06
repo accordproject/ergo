@@ -135,7 +135,7 @@ const Features = props => (
               contents={[
                 {
                   title: 'Legal First',
-                  content: 'Ergo is designed to capture the legal intent of contracts. Use it to enforce clauses preconditions, manipulate the contract state, and emit obligations.',
+                  content: 'Ergo is designed to capture the legal logic of contracts. Use it to enforce clauses preconditions, manipulate the contract state, and emit obligations.',
                 },
                 {
                   title: 'Safety and Verification',
