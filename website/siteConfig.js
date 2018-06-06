@@ -42,7 +42,7 @@ const siteConfig = {
     {doc: 'ergo-overview', label: 'Docs'},
     { href: "https://accordproject.github.io/ergo-playground", label: "Try" },
     { search: true },
-    { href: "https://docs.accordproject.org", label: "Accord" },
+    { href: "https://docs.accordproject.org", label: "Accord Project" },
     { href: "https://github.com/accordproject/ergo", label: "GitHub" },
   ],
 

@@ -103,7 +103,7 @@ class HomeSplash extends React.Component {
   </h2>
           <ProjectBanner />
           <PromoSection>
-            <Button href="https://docs.accordproject.org">Accord Project</Button>
+            <Button href="#accord">Accord Project</Button>
             <Button href="#try">Try Online</Button>
             <Button href={
                 siteConfig.baseUrl +
