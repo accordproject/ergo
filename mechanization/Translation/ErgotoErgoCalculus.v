@@ -411,7 +411,8 @@ Section ErgotoJavaScript.
          (mkLambdaC
             c.(clause_lambda).(lambda_params)
             c.(clause_lambda).(lambda_output)
-            c.(clause_lambda).(lambda_throw))
+            c.(clause_lambda).(lambda_throws)
+            c.(clause_lambda).(lambda_emits))
          (elift ergoc_expr_top (ergo_expr_to_calculus ctxt (ergo_stmt_to_expr c.(clause_lambda).(lambda_body))))).
 
   (** Translate a function to function+calculus *)
@@ -427,7 +428,8 @@ Section ErgotoJavaScript.
          (mkLambdaC
             f.(function_lambda).(lambda_params)
             f.(function_lambda).(lambda_output)
-            f.(function_lambda).(lambda_throw))
+            f.(function_lambda).(lambda_throws)
+            f.(function_lambda).(lambda_emits))
          (ergo_expr_to_calculus ctxt (ergo_stmt_to_expr f.(function_lambda).(lambda_body)))).
 
   (** Translate a declaration to a declaration+calculus *)

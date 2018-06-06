@@ -45,7 +45,8 @@ Section CTO.
       { cto_signature_name:string;
         cto_signature_params : list (string * cto_type);
         cto_signature_output : cto_type;
-        cto_signature_throw : option cto_type }.
+        cto_signature_throws : option cto_type;
+        cto_signature_emits : option cto_type }.
 
   Inductive cto_declaration_kind :=
   | CTOEnum : list string -> cto_declaration_kind
@@ -182,18 +183,26 @@ Section CTO.
                (sig:cto_signature) :=
       let params_types := resolve_cto_struct namespace tbl (sig.(cto_signature_params)) in
       let output_type := resolve_cto_type namespace tbl sig.(cto_signature_output) in
-      let throw_type :=
-          match sig.(cto_signature_throw) with
+      let throws_type :=
+          match sig.(cto_signature_throws) with
           | None => esuccess None
           | Some throw_ty =>
             elift Some (resolve_cto_type namespace tbl throw_ty)
           end
       in
-      elift3 (mkCTOSignature
+      let emits_type :=
+          match sig.(cto_signature_emits) with
+          | None => esuccess None
+          | Some throw_ty =>
+            elift Some (resolve_cto_type namespace tbl throw_ty)
+          end
+      in
+      elift4 (mkCTOSignature
                 sig.(cto_signature_name))
              params_types
              output_type
-             throw_type.
+             throws_type
+             emits_type.
 
     Definition resolve_cto_clauses
                (namespace:string)

@@ -31,7 +31,8 @@ Section ErgoCalculus.
       mkLambdaC
         { lambdac_params: list (string * cto_type);
           lambdac_output : cto_type;
-          lambdac_throw : option cto_type;
+          lambdac_throws : option cto_type;
+          lambdac_emits : option cto_type;
           lambdac_body : ergoc_expr; }.
 
     (** Clause *)

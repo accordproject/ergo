@@ -76,7 +76,8 @@ Section Ergo.
     mkLambda
       { lambda_params: list (string * cto_type);
         lambda_output : cto_type;
-        lambda_throw : option cto_type;
+        lambda_throws : option cto_type;
+        lambda_emits : option cto_type;
         lambda_body : ergo_stmt; }.
 
   Record ergo_function :=
@@ -121,7 +122,8 @@ Section Ergo.
            cl.(clause_name)
            cl.(clause_lambda).(lambda_params)
            cl.(clause_lambda).(lambda_output)
-           cl.(clause_lambda).(lambda_throw)) :: lookup_clauses_signatures dl'
+           cl.(clause_lambda).(lambda_throws)
+           cl.(clause_lambda).(lambda_emits)) :: lookup_clauses_signatures dl'
       end.
     
     Definition lookup_contract_signatures (c:ergo_contract) : list cto_signature :=

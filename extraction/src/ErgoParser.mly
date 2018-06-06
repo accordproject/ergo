@@ -26,21 +26,21 @@
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
 %token CONCEPT TRANSACTION ENUM EXTENDS
-%token CONTRACT OVER CLAUSE THROWS
+%token CONTRACT OVER CLAUSE
+%token THROWS EMITS
 
 %token ENFORCE IF THEN ELSE
 %token LET FOREACH IN WHERE
 %token RETURN THROW STATE
-%token VARIABLE AS
+%token VARIABLE
 %token NEW
-%token MATCH TYPEMATCH WITH
+%token MATCH WITH
 %token SET EMIT
 
 %token OR AND NOT
 
 %token NIL
 %token TRUE FALSE
-%token ANY EMPTY
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
@@ -105,7 +105,8 @@ decl:
     function_lambda =
     { lambda_params = [];
       lambda_output = out;
-      lambda_throw = mt;
+      lambda_throws = fst mt;
+      lambda_emits = snd mt;
       lambda_body = fs; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
     { EFunc
@@ -113,7 +114,8 @@ decl:
     function_lambda =
     { lambda_params = ps;
       lambda_output = out;
-      lambda_throw = mt;
+      lambda_throws = fst mt;
+      lambda_emits = snd mt;
       lambda_body = fs; } } }
 | IMPORT qn = qname_prefix
     { EImport (ErgoUtil.cto_import_decl_of_import_namespace qn) }
@@ -148,22 +150,28 @@ clause:
 				clause_lambda =
 				{ lambda_params = [];
 					lambda_output = out;
-					lambda_throw = mt;
+          lambda_throws = fst mt;
+          lambda_emits = snd mt;
 					lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
     { { clause_name = cn;
         clause_lambda =
         { lambda_params = ps;
           lambda_output = out;
-          lambda_throw = mt;
-          lambda_body = s; } } }
+          lambda_throws = fst mt;
+          lambda_emits = snd mt;
+					lambda_body = s; } } }
 
 maythrow:
 |
-  { None }
-| THROWS pt = paramtype
-  { Some pt }
-    
+  { (None,None) }
+| THROWS tt = paramtype
+  { (Some tt,None) }
+| EMITS et = paramtype
+  { (None,Some et) }
+| THROWS tt = paramtype EMITS et = paramtype
+  { (Some tt,Some et) }
+
 params:
 | p = param
     { p :: [] }
@@ -177,10 +185,6 @@ param:
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
-| EMPTY
-		{ ErgoCompiler.cto_empty }
-| ANY
-		{ ErgoCompiler.cto_any }
 | pt = IDENT
     { begin match pt with
       | "Boolean" -> ErgoCompiler.cto_boolean
@@ -189,6 +193,8 @@ paramtype:
       | "Long" -> ErgoCompiler.cto_long
       | "Integer" -> ErgoCompiler.cto_integer
       | "DateTime" -> ErgoCompiler.cto_dateTime
+      | "Empty" -> ErgoCompiler.cto_empty
+      | "Any" -> ErgoCompiler.cto_any
       | _ -> ErgoCompiler.cto_class_ref (Util.char_list_of_string pt)
       end }
 | LCURLY rt = rectype RCURLY
@@ -201,12 +207,12 @@ paramtype:
 rectype:
 | 
     { [] }
-| at = atttype
+| at = attributetype
     { [at] }
-| at = atttype COMMA rt = rectype
+| at = attributetype COMMA rt = rectype
     { at :: rt }
 
-atttype:
+attributetype:
 | an = IDENT COLON pt = paramtype
     { (Util.char_list_of_string an, pt) }
 
@@ -426,14 +432,14 @@ cases:
 reclist:
 | 
     { [] }
-| a = att
+| a = attribute
     { [a] }
-| a = att COMMA rl = reclist
+| a = attribute COMMA rl = reclist
     { a :: rl }
 
-att:
-| an = IDENT COLON e = expr
-    { (Util.char_list_of_string an, e) }
+attribute:
+| an = safeident COLON e = expr
+    { (an, e) }
 
 (* Qualified name *)
 qname_base:
@@ -497,32 +503,31 @@ safeident_base:
 | IMPORT { "import" }
 | DEFINE { "define" }
 | FUNCTION { "function" }
-| CONTRACT { "contract" }
 | CONCEPT { "concept" }
 | TRANSACTION { "transaction" }
 | ENUM { "enum" }
 | EXTENDS { "extends" }
+| CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }
+| THROWS { "throws" }
+| EMITS { "emits" }
+| STATE { "state" }
 | ENFORCE { "enforce" }
 | IF { "if" }
 | THEN { "then" }
 | ELSE { "else" }
 | LET { "let" }
 | FOREACH { "foreach" }
+| RETURN { "return" }
 | IN { "in" }
 | WHERE { "where" }
-| RETURN { "return" }
 | THROW { "throw" }
-| THROWS { "throws" }
-| STATE { "state" }
+| NEW { "new" }
+| VARIABLE { "variable" }
+| MATCH { "match" }
 | SET { "set" }
 | EMIT { "emit" }
-| VARIABLE { "variable" }
-| AS { "as" }
-| NEW { "new" }
-| MATCH { "match" }
-| TYPEMATCH { "typematch" }
 | WITH { "with" }
 | OR { "or" }
 | AND { "and" }
