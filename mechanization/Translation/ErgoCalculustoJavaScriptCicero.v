@@ -30,6 +30,7 @@ Section ErgoCalculustoJavaScriptCicero.
   Definition accord_annotation
              (request_type:string)
              (response_type:string)
+             (emits_type:string)
              (eol:string)
              (quotel:string) :=
     "/**" ++ eol
@@ -37,6 +38,7 @@ Section ErgoCalculustoJavaScriptCicero.
           ++ " * @param {Context} context - the Accord context" ++ eol
           ++ " * @param {" ++ request_type ++ "} context.request - the incoming request" ++ eol
           ++ " * @param {" ++ response_type ++ "} context.response - the response" ++ eol
+          ++ " * @param {" ++ emits_type ++ "} context.emit - the emitted events" ++ eol
           ++ " * @AccordClauseLogic" ++ eol
           ++ " */" ++ eol.
 
@@ -49,6 +51,7 @@ Section ErgoCalculustoJavaScriptCicero.
              (fun_name:string)
              (request_type:string)
              (response_type:string)
+             (emits_type:string)
              (contract_name:string)
              (clause_name:string)
              (eol:string)
@@ -56,6 +59,7 @@ Section ErgoCalculustoJavaScriptCicero.
     (accord_annotation
        request_type
        response_type
+       emits_type
        eol
        quotel)
       ++ "function " ++ fun_name ++ "(context) {" ++ eol
@@ -78,24 +82,24 @@ Section ErgoCalculustoJavaScriptCicero.
 
   Definition apply_wrapper_function
              (contract_name:string)
-             (signature:string * string * string)
+             (signature:string * string * string * string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let '(clause_name, request_type, response_type) := signature in
+    let '(clause_name, request_type, response_type, emits_type) := signature in
     let fun_name := contract_name ++ "_" ++ clause_name in
     wrapper_function
-      fun_name request_type response_type contract_name clause_name eol quotel.
+      fun_name request_type response_type emits_type contract_name clause_name eol quotel.
   
   Definition wrapper_functions
              (contract_name:string)
-             (signatures:list (string * string * string))
+             (signatures:list (string * string * string * string))
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
     String.concat eol (List.map (fun sig => apply_wrapper_function contract_name sig eol quotel) signatures).
 
   Definition javascript_of_package_with_dispatch
              (contract_name:string)
-             (signatures:list (string * string * string))
+             (signatures:list (string * string * string * string))
              (p:ergoc_package)
              (eol:string)
              (quotel:string) : ErgoCodeGen.ergoc_javascript :=
@@ -104,22 +108,29 @@ Section ErgoCalculustoJavaScriptCicero.
                    ++ (javascript_of_declarations p.(packagec_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
-  Fixpoint filter_signatures (namespace:string) (sigs:list cto_signature) : list (string * string * string) :=
+  Fixpoint filter_signatures (namespace:string) (sigs:list cto_signature) : list (string * string * string * string) :=
     match sigs with
     | nil => nil
     | sig :: rest =>
       let fname := sig.(cto_signature_name) in
       let params := sig.(cto_signature_params) in
       let outtype := sig.(cto_signature_output) in
+      let emitstype := sig.(cto_signature_emits) in
       match params with
       | nil => filter_signatures namespace rest
       | (_,reqtype)::nil =>
-        match reqtype, outtype with
-        | CTOClassRef reqname, CTOClassRef outname =>
+        match reqtype, outtype, emitstype with
+        | CTOClassRef reqname, CTOClassRef outname, Some (CTOClassRef emitsname) =>
           let qreqname := absolute_ref_of_relative_ref namespace reqname in
           let qoutname := absolute_ref_of_relative_ref namespace outname in
-          (fname,qreqname,qoutname) :: (filter_signatures namespace rest)
-        | _, _ =>
+          let qemitsname := absolute_ref_of_relative_ref namespace emitsname in
+          (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
+        | CTOClassRef reqname, CTOClassRef outname, None =>
+          let qreqname := absolute_ref_of_relative_ref namespace reqname in
+          let qoutname := absolute_ref_of_relative_ref namespace outname in
+          let qemitsname := default_emits in
+          (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
+        | _, _, _ =>
           filter_signatures namespace rest
         end
       | _ :: _ => filter_signatures namespace rest
