@@ -394,6 +394,12 @@ Section ErgotoJavaScript.
   
   (** Translate a clause to clause+calculus *)
 
+  Definition default_emits_in_clause (emits:option cto_type) : cto_type :=
+    match emits with
+    | Some e => e
+    | None => CTOClassRef default_emits
+    end.
+  
   Definition clause_to_calculus
              (ctxt:comp_context) (c:ergo_clause) : eresult ergoc_clause :=
     let ctxt : comp_context :=
@@ -412,7 +418,7 @@ Section ErgotoJavaScript.
             c.(clause_lambda).(lambda_params)
             c.(clause_lambda).(lambda_output)
             c.(clause_lambda).(lambda_throws)
-            c.(clause_lambda).(lambda_emits))
+            (Some (default_emits_in_clause c.(clause_lambda).(lambda_emits))))
          (elift ergoc_expr_top (ergo_expr_to_calculus ctxt (ergo_stmt_to_expr c.(clause_lambda).(lambda_body))))).
 
   (** Translate a function to function+calculus *)

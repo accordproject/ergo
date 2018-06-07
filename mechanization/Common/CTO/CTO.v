@@ -339,5 +339,6 @@ Section CTO.
   Section Builtin.
     Definition request_type := "Request"%string.
     Definition response_type := "Response"%string.
+    Definition default_emits := "Event"%string.
   End Builtin.
 End CTO.
