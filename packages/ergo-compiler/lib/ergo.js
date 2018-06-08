@@ -20,9 +20,11 @@ const Engine=require('./ergo-core.js');
 const CTOParser = require('composer-common/lib/introspect/parser');
 
 const HyperledgerCTO = Path.join(__dirname,'..','models','org.hyperledger.composer.system.cto');
-const AccordCommonCTO = Path.join(__dirname,'..','models','common.cto');
-const CommonCTOs = [HyperledgerCTO, AccordCommonCTO];
-const CommonCTOTexts = [Fs.readFileSync(HyperledgerCTO, 'utf8'), Fs.readFileSync(AccordCommonCTO, 'utf8')];
+const ContractCTO = Path.join(__dirname,'..','models','contract.cto');
+const MoneyCTO = Path.join(__dirname,'..','models','money.cto');
+const RuntimeCTO = Path.join(__dirname,'..','models','runtime.cto');
+const CommonCTOs = [HyperledgerCTO, ContractCTO, MoneyCTO, RuntimeCTO];
+const CommonCTOTexts = [Fs.readFileSync(HyperledgerCTO, 'utf8'), Fs.readFileSync(ContractCTO, 'utf8'), Fs.readFileSync(MoneyCTO, 'utf8'), Fs.readFileSync(RuntimeCTO, 'utf8')];
 
 /**
  * Utility class that implements the internals for Ergo.

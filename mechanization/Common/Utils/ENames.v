@@ -46,8 +46,8 @@ Section ENames.
   End AbsoluteNames.    
 
   Section ReservedNames.
-    Definition clause_main_name : relative_ref :=
-      "main".
+    Definition clause_main_name : relative_ref := "main".
+    Definition clause_init_name : relative_ref := "init".
   
     (** This *)
     Definition this_contract := "contract". (* Contains all contract data and clause data *)

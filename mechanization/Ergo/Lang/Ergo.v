@@ -118,12 +118,16 @@ Section Ergo.
       match dl with
       | nil => nil
       | cl :: dl' =>
-        (mkCTOSignature
-           cl.(clause_name)
-           cl.(clause_lambda).(lambda_params)
-           cl.(clause_lambda).(lambda_output)
-           cl.(clause_lambda).(lambda_throws)
-           cl.(clause_lambda).(lambda_emits)) :: lookup_clauses_signatures dl'
+        if (string_dec cl.(clause_name) clause_init_name)
+        then
+          lookup_clauses_signatures dl'
+        else
+          (mkCTOSignature
+             cl.(clause_name)
+             cl.(clause_lambda).(lambda_params)
+             cl.(clause_lambda).(lambda_output)
+             cl.(clause_lambda).(lambda_throws)
+             cl.(clause_lambda).(lambda_emits)) :: lookup_clauses_signatures dl'
       end.
     
     Definition lookup_contract_signatures (c:ergo_contract) : list cto_signature :=

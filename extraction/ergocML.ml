@@ -31,7 +31,9 @@ let modelsDir =
     ["packages";"ergo-compiler";"models"]
 let commonCTOs = [|
   Filename.concat modelsDir "org.hyperledger.composer.system.cto";
-  Filename.concat modelsDir "common.cto";
+  Filename.concat modelsDir "contract.cto";
+  Filename.concat modelsDir "money.cto";
+  Filename.concat modelsDir "runtime.cto";
 |]
 
 let patch_argv argv =
