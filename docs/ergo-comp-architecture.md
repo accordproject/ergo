@@ -1,5 +1,5 @@
 ---
-id: ergo-compiler
+id: ergo-comp-architecture
 title: Ergo Compiler
 ---
 

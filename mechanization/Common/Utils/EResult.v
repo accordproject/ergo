@@ -39,8 +39,6 @@ Section EResult.
   | TypeError : string -> eerror
   | RuntimeError : string -> eerror.
 
-  Locate lift_failure_in_three.
-  
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
     Success A eerror a.

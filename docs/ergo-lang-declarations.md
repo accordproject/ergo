@@ -1,5 +1,5 @@
 ---
-id: ergo-declarations
+id: ergo-lang-declarations
 title: Declarations
 ---
 

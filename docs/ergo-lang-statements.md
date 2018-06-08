@@ -1,5 +1,5 @@
 ---
-id: ergo-statements
+id: ergo-lang-statements
 title: Statements
 ---
 
