@@ -97,7 +97,7 @@ describe('ergo-compiler', () => {
     describe('#commonctos', function () {
         it('should return built-in CTOs', async function () {
             const result = Ergo.commonCTOs();
-            result.should.have.lengthOf(2);
+            result.should.have.lengthOf(4);
         });
     });
 });

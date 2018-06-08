@@ -28,6 +28,7 @@ Section ErgoCalculustoJavaScriptCicero.
   Local Open Scope string_scope.
 
   Definition accord_annotation
+             (clause_name:string)
              (request_type:string)
              (response_type:string)
              (emits_type:string)
@@ -39,7 +40,7 @@ Section ErgoCalculustoJavaScriptCicero.
           ++ " * @param {" ++ request_type ++ "} context.request - the incoming request" ++ eol
           ++ " * @param {" ++ response_type ++ "} context.response - the response" ++ eol
           ++ " * @param {" ++ emits_type ++ "} context.emit - the emitted events" ++ eol
-          ++ " * @AccordClauseLogic" ++ eol
+          ++ (if string_dec clause_name clause_init_name then " * @AccordClauseLogicInit" else " * @AccordClauseLogic") ++ eol
           ++ " */" ++ eol.
 
   (** Note: this adjusts the external interface to that currently expected in Cicero. Namely:
@@ -57,6 +58,7 @@ Section ErgoCalculustoJavaScriptCicero.
              (eol:string)
              (quotel:string) : string :=
     (accord_annotation
+       clause_name
        request_type
        response_type
        emits_type

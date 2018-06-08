@@ -99,6 +99,39 @@ Section ErgoExpand.
                       disp)))
       (match_of_sigs_top namespace effparams sigs).
 
+  Definition default_state :=
+    EConst
+      (drec (("$class",dstring "org.accordproject.cicero.contract.AccordContractState")
+               :: ("stateId",dstring "1")
+               :: nil))%string.
+  
+  Definition create_init_clause_for_contract (namespace:string) (c:ergo_contract) : ergo_clause :=
+    let effparams := EVar "request"%string :: nil in
+    let init_body :=
+        SSetState default_state
+                  (SReturn (EConst (drec nil)))
+    in
+    mkClause clause_init_name
+             (mkLambda
+                (("request"%string,(CTOClassRef "Request"))::nil)
+                CTOEmpty
+                None
+                (Some (CTOClassRef "Event"))
+                init_body).
+
+  Definition add_init_clause_to_contract (namespace:string) (c:ergo_contract) : ergo_contract :=
+    if in_dec string_dec clause_init_name
+              (map (fun cl => cl.(clause_name)) c.(contract_clauses))
+    then c
+    else
+      let init_clause :=
+          create_init_clause_for_contract namespace c
+      in
+      mkContract
+        c.(contract_name)
+        c.(contract_template)
+        (c.(contract_clauses) ++ (init_clause::nil)).
+  
   Definition add_main_clause_to_contract (namespace:string) (c:ergo_contract) : eresult ergo_contract :=
     if in_dec string_dec clause_main_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
@@ -112,7 +145,9 @@ Section ErgoExpand.
              (c.(contract_clauses) ++ (main_clause::nil)))
         (create_main_clause_for_contract namespace c).
   
-  Definition add_main_clause_to_declaration (namespace:string) (d:ergo_declaration) : eresult ergo_declaration :=
+  Definition add_main_init_clause_to_declaration
+             (namespace:string)
+             (d:ergo_declaration) : eresult ergo_declaration :=
     match d with
     | EType td => esuccess (EType td)
     | EExpr e => esuccess (EExpr e)
@@ -120,23 +155,23 @@ Section ErgoExpand.
     | EImport id => esuccess (EImport id)
     | EFunc fd => esuccess (EFunc fd)
     | EContract cd =>
+      let cd := add_init_clause_to_contract namespace cd in
       elift EContract (add_main_clause_to_contract namespace cd)
     end.
     
-  
-  Definition add_main_clauses_to_declarations
+  Definition add_main_init_clauses_to_declarations
              (namespace:string) (dl:list ergo_declaration) : eresult (list ergo_declaration) :=
-    emaplift (add_main_clause_to_declaration namespace) dl.
+    emaplift (add_main_init_clause_to_declaration namespace) dl.
     
-  Definition add_main_clauses_to_package (p:ergo_package) : eresult ergo_package :=
+  Definition add_main_init_clauses_to_package (p:ergo_package) : eresult ergo_package :=
     elift
       (mkPackage
          p.(package_namespace))
-      (add_main_clauses_to_declarations p.(package_namespace) p.(package_declarations)).
+      (add_main_init_clauses_to_declarations p.(package_namespace) p.(package_declarations)).
 
   (** Pre-processing. At the moment only add main clauses when missing *)
   Definition ergo_package_expand (p:ergo_package) : eresult ergo_package :=
-    add_main_clauses_to_package p.
+    add_main_init_clauses_to_package p.
   
 End ErgoExpand.
 

@@ -234,11 +234,48 @@
     ],
     "contract": "contract3.json",
     "request": "request.json",
-    "state": "state.json",
+    "state": null,
     "contractname": "PromissoryNote",
     "expected": {
-      "outstandingBalance": 1389.540157284947,
-      "$class": "org.accordproject.promissorynote.Response"
+      "$class": "org.accordproject.cicero.contract.AccordContractState",
+      "stateId": "1"
+    }
+  },
+  {
+    "name": "test13",
+    "dir": "data/installment-sale",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "InstallmentSale",
+    "expected": {
+      "total_paid": 2500,
+      "balance": 7612.499999999999,
+      "$class": "org.accordproject.installmentsale.Balance"
+    }
+  },
+  {
+    "name": "test14",
+    "dir": "data/installment-sale",
+    "ergo": "logic.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request-init.json",
+    "state": null,
+    "contractname": "InstallmentSale",
+    "expected": {
+      "$class": "org.accordproject.installmentsale.InstallmentSaleState",
+      "stateId": "1",
+      "status": "WaitingForFirstDayOfNextMonth",
+      "balance_remaining": 10000.00,
+      "total_paid": 0.0,
+      "next_payment_month": 1.0
     }
   }
 ]

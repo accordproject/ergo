@@ -1,0 +1,4 @@
+{
+    "$class": "org.accordproject.installmentsale.InitContract",
+    "firstMonth": 1.0
+}
