@@ -1,5 +1,5 @@
 ---
-id: ergo-cicero
+id: ergo-intro-cicero
 title: Use from Cicero
 ---
 

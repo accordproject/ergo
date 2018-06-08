@@ -1,5 +1,5 @@
 ---
-id: ergo-api
+id: ergo-api-js
 title: JavaScript API
 ---
 
@@ -271,6 +271,7 @@ Execute Ergo (JavaScript)
 | requestJson | <code>object</code> | the request transaction in JSON |
 | stateJson | <code>object</code> | the state in JSON |
 | contractName | <code>string</code> | of the contract to execute |
+
 
 
 * * *

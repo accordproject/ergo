@@ -1,9 +1,9 @@
 ---
-id: ergo-overview
+id: ergo-intro-overview
 title: Overview
 ---
 
-Ergo is a prototype for a domain specific language ("DSL") aimed at capturing the execution logic of *legal* contracts. The basic idea of a DSL is a computer language that's targeted to a particular kind of problem, rather than a general-purpose language that's aimed at any kind of software problem. For example, HTML is a DSL targeted at developing web pages. So, Ergo is a DSL aimed at capturing the execution logic of legal contracts. Ergo is intended to be accessible to Lawyers who create the corresponding prose for computable legal contracts. It is important that a developer and a lawyer can together agree that clauses in a computable legal contract have the same semantics as the equivalent Ergo code. However, as a programming language, the Ergo syntax should also respect programming conventionsHere are some thoughts and notes on requirements and on the
+Ergo is a prototype for a domain specific language (DSL) aimed at capturing the execution logic of *legal* contracts. The basic idea of a DSL is a computer language that's targeted to a particular kind of problem, rather than a general-purpose language that's aimed at any kind of software problem. For example, HTML is a DSL targeted at developing web pages. So, Ergo is a DSL aimed at capturing the execution logic of legal contracts. Ergo is intended to be accessible to Lawyers who create the corresponding prose for computable legal contracts. It is important that a developer and a lawyer can together agree that clauses in a computable legal contract have the same semantics as the equivalent Ergo code. However, as a programming language, the Ergo syntax should also respect programming conventionsHere are some thoughts and notes on requirements and on the
 initial design.
 
 ## What is Ergo?

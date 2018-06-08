@@ -1,5 +1,5 @@
 ---
-id: ergo-expressions
+id: ergo-lang-expressions
 title: Expressions
 ---
 

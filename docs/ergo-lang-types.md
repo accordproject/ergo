@@ -1,5 +1,5 @@
 ---
-id: ergo-types
+id: ergo-lang-types
 title: Types
 ---
 

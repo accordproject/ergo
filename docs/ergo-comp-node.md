@@ -1,6 +1,6 @@
 ---
-id: ergo-node
-title: Quickstart
+id: ergo-comp-node
+title: Quickstart (Node.js)
 ---
 
 Before you can run Ergo, you must install and configure the following dependencies on your machine:

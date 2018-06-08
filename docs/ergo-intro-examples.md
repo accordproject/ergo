@@ -1,5 +1,5 @@
 ---
-id: ergo-examples
+id: ergo-intro-examples
 title: Examples
 ---
 

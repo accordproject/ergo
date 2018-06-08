@@ -1,9 +1,10 @@
 {
   "docs": {
-    "Intro": ["ergo-overview","ergo-examples","ergo-compiler","ergo-cicero"],
-    "Language Guide": ["ergo-types", "ergo-expressions", "ergo-statements", "ergo-declarations"],
-    "Reference Manual": ["ergo-ref-lexical", "ergo-ref-conditional-expressions", "ergo-ref-match-expressions","ergo-specification"],
-    "Node.js": ["ergo-node"],
-    "API Documentation": ["ergo-api"]
+    "Intro": ["ergo-intro-overview","ergo-intro-examples","ergo-intro-cicero"],
+    "Language Guide": ["ergo-lang-types", "ergo-lang-expressions", "ergo-lang-statements", "ergo-lang-declarations"],
+    "Reference Manual": ["ergo-ref-lexical", "ergo-ref-conditional-expressions", "ergo-ref-match-expressions"],
+    "Formal Specification": ["ergo-spec-overview"],
+    "Compiler": ["ergo-comp-architecture","ergo-comp-node"],
+    "API Documentation": ["ergo-api-js"]
   }
 }

@@ -1,5 +1,5 @@
 ---
-id: ergo-specification
+id: ergo-spec-overview
 title: Formal Specification
 ---
 
