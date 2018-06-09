@@ -19,7 +19,7 @@ const Commands = require('../lib/commands');
 const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 require('yargs')
-    .command('compile', 'compile Ergo to JavaScript', (yargs) => {
+    .command('compile', 'compile Ergo contract to JavaScript', (yargs) => {
         yargs.option('ergo', {
             describe: 'path to the Ergo source'
         });
@@ -48,7 +48,7 @@ require('yargs')
                 Logger.error(err.message + ' ' + JSON.stringify(err));
             });
     })
-    .command('execute', 'execute a contract', (yargs) => {
+    .command('execute', 'execute Ergo contract', (yargs) => {
         yargs.option('contract', {
             describe: 'path to the contract data'
         });
@@ -56,7 +56,9 @@ require('yargs')
             describe: 'path to the request data'
         }).array('request');
         yargs.option('state', {
-            describe: 'path to the state data'
+            describe: 'path to the state data',
+            type: 'string',
+            default: null
         });
         yargs.option('ergo', {
             describe: 'path to the Ergo file'
@@ -69,9 +71,8 @@ require('yargs')
         });
     }, (argv) => {
         if (argv.verbose) {
-            Logger.info(`execute Ergo file ${argv.ergo} on contract data ${argv.contract} with request data ${argv.request} and CTOs ${argv.cto}`);
+            Logger.info(`execute Ergo contract ${argv.ergo} over data ${argv.contract} with request ${argv.request}  and state ${argv.state} and CTOs ${argv.cto}`);
         }
-
         return Commands.execute(argv.ergo, argv.cto, argv.contract, argv.request, argv.state, argv.contractname)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
