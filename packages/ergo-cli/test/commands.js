@@ -26,61 +26,80 @@ describe('ergo', () => {
     afterEach(() => {});
 
     describe('#compilehello', function () {
-        it('should compile a smart Ergo clause', async function () {
+        it('should compile a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
             const result = await Commands.compile(ergoPath, [ctoPath], 'javascript', false);
             result.should.not.be.null;
         });
-        it('should compile and link a smart Ergo clause', async function () {
+        it('should compile and link a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
             const result = await Commands.compile(ergoPath, [ctoPath], 'javascript', true);
             result.should.not.be.null;
         });
-        it('should compile a smart Ergo clause without cto', async function () {
+        it('should compile a smart Ergo contract without cto', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const result = await Commands.compile(ergoPath, undefined, 'javascript', false);
             result.should.not.be.null;
         });
     });
     describe('#executehello', function () {
-        it('should execute a smart Ergo clause', async function () {
+        it('should execute a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
+            const contractPath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath], statePath, 'HelloWorld', false);
+            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestPath], statePath, 'HelloWorld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
-        it('should execute a smart Ergo clause without cto', async function () {
+        it('should execute a smart Ergo contract without cto', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
-            const clausePath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
+            const contractPath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
-            const result = await Commands.execute(ergoPath, undefined, clausePath, [requestPath], statePath, 'HelloWorld', false);
+            const result = await Commands.execute(ergoPath, undefined, contractPath, [requestPath], statePath, 'HelloWorld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
     });
     describe('#executehellostate', function () {
-        it('should execute a smart Ergo clause with state once', async function () {
+        it('should execute a smart Ergo contract with state once', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworldstate', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworldstate', 'model.cto');
-            const clausePath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
+            const contractPath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath], statePath, 'HelloWorldState', false);
+            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestPath], statePath, 'HelloWorldState', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1)');
         });
-        it('should execute a smart Ergo clause with state thrice', async function () {
+        it('should execute a smart Ergo contract with state thrice', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworldstate', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworldstate', 'model.cto');
-            const clausePath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
+            const contractPath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], clausePath, [requestPath,requestPath,requestPath], statePath, 'HelloWorldState', false);
+            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestPath,requestPath,requestPath], statePath, 'HelloWorldState', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (3)');
+        });
+    });
+    describe('#executeinstallmentsale', function () {
+        it('should initialize a smart Ergo contract state', async function () {
+            const ergoPath = Path.resolve(__dirname, 'data/installment-sale', 'logic.ergo');
+            const ctoPath = Path.resolve(__dirname, 'data/installment-sale', 'model.cto');
+            const contractPath = Path.resolve(__dirname, 'data/installment-sale', 'contract.json');
+            const requestInitPath = Path.resolve(__dirname, 'data/installment-sale', 'request-init.json');
+            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestInitPath], null, 'InstallmentSale', false);
+            result.state.balance_remaining.should.equal(10000.00);
+        });
+        it('should initialize a smart Ergo contract and execute one request', async function () {
+            const ergoPath = Path.resolve(__dirname, 'data/installment-sale', 'logic.ergo');
+            const ctoPath = Path.resolve(__dirname, 'data/installment-sale', 'model.cto');
+            const contractPath = Path.resolve(__dirname, 'data/installment-sale', 'contract.json');
+            const requestInitPath = Path.resolve(__dirname, 'data/installment-sale', 'request-init.json');
+            const requestPath = Path.resolve(__dirname, 'data/installment-sale', 'request.json');
+            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestInitPath,requestPath], null, 'InstallmentSale', false);
+            result.state.balance_remaining.should.equal(7612.499999999999);
         });
     });
     describe('#parsecto', function () {

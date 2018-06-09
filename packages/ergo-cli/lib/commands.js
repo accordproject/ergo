@@ -24,7 +24,7 @@ const ErgoEngine = require('@accordproject/ergo-engine/lib/ergo-engine');
  */
 class Commands {
     /**
-     * Compile Ergo
+     * Compile Ergo contract
      *
      * @param {string} ergoPath path to the Ergo file
      * @param {string} ctoPaths paths to CTO models
@@ -48,7 +48,7 @@ class Commands {
     }
 
     /**
-     * Execute Ergo
+     * Execute Ergo contract
      *
      * @param {string} ergoPath path to the Ergo file
      * @param {string[]} ctoPaths paths to CTO models
@@ -71,9 +71,14 @@ class Commands {
         for (let i = 0; i < requestsPath.length; i++) {
             requestsJson.push(JSON.parse(Fs.readFileSync(requestsPath[i], 'utf8')));
         }
-        const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
         const firstRequest = requestsJson[0];
-        const initResponse = ErgoEngine.execute(ergoText,ctoTexts,contractJson,firstRequest,stateJson,contractName);
+        let initResponse;
+        if (statePath === null) {
+            initResponse = ErgoEngine.init(ergoText,ctoTexts,contractJson,firstRequest,contractName);
+        } else {
+            const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
+            initResponse = ErgoEngine.execute(ergoText,ctoTexts,contractJson,firstRequest,stateJson,contractName);
+        }
         // Get all the other requests and chain execution through Promise.reduce()
         const otherRequests = requestsJson.slice(1, requestsJson.length);
         return otherRequests.reduce((promise,requestJson) => {
