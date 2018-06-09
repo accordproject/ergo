@@ -11,7 +11,9 @@
     "state": "state.json",
     "contractname": "Smoke",
     "expected": {
-      "output": "Smoke.test successful"
+      "response": {
+        "output": "Smoke.test successful"
+      }
     }
   },
   {
@@ -26,7 +28,9 @@
     "state": "state.json",
     "contractname": "HelloWorld",
     "expected": {
-      "output": "Hello Fred Blogs (Accord Project)"
+      "response": {
+        "output": "Hello Fred Blogs (Accord Project)"
+      }
     }
   },
   {
@@ -41,8 +45,10 @@
     "state": "state.json",
     "contractname": "VolumeDiscount",
     "expected": {
-      "discountRate": 2.8,
-      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      "response": {
+        "discountRate": 2.8,
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      }
     }
   },
   {
@@ -57,8 +63,10 @@
     "state": "state.json",
     "contractname": "VolumeDiscount",
     "expected": {
-      "discountRate": 2.8,
-      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      "response": {
+        "discountRate": 2.8,
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      }
     }
   },
   {
@@ -73,8 +81,10 @@
     "state": "state.json",
     "contractname": "VolumeDiscount",
     "expected": {
-      "discountRate": 2.9,
-      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      "response": {
+        "discountRate": 2.9,
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      }
     }
   },
   {
@@ -89,8 +99,10 @@
     "state": "state.json",
     "contractname": "VolumeDiscount",
     "expected": {
-      "discountRate": 2.9,
-      "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      "response": {
+        "discountRate": 2.9,
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+      }
     }
   },
   {
@@ -106,9 +118,11 @@
     "state": "state.json",
     "contractname": "LateDeliveryAndPenalty",
     "expected": {
-      "buyerMayTerminate": true,
-      "penalty": 110,
-      "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse"
+      "response": {
+        "buyerMayTerminate": true,
+        "penalty": 110,
+        "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse"
+      }
     }
   },
   {
@@ -171,10 +185,12 @@
     "state": "state.json",
     "contractname": "AcceptanceOfDelivery",
     "expected": {
-      "receiver": "Party B",
-      "shipper": "Party A",
-      "status": "PASSED_TESTING",
-      "$class": "org.accordproject.acceptanceofdelivery.InspectionResponse"
+      "response": {
+        "receiver": "Party B",
+        "shipper": "Party A",
+        "status": "PASSED_TESTING",
+        "$class": "org.accordproject.acceptanceofdelivery.InspectionResponse"
+      }
     }
   },
   {
@@ -189,8 +205,10 @@
     "state": "state.json",
     "contractname": "FragileGoods",
     "expected": {
-      "amount": 990,
-      "$class": "io.clause.demo.fragileGoods.PayOut"
+      "response": {
+        "amount": 990,
+        "$class": "io.clause.demo.fragileGoods.PayOut"
+      }
     }
   },
   {
@@ -205,8 +223,10 @@
     "state": "state.json",
     "contractname": "PromissoryNote",
     "expected": {
-      "outstandingBalance": 1425.4396822450633,
-      "$class": "org.accordproject.promissorynote.Response"
+      "response": {
+        "outstandingBalance": 1425.4396822450633,
+        "$class": "org.accordproject.promissorynote.Response"
+      }
     }
   },
   {
@@ -221,8 +241,10 @@
     "state": "state.json",
     "contractname": "PromissoryNote",
     "expected": {
-      "outstandingBalance": 1425.4396822450633,
-      "$class": "org.accordproject.promissorynote.Response"
+      "response": {
+        "outstandingBalance": 1425.4396822450633,
+        "$class": "org.accordproject.promissorynote.Response"
+      }
     }
   },
   {
@@ -237,8 +259,10 @@
     "state": null,
     "contractname": "PromissoryNote",
     "expected": {
-      "$class": "org.accordproject.cicero.contract.AccordContractState",
-      "stateId": "1"
+      "state": {
+        "$class": "org.accordproject.cicero.contract.AccordContractState",
+        "stateId": "1"
+      }
     }
   },
   {
@@ -253,9 +277,11 @@
     "state": "state.json",
     "contractname": "InstallmentSale",
     "expected": {
-      "total_paid": 2500,
-      "balance": 7612.499999999999,
-      "$class": "org.accordproject.installmentsale.Balance"
+      "response": {
+        "total_paid": 2500,
+        "balance": 7612.499999999999,
+        "$class": "org.accordproject.installmentsale.Balance"
+      }
     }
   },
   {
@@ -270,12 +296,58 @@
     "state": null,
     "contractname": "InstallmentSale",
     "expected": {
-      "$class": "org.accordproject.installmentsale.InstallmentSaleState",
-      "stateId": "1",
-      "status": "WaitingForFirstDayOfNextMonth",
-      "balance_remaining": 10000.00,
-      "total_paid": 0.0,
-      "next_payment_month": 1.0
+      "state": {
+        "$class": "org.accordproject.installmentsale.InstallmentSaleState",
+        "stateId": "1",
+        "status": "WaitingForFirstDayOfNextMonth",
+        "balance_remaining": 10000.0,
+        "total_paid": 0.0,
+        "next_payment_month": 1.0
+      }
+    }
+  },
+  {
+    "name": "test14enforceerror",
+    "dir": "data/installment-sale",
+    "ergo": "logic2.ergo",
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request-init.json",
+    "state": null,
+    "contractname": "InstallmentSale",
+    "expected": {
+      "error": {
+        "kind": "ErgoError",
+        "message": "Month should be initialized to 3.0"
+      }
+    }
+  },
+  {
+    "name": "test14compileerror",
+    "dir": "data/installment-sale",
+    "ergo": "logic.ergo",
+    "models": [
+      "model2.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request-init.json",
+    "state": null,
+    "contractname": "InstallmentSale",
+    "expected": {
+       "error": {
+        "kind": "CompilationError",
+        "message": "Import not found: org.accordproject.base",
+        "locstart": {
+          "line": -1,
+          "character": -1
+        },
+        "locend": {
+          "line": -1,
+          "character": -1
+        }
+      }
     }
   }
 ]

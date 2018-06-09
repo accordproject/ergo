@@ -42,7 +42,7 @@ describe('ergo-compiler', () => {
         });
     });
     describe('#compilationerrormessage', function () {
-        it('should format parse error', async function () {
+        it('should format compilation error', async function () {
             const result = await Ergo.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
             result.should.deep.equal('Import not found: org.accordproject.base');
         });
