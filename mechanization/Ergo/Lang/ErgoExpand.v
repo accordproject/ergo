@@ -104,12 +104,16 @@ Section ErgoExpand.
       (drec (("$class",dstring "org.accordproject.cicero.contract.AccordContractState")
                :: ("stateId",dstring "1")
                :: nil))%string.
+  Definition default_response :=
+    EConst
+      (drec (("$class",dstring "org.accordproject.cicero.contract.Response")
+               :: nil))%string.
   
   Definition create_init_clause_for_contract (namespace:string) (c:ergo_contract) : ergo_clause :=
     let effparams := EVar "request"%string :: nil in
     let init_body :=
         SSetState default_state
-                  (SReturn (EConst (drec nil)))
+                  (SReturn default_response)
     in
     mkClause clause_init_name
              (mkLambda
