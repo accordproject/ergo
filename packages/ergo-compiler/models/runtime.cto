@@ -9,10 +9,10 @@ import org.accordproject.money.MonetaryAmount from https://models.accordproject.
  */
 
 /* A request is a transaction */
-abstract transaction Request {}
+transaction Request {}
 
 /* A response is a transaction */
-abstract transaction Response {}
+transaction Response {}
 
 /* An Error is a transaction */
 abstract transaction ErrorResponse {}
