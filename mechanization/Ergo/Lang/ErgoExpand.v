@@ -106,7 +106,7 @@ Section ErgoExpand.
                :: nil))%string.
   Definition default_response :=
     EConst
-      (drec (("$class",dstring "org.accordproject.cicero.contract.Response")
+      (drec (("$class",dstring "org.accordproject.cicero.runtime.Response")
                :: nil))%string.
   
   Definition create_init_clause_for_contract (namespace:string) (c:ergo_contract) : ergo_clause :=
