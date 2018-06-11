@@ -85,8 +85,12 @@ Section ErgoExpand.
       match_of_sigs namespace v0 effparam0 effparamrest ss
     end.
 
+  Definition filter_init sigs :=
+    filter (fun s => if (string_dec s.(cto_signature_name) clause_init_name) then false else true) sigs.
+  
   Definition create_main_clause_for_contract (namespace:string) (c:ergo_contract) : eresult ergo_clause :=
     let sigs := lookup_contract_signatures c in
+    let sigs := filter_init sigs in
     let effparams := EVar "request"%string :: nil in
     elift
       (fun disp =>
