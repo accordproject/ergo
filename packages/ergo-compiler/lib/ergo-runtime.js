@@ -12,6 +12,8 @@
  * limitations under the License.
  */
 
+/* Initialize inheritance */
+var inheritance = null;
 /* "standard library" (implementation of unary and binary operators) */
 function unwrap(doc) {
     // Unwrap for Enhanced TxStore format
@@ -315,6 +317,8 @@ function mustBeArray(obj) {
     throw e;
 }
 function cast(brands,v) {
+    //logger.info("CASTING: "+brands[0]);
+    //logger.info("FOR OBJECT: "+JSON.stringify(v));
     mustBeArray(brands);
     if ("$class" in v)
         return enhanced_cast(brands,v);

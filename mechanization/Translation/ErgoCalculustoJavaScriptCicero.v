@@ -57,6 +57,13 @@ Section ErgoCalculustoJavaScriptCicero.
              (clause_name:string)
              (eol:string)
              (quotel:string) : string :=
+    let state_init :=
+        if string_dec clause_name clause_init_name
+        then
+          "{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }"
+        else
+          "serializer.toJSON(context.state,{permitResourcesForRelationships:true})"
+    in
     (accord_annotation
        clause_name
        request_type
@@ -65,8 +72,8 @@ Section ErgoCalculustoJavaScriptCicero.
        eol
        quotel)
       ++ "function " ++ fun_name ++ "(context) {" ++ eol
-      ++ "  let pcontext = { 'request' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': serializer.toJSON(context.state,{permitResourcesForRelationships:true}), 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" ++ eol
-      ++ "  let result = new " ++ contract_name ++ "()." ++ clause_name ++ "(pcontext);" ++ eol
+      ++ "  let pcontext = { 'request' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': " ++ state_init ++ ", 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" ++ eol
+      ++ "    let result = new " ++ contract_name ++ "()." ++ clause_name ++ "(pcontext);" ++ eol
       ++ "  if (result.hasOwnProperty('left')) {" ++ eol
       ++ "    //logger.info('ergo result'+JSON.stringify(result))" ++ eol
       ++ "    context.response = serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true});" ++ eol

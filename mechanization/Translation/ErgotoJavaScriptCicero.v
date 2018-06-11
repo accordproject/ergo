@@ -33,9 +33,9 @@ Section ErgotoJavaScriptCicero.
   Definition ergo_package_to_javascript_cicero
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
-    let ec := lookup_single_contract p in
-    let exy := elift (fun c => (c.(contract_name), lookup_contract_signatures c)) ec in
     let p := ergo_package_expand p in
+    let ec := eolift lookup_single_contract p in
+    let exy := elift (fun c => (c.(contract_name), lookup_contract_signatures c)) ec in
     let pc := eolift (package_to_calculus ctos) p in
     eolift (fun xy =>
               elift (ergoc_package_to_javascript_cicero (fst xy) (snd xy)) pc)

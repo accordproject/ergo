@@ -16,6 +16,7 @@
 
 const Ergo=require('@accordproject/ergo-compiler/lib/ergo');
 const Moment = require('moment');
+const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 const {
     VM
@@ -39,7 +40,10 @@ class ErgoEngine {
     static executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName) {
         const vm = new VM({
             timeout: 1000,
-            sandbox: { moment: Moment }
+            sandbox: {
+                moment: Moment,
+                logger: Logger
+            }
         });
 
         // add immutables to the context
@@ -68,7 +72,10 @@ class ErgoEngine {
     static initErgoCode(ergoCode,contractJson,requestJson,contractName) {
         const vm = new VM({
             timeout: 1000,
-            sandbox: { moment: Moment }
+            sandbox: {
+                moment: Moment,
+                logger: Logger
+            }
         });
 
         // add immutables to the context
