@@ -13,8 +13,10 @@
  */
 namespace org.accordproject.installmentsale
 
-transaction Initialize {
+transaction InitializeRequest {
   o Double firstMonth
+}
+transaction InitializeResponse {
 }
 transaction Installment {
   o Double amount

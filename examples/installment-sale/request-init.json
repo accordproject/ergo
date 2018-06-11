@@ -1,4 +1,4 @@
 {
-    "$class": "org.accordproject.installmentsale.InitContract",
+    "$class": "org.accordproject.installmentsale.IntializeRequest",
     "firstMonth": 1.0
 }
