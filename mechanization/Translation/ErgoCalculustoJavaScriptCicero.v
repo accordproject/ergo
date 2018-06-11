@@ -121,29 +121,33 @@ Section ErgoCalculustoJavaScriptCicero.
     match sigs with
     | nil => nil
     | sig :: rest =>
-      let fname := sig.(cto_signature_name) in
-      let params := sig.(cto_signature_params) in
-      let outtype := sig.(cto_signature_output) in
-      let emitstype := sig.(cto_signature_emits) in
-      match params with
-      | nil => filter_signatures namespace rest
-      | (_,reqtype)::nil =>
-        match reqtype, outtype, emitstype with
-        | CTOClassRef reqname, CTOClassRef outname, Some (CTOClassRef emitsname) =>
-          let qreqname := absolute_ref_of_relative_ref namespace reqname in
-          let qoutname := absolute_ref_of_relative_ref namespace outname in
-          let qemitsname := absolute_ref_of_relative_ref namespace emitsname in
-          (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
-        | CTOClassRef reqname, CTOClassRef outname, None =>
-          let qreqname := absolute_ref_of_relative_ref namespace reqname in
-          let qoutname := absolute_ref_of_relative_ref namespace outname in
-          let qemitsname := default_emits in
-          (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
-        | _, _, _ =>
-          filter_signatures namespace rest
+      if (string_dec sig.(cto_signature_name) clause_main_name)
+      then
+        filter_signatures namespace rest
+      else
+        let fname := sig.(cto_signature_name) in
+        let params := sig.(cto_signature_params) in
+        let outtype := sig.(cto_signature_output) in
+        let emitstype := sig.(cto_signature_emits) in
+        match params with
+        | nil => filter_signatures namespace rest
+        | (_,reqtype)::nil =>
+          match reqtype, outtype, emitstype with
+          | CTOClassRef reqname, CTOClassRef outname, Some (CTOClassRef emitsname) =>
+            let qreqname := absolute_ref_of_relative_ref namespace reqname in
+            let qoutname := absolute_ref_of_relative_ref namespace outname in
+            let qemitsname := absolute_ref_of_relative_ref namespace emitsname in
+            (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
+          | CTOClassRef reqname, CTOClassRef outname, None =>
+            let qreqname := absolute_ref_of_relative_ref namespace reqname in
+            let qoutname := absolute_ref_of_relative_ref namespace outname in
+            let qemitsname := default_emits in
+            (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
+          | _, _, _ =>
+            filter_signatures namespace rest
+          end
+        | _ :: _ => filter_signatures namespace rest
         end
-      | _ :: _ => filter_signatures namespace rest
-      end
     end.
 
   Definition ergoc_package_to_javascript_cicero
