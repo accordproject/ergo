@@ -21,52 +21,52 @@ Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
 
 Module ECodeGen(ergomodel:ErgoBackendModel).
   (* NNRC *)
-  Definition ergoc_expr := NNRC.nnrc.
+  Definition nnrc_expr := NNRC.nnrc.
 
-  Definition ergoc_expr_let := cNNRC.NNRCLet.
+  Definition nnrc_expr_let := cNNRC.NNRCLet.
 
-  Definition ergoc_expr_unshadow := cNNRCShadow.unshadow.
-  Definition ergoc_expr_subst_const_to_var := cNNRCShadow.nnrc_subst_const_to_var.
-  Definition ergoc_expr_javascript_unshadow := NNRCtoJavaScript.nnrcToJSunshadow.
-  Definition ergoc_expr_java_unshadow := NNRCtoJava.nnrcToJavaunshadow.
+  Definition nnrc_expr_unshadow := cNNRCShadow.unshadow.
+  Definition nnrc_expr_subst_const_to_var := cNNRCShadow.nnrc_subst_const_to_var.
+  Definition nnrc_expr_javascript_unshadow := NNRCtoJavaScript.nnrcToJSunshadow.
+  Definition nnrc_expr_java_unshadow := NNRCtoJava.nnrcToJavaunshadow.
 
   (* JavaScript code generation *)
-  Definition ergoc_javascript_indent := NNRCtoJavaScript.indent.
-  Definition ergoc_javascript_quotel_double := NNRCtoJavaScript.quotel_double.
-  Definition ergoc_javascript_eol_newline := NNRCtoJavaScript.eol_newline.
+  Definition javascript_indent := NNRCtoJavaScript.indent.
+  Definition javascript_quotel_double := NNRCtoJavaScript.quotel_double.
+  Definition javascript_eol_newline := NNRCtoJavaScript.eol_newline.
 
-  Definition ergoc_javascript := CompLang.javascript.
+  Definition javascript := CompLang.javascript.
   
-  Definition ergoc_expr_to_javascript := NNRCtoJavaScript.nnrcToJS.
+  Definition nnrc_expr_to_javascript := NNRCtoJavaScript.nnrcToJS.
   
-  Definition ergoc_expr_to_javascript_fun := NNRCtoJavaScript.nnrcToJSFun.
+  Definition nnrc_expr_to_javascript_fun := NNRCtoJavaScript.nnrcToJSFun.
   
-  Definition ergoc_expr_to_javascript_method := NNRCtoJavaScript.nnrcToJSMethod.
+  Definition nnrc_expr_to_javascript_method := NNRCtoJavaScript.nnrcToJSMethod.
   
-  Definition ergoc_expr_to_javascript_fun_lift
-             (e:ergoc_expr)
+  Definition nnrc_expr_to_javascript_fun_lift
+             (e:nnrc_expr)
              (fname:String.string)
              (input_v:String.string)
              (init_indent:nat)
              (eol:String.string)
-             (quotel:String.string) : ergoc_javascript :=
+             (quotel:String.string) : javascript :=
     cNNRC.lift_nnrc_core
         (fun e => NNRCtoJavaScript.nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname)
         (NNRC.nnrc_to_nnrc_core e).
 
   (* Java code generation *)
-  Definition ergoc_java_indent := NNRCtoJava.indent.
-  Definition ergoc_java_quotel_double := NNRCtoJava.quotel_double.
-  Definition ergoc_java_eol_newline := NNRCtoJava.eol_newline.
+  Definition java_indent := NNRCtoJava.indent.
+  Definition java_quotel_double := NNRCtoJava.quotel_double.
+  Definition java_eol_newline := NNRCtoJava.eol_newline.
 
-  Definition ergoc_java := CompLang.java.
+  Definition java := CompLang.java.
   
-  Definition ergoc_expr_to_java := NNRCtoJava.nnrcToJava.
+  Definition nnrc_expr_to_java := NNRCtoJava.nnrcToJava.
 
   (* XXX Should be fixed Qcert-side *)
-  Definition ergoc_expr_to_java_method
+  Definition nnrc_expr_to_java_method
              (input_v:String.string)
-             (e:ergoc_expr)
+             (e:nnrc_expr)
              (i:nat)
              (eol:String.string)
              (quotel:String.string)

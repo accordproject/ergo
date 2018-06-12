@@ -27,15 +27,17 @@ Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
-Require Import ErgoSpec.Translation.ErgoCalculustoJava.
+Require Import ErgoSpec.Translation.ErgoCalculustoErgoNNRC.
+Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 
 Section ErgotoJava.
   Definition ergo_package_to_java
              (ctos:list cto_package)
              (p:ergo_package) : eresult javascript :=
     let p := ergo_package_expand p in
-    let pc := eolift (package_to_calculus ctos) p in
-    elift ergoc_package_to_java_top pc.
+    let pc := elift package_to_calculus p in
+    let pn := eolift (package_to_nnrc ctos) pc in
+    elift nnrc_package_to_java_top pn.
 
 End ErgotoJava.
 

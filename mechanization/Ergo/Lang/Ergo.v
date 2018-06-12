@@ -24,18 +24,10 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EImport.
 Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section Ergo.
-
-  Definition type_annotation : Set := option string.
-  
-  Inductive ergo_pattern :=
-  | CaseData : ErgoData.data -> ergo_pattern            (**r match against value *)
-  | CaseWildcard : type_annotation -> ergo_pattern      (**r match anything *)
-  | CaseLet : string -> type_annotation -> ergo_pattern (**r match against type *)
-  | CaseLetOption : string -> type_annotation -> ergo_pattern (**r match against type *)
-  .
 
   (** Expression *)
   Inductive ergo_expr :=
@@ -84,7 +76,7 @@ Section Ergo.
     mkFunc
       { function_name : string;
         function_lambda : lambda; }.
-    
+
     (** Clause *)
     Record ergo_clause :=
       mkClause

@@ -20,11 +20,9 @@ Require ErgoSpec.Common.Utils.ENames.
 Require ErgoSpec.Common.Utils.EResult.
 Require ErgoSpec.Common.Utils.EImport.
 Require ErgoSpec.Common.CTO.CTO.
+Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
-Require ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
-Require ErgoSpec.ErgoCalculus.Lang.ErgoCalculusCall.
-Require ErgoSpec.Translation.ErgotoErgoCalculus.
 Require ErgoSpec.Translation.ErgotoJavaScript.
 Require ErgoSpec.Translation.ErgotoJava.
 Require ErgoSpec.Translation.ErgotoJavaScriptCicero.
@@ -96,10 +94,10 @@ Module ErgoCompiler.
   Definition evar : String.string -> ergo_expr
     := Ergo.EVar.
 
-  Definition ecasedata : Data.data -> Ergo.ergo_pattern := Ergo.CaseData.
-  Definition ecasewildcard : Ergo.type_annotation -> Ergo.ergo_pattern := Ergo.CaseWildcard.
-  Definition ecaselet : String.string -> Ergo.type_annotation -> Ergo.ergo_pattern := Ergo.CaseLet.
-  Definition ecaseletoption : String.string -> Ergo.type_annotation -> Ergo.ergo_pattern := Ergo.CaseLetOption.
+  Definition ecasedata : Data.data -> EPattern.ergo_pattern := EPattern.CaseData.
+  Definition ecasewildcard : EPattern.type_annotation -> EPattern.ergo_pattern := EPattern.CaseWildcard.
+  Definition ecaselet : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern := EPattern.CaseLet.
+  Definition ecaseletoption : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern := EPattern.CaseLetOption.
 
   Definition econst : Data.data -> ergo_expr := Ergo.EConst.
   Definition earray : list ergo_expr -> ergo_expr := Ergo.EArray.
@@ -117,7 +115,7 @@ Module ErgoCompiler.
     := Ergo.EForeach.
   Definition ecallfun : String.string -> list ergo_expr -> ergo_expr
     := Ergo.ECallFun.
-  Definition ematch : ergo_expr -> list (Ergo.ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr
+  Definition ematch : ergo_expr -> list (EPattern.ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr
     := Ergo.EMatch.
   Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
     := Ergo.ERecord.
@@ -146,7 +144,7 @@ Module ErgoCompiler.
     Ergo.SIf.
   Definition senforce (e1:ergo_expr) (s2: option ergo_stmt) (s3:ergo_stmt) : ergo_stmt
     := Ergo.SEnforce e1 s2 s3.
-  Definition smatch : ergo_expr -> list (Ergo.ergo_pattern * ergo_stmt) -> ergo_stmt -> ergo_stmt
+  Definition smatch : ergo_expr -> list (EPattern.ergo_pattern * ergo_stmt) -> ergo_stmt -> ergo_stmt
     := Ergo.SMatch.
   
   Definition edot : String.string -> ergo_expr -> ergo_expr 

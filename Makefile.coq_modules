@@ -30,17 +30,20 @@ MODULES = \
 	Common/Utils/EImport \
 	Common/CTO/CTO \
 	Common/CTO/ETypeContext \
+	Common/Pattern/EPattern \
 	Ergo/Lang/Ergo \
 	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
 	ErgoCalculus/Lang/ErgoCalculus \
-	ErgoCalculus/Lang/ErgoCalculusSugar \
-	ErgoCalculus/Lang/ErgoCalculusCall \
+	ErgoNNRC/Lang/ErgoNNRC \
+	ErgoNNRC/Lang/ErgoNNRCSugar \
+	ErgoNNRC/Lang/ErgoNNRCCall \
 	Translation/ErgotoErgoCalculus \
-	Translation/ErgoCalculustoJavaScript \
-	Translation/ErgoCalculustoJavaScriptCicero \
-	Translation/ErgoCalculustoJava \
+	Translation/ErgoCalculustoErgoNNRC \
+	Translation/ErgoNNRCtoJavaScript \
+	Translation/ErgoNNRCtoJavaScriptCicero \
+	Translation/ErgoNNRCtoJava \
 	Translation/ErgotoJavaScript \
 	Translation/ErgotoJavaScriptCicero \
 	Translation/ErgotoJava \
