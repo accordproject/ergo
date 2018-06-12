@@ -19,10 +19,10 @@ Require Import List.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section ErgoCalculustoJavaScript.
+Section ErgoNNRCtoJavaScript.
   Local Open Scope string_scope.
 
   Definition function_name_of_contract_clause_name (coname:option string) (clname:string) : string :=
@@ -33,97 +33,97 @@ Section ErgoCalculustoJavaScript.
 
   (** Global expression *)
   Definition javascript_of_expression
-             (e:ergoc_expr)                  (* expression to translate *)
+             (e:nnrc_expr)                  (* expression to translate *)
              (t : nat)                       (* next available unused temporary *)
              (i : nat)                       (* indentation level *)
              (eol:string)                    (* Choice of end of line character *)
              (quotel:string)                 (* Choice of quote character *)
-    : ErgoCodeGen.ergoc_javascript
-      * ErgoCodeGen.ergoc_javascript
+    : ErgoCodeGen.javascript
+      * ErgoCodeGen.javascript
       * nat
-    := ErgoCodeGen.ergoc_expr_javascript_unshadow e t i eol quotel nil nil.
+    := ErgoCodeGen.nnrc_expr_javascript_unshadow e t i eol quotel nil nil.
 
   (** Global variable *)
   Definition javascript_of_global
              (v:string)                      (* global variable name *)
-             (bind:ergoc_expr)               (* expression for the global variable to translate *)
+             (bind:nnrc_expr)               (* expression for the global variable to translate *)
              (t : nat)                       (* next available unused temporary *)
              (i : nat)                       (* indentation level *)
              (eol:string)                    (* Choice of end of line character *)
              (quotel:string)                 (* Choice of quote character *)
-    : ErgoCodeGen.ergoc_javascript
-      * ErgoCodeGen.ergoc_javascript
+    : ErgoCodeGen.javascript
+      * ErgoCodeGen.javascript
       * nat
     := 
-      let '(s1, e1, t2) := ErgoCodeGen.ergoc_expr_to_javascript bind t i eol quotel nil in
+      let '(s1, e1, t2) := ErgoCodeGen.nnrc_expr_to_javascript bind t i eol quotel nil in
       let v0 := "v" ++ v in
-      (s1 ++ (ErgoCodeGen.ergoc_javascript_indent i) ++ "var " ++ v0 ++ " = " ++ e1 ++ ";" ++ eol,
+      (s1 ++ (ErgoCodeGen.javascript_indent i) ++ "var " ++ v0 ++ " = " ++ e1 ++ ";" ++ eol,
        v0,
        t2).
 
   (** Single method *)
   Definition javascript_method_of_body
-             (e:ergoc_expr)
+             (e:nnrc_expr)
              (fname:string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+             (quotel:string) : ErgoCodeGen.javascript :=
     let input_v := "context" in
-    ErgoCodeGen.ergoc_expr_to_javascript_method input_v e 1 eol quotel (input_v::nil) fname.
+    ErgoCodeGen.nnrc_expr_to_javascript_method input_v e 1 eol quotel (input_v::nil) fname.
 
   (** Single method *)
   Definition javascript_function_of_body
-             (e:ergoc_expr)
+             (e:nnrc_expr)
              (fname:string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+             (quotel:string) : ErgoCodeGen.javascript :=
     let input_v := "context" in
     let init_indent := 0 in
-    ErgoCodeGen.ergoc_expr_to_javascript_fun_lift e fname input_v init_indent eol quotel.
+    ErgoCodeGen.nnrc_expr_to_javascript_fun_lift e fname input_v init_indent eol quotel.
 
   Definition javascript_function_of_ergo_clause
-             (c:ergoc_clause)
+             (c:nnrc_clause)
              (coname:option string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := function_name_of_contract_clause_name coname c.(clausec_name) in
-    javascript_function_of_body c.(clausec_lambda).(lambdac_body) fname eol quotel.
+             (quotel:string) : ErgoCodeGen.javascript :=
+    let fname := function_name_of_contract_clause_name coname c.(clausen_name) in
+    javascript_function_of_body c.(clausen_lambda).(lambdan_body) fname eol quotel.
     
   Definition javascript_function_of_ergo_func
-             (f:ergoc_function)
+             (f:nnrc_function)
              (coname:option string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := function_name_of_contract_clause_name coname f.(functionc_name) in
-    javascript_function_of_body f.(functionc_lambda).(lambdac_body) fname eol quotel ++ eol.
+             (quotel:string) : ErgoCodeGen.javascript :=
+    let fname := function_name_of_contract_clause_name coname f.(functionn_name) in
+    javascript_function_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel ++ eol.
     
   Definition javascript_method_of_ergo_clause
-             (c:ergoc_clause)
+             (c:nnrc_clause)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := c.(clausec_name) in
-    javascript_method_of_body c.(clausec_lambda).(lambdac_body) fname eol quotel.
+             (quotel:string) : ErgoCodeGen.javascript :=
+    let fname := c.(clausen_name) in
+    javascript_method_of_body c.(clausen_lambda).(lambdan_body) fname eol quotel.
     
   Definition javascript_method_of_ergo_func
-             (f:ergoc_function)
+             (f:nnrc_function)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let fname := f.(functionc_name) in
-    javascript_method_of_body f.(functionc_lambda).(lambdac_body) fname eol quotel.
+             (quotel:string) : ErgoCodeGen.javascript :=
+    let fname := f.(functionn_name) in
+    javascript_method_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel.
 
   Definition javascript_of_clause_list
-             (cl:list ergoc_clause)
+             (cl:list nnrc_clause)
              (coname:string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+             (quotel:string) : ErgoCodeGen.javascript :=
     multi_append eol (fun c => javascript_method_of_ergo_clause c eol quotel) cl.
 
   Definition javascript_of_contract
-             (c:ergoc_contract)
+             (c:nnrc_contract)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
-    let coname := c.(contractc_name) in
+             (quotel:string) : ErgoCodeGen.javascript :=
+    let coname := c.(contractn_name) in
     "class " ++ coname ++ " {" ++ eol
-             ++ (javascript_of_clause_list c.(contractc_clauses) coname eol quotel) ++ eol
+             ++ (javascript_of_clause_list c.(contractn_clauses) coname eol quotel) ++ eol
              ++ "}" ++ eol.
 
   Definition preamble (eol:string) :=
@@ -140,34 +140,34 @@ Section ErgoCalculustoJavaScript.
        ++ eol.
     
   Definition javascript_of_declaration
-             (s : ergoc_declaration)       (* statement to translate *)
+             (s : nnrc_declaration)       (* statement to translate *)
              (t : nat)                     (* next available unused temporary *)
              (i : nat)                     (* indentation level *)
              (eol : string)
              (quotel : string)
-    : ErgoCodeGen.ergoc_javascript         (* JavaScript statements for computing result *)
-      * ErgoCodeGen.ergoc_javascript       (* JavaScript expression holding result *)
+    : ErgoCodeGen.javascript         (* JavaScript statements for computing result *)
+      * ErgoCodeGen.javascript       (* JavaScript expression holding result *)
       * nat                                (* next available unused temporary *)
     :=
       match s with
-      | ECExpr e => javascript_of_expression e t i eol quotel
-      | ECGlobal v e => javascript_of_global v e t i eol quotel
-      | ECFunc f =>
+      | ENExpr e => javascript_of_expression e t i eol quotel
+      | ENGlobal v e => javascript_of_global v e t i eol quotel
+      | ENFunc f =>
         (javascript_function_of_ergo_func f None eol quotel,"null",t)
-      | ECContract c =>
+      | ENContract c =>
         (javascript_of_contract c eol quotel,"null",t)
       end.
 
   Definition javascript_of_declarations
-             (sl : list ergoc_declaration) (* statements to translate *)
+             (sl : list nnrc_declaration) (* statements to translate *)
              (t : nat)                     (* next available unused temporary *)
              (i : nat)                     (* indentation level *)
              (eol : string)
              (quotel : string)
-    : ErgoCodeGen.ergoc_javascript
+    : ErgoCodeGen.javascript
     := let proc_one
-             (s:ergoc_declaration)
-             (acc:ErgoCodeGen.ergoc_javascript * nat) : ErgoCodeGen.ergoc_javascript * nat :=
+             (s:nnrc_declaration)
+             (acc:ErgoCodeGen.javascript * nat) : ErgoCodeGen.javascript * nat :=
            let '(s0, t0) := acc in
            let '(s1, e1, t1) := javascript_of_declaration s t0 i eol quotel in
            (s0 ++ s1,
@@ -176,17 +176,17 @@ Section ErgoCalculustoJavaScript.
        let '(sn, tn) := fold_right proc_one ("",t) sl in
        sn.
 
-  Definition ergoc_package_to_javascript
-             (p:ergoc_package)
+  Definition nnrc_package_to_javascript
+             (p:nnrc_package)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+             (quotel:string) : ErgoCodeGen.javascript :=
     (preamble eol) ++ eol
-                   ++ (javascript_of_declarations p.(packagec_declarations) 0 0 eol quotel)
+                   ++ (javascript_of_declarations p.(packagen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
   
-  Definition ergoc_package_to_javascript_top
-             (p:ergoc_package) : ErgoCodeGen.ergoc_javascript :=
-    ergoc_package_to_javascript p ErgoCodeGen.ergoc_javascript_eol_newline ErgoCodeGen.ergoc_javascript_quotel_double.
+  Definition nnrc_package_to_javascript_top
+             (p:nnrc_package) : ErgoCodeGen.javascript :=
+    nnrc_package_to_javascript p ErgoCodeGen.javascript_eol_newline ErgoCodeGen.javascript_quotel_double.
 
-End ErgoCalculustoJavaScript.
+End ErgoNNRCtoJavaScript.
 

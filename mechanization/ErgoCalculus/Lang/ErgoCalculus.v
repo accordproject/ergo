@@ -19,13 +19,14 @@
 Require Import String.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoCalculus.
 
   Section Syntax.
 
     (** Expression *)
-    Definition ergoc_expr := ErgoCodeGen.ergoc_expr.
+    Definition ergoc_expr := ergo_expr.
 
     Record lambdac :=
       mkLambdaC

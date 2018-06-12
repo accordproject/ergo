@@ -19,10 +19,10 @@ Require Import List.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section ErgoCalculustoJava.
+Section ErgoNNRCtoJava.
   Local Open Scope string_scope.
 
   Definition function_name_of_contract_clause_name (coname:option string) (clname:string) : string :=
@@ -33,64 +33,64 @@ Section ErgoCalculustoJava.
 
   (** Global expression *)
   Definition java_of_expression
-             (e:ergoc_expr)                  (* expression to translate *)
+             (e:nnrc_expr)                  (* expression to translate *)
              (t : nat)                       (* next available unused temporary *)
              (i : nat)                       (* indentation level *)
              (eol:string)                    (* Choice of end of line character *)
              (quotel:string)                 (* Choice of quote character *)
-    : ErgoCodeGen.ergoc_java
+    : ErgoCodeGen.java
       * ErgoCodeGen.java_data
       * nat
-    := ErgoCodeGen.ergoc_expr_java_unshadow e t i eol quotel nil nil.
+    := ErgoCodeGen.nnrc_expr_java_unshadow e t i eol quotel nil nil.
 
   (** Global variable *)
   Definition java_of_global
              (v:string)                      (* global variable name *)
-             (bind:ergoc_expr)               (* expression for the global variable to translate *)
+             (bind:nnrc_expr)               (* expression for the global variable to translate *)
              (t : nat)                       (* next available unused temporary *)
              (i : nat)                       (* indentation level *)
              (eol:string)                    (* Choice of end of line character *)
              (quotel:string)                 (* Choice of quote character *)
-    : ErgoCodeGen.ergoc_java
+    : ErgoCodeGen.java
       * ErgoCodeGen.java_data
       * nat
     := 
-      let '(s1, e1, t2) := ErgoCodeGen.ergoc_expr_to_java bind t i eol quotel nil in
+      let '(s1, e1, t2) := ErgoCodeGen.nnrc_expr_to_java bind t i eol quotel nil in
       let v0 := "v" ++ v in
-      (s1 ++ (ErgoCodeGen.ergoc_java_indent i) ++ "var " ++ v0 ++ " = " ++ (ErgoCodeGen.from_java_data e1) ++ ";" ++ eol,
+      (s1 ++ (ErgoCodeGen.java_indent i) ++ "var " ++ v0 ++ " = " ++ (ErgoCodeGen.from_java_data e1) ++ ";" ++ eol,
        ErgoCodeGen.mk_java_data v0,
        t2).
 
   (** Single method *)
   Definition java_method_of_body
-             (e:ergoc_expr)
+             (e:nnrc_expr)
              (fname:string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_java :=
+             (quotel:string) : ErgoCodeGen.java :=
     let input_v := "context" in
-    ErgoCodeGen.ergoc_expr_to_java_method input_v e 1 eol quotel ((input_v, input_v)::nil) fname.
+    ErgoCodeGen.nnrc_expr_to_java_method input_v e 1 eol quotel ((input_v, input_v)::nil) fname.
 
   Definition java_method_of_ergo_clause
-             (c:ergoc_clause)
+             (c:nnrc_clause)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_java :=
-    let fname := c.(clausec_name) in
-    java_method_of_body c.(clausec_lambda).(lambdac_body) fname eol quotel.
+             (quotel:string) : ErgoCodeGen.java :=
+    let fname := c.(clausen_name) in
+    java_method_of_body c.(clausen_lambda).(lambdan_body) fname eol quotel.
     
   Definition java_of_clause_list
-             (cl:list ergoc_clause)
+             (cl:list nnrc_clause)
              (coname:string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_java :=
+             (quotel:string) : ErgoCodeGen.java :=
     multi_append eol (fun c => java_method_of_ergo_clause c eol quotel) cl.
 
   Definition java_of_contract
-             (c:ergoc_contract)
+             (c:nnrc_contract)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_java :=
-    let coname := c.(contractc_name) in
+             (quotel:string) : ErgoCodeGen.java :=
+    let coname := c.(contractn_name) in
     "class " ++ coname ++ " {" ++ eol
-             ++ (java_of_clause_list c.(contractc_clauses) coname eol quotel) ++ eol
+             ++ (java_of_clause_list c.(contractn_clauses) coname eol quotel) ++ eol
              ++ "}" ++ eol.
 
   Definition preamble (eol:string) := eol.
@@ -98,33 +98,33 @@ Section ErgoCalculustoJava.
   Definition postamble (eol:string) := eol.
     
   Definition java_of_declaration
-             (s : ergoc_declaration)       (* statement to translate *)
+             (s : nnrc_declaration)       (* statement to translate *)
              (t : nat)                     (* next available unused temporary *)
              (i : nat)                     (* indentation level *)
              (eol : string)
              (quotel : string)
-    : ErgoCodeGen.ergoc_java               (* Java statements for computing result *)
+    : ErgoCodeGen.java               (* Java statements for computing result *)
       * ErgoCodeGen.java_data              (* Java expression holding result *)
       * nat                                (* next available unused temporary *)
     :=
       match s with
-      | ECExpr e => java_of_expression e t i eol quotel
-      | ECGlobal v e => java_of_global v e t i eol quotel
-      | ECFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
-      | ECContract c =>
+      | ENExpr e => java_of_expression e t i eol quotel
+      | ENGlobal v e => java_of_global v e t i eol quotel
+      | ENFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
+      | ENContract c =>
         (java_of_contract c eol quotel,ErgoCodeGen.mk_java_data "null",t)
       end.
 
   Definition java_of_declarations
-             (sl : list ergoc_declaration) (* statements to translate *)
+             (sl : list nnrc_declaration) (* statements to translate *)
              (t : nat)                     (* next available unused temporary *)
              (i : nat)                     (* indentation level *)
              (eol : string)
              (quotel : string)
-    : ErgoCodeGen.ergoc_java
+    : ErgoCodeGen.java
     := let proc_one
-             (s:ergoc_declaration)
-             (acc:ErgoCodeGen.ergoc_java * nat) : ErgoCodeGen.ergoc_java * nat :=
+             (s:nnrc_declaration)
+             (acc:ErgoCodeGen.java * nat) : ErgoCodeGen.java * nat :=
            let '(s0, t0) := acc in
            let '(s1, e1, t1) := java_of_declaration s t0 i eol quotel in
            (s0 ++ s1,
@@ -133,17 +133,17 @@ Section ErgoCalculustoJava.
        let '(sn, tn) := fold_right proc_one ("",t) sl in
        sn.
 
-  Definition ergoc_package_to_java
-             (p:ergoc_package)
+  Definition nnrc_package_to_java
+             (p:nnrc_package)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_java :=
+             (quotel:string) : ErgoCodeGen.java :=
     (preamble eol) ++ eol
-                   ++ (java_of_declarations p.(packagec_declarations) 0 0 eol quotel)
+                   ++ (java_of_declarations p.(packagen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
-  Definition ergoc_package_to_java_top
-             (p:ergoc_package) : ErgoCodeGen.ergoc_java :=
-    ergoc_package_to_java p ErgoCodeGen.ergoc_java_eol_newline ErgoCodeGen.ergoc_java_quotel_double.
+  Definition nnrc_package_to_java_top
+             (p:nnrc_package) : ErgoCodeGen.java :=
+    nnrc_package_to_java p ErgoCodeGen.java_eol_newline ErgoCodeGen.java_quotel_double.
 
-End ErgoCalculustoJava.
+End ErgoNNRCtoJava.
 

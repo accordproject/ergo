@@ -20,11 +20,11 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Translation.ErgoCalculustoJavaScript.
+Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 
-Section ErgoCalculustoJavaScriptCicero.
+Section ErgoNNRCtoJavaScriptCicero.
   Local Open Scope string_scope.
 
   Definition accord_annotation
@@ -93,7 +93,7 @@ Section ErgoCalculustoJavaScriptCicero.
              (contract_name:string)
              (signature:string * string * string * string)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+             (quotel:string) : ErgoCodeGen.javascript :=
     let '(clause_name, request_type, response_type, emits_type) := signature in
     let fun_name := contract_name ++ "_" ++ clause_name in
     wrapper_function
@@ -103,18 +103,18 @@ Section ErgoCalculustoJavaScriptCicero.
              (contract_name:string)
              (signatures:list (string * string * string * string))
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+             (quotel:string) : ErgoCodeGen.javascript :=
     String.concat eol (List.map (fun sig => apply_wrapper_function contract_name sig eol quotel) signatures).
 
   Definition javascript_of_package_with_dispatch
              (contract_name:string)
              (signatures:list (string * string * string * string))
-             (p:ergoc_package)
+             (p:nnrc_package)
              (eol:string)
-             (quotel:string) : ErgoCodeGen.ergoc_javascript :=
+             (quotel:string) : ErgoCodeGen.javascript :=
     (preamble eol) ++ eol
                    ++ (wrapper_functions contract_name signatures eol quotel)
-                   ++ (javascript_of_declarations p.(packagec_declarations) 0 0 eol quotel)
+                   ++ (javascript_of_declarations p.(packagen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
   Fixpoint filter_signatures (namespace:string) (sigs:list cto_signature) : list (string * string * string * string) :=
@@ -153,13 +153,13 @@ Section ErgoCalculustoJavaScriptCicero.
   Definition ergoc_package_to_javascript_cicero
              (coname:string)
              (sigs: list cto_signature)
-             (p:ergoc_package) : ErgoCodeGen.ergoc_javascript :=
+             (p:nnrc_package) : ErgoCodeGen.javascript :=
     javascript_of_package_with_dispatch
       coname
-      (filter_signatures p.(packagec_namespace) sigs)
+      (filter_signatures p.(packagen_namespace) sigs)
       p
-      ErgoCodeGen.ergoc_javascript_eol_newline
-      ErgoCodeGen.ergoc_javascript_quotel_double.
+      ErgoCodeGen.javascript_eol_newline
+      ErgoCodeGen.javascript_quotel_double.
 
-End ErgoCalculustoJavaScriptCicero.
+End ErgoNNRCtoJavaScriptCicero.
 
