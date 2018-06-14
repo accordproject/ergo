@@ -78,7 +78,7 @@ Section ErgotoErgoCalculus.
   Definition default_emits_in_clause (emits:option cto_type) : cto_type :=
     match emits with
     | Some e => e
-    | None => CTOClassRef default_emits
+    | None => CTOClassRef (AbsoluteRef event_type)
     end.
   
   Definition clause_to_calculus (c:ergo_clause) : ergoc_function :=
@@ -149,7 +149,7 @@ Section ErgotoErgoCalculus.
                        (SReturn (EConst (dfloat float_one)))).
     Definition cl1 :=
       mkClause "volumediscount"
-               (mkLambda (("request"%string, CTOClassRef "Request")::nil)
+               (mkLambda (("request"%string, CTOClassRef (AbsoluteRef request_type))::nil)
                          CTOAny
                          None
                          None

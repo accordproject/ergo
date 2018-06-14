@@ -18,36 +18,33 @@ Section ENames.
   Local Open Scope string.
 
   Section ScopedNames.
-    Definition relative_ref := string.
-    Definition namespace_ref := option string.
+    Definition local_name : Set := string.
+    Definition namespace_name : Set := string.
+    Definition namespace_prefix : Set := option namespace_name.
+    Definition absolute_name := string.
 
-    Record class_ref :=
-      mkClassRef
-        { class_namespace : namespace_ref;
-          class_name : relative_ref; }.
+    Inductive name_ref : Set :=
+    | RelativeRef : namespace_prefix -> local_name -> name_ref
+    | AbsoluteRef : absolute_name -> name_ref.
 
+    Definition absolute_name_of_local_name (ns: namespace_name) (ln: local_name) : absolute_name :=
+      ns ++ "." ++ ln.
+
+    Definition absolute_name_of_name_ref (local_ns: namespace_name) (nr: name_ref) : absolute_name :=
+      match nr with
+      | RelativeRef None ln => absolute_name_of_local_name local_ns ln
+      | RelativeRef (Some ns) ln => absolute_name_of_local_name ns ln
+      | AbsoluteRef an => an
+      end.
+
+    Definition absolute_ref_of_name_ref (local_ns: namespace_name) (nr: name_ref) : name_ref :=
+      AbsoluteRef (absolute_name_of_name_ref local_ns nr).
+    
   End ScopedNames.
 
-  Section AbsoluteNames.
-    Definition absolute_ref := string.
-
-    Definition absolute_ref_of_relative_ref (namespace: string) (rr: relative_ref) : absolute_ref :=
-      namespace ++ "." ++ rr.
-
-    Definition absolute_ref_of_class_ref (local_namespace:string) (cr:class_ref) : absolute_ref :=
-      let namespace :=
-          match cr.(class_namespace) with
-          | None => local_namespace
-          | Some namespace_ref => namespace_ref
-          end
-      in
-      absolute_ref_of_relative_ref namespace cr.(class_name).
-      
-  End AbsoluteNames.    
-
   Section ReservedNames.
-    Definition clause_main_name : relative_ref := "main". (* Main method -- defaults to dispatch over request *)
-    Definition clause_init_name : relative_ref := "init". (* Init method -- defaults to setting default state *)
+    Definition clause_main_name : local_name := "main". (* Main method -- defaults to dispatch over request *)
+    Definition clause_init_name : local_name := "init". (* Init method -- defaults to setting default state *)
 
     (** This *)
     Definition this_contract := "contract". (* Contains all contract data and clause data *)
@@ -60,4 +57,9 @@ Section ENames.
 
   End ReservedNames.
   
+  Section TypeNames.
+    Definition request_type := "Request"%string.
+    Definition response_type := "Response"%string.
+    Definition event_type := "Event"%string.
+  End TypeNames.
 End ENames.

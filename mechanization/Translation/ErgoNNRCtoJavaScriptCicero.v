@@ -134,14 +134,14 @@ Section ErgoNNRCtoJavaScriptCicero.
         | (_,reqtype)::nil =>
           match reqtype, outtype, emitstype with
           | CTOClassRef reqname, CTOClassRef outname, Some (CTOClassRef emitsname) =>
-            let qreqname := absolute_ref_of_relative_ref namespace reqname in
-            let qoutname := absolute_ref_of_relative_ref namespace outname in
-            let qemitsname := absolute_ref_of_relative_ref namespace emitsname in
+            let qreqname := absolute_name_of_name_ref namespace reqname in
+            let qoutname := absolute_name_of_name_ref namespace outname in
+            let qemitsname := absolute_name_of_name_ref namespace emitsname in
             (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
           | CTOClassRef reqname, CTOClassRef outname, None =>
-            let qreqname := absolute_ref_of_relative_ref namespace reqname in
-            let qoutname := absolute_ref_of_relative_ref namespace outname in
-            let qemitsname := default_emits in
+            let qreqname := absolute_name_of_name_ref namespace reqname in
+            let qoutname := absolute_name_of_name_ref namespace outname in
+            let qemitsname := event_type in
             (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
           | _, _, _ =>
             filter_signatures namespace rest

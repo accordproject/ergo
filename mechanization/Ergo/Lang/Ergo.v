@@ -43,7 +43,7 @@ Section Ergo.
   | EIf : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr (**r conditional *)
   | ELet : string -> option cto_type -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
   | ERecord : list (string * ergo_expr) -> ergo_expr (**r create a new record *)
-  | ENew : class_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
+  | ENew : name_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
   | ECallFun : string -> list ergo_expr -> ergo_expr (**r function call *)
   | EMatch : ergo_expr -> list (ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
   | EForeach : list (string * ergo_expr)

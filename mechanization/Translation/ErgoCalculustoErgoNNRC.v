@@ -241,7 +241,7 @@ Section ErgoCalculustoErgoNNRC.
               (ergoc_expr_to_nnrc ctxt e2)
     | ENew cr nil =>
       esuccess
-        (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
+        (new_expr (absolute_name_of_name_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
     | ENew cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           elift (NNRCUnop (OpRec s0)) (ergoc_expr_to_nnrc ctxt init)
@@ -252,7 +252,7 @@ Section ErgoCalculustoErgoNNRC.
           elift2 (NNRCBinop OpRecConcat)
                  (elift (NNRCUnop (OpRec attname)) e) acc
       in
-      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
+      elift (new_expr (absolute_name_of_name_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
     | ERecord nil =>
       esuccess
         (NNRCConst (drec nil))

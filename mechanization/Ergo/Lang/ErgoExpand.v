@@ -54,7 +54,7 @@ Section ErgoExpand.
     | nil => efailure (CompilationError ("Cannot create main if not at least one parameter in "++cname))
     | (param0, CTOClassRef type0)::otherparams =>
       elift (fun x =>
-               let type0 := absolute_ref_of_relative_ref namespace type0 in
+               let type0 := absolute_name_of_name_ref namespace type0 in
                (CaseLet v0 (Some type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, _)::otherparams =>
@@ -71,7 +71,7 @@ Section ErgoExpand.
              SMatch effparam0
                      s
                      (SThrow
-                        (ENew (mkClassRef None "Error"%string)
+                        (ENew (RelativeRef None "Error"%string)
                               (("message"%string, EConst (ErgoData.dstring ""))::nil))))
           (emaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
@@ -97,8 +97,8 @@ Section ErgoExpand.
       (fun disp =>
          (mkClause clause_main_name
                    (mkLambda
-                      (("request"%string,(CTOClassRef "Request"))::nil)
-                      (CTOClassRef "Response")
+                      (("request"%string,CTOClassRef (AbsoluteRef request_type))::nil)
+                      (CTOClassRef (AbsoluteRef response_type))
                       None
                       None
                       disp)))
@@ -122,10 +122,10 @@ Section ErgoExpand.
     in
     mkClause clause_init_name
              (mkLambda
-                (("request"%string,(CTOClassRef "Request"))::nil)
-                CTOEmpty
+                (("request"%string,(CTOClassRef (AbsoluteRef request_type)))::nil)
+                CTONone
                 None
-                (Some (CTOClassRef "Event"))
+                (Some (CTOClassRef (AbsoluteRef event_type)))
                 init_body).
 
   Definition add_init_clause_to_contract (namespace:string) (c:ergo_contract) : ergo_contract :=
