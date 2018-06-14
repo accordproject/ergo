@@ -73,9 +73,10 @@ Section ErgoNNRCtoJavaScriptCicero.
        quotel)
       ++ "function " ++ fun_name ++ "(context) {" ++ eol
       ++ "  let pcontext = { 'request' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': " ++ state_init ++ ", 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" ++ eol
-      ++ "    let result = new " ++ contract_name ++ "()." ++ clause_name ++ "(pcontext);" ++ eol
+      ++ "  //logger.info('ergo context: '+JSON.stringify(pcontext))" ++ eol
+      ++ "  let result = new " ++ contract_name ++ "()." ++ clause_name ++ "(pcontext);" ++ eol
       ++ "  if (result.hasOwnProperty('left')) {" ++ eol
-      ++ "    //logger.info('ergo result'+JSON.stringify(result))" ++ eol
+      ++ "    //logger.info('ergo result: '+JSON.stringify(result))" ++ eol
       ++ "    context.response = serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true});" ++ eol
       ++ "    context.state = serializer.fromJSON(result.left.state, {validate: false, acceptResourcesForRelationships: true});" ++ eol
       ++ "    let emitResult = [];" ++ eol
