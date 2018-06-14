@@ -81,8 +81,8 @@ Section ErgotoErgoCalculus.
     | None => CTOClassRef default_emits
     end.
   
-  Definition clause_to_calculus (c:ergo_clause) : ergoc_clause :=
-    mkClauseC
+  Definition clause_to_calculus (c:ergo_clause) : ergoc_function :=
+    mkFuncC
       c.(clause_name)
       (mkLambdaC
          ((this_contract,CTOAny)

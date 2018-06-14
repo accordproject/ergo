@@ -71,14 +71,14 @@ Section ErgoNNRCtoJava.
     ErgoCodeGen.nnrc_expr_to_java_method input_v e 1 eol quotel ((input_v, input_v)::nil) fname.
 
   Definition java_method_of_ergo_clause
-             (c:nnrc_clause)
+             (c:nnrc_function)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
-    let fname := c.(clausen_name) in
-    java_method_of_body c.(clausen_lambda).(lambdan_body) fname eol quotel.
+    let fname := c.(functionn_name) in
+    java_method_of_body c.(functionn_lambda).(lambdan_body) fname eol quotel.
     
   Definition java_of_clause_list
-             (cl:list nnrc_clause)
+             (cl:list nnrc_function)
              (coname:string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=

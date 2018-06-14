@@ -165,18 +165,6 @@ Module ErgoCompiler.
   Definition eoptionaldefault : ergo_expr -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDefault.
   
-  (** Ergo Calculus *)
-  Definition ergoc_package : Set 
-    := ErgoCalculus.ergoc_package.
-  Definition ergoc_contract : Set
-    := ErgoCalculus.ergoc_contract.
-  Definition ergoc_declaration : Set
-    := ErgoCalculus.ergoc_declaration.
-  Definition ergoc_clause : Set
-    := ErgoCalculus.ergoc_clause.
-  Definition ergoc_expr : Set 
-    := ErgoCalculus.ergoc_expr.
-
   (** Compilation *)
   Definition ergo_package_to_javascript :
     list CTO.cto_package

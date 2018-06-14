@@ -36,12 +36,6 @@ Section ErgoCalculus.
           lambdac_emits : option cto_type;
           lambdac_body : ergoc_expr; }.
 
-    (** Clause *)
-    Record ergoc_clause :=
-      mkClauseC
-        { clausec_name : string;
-          clausec_lambda : lambdac; }.
-
     (** Function *)
     Record ergoc_function :=
       mkFuncC
@@ -53,7 +47,7 @@ Section ErgoCalculus.
       mkContractC
         { contractc_name : string;
           contractc_template : string;
-          contractc_clauses : list ergoc_clause; }.
+          contractc_clauses : list ergoc_function; }.
 
     (** Declaration *)
     Inductive ergoc_declaration :=
