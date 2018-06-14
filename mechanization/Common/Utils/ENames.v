@@ -46,17 +46,17 @@ Section ENames.
   End AbsoluteNames.    
 
   Section ReservedNames.
-    Definition clause_main_name : relative_ref := "main".
-    Definition clause_init_name : relative_ref := "init".
-  
+    Definition clause_main_name : relative_ref := "main". (* Main method -- defaults to dispatch over request *)
+    Definition clause_init_name : relative_ref := "init". (* Init method -- defaults to setting default state *)
+
     (** This *)
     Definition this_contract := "contract". (* Contains all contract data and clause data *)
-    Definition this_state := "state". (* Contains state *)
-    Definition this_emit := "emit". (* Contains state *)
-    Definition local_contract := "lcontract". (* Contains all contract data and clause data *)
-    Definition local_state := "lstate". (* Contains state *)
-    Definition local_emit := "lemit". (* Contains state *)
-    Definition current_time := "now".
+    Definition this_state := "state".       (* Contains state *)
+    Definition this_emit := "emit".         (* Contains emit *)
+    Definition this_response := "response". (* Contains response *)
+    Definition local_state := "lstate".     (* Contains local state *)
+    Definition local_emit := "lemit".       (* Contains local emit *)
+    Definition current_time := "now".       (* Contains current time *)
 
   End ReservedNames.
   

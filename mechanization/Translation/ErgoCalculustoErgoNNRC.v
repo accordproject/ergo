@@ -187,17 +187,22 @@ Section ErgoCalculustoErgoNNRC.
     | EThisContract =>
       match ctxt.(comp_context_current_contract) with
       | None => not_in_contract_error
-      | Some _ => esuccess (NNRCVar local_contract)
+      | Some _ => esuccess (NNRCGetConstant this_contract)
       end
     | EThisClause => 
       match ctxt.(comp_context_current_clause) with
       | None => not_in_clause_error
-      | Some cname => esuccess (NNRCUnop (OpDot cname) (NNRCUnop OpUnbrand (NNRCVar local_contract)))
+      | Some clause_name => esuccess (NNRCUnop (OpDot clause_name) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
       end
     | EThisState =>
       match ctxt.(comp_context_current_contract) with
       | None => not_in_contract_error
       | Some _ => esuccess (NNRCVar local_state)
+      end
+    | EThisEmit =>
+      match ctxt.(comp_context_current_contract) with
+      | None => not_in_contract_error
+      | Some _ => esuccess (NNRCVar local_emit)
       end
     | EVar v =>
       if in_dec string_dec v ctxt.(comp_context_params)

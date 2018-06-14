@@ -86,7 +86,7 @@ describe('Execute', () => {
             resultKind = 'succeed';
         }
 
-        describe('#execute'+name, function () {
+        describe('#'+name, function () {
             it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
                 const ergoText = Fs.readFileSync(Path.resolve(__dirname, dir, ergo), 'utf8');
                 let ctoTexts = [];
