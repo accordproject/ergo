@@ -35,15 +35,17 @@ Module ErgoCompiler.
   Module Ops := ErgoBackend.ErgoOps.
 
   (** CTO *)
-  Definition cto_class : Set
-    := ENames.class_ref.
-  Definition mk_class_ref : option String.string -> String.string -> cto_class
-    := ENames.mkClassRef.
+  Definition name_ref : Set
+    := ENames.name_ref.
+  Definition mk_relative_ref : option String.string -> String.string -> name_ref
+    := ENames.RelativeRef.
+  Definition mk_absolute_ref : String.string -> name_ref
+    := ENames.AbsoluteRef.
 
   Definition cto_any : CTO.cto_type
     := CTO.CTOAny.
-  Definition cto_empty : CTO.cto_type
-    := CTO.CTOEmpty.
+  Definition cto_none : CTO.cto_type
+    := CTO.CTONone.
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
   Definition cto_string : CTO.cto_type
@@ -56,7 +58,7 @@ Module ErgoCompiler.
     := CTO.CTOInteger.
   Definition cto_dateTime : CTO.cto_type
     := CTO.CTODateTime.
-  Definition cto_class_ref : String.string -> CTO.cto_type
+  Definition cto_class_ref : name_ref -> CTO.cto_type
     := CTO.CTOClassRef.
   Definition cto_option : CTO.cto_type -> CTO.cto_type
     := CTO.CTOOption.
@@ -67,9 +69,9 @@ Module ErgoCompiler.
 
   Definition cto_enum : list String.string -> CTO.cto_declaration_kind
     := CTO.CTOEnum.
-  Definition cto_transaction : option String.string -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+  Definition cto_transaction : option name_ref -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
     := CTO.CTOTransaction.
-  Definition cto_concept : option String.string -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+  Definition cto_concept : option name_ref -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
     := CTO.CTOConcept.
 
   Definition mk_cto_declaration : String.string -> CTO.cto_declaration_kind -> CTO.cto_declaration

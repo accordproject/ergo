@@ -13,10 +13,22 @@
  *)
 
 %{
-  open Util
-  open LexUtil
-  open ErgoUtil
-  open ErgoComp
+open Util
+open LexUtil
+open ErgoUtil
+open ErgoComp
+
+let qname_of_qname_base qn =  
+  begin match qn with
+  | (None,last) -> (None,Util.char_list_of_string last)
+  | (Some prefix, last) ->
+      (Some (Util.char_list_of_string prefix),
+       Util.char_list_of_string last)
+  end
+
+let relative_ref_of_qname_base qn =
+  let (prefix,localname) = qname_of_qname_base qn in
+  RelativeRef (prefix,localname)
 %}
 
 %token <int> INT
@@ -82,7 +94,7 @@ main:
 package:
 | NAMESPACE qn = qname_prefix ss = decls
     { { package_namespace = Util.char_list_of_string qn;
-				package_declarations = ss; } }
+        package_declarations = ss; } }
 
 decls:
 |
@@ -125,8 +137,8 @@ decl:
 cto_class_decl:
 | LCURLY rt = rectype RCURLY
     { (None, rt) }
-| EXTENDS en = ident LCURLY rt = rectype RCURLY
-    { (Some en, rt) }
+| EXTENDS qn = qname_base LCURLY rt = rectype RCURLY
+    { (Some (relative_ref_of_qname_base qn), rt) }
 
 cto_enum_decl:
 | LCURLY il = identlist RCURLY
@@ -147,12 +159,12 @@ clauses:
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = stmt RCURLY
     { { clause_name = cn;
-				clause_lambda =
-				{ lambda_params = [];
-					lambda_output = out;
+        clause_lambda =
+        { lambda_params = [];
+          lambda_output = out;
           lambda_throws = fst mt;
           lambda_emits = snd mt;
-					lambda_body = e; } } }
+          lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
     { { clause_name = cn;
         clause_lambda =
@@ -160,7 +172,7 @@ clause:
           lambda_output = out;
           lambda_throws = fst mt;
           lambda_emits = snd mt;
-					lambda_body = s; } } }
+          lambda_body = s; } } }
 
 maythrow:
 |
@@ -185,17 +197,18 @@ param:
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
-| pt = IDENT
-    { begin match pt with
-      | "Boolean" -> ErgoCompiler.cto_boolean
-      | "String" -> ErgoCompiler.cto_string
-      | "Double" -> ErgoCompiler.cto_double
-      | "Long" -> ErgoCompiler.cto_long
-      | "Integer" -> ErgoCompiler.cto_integer
-      | "DateTime" -> ErgoCompiler.cto_dateTime
-      | "Empty" -> ErgoCompiler.cto_empty
-      | "Any" -> ErgoCompiler.cto_any
-      | _ -> ErgoCompiler.cto_class_ref (Util.char_list_of_string pt)
+| qn = qname_base
+    { begin match qn with
+      | (None, "Boolean") -> ErgoCompiler.cto_boolean
+      | (None, "String") -> ErgoCompiler.cto_string
+      | (None, "Double") -> ErgoCompiler.cto_double
+      | (None, "Long") -> ErgoCompiler.cto_long
+      | (None, "Integer") -> ErgoCompiler.cto_integer
+      | (None, "DateTime") -> ErgoCompiler.cto_dateTime
+      | (None, "Empty") -> ErgoCompiler.cto_none
+      | (None, "Any") -> ErgoCompiler.cto_any
+      | _ ->
+          ErgoCompiler.cto_class_ref (relative_ref_of_qname_base qn)
       end }
 | LCURLY rt = rectype RCURLY
     { ErgoCompiler.cto_record rt }
@@ -219,9 +232,9 @@ attributetype:
 stmt:
 (* Statments *)
 | RETURN
-		{ ErgoCompiler.sreturnempty }
+    { ErgoCompiler.sreturnempty }
 | RETURN e1 = expr
-		{ ErgoCompiler.sreturn e1 }
+    { ErgoCompiler.sreturn e1 }
 | THROW e1 = expr
     { ErgoCompiler.sthrow e1 }
 (* Call *)
@@ -247,9 +260,9 @@ stmt:
 fstmt:
 (* Statments *)
 | RETURN
-		{ ErgoCompiler.sfunreturnempty }
+    { ErgoCompiler.sfunreturnempty }
 | RETURN e1 = expr
-		{ ErgoCompiler.sfunreturn e1 }
+    { ErgoCompiler.sfunreturn e1 }
 | THROW e1 = expr
     { raise (LexError ("Cannot throw inside a function, you have to be in a Clause")) }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = fstmt
@@ -458,11 +471,7 @@ qname_base:
 
 qname:
 | qn = qname_base
-    { begin match qn with
-      | (None,last) -> (None,Util.char_list_of_string last)
-      | (Some prefix, last) ->
-    (Some (Util.char_list_of_string prefix), Util.char_list_of_string last)
-      end }
+    { qname_of_qname_base qn }
 
 qname_prefix:
 | qn = qname_base

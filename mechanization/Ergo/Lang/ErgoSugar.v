@@ -49,10 +49,10 @@ Section ErgoSugar.
          e2.
 
   Definition ENewSugar pname cname el : ergo_expr :=
-    ENew (mkClassRef pname cname) el.
+    ENew (RelativeRef pname cname) el.
 
   Definition SThrowSugar pname cname el : ergo_stmt :=
-    SThrow (ENew (mkClassRef pname cname) el).
+    SThrow (ENew (RelativeRef pname cname) el).
 
   Definition SThrowErgoCompilerError (msg:string) : ergo_stmt :=
     (SThrowSugar (Some "org.ergo")

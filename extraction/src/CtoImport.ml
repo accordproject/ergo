@@ -34,7 +34,7 @@ let base_type_of_decl d =
       | "Integer" -> CTOInteger
       | "Long" -> CTOLong
       | "DateTime" -> CTODateTime
-      | s -> CTOClassRef (char_list_of_string s)
+      | s -> CTOClassRef (RelativeRef (None,(char_list_of_string s)))
       end
   end
 

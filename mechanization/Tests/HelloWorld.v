@@ -36,8 +36,8 @@ contract HelloWorld over TemplateModel {
   Definition cl1 : ergo_clause :=
     mkClause "helloworld"
              (mkLambda
-                (("request", CTOClassRef "Request")::nil)
-                (CTOClassRef "Response")
+                (("request", CTOClassRef (AbsoluteRef "Request"))::nil)
+                (CTOClassRef (AbsoluteRef "Response"))
                 None
                 None
                 (SReturn (EVar "request"))).
