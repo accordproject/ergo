@@ -25,6 +25,8 @@ let args_list gconf =
     [
       ("-version", Arg.Unit ErgoUtil.get_version,
        " Prints the compiler version");
+      ("--version", Arg.Unit ErgoUtil.get_version,
+       " Prints the compiler version");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
        "<lang> Indicates the language for the target (default: javascript) " ^ available_targets)
     ]

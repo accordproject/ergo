@@ -1,4 +1,4 @@
-![Ergo](./docs/ergologo.png)
+![Ergo](./website/static/img/ergologo.png)
 
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
@@ -23,17 +23,17 @@ To install the Ergo compiler and command-line, do:
 $ npm install @accordproject/ergo-cli -g
 ```
 
-To check that the compiler has been installed, and see which version number:
+To check that the compiler and command-line tools have been installed and print the version number:
 
 ```text
+$ ergoc --version
 $ ergo --version
 ```
 
 To get command line help:
 
 ```text
-$ ergo --help
-$ ergo compile --help
+$ ergoc --help
 $ ergo execute --help
 ```
 
@@ -59,7 +59,7 @@ $ ergo execute --ergo ./examples/volumediscount/logic.ergo --contractname Volume
 
 ## Documentation
 
-The most recent documentation is available at [https://accordproject.netlify.com/docs/ergo.html](https://accordproject.netlify.com/docs/ergo.html)
+The most recent documentation is available at [https://ergo.accordproject.org/](https://ergo.accordproject.org/)
 
 ## For developers
 
