@@ -81,13 +81,13 @@ Section ErgoNNRCtoJavaScript.
     ErgoCodeGen.nnrc_expr_to_javascript_fun_lift e fname input_v init_indent eol quotel.
 
   Definition javascript_function_of_ergo_clause
-             (c:nnrc_clause)
+             (c:nnrc_function)
              (coname:option string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
-    let fname := function_name_of_contract_clause_name coname c.(clausen_name) in
-    javascript_function_of_body c.(clausen_lambda).(lambdan_body) fname eol quotel.
-    
+    let fname := function_name_of_contract_clause_name coname c.(functionn_name) in
+    javascript_function_of_body c.(functionn_lambda).(lambdan_body) fname eol quotel.
+
   Definition javascript_function_of_ergo_func
              (f:nnrc_function)
              (coname:option string)
@@ -97,11 +97,11 @@ Section ErgoNNRCtoJavaScript.
     javascript_function_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel ++ eol.
     
   Definition javascript_method_of_ergo_clause
-             (c:nnrc_clause)
+             (c:nnrc_function)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
-    let fname := c.(clausen_name) in
-    javascript_method_of_body c.(clausen_lambda).(lambdan_body) fname eol quotel.
+    let fname := c.(functionn_name) in
+    javascript_method_of_body c.(functionn_lambda).(lambdan_body) fname eol quotel.
     
   Definition javascript_method_of_ergo_func
              (f:nnrc_function)
@@ -111,7 +111,7 @@ Section ErgoNNRCtoJavaScript.
     javascript_method_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel.
 
   Definition javascript_of_clause_list
-             (cl:list nnrc_clause)
+             (cl:list nnrc_function)
              (coname:string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
@@ -140,28 +140,26 @@ Section ErgoNNRCtoJavaScript.
        ++ eol.
     
   Definition javascript_of_declaration
-             (s : nnrc_declaration)       (* statement to translate *)
-             (t : nat)                     (* next available unused temporary *)
-             (i : nat)                     (* indentation level *)
+             (s : nnrc_declaration)   (* statement to translate *)
+             (t : nat)                (* next available unused temporary *)
+             (i : nat)                (* indentation level *)
              (eol : string)
              (quotel : string)
-    : ErgoCodeGen.javascript         (* JavaScript statements for computing result *)
-      * ErgoCodeGen.javascript       (* JavaScript expression holding result *)
-      * nat                                (* next available unused temporary *)
+    : ErgoCodeGen.javascript          (* JavaScript statements for computing result *)
+      * ErgoCodeGen.javascript        (* JavaScript expression holding result *)
+      * nat                           (* next available unused temporary *)
     :=
       match s with
       | ENExpr e => javascript_of_expression e t i eol quotel
       | ENGlobal v e => javascript_of_global v e t i eol quotel
-      | ENFunc f =>
-        (javascript_function_of_ergo_func f None eol quotel,"null",t)
-      | ENContract c =>
-        (javascript_of_contract c eol quotel,"null",t)
+      | ENFunc f => (javascript_function_of_ergo_func f None eol quotel,"null",t)
+      | ENContract c => (javascript_of_contract c eol quotel,"null",t)
       end.
 
   Definition javascript_of_declarations
              (sl : list nnrc_declaration) (* statements to translate *)
-             (t : nat)                     (* next available unused temporary *)
-             (i : nat)                     (* indentation level *)
+             (t : nat)                    (* next available unused temporary *)
+             (i : nat)                    (* indentation level *)
              (eol : string)
              (quotel : string)
     : ErgoCodeGen.javascript

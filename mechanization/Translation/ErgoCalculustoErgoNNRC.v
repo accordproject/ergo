@@ -355,33 +355,10 @@ Section ErgoCalculustoErgoNNRC.
         (ergoc_expr_to_nnrc ctxt e1)
     end.
 
-  (** Translate a clause to clause+calculus *)
-
-  Definition clausec_to_nnrc
-             (ctxt:comp_context) (c:ergoc_clause) : eresult nnrc_clause :=
-    let ctxt : comp_context :=
-        set_current_clause ctxt c.(clausec_name)
-    in
-    let ctxt : comp_context :=
-        add_params
-          ctxt
-          (List.map fst c.(clausec_lambda).(lambdac_params))
-    in
-    elift
-      (mkClauseN
-         c.(clausec_name))
-      (elift
-         (mkLambdaN
-            c.(clausec_lambda).(lambdac_params)
-            c.(clausec_lambda).(lambdac_output)
-            c.(clausec_lambda).(lambdac_throws)
-            c.(clausec_lambda).(lambdac_emits))
-         (ergoc_expr_to_nnrc ctxt c.(clausec_lambda).(lambdac_body))).
-
   (** Translate a function to function+calculus *)
   Definition functionc_to_nnrc
              (ctxt:comp_context) (f:ergoc_function) : eresult nnrc_function :=
-    let ctxt :=
+    let ctxt : comp_context :=
         add_params ctxt (List.map fst f.(functionc_lambda).(lambdac_params))
     in
     elift
@@ -395,19 +372,26 @@ Section ErgoCalculustoErgoNNRC.
             f.(functionc_lambda).(lambdac_emits))
          (ergoc_expr_to_nnrc ctxt f.(functionc_lambda).(lambdac_body))).
 
+  (** Translate a clause to clause+calculus *)
+  Definition clausec_to_nnrc
+             (ctxt:comp_context) (f:ergoc_function) : eresult nnrc_function :=
+    let ctxt : comp_context :=
+        set_current_clause ctxt f.(functionc_name)
+    in
+    functionc_to_nnrc ctxt f.
+
   (** Translate a declaration to a declaration+calculus *)
   Definition clausec_declaration_to_nnrc
-             (ctxt:comp_context) (c:ergoc_clause) : eresult (comp_context * nnrc_clause) :=
+             (ctxt:comp_context) (c:ergoc_function) : eresult (comp_context * nnrc_function) :=
     elift
       (fun x => (add_one_function
                    ctxt
-                   x.(clausen_name)
-                   x.(clausen_lambda), x)) (* Add new function to comp_context *)
+                   x.(functionn_name)
+                   x.(functionn_lambda), x)) (* Add new function to comp_context *)
       (clausec_to_nnrc ctxt c).
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the comp_context *)
-
   Definition contractc_to_nnrc
              (ctxt:comp_context) (c:ergoc_contract) : eresult (comp_context * nnrc_contract) :=
     let ctxt :=
@@ -420,19 +404,19 @@ Section ErgoCalculustoErgoNNRC.
     in
     let init := esuccess (ctxt, nil) in
     let proc_one
-          (acc:eresult (comp_context * list nnrc_clause))
-          (s:ergoc_clause)
-        : eresult (comp_context * list nnrc_clause) :=
+          (acc:eresult (comp_context * list nnrc_function))
+          (s:ergoc_function)
+        : eresult (comp_context * list nnrc_function) :=
         eolift
-          (fun acc : comp_context * list nnrc_clause =>
+          (fun acc : comp_context * list nnrc_function =>
              let (ctxt,acc) := acc in
-             elift (fun xy : comp_context * nnrc_clause =>
+             elift (fun xy : comp_context * nnrc_function =>
                       let (newctxt,news) := xy in
                       (newctxt,news::acc))
                    (clausec_declaration_to_nnrc ctxt s))
           acc
     in
-    let cl : list ergoc_clause := c.(contractc_clauses) in
+    let cl : list ergoc_function := c.(contractc_clauses) in
     elift
       (fun xy =>
          (fst xy,

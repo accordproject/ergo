@@ -35,12 +35,6 @@ Section ErgoNNRC.
           lambdan_emits : option cto_type;
           lambdan_body : nnrc_expr; }.
 
-    (** Clause *)
-    Record nnrc_clause :=
-      mkClauseN
-        { clausen_name : string;
-          clausen_lambda : lambdan; }.
-
     (** Function *)
     Record nnrc_function :=
       mkFuncN
@@ -52,7 +46,7 @@ Section ErgoNNRC.
       mkContractN
         { contractn_name : string;
           contractn_template : string;
-          contractn_clauses : list nnrc_clause; }.
+          contractn_clauses : list nnrc_function; }.
 
     (** Declaration *)
     Inductive nnrc_declaration :=
