@@ -65,10 +65,15 @@ Section Patch.
 End Patch.
 
 Section ErgoNNRCCall.
-  (** Error for function calls *)
-  Definition call_error (fname:string) : string :=
+  (** Error for function call not found *)
+  Definition function_not_found_error (fname:string) : string :=
     "Function '" ++ fname ++ "' not found".
 
+  (** Error for clause call not found *)
+  Definition clause_not_found_error (fname:string) : string :=
+    "Clause '" ++ fname ++ "' not found".
+
+  (** Error for parameters mismatch in calls *)
   Definition call_params_error (fname:string) : string :=
     "Parameter mistmatch when calling function '" ++ fname ++ "'".
 
@@ -92,24 +97,7 @@ Section ErgoNNRCCall.
       is correct, it returns a closed expression computing the call. *)
   Definition lookup_call (t:lookup_table) (fname:string) (el:list nnrc_expr) : eresult nnrc_expr :=
     match t fname with
-    | None => efailure (CompilationError (call_error fname))
-    | Some cl =>
-      match zip_params (List.map fst cl.(lambdan_params)) el with
-      | None => efailure (CompilationError (call_params_error fname))
-      | Some params => 
-        esuccess (create_call params cl.(lambdan_body))
-      end
-    end.
-    
-  (** Looks up a clause with its parameters. If the function exists and the number of parameters
-      is correct, it returns a closed expression computing the call. *)
-  Definition lookup_clause_call
-             (t:lookup_table)
-             (cref:class_ref)
-             (fname:string)
-             (el:list nnrc_expr) : eresult nnrc_expr :=
-    match t fname with
-    | None => efailure (CompilationError (call_error fname))
+    | None => efailure (CompilationError (function_not_found_error fname))
     | Some cl =>
       match zip_params (List.map fst cl.(lambdan_params)) el with
       | None => efailure (CompilationError (call_params_error fname))

@@ -30,19 +30,22 @@ Section ErgoSugar.
 
   (** [return expr] is a no-op at the moment *)
   Definition mk_result e1 e2 e3 : ergo_expr :=
-    ERecord (("response", e1)
-               :: ("state", e2)
-               :: ("emit", e3)
-               :: nil)%string.
+    ERecord ((this_response, e1)
+               :: (this_state, e2)
+               :: (this_emit, e3)
+               :: nil).
 
   Definition set_state e1 e2 : ergo_expr :=
-    ELet "lstate" None e1 e2.
+    ELet local_state None e1 e2.
+
+  Definition this_clause clause_name :=
+    EUnaryOp (OpDot clause_name) (EUnaryOp OpUnbrand EThisContract).
 
   Definition push_emit e1 e2 : ergo_expr :=
-    ELet "lemit" None
+    ELet local_emit None
          (EBinaryOp OpBagUnion
                     (EUnaryOp OpBag e1)
-                    (EVar "lemit"))
+                    (EVar local_emit))
          e2.
 
   Definition ENewSugar pname cname el : ergo_expr :=

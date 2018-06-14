@@ -42,7 +42,7 @@ Section ErgotoErgoCalculus.
     | SThrow e =>
       EError e
     | SCallClause fname el =>
-      ECallFun fname el
+      ECallFun fname (EThisContract::(EVar local_state)::(EVar local_emit)::el)
     | SSetState e1 s2 =>
       set_state e1 (ergo_stmt_to_expr s2)
     | SEmit e1 s2 =>
@@ -70,10 +70,9 @@ Section ErgotoErgoCalculus.
     end.
 
   Definition ergoc_expr_top (e:ergoc_expr) : ergoc_expr :=
-    ELet local_contract None (EVar this_contract)
-         (ELet local_state None (EVar this_state)
-               (ELet local_emit None (EVar this_emit) e)).
-  
+    ELet local_state None (EVar this_state)
+         (ELet local_emit None (EVar this_emit) e).
+
   (** Translate a clause to clause+calculus *)
 
   Definition default_emits_in_clause (emits:option cto_type) : cto_type :=
@@ -130,15 +129,41 @@ Section ErgotoErgoCalculus.
   (** Translate a package to a package+calculus *)
   Definition declarations_calculus (dl:list ergo_declaration) : list ergoc_declaration :=
     let proc_one
-          (acc:list ergoc_declaration)
           (d:ergo_declaration)
+          (acc:list ergoc_declaration)
         : list ergoc_declaration :=
         match declaration_to_calculus d with
         | None => acc
         | Some edecl => edecl :: acc
         end
     in
-    List.fold_left proc_one dl nil.
+    List.fold_right proc_one nil dl.
+
+  Section Examples.
+    Definition f1 :=
+      mkFunc "addFee"
+             (mkLambda (("rate"%string, CTODouble)::nil)
+                       CTOAny
+                       None
+                       None
+                       (SReturn (EConst (dfloat float_one)))).
+    Definition cl1 :=
+      mkClause "volumediscount"
+               (mkLambda (("request"%string, CTOClassRef "Request")::nil)
+                         CTOAny
+                         None
+                         None
+                         (SReturn (ECallFun "addFee" ((EConst (dfloat float_zero))::nil)))).
+    Definition co1 :=
+      mkContract
+        "VolumeDiscount"
+        "TemplateModel"
+        (cl1::nil).
+
+    Definition dl : list ergo_declaration := (EFunc f1::EContract co1::nil).
+
+    (* Eval vm_compute in (declarations_calculus dl). *)
+  End Examples.
 
   (** Translate a package to a package+calculus *)
   Definition package_to_calculus (p:ergo_package) : ergoc_package :=
