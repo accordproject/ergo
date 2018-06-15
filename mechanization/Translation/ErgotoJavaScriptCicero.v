@@ -31,16 +31,16 @@ Require Import ErgoSpec.Translation.ErgoCalculustoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
 
 Section ErgotoJavaScriptCicero.
-  Definition ergo_package_to_javascript_cicero
+  Definition ergo_module_to_javascript_cicero
              (ctos:list cto_package)
-             (p:ergo_package) : eresult javascript :=
-    let p := ergo_package_expand p in
+             (p:ergo_module) : eresult javascript :=
+    let p := ergo_module_expand p in
     let ec := eolift lookup_single_contract p in
     let exy := elift (fun c => (c.(contract_name), lookup_contract_signatures c)) ec in
-    let pc := elift package_to_calculus p in
-    let pn := eolift (package_to_nnrc ctos) pc in
+    let pc := elift module_to_calculus p in
+    let pn := eolift (module_to_nnrc ctos) pc in
     eolift (fun xy =>
-              elift (ergoc_package_to_javascript_cicero (fst xy) (snd xy)) pn)
+              elift (ergoc_module_to_javascript_cicero (fst xy) (snd xy)) pn)
            exy.
 
 End ErgotoJavaScriptCicero.

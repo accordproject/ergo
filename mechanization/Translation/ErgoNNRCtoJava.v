@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-(** Translates contract logic to calculus *)
+(** Translates ErgoNNRC to Java *)
 
 Require Import String.
 Require Import List.
@@ -24,12 +24,6 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoNNRCtoJava.
   Local Open Scope string_scope.
-
-  Definition function_name_of_contract_clause_name (coname:option string) (clname:string) : string :=
-    match coname with
-    | None => clname
-    | Some coname => coname ++ "_" ++ clname
-    end.
 
   (** Global expression *)
   Definition java_of_expression
@@ -70,27 +64,27 @@ Section ErgoNNRCtoJava.
     let input_v := "context" in
     ErgoCodeGen.nnrc_expr_to_java_method input_v e 1 eol quotel ((input_v, input_v)::nil) fname.
 
-  Definition java_method_of_ergo_clause
-             (c:nnrc_function)
+  Definition java_method_of_nnrc_function
+             (f:nnrc_function)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
-    let fname := c.(functionn_name) in
-    java_method_of_body c.(functionn_lambda).(lambdan_body) fname eol quotel.
+    let fname := f.(functionn_name) in
+    java_method_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel.
     
-  Definition java_of_clause_list
-             (cl:list nnrc_function)
-             (coname:string)
+  Definition java_methods_of_nnrc_functions
+             (fl:list nnrc_function)
+             (tname:string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
-    multi_append eol (fun c => java_method_of_ergo_clause c eol quotel) cl.
+    multi_append eol (fun f => java_method_of_nnrc_function f eol quotel) fl.
 
-  Definition java_of_contract
-             (c:nnrc_contract)
+  Definition java_class_of_nnrc_function_table
+             (ft:nnrc_function_table)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
-    let coname := c.(contractn_name) in
-    "class " ++ coname ++ " {" ++ eol
-             ++ (java_of_clause_list c.(contractn_clauses) coname eol quotel) ++ eol
+    let tname := ft.(function_tablen_name) in
+    "class " ++ tname ++ " {" ++ eol
+             ++ (java_methods_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel) ++ eol
              ++ "}" ++ eol.
 
   Definition preamble (eol:string) := eol.
@@ -98,27 +92,26 @@ Section ErgoNNRCtoJava.
   Definition postamble (eol:string) := eol.
     
   Definition java_of_declaration
-             (s : nnrc_declaration)       (* statement to translate *)
-             (t : nat)                     (* next available unused temporary *)
-             (i : nat)                     (* indentation level *)
+             (s : nnrc_declaration)   (* statement to translate *)
+             (t : nat)                (* next available unused temporary *)
+             (i : nat)                (* indentation level *)
              (eol : string)
              (quotel : string)
-    : ErgoCodeGen.java               (* Java statements for computing result *)
-      * ErgoCodeGen.java_data              (* Java expression holding result *)
-      * nat                                (* next available unused temporary *)
+    : ErgoCodeGen.java                (* Java statements for computing result *)
+      * ErgoCodeGen.java_data         (* Java expression holding result *)
+      * nat                           (* next available unused temporary *)
     :=
       match s with
       | ENExpr e => java_of_expression e t i eol quotel
       | ENGlobal v e => java_of_global v e t i eol quotel
       | ENFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
-      | ENContract c =>
-        (java_of_contract c eol quotel,ErgoCodeGen.mk_java_data "null",t)
+      | ENFuncTable ft => (java_class_of_nnrc_function_table ft eol quotel,ErgoCodeGen.mk_java_data "null",t)
       end.
 
   Definition java_of_declarations
              (sl : list nnrc_declaration) (* statements to translate *)
-             (t : nat)                     (* next available unused temporary *)
-             (i : nat)                     (* indentation level *)
+             (t : nat)                    (* next available unused temporary *)
+             (i : nat)                    (* indentation level *)
              (eol : string)
              (quotel : string)
     : ErgoCodeGen.java
@@ -133,17 +126,17 @@ Section ErgoNNRCtoJava.
        let '(sn, tn) := fold_right proc_one ("",t) sl in
        sn.
 
-  Definition nnrc_package_to_java
-             (p:nnrc_package)
+  Definition nnrc_module_to_java
+             (p:nnrc_module)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
     (preamble eol) ++ eol
-                   ++ (java_of_declarations p.(packagen_declarations) 0 0 eol quotel)
+                   ++ (java_of_declarations p.(modulen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
-  Definition nnrc_package_to_java_top
-             (p:nnrc_package) : ErgoCodeGen.java :=
-    nnrc_package_to_java p ErgoCodeGen.java_eol_newline ErgoCodeGen.java_quotel_double.
+  Definition nnrc_module_to_java_top
+             (p:nnrc_module) : ErgoCodeGen.java :=
+    nnrc_module_to_java p ErgoCodeGen.java_eol_newline ErgoCodeGen.java_quotel_double.
 
 End ErgoNNRCtoJava.
 

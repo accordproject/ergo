@@ -56,11 +56,11 @@ Section ErgoCalculus.
     | ECFunc : ergoc_function -> ergoc_declaration
     | ECContract : ergoc_contract -> ergoc_declaration.
     
-    (** Package. *)
-    Record ergoc_package :=
-      mkPackageC
-        { packagec_namespace : string;
-          packagec_declarations : list ergoc_declaration; }.
+    (** Module. *)
+    Record ergoc_module :=
+      mkModuleC
+        { modulec_namespace : string;
+          modulec_declarations : list ergoc_declaration; }.
 
   End Syntax.
 

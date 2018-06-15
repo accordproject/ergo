@@ -62,4 +62,13 @@ Section ENames.
     Definition response_type := "Response"%string.
     Definition event_type := "Event"%string.
   End TypeNames.
+
+  Section Misc.
+    Definition function_name_in_table (tname:option string) (fname:string) : string :=
+      match tname with
+      | None => fname
+      | Some tname => tname ++ "_" ++ fname
+      end.
+  End Misc.
+
 End ENames.

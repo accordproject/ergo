@@ -100,11 +100,11 @@ Section Ergo.
     | EFunc : ergo_function -> ergo_declaration
     | EContract : ergo_contract -> ergo_declaration.
  
-    (** Package. *)
-    Record ergo_package :=
-      mkPackage
-        { package_namespace : string;
-          package_declarations : list ergo_declaration; }.
+    (** Module. *)
+    Record ergo_module :=
+      mkModule
+        { module_namespace : string;
+          module_declarations : list ergo_declaration; }.
 
   Section Lookup.
     Fixpoint lookup_clauses_signatures (dl:list ergo_clause) : list cto_signature :=
@@ -140,8 +140,8 @@ Section Ergo.
       | _ :: _ => efailure (EResult.CompilationError ("Cannot compile with more than one contract"))
       end.
       
-    Definition lookup_single_contract (p:ergo_package) : eresult ergo_contract :=
-      lookup_single_contract_in_declarations p.(package_declarations).
+    Definition lookup_single_contract (p:ergo_module) : eresult ergo_contract :=
+      lookup_single_contract_in_declarations p.(module_declarations).
     
   End Lookup.
 

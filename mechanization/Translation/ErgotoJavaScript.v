@@ -31,13 +31,13 @@ Require Import ErgoSpec.Translation.ErgoCalculustoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 
 Section ErgotoJavaScript.
-  Definition ergo_package_to_javascript
+  Definition ergo_module_to_javascript
              (ctos:list cto_package)
-             (p:ergo_package) : eresult javascript :=
-    let p := ergo_package_expand p in
-    let pc := elift package_to_calculus p in
-    let pn := eolift (package_to_nnrc ctos) pc in
-    elift nnrc_package_to_javascript_top pn.
+             (p:ergo_module) : eresult javascript :=
+    let p := ergo_module_expand p in
+    let pc := elift module_to_calculus p in
+    let pn := eolift (module_to_nnrc ctos) pc in
+    elift nnrc_module_to_javascript_top pn.
 
 End ErgotoJavaScript.
 
