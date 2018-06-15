@@ -40,7 +40,8 @@ Section ErgoNNRCtoJavaScriptCicero.
           ++ " * @param {" ++ request_type ++ "} context.request - the incoming request" ++ eol
           ++ " * @param {" ++ response_type ++ "} context.response - the response" ++ eol
           ++ " * @param {" ++ emits_type ++ "} context.emit - the emitted events" ++ eol
-          ++ (if string_dec clause_name clause_init_name then " * @AccordClauseLogicInit" else " * @AccordClauseLogic") ++ eol
+          ++ (if string_dec clause_name clause_init_name then " * @AccordClauseLogicInit" ++ eol else "")
+          ++ " * @AccordClauseLogic" ++ eol
           ++ " */" ++ eol.
 
   (** Note: this adjusts the external interface to that currently expected in Cicero. Namely:
