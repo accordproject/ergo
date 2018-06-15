@@ -126,7 +126,7 @@ Section ErgotoErgoCalculus.
     | EContract c => Some (ECContract (contract_to_calculus c))
     end.
 
-  (** Translate a package to a package+calculus *)
+  (** Translate a module to a module+calculus *)
   Definition declarations_calculus (dl:list ergo_declaration) : list ergoc_declaration :=
     let proc_one
           (d:ergo_declaration)
@@ -165,11 +165,11 @@ Section ErgotoErgoCalculus.
     (* Eval vm_compute in (declarations_calculus dl). *)
   End Examples.
 
-  (** Translate a package to a package+calculus *)
-  Definition package_to_calculus (p:ergo_package) : ergoc_package :=
-    mkPackageC
-      p.(package_namespace)
-      (declarations_calculus p.(package_declarations)).
+  (** Translate a module to a module+calculus *)
+  Definition module_to_calculus (p:ergo_module) : ergoc_module :=
+    mkModuleC
+      p.(module_namespace)
+      (declarations_calculus p.(module_declarations)).
 
 End ErgotoErgoCalculus.
 

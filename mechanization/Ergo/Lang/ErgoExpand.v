@@ -172,15 +172,15 @@ Section ErgoExpand.
              (namespace:string) (dl:list ergo_declaration) : eresult (list ergo_declaration) :=
     emaplift (add_main_init_clause_to_declaration namespace) dl.
     
-  Definition add_main_init_clauses_to_package (p:ergo_package) : eresult ergo_package :=
+  Definition add_main_init_clauses_to_module (p:ergo_module) : eresult ergo_module :=
     elift
-      (mkPackage
-         p.(package_namespace))
-      (add_main_init_clauses_to_declarations p.(package_namespace) p.(package_declarations)).
+      (mkModule
+         p.(module_namespace))
+      (add_main_init_clauses_to_declarations p.(module_namespace) p.(module_declarations)).
 
   (** Pre-processing. At the moment only add main clauses when missing *)
-  Definition ergo_package_expand (p:ergo_package) : eresult ergo_package :=
-    add_main_init_clauses_to_package p.
+  Definition ergo_module_expand (p:ergo_module) : eresult ergo_module :=
+    add_main_init_clauses_to_module p.
   
 End ErgoExpand.
 

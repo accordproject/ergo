@@ -80,8 +80,8 @@ Module ErgoCompiler.
     := CTO.mkCTOPackage.
 
   (** Ergo *)
-  Definition ergo_package : Set 
-    := Ergo.ergo_package.
+  Definition ergo_module : Set 
+    := Ergo.ergo_module.
   Definition ergo_contract : Set
     := Ergo.ergo_contract.
   Definition ergo_declaration : Set
@@ -168,23 +168,23 @@ Module ErgoCompiler.
     := ErgoSugar.EOptionalDefault.
   
   (** Compilation *)
-  Definition ergo_package_to_javascript :
+  Definition ergo_module_to_javascript :
     list CTO.cto_package
-    -> ergo_package
+    -> ergo_module
     -> EResult.eresult JavaScript.javascript
-    := ErgotoJavaScript.ergo_package_to_javascript.
+    := ErgotoJavaScript.ergo_module_to_javascript.
 
-  Definition ergo_package_to_javascript_cicero :
+  Definition ergo_module_to_javascript_cicero :
     list CTO.cto_package
-    -> ergo_package
+    -> ergo_module
     -> EResult.eresult JavaScript.javascript
-    := ErgotoJavaScriptCicero.ergo_package_to_javascript_cicero.
+    := ErgotoJavaScriptCicero.ergo_module_to_javascript_cicero.
 
-  Definition ergo_package_to_java :
+  Definition ergo_module_to_java :
     list CTO.cto_package
-    -> ergo_package
+    -> ergo_module
     -> EResult.eresult Java.java
-    := ErgotoJava.ergo_package_to_java.
+    := ErgotoJava.ergo_module_to_java.
 
 End ErgoCompiler.
 

@@ -108,15 +108,15 @@ Section ErgoNNRCtoJavaScriptCicero.
              (quotel:string) : ErgoCodeGen.javascript :=
     String.concat eol (List.map (fun sig => apply_wrapper_function contract_name sig eol quotel) signatures).
 
-  Definition javascript_of_package_with_dispatch
+  Definition javascript_of_module_with_dispatch
              (contract_name:string)
              (signatures:list (string * string * string * string))
-             (p:nnrc_package)
+             (p:nnrc_module)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
     (preamble eol) ++ eol
                    ++ (wrapper_functions contract_name signatures eol quotel)
-                   ++ (javascript_of_declarations p.(packagen_declarations) 0 0 eol quotel)
+                   ++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
   Fixpoint filter_signatures (namespace:string) (sigs:list cto_signature) : list (string * string * string * string) :=
@@ -152,13 +152,13 @@ Section ErgoNNRCtoJavaScriptCicero.
         end
     end.
 
-  Definition ergoc_package_to_javascript_cicero
+  Definition ergoc_module_to_javascript_cicero
              (coname:string)
              (sigs: list cto_signature)
-             (p:nnrc_package) : ErgoCodeGen.javascript :=
-    javascript_of_package_with_dispatch
+             (p:nnrc_module) : ErgoCodeGen.javascript :=
+    javascript_of_module_with_dispatch
       coname
-      (filter_signatures p.(packagen_namespace) sigs)
+      (filter_signatures p.(modulen_namespace) sigs)
       p
       ErgoCodeGen.javascript_eol_newline
       ErgoCodeGen.javascript_quotel_double.

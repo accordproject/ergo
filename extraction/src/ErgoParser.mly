@@ -82,19 +82,19 @@ let relative_ref_of_qname_base qn =
 %left DOT QUESTIONDOT
 %left BANG
 
-%start <ErgoComp.ErgoCompiler.ergo_package> main
+%start <ErgoComp.ErgoCompiler.ergo_module> main
 
 %%
 
 main:
-| p = package EOF
+| p = emodule EOF
     { p }
 
 
-package:
+emodule:
 | NAMESPACE qn = qname_prefix ss = decls
-    { { package_namespace = Util.char_list_of_string qn;
-        package_declarations = ss; } }
+    { { module_namespace = Util.char_list_of_string qn;
+        module_declarations = ss; } }
 
 decls:
 |

@@ -393,7 +393,7 @@ Section ErgoCalculustoErgoNNRC.
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the comp_context *)
   Definition contractc_to_nnrc
-             (ctxt:comp_context) (c:ergoc_contract) : eresult (comp_context * nnrc_contract) :=
+             (ctxt:comp_context) (c:ergoc_contract) : eresult (comp_context * nnrc_function_table) :=
     let ctxt :=
         set_current_contract ctxt c.(contractc_name)
     in
@@ -420,9 +420,8 @@ Section ErgoCalculustoErgoNNRC.
     elift
       (fun xy =>
          (fst xy,
-          (mkContractN
+          (mkFuncTableN
              c.(contractc_name)
-             c.(contractc_template)
              (snd xy))))
       (List.fold_left proc_one cl init).
 
@@ -443,14 +442,14 @@ Section ErgoCalculustoErgoNNRC.
         (fun x => (add_one_function ctxt x.(functionn_name) x.(functionn_lambda), ENFunc x)) (* Add new function to comp_context *)
         (functionc_to_nnrc ctxt f)
     | ECContract c =>
-      elift (fun xy => (fst xy, ENContract (snd xy)))
+      elift (fun xy => (fst xy, ENFuncTable (snd xy)))
             (contractc_to_nnrc ctxt c)
     end.
 
   Definition initial_comp_context (ctos:list cto_declaration) (p:string) :=
     mkCompContext ctos None None nnrc_stdlib p nil nil.
 
-  (** Translate a package to a package+calculus *)
+  (** Translate a module to a module+calculus *)
   Definition declarations_calculus_with_table
              (cto_decls:list cto_declaration) (local_namespace:string) (dl:list ergoc_declaration)
     : eresult (comp_context * list nnrc_declaration) :=
@@ -472,20 +471,20 @@ Section ErgoCalculustoErgoNNRC.
     in
     List.fold_left proc_one dl init.
 
-  (** Translate a package to a package+calculus *)
-  Definition package_to_nnrc_with_table
-             (cto_decls:list cto_declaration) (local_namespace:string) (p:ergoc_package) : eresult nnrc_package :=
+  (** Translate a module to a module+calculus *)
+  Definition module_to_nnrc_with_table
+             (cto_decls:list cto_declaration) (local_namespace:string) (p:ergoc_module) : eresult nnrc_module :=
     elift
       (fun xy =>
-         (mkPackageN
-            p.(packagec_namespace)
+         (mkModuleN
+            p.(modulec_namespace)
                 (snd xy)))
-      (declarations_calculus_with_table cto_decls local_namespace p.(packagec_declarations)).
+      (declarations_calculus_with_table cto_decls local_namespace p.(modulec_declarations)).
 
-  Definition package_to_nnrc (ctos:list cto_package) (p:ergoc_package) : eresult nnrc_package :=
-    let local_namespace := p.(packagec_namespace) in
+  Definition module_to_nnrc (ctos:list cto_package) (p:ergoc_module) : eresult nnrc_module :=
+    let local_namespace := p.(modulec_namespace) in
     let ectos := cto_resolved_tbl_for_package ctos in
-    eolift (fun ctos_decls => package_to_nnrc_with_table ctos_decls local_namespace p) ectos.
+    eolift (fun ctos_decls => module_to_nnrc_with_table ctos_decls local_namespace p) ectos.
 
   Section tests.
     Open Scope string.

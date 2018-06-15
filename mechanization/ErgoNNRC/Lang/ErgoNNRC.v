@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-(** Ergo is a language for expressing contract logic. *)
+(** ErgoNNRC is an IL with function tables where the body is written in NNRC. It is the main IL interfacing with Q*cert for code-generation. *)
 
 (** * Abstract Syntax *)
 
@@ -41,25 +41,24 @@ Section ErgoNNRC.
         { functionn_name : string;
           functionn_lambda : lambdan; }.
 
-    (** Contract *)
-    Record nnrc_contract :=
-      mkContractN
-        { contractn_name : string;
-          contractn_template : string;
-          contractn_clauses : list nnrc_function; }.
+    (** Function table *)
+    Record nnrc_function_table :=
+      mkFuncTableN
+        { function_tablen_name : string;
+          function_tablen_funs : list nnrc_function; }.
 
     (** Declaration *)
     Inductive nnrc_declaration :=
     | ENExpr : nnrc_expr -> nnrc_declaration
     | ENGlobal : string -> nnrc_expr -> nnrc_declaration
     | ENFunc : nnrc_function -> nnrc_declaration
-    | ENContract : nnrc_contract -> nnrc_declaration.
-    
-    (** Package. *)
-    Record nnrc_package :=
-      mkPackageN
-        { packagen_namespace : string;
-          packagen_declarations : list nnrc_declaration; }.
+    | ENFuncTable : nnrc_function_table -> nnrc_declaration.
+
+    (** Module. *)
+    Record nnrc_module :=
+      mkModuleN
+        { modulen_namespace : string;
+          modulen_declarations : list nnrc_declaration; }.
 
   End Syntax.
 
