@@ -1,9 +1,9 @@
-# Developing Ergo
+# Setting up for Ergo Development
 
-* [Development Setup](./#setup)
-* [Coding Rules](./#rules)
-* [Commit Message Guidelines](./#commits)
-* [Writing Documentation](./#documentation)
+* [Development Setup](.#setup)
+* [Coding Rules](.#rules)
+* [Commit Message Guidelines](.#commits)
+* [Writing Documentation](.#documentation)
 
 ##  Development Setup
 
@@ -16,7 +16,7 @@ Before you can build Ergo, you must install and configure the following dependen
 * [Git](http://git-scm.com/): The \[Github Guide to Installing Git\]\[git-setup\] is a good source of information.
 * [Node.js v8.x \(LTS\)](http://nodejs.org): We use Node to generate the documentation, run a development web server, run tests, and generate distributable files. Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 
-  We recommend using [nvm](https://github.com/creationix/nvm) \(or [nvm-windows](https://github.com/coreybutler/nvm-windows)\) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
+We recommend using [nvm](https://github.com/creationix/nvm) \(or [nvm-windows](https://github.com/coreybutler/nvm-windows)\) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
 
 ### Forking Ergo on Github
 
@@ -52,8 +52,8 @@ We recommend to install those using opam \([https://opam.ocaml.org](https://opam
 
 ```text
 $ opam repo add coq-released https://coq.inria.fr/opam/released
-$ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen coq.8.8.0
-$ opam install coq-qcert.1.1.0
+$ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen
+$ opam install coq.8.8.0 coq-qcert.1.1.0
 ```
 
 #### Build the Ergo Compiler
@@ -62,7 +62,7 @@ To recompile Ergo from its source, do:
 
 ```text
 $ make cleanall
-$ make ergo
+$ make
 ```
 
 ###  Running the Unit Test Suite
@@ -71,14 +71,6 @@ We write unit and integration tests with Jasmine and execute them with Karma. To
 
 ```text
 lerna run test
-```
-
-###  Running the End-to-end Test Suite
-
-TBD
-
-```text
-
 ```
 
 ##  Coding Rules
