@@ -1,13 +1,24 @@
-# Setting up for Ergo Development
+# Developing Ergo
 
-* [Development Setup](.#setup)
-* [Coding Rules](.#rules)
+* [Overview](#overview)
+* [Development Setup](#development-setup)
+* [Coding Rules](#rules)
 * [Commit Message Guidelines](.#commits)
 * [Writing Documentation](.#documentation)
 
-##  Development Setup
+## Overview
 
 This document describes how to set up your development environment to build and test Ergo, and explains the basic mechanics of using `git`, `node`, `lerna`.
+
+The core of the Ergo compiler is extracted from a formal specification in Coq to JavaScript.
+
+The code is located in the following directories:
+
+* in `mechanization` the Coq code \(includes the abstract syntax tree, intermediate languages, and compiler to JavaScript\)
+* in `extraction` support code in OCaml \(includes the parser\)
+* in `packages` the JavaScript packages, containing the Ergo compiler API and command-line tools
+
+##  Development Setup
 
 ### Installing Dependencies
 
@@ -34,16 +45,6 @@ $ cd ./ergo/packages/ergo-cli
 $ npm install -g
 ```
 
-### Build from source
-
-The core of the Ergo compiler is extracted from a formal specification in Coq to JavaScript.
-
-The code is located in the following directories:
-
-* in `mechanization` the Coq code \(includes the abstract syntax tree, intermediate languages, and compiler to JavaScript\)
-* in `extraction` support code in OCaml \(includes the parser\)
-* in `lib` the JavaScript API and command-line interface
-
 #### Dependencies
 
 To rebuild the compiler from the source, you will need Coq 8.8 \(or later\) and OCaml 4.05 \(or later\) with some additional libraries.
@@ -67,7 +68,7 @@ $ make
 
 ###  Running the Unit Test Suite
 
-We write unit and integration tests with Jasmine and execute them with Karma. To run all of the tests once on Chrome run:
+We write unit and integration tests with Mocha. To run all of the tests once run:
 
 ```text
 lerna run test
@@ -78,10 +79,7 @@ lerna run test
 To ensure consistency throughout the source code, keep these rules in mind as you are working:
 
 * All features or bug fixes **must be tested** by one or more \[specs\]\[unit-testing\].
-* All public API methods **must be documented** with jsdoc. To see how we document our APIs, please check
-
-  out the existing source code and see the section about [writing documentation](./#documentation)
-
+* All public API methods **must be documented** with jsdoc. To see how we document our APIs, please check out the existing source code and see the section about [writing documentation](./#documentation)
 * With the exceptions listed below, we follow the rules contained in
 
   \[Google's JavaScript Style Guide\]\[js-style-guide\].
@@ -119,10 +117,7 @@ Must be one of the following:
 * **feat**: A new feature
 * **fix**: A bug fix
 * **docs**: Documentation only changes
-* **style**: Changes that do not affect the meaning of the code \(white-space, formatting, missing
-
-  semi-colons, etc\)
-
+* **style**: Changes that do not affect the meaning of the code \(white-space, formatting, missing semi-colons, etc\)
 * **refactor**: A code change that neither fixes a bug nor adds a feature
 * **perf**: A code change that improves performance
 * **test**: Adding missing or correcting existing tests
@@ -158,7 +153,12 @@ A detailed explanation can be found in this \[document\]\[commit-message-format\
 
 ##  Writing Documentation
 
-The Ergo project uses [jsdoc](http://usejsdoc.org/) for all of its code documentation.
+The Ergo project uses [docusaurus](http://docusaurus.io/) for the language documentation.
+
+Code documentation uses the following tools:
+- [coq2html](https://github.com/xavierleroy/coq2html) for the compiler specification (install with `opam install coq-coq2html`)
+- [odoc](https://github.com/ocaml/odoc) (install with `opam install odoc`)
+- [JSDoc](http://usejsdoc.org) for the JavaScript part of the code
 
 This means that all the docs are stored inline in the source code and so are kept in sync as it changes.
 
