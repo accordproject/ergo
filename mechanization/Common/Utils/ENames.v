@@ -58,9 +58,17 @@ Section ENames.
   End ReservedNames.
   
   Section TypeNames.
-    Definition request_type := "Request"%string.
-    Definition response_type := "Response"%string.
-    Definition event_type := "Event"%string.
+    Definition default_request_name : string := "org.accordproject.cicero.runtime.Request".
+    Definition default_response_name : string := "org.accordproject.cicero.runtime.Response".
+    Definition default_event_name : string := "org.hyperledger.composer.system.Event".
+    Definition default_state_name : string := "org.accordproject.cicero.contract.AccordContractState".
+    Definition default_throws_name : string := "org.accordproject.cicero.contract.ErrorResponse".
+
+    Definition default_request_type := AbsoluteRef default_request_name.
+    Definition default_response_type := AbsoluteRef default_response_name.
+    Definition default_event_type := AbsoluteRef default_event_name.
+    Definition default_state_type := AbsoluteRef default_state_name.
+    Definition default_throws_type := AbsoluteRef default_throws_name.
   End TypeNames.
 
   Section Misc.

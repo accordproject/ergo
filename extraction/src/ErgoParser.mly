@@ -145,9 +145,10 @@ cto_enum_decl:
     { il }
 
 contract:
-| CONTRACT cn = ident OVER tn = ident LCURLY ds = clauses RCURLY
+| CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
     { { contract_name = cn;
         contract_template = tn;
+        contract_state = ms;
         contract_clauses = ds; } }
 
 clauses:
@@ -183,6 +184,12 @@ maythrow:
   { (None,Some et) }
 | THROWS tt = paramtype EMITS et = paramtype
   { (Some tt,Some et) }
+
+mayhavestate:
+|
+  { None }
+| STATE tt = paramtype
+  { Some tt }
 
 params:
 | p = param

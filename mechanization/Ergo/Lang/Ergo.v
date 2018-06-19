@@ -88,7 +88,8 @@ Section Ergo.
     Record ergo_contract :=
       mkContract
         { contract_name : string;
-          contract_template : string;
+          contract_template : cto_type;
+          contract_state : option cto_type;
           contract_clauses : list ergo_clause; }.
 
     (** Declaration *)

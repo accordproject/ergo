@@ -44,7 +44,8 @@ contract HelloWorld over TemplateModel {
 
   Definition c1 : ergo_contract :=
     mkContract "HelloWorld"
-               "TemplateModel"
+               (CTOClassRef (AbsoluteRef "TemplateModel"))
+               None
                (cl1::nil).
   
   Definition p1 : ergo_module :=

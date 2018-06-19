@@ -32,8 +32,6 @@ Section ErgoCalculus.
       mkLambdaC
         { lambdac_params: list (string * cto_type);
           lambdac_output : cto_type;
-          lambdac_throws : option cto_type;
-          lambdac_emits : option cto_type;
           lambdac_body : ergoc_expr; }.
 
     (** Function *)
@@ -46,7 +44,6 @@ Section ErgoCalculus.
     Record ergoc_contract :=
       mkContractC
         { contractc_name : string;
-          contractc_template : string;
           contractc_clauses : list ergoc_function; }.
 
     (** Declaration *)
@@ -55,7 +52,7 @@ Section ErgoCalculus.
     | ECGlobal : string -> ergoc_expr -> ergoc_declaration
     | ECFunc : ergoc_function -> ergoc_declaration
     | ECContract : ergoc_contract -> ergoc_declaration.
-    
+
     (** Module. *)
     Record ergoc_module :=
       mkModuleC

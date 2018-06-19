@@ -78,20 +78,43 @@ Section ErgotoErgoCalculus.
   Definition default_emits_in_clause (emits:option cto_type) : cto_type :=
     match emits with
     | Some e => e
-    | None => CTOClassRef (AbsoluteRef event_type)
+    | None => CTOClassRef default_event_type
     end.
-  
-  Definition clause_to_calculus (c:ergo_clause) : ergoc_function :=
+
+  Definition default_state_in_clause (state:option cto_type) : cto_type :=
+    match state with
+    | Some e => e
+    | None => CTOClassRef default_state_type
+    end.
+
+  Definition default_throws_in_clause (emits:option cto_type) : cto_type :=
+    match emits with
+    | Some e => e
+    | None => CTOClassRef default_throws_type
+    end.
+
+  Definition mk_success_type (response_type state_type emit_type: cto_type) :=
+    CTORecord (("response",response_type)::("state",state_type)::("emit",emit_type)::nil)%string.
+  Definition mk_error_type (throw_type: cto_type) :=
+    throw_type.
+  Definition mk_output_type (success_type error_type: cto_type) :=
+    CTOSum success_type error_type.
+
+  Definition clause_to_calculus (tem:cto_type) (sta:option cto_type) (c:ergo_clause) : ergoc_function :=
+    let response_type := c.(clause_lambda).(lambda_output) in
+    let emit_type := default_emits_in_clause c.(clause_lambda).(lambda_emits) in
+    let state_type :=  default_state_in_clause sta in
+    let success_type := mk_success_type response_type state_type emit_type in
+    let throw_type := default_throws_in_clause c.(clause_lambda).(lambda_throws) in
+    let error_type := mk_error_type throw_type in
     mkFuncC
       c.(clause_name)
       (mkLambdaC
-         ((this_contract,CTOAny)
-            ::(this_state,CTOAny)
-            ::(this_emit,CTOArray CTOAny)
+         ((this_contract, tem)
+            ::(this_state, state_type)
+            ::(this_emit,CTOArray emit_type)
             ::c.(clause_lambda).(lambda_params))
-         c.(clause_lambda).(lambda_output)
-         c.(clause_lambda).(lambda_throws)
-         (Some (default_emits_in_clause c.(clause_lambda).(lambda_emits)))
+         (mk_output_type success_type error_type)
          (ergoc_expr_top (ergo_stmt_to_expr c.(clause_lambda).(lambda_body)))).
 
   (** Translate a function to function+calculus *)
@@ -101,18 +124,15 @@ Section ErgotoErgoCalculus.
       (mkLambdaC
          f.(function_lambda).(lambda_params)
          f.(function_lambda).(lambda_output)
-         f.(function_lambda).(lambda_throws)
-         f.(function_lambda).(lambda_emits)
          (ergo_stmt_to_expr f.(function_lambda).(lambda_body))).
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the comp_context *)
 
   Definition contract_to_calculus (c:ergo_contract) : ergoc_contract :=
-    let clauses := map clause_to_calculus c.(contract_clauses) in
+    let clauses := map (clause_to_calculus c.(contract_template) c.(contract_state)) c.(contract_clauses) in
     mkContractC
       c.(contract_name)
-      c.(contract_template)
       clauses.
 
   (** Translate a statement to a statement+calculus *)
@@ -149,15 +169,16 @@ Section ErgotoErgoCalculus.
                        (SReturn (EConst (dfloat float_one)))).
     Definition cl1 :=
       mkClause "volumediscount"
-               (mkLambda (("request"%string, CTOClassRef (AbsoluteRef request_type))::nil)
+               (mkLambda (("request"%string, CTOClassRef default_request_type)::nil)
                          CTOAny
                          None
                          None
                          (SReturn (ECallFun "addFee" ((EConst (dfloat float_zero))::nil)))).
-    Definition co1 :=
+    Definition co1 : ergo_contract :=
       mkContract
         "VolumeDiscount"
-        "TemplateModel"
+        (CTOClassRef (AbsoluteRef "TemplateModel"%string))
+        None
         (cl1::nil).
 
     Definition dl : list ergo_declaration := (EFunc f1::EContract co1::nil).
