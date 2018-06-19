@@ -32,7 +32,7 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'model.cto'), 'utf8');
             const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
-            result.should.deep.equal({ 'error' : { 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } } });
+            result.should.deep.equal({ 'error' : { 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 16, 'character' : 20 }, 'locend' : { 'line' : 16, 'character' : 23 } } });
         });
     });
     describe('#parseerrormessage', function () {

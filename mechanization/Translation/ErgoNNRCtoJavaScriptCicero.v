@@ -143,7 +143,7 @@ Section ErgoNNRCtoJavaScriptCicero.
           | CTOClassRef reqname, CTOClassRef outname, None =>
             let qreqname := absolute_name_of_name_ref namespace reqname in
             let qoutname := absolute_name_of_name_ref namespace outname in
-            let qemitsname := event_type in
+            let qemitsname := default_event_name in
             (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
           | _, _, _ =>
             filter_signatures namespace rest

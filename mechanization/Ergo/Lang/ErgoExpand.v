@@ -97,21 +97,22 @@ Section ErgoExpand.
       (fun disp =>
          (mkClause clause_main_name
                    (mkLambda
-                      (("request"%string,CTOClassRef (AbsoluteRef request_type))::nil)
-                      (CTOClassRef (AbsoluteRef response_type))
+                      (("request"%string,CTOClassRef default_request_type)::nil)
+                      (CTOClassRef default_response_type)
                       None
                       None
                       disp)))
       (match_of_sigs_top namespace effparams sigs).
 
+  (* XXX Has to be fixed to use brands -- needs fixes in code-generation *)
   Definition default_state :=
     EConst
-      (drec (("$class",dstring "org.accordproject.cicero.contract.AccordContractState")
+      (drec (("$class",dstring default_state_name)
                :: ("stateId",dstring "1")
                :: nil))%string.
   Definition default_response :=
     EConst
-      (drec (("$class",dstring "org.accordproject.cicero.runtime.Response")
+      (drec (("$class",dstring default_response_name)
                :: nil))%string.
   
   Definition create_init_clause_for_contract (namespace:string) (c:ergo_contract) : ergo_clause :=
@@ -122,10 +123,10 @@ Section ErgoExpand.
     in
     mkClause clause_init_name
              (mkLambda
-                (("request"%string,(CTOClassRef (AbsoluteRef request_type)))::nil)
+                (("request"%string,(CTOClassRef default_request_type))::nil)
                 CTONone
                 None
-                (Some (CTOClassRef (AbsoluteRef event_type)))
+                (Some (CTOClassRef default_event_type))
                 init_body).
 
   Definition add_init_clause_to_contract (namespace:string) (c:ergo_contract) : ergo_contract :=
@@ -139,6 +140,7 @@ Section ErgoExpand.
       mkContract
         c.(contract_name)
         c.(contract_template)
+        c.(contract_state)
         (c.(contract_clauses) ++ (init_clause::nil)).
   
   Definition add_main_clause_to_contract (namespace:string) (c:ergo_contract) : eresult ergo_contract :=
@@ -151,6 +153,7 @@ Section ErgoExpand.
            mkContract
              c.(contract_name)
              c.(contract_template)
+             c.(contract_state)
              (c.(contract_clauses) ++ (main_clause::nil)))
         (create_main_clause_for_contract namespace c).
   

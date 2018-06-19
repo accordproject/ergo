@@ -76,16 +76,6 @@ Section ErgoCalculustoErgoNNRC.
         (List.cons param ctxt.(comp_context_globals))
         ctxt.(comp_context_params).
 
-    Definition add_one_param (ctxt:comp_context) (param:string) : comp_context :=
-      mkCompContext
-        ctxt.(comp_context_ctos)
-        ctxt.(comp_context_current_contract)
-        ctxt.(comp_context_current_clause)
-        ctxt.(comp_context_fun_table)
-        ctxt.(comp_context_namespace)
-        ctxt.(comp_context_globals)
-        (List.cons param ctxt.(comp_context_params)).
-
     Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambdan) : comp_context :=
       mkCompContext
         ctxt.(comp_context_ctos)
@@ -367,9 +357,7 @@ Section ErgoCalculustoErgoNNRC.
       (elift
          (mkLambdaN
             f.(functionc_lambda).(lambdac_params)
-            f.(functionc_lambda).(lambdac_output)
-            f.(functionc_lambda).(lambdac_throws)
-            f.(functionc_lambda).(lambdac_emits))
+            f.(functionc_lambda).(lambdac_output))
          (ergoc_expr_to_nnrc ctxt f.(functionc_lambda).(lambdac_body))).
 
   (** Translate a clause to clause+calculus *)

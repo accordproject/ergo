@@ -38,7 +38,8 @@ Section CTO.
   | CTOClassRef : name_ref -> cto_type             (**r relative class reference *)
   | CTOOption : cto_type -> cto_type               (**r optional type *)
   | CTORecord : list (string*cto_type) -> cto_type (**r record type *)
-  | CTOArray : cto_type -> cto_type.               (**r array type *)
+  | CTOArray : cto_type -> cto_type                (**r array type *)
+  | CTOSum : cto_type -> cto_type -> cto_type.     (**r sum type *)
 
   Record cto_signature : Set :=
     mkCTOSignature
@@ -168,6 +169,7 @@ Section CTO.
         let lifted_map := emaplift (fun xy => elift (fun t => (fst xy, t)) (snd xy)) initial_map in
         elift CTORecord lifted_map
       | CTOArray t => elift CTOArray (resolve_cto_type module_ns tbl t)
+      | CTOSum t1 t2 => elift2 CTOSum (resolve_cto_type module_ns tbl t1) (resolve_cto_type module_ns tbl t2)
       end.
 
     Definition resolve_cto_struct
@@ -337,8 +339,8 @@ Section CTO.
              (List.map (fun xy => (fst xy, cto_type_to_etype (snd xy))) rtl)
              (rec_sort (List.map (fun xy => (fst xy, cto_type_to_etype (snd xy))) rtl))
              eq_refl)
-      | CTOArray t =>
-        ErgoType.array (cto_type_to_etype t)
+      | CTOArray t => ErgoType.array (cto_type_to_etype t)
+      | CTOSum t1 t2 => ErgoType.sum (cto_type_to_etype t1) (cto_type_to_etype t2)
       end.
 
   End Semantics.

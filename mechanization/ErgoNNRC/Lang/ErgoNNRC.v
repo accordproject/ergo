@@ -31,8 +31,6 @@ Section ErgoNNRC.
       mkLambdaN
         { lambdan_params: list (string * cto_type);
           lambdan_output : cto_type;
-          lambdan_throws : option cto_type;
-          lambdan_emits : option cto_type;
           lambdan_body : nnrc_expr; }.
 
     (** Function *)
