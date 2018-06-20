@@ -38,13 +38,15 @@ Section ErgotoJavaScriptCicero.
              (p:ergo_module) : eresult javascript :=
     let p := ergo_module_expand p in
     let ec := eolift lookup_single_contract p in
-    let exy := elift (fun c => (c.(contract_name), lookup_contract_signatures c)) ec in
-    let pc := elift module_to_calculus p in
-    let etypes := map cto_package_to_ergo_type_module ctos in
-    let pn := eolift (module_to_nnrc etypes) pc in
-    eolift (fun xy =>
-              elift (ergoc_module_to_javascript_cicero (fst xy) (snd xy)) pn)
-           exy.
+    eolift
+      (fun c : ergo_contract =>
+         let contract_name := c.(contract_name) in 
+         let sigs := lookup_contract_signatures c in
+         let pc := elift module_to_calculus p in
+         let etypes := map cto_package_to_ergo_type_module ctos in
+         let pn := eolift (module_to_nnrc etypes) pc in
+         elift (ergoc_module_to_javascript_cicero contract_name c.(contract_state) sigs) pn)
+      ec.
 
 End ErgotoJavaScriptCicero.
 

@@ -315,4 +315,36 @@ Section ErgoType.
     (* Eval vm_compute in res. *)
   End Examples.
     
+  Definition lift_default_emits_type (emits:option ergo_type) : ergo_type :=
+    match emits with
+    | Some e => e
+    | None => ErgoTypeClassRef default_emits_type
+    end.
+
+  Definition lift_default_state_type (state:option ergo_type) : ergo_type :=
+    match state with
+    | Some e => e
+    | None => ErgoTypeClassRef default_state_type
+    end.
+
+  Definition lift_default_throws_type (emits:option ergo_type) : ergo_type :=
+    match emits with
+    | Some e => e
+    | None => ErgoTypeClassRef default_throws_type
+    end.
+
+  Definition mk_success_type (response_type state_type emit_type: ergo_type) :=
+    ErgoTypeRecord (("response",response_type)::("state",state_type)::("emit",emit_type)::nil)%string.
+  Definition mk_error_type (throw_type: ergo_type) :=
+    throw_type.
+  Definition mk_output_type (success_type error_type: ergo_type) :=
+    ErgoTypeSum success_type error_type.
+
+  Definition lift_default_state_name (state:option ergo_type) : eresult absolute_name :=
+    match state with
+    | None => esuccess default_state_name
+    | Some (ErgoTypeClassRef (AbsoluteRef r)) => esuccess r
+    | _ => unresolved_name_error
+    end.
+  
 End ErgoType.

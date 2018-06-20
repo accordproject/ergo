@@ -31,7 +31,8 @@ Section ErgoNNRCtoJavaScriptCicero.
              (clause_name:string)
              (request_type:string)
              (response_type:string)
-             (emits_type:string)
+             (emit_type:string)
+             (state_type:string)
              (eol:string)
              (quotel:string) :=
     "/**" ++ eol
@@ -39,7 +40,8 @@ Section ErgoNNRCtoJavaScriptCicero.
           ++ " * @param {Context} context - the Accord context" ++ eol
           ++ " * @param {" ++ request_type ++ "} context.request - the incoming request" ++ eol
           ++ " * @param {" ++ response_type ++ "} context.response - the response" ++ eol
-          ++ " * @param {" ++ emits_type ++ "} context.emit - the emitted events" ++ eol
+          ++ " * @param {" ++ emit_type ++ "} context.emit - the emitted events" ++ eol
+          ++ " * @param {" ++ state_type ++ "} context.state - the state" ++ eol
           ++ (if string_dec clause_name clause_init_name then " * @AccordClauseLogicInit" ++ eol else "")
           ++ " * @AccordClauseLogic" ++ eol
           ++ " */" ++ eol.
@@ -53,7 +55,8 @@ Section ErgoNNRCtoJavaScriptCicero.
              (fun_name:string)
              (request_type:string)
              (response_type:string)
-             (emits_type:string)
+             (emit_type:string)
+             (state_type:string)
              (contract_name:string)
              (clause_name:string)
              (eol:string)
@@ -69,7 +72,8 @@ Section ErgoNNRCtoJavaScriptCicero.
        clause_name
        request_type
        response_type
-       emits_type
+       emit_type
+       state_type
        eol
        quotel)
       ++ "function " ++ fun_name ++ "(context) {" ++ eol
@@ -93,24 +97,31 @@ Section ErgoNNRCtoJavaScriptCicero.
 
   Definition apply_wrapper_function
              (contract_name:string)
+             (contract_state_type:string)
              (signature:string * string * string * string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
-    let '(clause_name, request_type, response_type, emits_type) := signature in
+    let '(clause_name, request_type, response_type, emit_type) := signature in
     let fun_name := contract_name ++ "_" ++ clause_name in
     wrapper_function
-      fun_name request_type response_type emits_type contract_name clause_name eol quotel.
+      fun_name request_type response_type emit_type contract_state_type contract_name clause_name eol quotel.
   
   Definition wrapper_functions
              (contract_name:string)
-             (signatures:list (string * string * string * string))
+             (signatures:list (string * string * string * string) * string)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
-    String.concat eol (List.map (fun sig => apply_wrapper_function contract_name sig eol quotel) signatures).
+    String.concat eol
+                  (List.map (fun sig => apply_wrapper_function
+                                          contract_name
+                                          (snd signatures)
+                                          sig
+                                          eol
+                                          quotel) (fst signatures)).
 
   Definition javascript_of_module_with_dispatch
              (contract_name:string)
-             (signatures:list (string * string * string * string))
+             (signatures:list (string * string * string * string) * string)
              (p:nnrc_module)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
@@ -143,7 +154,7 @@ Section ErgoNNRCtoJavaScriptCicero.
           | ErgoTypeClassRef reqname, ErgoTypeClassRef outname, None =>
             let qreqname := absolute_name_of_name_ref namespace reqname in
             let qoutname := absolute_name_of_name_ref namespace outname in
-            let qemitsname := default_event_name in
+            let qemitsname := default_emits_name in
             (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
           | _, _, _ =>
             filter_signatures namespace rest
@@ -152,13 +163,24 @@ Section ErgoNNRCtoJavaScriptCicero.
         end
     end.
 
+  Definition filter_signatures_with_state (namespace:string) (contract_state_type:option ergo_type) (sigs:list ergo_type_signature) : list (string * string * string * string) * string :=
+    match contract_state_type with
+    | None => (filter_signatures namespace sigs, default_state_name)
+    | Some (ErgoTypeClassRef statename) =>
+      let qstatename := absolute_name_of_name_ref namespace statename in
+      (filter_signatures namespace sigs, qstatename)
+    | _ =>
+      (nil, "")
+    end.
+
   Definition ergoc_module_to_javascript_cicero
-             (coname:string)
+             (contract_name:string)
+             (contract_state_type:option ergo_type)
              (sigs: list ergo_type_signature)
              (p:nnrc_module) : ErgoCodeGen.javascript :=
     javascript_of_module_with_dispatch
-      coname
-      (filter_signatures p.(modulen_namespace) sigs)
+      contract_name
+      (filter_signatures_with_state p.(modulen_namespace) contract_state_type sigs)
       p
       ErgoCodeGen.javascript_eol_newline
       ErgoCodeGen.javascript_quotel_double.

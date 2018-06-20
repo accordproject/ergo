@@ -86,6 +86,9 @@ Section EResult.
     Definition enforce_error_content : ErgoData.data :=
       ErgoData.dbrand (ergo_default_error_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
+
+    Definition unresolved_name_error {A} : eresult A :=
+      efailure (CompilationError ("Unresolved name")).
   End Builtin.
 
 End EResult.
