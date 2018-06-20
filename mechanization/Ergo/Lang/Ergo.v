@@ -96,7 +96,6 @@ Section Ergo.
     | EType : ergo_type_declaration -> ergo_declaration
     | EExpr : ergo_expr -> ergo_declaration
     | EGlobal : string -> ergo_expr -> ergo_declaration
-    | EImport : import_decl -> ergo_declaration
     | EFunc : ergo_function -> ergo_declaration
     | EContract : ergo_contract -> ergo_declaration.
  
@@ -104,6 +103,7 @@ Section Ergo.
     Record ergo_module :=
       mkModule
         { module_namespace : string;
+          module_imports : list import_decl;
           module_declarations : list ergo_declaration; }.
 
   Section Lookup.
@@ -128,7 +128,6 @@ Section Ergo.
       | EType _ :: dl' => lookup_contracts_in_declarations dl'
       | EExpr _ :: dl' => lookup_contracts_in_declarations dl'
       | EGlobal _ _ :: dl' => lookup_contracts_in_declarations dl'
-      | EImport _ :: dl' => lookup_contracts_in_declarations dl'
       | EFunc f :: dl' => lookup_contracts_in_declarations dl'
       | EContract c :: dl' => c :: lookup_contracts_in_declarations dl'
       end.

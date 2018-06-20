@@ -33,78 +33,77 @@ Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRCCall.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoCalculustoErgoNNRC.
-
   Section TranslationContext.
-    Record comp_context :=
+    Record translation_context :=
       mkCompContext {
-          comp_context_ctos : list ergo_type_declaration;
-          comp_context_current_contract : option string;
-          comp_context_current_clause : option string;
-          comp_context_fun_table: lookup_table;
-          comp_context_namespace: string;
-          comp_context_globals: list string;
-          comp_context_params: list string;
+          translation_context_types : list ergo_type_declaration;
+          translation_context_current_contract : option string;
+          translation_context_current_clause : option string;
+          translation_context_fun_table: lookup_table;
+          translation_context_namespace: string;
+          translation_context_globals: list string;
+          translation_context_params: list string;
         }.
 
-    Definition add_globals (ctxt:comp_context) (params:list string) : comp_context :=
+    Definition add_globals (ctxt:translation_context) (params:list string) : translation_context :=
       mkCompContext
-        ctxt.(comp_context_ctos)
-        ctxt.(comp_context_current_contract)
-        ctxt.(comp_context_current_clause)
-        ctxt.(comp_context_fun_table)
-        ctxt.(comp_context_namespace)
-        (List.app params ctxt.(comp_context_globals))
-        ctxt.(comp_context_params).
+        ctxt.(translation_context_types)
+        ctxt.(translation_context_current_contract)
+        ctxt.(translation_context_current_clause)
+        ctxt.(translation_context_fun_table)
+        ctxt.(translation_context_namespace)
+        (List.app params ctxt.(translation_context_globals))
+        ctxt.(translation_context_params).
 
-    Definition add_params (ctxt:comp_context) (params:list string) : comp_context :=
+    Definition add_params (ctxt:translation_context) (params:list string) : translation_context :=
       mkCompContext
-        ctxt.(comp_context_ctos)
-        ctxt.(comp_context_current_contract)
-        ctxt.(comp_context_current_clause)
-        ctxt.(comp_context_fun_table)
-        ctxt.(comp_context_namespace)
-        ctxt.(comp_context_globals)
-        (List.app params ctxt.(comp_context_params)).
+        ctxt.(translation_context_types)
+        ctxt.(translation_context_current_contract)
+        ctxt.(translation_context_current_clause)
+        ctxt.(translation_context_fun_table)
+        ctxt.(translation_context_namespace)
+        ctxt.(translation_context_globals)
+        (List.app params ctxt.(translation_context_params)).
 
-    Definition add_one_global (ctxt:comp_context) (param:string) : comp_context :=
+    Definition add_one_global (ctxt:translation_context) (param:string) : translation_context :=
       mkCompContext
-        ctxt.(comp_context_ctos)
-        ctxt.(comp_context_current_contract)
-        ctxt.(comp_context_current_clause)
-        ctxt.(comp_context_fun_table)
-        ctxt.(comp_context_namespace)
-        (List.cons param ctxt.(comp_context_globals))
-        ctxt.(comp_context_params).
+        ctxt.(translation_context_types)
+        ctxt.(translation_context_current_contract)
+        ctxt.(translation_context_current_clause)
+        ctxt.(translation_context_fun_table)
+        ctxt.(translation_context_namespace)
+        (List.cons param ctxt.(translation_context_globals))
+        ctxt.(translation_context_params).
 
-    Definition add_one_function (ctxt:comp_context) (fname:string) (flambda:lambdan) : comp_context :=
+    Definition add_one_function (ctxt:translation_context) (fname:string) (flambda:lambdan) : translation_context :=
       mkCompContext
-        ctxt.(comp_context_ctos)
-        ctxt.(comp_context_current_contract)
-        ctxt.(comp_context_current_clause)
-        (add_function_to_table ctxt.(comp_context_fun_table) fname flambda)
-        ctxt.(comp_context_namespace)
-        ctxt.(comp_context_globals)
-        ctxt.(comp_context_params).
+        ctxt.(translation_context_types)
+        ctxt.(translation_context_current_contract)
+        ctxt.(translation_context_current_clause)
+        (add_function_to_table ctxt.(translation_context_fun_table) fname flambda)
+        ctxt.(translation_context_namespace)
+        ctxt.(translation_context_globals)
+        ctxt.(translation_context_params).
 
-    Definition set_current_contract (ctxt:comp_context) (cname:string) : comp_context :=
+    Definition set_current_contract (ctxt:translation_context) (cname:string) : translation_context :=
       mkCompContext
-        ctxt.(comp_context_ctos)
+        ctxt.(translation_context_types)
         (Some cname)
-        ctxt.(comp_context_current_clause)
-        ctxt.(comp_context_fun_table)
-        ctxt.(comp_context_namespace)
-        ctxt.(comp_context_globals)
-        ctxt.(comp_context_params).
+        ctxt.(translation_context_current_clause)
+        ctxt.(translation_context_fun_table)
+        ctxt.(translation_context_namespace)
+        ctxt.(translation_context_globals)
+        ctxt.(translation_context_params).
   
-    Definition set_current_clause (ctxt:comp_context) (cname:string) : comp_context :=
+    Definition set_current_clause (ctxt:translation_context) (cname:string) : translation_context :=
       mkCompContext
-        ctxt.(comp_context_ctos)
-        ctxt.(comp_context_current_contract)
+        ctxt.(translation_context_types)
+        ctxt.(translation_context_current_contract)
         (Some cname)
-        ctxt.(comp_context_fun_table)
-        ctxt.(comp_context_namespace)
-        ctxt.(comp_context_globals)
-        ctxt.(comp_context_params).
+        ctxt.(translation_context_fun_table)
+        ctxt.(translation_context_namespace)
+        ctxt.(translation_context_globals)
+        ctxt.(translation_context_params).
 
   End TranslationContext.
 
@@ -172,25 +171,25 @@ Section ErgoCalculustoErgoNNRC.
 
   (** Translate expressions to calculus *)
   Fixpoint ergoc_expr_to_nnrc
-           (ctxt:comp_context) (e:ergoc_expr) : eresult nnrc_expr :=
+           (ctxt:translation_context) (e:ergoc_expr) : eresult nnrc_expr :=
     match e with
     | EThisContract =>
-      match ctxt.(comp_context_current_contract) with
+      match ctxt.(translation_context_current_contract) with
       | None => not_in_contract_error
       | Some _ => esuccess (NNRCGetConstant this_contract)
       end
     | EThisClause => 
-      match ctxt.(comp_context_current_clause) with
+      match ctxt.(translation_context_current_clause) with
       | None => not_in_clause_error
       | Some clause_name => esuccess (NNRCUnop (OpDot clause_name) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
       end
     | EThisState =>
-      match ctxt.(comp_context_current_contract) with
+      match ctxt.(translation_context_current_contract) with
       | None => not_in_contract_error
       | Some _ => esuccess (NNRCVar local_state)
       end
     | EVar v =>
-      if in_dec string_dec v ctxt.(comp_context_params)
+      if in_dec string_dec v ctxt.(translation_context_params)
       then esuccess (NNRCGetConstant v)
       else esuccess (NNRCVar v)
     | EConst d =>
@@ -226,7 +225,7 @@ Section ErgoCalculustoErgoNNRC.
               (ergoc_expr_to_nnrc ctxt e2)
     | ENew cr nil =>
       esuccess
-        (new_expr (absolute_name_of_name_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
+        (new_expr (absolute_name_of_name_ref ctxt.(translation_context_namespace) cr) (NNRCConst (drec nil)))
     | ENew cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           elift (NNRCUnop (OpRec s0)) (ergoc_expr_to_nnrc ctxt init)
@@ -237,7 +236,7 @@ Section ErgoCalculustoErgoNNRC.
           elift2 (NNRCBinop OpRecConcat)
                  (elift (NNRCUnop (OpRec attname)) e) acc
       in
-      elift (new_expr (absolute_name_of_name_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
+      elift (new_expr (absolute_name_of_name_ref ctxt.(translation_context_namespace) cr)) (fold_left proc_one rest init_rec)
     | ERecord nil =>
       esuccess
         (NNRCConst (drec nil))
@@ -260,7 +259,7 @@ Section ErgoCalculustoErgoNNRC.
             (ergoc_expr_to_nnrc ctxt e)
             acc
       in
-      eolift (lookup_call ctxt.(comp_context_fun_table) fname) (fold_right proc_one init_el el)
+      eolift (lookup_call ctxt.(translation_context_fun_table) fname) (fold_right proc_one init_el el)
     | EMatch e0 ecases edefault =>
       let ec0 := ergoc_expr_to_nnrc ctxt e0 in
       let eccases :=
@@ -342,8 +341,8 @@ Section ErgoCalculustoErgoNNRC.
 
   (** Translate a function to function+calculus *)
   Definition functionc_to_nnrc
-             (ctxt:comp_context) (f:ergoc_function) : eresult nnrc_function :=
-    let ctxt : comp_context :=
+             (ctxt:translation_context) (f:ergoc_function) : eresult nnrc_function :=
+    let ctxt : translation_context :=
         add_params ctxt (List.map fst f.(functionc_lambda).(lambdac_params))
     in
     elift
@@ -357,43 +356,43 @@ Section ErgoCalculustoErgoNNRC.
 
   (** Translate a clause to clause+calculus *)
   Definition clausec_to_nnrc
-             (ctxt:comp_context) (f:ergoc_function) : eresult nnrc_function :=
-    let ctxt : comp_context :=
+             (ctxt:translation_context) (f:ergoc_function) : eresult nnrc_function :=
+    let ctxt : translation_context :=
         set_current_clause ctxt f.(functionc_name)
     in
     functionc_to_nnrc ctxt f.
 
   (** Translate a declaration to a declaration+calculus *)
   Definition clausec_declaration_to_nnrc
-             (ctxt:comp_context) (c:ergoc_function) : eresult (comp_context * nnrc_function) :=
+             (ctxt:translation_context) (c:ergoc_function) : eresult (translation_context * nnrc_function) :=
     elift
       (fun x => (add_one_function
                    ctxt
                    x.(functionn_name)
-                   x.(functionn_lambda), x)) (* Add new function to comp_context *)
+                   x.(functionn_lambda), x)) (* Add new function to translation_context *)
       (clausec_to_nnrc ctxt c).
 
   (** Translate a contract to a contract+calculus *)
-  (** For a contract, add 'contract' and 'now' to the comp_context *)
+  (** For a contract, add 'contract' and 'now' to the translation_context *)
   Definition contractc_to_nnrc
-             (ctxt:comp_context) (c:ergoc_contract) : eresult (comp_context * nnrc_function_table) :=
+             (ctxt:translation_context) (c:ergoc_contract) : eresult (translation_context * nnrc_function_table) :=
     let ctxt :=
         set_current_contract ctxt c.(contractc_name)
     in
-    let ctxt : comp_context :=
+    let ctxt : translation_context :=
         add_params
           ctxt
           (current_time :: this_contract :: this_state :: this_emit :: nil)
     in
     let init := esuccess (ctxt, nil) in
     let proc_one
-          (acc:eresult (comp_context * list nnrc_function))
+          (acc:eresult (translation_context * list nnrc_function))
           (s:ergoc_function)
-        : eresult (comp_context * list nnrc_function) :=
+        : eresult (translation_context * list nnrc_function) :=
         eolift
-          (fun acc : comp_context * list nnrc_function =>
+          (fun acc : translation_context * list nnrc_function =>
              let (ctxt,acc) := acc in
-             elift (fun xy : comp_context * nnrc_function =>
+             elift (fun xy : translation_context * nnrc_function =>
                       let (newctxt,news) := xy in
                       (newctxt,news::acc))
                    (clausec_declaration_to_nnrc ctxt s))
@@ -410,7 +409,7 @@ Section ErgoCalculustoErgoNNRC.
 
   (** Translate a statement to a statement+calculus *)
   Definition declaration_to_nnrc
-             (ctxt:comp_context) (s:ergoc_declaration) : eresult (comp_context * nnrc_declaration) :=
+             (ctxt:translation_context) (s:ergoc_declaration) : eresult (translation_context * nnrc_declaration) :=
     match s with
     | ECExpr e =>
       elift
@@ -418,35 +417,35 @@ Section ErgoCalculustoErgoNNRC.
         (ergoc_expr_to_nnrc ctxt e)
     | ECGlobal v e =>
       elift
-        (fun x => (add_one_global ctxt v, ENGlobal v x)) (* Add new variable to comp_context *)
+        (fun x => (add_one_global ctxt v, ENGlobal v x)) (* Add new variable to translation_context *)
         (ergoc_expr_to_nnrc ctxt e)
     | ECFunc f =>
       elift
-        (fun x => (add_one_function ctxt x.(functionn_name) x.(functionn_lambda), ENFunc x)) (* Add new function to comp_context *)
+        (fun x => (add_one_function ctxt x.(functionn_name) x.(functionn_lambda), ENFunc x)) (* Add new function to translation_context *)
         (functionc_to_nnrc ctxt f)
     | ECContract c =>
       elift (fun xy => (fst xy, ENFuncTable (snd xy)))
             (contractc_to_nnrc ctxt c)
     end.
 
-  Definition initial_comp_context (ctos:list ergo_type_declaration) (p:string) :=
-    mkCompContext ctos None None nnrc_stdlib p nil nil.
+  Definition initial_translation_context (etypes:list ergo_type_declaration) (p:string) :=
+    mkCompContext etypes None None nnrc_stdlib p nil nil.
 
   (** Translate a module to a module+calculus *)
   Definition declarations_calculus_with_table
              (ergo_type_decls:list ergo_type_declaration) (local_namespace:string) (dl:list ergoc_declaration)
-    : eresult (comp_context * list nnrc_declaration) :=
-    let ctxt := initial_comp_context ergo_type_decls local_namespace in
+    : eresult (translation_context * list nnrc_declaration) :=
+    let ctxt := initial_translation_context ergo_type_decls local_namespace in
     let init := esuccess (ctxt, nil) in
     let proc_one
-          (acc:eresult (comp_context * list nnrc_declaration))
+          (acc:eresult (translation_context * list nnrc_declaration))
           (s:ergoc_declaration)
-        : eresult (comp_context * list nnrc_declaration) :=
+        : eresult (translation_context * list nnrc_declaration) :=
         eolift
-          (fun acc : comp_context * list nnrc_declaration =>
+          (fun acc : translation_context * list nnrc_declaration =>
              let (ctxt,acc) := acc in
              let edecl := declaration_to_nnrc ctxt s in
-               elift (fun xy : comp_context * nnrc_declaration =>
+               elift (fun xy : translation_context * nnrc_declaration =>
                         let (newctxt,news) := xy in
                         (newctxt,news::acc))
                edecl)
@@ -464,14 +463,14 @@ Section ErgoCalculustoErgoNNRC.
                 (snd xy)))
       (declarations_calculus_with_table ergo_type_decls local_namespace p.(modulec_declarations)).
 
-  Definition module_to_nnrc (ctos:list ergo_type_package) (p:ergoc_module) : eresult nnrc_module :=
+  Definition module_to_nnrc (etypes:list ergo_type_module) (p:ergoc_module) : eresult nnrc_module :=
     let local_namespace := p.(modulec_namespace) in
-    let ectos := ergo_type_resolved_tbl_for_package ctos in
-    eolift (fun ctos_decls => module_to_nnrc_with_table ctos_decls local_namespace p) ectos.
+    let resolved_etypes := ergo_type_resolved_tbl_for_module etypes in
+    eolift (fun type_decls => module_to_nnrc_with_table type_decls local_namespace p) resolved_etypes.
 
   Section tests.
     Open Scope string.
-    Definition ctxt0 := initial_comp_context nil "org.accordproject".
+    Definition ctxt0 := initial_translation_context nil "org.accordproject".
 
     (**r Test pattern matching on values *)
     Definition input1 := dnat 2.

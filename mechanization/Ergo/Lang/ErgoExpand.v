@@ -164,7 +164,6 @@ Section ErgoExpand.
     | EType td => esuccess (EType td)
     | EExpr e => esuccess (EExpr e)
     | EGlobal v e => esuccess (EGlobal v e)
-    | EImport id => esuccess (EImport id)
     | EFunc fd => esuccess (EFunc fd)
     | EContract cd =>
       let cd := add_init_clause_to_contract namespace cd in
@@ -178,7 +177,8 @@ Section ErgoExpand.
   Definition add_main_init_clauses_to_module (p:ergo_module) : eresult ergo_module :=
     elift
       (mkModule
-         p.(module_namespace))
+         p.(module_namespace)
+         p.(module_imports))
       (add_main_init_clauses_to_declarations p.(module_namespace) p.(module_declarations)).
 
   (** Pre-processing. At the moment only add main clauses when missing *)

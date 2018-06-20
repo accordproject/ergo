@@ -27,7 +27,7 @@ Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
-Require Import ErgoSpec.Translation.CTOtoErgoType.
+Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
 Require Import ErgoSpec.Translation.ErgoCalculustoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
@@ -40,7 +40,7 @@ Section ErgotoJavaScriptCicero.
     let ec := eolift lookup_single_contract p in
     let exy := elift (fun c => (c.(contract_name), lookup_contract_signatures c)) ec in
     let pc := elift module_to_calculus p in
-    let etypes := map cto_package_to_ergo_type_package ctos in
+    let etypes := map cto_package_to_ergo_type_module ctos in
     let pn := eolift (module_to_nnrc etypes) pc in
     eolift (fun xy =>
               elift (ergoc_module_to_javascript_cicero (fst xy) (snd xy)) pn)

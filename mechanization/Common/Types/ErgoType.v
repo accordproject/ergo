@@ -58,7 +58,8 @@ Section ErgoType.
   | ErgoTypeGlobal : ergo_type -> ergo_type_declaration_kind
   | ErgoTypeFunction : ergo_type_signature -> ergo_type_declaration_kind
   | ErgoTypeContract :
-      ergo_type                         (**r template type *)
+      ergo_type                              (**r template type *)
+      -> ergo_type                           (**r state type *)
       -> list (string * ergo_type_signature) (**r clauses signatures *)
       -> ergo_type_declaration_kind.
 
@@ -67,19 +68,19 @@ Section ErgoType.
       { ergo_type_declaration_name : local_name;
         ergo_type_declaration_type : ergo_type_declaration_kind; }.
 
-  Record ergo_type_package :=
-    mkErgoTypePackage
-      { ergo_type_package_namespace : namespace_name;
-        ergo_type_package_imports : list import_decl;
-        ergo_type_package_declarations : list ergo_type_declaration; }.
+  Record ergo_type_module :=
+    mkErgoTypeModule
+      { ergo_type_module_namespace : namespace_name;
+        ergo_type_module_imports : list import_decl;
+        ergo_type_module_declarations : list ergo_type_declaration; }.
 
   Section NamesResolution.
-    (** There are three phases to the name resolution in ErgoType files/packages:
+    (** There are three phases to the name resolution in ErgoType files/modules:
 - build a per-namespace table containing all the local names mapped to their namespace resolve names
-- for a package, resolve imports using the per-namespace table to build a full namespace mapping for that package
-- resolve the names within a given package using the full namespace mapping for that package *)
+- for a module, resolve imports using the per-namespace table to build a full namespace mapping for that module
+- resolve the names within a given module using the full namespace mapping for that module *)
     
-    (** Maps local names to absolute names for a given ErgoType package *)
+    (** Maps local names to absolute names for a given ErgoType module *)
     Definition ergo_type_names_table : Set := list (local_name * absolute_name).
 
     (** Maps namespaces to the names table for that namespace *)
@@ -89,19 +90,19 @@ Section ErgoType.
       let ln := decl.(ergo_type_declaration_name) in
       (ln, absolute_name_of_local_name ns ln).
 
-    Definition names_table_of_ergo_type_package (ns:namespace_name) (pkg:ergo_type_package) : ergo_type_names_table :=
-      map (name_entry_of_ergo_type_declaration ns) pkg.(ergo_type_package_declarations).
+    Definition names_table_of_ergo_type_module (ns:namespace_name) (pkg:ergo_type_module) : ergo_type_names_table :=
+      map (name_entry_of_ergo_type_declaration ns) pkg.(ergo_type_module_declarations).
 
-    (** Note: this merges tables when the same namespace is used in more than one ErgoType package *)
-    Definition names_tables_of_ergo_type_packages (pkgs: list ergo_type_package) : ergo_type_names_tables :=
+    (** Note: this merges tables when the same namespace is used in more than one ErgoType module *)
+    Definition names_tables_of_ergo_type_modules (pkgs: list ergo_type_module) : ergo_type_names_tables :=
       let init : ergo_type_names_tables := nil in
-      let proc_one (acc:ergo_type_names_tables) (pkg:ergo_type_package) : ergo_type_names_tables :=
-          let ns := pkg.(ergo_type_package_namespace) in
+      let proc_one (acc:ergo_type_names_tables) (pkg:ergo_type_module) : ergo_type_names_tables :=
+          let ns := pkg.(ergo_type_module_namespace) in
           match lookup string_dec acc ns with
           | Some t =>
-            update_first string_dec acc ns (app t (names_table_of_ergo_type_package ns pkg))
+            update_first string_dec acc ns (app t (names_table_of_ergo_type_module ns pkg))
           | None =>
-            (ns, names_table_of_ergo_type_package ns pkg) :: acc
+            (ns, names_table_of_ergo_type_module ns pkg) :: acc
           end
       in
       fold_left proc_one pkgs init.
@@ -248,9 +249,10 @@ Section ErgoType.
       | ErgoTypeFunction ergo_type_signature =>
         elift ErgoTypeFunction
               (resolve_ergo_type_signature module_ns tbl ergo_type_signature)
-      | ErgoTypeContract template_type clauses_sigs =>
-        elift2 ErgoTypeContract
+      | ErgoTypeContract template_type state_type clauses_sigs =>
+        elift3 ErgoTypeContract
                (resolve_ergo_type module_ns tbl template_type)
+               (resolve_ergo_type module_ns tbl state_type)
                (resolve_ergo_type_clauses module_ns tbl clauses_sigs)
       end.
 
@@ -263,25 +265,25 @@ Section ErgoType.
       : eresult (list ergo_type_declaration) :=
       emaplift (resolve_declaration module_ns tbl) decls.
 
-    Definition resolve_names_in_package
+    Definition resolve_names_in_module
                (tbls:ergo_type_names_tables)
-               (pkg:ergo_type_package) : eresult (list ergo_type_declaration) :=
+               (pkg:ergo_type_module) : eresult (list ergo_type_declaration) :=
       (** Make sure to add current namespace to the list of imports - i.e., import self. *)
-      let imports := app pkg.(ergo_type_package_imports)
+      let imports := app pkg.(ergo_type_module_imports)
                                (("org.hyperledger.composer.system"%string, ImportAll)
-                                  ::(pkg.(ergo_type_package_namespace),ImportAll)::nil) in
-      let module_ns := pkg.(ergo_type_package_namespace) in
+                                  ::(pkg.(ergo_type_module_namespace),ImportAll)::nil) in
+      let module_ns := pkg.(ergo_type_module_namespace) in
       let in_scope_names := apply_imports_to_names_tables module_ns tbls imports in
       eolift (fun tbls => resolve_declarations
-                            pkg.(ergo_type_package_namespace)
+                            pkg.(ergo_type_module_namespace)
                             tbls
-                            pkg.(ergo_type_package_declarations)) in_scope_names.
+                            pkg.(ergo_type_module_declarations)) in_scope_names.
 
     (** Top level *)
-    Definition ergo_type_resolved_tbl_for_package
-               (pkgs:list ergo_type_package) : eresult (list ergo_type_declaration) :=
-      let tbls := names_tables_of_ergo_type_packages pkgs in
-      elift (@List.concat _) (emaplift (resolve_names_in_package tbls) pkgs).
+    Definition ergo_type_resolved_tbl_for_module
+               (pkgs:list ergo_type_module) : eresult (list ergo_type_declaration) :=
+      let tbls := names_tables_of_ergo_type_modules pkgs in
+      elift (@List.concat _) (emaplift (resolve_names_in_module tbls) pkgs).
 
   End NamesResolution.
 
@@ -295,21 +297,21 @@ Section ErgoType.
     
 
     Definition ergo_type1 :=
-      mkErgoTypePackage
+      mkErgoTypeModule
         "n1" (("n2",ImportAll)::nil) (ergo_typed1::ergo_typed2::nil).
     
     Definition ergo_typed3 :=
       mkErgoTypeDeclaration "c3" (ErgoTypeConcept None (("a", ErgoTypeBoolean)::("b",ErgoTypeString)::nil)).
     
     Definition ergo_type2 :=
-      mkErgoTypePackage
+      mkErgoTypeModule
         "n2" nil (ergo_typed3::nil).
 
     Definition pkgs := ergo_type2 :: ergo_type1 :: nil.
 
-    Definition tbls := names_tables_of_ergo_type_packages pkgs.
+    Definition tbls := names_tables_of_ergo_type_modules pkgs.
     (* Eval vm_compute in tbls. *)
-    Definition res := elift (@List.concat _) (emaplift (resolve_names_in_package tbls) pkgs).
+    Definition res := elift (@List.concat _) (emaplift (resolve_names_in_module tbls) pkgs).
     (* Eval vm_compute in res. *)
   End Examples.
     

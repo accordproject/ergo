@@ -39,7 +39,7 @@ MODULES = \
 	ErgoNNRC/Lang/ErgoNNRC \
 	ErgoNNRC/Lang/ErgoNNRCSugar \
 	ErgoNNRC/Lang/ErgoNNRCCall \
-	Translation/CTOtoErgoType \
+	Translation/CTOtoErgo \
 	Translation/ErgoTypetoErgoCalculusType \
 	Translation/ErgotoErgoCalculus \
 	Translation/ErgoCalculustoErgoNNRC \

@@ -92,10 +92,17 @@ main:
 
 
 emodule:
-| NAMESPACE qn = qname_prefix ss = decls
+| NAMESPACE qn = qname_prefix ims = imports ss = decls
     { { module_namespace = Util.char_list_of_string qn;
+        module_imports = ims;
         module_declarations = ss; } }
 
+imports:
+|   { [] }
+| IMPORT qn = qname_prefix ims = imports
+    { (ErgoUtil.cto_import_decl_of_import_namespace qn) :: ims }
+
+    
 decls:
 |
     { [] }
@@ -129,8 +136,6 @@ decl:
       lambda_throws = fst mt;
       lambda_emits = snd mt;
       lambda_body = fs; } } }
-| IMPORT qn = qname_prefix
-    { EImport (ErgoUtil.cto_import_decl_of_import_namespace qn) }
 | c = contract
     { EContract c }
 
