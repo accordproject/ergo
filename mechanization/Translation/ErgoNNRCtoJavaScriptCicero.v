@@ -18,7 +18,7 @@ Require Import String.
 Require Import List.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
@@ -45,7 +45,7 @@ Section ErgoNNRCtoJavaScriptCicero.
           ++ " */" ++ eol.
 
   (** Note: this adjusts the external interface to that currently expected in Cicero. Namely:
-- This serialized/deserialized CTO objects to/from JSON
+- This serialized/deserialized ErgoType objects to/from JSON
 - This applies the result from the functional call to the call as effects to the input context
 - This turns an error response into a JavaScript exception
 *)
@@ -119,28 +119,28 @@ Section ErgoNNRCtoJavaScriptCicero.
                    ++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
-  Fixpoint filter_signatures (namespace:string) (sigs:list cto_signature) : list (string * string * string * string) :=
+  Fixpoint filter_signatures (namespace:string) (sigs:list ergo_type_signature) : list (string * string * string * string) :=
     match sigs with
     | nil => nil
     | sig :: rest =>
-      if (string_dec sig.(cto_signature_name) clause_main_name)
+      if (string_dec sig.(ergo_type_signature_name) clause_main_name)
       then
         filter_signatures namespace rest
       else
-        let fname := sig.(cto_signature_name) in
-        let params := sig.(cto_signature_params) in
-        let outtype := sig.(cto_signature_output) in
-        let emitstype := sig.(cto_signature_emits) in
+        let fname := sig.(ergo_type_signature_name) in
+        let params := sig.(ergo_type_signature_params) in
+        let outtype := sig.(ergo_type_signature_output) in
+        let emitstype := sig.(ergo_type_signature_emits) in
         match params with
         | nil => filter_signatures namespace rest
         | (_,reqtype)::nil =>
           match reqtype, outtype, emitstype with
-          | CTOClassRef reqname, CTOClassRef outname, Some (CTOClassRef emitsname) =>
+          | ErgoTypeClassRef reqname, ErgoTypeClassRef outname, Some (ErgoTypeClassRef emitsname) =>
             let qreqname := absolute_name_of_name_ref namespace reqname in
             let qoutname := absolute_name_of_name_ref namespace outname in
             let qemitsname := absolute_name_of_name_ref namespace emitsname in
             (fname,qreqname,qoutname,qemitsname) :: (filter_signatures namespace rest)
-          | CTOClassRef reqname, CTOClassRef outname, None =>
+          | ErgoTypeClassRef reqname, ErgoTypeClassRef outname, None =>
             let qreqname := absolute_name_of_name_ref namespace reqname in
             let qoutname := absolute_name_of_name_ref namespace outname in
             let qemitsname := default_event_name in
@@ -154,7 +154,7 @@ Section ErgoNNRCtoJavaScriptCicero.
 
   Definition ergoc_module_to_javascript_cicero
              (coname:string)
-             (sigs: list cto_signature)
+             (sigs: list ergo_type_signature)
              (p:nnrc_module) : ErgoCodeGen.javascript :=
     javascript_of_module_with_dispatch
       coname

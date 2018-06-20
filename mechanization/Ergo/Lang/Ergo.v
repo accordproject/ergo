@@ -23,7 +23,7 @@ Require Import EquivDec.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EImport.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
@@ -34,14 +34,13 @@ Section Ergo.
   | EThisContract : ergo_expr (**r this contract *)
   | EThisClause : ergo_expr (**r this clause *)
   | EThisState : ergo_expr (**r this state *)
-  | EThisEmit : ergo_expr (**r this emit *)
   | EVar : string -> ergo_expr (**r variable *)
   | EConst : ErgoData.data -> ergo_expr (**r constant *)
   | EArray : list ergo_expr -> ergo_expr (**r array constructor *) 
   | EUnaryOp : ErgoOps.Unary.op -> ergo_expr -> ergo_expr (**r unary operator *)
   | EBinaryOp : ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr (**r binary operator *)
   | EIf : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr (**r conditional *)
-  | ELet : string -> option cto_type -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
+  | ELet : string -> option ergo_type -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
   | ERecord : list (string * ergo_expr) -> ergo_expr (**r create a new record *)
   | ENew : name_ref -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
   | ECallFun : string -> list ergo_expr -> ergo_expr (**r function call *)
@@ -59,7 +58,7 @@ Section Ergo.
   | SCallClause : string -> list ergo_expr -> ergo_stmt (**r clause call *)
   | SSetState : ergo_expr -> ergo_stmt -> ergo_stmt
   | SEmit : ergo_expr -> ergo_stmt -> ergo_stmt
-  | SLet : string -> option cto_type -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable binding *)
+  | SLet : string -> option ergo_type -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable binding *)
   | SIf : ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt
   | SEnforce : ergo_expr -> option ergo_stmt -> ergo_stmt -> ergo_stmt (**r enforce *)
   | SMatch : ergo_expr -> (list (ergo_pattern * ergo_stmt)) -> ergo_stmt -> ergo_stmt.
@@ -67,10 +66,10 @@ Section Ergo.
   (** Function *)
   Record lambda :=
     mkLambda
-      { lambda_params: list (string * cto_type);
-        lambda_output : cto_type;
-        lambda_throws : option cto_type;
-        lambda_emits : option cto_type;
+      { lambda_params: list (string * ergo_type);
+        lambda_output : ergo_type;
+        lambda_throws : option ergo_type;
+        lambda_emits : option ergo_type;
         lambda_body : ergo_stmt; }.
 
   Record ergo_function :=
@@ -88,13 +87,13 @@ Section Ergo.
     Record ergo_contract :=
       mkContract
         { contract_name : string;
-          contract_template : cto_type;
-          contract_state : option cto_type;
+          contract_template : ergo_type;
+          contract_state : option ergo_type;
           contract_clauses : list ergo_clause; }.
 
     (** Declaration *)
     Inductive ergo_declaration :=
-    | EType : cto_declaration -> ergo_declaration
+    | EType : ergo_type_declaration -> ergo_declaration
     | EExpr : ergo_expr -> ergo_declaration
     | EGlobal : string -> ergo_expr -> ergo_declaration
     | EImport : import_decl -> ergo_declaration
@@ -108,11 +107,11 @@ Section Ergo.
           module_declarations : list ergo_declaration; }.
 
   Section Lookup.
-    Fixpoint lookup_clauses_signatures (dl:list ergo_clause) : list cto_signature :=
+    Fixpoint lookup_clauses_signatures (dl:list ergo_clause) : list ergo_type_signature :=
       match dl with
       | nil => nil
       | cl :: dl' =>
-        (mkCTOSignature
+        (mkErgoTypeSignature
            cl.(clause_name)
            cl.(clause_lambda).(lambda_params)
            cl.(clause_lambda).(lambda_output)
@@ -120,7 +119,7 @@ Section Ergo.
            cl.(clause_lambda).(lambda_emits)) :: lookup_clauses_signatures dl'
       end.
     
-    Definition lookup_contract_signatures (c:ergo_contract) : list cto_signature :=
+    Definition lookup_contract_signatures (c:ergo_contract) : list ergo_type_signature :=
       lookup_clauses_signatures c.(contract_clauses).
     
     Fixpoint lookup_contracts_in_declarations (dl:list ergo_declaration) : list ergo_contract :=

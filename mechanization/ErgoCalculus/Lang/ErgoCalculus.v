@@ -17,7 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
@@ -30,8 +30,8 @@ Section ErgoCalculus.
 
     Record lambdac :=
       mkLambdaC
-        { lambdac_params: list (string * cto_type);
-          lambdac_output : cto_type;
+        { lambdac_params: list (string * ergo_type);
+          lambdac_output : ergo_type;
           lambdac_body : ergoc_expr; }.
 
     (** Function *)

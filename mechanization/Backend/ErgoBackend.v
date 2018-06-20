@@ -17,14 +17,14 @@ Require Export Qcert.Common.TypingRuntime.
 
 Require ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require ErgoSpec.Backend.Model.ErgoBackendRuntime.
-Require ErgoSpec.Backend.Lib.EType.
+Require ErgoSpec.Backend.Lib.ECType.
 Require ErgoSpec.Backend.Lib.EData.
 Require ErgoSpec.Backend.Lib.EOperators.
 Require ErgoSpec.Backend.Lib.ECodeGen.
 
 Module ErgoEnhancedBackend := ErgoBackendRuntime.ErgoBackendRuntime <+ ErgoEnhancedModel.CompEnhanced.
-Module ErgoType := EType.EType(ErgoEnhancedBackend).
 Module ErgoData := EData.EData(ErgoEnhancedBackend).
 Module ErgoOps := EOperators.EOperators(ErgoEnhancedBackend).
 Module ErgoCodeGen := ECodeGen.ECodeGen(ErgoEnhancedBackend).
+Module ErgoCalculusType := ECType.ECType(ErgoEnhancedBackend).
 

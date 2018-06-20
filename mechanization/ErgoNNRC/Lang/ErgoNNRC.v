@@ -17,7 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoNNRC.
@@ -29,8 +29,8 @@ Section ErgoNNRC.
 
     Record lambdan :=
       mkLambdaN
-        { lambdan_params: list (string * cto_type);
-          lambdan_output : cto_type;
+        { lambdan_params: list (string * ergo_type);
+          lambdan_output : ergo_type;
           lambdan_body : nnrc_expr; }.
 
     (** Function *)
