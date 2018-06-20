@@ -23,7 +23,7 @@ Require Import Qcert.NNRC.NNRCRuntime.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
@@ -37,7 +37,7 @@ Section ErgoCalculustoErgoNNRC.
   Section TranslationContext.
     Record comp_context :=
       mkCompContext {
-          comp_context_ctos : list cto_declaration;
+          comp_context_ctos : list ergo_type_declaration;
           comp_context_current_contract : option string;
           comp_context_current_clause : option string;
           comp_context_fun_table: lookup_table;
@@ -188,11 +188,6 @@ Section ErgoCalculustoErgoNNRC.
       match ctxt.(comp_context_current_contract) with
       | None => not_in_contract_error
       | Some _ => esuccess (NNRCVar local_state)
-      end
-    | EThisEmit =>
-      match ctxt.(comp_context_current_contract) with
-      | None => not_in_contract_error
-      | Some _ => esuccess (NNRCVar local_emit)
       end
     | EVar v =>
       if in_dec string_dec v ctxt.(comp_context_params)
@@ -434,14 +429,14 @@ Section ErgoCalculustoErgoNNRC.
             (contractc_to_nnrc ctxt c)
     end.
 
-  Definition initial_comp_context (ctos:list cto_declaration) (p:string) :=
+  Definition initial_comp_context (ctos:list ergo_type_declaration) (p:string) :=
     mkCompContext ctos None None nnrc_stdlib p nil nil.
 
   (** Translate a module to a module+calculus *)
   Definition declarations_calculus_with_table
-             (cto_decls:list cto_declaration) (local_namespace:string) (dl:list ergoc_declaration)
+             (ergo_type_decls:list ergo_type_declaration) (local_namespace:string) (dl:list ergoc_declaration)
     : eresult (comp_context * list nnrc_declaration) :=
-    let ctxt := initial_comp_context cto_decls local_namespace in
+    let ctxt := initial_comp_context ergo_type_decls local_namespace in
     let init := esuccess (ctxt, nil) in
     let proc_one
           (acc:eresult (comp_context * list nnrc_declaration))
@@ -461,17 +456,17 @@ Section ErgoCalculustoErgoNNRC.
 
   (** Translate a module to a module+calculus *)
   Definition module_to_nnrc_with_table
-             (cto_decls:list cto_declaration) (local_namespace:string) (p:ergoc_module) : eresult nnrc_module :=
+             (ergo_type_decls:list ergo_type_declaration) (local_namespace:string) (p:ergoc_module) : eresult nnrc_module :=
     elift
       (fun xy =>
          (mkModuleN
             p.(modulec_namespace)
                 (snd xy)))
-      (declarations_calculus_with_table cto_decls local_namespace p.(modulec_declarations)).
+      (declarations_calculus_with_table ergo_type_decls local_namespace p.(modulec_declarations)).
 
-  Definition module_to_nnrc (ctos:list cto_package) (p:ergoc_module) : eresult nnrc_module :=
+  Definition module_to_nnrc (ctos:list ergo_type_package) (p:ergoc_module) : eresult nnrc_module :=
     let local_namespace := p.(modulec_namespace) in
-    let ectos := cto_resolved_tbl_for_package ctos in
+    let ectos := ergo_type_resolved_tbl_for_package ctos in
     eolift (fun ctos_decls => module_to_nnrc_with_table ctos_decls local_namespace p) ectos.
 
   Section tests.

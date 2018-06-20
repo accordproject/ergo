@@ -20,7 +20,7 @@ Require Import Qcert.Common.TypingRuntime.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
 
-Module EType(ergomodel:ErgoBackendModel).
+Module ECType(ergomodel:ErgoBackendModel).
 
   Definition empty_brand_model (x:unit) := TBrandModel.empty_brand_model.
 
@@ -33,47 +33,47 @@ Module EType(ergomodel:ErgoBackendModel).
   Definition closed_kind : record_kind
     := RType.Closed.
 
-  Definition etype_struct {m:brand_relation} : Set
+  Definition ectype_struct {m:brand_relation} : Set
     := RType.rtype₀.
-  Definition etype {m:brand_relation} : Set
+  Definition ectype {m:brand_relation} : Set
     := RType.rtype.
   Definition t {m:brand_relation} : Set
-    := etype.
+    := ectype.
 
   Definition sorted_pf_type {m:brand_relation} srl
-      := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string etype srl) = true.
+      := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string ectype srl) = true.
 
-  Definition bottom {m:brand_relation} : etype
+  Definition bottom {m:brand_relation} : ectype
     := RType.Bottom.  
-  Definition top {m:brand_relation} : etype
+  Definition top {m:brand_relation} : ectype
     := RType.Top.
-  Definition empty {m:brand_relation} : etype
+  Definition empty {m:brand_relation} : ectype
     := RType.Unit.
-  Definition double {m:brand_relation} : etype
+  Definition double {m:brand_relation} : ectype
     := RType.Float.
-  Definition integer {m:brand_relation} : etype
+  Definition integer {m:brand_relation} : ectype
     := RType.Nat.
-  Definition bool {m:brand_relation} : etype
+  Definition bool {m:brand_relation} : ectype
     := RType.Bool.
-  Definition string {m:brand_relation} : etype
+  Definition string {m:brand_relation} : ectype
     := RType.String.
-  Definition array {m:brand_relation} : etype -> etype
+  Definition array {m:brand_relation} : ectype -> ectype
     := RType.Coll.
-  Definition record {m:brand_relation} : record_kind -> forall (r:list (String.string*etype)), sorted_pf_type r -> etype
+  Definition record {m:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
     := RType.Rec.
-  Definition sum {m:brand_relation} : etype -> etype -> etype
+  Definition sum {m:brand_relation} : ectype -> ectype -> ectype
     := RType.Either.
-  Definition arrow {m:brand_relation} : etype -> etype -> etype
+  Definition arrow {m:brand_relation} : ectype -> ectype -> ectype
     := RType.Arrow.
-  Definition brand {m:brand_relation} : list String.string -> etype 
+  Definition brand {m:brand_relation} : list String.string -> ectype 
     := RType.Brand.
 
-  Definition option {m:brand_relation} : etype -> etype
+  Definition option {m:brand_relation} : ectype -> ectype
     := RType.Option.
   
   (* Additional support for brand models extraction -- will have to be tested/consolidated *)
 
-  Definition brand_context_type {m:brand_relation} : Set := (String.string*etype).
+  Definition brand_context_type {m:brand_relation} : Set := (String.string*ectype).
   
   Definition brand_relation : Set := brand_relation.
   Definition make_brand_relation := Schema.mk_brand_relation.
@@ -81,5 +81,5 @@ Module EType(ergomodel:ErgoBackendModel).
   Definition make_brand_model := Schema.make_brand_model_from_decls_fails.
   Definition typing_runtime : Set := typing_runtime.
 
-End EType.
+End ECType.
 

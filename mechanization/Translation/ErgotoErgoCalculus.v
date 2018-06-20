@@ -23,7 +23,7 @@ Require Import Qcert.NNRC.NNRCRuntime.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoSugar.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
@@ -75,32 +75,32 @@ Section ErgotoErgoCalculus.
 
   (** Translate a clause to clause+calculus *)
 
-  Definition default_emits_in_clause (emits:option cto_type) : cto_type :=
+  Definition default_emits_in_clause (emits:option ergo_type) : ergo_type :=
     match emits with
     | Some e => e
-    | None => CTOClassRef default_event_type
+    | None => ErgoTypeClassRef default_event_type
     end.
 
-  Definition default_state_in_clause (state:option cto_type) : cto_type :=
+  Definition default_state_in_clause (state:option ergo_type) : ergo_type :=
     match state with
     | Some e => e
-    | None => CTOClassRef default_state_type
+    | None => ErgoTypeClassRef default_state_type
     end.
 
-  Definition default_throws_in_clause (emits:option cto_type) : cto_type :=
+  Definition default_throws_in_clause (emits:option ergo_type) : ergo_type :=
     match emits with
     | Some e => e
-    | None => CTOClassRef default_throws_type
+    | None => ErgoTypeClassRef default_throws_type
     end.
 
-  Definition mk_success_type (response_type state_type emit_type: cto_type) :=
-    CTORecord (("response",response_type)::("state",state_type)::("emit",emit_type)::nil)%string.
-  Definition mk_error_type (throw_type: cto_type) :=
+  Definition mk_success_type (response_type state_type emit_type: ergo_type) :=
+    ErgoTypeRecord (("response",response_type)::("state",state_type)::("emit",emit_type)::nil)%string.
+  Definition mk_error_type (throw_type: ergo_type) :=
     throw_type.
-  Definition mk_output_type (success_type error_type: cto_type) :=
-    CTOSum success_type error_type.
+  Definition mk_output_type (success_type error_type: ergo_type) :=
+    ErgoTypeSum success_type error_type.
 
-  Definition clause_to_calculus (tem:cto_type) (sta:option cto_type) (c:ergo_clause) : ergoc_function :=
+  Definition clause_to_calculus (tem:ergo_type) (sta:option ergo_type) (c:ergo_clause) : ergoc_function :=
     let response_type := c.(clause_lambda).(lambda_output) in
     let emit_type := default_emits_in_clause c.(clause_lambda).(lambda_emits) in
     let state_type :=  default_state_in_clause sta in
@@ -112,7 +112,7 @@ Section ErgotoErgoCalculus.
       (mkLambdaC
          ((this_contract, tem)
             ::(this_state, state_type)
-            ::(this_emit,CTOArray emit_type)
+            ::(this_emit,ErgoTypeArray emit_type)
             ::c.(clause_lambda).(lambda_params))
          (mk_output_type success_type error_type)
          (ergoc_expr_top (ergo_stmt_to_expr c.(clause_lambda).(lambda_body)))).
@@ -138,7 +138,7 @@ Section ErgotoErgoCalculus.
   (** Translate a statement to a statement+calculus *)
   Definition declaration_to_calculus (s:ergo_declaration) : option (ergoc_declaration) :=
     match s with
-    | EType cto_type => None
+    | EType ergo_type => None
     | EExpr e => Some (ECExpr e)
     | EGlobal v e => Some (ECGlobal v e)
     | EImport s => None
@@ -162,22 +162,22 @@ Section ErgotoErgoCalculus.
   Section Examples.
     Definition f1 :=
       mkFunc "addFee"
-             (mkLambda (("rate"%string, CTODouble)::nil)
-                       CTOAny
+             (mkLambda (("rate"%string, ErgoTypeDouble)::nil)
+                       ErgoTypeAny
                        None
                        None
                        (SReturn (EConst (dfloat float_one)))).
     Definition cl1 :=
       mkClause "volumediscount"
-               (mkLambda (("request"%string, CTOClassRef default_request_type)::nil)
-                         CTOAny
+               (mkLambda (("request"%string, ErgoTypeClassRef default_request_type)::nil)
+                         ErgoTypeAny
                          None
                          None
                          (SReturn (ECallFun "addFee" ((EConst (dfloat float_zero))::nil)))).
     Definition co1 : ergo_contract :=
       mkContract
         "VolumeDiscount"
-        (CTOClassRef (AbsoluteRef "TemplateModel"%string))
+        (ErgoTypeClassRef (AbsoluteRef "TemplateModel"%string))
         None
         (cl1::nil).
 

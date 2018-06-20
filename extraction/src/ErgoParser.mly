@@ -103,12 +103,12 @@ decls:
     { s :: ss }
 
 decl:
-| DEFINE CONCEPT cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration cn (CTOConcept (oe,ctype))) }
-| DEFINE TRANSACTION cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration cn (CTOTransaction (oe,ctype))) }
-| DEFINE ENUM cn = ident et = cto_enum_decl
-    { EType (ErgoCompiler.mk_cto_declaration cn (CTOEnum et)) }
+| DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeConcept (oe,ctype))) }
+| DEFINE TRANSACTION cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeTransaction (oe,ctype))) }
+| DEFINE ENUM cn = ident et = ergo_type_enum_decl
+    { EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeEnum et)) }
 | DEFINE VARIABLE v = ident EQUAL e = expr
     { EGlobal (v, e) }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
@@ -134,13 +134,13 @@ decl:
 | c = contract
     { EContract c }
 
-cto_class_decl:
+ergo_type_class_decl:
 | LCURLY rt = rectype RCURLY
     { (None, rt) }
 | EXTENDS qn = qname_base LCURLY rt = rectype RCURLY
     { (Some (relative_ref_of_qname_base qn), rt) }
 
-cto_enum_decl:
+ergo_type_enum_decl:
 | LCURLY il = identlist RCURLY
     { il }
 
@@ -199,30 +199,30 @@ params:
 
 param:
 | pn = IDENT
-    { (Util.char_list_of_string pn, ErgoCompiler.cto_any) }
+    { (Util.char_list_of_string pn, ErgoCompiler.ergo_type_any) }
 | pn = IDENT COLON pt = paramtype
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
 | qn = qname_base
     { begin match qn with
-      | (None, "Boolean") -> ErgoCompiler.cto_boolean
-      | (None, "String") -> ErgoCompiler.cto_string
-      | (None, "Double") -> ErgoCompiler.cto_double
-      | (None, "Long") -> ErgoCompiler.cto_long
-      | (None, "Integer") -> ErgoCompiler.cto_integer
-      | (None, "DateTime") -> ErgoCompiler.cto_dateTime
-      | (None, "Empty") -> ErgoCompiler.cto_none
-      | (None, "Any") -> ErgoCompiler.cto_any
+      | (None, "Boolean") -> ErgoCompiler.ergo_type_boolean
+      | (None, "String") -> ErgoCompiler.ergo_type_string
+      | (None, "Double") -> ErgoCompiler.ergo_type_double
+      | (None, "Long") -> ErgoCompiler.ergo_type_long
+      | (None, "Integer") -> ErgoCompiler.ergo_type_integer
+      | (None, "DateTime") -> ErgoCompiler.ergo_type_dateTime
+      | (None, "Empty") -> ErgoCompiler.ergo_type_none
+      | (None, "Any") -> ErgoCompiler.ergo_type_any
       | _ ->
-          ErgoCompiler.cto_class_ref (relative_ref_of_qname_base qn)
+          ErgoCompiler.ergo_type_class_ref (relative_ref_of_qname_base qn)
       end }
 | LCURLY rt = rectype RCURLY
-    { ErgoCompiler.cto_record rt }
+    { ErgoCompiler.ergo_type_record rt }
 | pt = paramtype LBRACKET RBRACKET
-    { ErgoCompiler.cto_array pt }
+    { ErgoCompiler.ergo_type_array pt }
 | pt = paramtype QUESTION
-    { ErgoCompiler.cto_option pt }
+    { ErgoCompiler.ergo_type_option pt }
 
 rectype:
 | 

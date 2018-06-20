@@ -15,7 +15,7 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Compiler.ErgoCompiler.
 
@@ -36,15 +36,15 @@ contract HelloWorld over TemplateModel {
   Definition cl1 : ergo_clause :=
     mkClause "helloworld"
              (mkLambda
-                (("request", CTOClassRef (AbsoluteRef "Request"))::nil)
-                (CTOClassRef (AbsoluteRef "Response"))
+                (("request", ErgoTypeClassRef (AbsoluteRef "Request"))::nil)
+                (ErgoTypeClassRef (AbsoluteRef "Response"))
                 None
                 None
                 (SReturn (EVar "request"))).
 
   Definition c1 : ergo_contract :=
     mkContract "HelloWorld"
-               (CTOClassRef (AbsoluteRef "TemplateModel"))
+               (ErgoTypeClassRef (AbsoluteRef "TemplateModel"))
                None
                (cl1::nil).
   

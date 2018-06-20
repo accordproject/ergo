@@ -22,7 +22,7 @@ Require Qcert.Utils.Closure.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 
 Section Lambda.
@@ -40,11 +40,11 @@ Section Lambda.
 End Lambda.
 
 Section Patch.
-  Definition nnrc_lambda_type_of_lambda_type (t:option unit) : cto_type :=
-    CTOAny.
+  Definition nnrc_lambda_type_of_lambda_type (t:option unit) : ergo_type :=
+    ErgoTypeAny.
   
   Definition nnrc_lambda_params_of_lambda_params
-             (params:list (string * option unit)) : list (string * cto_type) :=
+             (params:list (string * option unit)) : list (string * ergo_type) :=
     List.map (fun xy => (fst xy, nnrc_lambda_type_of_lambda_type (snd xy))) params.
     
   Definition nnrc_expr_lambda_of_backend_closure

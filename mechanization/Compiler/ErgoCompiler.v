@@ -20,6 +20,7 @@ Require ErgoSpec.Common.Utils.ENames.
 Require ErgoSpec.Common.Utils.EResult.
 Require ErgoSpec.Common.Utils.EImport.
 Require ErgoSpec.Common.CTO.CTO.
+Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
@@ -34,7 +35,7 @@ Module ErgoCompiler.
   Module Data := ErgoBackend.ErgoData.
   Module Ops := ErgoBackend.ErgoOps.
 
-  (** CTO *)
+  (** Names *)
   Definition name_ref : Set
     := ENames.name_ref.
   Definition mk_relative_ref : option String.string -> String.string -> name_ref
@@ -42,10 +43,7 @@ Module ErgoCompiler.
   Definition mk_absolute_ref : String.string -> name_ref
     := ENames.AbsoluteRef.
 
-  Definition cto_any : CTO.cto_type
-    := CTO.CTOAny.
-  Definition cto_none : CTO.cto_type
-    := CTO.CTONone.
+  (** CTO *)
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
   Definition cto_string : CTO.cto_type
@@ -62,8 +60,6 @@ Module ErgoCompiler.
     := CTO.CTOClassRef.
   Definition cto_option : CTO.cto_type -> CTO.cto_type
     := CTO.CTOOption.
-  Definition cto_record : list(String.string * CTO.cto_type) -> CTO.cto_type
-    := CTO.CTORecord.
   Definition cto_array : CTO.cto_type -> CTO.cto_type
     := CTO.CTOArray.
 
@@ -78,6 +74,44 @@ Module ErgoCompiler.
     := CTO.mkCTODeclaration.
   Definition mk_cto_package : String.string -> list EImport.import_decl -> list CTO.cto_declaration -> CTO.cto_package
     := CTO.mkCTOPackage.
+
+  (** ErgoType *)
+  Definition ergo_type_any : ErgoType.ergo_type
+    := ErgoType.ErgoTypeAny.
+  Definition ergo_type_none : ErgoType.ergo_type
+    := ErgoType.ErgoTypeNone.
+  Definition ergo_type_boolean : ErgoType.ergo_type
+    := ErgoType.ErgoTypeBoolean.
+  Definition ergo_type_string : ErgoType.ergo_type
+    := ErgoType.ErgoTypeString.
+  Definition ergo_type_double : ErgoType.ergo_type
+    := ErgoType.ErgoTypeDouble.
+  Definition ergo_type_long : ErgoType.ergo_type
+    := ErgoType.ErgoTypeLong.
+  Definition ergo_type_integer : ErgoType.ergo_type
+    := ErgoType.ErgoTypeInteger.
+  Definition ergo_type_dateTime : ErgoType.ergo_type
+    := ErgoType.ErgoTypeDateTime.
+  Definition ergo_type_class_ref : name_ref -> ErgoType.ergo_type
+    := ErgoType.ErgoTypeClassRef.
+  Definition ergo_type_option : ErgoType.ergo_type -> ErgoType.ergo_type
+    := ErgoType.ErgoTypeOption.
+  Definition ergo_type_record : list(String.string * ErgoType.ergo_type) -> ErgoType.ergo_type
+    := ErgoType.ErgoTypeRecord.
+  Definition ergo_type_array : ErgoType.ergo_type -> ErgoType.ergo_type
+    := ErgoType.ErgoTypeArray.
+
+  Definition ergo_type_enum : list String.string -> ErgoType.ergo_type_declaration_kind
+    := ErgoType.ErgoTypeEnum.
+  Definition ergo_type_transaction : option name_ref -> list (String.string * ErgoType.ergo_type) -> ErgoType.ergo_type_declaration_kind
+    := ErgoType.ErgoTypeTransaction.
+  Definition ergo_type_concept : option name_ref -> list (String.string * ErgoType.ergo_type) -> ErgoType.ergo_type_declaration_kind
+    := ErgoType.ErgoTypeConcept.
+
+  Definition mk_ergo_type_declaration : String.string -> ErgoType.ergo_type_declaration_kind -> ErgoType.ergo_type_declaration
+    := ErgoType.mkErgoTypeDeclaration.
+  Definition mk_ergo_type_package : String.string -> list EImport.import_decl -> list ErgoType.ergo_type_declaration -> ErgoType.ergo_type_package
+    := ErgoType.mkErgoTypePackage.
 
   (** Ergo *)
   Definition ergo_module : Set 
@@ -111,7 +145,7 @@ Module ErgoCompiler.
     := Ergo.EIf.
   Definition elet (v:String.string) (e1 e2:ergo_expr) : ergo_expr
     := Ergo.ELet v None e1 e2.
-  Definition elet_typed (v:String.string) (t:CTO.cto_type) (e1 e2:ergo_expr) : ergo_expr
+  Definition elet_typed (v:String.string) (t:ErgoType.ergo_type) (e1 e2:ergo_expr) : ergo_expr
     := Ergo.ELet v (Some t) e1 e2.
   Definition eforeach : list (String.string * ergo_expr) -> option ergo_expr -> ergo_expr -> ergo_expr
     := Ergo.EForeach.
@@ -140,7 +174,7 @@ Module ErgoCompiler.
     Ergo.SEmit.
   Definition slet (v:String.string) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt
     := Ergo.SLet v None e1 s2.
-  Definition slet_typed (v:String.string) (t:CTO.cto_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt
+  Definition slet_typed (v:String.string) (t:ErgoType.ergo_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt
     := Ergo.SLet v (Some t) e1 s2.
   Definition sif : ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt :=
     Ergo.SIf.
