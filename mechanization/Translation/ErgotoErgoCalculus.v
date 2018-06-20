@@ -75,37 +75,12 @@ Section ErgotoErgoCalculus.
 
   (** Translate a clause to clause+calculus *)
 
-  Definition default_emits_in_clause (emits:option ergo_type) : ergo_type :=
-    match emits with
-    | Some e => e
-    | None => ErgoTypeClassRef default_event_type
-    end.
-
-  Definition default_state_in_clause (state:option ergo_type) : ergo_type :=
-    match state with
-    | Some e => e
-    | None => ErgoTypeClassRef default_state_type
-    end.
-
-  Definition default_throws_in_clause (emits:option ergo_type) : ergo_type :=
-    match emits with
-    | Some e => e
-    | None => ErgoTypeClassRef default_throws_type
-    end.
-
-  Definition mk_success_type (response_type state_type emit_type: ergo_type) :=
-    ErgoTypeRecord (("response",response_type)::("state",state_type)::("emit",emit_type)::nil)%string.
-  Definition mk_error_type (throw_type: ergo_type) :=
-    throw_type.
-  Definition mk_output_type (success_type error_type: ergo_type) :=
-    ErgoTypeSum success_type error_type.
-
   Definition clause_to_calculus (tem:ergo_type) (sta:option ergo_type) (c:ergo_clause) : ergoc_function :=
     let response_type := c.(clause_lambda).(lambda_output) in
-    let emit_type := default_emits_in_clause c.(clause_lambda).(lambda_emits) in
-    let state_type :=  default_state_in_clause sta in
+    let emit_type := lift_default_emits_type c.(clause_lambda).(lambda_emits) in
+    let state_type :=  lift_default_state_type sta in
     let success_type := mk_success_type response_type state_type emit_type in
-    let throw_type := default_throws_in_clause c.(clause_lambda).(lambda_throws) in
+    let throw_type := lift_default_throws_type c.(clause_lambda).(lambda_throws) in
     let error_type := mk_error_type throw_type in
     mkFuncC
       c.(clause_name)

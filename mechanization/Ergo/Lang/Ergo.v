@@ -141,6 +141,12 @@ Section Ergo.
       
     Definition lookup_single_contract (p:ergo_module) : eresult ergo_contract :=
       lookup_single_contract_in_declarations p.(module_declarations).
+
+    Definition lookup_single_contract_with_state (p:ergo_module) : eresult (ergo_contract * string) :=
+      eolift (fun ec =>
+               elift (fun ecstate =>
+                        (ec, ecstate)) (lift_default_state_name ec.(contract_state)))
+            (lookup_single_contract_in_declarations p.(module_declarations)).
     
   End Lookup.
 

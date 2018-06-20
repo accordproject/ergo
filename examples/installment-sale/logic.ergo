@@ -13,7 +13,7 @@
  */
  namespace org.accordproject.installmentsale
 
-contract InstallmentSale over TemplateModel {
+contract InstallmentSale over TemplateModel state InstallmentSaleState {
   clause init(request : InitializeRequest) : InitializeResponse {
     set state new InstallmentSaleState{
       stateId: "org.accordproject.installmentsale.InstallmentSaleState#1",

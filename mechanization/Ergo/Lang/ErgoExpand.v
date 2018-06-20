@@ -126,7 +126,7 @@ Section ErgoExpand.
                 (("request"%string,(ErgoTypeClassRef default_request_type))::nil)
                 ErgoTypeNone
                 None
-                (Some (ErgoTypeClassRef default_event_type))
+                (Some (ErgoTypeClassRef default_emits_type))
                 init_body).
 
   Definition add_init_clause_to_contract (namespace:string) (c:ergo_contract) : ergo_contract :=
