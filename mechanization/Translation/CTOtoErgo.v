@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-(** Translates CTO to Ergo Types *)
+(** Translates a CTO to an Ergo module *)
 
 Require Import String.
 Require Import List.
@@ -24,8 +24,9 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EImport.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
 
-Section CTOtoErgoType.
+Section CTOtoErgo.
 
   Fixpoint cto_type_to_ergo_type (ct:cto_type) : ergo_type :=
     match ct with
@@ -60,10 +61,27 @@ Section CTOtoErgoType.
       d.(cto_declaration_name)
       (cto_declaration_kind_to_ergo_type_declaration_kind d.(cto_declaration_type)).
 
-  Definition cto_package_to_ergo_type_package (p:cto_package) : ergo_type_package :=
-    mkErgoTypePackage
+  Definition cto_declaration_to_ergo_declaration (d:cto_declaration) : ergo_declaration :=
+    EType (cto_declaration_to_ergo_type_declaration d).
+
+  Definition cto_package_to_ergo_module (p:cto_package) : ergo_module :=
+    mkModule
       p.(cto_package_namespace)
       p.(cto_package_imports)
-      (map cto_declaration_to_ergo_type_declaration p.(cto_package_declarations)).
+      (map cto_declaration_to_ergo_declaration p.(cto_package_declarations)).
 
-End CTOtoErgoType.
+  Fixpoint map_type_decl (edls:list ergo_declaration) : list ergo_type_declaration :=
+    match edls with
+    | nil => nil
+    | EType dl :: edls' => dl :: (map_type_decl edls')
+    | _ :: edls' =>  (map_type_decl edls')
+    end.
+  
+  Definition cto_package_to_ergo_type_module (p:cto_package) : ergo_type_module :=
+    let em := cto_package_to_ergo_module p in
+    mkErgoTypeModule
+      em.(module_namespace)
+      em.(module_imports)
+      (map_type_decl em.(module_declarations)).
+
+End CTOtoErgo.

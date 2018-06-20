@@ -110,8 +110,8 @@ Module ErgoCompiler.
 
   Definition mk_ergo_type_declaration : String.string -> ErgoType.ergo_type_declaration_kind -> ErgoType.ergo_type_declaration
     := ErgoType.mkErgoTypeDeclaration.
-  Definition mk_ergo_type_package : String.string -> list EImport.import_decl -> list ErgoType.ergo_type_declaration -> ErgoType.ergo_type_package
-    := ErgoType.mkErgoTypePackage.
+  Definition mk_ergo_type_module : String.string -> list EImport.import_decl -> list ErgoType.ergo_type_declaration -> ErgoType.ergo_type_module
+    := ErgoType.mkErgoTypeModule.
 
   (** Ergo *)
   Definition ergo_module : Set 

@@ -141,7 +141,6 @@ Section ErgotoErgoCalculus.
     | EType ergo_type => None
     | EExpr e => Some (ECExpr e)
     | EGlobal v e => Some (ECGlobal v e)
-    | EImport s => None
     | EFunc f => Some (ECFunc (function_to_calculus f))
     | EContract c => Some (ECContract (contract_to_calculus c))
     end.
