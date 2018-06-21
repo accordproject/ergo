@@ -24,8 +24,10 @@ Require ErgoSpec.Common.CTO.CTO.
 Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
+Require ErgoSpec.Ergo.Lang.ErgoEval.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
 Require ErgoSpec.Compiler.ErgoCompilerDriver.
+
 
 Module ErgoCompiler.
 
@@ -269,6 +271,9 @@ Module ErgoCompiler.
     -> ergo_module
     -> EResult.eresult Java.java
     := ErgoCompilerDriver.ergo_module_to_java_top.
+
+  (* REPL *)
+  Definition ergo_eval_expr := ErgoEval.ergo_eval_expr.
 
 End ErgoCompiler.
 
