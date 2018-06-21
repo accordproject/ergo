@@ -162,6 +162,34 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
   | ELiftError e1 e2 => TODO
   end.
 
+Fixpoint ergo_eval_stmt (ctx : ergo_context) (stmt : ergo_stmt) : eresult (ergo_context * ergo_data) :=
+       match stmt with
+       | SReturn expr => TODO
+       | SFunReturn expr => TODO
+       | SThrow expr => TODO
+       | SCallClause name args => TODO
+       | SSetState expr stmt' => TODO
+       | SEmit expr stmt' => TODO
+       | SLet name type val stmt' => TODO
+       | SIf c t f => TODO
+       | SEnforce e f stmt' => TODO
+       | SMatch e cls stmt' => TODO
+       end.
+
+Fixpoint ergo_eval_decl (ctx : ergo_context) (decl : ergo_declaration) : eresult (ergo_context * option ergo_data) :=
+  match decl with
+  | EType cto => esuccess (ctx, None)
+  | EExpr e =>
+    match ergo_eval_expr ctx e with
+    | Success _ _ r => esuccess (ctx, Some r)
+    | Failure _ _ f => efailure f
+    end
+  | EGlobal n e => TODO
+  | EImport id => TODO
+  | EFunc f => TODO
+  | EContract c => TODO
+  end.
+
 End ErgoEval.
 
 Section Tests.
