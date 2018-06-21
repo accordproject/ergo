@@ -35,6 +35,12 @@ BYTE=byte
 JS=js
 ML=ml
 
+TARGET0=ergotop.$(NATIVE)
+MAIN0=ergotop
+BYTE0=$(MAIN0).$(BYTE)
+BIN0=$(MAIN0).$(NATIVE)
+DIST0=../bin/$(TARGET0)
+
 TARGET1=ergoc.$(NATIVE)
 MAIN1=ergocML
 BYTE1=$(MAIN1).$(BYTE)
@@ -55,9 +61,11 @@ DIST3=../packages/ergo-cli/lib/$(TARGET3)
 
 
 ## Toplevel
-all: $(DIST1) $(DIST2) $(DIST3)
+all: $(DIST0) $(DIST1) $(DIST2) $(DIST3)
 
-all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli $(DIST1) $(DIST2) $(DIST3)
+all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli $(DIST0) $(DIST1) $(DIST2) $(DIST3)
+
+top: $(DIST0)
 
 js: $(DIST2) $(DIST3)
 
@@ -100,6 +108,12 @@ extracted/StdlibResources.ml: stdlib/contract.ctoj stdlib/hyperledger.ctoj stdli
          done) >> extracted/StdlibResources.ml
 
 ## Native
+$(DIST0): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN0)
+	cp _build/$(BIN0) $(DIST0)
+
+$(BIN0): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN0).$(ML)
+	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN0)
+
 $(DIST1): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN1)
 	cp _build/$(BIN1) $(DIST1)
 
@@ -127,6 +141,7 @@ clean:
 	ocamlbuild -clean -no-log
 	rm -rf _build
 	rm -rf _build_js
+	rm -f $(DIST0)
 	rm -f $(DIST1)
 	rm -f extracted/StdlibResources.ml
 	rm -f stdlib/*.ctoj
