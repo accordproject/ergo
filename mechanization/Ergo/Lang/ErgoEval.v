@@ -11,7 +11,7 @@ Section ErgoEval.
 
   Record ergo_context :=
     mkContext
-      { function_list : list ergo_function;
+      { function_list : list (string * ergo_function);
         clause_list : list ergo_clause;
         contract_list : list ergo_contract;
         environment_list : list (string * ergo_data);
@@ -36,6 +36,9 @@ Section ErgoEval.
               ctx.(this_contract)
               ctx.(this_state)
               ctx.(this_emit).
+
+  Definition ergo_context_update_env' (ctx : ergo_context) (items : list (string * ergo_data)) : ergo_context :=
+    fold_left (fun ctx' item => ergo_context_update_env ctx' (fst item) (snd item)) items ctx.
 
 Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_data :=
   match expr with
@@ -65,6 +68,7 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
   | EUnaryOp o e  =>
     match ergo_eval_expr ctx e with
     | Success _ _ e' =>
+      (* TODO this takes a type hierarchy as a list of string * strings. *)
       match ergo_unary_eval nil o e' with
       | Some r => esuccess r
       | None => efailure (RuntimeError "Unary operation failed.")
@@ -77,6 +81,7 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
     | Success _ _ e1' =>
       match ergo_eval_expr ctx e2 with
       | Success _ _ e2' =>
+        (* TODO this takes a type hierarchy as a list of string * strings. *)
         match ergo_binary_eval nil o e1' e2' with
         | Some r => esuccess r
         | None => efailure (RuntimeError "Binary operation failed.")
@@ -102,16 +107,49 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
     | Failure _ _ f => efailure f
     end
 
-  | ERecord rs => esuccess dunit
+  | ERecord rs =>
+    fold_left
+      (fun ls nv =>
+         let name := fst nv in
+         let value := snd nv in
+         match ls with
+         | Success _ _ (drec ls') =>
+           match ergo_eval_expr ctx value with
+             (* TODO OpRecConcat to normalize shadowing properly *)
+           | Success _ _ value' => esuccess (drec (ls' ++ ((name, value')::nil)))
+           | Failure _ _ f => efailure f
+           end
+         | Success _ _ _ => efailure (RuntimeError "This should never happen.")
+         | Failure _ _ f => efailure f
+         end)
+      rs (esuccess (drec nil))
+
   | ENew nr vs => esuccess dunit
-  | ECallFun f es => esuccess dunit
-  | EMatch e pes f => esuccess dunit
-  | EForeach ls whr f => esuccess dunit
-  | ELiftError e1 e2 => esuccess dunit
+  | ECallFun fn args =>
+    match lookup String.string_dec ctx.(function_list) fn with
+    | Some fn' =>
+      let lam := fn'.(function_lambda) in
+      let nms := lam.(lambda_params) in
+      let bod := lam.(lambda_body) in
+      esuccess dunit
+    | None => efailure (RuntimeError ("Function " ++ fn ++ " not found."))
+    end
+  | EMatch e pes f => efailure (RuntimeError "Unimplemented TODO")
+  | EForeach ls whr f => efailure (RuntimeError "Unimplemented TODO")
+  | ELiftError e1 e2 => efailure (RuntimeError "Unimplemented TODO") (* ignore for now *)
   end.
 
+Definition cow : string := "disco".
 Definition easy := EConst (dnat 0).
+Definition summ := EUnaryOp (OpNatUnary NatLog2) (EConst (dnat 1024)).
+Definition lettuce := ELet "cow" None (EConst (dnat 1024)) (EVar "cow").
+Definition cabbage := ELet "cow" None (EConst (dnat 2048)) lettuce.
+Definition records := ERecord ((cow, EConst (dnat 512))::(cow, EConst (dnat 4096))::nil).
 
-Compute (ergo_eval_expr ergo_empty_context easy). (* Compute = Eval vm_compute in *)
+(* Compute = Eval vm_compute in *)
+Compute (ergo_eval_expr ergo_empty_context easy).
+Compute (ergo_eval_expr ergo_empty_context summ).
+Compute (ergo_eval_expr ergo_empty_context cabbage).
+Compute (ergo_eval_expr ergo_empty_context records).
 
 End ErgoEval.
