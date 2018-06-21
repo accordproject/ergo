@@ -45,6 +45,8 @@ Section ErgoEval.
   Definition ergo_empty_context :=
     mkContext nil nil nil nil dunit dunit dunit dunit.
 
+  Definition TODO {A : Set} : eresult A := efailure (SystemError "Feature not implemented.").
+
   Definition ergo_unary_eval := ErgoOps.Unary.eval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
 
@@ -155,22 +157,26 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
       esuccess dunit
     | None => efailure (RuntimeError ("Function " ++ fn ++ " not found."))
     end
-  | EMatch e pes f => efailure (RuntimeError "Unimplemented TODO")
-  | EForeach ls whr f => efailure (RuntimeError "Unimplemented TODO")
-  | ELiftError e1 e2 => efailure (RuntimeError "Unimplemented TODO") (* ignore for now *)
+  | EMatch e pes f => TODO
+  | EForeach ls whr f => TODO
+  | ELiftError e1 e2 => TODO
   end.
 
-Definition cow : string := "disco".
-Definition easy := EConst (dnat 0).
-Definition summ := EUnaryOp (OpNatUnary NatLog2) (EConst (dnat 1024)).
-Definition lettuce := ELet "cow" None (EConst (dnat 1024)) (EVar "cow").
-Definition cabbage := ELet "cow" None (EConst (dnat 2048)) lettuce.
-Definition records := ERecord ((cow, EConst (dnat 512))::(cow, EConst (dnat 4096))::nil).
-
-(* Compute = Eval vm_compute in *)
-Compute (ergo_eval_expr ergo_empty_context easy).
-Compute (ergo_eval_expr ergo_empty_context summ).
-Compute (ergo_eval_expr ergo_empty_context cabbage).
-Compute (ergo_eval_expr ergo_empty_context records).
-
 End ErgoEval.
+
+Section Tests.
+
+  Definition cow : string := "disco".
+  Definition easy := EConst (dnat 0).
+  Definition summ := EUnaryOp (OpNatUnary NatLog2) (EConst (dnat 1024)).
+  Definition lettuce := ELet "cow" None (EConst (dnat 1024)) (EVar "cow").
+  Definition cabbage := ELet "cow" None (EConst (dnat 2048)) lettuce.
+  Definition records := ERecord ((cow, EConst (dnat 512))::(cow, EConst (dnat 4096))::nil).
+
+  (* Compute = Eval vm_compute in *)
+  Compute (ergo_eval_expr ergo_empty_context easy).
+  Compute (ergo_eval_expr ergo_empty_context summ).
+  Compute (ergo_eval_expr ergo_empty_context cabbage).
+  Compute (ergo_eval_expr ergo_empty_context records).
+
+End Tests.
