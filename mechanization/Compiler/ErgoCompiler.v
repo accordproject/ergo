@@ -273,7 +273,10 @@ Module ErgoCompiler.
     := ErgoCompilerDriver.ergo_module_to_java_top.
 
   (* REPL *)
+  Definition ergo_empty_context := ErgoEval.ergo_empty_context.
   Definition ergo_eval_expr := ErgoEval.ergo_eval_expr.
+  Definition ergo_eval_module := ErgoEval.ergo_eval_module.
+  Definition ergo_string_of_result := ErgoEval.ergo_string_of_result.
 
 End ErgoCompiler.
 
