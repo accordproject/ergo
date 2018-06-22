@@ -7,6 +7,8 @@ Clauses body are statements. They may return a response or an error. They may al
 
 ## Return statement
 
+The return statement stops the execution of a clause and may return a value.
+
 Returning a response from a clause can be done by using a return statement:
 
 ```
@@ -16,10 +18,9 @@ Returning a response from a clause can be done by using a return statement:
 ```
 
 ## Throw statement
+The throw statement is used to generate user-defined exceptions. The throw statement throws (generates) an error. When an error occurs, Ergo statement execution will stop, and generate an error message. See the example using a throw statement:
 
-Returning an error can be done by using a throw statement:
-
-```
+ ```
      throw "Something went wrong"          // Return an error as a string
      return new Error{ message: "oops!" }  // Return an error as an object
 ```
