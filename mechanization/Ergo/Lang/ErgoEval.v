@@ -68,7 +68,6 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
   | EThisContract => esuccess ctx.(this_contract)
   | EThisClause => esuccess ctx.(this_clause)
   | EThisState => esuccess ctx.(this_state)
-  | EThisEmit => esuccess ctx.(this_emit)    (* can be removed *)
   | EVar name =>
     let opt := lookup String.string_dec ctx.(environment_list) name in
     eresult_of_option opt (RuntimeError ("Variable not found: " ++ name))
@@ -185,7 +184,6 @@ Fixpoint ergo_eval_decl (ctx : ergo_context) (decl : ergo_declaration) : eresult
     | Failure _ _ f => efailure f
     end
   | EGlobal n e => TODO
-  | EImport id => TODO
   | EFunc f => TODO
   | EContract c => TODO
   end.
