@@ -277,6 +277,7 @@ Module ErgoCompiler.
   Definition ergo_eval_expr := ErgoEval.ergo_eval_expr.
   Definition ergo_eval_module := ErgoEval.ergo_eval_module.
   Definition ergo_string_of_result := ErgoEval.ergo_string_of_result.
+  Definition ergo_maybe_update_context := ErgoEval.ergo_maybe_update_context.
 
 End ErgoCompiler.
 
