@@ -1,11 +1,11 @@
-Expressions
+## Expressions
 The logic for individual clauses in Ergo is written using statements and expressions. Here below are the currently  supported statements and expressions.
 Literal values
 A literal is a notation for representing a fixed value in Ergo. Most programming languages have notations for atomic values such as integers, floating-point numbers, strings, booleans and characters;  as well as notations for elements of enumerated types and compound values such as arrays, records, and objects.
     "John Smith" // a string literal
     1            // an integer literal
     3.5e-10      // a floating point literal
-Operators
+## Operators
 Ergo supports a set of operators: constructs which behave generally like functions, but which differ syntactically or semantically from usual functions. Ergo operators include arithmetic (addition with +), comparison (with >), logical operations (such as and or &&) and concatenation operators (like ++).
     1+2*3                // Arithmetic operators
     1 <= 3               // Comparison operators
@@ -14,7 +14,7 @@ Ergo supports a set of operators: constructs which behave generally like functio
     true or false        // Boolean operators
     true and false
     "Hello" ++ " World!" // String concatenation
-Local variable declarations
+## Local variable declarations
 There are two levels of visibility, local variables are contrasted with global variables. A local variable is a variable that is given local scope. Local variable references in the function or block in which it is declared override the same variable name in the larger scope. 
     define variable x = 1; // declares and initialize a variable
     x+2                    // rest of the expression, with variable x in scope
@@ -26,7 +26,7 @@ Local variables can also be declared with a type:
     name ++ " Smith"                        // rest of the expression
     define variable x : Double = 3.1416     // declares and initialize a double variable
     sqrt(x)                                 // rest of the expression
-The If statement and Conditionals
+## The If statement and Conditionals
 Conditional statements, conditional expressions and conditional constructs are features of a programming language, which perform different computations or actions depending on whether a programmer-specified boolean condition evaluates to true or false.  Conditional expressions (also known as if statements) allow us to conditionally execute Ergo code depending on the value of a test condition. If the test condition evaluates to true then the code on the then branch is evaluated. Otherwise, when the test condition evaluates to false then the else branch is evaluated.
 Example
 if delayInDays > 15 then
@@ -59,7 +59,7 @@ The value of message after running this code will be "Low Price".
     if x < 0   // Condition
     then -x+1  // Expression if condition is true
     else x+1   // Expression if condition is false
-Enforce expressions
+## Enforce expressions
 Before a contract is enforceable some preconditions such as the following must be satisfied:
 •	Competent parties who have the legal capacity to contract
 •	Lawful subject matter
@@ -75,7 +75,7 @@ One can check preconditions in a clause using enforce expressions, as follows:
 The else part of the expression can be omitted in which case Ergo returns an error by default.
     enforce x >= 0;           // Condition
     x+1                       // Expression if condition is true
-Match expressions
+## Match expressions
 The Match compares a given value with specified constants and take action according to the first constant to match. There is a provision for a default action ('else') to be taken if no match succeeds
     match fruitcode
       with 1 then "Apple"
@@ -136,12 +136,12 @@ This is equivalent to the match expression:
       else
         ...
 
-For expressions
+## For expressions
 A foreach loop is a control flow statement/expression for specifying iteration, which allows code to be executed repeatedly. A foreach has two parts: a header specifying the iteration, and a body which is executed once per iteration. The header declares an explicit loop array, which allows the body to know which iteration is being executed. Foreach is used when the number of iterations is known before entering the loop. Foreach expressions allow to apply an expression of every element in an input array of values and returns a new array:
 foreach x in [1,-2,3] return x+1
 For expressions can have an optional condition of the values being iterated over:
     foreach x in [1,-2,3] where x > 0 return x+1
-Creating objects
+## Creating objects
 An object can be a variable, a data structure, a function, or a method, and as such, is a location in memory having a value and referenced by an identifier. In the class-based object-oriented programming "object" refers to a particular instance of a class where the object can be a combination of variables, functions, and data structures. Creating objects (such as CTO concepts, transactions, or Ergo errors) can be done using new with the name of the concept and the values for each fields:
     new Person{
       name: "John Smith",
