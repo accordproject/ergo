@@ -190,6 +190,28 @@ Fixpoint ergo_eval_decl (ctx : ergo_context) (decl : ergo_declaration) : eresult
   | EContract c => TODO
   end.
 
+Definition ergo_eval_module (ctx : ergo_context) (module : ergo_module) : eresult (ergo_context * option ergo_data) :=
+  match (module.(module_declarations)) with
+  | nil => TODO
+  | d::ds => ergo_eval_decl ctx d
+  end.
+
+Definition ergo_string_of_error (err : eerror) : string :=
+  match err with
+  | SystemError s => "System Error: " ++ s
+  | ParseError p => "Parse Error (?!)"
+  | CompilationError s => "Compilation Error: " ++ s
+  | TypeError s => "Type Error: " ++ s
+  | RuntimeError s => "Runtime Error: " ++ s
+  end.
+
+Definition ergo_string_of_result (result : eresult (ergo_context * option ergo_data)) : string :=
+  match result with
+  | Success _ _ (ctx, None) => "oops"
+  | Success _ _ (ctx, Some d) => dataToString d
+  | Failure _ _ f => ergo_string_of_error f
+  end.
+
 End ErgoEval.
 
 Section Tests.
