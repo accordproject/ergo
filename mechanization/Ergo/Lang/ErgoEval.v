@@ -210,6 +210,13 @@ Definition ergo_string_of_result (result : eresult (ergo_context * option ergo_d
   | Failure _ _ f => ergo_string_of_error f
   end.
 
+Definition ergo_maybe_update_context (ctx : ergo_context) (result : eresult (ergo_context * option ergo_data)) : ergo_context :=
+  match result with
+  | Success _ _ (ctx', Some d) => ctx'
+  | _ => ctx
+  end.
+
+
 End ErgoEval.
 
 Section Tests.

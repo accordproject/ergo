@@ -15,16 +15,28 @@
 open ErgoComp
 open ParseString
 
-(*
-let s = try (ParseString.parse_ergo_from_string "namespace org.accordproject.repl\ndefine variable a = 5\n" ; ())
-    with ErgoUtil.Ergo_Error e -> print_string (ErgoUtil.string_of_error e); print_string "\n"
-    *)
-
 let string_of_char_list cl = String.concat "" (List.map (String.make 1) cl)
 
-let p = print_string "ergotop$ "
-let t = ParseString.parse_ergo_from_string ("namespace org.accordproject.repl\n" ^ (read_line ()) ^ "\n")
-let u = ergo_eval_module ergo_empty_context t
-let v = ergo_string_of_result u
-let w = print_string (string_of_char_list v)
-let n = print_string "\n"
+let rec repl ctx =
+    print_string "ergotop$ " ;
+    let t' =
+        try
+            Some (ParseString.parse_ergo_from_string
+                    ("namespace org.accordproject.repl\n" ^
+                    (read_line ()) ^
+                    "\n"))
+        with ErgoUtil.Ergo_Error e ->
+            print_string (ErgoUtil.string_of_error e);
+            print_string "\n" ;
+            None
+    in
+        match t' with
+          None -> repl ctx
+        | Some t ->
+          let result = ergo_eval_module ctx t in
+          let out = ergo_string_of_result result in
+          print_string (string_of_char_list out);
+          print_string "\n";
+          repl (ergo_maybe_update_context ctx result)
+
+let main = repl ergo_empty_context
