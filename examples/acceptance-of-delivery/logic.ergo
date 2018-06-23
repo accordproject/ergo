@@ -18,12 +18,12 @@ import org.accordproject.acceptanceofdelivery.*
 
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse throws Error {
-    define variable received = request.deliverableReceivedAt;
+    let received = request.deliverableReceivedAt;
     enforce momentIsBefore(received,now()) else
       throw new Error{ error : "Transaction time is before the deliverable date." }
     ;
 
-    define variable status =
+    let status =
       if momentIsAfter(now(), momentAdd(received, momentDuration(contract.businessDays, "day")))
       then "OUTSIDE_INSPECTION_PERIOD"
       else if request.inspectionPassed

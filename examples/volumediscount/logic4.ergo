@@ -16,7 +16,7 @@
 import org.accordproject.contract.*
 import org.accordproject.late.*
 
-define variable fee = 1.0
+define constant fee = 1.0
 define function addFee(rate : Double) : Double {
 	return
     match fee

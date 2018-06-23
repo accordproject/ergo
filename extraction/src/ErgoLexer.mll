@@ -50,7 +50,7 @@
 	      "where", WHERE;
 	      "throw", THROW;
 	      "new", NEW;
-	      "variable", VARIABLE;
+	      "constant", CONSTANT;
 	      "match", MATCH;
 	      "set",SET;
         "emit",EMIT;
@@ -108,7 +108,6 @@ rule token sbuff = parse
 | "??" { QUESTIONQUESTION }
 | "?" { QUESTION }
 | "_" { UNDERSCORE }
-| "!" { BANG }
 | [' ' '\t']
     { token sbuff lexbuf }
 | newline

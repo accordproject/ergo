@@ -327,16 +327,6 @@ Section ErgoCalculustoErgoNNRC.
       in
       elift (NNRCUnop OpFlatten)
             (fold_left proc_one foreachs init_e)
-    | ELiftError e e1 =>
-      elift2
-        (fun ec ec1 =>
-           let (v1,v2) := fresh_in_lift_error ec1 in
-           NNRCEither
-             ec
-             v1 ec1
-             v2 (NNRCVar v2))
-        (ergoc_expr_to_nnrc ctxt e)
-        (ergoc_expr_to_nnrc ctxt e1)
     end.
 
   (** Translate a function to function+calculus *)
@@ -415,9 +405,9 @@ Section ErgoCalculustoErgoNNRC.
       elift
         (fun x => (ctxt, ENExpr x))
         (ergoc_expr_to_nnrc ctxt e)
-    | ECGlobal v e =>
+    | ECConstant v e =>
       elift
-        (fun x => (add_one_global ctxt v, ENGlobal v x)) (* Add new variable to translation_context *)
+        (fun x => (add_one_global ctxt v, ENConstant v x)) (* Add new variable to translation_context *)
         (ergoc_expr_to_nnrc ctxt e)
     | ECFunc f =>
       elift

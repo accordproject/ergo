@@ -44,7 +44,7 @@ let relative_ref_of_qname_base qn =
 %token ENFORCE IF THEN ELSE
 %token LET FOREACH IN WHERE
 %token RETURN THROW STATE
-%token VARIABLE
+%token CONSTANT
 %token NEW
 %token MATCH WITH
 %token SET EMIT
@@ -60,7 +60,7 @@ let relative_ref_of_qname_base qn =
 %token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
 %token DOT QUESTIONDOT COMMA COLON SEMI
-%token QUESTION QUESTIONQUESTION BANG UNDERSCORE
+%token QUESTION QUESTIONQUESTION UNDERSCORE
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
 %token LCURLY RCURLY
@@ -80,7 +80,6 @@ let relative_ref_of_qname_base qn =
 %left PLUSPLUS
 %right NOT
 %left DOT QUESTIONDOT
-%left BANG
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main
 
@@ -111,33 +110,41 @@ decls:
 
 decl:
 | DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeConcept (oe,ctype))) }
+    { let (oe,ctype) = dt in
+      ErgoCompiler.dtype (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeConcept (oe,ctype))) }
 | DEFINE TRANSACTION cn = ident dt = ergo_type_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeTransaction (oe,ctype))) }
+    { let (oe,ctype) = dt in
+      ErgoCompiler.dtype (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeTransaction (oe,ctype))) }
 | DEFINE ENUM cn = ident et = ergo_type_enum_decl
-    { EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeEnum et)) }
-| DEFINE VARIABLE v = ident EQUAL e = expr
-    { EGlobal (v, e) }
+    { ErgoCompiler.dtype (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeEnum et)) }
+| DEFINE CONSTANT v = ident EQUAL e = expr
+    { ErgoCompiler.dconstant v e }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
-    { EFunc
-  { function_name = cn;
-    function_lambda =
-    { lambda_params = [];
-      lambda_output = out;
-      lambda_throws = fst mt;
-      lambda_emits = snd mt;
-      lambda_body = fs; } } }
+    { ErgoCompiler.dfunc
+        { function_name = cn;
+          function_lambda =
+          { lambda_params = [];
+            lambda_output = out;
+            lambda_throws = fst mt;
+            lambda_emits = snd mt;
+            lambda_body = fs; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
-    { EFunc
-  { function_name = cn;
-    function_lambda =
-    { lambda_params = ps;
-      lambda_output = out;
-      lambda_throws = fst mt;
-      lambda_emits = snd mt;
-      lambda_body = fs; } } }
-| c = contract
-    { EContract c }
+    { ErgoCompiler.dfunc
+        { function_name = cn;
+          function_lambda =
+          { lambda_params = ps;
+            lambda_output = out;
+            lambda_throws = fst mt;
+            lambda_emits = snd mt;
+            lambda_body = fs; } } }
+| CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
+    { ErgoCompiler.dcontract
+        { contract_name = cn;
+          contract_template = tn;
+          contract_state = ms;
+          contract_clauses = ds; } }
+| s = stmt SEMI
+    { ErgoCompiler.dstmt s }
 
 ergo_type_class_decl:
 | LCURLY rt = rectype RCURLY
@@ -148,13 +155,6 @@ ergo_type_class_decl:
 ergo_type_enum_decl:
 | LCURLY il = identlist RCURLY
     { il }
-
-contract:
-| CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
-    { { contract_name = cn;
-        contract_template = tn;
-        contract_state = ms;
-        contract_clauses = ds; } }
 
 clauses:
 | 
@@ -252,9 +252,9 @@ stmt:
 (* Call *)
 | fn = IDENT LPAREN el = exprlist RPAREN
     { ErgoCompiler.scallclause (Util.char_list_of_string fn) el }
-| DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = stmt
+| LET v = ident EQUAL e1 = expr SEMI s2 = stmt
     { ErgoCompiler.slet v e1 s2 }
-| DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
+| LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
     { ErgoCompiler.slet_typed v t e1 s2 }
 | IF e1 = expr THEN s2 = stmt ELSE s3 = stmt
     { ErgoCompiler.sif e1 s2 s3 }
@@ -277,9 +277,9 @@ fstmt:
     { ErgoCompiler.sfunreturn e1 }
 | THROW e1 = expr
     { raise (LexError ("Cannot throw inside a function, you have to be in a Clause")) }
-| DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = fstmt
+| LET v = ident EQUAL e1 = expr SEMI s2 = fstmt
     { ErgoCompiler.slet v e1 s2 }
-| DEFINE VARIABLE v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
+| LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
     { ErgoCompiler.slet_typed v t e1 s2 }
 | IF e1 = expr THEN s2 = fstmt ELSE s3 = fstmt
     { ErgoCompiler.sif e1 s2 s3 }
@@ -334,17 +334,17 @@ expr:
     { ErgoCompiler.ecallfun (Util.char_list_of_string fn) el }
 (* Constants *)
 | NIL
-    { ErgoCompiler.econst ErgoCompiler.Data.dunit }
+    { ErgoCompiler.econst ErgoCompiler.ErgoData.dunit }
 | TRUE
-    { ErgoCompiler.econst (ErgoCompiler.Data.dbool true) }
+    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dbool true) }
 | FALSE
-    { ErgoCompiler.econst (ErgoCompiler.Data.dbool false) }
+    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dbool false) }
 | i = INT
-    { ErgoCompiler.econst (ErgoCompiler.Data.dnat (Util.coq_Z_of_int i)) }
+    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dnat (Util.coq_Z_of_int i)) }
 | f = FLOAT
-    { ErgoCompiler.econst (ErgoCompiler.Data.dfloat f) }
+    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dfloat f) }
 | s = STRING
-    { ErgoCompiler.econst (ErgoCompiler.Data.dstring (Util.char_list_of_string s)) }
+    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s)) }
 | LBRACKET el = exprlist RBRACKET
     { ErgoCompiler.earray el }
 (* Expressions *)
@@ -359,7 +359,7 @@ expr:
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { ErgoCompiler.eif e1 e2 e3 }
 | NEW qn = qname LCURLY r = reclist RCURLY
-    { ErgoCompiler.enew (fst qn) (snd qn) r }
+    { ErgoCompiler.enew (ErgoCompiler.mk_relative_ref (fst qn) (snd qn)) r }
 | LCURLY r = reclist RCURLY
     { ErgoCompiler.erecord r }
 | CONTRACT
@@ -369,57 +369,55 @@ expr:
 | STATE
     { ErgoCompiler.ethis_state }
 | LET v = ident EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet v e1 e2 }
+    { ErgoCompiler.elet v None e1 e2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet_typed v t e1 e2 }
+    { ErgoCompiler.elet v (Some t) e1 e2 }
 | MATCH e0 = expr csd = cases
     { ErgoCompiler.ematch e0 (fst csd) (snd csd) }
 | FOREACH fl = foreachlist RETURN e2 = expr
     { ErgoCompiler.eforeach fl None e2 }
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach fl (Some econd) e2 }
-| e1 = expr BANG e2 = expr
-    { ErgoCompiler.elifterror e1 e2 }
 (* Unary operators *)
 | NOT e = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg e }
+    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg e }
 (* Binary operators *)
 | e1 = expr EQUAL e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opequal e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opequal e1 e2 }
 | e1 = expr NEQUAL e2 = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opequal e1 e2) }
+    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opequal e1 e2) }
 | e1 = expr LT e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.oplt e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.oplt e1 e2 }
 | e1 = expr LTEQ e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.ople e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.ople e1 e2 }
 | e1 = expr GT e2 = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.ople e1 e2) }
+    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.ople e1 e2) }
 | e1 = expr GTEQ e2 = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.Ops.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.oplt e1 e2) }
+    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.oplt e1 e2) }
 | e1 = expr MINUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opminus e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opminus e1 e2 }
 | e1 = expr PLUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opplus e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opplus e1 e2 }
 | e1 = expr STAR e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opmult e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opmult e1 e2 }
 | e1 = expr SLASH e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.opdiv e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opdiv e1 e2 }
 | e1 = expr CARROT e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Double.oppow e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.oppow e1 e2 }
 | e1 = expr MINUSI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opminusi e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opminusi e1 e2 }
 | e1 = expr PLUSI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opplusi e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opplusi e1 e2 }
 | e1 = expr STARI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opmulti e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opmulti e1 e2 }
 | e1 = expr SLASHI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.Integer.opdivi e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opdivi e1 e2 }
 | e1 = expr AND e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opand e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opand e1 e2 }
 | e1 = expr OR e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opor e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opor e1 e2 }
 | e1 = expr PLUSPLUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.Ops.Binary.opstringconcat e1 e2 }
+    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opstringconcat e1 e2 }
 
 (* foreach list *)
 foreachlist:
@@ -495,11 +493,11 @@ qname_prefix:
 (* data *)
 data:
 | s = STRING
-    { ErgoCompiler.Data.dstring (Util.char_list_of_string s) }
+    { ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s) }
 | i = INT
-    { ErgoCompiler.Data.dnat i }
+    { ErgoCompiler.ErgoData.dnat i }
 | f = FLOAT
-    { ErgoCompiler.Data.dfloat f }
+    { ErgoCompiler.ErgoData.dfloat f }
 
 (* ident *)
 ident:
@@ -545,7 +543,7 @@ safeident_base:
 | WHERE { "where" }
 | THROW { "throw" }
 | NEW { "new" }
-| VARIABLE { "variable" }
+| CONSTANT { "constant" }
 | MATCH { "match" }
 | SET { "set" }
 | EMIT { "emit" }

@@ -47,7 +47,6 @@ Section Ergo.
   | EMatch : ergo_expr -> list (ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
   | EForeach : list (string * ergo_expr)
                -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
-  | ELiftError : ergo_expr -> ergo_expr -> ergo_expr
   .
 
   (** Statement *)
@@ -94,8 +93,8 @@ Section Ergo.
     (** Declaration *)
     Inductive ergo_declaration :=
     | EType : ergo_type_declaration -> ergo_declaration
-    | EExpr : ergo_expr -> ergo_declaration
-    | EGlobal : string -> ergo_expr -> ergo_declaration
+    | EStmt : ergo_stmt -> ergo_declaration
+    | EConstant : string -> ergo_expr -> ergo_declaration
     | EFunc : ergo_function -> ergo_declaration
     | EContract : ergo_contract -> ergo_declaration.
  
@@ -126,8 +125,8 @@ Section Ergo.
       match dl with
       | nil => nil
       | EType _ :: dl' => lookup_contracts_in_declarations dl'
-      | EExpr _ :: dl' => lookup_contracts_in_declarations dl'
-      | EGlobal _ _ :: dl' => lookup_contracts_in_declarations dl'
+      | EStmt _ :: dl' => lookup_contracts_in_declarations dl'
+      | EConstant _ _ :: dl' => lookup_contracts_in_declarations dl'
       | EFunc f :: dl' => lookup_contracts_in_declarations dl'
       | EContract c :: dl' => c :: lookup_contracts_in_declarations dl'
       end.

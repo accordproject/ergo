@@ -25,26 +25,26 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Section ErgoNNRCtoJavaScript.
   Local Open Scope string_scope.
 
-  (** Global expression *)
+  (** Top-level expression *)
   Definition javascript_of_expression
              (e:nnrc_expr)                  (* expression to translate *)
-             (t : nat)                       (* next available unused temporary *)
-             (i : nat)                       (* indentation level *)
-             (eol:string)                    (* Choice of end of line character *)
-             (quotel:string)                 (* Choice of quote character *)
+             (t : nat)                      (* next available unused temporary *)
+             (i : nat)                      (* indentation level *)
+             (eol:string)                   (* Choice of end of line character *)
+             (quotel:string)                (* Choice of quote character *)
     : ErgoCodeGen.javascript
       * ErgoCodeGen.javascript
       * nat
     := ErgoCodeGen.nnrc_expr_javascript_unshadow e t i eol quotel nil nil.
 
-  (** Global variable *)
-  Definition javascript_of_global
-             (v:string)                      (* global variable name *)
-             (bind:nnrc_expr)               (* expression for the global variable to translate *)
-             (t : nat)                       (* next available unused temporary *)
-             (i : nat)                       (* indentation level *)
-             (eol:string)                    (* Choice of end of line character *)
-             (quotel:string)                 (* Choice of quote character *)
+  (** Top-level constant *)
+  Definition javascript_of_constant
+             (v:string)                     (* constant name *)
+             (bind:nnrc_expr)               (* expression computing the constant *)
+             (t : nat)                      (* next available unused temporary *)
+             (i : nat)                      (* indentation level *)
+             (eol:string)                   (* Choice of end of line character *)
+             (quotel:string)                (* Choice of quote character *)
     : ErgoCodeGen.javascript
       * ErgoCodeGen.javascript
       * nat
@@ -130,7 +130,7 @@ Section ErgoNNRCtoJavaScript.
     :=
       match s with
       | ENExpr e => javascript_of_expression e t i eol quotel
-      | ENGlobal v e => javascript_of_global v e t i eol quotel
+      | ENConstant v e => javascript_of_constant v e t i eol quotel
       | ENFunc f => (javascript_function_of_nnrc_function f None eol quotel,"null",t)
       | ENFuncTable ft => (javascript_class_of_nnrc_function_table ft eol quotel,"null",t)
       end.

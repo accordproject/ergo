@@ -48,9 +48,6 @@ Section ErgoSugar.
                     (EVar local_emit))
          e2.
 
-  Definition ENewSugar pname cname el : ergo_expr :=
-    ENew (RelativeRef pname cname) el.
-
   Definition SThrowSugar pname cname el : ergo_stmt :=
     SThrow (ENew (RelativeRef pname cname) el).
 

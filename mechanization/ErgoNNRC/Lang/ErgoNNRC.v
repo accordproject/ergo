@@ -48,7 +48,7 @@ Section ErgoNNRC.
     (** Declaration *)
     Inductive nnrc_declaration :=
     | ENExpr : nnrc_expr -> nnrc_declaration
-    | ENGlobal : string -> nnrc_expr -> nnrc_declaration
+    | ENConstant : string -> nnrc_expr -> nnrc_declaration
     | ENFunc : nnrc_function -> nnrc_declaration
     | ENFuncTable : nnrc_function_table -> nnrc_declaration.
 
