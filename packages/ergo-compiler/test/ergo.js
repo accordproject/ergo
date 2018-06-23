@@ -71,7 +71,7 @@ describe('ergo-compiler', () => {
             result.success.should.not.be.null;
         });
     });
-    describe('#compilehellofail', function () {
+    describe('#compilelatedeliveryfail', function () {
         it('should fail when compiling a smart Ergo contract to JavaScript', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'model.cto'), 'utf8');
@@ -79,7 +79,7 @@ describe('ergo-compiler', () => {
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
-    describe('#compilehelloandlinkfail', function () {
+    describe('#compilelatedeliveryandlinkfail', function () {
         it('should fail when compiling and linking a smart Ergo contract to JavaScript', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'model.cto'), 'utf8');

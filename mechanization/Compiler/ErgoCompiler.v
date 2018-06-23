@@ -32,8 +32,8 @@ Module ErgoCompiler.
 
   Definition ergo_version := Version.ergo_version.
   
-  Module Data := ErgoBackend.ErgoData.
-  Module Ops := ErgoBackend.ErgoOps.
+  Module ErgoData := ErgoBackend.ErgoData.
+  Module ErgoOps := ErgoBackend.ErgoOps.
 
   (** Names *)
   Definition name_ref : Set
@@ -43,7 +43,7 @@ Module ErgoCompiler.
   Definition mk_absolute_ref : String.string -> name_ref
     := ENames.AbsoluteRef.
 
-  (** CTO *)
+  (** CTOs *)
   Definition cto_boolean : CTO.cto_type
     := CTO.CTOBoolean.
   Definition cto_string : CTO.cto_type
@@ -75,30 +75,32 @@ Module ErgoCompiler.
   Definition mk_cto_package : String.string -> list EImport.import_decl -> list CTO.cto_declaration -> CTO.cto_package
     := CTO.mkCTOPackage.
 
-  (** ErgoType *)
-  Definition ergo_type_any : ErgoType.ergo_type
+  (** Types *)
+  Definition ergo_type : Set 
+    := ErgoType.ergo_type.
+  Definition ergo_type_any : ergo_type
     := ErgoType.ErgoTypeAny.
-  Definition ergo_type_none : ErgoType.ergo_type
+  Definition ergo_type_none : ergo_type
     := ErgoType.ErgoTypeNone.
-  Definition ergo_type_boolean : ErgoType.ergo_type
+  Definition ergo_type_boolean : ergo_type
     := ErgoType.ErgoTypeBoolean.
-  Definition ergo_type_string : ErgoType.ergo_type
+  Definition ergo_type_string : ergo_type
     := ErgoType.ErgoTypeString.
-  Definition ergo_type_double : ErgoType.ergo_type
+  Definition ergo_type_double : ergo_type
     := ErgoType.ErgoTypeDouble.
-  Definition ergo_type_long : ErgoType.ergo_type
+  Definition ergo_type_long : ergo_type
     := ErgoType.ErgoTypeLong.
-  Definition ergo_type_integer : ErgoType.ergo_type
+  Definition ergo_type_integer : ergo_type
     := ErgoType.ErgoTypeInteger.
-  Definition ergo_type_dateTime : ErgoType.ergo_type
+  Definition ergo_type_dateTime : ergo_type
     := ErgoType.ErgoTypeDateTime.
-  Definition ergo_type_class_ref : name_ref -> ErgoType.ergo_type
+  Definition ergo_type_class_ref : name_ref -> ergo_type
     := ErgoType.ErgoTypeClassRef.
-  Definition ergo_type_option : ErgoType.ergo_type -> ErgoType.ergo_type
+  Definition ergo_type_option : ergo_type -> ergo_type
     := ErgoType.ErgoTypeOption.
-  Definition ergo_type_record : list(String.string * ErgoType.ergo_type) -> ErgoType.ergo_type
+  Definition ergo_type_record : list(String.string * ergo_type) -> ergo_type
     := ErgoType.ErgoTypeRecord.
-  Definition ergo_type_array : ErgoType.ergo_type -> ErgoType.ergo_type
+  Definition ergo_type_array : ergo_type -> ergo_type
     := ErgoType.ErgoTypeArray.
 
   Definition ergo_type_enum : list String.string -> ErgoType.ergo_type_declaration_kind
@@ -114,48 +116,64 @@ Module ErgoCompiler.
     := ErgoType.mkErgoTypeModule.
 
   (** Ergo *)
-  Definition ergo_module : Set 
-    := Ergo.ergo_module.
-  Definition ergo_contract : Set
-    := Ergo.ergo_contract.
-  Definition ergo_declaration : Set
-    := Ergo.ergo_declaration.
-  Definition ergo_clause : Set
-    := Ergo.ergo_clause.
   Definition ergo_expr : Set 
     := Ergo.ergo_expr.
   Definition ergo_stmt : Set 
     := Ergo.ergo_stmt.
+  Definition ergo_function : Set
+    := Ergo.ergo_function.
+  Definition ergo_clause : Set
+    := Ergo.ergo_clause.
+  Definition ergo_declaration : Set
+    := Ergo.ergo_declaration.
+  Definition ergo_module : Set 
+    := Ergo.ergo_module.
+  Definition ergo_contract : Set
+    := Ergo.ergo_contract.
 
+  (** Patterns *)
+  Definition ecasedata : ErgoData.data -> EPattern.ergo_pattern
+    := EPattern.CaseData.
+  Definition ecasewildcard : EPattern.type_annotation -> EPattern.ergo_pattern
+    := EPattern.CaseWildcard.
+  Definition ecaselet : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern
+    := EPattern.CaseLet.
+  Definition ecaseletoption : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern
+    := EPattern.CaseLetOption.
+
+  (** Expressions *)
+  Definition ethis_contract : ergo_expr
+    := Ergo.EThisContract.
+  Definition ethis_clause : ergo_expr
+    := Ergo.EThisClause.
+  Definition ethis_state : ergo_expr
+    := Ergo.EThisState.
   Definition evar : String.string -> ergo_expr
     := Ergo.EVar.
-
-  Definition ecasedata : Data.data -> EPattern.ergo_pattern := EPattern.CaseData.
-  Definition ecasewildcard : EPattern.type_annotation -> EPattern.ergo_pattern := EPattern.CaseWildcard.
-  Definition ecaselet : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern := EPattern.CaseLet.
-  Definition ecaseletoption : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern := EPattern.CaseLetOption.
-
-  Definition econst : Data.data -> ergo_expr := Ergo.EConst.
-  Definition earray : list ergo_expr -> ergo_expr := Ergo.EArray.
-  Definition eunaryop : Ops.Unary.op -> ergo_expr -> ergo_expr
+  Definition econst : ErgoData.data -> ergo_expr
+    := Ergo.EConst.
+  Definition earray : list ergo_expr -> ergo_expr
+    := Ergo.EArray.
+  Definition eunaryop : ErgoOps.Unary.op -> ergo_expr -> ergo_expr
     := Ergo.EUnaryOp.
-  Definition ebinaryop : Ops.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr 
+  Definition ebinaryop : ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr 
     := Ergo.EBinaryOp.
   Definition eif : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr 
     := Ergo.EIf.
-  Definition elet (v:String.string) (e1 e2:ergo_expr) : ergo_expr
+  Definition elet (v:String.string) (t:option ErgoType.ergo_type) (e1 e2:ergo_expr) : ergo_expr
     := Ergo.ELet v None e1 e2.
-  Definition elet_typed (v:String.string) (t:ErgoType.ergo_type) (e1 e2:ergo_expr) : ergo_expr
-    := Ergo.ELet v (Some t) e1 e2.
-  Definition eforeach : list (String.string * ergo_expr) -> option ergo_expr -> ergo_expr -> ergo_expr
-    := Ergo.EForeach.
+  Definition enew : name_ref -> list (String.string * ergo_expr) -> ergo_expr 
+    := Ergo.ENew.
+  Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
+    := Ergo.ERecord.
   Definition ecallfun : String.string -> list ergo_expr -> ergo_expr
     := Ergo.ECallFun.
   Definition ematch : ergo_expr -> list (EPattern.ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr
     := Ergo.EMatch.
-  Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
-    := Ergo.ERecord.
+  Definition eforeach : list (String.string * ergo_expr) -> option ergo_expr -> ergo_expr -> ergo_expr
+    := Ergo.EForeach.
 
+  (** Statements *)
   Definition sreturn : ergo_expr -> ergo_stmt :=
     Ergo.SReturn.
   Definition sfunreturn : ergo_expr -> ergo_stmt :=
@@ -182,25 +200,27 @@ Module ErgoCompiler.
     := Ergo.SEnforce e1 s2 s3.
   Definition smatch : ergo_expr -> list (EPattern.ergo_pattern * ergo_stmt) -> ergo_stmt -> ergo_stmt
     := Ergo.SMatch.
-  
+
+  (** Syntactic sugar *)
   Definition edot : String.string -> ergo_expr -> ergo_expr 
     := ErgoSugar.EDot.
-  Definition enew : option String.string -> String.string -> list (String.string * ergo_expr) -> ergo_expr 
-    := ErgoSugar.ENewSugar.
-  Definition ethis_contract : ergo_expr
-    := Ergo.EThisContract.
-  Definition ethis_clause : ergo_expr
-    := Ergo.EThisClause.
-  Definition ethis_state : ergo_expr
-    := Ergo.EThisState.
-  Definition elifterror : ergo_expr -> ergo_expr -> ergo_expr
-    := Ergo.ELiftError.
-
   Definition eoptionaldot : String.string -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDot.
   Definition eoptionaldefault : ergo_expr -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDefault.
   
+  (** Declarations *)
+  Definition dtype : ErgoType.ergo_type_declaration -> ergo_declaration
+    := Ergo.EType.
+  Definition dstmt : ergo_stmt -> ergo_declaration
+    := Ergo.EStmt.
+  Definition dconstant : String.string -> ergo_expr -> ergo_declaration
+    := Ergo.EConstant.
+  Definition dfunc : ergo_function -> ergo_declaration
+    := Ergo.EFunc.
+  Definition dcontract : ergo_contract -> ergo_declaration
+    := Ergo.EContract.
+
   (** Compilation *)
   Definition ergo_module_to_javascript :
     list CTO.cto_package

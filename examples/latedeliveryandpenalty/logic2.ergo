@@ -23,7 +23,7 @@ Late Delivery and Penalty. In case of delayed delivery[{" except for Force Majeu
 
 define function calculatePenalty(diff : Double, goodsValue : Double) : Double {
    // penalty formula
-   define variable penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
+   let penalty = (diff / penaltyDuration.amount) * penaltyPercentage/100 * goodsValue;
    
    // penalty may be capped
    if penalty > capPercentage/100 * goodsValue {
@@ -39,7 +39,7 @@ contract LateDeliveryAndPenalty over TemplateModel throws Error {
    // Clause for volume discount
    clause latedeliveryandpenalty(request : LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse {
 
-     define variable agreed = request.agreedDelivery;
+     let agreed = request.agreedDelivery;
 
      // First check if the clause applies
      if !moment.isAfter(moment.now(),agreed) {
@@ -48,9 +48,9 @@ contract LateDeliveryAndPenalty over TemplateModel throws Error {
        return LateDeliveryAndPenaltyResponse{ 0, true }
      } else { // If not, calculate the penalty and whether the contract can be terminated
        // difference between current date and agreed upon date
-       define variable diff = momentDiffDay(moment.now(),agreed,penaltyDuration.unit);
+       let diff = momentDiffDay(moment.now(),agreed,penaltyDuration.unit);
        // Calls the function to calculate penalty
-       define variable penalty = calculatePenalty(diff,request.goodsValue);
+       let penalty = calculatePenalty(diff,request.goodsValue);
        // Return the response with the penalty and termination determination
        return LateDeliveryAndPenaltyResponse{ capped, diff > termination }
      }

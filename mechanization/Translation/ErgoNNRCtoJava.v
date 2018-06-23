@@ -25,26 +25,26 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Section ErgoNNRCtoJava.
   Local Open Scope string_scope.
 
-  (** Global expression *)
+  (** Top-level expression *)
   Definition java_of_expression
              (e:nnrc_expr)                  (* expression to translate *)
-             (t : nat)                       (* next available unused temporary *)
-             (i : nat)                       (* indentation level *)
-             (eol:string)                    (* Choice of end of line character *)
-             (quotel:string)                 (* Choice of quote character *)
+             (t : nat)                      (* next available unused temporary *)
+             (i : nat)                      (* indentation level *)
+             (eol:string)                   (* Choice of end of line character *)
+             (quotel:string)                (* Choice of quote character *)
     : ErgoCodeGen.java
       * ErgoCodeGen.java_data
       * nat
     := ErgoCodeGen.nnrc_expr_java_unshadow e t i eol quotel nil nil.
 
-  (** Global variable *)
-  Definition java_of_global
-             (v:string)                      (* global variable name *)
-             (bind:nnrc_expr)               (* expression for the global variable to translate *)
-             (t : nat)                       (* next available unused temporary *)
-             (i : nat)                       (* indentation level *)
-             (eol:string)                    (* Choice of end of line character *)
-             (quotel:string)                 (* Choice of quote character *)
+  (** Top-level constant *)
+  Definition java_of_constant
+             (v:string)                     (* constant name *)
+             (bind:nnrc_expr)               (* expression computing the constant *)
+             (t : nat)                      (* next available unused temporary *)
+             (i : nat)                      (* indentation level *)
+             (eol:string)                   (* Choice of end of line character *)
+             (quotel:string)                (* Choice of quote character *)
     : ErgoCodeGen.java
       * ErgoCodeGen.java_data
       * nat
@@ -103,7 +103,7 @@ Section ErgoNNRCtoJava.
     :=
       match s with
       | ENExpr e => java_of_expression e t i eol quotel
-      | ENGlobal v e => java_of_global v e t i eol quotel
+      | ENConstant v e => java_of_constant v e t i eol quotel
       | ENFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
       | ENFuncTable ft => (java_class_of_nnrc_function_table ft eol quotel,ErgoCodeGen.mk_java_data "null",t)
       end.

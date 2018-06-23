@@ -162,8 +162,8 @@ Section ErgoExpand.
              (d:ergo_declaration) : eresult ergo_declaration :=
     match d with
     | EType td => esuccess (EType td)
-    | EExpr e => esuccess (EExpr e)
-    | EGlobal v e => esuccess (EGlobal v e)
+    | EStmt s => esuccess (EStmt s)
+    | EConstant v e => esuccess (EConstant v e)
     | EFunc fd => esuccess (EFunc fd)
     | EContract cd =>
       let cd := add_init_clause_to_contract namespace cd in

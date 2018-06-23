@@ -21,7 +21,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
   // Clause checking for late delivery and calculating penalty
   clause latedeliveryandpenalty(request : LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse throws Error {
     // Guard against calling late delivery clause too early
-    define variable agreed = request.agreedDelivery;
+    let agreed = request.agreedDelivery;
     enforce momentIsBefore(agreed,now()) else
     throw new Error{ message : "Cannot exercise late delivery before delivery date" }
     ;
@@ -34,12 +34,12 @@ contract LateDeliveryAndPenalty over TemplateModel {
     ;
 
     // Calculate the time difference between current date and agreed upon date
-    define variable diff = momentDiffDays(now,agreed);
+    let diff = momentDiffDays(now,agreed);
     // Penalty formula
-    define variable penalty =
+    let penalty =
       (diff / contract.penaltyDuration.amount) * contract.penaltyPercentage/100.0 * request.goodsValue;
     // Penalty may be capped
-    define variable capped = min([penalty,contract.capPercentage * request.goodsValue / 100.0]);
+    let capped = min([penalty,contract.capPercentage * request.goodsValue / 100.0]);
     // Return the response with the penalty and termination determination
     return new LateDeliveryAndPenaltyResponse{
       penalty: capped,

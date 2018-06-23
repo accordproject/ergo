@@ -114,8 +114,8 @@ Section ErgotoErgoCalculus.
   Definition declaration_to_calculus (s:ergo_declaration) : option (ergoc_declaration) :=
     match s with
     | EType ergo_type => None
-    | EExpr e => Some (ECExpr e)
-    | EGlobal v e => Some (ECGlobal v e)
+    | EStmt s => Some (ECExpr (ergo_stmt_to_expr s))
+    | EConstant v e => Some (ECConstant v e)
     | EFunc f => Some (ECFunc (function_to_calculus f))
     | EContract c => Some (ECContract (contract_to_calculus c))
     end.

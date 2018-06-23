@@ -49,7 +49,7 @@ Section ErgoCalculus.
     (** Declaration *)
     Inductive ergoc_declaration :=
     | ECExpr : ergoc_expr -> ergoc_declaration
-    | ECGlobal : string -> ergoc_expr -> ergoc_declaration
+    | ECConstant : string -> ergoc_expr -> ergoc_declaration
     | ECFunc : ergoc_function -> ergoc_declaration
     | ECContract : ergoc_contract -> ergoc_declaration.
 
