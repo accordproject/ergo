@@ -40,22 +40,25 @@ Section Lambda.
 End Lambda.
 
 Section Patch.
-  Definition nnrc_lambda_type_of_lambda_type (t:option unit) : ergo_type :=
-    ErgoTypeAny.
+  Definition nnrc_lambda_type_of_lambda_type (loc:location) (t:option unit) : ergo_type :=
+    mk_type loc ErgoTypeAny.
   
   Definition nnrc_lambda_params_of_lambda_params
+             (loc:location)
              (params:list (string * option unit)) : list (string * ergo_type) :=
-    List.map (fun xy => (fst xy, nnrc_lambda_type_of_lambda_type (snd xy))) params.
+    List.map (fun xy => (fst xy, nnrc_lambda_type_of_lambda_type loc (snd xy))) params.
     
   Definition nnrc_expr_lambda_of_backend_closure
              (cl:ErgoEnhancedBackend.ergo_backend_closure) : nnrc_expr_lambda :=
+    let loc := dummy_location in (* XXX TO DECIDE *)
     mkLambdaN
-      (nnrc_lambda_params_of_lambda_params cl.(Closure.closure_params))
-      (nnrc_lambda_type_of_lambda_type cl.(Closure.closure_output))
+      (nnrc_lambda_params_of_lambda_params loc cl.(Closure.closure_params))
+      (nnrc_lambda_type_of_lambda_type loc cl.(Closure.closure_output))
       cl.(Closure.closure_body).
 
-  Definition lookup_table_of_backend_lookup_table (tbl:ErgoEnhancedBackend.ergo_backend_lookup_table) :=
-    fun name => lift nnrc_expr_lambda_of_backend_closure (tbl name).
+  Definition lookup_table_of_backend_lookup_table
+             (tbl:ErgoEnhancedBackend.ergo_backend_lookup_table) :=
+    fun name => lift (nnrc_expr_lambda_of_backend_closure) (tbl name).
 
   Definition nnrc_stdlib : lookup_table :=
     lookup_table_of_backend_lookup_table ErgoEnhancedBackend.ergo_backend_stdlib.

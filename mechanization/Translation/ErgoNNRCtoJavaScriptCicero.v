@@ -134,18 +134,18 @@ Section ErgoNNRCtoJavaScriptCicero.
     match sigs with
     | nil => nil
     | sig :: rest =>
-      if (string_dec sig.(ergo_type_signature_name) clause_main_name)
+      if (string_dec sig.(type_signature_name) clause_main_name)
       then
         filter_signatures namespace rest
       else
-        let fname := sig.(ergo_type_signature_name) in
-        let params := sig.(ergo_type_signature_params) in
-        let outtype := sig.(ergo_type_signature_output) in
-        let emitstype := sig.(ergo_type_signature_emits) in
+        let fname := sig.(type_signature_name) in
+        let params := sig.(type_signature_params) in
+        let outtype := sig.(type_signature_output) in
+        let emitstype := sig.(type_signature_emits) in
         match params with
         | nil => filter_signatures namespace rest
         | (_,reqtype)::nil =>
-          match reqtype, outtype, emitstype with
+          match type_desc reqtype, type_desc outtype, lift type_desc emitstype with
           | ErgoTypeClassRef reqname, ErgoTypeClassRef outname, Some (ErgoTypeClassRef emitsname) =>
             let qreqname := absolute_name_of_name_ref namespace reqname in
             let qoutname := absolute_name_of_name_ref namespace outname in
@@ -164,7 +164,7 @@ Section ErgoNNRCtoJavaScriptCicero.
     end.
 
   Definition filter_signatures_with_state (namespace:string) (contract_state_type:option ergo_type) (sigs:list ergo_type_signature) : list (string * string * string * string) * string :=
-    match contract_state_type with
+    match lift type_desc contract_state_type with
     | None => (filter_signatures namespace sigs, default_state_name)
     | Some (ErgoTypeClassRef statename) =>
       let qstatename := absolute_name_of_name_ref namespace statename in

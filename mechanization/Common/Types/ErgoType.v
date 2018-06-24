@@ -25,54 +25,70 @@ Require Import ErgoSpec.Common.Utils.EImport.
 
 Section ErgoType.
 
-  Inductive ergo_type :=
-  | ErgoTypeAny : ergo_type                               (**r any type *)
-  | ErgoTypeNone : ergo_type                              (**r none type *)
-  | ErgoTypeBoolean : ergo_type                           (**r bool atomic type *)
-  | ErgoTypeString : ergo_type                            (**r string atomic type *)
-  | ErgoTypeDouble : ergo_type                            (**r double atomic type *)
-  | ErgoTypeLong : ergo_type                              (**r long atomic type *)
-  | ErgoTypeInteger : ergo_type                           (**r integer atomic type *)
-  | ErgoTypeDateTime : ergo_type                          (**r date and time atomic type *)
-  | ErgoTypeClassRef : name_ref -> ergo_type              (**r relative class reference *)
-  | ErgoTypeOption : ergo_type -> ergo_type               (**r optional type *)
-  | ErgoTypeRecord : list (string*ergo_type) -> ergo_type (**r record type *)
-  | ErgoTypeArray : ergo_type -> ergo_type                (**r array type *)
-  | ErgoTypeSum : ergo_type -> ergo_type -> ergo_type.    (**r sum type *)
+  Inductive ergo_type_desc :=
+  | ErgoTypeAny : ergo_type_desc                               (**r any type *)
+  | ErgoTypeNone : ergo_type_desc                              (**r none type *)
+  | ErgoTypeBoolean : ergo_type_desc                           (**r bool atomic type *)
+  | ErgoTypeString : ergo_type_desc                            (**r string atomic type *)
+  | ErgoTypeDouble : ergo_type_desc                            (**r double atomic type *)
+  | ErgoTypeLong : ergo_type_desc                              (**r long atomic type *)
+  | ErgoTypeInteger : ergo_type_desc                           (**r integer atomic type *)
+  | ErgoTypeDateTime : ergo_type_desc                          (**r date and time atomic type *)
+  | ErgoTypeClassRef : name_ref -> ergo_type_desc              (**r relative class reference *)
+  | ErgoTypeOption : ergo_type -> ergo_type_desc               (**r optional type *)
+  | ErgoTypeRecord : list (string*ergo_type) -> ergo_type_desc (**r record type *)
+  | ErgoTypeArray : ergo_type -> ergo_type_desc                (**r array type *)
+  | ErgoTypeSum : ergo_type -> ergo_type -> ergo_type_desc     (**r sum type *)
+  with ergo_type :=
+  | ErgoType : location -> ergo_type_desc -> ergo_type.
+
+  Definition type_loc (et:ergo_type) : location :=
+    match et with
+    | ErgoType loc _ => loc
+    end.
+  Definition type_desc (et:ergo_type) : ergo_type_desc :=
+    match et with
+    | ErgoType _ etd => etd
+   end.
+  Definition mk_type (loc:location) (etd:ergo_type_desc) : ergo_type :=
+    ErgoType loc etd.
 
   Record ergo_type_signature : Set :=
     mkErgoTypeSignature
-      { ergo_type_signature_name: string;
-        ergo_type_signature_params : list (string * ergo_type);
-        ergo_type_signature_output : ergo_type;
-        ergo_type_signature_throws : option ergo_type;
-        ergo_type_signature_emits : option ergo_type }.
+      { type_signature_name: string;
+        type_signature_location : location;
+        type_signature_params : list (string * ergo_type);
+        type_signature_output : ergo_type;
+        type_signature_throws : option ergo_type;
+        type_signature_emits : option ergo_type; }.
 
-  Inductive ergo_type_declaration_kind :=
-  | ErgoTypeEnum : list string -> ergo_type_declaration_kind
-  | ErgoTypeTransaction : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_kind
-  | ErgoTypeConcept : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_kind
-  | ErgoTypeEvent : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_kind
-  | ErgoTypeAsset : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_kind
-  | ErgoTypeParticipant : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_kind
-  | ErgoTypeGlobal : ergo_type -> ergo_type_declaration_kind
-  | ErgoTypeFunction : ergo_type_signature -> ergo_type_declaration_kind
+  Inductive ergo_type_declaration_desc :=
+  | ErgoTypeEnum : list string -> ergo_type_declaration_desc
+  | ErgoTypeTransaction : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
+  | ErgoTypeConcept : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
+  | ErgoTypeEvent : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
+  | ErgoTypeAsset : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
+  | ErgoTypeParticipant : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
+  | ErgoTypeGlobal : ergo_type -> ergo_type_declaration_desc
+  | ErgoTypeFunction : ergo_type_signature -> ergo_type_declaration_desc
   | ErgoTypeContract :
       ergo_type                              (**r template type *)
       -> ergo_type                           (**r state type *)
       -> list (string * ergo_type_signature) (**r clauses signatures *)
-      -> ergo_type_declaration_kind.
+      -> ergo_type_declaration_desc.
 
   Record ergo_type_declaration :=
     mkErgoTypeDeclaration
-      { ergo_type_declaration_name : local_name;
-        ergo_type_declaration_type : ergo_type_declaration_kind; }.
+      { type_declaration_name : local_name;
+        type_declaration_location : location;
+        type_declaration_type : ergo_type_declaration_desc; }.
 
   Record ergo_type_module :=
     mkErgoTypeModule
-      { ergo_type_module_namespace : namespace_name;
-        ergo_type_module_imports : list import_decl;
-        ergo_type_module_declarations : list ergo_type_declaration; }.
+      { type_module_namespace : namespace_name;
+        type_location : location;
+        type_module_imports : list import_decl;
+        type_module_declarations : list ergo_type_declaration; }.
 
   Section NamesResolution.
     (** There are three phases to the name resolution in ErgoType files/modules:
@@ -87,17 +103,17 @@ Section ErgoType.
     Definition ergo_type_names_tables : Set := list (namespace_name * ergo_type_names_table).
 
     Definition name_entry_of_ergo_type_declaration (ns:namespace_name) (decl:ergo_type_declaration) : local_name * absolute_name :=
-      let ln := decl.(ergo_type_declaration_name) in
+      let ln := decl.(type_declaration_name) in
       (ln, absolute_name_of_local_name ns ln).
 
     Definition names_table_of_ergo_type_module (ns:namespace_name) (pkg:ergo_type_module) : ergo_type_names_table :=
-      map (name_entry_of_ergo_type_declaration ns) pkg.(ergo_type_module_declarations).
+      map (name_entry_of_ergo_type_declaration ns) pkg.(type_module_declarations).
 
     (** Note: this merges tables when the same namespace is used in more than one ErgoType module *)
     Definition names_tables_of_ergo_type_modules (pkgs: list ergo_type_module) : ergo_type_names_tables :=
       let init : ergo_type_names_tables := nil in
       let proc_one (acc:ergo_type_names_tables) (pkg:ergo_type_module) : ergo_type_names_tables :=
-          let ns := pkg.(ergo_type_module_namespace) in
+          let ns := pkg.(type_module_namespace) in
           match lookup string_dec acc ns with
           | Some t =>
             update_first string_dec acc ns (app t (names_table_of_ergo_type_module ns pkg))
@@ -152,7 +168,10 @@ Section ErgoType.
       end.
 
     (** This is the name resolution *)
-    Fixpoint resolve_ergo_type (module_ns:namespace_name) (tbl:ergo_type_names_table) (t:ergo_type) : eresult ergo_type :=
+    Fixpoint resolve_ergo_type_desc
+             (module_ns:namespace_name)
+             (tbl:ergo_type_names_table)
+             (t:ergo_type_desc) : eresult ergo_type_desc :=
       match t with
       | ErgoTypeAny => esuccess ErgoTypeAny
       | ErgoTypeNone => esuccess ErgoTypeNone
@@ -170,7 +189,15 @@ Section ErgoType.
         elift ErgoTypeRecord lifted_map
       | ErgoTypeArray t => elift ErgoTypeArray (resolve_ergo_type module_ns tbl t)
       | ErgoTypeSum t1 t2 => elift2 ErgoTypeSum (resolve_ergo_type module_ns tbl t1) (resolve_ergo_type module_ns tbl t2)
-      end.
+      end
+    with resolve_ergo_type
+           (module_ns:namespace_name)
+           (tbl:ergo_type_names_table)
+           (et:ergo_type) : eresult ergo_type :=
+      elift
+        (fun etd =>
+           mk_type (type_loc et) etd)
+        (resolve_ergo_type_desc module_ns tbl (type_desc et)).
 
     Definition resolve_ergo_type_struct
                (ns:namespace_name)
@@ -190,24 +217,24 @@ Section ErgoType.
                (ns:namespace_name)
                (tbl:ergo_type_names_table)
                (sig:ergo_type_signature) :=
-      let params_types := resolve_ergo_type_struct ns tbl (sig.(ergo_type_signature_params)) in
-      let output_type := resolve_ergo_type ns tbl sig.(ergo_type_signature_output) in
+      let params_types := resolve_ergo_type_struct ns tbl (sig.(type_signature_params)) in
+      let output_type := resolve_ergo_type ns tbl sig.(type_signature_output) in
       let throws_type :=
-          match sig.(ergo_type_signature_throws) with
+          match sig.(type_signature_throws) with
           | None => esuccess None
           | Some throw_ty =>
             elift Some (resolve_ergo_type ns tbl throw_ty)
           end
       in
       let emits_type :=
-          match sig.(ergo_type_signature_emits) with
+          match sig.(type_signature_emits) with
           | None => esuccess None
           | Some throw_ty =>
             elift Some (resolve_ergo_type ns tbl throw_ty)
           end
       in
       elift4 (mkErgoTypeSignature
-                sig.(ergo_type_signature_name))
+                sig.(type_signature_name) sig.(type_signature_location))
              params_types
              output_type
              throws_type
@@ -220,8 +247,8 @@ Section ErgoType.
       emaplift (fun xy => elift (fun r => (fst xy, r))
                                 (resolve_ergo_type_signature ns tbl (snd xy))) cls.
 
-    Definition resolve_decl_kind (module_ns:namespace_name) (tbl:ergo_type_names_table)
-               (k:ergo_type_declaration_kind) : eresult ergo_type_declaration_kind :=
+    Definition resolve_decl_desc (module_ns:namespace_name) (tbl:ergo_type_names_table)
+               (k:ergo_type_declaration_desc) : eresult ergo_type_declaration_desc :=
       match k with
       | ErgoTypeEnum l => esuccess (ErgoTypeEnum l)
       | ErgoTypeTransaction extends_name ergo_type_struct =>
@@ -257,9 +284,9 @@ Section ErgoType.
       end.
 
     Definition resolve_declaration (module_ns:namespace_name) (tbl:ergo_type_names_table) (decl: ergo_type_declaration) : eresult ergo_type_declaration :=
-      let name := absolute_name_of_local_name module_ns decl.(ergo_type_declaration_name) in
-      let edecl_kind := resolve_decl_kind module_ns tbl decl.(ergo_type_declaration_type) in
-      elift (fun k => mkErgoTypeDeclaration name k) edecl_kind.
+      let name := absolute_name_of_local_name module_ns decl.(type_declaration_name) in
+      let edecl_desc := resolve_decl_desc module_ns tbl decl.(type_declaration_type) in
+      elift (fun k => mkErgoTypeDeclaration name decl.(type_declaration_location) k) edecl_desc.
     
     Definition resolve_declarations (module_ns:namespace_name) (tbl:ergo_type_names_table) (decls: list ergo_type_declaration)
       : eresult (list ergo_type_declaration) :=
@@ -269,15 +296,15 @@ Section ErgoType.
                (tbls:ergo_type_names_tables)
                (pkg:ergo_type_module) : eresult (list ergo_type_declaration) :=
       (** Make sure to add current namespace to the list of imports - i.e., import self. *)
-      let imports := app pkg.(ergo_type_module_imports)
+      let imports := app pkg.(type_module_imports)
                                (("org.hyperledger.composer.system"%string, ImportAll)
-                                  ::(pkg.(ergo_type_module_namespace),ImportAll)::nil) in
-      let module_ns := pkg.(ergo_type_module_namespace) in
+                                  ::(pkg.(type_module_namespace),ImportAll)::nil) in
+      let module_ns := pkg.(type_module_namespace) in
       let in_scope_names := apply_imports_to_names_tables module_ns tbls imports in
       eolift (fun tbls => resolve_declarations
-                            pkg.(ergo_type_module_namespace)
+                            pkg.(type_module_namespace)
                             tbls
-                            pkg.(ergo_type_module_declarations)) in_scope_names.
+                            pkg.(type_module_declarations)) in_scope_names.
 
     (** Top level *)
     Definition ergo_type_resolved_tbl_for_module
@@ -290,22 +317,42 @@ Section ErgoType.
   Section Examples.
     Local Open Scope string.
     Definition ergo_typed1 :=
-      mkErgoTypeDeclaration "c1" (ErgoTypeConcept None (("a", ErgoTypeBoolean)::("b",ErgoTypeClassRef (RelativeRef None "c3"))::nil)).
+      mkErgoTypeDeclaration
+        "c1"
+        dummy_location
+        (ErgoTypeConcept
+           None
+           (("a", mk_type dummy_location ErgoTypeBoolean)
+              ::("b", mk_type dummy_location (ErgoTypeClassRef (RelativeRef None "c3")))::nil)).
     
     Definition ergo_typed2 :=
-      mkErgoTypeDeclaration "c2" (ErgoTypeConcept None (("c", ErgoTypeBoolean)::("d",ErgoTypeClassRef (RelativeRef None "c1"))::nil)).
+      mkErgoTypeDeclaration
+        "c2"
+        dummy_location
+        (ErgoTypeConcept
+           None
+           (("c", mk_type dummy_location ErgoTypeBoolean)
+              ::("d", mk_type dummy_location (ErgoTypeClassRef (RelativeRef None "c1")))::nil)).
     
 
     Definition ergo_type1 :=
       mkErgoTypeModule
-        "n1" (("n2",ImportAll)::nil) (ergo_typed1::ergo_typed2::nil).
+        "n1"
+        dummy_location
+        (("n2",ImportAll)::nil) (ergo_typed1::ergo_typed2::nil).
     
     Definition ergo_typed3 :=
-      mkErgoTypeDeclaration "c3" (ErgoTypeConcept None (("a", ErgoTypeBoolean)::("b",ErgoTypeString)::nil)).
-    
+      mkErgoTypeDeclaration
+        "c3"
+        dummy_location
+        (ErgoTypeConcept
+           None
+           (("a", mk_type dummy_location ErgoTypeBoolean)
+              ::("b", mk_type dummy_location ErgoTypeString)::nil)).
+
     Definition ergo_type2 :=
       mkErgoTypeModule
-        "n2" nil (ergo_typed3::nil).
+        "n2" dummy_location nil (ergo_typed3::nil).
 
     Definition pkgs := ergo_type2 :: ergo_type1 :: nil.
 
@@ -315,36 +362,43 @@ Section ErgoType.
     (* Eval vm_compute in res. *)
   End Examples.
     
-  Definition lift_default_emits_type (emits:option ergo_type) : ergo_type :=
+  Definition lift_default_emits_type (loc:location) (emits:option ergo_type) : ergo_type :=
     match emits with
     | Some e => e
-    | None => ErgoTypeClassRef default_emits_type
+    | None => mk_type loc (ErgoTypeClassRef default_emits_type)
     end.
 
-  Definition lift_default_state_type (state:option ergo_type) : ergo_type :=
+  Definition lift_default_state_type (loc:location) (state:option ergo_type) : ergo_type :=
     match state with
     | Some e => e
-    | None => ErgoTypeClassRef default_state_type
+    | None => mk_type loc (ErgoTypeClassRef default_state_type)
     end.
 
-  Definition lift_default_throws_type (emits:option ergo_type) : ergo_type :=
+  Definition lift_default_throws_type (loc:location) (emits:option ergo_type) : ergo_type :=
     match emits with
     | Some e => e
-    | None => ErgoTypeClassRef default_throws_type
+    | None => mk_type loc (ErgoTypeClassRef default_throws_type)
     end.
 
-  Definition mk_success_type (response_type state_type emit_type: ergo_type) :=
-    ErgoTypeRecord (("response",response_type)::("state",state_type)::("emit",emit_type)::nil)%string.
-  Definition mk_error_type (throw_type: ergo_type) :=
-    throw_type.
-  Definition mk_output_type (success_type error_type: ergo_type) :=
-    ErgoTypeSum success_type error_type.
+  Definition mk_success_type (loc:location) (response_type state_type emit_type: ergo_type) :=
+    mk_type loc
+            (ErgoTypeRecord
+               (("response",response_type)
+                  ::("state",state_type)
+                  ::("emit",emit_type)
+                  ::nil))%string.
+  Definition mk_error_type (loc:location) (throw_type: ergo_type) := throw_type.
+  Definition mk_output_type (loc:location) (success_type error_type: ergo_type) :=
+    mk_type loc (ErgoTypeSum success_type error_type).
 
   Definition lift_default_state_name (state:option ergo_type) : eresult absolute_name :=
     match state with
     | None => esuccess default_state_name
-    | Some (ErgoTypeClassRef (AbsoluteRef r)) => esuccess r
-    | _ => unresolved_name_error
+    | Some et =>
+      match type_desc et with
+      | (ErgoTypeClassRef (AbsoluteRef r)) => esuccess r
+      | _ => unresolved_name_error
+      end
     end.
   
 End ErgoType.

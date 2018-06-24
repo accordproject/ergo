@@ -19,67 +19,81 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoSugar.
   (** [expr.field] is a macro for unbranding followed by field access in a record *)
-  Definition EDot (s:string) (e:ergo_expr) : ergo_expr :=
-    EUnaryOp (ErgoOps.Unary.opdot s) (EUnaryOp ErgoOps.Unary.opunbrand e).
+  Definition EDot (loc:location) (s:string) (e:ergo_expr) : ergo_expr :=
+    mk_expr loc (EUnaryOp (ErgoOps.Unary.opdot s)
+                          (mk_expr loc (EUnaryOp ErgoOps.Unary.opunbrand e))).
 
   (** [return expr] is a no-op at the moment *)
-  Definition mk_result e1 e2 e3 : ergo_expr :=
-    ERecord ((this_response, e1)
-               :: (this_state, e2)
-               :: (this_emit, e3)
-               :: nil).
+  Definition mk_result (loc:location) e1 e2 e3 : ergo_expr :=
+    mk_expr loc
+            (ERecord ((this_response, e1)
+                        :: (this_state, e2)
+                        :: (this_emit, e3)
+                        :: nil)).
 
-  Definition set_state e1 e2 : ergo_expr :=
-    ELet local_state None e1 e2.
+  Definition set_state (loc:location) e1 e2 : ergo_expr :=
+    mk_expr loc
+            (ELet local_state None e1 e2).
 
-  Definition this_clause clause_name :=
-    EUnaryOp (OpDot clause_name) (EUnaryOp OpUnbrand EThisContract).
+  Definition this_clause (loc:location) clause_name :=
+    mk_expr loc
+            (EUnaryOp (OpDot clause_name)
+                      (mk_expr loc (EUnaryOp OpUnbrand (mk_expr loc EThisContract)))).
 
-  Definition push_emit e1 e2 : ergo_expr :=
-    ELet local_emit None
-         (EBinaryOp OpBagUnion
-                    (EUnaryOp OpBag e1)
-                    (EVar local_emit))
-         e2.
+  Definition push_emit (loc:location) e1 e2 : ergo_expr :=
+    mk_expr loc
+            (ELet local_emit None
+                  (mk_expr loc
+                           (EBinaryOp OpBagUnion
+                                      (mk_expr loc (EUnaryOp OpBag e1))
+                                      (mk_expr loc (EVar local_emit))))
+                  e2).
 
-  Definition SThrowSugar pname cname el : ergo_stmt :=
-    SThrow (ENew (RelativeRef pname cname) el).
+  Definition SThrowSugar (loc:location) pname cname el : ergo_stmt :=
+    mk_stmt loc
+            (SThrow (mk_expr loc (ENew (RelativeRef pname cname) el))).
 
-  Definition SThrowErgoCompilerError (msg:string) : ergo_stmt :=
-    (SThrowSugar (Some "org.ergo")
-                 "Error"
-                 (("error", EConst (ErgoData.dstring msg))::nil))%string.
+  Definition SThrowErgoCompilerError (loc:location) (msg:string) : ergo_stmt :=
+    SThrowSugar loc
+                (Some "org.ergo"%string)
+                "Error"%string
+                (("error"%string, mk_expr loc
+                                   (EConst (ErgoData.dstring msg)))::nil).
 
-  Definition SReturnEmpty :=
-    SReturn (EConst dunit).
+  Definition SReturnEmpty (loc:location) :=
+    mk_stmt loc (SReturn (mk_expr loc (EConst dunit))).
   
-  Definition SFunReturnEmpty :=
-    SFunReturn (EConst dunit).
+  Definition SFunReturnEmpty (loc:location) :=
+    mk_stmt loc (SFunReturn (mk_expr loc (EConst dunit))).
 
   Section Errors.
-    Definition ESuccess (e:ergo_expr) : ergo_expr :=
-      EUnaryOp OpLeft e.
+    Definition ESuccess (loc:location) (e:ergo_expr) : ergo_expr :=
+      mk_expr loc (EUnaryOp OpLeft e).
       
-    Definition EError (e:ergo_expr) : ergo_expr :=
-      EUnaryOp OpRight e.
+    Definition EError (loc:location) (e:ergo_expr) : ergo_expr :=
+      mk_expr loc (EUnaryOp OpRight e).
 
   End Errors.
 
   Section Optional.
-    Definition EOptionalDot (pname:string) (e:ergo_expr) :=
-      EMatch e
-             ((CaseLetOption "$option" None, EUnaryOp (OpDot pname) (EVar "$option")) :: nil)
-             (EConst dnone).
-    Definition EOptionalDefault (e1 e2:ergo_expr) :=
-      EMatch e1
-             ((CaseLetOption "$option" None, EVar "$option") :: nil)
-             e2.
+    Definition EOptionalDot (loc:location) (pname:string) (e:ergo_expr) :=
+      mk_expr loc
+              (EMatch e
+                      ((CaseLetOption "$option" None,
+                        mk_expr loc (EUnaryOp (OpDot pname) (mk_expr loc (EVar "$option")))) :: nil)
+                      (mk_expr loc (EConst dnone))).
+    Definition EOptionalDefault (loc:location) (e1 e2:ergo_expr) :=
+      mk_expr loc
+              (EMatch e1
+                      ((CaseLetOption "$option" None, mk_expr loc (EVar "$option")) :: nil)
+                      e2).
   End Optional.
 
 End ErgoSugar.

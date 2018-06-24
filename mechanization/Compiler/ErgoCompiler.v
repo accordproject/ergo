@@ -44,75 +44,75 @@ Module ErgoCompiler.
     := ENames.AbsoluteRef.
 
   (** CTOs *)
-  Definition cto_boolean : CTO.cto_type
-    := CTO.CTOBoolean.
-  Definition cto_string : CTO.cto_type
-    := CTO.CTOString.
-  Definition cto_double : CTO.cto_type
-    := CTO.CTODouble.
-  Definition cto_long : CTO.cto_type
-    := CTO.CTOLong.
-  Definition cto_integer : CTO.cto_type
-    := CTO.CTOInteger.
-  Definition cto_dateTime : CTO.cto_type
-    := CTO.CTODateTime.
-  Definition cto_class_ref : name_ref -> CTO.cto_type
-    := CTO.CTOClassRef.
-  Definition cto_option : CTO.cto_type -> CTO.cto_type
-    := CTO.CTOOption.
-  Definition cto_array : CTO.cto_type -> CTO.cto_type
-    := CTO.CTOArray.
+  Definition cto_boolean loc : CTO.cto_type
+    := CTO.mk_cto loc CTO.CTOBoolean.
+  Definition cto_string loc : CTO.cto_type
+    := CTO.mk_cto loc CTO.CTOString.
+  Definition cto_double loc : CTO.cto_type
+    := CTO.mk_cto loc CTO.CTODouble.
+  Definition cto_long loc : CTO.cto_type
+    := CTO.mk_cto loc CTO.CTOLong.
+  Definition cto_integer loc : CTO.cto_type
+    := CTO.mk_cto loc CTO.CTOInteger.
+  Definition cto_dateTime loc : CTO.cto_type
+    := CTO.mk_cto loc CTO.CTODateTime.
+  Definition cto_class_ref loc name_ref : CTO.cto_type
+    := CTO.mk_cto loc (CTO.CTOClassRef name_ref).
+  Definition cto_option loc ct : CTO.cto_type
+    := CTO.mk_cto loc (CTO.CTOOption ct).
+  Definition cto_array loc ct : CTO.cto_type
+    := CTO.mk_cto loc (CTO.CTOArray ct).
 
-  Definition cto_enum : list String.string -> CTO.cto_declaration_kind
+  Definition cto_enum : list String.string -> CTO.cto_declaration_desc
     := CTO.CTOEnum.
-  Definition cto_transaction : option name_ref -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+  Definition cto_transaction : option name_ref -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_desc
     := CTO.CTOTransaction.
-  Definition cto_concept : option name_ref -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_kind
+  Definition cto_concept : option name_ref -> list (String.string * CTO.cto_type) -> CTO.cto_declaration_desc
     := CTO.CTOConcept.
 
-  Definition mk_cto_declaration : String.string -> CTO.cto_declaration_kind -> CTO.cto_declaration
+  Definition mk_cto_declaration : String.string -> EResult.location -> CTO.cto_declaration_desc -> CTO.cto_declaration
     := CTO.mkCTODeclaration.
-  Definition mk_cto_package : String.string -> list EImport.import_decl -> list CTO.cto_declaration -> CTO.cto_package
+  Definition mk_cto_package : String.string -> EResult.location -> list EImport.import_decl -> list CTO.cto_declaration -> CTO.cto_package
     := CTO.mkCTOPackage.
 
   (** Types *)
   Definition ergo_type : Set 
     := ErgoType.ergo_type.
-  Definition ergo_type_any : ergo_type
-    := ErgoType.ErgoTypeAny.
-  Definition ergo_type_none : ergo_type
-    := ErgoType.ErgoTypeNone.
-  Definition ergo_type_boolean : ergo_type
-    := ErgoType.ErgoTypeBoolean.
-  Definition ergo_type_string : ergo_type
-    := ErgoType.ErgoTypeString.
-  Definition ergo_type_double : ergo_type
-    := ErgoType.ErgoTypeDouble.
-  Definition ergo_type_long : ergo_type
-    := ErgoType.ErgoTypeLong.
-  Definition ergo_type_integer : ergo_type
-    := ErgoType.ErgoTypeInteger.
-  Definition ergo_type_dateTime : ergo_type
-    := ErgoType.ErgoTypeDateTime.
-  Definition ergo_type_class_ref : name_ref -> ergo_type
-    := ErgoType.ErgoTypeClassRef.
-  Definition ergo_type_option : ergo_type -> ergo_type
-    := ErgoType.ErgoTypeOption.
-  Definition ergo_type_record : list(String.string * ergo_type) -> ergo_type
-    := ErgoType.ErgoTypeRecord.
-  Definition ergo_type_array : ergo_type -> ergo_type
-    := ErgoType.ErgoTypeArray.
+  Definition ergo_type_any loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeAny.
+  Definition ergo_type_none loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeNone.
+  Definition ergo_type_boolean loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeBoolean.
+  Definition ergo_type_string loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeString.
+  Definition ergo_type_double loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeDouble.
+  Definition ergo_type_long loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeLong.
+  Definition ergo_type_integer loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeInteger.
+  Definition ergo_type_dateTime loc : ergo_type
+    := ErgoType.mk_type loc ErgoType.ErgoTypeDateTime.
+  Definition ergo_type_class_ref loc name_ref : ergo_type
+    := ErgoType.mk_type loc (ErgoType.ErgoTypeClassRef name_ref).
+  Definition ergo_type_option loc et : ergo_type
+    := ErgoType.mk_type loc (ErgoType.ErgoTypeOption et).
+  Definition ergo_type_record loc rec : ergo_type
+    := ErgoType.mk_type loc (ErgoType.ErgoTypeRecord rec).
+  Definition ergo_type_array loc et : ergo_type
+    := ErgoType.mk_type loc (ErgoType.ErgoTypeArray et).
 
-  Definition ergo_type_enum : list String.string -> ErgoType.ergo_type_declaration_kind
+  Definition ergo_type_enum : list String.string -> ErgoType.ergo_type_declaration_desc
     := ErgoType.ErgoTypeEnum.
-  Definition ergo_type_transaction : option name_ref -> list (String.string * ErgoType.ergo_type) -> ErgoType.ergo_type_declaration_kind
+  Definition ergo_type_transaction : option name_ref -> list (String.string * ErgoType.ergo_type) -> ErgoType.ergo_type_declaration_desc
     := ErgoType.ErgoTypeTransaction.
-  Definition ergo_type_concept : option name_ref -> list (String.string * ErgoType.ergo_type) -> ErgoType.ergo_type_declaration_kind
+  Definition ergo_type_concept : option name_ref -> list (String.string * ErgoType.ergo_type) -> ErgoType.ergo_type_declaration_desc
     := ErgoType.ErgoTypeConcept.
 
-  Definition mk_ergo_type_declaration : String.string -> ErgoType.ergo_type_declaration_kind -> ErgoType.ergo_type_declaration
+  Definition mk_ergo_type_declaration : String.string -> EResult.location -> ErgoType.ergo_type_declaration_desc -> ErgoType.ergo_type_declaration
     := ErgoType.mkErgoTypeDeclaration.
-  Definition mk_ergo_type_module : String.string -> list EImport.import_decl -> list ErgoType.ergo_type_declaration -> ErgoType.ergo_type_module
+  Definition mk_ergo_type_module : String.string -> EResult.location -> list EImport.import_decl -> list ErgoType.ergo_type_declaration -> ErgoType.ergo_type_module
     := ErgoType.mkErgoTypeModule.
 
   (** Ergo *)
@@ -142,84 +142,84 @@ Module ErgoCompiler.
     := EPattern.CaseLetOption.
 
   (** Expressions *)
-  Definition ethis_contract : ergo_expr
-    := Ergo.EThisContract.
-  Definition ethis_clause : ergo_expr
-    := Ergo.EThisClause.
-  Definition ethis_state : ergo_expr
-    := Ergo.EThisState.
-  Definition evar : String.string -> ergo_expr
-    := Ergo.EVar.
-  Definition econst : ErgoData.data -> ergo_expr
-    := Ergo.EConst.
-  Definition earray : list ergo_expr -> ergo_expr
-    := Ergo.EArray.
-  Definition eunaryop : ErgoOps.Unary.op -> ergo_expr -> ergo_expr
-    := Ergo.EUnaryOp.
-  Definition ebinaryop : ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr 
-    := Ergo.EBinaryOp.
-  Definition eif : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr 
-    := Ergo.EIf.
-  Definition elet (v:String.string) (t:option ErgoType.ergo_type) (e1 e2:ergo_expr) : ergo_expr
-    := Ergo.ELet v None e1 e2.
-  Definition enew : name_ref -> list (String.string * ergo_expr) -> ergo_expr 
-    := Ergo.ENew.
-  Definition erecord : list (String.string * ergo_expr) -> ergo_expr 
-    := Ergo.ERecord.
-  Definition ecallfun : String.string -> list ergo_expr -> ergo_expr
-    := Ergo.ECallFun.
-  Definition ematch : ergo_expr -> list (EPattern.ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr
-    := Ergo.EMatch.
-  Definition eforeach : list (String.string * ergo_expr) -> option ergo_expr -> ergo_expr -> ergo_expr
-    := Ergo.EForeach.
+  Definition ethis_contract loc : ergo_expr
+    := Ergo.mk_expr loc Ergo.EThisContract.
+  Definition ethis_clause loc : ergo_expr
+    := Ergo.mk_expr loc Ergo.EThisClause.
+  Definition ethis_state loc : ergo_expr
+    := Ergo.mk_expr loc Ergo.EThisState.
+  Definition evar loc v: ergo_expr
+    := Ergo.mk_expr loc (Ergo.EVar v).
+  Definition econst loc d :ergo_expr
+    := Ergo.mk_expr loc (Ergo.EConst d).
+  Definition earray loc arr : ergo_expr
+    := Ergo.mk_expr loc (Ergo.EArray arr).
+  Definition eunaryop loc u e : ergo_expr
+    := Ergo.mk_expr loc (Ergo.EUnaryOp u e).
+  Definition ebinaryop loc b e1 e2 : ergo_expr 
+    := Ergo.mk_expr loc (Ergo.EBinaryOp b e1 e2).
+  Definition eif loc e1 e2 e3 : ergo_expr 
+    := Ergo.mk_expr loc (Ergo.EIf e1 e2 e3).
+  Definition elet loc (v:String.string) (t:option ErgoType.ergo_type) (e1 e2:ergo_expr) : ergo_expr
+    := Ergo.mk_expr loc (Ergo.ELet v t e1 e2).
+  Definition enew loc n rec : ergo_expr 
+    := Ergo.mk_expr loc (Ergo.ENew n rec).
+  Definition erecord loc rec : ergo_expr 
+    := Ergo.mk_expr loc (Ergo.ERecord rec).
+  Definition ecallfun loc f el : ergo_expr
+    := Ergo.mk_expr loc (Ergo.ECallFun f el).
+  Definition ematch loc e0 epl ed : ergo_expr
+    := Ergo.mk_expr loc (Ergo.EMatch e0 epl ed).
+  Definition eforeach loc efl ew er : ergo_expr
+    := Ergo.mk_expr loc (Ergo.EForeach efl ew er).
 
   (** Statements *)
-  Definition sreturn : ergo_expr -> ergo_stmt :=
-    Ergo.SReturn.
-  Definition sfunreturn : ergo_expr -> ergo_stmt :=
-    Ergo.SFunReturn.
-  Definition sreturnempty : ergo_stmt :=
-    ErgoSugar.SReturnEmpty.
-  Definition sfunreturnempty : ergo_stmt :=
-    ErgoSugar.SFunReturnEmpty.
-  Definition sthrow : ergo_expr -> ergo_stmt :=
-    Ergo.SThrow.
-  Definition scallclause : String.string -> list ergo_expr -> ergo_stmt
-    := Ergo.SCallClause.
-  Definition ssetstate : ergo_expr -> ergo_stmt -> ergo_stmt :=
-    Ergo.SSetState.
-  Definition semit : ergo_expr -> ergo_stmt -> ergo_stmt :=
-    Ergo.SEmit.
-  Definition slet (v:String.string) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt
-    := Ergo.SLet v None e1 s2.
-  Definition slet_typed (v:String.string) (t:ErgoType.ergo_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt
-    := Ergo.SLet v (Some t) e1 s2.
-  Definition sif : ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt :=
-    Ergo.SIf.
-  Definition senforce (e1:ergo_expr) (s2: option ergo_stmt) (s3:ergo_stmt) : ergo_stmt
-    := Ergo.SEnforce e1 s2 s3.
-  Definition smatch : ergo_expr -> list (EPattern.ergo_pattern * ergo_stmt) -> ergo_stmt -> ergo_stmt
-    := Ergo.SMatch.
+  Definition sreturn loc e : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SReturn e).
+  Definition sfunreturn loc e : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SFunReturn e).
+  Definition sthrow loc e : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SThrow e).
+  Definition scallclause loc c el : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SCallClause c el).
+  Definition ssetstate loc e s : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SSetState  e s).
+  Definition semit loc e s : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SEmit e s).
+  Definition slet loc (v:String.string) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SLet v None e1 s2).
+  Definition slet_typed loc (v:String.string) (t:ErgoType.ergo_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SLet v (Some t) e1 s2).
+  Definition sif loc e1 s2 s3 : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SIf e1 s2 s3).
+  Definition senforce loc (e1:ergo_expr) (s2: option ergo_stmt) (s3:ergo_stmt) : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SEnforce e1 s2 s3).
+  Definition smatch loc e slp sd : ergo_stmt :=
+    Ergo.mk_stmt loc (Ergo.SMatch e slp sd).
 
   (** Syntactic sugar *)
-  Definition edot : String.string -> ergo_expr -> ergo_expr 
+  Definition edot : EResult.location -> String.string -> ergo_expr -> ergo_expr 
     := ErgoSugar.EDot.
-  Definition eoptionaldot : String.string -> ergo_expr -> ergo_expr
+  Definition eoptionaldot : EResult.location -> String.string -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDot.
-  Definition eoptionaldefault : ergo_expr -> ergo_expr -> ergo_expr
+  Definition eoptionaldefault : EResult.location -> ergo_expr -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDefault.
+  Definition sreturnempty : EResult.location -> ergo_stmt :=
+    ErgoSugar.SReturnEmpty.
+  Definition sfunreturnempty : EResult.location -> ergo_stmt :=
+    ErgoSugar.SFunReturnEmpty.
   
   (** Declarations *)
-  Definition dtype : ErgoType.ergo_type_declaration -> ergo_declaration
-    := Ergo.EType.
-  Definition dstmt : ergo_stmt -> ergo_declaration
-    := Ergo.EStmt.
-  Definition dconstant : String.string -> ergo_expr -> ergo_declaration
-    := Ergo.EConstant.
-  Definition dfunc : ergo_function -> ergo_declaration
-    := Ergo.EFunc.
-  Definition dcontract : ergo_contract -> ergo_declaration
-    := Ergo.EContract.
+  Definition dtype loc etd : ergo_declaration
+    := Ergo.mk_decl loc (Ergo.DType etd).
+  Definition dstmt loc s : ergo_declaration
+    := Ergo.mk_decl loc (Ergo.DStmt s).
+  Definition dconstant loc v e : ergo_declaration
+    := Ergo.mk_decl loc (Ergo.DConstant v e).
+  Definition dfunc loc f : ergo_declaration
+    := Ergo.mk_decl loc (Ergo.DFunc f).
+  Definition dcontract loc c : ergo_declaration
+    := Ergo.mk_decl loc (Ergo.DContract c).
 
   (** Compilation *)
   Definition ergo_module_to_javascript :

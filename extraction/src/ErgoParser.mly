@@ -29,6 +29,8 @@ let qname_of_qname_base qn =
 let relative_ref_of_qname_base qn =
   let (prefix,localname) = qname_of_qname_base qn in
   RelativeRef (prefix,localname)
+
+let mk_position (start_pos: Lexing.position) (end_pos: Lexing.position) : location = mk_position_of_loc_pair start_pos end_pos
 %}
 
 %token <int> INT
@@ -93,6 +95,7 @@ main:
 emodule:
 | NAMESPACE qn = qname_prefix ims = imports ss = decls
     { { module_namespace = Util.char_list_of_string qn;
+        module_location = mk_position $startpos $endpos;
         module_imports = ims;
         module_declarations = ss; } }
 
@@ -111,17 +114,21 @@ decls:
 decl:
 | DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
-      ErgoCompiler.dtype (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeConcept (oe,ctype))) }
+      ErgoCompiler.dtype (mk_position $startpos $endpos)
+        (ErgoCompiler.mk_ergo_type_declaration cn (mk_position $startpos $endpos) (ErgoTypeConcept (oe,ctype))) }
 | DEFINE TRANSACTION cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
-      ErgoCompiler.dtype (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeTransaction (oe,ctype))) }
+      ErgoCompiler.dtype (mk_position $startpos $endpos)
+        (ErgoCompiler.mk_ergo_type_declaration cn (mk_position $startpos $endpos) (ErgoTypeTransaction (oe,ctype))) }
 | DEFINE ENUM cn = ident et = ergo_type_enum_decl
-    { ErgoCompiler.dtype (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeEnum et)) }
+    { ErgoCompiler.dtype (mk_position $startpos $endpos)
+        (ErgoCompiler.mk_ergo_type_declaration cn (mk_position $startpos $endpos) (ErgoTypeEnum et)) }
 | DEFINE CONSTANT v = ident EQUAL e = expr
-    { ErgoCompiler.dconstant v e }
+    { ErgoCompiler.dconstant (mk_position $startpos $endpos) v e }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
-    { ErgoCompiler.dfunc
+    { ErgoCompiler.dfunc (mk_position $startpos $endpos)
         { function_name = cn;
+          function_location = mk_position $startpos $endpos;
           function_lambda =
           { lambda_params = [];
             lambda_output = out;
@@ -129,8 +136,9 @@ decl:
             lambda_emits = snd mt;
             lambda_body = fs; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
-    { ErgoCompiler.dfunc
+    { ErgoCompiler.dfunc (mk_position $startpos $endpos)
         { function_name = cn;
+          function_location = mk_position $startpos $endpos;
           function_lambda =
           { lambda_params = ps;
             lambda_output = out;
@@ -138,13 +146,14 @@ decl:
             lambda_emits = snd mt;
             lambda_body = fs; } } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
-    { ErgoCompiler.dcontract
+    { ErgoCompiler.dcontract (mk_position $startpos $endpos)
         { contract_name = cn;
+          contract_location = mk_position $startpos $endpos;
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }
 | s = stmt SEMI
-    { ErgoCompiler.dstmt s }
+    { ErgoCompiler.dstmt (mk_position $startpos $endpos) s }
 
 ergo_type_class_decl:
 | LCURLY rt = rectype RCURLY
@@ -165,6 +174,7 @@ clauses:
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = stmt RCURLY
     { { clause_name = cn;
+        clause_location = mk_position $startpos $endpos;
         clause_lambda =
         { lambda_params = [];
           lambda_output = out;
@@ -173,6 +183,7 @@ clause:
           lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
     { { clause_name = cn;
+        clause_location = mk_position $startpos $endpos;
         clause_lambda =
         { lambda_params = ps;
           lambda_output = out;
@@ -204,30 +215,30 @@ params:
 
 param:
 | pn = IDENT
-    { (Util.char_list_of_string pn, ErgoCompiler.ergo_type_any) }
+    { (Util.char_list_of_string pn, ErgoCompiler.ergo_type_any (mk_position $startpos $endpos)) }
 | pn = IDENT COLON pt = paramtype
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
 | qn = qname_base
     { begin match qn with
-      | (None, "Boolean") -> ErgoCompiler.ergo_type_boolean
-      | (None, "String") -> ErgoCompiler.ergo_type_string
-      | (None, "Double") -> ErgoCompiler.ergo_type_double
-      | (None, "Long") -> ErgoCompiler.ergo_type_long
-      | (None, "Integer") -> ErgoCompiler.ergo_type_integer
-      | (None, "DateTime") -> ErgoCompiler.ergo_type_dateTime
-      | (None, "Empty") -> ErgoCompiler.ergo_type_none
-      | (None, "Any") -> ErgoCompiler.ergo_type_any
+      | (None, "Boolean") -> ErgoCompiler.ergo_type_boolean (mk_position $startpos $endpos)
+      | (None, "String") -> ErgoCompiler.ergo_type_string (mk_position $startpos $endpos)
+      | (None, "Double") -> ErgoCompiler.ergo_type_double (mk_position $startpos $endpos)
+      | (None, "Long") -> ErgoCompiler.ergo_type_long (mk_position $startpos $endpos)
+      | (None, "Integer") -> ErgoCompiler.ergo_type_integer (mk_position $startpos $endpos)
+      | (None, "DateTime") -> ErgoCompiler.ergo_type_dateTime (mk_position $startpos $endpos)
+      | (None, "Empty") -> ErgoCompiler.ergo_type_none (mk_position $startpos $endpos)
+      | (None, "Any") -> ErgoCompiler.ergo_type_any (mk_position $startpos $endpos)
       | _ ->
-          ErgoCompiler.ergo_type_class_ref (relative_ref_of_qname_base qn)
+          ErgoCompiler.ergo_type_class_ref (mk_position $startpos $endpos) (relative_ref_of_qname_base qn)
       end }
 | LCURLY rt = rectype RCURLY
-    { ErgoCompiler.ergo_type_record rt }
+    { ErgoCompiler.ergo_type_record (mk_position $startpos $endpos) rt }
 | pt = paramtype LBRACKET RBRACKET
-    { ErgoCompiler.ergo_type_array pt }
+    { ErgoCompiler.ergo_type_array (mk_position $startpos $endpos) pt }
 | pt = paramtype QUESTION
-    { ErgoCompiler.ergo_type_option pt }
+    { ErgoCompiler.ergo_type_option (mk_position $startpos $endpos) pt }
 
 rectype:
 | 
@@ -244,45 +255,45 @@ attributetype:
 stmt:
 (* Statments *)
 | RETURN
-    { ErgoCompiler.sreturnempty }
+    { ErgoCompiler.sreturnempty (mk_position $startpos $endpos) }
 | RETURN e1 = expr
-    { ErgoCompiler.sreturn e1 }
+    { ErgoCompiler.sreturn (mk_position $startpos $endpos) e1 }
 | THROW e1 = expr
-    { ErgoCompiler.sthrow e1 }
+    { ErgoCompiler.sthrow (mk_position $startpos $endpos) e1 }
 (* Call *)
 | fn = IDENT LPAREN el = exprlist RPAREN
-    { ErgoCompiler.scallclause (Util.char_list_of_string fn) el }
+    { ErgoCompiler.scallclause (mk_position $startpos $endpos) (Util.char_list_of_string fn) el }
 | LET v = ident EQUAL e1 = expr SEMI s2 = stmt
-    { ErgoCompiler.slet v e1 s2 }
+    { ErgoCompiler.slet (mk_position $startpos $endpos) v e1 s2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
-    { ErgoCompiler.slet_typed v t e1 s2 }
+    { ErgoCompiler.slet_typed (mk_position $startpos $endpos) v t e1 s2 }
 | IF e1 = expr THEN s2 = stmt ELSE s3 = stmt
-    { ErgoCompiler.sif e1 s2 s3 }
+    { ErgoCompiler.sif (mk_position $startpos $endpos) e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = stmt SEMI s3 = stmt
-    { ErgoCompiler.senforce e1 (Some s2) s3 }
+    { ErgoCompiler.senforce (mk_position $startpos $endpos) e1 (Some s2) s3 }
 | ENFORCE e1 = expr SEMI s3 = stmt
-    { ErgoCompiler.senforce e1 None s3 }
+    { ErgoCompiler.senforce (mk_position $startpos $endpos) e1 None s3 }
 | SET STATE e1 = expr SEMI s2 = stmt
-    { ErgoCompiler.ssetstate e1 s2 }
+    { ErgoCompiler.ssetstate (mk_position $startpos $endpos) e1 s2 }
 | EMIT e1 = expr SEMI s2 = stmt
-    { ErgoCompiler.semit e1 s2 }
+    { ErgoCompiler.semit (mk_position $startpos $endpos) e1 s2 }
 | MATCH e0 = expr csd = cases_stmt
-    { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
+    { ErgoCompiler.smatch (mk_position $startpos $endpos) e0 (fst csd) (snd csd) }
 
 fstmt:
 (* Statments *)
 | RETURN
-    { ErgoCompiler.sfunreturnempty }
+    { ErgoCompiler.sfunreturnempty (mk_position $startpos $endpos) }
 | RETURN e1 = expr
-    { ErgoCompiler.sfunreturn e1 }
+    { ErgoCompiler.sfunreturn (mk_position $startpos $endpos) e1 }
 | THROW e1 = expr
     { raise (LexError ("Cannot throw inside a function, you have to be in a Clause")) }
 | LET v = ident EQUAL e1 = expr SEMI s2 = fstmt
-    { ErgoCompiler.slet v e1 s2 }
+    { ErgoCompiler.slet (mk_position $startpos $endpos) v e1 s2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
-    { ErgoCompiler.slet_typed v t e1 s2 }
+    { ErgoCompiler.slet_typed (mk_position $startpos $endpos) v t e1 s2 }
 | IF e1 = expr THEN s2 = fstmt ELSE s3 = fstmt
-    { ErgoCompiler.sif e1 s2 s3 }
+    { ErgoCompiler.sif (mk_position $startpos $endpos) e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = fstmt SEMI s3 = fstmt
     { raise (LexError ("Cannot use enforce inside a function, you have to be in a Clause")) }
 | ENFORCE e1 = expr SEMI s3 = fstmt
@@ -292,7 +303,7 @@ fstmt:
 | EMIT e1 = expr SEMI s2 = fstmt
     { raise (LexError ("Cannot emit inside a function, you have to be in a Clause")) }
 | MATCH e0 = expr csd = cases_fstmt
-    { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
+    { ErgoCompiler.smatch (mk_position $startpos $endpos) e0 (fst csd) (snd csd) }
 
 (* cases *)
 type_annotation:
@@ -331,93 +342,93 @@ expr:
     { e }
 (* Call *)
 | fn = IDENT LPAREN el = exprlist RPAREN
-    { ErgoCompiler.ecallfun (Util.char_list_of_string fn) el }
+    { ErgoCompiler.ecallfun (mk_position $startpos $endpos) (Util.char_list_of_string fn) el }
 (* Constants *)
 | NIL
-    { ErgoCompiler.econst ErgoCompiler.ErgoData.dunit }
+    { ErgoCompiler.econst (mk_position $startpos $endpos) ErgoCompiler.ErgoData.dunit }
 | TRUE
-    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dbool true) }
+    { ErgoCompiler.econst (mk_position $startpos $endpos) (ErgoCompiler.ErgoData.dbool true) }
 | FALSE
-    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dbool false) }
+    { ErgoCompiler.econst (mk_position $startpos $endpos) (ErgoCompiler.ErgoData.dbool false) }
 | i = INT
-    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dnat (Util.coq_Z_of_int i)) }
+    { ErgoCompiler.econst (mk_position $startpos $endpos) (ErgoCompiler.ErgoData.dnat (Util.coq_Z_of_int i)) }
 | f = FLOAT
-    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dfloat f) }
+    { ErgoCompiler.econst (mk_position $startpos $endpos) (ErgoCompiler.ErgoData.dfloat f) }
 | s = STRING
-    { ErgoCompiler.econst (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s)) }
+    { ErgoCompiler.econst (mk_position $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s)) }
 | LBRACKET el = exprlist RBRACKET
-    { ErgoCompiler.earray el }
+    { ErgoCompiler.earray (mk_position $startpos $endpos) el }
 (* Expressions *)
 | v = IDENT
-    { ErgoCompiler.evar (Util.char_list_of_string v) }
+    { ErgoCompiler.evar (mk_position $startpos $endpos) (Util.char_list_of_string v) }
 | e = expr DOT a = safeident
-    { ErgoCompiler.edot a e }
+    { ErgoCompiler.edot (mk_position $startpos $endpos) a e }
 | e = expr QUESTIONDOT a = safeident
-    { ErgoCompiler.eoptionaldot a e }
+    { ErgoCompiler.eoptionaldot (mk_position $startpos $endpos) a e }
 | e1 = expr QUESTIONQUESTION e2 = expr
-    { ErgoCompiler.eoptionaldefault e1 e2 }
+    { ErgoCompiler.eoptionaldefault (mk_position $startpos $endpos) e1 e2 }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
-    { ErgoCompiler.eif e1 e2 e3 }
+    { ErgoCompiler.eif (mk_position $startpos $endpos) e1 e2 e3 }
 | NEW qn = qname LCURLY r = reclist RCURLY
-    { ErgoCompiler.enew (ErgoCompiler.mk_relative_ref (fst qn) (snd qn)) r }
+    { ErgoCompiler.enew (mk_position $startpos $endpos) (ErgoCompiler.mk_relative_ref (fst qn) (snd qn)) r }
 | LCURLY r = reclist RCURLY
-    { ErgoCompiler.erecord r }
+    { ErgoCompiler.erecord (mk_position $startpos $endpos) r }
 | CONTRACT
-    { ErgoCompiler.ethis_contract }
+    { ErgoCompiler.ethis_contract (mk_position $startpos $endpos) }
 | CLAUSE
-    { ErgoCompiler.ethis_clause }
+    { ErgoCompiler.ethis_clause (mk_position $startpos $endpos) }
 | STATE
-    { ErgoCompiler.ethis_state }
+    { ErgoCompiler.ethis_state (mk_position $startpos $endpos) }
 | LET v = ident EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet v None e1 e2 }
+    { ErgoCompiler.elet (mk_position $startpos $endpos) v None e1 e2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet v (Some t) e1 e2 }
+    { ErgoCompiler.elet (mk_position $startpos $endpos) v (Some t) e1 e2 }
 | MATCH e0 = expr csd = cases
-    { ErgoCompiler.ematch e0 (fst csd) (snd csd) }
+    { ErgoCompiler.ematch (mk_position $startpos $endpos) e0 (fst csd) (snd csd) }
 | FOREACH fl = foreachlist RETURN e2 = expr
-    { ErgoCompiler.eforeach fl None e2 }
+    { ErgoCompiler.eforeach (mk_position $startpos $endpos) fl None e2 }
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
-    { ErgoCompiler.eforeach fl (Some econd) e2 }
+    { ErgoCompiler.eforeach (mk_position $startpos $endpos) fl (Some econd) e2 }
 (* Unary operators *)
 | NOT e = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg e }
+    { ErgoCompiler.eunaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg e }
 (* Binary operators *)
 | e1 = expr EQUAL e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opequal e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opequal e1 e2 }
 | e1 = expr NEQUAL e2 = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opequal e1 e2) }
+    { ErgoCompiler.eunaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opequal e1 e2) }
 | e1 = expr LT e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.oplt e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.oplt e1 e2 }
 | e1 = expr LTEQ e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.ople e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.ople e1 e2 }
 | e1 = expr GT e2 = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.ople e1 e2) }
+    { ErgoCompiler.eunaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.ople e1 e2) }
 | e1 = expr GTEQ e2 = expr
-    { ErgoCompiler.eunaryop ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.oplt e1 e2) }
+    { ErgoCompiler.eunaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.oplt e1 e2) }
 | e1 = expr MINUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opminus e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opminus e1 e2 }
 | e1 = expr PLUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opplus e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opplus e1 e2 }
 | e1 = expr STAR e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opmult e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opmult e1 e2 }
 | e1 = expr SLASH e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.opdiv e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opdiv e1 e2 }
 | e1 = expr CARROT e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Double.oppow e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.oppow e1 e2 }
 | e1 = expr MINUSI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opminusi e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opminusi e1 e2 }
 | e1 = expr PLUSI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opplusi e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opplusi e1 e2 }
 | e1 = expr STARI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opmulti e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opmulti e1 e2 }
 | e1 = expr SLASHI e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.Integer.opdivi e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opdivi e1 e2 }
 | e1 = expr AND e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opand e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opand e1 e2 }
 | e1 = expr OR e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opor e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opor e1 e2 }
 | e1 = expr PLUSPLUS e2 = expr
-    { ErgoCompiler.ebinaryop ErgoCompiler.ErgoOps.Binary.opstringconcat e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opstringconcat e1 e2 }
 
 (* foreach list *)
 foreachlist:

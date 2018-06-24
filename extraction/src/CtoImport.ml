@@ -23,22 +23,33 @@ let enum_case_of_decl d =
 let cto_enum_of_decls dl =
   List.map enum_case_of_decl dl
 
+let mk_loc loc =
+  { loc_start =
+    { offset = loc.cto_location_start.cto_loc_offset;
+       line = loc.cto_location_start.cto_loc_line;
+       column = loc.cto_location_start.cto_loc_column; };
+    loc_end =
+      { offset = loc.cto_location_end.cto_loc_offset;
+        line = loc.cto_location_end.cto_loc_line;
+        column = loc.cto_location_end.cto_loc_column; }; }
+
 let base_type_of_decl d =
   begin match d with
   | None -> ergo_raise (ergo_system_error "Missing propertyType in CTO")
   | Some d ->
       begin match d.cto_prop_type_name with
-      | "Boolean" -> CTOBoolean
-      | "String" -> CTOString
-      | "Double" -> CTODouble
-      | "Integer" -> CTOInteger
-      | "Long" -> CTOLong
-      | "DateTime" -> CTODateTime
-      | s -> CTOClassRef (RelativeRef (None,(char_list_of_string s)))
+      | "Boolean" -> ErgoCompiler.cto_boolean (mk_loc d.cto_prop_type_location)
+      | "String" -> ErgoCompiler.cto_string (mk_loc d.cto_prop_type_location)
+      | "Double" -> ErgoCompiler.cto_double (mk_loc d.cto_prop_type_location)
+      | "Integer" -> ErgoCompiler.cto_integer (mk_loc d.cto_prop_type_location)
+      | "Long" -> ErgoCompiler.cto_long (mk_loc d.cto_prop_type_location)
+      | "DateTime" -> ErgoCompiler.cto_dateTime (mk_loc d.cto_prop_type_location)
+      | s -> ErgoCompiler.cto_class_ref (mk_loc d.cto_prop_type_location) (RelativeRef (None,(char_list_of_string s)))
       end
   end
 
 let field_of_decl d =
+  let loc = mk_loc d.cto_decl_content_location in
   let field_name = char_list_of_string d.cto_decl_content_id.cto_id_name in
   let base_type =
     base_type_of_decl d.cto_decl_content_propertyType
@@ -46,7 +57,7 @@ let field_of_decl d =
   let field_type = base_type in
   let field_type =
     begin match d.cto_decl_content_array with
-    | Some "[]" -> CTOArray field_type
+    | Some "[]" -> ErgoCompiler.cto_array loc field_type
     | Some _ -> ergo_raise (ergo_system_error "Mal-formed array option in CTO JSON representation")
     | None -> field_type
     end
@@ -55,7 +66,7 @@ let field_of_decl d =
     begin match d.cto_decl_content_optional with
     | None -> field_type
     | Some opt ->
-        CTOOption (CTOArray base_type)
+        ErgoCompiler.cto_option loc (ErgoCompiler.cto_array loc base_type)
     end
   in
   (field_name, field_type)
@@ -68,6 +79,7 @@ let cto_event_of_decls dl =
 
 let cto_declaration_of_defn d =
   let decl_class = d.cto_defn_id.cto_id_name in
+  let loc = mk_loc d.cto_defn_location in
   let decl_type = 
     begin match d.cto_defn_ttype with
     | "EnumDeclaration" ->
@@ -92,6 +104,7 @@ let cto_declaration_of_defn d =
     end
   in
   { cto_declaration_name = char_list_of_string decl_class;
+    cto_declaration_location = loc;
     cto_declaration_type = decl_type; }
 
 let cto_declarations_of_body dl =
@@ -105,6 +118,7 @@ let cto_import (m:model) : cto_package =
   let imports = List.map cto_import_of_import m.cto_imports in
   let decls = cto_declarations_of_body m.cto_body in
   { cto_package_namespace = namespace;
+    cto_package_location = dummy_location; (* XXX Not in JSON *)
     cto_package_imports = imports;
     cto_package_declarations = decls; }
 

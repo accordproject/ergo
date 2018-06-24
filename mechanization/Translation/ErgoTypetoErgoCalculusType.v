@@ -30,7 +30,7 @@ Section ErgoTypetoErgoCalculusType.
   (** A semantics for ErgoCalculusType packages is obtained through translation
       into branded types. *)
   Program Fixpoint ergo_type_to_ergoc_type {m:brand_relation} (t:ergo_type) : ErgoCalculusType.ectype :=
-    match t with
+    match type_desc t with
     | ErgoTypeAny => ErgoCalculusType.top
     | ErgoTypeNone => ErgoCalculusType.empty
     | ErgoTypeBoolean => ErgoCalculusType.bool

@@ -20,13 +20,17 @@ open ErgoComp
 exception Ergo_Error of eerror
 let ergo_system_error msg =
   SystemError (char_list_of_string msg)
-let ergo_parse_error msg line1 char1 line2 char2 =
+let mk_position_point_of_loc pos =
+  { offset = pos.Lexing.pos_cnum;
+    line = pos.Lexing.pos_lnum;
+    column = pos.Lexing.pos_bol; }
+let mk_position_of_loc_pair start_pos end_pos =
+  { loc_start = mk_position_point_of_loc start_pos;
+    loc_end = mk_position_point_of_loc end_pos; }
+let ergo_parse_error msg start_pos end_pos =
   ParseError
-    { message = char_list_of_string msg;
-      loc_start = { line = line1;
-                    character = char1 };
-      loc_end = { line = line2;
-                  character = char2 } }
+    { parse_error_message = char_list_of_string msg;
+      parse_error_location = mk_position_of_loc_pair start_pos end_pos; }
 let ergo_compilation_error msg =
   CompilationError (char_list_of_string msg)
 let ergo_type_error msg =
@@ -50,39 +54,38 @@ let error_message error =
   let msg = 
     begin match error with
     | SystemError msg -> msg
-    | ParseError pe -> pe.message
+    | ParseError pe -> pe.parse_error_message
     | CompilationError msg -> msg
     | TypeError msg -> msg
     | RuntimeError msg -> msg
     end
   in string_of_char_list msg
 
-let loc_empty = { line = -1; character = -1; }
 let error_loc_start error =
   begin match error with
-  | SystemError _ -> loc_empty
-  | ParseError pe -> pe.loc_start
-  | CompilationError _ -> loc_empty
-  | TypeError _ -> loc_empty
-  | RuntimeError _ -> loc_empty
+  | SystemError _ -> dummy_location.loc_start
+  | ParseError pe -> pe.parse_error_location.loc_start
+  | CompilationError _ -> dummy_location.loc_start
+  | TypeError _ -> dummy_location.loc_start
+  | RuntimeError _ -> dummy_location.loc_start
   end
 let error_loc_end error =
   begin match error with
-  | SystemError _ -> loc_empty
-  | ParseError pe -> pe.loc_end
-  | CompilationError _ -> loc_empty
-  | TypeError _ -> loc_empty
-  | RuntimeError _ -> loc_empty
+  | SystemError _ -> dummy_location.loc_end
+  | ParseError pe -> pe.parse_error_location.loc_end
+  | CompilationError _ -> dummy_location.loc_end
+  | TypeError _ -> dummy_location.loc_end
+  | RuntimeError _ -> dummy_location.loc_end
   end
 
 let string_of_error_loc perror =
   "line " ^ (string_of_int perror.loc_start.line)
-  ^ " character " ^ (string_of_int perror.loc_start.character)
+  ^ " character " ^ (string_of_int perror.loc_start.column)
 
 let string_of_error error =
   begin match error with
   | SystemError _ -> "[SystemError] " ^ (error_message error)
-  | ParseError pe -> "[ParseError at " ^ (string_of_error_loc pe) ^ "] " ^ (error_message error)
+  | ParseError pe -> "[ParseError at " ^ (string_of_error_loc pe.parse_error_location) ^ "] " ^ (error_message error)
   | CompilationError _ -> "[CompilationError] " ^  (error_message error)
   | TypeError _ -> "[TypeError]" ^ (error_message error)
   | RuntimeError _ -> "[RuntimeError]" ^  (error_message error)

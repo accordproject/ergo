@@ -172,7 +172,7 @@ Section ErgoCalculustoErgoNNRC.
   (** Translate expressions to calculus *)
   Fixpoint ergoc_expr_to_nnrc
            (ctxt:translation_context) (e:ergoc_expr) : eresult nnrc_expr :=
-    match e with
+    match expr_desc e with
     | EThisContract =>
       match ctxt.(translation_context_current_contract) with
       | None => not_in_contract_error
@@ -465,22 +465,24 @@ Section ErgoCalculustoErgoNNRC.
     (**r Test pattern matching on values *)
     Definition input1 := dnat 2.
     
-    Example j1 :=
-      EMatch (EConst input1)
-              ((CaseData (dnat 1), (EConst (dstring "1")))
-                 :: (CaseData (dnat 2), (EConst (dstring "2")))
-                 :: nil)
-              (EConst (dstring "lots")).
+    Example j1 : ergoc_expr :=
+      mk_expr dummy_location
+              (EMatch (mk_expr dummy_location (EConst input1))
+                      ((CaseData (dnat 1), mk_expr dummy_location (EConst (dstring "1")))
+                         :: (CaseData (dnat 2), mk_expr dummy_location (EConst (dstring "2")))
+                         :: nil)
+                      (mk_expr dummy_location (EConst (dstring "lots")))).
     Definition jc1 := ergoc_expr_to_nnrc ctxt0 j1.
     (* Eval vm_compute in jc1. *)
     (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc1. *)
 
-    Example j1' :=
-      EMatch (EConst input1)
-              ((CaseData (dnat 1), (EConst (dstring "1")))
-                 :: (CaseLet "v2" None, EVar "v2")
-                 :: nil)
-              (EConst (dstring "lots")).
+    Example j1' : ergo_expr :=
+      mk_expr dummy_location
+              (EMatch (mk_expr dummy_location (EConst input1))
+                      ((CaseData (dnat 1), (mk_expr dummy_location (EConst (dstring "1"))))
+                         :: (CaseLet "v2" None, (mk_expr dummy_location (EVar "v2")))
+                         :: nil)
+                      (mk_expr dummy_location (EConst (dstring "lots")))).
     Definition jc1' := ergoc_expr_to_nnrc ctxt0 j1'.
     (* Eval vm_compute in jc1'. *)
     (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc1'. *)
@@ -489,12 +491,13 @@ Section ErgoCalculustoErgoNNRC.
     Definition input2 :=
       dbrand ("C2"::nil) (dnat 1).
     
-    Example j2 :=
-      EMatch (EConst input2)
-             ((CaseLet "v1" (Some "C1"), (EConst (dstring "1")))
-                :: (CaseLet "v2" (Some "C2"), (EConst (dstring "2")))
-                :: nil)
-              (EConst (dstring "lots")).
+    Example j2 : ergo_expr :=
+      mk_expr dummy_location
+              (EMatch (mk_expr dummy_location (EConst input2))
+                      ((CaseLet "v1" (Some "C1"), (mk_expr dummy_location (EConst (dstring "1"))))
+                         :: (CaseLet "v2" (Some "C2"), (mk_expr dummy_location (EConst (dstring "2"))))
+                         :: nil)
+                      (mk_expr dummy_location (EConst (dstring "lots")))).
 
     Definition jc2 := ergoc_expr_to_nnrc ctxt0 j2.
     (* Eval vm_compute in jc2. *)
@@ -507,11 +510,12 @@ Section ErgoCalculustoErgoNNRC.
     Definition input3none :=
       dnone.
     
-    Example j3 input :=
-      EMatch (EConst input)
-             ((CaseLetOption "v1" None, (EConst (dstring "1")))
-                :: nil)
-              (EConst (dstring "nothing")).
+    Example j3 input : ergo_expr :=
+      mk_expr dummy_location
+              (EMatch (mk_expr dummy_location (EConst input))
+                      ((CaseLetOption "v1" None, (mk_expr dummy_location (EConst (dstring "1"))))
+                         :: nil)
+                      (mk_expr dummy_location (EConst (dstring "nothing")))).
 
     Definition jc3 := ergoc_expr_to_nnrc ctxt0 (j3 input3).
     Definition jc3none := ergoc_expr_to_nnrc ctxt0 (j3 input3none).

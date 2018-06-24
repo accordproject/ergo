@@ -55,10 +55,10 @@ let wrap_all wrap_f l =
 let json_loc_of_loc loc =
   object%js
     val line = loc.line
-    val character = loc.character
+    val character = loc.column
   end
 
-let json_loc_missing () = json_loc_of_loc loc_empty
+let json_loc_missing () = json_loc_of_loc dummy_location.loc_start
 
 let json_of_ergo_error error =
   object%js
