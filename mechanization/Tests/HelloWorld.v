@@ -15,6 +15,7 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Compiler.ErgoCompiler.
@@ -35,23 +36,26 @@ contract HelloWorld over TemplateModel {
 
   Definition cl1 : ergo_clause :=
     mkClause "helloworld"
+             dummy_location
              (mkLambda
-                (("request", ErgoTypeClassRef (AbsoluteRef "Request"))::nil)
-                (ErgoTypeClassRef (AbsoluteRef "Response"))
+                (("request", mk_type dummy_location (ErgoTypeClassRef (AbsoluteRef "Request")))::nil)
+                (mk_type dummy_location (ErgoTypeClassRef (AbsoluteRef "Response")))
                 None
                 None
-                (SReturn (EVar "request"))).
+                (mk_stmt dummy_location (SReturn (mk_expr dummy_location (EVar "request"))))).
 
   Definition c1 : ergo_contract :=
     mkContract "HelloWorld"
-               (ErgoTypeClassRef (AbsoluteRef "TemplateModel"))
+               dummy_location
+               (mk_type dummy_location (ErgoTypeClassRef (AbsoluteRef "TemplateModel")))
                None
                (cl1::nil).
   
   Definition p1 : ergo_module :=
     mkModule "org.accordproject.helloworld"
+             dummy_location
              nil
-              ((EContract c1)::nil).
+             (mk_decl dummy_location (DContract c1)::nil).
 
   (* Eval vm_compute in (ErgoCompiler.ergo_module_to_javascript nil p1). *)
 End HelloWorld.

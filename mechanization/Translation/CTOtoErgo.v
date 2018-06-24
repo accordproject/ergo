@@ -28,8 +28,8 @@ Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section CTOtoErgo.
 
-  Fixpoint cto_type_to_ergo_type (ct:cto_type) : ergo_type :=
-    match ct with
+  Fixpoint cto_type_desc_to_ergo_type_desc (ctd:cto_type_desc) : ergo_type_desc :=
+    match ctd with
     | CTOBoolean => ErgoTypeBoolean
     | CTOString => ErgoTypeString
     | CTODouble => ErgoTypeDouble
@@ -39,9 +39,11 @@ Section CTOtoErgo.
     | CTOClassRef n => ErgoTypeClassRef n
     | CTOOption ct1 => ErgoTypeOption (cto_type_to_ergo_type ct1)
     | CTOArray ct1 => ErgoTypeArray (cto_type_to_ergo_type ct1)
-    end.
+    end
+  with cto_type_to_ergo_type (ct:cto_type) : ergo_type :=
+    mk_type (cto_loc ct) (cto_type_desc_to_ergo_type_desc (cto_desc ct)).
 
-  Definition cto_declaration_kind_to_ergo_type_declaration_kind (dk:cto_declaration_kind) :=
+  Definition cto_declaration_kind_to_ergo_type_declaration_desc (dk:cto_declaration_desc) :=
     match dk with
     | CTOEnum ls => ErgoTypeEnum ls
     | CTOTransaction on crec =>
@@ -59,29 +61,37 @@ Section CTOtoErgo.
   Definition cto_declaration_to_ergo_type_declaration (d:cto_declaration) : ergo_type_declaration :=
     mkErgoTypeDeclaration
       d.(cto_declaration_name)
-      (cto_declaration_kind_to_ergo_type_declaration_kind d.(cto_declaration_type)).
+      d.(cto_declaration_location)
+      (cto_declaration_kind_to_ergo_type_declaration_desc d.(cto_declaration_type)).
 
   Definition cto_declaration_to_ergo_declaration (d:cto_declaration) : ergo_declaration :=
-    EType (cto_declaration_to_ergo_type_declaration d).
+    mk_decl
+      d.(cto_declaration_location)
+      (DType (cto_declaration_to_ergo_type_declaration d)).
 
   Definition cto_package_to_ergo_module (p:cto_package) : ergo_module :=
     mkModule
       p.(cto_package_namespace)
+      p.(cto_package_location)
       p.(cto_package_imports)
       (map cto_declaration_to_ergo_declaration p.(cto_package_declarations)).
 
-  Fixpoint map_type_decl (edls:list ergo_declaration) : list ergo_type_declaration :=
+  Fixpoint filter_type_decl (edls:list ergo_declaration) : list ergo_type_declaration :=
     match edls with
     | nil => nil
-    | EType dl :: edls' => dl :: (map_type_decl edls')
-    | _ :: edls' =>  (map_type_decl edls')
+    | d :: edls' =>
+      match decl_desc d with
+      | DType dl => dl :: (filter_type_decl edls')
+      | _ =>  (filter_type_decl edls')
+      end
     end.
   
   Definition cto_package_to_ergo_type_module (p:cto_package) : ergo_type_module :=
     let em := cto_package_to_ergo_module p in
     mkErgoTypeModule
       em.(module_namespace)
+      em.(module_location)
       em.(module_imports)
-      (map_type_decl em.(module_declarations)).
+      (filter_type_decl em.(module_declarations)).
 
 End CTOtoErgo.

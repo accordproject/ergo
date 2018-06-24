@@ -24,33 +24,48 @@ Require Import ErgoSpec.Common.Utils.EImport.
 
 Section CTO.
 
-  Inductive cto_type :=
-  | CTOBoolean : cto_type                          (**r bool atomic type *)
-  | CTOString : cto_type                           (**r string atomic type *)
-  | CTODouble : cto_type                           (**r double atomic type *)
-  | CTOLong : cto_type                             (**r long atomic type *)
-  | CTOInteger : cto_type                          (**r integer atomic type *)
-  | CTODateTime : cto_type                         (**r date and time atomic type *)
-  | CTOClassRef : name_ref -> cto_type             (**r relative class reference *)
-  | CTOOption : cto_type -> cto_type               (**r optional type *)
-  | CTOArray : cto_type -> cto_type.               (**r array type *)
+  Inductive cto_type_desc :=
+  | CTOBoolean : cto_type_desc                          (**r bool atomic type *)
+  | CTOString : cto_type_desc                           (**r string atomic type *)
+  | CTODouble : cto_type_desc                           (**r double atomic type *)
+  | CTOLong : cto_type_desc                             (**r long atomic type *)
+  | CTOInteger : cto_type_desc                          (**r integer atomic type *)
+  | CTODateTime : cto_type_desc                         (**r date and time atomic type *)
+  | CTOClassRef : name_ref -> cto_type_desc             (**r relative class reference *)
+  | CTOOption : cto_type -> cto_type_desc               (**r optional type *)
+  | CTOArray : cto_type -> cto_type_desc                (**r array type *)
+  with cto_type :=
+  | CTOType : location -> cto_type_desc -> cto_type.
 
-  Inductive cto_declaration_kind :=
-  | CTOEnum : list string -> cto_declaration_kind
-  | CTOTransaction : option name_ref -> list (string * cto_type) -> cto_declaration_kind
-  | CTOConcept : option name_ref -> list (string * cto_type) -> cto_declaration_kind
-  | CTOEvent : option name_ref -> list (string * cto_type) -> cto_declaration_kind
-  | CTOAsset : option name_ref -> list (string * cto_type) -> cto_declaration_kind
-  | CTOParticipant : option name_ref -> list (string * cto_type) -> cto_declaration_kind.
+  Definition cto_loc (ct:cto_type) : location :=
+    match ct with
+    | CTOType loc _ => loc
+    end.
+  Definition cto_desc (ct:cto_type) : cto_type_desc :=
+    match ct with
+    | CTOType _ ctd => ctd
+   end.
+  Definition mk_cto (loc:location) (ctd:cto_type_desc) : cto_type :=
+    CTOType loc ctd.
+
+  Inductive cto_declaration_desc :=
+  | CTOEnum : list string -> cto_declaration_desc
+  | CTOTransaction : option name_ref -> list (string * cto_type) -> cto_declaration_desc
+  | CTOConcept : option name_ref -> list (string * cto_type) -> cto_declaration_desc
+  | CTOEvent : option name_ref -> list (string * cto_type) -> cto_declaration_desc
+  | CTOAsset : option name_ref -> list (string * cto_type) -> cto_declaration_desc
+  | CTOParticipant : option name_ref -> list (string * cto_type) -> cto_declaration_desc.
 
   Record cto_declaration :=
     mkCTODeclaration
       { cto_declaration_name : local_name;
-        cto_declaration_type : cto_declaration_kind; }.
+        cto_declaration_location : location;
+        cto_declaration_type : cto_declaration_desc; }.
 
   Record cto_package :=
     mkCTOPackage
       { cto_package_namespace : namespace_name;
+        cto_package_location : location;
         cto_package_imports : list import_decl;
         cto_package_declarations : list cto_declaration; }.
 

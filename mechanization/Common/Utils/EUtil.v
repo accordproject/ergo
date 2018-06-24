@@ -23,4 +23,14 @@ Section EUtil.
       (fold_left (fun acc e => acc ++ separator ++ (f e)) elems' (f e))%string
     end.
 
+  Fixpoint filter_some {A B:Type} (f:A -> option B) (l:list A) : list B :=
+    match l with
+    | nil => nil
+    | x :: t =>
+      match f x with
+      | None => (filter_some f t)
+      | Some x' => x' :: (filter_some f t)
+      end
+    end.
+
 End EUtil.

@@ -17,19 +17,28 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ZArith.
 
 Section EResult.
+  Record location_point :=
+    mkLocationPoint {
+        offset: Z;
+        line : Z;
+        column : Z;
+      }.
   Record location :=
     mkLocation {
-        line : nat;
-        character : nat;
+        loc_start: location_point;
+        loc_end: location_point;
       }.
-    
+  Definition dummy_location : location :=
+    let dummy_location_point := mkLocationPoint (-1) (-1) (-1) in
+    mkLocation dummy_location_point dummy_location_point.
+
   Record parse_error :=
     mkParseError {
-        message: string;
-        loc_start: location;
-        loc_end: location;
+        parse_error_message: string;
+        parse_error_location: location;
       }.
   
   Inductive eerror : Set :=
@@ -89,6 +98,8 @@ Section EResult.
 
     Definition unresolved_name_error {A} : eresult A :=
       efailure (CompilationError ("Unresolved name")).
+
+    
   End Builtin.
 
 End EResult.
