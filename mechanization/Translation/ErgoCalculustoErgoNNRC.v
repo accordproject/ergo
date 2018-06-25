@@ -401,20 +401,20 @@ Section ErgoCalculustoErgoNNRC.
   Definition declaration_to_nnrc
              (ctxt:translation_context) (s:ergoc_declaration) : eresult (translation_context * nnrc_declaration) :=
     match s with
-    | ECExpr e =>
+    | DCExpr e =>
       elift
-        (fun x => (ctxt, ENExpr x))
+        (fun x => (ctxt, DNExpr x))
         (ergoc_expr_to_nnrc ctxt e)
-    | ECConstant v e =>
+    | DCConstant v e =>
       elift
-        (fun x => (add_one_global ctxt v, ENConstant v x)) (* Add new variable to translation_context *)
+        (fun x => (add_one_global ctxt v, DNConstant v x)) (* Add new variable to translation_context *)
         (ergoc_expr_to_nnrc ctxt e)
-    | ECFunc f =>
+    | DCFunc f =>
       elift
-        (fun x => (add_one_function ctxt x.(functionn_name) x.(functionn_lambda), ENFunc x)) (* Add new function to translation_context *)
+        (fun x => (add_one_function ctxt x.(functionn_name) x.(functionn_lambda), DNFunc x)) (* Add new function to translation_context *)
         (functionc_to_nnrc ctxt f)
-    | ECContract c =>
-      elift (fun xy => (fst xy, ENFuncTable (snd xy)))
+    | DCContract c =>
+      elift (fun xy => (fst xy, DNFuncTable (snd xy)))
             (contractc_to_nnrc ctxt c)
     end.
 

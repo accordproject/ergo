@@ -47,10 +47,10 @@ Section ErgoNNRC.
 
     (** Declaration *)
     Inductive nnrc_declaration :=
-    | ENExpr : nnrc_expr -> nnrc_declaration
-    | ENConstant : string -> nnrc_expr -> nnrc_declaration
-    | ENFunc : nnrc_function -> nnrc_declaration
-    | ENFuncTable : nnrc_function_table -> nnrc_declaration.
+    | DNExpr : nnrc_expr -> nnrc_declaration
+    | DNConstant : string -> nnrc_expr -> nnrc_declaration
+    | DNFunc : nnrc_function -> nnrc_declaration
+    | DNFuncTable : nnrc_function_table -> nnrc_declaration.
 
     (** Module. *)
     Record nnrc_module :=
