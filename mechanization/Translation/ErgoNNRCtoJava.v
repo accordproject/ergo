@@ -102,10 +102,10 @@ Section ErgoNNRCtoJava.
       * nat                           (* next available unused temporary *)
     :=
       match s with
-      | ENExpr e => java_of_expression e t i eol quotel
-      | ENConstant v e => java_of_constant v e t i eol quotel
-      | ENFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
-      | ENFuncTable ft => (java_class_of_nnrc_function_table ft eol quotel,ErgoCodeGen.mk_java_data "null",t)
+      | DNExpr e => java_of_expression e t i eol quotel
+      | DNConstant v e => java_of_constant v e t i eol quotel
+      | DNFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
+      | DNFuncTable ft => (java_class_of_nnrc_function_table ft eol quotel,ErgoCodeGen.mk_java_data "null",t)
       end.
 
   Definition java_of_declarations

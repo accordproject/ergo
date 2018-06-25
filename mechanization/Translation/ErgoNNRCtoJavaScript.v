@@ -129,10 +129,10 @@ Section ErgoNNRCtoJavaScript.
       * nat                           (* next available unused temporary *)
     :=
       match s with
-      | ENExpr e => javascript_of_expression e t i eol quotel
-      | ENConstant v e => javascript_of_constant v e t i eol quotel
-      | ENFunc f => (javascript_function_of_nnrc_function f None eol quotel,"null",t)
-      | ENFuncTable ft => (javascript_class_of_nnrc_function_table ft eol quotel,"null",t)
+      | DNExpr e => javascript_of_expression e t i eol quotel
+      | DNConstant v e => javascript_of_constant v e t i eol quotel
+      | DNFunc f => (javascript_function_of_nnrc_function f None eol quotel,"null",t)
+      | DNFuncTable ft => (javascript_class_of_nnrc_function_table ft eol quotel,"null",t)
       end.
 
   Definition javascript_of_declarations

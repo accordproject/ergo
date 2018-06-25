@@ -17,6 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
@@ -38,25 +39,28 @@ Section ErgoCalculus.
     Record ergoc_function :=
       mkFuncC
         { functionc_name : string;
+          functionc_location : location;
           functionc_lambda : lambdac; }.
     
     (** Contract *)
     Record ergoc_contract :=
       mkContractC
         { contractc_name : string;
+          contractc_location : location;
           contractc_clauses : list ergoc_function; }.
 
     (** Declaration *)
     Inductive ergoc_declaration :=
-    | ECExpr : ergoc_expr -> ergoc_declaration
-    | ECConstant : string -> ergoc_expr -> ergoc_declaration
-    | ECFunc : ergoc_function -> ergoc_declaration
-    | ECContract : ergoc_contract -> ergoc_declaration.
+    | DCExpr : ergoc_expr -> ergoc_declaration
+    | DCConstant : string -> ergoc_expr -> ergoc_declaration
+    | DCFunc : ergoc_function -> ergoc_declaration
+    | DCContract : ergoc_contract -> ergoc_declaration.
 
     (** Module. *)
     Record ergoc_module :=
       mkModuleC
         { modulec_namespace : string;
+          modulec_location : location;
           modulec_declarations : list ergoc_declaration; }.
 
   End Syntax.

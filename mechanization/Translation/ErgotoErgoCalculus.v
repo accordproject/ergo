@@ -107,6 +107,7 @@ Section ErgotoErgoCalculus.
     let error_type := mk_error_type loc throw_type in
     mkFuncC
       c.(clause_name)
+      c.(clause_location)
       (mkLambdaC
          ((this_contract, tem)
             ::(this_state, state_type)
@@ -119,6 +120,7 @@ Section ErgotoErgoCalculus.
   Definition function_to_calculus (f:ergo_function) : ergoc_function :=
     mkFuncC
       f.(function_name)
+      f.(function_location)
       (mkLambdaC
          f.(function_lambda).(lambda_params)
          f.(function_lambda).(lambda_output)
@@ -131,16 +133,17 @@ Section ErgotoErgoCalculus.
     let clauses := map (clause_to_calculus c.(contract_template) c.(contract_state)) c.(contract_clauses) in
     mkContractC
       c.(contract_name)
+      c.(contract_location)
       clauses.
 
   (** Translate a statement to a statement+calculus *)
   Definition declaration_to_calculus (s:ergo_declaration) : option (ergoc_declaration) :=
     match decl_desc s with
     | DType ergo_type => None
-    | DStmt s => Some (ECExpr (ergo_stmt_to_expr s))
-    | DConstant v e => Some (ECConstant v e)
-    | DFunc f => Some (ECFunc (function_to_calculus f))
-    | DContract c => Some (ECContract (contract_to_calculus c))
+    | DStmt s => Some (DCExpr (ergo_stmt_to_expr s))
+    | DConstant v e => Some (DCConstant v e)
+    | DFunc f => Some (DCFunc (function_to_calculus f))
+    | DContract c => Some (DCContract (contract_to_calculus c))
     end.
 
   (** Translate a module to a module+calculus *)
@@ -200,6 +203,7 @@ Section ErgotoErgoCalculus.
   Definition module_to_calculus (p:ergo_module) : ergoc_module :=
     mkModuleC
       p.(module_namespace)
+      p.(module_location)
       (declarations_calculus p.(module_declarations)).
 
 End ErgotoErgoCalculus.
