@@ -67,6 +67,7 @@ Section ErgoNameResolution.
 
   (** This applies imports *)
   Definition apply_import_to_names
+             (loc:location)
              (ns:namespace_name)
              (ic:import_criteria)
              (tbl:name_table) : eresult name_table :=
@@ -74,12 +75,13 @@ Section ErgoNameResolution.
     | ImportAll => esuccess tbl
     | ImportName n =>
       match lookup string_dec tbl n with
-      | None => import_name_not_found ns n
+      | None => import_name_not_found loc ns n
       | Some t => esuccess ((n,t)::nil)
       end
     end.
 
   Definition apply_imports_to_names_tables
+             (loc:location)
              (ns:namespace_name)
              (tbls:namespace_name_table)
              (imports:list import_decl) : eresult name_table :=
@@ -89,18 +91,18 @@ Section ErgoNameResolution.
         | Some t =>
           elift2 (fun x y => app x y)
                  acc
-                 (apply_import_to_names ns (snd import) t)
-        | None => import_not_found (fst import)
+                 (apply_import_to_names loc ns (snd import) t)
+        | None => import_not_found loc (fst import)
         end
     in
     fold_left proc_one imports init.
 
   (** Local name lookup *)
-  Definition local_name_resolution (module_ns:namespace_name) (tbl:name_table) (nr:name_ref) : eresult absolute_name :=
+  Definition local_name_resolution (loc:location) (module_ns:namespace_name) (tbl:name_table) (nr:name_ref) : eresult absolute_name :=
     match nr with
     | RelativeRef None ln =>
       match lookup string_dec tbl ln with
-      | None => resolve_name_not_found module_ns ln
+      | None => resolve_name_not_found loc module_ns ln
       | Some an => esuccess an
       end
     | RelativeRef (Some ns) ln =>
@@ -111,6 +113,7 @@ Section ErgoNameResolution.
 
   (** This is the name resolution *)
   Fixpoint resolve_ergo_type_desc
+           (loc:location)
            (module_ns:namespace_name)
            (tbl:name_table)
            (t:ergo_type_desc) : eresult ergo_type_desc :=
@@ -123,7 +126,7 @@ Section ErgoNameResolution.
     | ErgoTypeLong => esuccess ErgoTypeLong
     | ErgoTypeInteger => esuccess ErgoTypeInteger
     | ErgoTypeDateTime => esuccess ErgoTypeDateTime
-    | ErgoTypeClassRef r => elift ErgoTypeClassRef (elift AbsoluteRef (local_name_resolution module_ns tbl r))
+    | ErgoTypeClassRef r => elift ErgoTypeClassRef (elift AbsoluteRef (local_name_resolution loc module_ns tbl r))
     | ErgoTypeOption t => elift ErgoTypeOption (resolve_ergo_type module_ns tbl t)
     | ErgoTypeRecord r =>
       let initial_map := map (fun xy => (fst xy, resolve_ergo_type module_ns tbl (snd xy))) r in
@@ -139,7 +142,7 @@ Section ErgoNameResolution.
          elift
            (fun etd =>
               mk_type (type_loc et) etd)
-           (resolve_ergo_type_desc module_ns tbl (type_desc et)).
+           (resolve_ergo_type_desc (type_loc et) module_ns tbl (type_desc et)).
   
   Definition resolve_ergo_type_struct
              (ns:namespace_name)
@@ -149,10 +152,13 @@ Section ErgoNameResolution.
                 elift (fun t => (fst xy, t)) (resolve_ergo_type ns tbl (snd xy))) t.
 
   Definition resolve_extends_name
-             (ns:string) (tbl:name_table) (en:option name_ref) : eresult (option name_ref) :=
+             (loc:location)
+             (ns:string)
+             (tbl:name_table)
+             (en:option name_ref) : eresult (option name_ref) :=
     match en with
     | None => esuccess None
-    | Some ln => elift Some (elift AbsoluteRef (local_name_resolution ns tbl ln))
+    | Some ln => elift Some (elift AbsoluteRef (local_name_resolution loc ns tbl ln))
     end.
 
   Definition resolve_ergo_type_signature
@@ -189,29 +195,32 @@ Section ErgoNameResolution.
     emaplift (fun xy => elift (fun r => (fst xy, r))
                               (resolve_ergo_type_signature ns tbl (snd xy))) cls.
 
-  Definition resolve_decl_desc (module_ns:namespace_name) (tbl:name_table)
+  Definition resolve_decl_desc
+             (loc:location)
+             (module_ns:namespace_name)
+             (tbl:name_table)
              (k:ergo_type_declaration_desc) : eresult ergo_type_declaration_desc :=
     match k with
     | ErgoTypeEnum l => esuccess (ErgoTypeEnum l)
     | ErgoTypeTransaction extends_name ergo_type_struct =>
       elift2 ErgoTypeTransaction
-             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_extends_name loc module_ns tbl extends_name)
              (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
     | ErgoTypeConcept extends_name ergo_type_struct =>
       elift2 ErgoTypeConcept
-             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_extends_name loc module_ns tbl extends_name)
              (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
     | ErgoTypeEvent extends_name ergo_type_struct =>
       elift2 ErgoTypeEvent
-             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_extends_name loc module_ns tbl extends_name)
              (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
     | ErgoTypeAsset extends_name ergo_type_struct =>
       elift2 ErgoTypeAsset
-             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_extends_name loc module_ns tbl extends_name)
              (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
     | ErgoTypeParticipant extends_name ergo_type_struct =>
       elift2 ErgoTypeParticipant
-             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_extends_name loc module_ns tbl extends_name)
              (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
     | ErgoTypeGlobal ergo_type =>
       elift ErgoTypeGlobal (resolve_ergo_type module_ns tbl ergo_type)
@@ -227,7 +236,7 @@ Section ErgoNameResolution.
 
   Definition resolve_declaration (module_ns:namespace_name) (tbl:name_table) (decl: ergo_type_declaration) : eresult ergo_type_declaration :=
     let name := absolute_name_of_local_name module_ns decl.(type_declaration_name) in
-    let edecl_desc := resolve_decl_desc module_ns tbl decl.(type_declaration_type) in
+    let edecl_desc := resolve_decl_desc decl.(type_declaration_location) module_ns tbl decl.(type_declaration_type) in
     elift (fun k => mkErgoTypeDeclaration name decl.(type_declaration_location) k) edecl_desc.
   
   Definition resolve_declarations (module_ns:namespace_name) (tbl:name_table) (decls: list ergo_type_declaration)
@@ -242,7 +251,7 @@ Section ErgoNameResolution.
                              (("org.hyperledger.composer.system"%string, ImportAll)
                                 ::(pkg.(type_module_namespace),ImportAll)::nil) in
     let module_ns := pkg.(type_module_namespace) in
-    let in_scope_names := apply_imports_to_names_tables module_ns tbls imports in
+    let in_scope_names := apply_imports_to_names_tables pkg.(type_module_location) module_ns tbls imports in
     eolift (fun tbls => resolve_declarations
                           pkg.(type_module_namespace)
                                 tbls

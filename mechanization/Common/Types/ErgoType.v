@@ -86,7 +86,7 @@ Section ErgoType.
   Record ergo_type_module :=
     mkErgoTypeModule
       { type_module_namespace : namespace_name;
-        type_location : location;
+        type_module_location : location;
         type_module_imports : list import_decl;
         type_module_declarations : list ergo_type_declaration; }.
 
@@ -125,7 +125,7 @@ Section ErgoType.
     | Some et =>
       match type_desc et with
       | (ErgoTypeClassRef (AbsoluteRef r)) => esuccess r
-      | _ => unresolved_name_error
+      | _ => unresolved_name_error (type_loc et)
       end
     end.
   

@@ -29,6 +29,7 @@ Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoExpand.
   (* Context *)
+
   Definition create_call
              (loc:location)
              (cname:string)
@@ -38,7 +39,7 @@ Section ErgoExpand.
              (callparams:list (string * ergo_type)) : eresult ergo_stmt :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
-    | None => efailure (CompilationError "Parameter mismatch during main creation")
+    | None => main_parameter_mismatch_error loc
     | Some _ =>
       esuccess (mk_stmt loc (SCallClause cname (mk_expr loc (EVar v0) :: effparamrest)))
     end.
@@ -53,7 +54,7 @@ Section ErgoExpand.
     let cname := s.(type_signature_name) in
     let callparams := s.(type_signature_params) in
     match callparams with
-    | nil => efailure (CompilationError ("Cannot create main if not at least one parameter in "++cname))
+    | nil => main_at_least_one_parameter_error loc
     | (param0, et)::otherparams =>
       match type_desc et with
       | ErgoTypeClassRef type0 =>
@@ -61,8 +62,7 @@ Section ErgoExpand.
                  let type0 := absolute_name_of_name_ref namespace type0 in
                  (CaseLet v0 (Some type0),x))
               (create_call loc cname v0 effparam0 effparamrest callparams)
-      | _ =>
-        efailure (CompilationError ("Cannot create main for non-class type "++cname))
+      | _ => main_not_a_class_error loc cname
       end
     end.
 
@@ -89,7 +89,7 @@ Section ErgoExpand.
              (effparams:list ergo_expr)
              (ss:list ergo_type_signature) :=
     match effparams with
-    | nil => efailure (CompilationError ("Cannot create main if not at least one effective parameter"))
+    | nil => main_at_least_one_parameter_error loc
     | effparam0 :: effparamrest =>
       let v0 := ("$"++clause_main_name)%string in (** XXX To be worked on *)
       match_of_sigs loc namespace v0 effparam0 effparamrest ss
