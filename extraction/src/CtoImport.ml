@@ -39,18 +39,18 @@ let mk_loc loc =
       dummy_location
   end
 
-let base_type_of_decl d =
+let base_type_of_decl loc d =
   begin match d with
   | None -> ergo_raise (ergo_system_error "Missing propertyType in CTO")
   | Some d ->
       begin match d.cto_prop_type_name with
-      | "Boolean" -> ErgoCompiler.cto_boolean (mk_loc d.cto_prop_type_location)
-      | "String" -> ErgoCompiler.cto_string (mk_loc d.cto_prop_type_location)
-      | "Double" -> ErgoCompiler.cto_double (mk_loc d.cto_prop_type_location)
-      | "Integer" -> ErgoCompiler.cto_integer (mk_loc d.cto_prop_type_location)
-      | "Long" -> ErgoCompiler.cto_long (mk_loc d.cto_prop_type_location)
-      | "DateTime" -> ErgoCompiler.cto_dateTime (mk_loc d.cto_prop_type_location)
-      | s -> ErgoCompiler.cto_class_ref (mk_loc d.cto_prop_type_location)
+      | "Boolean" -> ErgoCompiler.cto_boolean loc
+      | "String" -> ErgoCompiler.cto_string loc
+      | "Double" -> ErgoCompiler.cto_double loc
+      | "Integer" -> ErgoCompiler.cto_integer loc
+      | "Long" -> ErgoCompiler.cto_long loc
+      | "DateTime" -> ErgoCompiler.cto_dateTime loc
+      | s -> ErgoCompiler.cto_class_ref loc
                (RelativeRef (None,(char_list_of_string s)))
       end
   end
@@ -59,7 +59,7 @@ let field_of_decl d =
   let loc = mk_loc (Some d.cto_decl_content_location) in
   let field_name = char_list_of_string d.cto_decl_content_id.cto_id_name in
   let base_type =
-    base_type_of_decl d.cto_decl_content_propertyType
+    base_type_of_decl loc d.cto_decl_content_propertyType
   in
   let field_type = base_type in
   let field_type =
