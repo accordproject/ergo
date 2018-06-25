@@ -20,203 +20,287 @@ Require Import String.
 Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EImport.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
-Section ErgoNameResolve.
+Section ErgoNameResolution.
 
-  (** Resolve names in expressions *)
-  Fixpoint ergo_name_resolve (ctxt:list cto_declaration) (e:ergo_expr) : ergo_expr :=
-    match e with
-    | EThisContract => esuccess EThisContract
-    | EThisClause => esuccess EThisClause
-    | EThisState => esuccess EThisState
-    | EVar v => esuccess (EVar v)
-    | EConst d => esuccess (EConst d)
-    | EArray el =>
-      let init_el := esuccess nil in
-      let proc_one (acc:eresult (list ergo_expr)) (e:ergo_expr) : eresult (list ergo_expr) :=
-          elift2
-            cons
-            (ergo_name_resolve ctxt e)
-            acc
-      in
-      elift EArray (fold_left proc_one el init_el)
-    | EUnaryOp u e =>
-      elift (EUnaryOp u)
-            (ergo_name_resolve ctxt e)
-    | EBinaryOp b e1 e2 =>
-      elift2 (EBinaryOp b)
-             (ergo_name_resolve ctxt e1)
-             (ergo_name_resolve ctxt e2)
-    | EIf e1 e2 e3 =>
-      elift3 EIf
-        (ergo_name_resolve ctxt e1)
-        (ergo_name_resolve ctxt e2)
-        (ergo_name_resolve ctxt e3)
-    | EEnforce e1 None e3 =>
-      elift3 EEnforce
-        (ergo_name_resolve ctxt e1)
-        (esuccess None)
-        (ergo_name_resolve ctxt e3)
-    | EEnforce e1 (Some e2) e3 =>
-      elift3 EEnforce
-        (ergo_name_resolve ctxt e1)
-        (ergo_name_resolve ctxt e3)
-        (ergo_name_resolve ctxt e2)
-    | ELet v None e1 e2 =>
-      elift2 (ELet v None)
-             (ergo_name_resolve ctxt e1)
-             (ergo_name_resolve ctxt e2)
-    | ELet v (Some t1) e1 e2 =>
-      elift2 (ELet v (Some t1))
-              (ergo_name_resolve ctxt e1)
-              (ergo_name_resolve ctxt e2)
-    | ENew cr nil =>
-      esuccess
-        (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
-    | ENew cr ((s0,init)::rest) =>
-      let init_rec : eresult nnrc :=
-          elift (NNRCUnop (OpRec s0)) (ergo_name_resolve ctxt init)
-      in
-      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
-          let attname := fst att in
-          let e := ergo_name_resolve ctxt (snd att) in
-          elift2 (NNRCBinop OpRecConcat)
-                 (elift (NNRCUnop (OpRec attname)) e) acc
-      in
-      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | ERecord nil =>
-      esuccess
-        (NNRCConst (drec nil))
-    | ERecord ((s0,init)::rest) =>
-      let init_rec : eresult nnrc :=
-          elift (NNRCUnop (OpRec s0)) (ergo_name_resolve ctxt init)
-      in
-      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
-          let attname := fst att in
-          let e := ergo_name_resolve ctxt (snd att) in
-          elift2 (NNRCBinop OpRecConcat)
-                 (elift (NNRCUnop (OpRec attname)) e) acc
-      in
-      fold_left proc_one rest init_rec
-    | EThrow cr nil =>
-      esuccess (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr) (NNRCConst (drec nil)))
-    | EThrow cr ((s0,init)::rest) =>
-      let init_rec : eresult nnrc :=
-          elift (NNRCUnop (OpRec s0)) (ergo_name_resolve ctxt init)
-      in
-      let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
-          let attname := fst att in
-          let e := ergo_name_resolve ctxt (snd att) in
-          elift2 (NNRCBinop OpRecConcat)
-                 (elift (NNRCUnop (OpRec attname)) e)
-                 acc
-      in
-      elift (new_expr (absolute_ref_of_class_ref ctxt.(comp_context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | ECall fname el =>
-      let init_el := esuccess nil in
-      let proc_one (e:ergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
-          elift2
-            cons
-            (ergo_name_resolve ctxt e)
-            acc
-      in
-      eolift (lookup_call ctxt.(comp_context_table) fname) (fold_right proc_one init_el el)
-    | EMatch e0 ecases edefault =>
-      let ec0 := ergo_name_resolve ctxt e0 in
-      let eccases :=
-          let proc_one acc ecase :=
-              eolift
-                (fun acc =>
-                   elift (fun x => (fst ecase, x)::acc)
-                         (ergo_name_resolve ctxt (snd ecase))) acc
-          in
-          fold_left proc_one ecases (esuccess nil)
-      in
-      let ecdefault := ergo_name_resolve ctxt edefault in
-      eolift
-        (fun ec0 =>
-           eolift
-             (fun eccases =>
-                eolift
-                  (fun ecdefault =>
-                     let v0 := fresh_in_match eccases ecdefault in
-                     let proc_one_case
-                           (acc:eresult ergoc_expr)
-                           (ecase:match_case * ergoc_expr)
-                         : eresult ergoc_expr :=
-                         match fst ecase with
-                         | (Some v, CaseValue d) =>
-                           elift
-                             (fun acc =>
-                                NNRCIf (NNRCBinop OpEqual
-                                                  (NNRCVar v0)
-                                                  (NNRCConst d))
-                                       (NNRCLet v
-                                                (NNRCVar v0)
-                                                (snd ecase))
-                                       acc) acc
-                         | (None, CaseValue d) =>
-                           elift
-                             (fun acc =>
-                                NNRCIf (NNRCBinop OpEqual
-                                                  (NNRCVar v0)
-                                                  (NNRCConst d))
-                                       (snd ecase)
-                                       acc) acc
-                         | (Some v, CaseType brand) =>
-                           elift (fun acc =>
-                                    let v2 := fresh_in_case acc in
-                                    NNRCEither
-                                      (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
-                                      v (snd ecase)
-                                      v2 acc
-                                 ) acc
-                         | (None, CaseType brand) =>
-                           elift (fun acc =>
-                                    let v1 := fresh_in_case (snd ecase) in
-                                    let v2 := fresh_in_case acc in
-                                    NNRCEither
-                                      (NNRCUnop (OpCast (brand::nil)) (NNRCVar v0))
-                                      v1 (snd ecase)
-                                      v2 acc
-                                 ) acc
-                         end
-                     in
-                     let eccases_folded :=
-                         fold_left proc_one_case eccases (esuccess ecdefault)
-                     in
-                     elift (NNRCLet v0 ec0) eccases_folded)
-                  ecdefault) eccases) ec0
-    | EForeach foreachs None e2 =>
-      let init_e := ergo_name_resolve ctxt e2 in
-      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
-          let v := fst foreach in
-          let e := ergo_name_resolve ctxt (snd foreach) in
-          elift2 (NNRCFor v)
-                 e
-                 acc
-      in
-      fold_left proc_one foreachs init_e
-    | EForeach foreachs (Some econd) e2 =>
-      let init_e :=
-          elift2
-            (fun econd e2 =>
-               NNRCIf econd
-                     (NNRCUnop OpBag e2)
-                     (NNRCConst (dcoll nil)))
-            (ergo_name_resolve ctxt econd)
-            (ergo_name_resolve ctxt e2)
-      in
-      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
-          let v := fst foreach in
-          let e := ergo_name_resolve ctxt (snd foreach) in
-          elift2 (NNRCFor v)
-                 e
-                 acc
-      in
-      elift (NNRCUnop OpFlatten)
-            (fold_left proc_one foreachs init_e)
+  (** There are three phases to the name resolution in ErgoType files/modules:
+- build a per-namespace table containing all the local names mapped to their namespace resolve names
+- for a module, resolve imports using the per-namespace table to build a full namespace mapping for that module
+- resolve the names within a given module using the full namespace mapping for that module *)
+  
+  (** Maps local names to absolute names for a given ErgoType module *)
+  Definition name_table : Set := list (local_name * absolute_name).
+  Definition namespace_name_table : Set := list (namespace_name * name_table).
+
+  (** Maps namespaces to the names table for that namespace *)
+  Record resolution_context :=
+    mkResolutionContext {
+        type_names : name_table;
+        function_names : name_table;
+      }.
+
+  Definition name_entry_of_ergo_type_declaration (ns:namespace_name) (decl:ergo_type_declaration) : local_name * absolute_name :=
+    let ln := decl.(type_declaration_name) in
+    (ln, absolute_name_of_local_name ns ln).
+
+  Definition names_table_of_ergo_type_module (ns:namespace_name) (pkg:ergo_type_module) : name_table :=
+    map (name_entry_of_ergo_type_declaration ns) pkg.(type_module_declarations).
+
+  (** Note: this merges tables when the same namespace is used in more than one ErgoType module *)
+  Definition names_tables_of_ergo_type_modules (pkgs: list ergo_type_module) : namespace_name_table :=
+    let init : namespace_name_table := nil in
+    let proc_one (acc:namespace_name_table) (pkg:ergo_type_module) : namespace_name_table :=
+        let ns := pkg.(type_module_namespace) in
+        match lookup string_dec acc ns with
+        | Some t =>
+          update_first string_dec acc ns (app t (names_table_of_ergo_type_module ns pkg))
+        | None =>
+          (ns, names_table_of_ergo_type_module ns pkg) :: acc
+        end
+    in
+    fold_left proc_one pkgs init.
+
+  (** This applies imports *)
+  Definition apply_import_to_names
+             (ns:namespace_name)
+             (ic:import_criteria)
+             (tbl:name_table) : eresult name_table :=
+    match ic with
+    | ImportAll => esuccess tbl
+    | ImportName n =>
+      match lookup string_dec tbl n with
+      | None => import_name_not_found ns n
+      | Some t => esuccess ((n,t)::nil)
+      end
     end.
+
+  Definition apply_imports_to_names_tables
+             (ns:namespace_name)
+             (tbls:namespace_name_table)
+             (imports:list import_decl) : eresult name_table :=
+    let init : eresult name_table := esuccess nil in
+    let proc_one (acc:eresult name_table) (import:import_decl) : eresult name_table :=
+        match lookup string_dec tbls (fst import) with
+        | Some t =>
+          elift2 (fun x y => app x y)
+                 acc
+                 (apply_import_to_names ns (snd import) t)
+        | None => import_not_found (fst import)
+        end
+    in
+    fold_left proc_one imports init.
+
+  (** Local name lookup *)
+  Definition local_name_resolution (module_ns:namespace_name) (tbl:name_table) (nr:name_ref) : eresult absolute_name :=
+    match nr with
+    | RelativeRef None ln =>
+      match lookup string_dec tbl ln with
+      | None => resolve_name_not_found module_ns ln
+      | Some an => esuccess an
+      end
+    | RelativeRef (Some ns) ln =>
+      esuccess  (absolute_name_of_local_name ns ln)
+    | AbsoluteRef an =>
+      esuccess an
+    end.
+
+  (** This is the name resolution *)
+  Fixpoint resolve_ergo_type_desc
+           (module_ns:namespace_name)
+           (tbl:name_table)
+           (t:ergo_type_desc) : eresult ergo_type_desc :=
+    match t with
+    | ErgoTypeAny => esuccess ErgoTypeAny
+    | ErgoTypeNone => esuccess ErgoTypeNone
+    | ErgoTypeBoolean => esuccess ErgoTypeBoolean
+    | ErgoTypeString => esuccess ErgoTypeString
+    | ErgoTypeDouble => esuccess ErgoTypeDouble
+    | ErgoTypeLong => esuccess ErgoTypeLong
+    | ErgoTypeInteger => esuccess ErgoTypeInteger
+    | ErgoTypeDateTime => esuccess ErgoTypeDateTime
+    | ErgoTypeClassRef r => elift ErgoTypeClassRef (elift AbsoluteRef (local_name_resolution module_ns tbl r))
+    | ErgoTypeOption t => elift ErgoTypeOption (resolve_ergo_type module_ns tbl t)
+    | ErgoTypeRecord r =>
+      let initial_map := map (fun xy => (fst xy, resolve_ergo_type module_ns tbl (snd xy))) r in
+      let lifted_map := emaplift (fun xy => elift (fun t => (fst xy, t)) (snd xy)) initial_map in
+      elift ErgoTypeRecord lifted_map
+    | ErgoTypeArray t => elift ErgoTypeArray (resolve_ergo_type module_ns tbl t)
+    | ErgoTypeSum t1 t2 => elift2 ErgoTypeSum (resolve_ergo_type module_ns tbl t1) (resolve_ergo_type module_ns tbl t2)
+    end
+  with resolve_ergo_type
+         (module_ns:namespace_name)
+         (tbl:name_table)
+         (et:ergo_type) : eresult ergo_type :=
+         elift
+           (fun etd =>
+              mk_type (type_loc et) etd)
+           (resolve_ergo_type_desc module_ns tbl (type_desc et)).
+  
+  Definition resolve_ergo_type_struct
+             (ns:namespace_name)
+             (tbl:name_table)
+             (t:list (string * ergo_type)) : eresult (list (string * ergo_type)) :=
+    emaplift (fun xy =>
+                elift (fun t => (fst xy, t)) (resolve_ergo_type ns tbl (snd xy))) t.
+
+  Definition resolve_extends_name
+             (ns:string) (tbl:name_table) (en:option name_ref) : eresult (option name_ref) :=
+    match en with
+    | None => esuccess None
+    | Some ln => elift Some (elift AbsoluteRef (local_name_resolution ns tbl ln))
+    end.
+
+  Definition resolve_ergo_type_signature
+             (ns:namespace_name)
+             (tbl:name_table)
+             (sig:ergo_type_signature) :=
+    let params_types := resolve_ergo_type_struct ns tbl (sig.(type_signature_params)) in
+    let output_type := resolve_ergo_type ns tbl sig.(type_signature_output) in
+    let throws_type :=
+        match sig.(type_signature_throws) with
+        | None => esuccess None
+        | Some throw_ty =>
+          elift Some (resolve_ergo_type ns tbl throw_ty)
+        end
+    in
+    let emits_type :=
+        match sig.(type_signature_emits) with
+        | None => esuccess None
+        | Some throw_ty =>
+          elift Some (resolve_ergo_type ns tbl throw_ty)
+        end
+    in
+    elift4 (mkErgoTypeSignature
+              sig.(type_signature_name) sig.(type_signature_location))
+           params_types
+           output_type
+           throws_type
+           emits_type.
+
+  Definition resolve_ergo_type_clauses
+             (ns:namespace_name)
+             (tbl:name_table)
+             (cls:list (string * ergo_type_signature)) : eresult (list (string * ergo_type_signature)) :=
+    emaplift (fun xy => elift (fun r => (fst xy, r))
+                              (resolve_ergo_type_signature ns tbl (snd xy))) cls.
+
+  Definition resolve_decl_desc (module_ns:namespace_name) (tbl:name_table)
+             (k:ergo_type_declaration_desc) : eresult ergo_type_declaration_desc :=
+    match k with
+    | ErgoTypeEnum l => esuccess (ErgoTypeEnum l)
+    | ErgoTypeTransaction extends_name ergo_type_struct =>
+      elift2 ErgoTypeTransaction
+             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
+    | ErgoTypeConcept extends_name ergo_type_struct =>
+      elift2 ErgoTypeConcept
+             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
+    | ErgoTypeEvent extends_name ergo_type_struct =>
+      elift2 ErgoTypeEvent
+             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
+    | ErgoTypeAsset extends_name ergo_type_struct =>
+      elift2 ErgoTypeAsset
+             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
+    | ErgoTypeParticipant extends_name ergo_type_struct =>
+      elift2 ErgoTypeParticipant
+             (resolve_extends_name module_ns tbl extends_name)
+             (resolve_ergo_type_struct module_ns tbl ergo_type_struct)
+    | ErgoTypeGlobal ergo_type =>
+      elift ErgoTypeGlobal (resolve_ergo_type module_ns tbl ergo_type)
+    | ErgoTypeFunction ergo_type_signature =>
+      elift ErgoTypeFunction
+            (resolve_ergo_type_signature module_ns tbl ergo_type_signature)
+    | ErgoTypeContract template_type state_type clauses_sigs =>
+      elift3 ErgoTypeContract
+             (resolve_ergo_type module_ns tbl template_type)
+             (resolve_ergo_type module_ns tbl state_type)
+             (resolve_ergo_type_clauses module_ns tbl clauses_sigs)
+    end.
+
+  Definition resolve_declaration (module_ns:namespace_name) (tbl:name_table) (decl: ergo_type_declaration) : eresult ergo_type_declaration :=
+    let name := absolute_name_of_local_name module_ns decl.(type_declaration_name) in
+    let edecl_desc := resolve_decl_desc module_ns tbl decl.(type_declaration_type) in
+    elift (fun k => mkErgoTypeDeclaration name decl.(type_declaration_location) k) edecl_desc.
+  
+  Definition resolve_declarations (module_ns:namespace_name) (tbl:name_table) (decls: list ergo_type_declaration)
+    : eresult (list ergo_type_declaration) :=
+    emaplift (resolve_declaration module_ns tbl) decls.
+
+  Definition resolve_names_in_module
+             (tbls:namespace_name_table)
+             (pkg:ergo_type_module) : eresult (list ergo_type_declaration) :=
+    (** Make sure to add current namespace to the list of imports - i.e., import self. *)
+    let imports := app pkg.(type_module_imports)
+                             (("org.hyperledger.composer.system"%string, ImportAll)
+                                ::(pkg.(type_module_namespace),ImportAll)::nil) in
+    let module_ns := pkg.(type_module_namespace) in
+    let in_scope_names := apply_imports_to_names_tables module_ns tbls imports in
+    eolift (fun tbls => resolve_declarations
+                          pkg.(type_module_namespace)
+                                tbls
+                                pkg.(type_module_declarations)) in_scope_names.
+
+  (** Top level *)
+  Definition ergo_type_resolved_tbl_for_module
+             (pkgs:list ergo_type_module) : eresult (list ergo_type_declaration) :=
+    let tbls := names_tables_of_ergo_type_modules pkgs in
+    elift (@List.concat _) (emaplift (resolve_names_in_module tbls) pkgs).
+
+  Section Examples.
+    Local Open Scope string.
+    Definition ergo_typed1 :=
+      mkErgoTypeDeclaration
+        "c1"
+        dummy_location
+        (ErgoTypeConcept
+           None
+           (("a", mk_type dummy_location ErgoTypeBoolean)
+              ::("b", mk_type dummy_location (ErgoTypeClassRef (RelativeRef None "c3")))::nil)).
+    
+    Definition ergo_typed2 :=
+      mkErgoTypeDeclaration
+        "c2"
+        dummy_location
+        (ErgoTypeConcept
+           None
+           (("c", mk_type dummy_location ErgoTypeBoolean)
+              ::("d", mk_type dummy_location (ErgoTypeClassRef (RelativeRef None "c1")))::nil)).
+    
+
+    Definition ergo_type1 :=
+      mkErgoTypeModule
+        "n1"
+        dummy_location
+        (("n2",ImportAll)::nil) (ergo_typed1::ergo_typed2::nil).
+    
+    Definition ergo_typed3 :=
+      mkErgoTypeDeclaration
+        "c3"
+        dummy_location
+        (ErgoTypeConcept
+           None
+           (("a", mk_type dummy_location ErgoTypeBoolean)
+              ::("b", mk_type dummy_location ErgoTypeString)::nil)).
+
+    Definition ergo_type2 :=
+      mkErgoTypeModule
+        "n2" dummy_location nil (ergo_typed3::nil).
+
+    Definition pkgs := ergo_type2 :: ergo_type1 :: nil.
+
+    Definition tbls := names_tables_of_ergo_type_modules pkgs.
+    (* Eval vm_compute in tbls. *)
+    Definition res := elift (@List.concat _) (emaplift (resolve_names_in_module tbls) pkgs).
+    (* Eval vm_compute in res. *)
+  End Examples.
+
+End ErgoNameResolution.
+

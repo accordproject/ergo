@@ -26,6 +26,7 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.Ergo.Lang.ErgoNameResolve.
 Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRCSugar.

@@ -35,6 +35,7 @@ MODULES = \
 	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
+  Ergo/Lang/ErgoNameResolve \
 	ErgoCalculus/Lang/ErgoCalculus \
 	ErgoNNRC/Lang/ErgoNNRC \
 	ErgoNNRC/Lang/ErgoNNRCSugar \
