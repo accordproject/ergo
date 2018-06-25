@@ -37,7 +37,6 @@ type decorator = json
 
 type propType = {
     name : string;
-    ?location : location nullable;
 } <ocaml field_prefix="cto_prop_type_">
 type optional = {
     ttype <json name="type"> : string;
