@@ -28,25 +28,20 @@ Section EResult.
       }.
   Record location :=
     mkLocation {
+        loc_file: option string;
         loc_start: location_point;
         loc_end: location_point;
       }.
   Definition dummy_location : location :=
     let dummy_location_point := mkLocationPoint (-1) (-1) (-1) in
-    mkLocation dummy_location_point dummy_location_point.
+    mkLocation None dummy_location_point dummy_location_point.
 
-  Record parse_error :=
-    mkParseError {
-        parse_error_message: string;
-        parse_error_location: location;
-      }.
-  
   Inductive eerror : Set :=
   | SystemError : string -> eerror
-  | ParseError : parse_error -> eerror
-  | CompilationError : string -> eerror
-  | TypeError : string -> eerror
-  | RuntimeError : string -> eerror.
+  | ParseError : location -> string -> eerror
+  | CompilationError : location -> string -> eerror
+  | TypeError : location -> string -> eerror
+  | RuntimeError : location -> string -> eerror.
 
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
@@ -74,19 +69,35 @@ Section EResult.
 
   (** Built-in errors *)
   Section Builtin.
-    Definition not_in_contract_error {A} : eresult A :=
-      efailure (CompilationError ("Cannot use 'contract' variable outside of a contract")).
-    Definition not_in_clause_error {A} : eresult A :=
-      efailure (CompilationError ("Cannot use 'clause' variable outside of a clause")).
+    Definition not_in_contract_error {A} loc : eresult A :=
+      efailure (CompilationError loc "Cannot use 'contract' variable outside of a contract").
+    Definition not_in_clause_error {A} loc : eresult A :=
+      efailure (CompilationError loc "Cannot use 'clause' variable outside of a clause").
 
     (* CTO errors *)
-    Definition import_not_found {A} (import:string) : eresult A :=
-      efailure (CompilationError ("Import not found: " ++ import)).
-    Definition resolve_name_not_found {A} (namespace:string) (name_ref:string) : eresult A :=
-      efailure (CompilationError ("Cannot resolve name '" ++ name_ref++ "' not found in CTO with namespace " ++ namespace)).
-    Definition import_name_not_found {A} (namespace:string) (name_ref:string) : eresult A :=
-      efailure (CompilationError ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
+    Definition import_not_found {A} loc (import:string) : eresult A :=
+      efailure (CompilationError loc ("Import not found: " ++ import)).
+    Definition resolve_name_not_found {A} loc (namespace:string) (name_ref:string) : eresult A :=
+      efailure (CompilationError loc ("Cannot resolve name '" ++ name_ref++ "' not found in CTO with namespace " ++ namespace)).
+    Definition import_name_not_found {A} loc (namespace:string) (name_ref:string) : eresult A :=
+      efailure (CompilationError loc ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
   
+    (** Main clause creation errors *)
+    Definition main_parameter_mismatch_error {A} loc : eresult A :=
+      efailure (CompilationError loc "Parameter mismatch during main creation").
+    Definition main_at_least_one_parameter_error {A} loc : eresult A :=
+      efailure (CompilationError loc "Cannot create main if not at least one parameter").
+    Definition main_not_a_class_error {A} loc (cname:string) : eresult A :=
+      efailure (CompilationError loc ("Cannot create main for non-class type "++cname)).
+    
+    (** Call errors *)
+    Definition function_not_found_error {A} loc (fname:string) : eresult A :=
+      efailure (CompilationError loc ("Function '" ++ fname ++ "' not found")).
+    Definition clause_not_found_error {A} loc (fname:string) : eresult A :=
+      efailure (CompilationError loc ("Clause '" ++ fname ++ "' not found")).
+    Definition call_params_error {A} loc (fname:string) : eresult A :=
+      efailure (CompilationError loc ("Parameter mistmatch when calling function '" ++ fname ++ "'")).
+
     Definition ergo_default_package : string := "org.accordproject.ergo".
     Definition ergo_default_error_local_name : string := "Error".
     Definition ergo_default_error_name : string :=
@@ -96,10 +107,11 @@ Section EResult.
       ErgoData.dbrand (ergo_default_error_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
 
-    Definition unresolved_name_error {A} : eresult A :=
-      efailure (CompilationError ("Unresolved name")).
+    Definition unresolved_name_error {A} loc : eresult A :=
+      efailure (CompilationError loc "Unresolved name").
+    Definition should_have_one_contract_error {A} loc : eresult A :=
+      efailure (CompilationError loc "Should have exactly one contract").
 
-    
   End Builtin.
 
 End EResult.

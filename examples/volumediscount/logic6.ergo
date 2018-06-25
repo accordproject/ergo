@@ -11,17 +11,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.volumediscount
+namespace org.accordproject.volumediscount
 
 import org.accordproject.contract.*
 import org.accordproject.late.*
 
 define constant fee = 1.0
+
 define function addFee(rate : Double) : Double {
   return
 	  match fee
-      with let v = 1.0 then rate + v/10.0
-      with let v = 2.0 then rate + fee/15.0
+      with 1.0 then rate + fee/10.0
+      with 2.0 then rate + fee/15.0
       else rate
 }
 

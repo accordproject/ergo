@@ -25,18 +25,17 @@ let mk_position_point_of_loc pos =
     line = pos.Lexing.pos_lnum;
     column = pos.Lexing.pos_cnum - pos.Lexing.pos_bol; }
 let mk_position_of_loc_pair start_pos end_pos =
-  { loc_start = mk_position_point_of_loc start_pos;
+  { loc_file = None; (* XXX TO BE FIXED *)
+    loc_start = mk_position_point_of_loc start_pos;
     loc_end = mk_position_point_of_loc end_pos; }
 let ergo_parse_error msg start_pos end_pos =
-  ParseError
-    { parse_error_message = char_list_of_string msg;
-      parse_error_location = mk_position_of_loc_pair start_pos end_pos; }
-let ergo_compilation_error msg =
-  CompilationError (char_list_of_string msg)
-let ergo_type_error msg =
-  TypeError (char_list_of_string msg)
-let ergo_runtime_error msg =
-  RuntimeError (char_list_of_string msg)
+  ParseError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
+let ergo_compilation_error msg start_pos end_pos =
+  CompilationError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
+let ergo_type_error msg start_pos end_pos =
+  TypeError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
+let ergo_runtime_error msg start_pos end_pos =
+  RuntimeError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
 
 let ergo_raise error =
   raise (Ergo_Error error)
@@ -44,38 +43,38 @@ let ergo_raise error =
 let error_kind error =
   begin match error with
   | SystemError _ -> "SystemError"
-  | ParseError _ -> "ParseError"
-  | CompilationError _ -> "CompilationError"
-  | TypeError _ -> "TypeError"
-  | RuntimeError _ -> "RuntimeError"
+  | ParseError (_,_) -> "ParseError"
+  | CompilationError (_,_) -> "CompilationError"
+  | TypeError (_,_) -> "TypeError"
+  | RuntimeError (_,_) -> "RuntimeError"
   end
 
 let error_message error =
   let msg = 
     begin match error with
     | SystemError msg -> msg
-    | ParseError pe -> pe.parse_error_message
-    | CompilationError msg -> msg
-    | TypeError msg -> msg
-    | RuntimeError msg -> msg
+    | ParseError (_,msg) -> msg
+    | CompilationError (_,msg) -> msg
+    | TypeError (_,msg) -> msg
+    | RuntimeError (_,msg) -> msg
     end
   in string_of_char_list msg
 
 let error_loc_start error =
   begin match error with
   | SystemError _ -> dummy_location.loc_start
-  | ParseError pe -> pe.parse_error_location.loc_start
-  | CompilationError _ -> dummy_location.loc_start
-  | TypeError _ -> dummy_location.loc_start
-  | RuntimeError _ -> dummy_location.loc_start
+  | ParseError (loc,_) -> loc.loc_start
+  | CompilationError (loc,_) -> loc.loc_start
+  | TypeError (loc,_) -> loc.loc_start
+  | RuntimeError (loc,_) -> loc.loc_start
   end
 let error_loc_end error =
   begin match error with
   | SystemError _ -> dummy_location.loc_end
-  | ParseError pe -> pe.parse_error_location.loc_end
-  | CompilationError _ -> dummy_location.loc_end
-  | TypeError _ -> dummy_location.loc_end
-  | RuntimeError _ -> dummy_location.loc_end
+  | ParseError (loc,_) -> loc.loc_end
+  | CompilationError (loc,_) -> loc.loc_end
+  | TypeError (loc,_) -> loc.loc_end
+  | RuntimeError (loc,_) -> loc.loc_end
   end
 
 let string_of_error_loc perror =
@@ -85,10 +84,10 @@ let string_of_error_loc perror =
 let string_of_error error =
   begin match error with
   | SystemError _ -> "[SystemError] " ^ (error_message error)
-  | ParseError pe -> "[ParseError at " ^ (string_of_error_loc pe.parse_error_location) ^ "] " ^ (error_message error)
-  | CompilationError _ -> "[CompilationError] " ^  (error_message error)
-  | TypeError _ -> "[TypeError]" ^ (error_message error)
-  | RuntimeError _ -> "[RuntimeError]" ^  (error_message error)
+  | ParseError (loc, _) -> "[ParseError at " ^ (string_of_error_loc loc) ^ "] " ^ (error_message error)
+  | CompilationError (loc, _) -> "[CompilationError at " ^ (string_of_error_loc loc) ^ "] " ^  (error_message error)
+  | TypeError (loc, _) -> "[TypeError at " ^ (string_of_error_loc loc) ^ "]" ^ (error_message error)
+  | RuntimeError (loc, _) -> "[RuntimeError at " ^ (string_of_error_loc loc) ^ "]" ^  (error_message error)
   end
 
 (* Version number *)

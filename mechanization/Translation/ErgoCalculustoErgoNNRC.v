@@ -173,20 +173,21 @@ Section ErgoCalculustoErgoNNRC.
   (** Translate expressions to calculus *)
   Fixpoint ergoc_expr_to_nnrc
            (ctxt:translation_context) (e:ergoc_expr) : eresult nnrc_expr :=
+    let loc := expr_loc e in
     match expr_desc e with
     | EThisContract =>
       match ctxt.(translation_context_current_contract) with
-      | None => not_in_contract_error
+      | None => not_in_contract_error loc
       | Some _ => esuccess (NNRCGetConstant this_contract)
       end
     | EThisClause => 
       match ctxt.(translation_context_current_clause) with
-      | None => not_in_clause_error
+      | None => not_in_clause_error loc
       | Some clause_name => esuccess (NNRCUnop (OpDot clause_name) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
       end
     | EThisState =>
       match ctxt.(translation_context_current_contract) with
-      | None => not_in_contract_error
+      | None => not_in_contract_error loc
       | Some _ => esuccess (NNRCVar local_state)
       end
     | EVar v =>
@@ -260,7 +261,7 @@ Section ErgoCalculustoErgoNNRC.
             (ergoc_expr_to_nnrc ctxt e)
             acc
       in
-      eolift (lookup_call ctxt.(translation_context_fun_table) fname) (fold_right proc_one init_el el)
+      eolift (lookup_call loc ctxt.(translation_context_fun_table) fname) (fold_right proc_one init_el el)
     | EMatch e0 ecases edefault =>
       let ec0 := ergoc_expr_to_nnrc ctxt e0 in
       let eccases :=

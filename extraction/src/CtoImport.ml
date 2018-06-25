@@ -26,7 +26,8 @@ let cto_enum_of_decls dl =
 let mk_loc loc =
   begin match loc with
   | Some loc ->
-      { loc_start =
+      { loc_file = None;
+        loc_start =
           { offset = loc.cto_location_start.cto_loc_offset;
             line = loc.cto_location_start.cto_loc_line;
             column = loc.cto_location_start.cto_loc_column; };

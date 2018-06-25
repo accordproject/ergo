@@ -175,21 +175,21 @@ Section Ergo.
     Definition lookup_contracts_in_declarations (dl:list ergo_declaration) : list ergo_contract :=
       filter_some contract_of_declaration dl.
 
-    Definition lookup_single_contract_in_declarations (dl:list ergo_declaration) : eresult ergo_contract :=
+    Definition lookup_single_contract_in_declarations (loc:location) (dl:list ergo_declaration) : eresult ergo_contract :=
       match lookup_contracts_in_declarations dl with
-      | nil => efailure (EResult.CompilationError ("Cannot compile without at least one contract"))
+      | nil => should_have_one_contract_error loc
       | c :: nil => esuccess c
-      | _ :: _ => efailure (EResult.CompilationError ("Cannot compile with more than one contract"))
+      | _ :: _ => should_have_one_contract_error loc
       end.
       
     Definition lookup_single_contract (p:ergo_module) : eresult ergo_contract :=
-      lookup_single_contract_in_declarations p.(module_declarations).
+      lookup_single_contract_in_declarations p.(module_location) p.(module_declarations).
 
     Definition lookup_single_contract_with_state (p:ergo_module) : eresult (ergo_contract * string) :=
       eolift (fun ec =>
                elift (fun ecstate =>
                         (ec, ecstate)) (lift_default_state_name ec.(contract_state)))
-            (lookup_single_contract_in_declarations p.(module_declarations)).
+            (lookup_single_contract_in_declarations p.(module_location) p.(module_declarations)).
     
   End Lookup.
 
