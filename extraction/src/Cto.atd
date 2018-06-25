@@ -37,7 +37,7 @@ type decorator = json
 
 type propType = {
     name : string;
-    location : location;
+    ?location : location nullable;
 } <ocaml field_prefix="cto_prop_type_">
 type optional = {
     ttype <json name="type"> : string;
@@ -75,7 +75,7 @@ type definition = {
     id : id;
     ?classExtension : classExtension nullable;
     body : definition_content;
-    location : location;
+    ?location : location nullable;
 } <ocaml field_prefix="cto_defn_">
 type import = {
      namespace : string;

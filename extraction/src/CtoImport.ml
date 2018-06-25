@@ -24,14 +24,19 @@ let cto_enum_of_decls dl =
   List.map enum_case_of_decl dl
 
 let mk_loc loc =
-  { loc_start =
-    { offset = loc.cto_location_start.cto_loc_offset;
-       line = loc.cto_location_start.cto_loc_line;
-       column = loc.cto_location_start.cto_loc_column; };
-    loc_end =
-      { offset = loc.cto_location_end.cto_loc_offset;
-        line = loc.cto_location_end.cto_loc_line;
-        column = loc.cto_location_end.cto_loc_column; }; }
+  begin match loc with
+  | Some loc ->
+      { loc_start =
+          { offset = loc.cto_location_start.cto_loc_offset;
+            line = loc.cto_location_start.cto_loc_line;
+            column = loc.cto_location_start.cto_loc_column; };
+        loc_end =
+          { offset = loc.cto_location_end.cto_loc_offset;
+            line = loc.cto_location_end.cto_loc_line;
+            column = loc.cto_location_end.cto_loc_column; }; }
+  | None ->
+      dummy_location
+  end
 
 let base_type_of_decl d =
   begin match d with
@@ -44,12 +49,13 @@ let base_type_of_decl d =
       | "Integer" -> ErgoCompiler.cto_integer (mk_loc d.cto_prop_type_location)
       | "Long" -> ErgoCompiler.cto_long (mk_loc d.cto_prop_type_location)
       | "DateTime" -> ErgoCompiler.cto_dateTime (mk_loc d.cto_prop_type_location)
-      | s -> ErgoCompiler.cto_class_ref (mk_loc d.cto_prop_type_location) (RelativeRef (None,(char_list_of_string s)))
+      | s -> ErgoCompiler.cto_class_ref (mk_loc d.cto_prop_type_location)
+               (RelativeRef (None,(char_list_of_string s)))
       end
   end
 
 let field_of_decl d =
-  let loc = mk_loc d.cto_decl_content_location in
+  let loc = mk_loc (Some d.cto_decl_content_location) in
   let field_name = char_list_of_string d.cto_decl_content_id.cto_id_name in
   let base_type =
     base_type_of_decl d.cto_decl_content_propertyType
