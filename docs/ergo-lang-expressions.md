@@ -6,7 +6,9 @@ A literal is a notation for representing a fixed value in Ergo. Most programming
     "John Smith" // a string literal
     1            // an integer literal
     3.5e-10      // a floating point literal
-```    
+
+```
+
 ## Operators
 Ergo supports a set of operators: constructs which behave generally like functions, but which differ syntactically or semantically from usual functions. Ergo operators include arithmetic (addition with +), comparison (with >), logical operations (such as and or &&) and concatenation operators (like ++).
 ```
@@ -18,6 +20,7 @@ Ergo supports a set of operators: constructs which behave generally like functio
     true and false
     "Hello" ++ " World!" // String concatenation
 ``` 
+
 ## Local variable declarations
 There are two levels of visibility, local variables are contrasted with global variables. A local variable is a variable that is given local scope. Local variable references in the function or block in which it is declared override the same variable name in the larger scope. 
 ``` 
@@ -34,9 +37,9 @@ Local variables can also be declared with a type:
     define variable name : String = "John"; // declares and initialize a string variable
     name ++ " Smith"                        // rest of the expression
     define variable x : Double = 3.1416     // declares and initialize a double variable
-    sqrt(x)       
-    // rest of the expression
+    sqrt(x)                                 // rest of the expression
 ```    
+
 ## The If statement and Conditionals
 Conditional statements, conditional expressions and conditional constructs are features of a programming language, which perform different computations or actions depending on whether a programmer-specified boolean condition evaluates to true or false.  Conditional expressions (also known as if statements) allow us to conditionally execute Ergo code depending on the value of a test condition. If the test condition evaluates to true then the code on the then branch is evaluated. Otherwise, when the test condition evaluates to false then the else branch is evaluated.
 Example
@@ -77,13 +80,14 @@ The value of message after running this code will be "Low Price".
     if x < 0   // Condition
     then -x+1  // Expression if condition is true
     else x+1   // Expression if condition is false
-```    
+```
+
 ## Enforce expressions
 Before a contract is enforceable some preconditions such as the following must be satisfied:
-•	Competent parties who have the legal capacity to contract
-•	Lawful subject matter
-•	Mutuality of obligation
-•	Consideration
+-	Competent parties who have the legal capacity to contract
+-	Lawful subject matter
+-	Mutuality of obligation
+-	Consideration
 The constructs below will be used to determine if the preconditions have been met and what actions to take if they are not
 Example Prose
     Do the parties have adequate funds to execute this contract?  
@@ -168,6 +172,7 @@ foreach x in [1,-2,3] return x+1
 For expressions can have an optional condition of the values being iterated over:
     foreach x in [1,-2,3] where x > 0 return x+1
 ```    
+
 ## Creating objects
 An object can be a variable, a data structure, a function, or a method, and as such, is a location in memory having a value and referenced by an identifier. In the class-based object-oriented programming "object" refers to a particular instance of a class where the object can be a combination of variables, functions, and data structures. Creating objects (such as CTO concepts, transactions, or Ergo errors) can be done using new with the name of the concept and the values for each fields:
 ```
