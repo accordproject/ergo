@@ -37,72 +37,65 @@ Section ErgoCalculustoErgoNNRC.
   Section TranslationContext.
     Record translation_context :=
       mkCompContext {
-          translation_context_types : list ergo_type_declaration;
+          translation_context_modules : list laergo_module;
           translation_context_current_contract : option string;
           translation_context_current_clause : option string;
           translation_context_fun_table: lookup_table;
-          translation_context_namespace: string;
           translation_context_globals: list string;
           translation_context_params: list string;
         }.
 
     Definition add_globals (ctxt:translation_context) (params:list string) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_types)
+        ctxt.(translation_context_modules)
         ctxt.(translation_context_current_contract)
         ctxt.(translation_context_current_clause)
         ctxt.(translation_context_fun_table)
-        ctxt.(translation_context_namespace)
         (List.app params ctxt.(translation_context_globals))
         ctxt.(translation_context_params).
 
     Definition add_params (ctxt:translation_context) (params:list string) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_types)
+        ctxt.(translation_context_modules)
         ctxt.(translation_context_current_contract)
         ctxt.(translation_context_current_clause)
         ctxt.(translation_context_fun_table)
-        ctxt.(translation_context_namespace)
         ctxt.(translation_context_globals)
         (List.app params ctxt.(translation_context_params)).
 
     Definition add_one_global (ctxt:translation_context) (param:string) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_types)
+        ctxt.(translation_context_modules)
         ctxt.(translation_context_current_contract)
         ctxt.(translation_context_current_clause)
         ctxt.(translation_context_fun_table)
-        ctxt.(translation_context_namespace)
         (List.cons param ctxt.(translation_context_globals))
         ctxt.(translation_context_params).
 
     Definition add_one_function (ctxt:translation_context) (fname:string) (flambda:lambdan) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_types)
+        ctxt.(translation_context_modules)
         ctxt.(translation_context_current_contract)
         ctxt.(translation_context_current_clause)
         (add_function_to_table ctxt.(translation_context_fun_table) fname flambda)
-        ctxt.(translation_context_namespace)
         ctxt.(translation_context_globals)
         ctxt.(translation_context_params).
 
     Definition set_current_contract (ctxt:translation_context) (cname:string) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_types)
+        ctxt.(translation_context_modules)
         (Some cname)
         ctxt.(translation_context_current_clause)
         ctxt.(translation_context_fun_table)
-        ctxt.(translation_context_namespace)
         ctxt.(translation_context_globals)
         ctxt.(translation_context_params).
   
     Definition set_current_clause (ctxt:translation_context) (cname:string) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_types)
+        ctxt.(translation_context_modules)
         ctxt.(translation_context_current_contract)
         (Some cname)
         ctxt.(translation_context_fun_table)
-        ctxt.(translation_context_namespace)
         ctxt.(translation_context_globals)
         ctxt.(translation_context_params).
 
@@ -173,30 +166,29 @@ Section ErgoCalculustoErgoNNRC.
   (** Translate expressions to calculus *)
   Fixpoint ergoc_expr_to_nnrc
            (ctxt:translation_context) (e:ergoc_expr) : eresult nnrc_expr :=
-    let loc := expr_loc e in
-    match expr_desc e with
-    | EThisContract =>
+    match e with
+    | EThisContract loc =>
       match ctxt.(translation_context_current_contract) with
       | None => not_in_contract_error loc
       | Some _ => esuccess (NNRCGetConstant this_contract)
       end
-    | EThisClause => 
+    | EThisClause loc => 
       match ctxt.(translation_context_current_clause) with
       | None => not_in_clause_error loc
       | Some clause_name => esuccess (NNRCUnop (OpDot clause_name) (NNRCUnop OpUnbrand (NNRCGetConstant this_contract)))
       end
-    | EThisState =>
+    | EThisState loc =>
       match ctxt.(translation_context_current_contract) with
       | None => not_in_contract_error loc
       | Some _ => esuccess (NNRCVar local_state)
       end
-    | EVar v =>
+    | EVar loc v =>
       if in_dec string_dec v ctxt.(translation_context_params)
       then esuccess (NNRCGetConstant v)
       else esuccess (NNRCVar v)
-    | EConst d =>
+    | EConst loc d =>
       esuccess (NNRCConst d)
-    | EArray el =>
+    | EArray loc el =>
       let init_el := esuccess nil in
       let proc_one (acc:eresult (list nnrc_expr)) (e:ergo_expr) : eresult (list nnrc_expr) :=
           elift2
@@ -205,30 +197,29 @@ Section ErgoCalculustoErgoNNRC.
             acc
       in
       elift new_array (fold_left proc_one el init_el)
-    | EUnaryOp u e =>
+    | EUnaryOp loc u e =>
       elift (NNRCUnop u)
             (ergoc_expr_to_nnrc ctxt e)
-    | EBinaryOp b e1 e2 =>
+    | EBinaryOp loc b e1 e2 =>
       elift2 (NNRCBinop b)
              (ergoc_expr_to_nnrc ctxt e1)
              (ergoc_expr_to_nnrc ctxt e2)
-    | EIf e1 e2 e3 =>
+    | EIf loc e1 e2 e3 =>
       elift3 NNRCIf
         (ergoc_expr_to_nnrc ctxt e1)
         (ergoc_expr_to_nnrc ctxt e2)
         (ergoc_expr_to_nnrc ctxt e3)
-    | ELet v None e1 e2 =>
+    | ELet loc v None e1 e2 =>
       elift2 (NNRCLet v)
               (ergoc_expr_to_nnrc ctxt e1)
               (ergoc_expr_to_nnrc ctxt e2)
-    | ELet v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
+    | ELet loc v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
       elift2 (NNRCLet v)
               (ergoc_expr_to_nnrc ctxt e1)
               (ergoc_expr_to_nnrc ctxt e2)
-    | ENew cr nil =>
-      esuccess
-        (new_expr (absolute_name_of_name_ref ctxt.(translation_context_namespace) cr) (NNRCConst (drec nil)))
-    | ENew cr ((s0,init)::rest) =>
+    | ENew loc cr nil =>
+      esuccess (new_expr cr (NNRCConst (drec nil)))
+    | ENew loc cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           elift (NNRCUnop (OpRec s0)) (ergoc_expr_to_nnrc ctxt init)
       in
@@ -238,11 +229,10 @@ Section ErgoCalculustoErgoNNRC.
           elift2 (NNRCBinop OpRecConcat)
                  (elift (NNRCUnop (OpRec attname)) e) acc
       in
-      elift (new_expr (absolute_name_of_name_ref ctxt.(translation_context_namespace) cr)) (fold_left proc_one rest init_rec)
-    | ERecord nil =>
-      esuccess
-        (NNRCConst (drec nil))
-    | ERecord ((s0,init)::rest) =>
+      elift (new_expr cr) (fold_left proc_one rest init_rec)
+    | ERecord loc nil =>
+      esuccess (NNRCConst (drec nil))
+    | ERecord loc ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           elift (NNRCUnop (OpRec s0)) (ergoc_expr_to_nnrc ctxt init)
       in
@@ -253,7 +243,7 @@ Section ErgoCalculustoErgoNNRC.
                  (elift (NNRCUnop (OpRec attname)) e) acc
       in
       fold_left proc_one rest init_rec
-    | ECallFun fname el =>
+    | ECallFun loc fname el =>
       let init_el := esuccess nil in
       let proc_one (e:ergo_expr) (acc:eresult (list nnrc_expr)) : eresult (list nnrc_expr) :=
           elift2
@@ -262,7 +252,7 @@ Section ErgoCalculustoErgoNNRC.
             acc
       in
       eolift (lookup_call loc ctxt.(translation_context_fun_table) fname) (fold_right proc_one init_el el)
-    | EMatch e0 ecases edefault =>
+    | EMatch loc e0 ecases edefault =>
       let ec0 := ergoc_expr_to_nnrc ctxt e0 in
       let eccases :=
           let proc_one acc ecase :=
@@ -300,7 +290,7 @@ Section ErgoCalculustoErgoNNRC.
                      in
                      elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
-    | EForeach foreachs None e2 =>
+    | EForeach loc foreachs None e2 =>
       let init_e := ergoc_expr_to_nnrc ctxt e2 in
       let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
           let v := fst foreach in
@@ -310,7 +300,7 @@ Section ErgoCalculustoErgoNNRC.
                  acc
       in
       fold_left proc_one foreachs init_e
-    | EForeach foreachs (Some econd) e2 =>
+    | EForeach loc foreachs (Some econd) e2 =>
       let init_e :=
           elift2
             (fun econd e2 =>
@@ -403,31 +393,31 @@ Section ErgoCalculustoErgoNNRC.
   Definition declaration_to_nnrc
              (ctxt:translation_context) (s:ergoc_declaration) : eresult (translation_context * nnrc_declaration) :=
     match s with
-    | DCExpr e =>
+    | DCExpr loc e =>
       elift
         (fun x => (ctxt, DNExpr x))
         (ergoc_expr_to_nnrc ctxt e)
-    | DCConstant v e =>
+    | DCConstant loc v e =>
       elift
         (fun x => (add_one_global ctxt v, DNConstant v x)) (* Add new variable to translation_context *)
         (ergoc_expr_to_nnrc ctxt e)
-    | DCFunc f =>
+    | DCFunc loc f =>
       elift
         (fun x => (add_one_function ctxt x.(functionn_name) x.(functionn_lambda), DNFunc x)) (* Add new function to translation_context *)
         (functionc_to_nnrc ctxt f)
-    | DCContract c =>
+    | DCContract loc c =>
       elift (fun xy => (fst xy, DNFuncTable (snd xy)))
             (contractc_to_nnrc ctxt c)
     end.
 
-  Definition initial_translation_context (etypes:list ergo_type_declaration) (p:string) :=
-    mkCompContext etypes None None nnrc_stdlib p nil nil.
+  Definition initial_translation_context (ml:list laergo_module) :=
+    mkCompContext ml None None nnrc_stdlib nil nil.
 
   (** Translate a module to a module+calculus *)
   Definition declarations_calculus_with_table
-             (ergo_type_decls:list ergo_type_declaration) (local_namespace:string) (dl:list ergoc_declaration)
+             (ml:list laergo_module) (dl:list ergoc_declaration)
     : eresult (translation_context * list nnrc_declaration) :=
-    let ctxt := initial_translation_context ergo_type_decls local_namespace in
+    let ctxt := initial_translation_context ml in
     let init := esuccess (ctxt, nil) in
     let proc_one
           (acc:eresult (translation_context * list nnrc_declaration))
@@ -447,63 +437,61 @@ Section ErgoCalculustoErgoNNRC.
 
   (** Translate a module to a module+calculus *)
   Definition module_to_nnrc_with_table
-             (ergo_type_decls:list ergo_type_declaration) (local_namespace:string) (p:ergoc_module) : eresult nnrc_module :=
+             (ml:list laergo_module) (p:ergoc_module) : eresult nnrc_module :=
     elift
       (fun xy =>
          (mkModuleN
             p.(modulec_namespace)
                 (snd xy)))
-      (declarations_calculus_with_table ergo_type_decls local_namespace p.(modulec_declarations)).
+      (declarations_calculus_with_table ml p.(modulec_declarations)).
 
-  Definition module_to_nnrc (etypes:list ergo_type_module) (p:ergoc_module) : eresult nnrc_module :=
-    let local_namespace := p.(modulec_namespace) in
-    let resolved_etypes := ergo_type_resolved_tbl_for_module etypes in
-    eolift (fun type_decls => module_to_nnrc_with_table type_decls local_namespace p) resolved_etypes.
+  Definition ergoc_module_to_nnrc (rml:list laergo_module) (m:ergoc_module) : eresult nnrc_module :=
+    module_to_nnrc_with_table rml m.
 
-  Section tests.
+  Section Examples.
     Open Scope string.
-    Definition ctxt0 := initial_translation_context nil "org.accordproject".
+    Definition ctxt0 := initial_translation_context nil.
 
     (**r Test pattern matching on values *)
     Definition input1 := dnat 2.
     
     Example j1 : ergoc_expr :=
-      mk_expr dummy_location
-              (EMatch (mk_expr dummy_location (EConst input1))
-                      ((CaseData (dnat 1), mk_expr dummy_location (EConst (dstring "1")))
-                         :: (CaseData (dnat 2), mk_expr dummy_location (EConst (dstring "2")))
-                         :: nil)
-                      (mk_expr dummy_location (EConst (dstring "lots")))).
+      EMatch dummy_location
+             (EConst dummy_location input1)
+             ((CaseData (dnat 1), EConst dummy_location (dstring "1"))
+                :: (CaseData (dnat 2), EConst dummy_location (dstring "2"))
+                :: nil)
+             (EConst dummy_location (dstring "lots")).
     Definition jc1 := ergoc_expr_to_nnrc ctxt0 j1.
-    (* Eval vm_compute in jc1. *)
-    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc1. *)
+    (* Compute jc1. *)
+    (* Compute elift (fun x => nnrc_eval_top nil x nil) jc1. *)
 
-    Example j1' : ergo_expr :=
-      mk_expr dummy_location
-              (EMatch (mk_expr dummy_location (EConst input1))
-                      ((CaseData (dnat 1), (mk_expr dummy_location (EConst (dstring "1"))))
-                         :: (CaseLet "v2" None, (mk_expr dummy_location (EVar "v2")))
-                         :: nil)
-                      (mk_expr dummy_location (EConst (dstring "lots")))).
+    Example j1' : laergo_expr :=
+      EMatch dummy_location
+             (EConst dummy_location input1)
+             ((CaseData (dnat 1), EConst dummy_location (dstring "1"))
+                :: (CaseLet "v2" None, EVar dummy_location "v2")
+                :: nil)
+             (EConst dummy_location (dstring "lots")).
     Definition jc1' := ergoc_expr_to_nnrc ctxt0 j1'.
-    (* Eval vm_compute in jc1'. *)
-    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc1'. *)
+    (* Compute jc1'. *)
+    (* Compute elift (fun x => nnrc_eval_top nil x nil) jc1'. *)
 
     (**r Test pattern matching on type names *)
     Definition input2 :=
       dbrand ("C2"::nil) (dnat 1).
     
-    Example j2 : ergo_expr :=
-      mk_expr dummy_location
-              (EMatch (mk_expr dummy_location (EConst input2))
-                      ((CaseLet "v1" (Some "C1"), (mk_expr dummy_location (EConst (dstring "1"))))
-                         :: (CaseLet "v2" (Some "C2"), (mk_expr dummy_location (EConst (dstring "2"))))
-                         :: nil)
-                      (mk_expr dummy_location (EConst (dstring "lots")))).
+    Example j2 : laergo_expr :=
+      EMatch dummy_location
+             (EConst dummy_location input2)
+             ((CaseLet "v1" (Some "C1"), EConst dummy_location (dstring "1"))
+                :: (CaseLet "v2" (Some "C2"), EConst dummy_location (dstring "2"))
+                :: nil)
+             (EConst dummy_location (dstring "lots")).
 
     Definition jc2 := ergoc_expr_to_nnrc ctxt0 j2.
-    (* Eval vm_compute in jc2. *)
-    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc2. *)
+    (* Compute jc2. *)
+    (* Compute elift (fun x => nnrc_eval_top nil x nil) jc2. *)
 
     (**r Test pattern matching on optional *)
     Definition input3 :=
@@ -512,21 +500,21 @@ Section ErgoCalculustoErgoNNRC.
     Definition input3none :=
       dnone.
     
-    Example j3 input : ergo_expr :=
-      mk_expr dummy_location
-              (EMatch (mk_expr dummy_location (EConst input))
-                      ((CaseLetOption "v1" None, (mk_expr dummy_location (EConst (dstring "1"))))
-                         :: nil)
-                      (mk_expr dummy_location (EConst (dstring "nothing")))).
+    Example j3 input : laergo_expr :=
+      EMatch dummy_location
+             (EConst dummy_location input)
+             ((CaseLetOption "v1" None, EConst dummy_location (dstring "1"))
+                :: nil)
+             (EConst dummy_location (dstring "nothing")).
 
     Definition jc3 := ergoc_expr_to_nnrc ctxt0 (j3 input3).
     Definition jc3none := ergoc_expr_to_nnrc ctxt0 (j3 input3none).
-    (* Eval vm_compute in jc3. *)
-    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc3. *)
-    (* Eval vm_compute in jc3none. *)
-    (* Eval vm_compute in elift (fun x => nnrc_eval_top nil x nil) jc3none. *)
+    (* Compute jc3. *)
+    (* Compute elift (fun x => nnrc_eval_top nil x nil) jc3. *)
+    (* Compute jc3none. *)
+    (* Compute elift (fun x => nnrc_eval_top nil x nil) jc3none. *)
 
-  End tests.
+  End Examples.
   
 End ErgoCalculustoErgoNNRC.
 

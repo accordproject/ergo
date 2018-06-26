@@ -40,12 +40,12 @@ Section Lambda.
 End Lambda.
 
 Section Patch.
-  Definition nnrc_lambda_type_of_lambda_type (loc:location) (t:option unit) : ergo_type :=
-    mk_type loc ErgoTypeAny.
-  
+  Definition nnrc_lambda_type_of_lambda_type (loc:location) (t:option unit) : nnrc_type :=
+    ErgoTypeAny loc.
+
   Definition nnrc_lambda_params_of_lambda_params
              (loc:location)
-             (params:list (string * option unit)) : list (string * ergo_type) :=
+             (params:list (string * option unit)) : list (string * nnrc_type) :=
     List.map (fun xy => (fst xy, nnrc_lambda_type_of_lambda_type loc (snd xy))) params.
     
   Definition nnrc_expr_lambda_of_backend_closure

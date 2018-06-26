@@ -60,6 +60,9 @@ Section EResult.
   Definition elift4 {A B C D E:Set} (f:A -> B -> C -> D -> E)
              (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) : eresult E :=
     eolift (fun x => elift (fun g => g x) (elift3 f a b c)) d.
+  Definition elift5 {A B C D E F:Set} (f:A -> B -> C -> D -> E -> F)
+             (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) (e:eresult E) : eresult F :=
+    eolift (fun x => elift (fun g => g x) (elift4 f a b c d)) e.
   Definition emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
     lift_failure_map f al.
   Definition eresult_of_option {A:Set} (a:option A) (e:eerror) :=
@@ -75,11 +78,15 @@ Section EResult.
       efailure (CompilationError loc "Cannot use 'clause' variable outside of a clause").
 
     (* CTO errors *)
-    Definition import_not_found {A} loc (import:string) : eresult A :=
+    Definition import_not_found_error {A} loc (import:string) : eresult A :=
       efailure (CompilationError loc ("Import not found: " ++ import)).
-    Definition resolve_name_not_found {A} loc (namespace:string) (name_ref:string) : eresult A :=
-      efailure (CompilationError loc ("Cannot resolve name '" ++ name_ref++ "' not found in CTO with namespace " ++ namespace)).
-    Definition import_name_not_found {A} loc (namespace:string) (name_ref:string) : eresult A :=
+    Definition type_name_not_found_error {A} loc (ln:string) : eresult A :=
+      efailure (CompilationError loc ("Cannot find type with name '" ++ ln ++ "'")).
+    Definition variable_name_not_found_error {A} loc (ln:string) : eresult A :=
+      efailure (CompilationError loc ("Cannot find variable with name '" ++ ln ++ "'")).
+    Definition function_name_not_found_error {A} loc (ln:string) : eresult A :=
+      efailure (CompilationError loc ("Cannot find function with name '" ++ ln ++ "'")).
+    Definition import_name_not_found_error {A} loc (namespace:string) (name_ref:string) : eresult A :=
       efailure (CompilationError loc ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
   
     (** Main clause creation errors *)

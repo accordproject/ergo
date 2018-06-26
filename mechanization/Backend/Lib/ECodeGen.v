@@ -35,6 +35,8 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
   Definition javascript_quotel_double := NNRCtoJavaScript.quotel_double.
   Definition javascript_eol_newline := NNRCtoJavaScript.eol_newline.
 
+  Definition javascript_identifier_sanitizer := NNRCtoJavaScript.jsIdentifierSanitize.
+  
   Definition javascript := CompLang.javascript.
   
   Definition nnrc_expr_to_javascript := NNRCtoJavaScript.nnrcToJS.

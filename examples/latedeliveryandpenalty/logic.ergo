@@ -13,9 +13,6 @@
  */
  namespace org.accordproject.latedeliveryandpenalty
 
-import org.accordproject.common.*
-import org.accordproject.latedeliveryandpenalty.*
-
 // Declare a contract over a template model
 contract LateDeliveryAndPenalty over TemplateModel {
   // Clause checking for late delivery and calculating penalty

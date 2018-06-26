@@ -28,7 +28,7 @@ let qname_of_qname_base qn =
 
 let relative_ref_of_qname_base qn =
   let (prefix,localname) = qname_of_qname_base qn in
-  RelativeRef (prefix,localname)
+  (prefix,localname)
 
 let mk_position (start_pos: Lexing.position) (end_pos: Lexing.position) : location = mk_position_of_loc_pair start_pos end_pos
 %}
@@ -94,8 +94,8 @@ main:
 
 emodule:
 | NAMESPACE qn = qname_prefix ims = imports ss = decls
-    { { module_namespace = Util.char_list_of_string qn;
-        module_location = mk_position $startpos $endpos;
+    { { module_annot = mk_position $startpos $endpos;
+        module_namespace = Util.char_list_of_string qn;
         module_imports = ims;
         module_declarations = ss; } }
 
@@ -115,40 +115,42 @@ decl:
 | DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_position $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration cn (mk_position $startpos $endpos) (ErgoTypeConcept (oe,ctype))) }
+        (ErgoCompiler.mk_ergo_type_declaration (mk_position $startpos $endpos) cn (ErgoTypeConcept (oe,ctype))) }
 | DEFINE TRANSACTION cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_position $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration cn (mk_position $startpos $endpos) (ErgoTypeTransaction (oe,ctype))) }
+        (ErgoCompiler.mk_ergo_type_declaration (mk_position $startpos $endpos) cn (ErgoTypeTransaction (oe,ctype))) }
 | DEFINE ENUM cn = ident et = ergo_type_enum_decl
     { ErgoCompiler.dtype (mk_position $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration cn (mk_position $startpos $endpos) (ErgoTypeEnum et)) }
+        (ErgoCompiler.mk_ergo_type_declaration (mk_position $startpos $endpos) cn (ErgoTypeEnum et)) }
 | DEFINE CONSTANT v = ident EQUAL e = expr
     { ErgoCompiler.dconstant (mk_position $startpos $endpos) v e }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
     { ErgoCompiler.dfunc (mk_position $startpos $endpos)
-        { function_name = cn;
-          function_location = mk_position $startpos $endpos;
-          function_lambda =
-          { lambda_params = [];
-            lambda_output = out;
-            lambda_throws = fst mt;
-            lambda_emits = snd mt;
-            lambda_body = fs; } } }
+        { function_annot = mk_position $startpos $endpos;
+          function_name = cn;
+          function_sig =
+          { type_signature_annot = (mk_position $startpos $endpos);
+            type_signature_params = [];
+            type_signature_output = out;
+            type_signature_throws = fst mt;
+            type_signature_emits = snd mt };
+          function_body = fs; } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
     { ErgoCompiler.dfunc (mk_position $startpos $endpos)
-        { function_name = cn;
-          function_location = mk_position $startpos $endpos;
-          function_lambda =
-          { lambda_params = ps;
-            lambda_output = out;
-            lambda_throws = fst mt;
-            lambda_emits = snd mt;
-            lambda_body = fs; } } }
+        { function_annot = mk_position $startpos $endpos;
+          function_name = cn;
+          function_sig =
+          { type_signature_annot = (mk_position $startpos $endpos);
+            type_signature_params = ps;
+            type_signature_output = out;
+            type_signature_throws = fst mt;
+            type_signature_emits = snd mt };
+          function_body = fs; } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
     { ErgoCompiler.dcontract (mk_position $startpos $endpos)
-        { contract_name = cn;
-          contract_location = mk_position $startpos $endpos;
+        { contract_annot = mk_position $startpos $endpos;
+          contract_name = cn;
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }
@@ -173,23 +175,25 @@ clauses:
 
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = stmt RCURLY
-    { { clause_name = cn;
-        clause_location = mk_position $startpos $endpos;
-        clause_lambda =
-        { lambda_params = [];
-          lambda_output = out;
-          lambda_throws = fst mt;
-          lambda_emits = snd mt;
-          lambda_body = e; } } }
+    { { clause_annot = mk_position $startpos $endpos;
+        clause_name = cn;
+        clause_sig =
+        { type_signature_annot = (mk_position $startpos $endpos);
+          type_signature_params = [];
+          type_signature_output = out;
+          type_signature_throws = fst mt;
+          type_signature_emits = snd mt };
+        clause_body = e; } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
-    { { clause_name = cn;
-        clause_location = mk_position $startpos $endpos;
-        clause_lambda =
-        { lambda_params = ps;
-          lambda_output = out;
-          lambda_throws = fst mt;
-          lambda_emits = snd mt;
-          lambda_body = s; } } }
+    { { clause_annot = mk_position $startpos $endpos;
+        clause_name = cn;
+        clause_sig =
+        { type_signature_annot = (mk_position $startpos $endpos);
+          type_signature_params = ps;
+          type_signature_output = out;
+          type_signature_throws = fst mt;
+          type_signature_emits = snd mt };
+        clause_body = s; } }
 
 maythrow:
 |
@@ -370,7 +374,7 @@ expr:
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { ErgoCompiler.eif (mk_position $startpos $endpos) e1 e2 e3 }
 | NEW qn = qname LCURLY r = reclist RCURLY
-    { ErgoCompiler.enew (mk_position $startpos $endpos) (ErgoCompiler.mk_relative_ref (fst qn) (snd qn)) r }
+    { ErgoCompiler.enew (mk_position $startpos $endpos) qn r }
 | LCURLY r = reclist RCURLY
     { ErgoCompiler.erecord (mk_position $startpos $endpos) r }
 | CONTRACT

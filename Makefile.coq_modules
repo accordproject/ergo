@@ -27,7 +27,7 @@ MODULES = \
 	Common/Utils/EUtil \
 	Common/Utils/ENames \
 	Common/Utils/EResult \
-	Common/Utils/EImport \
+	Common/Utils/EAstUtil \
 	Common/CTO/CTO \
 	Common/Types/ErgoType \
 	Common/Pattern/EPattern \

@@ -23,6 +23,7 @@ Section EAstUtil.
   
     Inductive import_decl : Set :=
     | ImportAll : A -> namespace_name -> import_decl
+    | ImportSelf : A -> namespace_name -> import_decl
     | ImportName : A -> namespace_name -> local_name -> import_decl.
 
     Definition extends : Set := option N.

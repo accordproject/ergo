@@ -62,7 +62,8 @@ Section ErgoNNRCtoJavaScript.
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
     let input_v := "context" in
-    ErgoCodeGen.nnrc_expr_to_javascript_method input_v e 1 eol quotel (input_v::nil) fname.
+    ErgoCodeGen.nnrc_expr_to_javascript_method input_v e 1 eol quotel (input_v::nil)
+                                               (ErgoCodeGen.javascript_identifier_sanitizer fname).
 
   (** Single function *)
   Definition javascript_function_of_body
@@ -72,7 +73,7 @@ Section ErgoNNRCtoJavaScript.
              (quotel:string) : ErgoCodeGen.javascript :=
     let input_v := "context" in
     let init_indent := 0 in
-    ErgoCodeGen.nnrc_expr_to_javascript_fun_lift e fname input_v init_indent eol quotel.
+    ErgoCodeGen.nnrc_expr_to_javascript_fun_lift e (ErgoCodeGen.javascript_identifier_sanitizer fname) input_v init_indent eol quotel.
 
   Definition javascript_function_of_nnrc_function
              (f:nnrc_function)
@@ -100,7 +101,7 @@ Section ErgoNNRCtoJavaScript.
              (ft:nnrc_function_table)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
-    let tname := ft.(function_tablen_name) in
+    let tname := ErgoCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in
     "class " ++ tname ++ " {" ++ eol
              ++ (javascript_methods_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel) ++ eol
              ++ "}" ++ eol.
