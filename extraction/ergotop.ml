@@ -14,11 +14,17 @@
 
 open ErgoComp
 open ParseString
+open Unix
 
 let string_of_char_list cl = String.concat "" (List.map (String.make 1) cl)
 
+let prompt () =
+    if isatty stdin then
+        print_string "ergotop$ "
+    else ()
+
 let rec repl ctx =
-    print_string "ergotop$ " ;
+    prompt () ;
     let t' =
         try
             Some (ParseString.parse_ergo_from_string
