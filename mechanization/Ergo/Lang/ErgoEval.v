@@ -19,6 +19,8 @@
  * -- Kartik, June 2018
  *)
 
+(* TODO: Fix all the folds. There is currently an even number of reversings... >_< *)
+
 Require Import Ergo.
 Require Import String.
 Require Import List.
@@ -42,6 +44,9 @@ Section ErgoEval.
         ctx_this_state : ergo_data;
         ctx_this_emit : ergo_data;
         }.
+
+  Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
+    ls ++ (a :: nil).
 
   Definition ergo_empty_context :=
     mkContext nil nil nil nil nil dunit dunit dunit dunit.
@@ -122,7 +127,12 @@ Section ErgoEval.
     | EThisState => esuccess expr
     | EVar _ => esuccess expr
     | EConst _ => esuccess expr
-    | EArray a => TODO
+    | EArray a =>
+      elift EArray
+            (fold_left
+               (fun ls na =>
+                  elift2 postpend ls (ergo_inline_expr ctx na))
+               a (esuccess nil))
     | EUnaryOp o e => elift (EUnaryOp o) (ergo_inline_expr ctx e)
     | EBinaryOp o e1 e2 =>
       elift2 (EBinaryOp o) (ergo_inline_expr ctx e1) (ergo_inline_expr ctx e2)
@@ -141,7 +151,8 @@ Section ErgoEval.
       match lookup String.string_dec ctx.(ctx_function_env) fn with
       | Some fn' =>
         eolift (ergo_letify_function fn')
-               (fold_left (fun ls nv => elift2 cons (ergo_inline_expr ctx nv) ls)
+               (fold_left (fun ls nv =>
+                             elift2 postpend ls (ergo_inline_expr ctx nv))
                           args (esuccess nil))
       | None => efailure (CompilationError ("Function " ++ fn ++ " not found."))
       end
@@ -167,7 +178,12 @@ Section ErgoEval.
         end
       end
     | EConst _ => esuccess expr
-    | EArray a => TODO
+    | EArray a =>
+      elift EArray
+            (fold_left
+               (fun ls na =>
+                  elift2 postpend ls (ergo_inline_globals ctx na))
+               a (esuccess nil))
     | EUnaryOp o e => elift (EUnaryOp o) (ergo_inline_globals ctx e)
     | EBinaryOp o e1 e2 =>
       elift2 (EBinaryOp o) (ergo_inline_globals ctx e1) (ergo_inline_globals ctx e2)
@@ -184,8 +200,10 @@ Section ErgoEval.
     | ENew n rs => TODO
     | ECallFun fn args =>
         elift (ECallFun fn)
-              (fold_left (fun ls nv => elift2 cons (ergo_inline_globals ctx nv) ls)
-                         args (esuccess nil))
+              (fold_left
+                 (fun ls nv =>
+                    elift2 postpend ls (ergo_inline_globals ctx nv))
+                 args (esuccess nil))
     | EMatch _ _ _ => TODO
     | EForeach _ _ _ => TODO
     | ELiftError _ _ => TODO
@@ -386,7 +404,7 @@ Definition ergo_string_of_error (err : eerror) : string :=
 Definition ergo_string_of_result (result : eresult (ergo_context * option ergo_data)) : string :=
   match result with
   | Success _ _ (ctx, None) => "lol ok"
-  | Success _ _ (ctx, Some d) => dataToString d
+  | Success _ _ (ctx, Some d) => (*dataToString d*) ErgoData.data_to_json_string ""%string d
   | Failure _ _ f => ergo_string_of_error f
   end.
 
