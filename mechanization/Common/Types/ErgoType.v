@@ -21,112 +21,145 @@ Require Import Qcert.Common.TypingRuntime.
 
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EImport.
+Require Import ErgoSpec.Common.Utils.EAstUtil.
 
 Section ErgoType.
+  Section Ast.
+    Context {A:Set}. (* Type for annotations *)
+    Context {N:Set}. (* Type for names *)
+  
+    Inductive ergo_type :=
+    | ErgoTypeAny : A -> ergo_type                               (**r any type *)
+    | ErgoTypeNone : A -> ergo_type                              (**r none type *)
+    | ErgoTypeBoolean : A -> ergo_type                           (**r bool atomic type *)
+    | ErgoTypeString : A -> ergo_type                            (**r string atomic type *)
+    | ErgoTypeDouble : A -> ergo_type                            (**r double atomic type *)
+    | ErgoTypeLong : A -> ergo_type                              (**r long atomic type *)
+    | ErgoTypeInteger : A -> ergo_type                           (**r integer atomic type *)
+    | ErgoTypeDateTime : A -> ergo_type                          (**r date and time atomic type *)
+    | ErgoTypeClassRef : A -> N -> ergo_type                     (**r relative class reference *)
+    | ErgoTypeOption : A -> ergo_type -> ergo_type               (**r optional type *)
+    | ErgoTypeRecord : A -> list (string*ergo_type) -> ergo_type (**r record type *)
+    | ErgoTypeArray : A -> ergo_type -> ergo_type                (**r array type *)
+    | ErgoTypeSum : A -> ergo_type -> ergo_type -> ergo_type     (**r sum type *)
+    .
 
-  Inductive ergo_type_desc :=
-  | ErgoTypeAny : ergo_type_desc                               (**r any type *)
-  | ErgoTypeNone : ergo_type_desc                              (**r none type *)
-  | ErgoTypeBoolean : ergo_type_desc                           (**r bool atomic type *)
-  | ErgoTypeString : ergo_type_desc                            (**r string atomic type *)
-  | ErgoTypeDouble : ergo_type_desc                            (**r double atomic type *)
-  | ErgoTypeLong : ergo_type_desc                              (**r long atomic type *)
-  | ErgoTypeInteger : ergo_type_desc                           (**r integer atomic type *)
-  | ErgoTypeDateTime : ergo_type_desc                          (**r date and time atomic type *)
-  | ErgoTypeClassRef : name_ref -> ergo_type_desc              (**r relative class reference *)
-  | ErgoTypeOption : ergo_type -> ergo_type_desc               (**r optional type *)
-  | ErgoTypeRecord : list (string*ergo_type) -> ergo_type_desc (**r record type *)
-  | ErgoTypeArray : ergo_type -> ergo_type_desc                (**r array type *)
-  | ErgoTypeSum : ergo_type -> ergo_type -> ergo_type_desc     (**r sum type *)
-  with ergo_type :=
-  | ErgoType : location -> ergo_type_desc -> ergo_type.
+    Definition type_annot (et:ergo_type) : A :=
+      match et with
+      | ErgoTypeAny a => a
+      | ErgoTypeNone a => a
+      | ErgoTypeBoolean a => a
+      | ErgoTypeString a => a
+      | ErgoTypeDouble a => a
+      | ErgoTypeLong a => a
+      | ErgoTypeInteger a => a
+      | ErgoTypeDateTime a => a
+      | ErgoTypeClassRef a _ => a
+      | ErgoTypeOption a _ => a
+      | ErgoTypeRecord a _ => a
+      | ErgoTypeArray a _ => a
+      | ErgoTypeSum a _ _ => a
+      end.
 
-  Definition type_loc (et:ergo_type) : location :=
-    match et with
-    | ErgoType loc _ => loc
-    end.
-  Definition type_desc (et:ergo_type) : ergo_type_desc :=
-    match et with
-    | ErgoType _ etd => etd
-   end.
-  Definition mk_type (loc:location) (etd:ergo_type_desc) : ergo_type :=
-    ErgoType loc etd.
+    Record ergo_type_signature : Set :=
+      mkErgoTypeSignature
+        { type_signature_annot : A;
+          type_signature_params : list (string * ergo_type);
+          type_signature_output : ergo_type;
+          type_signature_throws : option ergo_type;
+          type_signature_emits : option ergo_type; }.
 
-  Record ergo_type_signature : Set :=
-    mkErgoTypeSignature
-      { type_signature_name: string;
-        type_signature_location : location;
-        type_signature_params : list (string * ergo_type);
-        type_signature_output : ergo_type;
-        type_signature_throws : option ergo_type;
-        type_signature_emits : option ergo_type; }.
+    Inductive ergo_type_declaration_desc :=
+    | ErgoTypeEnum : list string -> ergo_type_declaration_desc
+    | ErgoTypeTransaction : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeConcept : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeEvent : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeAsset : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeParticipant : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeGlobal : ergo_type -> ergo_type_declaration_desc
+    | ErgoTypeFunction : ergo_type_signature -> ergo_type_declaration_desc
+    | ErgoTypeContract :
+        ergo_type                              (**r template type *)
+        -> ergo_type                           (**r state type *)
+        -> list (string * ergo_type_signature) (**r clauses signatures *)
+        -> ergo_type_declaration_desc.
 
-  Inductive ergo_type_declaration_desc :=
-  | ErgoTypeEnum : list string -> ergo_type_declaration_desc
-  | ErgoTypeTransaction : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
-  | ErgoTypeConcept : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
-  | ErgoTypeEvent : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
-  | ErgoTypeAsset : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
-  | ErgoTypeParticipant : option name_ref -> list (string * ergo_type) -> ergo_type_declaration_desc
-  | ErgoTypeGlobal : ergo_type -> ergo_type_declaration_desc
-  | ErgoTypeFunction : ergo_type_signature -> ergo_type_declaration_desc
-  | ErgoTypeContract :
-      ergo_type                              (**r template type *)
-      -> ergo_type                           (**r state type *)
-      -> list (string * ergo_type_signature) (**r clauses signatures *)
-      -> ergo_type_declaration_desc.
+    Record ergo_type_declaration :=
+      mkErgoTypeDeclaration
+        { type_declaration_annot : A;
+          type_declaration_name : local_name;
+          type_declaration_type : ergo_type_declaration_desc; }.
 
-  Record ergo_type_declaration :=
-    mkErgoTypeDeclaration
-      { type_declaration_name : local_name;
-        type_declaration_location : location;
-        type_declaration_type : ergo_type_declaration_desc; }.
+    Record ergo_type_module :=
+      mkErgoTypeModule
+        { type_module_annot : A;
+          type_module_namespace : namespace_name;
+          type_module_imports : list (@import_decl A);
+          type_module_declarations : list ergo_type_declaration; }.
 
-  Record ergo_type_module :=
-    mkErgoTypeModule
-      { type_module_namespace : namespace_name;
-        type_module_location : location;
-        type_module_imports : list import_decl;
-        type_module_declarations : list ergo_type_declaration; }.
+  End Ast.
 
-  Definition lift_default_emits_type (loc:location) (emits:option ergo_type) : ergo_type :=
+  Definition rergo_type {A} : Set := @ergo_type A relative_name.
+  Definition rergo_type_signature {A} : Set := @ergo_type_signature A relative_name.
+  Definition rergo_type_declaration {A} : Set := @ergo_type_declaration A relative_name.
+  Definition rergo_type_declaration_desc {A} : Set := @ergo_type_declaration_desc A relative_name.
+  Definition rergo_type_module {A} : Set := @ergo_type_module A relative_name.
+
+  Definition aergo_type {A} : Set := @ergo_type A absolute_name.
+  Definition aergo_type_signature {A} : Set := @ergo_type_signature A absolute_name.
+  Definition aergo_type_declaration_desc {A} : Set := @ergo_type_declaration_desc A absolute_name.
+  Definition aergo_type_declaration {A} : Set := @ergo_type_declaration A absolute_name.
+  Definition aergo_type_module {A} : Set := @ergo_type_module A absolute_name.
+  
+  Definition lrergo_type : Set := @ergo_type location relative_name.
+  Definition lrergo_type_signature : Set := @ergo_type_signature location relative_name.
+  Definition lrergo_type_declaration_desc : Set := @ergo_type_declaration_desc location relative_name.
+  Definition lrergo_type_declaration : Set := @ergo_type_declaration location relative_name.
+  Definition lrergo_type_module : Set := @ergo_type_module location relative_name.
+
+  Definition laergo_type : Set := @ergo_type location absolute_name.
+  Definition laergo_type_signature : Set := @ergo_type_signature location absolute_name.
+  Definition laergo_type_declaration : Set := @ergo_type_declaration location absolute_name.
+  Definition laergo_type_declaration_desc : Set := @ergo_type_declaration_desc location absolute_name.
+  Definition laergo_type_module : Set := @ergo_type_module location absolute_name.
+  
+  Definition lift_default_emits_type (loc:location) (emits:option laergo_type) : laergo_type :=
     match emits with
     | Some e => e
-    | None => mk_type loc (ErgoTypeClassRef default_emits_type)
+    | None => ErgoTypeClassRef loc default_emits_absolute_name
     end.
 
-  Definition lift_default_state_type (loc:location) (state:option ergo_type) : ergo_type :=
+  Definition lift_default_state_type (loc:location) (state:option laergo_type) : laergo_type :=
     match state with
     | Some e => e
-    | None => mk_type loc (ErgoTypeClassRef default_state_type)
+    | None => ErgoTypeClassRef loc default_state_absolute_name
     end.
 
-  Definition lift_default_throws_type (loc:location) (emits:option ergo_type) : ergo_type :=
+  Definition lift_default_throws_type (loc:location) (emits:option laergo_type) : laergo_type :=
     match emits with
     | Some e => e
-    | None => mk_type loc (ErgoTypeClassRef default_throws_type)
+    | None => ErgoTypeClassRef loc default_throws_absolute_name
     end.
 
-  Definition mk_success_type (loc:location) (response_type state_type emit_type: ergo_type) :=
-    mk_type loc
-            (ErgoTypeRecord
-               (("response",response_type)
-                  ::("state",state_type)
-                  ::("emit",emit_type)
-                  ::nil))%string.
-  Definition mk_error_type (loc:location) (throw_type: ergo_type) := throw_type.
-  Definition mk_output_type (loc:location) (success_type error_type: ergo_type) :=
-    mk_type loc (ErgoTypeSum success_type error_type).
+  Definition mk_success_type (loc:location) (response_type state_type emit_type: laergo_type) : laergo_type :=
+    ErgoTypeRecord loc
+       (("response",response_type)
+          ::("state",state_type)
+          ::("emit",emit_type)
+          ::nil)%string.
 
-  Definition lift_default_state_name (state:option ergo_type) : eresult absolute_name :=
+  Definition mk_error_type (loc:location) (throw_type: laergo_type) : laergo_type := throw_type.
+  Definition mk_output_type (loc:location) (success_type error_type: laergo_type) : laergo_type :=
+    ErgoTypeSum loc success_type error_type.
+
+  Definition lift_default_state_name (state:option laergo_type) : eresult absolute_name :=
     match state with
-    | None => esuccess default_state_name
+    | None => esuccess default_state_absolute_name
     | Some et =>
-      match type_desc et with
-      | (ErgoTypeClassRef (AbsoluteRef r)) => esuccess r
-      | _ => unresolved_name_error (type_loc et)
+      match et with
+      | ErgoTypeClassRef _ r => esuccess r
+      | _ => unresolved_name_error (type_annot et)
       end
     end.
-  
+
 End ErgoType.

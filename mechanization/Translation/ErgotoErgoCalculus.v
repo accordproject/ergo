@@ -32,118 +32,108 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Section ErgotoErgoCalculus.
 
   (** Translate an Ergo statement to an Ergo expression *)
-
-  Fixpoint ergo_stmt_to_expr (s:ergo_stmt) : ergoc_expr :=
-    let loc := stmt_loc s in
-    match stmt_desc s with
-    | SReturn e =>
+  Fixpoint ergo_stmt_to_expr (s:laergo_stmt) : ergoc_expr :=
+    match s with
+    | SReturn loc e =>
       ESuccess loc (mk_result
                       loc
                       e
-                      (mk_expr loc (EVar local_state))
-                      (mk_expr loc (EVar local_emit)))
-    | SFunReturn e =>
+                      (EVar loc local_state)
+                      (EVar loc local_emit))
+    | SFunReturn loc e =>
       e (* Returning from a function does not have state or emit, just the result *)
-    | SThrow e =>
+    | SThrow loc e =>
       EError loc e
-    | SCallClause fname el =>
-      mk_expr
-        loc
-        (ECallFun
-           fname
-           (mk_expr loc EThisContract
-              ::mk_expr loc (EVar local_state)
-              ::mk_expr loc (EVar local_emit)
-              ::el))
-    | SSetState e1 s2 =>
+    | SCallClause loc fname el =>
+      ECallFun loc
+               fname
+               ((EThisContract loc)
+                        ::(EVar loc local_state)
+                        ::(EVar loc local_emit)
+                        ::el)
+    | SSetState loc e1 s2 =>
       set_state loc e1 (ergo_stmt_to_expr s2)
-    | SEmit e1 s2 =>
+    | SEmit loc e1 s2 =>
       push_emit loc e1 (ergo_stmt_to_expr s2)
-    | SLet vname vtype e1 s2 =>
-      mk_expr
-        loc
-        (ELet vname vtype
-              e1
-              (ergo_stmt_to_expr s2))
-    | SIf e1 s2 s3 =>
-      mk_expr
-        loc
-        (EIf e1
-             (ergo_stmt_to_expr s2)
-             (ergo_stmt_to_expr s3))
-    | SEnforce e1 None s3 =>
-      mk_expr
-        loc
-        (EIf (mk_expr loc (EUnaryOp OpNeg e1))
-             (EError loc (mk_expr loc (EConst enforce_error_content)))
-             (ergo_stmt_to_expr s3))
-    | SEnforce e1 (Some s2) s3 =>
-      mk_expr
-        loc
-        (EIf (mk_expr loc (EUnaryOp OpNeg e1))
-             (ergo_stmt_to_expr s2)
-             (ergo_stmt_to_expr s3))
-    | SMatch e sl sdefault =>
-      mk_expr
-        loc
-        (EMatch e
-                (map (fun xy => (fst xy, (ergo_stmt_to_expr (snd xy)))) sl)
-                (ergo_stmt_to_expr sdefault))
+    | SLet loc vname vtype e1 s2 =>
+      ELet loc vname vtype
+           e1
+           (ergo_stmt_to_expr s2)
+    | SIf loc e1 s2 s3 =>
+      EIf loc e1
+          (ergo_stmt_to_expr s2)
+          (ergo_stmt_to_expr s3)
+    | SEnforce loc e1 None s3 =>
+      EIf loc (EUnaryOp loc OpNeg e1)
+          (EError loc (EConst loc enforce_error_content))
+          (ergo_stmt_to_expr s3)
+    | SEnforce loc e1 (Some s2) s3 =>
+      EIf loc
+          (EUnaryOp loc OpNeg e1)
+          (ergo_stmt_to_expr s2)
+          (ergo_stmt_to_expr s3)
+    | SMatch loc e sl sdefault =>
+      EMatch loc e
+             (map (fun xy => (fst xy, (ergo_stmt_to_expr (snd xy)))) sl)
+             (ergo_stmt_to_expr sdefault)
     end.
 
   Definition ergoc_expr_top (loc:location) (e:ergoc_expr) : ergoc_expr :=
-    mk_expr loc (ELet local_state None (mk_expr loc (EVar this_state))
-                      (mk_expr loc (ELet local_emit None (mk_expr loc (EVar this_emit)) e))).
+    ELet loc
+         local_state
+         None
+         (EVar loc this_state)
+         (ELet loc local_emit None (EVar loc this_emit) e).
 
   (** Translate a clause to clause+calculus *)
 
-  Definition clause_to_calculus (tem:ergo_type) (sta:option ergo_type) (c:ergo_clause) : ergoc_function :=
-    let loc := c.(clause_location) in
-    let response_type := c.(clause_lambda).(lambda_output) in
-    let emit_type := lift_default_emits_type loc c.(clause_lambda).(lambda_emits) in
+  Definition clause_to_calculus (tem:laergo_type) (sta:option laergo_type) (c:laergo_clause) : ergoc_function :=
+    let loc := c.(clause_annot) in
+    let response_type := c.(clause_sig).(type_signature_output) in
+    let emit_type := lift_default_emits_type loc c.(clause_sig).(type_signature_emits) in
     let state_type :=  lift_default_state_type loc sta in
     let success_type := mk_success_type loc response_type state_type emit_type in
-    let throw_type := lift_default_throws_type loc c.(clause_lambda).(lambda_throws) in
+    let throw_type := lift_default_throws_type loc c.(clause_sig).(type_signature_throws) in
     let error_type := mk_error_type loc throw_type in
     mkFuncC
+      c.(clause_annot)
       c.(clause_name)
-      c.(clause_location)
       (mkLambdaC
          ((this_contract, tem)
             ::(this_state, state_type)
-            ::(this_emit,mk_type loc (ErgoTypeArray emit_type))
-            ::c.(clause_lambda).(lambda_params))
+            ::(this_emit, ErgoTypeArray loc emit_type)
+            ::c.(clause_sig).(type_signature_params))
          (mk_output_type loc success_type error_type)
-         (ergoc_expr_top loc (ergo_stmt_to_expr c.(clause_lambda).(lambda_body)))).
+         (ergoc_expr_top loc (ergo_stmt_to_expr c.(clause_body)))).
 
   (** Translate a function to function+calculus *)
-  Definition function_to_calculus (f:ergo_function) : ergoc_function :=
+  Definition function_to_calculus (f:laergo_function) : ergoc_function :=
     mkFuncC
+      f.(function_annot)
       f.(function_name)
-      f.(function_location)
       (mkLambdaC
-         f.(function_lambda).(lambda_params)
-         f.(function_lambda).(lambda_output)
-         (ergo_stmt_to_expr f.(function_lambda).(lambda_body))).
+         f.(function_sig).(type_signature_params)
+         f.(function_sig).(type_signature_output)
+         (ergo_stmt_to_expr f.(function_body))).
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the comp_context *)
 
-  Definition contract_to_calculus (c:ergo_contract) : ergoc_contract :=
+  Definition contract_to_calculus (c:laergo_contract) : ergoc_contract :=
     let clauses := map (clause_to_calculus c.(contract_template) c.(contract_state)) c.(contract_clauses) in
     mkContractC
+      c.(contract_annot)
       c.(contract_name)
-      c.(contract_location)
       clauses.
 
   (** Translate a statement to a statement+calculus *)
-  Definition declaration_to_calculus (s:ergo_declaration) : option (ergoc_declaration) :=
-    match decl_desc s with
-    | DType ergo_type => None
-    | DStmt s => Some (DCExpr (ergo_stmt_to_expr s))
-    | DConstant v e => Some (DCConstant v e)
-    | DFunc f => Some (DCFunc (function_to_calculus f))
-    | DContract c => Some (DCContract (contract_to_calculus c))
+  Definition declaration_to_calculus (s:laergo_declaration) : option (ergoc_declaration) :=
+    match s with
+    | DType loc ergo_type => None
+    | DStmt loc s => Some (DCExpr loc (ergo_stmt_to_expr s))
+    | DConstant loc v e => Some (DCConstant loc v e)
+    | DFunc loc f => Some (DCFunc loc (function_to_calculus f))
+    | DContract loc c => Some (DCContract loc (contract_to_calculus c))
     end.
 
   (** Translate a module to a module+calculus *)
@@ -160,51 +150,54 @@ Section ErgotoErgoCalculus.
     List.fold_right proc_one nil dl.
 
   Section Examples.
-    Definition f1 :=
-      mkFunc "addFee"
-             dummy_location
-             (mkLambda (("rate"%string, mk_type dummy_location ErgoTypeDouble)::nil)
-                       (mk_type dummy_location ErgoTypeAny)
-                       None
-                       None
-                       (mk_stmt dummy_location
-                                (SReturn (mk_expr dummy_location (EConst (dfloat float_one)))))).
-    Definition cl1 :=
-      mkClause "volumediscount"
-             dummy_location
-               (mkLambda (("request"%string, mk_type dummy_location (ErgoTypeClassRef default_request_type))::nil)
-                         (mk_type dummy_location ErgoTypeAny)
-                         None
-                         None
-                         (mk_stmt
-                            dummy_location
-                            (SReturn
-                               (mk_expr
-                                  dummy_location
-                                  (ECallFun "addFee"
-                                            (mk_expr dummy_location (EConst (dfloat float_zero))::nil)))))).
-    Definition co1 : ergo_contract :=
+    Definition f1 : laergo_function :=
+      mkFunc dummy_location
+             "addFee"%string
+             (mkErgoTypeSignature
+                dummy_location
+                (("rate"%string, ErgoTypeDouble dummy_location)::nil)
+                (ErgoTypeAny dummy_location)
+                None
+                None)
+             (SReturn dummy_location (EConst dummy_location (dfloat float_one))).
+    Definition cl1 : laergo_clause :=
+      mkClause dummy_location
+               "volumediscount"%string
+               (mkErgoTypeSignature
+                  dummy_location
+                  (("request"%string, ErgoTypeClassRef dummy_location default_request_absolute_name)::nil)
+                  (ErgoTypeAny dummy_location)
+                  None
+                  None)
+               (SReturn
+                  dummy_location
+                  (ECallFun dummy_location "addFee"
+                            (EConst dummy_location (dfloat float_zero)::nil))).
+    Definition co1 : laergo_contract :=
       mkContract
-        "VolumeDiscount"
         dummy_location
-        (mk_type dummy_location
-                 (ErgoTypeClassRef (AbsoluteRef "TemplateModel"%string)))
+        "VolumeDiscount"%string
+        (ErgoTypeClassRef dummy_location "TemplateModel"%string)
         None
         (cl1::nil).
 
-    Definition dl : list ergo_declaration :=
-      ((mk_decl dummy_location (DFunc f1))
-         :: (mk_decl dummy_location (DContract co1))::nil).
+    Definition dl : list laergo_declaration :=
+      (DFunc dummy_location f1)
+        :: (DContract dummy_location co1)
+        :: nil.
 
-    (* Eval vm_compute in (declarations_calculus dl). *)
+    (* Compute (declarations_calculus dl). *)
   End Examples.
 
   (** Translate a module to a module+calculus *)
-  Definition module_to_calculus (p:ergo_module) : ergoc_module :=
+  Definition ergo_module_to_calculus (p:laergo_module) : ergoc_module :=
     mkModuleC
+      p.(module_annot)
       p.(module_namespace)
-      p.(module_location)
       (declarations_calculus p.(module_declarations)).
+
+  Definition ergo_modules_to_calculus (pl:list laergo_module) : list ergoc_module :=
+    map ergo_module_to_calculus pl.
 
 End ErgotoErgoCalculus.
 

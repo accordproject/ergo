@@ -14,6 +14,7 @@
 
 open Util
 open ErgoUtil
+open ErgoComp.ErgoCompiler
 
 type lang =
   | Ergo
@@ -55,7 +56,7 @@ type global_config = {
   mutable jconf_source : lang;
   mutable jconf_target : lang;
   mutable jconf_cto_files : string list;
-  mutable jconf_ctos : ErgoComp.cto_package list;
+  mutable jconf_ctos : cto_package list;
 }
 
 let default_config () = {

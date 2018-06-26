@@ -26,6 +26,7 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.Ergo.Lang.ErgoNameResolve.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
@@ -33,13 +34,17 @@ Require Import ErgoSpec.Translation.ErgoCalculustoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 
 Section ErgotoJavaScript.
+
   Definition ergo_module_to_javascript
              (ctos:list cto_package)
-             (p:ergo_module) : eresult javascript :=
-    let p := ergo_module_expand p in
-    let pc := elift module_to_calculus p in
-    let etypes := map cto_package_to_ergo_type_module ctos in
-    let pn := eolift (module_to_nnrc etypes) pc in
+             (p:lrergo_module) : eresult javascript :=
+    let mctos := map cto_package_to_ergo_module ctos in
+    let nsctxt := namespace_ctxt_of_ergo_modules (mctos ++ (p::nil)) in
+    let rctos := resolve_ergo_all_modules nsctxt mctos in
+    let p := resolve_ergo_single_module nsctxt p in
+    let p := eolift expand_ergo_module p in
+    let pc := elift ergo_module_to_calculus p in
+    let pn := eolift (fun rctos => eolift (ergoc_module_to_nnrc rctos) pc) rctos in
     elift nnrc_module_to_javascript_top pn.
 
 End ErgotoJavaScript.

@@ -16,7 +16,7 @@
 
 const Fs = require('fs');
 const Path = require('path');
-const Engine=require('./ergo-core.js');
+const Compiler=require('./ergo-core.js');
 const CTOParser = require('composer-common/lib/introspect/parser');
 
 const HyperledgerCTO = Path.join(__dirname,'..','models','org.hyperledger.composer.system.cto');
@@ -53,6 +53,26 @@ class Ergo {
     }
 
     /**
+     * Contract call name
+     *
+     * @param {string} contractName name of the contract
+     * @returns {string} name of the JavaScript class
+     */
+    static contractCallName(contractName) {
+        return Compiler.call({ 'name' : contractName });
+    }
+
+    /**
+     * Contract call name promise
+     *
+     * @param {string} contractName name of the contract
+     * @returns {string} a promise to the name of the compiled JavaScript class
+     */
+    static contractCallNamePromise(contractName) {
+        return Promise.resolve(this.contractCallName(contractName));
+    }
+
+    /**
      * Compile Ergo to JavaScript
      *
      * @param {string} ergoText text for Ergo code
@@ -74,7 +94,7 @@ class Ergo {
             config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctos[i])));
         }
         // Call compiler
-        const compiled = Engine.compile(config);
+        const compiled = Compiler.compile(config);
         if (compiled.code) {
             return { 'error' : compiled.error };
         } else {

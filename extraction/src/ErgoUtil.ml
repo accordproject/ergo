@@ -104,13 +104,10 @@ let cto_import_decl_of_import_namespace ns =
   | Some i ->
       let namespace = char_list_of_string (String.sub ns 0 i) in
       let criteria_str = String.sub ns (i+1) (String.length ns - (i+1)) in
-      let criteria =
-        begin match criteria_str with
-        | "*" -> ImportAll
-        | _ -> ImportName (char_list_of_string criteria_str)
-        end
-      in
-      (namespace, criteria)
+      begin match criteria_str with
+      | "*" -> ImportAll (dummy_location, namespace)
+      | _ -> ImportName (dummy_location,namespace,char_list_of_string criteria_str)
+      end
   end
 
 (** Additional utility functions *)
@@ -125,4 +122,10 @@ let wrap_jerrors f e =
   | Failure e -> ergo_raise e
   | Success x -> f x
   end
+
+(** Ergo call *)
+
+let ergo_call contract_name =
+  Util.string_of_char_list
+    (ErgoCompiler.javascript_identifier_sanitizer (Util.char_list_of_string contract_name))
 

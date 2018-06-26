@@ -50,7 +50,7 @@ class ErgoEngine {
         const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': Moment() };
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
-        const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
+        const contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
         const clauseCall = 'contract.main(params);'; // Create the clause call
         const result = vm.run(contract + clauseCall); // Call the logic
         if (result.hasOwnProperty('left')) {
@@ -82,7 +82,7 @@ class ErgoEngine {
         const params = { 'contract': contractJson, 'request': requestJson, 'state': {}, 'emit': [], 'now': Moment() };
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
-        const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
+        const contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
         const clauseCall = 'contract.init(params);'; // Create the clause call
         const result = vm.run(contract + clauseCall); // Call the logic
         if (result.hasOwnProperty('left')) {

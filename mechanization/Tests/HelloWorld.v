@@ -34,28 +34,29 @@ contract HelloWorld over TemplateModel {
 }
 *)
 
-  Definition cl1 : ergo_clause :=
-    mkClause "helloworld"
-             dummy_location
-             (mkLambda
-                (("request", mk_type dummy_location (ErgoTypeClassRef (AbsoluteRef "Request")))::nil)
-                (mk_type dummy_location (ErgoTypeClassRef (AbsoluteRef "Response")))
+  Definition cl1 : lrergo_clause :=
+    mkClause dummy_location
+             "helloworld"
+             (mkErgoTypeSignature
+                dummy_location
+                (("request", ErgoTypeClassRef dummy_location (None,"Request"))::nil)
+                (ErgoTypeClassRef dummy_location (None,"Response"))
                 None
-                None
-                (mk_stmt dummy_location (SReturn (mk_expr dummy_location (EVar "request"))))).
+                None)
+             (SReturn dummy_location (EVar dummy_location "request")).
 
-  Definition c1 : ergo_contract :=
-    mkContract "HelloWorld"
-               dummy_location
-               (mk_type dummy_location (ErgoTypeClassRef (AbsoluteRef "TemplateModel")))
+  Definition c1 : lrergo_contract :=
+    mkContract dummy_location
+               "HelloWorld"
+               (ErgoTypeClassRef dummy_location (None,"TemplateModel"))
                None
                (cl1::nil).
   
-  Definition p1 : ergo_module :=
-    mkModule "org.accordproject.helloworld"
-             dummy_location
+  Definition p1 : lrergo_module :=
+    mkModule dummy_location
+             "org.accordproject.helloworld"
              nil
-             (mk_decl dummy_location (DContract c1)::nil).
+             (DContract dummy_location c1::nil).
 
   (* Eval vm_compute in (ErgoCompiler.ergo_module_to_javascript nil p1). *)
 End HelloWorld.

@@ -51,7 +51,7 @@ let base_type_of_decl loc d =
       | "Long" -> ErgoCompiler.cto_long loc
       | "DateTime" -> ErgoCompiler.cto_dateTime loc
       | s -> ErgoCompiler.cto_class_ref loc
-               (RelativeRef (None,(char_list_of_string s)))
+               (None,(char_list_of_string s))
       end
   end
 
@@ -111,7 +111,7 @@ let cto_declaration_of_defn d =
     end
   in
   { cto_declaration_name = char_list_of_string decl_class;
-    cto_declaration_location = loc;
+    cto_declaration_annot = loc;
     cto_declaration_type = decl_type; }
 
 let cto_declarations_of_body dl =
@@ -120,12 +120,12 @@ let cto_declarations_of_body dl =
 let cto_import_of_import i =
   ErgoUtil.cto_import_decl_of_import_namespace i.cto_import_namespace
 
-let cto_import (m:model) : cto_package =
+let cto_import (m:model) : ErgoCompiler.cto_package =
   let namespace = char_list_of_string m.cto_namespace in
   let imports = List.map cto_import_of_import m.cto_imports in
   let decls = cto_declarations_of_body m.cto_body in
   { cto_package_namespace = namespace;
-    cto_package_location = dummy_location; (* XXX Not in JSON *)
+    cto_package_annot = dummy_location; (* XXX Not in JSON *)
     cto_package_imports = imports;
     cto_package_declarations = decls; }
 

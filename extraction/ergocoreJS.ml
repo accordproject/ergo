@@ -116,8 +116,12 @@ let ergo_compile input =
 let ergo_version unit =
   ErgoUtil.ergo_version
 
+let ergo_call contract =
+  Js.string (ErgoUtil.ergo_call (Js.to_string contract##.name))
+
 let _ =
   Js.export_all (object%js
+    val call = Js.wrap_callback ergo_call
     val compile  = Js.wrap_callback ergo_compile
     val version = Js.wrap_callback ergo_version
   end)

@@ -19,6 +19,7 @@
 Require Import String.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
 
 Section ErgoNNRC.
 
@@ -26,11 +27,12 @@ Section ErgoNNRC.
 
     (** Expression *)
     Definition nnrc_expr := ErgoCodeGen.nnrc_expr.
+    Definition nnrc_type := ErgoCalculus.ergoc_type. (* XXX To be changed to Qcert type *)
 
     Record lambdan :=
       mkLambdaN
-        { lambdan_params: list (string * ergo_type);
-          lambdan_output : ergo_type;
+        { lambdan_params: list (string * ergoc_type);
+          lambdan_output : ergoc_type;
           lambdan_body : nnrc_expr; }.
 
     (** Function *)

@@ -23,174 +23,205 @@ Require Import EquivDec.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Common.Utils.EImport.
+Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section Ergo.
-
-  (** Expression *)
-
-  Inductive ergo_expr_desc :=
-  | EThisContract : ergo_expr_desc (**r this contract *)
-  | EThisClause : ergo_expr_desc (**r this clause *)
-  | EThisState : ergo_expr_desc (**r this state *)
-  | EVar : string -> ergo_expr_desc (**r variable *)
-  | EConst : ErgoData.data -> ergo_expr_desc (**r constant *)
-  | EArray : list ergo_expr -> ergo_expr_desc (**r array constructor *) 
-  | EUnaryOp : ErgoOps.Unary.op -> ergo_expr -> ergo_expr_desc (**r unary operator *)
-  | EBinaryOp : ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr_desc (**r binary operator *)
-  | EIf : ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr_desc (**r conditional *)
-  | ELet : string -> option ergo_type -> ergo_expr -> ergo_expr -> ergo_expr_desc (**r local variable binding *)
-  | ERecord : list (string * ergo_expr) -> ergo_expr_desc (**r create a new record *)
-  | ENew : name_ref -> list (string * ergo_expr) -> ergo_expr_desc (**r create a new concept/object *)
-  | ECallFun : string -> list ergo_expr -> ergo_expr_desc (**r function call *)
-  | EMatch : ergo_expr -> list (ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr_desc (**r match-case *)
-  | EForeach : list (string * ergo_expr)
-               -> option ergo_expr -> ergo_expr -> ergo_expr_desc (**r foreach with optional where *)
-  with ergo_expr :=
-  | EExpr : location -> ergo_expr_desc -> ergo_expr.
-
-  Definition expr_loc (e:ergo_expr) : location :=
-    match e with
-    | EExpr loc _ => loc
-    end.
-  Definition expr_desc (e:ergo_expr) : ergo_expr_desc :=
-    match e with
-    | EExpr _ ed => ed
-   end.
-  Definition mk_expr (loc:location) (ed:ergo_expr_desc) : ergo_expr :=
-    EExpr loc ed.
+  Section Ast.
+    Context {A:Set}. (* Type for annotations *)
+    Context {N:Set}. (* Type for names *)
   
-  (** Statement *)
-  Inductive ergo_stmt_desc :=
-  | SReturn : ergo_expr -> ergo_stmt_desc
-  | SFunReturn : ergo_expr -> ergo_stmt_desc
-  | SThrow : ergo_expr -> ergo_stmt_desc
-  | SCallClause : string -> list ergo_expr -> ergo_stmt_desc (**r clause call *)
-  | SSetState : ergo_expr -> ergo_stmt -> ergo_stmt_desc
-  | SEmit : ergo_expr -> ergo_stmt -> ergo_stmt_desc
-  | SLet : string -> option ergo_type -> ergo_expr -> ergo_stmt -> ergo_stmt_desc (**r local variable binding *)
-  | SIf : ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt_desc
-  | SEnforce : ergo_expr -> option ergo_stmt -> ergo_stmt -> ergo_stmt_desc (**r enforce *)
-  | SMatch : ergo_expr -> (list (ergo_pattern * ergo_stmt)) -> ergo_stmt -> ergo_stmt_desc
-  with ergo_stmt :=
-  | EStmt : location -> ergo_stmt_desc -> ergo_stmt.
+    (** Expression *)
 
-  Definition stmt_loc (e:ergo_stmt) : location :=
-    match e with
-    | EStmt loc _ => loc
-    end.
-  Definition stmt_desc (e:ergo_stmt) : ergo_stmt_desc :=
-    match e with
-    | EStmt _ ed => ed
-    end.
-  Definition mk_stmt (loc:location) (ed:ergo_stmt_desc) : ergo_stmt :=
-    EStmt loc ed.
-  
-  (** Function *)
-  Record lambda :=
-    mkLambda
-      { lambda_params: list (string * ergo_type);
-        lambda_output : ergo_type;
-        lambda_throws : option ergo_type;
-        lambda_emits : option ergo_type;
-        lambda_body : ergo_stmt; }.
+    Inductive ergo_expr :=
+    | EThisContract : A -> ergo_expr (**r this contract *)
+    | EThisClause : A -> ergo_expr (**r this clause *)
+    | EThisState : A -> ergo_expr (**r this state *)
+    | EVar : A -> string -> ergo_expr (**r variable *)
+    | EConst : A -> ErgoData.data -> ergo_expr (**r constant *)
+    | EArray : A -> list ergo_expr -> ergo_expr (**r array constructor *) 
+    | EUnaryOp : A -> ErgoOps.Unary.op -> ergo_expr -> ergo_expr (**r unary operator *)
+    | EBinaryOp : A -> ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr (**r binary operator *)
+    | EIf : A -> ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr (**r conditional *)
+    | ELet : A -> string -> option (@ergo_type A N) -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
+    | ERecord : A -> list (string * ergo_expr) -> ergo_expr (**r create a new record *)
+    | ENew : A -> N -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
+    | ECallFun : A -> string -> list ergo_expr -> ergo_expr (**r function call *)
+    | EMatch : A -> ergo_expr -> list (ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
+    | EForeach : A -> list (string * ergo_expr)
+                 -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
+    .
 
-  Record ergo_function :=
-    mkFunc
-      { function_name : string;
-        function_location : location;
-        function_lambda : lambda; }.
+    Definition expr_annot (e:ergo_expr) : A :=
+      match e with
+      | EThisContract a => a
+      | EThisClause a => a
+      | EThisState a => a
+      | EVar a _ => a
+      | EConst a _ => a
+      | EArray a _ => a
+      | EUnaryOp a _ _ => a
+      | EBinaryOp a _ _ _ => a
+      | EIf a _ _ _ => a
+      | ELet a _ _ _ _ => a
+      | ERecord a _ => a
+      | ENew a _ _ => a
+      | ECallFun a _ _ => a
+      | EMatch a _ _ _ => a
+      | EForeach a _ _ _ => a
+      end.
+    
+    (** Statement *)
+    Inductive ergo_stmt :=
+    | SReturn : A -> ergo_expr -> ergo_stmt
+    | SFunReturn : A -> ergo_expr -> ergo_stmt
+    | SThrow : A -> ergo_expr -> ergo_stmt
+    | SCallClause : A -> string -> list ergo_expr -> ergo_stmt (**r clause call *)
+    | SSetState : A -> ergo_expr -> ergo_stmt -> ergo_stmt
+    | SEmit : A -> ergo_expr -> ergo_stmt -> ergo_stmt
+    | SLet : A -> string -> option (@ergo_type A N) -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable *)
+    | SIf : A -> ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt
+    | SEnforce : A -> ergo_expr -> option ergo_stmt -> ergo_stmt -> ergo_stmt (**r enforce *)
+    | SMatch : A -> ergo_expr -> (list (ergo_pattern * ergo_stmt)) -> ergo_stmt -> ergo_stmt
+    .
+
+    Definition stmt_annot (e:ergo_stmt) : A :=
+      match e with
+      | SReturn a _ => a
+      | SFunReturn a _ => a
+      | SThrow a _ => a
+      | SCallClause a _ _ => a
+      | SSetState a _ _ => a
+      | SEmit a _ _ => a
+      | SLet a _ _ _ _ => a
+      | SIf a _ _ _ => a
+      | SEnforce a _ _ _ => a
+      | SMatch a _ _ _ => a
+      end.
+    
+    (** Function *)
+    Record ergo_function :=
+      mkFunc
+        { function_annot : A;
+          function_name : local_name;
+          function_sig : @ergo_type_signature A N;
+          function_body : ergo_stmt; }.
 
     (** Clause *)
     Record ergo_clause :=
       mkClause
-        { clause_name : string;
-          clause_location : location;
-          clause_lambda : lambda; }.
+        { clause_annot : A;
+          clause_name : local_name;
+          clause_sig : @ergo_type_signature A N;
+          clause_body : ergo_stmt; }.
 
     (** Contract *)
     Record ergo_contract :=
       mkContract
-        { contract_name : string;
-          contract_location : location;
-          contract_template : ergo_type;
-          contract_state : option ergo_type;
+        { contract_annot : A;
+          contract_name : local_name;
+          contract_template : (@ergo_type A N);
+          contract_state : option (@ergo_type A N);
           contract_clauses : list ergo_clause; }.
 
     (** Declaration *)
-    Inductive ergo_declaration_desc :=
-    | DType : ergo_type_declaration -> ergo_declaration_desc
-    | DStmt : ergo_stmt -> ergo_declaration_desc
-    | DConstant : string -> ergo_expr -> ergo_declaration_desc
-    | DFunc : ergo_function -> ergo_declaration_desc
-    | DContract : ergo_contract -> ergo_declaration_desc
-    with ergo_declaration :=
-    | EDecl : location -> ergo_declaration_desc -> ergo_declaration.
- 
-  Definition decl_loc (d:ergo_declaration) : location :=
-    match d with
-    | EDecl loc _ => loc
-    end.
-  Definition decl_desc (d:ergo_declaration) : ergo_declaration_desc :=
-    match d with
-    | EDecl _ dd => dd
-   end.
-  Definition mk_decl (loc:location) (dd:ergo_declaration_desc) : ergo_declaration :=
-    EDecl loc dd.
-  
-  (** Module. *)
-  Record ergo_module :=
-    mkModule
-      { module_namespace : string;
-        module_location : location;
-        module_imports : list import_decl;
-        module_declarations : list ergo_declaration; }.
+    Inductive ergo_declaration :=
+    | DType : A -> @ergo_type_declaration A N -> ergo_declaration
+    | DStmt : A -> ergo_stmt -> ergo_declaration
+    | DConstant : A -> local_name -> ergo_expr -> ergo_declaration
+    | DFunc : A -> ergo_function -> ergo_declaration
+    | DContract : A -> ergo_contract -> ergo_declaration
+    .
+    
+    Definition decl_annot (d:ergo_declaration) : A :=
+      match d with
+      | DType a _ => a
+      | DStmt a _ => a
+      | DConstant a _ _ => a
+      | DFunc a _ => a
+      | DContract a _ => a
+      end.
+
+    (** Module. *)
+    Record ergo_module :=
+      mkModule
+        { module_annot : A;
+          module_namespace : namespace_name;
+          module_imports : list (@import_decl A);
+          module_declarations : list ergo_declaration; }.
+
+  End Ast.
+
+  Definition rergo_expr {A} := @ergo_expr A relative_name.
+  Definition rergo_stmt {A} := @ergo_stmt A relative_name.
+  Definition rergo_function {A} := @ergo_function A relative_name.
+  Definition rergo_clause {A} := @ergo_clause A relative_name.
+  Definition rergo_contract {A} := @ergo_contract A relative_name.
+  Definition rergo_declaration {A} := @ergo_declaration A relative_name.
+  Definition rergo_module {A} := @ergo_module A relative_name.
+
+  Definition aergo_expr {A} := @ergo_expr A absolute_name.
+  Definition aergo_stmt {A} := @ergo_stmt A absolute_name.
+  Definition arergo_function {A} := @ergo_function A absolute_name.
+  Definition arergo_clause {A} := @ergo_clause A absolute_name.
+  Definition arergo_contract {A} := @ergo_contract A absolute_name.
+  Definition arergo_declaration {A} := @ergo_declaration A absolute_name.
+  Definition arergo_module {A} := @ergo_module A absolute_name.
+
+  Definition lrergo_expr := @ergo_expr location relative_name.
+  Definition lrergo_stmt := @ergo_stmt location relative_name.
+  Definition lrergo_function := @ergo_function location relative_name.
+  Definition lrergo_clause := @ergo_clause location relative_name.
+  Definition lrergo_contract := @ergo_contract location relative_name.
+  Definition lrergo_declaration := @ergo_declaration location relative_name.
+  Definition lrergo_module := @ergo_module location relative_name.
+
+  Definition laergo_expr := @ergo_expr location absolute_name.
+  Definition laergo_stmt := @ergo_stmt location absolute_name.
+  Definition laergo_function := @ergo_function location absolute_name.
+  Definition laergo_clause := @ergo_clause location absolute_name.
+  Definition laergo_contract := @ergo_contract location absolute_name.
+  Definition laergo_declaration := @ergo_declaration location absolute_name.
+  Definition laergo_module := @ergo_module location absolute_name.
 
   Section Lookup.
-    Fixpoint lookup_clauses_signatures (dl:list ergo_clause) : list ergo_type_signature :=
+    Fixpoint lookup_clauses_signatures (dl:list laergo_clause) : list (string * ergo_type_signature) :=
       match dl with
       | nil => nil
       | cl :: dl' =>
-        (mkErgoTypeSignature
-           cl.(clause_name)
-           cl.(clause_location)
-           cl.(clause_lambda).(lambda_params)
-           cl.(clause_lambda).(lambda_output)
-           cl.(clause_lambda).(lambda_throws)
-           cl.(clause_lambda).(lambda_emits)) :: lookup_clauses_signatures dl'
+        (cl.(clause_name),cl.(clause_sig)) :: lookup_clauses_signatures dl'
       end.
-    
-    Definition lookup_contract_signatures (c:ergo_contract) : list ergo_type_signature :=
+      
+    Definition lookup_contract_signatures (c:ergo_contract) : list (string * ergo_type_signature) :=
       lookup_clauses_signatures c.(contract_clauses).
 
-    Definition contract_of_declaration (d:ergo_declaration) : option ergo_contract :=
-      match decl_desc d with
-      | DContract c => Some c
+    Definition contract_of_declaration (d:laergo_declaration) : option laergo_contract :=
+      match d with
+      | DContract _ c => Some c
       | _ => None
       end.
 
-    Definition lookup_contracts_in_declarations (dl:list ergo_declaration) : list ergo_contract :=
+    Definition lookup_contracts_in_declarations (dl:list laergo_declaration) : list laergo_contract :=
       filter_some contract_of_declaration dl.
 
-    Definition lookup_single_contract_in_declarations (loc:location) (dl:list ergo_declaration) : eresult ergo_contract :=
+    Definition lookup_single_contract_in_declarations
+               (loc:location) (dl:list laergo_declaration) : eresult laergo_contract :=
       match lookup_contracts_in_declarations dl with
       | nil => should_have_one_contract_error loc
       | c :: nil => esuccess c
       | _ :: _ => should_have_one_contract_error loc
       end.
-      
-    Definition lookup_single_contract (p:ergo_module) : eresult ergo_contract :=
-      lookup_single_contract_in_declarations p.(module_location) p.(module_declarations).
 
-    Definition lookup_single_contract_with_state (p:ergo_module) : eresult (ergo_contract * string) :=
+    Definition lookup_single_contract (p:laergo_module) : eresult laergo_contract :=
+      lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations).
+
+    Definition lookup_single_contract_with_state (p:laergo_module) : eresult (laergo_contract * string) :=
       eolift (fun ec =>
-               elift (fun ecstate =>
-                        (ec, ecstate)) (lift_default_state_name ec.(contract_state)))
-            (lookup_single_contract_in_declarations p.(module_location) p.(module_declarations)).
-    
+                elift (fun ecstate =>
+                         (ec, ecstate)) (lift_default_state_name ec.(contract_state)))
+             (lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations)).
   End Lookup.
 
 End Ergo.

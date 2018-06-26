@@ -20,53 +20,69 @@ Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EImport.
+Require Import ErgoSpec.Common.Utils.EAstUtil.
 
 Section CTO.
+  Section Ast.
+    Context {A:Set}. (* Type for annotations *)
+    Context {N:Set}. (* Type for names *)
+  
+    Inductive cto_type :=
+    | CTOBoolean : A -> cto_type                   (**r bool atomic type *)
+    | CTOString : A -> cto_type                    (**r string atomic type *)
+    | CTODouble : A -> cto_type                    (**r double atomic type *)
+    | CTOLong : A -> cto_type                      (**r long atomic type *)
+    | CTOInteger : A -> cto_type                   (**r integer atomic type *)
+    | CTODateTime : A -> cto_type                  (**r date and time atomic type *)
+    | CTOClassRef : A -> N -> cto_type             (**r relative class reference *)
+    | CTOOption : A -> cto_type -> cto_type        (**r optional type *)
+    | CTOArray : A -> cto_type -> cto_type         (**r array type *)
+    .
 
-  Inductive cto_type_desc :=
-  | CTOBoolean : cto_type_desc                          (**r bool atomic type *)
-  | CTOString : cto_type_desc                           (**r string atomic type *)
-  | CTODouble : cto_type_desc                           (**r double atomic type *)
-  | CTOLong : cto_type_desc                             (**r long atomic type *)
-  | CTOInteger : cto_type_desc                          (**r integer atomic type *)
-  | CTODateTime : cto_type_desc                         (**r date and time atomic type *)
-  | CTOClassRef : name_ref -> cto_type_desc             (**r relative class reference *)
-  | CTOOption : cto_type -> cto_type_desc               (**r optional type *)
-  | CTOArray : cto_type -> cto_type_desc                (**r array type *)
-  with cto_type :=
-  | CTOType : location -> cto_type_desc -> cto_type.
+    Definition cto_annot (ct:cto_type) : A :=
+      match ct with
+      | CTOBoolean a => a
+      | CTOString a => a
+      | CTODouble a => a
+      | CTOLong a => a
+      | CTOInteger a => a
+      | CTODateTime a => a
+      | CTOClassRef a _ => a
+      | CTOOption a _ => a
+      | CTOArray a _ => a
+      end.
 
-  Definition cto_loc (ct:cto_type) : location :=
-    match ct with
-    | CTOType loc _ => loc
-    end.
-  Definition cto_desc (ct:cto_type) : cto_type_desc :=
-    match ct with
-    | CTOType _ ctd => ctd
-   end.
-  Definition mk_cto (loc:location) (ctd:cto_type_desc) : cto_type :=
-    CTOType loc ctd.
+    Inductive cto_declaration_desc :=
+    | CTOEnum : list string -> cto_declaration_desc
+    | CTOTransaction : @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOConcept : @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOEvent : @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOAsset : @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOParticipant : @extends N -> list (string * cto_type) -> cto_declaration_desc.
 
-  Inductive cto_declaration_desc :=
-  | CTOEnum : list string -> cto_declaration_desc
-  | CTOTransaction : option name_ref -> list (string * cto_type) -> cto_declaration_desc
-  | CTOConcept : option name_ref -> list (string * cto_type) -> cto_declaration_desc
-  | CTOEvent : option name_ref -> list (string * cto_type) -> cto_declaration_desc
-  | CTOAsset : option name_ref -> list (string * cto_type) -> cto_declaration_desc
-  | CTOParticipant : option name_ref -> list (string * cto_type) -> cto_declaration_desc.
+    Record cto_declaration :=
+      mkCTODeclaration
+        { cto_declaration_annot : A;
+          cto_declaration_name : local_name;
+          cto_declaration_type : cto_declaration_desc; }.
 
-  Record cto_declaration :=
-    mkCTODeclaration
-      { cto_declaration_name : local_name;
-        cto_declaration_location : location;
-        cto_declaration_type : cto_declaration_desc; }.
+    Record cto_package :=
+      mkCTOPackage
+        { cto_package_annot : A;
+          cto_package_namespace : namespace_name;
+          cto_package_imports : list (@import_decl A);
+          cto_package_declarations : list cto_declaration; }.
+  End Ast.
 
-  Record cto_package :=
-    mkCTOPackage
-      { cto_package_namespace : namespace_name;
-        cto_package_location : location;
-        cto_package_imports : list import_decl;
-        cto_package_declarations : list cto_declaration; }.
+  Definition rcto_type {A:Set} : Set := @cto_type A relative_name.
+  Definition rcto_declaration_desc {A:Set} : Set := @cto_declaration_desc A relative_name.
+  Definition rcto_declaration {A:Set} : Set := @cto_declaration A relative_name.
+  Definition rcto_package {A:Set} : Set := @cto_package A relative_name.
+  
+  Definition lrcto_type : Set := @cto_type location relative_name.
+  Definition lrcto_declaration_desc : Set := @cto_declaration_desc location relative_name.
+  Definition lrcto_declaration : Set := @cto_declaration location relative_name.
+  Definition lrcto_package : Set := @cto_package location relative_name.
 
 End CTO.
+

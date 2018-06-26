@@ -12,6 +12,8 @@
  * limitations under the License.
  *)
 
-val cto_import: Cto_j.model -> ErgoComp.cto_package
+open ErgoComp.ErgoCompiler
+
+val cto_import: Cto_j.model -> cto_package
 
 

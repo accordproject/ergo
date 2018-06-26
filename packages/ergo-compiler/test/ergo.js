@@ -27,6 +27,14 @@ describe('ergo-compiler', () => {
 
     afterEach(() => {});
 
+    describe('#callname', function () {
+        it('should sanitize call names for contracts', async function () {
+            const contractName = 'org.accordproject.volumediscount.VolumeDiscount';
+            const result = await Ergo.contractCallNamePromise(contractName);
+            result.should.equal('orgXaccordprojectXvolumediscountXVolumeDiscount');
+        });
+    });
+
     describe('#parsefail', function () {
         it('should fail when Ergo does not parse', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'logic.ergo'), 'utf8');

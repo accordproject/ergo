@@ -27,40 +27,41 @@ Section ErgoCalculus.
   Section Syntax.
 
     (** Expression *)
-    Definition ergoc_expr := ergo_expr.
+    Definition ergoc_expr := laergo_expr.
+    Definition ergoc_type := laergo_type.
 
     Record lambdac :=
       mkLambdaC
-        { lambdac_params: list (string * ergo_type);
-          lambdac_output : ergo_type;
+        { lambdac_params: list (string * ergoc_type);
+          lambdac_output : ergoc_type;
           lambdac_body : ergoc_expr; }.
 
     (** Function *)
     Record ergoc_function :=
       mkFuncC
-        { functionc_name : string;
-          functionc_location : location;
+        { functionc_annot : location;
+          functionc_name : string;
           functionc_lambda : lambdac; }.
-    
+
     (** Contract *)
     Record ergoc_contract :=
       mkContractC
-        { contractc_name : string;
-          contractc_location : location;
+        { contractc_annot : location;
+          contractc_name : string;
           contractc_clauses : list ergoc_function; }.
 
     (** Declaration *)
     Inductive ergoc_declaration :=
-    | DCExpr : ergoc_expr -> ergoc_declaration
-    | DCConstant : string -> ergoc_expr -> ergoc_declaration
-    | DCFunc : ergoc_function -> ergoc_declaration
-    | DCContract : ergoc_contract -> ergoc_declaration.
+    | DCExpr : location -> ergoc_expr -> ergoc_declaration
+    | DCConstant : location -> string -> ergoc_expr -> ergoc_declaration
+    | DCFunc : location -> ergoc_function -> ergoc_declaration
+    | DCContract : location -> ergoc_contract -> ergoc_declaration.
 
     (** Module. *)
     Record ergoc_module :=
       mkModuleC
-        { modulec_namespace : string;
-          modulec_location : location;
+        { modulec_annot : location;
+          modulec_namespace : string;
           modulec_declarations : list ergoc_declaration; }.
 
   End Syntax.

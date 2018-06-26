@@ -21,25 +21,19 @@ Section ENames.
     Definition local_name : Set := string.
     Definition namespace_name : Set := string.
     Definition namespace_prefix : Set := option namespace_name.
-    Definition absolute_name := string.
 
-    Inductive name_ref : Set :=
-    | RelativeRef : namespace_prefix -> local_name -> name_ref
-    | AbsoluteRef : absolute_name -> name_ref.
+    Definition relative_name : Set := namespace_prefix * local_name.
+    Definition absolute_name : Set := string.
 
     Definition absolute_name_of_local_name (ns: namespace_name) (ln: local_name) : absolute_name :=
       ns ++ "." ++ ln.
 
-    Definition absolute_name_of_name_ref (local_ns: namespace_name) (nr: name_ref) : absolute_name :=
-      match nr with
-      | RelativeRef None ln => absolute_name_of_local_name local_ns ln
-      | RelativeRef (Some ns) ln => absolute_name_of_local_name ns ln
-      | AbsoluteRef an => an
+    Definition absolute_name_of_relative_name (local_ns: namespace_name) (rn: relative_name) : absolute_name :=
+      match rn with
+      | (None,ln) => absolute_name_of_local_name local_ns ln
+      | (Some ns,ln) => absolute_name_of_local_name ns ln
       end.
 
-    Definition absolute_ref_of_name_ref (local_ns: namespace_name) (nr: name_ref) : name_ref :=
-      AbsoluteRef (absolute_name_of_name_ref local_ns nr).
-    
   End ScopedNames.
 
   Section ReservedNames.
@@ -58,17 +52,12 @@ Section ENames.
   End ReservedNames.
   
   Section TypeNames.
-    Definition default_request_name : string := "org.accordproject.cicero.runtime.Request".
-    Definition default_response_name : string := "org.accordproject.cicero.runtime.Response".
-    Definition default_emits_name : string := "org.hyperledger.composer.system.Event".
-    Definition default_state_name : string := "org.accordproject.cicero.contract.AccordContractState".
-    Definition default_throws_name : string := "org.accordproject.cicero.contract.ErrorResponse".
+    Definition default_request_absolute_name : string := "org.accordproject.cicero.runtime.Request".
+    Definition default_response_absolute_name : string := "org.accordproject.cicero.runtime.Response".
+    Definition default_emits_absolute_name : string := "org.hyperledger.composer.system.Event".
+    Definition default_state_absolute_name : string := "org.accordproject.cicero.contract.AccordContractState".
+    Definition default_throws_absolute_name : string := "org.accordproject.cicero.contract.ErrorResponse".
 
-    Definition default_request_type := AbsoluteRef default_request_name.
-    Definition default_response_type := AbsoluteRef default_response_name.
-    Definition default_emits_type := AbsoluteRef default_emits_name.
-    Definition default_state_type := AbsoluteRef default_state_name.
-    Definition default_throws_type := AbsoluteRef default_throws_name.
   End TypeNames.
 
   Section Misc.

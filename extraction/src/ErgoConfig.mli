@@ -12,6 +12,8 @@
  * limitations under the License.
  *)
 
+open ErgoComp.ErgoCompiler
+
 type lang =
   | Ergo
   | JavaScript
@@ -28,7 +30,7 @@ type global_config = {
   mutable jconf_source : lang;
   mutable jconf_target : lang;
   mutable jconf_cto_files : string list;
-  mutable jconf_ctos : ErgoComp.cto_package list;
+  mutable jconf_ctos : cto_package list;
 }
 
 val default_config : unit -> global_config
@@ -36,7 +38,7 @@ val default_config : unit -> global_config
 val get_source_lang : global_config -> lang
 val get_target_lang : global_config -> lang
 val get_cto_files : global_config -> string list
-val get_ctos : global_config -> ErgoComp.cto_package list
+val get_ctos : global_config -> cto_package list
 
 val set_source_lang : global_config -> string -> unit
 val set_target_lang : global_config -> string -> unit
