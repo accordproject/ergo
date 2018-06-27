@@ -145,8 +145,20 @@ Section ErgoEval.
       elift2 (fun v' b' => ELet n t v' b')
              (ergo_inline_expr ctx v)
              (ergo_inline_expr ctx b)
-    | ERecord rs => TODO
-    | ENew n rs => TODO
+    | ERecord rs =>
+      elift ERecord
+            (fold_left
+               (fun ls nr =>
+                  elift2 postpend ls
+                         (elift (fun x => (fst nr, x)) (ergo_inline_expr ctx (snd nr))))
+               rs (esuccess nil))
+    | ENew n rs =>
+      elift (ENew n)
+            (fold_left
+               (fun ls nr =>
+                  elift2 postpend ls
+                         (elift (fun x => (fst nr, x)) (ergo_inline_expr ctx (snd nr))))
+               rs (esuccess nil))
     | ECallFun fn args =>
       match lookup String.string_dec ctx.(ctx_function_env) fn with
       | Some fn' =>
@@ -196,8 +208,20 @@ Section ErgoEval.
       elift2 (fun v' b' => ELet n t v' b')
              (ergo_inline_globals ctx v)
              (ergo_inline_globals (ergo_ctx_update_local_env ctx n dunit) b)
-    | ERecord rs => TODO
-    | ENew n rs => TODO
+    | ERecord rs =>
+      elift ERecord
+            (fold_left
+               (fun ls nr =>
+                  elift2 postpend ls
+                         (elift (fun x => (fst nr, x)) (ergo_inline_globals ctx (snd nr))))
+               rs (esuccess nil))
+    | ENew n rs =>
+      elift (ENew n)
+            (fold_left
+               (fun ls nr =>
+                  elift2 postpend ls
+                         (elift (fun x => (fst nr, x)) (ergo_inline_globals ctx (snd nr))))
+               rs (esuccess nil))
     | ECallFun fn args =>
         elift (ECallFun fn)
               (fold_left
@@ -342,7 +366,7 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
 
   | EMatch e pes f => TODO
   | EForeach ls whr f => TODO
-  | ELiftError e1 e2 => TODO
+  | ELiftError e1 e2 => TODO (* This isn't a thing though so we're okay :) *)
   end.
 
 Fixpoint ergo_eval_stmt (ctx : ergo_context) (stmt : ergo_stmt) : eresult (ergo_context * ergo_data) :=
