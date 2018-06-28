@@ -98,23 +98,23 @@ Section ErgotoErgoCalculus.
     mkFuncC
       c.(clause_annot)
       c.(clause_name)
-      (mkLambdaC
+      (mkSigC
          ((this_contract, tem)
             ::(this_state, state_type)
             ::(this_emit, ErgoTypeArray loc emit_type)
             ::c.(clause_sig).(type_signature_params))
-         (mk_output_type loc success_type error_type)
-         (ergoc_expr_top loc (ergo_stmt_to_expr c.(clause_body)))).
+         (mk_output_type loc success_type error_type))
+      (lift (ergoc_expr_top loc) (lift ergo_stmt_to_expr c.(clause_body))).
 
   (** Translate a function to function+calculus *)
   Definition function_to_calculus (f:laergo_function) : ergoc_function :=
     mkFuncC
       f.(function_annot)
       f.(function_name)
-      (mkLambdaC
+      (mkSigC
          f.(function_sig).(type_signature_params)
-         f.(function_sig).(type_signature_output)
-         (ergo_stmt_to_expr f.(function_body))).
+         f.(function_sig).(type_signature_output))
+      (lift ergo_stmt_to_expr f.(function_body)).
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the comp_context *)
@@ -159,7 +159,7 @@ Section ErgotoErgoCalculus.
                 (ErgoTypeAny dummy_location)
                 None
                 None)
-             (SReturn dummy_location (EConst dummy_location (dfloat float_one))).
+             (Some (SReturn dummy_location (EConst dummy_location (dfloat float_one)))).
     Definition cl1 : laergo_clause :=
       mkClause dummy_location
                "volumediscount"%string
@@ -169,10 +169,10 @@ Section ErgotoErgoCalculus.
                   (ErgoTypeAny dummy_location)
                   None
                   None)
-               (SReturn
-                  dummy_location
-                  (ECallFun dummy_location "addFee"
-                            (EConst dummy_location (dfloat float_zero)::nil))).
+               (Some (SReturn
+                        dummy_location
+                        (ECallFun dummy_location "addFee"
+                                  (EConst dummy_location (dfloat float_zero)::nil)))).
     Definition co1 : laergo_contract :=
       mkContract
         dummy_location

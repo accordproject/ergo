@@ -15,8 +15,7 @@
 open Util
 open ErgoComp
 
-(* Ergo Exception *)
-
+(** Ergo errors *)
 exception Ergo_Error of eerror
 let ergo_system_error msg =
   SystemError (char_list_of_string msg)
@@ -90,13 +89,50 @@ let string_of_error error =
   | RuntimeError (loc, _) -> "[RuntimeError at " ^ (string_of_error_loc loc) ^ "]" ^  (error_message error)
   end
 
-(* Version number *)
+(** Version number *)
 let ergo_version = string_of_char_list ergo_version
 
 let get_version () =
   print_endline ("Ergo compiler version " ^ ergo_version);
   exit 0
 
+(** Additional utility functions *)
+let process_file f file_name =
+  let file_content = string_of_file file_name in
+  f (file_name,file_content)
+
+type result_file = {
+  res_file : string;
+  res_content : string;
+}
+
+let make_result_file ext source_file s =
+  let fpref = Filename.chop_extension source_file in
+  let fout = outname (target_f None fpref) ext in
+  { res_file = fout;
+    res_content = s; }
+
+let wrap_jerrors f e =
+  begin match e with
+  | Failure e -> ergo_raise e
+  | Success x -> f x
+  end
+
+(** Ergo call *)
+let ergo_call contract_name =
+  Util.string_of_char_list
+    (ErgoCompiler.javascript_identifier_sanitizer (Util.char_list_of_string contract_name))
+
+(** Stdlib *)
+let modelsDir =
+  Util.filename_append
+    StaticConfig.ergo_home
+    ["packages";"ergo-compiler";"models"]
+let stdlibErgo = [
+  Filename.concat modelsDir "org.accordproject.ergo.stdlib.ergo";
+]
+
+(** CTO import *)
 let cto_import_decl_of_import_namespace ns =
   begin match String.rindex_opt ns '.' with
   | None ->
@@ -109,23 +145,4 @@ let cto_import_decl_of_import_namespace ns =
       | _ -> ImportName (dummy_location,namespace,char_list_of_string criteria_str)
       end
   end
-
-(** Additional utility functions *)
-
-let process_file f file_name =
-  Format.printf "Processing file: %s --" file_name;
-  let file_content = string_of_file file_name in
-  f (file_name,file_content)
-
-let wrap_jerrors f e =
-  begin match e with
-  | Failure e -> ergo_raise e
-  | Success x -> f x
-  end
-
-(** Ergo call *)
-
-let ergo_call contract_name =
-  Util.string_of_char_list
-    (ErgoCompiler.javascript_identifier_sanitizer (Util.char_list_of_string contract_name))
 

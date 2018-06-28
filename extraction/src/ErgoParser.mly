@@ -125,17 +125,6 @@ decl:
         (ErgoCompiler.mk_ergo_type_declaration (mk_position $startpos $endpos) cn (ErgoTypeEnum et)) }
 | DEFINE CONSTANT v = ident EQUAL e = expr
     { ErgoCompiler.dconstant (mk_position $startpos $endpos) v e }
-| DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
-    { ErgoCompiler.dfunc (mk_position $startpos $endpos)
-        { function_annot = mk_position $startpos $endpos;
-          function_name = cn;
-          function_sig =
-          { type_signature_annot = (mk_position $startpos $endpos);
-            type_signature_params = [];
-            type_signature_output = out;
-            type_signature_throws = fst mt;
-            type_signature_emits = snd mt };
-          function_body = fs; } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
     { ErgoCompiler.dfunc (mk_position $startpos $endpos)
         { function_annot = mk_position $startpos $endpos;
@@ -146,7 +135,18 @@ decl:
             type_signature_output = out;
             type_signature_throws = fst mt;
             type_signature_emits = snd mt };
-          function_body = fs; } }
+          function_body = Some fs; } }
+| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow
+    { ErgoCompiler.dfunc (mk_position $startpos $endpos)
+        { function_annot = mk_position $startpos $endpos;
+          function_name = cn;
+          function_sig =
+          { type_signature_annot = (mk_position $startpos $endpos);
+            type_signature_params = ps;
+            type_signature_output = out;
+            type_signature_throws = fst mt;
+            type_signature_emits = snd mt };
+          function_body = None; } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
     { ErgoCompiler.dcontract (mk_position $startpos $endpos)
         { contract_annot = mk_position $startpos $endpos;
@@ -174,16 +174,6 @@ clauses:
     { c :: cl }
 
 clause:
-| CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = stmt RCURLY
-    { { clause_annot = mk_position $startpos $endpos;
-        clause_name = cn;
-        clause_sig =
-        { type_signature_annot = (mk_position $startpos $endpos);
-          type_signature_params = [];
-          type_signature_output = out;
-          type_signature_throws = fst mt;
-          type_signature_emits = snd mt };
-        clause_body = e; } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
     { { clause_annot = mk_position $startpos $endpos;
         clause_name = cn;
@@ -193,7 +183,7 @@ clause:
           type_signature_output = out;
           type_signature_throws = fst mt;
           type_signature_emits = snd mt };
-        clause_body = s; } }
+        clause_body = Some s; } }
 
 maythrow:
 |
@@ -212,6 +202,8 @@ mayhavestate:
   { Some tt }
 
 params:
+| 
+    { [] }
 | p = param
     { p :: [] }
 | p = param COMMA ps = params

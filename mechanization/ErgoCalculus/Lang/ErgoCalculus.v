@@ -30,18 +30,18 @@ Section ErgoCalculus.
     Definition ergoc_expr := laergo_expr.
     Definition ergoc_type := laergo_type.
 
-    Record lambdac :=
-      mkLambdaC
-        { lambdac_params: list (string * ergoc_type);
-          lambdac_output : ergoc_type;
-          lambdac_body : ergoc_expr; }.
+    Record sigc :=
+      mkSigC
+        { sigc_params: list (string * ergoc_type);
+          sigc_output : ergoc_type; }.
 
     (** Function *)
     Record ergoc_function :=
       mkFuncC
         { functionc_annot : location;
           functionc_name : string;
-          functionc_lambda : lambdac; }.
+          functionc_sig : sigc;
+          functionc_body : option ergoc_expr; }.
 
     (** Contract *)
     Record ergoc_contract :=

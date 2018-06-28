@@ -11,12 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace io.clause.demo.fragileGoods
+namespace io.clause.demo.fragileGoods
 
-import org.accordproject.contract.*
-import io.clause.demo.fragileGoods.*
-
-import ergo.moment.* // Date/Time library
+import org.accordproject.cicero.runtime.*
 
 define function numberOfShocks(maxAcc : Double, minAcc : Double, accelerometerReadings : Double[]) : Double {
   return
@@ -28,7 +25,7 @@ define function numberOfShocks(maxAcc : Double, minAcc : Double, accelerometerRe
 }
 
 contract FragileGoods over TemplateModel {
-  clause fragilegoods(request : DeliveryUpdate) : PayOut throws Error {
+  clause fragilegoods(request : DeliveryUpdate) : PayOut throws ErrorResponse {
     let shocks =
         numberOfShocks(contract.accelerationMax,
 		       contract.accelerationMin,

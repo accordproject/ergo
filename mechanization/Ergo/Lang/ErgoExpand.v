@@ -115,7 +115,7 @@ Section ErgoExpand.
                       (ErgoTypeClassRef loc default_response_absolute_name)
                       None
                       None)
-                   disp))
+                   (Some disp)))
       (match_of_sigs_top loc namespace effparams sigs).
 
   (* XXX Has to be fixed to use brands -- needs fixes in code-generation *)
@@ -148,7 +148,7 @@ Section ErgoExpand.
                 (ErgoTypeNone loc)
                 None
                 (Some (ErgoTypeClassRef loc default_emits_absolute_name)))
-             init_body.
+             (Some init_body).
 
   Definition add_init_clause_to_contract (namespace:string) (c:laergo_contract) : laergo_contract :=
     let loc := c.(contract_annot) in

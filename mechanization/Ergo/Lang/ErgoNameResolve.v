@@ -552,19 +552,31 @@ Section ErgoNameResolution.
                (f:lrergo_function) : eresult laergo_function :=
       let loc := f.(function_annot) in
       let rfname := absolute_name_of_local_name module_ns f.(function_name) in
+      let rbody :=
+          match f.(function_body) with
+          | None => esuccess None
+          | Some body => elift Some (resolve_ergo_stmt ctxt body)
+          end
+      in
       elift2 (mkFunc loc rfname)
              (resolve_ergo_type_signature ctxt f.(function_sig))
-             (resolve_ergo_stmt ctxt f.(function_body)).
+             rbody.
     
     Definition resolve_ergo_clause
                (module_ns:namespace_name)
                (ctxt:resolution_ctxt)
                (c:ergo_clause) : eresult laergo_clause :=
       let loc := c.(clause_annot) in
-      let rcname := absolute_name_of_local_name module_ns c.(clause_name) in
+      let rcname := c.(clause_name) in
+      let rbody :=
+          match c.(clause_body) with
+          | None => esuccess None
+          | Some body => elift Some (resolve_ergo_stmt ctxt body)
+          end
+      in
       elift2 (mkClause loc rcname)
              (resolve_ergo_type_signature ctxt c.(clause_sig))
-             (resolve_ergo_stmt ctxt c.(clause_body)).
+             rbody.
 
     Definition resolve_ergo_clauses
                (module_ns:namespace_name)
@@ -622,6 +634,7 @@ Section ErgoNameResolution.
       let imports := app
                        m.(module_imports)
                        ((ImportAll dummy_location ("org.hyperledger.composer.system"%string))
+                          ::(ImportAll dummy_location ("org.accordproject.ergo.stdlib"%string))
                           ::(ImportSelf dummy_location module_ns)
                           ::nil) in
       let erctxt := resolve_imports nsctxt imports in

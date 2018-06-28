@@ -52,19 +52,19 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
     fun fname =>
       let binop :=
           match fname with
-          | "moment"%string =>
+          | "org.accordproject.ergo.stdlib.moment"%string =>
             Some (OpForeignUnary (enhanced_unary_date_time_op
                                     uop_date_time_from_string))
-          | "momentDayOfMonth"%string =>
+          | "org.accordproject.ergo.stdlib.momentDayOfMonth"%string =>
             Some (OpForeignUnary (enhanced_unary_date_time_op
                                      (uop_date_time_component date_time_DAY)))
-          | "momentMonth"%string =>
+          | "org.accordproject.ergo.stdlib.momentMonth"%string =>
             Some (OpForeignUnary (enhanced_unary_date_time_op
                                      (uop_date_time_component date_time_MONTH)))
-          | "momentQuarter"%string =>
+          | "org.accordproject.ergo.stdlib.momentQuarter"%string =>
             Some (OpForeignUnary (enhanced_unary_date_time_op
                                      (uop_date_time_component date_time_QUARTER)))
-          | "momentYear"%string =>
+          | "org.accordproject.ergo.stdlib.momentYear"%string =>
             Some (OpForeignUnary (enhanced_unary_date_time_op
                                      (uop_date_time_component date_time_YEAR))) 
          | _ => None
@@ -84,22 +84,22 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
     fun fname =>
       let binop :=
           match fname with
-          | "momentIsAfter"%string =>
+          | "org.accordproject.ergo.stdlib.momentIsAfter"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
                                      bop_date_time_gt))
-          | "momentIsBefore"%string =>
+          | "org.accordproject.ergo.stdlib.momentIsBefore"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
                                      bop_date_time_lt))
-          | "momentSubtract"%string =>
+          | "org.accordproject.ergo.stdlib.momentSubtract"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
                                      bop_date_time_minus))
-          | "momentAdd"%string =>
+          | "org.accordproject.ergo.stdlib.momentAdd"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
                                      bop_date_time_plus))
-          | "momentDiffDays"%string =>
+          | "org.accordproject.ergo.stdlib.momentDiffDays"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
                                      bop_date_time_duration_days))
-          | "momentDiffSeconds"%string =>
+          | "org.accordproject.ergo.stdlib.momentDiffSeconds"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
                                      bop_date_time_duration_seconds))
           | _ => None
@@ -116,7 +116,7 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
   Definition foreign_function_table : backend_lookup_table :=
     fun fname =>
       match fname with
-      | "momentIsSame"%string =>
+      | "org.accordproject.ergo.stdlib.momentIsSame"%string =>
         let e :=
             NNRCUnop
               OpNeg
@@ -128,7 +128,7 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
         Some (mk_naked_closure
                 ("p1"::"p2"::nil)
                 e)
-      | "momentDuration"%string =>
+      | "org.accordproject.ergo.stdlib.momentDuration"%string =>
         let e :=
             NNRCLet "v1"%string (NNRCUnop OpToString (NNRCGetConstant "p1"%string))
                     (NNRCLet "v2"%string
@@ -160,31 +160,31 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
       let unop :=
           match fname with
           (* Polymorphic *)
-          | "toString" => Some OpToString
+          | "org.accordproject.ergo.stdlib.toString" => Some OpToString
           (* Data *)
-          | "some" => Some OpLeft
+          | "org.accordproject.ergo.stdlib.some" => Some OpLeft
           (* Natural numbers // Integer or Long *)
-          | "integerAbs" => Some (OpNatUnary NatAbs)
-          | "integerlog2" => Some (OpNatUnary NatLog2)
-          | "integerSqrt" => Some (OpNatUnary NatSqrt)
-          | "integerToDouble" => Some OpFloatOfNat
+          | "org.accordproject.ergo.stdlib.integerAbs" => Some (OpNatUnary NatAbs)
+          | "org.accordproject.ergo.stdlib.integerlog2" => Some (OpNatUnary NatLog2)
+          | "org.accordproject.ergo.stdlib.integerSqrt" => Some (OpNatUnary NatSqrt)
+          | "org.accordproject.ergo.stdlib.integerToDouble" => Some OpFloatOfNat
           (* Floating point numbers // Double *)
-          | "sqrt" => Some (OpFloatUnary FloatSqrt)
-          | "exp" => Some (OpFloatUnary FloatExp)
-          | "log" => Some (OpFloatUnary FloatLog)
-          | "log10" => Some (OpFloatUnary FloatLog10)
-          | "ceil" => Some (OpFloatUnary FloatCeil)
-          | "floor" => Some (OpFloatUnary FloatFloor)
-          | "abs" => Some (OpFloatUnary FloatAbs)
-          | "max" => Some OpFloatBagMax
-          | "min" => Some OpFloatBagMin
-          | "average" => Some OpFloatMean
-          | "sum" => Some OpFloatSum
-          | "doubletoInteger" | "truncate" => Some OpFloatTruncate
+          | "org.accordproject.ergo.stdlib.sqrt" => Some (OpFloatUnary FloatSqrt)
+          | "org.accordproject.ergo.stdlib.exp" => Some (OpFloatUnary FloatExp)
+          | "org.accordproject.ergo.stdlib.log" => Some (OpFloatUnary FloatLog)
+          | "org.accordproject.ergo.stdlib.log10" => Some (OpFloatUnary FloatLog10)
+          | "org.accordproject.ergo.stdlib.ceil" => Some (OpFloatUnary FloatCeil)
+          | "org.accordproject.ergo.stdlib.floor" => Some (OpFloatUnary FloatFloor)
+          | "org.accordproject.ergo.stdlib.abs" => Some (OpFloatUnary FloatAbs)
+          | "org.accordproject.ergo.stdlib.max" => Some OpFloatBagMax
+          | "org.accordproject.ergo.stdlib.min" => Some OpFloatBagMin
+          | "org.accordproject.ergo.stdlib.average" => Some OpFloatMean
+          | "org.accordproject.ergo.stdlib.sum" => Some OpFloatSum
+          | "org.accordproject.ergo.stdlib.doubletoInteger" | "org.accordproject.ergo.stdlib.truncate" => Some OpFloatTruncate
           (* Arrays *)
-          | "distinct" => Some OpDistinct
-          | "count" => Some OpCount
-          | "flatten" => Some OpFlatten
+          | "org.accordproject.ergo.stdlib.distinct" => Some OpDistinct
+          | "org.accordproject.ergo.stdlib.count" => Some OpCount
+          | "org.accordproject.ergo.stdlib.flatten" => Some OpFlatten
           | _ => None
           end
       in
@@ -201,15 +201,15 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
         let binop :=
             match fname with
             (* Natural numbers // Integer or Long *)
-            | "integerMod" => Some (OpNatBinary NatRem)
-            | "integerMin" => Some (OpNatBinary NatMin)
-            | "integerMax" => Some (OpNatBinary NatMax)
+            | "org.accordproject.ergo.stdlib.integerMod" => Some (OpNatBinary NatRem)
+            | "org.accordproject.ergo.stdlib.integerMin" => Some (OpNatBinary NatMin)
+            | "org.accordproject.ergo.stdlib.integerMax" => Some (OpNatBinary NatMax)
             (* Floating point numbers // Double *)
-            | "min" => Some (OpFloatBinary FloatMin)
-            | "max" => Some (OpFloatBinary FloatMax)
+            | "org.accordproject.ergo.stdlib.min" => Some (OpFloatBinary FloatMin)
+            | "org.accordproject.ergo.stdlib.max" => Some (OpFloatBinary FloatMax)
             (* Arrays *)
-            | "arrayAdd" => Some OpBagUnion
-            | "arraySubstract" => Some OpBagDiff
+            | "org.accordproject.ergo.stdlib.arrayAdd" => Some OpBagUnion
+            | "org.accordproject.ergo.stdlib.arraySubstract" => Some OpBagDiff
             | _ => None
             end
         in
@@ -224,7 +224,7 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
     Definition builtin_table : backend_lookup_table :=
       fun fname =>
         match fname with
-        | "now" =>
+        | "org.accordproject.ergo.stdlib.now" =>
           Some (mk_naked_closure
                   nil
                   (NNRCGetConstant "now"))
