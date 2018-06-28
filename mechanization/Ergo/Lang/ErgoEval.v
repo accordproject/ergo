@@ -170,18 +170,34 @@ Section ErgoEval.
       | None => efailure (CompilationError ("Function " ++ fn ++ " not found."))
       end
     | EMatch _ _ _ => TODO
+
     | EForeach rs whr fn =>
-      elift3 EForeach
-             (fold_left
-               (fun ls nr =>
-                  elift2 postpend ls
-                         (elift (fun x => (fst nr, x)) (ergo_inline_expr ctx (snd nr))))
-               rs (esuccess nil))
-             (match whr with
-              | Some whr' => (elift Some) (ergo_inline_expr ctx whr')
-              | None => esuccess None
-              end)
-             (ergo_inline_expr ctx fn)
+      let singleton := fun x => EArray (x::nil) in
+      let base := 
+        match whr with
+        | None => elift singleton (ergo_inline_expr ctx fn)
+        | Some whr' =>
+          elift3 EIf
+                 (ergo_inline_expr ctx whr')
+                 (elift singleton (ergo_inline_expr ctx fn))
+                 (esuccess (EArray nil))
+        end
+      in
+      fold_right
+        (fun lay ker =>
+           elift (EUnaryOp OpFlatten)
+                 (
+           elift3 EForeach
+                  (elift (fun v' => (fst lay, v')::nil) (ergo_inline_expr ctx (snd lay)))
+                  (match whr with
+                   | None => esuccess None
+                   | Some x => elift Some (ergo_inline_expr ctx x)
+                   end)
+                  ker
+                  )
+        )
+        base rs
+
     | ELiftError _ _ => TODO
     end.
 
@@ -253,7 +269,6 @@ Section ErgoEval.
               | None => esuccess None
               end)
              (ergo_inline_globals ctx fn)
-
     | ELiftError _ _ => TODO
     end.
 
@@ -281,21 +296,15 @@ Fixpoint cross_product_helper
        match ls with
        | nil => esuccess (ctx::nil)
        | (name, dcoll arr)::rest =>
-         (*
-         elift (fun rest' =>
-                  concat
-                    (map (fun ctx' => (map (ergo_ctx_update_local_env ctx' name) arr))
-                         rest'))
-               (cross_product_helper ctx rest)
-*)
-         elift (fun rest' =>
-                  concat
-                    (map
-                       (fun val =>
-                          (map
-                             (fun ctx' =>
-                                (ergo_ctx_update_local_env ctx' name val)) rest'))
-                       arr))
+         elift
+           (fun rest' =>
+              concat
+                (map
+                   (fun val =>
+                      (map
+                         (fun ctx' =>
+                            (ergo_ctx_update_local_env ctx' name val)) rest'))
+                   arr))
                (cross_product_helper ctx rest)
        | (name, _)::rest => efailure (RuntimeError "Tried to foreach with a non-array...")
        end.
@@ -307,7 +316,6 @@ Fixpoint get_somes_helper {A}
   | None::ls' => get_somes_helper ls'
   | (Some pig) :: ls' => pig :: (get_somes_helper ls')
   end.
-
 
 Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_data :=
   match expr with
@@ -425,33 +433,19 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
   | EMatch e pes f => TODO
 
   | EForeach rs whr fn =>
-    let process_ctx :=
-        fun ctx' =>
-          match whr with
-          | None => eolift (compose esuccess Some) (ergo_eval_expr ctx' fn)
-          | Some whr' =>
-            match ergo_eval_expr ctx' whr' with
-            | Success _ _ (dbool true) => eolift (compose esuccess Some) (ergo_eval_expr ctx' fn)
-            | Success _ _ (dbool false) => esuccess None
-            | Success _ _ _ => efailure (RuntimeError "WHERE must be boolean")
-            | Failure _ _ f => efailure f
-            end
-          end
-    in
-    (elift dcoll)
-      (eolift
-         (fun nrs =>
-
-            (elift get_somes_helper)
-              ((eolift (emaplift process_ctx))
-                 (cross_product_helper ctx nrs)))
-
-         (fold_left (* returns esuccess [(name, array we hope)] *)
-            (fun ls nr =>
-               (elift2 postpend)
-                 ls
-                 (elift (fun x => (fst nr, x)) (ergo_eval_expr ctx (snd nr))))
-            rs (esuccess nil)))
+    match rs with
+    | (name, arr)::nil =>
+      match ergo_eval_expr ctx arr with
+      | Failure _ _ f => efailure f
+      | Success _ _ (dcoll arr') =>
+        (elift dcoll)
+          (emaplift
+             (fun elt => ergo_eval_expr (ergo_ctx_update_local_env ctx name elt) fn)
+             arr')
+      | Success _ _ _ => efailure (RuntimeError "Foreach needs to be called on an array")
+      end
+    | _ => efailure (RuntimeError "Failed to inline foreach")
+    end
 
   | ELiftError e1 e2 => TODO (* This isn't a thing though so we're okay :) *)
   end.
@@ -479,7 +473,7 @@ Fixpoint ergo_eval_decl (ctx : ergo_context) (decl : ergo_declaration) : eresult
     | Failure _ _ f => efailure f
     end
   | EGlobal n e =>
-    match ergo_eval_expr ctx e with
+    match eolift (ergo_eval_expr ctx) (ergo_inline_expr ctx e) with
     | Success _ _ r =>
       esuccess (ergo_ctx_update_global_env ctx n r, None)
     | Failure _ _ f => efailure f
