@@ -107,7 +107,7 @@ Section Ergo.
         { function_annot : A;
           function_name : local_name;
           function_sig : @ergo_type_signature A N;
-          function_body : ergo_stmt; }.
+          function_body : option ergo_stmt; }.
 
     (** Clause *)
     Record ergo_clause :=
@@ -115,7 +115,7 @@ Section Ergo.
         { clause_annot : A;
           clause_name : local_name;
           clause_sig : @ergo_type_signature A N;
-          clause_body : ergo_stmt; }.
+          clause_body : option ergo_stmt; }.
 
     (** Contract *)
     Record ergo_contract :=

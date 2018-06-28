@@ -1,4 +1,4 @@
 {
-    "$class": "org.accordproject.promissorynote.Request",
+    "$class": "org.accordproject.promissorynote.MyRequest",
     "amountPaid": 100
 }

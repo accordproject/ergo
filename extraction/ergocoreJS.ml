@@ -106,7 +106,7 @@ let ergo_compile input =
     end
   in
   begin try
-    let res = ErgoCompile.ergo_compile gconf j_s in
+    let res = ErgoCompile.ergo_compile gconf (ref (get_stdlib gconf)) j_s in
     json_of_result res
   with
   | Ergo_Error error -> json_of_error error

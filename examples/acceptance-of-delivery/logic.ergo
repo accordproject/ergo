@@ -11,16 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.acceptanceofdelivery
+namespace org.accordproject.acceptanceofdelivery
 
-import org.accordproject.common.*
-import org.accordproject.acceptanceofdelivery.*
+import org.accordproject.cicero.runtime.*
 
 contract AcceptanceOfDelivery over TemplateModel {
-  clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse throws Error {
+  clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse throws ErrorResponse {
     let received = request.deliverableReceivedAt;
     enforce momentIsBefore(received,now()) else
-      throw new Error{ error : "Transaction time is before the deliverable date." }
+      throw new ErrorResponse{ error : "Transaction time is before the deliverable date." }
     ;
 
     let status =

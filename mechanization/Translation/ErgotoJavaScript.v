@@ -37,9 +37,10 @@ Section ErgotoJavaScript.
 
   Definition ergo_module_to_javascript
              (ctos:list cto_package)
+             (ml:list lrergo_module)
              (p:lrergo_module) : eresult javascript :=
     let mctos := map cto_package_to_ergo_module ctos in
-    let nsctxt := namespace_ctxt_of_ergo_modules (mctos ++ (p::nil)) in
+    let nsctxt := namespace_ctxt_of_ergo_modules (mctos ++ ml ++ (p::nil)) in
     let rctos := resolve_ergo_all_modules nsctxt mctos in
     let p := resolve_ergo_single_module nsctxt p in
     let p := eolift expand_ergo_module p in

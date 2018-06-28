@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.helloworldstate
 
-transaction Request {
+namespace org.accordproject.helloworldstate
+
+transaction MyRequest {
   o String input
 }
 
-transaction Response {
+transaction MyResponse {
   o String output
 }
 

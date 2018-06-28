@@ -238,18 +238,21 @@ Module ErgoCompiler.
   (** Compilation *)
   Definition ergo_module_to_javascript :
     list CTO.cto_package
+    -> list ergo_module
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScript.ergo_module_to_javascript.
 
   Definition ergo_module_to_javascript_cicero :
     list CTO.cto_package
+    -> list ergo_module
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
     := ErgotoJavaScriptCicero.ergo_module_to_javascript_cicero.
 
   Definition ergo_module_to_java :
     list CTO.cto_package
+    -> list ergo_module
     -> ergo_module
     -> EResult.eresult Java.java
     := ErgotoJava.ergo_module_to_java.

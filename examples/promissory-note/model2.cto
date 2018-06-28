@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.promissorynote
 
-transaction Request {
+namespace org.accordproject.promissorynote
+
+transaction MyRequest {
   o Double amountPaid
 }
 
-transaction Response {
+transaction MyResponse {
   o Double outstandingBalance
 }
 

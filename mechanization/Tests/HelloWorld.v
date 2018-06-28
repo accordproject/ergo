@@ -43,7 +43,7 @@ contract HelloWorld over TemplateModel {
                 (ErgoTypeClassRef dummy_location (None,"Response"))
                 None
                 None)
-             (SReturn dummy_location (EVar dummy_location "request")).
+             (Some (SReturn dummy_location (EVar dummy_location "request"))).
 
   Definition c1 : lrergo_contract :=
     mkContract dummy_location

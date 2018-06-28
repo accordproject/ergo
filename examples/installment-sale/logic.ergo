@@ -11,7 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.installmentsale
+
+namespace org.accordproject.installmentsale
 
 contract InstallmentSale over TemplateModel state InstallmentSaleState {
   clause init(request : InitializeRequest) : InitializeResponse {

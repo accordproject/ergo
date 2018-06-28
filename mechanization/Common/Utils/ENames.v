@@ -56,7 +56,7 @@ Section ENames.
     Definition default_response_absolute_name : string := "org.accordproject.cicero.runtime.Response".
     Definition default_emits_absolute_name : string := "org.hyperledger.composer.system.Event".
     Definition default_state_absolute_name : string := "org.accordproject.cicero.contract.AccordContractState".
-    Definition default_throws_absolute_name : string := "org.accordproject.cicero.contract.ErrorResponse".
+    Definition default_throws_absolute_name : string := "org.accordproject.cicero.runtime.ErrorResponse".
 
   End TypeNames.
 

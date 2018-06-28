@@ -11,16 +11,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.latedeliveryandpenalty
+
+namespace org.accordproject.latedeliveryandpenalty
+
+import org.accordproject.cicero.runtime.*
 
 // Declare a contract over a template model
 contract LateDeliveryAndPenalty over TemplateModel {
   // Clause checking for late delivery and calculating penalty
-  clause latedeliveryandpenalty(request : LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse throws Error {
+  clause latedeliveryandpenalty(request : LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse throws ErrorResponse {
     // Guard against calling late delivery clause too early
     let agreed = request.agreedDelivery;
     enforce momentIsBefore(agreed,now()) else
-    throw new Error{ message : "Cannot exercise late delivery before delivery date" }
+    throw new ErrorResponse{ message : "Cannot exercise late delivery before delivery date" }
     ;
     // Guard against force majeure
     enforce !contract.forceMajeure or !request.forceMajeure else

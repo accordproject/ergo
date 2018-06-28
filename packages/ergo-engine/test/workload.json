@@ -9,7 +9,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "Smoke",
+    "contractname": "org.accordproject.Smoke",
     "expected": {
       "response": {
         "output": "Smoke.test successful"
@@ -26,7 +26,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "HelloWorld",
+    "contractname": "org.accordproject.helloworld.HelloWorld",
     "expected": {
       "response": {
         "output": "Hello Fred Blogs (Accord Project)"
@@ -43,7 +43,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "VolumeDiscount",
+    "contractname": "org.accordproject.volumediscount.VolumeDiscount",
     "expected": {
       "response": {
         "discountRate": 2.8,
@@ -61,7 +61,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "VolumeDiscount",
+    "contractname": "org.accordproject.volumediscount.VolumeDiscount",
     "expected": {
       "response": {
         "discountRate": 2.8,
@@ -79,7 +79,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "VolumeDiscount",
+    "contractname": "org.accordproject.volumediscount.VolumeDiscount",
     "expected": {
       "response": {
         "discountRate": 2.9,
@@ -97,7 +97,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "VolumeDiscount",
+    "contractname": "org.accordproject.volumediscount.VolumeDiscount",
     "expected": {
       "response": {
         "discountRate": 2.9,
@@ -116,7 +116,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "LateDeliveryAndPenalty",
+    "contractname": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty",
     "expected": {
       "response": {
         "buyerMayTerminate": true,
@@ -135,7 +135,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "LateDeliveryAndPenalty",
+    "contractname": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty",
     "expected": {
       "error": {
         "kind": "CompilationError",
@@ -162,12 +162,12 @@
     "contract": "contract.json",
     "request": "request-early.json",
     "state": "state.json",
-    "contractname": "LateDeliveryAndPenalty",
+    "contractname": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty",
     "expected": {
       "error": {
         "kind": "ErgoError",
         "message": {
-          "$class": "org.accordproject.latedeliveryandpenalty.Error",
+          "$class": "org.accordproject.cicero.runtime.ErrorResponse",
           "message": "Cannot exercise late delivery before delivery date"
         }
       }
@@ -183,7 +183,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "AcceptanceOfDelivery",
+    "contractname": "org.accordproject.acceptanceofdelivery.AcceptanceOfDelivery",
     "expected": {
       "response": {
         "receiver": "Party B",
@@ -203,7 +203,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "FragileGoods",
+    "contractname": "io.clause.demo.fragileGoods.FragileGoods",
     "expected": {
       "response": {
         "amount": 990,
@@ -221,11 +221,11 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "PromissoryNote",
+    "contractname": "org.accordproject.promissorynote.PromissoryNote",
     "expected": {
       "response": {
         "outstandingBalance": 1425.4396822450633,
-        "$class": "org.accordproject.promissorynote.Response"
+        "$class": "org.accordproject.promissorynote.MyResponse"
       }
     }
   },
@@ -239,11 +239,11 @@
     "contract": "contract2.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "PromissoryNote",
+    "contractname": "org.accordproject.promissorynote.PromissoryNote",
     "expected": {
       "response": {
         "outstandingBalance": 1425.4396822450633,
-        "$class": "org.accordproject.promissorynote.Response"
+        "$class": "org.accordproject.promissorynote.MyResponse"
       }
     }
   },
@@ -257,7 +257,7 @@
     "contract": "contract3.json",
     "request": "request.json",
     "state": null,
-    "contractname": "PromissoryNote",
+    "contractname": "org.accordproject.promissorynote.PromissoryNote",
     "expected": {
       "state": {
         "$class": "org.accordproject.cicero.contract.AccordContractState",
@@ -275,7 +275,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "InstallmentSale",
+    "contractname": "org.accordproject.installmentsale.InstallmentSale",
     "expected": {
       "response": {
         "total_paid": 2500,
@@ -294,7 +294,7 @@
     "contract": "contract.json",
     "request": "request-init.json",
     "state": null,
-    "contractname": "InstallmentSale",
+    "contractname": "org.accordproject.installmentsale.InstallmentSale",
     "expected": {
       "state": {
         "$class": "org.accordproject.installmentsale.InstallmentSaleState",
@@ -316,7 +316,7 @@
     "contract": "contract.json",
     "request": "request-init.json",
     "state": null,
-    "contractname": "InstallmentSale",
+    "contractname": "org.accordproject.installmentsale.InstallmentSale",
     "expected": {
       "error": {
         "kind": "ErgoError",
@@ -334,7 +334,7 @@
     "contract": "contract.json",
     "request": "request-init.json",
     "state": null,
-    "contractname": "InstallmentSale",
+    "contractname": "org.accordproject.installmentsale.InstallmentSale",
     "expected": {
        "error": {
         "kind": "CompilationError",

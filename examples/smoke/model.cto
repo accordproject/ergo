@@ -21,6 +21,10 @@ transaction Response {
   o String output
 }
 
+concept Test {
+  o String contract
+}
+
 /**
  * The template model
  */

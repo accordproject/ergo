@@ -291,7 +291,7 @@ Section ErgoCalculustoErgoNNRC.
                      elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
     | EForeach loc foreachs None e2 =>
-      let init_e := ergoc_expr_to_nnrc ctxt e2 in
+      let init_e := NNRCUnop OpBag (ergoc_expr_to_nnrc ctxt e2) in
       let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
           let v := fst foreach in
           let e := ergoc_expr_to_nnrc ctxt (snd foreach) in
@@ -325,16 +325,25 @@ Section ErgoCalculustoErgoNNRC.
   Definition functionc_to_nnrc
              (ctxt:translation_context) (f:ergoc_function) : eresult nnrc_function :=
     let ctxt : translation_context :=
-        add_params ctxt (List.map fst f.(functionc_lambda).(lambdac_params))
+        add_params ctxt (List.map fst f.(functionc_sig).(sigc_params))
     in
-    elift
-      (mkFuncN
-         f.(functionc_name))
-      (elift
-         (mkLambdaN
-            f.(functionc_lambda).(lambdac_params)
-            f.(functionc_lambda).(lambdac_output))
-         (ergoc_expr_to_nnrc ctxt f.(functionc_lambda).(lambdac_body))).
+    match f.(functionc_body) with
+    | Some body =>
+      elift
+        (mkFuncN
+           f.(functionc_name))
+        (elift
+           (mkLambdaN
+              f.(functionc_sig).(sigc_params)
+              f.(functionc_sig).(sigc_output))
+           (ergoc_expr_to_nnrc ctxt body))
+    | None =>
+      let rlambda := lookup_lambda f.(functionc_annot) nnrc_stdlib f.(functionc_name) in
+      elift
+        (mkFuncN
+           f.(functionc_name))
+        rlambda
+    end.
 
   (** Translate a clause to clause+calculus *)
   Definition clausec_to_nnrc

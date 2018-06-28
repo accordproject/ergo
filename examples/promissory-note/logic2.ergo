@@ -14,14 +14,14 @@
 
 namespace org.accordproject.promissorynote
 
-//import ergo.moment.*
+import org.accordproject.cicero.runtime.*
 
 define function compoundInterestMultiple(annualInterest : Double, numberOfDays : Double) : Double {
     return (1.0 + annualInterest) ^ (numberOfDays / 365.0)
 }
 
 contract PromissoryNote over TemplateModel {
-  clause check(request : Request) : Response throws Error {
+  clause check(request : MyRequest) : MyResponse throws ErrorResponse {
     enforce contract.annualInterest >= 0.0;
     enforce contract.dollarAmount >= 0.0;
     let outstanding = contract.dollarAmount - request.amountPaid;
@@ -32,7 +32,7 @@ contract PromissoryNote over TemplateModel {
     enforce numberOfDays >= 0.0;
     let compounded =  outstanding * compoundInterestMultiple(interestRate, numberOfDays);
 
-    return new Response{
+    return new MyResponse{
       outstandingBalance: compounded
     }
   }

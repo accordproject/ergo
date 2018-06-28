@@ -11,9 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.volumediscount
 
-import org.accordproject.contract.*
+namespace org.accordproject.volumediscount
 
 contract VolumeDiscount over TemplateModel {
    // Clause for volume discount

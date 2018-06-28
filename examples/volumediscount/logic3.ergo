@@ -11,12 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- /* Volume discount logic in Ergo */
+
+/* Volume discount logic in Ergo */
 
 namespace org.accordproject.volumediscount
-
-import org.accordproject.contract.*
-import org.accordproject.late.*
 
 define constant fee = 0.1
 define function addFee(rate : Double) : Double {

@@ -30,6 +30,9 @@ Section Lambda.
 
   Definition lookup_table := string -> option nnrc_expr_lambda.
 
+  Definition empty_lookup_table : lookup_table :=
+    (fun s : string => None).
+
   Definition add_function_to_table
              (t:lookup_table) (newfname:string) (newcl:lambdan) : lookup_table :=
     fun fname =>
@@ -84,16 +87,20 @@ Section ErgoNNRCCall.
 
   (** Looks up a function with its parameters. If the function exists and the number of parameters
       is correct, it returns a closed expression computing the call. *)
-  Definition lookup_call (loc:location) (t:lookup_table) (fname:string) (el:list nnrc_expr) : eresult nnrc_expr :=
+  Definition lookup_lambda (loc:location) (t:lookup_table) (fname:string) : eresult nnrc_expr_lambda :=
     match t fname with
     | None => function_not_found_error loc fname
-    | Some cl =>
-      match zip_params (List.map fst cl.(lambdan_params)) el with
-      | None => call_params_error loc fname
-      | Some params => 
-        esuccess (create_call params cl.(lambdan_body))
-      end
+    | Some cl => esuccess cl
     end.
+
+  Definition lookup_call (loc:location) (t:lookup_table) (fname:string) (el:list nnrc_expr) : eresult nnrc_expr :=
+    let rlambda := lookup_lambda loc t fname in
+    eolift (fun cl =>
+             match zip_params (List.map fst cl.(lambdan_params)) el with
+             | None => call_params_error loc fname
+             | Some params => 
+               esuccess (create_call params cl.(lambdan_body))
+             end) rlambda.
 
 End ErgoNNRCCall.
 

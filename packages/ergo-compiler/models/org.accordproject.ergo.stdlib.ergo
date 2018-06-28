@@ -1,0 +1,14 @@
+namespace org.accordproject.ergo.stdlib
+
+define function now() : DateTime
+define function moment(x:String) : DateTime
+define function momentDuration(x:String, y:String) : Duration
+define function momentIsAfter(x:DateTime, y:DateTime) : Boolean
+define function momentIsBefore(x:DateTime, y:DateTime) : Boolean
+define function momentDiffDays(x:DateTime, y:DateTime) : Duration
+define function momentAdd(x:DateTime, y:Duration) : DateTime
+define function min(x:Float[]) : Float
+define function count(x:Float[]) : Integer
+
+define function some(Anything) : Anything
+
