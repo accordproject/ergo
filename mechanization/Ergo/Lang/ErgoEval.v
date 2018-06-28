@@ -24,6 +24,7 @@
 Require Import Ergo.
 Require Import String.
 Require Import List.
+Require Import Basics.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import Common.Utils.EResult.
@@ -169,7 +170,18 @@ Section ErgoEval.
       | None => efailure (CompilationError ("Function " ++ fn ++ " not found."))
       end
     | EMatch _ _ _ => TODO
-    | EForeach _ _ _ => TODO
+    | EForeach rs whr fn =>
+      elift3 EForeach
+             (fold_left
+               (fun ls nr =>
+                  elift2 postpend ls
+                         (elift (fun x => (fst nr, x)) (ergo_inline_expr ctx (snd nr))))
+               rs (esuccess nil))
+             (match whr with
+              | Some whr' => (elift Some) (ergo_inline_expr ctx whr')
+              | None => esuccess None
+              end)
+             (ergo_inline_expr ctx fn)
     | ELiftError _ _ => TODO
     end.
 
@@ -229,7 +241,19 @@ Section ErgoEval.
                     elift2 postpend ls (ergo_inline_globals ctx nv))
                  args (esuccess nil))
     | EMatch _ _ _ => TODO
-    | EForeach _ _ _ => TODO
+    | EForeach rs whr fn =>
+      elift3 EForeach
+             (fold_left
+               (fun ls nr =>
+                  elift2 postpend ls
+                         (elift (fun x => (fst nr, x)) (ergo_inline_globals ctx (snd nr))))
+               rs (esuccess nil))
+             (match whr with
+              | Some whr' => (elift Some) (ergo_inline_globals ctx whr')
+              | None => esuccess None
+              end)
+             (ergo_inline_globals ctx fn)
+
     | ELiftError _ _ => TODO
     end.
 
@@ -250,6 +274,40 @@ Section ErgoEval.
       end
     | _ => efailure (CompilationError ("Function "++fn.(function_name)++" is bad!!!"))
     end.
+
+Fixpoint cross_product_helper
+       (ctx : ergo_context)
+       (ls : list (string * ergo_data)) : eresult (list ergo_context) :=
+       match ls with
+       | nil => esuccess (ctx::nil)
+       | (name, dcoll arr)::rest =>
+         (*
+         elift (fun rest' =>
+                  concat
+                    (map (fun ctx' => (map (ergo_ctx_update_local_env ctx' name) arr))
+                         rest'))
+               (cross_product_helper ctx rest)
+*)
+         elift (fun rest' =>
+                  concat
+                    (map
+                       (fun val =>
+                          (map
+                             (fun ctx' =>
+                                (ergo_ctx_update_local_env ctx' name val)) rest'))
+                       arr))
+               (cross_product_helper ctx rest)
+       | (name, _)::rest => efailure (RuntimeError "Tried to foreach with a non-array...")
+       end.
+
+Fixpoint get_somes_helper {A}
+         (ls : list (option A)) :=
+  match ls with
+  | nil => nil
+  | None::ls' => get_somes_helper ls'
+  | (Some pig) :: ls' => pig :: (get_somes_helper ls')
+  end.
+
 
 Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_data :=
   match expr with
@@ -365,7 +423,36 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
   | ECallFun fn args => efailure (CompilationError "You forgot to inline a call...")
 
   | EMatch e pes f => TODO
-  | EForeach ls whr f => TODO
+
+  | EForeach rs whr fn =>
+    let process_ctx :=
+        fun ctx' =>
+          match whr with
+          | None => eolift (compose esuccess Some) (ergo_eval_expr ctx' fn)
+          | Some whr' =>
+            match ergo_eval_expr ctx' whr' with
+            | Success _ _ (dbool true) => eolift (compose esuccess Some) (ergo_eval_expr ctx' fn)
+            | Success _ _ (dbool false) => esuccess None
+            | Success _ _ _ => efailure (RuntimeError "WHERE must be boolean")
+            | Failure _ _ f => efailure f
+            end
+          end
+    in
+    (elift dcoll)
+      (eolift
+         (fun nrs =>
+
+            (elift get_somes_helper)
+              ((eolift (emaplift process_ctx))
+                 (cross_product_helper ctx nrs)))
+
+         (fold_left (* returns esuccess [(name, array we hope)] *)
+            (fun ls nr =>
+               (elift2 postpend)
+                 ls
+                 (elift (fun x => (fst nr, x)) (ergo_eval_expr ctx (snd nr))))
+            rs (esuccess nil)))
+
   | ELiftError e1 e2 => TODO (* This isn't a thing though so we're okay :) *)
   end.
 
