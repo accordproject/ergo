@@ -16,6 +16,7 @@
 
 const Ergo=require('@accordproject/ergo-compiler/lib/ergo');
 const Moment = require('moment');
+const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 const {
     VM
@@ -39,7 +40,10 @@ class ErgoEngine {
     static executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName) {
         const vm = new VM({
             timeout: 1000,
-            sandbox: { moment: Moment }
+            sandbox: {
+                moment: Moment,
+                logger: Logger
+            }
         });
 
         // add immutables to the context
@@ -48,6 +52,38 @@ class ErgoEngine {
         vm.run(ergoCode); // Load the generated logic
         const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
         const clauseCall = 'contract.main(params);'; // Create the clause call
+        const result = vm.run(contract + clauseCall); // Call the logic
+        if (result.hasOwnProperty('left')) {
+            return Promise.resolve(result.left);
+        } else {
+            return Promise.resolve({ 'error' : { 'kind' : 'ErgoError', 'message' : result.right } });
+        }
+    }
+
+    /**
+     * Initialize state
+     *
+     * @param {string} ergoCode JavaScript code for ergo logic
+     * @param {object} contractJson the contract data in JSON
+     * @param {object} requestJson the request transaction in JSON
+     * @param {string} contractName of the contract to initialize
+     * @returns {object} Promise to the result of initialization
+     */
+    static initErgoCode(ergoCode,contractJson,requestJson,contractName) {
+        const vm = new VM({
+            timeout: 1000,
+            sandbox: {
+                moment: Moment,
+                logger: Logger
+            }
+        });
+
+        // add immutables to the context
+        const params = { 'contract': contractJson, 'request': requestJson, 'state': {}, 'emit': [], 'now': Moment() };
+        vm.freeze(params, 'params'); // Add the context
+        vm.run(ergoCode); // Load the generated logic
+        const contract = 'let contract = new ' + contractName+ '();'; // Instantiate the contract
+        const clauseCall = 'contract.init(params);'; // Create the clause call
         const result = vm.run(contract + clauseCall); // Call the logic
         if (result.hasOwnProperty('left')) {
             return Promise.resolve(result.left);
@@ -73,6 +109,26 @@ class ErgoEngine {
                 return ergoCode;
             } else {
                 return this.executeErgoCode(ergoCode.success,contractJson,requestJson,stateJson,contractName);
+            }
+        });
+    }
+
+    /**
+     * Initialize Ergo contract state (JavaScript)
+     *
+     * @param {string} ergoText text for Ergo code
+     * @param {string} ctoTexts texts for CTO models
+     * @param {object} contractJson the contract data in JSON
+     * @param {object} requestJson the request transaction in JSON
+     * @param {string} contractName of the contract to execute
+     * @returns {object} Promise to the result of execution
+     */
+    static init(ergoText,ctoTexts,contractJson,requestJson,contractName) {
+        return (Ergo.compileAndLink(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
+            if (ergoCode.hasOwnProperty('error')) {
+                return ergoCode;
+            } else {
+                return this.initErgoCode(ergoCode.success,contractJson,requestJson,contractName);
             }
         });
     }

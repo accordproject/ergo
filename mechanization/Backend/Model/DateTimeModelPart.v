@@ -225,8 +225,11 @@ Extract Inlined Constant DATE_TIME_gt => "(fun x y -> x > y)".
 Axiom DATE_TIME_ge : DATE_TIME -> DATE_TIME -> bool.
 Extract Inlined Constant DATE_TIME_ge => "(fun x y -> x >= y)".
 
-Axiom DATE_TIME_DURATION_between : DATE_TIME -> DATE_TIME -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_between => "(fun x y -> """")".
+Axiom DATE_TIME_DURATION_days : DATE_TIME -> DATE_TIME -> DATE_TIME_DURATION.
+Extract Inlined Constant DATE_TIME_DURATION_days => "(fun x y -> """")".
+
+Axiom DATE_TIME_DURATION_seconds : DATE_TIME -> DATE_TIME -> DATE_TIME_DURATION.
+Extract Inlined Constant DATE_TIME_DURATION_seconds => "(fun x y -> """")".
 
 Inductive date_time_binary_op
   :=
@@ -237,7 +240,8 @@ Inductive date_time_binary_op
   | bop_date_time_le
   | bop_date_time_gt
   | bop_date_time_ge
-  | bop_date_time_duration_between
+  | bop_date_time_duration_days
+  | bop_date_time_duration_seconds
 .
 
 Definition date_time_binary_op_tostring (f:date_time_binary_op) : String.string
@@ -249,7 +253,8 @@ Definition date_time_binary_op_tostring (f:date_time_binary_op) : String.string
      | bop_date_time_le => "DateTimeLe"
      | bop_date_time_gt => "DateTimeGt"
      | bop_date_time_ge => "DateTimeGe"
-     | bop_date_time_duration_between => "DateTimeDurationBetween"
+     | bop_date_time_duration_days => "DateTimeDurationDays"
+     | bop_date_time_duration_seconds => "DateTimeDurationSeconds"
      end.
 
 (* Java equivalent: JavaScriptBackend.jsFunc *)
@@ -268,8 +273,8 @@ Definition date_time_to_java_binary_op
      | bop_date_time_le =>  mk_java_binary_op0 "date_time_le" d1 d2
      | bop_date_time_gt =>  mk_java_binary_op0 "date_time_gt" d1 d2
      | bop_date_time_ge => mk_java_binary_op0 "date_time_ge" d1 d2
-     | bop_date_time_duration_between => mk_java_binary_op0 "date_time_duration_between" d1 d2
-
+     | bop_date_time_duration_days => mk_java_binary_op0 "date_time_duration_days" d1 d2
+     | bop_date_time_duration_seconds => mk_java_binary_op0 "date_time_duration_seconds" d1 d2
      end.
 
 Definition date_time_to_javascript_binary_op
@@ -284,7 +289,8 @@ Definition date_time_to_javascript_binary_op
      | bop_date_time_le =>  jsFunc "dateTimePointLe" d1 d2
      | bop_date_time_gt =>  jsFunc "dateTimePointGt" d1 d2
      | bop_date_time_ge => jsFunc "dateTimePointGe" d1 d2
-     | bop_date_time_duration_between => jsFunc "dateTimeDurationBetween" d1 d2
+     | bop_date_time_duration_days => jsFunc "dateTimeDurationDays" d1 d2
+     | bop_date_time_duration_seconds => jsFunc "dateTimeDurationSeconds" d1 d2
      end.  
 
 Definition date_time_to_ajavascript_binary_op
@@ -298,6 +304,7 @@ Definition date_time_to_ajavascript_binary_op
      | bop_date_time_le =>  call_runtime "dateTimePointLe" [ e1; e2 ]
      | bop_date_time_gt =>  call_runtime "dateTimePointGt" [ e1; e2 ]
      | bop_date_time_ge => call_runtime "dateTimePointGe" [ e1; e2 ]
-     | bop_date_time_duration_between => call_runtime "dateTimeDurationBetween" [ e1; e2 ]
+     | bop_date_time_duration_days => call_runtime "dateTimeDurationDays" [ e1; e2 ]
+     | bop_date_time_duration_seconds => call_runtime "dateTimeDurationSeconds" [ e1; e2 ]
      end.  
 

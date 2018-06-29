@@ -95,7 +95,7 @@ $(BIN1): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoC
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN1)
 
 ## JavaScript
-$(DIST2): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE2)
+$(DIST2): $(ATDS) extracted/StaticConfig.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE2) $(DIST1)
 	js_of_ocaml _build_js/$(BYTE2) -o _build_js/$(BIN2)
 	cp _build_js/$(BIN2) $(DIST2)
 

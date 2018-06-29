@@ -1,0 +1,16 @@
+{
+  "name": "figure",
+  "version": "1.0.0",
+  "description": "Fix up the svg figure",
+  "main": "figure.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Avi Shinnar",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^10.0.2",
+    "node": ">=8",
+    "typescript": "^2.8.3"
+  }
+}

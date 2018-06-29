@@ -1,0 +1,102 @@
+\begin{tikzpicture}[
+   align=center,
+   node distance=0.4em and 0.8em,
+   font=\footnotesize,
+   every loop/.style={latex-},
+ ]
+
+ % AST
+ \node[lang, coqc, hyperlink node=\coqurl{Ergo.Lang}{Ergo}{ergo_package}]
+      (ergoast) {Ergo\\Syntax Tree};
+
+ % Transition
+ \node[lang,
+       above=3em of ergoast]
+      (parsing) {Parsing};
+
+ % Source
+ \node[lang, source,
+       above=3em of parsing]
+      (ergo) {Ergo};
+ 
+ % Transition
+
+ \node[lang, hyperlink node=\coqurl{Ergo.Lang}{Ergo}{run_nraenv_optims},
+       right=of ergoast]
+      (naming) {Name\\Resolution};
+
+ \node[lang, coqc, hyperlink node=\coqurl{Common.CTO}{CTO}{cto_type},
+       above=3em of naming] (cto_type) {Resolved\\CTO Types};
+
+ \node[lang, source,
+       right=1.95em of ergo] (cto) {CTO};
+
+ % AST
+ \node[lang, coqc, hyperlink node=\coqurl{Ergo.Lang}{Ergo}{ergo_package},
+       right=of naming]
+      (ergoastresolved) {Resolved Ergo\\Syntax Tree};
+
+ % Transition
+
+ \node[lang, hyperlink node=\coqurl{Translation}{ErgotoErgoCalculus}{package_to_calculus},
+       right=of ergoastresolved]
+      (translation) {Translation};
+
+ % Calculus
+ \node[lang, coqc, hyperlink node=\coqurl{ErgoCalculus.Lang}{ErgoCalculus}{ergoc_package},
+       right=of translation]
+      (ergoc) {Ergo\\Calculus};
+
+ % Transition
+
+ \node[lang, hyperlink node=\coqurl{ErgoCalculus.Typing}{TErgoCalculus}{tergoc_package},
+       right=of ergoc] (typing) {Type\\Checking};
+
+ \node[lang, coqc, hyperlink node=\coqurl{Common.TypeSystem}{ErgoType}{ergo_type},
+       above=3em of typing] (ergo_type) {Ergo\\Types};
+
+ % Typed Calculus
+ \node[lang, coqc, hyperlink node=\coqurl{ErgoCalculus.Typing}{TErgoCalculus}{tergoc_package},
+       right=of typing] (tergoc) {Typed Ergo\\Calculus};
+
+ % Transition
+
+ \node[lang, hyperlink node=\coqurl{ErgoCalculus.Typing}{TErgoCalculus}{tergoc_package},
+       right=of ergoc] (typing) {Type\\Checking};
+
+ % Target
+ \node[lang, target,
+       right=6em of tergoc]
+      (javascript) {JavaScript};
+
+ \node[lang, target,
+       above=1em of javascript]
+      (hyperledger) {Hyperledger};
+
+ \node[lang, target,
+       above=1em of hyperledger]
+      (java) {Java};
+
+ \node[lang, target, thick,
+       below=1em of javascript]
+      (dotdotdot) {...};
+
+ % Sources
+ \path[-,thick] (ergo.south) edge (parsing.north);
+ \path[trans] (parsing.south) -- (ergoast.north);
+ \path[-,thick] (ergoast.east) edge (naming.west);
+ \path[trans] (naming.east) -- (ergoastresolved.west);
+ \path[-,thick] (ergoastresolved.east) edge (translation.west);
+ \path[trans] (translation.east) -- (ergoc.west);
+ \path[-,thick] (ergoc.east) edge (typing.west);
+ \path[trans] (typing.east) -- (tergoc.west);
+ \path[trans,dashed] (cto.south) -- (cto_type.north);
+ \path[trans] (cto_type.south) -- (naming.north);
+ \path[trans] (ergo_type.south) -- (typing.north);
+ \path[trans,dashed] (cto_type.east) -- node [text width=2.5cm,midway,above=0.2em ] {Type Processing} (ergo_type.west);
+ \path[trans,dashed] (tergoc.east) -- node [text width=2.5cm,midway,above=0.2em ] {Code\\Generation} (javascript.west);
+
+ % Loops
+ %\tikzloop[ccoqc]{ergoast}{\coqurl{Ergo.Lang}{Ergo}{run_nraenv_optims}}{Namespace\\Resolution}
+\end{tikzpicture}
+

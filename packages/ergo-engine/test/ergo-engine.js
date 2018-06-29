@@ -27,6 +27,43 @@ const Path = require('path');
 // Set of tests
 const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.json'), 'utf8'));
 
+/**
+ * Compare actual result and expected result
+ *
+ * @param {string} expected the result as specified in the test workload
+ * @param {string} actual the result as returned by the engine
+ * @returns {object} Promise to the comparison
+ */
+function compare(expected,actual) {
+    if (expected.hasOwnProperty('error')) {
+        actual.error.should.not.be.null;
+        return actual.error.should.deep.equal(expected.error);
+    }
+    if (expected.hasOwnProperty('state')) {
+        // actual.state.should.not.be.null;
+        for (const key in expected.state) {
+            if (expected.state.hasOwnProperty(key)) {
+                const field = key;
+                const value = expected.state[key];
+                actual.state[field].should.not.be.null;
+                actual.state[field].should.deep.equal(value);
+            }
+        }
+    }
+    if (expected.hasOwnProperty('response')) {
+        //console.info(JSON.stringify(actual.response));
+        //actual.response.should.not.be.null;
+        for (const key in expected.response) {
+            if (expected.response.hasOwnProperty(key)) {
+                const field = key;
+                const value = expected.response[key];
+                actual.response[field].should.not.be.null;
+                actual.response[field].should.deep.equal(value);
+            }
+        }
+    }
+}
+
 describe('Execute', () => {
 
     afterEach(() => {});
@@ -49,29 +86,22 @@ describe('Execute', () => {
             resultKind = 'succeed';
         }
 
-        describe('#execute'+name, function () {
+        describe('#'+name, function () {
             it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
                 const ergoText = Fs.readFileSync(Path.resolve(__dirname, dir, ergo), 'utf8');
                 let ctoTexts = [];
                 for (let i = 0; i < models.length; i++) {
                     ctoTexts.push(Fs.readFileSync(Path.resolve(__dirname, dir, models[i]), 'utf8'));
                 }
-                const clauseJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
+                const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
-                const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                if (expected.hasOwnProperty('error')) {
-                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname);
-                    return result.error.should.deep.equal(expected.error);
+                if (state === null) {
+                    const actual = await ErgoEngine.init(ergoText, ctoTexts, contractJson, requestJson, contractname);
+                    return compare(expected,actual);
                 } else {
-                    const result = await ErgoEngine.execute(ergoText, ctoTexts, clauseJson, requestJson, stateJson, contractname);
-                    for (const key in expected) {
-                        if (expected.hasOwnProperty(key)) {
-                            const field = key;
-                            const value = expected[key];
-                            result.response[field].should.not.be.null;
-                            result.response[field].should.deep.equal(value);
-                        }
-                    }
+                    const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
+                    const actual = await ErgoEngine.execute(ergoText, ctoTexts, contractJson, requestJson, stateJson, contractname);
+                    return compare(expected,actual);
                 }
             });
         });

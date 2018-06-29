@@ -48,7 +48,7 @@ contract LateDeliveryAndPenalty over TemplateModel throws Error {
        return LateDeliveryAndPenaltyResponse{ 0, true }
      } else { // If not, calculate the penalty and whether the contract can be terminated
        // difference between current date and agreed upon date
-       define variable diff = moment.diff(moment.now(),agreed,penaltyDuration.unit);
+       define variable diff = momentDiffDay(moment.now(),agreed,penaltyDuration.unit);
        // Calls the function to calculate penalty
        define variable penalty = calculatePenalty(diff,request.goodsValue);
        // Return the response with the penalty and termination determination

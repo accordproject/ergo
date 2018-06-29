@@ -50,9 +50,12 @@ Section EResult.
     lift_failure_in f a.
   Definition elift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
     lift_failure_in_two f a b.
-  Definition elift3 {A B C D:Set} (f:A -> B -> C ->D)
+  Definition elift3 {A B C D:Set} (f:A -> B -> C -> D)
              (a:eresult A) (b:eresult B) (c:eresult C) : eresult D :=
     lift_failure_in_three f a b c.
+  Definition elift4 {A B C D E:Set} (f:A -> B -> C -> D -> E)
+             (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) : eresult E :=
+    eolift (fun x => elift (fun g => g x) (elift3 f a b c)) d.
   Definition emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
     lift_failure_map f al.
   Definition eresult_of_option {A:Set} (a:option A) (e:eerror) :=
@@ -83,6 +86,9 @@ Section EResult.
     Definition enforce_error_content : ErgoData.data :=
       ErgoData.dbrand (ergo_default_error_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
+
+    Definition unresolved_name_error {A} : eresult A :=
+      efailure (CompilationError ("Unresolved name")).
   End Builtin.
 
 End EResult.

@@ -57,7 +57,8 @@ publish:
 
 ## Documentation
 documentation:
-	@$(MAKE) -C mechanization documentation
+	$(MAKE) -C mechanization documentation
+	./scripts/build_api_md.sh
 
 ## Testing
 test:
@@ -94,7 +95,6 @@ cleanall-npm: clean-npm
 clean: Makefile.coq
 	- @$(MAKE) clean-npm
 	- @$(MAKE) clean-extraction
-	- @$(MAKE) clean-mechanization
 	- @$(MAKE) -C packages/ergo-compiler clean
 	- @$(MAKE) -C packages/ergo-engine clean
 	- @$(MAKE) -C packages/ergo-cli clean

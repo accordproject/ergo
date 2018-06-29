@@ -1,0 +1,96 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ErgoSpec.Common.Utils.EResult</title>
+<meta name="description" content="Documentation of Coq module ErgoSpec.Common.Utils.EResult" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ErgoSpec.Common.Utils.EResult</h1>
+<div class="coq">
+<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="ErgoSpec.Backend.ErgoBackend.html">ErgoSpec.Backend.ErgoBackend</a></span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="EResult">EResult</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="location">location</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="mkLocation">mkLocation</a></span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="line">line</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nat">nat</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="character">character</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nat">nat</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="parse_error">parse_error</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="mkParseError">mkParseError</a></span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="message">message</a></span>: <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="loc_start">loc_start</a></span>: <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#location">location</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="loc_end">loc_end</a></span>: <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#location">location</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="eerror">eerror</a></span> : <span class="kwd">Set</span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="SystemError">SystemError</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eerror">eerror</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="ParseError">ParseError</a></span> : <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#parse_error">parse_error</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eerror">eerror</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CompilationError">CompilationError</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eerror">eerror</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="TypeError">TypeError</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eerror">eerror</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="RuntimeError">RuntimeError</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html#string">string</a></span> -&gt; <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eerror">eerror</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">eresult</span> (<span class="id">A</span>:<span class="kwd">Set</span>) := <span class="id">Result</span> <span class="id">A</span> <span class="id">eerror</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">esuccess</span> {<span class="id">A</span>:<span class="kwd">Set</span>} (<span class="id">a</span>:<span class="id">A</span>) : <span class="id">eresult</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">Success</span> <span class="id">A</span> <span class="id">eerror</span> <span class="id">a</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">efailure</span> {<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#A">A</a></span>:<span class="kwd">Set</span>} (<span class="id">e</span>:<span class="id">eerror</span>) : <span class="id">eresult</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">Failure</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eerror">A</a></span> <span class="id">eerror</span> <span class="id">e</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">eolift</span> {<span class="id">A</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#A">B</a></span>:<span class="kwd">Set</span>} (<span class="id">f</span>:<span class="id">A</span> -&gt; <span class="id">eresult</span> <span class="id">B</span>) (<span class="id">a</span>:<span class="id">eresult</span> <span class="id">A</span>) : <span class="id">eresult</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">B</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lift_failure</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#A">f</a></span> <span class="id">a</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">elift</span> {<span class="id">A</span> <span class="id">B</span>:<span class="kwd">Set</span>} (<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#f">f</a></span>:<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#a">A</a></span> -&gt; <span class="id">B</span>) (<span class="id">a</span>:<span class="id">eresult</span> <span class="id">A</span>) : <span class="id">eresult</span> <span class="id">B</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lift_failure_in</span> <span class="id">f</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">a</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">elift2</span> {<span class="id">A</span> <span class="id">B</span> <span class="id">C</span>:<span class="kwd">Set</span>} (<span class="id">f</span>:<span class="id">A</span> -&gt; <span class="id">B</span> -&gt; <span class="id">C</span>) (<span class="id">a</span>:<span class="id">eresult</span> <span class="id">A</span>) (<span class="id">b</span>:<span class="id">eresult</span> <span class="id">B</span>) : <span class="id">eresult</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">C</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lift_failure_in_two</span> <span class="id">f</span> <span class="id">a</span> <span class="id">b</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">elift3</span> {<span class="id">A</span> <span class="id">B</span> <span class="id">C</span> <span class="id">D</span>:<span class="kwd">Set</span>} (<span class="id">f</span>:<span class="id">A</span> -&gt; <span class="id">B</span> -&gt; <span class="id">C</span> -&gt; <span class="id">D</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">a</span>:<span class="id">eresult</span> <span class="id">A</span>) (<span class="id">b</span>:<span class="id">eresult</span> <span class="id">B</span>) (<span class="id">c</span>:<span class="id">eresult</span> <span class="id">C</span>) : <span class="id">eresult</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">D</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lift_failure_in_three</span> <span class="id">f</span> <span class="id">a</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#D">b</a></span> <span class="id">c</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">elift4</span> {<span class="id">A</span> <span class="id">B</span> <span class="id">C</span> <span class="id">D</span> <span class="id">E</span>:<span class="kwd">Set</span>} (<span class="id">f</span>:<span class="id">A</span> -&gt; <span class="id">B</span> -&gt; <span class="id">C</span> -&gt; <span class="id">D</span> -&gt; <span class="id">E</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">a</span>:<span class="id">eresult</span> <span class="id">A</span>) (<span class="id">b</span>:<span class="id">eresult</span> <span class="id">B</span>) (<span class="id">c</span>:<span class="id">eresult</span> <span class="id">C</span>) (<span class="id">d</span>:<span class="id">eresult</span> <span class="id">D</span>) : <span class="id">eresult</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eresult">E</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">eolift</span> (<span class="kwd">fun</span> <span class="id">x</span> =&gt; <span class="id">elift</span> (<span class="kwd">fun</span> <span class="id">g</span> =&gt; <span class="id">g</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#eolift">x</a></span>) (<span class="id">elift3</span> <span class="id">f</span> <span class="id">a</span> <span class="id">b</span> <span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#elift">c</a></span>)) <span class="id">d</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">emaplift</span> {<span class="id">A</span> <span class="id">B</span>:<span class="kwd">Set</span>} (<span class="id">f</span>:<span class="id">A</span> -&gt; <span class="id">eresult</span> <span class="id"><a name="emaplift">B</a></span>) (<span class="id">al</span>:<span class="id">list</span> <span class="id">A</span>) : <span class="id">eresult</span> (<span class="id">list</span> <span class="id">B</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lift_failure_map</span> <span class="id">f</span> <span class="id">al</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">eresult_of_option</span> {<span class="id">A</span>:<span class="kwd">Set</span>} (<span class="id">a</span>:<span class="id">option</span> <span class="id">A</span>) (<span class="id">e</span>:<span class="id">eerror</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">result_of_option</span> <span class="id">a</span> <span class="id">e</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a href="https://querycert.github.io/html/Qcert.Utils.Result.html#result_of_option">option_of_eresult</a></span> {<span class="id"><a href="ErgoSpec.Common.Utils.EResult.html#e">A</a></span>:<span class="kwd">Set</span>} (<span class="id">a</span>:<span class="id">eresult</span> <span class="id">A</span>) : <span class="id">option</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">option_of_result</span> <span class="id">a</span>.<br/>
+<br/>
+<div class="doc">Built-in errors </div>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id">Builtin</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">not_in_contract_error</span> {<span class="id">A</span>} : <span class="id">eresult</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">efailure</span> (<span class="id">CompilationError</span> ("<span class="id">Cannot</span> <span class="id">use</span> '<span class="id">contract</span>' <span class="id">variable</span> <span class="id">outside</span> <span class="id">of</span> <span class="id">a</span> <span class="id">contract</span>")).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">not_in_clause_error</span> {<span class="id">A</span>} : <span class="id">eresult</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">efailure</span> (<span class="id">CompilationError</span> ("<span class="id">Cannot</span> <span class="id">use</span> '<span class="id">clause</span>' <span class="id">variable</span> <span class="id">outside</span> <span class="id">of</span> <span class="id">a</span> <span class="id">clause</span>")).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">import_not_found</span> {<span class="id">A</span>} (<span class="id">import</span>:<span class="id">string</span>) : <span class="id">eresult</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">efailure</span> (<span class="id">CompilationError</span> ("<span class="kwd">Import</span> <span class="id">not</span> <span class="id">found</span>: " ++ <span class="id">import</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">resolve_name_not_found</span> {<span class="id">A</span>} (<span class="id">namespace</span>:<span class="id">string</span>) (<span class="id">name_ref</span>:<span class="id">string</span>) : <span class="id">eresult</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">efailure</span> (<span class="id">CompilationError</span> ("<span class="id">Cannot</span> <span class="id">resolve</span> <span class="id">name</span> '" ++ <span class="id">name_ref</span>++ "' <span class="id">not</span> <span class="id">found</span> <span class="kwd">in</span> <span class="id">CTO</span> <span class="kwd">with</span> <span class="id">namespace</span> " ++ <span class="id">namespace</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">import_name_not_found</span> {<span class="id">A</span>} (<span class="id">namespace</span>:<span class="id">string</span>) (<span class="id">name_ref</span>:<span class="id">string</span>) : <span class="id">eresult</span> <span class="id">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">efailure</span> (<span class="id">CompilationError</span> ("<span class="id">Cannot</span> <span class="id">import</span> <span class="id">name</span> '" ++ <span class="id">name_ref</span>++ "' <span class="kwd">in</span> <span class="id">CTO</span> <span class="kwd">with</span> <span class="id">namespace</span> " ++ <span class="id">namespace</span>)).<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergo_default_package</span> : <span class="id">string</span> := "<span class="id">org.accordproject.ergo</span>".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergo_default_error_local_name</span> : <span class="id">string</span> := "<span class="id">Error</span>".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">ergo_default_error_name</span> : <span class="id">string</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ergo_default_package</span> ++ "." ++ <span class="id">ergo_default_error_local_name</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id">enforce_error_content</span> : <span class="id">ErgoData.data</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">ErgoData.dbrand</span> (<span class="id">ergo_default_error_name</span>::<span class="id">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ErgoData.drec</span> (("<span class="id">message</span>"%<span class="id">string</span>, <span class="id">ErgoData.dstring</span> "<span class="id">Enforce</span> <span class="id">condition</span> <span class="id">failed</span>")::<span class="id">nil</span>)).<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id">Builtin</span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id">EResult</span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</div>
+</body>
+</html>

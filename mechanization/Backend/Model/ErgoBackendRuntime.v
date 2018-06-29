@@ -96,9 +96,12 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
           | "momentAdd"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
                                      bop_date_time_plus))
-          | "momentDiff"%string =>
+          | "momentDiffDays"%string =>
             Some (OpForeignBinary (enhanced_binary_date_time_op
-                                     bop_date_time_duration_between))
+                                     bop_date_time_duration_days))
+          | "momentDiffSeconds"%string =>
+            Some (OpForeignBinary (enhanced_binary_date_time_op
+                                     bop_date_time_duration_seconds))
           | _ => None
           end
       in
@@ -158,6 +161,8 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
           match fname with
           (* Polymorphic *)
           | "toString" => Some OpToString
+          (* Data *)
+          | "some" => Some OpLeft
           (* Natural numbers // Integer or Long *)
           | "integerAbs" => Some (OpNatUnary NatAbs)
           | "integerlog2" => Some (OpNatUnary NatLog2)

@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{pifont} % for \fleur macro
+\usepackage{ifpdf}
+\usepackage{tikz}
+\usepackage{calc}
+\usetikzlibrary{automata}
+\usetikzlibrary{positioning,calc,decorations.markings,shapes,graphs}
+
+\newcommand{\coqHTMLBase}{https://ergo.accordproject.org}
+\newcommand{\coqBaseModule}{docs/assets/specification}
+\newcommand{\coqurl}[3]{\coqHTMLBase/\coqBaseModule/ErgoSpec.#1.#2.html\##3}
+\newcommand{\projectname}{Q*cert}
+
+\newcommand{\fleur}{\ding{95}}
+\newcommand{\coqtop}{{\href{\coqHTMLBase}{\fleur}}\xspace}
+\newcommand{\coqdef}[3]{{\href{\coqurl{#1}{#2}{#3}}{\fleur}}\xspace}
+
+\newcommand{\NRAEnv}{\texorpdfstring{NRA$^{\!\mbox{\it e}}$}{NRAe}\xspace}
+\newcommand{\NRALambda}{\texorpdfstring{$\lambda$-NRA}{λ-NRA}\xspace}
+
+\ifpdf
+\usepackage[hidelinks]{hyperref}
+\else
+\usepackage[hidelinks,hypertex]{hyperref}
+\fi
+\input{tikzmacros}
+\begin{document}
+\input{codegen-coq}
+\end{document}

@@ -1,0 +1,53 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ namespace org.accordproject.promissorynote
+
+transaction Request {
+  o Double amountPaid
+}
+
+transaction Response {
+  o Double outstandingBalance
+}
+
+enum LegalEntity {
+  o PLC
+  o LLC
+  o INC
+  o Corporation
+}
+
+/**
+ * The template model
+ */
+@AccordTemplateModel("promissory-note")
+concept TemplateModel {
+  /**
+   * The name for the clause
+   */
+  o Double dollarAmount
+  o DateTime date
+  o String maker
+  o Double interestRate optional
+  o Boolean individual
+  o String makerAddress
+  o String lender
+  o LegalEntity legalEntity
+  o String lenderAddress
+  o Double principal
+  o DateTime maturityDate
+  o Integer defaultDays
+  o Integer insolvencyDays
+  o String jurisdiction
+}

@@ -1,0 +1,9 @@
+*.out
+*.log
+*.aux
+*.dvi
+*.svg.gen
+*.map
+cleansvg.js
+node_modules/
+*~

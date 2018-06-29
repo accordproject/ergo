@@ -1,0 +1,63 @@
+\begin{tikzpicture}[
+   align=center,
+   node distance=0.4em and 0.8em,
+   font=\footnotesize,
+   every loop/.style={latex-},
+ ]
+
+ % AST
+ \node[lang, coqc, hyperlink node=\coqurl{Common.CTO}{CTO}{cto_type}]
+      (cto_type) {CTO Types\\~};
+
+ % Transition
+ \node[lang,
+       above=1em of cto_type]
+      (parsing) {Parsing};
+
+ % Source
+ \node[lang, source,
+       above=1em of parsing]
+      (cto) {CTO};
+ 
+ % Transition
+
+ \node[lang, hyperlink node=\coqurl{Common.CTO}{CTO}{cto_resolved_tbl_for_package},
+       right=of cto_type]
+      (naming) {Type Name\\Resolution};
+
+ % AST
+ \node[lang, coqc, hyperlink node=\coqurl{Common.CTO}{CTO}{cto_type},
+       right=of naming]
+      (cto_typeresolved) {Resolved\\CTO Type};
+
+ \node[lang, coqc,
+       below=3em of cto_typeresolved]
+      (ergonaming) {Name\\Resolution};
+
+ % Transition
+
+ \node[lang, hyperlink node=\coqurl{Common.CTO}{CTO}{cto_type_to_etype},
+       right=of cto_typeresolved]
+      (modeling) {Model Construction};
+
+ % Calculus
+ \node[lang, coqc, hyperlink node=\coqurl{Common.TypeSystem}{ErgoType}{ergo_type},
+       right=of modeling]
+      (ergo_type) {Ergo\\Types};
+
+ \node[lang, coqc,
+       below=3em of ergo_type]
+      (typing) {Type\\Checking};
+
+ \path[-,thick] (cto.south) edge (parsing.north);
+ \path[trans] (parsing.south) -- (cto_type.north);
+ \path[-,thick] (cto_type.east) edge (naming.west);
+ \path[trans] (naming.east) -- (cto_typeresolved.west);
+ \path[-,thick] (cto_typeresolved.east) edge (modeling.west);
+ \path[trans] (modeling.east) -- (ergo_type.west);
+ \path[trans,dashed] (cto_typeresolved.south) -- (ergonaming.north);
+ \path[trans,dashed] (ergo_type.south) -- (typing.north);
+ % Loops
+ %\tikzloop[ccoqc]{ergoast}{\coqurl{Ergo.Lang}{Ergo}{run_nraenv_optims}}{Namespace\\ Resolution}
+\end{tikzpicture}
+

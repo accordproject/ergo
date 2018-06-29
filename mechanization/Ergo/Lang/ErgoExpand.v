@@ -23,7 +23,8 @@ Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Types.ErgoType.
+Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoExpand.
@@ -33,7 +34,7 @@ Section ErgoExpand.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (callparams:list (string * cto_type)) : eresult ergo_stmt :=
+             (callparams:list (string * ergo_type)) : eresult ergo_stmt :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
     | None => efailure (CompilationError "Parameter mismatch during main creation")
@@ -46,15 +47,15 @@ Section ErgoExpand.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (s:cto_signature) : eresult (match_case * ergo_stmt) :=
-    let cname := s.(cto_signature_name) in
-    let callparams := s.(cto_signature_params) in
+             (s:ergo_type_signature) : eresult (ergo_pattern * ergo_stmt) :=
+    let cname := s.(ergo_type_signature_name) in
+    let callparams := s.(ergo_type_signature_params) in
     match callparams with
     | nil => efailure (CompilationError ("Cannot create main if not at least one parameter in "++cname))
-    | (param0, CTOClassRef type0)::otherparams =>
+    | (param0, ErgoTypeClassRef type0)::otherparams =>
       elift (fun x =>
-               let type0 := absolute_ref_of_relative_ref namespace type0 in
-               ((Some v0,CaseType type0),x))
+               let type0 := absolute_name_of_name_ref namespace type0 in
+               (CaseLet v0 (Some type0),x))
             (create_call cname v0 effparam0 effparamrest callparams)
     | (param0, _)::otherparams =>
       efailure (CompilationError ("Cannot create main for non-class type "++cname))
@@ -65,19 +66,19 @@ Section ErgoExpand.
              (v0:string)
              (effparam0:ergo_expr)
              (effparamrest:list ergo_expr)
-             (ss:list cto_signature) : eresult ergo_stmt :=
+             (ss:list ergo_type_signature) : eresult ergo_stmt :=
     elift (fun s =>
              SMatch effparam0
                      s
                      (SThrow
-                        (ENew (mkClassRef None "Error"%string)
+                        (ENew (RelativeRef None "Error"%string)
                               (("message"%string, EConst (ErgoData.dstring ""))::nil))))
           (emaplift (case_of_sig namespace v0 effparam0 effparamrest) ss).
 
   Definition match_of_sigs_top
              (namespace:string)
              (effparams:list ergo_expr)
-             (ss:list cto_signature) :=
+             (ss:list ergo_type_signature) :=
     match effparams with
     | nil => efailure (CompilationError ("Cannot create main if not at least one effective parameter"))
     | effparam0 :: effparamrest =>
@@ -85,19 +86,63 @@ Section ErgoExpand.
       match_of_sigs namespace v0 effparam0 effparamrest ss
     end.
 
+  Definition filter_init sigs :=
+    filter (fun s => if (string_dec s.(ergo_type_signature_name) clause_init_name) then false else true) sigs.
+  
   Definition create_main_clause_for_contract (namespace:string) (c:ergo_contract) : eresult ergo_clause :=
     let sigs := lookup_contract_signatures c in
+    let sigs := filter_init sigs in
     let effparams := EVar "request"%string :: nil in
     elift
       (fun disp =>
          (mkClause clause_main_name
                    (mkLambda
-                      (("request"%string,(CTOClassRef "Request"))::nil)
-                      (CTOClassRef "Response")
+                      (("request"%string,ErgoTypeClassRef default_request_type)::nil)
+                      (ErgoTypeClassRef default_response_type)
+                      None
                       None
                       disp)))
       (match_of_sigs_top namespace effparams sigs).
 
+  (* XXX Has to be fixed to use brands -- needs fixes in code-generation *)
+  Definition default_state :=
+    EConst
+      (drec (("$class",dstring default_state_name)
+               :: ("stateId",dstring "1")
+               :: nil))%string.
+  Definition default_response :=
+    EConst
+      (drec (("$class",dstring default_response_name)
+               :: nil))%string.
+  
+  Definition create_init_clause_for_contract (namespace:string) (c:ergo_contract) : ergo_clause :=
+    let effparams := EVar "request"%string :: nil in
+    let init_body :=
+        SSetState default_state
+                  (SReturn default_response)
+    in
+    mkClause clause_init_name
+             (mkLambda
+                (("request"%string,(ErgoTypeClassRef default_request_type))::nil)
+                ErgoTypeNone
+                None
+                (Some (ErgoTypeClassRef default_emits_type))
+                init_body).
+
+  Definition add_init_clause_to_contract (namespace:string) (c:ergo_contract) : ergo_contract :=
+    if in_dec string_dec clause_init_name
+              (map (fun cl => cl.(clause_name)) c.(contract_clauses))
+    then c
+    else
+      let init_clause :=
+          create_init_clause_for_contract namespace c
+      in
+      mkContract
+        c.(contract_name)
+        c.(contract_template)
+        c.(contract_state)
+        (c.(contract_clauses) ++ (init_clause::nil)).
+  
   Definition add_main_clause_to_contract (namespace:string) (c:ergo_contract) : eresult ergo_contract :=
     if in_dec string_dec clause_main_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
@@ -108,34 +153,37 @@ Section ErgoExpand.
            mkContract
              c.(contract_name)
              c.(contract_template)
+             c.(contract_state)
              (c.(contract_clauses) ++ (main_clause::nil)))
         (create_main_clause_for_contract namespace c).
   
-  Definition add_main_clause_to_declaration (namespace:string) (d:ergo_declaration) : eresult ergo_declaration :=
+  Definition add_main_init_clause_to_declaration
+             (namespace:string)
+             (d:ergo_declaration) : eresult ergo_declaration :=
     match d with
     | EType td => esuccess (EType td)
     | EExpr e => esuccess (EExpr e)
     | EGlobal v e => esuccess (EGlobal v e)
-    | EImport id => esuccess (EImport id)
     | EFunc fd => esuccess (EFunc fd)
     | EContract cd =>
+      let cd := add_init_clause_to_contract namespace cd in
       elift EContract (add_main_clause_to_contract namespace cd)
     end.
     
-  
-  Definition add_main_clauses_to_declarations
+  Definition add_main_init_clauses_to_declarations
              (namespace:string) (dl:list ergo_declaration) : eresult (list ergo_declaration) :=
-    emaplift (add_main_clause_to_declaration namespace) dl.
+    emaplift (add_main_init_clause_to_declaration namespace) dl.
     
-  Definition add_main_clauses_to_package (p:ergo_package) : eresult ergo_package :=
+  Definition add_main_init_clauses_to_module (p:ergo_module) : eresult ergo_module :=
     elift
-      (mkPackage
-         p.(package_namespace))
-      (add_main_clauses_to_declarations p.(package_namespace) p.(package_declarations)).
+      (mkModule
+         p.(module_namespace)
+         p.(module_imports))
+      (add_main_init_clauses_to_declarations p.(module_namespace) p.(module_declarations)).
 
   (** Pre-processing. At the moment only add main clauses when missing *)
-  Definition ergo_package_expand (p:ergo_package) : eresult ergo_package :=
-    add_main_clauses_to_package p.
+  Definition ergo_module_expand (p:ergo_module) : eresult ergo_module :=
+    add_main_init_clauses_to_module p.
   
 End ErgoExpand.
 

@@ -19,6 +19,7 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
@@ -29,26 +30,29 @@ Section ErgoSugar.
 
   (** [return expr] is a no-op at the moment *)
   Definition mk_result e1 e2 e3 : ergo_expr :=
-    ERecord (("response", e1)
-               :: ("state", e2)
-               :: ("emit", e3)
-               :: nil)%string.
+    ERecord ((this_response, e1)
+               :: (this_state, e2)
+               :: (this_emit, e3)
+               :: nil).
 
   Definition set_state e1 e2 : ergo_expr :=
-    ELet "lstate" None e1 e2.
+    ELet local_state None e1 e2.
+
+  Definition this_clause clause_name :=
+    EUnaryOp (OpDot clause_name) (EUnaryOp OpUnbrand EThisContract).
 
   Definition push_emit e1 e2 : ergo_expr :=
-    ELet "lemit" None
+    ELet local_emit None
          (EBinaryOp OpBagUnion
                     (EUnaryOp OpBag e1)
-                    (EVar "lemit"))
+                    (EVar local_emit))
          e2.
 
   Definition ENewSugar pname cname el : ergo_expr :=
-    ENew (mkClassRef pname cname) el.
+    ENew (RelativeRef pname cname) el.
 
   Definition SThrowSugar pname cname el : ergo_stmt :=
-    SThrow (ENew (mkClassRef pname cname) el).
+    SThrow (ENew (RelativeRef pname cname) el).
 
   Definition SThrowErgoCompilerError (msg:string) : ergo_stmt :=
     (SThrowSugar (Some "org.ergo")
@@ -69,6 +73,16 @@ Section ErgoSugar.
       EUnaryOp OpRight e.
 
   End Errors.
-  
-End ErgoSugar.
 
+  Section Optional.
+    Definition EOptionalDot (pname:string) (e:ergo_expr) :=
+      EMatch e
+             ((CaseLetOption "$option" None, EUnaryOp (OpDot pname) (EVar "$option")) :: nil)
+             (EConst dnone).
+    Definition EOptionalDefault (e1 e2:ergo_expr) :=
+      EMatch e1
+             ((CaseLetOption "$option" None, EVar "$option") :: nil)
+             e2.
+  End Optional.
+
+End ErgoSugar.

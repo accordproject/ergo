@@ -264,7 +264,8 @@ Definition date_time_binary_op_interp
      | bop_date_time_le => rondbooldateTime2 DATE_TIME_le d1 d2
      | bop_date_time_gt => rondbooldateTime2 DATE_TIME_gt d1 d2
      | bop_date_time_ge => rondbooldateTime2 DATE_TIME_ge d1 d2
-     | bop_date_time_duration_between => lift denhanceddateTimeinterval (onddateTime2 DATE_TIME_DURATION_between d1 d2)
+     | bop_date_time_duration_days => lift denhanceddateTimeinterval (onddateTime2 DATE_TIME_DURATION_days d1 d2)
+     | bop_date_time_duration_seconds => lift denhanceddateTimeinterval (onddateTime2 DATE_TIME_DURATION_seconds d1 d2)
      end.
 
 Definition enhanced_binary_op_interp
@@ -1473,8 +1474,10 @@ Inductive date_time_binary_op_has_type {model:brand_model} :
       date_time_binary_op_has_type bop_date_time_gt DateTime DateTime Bool 
   | tbop_date_time_ge :
       date_time_binary_op_has_type bop_date_time_ge DateTime DateTime Bool
-  | tbop_date_time_duration_between  :
-      date_time_binary_op_has_type bop_date_time_duration_between DateTime DateTime DateTimeInterval
+  | tbop_date_time_duration_days  :
+      date_time_binary_op_has_type bop_date_time_duration_days DateTime DateTime DateTimeInterval
+  | tbop_date_time_duration_seconds  :
+      date_time_binary_op_has_type bop_date_time_duration_seconds DateTime DateTime DateTimeInterval
 .
 
 Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) :=
@@ -1493,7 +1496,9 @@ Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_bi
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
   | bop_date_time_ge =>
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
-  | bop_date_time_duration_between  =>
+  | bop_date_time_duration_days  =>
+    if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeInterval else None
+  | bop_date_time_duration_seconds  =>
     if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeInterval else None
   end.
 
@@ -1530,7 +1535,9 @@ Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_tim
   | bop_date_time_gt
   | bop_date_time_ge =>
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Bool
-  | bop_date_time_duration_between  =>
+  | bop_date_time_duration_days  =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeInterval
+  | bop_date_time_duration_seconds  =>
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeInterval
   end.
 
@@ -1777,8 +1784,10 @@ Module CompEnhanced.
         Definition date_time_ge 
           := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_ge).
 
-        Definition date_time_duration_between 
-          := OpForeignBinary (enhanced_binary_date_time_op (bop_date_time_duration_between)).
+        Definition date_time_duration_days
+          := OpForeignBinary (enhanced_binary_date_time_op (bop_date_time_duration_days)).
+        Definition date_time_duration_seconds 
+          := OpForeignBinary (enhanced_binary_date_time_op (bop_date_time_duration_seconds)).
         
         (* for coq style syntax *)
         Definition OpDateTimePlus := date_time_plus.
@@ -1789,7 +1798,8 @@ Module CompEnhanced.
         Definition OpDateTimeGt := date_time_gt.
         Definition OpDateTimeGe := date_time_ge.
 
-        Definition OpDateTimeIntervalBetween := date_time_duration_between.
+        Definition OpDateTimeIntervalDays := date_time_duration_days.
+        Definition OpDateTimeIntervalSeconds := date_time_duration_seconds.
 
       End Binary.
     End Ops.

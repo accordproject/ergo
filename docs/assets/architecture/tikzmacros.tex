@@ -1,0 +1,150 @@
+\tikzset{
+    hyperlink node/.style={
+        alias=sourcenode,
+        append after command={
+            let \p1 = (sourcenode.north west),
+                \p2=(sourcenode.south east),
+                \n1={\x2-\x1},
+                \n2={\y1-\y2} in
+            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)] {\href{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                    %finds text --- rules don't work without \XeTeXLinkBox.
+                    %Still builds correctly with pdflatex and lualatex
+        }
+    }
+}
+
+\definecolor{csource}{RGB}{222,168,167}
+\definecolor{ctarget}{RGB}{222,168,167}
+\definecolor{cjava}{RGB}{156,186,95}
+\definecolor{ccoqp}{RGB}{222,168,167}
+\definecolor{ccoqc}{RGB}{161,187,215}
+
+\tikzstyle{coqp}=[
+ draw=ccoqp!150,fill=ccoqp
+]
+
+\tikzstyle{coqc}=[
+ draw=ccoqc!150,fill=ccoqc
+]
+
+\tikzstyle{java}=[
+ draw=cjava!150,fill=cjava
+]
+
+\tikzstyle{java-api}=[
+ draw=cjava,fill=cjava!50,
+ minimum width=21em,
+ minimum height=1.4em,
+ xshift=5em,
+ font=\scriptsize\sffamily,
+]
+
+\tikzstyle{source}=[
+ draw=csource!150,fill=csource
+]
+
+\tikzstyle{target}=[
+ draw=ctarget!150,fill=ctarget
+]
+
+\tikzstyle{lang}=[
+ thick,
+ minimum width=3em,
+ minimum height=1.4em,
+ font=\scriptsize\sffamily,
+]
+
+\tikzstyle{sep-caption}=[
+ thick,
+ font=\scriptsize\sffamily,
+]
+
+\tikzstyle{tcoqp}=[
+ draw=ccoqp!150
+]
+
+\tikzstyle{tcoqc}=[
+ draw=ccoqc!150
+]
+
+\tikzstyle{trans}=[
+ draw,semithick,-latex,
+ font=\scriptsize\sffamily,
+]
+
+\tikzstyle{separation}=[
+ draw,very thick, gray
+]
+
+\newcommand{\tikzoptim}[3][]{
+   \path[trans, draw=#1!150, fill=#1!150] (#2) edge [looseness=10, loop above, draw=#1!150]
+       node [pos=0.5](#2-optim) {}
+       node [yshift = 0.5em,below] {\href{#3}{\phantom{XXX}} \\ \href{#3}{\phantom{XXX}}} ();
+}
+\newcommand{\tikzloop}[4][]{
+   \path[trans, draw=#1!150, fill=#1!150] (#2) edge [looseness=10, loop above, draw=#1!150]
+       node [pos=0.5](#2-optim) {#4}
+       node [yshift = 0.5em,below] {\href{#3}{\phantom{XXX}} \\ \href{#3}{\phantom{XXX}}} ();
+}
+\newcommand{\tikzoptimdashed}[3][]{
+   \path[trans, draw=#1!150, fill=#1!150] (#2) edge [looseness=10, loop above, dashed, draw=#1!150]
+       node [pos=0.5](#2-optim) {}
+       node [yshift = 0.5em,below] {\href{#3}{\phantom{XXX}} \\ \href{#3}{\phantom{XXX}}} ();
+}
+
+\newcommand{\transref}[2]{
+   \foreach \i in {0,...,#1} { node [pos=\i/#1, circle] {\href{#2}{\phantom{X}}}}
+}
+
+\newcommand{\transocamljava}[1]{
+ \path[draw,thick,latex-latex, densely dashed,
+      shorten >=0.2em, shorten <=0.2em,
+       java] ([xshift=-0.75em] #1.south) -- ([xshift=-0.75em] #1-java.north);
+}
+
+\makeatletter
+\tikzset{
+  box/.style={
+    minimum height=0.8cm,
+    draw,
+    rounded corners,
+    rectangle
+  },
+  moveable rectangle/condition/.code={%
+    \pgfmathparse{(\mrwidth > 1cm ? "(a.north east)" : "(a.south west)")}
+    \let\mrvector=\pgfmathresult
+  },
+  moveable/.is if=mr@moveable,
+}
+\def\mrvector{(0,0)}
+\newif\ifmr@moveable
+\pgfdeclareshape{moveable rectangle}{%
+  \inheritsavedanchors[from=rectangle]%
+  \anchor{north west}{%
+    \ifmr@moveable
+    \northeast
+    \pgf@xa=\pgf@x
+    \southwest
+    \advance\pgf@xa by -\pgf@x
+    \edef\mrwidth{\the\pgf@xa}%
+    \pgfkeys{/tikz/moveable rectangle/condition}%
+    \tikz@scan@one@point\pgfutil@firstofone\mrvector
+    \pgf@xa=-\pgf@x
+    \pgf@ya=-\pgf@y
+    \northeast
+    \advance\pgf@ya by \pgf@y
+    \southwest
+    \advance\pgf@xa by \pgf@x
+    \pgf@x=\pgf@xa
+    \pgf@y=\pgf@ya
+    \else
+    \northeast
+    \pgf@ya=\pgf@y
+    \southwest
+    \pgf@y=\pgf@ya
+    \fi
+  }
+  \inheritbackgroundpath[from=rectangle]
+}
+\makeatother

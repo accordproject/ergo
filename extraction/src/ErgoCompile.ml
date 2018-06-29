@@ -22,16 +22,16 @@ type result_file = {
   res_content : string;
 }
 
-let compile_package_to_javascript ctos ergo =
-  let code = ErgoCompiler.ergo_package_to_javascript ctos ergo in
+let compile_module_to_javascript ctos ergo =
+  let code = ErgoCompiler.ergo_module_to_javascript ctos ergo in
   wrap_jerrors string_of_char_list code
 
-let compile_package_to_javascript_cicero ctos ergo =
-  let code = ErgoCompiler.ergo_package_to_javascript_cicero ctos ergo in
+let compile_module_to_javascript_cicero ctos ergo =
+  let code = ErgoCompiler.ergo_module_to_javascript_cicero ctos ergo in
   wrap_jerrors string_of_char_list code
 
-let compile_package_to_java ctos ergo =
-  let code = ErgoCompiler.ergo_package_to_java ctos ergo in
+let compile_module_to_java ctos ergo =
+  let code = ErgoCompiler.ergo_module_to_java ctos ergo in
   wrap_jerrors string_of_char_list code
 
 let compile_inner target ctos file_content =
@@ -39,11 +39,11 @@ let compile_inner target ctos file_content =
   begin match target with
   | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
   | JavaScript ->
-      compile_package_to_javascript ctos ergo_parsed
+      compile_module_to_javascript ctos ergo_parsed
   | JavaScriptCicero ->
-      compile_package_to_javascript_cicero ctos ergo_parsed
+      compile_module_to_javascript_cicero ctos ergo_parsed
   | Java ->
-      compile_package_to_java ctos ergo_parsed
+      compile_module_to_java ctos ergo_parsed
   end
 
 let make_result_file target_lang source_file s =

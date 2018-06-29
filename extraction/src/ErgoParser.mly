@@ -13,10 +13,22 @@
  *)
 
 %{
-  open Util
-  open LexUtil
-  open ErgoUtil
-  open ErgoComp
+open Util
+open LexUtil
+open ErgoUtil
+open ErgoComp
+
+let qname_of_qname_base qn =  
+  begin match qn with
+  | (None,last) -> (None,Util.char_list_of_string last)
+  | (Some prefix, last) ->
+      (Some (Util.char_list_of_string prefix),
+       Util.char_list_of_string last)
+  end
+
+let relative_ref_of_qname_base qn =
+  let (prefix,localname) = qname_of_qname_base qn in
+  RelativeRef (prefix,localname)
 %}
 
 %token <int> INT
@@ -26,29 +38,29 @@
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
 %token CONCEPT TRANSACTION ENUM EXTENDS
-%token CONTRACT OVER CLAUSE THROWS
+%token CONTRACT OVER CLAUSE
+%token THROWS EMITS
 
 %token ENFORCE IF THEN ELSE
 %token LET FOREACH IN WHERE
 %token RETURN THROW STATE
-%token VARIABLE AS
+%token VARIABLE
 %token NEW
-%token MATCH TYPEMATCH WITH
+%token MATCH WITH
 %token SET EMIT
 
 %token OR AND NOT
 
 %token NIL
 %token TRUE FALSE
-%token ANY EMPTY
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
 %token PLUS MINUS STAR SLASH CARROT
 %token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
-%token DOT COMMA COLON SEMI
-%token QUESTION BANG
+%token DOT QUESTIONDOT COMMA COLON SEMI
+%token QUESTION QUESTIONQUESTION BANG UNDERSCORE
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
 %token LCURLY RCURLY
@@ -61,28 +73,36 @@
 %left AND
 %left EQUAL NEQUAL
 %left LT GT LTEQ GTEQ
+%left QUESTIONQUESTION
 %left PLUS MINUS PLUSI MINUSI
 %left STAR SLASH STARI SLASHI
 %left CARROT
 %left PLUSPLUS
 %right NOT
-%left DOT
-%left QUESTION BANG
+%left DOT QUESTIONDOT
+%left BANG
 
-%start <ErgoComp.ErgoCompiler.ergo_package> main
+%start <ErgoComp.ErgoCompiler.ergo_module> main
 
 %%
 
 main:
-| p = package EOF
+| p = emodule EOF
     { p }
 
 
-package:
-| NAMESPACE qn = qname_prefix ss = decls
-    { { package_namespace = Util.char_list_of_string qn;
-				package_declarations = ss; } }
+emodule:
+| NAMESPACE qn = qname_prefix ims = imports ss = decls
+    { { module_namespace = Util.char_list_of_string qn;
+        module_imports = ims;
+        module_declarations = ss; } }
 
+imports:
+|   { [] }
+| IMPORT qn = qname_prefix ims = imports
+    { (ErgoUtil.cto_import_decl_of_import_namespace qn) :: ims }
+
+    
 decls:
 |
     { [] }
@@ -90,12 +110,12 @@ decls:
     { s :: ss }
 
 decl:
-| DEFINE CONCEPT cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration cn (CTOConcept (oe,ctype))) }
-| DEFINE TRANSACTION cn = ident dt = cto_class_decl
-    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_cto_declaration cn (CTOTransaction (oe,ctype))) }
-| DEFINE ENUM cn = ident et = cto_enum_decl
-    { EType (ErgoCompiler.mk_cto_declaration cn (CTOEnum et)) }
+| DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeConcept (oe,ctype))) }
+| DEFINE TRANSACTION cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeTransaction (oe,ctype))) }
+| DEFINE ENUM cn = ident et = ergo_type_enum_decl
+    { EType (ErgoCompiler.mk_ergo_type_declaration cn (ErgoTypeEnum et)) }
 | DEFINE VARIABLE v = ident EQUAL e = expr
     { EGlobal (v, e) }
 | DEFINE FUNCTION cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
@@ -104,7 +124,8 @@ decl:
     function_lambda =
     { lambda_params = [];
       lambda_output = out;
-      lambda_throw = mt;
+      lambda_throws = fst mt;
+      lambda_emits = snd mt;
       lambda_body = fs; } } }
 | DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
     { EFunc
@@ -112,27 +133,27 @@ decl:
     function_lambda =
     { lambda_params = ps;
       lambda_output = out;
-      lambda_throw = mt;
+      lambda_throws = fst mt;
+      lambda_emits = snd mt;
       lambda_body = fs; } } }
-| IMPORT qn = qname_prefix
-    { EImport (ErgoUtil.cto_import_decl_of_import_namespace qn) }
 | c = contract
     { EContract c }
 
-cto_class_decl:
+ergo_type_class_decl:
 | LCURLY rt = rectype RCURLY
     { (None, rt) }
-| EXTENDS en = ident LCURLY rt = rectype RCURLY
-    { (Some en, rt) }
+| EXTENDS qn = qname_base LCURLY rt = rectype RCURLY
+    { (Some (relative_ref_of_qname_base qn), rt) }
 
-cto_enum_decl:
+ergo_type_enum_decl:
 | LCURLY il = identlist RCURLY
     { il }
 
 contract:
-| CONTRACT cn = ident OVER tn = ident LCURLY ds = clauses RCURLY
+| CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
     { { contract_name = cn;
         contract_template = tn;
+        contract_state = ms;
         contract_clauses = ds; } }
 
 clauses:
@@ -144,25 +165,37 @@ clauses:
 clause:
 | CLAUSE cn = ident LPAREN RPAREN COLON out = paramtype mt = maythrow LCURLY e = stmt RCURLY
     { { clause_name = cn;
-				clause_lambda =
-				{ lambda_params = [];
-					lambda_output = out;
-					lambda_throw = mt;
-					lambda_body = e; } } }
+        clause_lambda =
+        { lambda_params = [];
+          lambda_output = out;
+          lambda_throws = fst mt;
+          lambda_emits = snd mt;
+          lambda_body = e; } } }
 | CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
     { { clause_name = cn;
         clause_lambda =
         { lambda_params = ps;
           lambda_output = out;
-          lambda_throw = mt;
+          lambda_throws = fst mt;
+          lambda_emits = snd mt;
           lambda_body = s; } } }
 
 maythrow:
 |
+  { (None,None) }
+| THROWS tt = paramtype
+  { (Some tt,None) }
+| EMITS et = paramtype
+  { (None,Some et) }
+| THROWS tt = paramtype EMITS et = paramtype
+  { (Some tt,Some et) }
+
+mayhavestate:
+|
   { None }
-| THROWS pt = paramtype
-  { Some pt }
-    
+| STATE tt = paramtype
+  { Some tt }
+
 params:
 | p = param
     { p :: [] }
@@ -171,50 +204,49 @@ params:
 
 param:
 | pn = IDENT
-    { (Util.char_list_of_string pn, ErgoCompiler.cto_any) }
+    { (Util.char_list_of_string pn, ErgoCompiler.ergo_type_any) }
 | pn = IDENT COLON pt = paramtype
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
-| EMPTY
-		{ ErgoCompiler.cto_empty }
-| ANY
-		{ ErgoCompiler.cto_any }
-| pt = IDENT
-    { begin match pt with
-      | "Boolean" -> ErgoCompiler.cto_boolean
-      | "String" -> ErgoCompiler.cto_string
-      | "Double" -> ErgoCompiler.cto_double
-      | "Long" -> ErgoCompiler.cto_long
-      | "Integer" -> ErgoCompiler.cto_integer
-      | "DateTime" -> ErgoCompiler.cto_dateTime
-      | _ -> ErgoCompiler.cto_class_ref (Util.char_list_of_string pt)
+| qn = qname_base
+    { begin match qn with
+      | (None, "Boolean") -> ErgoCompiler.ergo_type_boolean
+      | (None, "String") -> ErgoCompiler.ergo_type_string
+      | (None, "Double") -> ErgoCompiler.ergo_type_double
+      | (None, "Long") -> ErgoCompiler.ergo_type_long
+      | (None, "Integer") -> ErgoCompiler.ergo_type_integer
+      | (None, "DateTime") -> ErgoCompiler.ergo_type_dateTime
+      | (None, "Empty") -> ErgoCompiler.ergo_type_none
+      | (None, "Any") -> ErgoCompiler.ergo_type_any
+      | _ ->
+          ErgoCompiler.ergo_type_class_ref (relative_ref_of_qname_base qn)
       end }
 | LCURLY rt = rectype RCURLY
-    { ErgoCompiler.cto_record rt }
+    { ErgoCompiler.ergo_type_record rt }
 | pt = paramtype LBRACKET RBRACKET
-    { ErgoCompiler.cto_array pt }
+    { ErgoCompiler.ergo_type_array pt }
 | pt = paramtype QUESTION
-    { ErgoCompiler.cto_option pt }
+    { ErgoCompiler.ergo_type_option pt }
 
 rectype:
 | 
     { [] }
-| at = atttype
+| at = attributetype
     { [at] }
-| at = atttype COMMA rt = rectype
+| at = attributetype COMMA rt = rectype
     { at :: rt }
 
-atttype:
+attributetype:
 | an = IDENT COLON pt = paramtype
     { (Util.char_list_of_string an, pt) }
 
 stmt:
 (* Statments *)
 | RETURN
-		{ ErgoCompiler.sreturnempty }
+    { ErgoCompiler.sreturnempty }
 | RETURN e1 = expr
-		{ ErgoCompiler.sreturn e1 }
+    { ErgoCompiler.sreturn e1 }
 | THROW e1 = expr
     { ErgoCompiler.sthrow e1 }
 (* Call *)
@@ -240,9 +272,9 @@ stmt:
 fstmt:
 (* Statments *)
 | RETURN
-		{ ErgoCompiler.sfunreturnempty }
+    { ErgoCompiler.sfunreturnempty }
 | RETURN e1 = expr
-		{ ErgoCompiler.sfunreturn e1 }
+    { ErgoCompiler.sfunreturn e1 }
 | THROW e1 = expr
     { raise (LexError ("Cannot throw inside a function, you have to be in a Clause")) }
 | DEFINE VARIABLE v = ident EQUAL e1 = expr SEMI s2 = fstmt
@@ -263,29 +295,35 @@ fstmt:
     { ErgoCompiler.smatch e0 (fst csd) (snd csd) }
 
 (* cases *)
+type_annotation:
+| (* Empty *)
+    { None }
+| COLON tn = IDENT
+    { Some (Util.char_list_of_string tn) }
+
 cases_stmt:
 | ELSE s = stmt
     { ([],s) }
 | WITH d = data THEN s = stmt cs = cases_stmt
-    { (((None,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH LET v = ident EQUAL d = data THEN s = stmt cs = cases_stmt
-    { (((Some v,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH AS brand = STRING THEN s = stmt tcs = cases_stmt
-    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
-| WITH LET v = ident AS brand = STRING THEN s = stmt tcs = cases_stmt
-    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+    { ((ErgoCompiler.ecasedata d,s)::(fst cs), snd cs) }
+| WITH LET v = ident ta = type_annotation THEN s = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecaselet v ta,s)::(fst cs), snd cs) }
+| WITH UNDERSCORE ta = type_annotation THEN e = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecasewildcard ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident QUESTION ta = type_annotation THEN s = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecaseletoption v ta,s)::(fst cs), snd cs) }
 
 cases_fstmt:
 | ELSE s = fstmt
     { ([],s) }
 | WITH d = data THEN s = fstmt cs = cases_fstmt
-    { (((None,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH LET v = ident EQUAL d = data THEN s = fstmt cs = cases_fstmt
-    { (((Some v,ErgoCompiler.ecasevalue d),s)::(fst cs), snd cs) }
-| WITH AS brand = STRING THEN s = fstmt tcs = cases_fstmt
-    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
-| WITH LET v = ident AS brand = STRING THEN s = fstmt tcs = cases_fstmt
-    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),s)::(fst tcs), snd tcs) }
+    { ((ErgoCompiler.ecasedata d,s)::(fst cs), snd cs) }
+| WITH LET v = ident ta = type_annotation THEN s = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecaselet v ta,s)::(fst cs), snd cs) }
+| WITH UNDERSCORE ta = type_annotation THEN e = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecasewildcard ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident QUESTION ta = type_annotation THEN s = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecaseletoption v ta ,s)::(fst cs), snd cs) }
 
 expr:
 (* Parenthesized expression *)
@@ -314,6 +352,10 @@ expr:
     { ErgoCompiler.evar (Util.char_list_of_string v) }
 | e = expr DOT a = safeident
     { ErgoCompiler.edot a e }
+| e = expr QUESTIONDOT a = safeident
+    { ErgoCompiler.eoptionaldot a e }
+| e1 = expr QUESTIONQUESTION e2 = expr
+    { ErgoCompiler.eoptionaldefault e1 e2 }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { ErgoCompiler.eif e1 e2 e3 }
 | NEW qn = qname LCURLY r = reclist RCURLY
@@ -336,8 +378,6 @@ expr:
     { ErgoCompiler.eforeach fl None e2 }
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach fl (Some econd) e2 }
-| e1 = expr QUESTION e2 = expr
-    { ErgoCompiler.eliftoptional e1 e2 }
 | e1 = expr BANG e2 = expr
     { ErgoCompiler.elifterror e1 e2 }
 (* Unary operators *)
@@ -405,26 +445,26 @@ cases:
 | ELSE e = expr
     { ([],e) }
 | WITH d = data THEN e = expr cs = cases
-    { (((None,ErgoCompiler.ecasevalue d),e)::(fst cs), snd cs) }
-| WITH LET v = ident EQUAL d = data THEN e = expr cs = cases
-    { (((Some v,ErgoCompiler.ecasevalue d),e)::(fst cs), snd cs) }
-| WITH AS brand = STRING THEN e = expr tcs = cases
-    { (((None,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
-| WITH LET v = ident AS brand = STRING THEN e = expr tcs = cases
-    { (((Some v,ErgoCompiler.ecasetype (Util.char_list_of_string brand)),e)::(fst tcs), snd tcs) }
+    { ((ErgoCompiler.ecasedata d,e)::(fst cs), snd cs) }
+| WITH UNDERSCORE ta = type_annotation THEN e = expr cs = cases
+    { ((ErgoCompiler.ecasewildcard ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident ta = type_annotation THEN e = expr cs = cases
+    { ((ErgoCompiler.ecaselet v ta,e)::(fst cs), snd cs) }
+| WITH LET v = ident QUESTION ta = type_annotation THEN e = expr tcs = cases
+    { ((ErgoCompiler.ecaseletoption v ta,e)::(fst tcs), snd tcs) }
 
 (* New struct *)
 reclist:
 | 
     { [] }
-| a = att
+| a = attribute
     { [a] }
-| a = att COMMA rl = reclist
+| a = attribute COMMA rl = reclist
     { a :: rl }
 
-att:
-| an = IDENT COLON e = expr
-    { (Util.char_list_of_string an, e) }
+attribute:
+| an = safeident COLON e = expr
+    { (an, e) }
 
 (* Qualified name *)
 qname_base:
@@ -443,11 +483,7 @@ qname_base:
 
 qname:
 | qn = qname_base
-    { begin match qn with
-      | (None,last) -> (None,Util.char_list_of_string last)
-      | (Some prefix, last) ->
-    (Some (Util.char_list_of_string prefix), Util.char_list_of_string last)
-      end }
+    { qname_of_qname_base qn }
 
 qname_prefix:
 | qn = qname_base
@@ -488,32 +524,31 @@ safeident_base:
 | IMPORT { "import" }
 | DEFINE { "define" }
 | FUNCTION { "function" }
-| CONTRACT { "contract" }
 | CONCEPT { "concept" }
 | TRANSACTION { "transaction" }
 | ENUM { "enum" }
 | EXTENDS { "extends" }
+| CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }
+| THROWS { "throws" }
+| EMITS { "emits" }
+| STATE { "state" }
 | ENFORCE { "enforce" }
 | IF { "if" }
 | THEN { "then" }
 | ELSE { "else" }
 | LET { "let" }
 | FOREACH { "foreach" }
+| RETURN { "return" }
 | IN { "in" }
 | WHERE { "where" }
-| RETURN { "return" }
 | THROW { "throw" }
-| THROWS { "throws" }
-| STATE { "state" }
+| NEW { "new" }
+| VARIABLE { "variable" }
+| MATCH { "match" }
 | SET { "set" }
 | EMIT { "emit" }
-| VARIABLE { "variable" }
-| AS { "as" }
-| NEW { "new" }
-| MATCH { "match" }
-| TYPEMATCH { "typematch" }
 | WITH { "with" }
 | OR { "or" }
 | AND { "and" }

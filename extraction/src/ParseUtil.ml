@@ -46,5 +46,5 @@ let parse parser lexer buf =
                     (end_pos.Lexing.pos_cnum - end_pos.Lexing.pos_bol))
   end
 
-let parse_ergo f : ergo_package = parse ErgoParser.main (ErgoLexer.token (string_buff ())) f
+let parse_ergo f : ergo_module = parse ErgoParser.main (ErgoLexer.token (string_buff ())) f
 

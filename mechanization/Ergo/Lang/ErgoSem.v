@@ -45,7 +45,7 @@ Section ErgoSem.
       env.(env_this_emit)
       ((v,d)::env.(env_variables)).
   
-  Definition mod_context := list ergo_package.
+  Definition module_context := list ergo_module.
 
   (** Currently, this is written as a big-step semantics. There is
       some amount of duplication in rules preconditions due to error
@@ -53,7 +53,7 @@ Section ErgoSem.
       semantic style.  See [Charguéraud ESOP 2013]
       http://www.chargueraud.org/research/2012/pretty/ *)
 
-  Inductive ergo_expr_sem : mod_context -> env -> ergo_expr -> ErgoData.data -> Prop :=
+  Inductive ergo_expr_sem : module_context -> env -> ergo_expr -> ErgoData.data -> Prop :=
   | sem_EThisContract : forall mc env,
       ergo_expr_sem mc env EThisContract (env.(env_this_contract))
   | sem_EThisClause : forall mc env,

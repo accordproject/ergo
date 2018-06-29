@@ -144,8 +144,10 @@ Module EOperators(ergomodel:ErgoBackendModel).
         := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeGt.
       Definition opdatege : op
         := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeGe.
-      Definition opdateintervalbetween : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIntervalBetween.
+      Definition opdateintervaldays : op
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIntervalDays.
+      Definition opdateintervalseconds : op
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIntervalSeconds.
     End DateTime.
 
     Definition opequal : op

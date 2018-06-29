@@ -19,7 +19,7 @@ MODULES = \
   Backend/Model/ErgoEnhancedModel \
 	Backend/Model/ErgoBackendModel \
 	Backend/Model/ErgoBackendRuntime \
-	Backend/Lib/EType \
+	Backend/Lib/ECType \
 	Backend/Lib/EData \
 	Backend/Lib/EOperators \
 	Backend/Lib/ECodeGen \
@@ -29,18 +29,23 @@ MODULES = \
 	Common/Utils/EResult \
 	Common/Utils/EImport \
 	Common/CTO/CTO \
-	Common/CTO/ETypeContext \
+	Common/Types/ErgoType \
+	Common/Pattern/EPattern \
 	Ergo/Lang/Ergo \
 	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
 	ErgoCalculus/Lang/ErgoCalculus \
-	ErgoCalculus/Lang/ErgoCalculusSugar \
-	ErgoCalculus/Lang/ErgoCalculusCall \
+	ErgoNNRC/Lang/ErgoNNRC \
+	ErgoNNRC/Lang/ErgoNNRCSugar \
+	ErgoNNRC/Lang/ErgoNNRCCall \
+	Translation/CTOtoErgo \
+	Translation/ErgoTypetoErgoCalculusType \
 	Translation/ErgotoErgoCalculus \
-	Translation/ErgoCalculustoJavaScript \
-	Translation/ErgoCalculustoJavaScriptCicero \
-	Translation/ErgoCalculustoJava \
+	Translation/ErgoCalculustoErgoNNRC \
+	Translation/ErgoNNRCtoJavaScript \
+	Translation/ErgoNNRCtoJavaScriptCicero \
+	Translation/ErgoNNRCtoJava \
 	Translation/ErgotoJavaScript \
 	Translation/ErgotoJavaScriptCicero \
 	Translation/ErgotoJava \

@@ -32,7 +32,7 @@ describe('ergo-compiler', () => {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'model.cto'), 'utf8');
             const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
-            result.should.deep.equal({ 'error' : { 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } } });
+            result.should.deep.equal({ 'error' : { 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 16, 'character' : 20 }, 'locend' : { 'line' : 16, 'character' : 23 } } });
         });
     });
     describe('#parseerrormessage', function () {
@@ -42,7 +42,7 @@ describe('ergo-compiler', () => {
         });
     });
     describe('#compilationerrormessage', function () {
-        it('should format parse error', async function () {
+        it('should format compilation error', async function () {
             const result = await Ergo.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
             result.should.deep.equal('Import not found: org.accordproject.base');
         });
@@ -97,7 +97,7 @@ describe('ergo-compiler', () => {
     describe('#commonctos', function () {
         it('should return built-in CTOs', async function () {
             const result = Ergo.commonCTOs();
-            result.should.have.lengthOf(2);
+            result.should.have.lengthOf(4);
         });
     });
 });

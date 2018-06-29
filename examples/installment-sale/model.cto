@@ -13,31 +13,31 @@
  */
 namespace org.accordproject.installmentsale
 
+transaction InitializeRequest {
+  o Double firstMonth
+}
+transaction InitializeResponse {
+}
 transaction Installment {
   o Double amount
 }
-
 transaction ClosingPayment {
   o Double amount
 }
-
 transaction Balance {
   o Double balance
 	o Double total_paid
 }
-
 enum ContractStatus {
   o WaitingForFirstDayOfNextMonth
   o Fulfilled
 }
-
-concept ContractState {
+asset InstallmentSaleState extends ContractState {
   o ContractStatus status
   o Double balance_remaining
   o Integer next_payment_month
 	o Double total_paid
 }
-
 event PaymentObligation {
   o String from
 	o String to
@@ -57,4 +57,3 @@ concept TemplateModel {
   o Double MIN_PAYMENT
   o Double DUE_AT_CLOSING
 }
-

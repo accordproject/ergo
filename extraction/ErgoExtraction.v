@@ -18,12 +18,18 @@
 
 Require Extraction.
 Extraction Language OCaml.
-Require Import ExtrOcamlBasic ExtrOcamlString ExtrOcamlNatInt ExtrOcamlZInt.
+Require Import ExtrOcamlBasic.
+Require Import ExtrOcamlString.
+Require Import ExtrOcamlNatInt.
+Require Import ExtrOcamlZInt.
 Require Import Qcert.Extraction.ExtrOcamlFloatNatIntZInt.
+
 Extraction Blacklist String List.
 
 Require Import Qcert.Utils.Digits.
 Extract Constant Digits.nat_to_string10 => "(fun x -> Util.char_list_of_string (string_of_int x))".
+
+Extract Constant String.append => "(fun s1 s2 -> Util.char_list_append s1 s2)".
 
 (* Ergo modules *)
 Require ErgoCompiler.

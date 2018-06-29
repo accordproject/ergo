@@ -91,21 +91,21 @@ let json_of_error error =
   end
 
 let ergo_compile input =
+  let gconf =
+    begin try
+      global_config_of_json input
+    with exn ->
+      ergo_raise (ergo_system_error ("Couldn't load configuration: "^(Printexc.to_string exn)))
+    end
+  in
+  let j_s =
+    begin try
+      Js.to_string input##.ergo
+    with exn ->
+      ergo_raise (ergo_system_error ("Couldn't load contract: "^(Printexc.to_string exn)))
+    end
+  in
   begin try
-    let gconf =
-      begin try
-        global_config_of_json input
-      with exn ->
-        ergo_raise (ergo_system_error ("Couldn't load configuration: "^(Printexc.to_string exn)))
-      end
-    in
-    let j_s =
-      begin try
-        Js.to_string input##.ergo
-      with exn ->
-        ergo_raise (ergo_system_error ("[Compilation Error] Couldn't load contract: "^(Printexc.to_string exn)))
-      end
-    in
     let res = ErgoCompile.ergo_compile gconf j_s in
     json_of_result res
   with

@@ -28,7 +28,7 @@ let parse_string p_fun s =
   let buf = Lexing.from_string s in
   p_fun buf
 
-let parse_ergo_from_string s : ergo_package = parse_string parse_ergo s
+let parse_ergo_from_string s : ergo_module = parse_string parse_ergo s
 
 
 
