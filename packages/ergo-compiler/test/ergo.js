@@ -98,14 +98,8 @@ describe('ergo-compiler', () => {
     describe('#parsecto', function () {
         it('should parse CTO', async function () {
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
-            const result = await Ergo.parseCTO(ctoText);
+            const result = Ergo.parseCTOtoJSON(ctoText);
             result.should.not.be.null;
-        });
-    });
-    describe('#commonctos', function () {
-        it('should return built-in CTOs', async function () {
-            const result = Ergo.commonCTOs();
-            result.should.have.lengthOf(4);
         });
     });
 });

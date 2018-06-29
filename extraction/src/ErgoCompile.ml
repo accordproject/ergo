@@ -51,18 +51,18 @@ let ergo_compile gconf mls file_content =
   result
 
 let ergo_proc gconf mls (file_name,file_content) =
-  Printf.printf "Processing file: %s --" file_name;
+  Printf.printf "Compiling Ergo '%s' " file_name;
   let target_lang = ErgoConfig.get_target_lang gconf in
   let result = ergo_compile gconf mls file_content in
   let file_res = make_result_file (extension_of_lang target_lang) file_name result in
   if file_res.res_file <> "" then
     begin
-      Printf.printf " compiled to: %s\n" file_res.res_file;
+      Printf.printf " to '%s'\n" file_res.res_file;
       make_file file_res.res_file file_res.res_content
     end
 
 let get_stdlib gconf =
-  List.map (process_file (ergo_parse gconf)) stdlibErgo
+  List.map (ergo_parse gconf) ErgoStdlib.ergo_stdlib
 
 let batch_compile_top gconf cto_files input_files =
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;

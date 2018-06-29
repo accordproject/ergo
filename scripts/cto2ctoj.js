@@ -15,23 +15,25 @@
 
 'use strict';
 
-const Commands = require('../lib/commands');
-const Logger = require('@accordproject/ergo-compiler/lib/logger');
+const Fs = require('fs');
+const CTOParser = require('composer-common/lib/introspect/parser');
 
 require('yargs')
     .command('parse', 'parse CTO file to JSON', (yargs) => {
     }, (argv) => {
         const files = argv._.slice(1);
         for (let i = 0; i < files.length; i++) {
-            const inFile = files[i];
-            Logger.info(`Parse CTO file ${inFile}`);
-            Commands.parseCTOtoFile(inFile)
-                .then((outFile) => {
-                    Logger.info(`Create CTOJ file ${outFile}`);
-                })
-                .catch((err) => {
-                    Logger.error(err.message + ' ' + JSON.stringify(err));
-                });
+            try {
+                const inFile = files[i];
+                console.info(`Parsing CTO '${inFile}'`);
+                const ctoText = Fs.readFileSync(inFile, 'utf8');
+                const ctoJson = CTOParser.parse(ctoText);
+                const outFile = inFile.substr(0, inFile.lastIndexOf('.')) + '.ctoj';
+                Fs.writeFileSync(outFile, JSON.stringify(ctoJson));
+                console.info(`Create CTOJ file ${outFile}`);
+            } catch (err) {
+                console.error(err.message + ' ' + JSON.stringify(err));
+            };
         }
     })
     .demandCommand()

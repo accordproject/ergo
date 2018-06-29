@@ -89,17 +89,6 @@ class Commands {
     }
 
     /**
-     * Parse CTO to JSON
-     *
-     * @param {string} ctoPath path to CTO model file
-     * @returns {object} The parsed CTO model syntax tree in JSON
-     */
-    static parseCTO(ctoPath) {
-        const ctoText = Fs.readFileSync(ctoPath, 'utf8');
-        return Ergo.parseCTO(ctoText);
-    }
-
-    /**
      * Parse CTO to JSON File
      *
      * @param {string} ctoPath path to CTO model file

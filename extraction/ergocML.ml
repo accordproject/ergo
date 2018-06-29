@@ -25,19 +25,7 @@ let patch_cto_extension f =
   | _ -> f
   end
 
-let modelsDir =
-  Util.filename_append
-    StaticConfig.ergo_home
-    ["packages";"ergo-compiler";"models"]
-let commonCTOs = [|
-  Filename.concat modelsDir "org.hyperledger.composer.system.cto";
-  Filename.concat modelsDir "contract.cto";
-  Filename.concat modelsDir "money.cto";
-  Filename.concat modelsDir "runtime.cto";
-|]
-
 let patch_argv argv =
-  let argv = Array.append argv commonCTOs in
   Array.map patch_cto_extension argv
 
 let wrap_error e =

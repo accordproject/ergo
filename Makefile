@@ -27,7 +27,8 @@ all:
 	@$(MAKE) MAKEFLAGS= ergo
 
 # Regenerate the npm directory
-ergo: _CoqProject Makefile.coq
+ergo:
+	@$(MAKE) npm-setup
 	@$(MAKE) ergo-mechanization
 	@$(MAKE) MAKEFLAGS= ergo-extraction-refresh
 
@@ -49,7 +50,10 @@ ergo-extraction-refresh:
 	@echo "[Ergo] "
 	@$(MAKE) -C extraction all-refresh
 
-ergo-npm:
+npm-setup:
+	@echo "[Ergo] "
+	@echo "[Ergo] Setting up Lerna"
+	@echo "[Ergo] "
 	lerna bootstrap
 
 publish:
@@ -100,6 +104,9 @@ clean: Makefile.coq
 	- @$(MAKE) -C packages/ergo-cli clean
 
 cleanall: Makefile.coq
+	@echo "[Ergo] "
+	@echo "[Ergo] Cleaning up"
+	@echo "[Ergo] "
 	- @$(MAKE) cleanall-npm
 	- @$(MAKE) cleanall-extraction
 	- @$(MAKE) cleanall-mechanization
@@ -110,6 +117,9 @@ cleanall: Makefile.coq
 
 ##
 _CoqProject: Makefile.config
+	@echo "[Ergo] "
+	@echo "[Ergo] Setting up Coq"
+	@echo "[Ergo] "
 ifneq ($(QCERT),)
 	(echo "-R mechanization ErgoSpec -R $(QCERT)/coq Qcert";) > _CoqProject
 else

@@ -19,13 +19,6 @@ const Path = require('path');
 const Compiler=require('./ergo-core.js');
 const CTOParser = require('composer-common/lib/introspect/parser');
 
-const HyperledgerCTO = Path.join(__dirname,'..','models','org.hyperledger.composer.system.cto');
-const ContractCTO = Path.join(__dirname,'..','models','contract.cto');
-const MoneyCTO = Path.join(__dirname,'..','models','money.cto');
-const RuntimeCTO = Path.join(__dirname,'..','models','runtime.cto');
-const CommonCTOs = [HyperledgerCTO, ContractCTO, MoneyCTO, RuntimeCTO];
-const CommonCTOTexts = [Fs.readFileSync(HyperledgerCTO, 'utf8'), Fs.readFileSync(ContractCTO, 'utf8'), Fs.readFileSync(MoneyCTO, 'utf8'), Fs.readFileSync(RuntimeCTO, 'utf8')];
-
 /**
  * Utility class that implements the internals for Ergo.
  * @class
@@ -40,16 +33,6 @@ class Ergo {
     static parseCTOtoJSON(ctoText) {
         const result = CTOParser.parse(ctoText);
         return result;
-    }
-
-    /**
-     * Parse CTO
-     *
-     * @param {string} ctoText text for CTO model
-     * @returns {object} The parsed CTO model syntax tree in JSON
-     */
-    static parseCTO(ctoText) {
-        return Promise.resolve(this.parseCTOtoJSON(ctoText));
     }
 
     /**
@@ -88,10 +71,9 @@ class Ergo {
         };
         // Clean-up naming for Sexps
         config.ergo = ergoText;
-        const ctos = CommonCTOTexts.concat(ctoTexts);
         config.cto = [];
-        for (let i = 0; i < ctos.length; i++) {
-            config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctos[i])));
+        for (let i = 0; i < ctoTexts.length; i++) {
+            config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctoTexts[i])));
         }
         // Call compiler
         const compiled = Compiler.compile(config);
@@ -171,14 +153,6 @@ class Ergo {
         }
     }
 
-    /**
-     * Common CTOs
-     *
-     * @returns {string[]} Built-in CTO models
-     */
-    static commonCTOs() {
-        return CommonCTOs;
-    }
 }
 
 module.exports = Ergo;
