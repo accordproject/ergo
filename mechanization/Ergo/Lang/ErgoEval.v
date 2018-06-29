@@ -170,7 +170,7 @@ Section ErgoEval.
       | None => efailure (CompilationError ("Function " ++ fn ++ " not found."))
       end
     | EMatch _ _ _ => TODO
-
+ 
     | EForeach rs whr fn =>
       let singleton := fun x => EArray (x::nil) in
       let base := 
@@ -197,7 +197,7 @@ Section ErgoEval.
                   )
         )
         base rs
-
+ 
     | ELiftError _ _ => TODO
     end.
 
@@ -289,33 +289,6 @@ Section ErgoEval.
       end
     | _ => efailure (CompilationError ("Function "++fn.(function_name)++" is bad!!!"))
     end.
-
-Fixpoint cross_product_helper
-       (ctx : ergo_context)
-       (ls : list (string * ergo_data)) : eresult (list ergo_context) :=
-       match ls with
-       | nil => esuccess (ctx::nil)
-       | (name, dcoll arr)::rest =>
-         elift
-           (fun rest' =>
-              concat
-                (map
-                   (fun val =>
-                      (map
-                         (fun ctx' =>
-                            (ergo_ctx_update_local_env ctx' name val)) rest'))
-                   arr))
-               (cross_product_helper ctx rest)
-       | (name, _)::rest => efailure (RuntimeError "Tried to foreach with a non-array...")
-       end.
-
-Fixpoint get_somes_helper {A}
-         (ls : list (option A)) :=
-  match ls with
-  | nil => nil
-  | None::ls' => get_somes_helper ls'
-  | (Some pig) :: ls' => pig :: (get_somes_helper ls')
-  end.
 
 Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_data :=
   match expr with
