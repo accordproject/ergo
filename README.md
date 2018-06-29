@@ -59,7 +59,7 @@ $ ergo execute --ergo ./examples/volumediscount/logic.ergo --contractname Volume
 
 ## Documentation
 
-The most recent documentation is available at [https://accordproject.netlify.com/docs/ergo.html](https://accordproject.netlify.com/docs/ergo.html)
+The most recent documentation is available at [https://docs.accordproject.org/docs/ergo-intro-overview.html](https://docs.accordproject.org/docs/ergo-intro-overview.html)
 
 ## For developers
 
