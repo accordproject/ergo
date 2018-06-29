@@ -165,7 +165,7 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
           | "org.accordproject.ergo.stdlib.some" => Some OpLeft
           (* Natural numbers // Integer or Long *)
           | "org.accordproject.ergo.stdlib.integerAbs" => Some (OpNatUnary NatAbs)
-          | "org.accordproject.ergo.stdlib.integerlog2" => Some (OpNatUnary NatLog2)
+          | "org.accordproject.ergo.stdlib.integerLog2" => Some (OpNatUnary NatLog2)
           | "org.accordproject.ergo.stdlib.integerSqrt" => Some (OpNatUnary NatSqrt)
           | "org.accordproject.ergo.stdlib.integerToDouble" => Some OpFloatOfNat
           (* Floating point numbers // Double *)
@@ -205,8 +205,8 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
             | "org.accordproject.ergo.stdlib.integerMin" => Some (OpNatBinary NatMin)
             | "org.accordproject.ergo.stdlib.integerMax" => Some (OpNatBinary NatMax)
             (* Floating point numbers // Double *)
-            | "org.accordproject.ergo.stdlib.min" => Some (OpFloatBinary FloatMin)
-            | "org.accordproject.ergo.stdlib.max" => Some (OpFloatBinary FloatMax)
+            | "org.accordproject.ergo.stdlib.minPair" => Some (OpFloatBinary FloatMin)
+            | "org.accordproject.ergo.stdlib.maxPair" => Some (OpFloatBinary FloatMax)
             (* Arrays *)
             | "org.accordproject.ergo.stdlib.arrayAdd" => Some OpBagUnion
             | "org.accordproject.ergo.stdlib.arraySubstract" => Some OpBagDiff

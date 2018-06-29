@@ -9,16 +9,62 @@ let runtime = {xxx|
 let stdlib = {xxx|
 namespace org.accordproject.ergo.stdlib
 
+// DateTime operations
 define function now() : DateTime
 define function moment(x:String) : DateTime
-define function momentDuration(x:String, y:String) : Duration
+
+define function momentDayOfMonth(x:DateTime) : Double
+define function momentMonth(x:DateTime) : Double
+define function momentQuarter(x:DateTime) : Double
+define function momentYear(x:DateTime) : Double
+
 define function momentIsAfter(x:DateTime, y:DateTime) : Boolean
 define function momentIsBefore(x:DateTime, y:DateTime) : Boolean
-define function momentDiffDays(x:DateTime, y:DateTime) : Duration
+define function momentIsSame(x:DateTime, y:DateTime) : Boolean
+
+define function momentDuration(x:String, y:String) : Duration
+define function momentSubtract(x:DateTime, y:Duration) : DateTime
 define function momentAdd(x:DateTime, y:Duration) : DateTime
+define function momentDiffDays(x:DateTime, y:DateTime) : Double
+define function momentDiffSeconds(x:DateTime, y:DateTime) : Double
+
 define function min(x:Float[]) : Float
 define function count(x:Float[]) : Integer
 
-define function some(Anything) : Anything
+// Integer operations
+define function integerAbs(x:Integer) : Integer
+define function integerLog2(x:Integer) : Integer
+define function integerSqrt(x:Integer) : Integer
+define function integerToDouble(x:Integer) : Double
 
+define function integerMod(x:Integer, y:Integer) : Integer
+define function integerMin(x:Integer, y:Integer) : Integer
+define function integerMax(x:Integer, y:Integer) : Integer
+
+// Double operations
+define function sqrt(x:Double) : Double
+define function exp(x:Double) : Double
+define function log(x:Double) : Double
+define function log10(x:Double) : Double
+define function ceil(x:Double) : Double
+define function floor(x:Double) : Double
+define function abs(x:Double) : Double
+define function max(x:Double[]) : Double
+define function min(x:Double[]) : Double
+define function average(x:Double[]) : Double
+define function sum(x:Double[]) : Double
+define function doubleToInteger(x:Double) : Integer
+define function truncate(x:Double) : Integer
+
+define function maxPair(x:Double, y:Double) : Double
+define function minPair(x:Double, y:Double) : Double
+
+// Polymorphic operations
+define function toString(x:Any) : String
+define function some(x:Any) : Any
+define function distinct(x:Any[]) : Any[]
+define function count(x:Any[]) : Integer
+define function flatten(x:Any[][]) : Any[]
+define function arrayAdd(x:Any[],y:Any[]) : Any[]
+define function arraySubtract(x:Any[],y:Any[]) : Any[]
 |xxx}
