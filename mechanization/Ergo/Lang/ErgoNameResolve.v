@@ -367,13 +367,13 @@ Section ErgoNameResolution.
       | EConst loc d => esuccess (EConst loc d)
       | EArray loc el =>
         let init_el := esuccess nil in
-        let proc_one (acc:eresult (list laergo_expr)) (e:lrergo_expr) : eresult (list laergo_expr) :=
+        let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
               (resolve_ergo_expr ctxt e)
               acc
         in
-        elift (EArray loc) (fold_left proc_one el init_el)
+        elift (EArray loc) (fold_right proc_one init_el el)
       | EUnaryOp loc u e =>
         elift (EUnaryOp loc u)
               (resolve_ergo_expr ctxt e)
@@ -400,20 +400,20 @@ Section ErgoNameResolution.
       | ENew loc cr el =>
         let rcr := resolve_type_name loc ctxt cr in
         let init_rec := esuccess nil in
-        let proc_one (acc:eresult (list (string * laergo_expr))) (att:string * lrergo_expr) :=
+        let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
             let e := resolve_ergo_expr ctxt (snd att) in
             elift2 (fun e => fun acc => (attname,e)::acc) e acc
         in
-        elift2 (ENew loc) rcr (fold_left proc_one el init_rec)
+        elift2 (ENew loc) rcr (fold_right proc_one init_rec el)
       | ERecord loc el =>
         let init_rec := esuccess nil in
-        let proc_one (acc:eresult (list (string * laergo_expr))) (att:string * lrergo_expr) :=
+        let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
             let e := resolve_ergo_expr ctxt (snd att) in
             elift2 (fun e => fun acc => (attname,e)::acc) e acc
         in
-        elift (ERecord loc) (fold_left proc_one el init_rec)
+        elift (ERecord loc) (fold_right proc_one init_rec el)
       | ECallFun loc fname el =>
         let rfname := resolve_function_name loc ctxt (None,fname) in
         let init_el := esuccess nil in
@@ -454,8 +454,8 @@ Section ErgoNameResolution.
         in
         let init_e := esuccess nil in
         let proc_one
-              (acc:eresult (list (string * laergo_expr)))
               (foreach:string * lrergo_expr)
+              (acc:eresult (list (string * laergo_expr)))
             : eresult (list (string * laergo_expr)) :=
             let v := fst foreach in
             let e := resolve_ergo_expr ctxt (snd foreach) in
@@ -464,7 +464,7 @@ Section ErgoNameResolution.
                  acc
         in
         elift3 (EForeach loc)
-               (fold_left proc_one foreachs init_e)
+               (fold_right proc_one init_e foreachs)
                recond
                re2
       end.
@@ -723,6 +723,5 @@ Section ErgoNameResolution.
     (* Eval vm_compute in aml1. *)
   End Examples.
   
-
 End ErgoNameResolution.
 

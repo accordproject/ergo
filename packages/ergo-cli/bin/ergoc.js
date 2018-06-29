@@ -17,15 +17,9 @@
 
 const Commands = require('../lib/commands');
 const Logger = require('@accordproject/ergo-compiler/lib/logger');
-const Ergo = require('@accordproject/ergo-compiler/lib/ergo');
 
 try {
     const args = process.argv;
-    const commonCTOs = Ergo.commonCTOs();
-    for (let i = 0; i < commonCTOs.length; i++) {
-        //Logger.info();
-        args.push(commonCTOs[i]);
-    }
     for (let i = 0; i < args.length; i++) {
         if (args[i].split('.').pop() === 'cto') {
             const ctoPath = args[i];

@@ -190,13 +190,13 @@ Section ErgoCalculustoErgoNNRC.
       esuccess (NNRCConst d)
     | EArray loc el =>
       let init_el := esuccess nil in
-      let proc_one (acc:eresult (list nnrc_expr)) (e:ergo_expr) : eresult (list nnrc_expr) :=
+      let proc_one (e:ergo_expr) (acc:eresult (list nnrc_expr)) : eresult (list nnrc_expr) :=
           elift2
             cons
             (ergoc_expr_to_nnrc ctxt e)
             acc
       in
-      elift new_array (fold_left proc_one el init_el)
+      elift new_array (fold_right proc_one init_el el)
     | EUnaryOp loc u e =>
       elift (NNRCUnop u)
             (ergoc_expr_to_nnrc ctxt e)
@@ -227,7 +227,7 @@ Section ErgoCalculustoErgoNNRC.
           let attname := fst att in
           let e := ergoc_expr_to_nnrc ctxt (snd att) in
           elift2 (NNRCBinop OpRecConcat)
-                 (elift (NNRCUnop (OpRec attname)) e) acc
+                 acc (elift (NNRCUnop (OpRec attname)) e)
       in
       elift (new_expr cr) (fold_left proc_one rest init_rec)
     | ERecord loc nil =>
@@ -240,7 +240,7 @@ Section ErgoCalculustoErgoNNRC.
           let attname := fst att in
           let e := ergoc_expr_to_nnrc ctxt (snd att) in
           elift2 (NNRCBinop OpRecConcat)
-                 (elift (NNRCUnop (OpRec attname)) e) acc
+                 acc (elift (NNRCUnop (OpRec attname)) e)
       in
       fold_left proc_one rest init_rec
     | ECallFun loc fname el =>
@@ -290,35 +290,30 @@ Section ErgoCalculustoErgoNNRC.
                      in
                      elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
-    | EForeach loc foreachs None e2 =>
-      let init_e := NNRCUnop OpBag (ergoc_expr_to_nnrc ctxt e2) in
-      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
-          let v := fst foreach in
-          let e := ergoc_expr_to_nnrc ctxt (snd foreach) in
-          elift2 (NNRCFor v)
-                 e
-                 acc
-      in
-      fold_left proc_one foreachs init_e
-    | EForeach loc foreachs (Some econd) e2 =>
+    | EForeach loc foreachs econd e2 =>
+      let init_e2 := elift (NNRCUnop OpBag) (ergoc_expr_to_nnrc ctxt e2) in
       let init_e :=
-          elift2
-            (fun econd e2 =>
-               NNRCIf econd
-                     (NNRCUnop OpBag e2)
-                     (NNRCConst (dcoll nil)))
-            (ergoc_expr_to_nnrc ctxt econd)
-            (ergoc_expr_to_nnrc ctxt e2)
+          match econd with
+          | Some econd =>
+            elift2
+              (fun econd e2 =>
+                 NNRCIf econd
+                        e2
+                        (NNRCConst (dcoll nil)))
+              (ergoc_expr_to_nnrc ctxt econd)
+              init_e2
+          | None => init_e2
+          end
       in
-      let proc_one (acc:eresult nnrc) (foreach:string * ergo_expr) : eresult nnrc :=
+      let proc_one (foreach:string * ergo_expr) (acc:eresult nnrc) : eresult nnrc :=
           let v := fst foreach in
           let e := ergoc_expr_to_nnrc ctxt (snd foreach) in
-          elift2 (NNRCFor v)
-                 e
-                 acc
+          elift (NNRCUnop OpFlatten)
+                (elift2 (NNRCFor v)
+                        e
+                        acc)
       in
-      elift (NNRCUnop OpFlatten)
-            (fold_left proc_one foreachs init_e)
+      fold_right proc_one init_e foreachs
     end.
 
   (** Translate a function to function+calculus *)
@@ -523,7 +518,34 @@ Section ErgoCalculustoErgoNNRC.
     (* Compute jc3none. *)
     (* Compute elift (fun x => nnrc_eval_top nil x nil) jc3none. *)
 
+    Example j4 : laergo_expr :=
+      EForeach dummy_location
+               (("x", EConst dummy_location (dcoll (dnat 1::dnat 2::dnat 3::nil)))
+                  :: ("y", EConst dummy_location (dcoll (dnat 4::dnat 5::dnat 6::nil)))
+                  :: nil)
+               None
+               (ERecord dummy_location
+                        (("a",EVar dummy_location "x")
+                           ::("b",EVar dummy_location "y")
+                           ::nil)).
+    Definition jc4 := ergoc_expr_to_nnrc ctxt0 j4.
+    (* Compute jc4. *)
+
+    Example j5 : laergo_expr :=
+      EForeach dummy_location
+               (("x", EConst dummy_location (dcoll (dnat 1::dnat 2::dnat 3::nil)))
+                  :: ("y", EConst dummy_location (dcoll (dnat 4::dnat 5::dnat 6::nil)))
+                  :: nil)
+               None
+               (ENew dummy_location
+                     "person"
+                     (("a",EVar dummy_location "x")
+                        ::("b",EVar dummy_location "y")
+                        ::nil)).
+    Definition jc5 := ergoc_expr_to_nnrc ctxt0 j5.
+    (* Compute jc5. *)
+
   End Examples.
-  
+
 End ErgoCalculustoErgoNNRC.
 

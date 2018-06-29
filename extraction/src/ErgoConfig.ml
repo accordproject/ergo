@@ -59,7 +59,7 @@ type global_config = {
   mutable jconf_ctos : cto_package list;
 }
 
-let default_config () = {
+let empty_config () = {
   jconf_source = Ergo;
   jconf_target = JavaScript;
   jconf_cto_files = [];
@@ -80,3 +80,8 @@ let add_cto_file gconf (f,s) =
     gconf.jconf_cto_files <- gconf.jconf_cto_files @ [s];
     add_cto gconf s
   end
+
+let default_config () =
+  let gconf = empty_config () in
+  List.iter (add_cto_file gconf) ErgoStdlib.ergo_stdcto;
+  gconf

@@ -24,10 +24,21 @@ define function numberOfShocks(maxAcc : Double, minAcc : Double, accelerometerRe
     )
 }
 
+define function shocks(maxAcc : Double, minAcc : Double, accelerometerReadings : Double[]) : Double {
+  return
+    foreach r in accelerometerReadings
+    where r > maxAcc or r < minAcc
+    return r
+}
+
 contract FragileGoods over TemplateModel {
   clause fragilegoods(request : DeliveryUpdate) : PayOut throws ErrorResponse {
     let shocks =
         numberOfShocks(contract.accelerationMax,
+		       contract.accelerationMin,
+		       request.accelerometerReadings);
+    let shocks2 =
+        shocks(contract.accelerationMax,
 		       contract.accelerationMin,
 		       request.accelerometerReadings);
     let shockPenalty =
@@ -35,8 +46,8 @@ contract FragileGoods over TemplateModel {
         * shocks;
     match request.status
       with "ARRIVED" then
-        return new PayOut{ amount : contract.deliveryPrice - shockPenalty }
+        return new PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
       else
-	return new PayOut{ amount : contract.deliveryPrice - shockPenalty }
+	return new PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
   }  
 }

@@ -102,13 +102,6 @@ describe('ergo', () => {
             result.state.balance_remaining.should.equal(7612.499999999999);
         });
     });
-    describe('#parsecto', function () {
-        it('should parse CTO', async function () {
-            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.parseCTO(ctoPath);
-            result.should.not.be.null;
-        });
-    });
     describe('#parsectotofile', function () {
         it('should parse CTO to CTOJ', async function () {
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');

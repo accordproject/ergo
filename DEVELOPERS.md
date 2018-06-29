@@ -29,6 +29,12 @@ Before you can build Ergo, you must install and configure the following dependen
 
 We recommend using [nvm](https://github.com/creationix/nvm) \(or [nvm-windows](https://github.com/coreybutler/nvm-windows)\) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
 
+* [Lerna](https://lernajs.io): We use lerna to handle multiple npm packages in the Ergo repository. To install:
+
+```
+npm install -g lerna
+```
+
 ### Forking Ergo on Github
 
 To contribute code to Ergo, you must have a GitHub account so you can push code to your own fork of Ergo and open Pull Requests in the \[GitHub Repository\]\[github\].

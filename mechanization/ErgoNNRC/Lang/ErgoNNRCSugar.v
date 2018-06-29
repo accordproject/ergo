@@ -51,12 +51,17 @@ Section ErgoNNRCSugar.
     match el with
     | nil => NNRCConst (dcoll nil)
     | e1::erest =>
-      fold_left (fun acc e => NNRCBinop OpBagUnion (NNRCUnop OpBag e) acc) erest (NNRCUnop OpBag e1)
+      fold_left (fun acc e => NNRCBinop OpBagUnion acc (NNRCUnop OpBag e)) erest (NNRCUnop OpBag e1)
     end.
 
   (** [new Concept{ field1: expr1, ... fieldn: exprn }] creates a record and brands it with the concept name *)
   Definition new_expr (brand:string) (struct_expr:nnrc_expr) : nnrc_expr :=
     NNRCUnop (OpBrand (brand :: nil)) struct_expr.
 
+  Section Examples.
+    Definition el1 := (NNRCConst (dnat 1))::(NNRCConst (dnat 2))::(NNRCConst (dnat 3))::nil.
+
+    (* Compute new_array el1. *)
+  End Examples.
 End ErgoNNRCSugar.
 

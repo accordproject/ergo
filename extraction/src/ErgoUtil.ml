@@ -123,15 +123,6 @@ let ergo_call contract_name =
   Util.string_of_char_list
     (ErgoCompiler.javascript_identifier_sanitizer (Util.char_list_of_string contract_name))
 
-(** Stdlib *)
-let modelsDir =
-  Util.filename_append
-    StaticConfig.ergo_home
-    ["packages";"ergo-compiler";"models"]
-let stdlibErgo = [
-  Filename.concat modelsDir "org.accordproject.ergo.stdlib.ergo";
-]
-
 (** CTO import *)
 let cto_import_decl_of_import_namespace ns =
   begin match String.rindex_opt ns '.' with
