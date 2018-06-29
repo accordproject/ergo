@@ -16,6 +16,12 @@ open ErgoComp
 open ParseString
 open Unix
 
+let get_stdlib () =
+  List.map ParseString.parse_ergo_from_string (List.map snd ErgoStdlib.ergo_stdlib)
+
+let get_ctos () =
+  ErgoConfig.get_ctos (ErgoConfig.default_config ())
+
 let string_of_char_list cl = String.concat "" (List.map (String.make 1) cl)
 
 let prompt () =
@@ -39,7 +45,9 @@ let rec repl ctx =
         match t' with
           None -> repl ctx
         | Some t ->
-          let result = ergo_eval_module ctx t in
+          let ctos = get_ctos () in
+          let ml = get_stdlib () in
+          let result = ergo_eval_module ctos ml ctx t in
           let out = ergo_string_of_result result in
           print_string (string_of_char_list out);
           print_string "\n";

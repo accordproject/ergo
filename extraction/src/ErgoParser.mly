@@ -120,8 +120,6 @@ decls:
     { s :: ss }
 
 decl:
-| e = expr
-    { EExpr e }
 | DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
