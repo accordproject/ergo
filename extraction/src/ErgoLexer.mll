@@ -74,6 +74,7 @@ let digit = ['0'-'9']
 let frac = '.' digit*
 let exp = ['e' 'E'] ['-' '+']? digit+
 let float = digit* (frac exp? | exp)
+let int = ['0'-'9']+
 
 rule token sbuff = parse
 | eof { EOF }
@@ -114,7 +115,7 @@ rule token sbuff = parse
     { Lexing.new_line lexbuf; token sbuff lexbuf }
 | float as f
     { FLOAT (float_of_string f) }
-| ('-'? ['0'-'9']+) as i
+| int as i
     { INT (int_of_string i) }
 | '"'
     { reset_string sbuff; string sbuff lexbuf }
