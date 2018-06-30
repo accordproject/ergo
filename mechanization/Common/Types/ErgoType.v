@@ -90,38 +90,27 @@ Section ErgoType.
           type_declaration_name : local_name;
           type_declaration_type : ergo_type_declaration_desc; }.
 
-    Record ergo_type_module :=
-      mkErgoTypeModule
-        { type_module_annot : A;
-          type_module_namespace : namespace_name;
-          type_module_imports : list (@import_decl A);
-          type_module_declarations : list ergo_type_declaration; }.
-
   End Ast.
 
   Definition rergo_type {A} : Set := @ergo_type A relative_name.
   Definition rergo_type_signature {A} : Set := @ergo_type_signature A relative_name.
   Definition rergo_type_declaration {A} : Set := @ergo_type_declaration A relative_name.
   Definition rergo_type_declaration_desc {A} : Set := @ergo_type_declaration_desc A relative_name.
-  Definition rergo_type_module {A} : Set := @ergo_type_module A relative_name.
 
   Definition aergo_type {A} : Set := @ergo_type A absolute_name.
   Definition aergo_type_signature {A} : Set := @ergo_type_signature A absolute_name.
   Definition aergo_type_declaration_desc {A} : Set := @ergo_type_declaration_desc A absolute_name.
   Definition aergo_type_declaration {A} : Set := @ergo_type_declaration A absolute_name.
-  Definition aergo_type_module {A} : Set := @ergo_type_module A absolute_name.
   
   Definition lrergo_type : Set := @ergo_type location relative_name.
   Definition lrergo_type_signature : Set := @ergo_type_signature location relative_name.
   Definition lrergo_type_declaration_desc : Set := @ergo_type_declaration_desc location relative_name.
   Definition lrergo_type_declaration : Set := @ergo_type_declaration location relative_name.
-  Definition lrergo_type_module : Set := @ergo_type_module location relative_name.
 
   Definition laergo_type : Set := @ergo_type location absolute_name.
   Definition laergo_type_signature : Set := @ergo_type_signature location absolute_name.
   Definition laergo_type_declaration : Set := @ergo_type_declaration location absolute_name.
   Definition laergo_type_declaration_desc : Set := @ergo_type_declaration_desc location absolute_name.
-  Definition laergo_type_module : Set := @ergo_type_module location absolute_name.
   
   Definition lift_default_emits_type (loc:location) (emits:option laergo_type) : laergo_type :=
     match emits with
