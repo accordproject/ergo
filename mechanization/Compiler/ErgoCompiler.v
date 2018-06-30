@@ -89,8 +89,6 @@ Module ErgoCompiler.
     ErgoType.lrergo_type_declaration_desc.
   Definition ergo_type_declaration : Set :=
     ErgoType.lrergo_type_declaration.
-  Definition ergo_type_module : Set :=
-    ErgoType.lrergo_type_module.
   
   Definition ergo_type_any loc : ergo_type
     := ErgoType.ErgoTypeAny loc.
@@ -126,8 +124,6 @@ Module ErgoCompiler.
 
   Definition mk_ergo_type_declaration : EResult.location -> String.string -> ergo_type_declaration_desc -> ergo_type_declaration
     := ErgoType.mkErgoTypeDeclaration.
-  Definition mk_ergo_type_module : EResult.location -> String.string -> list EAstUtil.import_decl -> list ergo_type_declaration -> ergo_type_module
-    := ErgoType.mkErgoTypeModule.
 
   (** Ergo *)
   Definition ergo_expr : Set 
