@@ -1,4 +1,4 @@
 {
-    "$class": "org.accordproject.Request",
+    "$class": "org.accordproject.smoke.MyRequest",
     "input": "Accord Project"
 }

@@ -80,6 +80,7 @@ let mk_position (start_pos: Lexing.position) (end_pos: Lexing.position) : locati
 %left STAR SLASH STARI SLASHI
 %left CARROT
 %left PLUSPLUS
+%nonassoc uminus
 %right NOT
 %left DOT QUESTIONDOT
 
@@ -386,6 +387,10 @@ expr:
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach (mk_position $startpos $endpos) fl (Some econd) e2 }
 (* Unary operators *)
+| MINUS e = expr %prec uminus
+    { ErgoCompiler.eunaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Unary.Double.opuminus e }
+| MINUSI e = expr %prec uminus
+    { ErgoCompiler.opuminusi (mk_position $startpos $endpos) e }
 | NOT e = expr
     { ErgoCompiler.eunaryop (mk_position $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg e }
 (* Binary operators *)

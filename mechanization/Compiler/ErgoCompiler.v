@@ -183,6 +183,13 @@ Module ErgoCompiler.
   Definition eforeach loc efl ew er : ergo_expr
     := Ergo.EForeach loc efl ew er.
 
+  Section Integer.
+    Local Open Scope Z_scope.
+    (* XXX missing unary operator in Q*cert *)
+    Definition opuminusi loc e :=
+      ebinaryop loc ErgoOps.Binary.Integer.opminusi (econst loc (ErgoData.dnat 0)) e.
+  End Integer.
+  
   (** Statements *)
   Definition sreturn loc e : ergo_stmt :=
     Ergo.SReturn loc e.

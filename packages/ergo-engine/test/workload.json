@@ -9,7 +9,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "org.accordproject.Smoke",
+    "contractname": "org.accordproject.smoke.Smoke",
     "expected": {
       "response": {
         "output": "Smoke.test successful"

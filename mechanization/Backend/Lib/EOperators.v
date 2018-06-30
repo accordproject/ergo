@@ -29,6 +29,8 @@ Module EOperators(ergomodel:ErgoBackendModel).
       := op.
 
     Module Double.
+      Definition opuminus : op 
+        := UnaryOperators.OpFloatUnary UnaryOperators.FloatNeg.
       Definition opabs : op 
         := UnaryOperators.OpFloatUnary UnaryOperators.FloatAbs.
       Definition oplog2 : op 
