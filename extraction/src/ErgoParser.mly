@@ -85,6 +85,7 @@ let mk_position (start_pos: Lexing.position) (end_pos: Lexing.position) : locati
 %left DOT QUESTIONDOT
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main
+%start <ErgoComp.ErgoCompiler.ergo_declaration> main_decl
 
 %%
 
@@ -92,6 +93,9 @@ main:
 | p = emodule EOF
     { p }
 
+main_decl:
+| p = decl EOF
+    { p }
 
 emodule:
 | NAMESPACE qn = qname_prefix ims = imports ss = decls

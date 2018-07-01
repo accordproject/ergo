@@ -1,4 +1,4 @@
-![Ergo](./website/static/img/ergo.png)
+![Ergo](./ergo.png)
 
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
