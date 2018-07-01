@@ -29,7 +29,7 @@ let compile_module_to_java ctos mls ergo =
   let code = ErgoCompiler.ergo_module_to_java ctos mls ergo in
   wrap_jerrors string_of_char_list code
 
-let ergo_parse gconf (file_name,file_content) =
+let ergo_parse (file_name,file_content) =
   ParseString.parse_ergo_from_string file_content
 
 let ergo_compile gconf mls file_content =
@@ -62,7 +62,7 @@ let ergo_proc gconf mls (file_name,file_content) =
     end
 
 let get_stdlib gconf =
-  List.map (ergo_parse gconf) ErgoStdlib.ergo_stdlib
+  List.map ergo_parse ErgoStdlib.ergo_stdlib
 
 let batch_compile_top gconf cto_files input_files =
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
