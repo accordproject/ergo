@@ -29,13 +29,12 @@ let compile_module_to_java ctos mls ergo =
   let code = ErgoCompiler.ergo_module_to_java ctos mls ergo in
   wrap_jerrors string_of_char_list code
 
-let ergo_parse (file_name,file_content) =
-  ParseString.parse_ergo_from_string file_content
+let ergo_parse_module (file_name,file_content) =
+  ParseString.parse_ergo_module_from_string file_name file_content
 
-let ergo_compile gconf mls file_content =
+let ergo_compile gconf mls ergo_parsed =
   let target = ErgoConfig.get_target_lang gconf in
   let ctos = ErgoConfig.get_ctos gconf in
-  let ergo_parsed = ParseString.parse_ergo_from_string file_content in
   let result =
     begin match target with
     | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
@@ -53,7 +52,8 @@ let ergo_compile gconf mls file_content =
 let ergo_proc gconf mls (file_name,file_content) =
   Printf.printf "Compiling Ergo '%s' " file_name;
   let target_lang = ErgoConfig.get_target_lang gconf in
-  let result = ergo_compile gconf mls file_content in
+  let ergo_parsed = ergo_parse_module (file_name,file_content) in
+  let result = ergo_compile gconf mls ergo_parsed in
   let file_res = make_result_file (extension_of_lang target_lang) file_name result in
   if file_res.res_file <> "" then
     begin
@@ -62,7 +62,7 @@ let ergo_proc gconf mls (file_name,file_content) =
     end
 
 let get_stdlib gconf =
-  List.map ergo_parse ErgoStdlib.ergo_stdlib
+  List.map ergo_parse_module ErgoStdlib.ergo_stdlib
 
 let batch_compile_top gconf cto_files input_files =
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;

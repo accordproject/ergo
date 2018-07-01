@@ -38,5 +38,6 @@ let parse parser lexer buf =
       ergo_raise (ergo_parse_error "Parse error" start_pos end_pos)
   end
 
-let parse_ergo f : ergo_module = parse ErgoParser.main (ErgoLexer.token (string_buff ())) f
+let parse_ergo_module f : ergo_module = parse ErgoParser.main_module (ErgoLexer.token (string_buff ())) f
+let parse_ergo_declaration f : ergo_declaration = parse ErgoParser.main_decl (ErgoLexer.token (string_buff ())) f
 

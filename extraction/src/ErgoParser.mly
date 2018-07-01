@@ -84,12 +84,12 @@ let mk_position (start_pos: Lexing.position) (end_pos: Lexing.position) : locati
 %right NOT
 %left DOT QUESTIONDOT
 
-%start <ErgoComp.ErgoCompiler.ergo_module> main
+%start <ErgoComp.ErgoCompiler.ergo_module> main_module
 %start <ErgoComp.ErgoCompiler.ergo_declaration> main_decl
 
 %%
 
-main:
+main_module:
 | p = emodule EOF
     { p }
 
