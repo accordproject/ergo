@@ -18,6 +18,7 @@ open ErgoComp.ErgoCompiler
 
 open ParseUtil
 
-val parse_ergo_from_string : string -> ergo_module
+val parse_ergo_module_from_string : string -> string -> ergo_module
 
+val parse_ergo_declaration_from_string : string -> string -> ergo_declaration
 
