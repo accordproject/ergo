@@ -53,4 +53,11 @@ let rec repl ctx =
           print_string "\n";
           repl (ergo_maybe_update_context ctx result)
 
-let main = repl ergo_empty_context
+let welcome () =
+    if isatty stdin
+    then print_string ("Launching ergotop, version " ^ (string_of_char_list ergo_version) ^ "\n")
+    else ()
+
+let main =
+    welcome ();
+    repl ergo_empty_context
