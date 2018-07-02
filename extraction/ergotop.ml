@@ -29,6 +29,7 @@ let prompt () =
         print_string "ergotop$ "
     else ()
 
+(*
 let rec repl ctx =
     prompt () ;
     try
@@ -42,8 +43,8 @@ let rec repl ctx =
         print_string (ErgoUtil.string_of_error e);
         print_string "\n";
         repl ctx
+          *)
 
-(*
 let rec repl ctx =
     prompt () ;
     let t' =
@@ -52,8 +53,12 @@ let rec repl ctx =
                     ("namespace org.accordproject.repl\n" ^
                     (read_line ()) ^
                     "\n"))
-        with ErgoUtil.Ergo_Error e ->
+        with
+        | ErgoUtil.Ergo_Error e ->
             print_string (ErgoUtil.string_of_error e);
+            print_string "\n" ;
+            None
+        | End_of_file ->
             print_string "\n" ;
             None
     in
@@ -67,7 +72,6 @@ let rec repl ctx =
           print_string (string_of_char_list out);
           print_string "\n";
           repl (ergo_maybe_update_context ctx result)
-          *)
 
 let welcome () =
     if isatty stdin
