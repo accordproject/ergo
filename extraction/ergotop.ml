@@ -29,49 +29,28 @@ let prompt () =
         print_string "ergotop$ "
     else ()
 
-(*
 let rec repl ctx =
     prompt () ;
     try
-        let decl = ParseString.parse_ergo_declaration_from_string "stdin" ((read_line()) ^ "\n") in
-        let result = ergo_eval_decl ctx decl in
+        let t = (ParseString.parse_ergo_module_from_string "stdin"
+                ("namespace org.accordproject.repl\n" ^
+                (read_line ()) ^
+                "\n")) in
+        let ctos = get_ctos () in
+        let ml = get_stdlib () in
+        let result = ergo_eval_module ctos ml ctx t in
         let out = ergo_string_of_result result in
-        print_string (string_of_char_list out);
-        print_string "\n";
+        if (List.length out) > 0
+        then print_string ((string_of_char_list out) ^ "\n")
+        else ();
         repl (ergo_maybe_update_context ctx result)
-    with ErgoUtil.Ergo_Error e ->
-        print_string (ErgoUtil.string_of_error e);
-        print_string "\n";
-        repl ctx
-*)
 
-let rec repl ctx =
-    prompt () ;
-    let t' =
-        try
-            Some (ParseString.parse_ergo_module_from_string "stdin"
-                    ("namespace org.accordproject.repl\n" ^
-                    (read_line ()) ^
-                    "\n"))
-        with
-        | ErgoUtil.Ergo_Error e ->
-            print_string (ErgoUtil.string_of_error e);
-            print_string "\n" ;
-            None
-        | End_of_file ->
-            print_string "\n" ;
-            None
-    in
-        match t' with
-          None -> repl ctx
-        | Some t ->
-          let ctos = get_ctos () in
-          let ml = get_stdlib () in
-          let result = ergo_eval_module ctos ml ctx t in
-          let out = ergo_string_of_result result in
-          print_string (string_of_char_list out);
-          print_string "\n";
-          repl (ergo_maybe_update_context ctx result)
+    with
+    | ErgoUtil.Ergo_Error e ->
+        print_string (ErgoUtil.string_of_error e);
+        print_string "\n" ;
+        repl ctx
+    | End_of_file -> None
 
 let welcome () =
     if isatty stdin
