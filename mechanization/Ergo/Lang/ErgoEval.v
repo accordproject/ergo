@@ -500,21 +500,31 @@ Definition ergo_string_of_location_point (lp : location_point) : string :=
   (toString lp.(line)) ++ ":" ++ (toString lp.(column)).
 
 Definition ergo_string_of_location (loc : location) : string :=
-  (ergo_string_of_location_point loc.(loc_start)) ++ "-" ++ (ergo_string_of_location_point loc.(loc_end)).
+  let file :=
+      match loc.(loc_file) with
+      | Some f => (f ++ " ")%string
+      | None => ""%string
+      end
+  in
+  file ++
+  (ergo_string_of_location_point loc.(loc_start)) ++ "-" ++
+  (ergo_string_of_location_point loc.(loc_end)).
 
+Definition ergo_format_error (name : string) (loc : location) (msg : string) :=
+  (name ++ " at " ++ (ergo_string_of_location loc) ++ " '" ++ msg ++ "'")%string.
 
 Definition ergo_string_of_error (err : eerror) : string :=
   match err with
-  | SystemError s => "System Error: " ++ s
-  | ParseError loc p => "Parse Error (?!)"
-  | CompilationError loc s => "Compilation Error: " ++ s
-  | TypeError loc s => "Type Error: " ++ s
-  | RuntimeError loc s => "Runtime Error: " ++ s
+  | SystemError s => "System error: " ++ s
+  | ParseError loc msg => ergo_format_error "Parse error" loc msg
+  | CompilationError loc msg => ergo_format_error "Compilation error" loc msg
+  | TypeError loc msg => ergo_format_error "Type error" loc msg
+  | RuntimeError loc msg => ergo_format_error "Runtime error" loc msg
   end.
 
 Definition ergo_string_of_result (result : eresult (ergo_context * option ergo_data)) : string :=
   match result with
-  | Success _ _ (ctx, None) => "lol ok"
+  | Success _ _ (ctx, None) => ""
   | Success _ _ (ctx, Some d) => (*dataToString d*) ErgoData.data_to_json_string ""%string d
   | Failure _ _ f => ergo_string_of_error f
   end.
