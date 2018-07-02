@@ -17,7 +17,7 @@ open ParseString
 open Unix
 
 let get_stdlib () =
-  List.map ParseString.parse_ergo_from_string (List.map snd ErgoStdlib.ergo_stdlib)
+  List.map (ParseString.parse_ergo_module_from_string "stdlib") (List.map snd ErgoStdlib.ergo_stdlib)
 
 let get_ctos () =
   ErgoConfig.get_ctos (ErgoConfig.default_config ())
@@ -33,8 +33,8 @@ let prompt () =
 let rec repl ctx =
     prompt () ;
     try
-        let decl = ParseString.parse_ergo_declaration_from_string ((read_line()) ^ "\n") in
-        let result = ergo_eval_declaration ctx decl in
+        let decl = ParseString.parse_ergo_declaration_from_string "stdin" ((read_line()) ^ "\n") in
+        let result = ergo_eval_decl ctx decl in
         let out = ergo_string_of_result result in
         print_string (string_of_char_list out);
         print_string "\n";
@@ -43,13 +43,13 @@ let rec repl ctx =
         print_string (ErgoUtil.string_of_error e);
         print_string "\n";
         repl ctx
-          *)
+*)
 
 let rec repl ctx =
     prompt () ;
     let t' =
         try
-            Some (ParseString.parse_ergo_from_string
+            Some (ParseString.parse_ergo_module_from_string "stdin"
                     ("namespace org.accordproject.repl\n" ^
                     (read_line ()) ^
                     "\n"))
