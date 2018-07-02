@@ -31,6 +31,21 @@ let prompt () =
 
 let rec repl ctx =
     prompt () ;
+    try
+        let decl = ParseString.parse_ergo_declaration_from_string ((read_line()) ^ "\n") in
+        let result = ergo_eval_declaration ctx decl in
+        let out = ergo_string_of_result result in
+        print_string (string_of_char_list out);
+        print_string "\n";
+        repl (ergo_maybe_update_context ctx result)
+    with ErgoUtil.Ergo_Error e ->
+        print_string (ErgoUtil.string_of_error e);
+        print_string "\n";
+        repl ctx
+
+(*
+let rec repl ctx =
+    prompt () ;
     let t' =
         try
             Some (ParseString.parse_ergo_from_string
@@ -52,6 +67,7 @@ let rec repl ctx =
           print_string (string_of_char_list out);
           print_string "\n";
           repl (ergo_maybe_update_context ctx result)
+          *)
 
 let welcome () =
     if isatty stdin
