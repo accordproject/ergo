@@ -113,7 +113,7 @@ $(DIST2): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/E
 _build_js/$(BYTE2): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN2).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE2)
 
-$(DIST3): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE3)
+$(DIST3): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE3) $(DIST1)
 	js_of_ocaml _build_js/$(BYTE3) -o _build_js/$(BIN3)
 	cp _build_js/$(BIN3) $(DIST3)
 
