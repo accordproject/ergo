@@ -24,6 +24,11 @@ let get_ctos () =
 
 let string_of_char_list cl = String.concat "" (List.map (String.make 1) cl)
 
+let welcome () =
+    if isatty stdin
+    then print_string ("Welcome to ERGOTOP version " ^ (string_of_char_list ergo_version) ^ "\n")
+    else ()
+
 let prompt () =
     if isatty stdin then
         print_string "ergotop$ "
@@ -44,18 +49,12 @@ let rec repl ctx =
         then print_string ((string_of_char_list out) ^ "\n")
         else ();
         repl (ergo_maybe_update_context ctx result)
-
     with
     | ErgoUtil.Ergo_Error e ->
         print_string (ErgoUtil.string_of_error e);
         print_string "\n" ;
         repl ctx
     | End_of_file -> None
-
-let welcome () =
-    if isatty stdin
-    then print_string ("Launching ergotop, version " ^ (string_of_char_list ergo_version) ^ "\n")
-    else ()
 
 let main =
     welcome ();
