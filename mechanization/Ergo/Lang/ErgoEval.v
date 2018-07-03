@@ -34,7 +34,6 @@ Require Import ErgoSpec.Translation.CTOtoErgo.
 
 Require Ergo.
 Require Import Ergo.
-Definition ergo_data := ErgoData.data.
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
 Definition ergo_function := Ergo.laergo_function.
@@ -43,177 +42,21 @@ Definition ergo_contract := Ergo.laergo_contract.
 Definition ergo_declaration := Ergo.laergo_declaration.
 Definition ergo_module := Ergo.laergo_module.
 
+Require Import ErgoInline.
+
 Section ErgoEval.
-
-  Record ergo_context :=
-    mkContext
-      { ctx_function_env : list (string * ergo_function);
-        ctx_clause_env : list (string * ergo_clause);
-        ctx_contract_env : list (string * ergo_contract);
-        ctx_global_env : list (string * ergo_data);
-        ctx_local_env : list (string * ergo_data);
-        ctx_this_clause : ergo_data;
-        ctx_this_contract : ergo_data;
-        ctx_this_state : ergo_data;
-        ctx_this_emit : ergo_data;
-        }.
-
-  Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
-    ls ++ (a :: nil).
 
   Definition ergo_empty_context :=
     mkContext nil nil nil nil nil dunit dunit dunit dunit.
 
-  Definition TODO {A : Set} : eresult A := efailure (SystemError "Feature not implemented.").
+  Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
+    ls ++ (a :: nil).
 
   Definition ergo_unary_eval := ErgoOps.Unary.eval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
 
-  Definition ergo_ctx_update_function_env (ctx : ergo_context) (name : string) (value : ergo_function) : ergo_context :=
-    mkContext ((name, value)::ctx.(ctx_function_env))
-              ctx.(ctx_clause_env)
-              ctx.(ctx_contract_env)
-              (ctx.(ctx_global_env))
-              ctx.(ctx_local_env)
-              ctx.(ctx_this_clause)
-              ctx.(ctx_this_contract)
-              ctx.(ctx_this_state)
-              ctx.(ctx_this_emit).
-
-  Definition ergo_ctx_update_global_env (ctx : ergo_context) (name : string) (value : ergo_data) : ergo_context :=
-    mkContext ctx.(ctx_function_env)
-              ctx.(ctx_clause_env)
-              ctx.(ctx_contract_env)
-              ((name, value)::ctx.(ctx_global_env))
-              (ctx.(ctx_local_env))
-              ctx.(ctx_this_clause)
-              ctx.(ctx_this_contract)
-              ctx.(ctx_this_state)
-              ctx.(ctx_this_emit).
-
-  Definition ergo_ctx_update_local_env (ctx : ergo_context) (name : string) (value : ergo_data) : ergo_context :=
-    mkContext ctx.(ctx_function_env)
-              ctx.(ctx_clause_env)
-              ctx.(ctx_contract_env)
-              (ctx.(ctx_global_env))
-              ((name, value)::ctx.(ctx_local_env))
-              ctx.(ctx_this_clause)
-              ctx.(ctx_this_contract)
-              ctx.(ctx_this_state)
-              ctx.(ctx_this_emit).
-
-  Definition ergo_ctx_set_local_env (ctx : ergo_context) (new_local_env : list (string * ergo_data)) : ergo_context :=
-    mkContext ctx.(ctx_function_env)
-              ctx.(ctx_clause_env)
-              ctx.(ctx_contract_env)
-              (ctx.(ctx_global_env))
-              new_local_env
-              ctx.(ctx_this_clause)
-              ctx.(ctx_this_contract)
-              ctx.(ctx_this_state)
-              ctx.(ctx_this_emit).
-
-  Fixpoint ergo_letify_function'
-           (loc : location)
-           (body : ergo_expr)
-           (args : list (string * ergo_expr)) : ergo_expr :=
-    match args with
-    | nil => body
-    | (n,v)::rest => ELet loc n None v (ergo_letify_function' loc body rest)
-    end.
-
-  Definition ergo_letify_function (fn : ergo_function) (args : list ergo_expr) :=
-    match fn.(function_body) with
-    | None => TODO
-    | Some (SFunReturn loc body) =>
-      match zip (map fst (fn.(function_sig).(type_signature_params))) args with
-      | Some args' => esuccess (ergo_letify_function' fn.(function_annot) body args')
-      | None => efailure (CompilationError fn.(function_annot) ("Wrong number of arguments for "%string ++ fn.(function_name))%string)
-      end
-    | _ =>
-      efailure
-        (CompilationError
-           fn.(function_annot) (("Function "%string) ++ fn.(function_name) ++ (" is bad."%string)))
-    end.
-
-  Fixpoint ergo_inline_expr
-           (ctx : ergo_context)
-           (expr : ergo_expr) : eresult ergo_expr :=
-    match expr with
-    | EThisContract _ => esuccess expr
-    | EThisClause _ => esuccess expr
-    | EThisState _ => esuccess expr
-    | EVar _ _ => esuccess expr
-    | EConst _ _ => esuccess expr
-    | EArray loc a =>
-      elift (EArray loc)
-            (fold_left
-               (fun ls na =>
-                  elift2 postpend ls (ergo_inline_expr ctx na))
-               a (esuccess nil))
-    | EUnaryOp loc o e => elift (EUnaryOp loc o) (ergo_inline_expr ctx e)
-    | EBinaryOp loc o e1 e2 =>
-      elift2 (EBinaryOp loc o) (ergo_inline_expr ctx e1) (ergo_inline_expr ctx e2)
-    | EIf loc c t f =>
-      elift3 (EIf loc)
-             (ergo_inline_expr ctx c)
-             (ergo_inline_expr ctx t)
-             (ergo_inline_expr ctx f)
-    | ELet loc n t v b =>
-      elift2 (fun v' b' => (ELet loc) n t v' b')
-             (ergo_inline_expr ctx v)
-             (ergo_inline_expr ctx b)
-    | ERecord loc rs =>
-      elift (ERecord loc)
-            (fold_left
-               (fun ls nr =>
-                  elift2 postpend ls
-                         (elift (fun x => (fst nr, x)) (ergo_inline_expr ctx (snd nr))))
-               rs (esuccess nil))
-    | ENew loc n rs =>
-      elift (ENew loc n)
-            (fold_left
-               (fun ls nr =>
-                  elift2 postpend ls
-                         (elift (fun x => (fst nr, x)) (ergo_inline_expr ctx (snd nr))))
-               rs (esuccess nil))
-    | ECallFun loc fn args =>
-      match lookup String.string_dec ctx.(ctx_function_env) fn with
-      | Some fn' =>
-        eolift (ergo_letify_function fn')
-               (fold_left (fun ls nv =>
-                             elift2 postpend ls (ergo_inline_expr ctx nv))
-                          args (esuccess nil))
-      | None => efailure (CompilationError loc ("Function " ++ fn ++ " not found.")%string)
-      end
-    | EMatch _ _ _ _ => TODO
- 
-    | EForeach loc rs whr fn =>
-      let singleton := fun x => EArray loc (x::nil) in
-      let base := 
-        match whr with
-        | None => elift singleton (ergo_inline_expr ctx fn)
-        | Some whr' =>
-          elift3 (EIf loc)
-                 (ergo_inline_expr ctx whr')
-                 (elift singleton (ergo_inline_expr ctx fn))
-                 (esuccess (EArray loc nil))
-        end
-      in
-      fold_right
-        (fun lay ker =>
-           elift
-             (EUnaryOp loc OpFlatten)
-             (elift3 (EForeach loc)
-                     (elift (fun v' => (fst lay, v')::nil) (ergo_inline_expr ctx (snd lay)))
-                     (match whr with
-                      | None => esuccess None
-                      | Some x => elift Some (ergo_inline_expr ctx x)
-                      end)
-                     ker))
-        base rs
- 
-    end.
+  Definition ergo_inline_expr ctx expr :=
+    eolift (ergo_inline_functions ctx)) (ergo_inline_foreach ctx expr).
 
   Fixpoint ergo_inline_globals
            (ctx : ergo_context)
