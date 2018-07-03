@@ -75,12 +75,14 @@ Section EResult.
 
   (** Built-in errors *)
   Section Builtin.
-    Definition TODO_error {A} prov : eresult A :=
-      efailure (CompilationError prov "TODO").
+
     Definition not_in_contract_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot use 'contract' variable outside of a contract").
     Definition not_in_clause_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot use 'clause' variable outside of a clause").
+
+    Definition TODO {A : Set} : eresult A :=
+        efailure (SystemError "Feature not implemented.").
 
     (* CTO errors *)
     Definition import_not_found_error {A} prov (import:string) : eresult A :=
