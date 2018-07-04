@@ -9,6 +9,10 @@ let runtime = {xxx|
 let stdlib = {xxx|
 namespace org.accordproject.ergo.stdlib
 
+define concept Duration {
+	duration : String
+}
+
 // DateTime operations
 define function now() : DateTime
 define function moment(x:String) : DateTime
@@ -28,8 +32,8 @@ define function momentAdd(x:DateTime, y:Duration) : DateTime
 define function momentDiffDays(x:DateTime, y:DateTime) : Double
 define function momentDiffSeconds(x:DateTime, y:DateTime) : Double
 
-define function min(x:Float[]) : Float
-define function count(x:Float[]) : Integer
+define function min(x:Double[]) : Double
+define function count(x:Double[]) : Integer
 
 // Integer operations
 define function integerAbs(x:Integer) : Integer

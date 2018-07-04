@@ -50,7 +50,7 @@ Section ErgoNNRCtoJavaScript.
       * nat
     := 
       let '(s1, e1, t2) := ErgoCodeGen.nnrc_expr_to_javascript bind t i eol quotel nil in
-      let v0 := "v" ++ v in
+      let v0 := ErgoCodeGen.javascript_identifier_sanitizer ("v" ++ v) in
       (s1 ++ (ErgoCodeGen.javascript_indent i) ++ "var " ++ v0 ++ " = " ++ e1 ++ ";" ++ eol,
        v0,
        t2).

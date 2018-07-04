@@ -35,20 +35,20 @@ MODULES = \
 	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
-  Ergo/Lang/ErgoNameResolve \
 	ErgoCalculus/Lang/ErgoCalculus \
 	ErgoNNRC/Lang/ErgoNNRC \
 	ErgoNNRC/Lang/ErgoNNRCSugar \
 	ErgoNNRC/Lang/ErgoNNRCCall \
 	Translation/CTOtoErgo \
+  Translation/ErgoNameResolve \
 	Translation/ErgoTypetoErgoCalculusType \
 	Translation/ErgotoErgoCalculus \
 	Translation/ErgoCalculustoErgoNNRC \
 	Translation/ErgoNNRCtoJavaScript \
 	Translation/ErgoNNRCtoJavaScriptCicero \
 	Translation/ErgoNNRCtoJava \
-	Translation/ErgotoJavaScript \
-	Translation/ErgotoJavaScriptCicero \
-	Translation/ErgotoJava \
+	Compiler/ErgotoJavaScript \
+	Compiler/ErgotoJavaScriptCicero \
+	Compiler/ErgotoJava \
 	Compiler/ErgoCompiler \
 	Tests/HelloWorld
