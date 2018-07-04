@@ -26,9 +26,9 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import ErgoSpec.Ergo.Lang.ErgoNameResolve.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.Translation.CTOtoErgo.
+Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
 Require Import ErgoSpec.Translation.ErgoCalculustoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
@@ -36,20 +36,21 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
 Section ErgotoJavaScriptCicero.
   Definition ergo_module_to_javascript_cicero
              (ctos:list cto_package)
-             (ml:list lrergo_module)
+             (mls:list lrergo_module)
              (p:ergo_module) : eresult javascript :=
-    let mctos := map cto_package_to_ergo_module ctos in
-    let nsctxt := namespace_ctxt_of_ergo_modules (mctos ++ ml ++ (p::nil)) in
-    let rctos := resolve_ergo_all_modules nsctxt mctos in
-    let p := resolve_ergo_single_module nsctxt p in
-    let p := eolift expand_ergo_module p in
+    let ictos := map InputCTO ctos in
+    let imls := map InputErgo mls in
+    let ctxt := init_namespace_ctxt in
+    let rmods := resolve_ergo_inputs ctxt (ictos ++ imls) in
+    let p := eolift (fun pc => resolve_ergo_module (snd pc) p) rmods in
+    let p := eolift (fun pc => expand_ergo_module (fst pc)) p in
     let ec := eolift lookup_single_contract p in
     eolift
       (fun c : ergo_contract =>
          let contract_name := c.(contract_name) in 
          let sigs := lookup_contract_signatures c in
          let pc := elift ergo_module_to_calculus p in
-         let pn := eolift (fun rctos => eolift (ergoc_module_to_nnrc rctos) pc) rctos in
+         let pn := eolift (fun rmods => eolift (ergoc_module_to_nnrc (fst rmods)) pc) rmods in
          elift (ergoc_module_to_javascript_cicero contract_name c.(contract_state) sigs) pn)
       ec.
 

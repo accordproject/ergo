@@ -15,8 +15,8 @@
 open StdlibResources
 
 let ergo_stdcto =
-  [ ("contract.cto", contract);
-    ("hyperledger.cto", hyperledger);
+  [ ("hyperledger.cto", hyperledger);
+    ("contract.cto", contract);
     ("money.cto", money);
     ("runtime.cto", runtime);]
 let ergo_stdlib =

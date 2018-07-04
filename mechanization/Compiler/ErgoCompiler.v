@@ -24,9 +24,9 @@ Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
-Require ErgoSpec.Translation.ErgotoJavaScript.
-Require ErgoSpec.Translation.ErgotoJava.
-Require ErgoSpec.Translation.ErgotoJavaScriptCicero.
+Require ErgoSpec.Compiler.ErgotoJavaScript.
+Require ErgoSpec.Compiler.ErgotoJava.
+Require ErgoSpec.Compiler.ErgotoJavaScriptCicero.
 
 Module ErgoCompiler.
 
@@ -140,6 +140,8 @@ Module ErgoCompiler.
     := Ergo.lrergo_contract.
   Definition ergo_module : Set 
     := Ergo.lrergo_module.
+  Definition ergo_input : Set 
+    := Ergo.lrergo_input.
 
   (** Patterns *)
   Definition ecasedata : ErgoData.data -> EPattern.ergo_pattern

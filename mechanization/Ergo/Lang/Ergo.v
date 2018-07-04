@@ -24,6 +24,7 @@ Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
+Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Backend.ErgoBackend.
@@ -152,6 +153,10 @@ Section Ergo.
           module_imports : list (@import_decl A);
           module_declarations : list ergo_declaration; }.
 
+    Inductive ergo_input :=
+    | InputErgo : ergo_module -> ergo_input
+    | InputCTO : @cto_package A N -> ergo_input.
+
   End Ast.
 
   Definition rergo_expr {A} := @ergo_expr A relative_name.
@@ -161,6 +166,7 @@ Section Ergo.
   Definition rergo_contract {A} := @ergo_contract A relative_name.
   Definition rergo_declaration {A} := @ergo_declaration A relative_name.
   Definition rergo_module {A} := @ergo_module A relative_name.
+  Definition rergo_input {A} := @ergo_input A relative_name.
 
   Definition aergo_expr {A} := @ergo_expr A absolute_name.
   Definition aergo_stmt {A} := @ergo_stmt A absolute_name.
@@ -177,6 +183,7 @@ Section Ergo.
   Definition lrergo_contract := @ergo_contract location relative_name.
   Definition lrergo_declaration := @ergo_declaration location relative_name.
   Definition lrergo_module := @ergo_module location relative_name.
+  Definition lrergo_input := @ergo_input location relative_name.
 
   Definition laergo_expr := @ergo_expr location absolute_name.
   Definition laergo_stmt := @ergo_stmt location absolute_name.

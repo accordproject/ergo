@@ -107,7 +107,7 @@ let ergo_compile input =
   in
   begin try
     let ergo_parsed = ergo_parse_module ("%JSBUFFER%",j_s) in
-    let res = ErgoCompile.ergo_compile gconf (ref (get_stdlib gconf)) ergo_parsed in
+    let res = ErgoCompile.ergo_compile gconf (ref (get_stdlib ())) ergo_parsed in
     json_of_result res
   with
   | Ergo_Error error -> json_of_error error

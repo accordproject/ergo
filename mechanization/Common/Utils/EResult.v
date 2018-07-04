@@ -70,6 +70,24 @@ Section EResult.
   Definition option_of_eresult {A:Set} (a:eresult A) : option A :=
     option_of_result a.
 
+  (* Fold-left over functions returning eresults *)
+  Definition elift_fold_left {A:Set} {B:Set}
+             (f : A -> B -> eresult A) (l:list B) (a:A) : eresult A :=
+    let proc_one (acc:eresult A) (x:B)
+        : eresult A :=
+        eolift (fun acc => f acc x) acc
+    in
+    fold_left proc_one l (esuccess a).
+
+  (* Variant of Fold-left for functions passing eresults with a context *)
+  Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
+             (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
+    elift_fold_left
+      (fun acc c =>
+         elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
+      l
+      (nil, c).
+
   (** Built-in errors *)
   Section Builtin.
     Definition not_in_contract_error {A} loc : eresult A :=
