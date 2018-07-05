@@ -12,6 +12,8 @@
  * limitations under the License.
  *)
 
+(* builds the JS interface from ocaml *)
+
 open Util
 open ErgoUtil
 open ErgoComp
