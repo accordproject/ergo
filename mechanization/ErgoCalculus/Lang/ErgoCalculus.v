@@ -68,6 +68,7 @@ Section ErgoCalculus.
 
   Section Semantics.
     (* XXX Nothing yet -- relational semantics should go here *)
+
   End Semantics.
 
   Section Evaluation.

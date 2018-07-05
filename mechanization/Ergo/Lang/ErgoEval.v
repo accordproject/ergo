@@ -49,7 +49,16 @@ Require Import ErgoInline.
 Section ErgoEval.
 
   Definition ergo_empty_context :=
-    mkContext nil nil nil nil nil dunit dunit dunit dunit.
+    mkContext nil nil nil nil
+              (("contract"%string, dcoll nil)
+                 ::("state"%string, dcoll nil)
+                 ::("emit"%string, dcoll nil)
+                 ::("response"%string, dcoll nil)
+                 ::("lstate"%string, dcoll nil)
+                 ::("lemit"%string, dcoll nil)
+                 ::("now"%string, dcoll nil)
+                 ::nil)
+              dunit dunit dunit dunit.
 
   Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
     ls ++ (a :: nil).
@@ -363,20 +372,29 @@ Definition ergo_string_of_error (err : eerror) : string :=
   | RuntimeError loc msg => ergo_format_error "Runtime error" loc msg
   end.
 
-Definition ergo_string_of_result (result : eresult (namespace_ctxt * ergo_context * option ergo_data)) : string :=
+Definition ergo_string_of_result {A : Set} (result : eresult (A * ergo_context * option ergo_data)) : string :=
   match result with
   | Success _ _ (_, _, None) => ""
   | Success _ _ (_, _, Some d) => (*dataToString d*) ErgoData.data_to_json_string ""%string d
   | Failure _ _ f => ergo_string_of_error f
   end.
 
-Definition ergo_maybe_update_context
-           (ctx : namespace_ctxt * ergo_context)
-           (result : eresult (namespace_ctxt * ergo_context * option ergo_data))
-  : (namespace_ctxt * ergo_context) :=
+Definition ergo_maybe_update_context {A : Set}
+           (ctx : A * ergo_context)
+           (result : eresult (A * ergo_context * option ergo_data))
+  : (A * ergo_context) :=
   match result with
   | Success _ _ (sctx', dctx', _) => (sctx', dctx')
   | _ => ctx
+  end.
+
+Definition ergo_make_stdlib_ctxt
+           (ctos:list lrcto_package)
+           (mls:list lrergo_module)
+  : compilation_ctxt :=
+  match (compilation_ctxt_from_inputs ctos mls) with
+  | Success _ _ r => r
+  | Failure _ _ f => (nil, init_namespace_ctxt)
   end.
 
 Definition ergo_make_stdlib_namespace
@@ -387,6 +405,26 @@ Definition ergo_make_stdlib_namespace
   | Success _ _ r => r
   | Failure _ _ f => init_namespace_ctxt
   end.
+
+Require Import ErgoCalculus.
+Require Import Compiler.ErgoCompilerDriver.
+
+Definition ergo_eval_decl_via_calculus
+           (sctx : compilation_ctxt)
+           (dctx : ergo_context)
+           (decl : lrergo_declaration)
+  : eresult (compilation_ctxt * ergo_context * option ergo_data) :=
+  match ergo_declaration_to_ergo_calculus sctx decl with
+  | Failure _ _ f => efailure f
+  | Success _ _ (None, sctx') => esuccess (sctx', dctx, None)
+  | Success _ _ (Some (DCExpr loc expr), sctx') =>
+    elift (fun x => (sctx', dctx, Some x))
+          ((eolift (ergo_eval_expr dctx)) (ergo_inline_expr dctx expr))
+  | Success _ _ (Some (DCConstant loc name expr), sctx') => TODO
+  | Success _ _ (Some (DCFunc loc func), sctx') => TODO
+  | Success _ _ (Some (DCContract loc contr), sctx') => TODO
+  end.
+
 
 End ErgoEval.
 
