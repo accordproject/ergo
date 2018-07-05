@@ -77,6 +77,7 @@ cleanall-mechanization:
 	- @rm -f Makefile.coq
 	- @rm -f Makefile.coq.conf
 	- @rm -f _CoqProject
+	- @find mechanization \( -name '*.vo' -or -name '*.v.d' -or -name '*.glob'  -or -name '*.aux' \) -print0 | xargs -0 rm -f
 
 clean-extraction:
 	- @$(MAKE) -C extraction clean
