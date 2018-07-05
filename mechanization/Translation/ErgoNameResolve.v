@@ -282,6 +282,42 @@ Section ErgoNameResolution.
       in
       fold_left proc_one imports (esuccess ctxt).
 
+    (* Resolve imports for CTO *)
+    Definition is_builtin_import (ns:namespace_name) : bool :=
+      if string_dec ns hyperledger_namespace
+      then true
+      else if string_dec ns stdlib_namespace
+           then true
+           else false.
+
+    Definition resolve_cto_imports (ctxt:namespace_ctxt) (ims:list limport_decl) :=
+      let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
+      let imports :=
+          if is_builtin_import ctxt_ns
+          then app ims (ImportSelf dummy_location ctxt_ns :: nil)
+          else
+            (* Add built-in modules to import, first.
+               Make sure to add current namespace to the list of imports - i.e., import self. *)
+            (ImportAll dummy_location hyperledger_namespace)
+              ::(app ims (ImportSelf dummy_location ctxt_ns :: nil))
+      in
+      resolve_imports ctxt imports.
+      
+    (* Resolve imports for Ergo *)
+    Definition resolve_ergo_imports (ctxt:namespace_ctxt) (ims:list limport_decl) :=
+      let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
+      let imports :=
+          if is_builtin_import ctxt_ns
+          then app ims (ImportSelf dummy_location ctxt_ns :: nil)
+          else
+            (* Add built-in modules to import, first.
+               Make sure to add current namespace to the list of imports - i.e., import self. *)
+            (ImportAll dummy_location hyperledger_namespace)
+              ::(ImportAll dummy_location stdlib_namespace)
+              ::(app ims (ImportSelf dummy_location ctxt_ns :: nil))
+      in
+      resolve_imports ctxt imports.
+      
   End ResolveImports.
 
   Section NameResolution.
@@ -704,16 +740,6 @@ Section ErgoNameResolution.
     Definition init_namespace_ctxt_from_modules (ml:list lrergo_module) :=
       namespace_ctxt_of_ergo_modules init_namespace_ctxt ml.
 
-    Definition hyperledger_namespace : string := "org.hyperledger.composer.system"%string.
-    Definition stdlib_namespace : string := "org.accordproject.ergo.stdlib"%string.
-    
-    Definition is_builtin_import (ns:namespace_name) : bool :=
-      if string_dec ns hyperledger_namespace
-      then true
-      else if string_dec ns stdlib_namespace
-           then true
-           else false.
-
     (* Resolve a CTO package *)
     Definition resolve_cto_package
                (ctxt:namespace_ctxt)
@@ -722,16 +748,7 @@ Section ErgoNameResolution.
       let module_ns := m.(module_namespace) in
       let ctxt := new_namespace_scope ctxt module_ns in
       let ctxt := namespace_ctxt_of_ergo_module ctxt m in (* XXX Pre-populate namespace for CTO modules to handle not-yet-declared names *)
-      let imports :=
-          if is_builtin_import module_ns
-          then app m.(module_imports) (ImportSelf dummy_location module_ns :: nil)
-          else
-           (* Add built-in modules to import, first.
-              Make sure to add current namespace to the list of imports - i.e., import self. *)
-          (ImportAll dummy_location hyperledger_namespace)
-            ::(app m.(module_imports) (ImportSelf dummy_location module_ns :: nil))
-      in
-      let rctxt := resolve_imports ctxt imports in
+      let rctxt := resolve_cto_imports ctxt m.(module_imports) in
       eolift (fun ctxt =>
                 elift
                   (fun nc =>
@@ -749,17 +766,7 @@ Section ErgoNameResolution.
                (m:lrergo_module) : eresult (laergo_module * namespace_ctxt) :=
       let module_ns := m.(module_namespace) in
       let ctxt := new_namespace_scope ctxt module_ns in
-      let imports :=
-          if is_builtin_import module_ns
-          then app m.(module_imports) (ImportSelf dummy_location module_ns :: nil)
-          else
-           (* Add built-in modules to import, first.
-              Make sure to add current namespace to the list of imports - i.e., import self. *)
-          (ImportAll dummy_location hyperledger_namespace)
-            ::(ImportAll dummy_location stdlib_namespace)
-            ::(app m.(module_imports) (ImportSelf dummy_location module_ns :: nil))
-      in
-      let rctxt := resolve_imports ctxt imports in
+      let rctxt := resolve_ergo_imports ctxt m.(module_imports) in
       eolift (fun ctxt =>
                 elift
                   (fun nc =>

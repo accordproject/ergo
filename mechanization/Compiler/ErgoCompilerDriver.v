@@ -23,6 +23,7 @@ Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
@@ -46,6 +47,22 @@ Section ErgoCompilerDriver.
   Definition update_namespace_ctxt (ctxt:compilation_ctxt) (ns_ctxt:namespace_ctxt) :=
     (fst ctxt, ns_ctxt).
 
+  Definition set_namespace_in_compilation_ctxt (ctxt:compilation_ctxt) (ns:namespace_name) : compilation_ctxt :=
+    update_namespace_ctxt
+      ctxt (new_namespace_scope
+              (namespace_ctxt_of_compilation_ctxt ctxt)
+              ns).
+
+  Definition import_namespaces_in_compilation_ctxt
+             (ctxt:compilation_ctxt)
+             (ims:list limport_decl) : eresult compilation_ctxt :=
+    let ns_ctxt := namespace_ctxt_of_compilation_ctxt ctxt in
+    let rns_ctxt := resolve_ergo_imports ns_ctxt ims in
+    elift
+      (update_namespace_ctxt
+         ctxt)
+      rns_ctxt.
+  
   (* Initialize compilation context *)
   Definition compilation_ctxt_from_inputs
              (ctos:list lrcto_package)
