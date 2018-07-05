@@ -78,12 +78,12 @@ Section ErgotoErgoCalculus.
              (ergo_stmt_to_expr sdefault)
     end.
 
-  Definition ergoc_expr_top (loc:location) (e:ergoc_expr) : ergoc_expr :=
+  Definition ergo_stmt_to_expr_top (loc:location) (e:ergo_stmt) : ergoc_expr :=
     ELet loc
          local_state
          None
          (EVar loc this_state)
-         (ELet loc local_emit None (EVar loc this_emit) e).
+         (ELet loc local_emit None (EVar loc this_emit) (ergo_stmt_to_expr e)).
 
   (** Translate a clause to clause+calculus *)
 
@@ -104,7 +104,7 @@ Section ErgotoErgoCalculus.
             ::(this_emit, ErgoTypeArray loc emit_type)
             ::c.(clause_sig).(type_signature_params))
          (mk_output_type loc success_type error_type))
-      (lift (ergoc_expr_top loc) (lift ergo_stmt_to_expr c.(clause_body))).
+      (lift (ergo_stmt_to_expr_top loc) c.(clause_body)).
 
   (** Translate a function to function+calculus *)
   Definition function_to_calculus (f:laergo_function) : ergoc_function :=
@@ -130,7 +130,7 @@ Section ErgotoErgoCalculus.
   Definition declaration_to_calculus (s:laergo_declaration) : option (ergoc_declaration) :=
     match s with
     | DType loc ergo_type => None
-    | DStmt loc s => Some (DCExpr loc (ergo_stmt_to_expr s))
+    | DStmt loc s => Some (DCExpr loc (ergo_stmt_to_expr_top loc s))
     | DConstant loc v e => Some (DCConstant loc v e)
     | DFunc loc f => Some (DCFunc loc (function_to_calculus f))
     | DContract loc c => Some (DCContract loc (contract_to_calculus c))
