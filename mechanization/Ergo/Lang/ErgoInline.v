@@ -19,7 +19,7 @@ Require Import Basics.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.Ergo.Lang.ErgoNameResolve.
+Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import Common.Utils.EResult.
 
 Require Import ErgoSpec.Common.CTO.CTO.
