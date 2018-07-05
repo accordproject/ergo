@@ -155,23 +155,5 @@ contract HelloWorld over TemplateModel {
       dummy_location stdlib_namespace nil (DType dummy_location ergo_typed_top::nil).
   Definition  mls:= ergo_stdlib :: nil.
 
-  (* Compute (ErgoCompiler.ergo_module_to_javascript ctos mls p1). *)
-
-  Definition ictos := map InputCTO ctos.
-  Definition imls := map InputErgo mls.
-  Definition ctxt := init_namespace_ctxt.
-  Definition rmods := resolve_ergo_inputs ctxt (ictos ++ imls).
-  (* Compute rmods. *)
-  Definition p := eolift (fun pc => resolve_ergo_module (snd pc) p1) rmods.
-  Require Import ErgoExpand.
-  Require Import ErgotoErgoCalculus.
-  Require Import ErgoCalculustoErgoNNRC.
-  Definition p' := eolift (fun pc => expand_ergo_module (fst pc)) p.
-  (* Compute p'. *)
-  Definition pc := elift ergo_module_to_calculus p'.
-  (* Compute pc. *)
-  Definition pn := eolift (fun rmods => eolift (ergoc_module_to_nnrc (fst rmods)) pc) rmods.
-  (* Compute pn. *)
-
 End HelloWorld.
 

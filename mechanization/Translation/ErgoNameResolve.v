@@ -231,6 +231,10 @@ Section ErgoNameResolution.
     Definition namespace_ctxt_of_ergo_modules (ctxt:namespace_ctxt) (ml:list lrergo_module) : namespace_ctxt :=
       fold_left namespace_ctxt_of_ergo_module ml ctxt.
 
+    Definition namespace_ctxt_of_cto_packages (ctxt:namespace_ctxt) (ctos:list cto_package) : namespace_ctxt :=
+      let mls := map cto_package_to_ergo_module ctos in
+      fold_left namespace_ctxt_of_ergo_module mls ctxt.
+
   End NamespaceContext.
 
   Section ResolveImports.
@@ -776,6 +780,15 @@ Section ErgoNameResolution.
         ml
         ctxt.
 
+    Definition resolve_cto_packages
+               (ctxt:namespace_ctxt)
+               (ctos:list lrcto_package) : eresult (list laergo_module * namespace_ctxt) :=
+      let ctxt := namespace_ctxt_of_cto_packages ctxt ctos in (* XXX Pre-populate namespace for CTO modules to handle not-yet-declared names *)
+      elift_context_fold_left
+        resolve_cto_package
+        ctos
+        ctxt.
+
     Definition resolve_ergo_input
                (ctxt:namespace_ctxt)
                (input:lrergo_input) : eresult (laergo_module * namespace_ctxt) :=
@@ -785,7 +798,19 @@ Section ErgoNameResolution.
       | InputErgo m =>
         resolve_ergo_module ctxt m
       end.
-    
+
+    Fixpoint split_ctos_and_ergos (inputs:list lrergo_input)
+      : (list lrcto_package * list lrergo_module) :=
+      match inputs with
+      | nil => (nil, nil)
+      | InputCTO cto :: rest =>
+        let split_rest := split_ctos_and_ergos rest in
+        (cto :: (fst split_rest), snd split_rest)
+      | InputErgo ml :: rest =>
+        let split_rest := split_ctos_and_ergos rest in
+        (fst split_rest, ml :: (snd split_rest))
+      end.
+
     Definition resolve_ergo_inputs
                (ctxt:namespace_ctxt)
                (il:list lrergo_input) : eresult (list laergo_module * namespace_ctxt) :=
@@ -793,6 +818,17 @@ Section ErgoNameResolution.
         resolve_ergo_input
         il
         ctxt.
+
+    Definition resolve_ergo_inputs_ctos_first
+               (ctxt:namespace_ctxt)
+               (inputs:list lrergo_input) : eresult (list laergo_module * namespace_ctxt) :=
+      let (ctos, mls) := split_ctos_and_ergos inputs in
+      let rctos := resolve_cto_packages ctxt ctos in
+      eolift (fun ectos =>
+                let mlctos := fst ectos in
+                let rmls := resolve_ergo_modules (snd ectos) mls in
+                elift (fun emls => (mlctos ++ (fst emls), snd emls)) rmls)
+             rctos.
 
   End Top.
 
