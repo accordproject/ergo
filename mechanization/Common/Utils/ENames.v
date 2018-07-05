@@ -52,6 +52,9 @@ Section ENames.
   End ReservedNames.
   
   Section TypeNames.
+    Definition hyperledger_namespace : string := "org.hyperledger.composer.system"%string.
+    Definition stdlib_namespace : string := "org.accordproject.ergo.stdlib"%string.
+    
     Definition default_request_absolute_name : string := "org.accordproject.cicero.runtime.Request".
     Definition default_response_absolute_name : string := "org.accordproject.cicero.runtime.Response".
     Definition default_emits_absolute_name : string := "org.hyperledger.composer.system.Event".
