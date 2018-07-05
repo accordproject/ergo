@@ -90,6 +90,8 @@ Section EResult.
 
   (** Built-in errors *)
   Section Builtin.
+    Definition TODO_error {A} loc : eresult A :=
+      efailure (CompilationError loc "TODO").
     Definition not_in_contract_error {A} loc : eresult A :=
       efailure (CompilationError loc "Cannot use 'contract' variable outside of a contract").
     Definition not_in_clause_error {A} loc : eresult A :=
