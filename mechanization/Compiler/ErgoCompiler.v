@@ -24,9 +24,7 @@ Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
-Require ErgoSpec.Compiler.ErgotoJavaScript.
-Require ErgoSpec.Compiler.ErgotoJava.
-Require ErgoSpec.Compiler.ErgotoJavaScriptCicero.
+Require ErgoSpec.Compiler.ErgoCompilerDriver.
 
 Module ErgoCompiler.
 
@@ -246,21 +244,21 @@ Module ErgoCompiler.
     -> list ergo_module
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
-    := ErgotoJavaScript.ergo_module_to_javascript.
+    := ErgoCompilerDriver.ergo_module_to_javascript_top.
 
   Definition ergo_module_to_javascript_cicero :
     list CTO.cto_package
     -> list ergo_module
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
-    := ErgotoJavaScriptCicero.ergo_module_to_javascript_cicero.
+    := ErgoCompilerDriver.ergo_module_to_javascript_cicero_top.
 
   Definition ergo_module_to_java :
     list CTO.cto_package
     -> list ergo_module
     -> ergo_module
     -> EResult.eresult Java.java
-    := ErgotoJava.ergo_module_to_java.
+    := ErgoCompilerDriver.ergo_module_to_java_top.
 
 End ErgoCompiler.
 

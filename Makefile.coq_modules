@@ -47,8 +47,6 @@ MODULES = \
 	Translation/ErgoNNRCtoJavaScript \
 	Translation/ErgoNNRCtoJavaScriptCicero \
 	Translation/ErgoNNRCtoJava \
-	Compiler/ErgotoJavaScript \
-	Compiler/ErgotoJavaScriptCicero \
-	Compiler/ErgotoJava \
+	Compiler/ErgoCompilerDriver \
 	Compiler/ErgoCompiler \
 	Tests/HelloWorld
