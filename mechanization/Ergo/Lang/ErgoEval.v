@@ -29,6 +29,8 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import Common.Utils.EResult.
 
+Require Import Compiler.ErgoCompilerDriver.
+
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 
@@ -368,12 +370,23 @@ Definition ergo_string_of_result (result : eresult (namespace_ctxt * ergo_contex
   | Failure _ _ f => ergo_string_of_error f
   end.
 
-Definition ergo_maybe_update_context (ctx : ergo_context) (result : eresult (namespace_ctxt * ergo_context * option ergo_data)) : ergo_context :=
+Definition ergo_maybe_update_context
+           (ctx : namespace_ctxt * ergo_context)
+           (result : eresult (namespace_ctxt * ergo_context * option ergo_data))
+  : (namespace_ctxt * ergo_context) :=
   match result with
-  | Success _ _ (_, ctx', _) => ctx'
+  | Success _ _ (sctx', dctx', _) => (sctx', dctx')
   | _ => ctx
   end.
 
+Definition ergo_make_stdlib_namespace
+           (ctos:list lrcto_package)
+           (mls:list lrergo_module)
+  : namespace_ctxt :=
+  match (elift namespace_ctxt_of_compilation_ctxt) (compilation_ctxt_from_inputs ctos mls) with
+  | Success _ _ r => r
+  | Failure _ _ f => init_namespace_ctxt
+  end.
 
 End ErgoEval.
 

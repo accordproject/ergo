@@ -34,28 +34,26 @@ let prompt () =
         print_string "ergotop$ "
     else ()
 
-let rec repl ctx =
+let rec repl (sctx, dctx) =
     prompt () ;
     try
-        let t = (ParseString.parse_ergo_module_from_string "stdin"
-                ("namespace org.accordproject.repl\n" ^
-                (read_line ()) ^
-                "\n")) in
-        let ctos = get_ctos () in
-        let ml = get_stdlib () in
-        let result = ergo_eval_module ctos ml ctx t in
+        let decl = (ParseString.parse_ergo_declaration_from_string "stdin" ((read_line ()) ^ "\n")) in
+        let result = ergo_eval_decl sctx dctx decl in
         let out = ergo_string_of_result result in
         if (List.length out) > 0
         then print_string ((string_of_char_list out) ^ "\n")
         else ();
-        repl (ergo_maybe_update_context ctx result)
+        repl (ergo_maybe_update_context (sctx, dctx) result)
     with
     | ErgoUtil.Ergo_Error e ->
         print_string (ErgoUtil.string_of_error e);
         print_string "\n" ;
-        repl ctx
+        repl (sctx, dctx)
     | End_of_file -> None
 
 let main =
     welcome ();
-    repl ergo_empty_context
+    repl (
+        (ergo_make_stdlib_namespace (get_ctos ()) (get_stdlib ())),
+        ergo_empty_context
+    )
