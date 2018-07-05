@@ -26,7 +26,7 @@ Require Import Basics.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.Ergo.Lang.ErgoNameResolve.
+Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import Common.Utils.EResult.
 
 Require Import ErgoSpec.Common.CTO.CTO.
@@ -56,7 +56,7 @@ Section ErgoEval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
 
   Definition ergo_inline_expr ctx expr :=
-    eolift (ergo_inline_functions ctx)) (ergo_inline_foreach ctx expr).
+    eolift (ergo_inline_functions ctx) (ergo_inline_foreach ctx expr).
 
   Fixpoint ergo_inline_globals
            (ctx : ergo_context)
@@ -288,57 +288,53 @@ Fixpoint ergo_eval_stmt (ctx : ergo_context) (stmt : ergo_stmt) : eresult (ergo_
        | SMatch _ e cls stmt' => TODO
        end.
 
-Fixpoint ergo_eval_decl (ctx : ergo_context) (decl : ergo_declaration) : eresult (ergo_context * option ergo_data) :=
-  match decl with
-  | DType _ cto => esuccess (ctx, None)
-  | DStmt _ stmt => ergo_eval_stmt ctx stmt
-                            (*
-  | DExpr _ e =>
-    match eolift (ergo_eval_expr ctx) (ergo_inline_expr ctx e) with
-    | Success _ _ r => esuccess (ctx, Some r)
-    | Failure _ _ f => efailure f
-    end
-*)
-  | DConstant _ n e =>
-    match eolift (ergo_eval_expr ctx) (ergo_inline_expr ctx e) with
-    | Success _ _ r =>
-      esuccess (ergo_ctx_update_global_env ctx n r, None)
-    | Failure _ _ f => efailure f
-    end
-  | DFunc _ fn =>
-    elift (fun fn' => (ergo_ctx_update_function_env ctx fn'.(function_name) fn', None))
-          (ergo_inline_function ctx fn)
-  | DContract _ c => TODO
+Fixpoint ergo_eval_decl
+        (sctx : namespace_ctxt)
+        (dctx : ergo_context)
+        (decl : lrergo_declaration)
+        : eresult (namespace_ctxt * ergo_context * option ergo_data) :=
+  match resolve_ergo_declaration sctx decl with
+  | Failure _ _ f => efailure f
+  | Success _ _ (d', sctx') =>
+    match d' with
+      | DType _ cto => esuccess (sctx', dctx, None)
+      | DStmt _ stmt =>
+        match ergo_eval_stmt dctx stmt with
+        | Success _ _ (dctx', res) => esuccess (sctx', dctx', res)
+        | Failure _ _ f => efailure f
+        end
+      | DConstant _ n e =>
+        match eolift (ergo_eval_expr dctx) (ergo_inline_expr dctx e) with
+        | Success _ _ r =>
+          esuccess (sctx', ergo_ctx_update_global_env dctx n r, None)
+        | Failure _ _ f => efailure f
+        end
+      | DFunc _ fn =>
+        elift (fun fn' =>
+                (sctx', ergo_ctx_update_function_env dctx fn'.(function_name) fn', None))
+              (ergo_inline_function dctx fn)
+      | DContract _ c => TODO
+      end
   end.
 
 Definition ergo_eval_module
            (ctos:list cto_package)
            (ml:list lrergo_module)
-           (ctx : ergo_context)
+           (dctx : ergo_context)
            (module : lrergo_module)
-  : eresult (ergo_context * option ergo_data) :=
+  : eresult (namespace_ctxt * ergo_context * option ergo_data) :=
 
   let mctos := map cto_package_to_ergo_module ctos in
-  let nsctxt := namespace_ctxt_of_ergo_modules (mctos ++ ml ++ (module::nil)) in
+  let sctx := namespace_ctxt_of_ergo_modules (empty_namespace_ctxt "repl"%string) (mctos ++ ml ++ (module::nil)) in
 
-  match (resolve_ergo_single_module nsctxt module) with
-  | Success _ _ mdl =>
     fold_left
       (fun prev_ctx d =>
          match prev_ctx with
          | Failure _ _ f => efailure f
-         | Success _ _ (ctx', _) =>
-           match ergo_eval_decl ctx' d with
-           | Failure _ _ f => efailure f
-           | s => s
-           end
+         | Success _ _ (dctx', sctx', _) => ergo_eval_decl dctx' sctx' d
          end)
-      mdl.(module_declarations) 
-          (esuccess (ctx, None))
-  | Failure _ _ f => efailure f
-  end.
+      module.(module_declarations) (esuccess (sctx, dctx, None)).
 
-(* Require Import Qcert.Basic.Util.Digits. *)
 Definition ergo_string_of_location_point (lp : location_point) : string :=
   (toString lp.(line)) ++ ":" ++ (toString lp.(column)).
 
@@ -365,16 +361,16 @@ Definition ergo_string_of_error (err : eerror) : string :=
   | RuntimeError loc msg => ergo_format_error "Runtime error" loc msg
   end.
 
-Definition ergo_string_of_result (result : eresult (ergo_context * option ergo_data)) : string :=
+Definition ergo_string_of_result (result : eresult (namespace_ctxt * ergo_context * option ergo_data)) : string :=
   match result with
-  | Success _ _ (ctx, None) => ""
-  | Success _ _ (ctx, Some d) => (*dataToString d*) ErgoData.data_to_json_string ""%string d
+  | Success _ _ (_, _, None) => ""
+  | Success _ _ (_, _, Some d) => (*dataToString d*) ErgoData.data_to_json_string ""%string d
   | Failure _ _ f => ergo_string_of_error f
   end.
 
-Definition ergo_maybe_update_context (ctx : ergo_context) (result : eresult (ergo_context * option ergo_data)) : ergo_context :=
+Definition ergo_maybe_update_context (ctx : ergo_context) (result : eresult (namespace_ctxt * ergo_context * option ergo_data)) : ergo_context :=
   match result with
-  | Success _ _ (ctx', _) => ctx'
+  | Success _ _ (_, ctx', _) => ctx'
   | _ => ctx
   end.
 
