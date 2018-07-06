@@ -31,6 +31,8 @@ Require Import Common.Utils.EResult.
 
 Require Import Compiler.ErgoCompilerDriver.
 
+
+Require Import ErgoCalculus.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 
@@ -375,7 +377,8 @@ Definition ergo_string_of_error (err : eerror) : string :=
 Definition ergo_string_of_result {A : Set} (result : eresult (A * ergo_context * option ergo_data)) : string :=
   match result with
   | Success _ _ (_, _, None) => ""
-  | Success _ _ (_, _, Some d) => (*dataToString d*) ErgoData.data_to_json_string ""%string d
+  | Success _ _ (_, _, Some d) =>
+    (*dataToString d*) ErgoData.data_to_json_string """"%string d
   | Failure _ _ f => ergo_string_of_error f
   end.
 
@@ -406,8 +409,16 @@ Definition ergo_make_stdlib_namespace
   | Failure _ _ f => init_namespace_ctxt
   end.
 
-Require Import ErgoCalculus.
-Require Import Compiler.ErgoCompilerDriver.
+
+Definition ergo_function_of_ergoc_function (fn : ergoc_function) : ergo_function :=
+  mkFunc fn.(functionc_annot)
+         fn.(functionc_name)
+         (mkErgoTypeSignature
+            fn.(functionc_annot)
+            fn.(functionc_sig).(sigc_params)
+            fn.(functionc_sig).(sigc_output)
+            None None)
+         (option_map (SFunReturn fn.(functionc_annot)) fn.(functionc_body)).
 
 Definition ergo_eval_decl_via_calculus
            (sctx : compilation_ctxt)
@@ -420,8 +431,13 @@ Definition ergo_eval_decl_via_calculus
   | Success _ _ (Some (DCExpr loc expr), sctx') =>
     elift (fun x => (sctx', dctx, Some x))
           ((eolift (ergo_eval_expr dctx)) (ergo_inline_expr dctx expr))
-  | Success _ _ (Some (DCConstant loc name expr), sctx') => TODO
-  | Success _ _ (Some (DCFunc loc func), sctx') => TODO
+  | Success _ _ (Some (DCConstant loc name expr), sctx') =>
+    let expr' := eolift (ergo_eval_expr dctx) (ergo_inline_expr dctx expr) in
+    eolift (fun val => esuccess (sctx', ergo_ctx_update_global_env dctx name val, None)) expr'
+  | Success _ _ (Some (DCFunc loc func), sctx') =>
+    elift (fun fn' =>
+             (sctx', ergo_ctx_update_function_env dctx fn'.(function_name) fn', None))
+          (ergo_inline_function dctx (ergo_function_of_ergoc_function func))
   | Success _ _ (Some (DCContract loc contr), sctx') => TODO
   end.
 
