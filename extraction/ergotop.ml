@@ -44,7 +44,7 @@ let rec read_nonempty_line () =
 let rec repl (sctx, dctx) =
     prompt () ;
     try
-        let decl = (ParseString.parse_ergo_declaration_from_string "stdin" ((read_line ()) ^ "\n")) in
+        let decl = (ParseString.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
         let result = ergo_eval_decl sctx dctx decl in
         let out = ergo_string_of_result result in
         if (List.length out) > 0
