@@ -22,6 +22,7 @@
 Require Import String.
 Require Import List.
 Require Import Basics.
+Require Import Coq.Strings.Ascii.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
@@ -374,6 +375,22 @@ Definition ergo_string_of_error (err : eerror) : string :=
   | RuntimeError loc msg => ergo_format_error "Runtime error" loc msg
   end.
 
+Definition fmt_nl := "
+"%string.
+
+Definition fmt_esc := String.String (ascii_of_N 27) EmptyString.
+
+Definition fmt_csi : string := fmt_esc ++ ("["%string).
+
+Definition fmt_red (msg : string) : string :=
+  (fmt_csi ++ "31m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
+
+Definition fmt_grn (msg : string) : string :=
+  (fmt_csi ++ "32m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
+
+Definition fmt_mag (msg : string) : string :=
+  (fmt_csi ++ "35m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
+
 Definition ergo_string_of_result {A : Set} (result : eresult (A * ergo_context * option ergo_data)) : string :=
   match result with
   | Success _ _ (_, _, None) => ""
@@ -381,11 +398,19 @@ Definition ergo_string_of_result {A : Set} (result : eresult (A * ergo_context *
                          (dleft
                             (drec (("response"%string, response)
                                      ::("state"%string, state)
-                                     ::("emit"%string, emit)
+                                     ::("emit"%string, dcoll emits)
                                      ::nil))
-                )) =>
-    ErgoData.data_to_json_string """"%string response
+                            )
+                ) =>
+    (fold_left
+       (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
+       (map (ErgoData.data_to_json_string """"%string) emits) ""%string)
+      ++ (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string """"%string response)
     (*dataToString d*) 
+  | Success _ _ (_, _, Some
+                         (dright msg)
+                ) =>
+    fmt_red ("Error. "%string) ++ (ErgoData.data_to_json_string """"%string msg)
   | Success _ _ (_, _, Some d) =>
     ErgoData.data_to_json_string """"%string d
   | Failure _ _ f => ergo_string_of_error f
