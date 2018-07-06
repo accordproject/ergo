@@ -377,8 +377,17 @@ Definition ergo_string_of_error (err : eerror) : string :=
 Definition ergo_string_of_result {A : Set} (result : eresult (A * ergo_context * option ergo_data)) : string :=
   match result with
   | Success _ _ (_, _, None) => ""
+  | Success _ _ (_, _, Some
+                         (dleft
+                            (drec (("response"%string, response)
+                                     ::("state"%string, state)
+                                     ::("emit"%string, emit)
+                                     ::nil))
+                )) =>
+    ErgoData.data_to_json_string """"%string response
+    (*dataToString d*) 
   | Success _ _ (_, _, Some d) =>
-    (*dataToString d*) ErgoData.data_to_json_string """"%string d
+    ErgoData.data_to_json_string """"%string d
   | Failure _ _ f => ergo_string_of_error f
   end.
 
