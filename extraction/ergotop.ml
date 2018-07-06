@@ -34,6 +34,13 @@ let prompt () =
         print_string "ergotop$ "
     else ()
 
+let rec read_nonempty_line () =
+    let line = read_line () in
+    if line = "" then
+        read_nonempty_line ()
+    else
+        line ^ "\n"
+
 let rec repl (sctx, dctx) =
     prompt () ;
     try
@@ -54,7 +61,7 @@ let rec repl (sctx, dctx) =
 let rec repl2 (sctx, dctx) =
     prompt () ;
     try
-        let decl = (ParseString.parse_ergo_declaration_from_string "stdin" ((read_line ()) ^ "\n")) in
+        let decl = (ParseString.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
         let result = ergo_eval_decl_via_calculus sctx dctx decl in
         let out = ergo_string_of_result result in
         if (List.length out) > 0
