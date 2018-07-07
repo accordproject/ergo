@@ -16,32 +16,17 @@
 
 Require Import String.
 Require Import List.
-Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ZArith.
+Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 
 Section EResult.
-  Record location_point :=
-    mkLocationPoint {
-        offset: Z;
-        line : Z;
-        column : Z;
-      }.
-  Record location :=
-    mkLocation {
-        loc_file: option string;
-        loc_start: location_point;
-        loc_end: location_point;
-      }.
-  Definition dummy_location : location :=
-    let dummy_location_point := mkLocationPoint (-1) (-1) (-1) in
-    mkLocation None dummy_location_point dummy_location_point.
-
   Inductive eerror : Set :=
-  | SystemError : string -> eerror
-  | ParseError : location -> string -> eerror
-  | CompilationError : location -> string -> eerror
-  | TypeError : location -> string -> eerror
-  | RuntimeError : location -> string -> eerror.
+  | SystemError : provenance -> string -> eerror
+  | ParseError : provenance -> string -> eerror
+  | CompilationError : provenance -> string -> eerror
+  | TypeError : provenance -> string -> eerror
+  | RuntimeError : provenance -> string -> eerror.
 
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
@@ -90,55 +75,61 @@ Section EResult.
 
   (** Built-in errors *)
   Section Builtin.
-    Definition TODO_error {A} loc : eresult A :=
-      efailure (CompilationError loc "TODO").
-    Definition not_in_contract_error {A} loc : eresult A :=
-      efailure (CompilationError loc "Cannot use 'contract' variable outside of a contract").
-    Definition not_in_clause_error {A} loc : eresult A :=
-      efailure (CompilationError loc "Cannot use 'clause' variable outside of a clause").
+    Definition TODO_error {A} prov : eresult A :=
+      efailure (CompilationError prov "TODO").
+    Definition not_in_contract_error {A} prov : eresult A :=
+      efailure (CompilationError prov "Cannot use 'contract' variable outside of a contract").
+    Definition not_in_clause_error {A} prov : eresult A :=
+      efailure (CompilationError prov "Cannot use 'clause' variable outside of a clause").
 
     (* CTO errors *)
-    Definition import_not_found_error {A} loc (import:string) : eresult A :=
-      efailure (CompilationError loc ("Import not found: " ++ import)).
-    Definition type_name_not_found_error {A} loc (ln:string) : eresult A :=
-      efailure (CompilationError loc ("Cannot find type with name '" ++ ln ++ "'")).
-    Definition variable_name_not_found_error {A} loc (ln:string) : eresult A :=
-      efailure (CompilationError loc ("Cannot find variable with name '" ++ ln ++ "'")).
-    Definition function_name_not_found_error {A} loc (ln:string) : eresult A :=
-      efailure (CompilationError loc ("Cannot find function with name '" ++ ln ++ "'")).
-    Definition import_name_not_found_error {A} loc (namespace:string) (name_ref:string) : eresult A :=
-      efailure (CompilationError loc ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
+    Definition import_not_found_error {A} prov (import:string) : eresult A :=
+      efailure (CompilationError prov ("Import not found: " ++ import)).
+    Definition type_name_not_found_error {A} prov (ln:string) : eresult A :=
+      efailure (CompilationError prov ("Cannot find type with name '" ++ ln ++ "'")).
+    Definition variable_name_not_found_error {A} prov (ln:string) : eresult A :=
+      efailure (CompilationError prov ("Cannot find variable with name '" ++ ln ++ "'")).
+    Definition function_name_not_found_error {A} prov (ln:string) : eresult A :=
+      efailure (CompilationError prov ("Cannot find function with name '" ++ ln ++ "'")).
+    Definition import_name_not_found_error {A} prov (namespace:string) (name_ref:string) : eresult A :=
+      efailure (CompilationError prov ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
   
     (** Main clause creation errors *)
-    Definition main_parameter_mismatch_error {A} loc : eresult A :=
-      efailure (CompilationError loc "Parameter mismatch during main creation").
-    Definition main_at_least_one_parameter_error {A} loc : eresult A :=
-      efailure (CompilationError loc "Cannot create main if not at least one parameter").
-    Definition main_not_a_class_error {A} loc (cname:string) : eresult A :=
-      efailure (CompilationError loc ("Cannot create main for non-class type "++cname)).
+    Definition main_parameter_mismatch_error {A} prov : eresult A :=
+      efailure (CompilationError prov "Parameter mismatch during main creation").
+    Definition main_at_least_one_parameter_error {A} prov : eresult A :=
+      efailure (CompilationError prov "Cannot create main if not at least one parameter").
+    Definition main_not_a_class_error {A} prov (cname:string) : eresult A :=
+      efailure (CompilationError prov ("Cannot create main for non-class type "++cname)).
     
     (** Call errors *)
-    Definition function_not_found_error {A} loc (fname:string) : eresult A :=
-      efailure (CompilationError loc ("Function '" ++ fname ++ "' not found")).
-    Definition clause_not_found_error {A} loc (fname:string) : eresult A :=
-      efailure (CompilationError loc ("Clause '" ++ fname ++ "' not found")).
-    Definition call_params_error {A} loc (fname:string) : eresult A :=
-      efailure (CompilationError loc ("Parameter mistmatch when calling function '" ++ fname ++ "'")).
+    Definition function_not_found_error {A} prov (fname:string) : eresult A :=
+      efailure (CompilationError prov ("Function '" ++ fname ++ "' not found")).
+    Definition clause_not_found_error {A} prov (fname:string) : eresult A :=
+      efailure (CompilationError prov ("Clause '" ++ fname ++ "' not found")).
+    Definition call_params_error {A} prov (fname:string) : eresult A :=
+      efailure (CompilationError prov ("Parameter mistmatch when calling function '" ++ fname ++ "'")).
 
     Definition ergo_default_package : string := "org.accordproject.ergo".
-    Definition ergo_default_error_local_name : string := "Error".
+    Definition ergo_default_error_proval_name : string := "Error".
     Definition ergo_default_error_name : string :=
-      ergo_default_package ++ "." ++ ergo_default_error_local_name.
+      ergo_default_package ++ "." ++ ergo_default_error_proval_name.
 
     Definition enforce_error_content : ErgoData.data :=
       ErgoData.dbrand (ergo_default_error_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
 
-    Definition unresolved_name_error {A} loc : eresult A :=
-      efailure (CompilationError loc "Unresolved name").
-    Definition should_have_one_contract_error {A} loc : eresult A :=
-      efailure (CompilationError loc "Should have exactly one contract").
+    Definition unresolved_name_error {A} prov : eresult A :=
+      efailure (CompilationError prov "Unresolved name").
+    Definition should_have_one_contract_error {A} prov : eresult A :=
+      efailure (CompilationError prov "Should have exactly one contract").
 
+    Definition contract_in_calculus_error {A} prov : eresult A :=
+      efailure (SystemError prov "Should not find 'contract' in Ergo Calculus").
+    Definition clause_in_calculus_error {A} prov : eresult A :=
+      efailure (SystemError prov "Should not find 'clause' in Ergo Calculus").
+    Definition state_in_calculus_error {A} prov : eresult A :=
+      efailure (SystemError prov "Should not find 'state' in Ergo Calculus").
   End Builtin.
 
 End EResult.

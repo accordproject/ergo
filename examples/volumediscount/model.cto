@@ -11,7 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.volumediscount
+
+namespace org.accordproject.volumediscount
 
 /**
  * Defines the data model for the VolumeDiscount template.

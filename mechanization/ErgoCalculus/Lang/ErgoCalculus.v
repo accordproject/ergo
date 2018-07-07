@@ -17,7 +17,9 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
@@ -38,7 +40,7 @@ Section ErgoCalculus.
     (** Function *)
     Record ergoc_function :=
       mkFuncC
-        { functionc_annot : location;
+        { functionc_annot : provenance;
           functionc_name : string;
           functionc_sig : sigc;
           functionc_body : option ergoc_expr; }.
@@ -46,21 +48,21 @@ Section ErgoCalculus.
     (** Contract *)
     Record ergoc_contract :=
       mkContractC
-        { contractc_annot : location;
+        { contractc_annot : provenance;
           contractc_name : string;
           contractc_clauses : list ergoc_function; }.
 
     (** Declaration *)
     Inductive ergoc_declaration :=
-    | DCExpr : location -> ergoc_expr -> ergoc_declaration
-    | DCConstant : location -> string -> ergoc_expr -> ergoc_declaration
-    | DCFunc : location -> ergoc_function -> ergoc_declaration
-    | DCContract : location -> ergoc_contract -> ergoc_declaration.
+    | DCExpr : provenance -> ergoc_expr -> ergoc_declaration
+    | DCConstant : provenance -> string -> ergoc_expr -> ergoc_declaration
+    | DCFunc : provenance -> ergoc_function -> ergoc_declaration
+    | DCContract : provenance -> ergoc_contract -> ergoc_declaration.
 
     (** Module. *)
     Record ergoc_module :=
       mkModuleC
-        { modulec_annot : location;
+        { modulec_annot : provenance;
           modulec_namespace : string;
           modulec_declarations : list ergoc_declaration; }.
 

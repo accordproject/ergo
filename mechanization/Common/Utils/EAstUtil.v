@@ -13,6 +13,7 @@
  *)
 
 Require Import String.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 
@@ -30,7 +31,7 @@ Section EAstUtil.
 
   End Ast.
 
-  Definition limport_decl : Set := @import_decl location.
+  Definition limport_decl : Set := @import_decl provenance.
   
   Definition rextends : Set := @extends relative_name.
   Definition aextends : Set := @extends absolute_name.
