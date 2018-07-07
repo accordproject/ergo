@@ -141,16 +141,16 @@ Section ErgoCompilerDriver.
     let p := eolift (fun pc => expand_ergo_module (fst pc)) p in
     let ec := eolift lookup_single_contract p in
     eolift
-      (fun c : ergo_contract =>
-         let contract_name := c.(contract_name) in 
-         let sigs := lookup_contract_signatures c in
+      (fun c : local_name * ergo_contract =>
+         let contract_name := (fst c) in 
+         let sigs := lookup_contract_signatures (snd c) in
          let pc := eolift ergo_module_to_calculus p in
          let pn :=
              eolift
                (fun rmods =>
                   eolift (ergoc_module_to_nnrc (fst rmods)) pc) rmods
          in
-         elift (ergoc_module_to_javascript_cicero contract_name c.(contract_state) sigs) pn)
+         elift (ergoc_module_to_javascript_cicero contract_name (snd c).(contract_state) sigs) pn)
       ec.
 
 End ErgoCompilerDriver.

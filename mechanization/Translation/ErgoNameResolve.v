@@ -216,12 +216,11 @@ Section ErgoNameResolution.
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         let an := absolute_name_of_local_name ns ln in
         add_constant_to_namespace_ctxt ctxt ns ln an
-      | DFunc _ fd :: rest =>
+      | DFunc _ ln fd :: rest =>
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
-        let ln := fd.(function_name) in
         let an := absolute_name_of_local_name ns ln in
         add_function_to_namespace_ctxt ctxt ns ln an
-      | DContract _ c :: rest => (* XXX TO BE REVISED *)
+      | DContract _ _ c :: rest => (* XXX TO BE REVISED *)
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         ctxt
       end.
@@ -644,14 +643,13 @@ Section ErgoNameResolution.
                (tbl:namespace_table)
                (f:lrergo_function) : eresult laergo_function :=
       let prov := f.(function_annot) in
-      let rfname := absolute_name_of_local_name module_ns f.(function_name) in
       let rbody :=
           match f.(function_body) with
           | None => esuccess None
           | Some body => elift Some (resolve_ergo_stmt tbl body)
           end
       in
-      elift2 (mkFunc prov rfname)
+      elift2 (mkFunc prov)
              (resolve_ergo_type_signature tbl f.(function_sig))
              rbody.
     
@@ -682,7 +680,6 @@ Section ErgoNameResolution.
                (tbl:namespace_table)
                (c:lrergo_contract) : eresult laergo_contract :=
       let prov := c.(contract_annot) in
-      let rcname := absolute_name_of_local_name module_ns c.(contract_name) in
       let rtemplate := resolve_ergo_type tbl c.(contract_template) in
       let rstate :=
           match c.(contract_state) with
@@ -690,7 +687,7 @@ Section ErgoNameResolution.
           | Some state => elift Some (resolve_ergo_type tbl state)
           end
       in
-      elift3 (mkContract prov rcname)
+      elift3 (mkContract prov)
              rtemplate
              rstate
              (resolve_ergo_clauses module_ns tbl c.(contract_clauses)).
@@ -713,14 +710,14 @@ Section ErgoNameResolution.
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_constant_to_namespace_ctxt_current ctxt ln an in
         elift (fun x => (DConstant prov ln x, ctxt)) (resolve_ergo_expr tbl e)
-      | DFunc prov fd =>
-        let ln := fd.(function_name) in
+      | DFunc prov ln fd =>
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_function_to_namespace_ctxt_current ctxt ln an in (* XXX TBD *)
-        elift (fun x => (DFunc prov x, ctxt)) (resolve_ergo_function module_ns tbl fd)
-      | DContract prov c => (* XXX TO BE REVISED *)
+        elift (fun x => (DFunc prov an x, ctxt)) (resolve_ergo_function module_ns tbl fd)
+      | DContract prov ln c  => (* XXX TO BE REVISED *)
         let ctxt := ctxt in
-        elift (fun x => (DContract prov x, ctxt)) (resolve_ergo_contract module_ns tbl c)
+        let an := absolute_name_of_local_name module_ns ln in
+        elift (fun x => (DContract prov an x, ctxt)) (resolve_ergo_contract module_ns tbl c)
       end.
 
     Definition resolve_ergo_declarations
@@ -863,7 +860,6 @@ Section ErgoNameResolution.
     Definition ergo_funcd1 : lrergo_function :=
       mkFunc
         dummy_provenance
-        "addFee"
         (mkErgoTypeSignature
            dummy_provenance
            nil
@@ -875,7 +871,6 @@ Section ErgoNameResolution.
     Definition ergo_funcd2 : lrergo_function :=
       mkFunc
         dummy_provenance
-        "addFee2"
         (mkErgoTypeSignature
            dummy_provenance
            nil
@@ -899,7 +894,6 @@ Section ErgoNameResolution.
     Definition ergo_contractd1 : lrergo_contract :=
       mkContract
         dummy_provenance
-        "MyContract"
         (ErgoTypeBoolean dummy_provenance)
         None
         (ergo_clause2::nil).
@@ -909,8 +903,8 @@ Section ErgoNameResolution.
         dummy_provenance
         "n1"
         ((ImportAll dummy_provenance "n2")::nil)
-        (DFunc dummy_provenance ergo_funcd1
-               ::DContract dummy_provenance ergo_contractd1
+        (DFunc dummy_provenance "addFee" ergo_funcd1
+               ::DContract dummy_provenance "MyContract" ergo_contractd1
                ::DType dummy_provenance ergo_typed1
                ::DType dummy_provenance ergo_typed2::nil).
     

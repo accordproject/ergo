@@ -161,7 +161,6 @@ Section ErgoExpand.
       in
       mkContract
         prov
-        c.(contract_name)
         c.(contract_template)
         c.(contract_state)
         (c.(contract_clauses) ++ (init_clause::nil)).
@@ -176,7 +175,6 @@ Section ErgoExpand.
         (fun main_clause =>
            mkContract
              prov
-             c.(contract_name)
              c.(contract_template)
              c.(contract_state)
              (c.(contract_clauses) ++ (main_clause::nil)))
@@ -189,12 +187,12 @@ Section ErgoExpand.
     | DType _ _ => esuccess d
     | DStmt _ _ => esuccess d
     | DConstant _ _ _ => esuccess d
-    | DFunc _ _ => esuccess d
-    | DContract _ c =>
+    | DFunc _ _ _ => esuccess d
+    | DContract _ cn c =>
       let cd := add_init_clause_to_contract namespace c in
       elift
         (fun dd =>
-           (DContract (decl_annot d) dd))
+           (DContract (decl_annot d) cn dd))
         (add_main_clause_to_contract namespace cd)
     end.
     

@@ -51,7 +51,6 @@ contract HelloWorld over TemplateModel {
 
   Definition c1 : lrergo_contract :=
     mkContract dummy_provenance
-               "HelloWorld"
                (ErgoTypeClassRef dummy_provenance (None,"TemplateModel"))
                None
                (cl1::nil).
@@ -59,7 +58,6 @@ contract HelloWorld over TemplateModel {
   Definition ergo_funcd1 : lrergo_function :=
     mkFunc
       dummy_provenance
-      "addFee"
       (mkErgoTypeSignature
          dummy_provenance
          (("req",ErgoTypeBoolean dummy_provenance)::nil)
@@ -71,7 +69,6 @@ contract HelloWorld over TemplateModel {
   Definition ergo_funcd2 : lrergo_function :=
     mkFunc
       dummy_provenance
-      "addFee2"
       (mkErgoTypeSignature
          dummy_provenance
          nil
@@ -95,7 +92,6 @@ contract HelloWorld over TemplateModel {
   Definition ergo_contractd1 : lrergo_contract :=
     mkContract
       dummy_provenance
-      "MyContract"
       (ErgoTypeBoolean dummy_provenance)
       None
       (ergo_clause2::nil).
@@ -104,9 +100,9 @@ contract HelloWorld over TemplateModel {
     mkModule dummy_provenance
              "org.accordproject.helloworld"
              nil
-             (DFunc dummy_provenance ergo_funcd1
-                    ::DContract dummy_provenance c1
-                    ::DContract dummy_provenance ergo_contractd1::nil).
+             (DFunc dummy_provenance "addFee" ergo_funcd1
+                    ::DContract dummy_provenance "HelloWorld" c1
+                    ::DContract dummy_provenance "MyContract" ergo_contractd1::nil).
 
   Definition cto_typed_tm : lrcto_declaration :=
     mkCTODeclaration

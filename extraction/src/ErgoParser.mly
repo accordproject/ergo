@@ -133,10 +133,9 @@ decl:
         (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEnum et)) }
 | DEFINE CONSTANT v = ident EQUAL e = expr
     { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v e }
-| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
-    { ErgoCompiler.dfunc (mk_provenance $startpos $endpos)
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
+    { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
-          function_name = cn;
           function_sig =
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
@@ -144,10 +143,9 @@ decl:
             type_signature_throws = fst mt;
             type_signature_emits = snd mt };
           function_body = Some fs; } }
-| DEFINE FUNCTION cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow
-    { ErgoCompiler.dfunc (mk_provenance $startpos $endpos)
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow
+    { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
-          function_name = cn;
           function_sig =
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
@@ -156,9 +154,8 @@ decl:
             type_signature_emits = snd mt };
           function_body = None; } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
-    { ErgoCompiler.dcontract (mk_provenance $startpos $endpos)
+    { ErgoCompiler.dcontract (mk_provenance $startpos $endpos) cn
         { contract_annot = mk_provenance $startpos $endpos;
-          contract_name = cn;
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }

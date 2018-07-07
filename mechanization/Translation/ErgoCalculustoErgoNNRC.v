@@ -278,47 +278,46 @@ Section ErgoCalculustoErgoNNRC.
 
   (** Translate a function to function+calculus *)
   Definition functionc_to_nnrc
-             (ctxt:translation_context) (f:ergoc_function) : eresult nnrc_function :=
+             (ctxt:translation_context)
+             (fn:absolute_name)
+             (f:ergoc_function) : eresult nnrc_function :=
     let ctxt : translation_context :=
         add_params ctxt (List.map fst f.(functionc_sig).(sigc_params))
     in
     match f.(functionc_body) with
     | Some body =>
       elift
-        (mkFuncN
-           f.(functionc_name))
+        (mkFuncN fn)
         (elift
            (mkLambdaN
               f.(functionc_sig).(sigc_params)
               f.(functionc_sig).(sigc_output))
            (ergoc_expr_to_nnrc ctxt body))
     | None =>
-      let rlambda := lookup_lambda f.(functionc_annot) nnrc_stdlib f.(functionc_name) in
+      let rlambda := lookup_lambda f.(functionc_annot) nnrc_stdlib fn in
       elift
-        (mkFuncN
-           f.(functionc_name))
+        (mkFuncN fn)
         rlambda
     end.
 
-  (** Translate a clause to clause+calculus *)
-  Definition clausec_to_nnrc
-             (ctxt:translation_context) (f:ergoc_function) : eresult nnrc_function :=
-    functionc_to_nnrc ctxt f.
-
   (** Translate a declaration to a declaration+calculus *)
   Definition clausec_declaration_to_nnrc
-             (ctxt:translation_context) (c:ergoc_function) : eresult (translation_context * nnrc_function) :=
+             (ctxt:translation_context)
+             (fn:absolute_name)
+             (f:ergoc_function) : eresult (translation_context * nnrc_function) :=
     elift
       (fun x => (add_one_function
                    ctxt
                    x.(functionn_name)
                    x.(functionn_lambda), x)) (* Add new function to translation_context *)
-      (clausec_to_nnrc ctxt c).
+      (functionc_to_nnrc ctxt fn f).
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the translation_context *)
   Definition contractc_to_nnrc
-             (ctxt:translation_context) (c:ergoc_contract) : eresult (translation_context * nnrc_function_table) :=
+             (ctxt:translation_context)
+             (cn:local_name)
+             (c:ergoc_contract) : eresult (translation_context * nnrc_function_table) :=
     let ctxt : translation_context := (* XXX Should probably be moved to Ergo -> ErgoCalculus *)
         add_params
           ctxt
@@ -327,7 +326,7 @@ Section ErgoCalculustoErgoNNRC.
     let init := esuccess (ctxt, nil) in
     let proc_one
           (acc:eresult (translation_context * list nnrc_function))
-          (s:ergoc_function)
+          (s:absolute_name * ergoc_function)
         : eresult (translation_context * list nnrc_function) :=
         eolift
           (fun acc : translation_context * list nnrc_function =>
@@ -335,17 +334,16 @@ Section ErgoCalculustoErgoNNRC.
              elift (fun xy : translation_context * nnrc_function =>
                       let (newctxt,news) := xy in
                       (newctxt,news::acc))
-                   (clausec_declaration_to_nnrc ctxt s))
+                   (clausec_declaration_to_nnrc ctxt (fst s) (snd s)))
           acc
     in
-    let cl : list ergoc_function := c.(contractc_clauses) in
     elift
       (fun xy =>
          (fst xy,
           (mkFuncTableN
-             c.(contractc_name)
+             cn
              (snd xy))))
-      (List.fold_left proc_one cl init).
+      (List.fold_left proc_one c.(contractc_clauses) init).
 
   (** Translate a statement to a statement+calculus *)
   Definition declaration_to_nnrc
@@ -359,13 +357,13 @@ Section ErgoCalculustoErgoNNRC.
       elift
         (fun x => (add_one_global ctxt v, DNConstant v x)) (* Add new variable to translation_context *)
         (ergoc_expr_to_nnrc ctxt e)
-    | DCFunc prov f =>
+    | DCFunc prov fn f =>
       elift
         (fun x => (add_one_function ctxt x.(functionn_name) x.(functionn_lambda), DNFunc x)) (* Add new function to translation_context *)
-        (functionc_to_nnrc ctxt f)
-    | DCContract prov c =>
+        (functionc_to_nnrc ctxt fn f)
+    | DCContract prov cn c =>
       elift (fun xy => (fst xy, DNFuncTable (snd xy)))
-            (contractc_to_nnrc ctxt c)
+            (contractc_to_nnrc ctxt cn c)
     end.
 
   Definition initial_translation_context (ml:list laergo_module) :=
