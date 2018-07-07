@@ -244,10 +244,10 @@ Module ErgoCompiler.
     := Ergo.DStmt loc s.
   Definition dconstant loc v e : ergo_declaration
     := Ergo.DConstant loc v e.
-  Definition dfunc loc f : ergo_declaration
-    := Ergo.DFunc loc f.
-  Definition dcontract loc c : ergo_declaration
-    := Ergo.DContract loc c.
+  Definition dfunc loc fn f : ergo_declaration
+    := Ergo.DFunc loc fn f.
+  Definition dcontract loc cn c : ergo_declaration
+    := Ergo.DContract loc cn c.
 
   (** Compilation *)
   Definition ergo_module_to_javascript :

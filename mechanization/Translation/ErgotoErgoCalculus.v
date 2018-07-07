@@ -273,7 +273,7 @@ Section ErgotoErgoCalculus.
              (ctxt:translation_context)
              (tem:laergo_type)
              (sta:option laergo_type)
-             (c:laergo_clause) : eresult ergoc_function :=
+             (c:laergo_clause) : eresult (local_name * ergoc_function) :=
     let ctxt : translation_context := set_current_clause ctxt c.(clause_name) in
     (* XXX keep track of clause provenance *)
     let prov := ProvClause (loc_of_provenance c.(clause_annot)) c.(clause_name) in
@@ -291,15 +291,17 @@ Section ErgotoErgoCalculus.
         end
     in
     elift
-      (mkFuncC
-         prov
-         c.(clause_name)
-             (mkSigC
-                ((this_contract, tem)
-                   ::(this_state, state_type)
-                   ::(this_emit, ErgoTypeArray prov emit_type)
-                   ::c.(clause_sig).(type_signature_params))
-                (mk_output_type prov success_type error_type)))
+      (fun body =>
+         (c.(clause_name),
+          mkFuncC
+            prov
+            (mkSigC
+               ((this_contract, tem)
+                  ::(this_state, state_type)
+                  ::(this_emit, ErgoTypeArray prov emit_type)
+                  ::c.(clause_sig).(type_signature_params))
+               (mk_output_type prov success_type error_type))
+            body))
       body.
 
   (** Translate a function to function+calculus *)
@@ -317,7 +319,6 @@ Section ErgotoErgoCalculus.
     elift
       (mkFuncC
         f.(function_annot)
-        f.(function_name)
         (mkSigC
           f.(function_sig).(type_signature_params)
           f.(function_sig).(type_signature_output)))
@@ -329,16 +330,12 @@ Section ErgotoErgoCalculus.
   Definition contract_to_calculus
              (ctxt:translation_context)
              (c:laergo_contract) : eresult ergoc_contract :=
-    let ctxt :=
-        set_current_contract ctxt c.(contract_name)
-    in
     let clauses :=
         emaplift (clause_to_calculus ctxt c.(contract_template) c.(contract_state)) c.(contract_clauses)
     in
     elift
       (mkContractC
-         c.(contract_annot)
-         c.(contract_name))
+         c.(contract_annot))
       clauses.
 
   (** Translate a statement to a statement+calculus *)
@@ -349,8 +346,12 @@ Section ErgotoErgoCalculus.
     | DType prov ergo_type => esuccess None
     | DStmt prov s => elift Some (elift (DCExpr prov) (ergo_stmt_to_expr_top ctxt prov s))
     | DConstant prov v e => elift Some (elift (DCConstant prov v) (ergo_expr_to_ergoc_expr ctxt e))
-    | DFunc prov f => elift Some (elift (DCFunc prov) (function_to_calculus ctxt f))
-    | DContract prov c => elift Some (elift (DCContract prov) (contract_to_calculus ctxt c))
+    | DFunc prov fn f =>
+      elift Some (elift (DCFunc prov fn) (function_to_calculus ctxt f))
+    | DContract prov cn c =>
+      elift Some (elift (DCContract prov cn)
+                        (let ctxt := set_current_contract ctxt cn in
+                         contract_to_calculus ctxt c))
     end.
 
   (** Translate a module to a module+calculus *)
@@ -384,7 +385,6 @@ Section ErgotoErgoCalculus.
   Section Examples.
     Definition f1 : laergo_function :=
       mkFunc dummy_provenance
-             "addFee"%string
              (mkErgoTypeSignature
                 dummy_provenance
                 (("rate"%string, ErgoTypeDouble dummy_provenance)::nil)
@@ -394,7 +394,6 @@ Section ErgotoErgoCalculus.
              (Some (SReturn dummy_provenance (EConst dummy_provenance (dfloat float_one)))).
     Definition f2 : laergo_function :=
       mkFunc dummy_provenance
-             "addFee"%string
              (mkErgoTypeSignature
                 dummy_provenance
                 (("rate"%string, ErgoTypeDouble dummy_provenance)::nil)
@@ -431,20 +430,19 @@ Section ErgotoErgoCalculus.
     Definition co1 : laergo_contract :=
       mkContract
         dummy_provenance
-        "VolumeDiscount"%string
         (ErgoTypeClassRef dummy_provenance "TemplateModel"%string)
         None
         (cl1::cl2::nil).
 
     Definition dl1 : list laergo_declaration :=
-      (DFunc dummy_provenance f1)
-        :: (DContract dummy_provenance co1)
+      (DFunc dummy_provenance "addFee"%string f1)
+        :: (DContract dummy_provenance "VolumeDiscount"%string co1)
         :: nil.
 
     Definition dl2 : list laergo_declaration :=
-      (DFunc dummy_provenance f1)
-        :: (DFunc dummy_provenance f2)
-        :: (DContract dummy_provenance co1)
+      (DFunc dummy_provenance "addFee"%string f1)
+        :: (DFunc dummy_provenance "addFee2"%string f2)
+        :: (DContract dummy_provenance "VolumeDiscount"%string co1)
         :: nil.
 
     (* Compute (declarations_calculus initial_translation_context dl1). (* Should succeed *) *)

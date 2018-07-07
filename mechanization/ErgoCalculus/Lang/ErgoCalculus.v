@@ -41,7 +41,6 @@ Section ErgoCalculus.
     Record ergoc_function :=
       mkFuncC
         { functionc_annot : provenance;
-          functionc_name : string;
           functionc_sig : sigc;
           functionc_body : option ergoc_expr; }.
 
@@ -49,15 +48,14 @@ Section ErgoCalculus.
     Record ergoc_contract :=
       mkContractC
         { contractc_annot : provenance;
-          contractc_name : string;
-          contractc_clauses : list ergoc_function; }.
+          contractc_clauses : list (local_name * ergoc_function); }.
 
     (** Declaration *)
     Inductive ergoc_declaration :=
     | DCExpr : provenance -> ergoc_expr -> ergoc_declaration
-    | DCConstant : provenance -> string -> ergoc_expr -> ergoc_declaration
-    | DCFunc : provenance -> ergoc_function -> ergoc_declaration
-    | DCContract : provenance -> ergoc_contract -> ergoc_declaration.
+    | DCConstant : provenance -> absolute_name -> ergoc_expr -> ergoc_declaration
+    | DCFunc : provenance -> absolute_name -> ergoc_function -> ergoc_declaration
+    | DCContract : provenance -> absolute_name -> ergoc_contract -> ergoc_declaration.
 
     (** Module. *)
     Record ergoc_module :=

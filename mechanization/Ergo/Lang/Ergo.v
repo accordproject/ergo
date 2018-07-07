@@ -107,7 +107,6 @@ Section Ergo.
     Record ergo_function :=
       mkFunc
         { function_annot : A;
-          function_name : local_name;
           function_sig : @ergo_type_signature A N;
           function_body : option ergo_stmt; }.
 
@@ -123,7 +122,6 @@ Section Ergo.
     Record ergo_contract :=
       mkContract
         { contract_annot : A;
-          contract_name : local_name;
           contract_template : (@ergo_type A N);
           contract_state : option (@ergo_type A N);
           contract_clauses : list ergo_clause; }.
@@ -133,8 +131,8 @@ Section Ergo.
     | DType : A -> @ergo_type_declaration A N -> ergo_declaration
     | DStmt : A -> ergo_stmt -> ergo_declaration
     | DConstant : A -> local_name -> ergo_expr -> ergo_declaration
-    | DFunc : A -> ergo_function -> ergo_declaration
-    | DContract : A -> ergo_contract -> ergo_declaration
+    | DFunc : A -> local_name -> ergo_function -> ergo_declaration
+    | DContract : A -> local_name -> ergo_contract -> ergo_declaration
     .
     
     Definition decl_annot (d:ergo_declaration) : A :=
@@ -142,8 +140,8 @@ Section Ergo.
       | DType a _ => a
       | DStmt a _ => a
       | DConstant a _ _ => a
-      | DFunc a _ => a
-      | DContract a _ => a
+      | DFunc a _ _ => a
+      | DContract a _ _ => a
       end.
 
     (** Module. *)
@@ -195,40 +193,41 @@ Section Ergo.
   Definition laergo_module := @ergo_module provenance absolute_name.
 
   Section Lookup.
-    Fixpoint lookup_clauses_signatures (dl:list laergo_clause) : list (string * ergo_type_signature) :=
+    Fixpoint lookup_clauses_signatures (dl:list laergo_clause) : list (local_name * ergo_type_signature) :=
       match dl with
       | nil => nil
       | cl :: dl' =>
         (cl.(clause_name),cl.(clause_sig)) :: lookup_clauses_signatures dl'
       end.
       
-    Definition lookup_contract_signatures (c:ergo_contract) : list (string * ergo_type_signature) :=
+    Definition lookup_contract_signatures (c:ergo_contract) : list (local_name * ergo_type_signature) :=
       lookup_clauses_signatures c.(contract_clauses).
 
-    Definition contract_of_declaration (d:laergo_declaration) : option laergo_contract :=
+    Definition contract_of_declaration (d:laergo_declaration) : option (local_name * laergo_contract) :=
       match d with
-      | DContract _ c => Some c
+      | DContract _ cn c => Some (cn, c)
       | _ => None
       end.
 
-    Definition lookup_contracts_in_declarations (dl:list laergo_declaration) : list laergo_contract :=
+    Definition lookup_contracts_in_declarations (dl:list laergo_declaration)
+      : list (local_name * laergo_contract) :=
       filter_some contract_of_declaration dl.
 
     Definition lookup_single_contract_in_declarations
-               (prov:provenance) (dl:list laergo_declaration) : eresult laergo_contract :=
+               (prov:provenance) (dl:list laergo_declaration) : eresult (local_name * laergo_contract) :=
       match lookup_contracts_in_declarations dl with
       | nil => should_have_one_contract_error prov
       | c :: nil => esuccess c
       | _ :: _ => should_have_one_contract_error prov
       end.
 
-    Definition lookup_single_contract (p:laergo_module) : eresult laergo_contract :=
+    Definition lookup_single_contract (p:laergo_module) : eresult (local_name * laergo_contract) :=
       lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations).
 
-    Definition lookup_single_contract_with_state (p:laergo_module) : eresult (laergo_contract * string) :=
+    Definition lookup_single_contract_with_state (p:laergo_module) : eresult ((string * laergo_contract) * string) :=
       eolift (fun ec =>
                 elift (fun ecstate =>
-                         (ec, ecstate)) (lift_default_state_name ec.(contract_state)))
+                         (ec, ecstate)) (lift_default_state_name (snd ec).(contract_state)))
              (lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations)).
   End Lookup.
 
