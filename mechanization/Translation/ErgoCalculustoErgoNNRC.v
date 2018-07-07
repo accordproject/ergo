@@ -250,30 +250,13 @@ Section ErgoCalculustoErgoNNRC.
                      in
                      elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
-    | EForeach prov foreachs econd e2 =>
-      let init_e2 := elift (NNRCUnop OpBag) (ergoc_expr_to_nnrc ctxt e2) in
-      let init_e :=
-          match econd with
-          | Some econd =>
-            elift2
-              (fun econd e2 =>
-                 NNRCIf econd
-                        e2
-                        (NNRCConst (dcoll nil)))
-              (ergoc_expr_to_nnrc ctxt econd)
-              init_e2
-          | None => init_e2
-          end
-      in
-      let proc_one (foreach:string * ergo_expr) (acc:eresult nnrc) : eresult nnrc :=
-          let v := fst foreach in
-          let e := ergoc_expr_to_nnrc ctxt (snd foreach) in
-          elift (NNRCUnop OpFlatten)
-                (elift2 (NNRCFor v)
-                        e
-                        acc)
-      in
-      fold_right proc_one init_e foreachs
+    | EForeach loc ((v,e1)::nil) None e2 =>
+      elift2
+        (NNRCFor v)
+        (ergoc_expr_to_nnrc ctxt e1)
+        (ergoc_expr_to_nnrc ctxt e2)
+    | EForeach prov _ _ _ =>
+      complex_foreach_in_calculus_error prov (* XXX We should prove it never happens *)
     end.
 
   (** Translate a function to function+calculus *)

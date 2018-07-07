@@ -130,6 +130,8 @@ Section EResult.
       efailure (SystemError prov "Should not find 'clause' in Ergo Calculus").
     Definition state_in_calculus_error {A} prov : eresult A :=
       efailure (SystemError prov "Should not find 'state' in Ergo Calculus").
+    Definition complex_foreach_in_calculus_error {A} prov : eresult A :=
+      efailure (SystemError prov "Should only have single loop foreach in Ergo Calculus").
   End Builtin.
 
 End EResult.
