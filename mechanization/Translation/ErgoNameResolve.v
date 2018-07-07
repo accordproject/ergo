@@ -19,6 +19,7 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
@@ -64,35 +65,35 @@ Section ErgoNameResolution.
         (app tbl1.(namespace_table_constants) tbl2.(namespace_table_constants))
         (app tbl1.(namespace_table_functions) tbl2.(namespace_table_functions)).
 
-    Definition lookup_type_name (loc:location) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
+    Definition lookup_type_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_types) ln with
-      | None => type_name_not_found_error loc ln
+      | None => type_name_not_found_error prov ln
       | Some an => esuccess an
       end.
-    Definition lookup_constant_name (loc:location) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
+    Definition lookup_constant_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_constants) ln with
-      | None => variable_name_not_found_error loc ln
+      | None => variable_name_not_found_error prov ln
       | Some an => esuccess an
       end.
-    Definition lookup_function_name (loc:location) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
+    Definition lookup_function_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_functions) ln with
-      | None => function_name_not_found_error loc ln
+      | None => function_name_not_found_error prov ln
       | Some an => esuccess an
       end.
 
-    Definition resolve_type_name (loc:location) (tbl:namespace_table) (rn:relative_name) :=
+    Definition resolve_type_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
       match fst rn with
-      | None => lookup_type_name loc tbl (snd rn)
+      | None => lookup_type_name prov tbl (snd rn)
       | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
       end.
-    Definition resolve_constant_name (loc:location) (tbl:namespace_table) (rn:relative_name) :=
+    Definition resolve_constant_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
       match fst rn with
-      | None => lookup_constant_name loc tbl (snd rn)
+      | None => lookup_constant_name prov tbl (snd rn)
       | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
       end.
-    Definition resolve_function_name (loc:location) (tbl:namespace_table) (rn:relative_name) :=
+    Definition resolve_function_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
       match fst rn with
-      | None => lookup_function_name loc tbl (snd rn)
+      | None => lookup_function_name prov tbl (snd rn)
       | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
       end.
 
@@ -241,32 +242,32 @@ Section ErgoNameResolution.
     (** This applies imports *)
     Definition lookup_one_import
                (ctxt:namespace_ctxt)
-               (ic:import_decl) : eresult namespace_table :=
+               (ic:limport_decl) : eresult namespace_table :=
       match ic with
-      | ImportAll loc ns =>
+      | ImportAll prov ns =>
         match lookup string_dec ctxt.(namespace_ctxt_modules) ns with
         | Some tbl => esuccess tbl
-        | None => import_not_found_error loc ns
+        | None => import_not_found_error prov ns
         end
-      | ImportSelf loc ns =>
+      | ImportSelf prov ns =>
         match lookup string_dec ctxt.(namespace_ctxt_modules) ns with
         | Some tbl => esuccess tbl
         | None => esuccess empty_namespace_table
         end
-      | ImportName loc ns ln =>
+      | ImportName prov ns ln =>
         match lookup string_dec ctxt.(namespace_ctxt_modules) ns with
         | Some tbl =>
           match lookup string_dec tbl.(namespace_table_types) ln with
-          | None => import_name_not_found_error loc ns ln
+          | None => import_name_not_found_error prov ns ln
           | Some an => esuccess (one_type_to_namespace_table ln an)
           end
-        | None => import_not_found_error loc ns
+        | None => import_not_found_error prov ns
         end
       end.
 
     Definition resolve_one_import
                (ctxt:namespace_ctxt)
-               (ic:import_decl) : eresult namespace_ctxt :=
+               (ic:limport_decl) : eresult namespace_ctxt :=
       elift (fun tbl =>
                mkNamespaceCtxt
                  ctxt.(namespace_ctxt_modules)
@@ -294,12 +295,12 @@ Section ErgoNameResolution.
       let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
       let imports :=
           if is_builtin_import ctxt_ns
-          then app ims (ImportSelf dummy_location ctxt_ns :: nil)
+          then app ims (ImportSelf dummy_provenance ctxt_ns :: nil)
           else
             (* Add built-in modules to import, first.
                Make sure to add current namespace to the list of imports - i.e., import self. *)
-            (ImportAll dummy_location hyperledger_namespace)
-              ::(app ims (ImportSelf dummy_location ctxt_ns :: nil))
+            (ImportAll dummy_provenance hyperledger_namespace)
+              ::(app ims (ImportSelf dummy_provenance ctxt_ns :: nil))
       in
       resolve_imports ctxt imports.
       
@@ -308,13 +309,13 @@ Section ErgoNameResolution.
       let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
       let imports :=
           if is_builtin_import ctxt_ns
-          then app ims (ImportSelf dummy_location ctxt_ns :: nil)
+          then app ims (ImportSelf dummy_provenance ctxt_ns :: nil)
           else
             (* Add built-in modules to import, first.
                Make sure to add current namespace to the list of imports - i.e., import self. *)
-            (ImportAll dummy_location hyperledger_namespace)
-              ::(ImportAll dummy_location stdlib_namespace)
-              ::(app ims (ImportSelf dummy_location ctxt_ns :: nil))
+            (ImportAll dummy_provenance hyperledger_namespace)
+              ::(ImportAll dummy_provenance stdlib_namespace)
+              ::(app ims (ImportSelf dummy_provenance ctxt_ns :: nil))
       in
       resolve_imports ctxt imports.
       
@@ -326,27 +327,27 @@ Section ErgoNameResolution.
              (tbl:namespace_table)
              (t:lrergo_type) : eresult laergo_type :=
       match t with
-      | ErgoTypeAny loc => esuccess (ErgoTypeAny loc)
-      | ErgoTypeNone loc => esuccess (ErgoTypeNone loc)
-      | ErgoTypeBoolean loc => esuccess (ErgoTypeBoolean loc)
-      | ErgoTypeString loc => esuccess (ErgoTypeString loc)
-      | ErgoTypeDouble loc => esuccess (ErgoTypeDouble loc)
-      | ErgoTypeLong loc => esuccess (ErgoTypeLong loc)
-      | ErgoTypeInteger loc => esuccess (ErgoTypeInteger loc)
-      | ErgoTypeDateTime loc => esuccess (ErgoTypeDateTime loc)
-      | ErgoTypeClassRef loc rn =>
-        elift (ErgoTypeClassRef loc)
-              (resolve_type_name loc tbl rn)
-      | ErgoTypeOption loc t =>
-        elift (ErgoTypeOption loc) (resolve_ergo_type tbl t)
-      | ErgoTypeRecord loc r =>
+      | ErgoTypeAny prov => esuccess (ErgoTypeAny prov)
+      | ErgoTypeNone prov => esuccess (ErgoTypeNone prov)
+      | ErgoTypeBoolean prov => esuccess (ErgoTypeBoolean prov)
+      | ErgoTypeString prov => esuccess (ErgoTypeString prov)
+      | ErgoTypeDouble prov => esuccess (ErgoTypeDouble prov)
+      | ErgoTypeLong prov => esuccess (ErgoTypeLong prov)
+      | ErgoTypeInteger prov => esuccess (ErgoTypeInteger prov)
+      | ErgoTypeDateTime prov => esuccess (ErgoTypeDateTime prov)
+      | ErgoTypeClassRef prov rn =>
+        elift (ErgoTypeClassRef prov)
+              (resolve_type_name prov tbl rn)
+      | ErgoTypeOption prov t =>
+        elift (ErgoTypeOption prov) (resolve_ergo_type tbl t)
+      | ErgoTypeRecord prov r =>
         let initial_map := map (fun xy => (fst xy, resolve_ergo_type tbl (snd xy))) r in
         let lifted_map := emaplift (fun xy => elift (fun t => (fst xy, t)) (snd xy)) initial_map in
-        elift (ErgoTypeRecord loc) lifted_map
-      | ErgoTypeArray loc t =>
-        elift (ErgoTypeArray loc) (resolve_ergo_type tbl t)
-      | ErgoTypeSum loc t1 t2 =>
-        elift2 (ErgoTypeSum loc)
+        elift (ErgoTypeRecord prov) lifted_map
+      | ErgoTypeArray prov t =>
+        elift (ErgoTypeArray prov) (resolve_ergo_type tbl t)
+      | ErgoTypeSum prov t1 t2 =>
+        elift2 (ErgoTypeSum prov)
                (resolve_ergo_type tbl t1)
                (resolve_ergo_type tbl t2)
       end.
@@ -358,12 +359,12 @@ Section ErgoNameResolution.
                   elift (fun t => (fst xy, t)) (resolve_ergo_type tbl (snd xy))) t.
 
     Definition resolve_extends
-               (loc:location)
+               (prov:provenance)
                (tbl:namespace_table)
                (en:rextends) : eresult aextends :=
       match en with
       | None => esuccess None
-      | Some rn => elift Some (resolve_type_name loc tbl rn)
+      | Some rn => elift Some (resolve_type_name prov tbl rn)
       end.
 
     Definition resolve_ergo_type_signature
@@ -399,30 +400,30 @@ Section ErgoNameResolution.
                                 (resolve_ergo_type_signature tbl (snd xy))) cls.
 
     Definition resolve_ergo_type_declaration_desc
-               (loc:location)
+               (prov:provenance)
                (tbl:namespace_table)
                (d:lrergo_type_declaration_desc) : eresult laergo_type_declaration_desc :=
       match d with
       | ErgoTypeEnum l => esuccess (ErgoTypeEnum l)
       | ErgoTypeTransaction extends_name ergo_type_struct =>
         elift2 ErgoTypeTransaction
-               (resolve_extends loc tbl extends_name)
+               (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct tbl ergo_type_struct)
       | ErgoTypeConcept extends_name ergo_type_struct =>
         elift2 ErgoTypeConcept
-               (resolve_extends loc tbl extends_name)
+               (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct tbl ergo_type_struct)
       | ErgoTypeEvent extends_name ergo_type_struct =>
         elift2 ErgoTypeEvent
-               (resolve_extends loc tbl extends_name)
+               (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct tbl ergo_type_struct)
       | ErgoTypeAsset extends_name ergo_type_struct =>
         elift2 ErgoTypeAsset
-               (resolve_extends loc tbl extends_name)
+               (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct tbl ergo_type_struct)
       | ErgoTypeParticipant extends_name ergo_type_struct =>
         elift2 ErgoTypeParticipant
-               (resolve_extends loc tbl extends_name)
+               (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct tbl ergo_type_struct)
       | ErgoTypeGlobal ergo_type =>
         elift ErgoTypeGlobal (resolve_ergo_type tbl ergo_type)
@@ -452,12 +453,12 @@ Section ErgoNameResolution.
              (tbl:namespace_table)
              (e:lrergo_expr) : eresult laergo_expr :=
       match e with
-      | EThisContract loc => esuccess (EThisContract loc)
-      | EThisClause loc => esuccess (EThisClause loc)
-      | EThisState loc => esuccess (EThisState loc)
-      | EVar loc v => esuccess (EVar loc v)
-      | EConst loc d => esuccess (EConst loc d)
-      | EArray loc el =>
+      | EThisContract prov => esuccess (EThisContract prov)
+      | EThisClause prov => esuccess (EThisClause prov)
+      | EThisState prov => esuccess (EThisState prov)
+      | EVar prov v => esuccess (EVar prov v)
+      | EConst prov d => esuccess (EConst prov d)
+      | EArray prov el =>
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
@@ -465,49 +466,49 @@ Section ErgoNameResolution.
               (resolve_ergo_expr tbl e)
               acc
         in
-        elift (EArray loc) (fold_right proc_one init_el el)
-      | EUnaryOp loc u e =>
-        elift (EUnaryOp loc u)
+        elift (EArray prov) (fold_right proc_one init_el el)
+      | EUnaryOp prov u e =>
+        elift (EUnaryOp prov u)
               (resolve_ergo_expr tbl e)
-      | EBinaryOp loc b e1 e2 =>
-        elift2 (EBinaryOp loc b)
+      | EBinaryOp prov b e1 e2 =>
+        elift2 (EBinaryOp prov b)
                (resolve_ergo_expr tbl e1)
                (resolve_ergo_expr tbl e2)
-      | EIf loc e1 e2 e3 =>
-        elift3 (EIf loc)
+      | EIf prov e1 e2 e3 =>
+        elift3 (EIf prov)
                (resolve_ergo_expr tbl e1)
                (resolve_ergo_expr tbl e2)
                (resolve_ergo_expr tbl e3)
-      | ELet loc v ta e1 e2 =>
+      | ELet prov v ta e1 e2 =>
         let rta :=
             match ta with
             | None => esuccess None
             | Some ta => elift Some (resolve_ergo_type tbl ta)
             end
         in
-        elift3 (ELet loc v)
+        elift3 (ELet prov v)
                rta
                (resolve_ergo_expr tbl e1)
                (resolve_ergo_expr tbl e2)
-      | ENew loc cr el =>
-        let rcr := resolve_type_name loc tbl cr in
+      | ENew prov cr el =>
+        let rcr := resolve_type_name prov tbl cr in
         let init_rec := esuccess nil in
         let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
             let e := resolve_ergo_expr tbl (snd att) in
             elift2 (fun e => fun acc => (attname,e)::acc) e acc
         in
-        elift2 (ENew loc) rcr (fold_right proc_one init_rec el)
-      | ERecord loc el =>
+        elift2 (ENew prov) rcr (fold_right proc_one init_rec el)
+      | ERecord prov el =>
         let init_rec := esuccess nil in
         let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
             let e := resolve_ergo_expr tbl (snd att) in
             elift2 (fun e => fun acc => (attname,e)::acc) e acc
         in
-        elift (ERecord loc) (fold_right proc_one init_rec el)
-      | ECallFun loc fname el =>
-        let rfname := resolve_function_name loc tbl (None,fname) in
+        elift (ERecord prov) (fold_right proc_one init_rec el)
+      | ECallFun prov fname el =>
+        let rfname := resolve_function_name prov tbl (None,fname) in
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
@@ -515,8 +516,8 @@ Section ErgoNameResolution.
               (resolve_ergo_expr tbl e)
               acc
         in
-        elift2 (ECallFun loc) rfname (fold_right proc_one init_el el)
-      | EMatch loc e0 ecases edefault =>
+        elift2 (ECallFun prov) rfname (fold_right proc_one init_el el)
+      | EMatch prov e0 ecases edefault =>
         let ec0 := resolve_ergo_expr tbl e0 in
         let eccases :=
             let proc_one acc ecase :=
@@ -534,9 +535,9 @@ Section ErgoNameResolution.
                (fun eccases : list (ergo_pattern * laergo_expr) =>
                   elift
                     (fun ecdefault : laergo_expr =>
-                    EMatch loc ec0 eccases ecdefault)
+                    EMatch prov ec0 eccases ecdefault)
                     ecdefault) eccases) ec0
-      | EForeach loc foreachs econd e2 =>
+      | EForeach prov foreachs econd e2 =>
         let re2 := resolve_ergo_expr tbl e2 in
         let recond :=
             match econd with
@@ -555,7 +556,7 @@ Section ErgoNameResolution.
                  e
                  acc
         in
-        elift3 (EForeach loc)
+        elift3 (EForeach prov)
                (fold_right proc_one init_e foreachs)
                recond
                re2
@@ -566,11 +567,11 @@ Section ErgoNameResolution.
              (tbl:namespace_table)
              (e:lrergo_stmt) : eresult laergo_stmt :=
       match e with
-      | SReturn loc e => elift (SReturn loc) (resolve_ergo_expr tbl e)
-      | SFunReturn loc e => elift (SFunReturn loc) (resolve_ergo_expr tbl e)
-      | SThrow loc e =>  elift (SThrow loc) (resolve_ergo_expr tbl e)
-      | SCallClause loc fname el =>
-        let rfname := resolve_function_name loc tbl (None,fname) in
+      | SReturn prov e => elift (SReturn prov) (resolve_ergo_expr tbl e)
+      | SFunReturn prov e => elift (SFunReturn prov) (resolve_ergo_expr tbl e)
+      | SThrow prov e =>  elift (SThrow prov) (resolve_ergo_expr tbl e)
+      | SCallClause prov fname el =>
+        let rfname := resolve_function_name prov tbl (None,fname) in
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
@@ -578,43 +579,43 @@ Section ErgoNameResolution.
               (resolve_ergo_expr tbl e)
               acc
         in
-        elift2 (SCallClause loc) rfname (fold_right proc_one init_el el)
-      | SSetState loc e1 s2 =>
-        elift2 (SSetState loc)
+        elift2 (SCallClause prov) rfname (fold_right proc_one init_el el)
+      | SSetState prov e1 s2 =>
+        elift2 (SSetState prov)
                (resolve_ergo_expr tbl e1)
                (resolve_ergo_stmt tbl s2)
-      | SEmit loc e1 s2 =>
-        elift2 (SEmit loc)
+      | SEmit prov e1 s2 =>
+        elift2 (SEmit prov)
                (resolve_ergo_expr tbl e1)
                (resolve_ergo_stmt tbl s2)
-      | SLet loc v ta e1 s2 =>
+      | SLet prov v ta e1 s2 =>
         let rta :=
             match ta with
             | None => esuccess None
             | Some ta => elift Some (resolve_ergo_type tbl ta)
             end
         in
-        elift3 (SLet loc v)
+        elift3 (SLet prov v)
                rta
                (resolve_ergo_expr tbl e1)
                (resolve_ergo_stmt tbl s2)
-      | SIf loc e1 s2 s3 =>
-        elift3 (SIf loc)
+      | SIf prov e1 s2 s3 =>
+        elift3 (SIf prov)
                (resolve_ergo_expr tbl e1)
                (resolve_ergo_stmt tbl s2)
                (resolve_ergo_stmt tbl s3)
-      | SEnforce loc e1 os2 s3 =>
+      | SEnforce prov e1 os2 s3 =>
         let rs2 :=
             match os2 with
             | None => esuccess None
             | Some s2 => elift Some (resolve_ergo_stmt tbl s2)
             end
         in
-        elift3 (SEnforce loc)
+        elift3 (SEnforce prov)
                (resolve_ergo_expr tbl e1)
                rs2
                (resolve_ergo_stmt tbl s3)
-      | SMatch loc e0 scases sdefault =>
+      | SMatch prov e0 scases sdefault =>
         let ec0 := resolve_ergo_expr tbl e0 in
         let sccases :=
             let proc_one acc scase :=
@@ -632,7 +633,7 @@ Section ErgoNameResolution.
                (fun sccases : list (ergo_pattern * laergo_stmt) =>
                   elift
                     (fun scdefault : laergo_stmt =>
-                    SMatch loc ec0 sccases scdefault)
+                    SMatch prov ec0 sccases scdefault)
                     scdefault) sccases) ec0
       end.
 
@@ -642,7 +643,7 @@ Section ErgoNameResolution.
                (module_ns:namespace_name)
                (tbl:namespace_table)
                (f:lrergo_function) : eresult laergo_function :=
-      let loc := f.(function_annot) in
+      let prov := f.(function_annot) in
       let rfname := absolute_name_of_local_name module_ns f.(function_name) in
       let rbody :=
           match f.(function_body) with
@@ -650,7 +651,7 @@ Section ErgoNameResolution.
           | Some body => elift Some (resolve_ergo_stmt tbl body)
           end
       in
-      elift2 (mkFunc loc rfname)
+      elift2 (mkFunc prov rfname)
              (resolve_ergo_type_signature tbl f.(function_sig))
              rbody.
     
@@ -658,7 +659,7 @@ Section ErgoNameResolution.
                (module_ns:namespace_name)
                (tbl:namespace_table)
                (c:ergo_clause) : eresult laergo_clause :=
-      let loc := c.(clause_annot) in
+      let prov := c.(clause_annot) in
       let rcname := c.(clause_name) in
       let rbody :=
           match c.(clause_body) with
@@ -666,7 +667,7 @@ Section ErgoNameResolution.
           | Some body => elift Some (resolve_ergo_stmt tbl body)
           end
       in
-      elift2 (mkClause loc rcname)
+      elift2 (mkClause prov rcname)
              (resolve_ergo_type_signature tbl c.(clause_sig))
              rbody.
 
@@ -680,7 +681,7 @@ Section ErgoNameResolution.
                (module_ns:namespace_name)
                (tbl:namespace_table)
                (c:lrergo_contract) : eresult laergo_contract :=
-      let loc := c.(contract_annot) in
+      let prov := c.(contract_annot) in
       let rcname := absolute_name_of_local_name module_ns c.(contract_name) in
       let rtemplate := resolve_ergo_type tbl c.(contract_template) in
       let rstate :=
@@ -689,7 +690,7 @@ Section ErgoNameResolution.
           | Some state => elift Some (resolve_ergo_type tbl state)
           end
       in
-      elift3 (mkContract loc rcname)
+      elift3 (mkContract prov rcname)
              rtemplate
              rstate
              (resolve_ergo_clauses module_ns tbl c.(contract_clauses)).
@@ -701,25 +702,25 @@ Section ErgoNameResolution.
       let module_ns : namespace_name := ctxt.(namespace_ctxt_namespace) in
       let tbl : namespace_table := ctxt.(namespace_ctxt_current) in
       match d with
-      | DType loc td =>
+      | DType prov td =>
         let ln := td.(type_declaration_name) in
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_type_to_namespace_ctxt_current ctxt ln an in
-        elift (fun x => (DType loc x, ctxt)) (resolve_ergo_type_declaration module_ns tbl td)
-      | DStmt loc st =>
-        elift (fun x => (DStmt loc x, ctxt)) (resolve_ergo_stmt tbl st)
-      | DConstant loc ln e =>
+        elift (fun x => (DType prov x, ctxt)) (resolve_ergo_type_declaration module_ns tbl td)
+      | DStmt prov st =>
+        elift (fun x => (DStmt prov x, ctxt)) (resolve_ergo_stmt tbl st)
+      | DConstant prov ln e =>
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_constant_to_namespace_ctxt_current ctxt ln an in
-        elift (fun x => (DConstant loc ln x, ctxt)) (resolve_ergo_expr tbl e)
-      | DFunc loc fd =>
+        elift (fun x => (DConstant prov ln x, ctxt)) (resolve_ergo_expr tbl e)
+      | DFunc prov fd =>
         let ln := fd.(function_name) in
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_function_to_namespace_ctxt_current ctxt ln an in (* XXX TBD *)
-        elift (fun x => (DFunc loc x, ctxt)) (resolve_ergo_function module_ns tbl fd)
-      | DContract loc c => (* XXX TO BE REVISED *)
+        elift (fun x => (DFunc prov x, ctxt)) (resolve_ergo_function module_ns tbl fd)
+      | DContract prov c => (* XXX TO BE REVISED *)
         let ctxt := ctxt in
-        elift (fun x => (DContract loc x, ctxt)) (resolve_ergo_contract module_ns tbl c)
+        elift (fun x => (DContract prov x, ctxt)) (resolve_ergo_contract module_ns tbl c)
       end.
 
     Definition resolve_ergo_declarations
@@ -843,103 +844,103 @@ Section ErgoNameResolution.
     Local Open Scope string.
     Definition ergo_typed1 : lrergo_type_declaration :=
       mkErgoTypeDeclaration
-        dummy_location
+        dummy_provenance
         "c1"
         (ErgoTypeConcept
            None
-           (("a", ErgoTypeBoolean dummy_location)
-              ::("b", (ErgoTypeClassRef dummy_location (None, "c3")))::nil)).
+           (("a", ErgoTypeBoolean dummy_provenance)
+              ::("b", (ErgoTypeClassRef dummy_provenance (None, "c3")))::nil)).
 
     Definition ergo_typed2 : lrergo_type_declaration :=
       mkErgoTypeDeclaration
-        dummy_location
+        dummy_provenance
         "c2"
         (ErgoTypeConcept
            None
-           (("c", ErgoTypeBoolean dummy_location)
-              ::("d", (ErgoTypeClassRef dummy_location (None, "c1")))::nil)).
+           (("c", ErgoTypeBoolean dummy_provenance)
+              ::("d", (ErgoTypeClassRef dummy_provenance (None, "c1")))::nil)).
 
     Definition ergo_funcd1 : lrergo_function :=
       mkFunc
-        dummy_location
+        dummy_provenance
         "addFee"
         (mkErgoTypeSignature
-           dummy_location
+           dummy_provenance
            nil
-           (ErgoTypeBoolean dummy_location)
+           (ErgoTypeBoolean dummy_provenance)
            None
            None)
         None.
     
     Definition ergo_funcd2 : lrergo_function :=
       mkFunc
-        dummy_location
+        dummy_provenance
         "addFee2"
         (mkErgoTypeSignature
-           dummy_location
+           dummy_provenance
            nil
-           (ErgoTypeBoolean dummy_location)
+           (ErgoTypeBoolean dummy_provenance)
            None
            None)
-        (Some (SFunReturn dummy_location (ECallFun dummy_location "addFee" nil))).
+        (Some (SFunReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
 
     Definition ergo_clause2 : lrergo_clause :=
       mkClause
-        dummy_location
+        dummy_provenance
         "addFee2"
         (mkErgoTypeSignature
-           dummy_location
+           dummy_provenance
            nil
-           (ErgoTypeBoolean dummy_location)
+           (ErgoTypeBoolean dummy_provenance)
            None
            None)
-        (Some (SReturn dummy_location (ECallFun dummy_location "addFee" nil))).
+        (Some (SReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
 
     Definition ergo_contractd1 : lrergo_contract :=
       mkContract
-        dummy_location
+        dummy_provenance
         "MyContract"
-        (ErgoTypeBoolean dummy_location)
+        (ErgoTypeBoolean dummy_provenance)
         None
         (ergo_clause2::nil).
     
     Definition ergo_module1 : lrergo_module :=
       mkModule
-        dummy_location
+        dummy_provenance
         "n1"
-        ((ImportAll dummy_location "n2")::nil)
-        (DFunc dummy_location ergo_funcd1
-               ::DContract dummy_location ergo_contractd1
-               ::DType dummy_location ergo_typed1
-               ::DType dummy_location ergo_typed2::nil).
+        ((ImportAll dummy_provenance "n2")::nil)
+        (DFunc dummy_provenance ergo_funcd1
+               ::DContract dummy_provenance ergo_contractd1
+               ::DType dummy_provenance ergo_typed1
+               ::DType dummy_provenance ergo_typed2::nil).
     
     Definition ergo_typed3 : lrergo_type_declaration :=
       mkErgoTypeDeclaration
-        dummy_location
+        dummy_provenance
         "c3"
         (ErgoTypeConcept
            None
-           (("a", ErgoTypeBoolean dummy_location)
-              ::("b", ErgoTypeString dummy_location)::nil)).
+           (("a", ErgoTypeBoolean dummy_provenance)
+              ::("b", ErgoTypeString dummy_provenance)::nil)).
 
     Definition ergo_typed_top : lrergo_type_declaration :=
       mkErgoTypeDeclaration
-        dummy_location
+        dummy_provenance
         "top"
         (ErgoTypeGlobal
-           (ErgoTypeAny dummy_location)).
+           (ErgoTypeAny dummy_provenance)).
 
     Definition ergo_module2 : lrergo_module :=
       mkModule
-        dummy_location "n2" nil (DType dummy_location ergo_typed3::nil).
+        dummy_provenance "n2" nil (DType dummy_provenance ergo_typed3::nil).
 
     Definition ergo_hl : lrergo_module :=
       mkModule
-        dummy_location hyperledger_namespace nil (DType dummy_location ergo_typed_top::nil).
+        dummy_provenance hyperledger_namespace nil (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ergo_stdlib : lrergo_module :=
       mkModule
-        dummy_location stdlib_namespace nil (DType dummy_location ergo_typed_top::nil).
+        dummy_provenance stdlib_namespace nil (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ml1 : list lrergo_module := ergo_hl :: ergo_stdlib :: ergo_module2 :: ergo_module1 :: nil.
     Definition aml1 := resolve_ergo_modules (empty_namespace_ctxt "TEST") ml1.

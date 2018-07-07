@@ -17,8 +17,6 @@ open ErgoComp
 
 (** Ergo errors *)
 exception Ergo_Error of eerror
-let ergo_system_error msg =
-  SystemError (char_list_of_string msg)
 let mk_position_point_of_loc pos =
   { offset = pos.Lexing.pos_cnum;
     line = pos.Lexing.pos_lnum;
@@ -27,21 +25,25 @@ let mk_position_of_loc_pair start_pos end_pos =
   { loc_file = None; (* XXX TO BE FIXED *)
     loc_start = mk_position_point_of_loc start_pos;
     loc_end = mk_position_point_of_loc end_pos; }
+let mk_provenance_of_loc_pair start_pos end_pos =
+  ErgoCompiler.prov_loc (mk_position_of_loc_pair start_pos end_pos)
+let ergo_system_error msg =
+  SystemError (dummy_provenance,char_list_of_string msg)
 let ergo_parse_error msg start_pos end_pos =
-  ParseError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  ParseError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 let ergo_compilation_error msg start_pos end_pos =
-  CompilationError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  CompilationError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 let ergo_type_error msg start_pos end_pos =
-  TypeError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  TypeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 let ergo_runtime_error msg start_pos end_pos =
-  RuntimeError (mk_position_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  RuntimeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 
 let ergo_raise error =
   raise (Ergo_Error error)
 
 let error_kind error =
   begin match error with
-  | SystemError _ -> "SystemError"
+  | SystemError (_,_) -> "SystemError"
   | ParseError (_,_) -> "ParseError"
   | CompilationError (_,_) -> "CompilationError"
   | TypeError (_,_) -> "TypeError"
@@ -51,7 +53,7 @@ let error_kind error =
 let error_message error =
   let msg = 
     begin match error with
-    | SystemError msg -> msg
+    | SystemError (_,msg) -> msg
     | ParseError (_,msg) -> msg
     | CompilationError (_,msg) -> msg
     | TypeError (_,msg) -> msg
@@ -61,32 +63,33 @@ let error_message error =
 
 let error_loc_start error =
   begin match error with
-  | SystemError _ -> dummy_location.loc_start
-  | ParseError (loc,_) -> loc.loc_start
-  | CompilationError (loc,_) -> loc.loc_start
-  | TypeError (loc,_) -> loc.loc_start
-  | RuntimeError (loc,_) -> loc.loc_start
+  | SystemError (loc,_) -> (loc_of_provenance loc).loc_start
+  | ParseError (prov,_) -> (loc_of_provenance prov).loc_start
+  | CompilationError (prov,_) -> (loc_of_provenance prov).loc_start
+  | TypeError (prov,_) -> (loc_of_provenance prov).loc_start
+  | RuntimeError (prov,_) -> (loc_of_provenance prov).loc_start
   end
 let error_loc_end error =
   begin match error with
-  | SystemError _ -> dummy_location.loc_end
-  | ParseError (loc,_) -> loc.loc_end
-  | CompilationError (loc,_) -> loc.loc_end
-  | TypeError (loc,_) -> loc.loc_end
-  | RuntimeError (loc,_) -> loc.loc_end
+  | SystemError (prov,_) -> (loc_of_provenance prov).loc_end
+  | ParseError (prov,_) -> (loc_of_provenance prov).loc_end
+  | CompilationError (prov,_) -> (loc_of_provenance prov).loc_end
+  | TypeError (prov,_) -> (loc_of_provenance prov).loc_end
+  | RuntimeError (prov,_) -> (loc_of_provenance prov).loc_end
   end
 
-let string_of_error_loc perror =
-  "line " ^ (string_of_int perror.loc_start.line)
-  ^ " character " ^ (string_of_int perror.loc_start.column)
+let string_of_error_prov prov =
+  let loc = loc_of_provenance prov in
+  "line " ^ (string_of_int loc.loc_start.line)
+  ^ " character " ^ (string_of_int loc.loc_start.column)
 
 let string_of_error error =
   begin match error with
   | SystemError _ -> "[SystemError] " ^ (error_message error)
-  | ParseError (loc, _) -> "[ParseError at " ^ (string_of_error_loc loc) ^ "] " ^ (error_message error)
-  | CompilationError (loc, _) -> "[CompilationError at " ^ (string_of_error_loc loc) ^ "] " ^  (error_message error)
-  | TypeError (loc, _) -> "[TypeError at " ^ (string_of_error_loc loc) ^ "]" ^ (error_message error)
-  | RuntimeError (loc, _) -> "[RuntimeError at " ^ (string_of_error_loc loc) ^ "]" ^  (error_message error)
+  | ParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
+  | CompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
+  | TypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "]" ^ (error_message error)
+  | RuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "]" ^  (error_message error)
   end
 
 (** Version number *)
@@ -132,8 +135,8 @@ let cto_import_decl_of_import_namespace ns =
       let namespace = char_list_of_string (String.sub ns 0 i) in
       let criteria_str = String.sub ns (i+1) (String.length ns - (i+1)) in
       begin match criteria_str with
-      | "*" -> ImportAll (dummy_location, namespace)
-      | _ -> ImportName (dummy_location,namespace,char_list_of_string criteria_str)
+      | "*" -> ImportAll (dummy_provenance, namespace)
+      | _ -> ImportName (dummy_provenance,namespace,char_list_of_string criteria_str)
       end
   end
 

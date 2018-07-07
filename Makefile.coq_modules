@@ -25,6 +25,7 @@ MODULES = \
 	Backend/Lib/ECodeGen \
 	Backend/ErgoBackend \
 	Common/Utils/EUtil \
+	Common/Utils/EProvenance \
 	Common/Utils/ENames \
 	Common/Utils/EResult \
 	Common/Utils/EAstUtil \
@@ -36,6 +37,7 @@ MODULES = \
 	Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
 	ErgoCalculus/Lang/ErgoCalculus \
+	ErgoCalculus/Lang/ErgoCalculusSugar \
 	ErgoNNRC/Lang/ErgoNNRC \
 	ErgoNNRC/Lang/ErgoNNRCSugar \
 	ErgoNNRC/Lang/ErgoNNRCCall \

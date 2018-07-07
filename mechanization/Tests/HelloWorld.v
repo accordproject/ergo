@@ -14,6 +14,7 @@
 
 Require Import String.
 Require Import List.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.CTO.CTO.
@@ -38,113 +39,113 @@ contract HelloWorld over TemplateModel {
 *)
 
   Definition cl1 : lrergo_clause :=
-    mkClause dummy_location
+    mkClause dummy_provenance
              "helloworld"
              (mkErgoTypeSignature
-                dummy_location
-                (("request", ErgoTypeClassRef dummy_location (None,"Request"))::nil)
-                (ErgoTypeClassRef dummy_location (None,"Response"))
+                dummy_provenance
+                (("request", ErgoTypeClassRef dummy_provenance (None,"Request"))::nil)
+                (ErgoTypeClassRef dummy_provenance (None,"Response"))
                 None
                 None)
-             (Some (SReturn dummy_location (EVar dummy_location "request"))).
+             (Some (SReturn dummy_provenance (EVar dummy_provenance "request"))).
 
   Definition c1 : lrergo_contract :=
-    mkContract dummy_location
+    mkContract dummy_provenance
                "HelloWorld"
-               (ErgoTypeClassRef dummy_location (None,"TemplateModel"))
+               (ErgoTypeClassRef dummy_provenance (None,"TemplateModel"))
                None
                (cl1::nil).
   
   Definition ergo_funcd1 : lrergo_function :=
     mkFunc
-      dummy_location
+      dummy_provenance
       "addFee"
       (mkErgoTypeSignature
-         dummy_location
-         (("req",ErgoTypeBoolean dummy_location)::nil)
-         (ErgoTypeBoolean dummy_location)
+         dummy_provenance
+         (("req",ErgoTypeBoolean dummy_provenance)::nil)
+         (ErgoTypeBoolean dummy_provenance)
          None
          None)
       None.
     
   Definition ergo_funcd2 : lrergo_function :=
     mkFunc
-      dummy_location
+      dummy_provenance
       "addFee2"
       (mkErgoTypeSignature
-         dummy_location
+         dummy_provenance
          nil
-         (ErgoTypeBoolean dummy_location)
+         (ErgoTypeBoolean dummy_provenance)
          None
          None)
-      (Some (SFunReturn dummy_location (ECallFun dummy_location "addFee" nil))).
+      (Some (SFunReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
 
   Definition ergo_clause2 : lrergo_clause :=
     mkClause
-      dummy_location
+      dummy_provenance
       "addFee2"
       (mkErgoTypeSignature
-         dummy_location
-         (("request", ErgoTypeClassRef dummy_location (None,"Request"))::nil)
-         (ErgoTypeClassRef dummy_location (None,"Response"))
+         dummy_provenance
+         (("request", ErgoTypeClassRef dummy_provenance (None,"Request"))::nil)
+         (ErgoTypeClassRef dummy_provenance (None,"Response"))
          None
          None)
-      (Some (SReturn dummy_location (ECallFun dummy_location "addFee" nil))).
+      (Some (SReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
 
   Definition ergo_contractd1 : lrergo_contract :=
     mkContract
-      dummy_location
+      dummy_provenance
       "MyContract"
-      (ErgoTypeBoolean dummy_location)
+      (ErgoTypeBoolean dummy_provenance)
       None
       (ergo_clause2::nil).
 
   Definition p1 : lrergo_module :=
-    mkModule dummy_location
+    mkModule dummy_provenance
              "org.accordproject.helloworld"
              nil
-             (DFunc dummy_location ergo_funcd1
-                    ::DContract dummy_location c1
-                    ::DContract dummy_location ergo_contractd1::nil).
+             (DFunc dummy_provenance ergo_funcd1
+                    ::DContract dummy_provenance c1
+                    ::DContract dummy_provenance ergo_contractd1::nil).
 
   Definition cto_typed_tm : lrcto_declaration :=
     mkCTODeclaration
-      dummy_location
+      dummy_provenance
       "TemplateModel"
       (CTOConcept
          None
-         (("x",(CTOBoolean dummy_location))::nil)).
+         (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_typed_rq : lrcto_declaration :=
     mkCTODeclaration
-      dummy_location
+      dummy_provenance
       "Request"
       (CTOConcept
          None
-         (("x",(CTOBoolean dummy_location))::nil)).
+         (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_typed_rs : lrcto_declaration :=
     mkCTODeclaration
-      dummy_location
+      dummy_provenance
       "Response"
       (CTOConcept
          None
-         (("x",(CTOBoolean dummy_location))::nil)).
+         (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_model : lrcto_package :=
     mkCTOPackage
-      dummy_location
+      dummy_provenance
       hyperledger_namespace
       nil
       (cto_typed_tm::cto_typed_rq::cto_typed_rs::nil).
 
   Definition cto_typed_top : lrcto_declaration :=
     mkCTODeclaration
-      dummy_location
+      dummy_provenance
       "top"
       (CTOConcept
          None
-         (("x",(CTOBoolean dummy_location))::nil)).
+         (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_hl : lrcto_package :=
     mkCTOPackage
-      dummy_location
+      dummy_provenance
       hyperledger_namespace
       nil
       (cto_typed_top::nil).
@@ -152,7 +153,7 @@ contract HelloWorld over TemplateModel {
   
   Definition ergo_stdlib : lrergo_module :=
     mkModule
-      dummy_location stdlib_namespace nil (DType dummy_location ergo_typed_top::nil).
+      dummy_provenance stdlib_namespace nil (DType dummy_provenance ergo_typed_top::nil).
   Definition  mls:= ergo_stdlib :: nil.
 
 End HelloWorld.

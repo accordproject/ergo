@@ -16,6 +16,7 @@ Require String.
 
 Require ErgoSpec.Version.
 Require ErgoSpec.Backend.ErgoBackend.
+Require ErgoSpec.Common.Utils.EProvenance.
 Require ErgoSpec.Common.Utils.ENames.
 Require ErgoSpec.Common.Utils.EResult.
 Require ErgoSpec.Common.Utils.EAstUtil.
@@ -38,7 +39,17 @@ Module ErgoCompiler.
   Definition javascript_identifier_sanitizer := ErgoBackend.ErgoCodeGen.javascript_identifier_sanitizer.
   
   (** Location *)
-  Definition location := EResult.location.
+  Definition location := EProvenance.location.
+  Definition provenance := EProvenance.provenance.
+
+  Definition loc_of_provenance := EProvenance.loc_of_provenance.
+  
+  Definition prov_func := EProvenance.ProvFunc.
+  Definition prov_clause := EProvenance.ProvClause.
+  Definition prov_this_contract := EProvenance.ProvThisContract.
+  Definition prov_this_clause := EProvenance.ProvThisClause.
+  Definition prov_this_state := EProvenance.ProvThisState.
+  Definition prov_loc := EProvenance.ProvLoc.
 
   (** Names *)
   Definition relative_name : Set := ENames.relative_name.
@@ -49,17 +60,17 @@ Module ErgoCompiler.
   Definition cto_declaration := CTO.lrcto_declaration.
   Definition cto_package := CTO.lrcto_package.
   
-  Definition cto_boolean : location -> cto_type
+  Definition cto_boolean : provenance -> cto_type
     := CTO.CTOBoolean.
-  Definition cto_string : location -> cto_type
+  Definition cto_string : provenance -> cto_type
     := CTO.CTOString.
-  Definition cto_double : location -> cto_type
+  Definition cto_double : provenance -> cto_type
     := CTO.CTODouble.
-  Definition cto_long : location -> cto_type
+  Definition cto_long : provenance -> cto_type
     := CTO.CTOLong.
-  Definition cto_integer : location -> cto_type
+  Definition cto_integer : provenance -> cto_type
     := CTO.CTOInteger.
-  Definition cto_dateTime : location -> cto_type
+  Definition cto_dateTime : provenance -> cto_type
     := CTO.CTODateTime.
   Definition cto_class_ref loc name_ref : cto_type
     := CTO.CTOClassRef loc name_ref.
@@ -75,9 +86,9 @@ Module ErgoCompiler.
   Definition cto_concept : option relative_name -> list (String.string * cto_type) -> cto_declaration_desc
     := CTO.CTOConcept.
 
-  Definition mk_cto_declaration : EResult.location -> String.string -> cto_declaration_desc -> cto_declaration
+  Definition mk_cto_declaration : EProvenance.provenance -> String.string -> cto_declaration_desc -> cto_declaration
     := CTO.mkCTODeclaration.
-  Definition mk_cto_package : EResult.location -> String.string -> list EAstUtil.import_decl -> list cto_declaration -> cto_package
+  Definition mk_cto_package : EProvenance.provenance -> String.string -> list EAstUtil.import_decl -> list cto_declaration -> cto_package
     := CTO.mkCTOPackage.
 
   (** Types *)
@@ -120,7 +131,7 @@ Module ErgoCompiler.
   Definition ergo_type_concept : option relative_name -> list (String.string * ergo_type) -> ergo_type_declaration_desc
     := ErgoType.ErgoTypeConcept.
 
-  Definition mk_ergo_type_declaration : EResult.location -> String.string -> ergo_type_declaration_desc -> ergo_type_declaration
+  Definition mk_ergo_type_declaration : EProvenance.provenance -> String.string -> ergo_type_declaration_desc -> ergo_type_declaration
     := ErgoType.mkErgoTypeDeclaration.
 
   (** Ergo *)
@@ -215,15 +226,15 @@ Module ErgoCompiler.
     Ergo.SMatch loc e slp sd.
 
   (** Syntactic sugar *)
-  Definition edot : EResult.location -> String.string -> ergo_expr -> ergo_expr 
+  Definition edot : EProvenance.provenance -> String.string -> ergo_expr -> ergo_expr 
     := ErgoSugar.EDot.
-  Definition eoptionaldot : EResult.location -> String.string -> ergo_expr -> ergo_expr
+  Definition eoptionaldot : EProvenance.provenance -> String.string -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDot.
-  Definition eoptionaldefault : EResult.location -> ergo_expr -> ergo_expr -> ergo_expr
+  Definition eoptionaldefault : EProvenance.provenance -> ergo_expr -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDefault.
-  Definition sreturnempty : EResult.location -> ergo_stmt :=
+  Definition sreturnempty : EProvenance.provenance -> ergo_stmt :=
     ErgoSugar.SReturnEmpty.
-  Definition sfunreturnempty : EResult.location -> ergo_stmt :=
+  Definition sfunreturnempty : EProvenance.provenance -> ergo_stmt :=
     ErgoSugar.SFunReturnEmpty.
   
   (** Declarations *)

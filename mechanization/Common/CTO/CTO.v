@@ -18,6 +18,7 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
@@ -79,10 +80,10 @@ Section CTO.
   Definition rcto_declaration {A:Set} : Set := @cto_declaration A relative_name.
   Definition rcto_package {A:Set} : Set := @cto_package A relative_name.
   
-  Definition lrcto_type : Set := @cto_type location relative_name.
-  Definition lrcto_declaration_desc : Set := @cto_declaration_desc location relative_name.
-  Definition lrcto_declaration : Set := @cto_declaration location relative_name.
-  Definition lrcto_package : Set := @cto_package location relative_name.
+  Definition lrcto_type : Set := @cto_type provenance relative_name.
+  Definition lrcto_declaration_desc : Set := @cto_declaration_desc provenance relative_name.
+  Definition lrcto_declaration : Set := @cto_declaration provenance relative_name.
+  Definition lrcto_package : Set := @cto_package provenance relative_name.
 
 End CTO.
 

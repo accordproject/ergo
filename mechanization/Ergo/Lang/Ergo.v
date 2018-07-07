@@ -21,6 +21,7 @@ Require Import List.
 Require Import EquivDec.
 
 Require Import ErgoSpec.Common.Utils.EUtil.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
@@ -176,22 +177,22 @@ Section Ergo.
   Definition arergo_declaration {A} := @ergo_declaration A absolute_name.
   Definition arergo_module {A} := @ergo_module A absolute_name.
 
-  Definition lrergo_expr := @ergo_expr location relative_name.
-  Definition lrergo_stmt := @ergo_stmt location relative_name.
-  Definition lrergo_function := @ergo_function location relative_name.
-  Definition lrergo_clause := @ergo_clause location relative_name.
-  Definition lrergo_contract := @ergo_contract location relative_name.
-  Definition lrergo_declaration := @ergo_declaration location relative_name.
-  Definition lrergo_module := @ergo_module location relative_name.
-  Definition lrergo_input := @ergo_input location relative_name.
+  Definition lrergo_expr := @ergo_expr provenance relative_name.
+  Definition lrergo_stmt := @ergo_stmt provenance relative_name.
+  Definition lrergo_function := @ergo_function provenance relative_name.
+  Definition lrergo_clause := @ergo_clause provenance relative_name.
+  Definition lrergo_contract := @ergo_contract provenance relative_name.
+  Definition lrergo_declaration := @ergo_declaration provenance relative_name.
+  Definition lrergo_module := @ergo_module provenance relative_name.
+  Definition lrergo_input := @ergo_input provenance relative_name.
 
-  Definition laergo_expr := @ergo_expr location absolute_name.
-  Definition laergo_stmt := @ergo_stmt location absolute_name.
-  Definition laergo_function := @ergo_function location absolute_name.
-  Definition laergo_clause := @ergo_clause location absolute_name.
-  Definition laergo_contract := @ergo_contract location absolute_name.
-  Definition laergo_declaration := @ergo_declaration location absolute_name.
-  Definition laergo_module := @ergo_module location absolute_name.
+  Definition laergo_expr := @ergo_expr provenance absolute_name.
+  Definition laergo_stmt := @ergo_stmt provenance absolute_name.
+  Definition laergo_function := @ergo_function provenance absolute_name.
+  Definition laergo_clause := @ergo_clause provenance absolute_name.
+  Definition laergo_contract := @ergo_contract provenance absolute_name.
+  Definition laergo_declaration := @ergo_declaration provenance absolute_name.
+  Definition laergo_module := @ergo_module provenance absolute_name.
 
   Section Lookup.
     Fixpoint lookup_clauses_signatures (dl:list laergo_clause) : list (string * ergo_type_signature) :=
@@ -214,11 +215,11 @@ Section Ergo.
       filter_some contract_of_declaration dl.
 
     Definition lookup_single_contract_in_declarations
-               (loc:location) (dl:list laergo_declaration) : eresult laergo_contract :=
+               (prov:provenance) (dl:list laergo_declaration) : eresult laergo_contract :=
       match lookup_contracts_in_declarations dl with
-      | nil => should_have_one_contract_error loc
+      | nil => should_have_one_contract_error prov
       | c :: nil => esuccess c
-      | _ :: _ => should_have_one_contract_error loc
+      | _ :: _ => should_have_one_contract_error prov
       end.
 
     Definition lookup_single_contract (p:laergo_module) : eresult laergo_contract :=

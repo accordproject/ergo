@@ -23,20 +23,21 @@ let enum_case_of_decl d =
 let cto_enum_of_decls dl =
   List.map enum_case_of_decl dl
 
-let mk_loc loc =
+let mk_prov loc =
   begin match loc with
   | Some loc ->
-      { loc_file = None;
-        loc_start =
-          { offset = loc.cto_location_start.cto_loc_offset;
-            line = loc.cto_location_start.cto_loc_line;
-            column = loc.cto_location_start.cto_loc_column; };
-        loc_end =
-          { offset = loc.cto_location_end.cto_loc_offset;
-            line = loc.cto_location_end.cto_loc_line;
-            column = loc.cto_location_end.cto_loc_column; }; }
+      ErgoCompiler.prov_loc
+        { loc_file = None;
+          loc_start =
+            { offset = loc.cto_location_start.cto_loc_offset;
+              line = loc.cto_location_start.cto_loc_line;
+              column = loc.cto_location_start.cto_loc_column; };
+          loc_end =
+            { offset = loc.cto_location_end.cto_loc_offset;
+              line = loc.cto_location_end.cto_loc_line;
+              column = loc.cto_location_end.cto_loc_column; }; }
   | None ->
-      dummy_location
+      dummy_provenance
   end
 
 let base_type_of_decl loc d =
@@ -56,7 +57,7 @@ let base_type_of_decl loc d =
   end
 
 let field_of_decl d =
-  let loc = mk_loc (Some d.cto_decl_content_location) in
+  let loc = mk_prov (Some d.cto_decl_content_location) in
   let field_name = char_list_of_string d.cto_decl_content_id.cto_id_name in
   let base_type =
     base_type_of_decl loc d.cto_decl_content_propertyType
@@ -86,7 +87,7 @@ let cto_event_of_decls dl =
 
 let cto_declaration_of_defn d =
   let decl_class = d.cto_defn_id.cto_id_name in
-  let loc = mk_loc d.cto_defn_location in
+  let loc = mk_prov d.cto_defn_location in
   let decl_type = 
     begin match d.cto_defn_ttype with
     | "EnumDeclaration" ->
@@ -125,7 +126,7 @@ let cto_import (m:model) : ErgoCompiler.cto_package =
   let imports = List.map cto_import_of_import m.cto_imports in
   let decls = cto_declarations_of_body m.cto_body in
   { cto_package_namespace = namespace;
-    cto_package_annot = dummy_location; (* XXX Not in JSON *)
+    cto_package_annot = dummy_provenance; (* XXX Not in JSON *)
     cto_package_imports = imports;
     cto_package_declarations = decls; }
 

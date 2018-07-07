@@ -81,7 +81,11 @@ Section ErgoCompilerDriver.
     eolift (fun amc =>
               let ctxt := update_namespace_ctxt ctxt (snd amc) in
               let p := expand_ergo_module (fst amc) in
-              elift (fun p => (ergo_module_to_calculus p, ctxt)) p) am.
+              eolift (fun p =>
+                        elift
+                          (fun pc => (pc, ctxt))
+                          (ergo_module_to_calculus p)) p)
+           am.
 
   (* ErgoDecl -> ErgoCalculusDecl *)
   Definition ergo_declaration_to_ergo_calculus
@@ -89,9 +93,12 @@ Section ErgoCompilerDriver.
              (ld:lrergo_declaration) : eresult (option ergoc_declaration * compilation_ctxt) :=
     let ns_ctxt := namespace_ctxt_of_compilation_ctxt ctxt in
     let am := resolve_ergo_declaration ns_ctxt ld in
-    elift (fun amc =>
+    eolift (fun amc =>
              let ctxt := update_namespace_ctxt ctxt (snd amc) in
-             (declaration_to_calculus (fst amc), ctxt)) am.
+             elift
+               (fun d => (d, ctxt))
+               (declaration_to_calculus (fst amc)))
+               am.
 
   Definition ergo_module_to_javascript
              (ctxt:compilation_ctxt)
@@ -137,8 +144,12 @@ Section ErgoCompilerDriver.
       (fun c : ergo_contract =>
          let contract_name := c.(contract_name) in 
          let sigs := lookup_contract_signatures c in
-         let pc := elift ergo_module_to_calculus p in
-         let pn := eolift (fun rmods => eolift (ergoc_module_to_nnrc (fst rmods)) pc) rmods in
+         let pc := eolift ergo_module_to_calculus p in
+         let pn :=
+             eolift
+               (fun rmods =>
+                  eolift (ergoc_module_to_nnrc (fst rmods)) pc) rmods
+         in
          elift (ergoc_module_to_javascript_cicero contract_name c.(contract_state) sigs) pn)
       ec.
 

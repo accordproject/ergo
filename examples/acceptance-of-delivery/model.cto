@@ -11,7 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.acceptanceofdelivery
+
+namespace org.accordproject.acceptanceofdelivery
 
 /**
  * Sent by the receiver of the goods, indicates when the goods were

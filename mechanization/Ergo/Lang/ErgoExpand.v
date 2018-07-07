@@ -17,11 +17,11 @@
 Require Import String.
 Require Import List.
 Require Import Qcert.Utils.ListAdd. (* For zip *)
-Require Import Qcert.Compiler.Driver.CompLang.
 
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Common.Pattern.EPattern.
@@ -31,7 +31,7 @@ Section ErgoExpand.
   (* Context *)
 
   Definition create_call
-             (loc:location)
+             (prov:provenance)
              (cname:string)
              (v0:string)
              (effparam0:laergo_expr)
@@ -39,13 +39,13 @@ Section ErgoExpand.
              (callparams:list (string * laergo_type)) : eresult laergo_stmt :=
     let zipped := zip callparams (effparam0 :: effparamrest) in
     match zipped with
-    | None => main_parameter_mismatch_error loc
+    | None => main_parameter_mismatch_error prov
     | Some _ =>
-      esuccess (SCallClause loc cname (EVar loc v0 :: effparamrest))
+      esuccess (SCallClause prov cname (EVar prov v0 :: effparamrest))
     end.
 
   Definition case_of_sig
-             (loc:location)
+             (prov:provenance)
              (namespace:string)
              (v0:string)
              (effparam0:laergo_expr)
@@ -54,42 +54,42 @@ Section ErgoExpand.
     let cname := (fst s) in
     let callparams := (snd s).(type_signature_params) in
     match callparams with
-    | nil => main_at_least_one_parameter_error loc
+    | nil => main_at_least_one_parameter_error prov
     | (param0, et)::otherparams =>
       match et with
       | ErgoTypeClassRef _ type0 =>
         elift (fun x =>
                  (CaseLet v0 (Some type0),x))
-              (create_call loc cname v0 effparam0 effparamrest callparams)
-      | _ => main_not_a_class_error loc cname
+              (create_call prov cname v0 effparam0 effparamrest callparams)
+      | _ => main_not_a_class_error prov cname
       end
     end.
 
   Definition match_of_sigs
-             (loc:location)
+             (prov:provenance)
              (namespace:string)
              (v0:string)
              (effparam0:laergo_expr)
              (effparamrest:list laergo_expr)
              (ss:list (string * laergo_type_signature)) : eresult laergo_stmt :=
     elift (fun s =>
-             SMatch loc effparam0
+             SMatch prov effparam0
                     s
-                    (SThrow loc
-                            (ENew loc default_throws_absolute_name
-                                  (("message"%string, EConst loc (ErgoData.dstring ""))::nil))))
-          (emaplift (case_of_sig loc namespace v0 effparam0 effparamrest) ss).
+                    (SThrow prov
+                            (ENew prov default_throws_absolute_name
+                                  (("message"%string, EConst prov (ErgoData.dstring ""))::nil))))
+          (emaplift (case_of_sig prov namespace v0 effparam0 effparamrest) ss).
 
   Definition match_of_sigs_top
-             (loc:location)
+             (prov:provenance)
              (namespace:string)
              (effparams:list ergo_expr)
              (ss:list (string * laergo_type_signature)) :=
     match effparams with
-    | nil => main_at_least_one_parameter_error loc
+    | nil => main_at_least_one_parameter_error prov
     | effparam0 :: effparamrest =>
       let v0 := ("$"++clause_main_name)%string in (** XXX To be worked on *)
-      match_of_sigs loc namespace v0 effparam0 effparamrest ss
+      match_of_sigs prov namespace v0 effparam0 effparamrest ss
     end.
 
   Definition filter_init (sigs:list (string * laergo_type_signature)) :=
@@ -99,75 +99,75 @@ Section ErgoExpand.
               else true) sigs.
   
   Definition create_main_clause_for_contract
-             (loc:location)
+             (prov:provenance)
              (namespace:string)
              (c:laergo_contract) : eresult laergo_clause :=
     let sigs := lookup_contract_signatures c in
     let sigs := filter_init sigs in
-    let effparams := EVar loc "request"%string :: nil in
+    let effparams := EVar prov "request"%string :: nil in
     elift
       (fun disp =>
-         (mkClause loc
+         (mkClause prov
                    clause_main_name
                    (mkErgoTypeSignature
-                      loc
-                      (("request"%string,ErgoTypeClassRef loc default_request_absolute_name)::nil)
-                      (ErgoTypeClassRef loc default_response_absolute_name)
+                      prov
+                      (("request"%string,ErgoTypeClassRef prov default_request_absolute_name)::nil)
+                      (ErgoTypeClassRef prov default_response_absolute_name)
                       None
                       None)
                    (Some disp)))
-      (match_of_sigs_top loc namespace effparams sigs).
+      (match_of_sigs_top prov namespace effparams sigs).
 
   (* XXX Has to be fixed to use brands -- needs fixes in code-generation *)
-  Definition default_state (loc:location) : laergo_expr :=
+  Definition default_state (prov:provenance) : laergo_expr :=
     EConst
-      loc
+      prov
       (drec (("$class",dstring default_state_absolute_name)
                :: ("stateId",dstring "1")
                :: nil))%string.
-  Definition default_response (loc:location) : laergo_expr :=
+  Definition default_response (prov:provenance) : laergo_expr :=
     EConst
-      loc
+      prov
       (drec (("$class",dstring default_response_absolute_name)
                :: nil))%string.
   
   Definition create_init_clause_for_contract
-             (loc:location)
+             (prov:provenance)
              (namespace:string)
              (c:laergo_contract) : laergo_clause :=
-    let effparams : list laergo_expr := EVar loc "request"%string :: nil in
+    let effparams : list laergo_expr := EVar prov "request"%string :: nil in
     let init_body :=
-        SSetState loc (default_state loc)
-                  (SReturn loc (default_response loc))
+        SSetState prov (default_state prov)
+                  (SReturn prov (default_response prov))
     in
-    mkClause loc
+    mkClause prov
              clause_init_name
              (mkErgoTypeSignature
-                loc
-                (("request"%string, ErgoTypeClassRef loc default_request_absolute_name)::nil)
-                (ErgoTypeNone loc)
+                prov
+                (("request"%string, ErgoTypeClassRef prov default_request_absolute_name)::nil)
+                (ErgoTypeNone prov)
                 None
-                (Some (ErgoTypeClassRef loc default_emits_absolute_name)))
+                (Some (ErgoTypeClassRef prov default_emits_absolute_name)))
              (Some init_body).
 
   Definition add_init_clause_to_contract (namespace:string) (c:laergo_contract) : laergo_contract :=
-    let loc := c.(contract_annot) in
+    let prov := c.(contract_annot) in
     if in_dec string_dec clause_init_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
     then c
     else
       let init_clause :=
-          create_init_clause_for_contract loc namespace c
+          create_init_clause_for_contract prov namespace c
       in
       mkContract
-        loc
+        prov
         c.(contract_name)
         c.(contract_template)
         c.(contract_state)
         (c.(contract_clauses) ++ (init_clause::nil)).
 
   Definition add_main_clause_to_contract (namespace:string) (c:laergo_contract) : eresult laergo_contract :=
-    let loc := c.(contract_annot) in
+    let prov := c.(contract_annot) in
     if in_dec string_dec clause_main_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
     then esuccess c
@@ -175,12 +175,12 @@ Section ErgoExpand.
       elift
         (fun main_clause =>
            mkContract
-             loc
+             prov
              c.(contract_name)
              c.(contract_template)
              c.(contract_state)
              (c.(contract_clauses) ++ (main_clause::nil)))
-        (create_main_clause_for_contract loc namespace c).
+        (create_main_clause_for_contract prov namespace c).
   
   Definition add_main_init_clause_to_declaration
              (namespace:string)

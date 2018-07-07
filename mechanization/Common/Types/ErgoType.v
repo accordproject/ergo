@@ -16,9 +16,8 @@
 
 Require Import String.
 Require Import List.
-Require Import Qcert.Utils.Utils.
-Require Import Qcert.Common.TypingRuntime.
 
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
@@ -102,44 +101,44 @@ Section ErgoType.
   Definition aergo_type_declaration_desc {A} : Set := @ergo_type_declaration_desc A absolute_name.
   Definition aergo_type_declaration {A} : Set := @ergo_type_declaration A absolute_name.
   
-  Definition lrergo_type : Set := @ergo_type location relative_name.
-  Definition lrergo_type_signature : Set := @ergo_type_signature location relative_name.
-  Definition lrergo_type_declaration_desc : Set := @ergo_type_declaration_desc location relative_name.
-  Definition lrergo_type_declaration : Set := @ergo_type_declaration location relative_name.
+  Definition lrergo_type : Set := @ergo_type provenance relative_name.
+  Definition lrergo_type_signature : Set := @ergo_type_signature provenance relative_name.
+  Definition lrergo_type_declaration_desc : Set := @ergo_type_declaration_desc provenance relative_name.
+  Definition lrergo_type_declaration : Set := @ergo_type_declaration provenance relative_name.
 
-  Definition laergo_type : Set := @ergo_type location absolute_name.
-  Definition laergo_type_signature : Set := @ergo_type_signature location absolute_name.
-  Definition laergo_type_declaration : Set := @ergo_type_declaration location absolute_name.
-  Definition laergo_type_declaration_desc : Set := @ergo_type_declaration_desc location absolute_name.
+  Definition laergo_type : Set := @ergo_type provenance absolute_name.
+  Definition laergo_type_signature : Set := @ergo_type_signature provenance absolute_name.
+  Definition laergo_type_declaration : Set := @ergo_type_declaration provenance absolute_name.
+  Definition laergo_type_declaration_desc : Set := @ergo_type_declaration_desc provenance absolute_name.
   
-  Definition lift_default_emits_type (loc:location) (emits:option laergo_type) : laergo_type :=
+  Definition lift_default_emits_type (prov:provenance) (emits:option laergo_type) : laergo_type :=
     match emits with
     | Some e => e
-    | None => ErgoTypeClassRef loc default_emits_absolute_name
+    | None => ErgoTypeClassRef prov default_emits_absolute_name
     end.
 
-  Definition lift_default_state_type (loc:location) (state:option laergo_type) : laergo_type :=
+  Definition lift_default_state_type (prov:provenance) (state:option laergo_type) : laergo_type :=
     match state with
     | Some e => e
-    | None => ErgoTypeClassRef loc default_state_absolute_name
+    | None => ErgoTypeClassRef prov default_state_absolute_name
     end.
 
-  Definition lift_default_throws_type (loc:location) (emits:option laergo_type) : laergo_type :=
+  Definition lift_default_throws_type (prov:provenance) (emits:option laergo_type) : laergo_type :=
     match emits with
     | Some e => e
-    | None => ErgoTypeClassRef loc default_throws_absolute_name
+    | None => ErgoTypeClassRef prov default_throws_absolute_name
     end.
 
-  Definition mk_success_type (loc:location) (response_type state_type emit_type: laergo_type) : laergo_type :=
-    ErgoTypeRecord loc
+  Definition mk_success_type (prov:provenance) (response_type state_type emit_type: laergo_type) : laergo_type :=
+    ErgoTypeRecord prov
        (("response",response_type)
           ::("state",state_type)
           ::("emit",emit_type)
           ::nil)%string.
 
-  Definition mk_error_type (loc:location) (throw_type: laergo_type) : laergo_type := throw_type.
-  Definition mk_output_type (loc:location) (success_type error_type: laergo_type) : laergo_type :=
-    ErgoTypeSum loc success_type error_type.
+  Definition mk_error_type (prov:provenance) (throw_type: laergo_type) : laergo_type := throw_type.
+  Definition mk_output_type (prov:provenance) (success_type error_type: laergo_type) : laergo_type :=
+    ErgoTypeSum prov success_type error_type.
 
   Definition lift_default_state_name (state:option laergo_type) : eresult absolute_name :=
     match state with
