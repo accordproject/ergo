@@ -66,7 +66,7 @@ By default, Ergo compiles to JavaScript for execution. You can inspect the compi
 To compile and execute that contract:
 
 ```text
-$ ergo execute --cto ./examples/volumediscount/model.cto --ergo ./examples/volumediscount/logic.ergo --contractname VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergo execute --cto ./examples/volumediscount/model.cto --ergo ./examples/volumediscount/logic.ergo --contractname org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 13:40:03 - info: Logging initialized. 2018-06-17T17:40:03.587Z
 13:40:03 - info: {"emit":[],"state":{"$class":"org.accordproject.cicero.contract.AccordContractState","stateId":"1"},"response":{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}}
 ```
