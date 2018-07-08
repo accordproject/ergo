@@ -200,7 +200,8 @@ Section ErgotoErgoCalculus.
         elift (fun el =>
                  ECallFun prov
                           fname
-                          ((thisContract prov)
+                          ((EVar prov current_time)
+                             ::(thisContract prov)
                              ::(EVar prov local_state)
                              ::(EVar prov local_emit)
                              ::el)) el
@@ -296,7 +297,8 @@ Section ErgotoErgoCalculus.
           mkFuncC
             prov
             (mkSigC
-               ((this_contract, tem)
+               ((current_time, (ErgoTypeDateTime prov))
+                  ::(this_contract, tem)
                   ::(this_state, state_type)
                   ::(this_emit, ErgoTypeArray prov emit_type)
                   ::c.(clause_sig).(type_signature_params))

@@ -301,11 +301,6 @@ Section ErgoCalculustoErgoNNRC.
              (ctxt:translation_context)
              (cn:local_name)
              (c:ergoc_contract) : eresult (translation_context * nnrc_function_table) :=
-    let ctxt : translation_context := (* XXX Should probably be moved to Ergo -> ErgoCalculus *)
-        add_params
-          ctxt
-          (current_time :: this_contract :: this_state :: this_emit :: nil)
-    in
     let init := esuccess (ctxt, nil) in
     let proc_one
           (acc:eresult (translation_context * list nnrc_function))
