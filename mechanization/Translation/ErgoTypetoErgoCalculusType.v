@@ -16,8 +16,6 @@
 
 Require Import String.
 Require Import List.
-Require Import Qcert.Utils.Utils.
-Require Import Qcert.Common.TypingRuntime.
 
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.

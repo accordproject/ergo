@@ -15,8 +15,6 @@
 Require Import String.
 Require Import List.
 
-Require Import Qcert.Utils.ListAdd. (* For zip *)
-
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.

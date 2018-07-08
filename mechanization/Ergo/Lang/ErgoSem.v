@@ -20,8 +20,6 @@ Require Import String.
 Require Import List.
 Require Import EquivDec.
 
-Require Import Qcert.Utils.Utils.
-
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.CTO.CTO.

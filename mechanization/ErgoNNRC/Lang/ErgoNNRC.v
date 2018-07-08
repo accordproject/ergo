@@ -27,7 +27,7 @@ Section ErgoNNRC.
 
     (** Expression *)
     Definition nnrc_expr := ErgoCodeGen.nnrc_expr.
-    Definition nnrc_type := ErgoCalculus.ergoc_type. (* XXX To be changed to Qcert type *)
+    Definition nnrc_type := ErgoCalculus.ergoc_type. (* XXX To be changed to Q*cert type *)
 
     Record lambdan :=
       mkLambdaN
