@@ -74,3 +74,4 @@ val filename_append : string -> string list -> string
 
 val loc_error : string -> ('a -> 'b) -> 'a -> 'b
 
+val map_assoc : ('a -> 'b -> 'c) -> (('a * 'b) list) -> 'c list

@@ -53,35 +53,45 @@ let available_targets =
   "(available: " ^ (String.concat "," (List.map name_of_lang targets)) ^ ")"
 
 type global_config = {
-  mutable jconf_source : lang;
-  mutable jconf_target : lang;
-  mutable jconf_cto_files : string list;
-  mutable jconf_ctos : cto_package list;
+  mutable econf_source : lang;
+  mutable econf_target : lang;
+  mutable econf_ctos : cto_package list;
+  mutable econf_modules : ergo_module list;
 }
 
 let empty_config () = {
-  jconf_source = Ergo;
-  jconf_target = JavaScript;
-  jconf_cto_files = [];
-  jconf_ctos = [];
+  econf_source = Ergo;
+  econf_target = JavaScript;
+  econf_ctos = [];
+  econf_modules = [];
 } 
 
-let get_source_lang gconf = gconf.jconf_source
-let get_target_lang gconf = gconf.jconf_target
-let get_cto_files gconf = gconf.jconf_cto_files
-let get_ctos gconf = gconf.jconf_ctos
+let get_source_lang gconf = gconf.econf_source
+let get_target_lang gconf = gconf.econf_target
+let get_ctos gconf = gconf.econf_ctos
+let get_modules gconf = gconf.econf_modules
 
-let set_source_lang gconf s = gconf.jconf_source <- (lang_of_name s)
-let set_target_lang gconf s = gconf.jconf_target <- (lang_of_name s)
-let add_cto gconf s =
-  gconf.jconf_ctos <- gconf.jconf_ctos @ [CtoImport.cto_import (Cto_j.model_of_string s)]
+let set_source_lang gconf s = gconf.econf_source <- (lang_of_name s)
+let set_target_lang gconf s = gconf.econf_target <- (lang_of_name s)
+let add_cto gconf cto =
+  gconf.econf_ctos <- gconf.econf_ctos @ [cto]
 let add_cto_file gconf (f,s) =
-  begin
-    gconf.jconf_cto_files <- gconf.jconf_cto_files @ [s];
-    add_cto gconf s
-  end
+  add_cto gconf (ParseUtil.parse_cto_package_from_string f s)
+let add_module gconf m =
+  gconf.econf_modules <- gconf.econf_modules @ [m]
+let add_module_file gconf (f,s) =
+  add_module gconf (ParseUtil.parse_ergo_module_from_string f s)
 
+let get_stdlib () =
+  (Util.map_assoc ParseUtil.parse_cto_package_from_string (ErgoStdlib.ergo_stdcto),
+   Util.map_assoc ParseUtil.parse_ergo_module_from_string (ErgoStdlib.ergo_stdlib))
+
+let add_stdlib gconf =
+  let (ctos, mls) = get_stdlib () in
+  gconf.econf_ctos <- ctos @ gconf.econf_ctos;
+  gconf.econf_modules <- mls @ gconf.econf_modules
 let default_config () =
   let gconf = empty_config () in
-  List.iter (add_cto_file gconf) ErgoStdlib.ergo_stdcto;
+  add_stdlib gconf;
   gconf
+

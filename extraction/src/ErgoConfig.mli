@@ -27,21 +27,26 @@ val extension_of_lang : lang -> string
 val available_targets : string
 
 type global_config = {
-  mutable jconf_source : lang;
-  mutable jconf_target : lang;
-  mutable jconf_cto_files : string list;
-  mutable jconf_ctos : cto_package list;
+  mutable econf_source : lang;
+  mutable econf_target : lang;
+  mutable econf_ctos : cto_package list;
+  mutable econf_modules : ergo_module list;
 }
 
+val get_stdlib : unit -> (cto_package list * ergo_module list)
+val add_stdlib : global_config -> unit
 val default_config : unit -> global_config
 
 val get_source_lang : global_config -> lang
 val get_target_lang : global_config -> lang
-val get_cto_files : global_config -> string list
 val get_ctos : global_config -> cto_package list
+val get_modules : global_config -> ergo_module list
 
 val set_source_lang : global_config -> string -> unit
 val set_target_lang : global_config -> string -> unit
+
 val add_cto_file : global_config -> string * string -> unit
-val add_cto : global_config -> string -> unit
+val add_cto : global_config -> cto_package -> unit
+val add_module_file : global_config -> string * string -> unit
+val add_module : global_config -> ergo_module -> unit
 

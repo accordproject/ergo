@@ -130,9 +130,9 @@ Section Ergo.
     Inductive ergo_declaration :=
     | DType : A -> @ergo_type_declaration A N -> ergo_declaration
     | DStmt : A -> ergo_stmt -> ergo_declaration
-    | DConstant : A -> local_name -> ergo_expr -> ergo_declaration
-    | DFunc : A -> local_name -> ergo_function -> ergo_declaration
-    | DContract : A -> local_name -> ergo_contract -> ergo_declaration
+    | DConstant : A -> absolute_name -> ergo_expr -> ergo_declaration
+    | DFunc : A -> absolute_name -> ergo_function -> ergo_declaration
+    | DContract : A -> absolute_name -> ergo_contract -> ergo_declaration
     .
     
     Definition decl_annot (d:ergo_declaration) : A :=
@@ -203,28 +203,29 @@ Section Ergo.
     Definition lookup_contract_signatures (c:ergo_contract) : list (local_name * ergo_type_signature) :=
       lookup_clauses_signatures c.(contract_clauses).
 
-    Definition contract_of_declaration (d:laergo_declaration) : option (local_name * laergo_contract) :=
+    Definition contract_of_declaration (d:laergo_declaration) : option (absolute_name * laergo_contract) :=
       match d with
       | DContract _ cn c => Some (cn, c)
       | _ => None
       end.
 
     Definition lookup_contracts_in_declarations (dl:list laergo_declaration)
-      : list (local_name * laergo_contract) :=
+      : list (absolute_name * laergo_contract) :=
       filter_some contract_of_declaration dl.
 
     Definition lookup_single_contract_in_declarations
-               (prov:provenance) (dl:list laergo_declaration) : eresult (local_name * laergo_contract) :=
+               (prov:provenance) (dl:list laergo_declaration) : eresult (absolute_name * laergo_contract) :=
       match lookup_contracts_in_declarations dl with
       | nil => should_have_one_contract_error prov
       | c :: nil => esuccess c
       | _ :: _ => should_have_one_contract_error prov
       end.
 
-    Definition lookup_single_contract (p:laergo_module) : eresult (local_name * laergo_contract) :=
+    Definition lookup_single_contract (p:laergo_module) : eresult (absolute_name * laergo_contract) :=
       lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations).
 
-    Definition lookup_single_contract_with_state (p:laergo_module) : eresult ((string * laergo_contract) * string) :=
+    Definition lookup_single_contract_with_state (p:laergo_module)
+      : eresult ((absolute_name * laergo_contract) * string) :=
       eolift (fun ec =>
                 elift (fun ecstate =>
                          (ec, ecstate)) (lift_default_state_name (snd ec).(contract_state)))

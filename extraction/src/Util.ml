@@ -206,3 +206,6 @@ let loc_error s f x =
   | Failure exn -> raise (Failure exn)
   | exn -> raise (Failure ("[In " ^ s ^ "]" ^ (Printexc.to_string exn)))
   end
+
+let map_assoc f l =
+  List.map (fun xy -> f (fst xy) (snd xy)) l
