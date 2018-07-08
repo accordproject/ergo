@@ -19,3 +19,8 @@ open ErgoComp.ErgoCompiler
 val parse_ergo_module : Lexing.lexbuf -> ergo_module
 val parse_ergo_declaration : Lexing.lexbuf -> ergo_declaration
 
+val parse_ergo_module_from_string : string -> string -> ergo_module
+val parse_ergo_declaration_from_string : string -> string -> ergo_declaration
+
+val parse_cto_package_from_string : string -> string -> cto_package
+
