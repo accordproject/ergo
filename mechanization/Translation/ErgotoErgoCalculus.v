@@ -17,9 +17,6 @@
 Require Import String.
 Require Import List.
 
-Require Import Qcert.Utils.Utils.
-Require Import Qcert.NNRC.NNRCRuntime.
-
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.

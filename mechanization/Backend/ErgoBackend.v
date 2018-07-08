@@ -22,6 +22,11 @@ Require ErgoSpec.Backend.Lib.EData.
 Require ErgoSpec.Backend.Lib.EOperators.
 Require ErgoSpec.Backend.Lib.ECodeGen.
 
+Section Utils.
+  (* Exported from Qcert.Utils.ListAdd *)
+  Definition zip {A} {B} : list A -> list B -> option (list (A * B)) := zip.
+End Utils.
+
 Module ErgoEnhancedBackend := ErgoBackendRuntime.ErgoBackendRuntime <+ ErgoEnhancedModel.CompEnhanced.
 Module ErgoData := EData.EData(ErgoEnhancedBackend).
 Module ErgoOps := EOperators.EOperators(ErgoEnhancedBackend).

@@ -16,8 +16,6 @@
 
 Require Import String.
 Require Import List.
-Require Import Qcert.Utils.ListAdd. (* For zip *)
-Require Import Qcert.Compiler.Driver.CompLang.
 
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.ErgoBackend.
@@ -102,7 +100,7 @@ Section ErgoCompilerDriver.
 
   Definition ergo_module_to_javascript
              (ctxt:compilation_ctxt)
-             (p:lrergo_module) : eresult javascript :=
+             (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
     let rmods := modules_of_compilation_ctxt ctxt in
     let pc := ergo_module_to_ergo_calculus ctxt p in
     let pn := eolift (fun xy => ergoc_module_to_nnrc rmods (fst xy)) pc in
@@ -111,13 +109,13 @@ Section ErgoCompilerDriver.
   Definition ergo_module_to_javascript_top
              (ctos:list lrcto_package)
              (mls:list lrergo_module)
-             (p:lrergo_module) : eresult javascript :=
+             (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
     let ctxt := compilation_ctxt_from_inputs ctos mls in
     eolift (fun ctxt => ergo_module_to_javascript ctxt p) ctxt.
   
   Definition ergo_module_to_java
              (ctxt:compilation_ctxt)
-             (p:lrergo_module) : eresult java :=
+             (p:lrergo_module) : eresult ErgoCodeGen.java :=
     let rmods := modules_of_compilation_ctxt ctxt in
     let pc := ergo_module_to_ergo_calculus ctxt p in
     let pn := eolift (fun xy => ergoc_module_to_nnrc rmods (fst xy)) pc in
@@ -126,14 +124,14 @@ Section ErgoCompilerDriver.
   Definition ergo_module_to_java_top
              (ctos:list lrcto_package)
              (mls:list lrergo_module)
-             (p:lrergo_module) : eresult java :=
+             (p:lrergo_module) : eresult ErgoCodeGen.java :=
     let ctxt := compilation_ctxt_from_inputs ctos mls in
     eolift (fun ctxt => ergo_module_to_java ctxt p) ctxt.
 
   Definition ergo_module_to_javascript_cicero_top
              (ctos:list cto_package)
              (mls:list lrergo_module)
-             (p:ergo_module) : eresult javascript :=
+             (p:ergo_module) : eresult ErgoCodeGen.javascript :=
     let ctxt := init_namespace_ctxt in
     let rctos := resolve_cto_packages ctxt ctos in
     let rmods := eolift (fun rctos => resolve_ergo_modules (snd rctos) mls) rctos in
