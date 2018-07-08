@@ -108,7 +108,7 @@ Section EResult.
     Definition clause_not_found_error {A} prov (fname:string) : eresult A :=
       efailure (CompilationError prov ("Clause '" ++ fname ++ "' not found")).
     Definition call_params_error {A} prov (fname:string) : eresult A :=
-      efailure (CompilationError prov ("Parameter mistmatch when calling function '" ++ fname ++ "'")).
+      efailure (CompilationError prov ("Parameter mismatch when calling function '" ++ fname ++ "'")).
 
     Definition ergo_default_package : string := "org.accordproject.ergo".
     Definition ergo_default_error_proval_name : string := "Error".
