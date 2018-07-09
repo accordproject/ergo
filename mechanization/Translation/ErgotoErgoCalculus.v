@@ -311,8 +311,8 @@ Section ErgotoErgoCalculus.
     let body :=
         match f.(function_body) with
         | None => esuccess None
-        | Some stmt =>
-          elift Some (ergo_stmt_to_expr_top ctxt prov stmt)
+        | Some e =>
+          elift Some (ergo_expr_to_ergoc_expr ctxt e)
         end
     in
     elift
@@ -390,7 +390,7 @@ Section ErgotoErgoCalculus.
                 (ErgoTypeAny dummy_provenance)
                 None
                 None)
-             (Some (SReturn dummy_provenance (EConst dummy_provenance (dfloat float_one)))).
+             (Some (EConst dummy_provenance (dfloat float_one))).
     Definition f2 : laergo_function :=
       mkFunc dummy_provenance
              (mkErgoTypeSignature
@@ -399,7 +399,7 @@ Section ErgotoErgoCalculus.
                 (ErgoTypeAny dummy_provenance)
                 None
                 None)
-             (Some (SReturn dummy_provenance (EThisContract dummy_provenance))).
+             (Some (EThisContract dummy_provenance)).
     Definition cl1 : laergo_clause :=
       mkClause dummy_provenance
                "volumediscount"%string
@@ -444,8 +444,8 @@ Section ErgotoErgoCalculus.
         :: (DContract dummy_provenance "VolumeDiscount"%string co1)
         :: nil.
 
-    (* Compute (declarations_calculus initial_translation_context dl1). (* Should succeed *) *)
-    (* Compute (declarations_calculus initial_translation_context dl2). (* Should fail *) *)
+    (* Compute (declarations_calculus dl1). (* Should succeed *) *)
+    (* Compute (declarations_calculus dl2). (* Should fail *) *)
   End Examples.
 
 End ErgotoErgoCalculus.

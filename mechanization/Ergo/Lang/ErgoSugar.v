@@ -33,11 +33,9 @@ Section ErgoSugar.
              (ErgoOps.Unary.opdot s)
              (EUnaryOp a ErgoOps.Unary.opunbrand e).
 
-  Definition SReturnEmpty (a:A) : rergo_stmt :=
-    SReturn a (EConst a dunit).
+  Definition SReturnEmpty (a:A) : rergo_stmt := SReturn a (EConst a dunit).
 
-  Definition SFunReturnEmpty (a:A) : rergo_stmt :=
-    SFunReturn a (EConst a dunit).
+  Definition EFunReturnEmpty (a:A) : rergo_expr := EConst a dunit.
 
   Definition EOptionalDot (a:A) (pname:string) (e:rergo_expr) :=
     EMatch a

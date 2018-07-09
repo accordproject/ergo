@@ -284,17 +284,17 @@ stmt:
 fstmt:
 (* Statments *)
 | RETURN
-    { ErgoCompiler.sfunreturnempty (mk_provenance $startpos $endpos) }
+    { ErgoCompiler.efunreturnempty (mk_provenance $startpos $endpos) }
 | RETURN e1 = expr
-    { ErgoCompiler.sfunreturn (mk_provenance $startpos $endpos) e1 }
+    { ErgoCompiler.efunreturn (mk_provenance $startpos $endpos) e1 }
 | THROW e1 = expr
     { raise (LexError ("Cannot throw inside a function, you have to be in a Clause")) }
 | LET v = ident EQUAL e1 = expr SEMI s2 = fstmt
-    { ErgoCompiler.slet (mk_provenance $startpos $endpos) v e1 s2 }
+    { ErgoCompiler.elet (mk_provenance $startpos $endpos) v None e1 s2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
-    { ErgoCompiler.slet_typed (mk_provenance $startpos $endpos) v t e1 s2 }
+    { ErgoCompiler.elet (mk_provenance $startpos $endpos) v (Some t) e1 s2 }
 | IF e1 = expr THEN s2 = fstmt ELSE s3 = fstmt
-    { ErgoCompiler.sif (mk_provenance $startpos $endpos) e1 s2 s3 }
+    { ErgoCompiler.eif (mk_provenance $startpos $endpos) e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = fstmt SEMI s3 = fstmt
     { raise (LexError ("Cannot use enforce inside a function, you have to be in a Clause")) }
 | ENFORCE e1 = expr SEMI s3 = fstmt
@@ -304,7 +304,7 @@ fstmt:
 | EMIT e1 = expr SEMI s2 = fstmt
     { raise (LexError ("Cannot emit inside a function, you have to be in a Clause")) }
 | MATCH e0 = expr csd = cases_fstmt
-    { ErgoCompiler.smatch (mk_provenance $startpos $endpos) e0 (fst csd) (snd csd) }
+    { ErgoCompiler.ematch (mk_provenance $startpos $endpos) e0 (fst csd) (snd csd) }
 
 (* cases *)
 type_annotation:
