@@ -133,25 +133,25 @@ decl:
         (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEnum et)) }
 | DEFINE CONSTANT v = ident EQUAL e = expr
     { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v e }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY fs = fstmt RCURLY
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype et = effecttypes LCURLY fs = fstmt RCURLY
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
           function_sig =
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
             type_signature_output = out;
-            type_signature_throws = fst mt;
-            type_signature_emits = snd mt };
+            type_signature_throws = fst et;
+            type_signature_emits = snd et };
           function_body = Some fs; } }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype et = effecttypes
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
           function_sig =
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
             type_signature_output = out;
-            type_signature_throws = fst mt;
-            type_signature_emits = snd mt };
+            type_signature_throws = fst et;
+            type_signature_emits = snd et };
           function_body = None; } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
     { ErgoCompiler.dcontract (mk_provenance $startpos $endpos) cn
@@ -179,18 +179,18 @@ clauses:
     { c :: cl }
 
 clause:
-| CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype mt = maythrow LCURLY s = stmt RCURLY
+| CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype et = effecttypes LCURLY s = stmt RCURLY
     { { clause_annot = mk_provenance $startpos $endpos;
         clause_name = cn;
         clause_sig =
         { type_signature_annot = (mk_provenance $startpos $endpos);
           type_signature_params = ps;
           type_signature_output = out;
-          type_signature_throws = fst mt;
-          type_signature_emits = snd mt };
+          type_signature_throws = fst et;
+          type_signature_emits = snd et };
         clause_body = Some s; } }
 
-maythrow:
+effecttypes:
 |
   { (None,None) }
 | THROWS tt = paramtype
@@ -198,6 +198,8 @@ maythrow:
 | EMITS et = paramtype
   { (None,Some et) }
 | THROWS tt = paramtype EMITS et = paramtype
+  { (Some tt,Some et) }
+| EMITS et = paramtype THROWS tt = paramtype
   { (Some tt,Some et) }
 
 mayhavestate:
