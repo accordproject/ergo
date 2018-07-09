@@ -29,6 +29,7 @@ Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import Common.Utils.EResult.
+Require Import Common.Utils.EProvenance.
 
 Require Import Compiler.ErgoCompilerDriver.
 
@@ -147,16 +148,14 @@ Section ErgoEval.
            (fn : ergo_function) : eresult ergo_function :=
     match fn.(function_body) with
     | None => TODO
-    | Some (SFunReturn loc expr) =>
+    | Some expr =>
       match eolift (ergo_inline_expr ctx) (ergo_inline_globals ctx expr) with
         | Success _ _ new_body =>
-          esuccess (mkFunc loc
-                           fn.(function_name)
+          esuccess (mkFunc fn.(function_annot)
                                 fn.(function_sig)
-                                (Some (SFunReturn loc new_body)))
+                                (Some new_body))
         | Failure _ _ f => efailure f
       end
-    | _ => efailure (CompilationError fn.(function_annot) ("Function "++fn.(function_name)++" is bad!!!")%string)
     end.
 
 Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_data :=
@@ -323,11 +322,11 @@ Fixpoint ergo_eval_decl
           esuccess (sctx', ergo_ctx_update_global_env dctx n r, None)
         | Failure _ _ f => efailure f
         end
-      | DFunc _ fn =>
+      | DFunc _ name fn =>
         elift (fun fn' =>
-                (sctx', ergo_ctx_update_function_env dctx fn'.(function_name) fn', None))
+                (sctx', ergo_ctx_update_function_env dctx name fn', None))
               (ergo_inline_function dctx fn)
-      | DContract _ c => TODO
+      | DContract _ _ c => TODO
       end
   end.
 
@@ -363,12 +362,13 @@ Definition ergo_string_of_location (loc : location) : string :=
   (ergo_string_of_location_point loc.(loc_start)) ++ "-" ++
   (ergo_string_of_location_point loc.(loc_end)).
 
-Definition ergo_format_error (name : string) (loc : location) (msg : string) :=
+Definition ergo_format_error (name : string) (prov : provenance) (msg : string) :=
+  let loc := loc_of_provenance prov in
   (name ++ " at " ++ (ergo_string_of_location loc) ++ " '" ++ msg ++ "'")%string.
 
 Definition ergo_string_of_error (err : eerror) : string :=
   match err with
-  | SystemError s => "System error: " ++ s
+  | SystemError loc s => "System error: " ++ s
   | ParseError loc msg => ergo_format_error "Parse error" loc msg
   | CompilationError loc msg => ergo_format_error "Compilation error" loc msg
   | TypeError loc msg => ergo_format_error "Type error" loc msg
@@ -446,13 +446,12 @@ Definition ergo_make_stdlib_namespace
 
 Definition ergo_function_of_ergoc_function (fn : ergoc_function) : ergo_function :=
   mkFunc fn.(functionc_annot)
-         fn.(functionc_name)
          (mkErgoTypeSignature
             fn.(functionc_annot)
             fn.(functionc_sig).(sigc_params)
             fn.(functionc_sig).(sigc_output)
             None None)
-         (option_map (SFunReturn fn.(functionc_annot)) fn.(functionc_body)).
+         fn.(functionc_body).
 
 Definition ergo_eval_decl_via_calculus
            (sctx : compilation_ctxt)
@@ -468,11 +467,11 @@ Definition ergo_eval_decl_via_calculus
   | Success _ _ (Some (DCConstant loc name expr), sctx') =>
     let expr' := eolift (ergo_eval_expr dctx) (ergo_inline_expr dctx expr) in
     eolift (fun val => esuccess (sctx', ergo_ctx_update_global_env dctx name val, None)) expr'
-  | Success _ _ (Some (DCFunc loc func), sctx') =>
+  | Success _ _ (Some (DCFunc loc name func), sctx') =>
     elift (fun fn' =>
-             (sctx', ergo_ctx_update_function_env dctx fn'.(function_name) fn', None))
+             (sctx', ergo_ctx_update_function_env dctx name fn', None))
           (ergo_inline_function dctx (ergo_function_of_ergoc_function func))
-  | Success _ _ (Some (DCContract loc contr), sctx') => TODO
+  | Success _ _ (Some (DCContract loc name contr), sctx') => TODO
   end.
 
 

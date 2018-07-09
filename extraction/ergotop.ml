@@ -13,11 +13,11 @@
  *)
 
 open ErgoComp
-open ParseString
+open ParseUtil
 open Unix
 
 let get_stdlib () =
-  List.map (ParseString.parse_ergo_module_from_string "stdlib") (List.map snd ErgoStdlib.ergo_stdlib)
+  List.map (ParseUtil.parse_ergo_module_from_string "stdlib") (List.map snd ErgoStdlib.ergo_stdlib)
 
 let get_ctos () =
   ErgoConfig.get_ctos (ErgoConfig.default_config ())
@@ -44,7 +44,7 @@ let rec read_nonempty_line () =
 let rec repl (sctx, dctx) =
     prompt () ;
     try
-        let decl = (ParseString.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
+        let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
         let result = ergo_eval_decl sctx dctx decl in
         let out = ergo_string_of_result result in
         if (List.length out) > 0
@@ -61,7 +61,7 @@ let rec repl (sctx, dctx) =
 let rec repl2 (sctx, dctx) =
     prompt () ;
     try
-        let decl = (ParseString.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
+        let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
         let result = ergo_eval_decl_via_calculus sctx dctx decl in
         let out = ergo_string_of_result result in
         if (List.length out) > 0

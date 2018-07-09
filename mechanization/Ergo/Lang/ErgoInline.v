@@ -21,6 +21,7 @@ Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import Common.Utils.EResult.
+Require Import Common.Utils.EProvenance.
 
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Translation.CTOtoErgo.
@@ -131,29 +132,25 @@ Section ErgoInline.
   Definition ergo_inline_foreach ctx := ergo_map_expr ctx ergo_inline_foreach'.
 
   Fixpoint ergo_letify_function'
-           (loc : location)
+           (prov : provenance)
            (body : ergo_expr)
            (args : list (string * ergo_expr)) : ergo_expr :=
     match args with
     | nil => body
-    | (n,v)::rest => ELet loc n None v (ergo_letify_function' loc body rest)
+    | (n,v)::rest => ELet prov n None v (ergo_letify_function' prov body rest)
     end.
 
   Definition ergo_letify_function (fn : ergo_function) (args : list ergo_expr) :=
     match fn.(function_body) with
     | None => TODO
-    | Some (SFunReturn loc body) =>
+    | Some body =>
       match zip (map fst (fn.(function_sig).(type_signature_params))) args with
       | Some args' => esuccess (ergo_letify_function' fn.(function_annot) body args')
       | None =>
         efailure (CompilationError
                     fn.(function_annot)
-                    ("Wrong number of arguments for "%string ++ fn.(function_name))%string)
+                    ("Wrong number of arguments for function.")%string)
       end
-    | _ =>
-      efailure
-        (CompilationError
-           fn.(function_annot) (("Function "%string) ++ fn.(function_name) ++ (" is bad."%string)))
     end.
 
   Definition ergo_inline_functions' (ctx : ergo_context) (expr : ergo_expr) :=

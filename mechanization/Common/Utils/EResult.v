@@ -82,7 +82,7 @@ Section EResult.
       efailure (CompilationError prov "Cannot use 'clause' variable outside of a clause").
 
     Definition TODO {A : Set} : eresult A :=
-        efailure (SystemError "Feature not implemented.").
+        efailure (SystemError dummy_provenance "Feature not implemented."%string).
 
     (* CTO errors *)
     Definition import_not_found_error {A} prov (import:string) : eresult A :=
