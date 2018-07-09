@@ -20,6 +20,7 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
+Require Import Common.Utils.EUtil.
 Require Import Common.Utils.EResult.
 Require Import Common.Utils.EProvenance.
 
@@ -37,9 +38,6 @@ Definition ergo_declaration := Ergo.laergo_declaration.
 Definition ergo_module := Ergo.laergo_module.
 
 Section ErgoInline.
-
-  Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
-    ls ++ (a :: nil).
 
   Fixpoint ergo_map_expr
            (ctx : ergo_context)
