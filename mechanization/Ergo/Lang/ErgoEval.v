@@ -29,6 +29,7 @@ Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import Common.Utils.EResult.
+Require Import Common.Utils.EUtil.
 Require Import Common.Utils.EProvenance.
 
 Require Import Compiler.ErgoCompilerDriver.
@@ -63,9 +64,6 @@ Section ErgoEval.
                  ::("now"%string, dcoll nil)
                  ::nil)
               dunit dunit dunit dunit.
-
-  Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
-    ls ++ (a :: nil).
 
   Definition ergo_unary_eval := ErgoOps.Unary.eval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
@@ -264,7 +262,7 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
     | Success _ _ r => esuccess (dbrand (nr::nil) r)
     end
 
-  | ECallFun loc fn args => efailure (CompilationError loc "You forgot to inline a call...")
+  | ECallFun loc fn args => efailure (SystemError loc "You forgot to inline a call...")
 
   | EMatch loc e pes f => TODO
 
