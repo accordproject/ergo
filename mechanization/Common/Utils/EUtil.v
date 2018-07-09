@@ -33,4 +33,7 @@ Section EUtil.
       end
     end.
 
+  Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
+    ls ++ (a :: nil).
+
 End EUtil.
