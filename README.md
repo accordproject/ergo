@@ -27,6 +27,8 @@ The most recent documentation for Ergo is available at [https://ergo.accordproje
 
 If you simply want to get a peek at Ergo without installing anything, check out the examples on the [Ergo Playground](https://accordproject.github.io/ergo-playground/).
 
+You can also explore `ergotop`, a simple REPL for Ergo. Launch it via `./bin/ergotop` (or `./bin/ergotop.native` if you do not have `rlwrap` installed).
+
 ### Install Ergo
 
 The easiest way to install Ergo is as a [Node.js](https://nodejs.org/) package. Once you have Node.js installed on your machine, you can get the Ergo compiler and command-line using the Node.js package manager by typing the following in a terminal:
