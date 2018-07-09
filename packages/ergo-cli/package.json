@@ -30,8 +30,7 @@
   },
   "bin": {
     "ergo": "./bin/ergo.js",
-    "ergoc": "./bin/ergoc.js",
-    "ergop": "./bin/ergop.js"
+    "ergoc": "./bin/ergoc.js"
   },
   "devDependencies": {
     "chai": "3.5.0",
