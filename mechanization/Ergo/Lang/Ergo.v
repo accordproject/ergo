@@ -108,7 +108,7 @@ Section Ergo.
       mkFunc
         { function_annot : A;
           function_sig : @ergo_type_signature A N;
-          function_body : option ergo_stmt; }.
+          function_body : option ergo_expr; }.
 
     (** Clause *)
     Record ergo_clause :=

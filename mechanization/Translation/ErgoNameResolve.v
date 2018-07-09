@@ -646,7 +646,7 @@ Section ErgoNameResolution.
       let rbody :=
           match f.(function_body) with
           | None => esuccess None
-          | Some body => elift Some (resolve_ergo_stmt tbl body)
+          | Some body => elift Some (resolve_ergo_expr tbl body)
           end
       in
       elift2 (mkFunc prov)
@@ -877,7 +877,7 @@ Section ErgoNameResolution.
            (ErgoTypeBoolean dummy_provenance)
            None
            None)
-        (Some (SFunReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
+        (Some (ECallFun dummy_provenance "addFee" nil)).
 
     Definition ergo_clause2 : lrergo_clause :=
       mkClause

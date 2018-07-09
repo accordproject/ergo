@@ -75,7 +75,7 @@ contract HelloWorld over TemplateModel {
          (ErgoTypeBoolean dummy_provenance)
          None
          None)
-      (Some (SFunReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
+      (Some (ECallFun dummy_provenance "addFee" nil)).
 
   Definition ergo_clause2 : lrergo_clause :=
     mkClause

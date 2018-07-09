@@ -44,7 +44,7 @@ let global_config_of_json j =
   let apply = apply gconf in
   let iter_array = iter_array gconf in
   (* CTOs *)
-  iter_array ErgoConfig.add_cto j##.cto;
+  iter_array (fun gconf x -> ErgoConfig.add_cto_file gconf ("JS",x)) j##.cto;
   (* Target *)
   apply ErgoConfig.set_target_lang j##.target;
   gconf
@@ -108,8 +108,11 @@ let ergo_compile input =
     end
   in
   begin try
-    let ergo_parsed = ergo_parse_module ("%JSBUFFER%",j_s) in
-    let res = ErgoCompile.ergo_compile gconf (ref (get_stdlib ())) ergo_parsed in
+    let ergo_parsed = ParseUtil.parse_ergo_module_from_string "%JSBUFFER%" j_s in
+    let target_lang = ErgoConfig.get_target_lang gconf in
+    let ctos = ErgoConfig.get_ctos gconf in
+    let mls = ref (ErgoConfig.get_modules gconf) in
+    let res = ErgoCompile.ergo_compile target_lang ctos mls ergo_parsed in
     json_of_result res
   with
   | Ergo_Error error -> json_of_error error
