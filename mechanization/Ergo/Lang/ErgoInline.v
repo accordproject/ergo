@@ -163,4 +163,6 @@ Section ErgoInline.
 
   Definition ergo_inline_functions ctx := ergo_map_expr ctx ergo_inline_functions'.
 
+  Definition ergo_inline_expr := ergo_inline_functions.
+
 End ErgoInline.

@@ -12,9 +12,10 @@
  * limitations under the License.
  *)
 
-(* This is the [WIP] REFERENCE IMPLEMENTATION of the dynamic semantics of the ERGO
- * language.
- *   It is also being developed, and changing rapidly.
+(* This is the [WIP] REFERENCE IMPLEMENTATION of the dynamic semantics of the
+ * ERGO language.
+ *
+ * It is also being developed, and changing rapidly.
  *
  * -- Kartik, June 2018
  *)
@@ -67,9 +68,6 @@ Section ErgoEval.
 
   Definition ergo_unary_eval := ErgoOps.Unary.eval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
-
-  Definition ergo_inline_expr ctx expr :=
-    eolift (ergo_inline_functions ctx) (ergo_inline_foreach ctx expr).
 
   Fixpoint ergo_inline_globals
            (ctx : ergo_context)
@@ -262,10 +260,12 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
     | Success _ _ r => esuccess (dbrand (nr::nil) r)
     end
 
+    (* EXPECTS: no function calls in expression *)
   | ECallFun loc fn args => efailure (SystemError loc "You forgot to inline a call...")
 
   | EMatch loc e pes f => TODO
 
+    (* EXPECTS: each foreach has only one dimension *)
   | EForeach loc rs whr fn =>
     match rs with
     | (name, arr)::nil =>
@@ -451,25 +451,39 @@ Definition ergo_function_of_ergoc_function (fn : ergoc_function) : ergo_function
             None None)
          fn.(functionc_body).
 
+Definition ergoc_eval_decl
+           (dctx : ergo_context)
+           (decl : ergoc_declaration)
+  : eresult (ergo_context * option ergo_data) :=
+  match decl with
+  | DCExpr loc expr =>
+    elift (fun x => (dctx, Some x))
+          ((eolift (ergo_eval_expr dctx)) (ergo_inline_expr dctx expr))
+  | DCConstant loc name expr =>
+    let expr' := eolift (ergo_eval_expr dctx) (ergo_inline_expr dctx expr) in
+    eolift (fun val => esuccess (ergo_ctx_update_global_env dctx name val, None)) expr'
+  | DCFunc loc name func =>
+    elift (fun fn' =>
+             (ergo_ctx_update_function_env dctx name fn', None))
+          (ergo_inline_function dctx (ergo_function_of_ergoc_function func))
+  | DCContract loc name contr => TODO
+  end.
+
 Definition ergo_eval_decl_via_calculus
            (sctx : compilation_ctxt)
            (dctx : ergo_context)
            (decl : lrergo_declaration)
   : eresult (compilation_ctxt * ergo_context * option ergo_data) :=
   match ergo_declaration_to_ergo_calculus sctx decl with
+
   | Failure _ _ f => efailure f
   | Success _ _ (None, sctx') => esuccess (sctx', dctx, None)
-  | Success _ _ (Some (DCExpr loc expr), sctx') =>
-    elift (fun x => (sctx', dctx, Some x))
-          ((eolift (ergo_eval_expr dctx)) (ergo_inline_expr dctx expr))
-  | Success _ _ (Some (DCConstant loc name expr), sctx') =>
-    let expr' := eolift (ergo_eval_expr dctx) (ergo_inline_expr dctx expr) in
-    eolift (fun val => esuccess (sctx', ergo_ctx_update_global_env dctx name val, None)) expr'
-  | Success _ _ (Some (DCFunc loc name func), sctx') =>
-    elift (fun fn' =>
-             (sctx', ergo_ctx_update_function_env dctx name fn', None))
-          (ergo_inline_function dctx (ergo_function_of_ergoc_function func))
-  | Success _ _ (Some (DCContract loc name contr), sctx') => TODO
+
+  | Success _ _ (Some decl', sctx') =>
+    match ergoc_eval_decl dctx decl' with
+    | Failure _ _ f => efailure f
+    | Success _ _ (dctx', res) => esuccess (sctx', dctx', res)
+    end
   end.
 
 
