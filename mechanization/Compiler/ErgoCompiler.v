@@ -19,6 +19,7 @@ Require ErgoSpec.Backend.ErgoBackend.
 Require ErgoSpec.Common.Utils.EProvenance.
 Require ErgoSpec.Common.Utils.ENames.
 Require ErgoSpec.Common.Utils.EResult.
+Require ErgoSpec.Common.Utils.EFormat.
 Require ErgoSpec.Common.Utils.EAstUtil.
 Require ErgoSpec.Common.CTO.CTO.
 Require ErgoSpec.Common.Types.ErgoType.
@@ -283,9 +284,10 @@ Module ErgoCompiler.
   Definition ergo_empty_context := ErgoEval.ergo_empty_context.
   Definition ergo_eval_expr := ErgoEval.ergo_eval_expr.
   Definition ergo_eval_module := ErgoEval.ergo_eval_module.
-  Definition ergo_string_of_result := @ErgoEval.ergo_string_of_result ErgoCompilerDriver.compilation_ctxt.
   Definition ergo_maybe_update_context := @ErgoEval.ergo_maybe_update_context ErgoCompilerDriver.compilation_ctxt.
   Definition ergo_eval_decl_via_calculus := ErgoEval.ergo_eval_decl_via_calculus.
+
+  Definition ergo_string_of_result := @EFormat.ergo_string_of_result ErgoCompilerDriver.compilation_ctxt.
 
 End ErgoCompiler.
 
