@@ -276,14 +276,15 @@ Module ErgoCompiler.
   Definition namespace_ctxt_of_compilation_ctxt := ErgoCompilerDriver.namespace_ctxt_of_compilation_ctxt.
   Definition ergo_declaration_to_ergo_calculus := ErgoCompilerDriver.ergo_declaration_to_ergo_calculus.
 
+  Definition ergo_make_stdlib_namespace := ErgoCompilerDriver.ergo_make_stdlib_namespace.
+  Definition ergo_make_stdlib_ctxt := ErgoCompilerDriver.ergo_make_stdlib_ctxt.
+
   (* REPL *)
   Definition ergo_empty_context := ErgoEval.ergo_empty_context.
   Definition ergo_eval_expr := ErgoEval.ergo_eval_expr.
   Definition ergo_eval_module := ErgoEval.ergo_eval_module.
   Definition ergo_string_of_result := @ErgoEval.ergo_string_of_result ErgoCompilerDriver.compilation_ctxt.
   Definition ergo_maybe_update_context := @ErgoEval.ergo_maybe_update_context ErgoCompilerDriver.compilation_ctxt.
-  Definition ergo_make_stdlib_namespace := ErgoEval.ergo_make_stdlib_namespace.
-  Definition ergo_make_stdlib_ctxt := ErgoEval.ergo_make_stdlib_ctxt.
   Definition ergo_eval_decl_via_calculus := ErgoEval.ergo_eval_decl_via_calculus.
 
 End ErgoCompiler.

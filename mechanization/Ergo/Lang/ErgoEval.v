@@ -423,25 +423,6 @@ Definition ergo_maybe_update_context {A : Set}
   | _ => ctx
   end.
 
-Definition ergo_make_stdlib_ctxt
-           (ctos:list lrcto_package)
-           (mls:list lrergo_module)
-  : compilation_ctxt :=
-  match (compilation_ctxt_from_inputs ctos mls) with
-  | Success _ _ r => r
-  | Failure _ _ f => (nil, init_namespace_ctxt)
-  end.
-
-Definition ergo_make_stdlib_namespace
-           (ctos:list lrcto_package)
-           (mls:list lrergo_module)
-  : namespace_ctxt :=
-  match (elift namespace_ctxt_of_compilation_ctxt) (compilation_ctxt_from_inputs ctos mls) with
-  | Success _ _ r => r
-  | Failure _ _ f => init_namespace_ctxt
-  end.
-
-
 Definition ergo_function_of_ergoc_function (fn : ergoc_function) : ergo_function :=
   mkFunc fn.(functionc_annot)
          (mkErgoTypeSignature

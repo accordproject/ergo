@@ -70,6 +70,25 @@ Section ErgoCompilerDriver.
     let ctxt := init_namespace_ctxt in
     resolve_ergo_inputs ctxt (ictos ++ imls).
 
+  Definition ergo_make_stdlib_ctxt
+             (ctos:list lrcto_package)
+             (mls:list lrergo_module)
+    : compilation_ctxt :=
+    match (compilation_ctxt_from_inputs ctos mls) with
+    | Success _ _ r => r
+    | Failure _ _ f => (nil, init_namespace_ctxt)
+    end.
+  
+  Definition ergo_make_stdlib_namespace
+             (ctos:list lrcto_package)
+             (mls:list lrergo_module)
+    : namespace_ctxt :=
+    match (elift namespace_ctxt_of_compilation_ctxt) (compilation_ctxt_from_inputs ctos mls) with
+    | Success _ _ r => r
+    | Failure _ _ f => init_namespace_ctxt
+    end.
+
+
   (* Ergo -> ErgoCalculus *)
   Definition ergo_module_to_ergo_calculus
              (ctxt:compilation_ctxt)
