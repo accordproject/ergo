@@ -28,6 +28,7 @@ MODULES = \
 	Common/Utils/EProvenance \
 	Common/Utils/ENames \
 	Common/Utils/EResult \
+	Common/Utils/EFormat \
 	Common/Utils/EAstUtil \
 	Common/CTO/CTO \
 	Common/Types/ErgoType \
