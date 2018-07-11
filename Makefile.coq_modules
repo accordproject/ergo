@@ -28,7 +28,6 @@ MODULES = \
 	Common/Utils/EProvenance \
 	Common/Utils/ENames \
 	Common/Utils/EResult \
-	Common/Utils/EREPLUtil \
 	Common/Utils/EAstUtil \
 	Common/CTO/CTO \
 	Common/Types/ErgoType \
@@ -41,6 +40,7 @@ MODULES = \
 	ErgoCalculus/Lang/ErgoCalculusSugar \
 	ErgoCalculus/Lang/ErgocEval \
 	ErgoCalculus/Lang/ErgocInline \
+	ErgoCalculus/Lang/EREPLUtil \
 	ErgoNNRC/Lang/ErgoNNRC \
 	ErgoNNRC/Lang/ErgoNNRCSugar \
 	ErgoNNRC/Lang/ErgoNNRCCall \
