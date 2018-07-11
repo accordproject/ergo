@@ -25,7 +25,7 @@ Require ErgoSpec.Common.CTO.CTO.
 Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
-Require ErgoSpec.Ergo.Lang.ErgoEval.
+Require ErgoSpec.ErgoCalculus.Lang.ErgocEval.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
 Require ErgoSpec.Compiler.ErgoCompilerDriver.
 
@@ -281,11 +281,11 @@ Module ErgoCompiler.
   Definition ergo_make_stdlib_ctxt := ErgoCompilerDriver.ergo_make_stdlib_ctxt.
 
   (* REPL *)
-  Definition ergo_empty_context := ErgoEval.ergo_empty_context.
-  Definition ergo_eval_expr := ErgoEval.ergo_eval_expr.
-  Definition ergo_eval_module := ErgoEval.ergo_eval_module.
-  Definition ergo_maybe_update_context := @ErgoEval.ergo_maybe_update_context ErgoCompilerDriver.compilation_ctxt.
-  Definition ergo_eval_decl_via_calculus := ErgoEval.ergo_eval_decl_via_calculus.
+  Definition ergo_empty_context := ErgocEval.ergo_empty_context.
+  Definition ergo_eval_expr := ErgocEval.ergo_eval_expr.
+  Definition ergo_eval_module := ErgocEval.ergo_eval_module.
+  Definition ergo_maybe_update_context := @ErgocEval.ergo_maybe_update_context ErgoCompilerDriver.compilation_ctxt.
+  Definition ergo_eval_decl_via_calculus := ErgocEval.ergo_eval_decl_via_calculus.
 
   Definition ergo_string_of_result := @EFormat.ergo_string_of_result ErgoCompilerDriver.compilation_ctxt.
 

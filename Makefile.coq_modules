@@ -34,13 +34,13 @@ MODULES = \
 	Common/Types/ErgoType \
 	Common/Pattern/EPattern \
 	Ergo/Lang/Ergo \
-	Ergo/Lang/ErgoEval \
-	Ergo/Lang/ErgoInline \
 	Ergo/Lang/ErgoSem \
 	Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
 	ErgoCalculus/Lang/ErgoCalculus \
 	ErgoCalculus/Lang/ErgoCalculusSugar \
+	ErgoCalculus/Lang/ErgocEval \
+	ErgoCalculus/Lang/ErgocInline \
 	ErgoNNRC/Lang/ErgoNNRC \
 	ErgoNNRC/Lang/ErgoNNRCSugar \
 	ErgoNNRC/Lang/ErgoNNRCCall \
