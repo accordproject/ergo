@@ -19,13 +19,13 @@ Require ErgoSpec.Backend.ErgoBackend.
 Require ErgoSpec.Common.Utils.EProvenance.
 Require ErgoSpec.Common.Utils.ENames.
 Require ErgoSpec.Common.Utils.EResult.
-Require ErgoSpec.Common.Utils.EREPLUtil.
 Require ErgoSpec.Common.Utils.EAstUtil.
 Require ErgoSpec.Common.CTO.CTO.
 Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.ErgoCalculus.Lang.ErgocEval.
+Require ErgoSpec.ErgoCalculus.Lang.EREPLUtil.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
 Require ErgoSpec.Compiler.ErgoCompilerDriver.
 
