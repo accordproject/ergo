@@ -43,6 +43,7 @@ Require Import ErgoSpec.Translation.CTOtoErgo.
 
 Require Ergo.
 Require Import Ergo.
+
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
 Definition ergo_function := Ergo.laergo_function.
@@ -72,7 +73,7 @@ Section ErgoEval.
 
   Fixpoint ergo_inline_globals
            (ctx : ergo_context)
-           (expr : ergo_expr) : eresult ergo_expr :=
+           (expr : ergoc_expr) : eresult ergoc_expr :=
     match expr with
     | EThisContract _ => esuccess expr
     | EThisClause _ => esuccess expr
@@ -142,20 +143,20 @@ Section ErgoEval.
 
   Definition ergo_inline_function
            (ctx : ergo_context)
-           (fn : ergo_function) : eresult ergo_function :=
-    match fn.(function_body) with
+           (fn : ergoc_function) : eresult ergoc_function :=
+    match fn.(functionc_body) with
     | None => TODO
     | Some expr =>
       match eolift (ergo_inline_expr ctx) (ergo_inline_globals ctx expr) with
         | Success _ _ new_body =>
-          esuccess (mkFunc fn.(function_annot)
-                                fn.(function_sig)
+          esuccess (mkFuncC fn.(functionc_annot)
+                                fn.(functionc_sig)
                                 (Some new_body))
         | Failure _ _ f => efailure f
       end
     end.
 
-Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_data :=
+Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergoc_expr) : eresult ergo_data :=
   match expr with
   | EThisContract _ => esuccess ctx.(ctx_this_contract)
   | EThisClause _ => esuccess ctx.(ctx_this_clause)
@@ -284,6 +285,7 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergo_expr) : eresult ergo_d
 
   end.
 
+(*
 Fixpoint ergo_eval_stmt (ctx : ergo_context) (stmt : ergo_stmt) : eresult (ergo_context * option ergo_data) :=
        match stmt with
        | SReturn _ expr =>
@@ -299,7 +301,9 @@ Fixpoint ergo_eval_stmt (ctx : ergo_context) (stmt : ergo_stmt) : eresult (ergo_
        | SEnforce _ e f stmt' => TODO
        | SMatch _ e cls stmt' => TODO
        end.
+*)
 
+(*
 Fixpoint ergo_eval_decl
         (sctx : namespace_ctxt)
         (dctx : ergo_context)
@@ -328,7 +332,9 @@ Fixpoint ergo_eval_decl
       | DContract _ _ c => TODO
       end
   end.
+*)
 
+(*
 Definition ergo_eval_module
            (ctos:list cto_package)
            (ml:list lrergo_module)
@@ -346,6 +352,7 @@ Definition ergo_eval_module
          | Success _ _ (dctx', sctx', _) => ergo_eval_decl dctx' sctx' d
          end)
       module.(module_declarations) (esuccess (sctx, dctx, None)).
+*)
 
 Definition ergo_maybe_update_context {A : Set}
            (ctx : A * ergo_context)
@@ -379,7 +386,7 @@ Definition ergoc_eval_decl
   | DCFunc loc name func =>
     elift (fun fn' =>
              (ergo_ctx_update_function_env dctx name fn', None))
-          (ergo_inline_function dctx (ergo_function_of_ergoc_function func))
+          (ergo_inline_function dctx func)
   | DCContract loc name contr => TODO
   end.
 

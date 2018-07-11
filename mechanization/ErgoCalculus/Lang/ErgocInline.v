@@ -29,6 +29,7 @@ Require Import ErgoSpec.Translation.CTOtoErgo.
 
 Require Ergo.
 Require Import Ergo.
+Require Import ErgoCalculus.
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
 Definition ergo_function := Ergo.laergo_function.
@@ -138,15 +139,15 @@ Section ErgoInline.
     | (n,v)::rest => ELet prov n None v (ergo_letify_function' prov body rest)
     end.
 
-  Definition ergo_letify_function (fn : ergo_function) (args : list ergo_expr) :=
-    match fn.(function_body) with
+  Definition ergo_letify_function (fn : ergoc_function) (args : list ergo_expr) :=
+    match fn.(functionc_body) with
     | None => TODO
     | Some body =>
-      match zip (map fst (fn.(function_sig).(type_signature_params))) args with
-      | Some args' => esuccess (ergo_letify_function' fn.(function_annot) body args')
+      match zip (map fst (fn.(functionc_sig).(sigc_params))) args with
+      | Some args' => esuccess (ergo_letify_function' fn.(functionc_annot) body args')
       | None =>
         efailure (CompilationError
-                    fn.(function_annot)
+                    fn.(functionc_annot)
                     ("Wrong number of arguments for function.")%string)
       end
     end.
