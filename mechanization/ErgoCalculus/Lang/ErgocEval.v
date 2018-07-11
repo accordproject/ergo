@@ -32,10 +32,11 @@ Require Import Common.Utils.EResult.
 Require Import Common.Utils.EUtil.
 Require Import Common.Utils.EProvenance.
 
+(*
 Require Import Common.Utils.EFormat.
+*)
 
 Require Import Compiler.ErgoCompilerDriver.
-
 
 Require Import ErgoCalculus.
 Require Import ErgoSpec.Common.CTO.CTO.
@@ -302,24 +303,6 @@ Definition ergoc_eval_decl
           (ergo_inline_function dctx func)
   | DCContract loc name contr => TODO
   end.
-
-Definition ergo_eval_decl_via_calculus
-           (sctx : compilation_ctxt)
-           (dctx : ergo_context)
-           (decl : lrergo_declaration)
-  : eresult (compilation_ctxt * ergo_context * option ergo_data) :=
-  match ergo_declaration_to_ergo_calculus sctx decl with
-
-  | Failure _ _ f => efailure f
-  | Success _ _ (None, sctx') => esuccess (sctx', dctx, None)
-
-  | Success _ _ (Some decl', sctx') =>
-    match ergoc_eval_decl dctx decl' with
-    | Failure _ _ f => efailure f
-    | Success _ _ (dctx', res) => esuccess (sctx', dctx', res)
-    end
-  end.
-
 
 End ErgocEval.
 

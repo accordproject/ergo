@@ -27,11 +27,30 @@ Require Import Common.Utils.EResult.
 Require Import Common.Utils.EUtil.
 Require Import Common.Utils.EProvenance.
 
+Require Import Compiler.ErgoCompilerDriver.
+
 Require Import Ergo.
 Require Import ErgoCalculus.
+Require Import ErgocEval.
 
-Section EFormat.
+Section EREPLUtil.
 
+Definition ergo_eval_decl_via_calculus
+           (sctx : compilation_ctxt)
+           (dctx : ergo_context)
+           (decl : lrergo_declaration)
+  : eresult (compilation_ctxt * ergo_context * option ergo_data) :=
+  match ergo_declaration_to_ergo_calculus sctx decl with
+
+  | Failure _ _ f => efailure f
+  | Success _ _ (None, sctx') => esuccess (sctx', dctx, None)
+
+  | Success _ _ (Some decl', sctx') =>
+    match ergoc_eval_decl dctx decl' with
+    | Failure _ _ f => efailure f
+    | Success _ _ (dctx', res) => esuccess (sctx', dctx', res)
+    end
+  end.
 
 Definition ergo_string_of_location_point (lp : location_point) : string :=
   (toString lp.(line)) ++ ":" ++ (toString lp.(column)).
@@ -101,4 +120,4 @@ Definition ergo_string_of_result {A : Set} (result : eresult (A * ergo_context *
   | Failure _ _ f => ergo_string_of_error f
   end.
 
-End EFormat.
+End EREPLUtil.
