@@ -28,6 +28,7 @@ Require Import Common.Utils.EUtil.
 Require Import Common.Utils.EProvenance.
 
 Require Import Ergo.
+Require Import ErgoCalculus.
 
 Section EFormat.
 

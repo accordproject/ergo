@@ -45,7 +45,7 @@ let rec repl (sctx, dctx) =
     prompt () ;
     try
         let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
-        let result = ergo_eval_decl sctx dctx decl in
+        let result = ergo_eval_decl_via_calculus sctx dctx decl in
         let out = ergo_string_of_result result in
         if (List.length out) > 0
         then print_string ((string_of_char_list out) ^ "\n")
@@ -58,29 +58,6 @@ let rec repl (sctx, dctx) =
         repl (sctx, dctx)
     | End_of_file -> None
 
-let rec repl2 (sctx, dctx) =
-    prompt () ;
-    try
-        let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
-        let result = ergo_eval_decl_via_calculus sctx dctx decl in
-        let out = ergo_string_of_result result in
-        if (List.length out) > 0
-        then print_string ((string_of_char_list out) ^ "\n")
-        else ();
-        repl2 (ergo_maybe_update_context (sctx, dctx) result)
-    with
-    | ErgoUtil.Ergo_Error e ->
-        print_string (ErgoUtil.string_of_error e);
-        print_string "\n" ;
-        repl2 (sctx, dctx)
-    | End_of_file -> None
-
 let main =
     welcome ();
-    repl2 (ergo_make_stdlib_ctxt (get_ctos ()) (get_stdlib ()), ergo_empty_context)
-    (*
-    repl (
-        (ergo_make_stdlib_namespace (get_ctos ()) (get_stdlib ())),
-        ergo_empty_context
-    )
-    *)
+    repl (ergo_make_stdlib_ctxt (get_ctos ()) (get_stdlib ()), ergo_empty_context)

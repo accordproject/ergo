@@ -282,8 +282,6 @@ Module ErgoCompiler.
 
   (* REPL *)
   Definition ergo_empty_context := ErgocEval.ergo_empty_context.
-  Definition ergo_eval_expr := ErgocEval.ergo_eval_expr.
-  Definition ergo_eval_module := ErgocEval.ergo_eval_module.
   Definition ergo_maybe_update_context := @ErgocEval.ergo_maybe_update_context ErgoCompilerDriver.compilation_ctxt.
   Definition ergo_eval_decl_via_calculus := ErgocEval.ergo_eval_decl_via_calculus.
 
