@@ -52,23 +52,9 @@ Definition ergo_eval_decl_via_calculus
     end
   end.
 
-Definition ergo_string_of_location_point (lp : location_point) : string :=
-  (toString lp.(line)) ++ ":" ++ (toString lp.(column)).
-
-Definition ergo_string_of_location (loc : location) : string :=
-  let file :=
-      match loc.(loc_file) with
-      | Some f => (f ++ " ")%string
-      | None => ""%string
-      end
-  in
-  file ++
-  (ergo_string_of_location_point loc.(loc_start)) ++ "-" ++
-  (ergo_string_of_location_point loc.(loc_end)).
-
 Definition ergo_format_error (name : string) (prov : provenance) (msg : string) :=
   let loc := loc_of_provenance prov in
-  (name ++ " at " ++ (ergo_string_of_location loc) ++ " '" ++ msg ++ "'")%string.
+  (name ++ " at " ++ (string_of_location loc) ++ " '" ++ msg ++ "'")%string.
 
 Definition ergo_string_of_error (err : eerror) : string :=
   match err with
