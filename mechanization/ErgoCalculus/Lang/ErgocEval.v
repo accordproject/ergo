@@ -41,20 +41,11 @@ Require Import ErgoCalculus.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 
-Require Ergo.
 Require Import Ergo.
-
-Definition ergo_expr := Ergo.laergo_expr.
-Definition ergo_stmt := Ergo.laergo_stmt.
-Definition ergo_function := Ergo.laergo_function.
-Definition ergo_clause := Ergo.laergo_clause.
-Definition ergo_contract := Ergo.laergo_contract.
-Definition ergo_declaration := Ergo.laergo_declaration.
-Definition ergo_module := Ergo.laergo_module.
 
 Require Import ErgocInline.
 
-Section ErgoEval.
+Section ErgocEval.
 
   Definition ergo_empty_context :=
     mkContext nil nil nil nil
@@ -158,9 +149,9 @@ Section ErgoEval.
 
 Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergoc_expr) : eresult ergo_data :=
   match expr with
-  | EThisContract _ => esuccess ctx.(ctx_this_contract)
-  | EThisClause _ => esuccess ctx.(ctx_this_clause)
-  | EThisState _ => esuccess ctx.(ctx_this_state)
+  | EThisContract loc => efailure (SystemError loc "No `this' in ergoc")
+  | EThisClause   loc => efailure (SystemError loc "No `clause' in ergoc")
+  | EThisState    loc => efailure (SystemError loc "No `state' in ergoc")
   | EVar loc name =>
     let opt := lookup String.string_dec (ctx.(ctx_local_env)++ctx.(ctx_global_env)) name in
     eresult_of_option opt (RuntimeError loc ("Variable not found: " ++ name)%string)
@@ -285,75 +276,6 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergoc_expr) : eresult ergo_
 
   end.
 
-(*
-Fixpoint ergo_eval_stmt (ctx : ergo_context) (stmt : ergo_stmt) : eresult (ergo_context * option ergo_data) :=
-       match stmt with
-       | SReturn _ expr =>
-         elift (fun x => (ctx, Some x))
-               (eolift (ergo_eval_expr ctx) (ergo_inline_expr ctx expr))
-       | SFunReturn _ expr => TODO
-       | SThrow _ expr => TODO
-       | SCallClause _ name args => TODO
-       | SSetState _ expr stmt' => TODO
-       | SEmit _ expr stmt' => TODO
-       | SLet _ name type val stmt' => TODO
-       | SIf _ c t f => TODO
-       | SEnforce _ e f stmt' => TODO
-       | SMatch _ e cls stmt' => TODO
-       end.
-*)
-
-(*
-Fixpoint ergo_eval_decl
-        (sctx : namespace_ctxt)
-        (dctx : ergo_context)
-        (decl : lrergo_declaration)
-        : eresult (namespace_ctxt * ergo_context * option ergo_data) :=
-  match resolve_ergo_declaration sctx decl with
-  | Failure _ _ f => efailure f
-  | Success _ _ (d', sctx') =>
-    match d' with
-      | DType _ cto => esuccess (sctx', dctx, None)
-      | DStmt _ stmt =>
-        match ergo_eval_stmt dctx stmt with
-        | Success _ _ (dctx', res) => esuccess (sctx', dctx', res)
-        | Failure _ _ f => efailure f
-        end
-      | DConstant _ n e =>
-        match eolift (ergo_eval_expr dctx) (ergo_inline_expr dctx e) with
-        | Success _ _ r =>
-          esuccess (sctx', ergo_ctx_update_global_env dctx n r, None)
-        | Failure _ _ f => efailure f
-        end
-      | DFunc _ name fn =>
-        elift (fun fn' =>
-                (sctx', ergo_ctx_update_function_env dctx name fn', None))
-              (ergo_inline_function dctx fn)
-      | DContract _ _ c => TODO
-      end
-  end.
-*)
-
-(*
-Definition ergo_eval_module
-           (ctos:list cto_package)
-           (ml:list lrergo_module)
-           (dctx : ergo_context)
-           (module : lrergo_module)
-  : eresult (namespace_ctxt * ergo_context * option ergo_data) :=
-
-  let mctos := map cto_package_to_ergo_module ctos in
-  let sctx := namespace_ctxt_of_ergo_modules (empty_namespace_ctxt "repl"%string) (mctos ++ ml ++ (module::nil)) in
-
-    fold_left
-      (fun prev_ctx d =>
-         match prev_ctx with
-         | Failure _ _ f => efailure f
-         | Success _ _ (dctx', sctx', _) => ergo_eval_decl dctx' sctx' d
-         end)
-      module.(module_declarations) (esuccess (sctx, dctx, None)).
-*)
-
 Definition ergo_maybe_update_context {A : Set}
            (ctx : A * ergo_context)
            (result : eresult (A * ergo_context * option ergo_data))
@@ -362,15 +284,6 @@ Definition ergo_maybe_update_context {A : Set}
   | Success _ _ (sctx', dctx', _) => (sctx', dctx')
   | _ => ctx
   end.
-
-Definition ergo_function_of_ergoc_function (fn : ergoc_function) : ergo_function :=
-  mkFunc fn.(functionc_annot)
-         (mkErgoTypeSignature
-            fn.(functionc_annot)
-            fn.(functionc_sig).(sigc_params)
-            fn.(functionc_sig).(sigc_output)
-            None None)
-         fn.(functionc_body).
 
 Definition ergoc_eval_decl
            (dctx : ergo_context)
@@ -408,7 +321,7 @@ Definition ergo_eval_decl_via_calculus
   end.
 
 
-End ErgoEval.
+End ErgocEval.
 
 (*
 Section Tests.
