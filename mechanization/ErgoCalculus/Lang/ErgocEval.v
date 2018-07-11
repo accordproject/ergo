@@ -51,7 +51,7 @@ Definition ergo_contract := Ergo.laergo_contract.
 Definition ergo_declaration := Ergo.laergo_declaration.
 Definition ergo_module := Ergo.laergo_module.
 
-Require Import ErgoInline.
+Require Import ErgocInline.
 
 Section ErgoEval.
 
