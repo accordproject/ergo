@@ -60,4 +60,4 @@ let rec repl (sctx, dctx) =
 
 let main =
     welcome ();
-    repl (ergo_make_stdlib_ctxt (get_ctos ()) (get_stdlib ()), ergo_empty_context)
+    repl (ergo_make_stdlib_ctxt (get_ctos ()) (get_stdlib ()), ErgoCompiler.ergo_empty_eval_context)

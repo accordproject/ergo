@@ -74,18 +74,18 @@ Section EProvenance.
     | _ => false
     end.
     
-Definition string_of_location_point (lp : location_point) : string :=
-  (toString lp.(line)) ++ ":" ++ (toString lp.(column)).
+  Definition string_of_location_point (lp : location_point) : string :=
+    (toString lp.(line)) ++ ":" ++ (toString lp.(column)).
 
-Definition string_of_location (loc : location) : string :=
-  let file :=
-      match loc.(loc_file) with
-      | Some f => (f ++ " ")%string
-      | None => ""%string
-      end
-  in
-  file ++
-  (string_of_location_point loc.(loc_start)) ++ "-" ++
-  (string_of_location_point loc.(loc_end)).
+  Definition string_of_location (loc : location) : string :=
+    let file :=
+        match loc.(loc_file) with
+        | Some f => (f ++ " ")%string
+        | None => ""%string
+        end
+    in
+    file ++
+         (string_of_location_point loc.(loc_start)) ++ "-" ++
+         (string_of_location_point loc.(loc_end)).
 
 End EProvenance.

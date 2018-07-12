@@ -17,23 +17,16 @@ Require Import List.
 Require Import Basics.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.EAstUtil.
-Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.Translation.ErgoNameResolve.
-Require Import Common.Utils.EUtil.
-Require Import Common.Utils.EResult.
-Require Import Common.Utils.ENames.
-Require Import Common.Utils.EProvenance.
+Require Import ErgoSpec.Common.Utils.EUtil.
+Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 
-Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Translation.CTOtoErgo.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.Ergo.Lang.ErgoMap.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoCalculus.Lang.ErgocEvalContext.
 
-Require Import ErgoMap.
-
-Require Ergo.
-Require Import Ergo.
-Require Import ErgoCalculus.
-Require Import ErgocContext.
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
 Definition ergo_function := Ergo.laergo_function.
@@ -45,11 +38,11 @@ Definition ergo_module := Ergo.laergo_module.
 Section ErgoInline.
 
   Definition ergo_map_expr_sane ctx fn expr :=
-    @ergo_map_expr provenance absolute_name ergo_context ctx
-                       (fun ctx name expr => ergo_ctx_update_local_env ctx name dunit)
-                       fn expr.
+    @ergo_map_expr provenance absolute_name eval_context ctx
+                   (fun ctx name expr => ergo_ctx_update_local_env ctx name dunit)
+                   fn expr.
 
-  Definition ergo_inline_foreach' (ctx : ergo_context) (expr : ergo_expr) :=
+  Definition ergo_inline_foreach' (ctx : eval_context) (expr : ergo_expr) :=
     match expr with
     | EForeach loc rs whr fn =>
       (compose Some esuccess)
@@ -87,7 +80,7 @@ Section ErgoInline.
       end
     end.
 
-  Definition ergo_inline_functions' (ctx : ergo_context) (expr : ergo_expr) :=
+  Definition ergo_inline_functions' (ctx : eval_context) (expr : ergo_expr) :=
   match expr with
   | ECallFun loc fn args => Some
       match lookup String.string_dec ctx.(ctx_function_env) fn with

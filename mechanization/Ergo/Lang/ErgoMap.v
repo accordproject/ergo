@@ -16,23 +16,16 @@ Require Import String.
 Require Import List.
 Require Import Basics.
 
-Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.EAstUtil.
-Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.Translation.ErgoNameResolve.
-Require Import Common.Utils.EUtil.
-Require Import Common.Utils.EResult.
-Require Import Common.Utils.ENames.
-Require Import Common.Utils.EProvenance.
+Require Import ErgoSpec.Common.Utils.EUtil.
+Require Import ErgoSpec.Common.Utils.EResult.
 
-Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Translation.CTOtoErgo.
 
-Require Import Ergo.
+
+Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoMap.
-  Context {A : Set}.
-  Context {N : Set}.
+  Context {A:Set}. (* Type for annotations *)
+  Context {N:Set}. (* Type for names *)
 
   Fixpoint ergo_map_expr {C : Set}
            (ctx : C)
@@ -40,14 +33,7 @@ Section ErgoMap.
            (fn : C -> @ergo_expr A N -> option (eresult (@ergo_expr A N)))
            (expr : @ergo_expr A N)
     : eresult (@ergo_expr A N) :=
-    let maybe_fn :=
-        fun expr'  =>
-          match elift (fn ctx) expr' with
-          | Success _ _ (Some r) => r
-          | Success _ _ None => expr'
-          | Failure _ _ f => efailure f
-          end
-    in
+    let maybe_fn := elift_maybe (fn ctx) in
     maybe_fn
       match expr with
       | EThisContract _ => esuccess expr
@@ -64,7 +50,9 @@ Section ErgoMap.
       | EUnaryOp loc o e =>
         elift (EUnaryOp loc o) (ergo_map_expr ctx ctxt_new_variable_scope fn e)
       | EBinaryOp loc o e1 e2 =>
-        elift2 (EBinaryOp loc o) (ergo_map_expr ctx ctxt_new_variable_scope fn e1) (ergo_map_expr ctx ctxt_new_variable_scope fn e2)
+        elift2 (EBinaryOp loc o)
+               (ergo_map_expr ctx ctxt_new_variable_scope fn e1)
+               (ergo_map_expr ctx ctxt_new_variable_scope fn e2)
       | EIf loc c t f =>
         elift3 (EIf loc)
                (ergo_map_expr ctx ctxt_new_variable_scope fn c)

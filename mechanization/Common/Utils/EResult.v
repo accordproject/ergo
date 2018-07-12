@@ -14,6 +14,7 @@
 
 (* Error monad *)
 
+Require Import Ascii.
 Require Import String.
 Require Import List.
 Require Import ZArith.
@@ -27,55 +28,68 @@ Section EResult.
   | CompilationError : provenance -> string -> eerror
   | TypeError : provenance -> string -> eerror
   | RuntimeError : provenance -> string -> eerror.
-
+  
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
     Success A eerror a.
   Definition efailure {A:Set} (e:eerror) : eresult A :=
     Failure A eerror e.
-  Definition eolift {A B:Set} (f:A -> eresult B) (a:eresult A) : eresult B :=
-    lift_failure f a.
-  Definition elift {A B:Set} (f:A -> B) (a:eresult A) : eresult B :=
-    lift_failure_in f a.
-  Definition elift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
-    lift_failure_in_two f a b.
-  Definition elift3 {A B C D:Set} (f:A -> B -> C -> D)
-             (a:eresult A) (b:eresult B) (c:eresult C) : eresult D :=
-    lift_failure_in_three f a b c.
-  Definition elift4 {A B C D E:Set} (f:A -> B -> C -> D -> E)
-             (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) : eresult E :=
-    eolift (fun x => elift (fun g => g x) (elift3 f a b c)) d.
-  Definition elift5 {A B C D E F:Set} (f:A -> B -> C -> D -> E -> F)
-             (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) (e:eresult E) : eresult F :=
-    eolift (fun x => elift (fun g => g x) (elift4 f a b c d)) e.
-  Definition emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
-    lift_failure_map f al.
-  Definition eresult_of_option {A:Set} (a:option A) (e:eerror) :=
-    result_of_option a e.
-  Definition option_of_eresult {A:Set} (a:eresult A) : option A :=
-    option_of_result a.
 
-  (* Fold-left over functions returning eresults *)
-  Definition elift_fold_left {A:Set} {B:Set}
-             (f : A -> B -> eresult A) (l:list B) (a:A) : eresult A :=
-    let proc_one (acc:eresult A) (x:B)
-        : eresult A :=
-        eolift (fun acc => f acc x) acc
-    in
-    fold_left proc_one l (esuccess a).
+  Section Lift.
+    Definition eolift {A B:Set} (f:A -> eresult B) (a:eresult A) : eresult B :=
+      lift_failure f a.
+    Definition elift {A B:Set} (f:A -> B) (a:eresult A) : eresult B :=
+      lift_failure_in f a.
+    Definition elift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
+      lift_failure_in_two f a b.
+    Definition elift3 {A B C D:Set} (f:A -> B -> C -> D)
+               (a:eresult A) (b:eresult B) (c:eresult C) : eresult D :=
+      lift_failure_in_three f a b c.
+    Definition elift4 {A B C D E:Set} (f:A -> B -> C -> D -> E)
+               (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) : eresult E :=
+      eolift (fun x => elift (fun g => g x) (elift3 f a b c)) d.
+    Definition elift5 {A B C D E F:Set} (f:A -> B -> C -> D -> E -> F)
+               (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) (e:eresult E) : eresult F :=
+      eolift (fun x => elift (fun g => g x) (elift4 f a b c d)) e.
+    Definition emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
+      lift_failure_map f al.
+    Definition eresult_of_option {A:Set} (a:option A) (e:eerror) :=
+      result_of_option a e.
+    Definition option_of_eresult {A:Set} (a:eresult A) : option A :=
+      option_of_result a.
+    Definition elift_both {A B:Set} (f: A -> B) (g:eerror -> B) (a:eresult A) : B :=
+      match a with
+      | Success _ _ s => f s
+      | Failure _ _ e => g e
+      end.
+    Definition elift_maybe {A:Set} (f: A -> option (eresult A)) (a:eresult A) : eresult A :=
+      match elift f a with
+      | Success _ _ (Some s) => s
+      | Success _ _ None => a
+      | Failure _ _ e => efailure e
+      end.
 
-  (* Variant of Fold-left for functions passing eresults with a context *)
-  Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
-             (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
-    elift_fold_left
-      (fun acc c =>
-         elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
-      l
-      (nil, c).
+    (* Fold-left over functions returning eresults *)
+    Definition elift_fold_left {A:Set} {B:Set}
+               (f : A -> B -> eresult A) (l:list B) (a:A) : eresult A :=
+      let proc_one (acc:eresult A) (x:B)
+          : eresult A :=
+          eolift (fun acc => f acc x) acc
+      in
+      fold_left proc_one l (esuccess a).
+
+    (* Variant of Fold-left for functions passing eresults with a context *)
+    Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
+               (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
+      elift_fold_left
+        (fun acc c =>
+           elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
+        l
+        (nil, c).
+  End Lift.
 
   (** Built-in errors *)
   Section Builtin.
-
     Definition not_in_contract_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot use 'contract' variable outside of a contract").
     Definition not_in_clause_error {A} prov : eresult A :=
@@ -136,4 +150,35 @@ Section EResult.
       efailure (SystemError prov "Should only have single loop foreach in Ergo Calculus").
   End Builtin.
 
+  Section Fmt.
+    Definition format_error (name : string) (prov : provenance) (msg : string) :=
+      let loc := loc_of_provenance prov in
+      (name ++ " at " ++ (string_of_location loc) ++ " '" ++ msg ++ "'")%string.
+
+    Definition string_of_error (err : eerror) : string :=
+      match err with
+      | SystemError loc s => "System error: " ++ s
+      | ParseError loc msg => format_error "Parse error" loc msg
+      | CompilationError loc msg => format_error "Compilation error" loc msg
+      | TypeError loc msg => format_error "Type error" loc msg
+      | RuntimeError loc msg => format_error "Runtime error" loc msg
+      end.
+
+    Definition fmt_nl := String.String (ascii_of_N 10) EmptyString.
+
+    Definition fmt_esc := String.String (ascii_of_N 27) EmptyString.
+
+    Definition fmt_csi : string := fmt_esc ++ ("["%string).
+
+    Definition fmt_red (msg : string) : string :=
+      (fmt_csi ++ "31m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
+
+    Definition fmt_grn (msg : string) : string :=
+      (fmt_csi ++ "32m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
+
+    Definition fmt_mag (msg : string) : string :=
+      (fmt_csi ++ "35m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
+
+  End Fmt.
+  
 End EResult.
