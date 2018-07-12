@@ -32,12 +32,12 @@ Require Import Ergo.
 
 Section ErgoMap.
 
-  Fixpoint ergo_map_expr {A : Set} {L : Set} {N : Set}
-           (ctx : A)
-           (ctx_add : A -> string -> @ergo_expr L N -> A)
-           (fn : A -> @ergo_expr L N -> option (eresult (@ergo_expr L N)))
-           (expr : @ergo_expr L N)
-    : eresult (@ergo_expr L N) :=
+  Fixpoint ergo_map_expr {C : Set} {A : Set} {N : Set}
+           (ctx : C)
+           (ctx_add : C -> string -> @ergo_expr A N -> C)
+           (fn : C -> @ergo_expr A N -> option (eresult (@ergo_expr A N)))
+           (expr : @ergo_expr A N)
+    : eresult (@ergo_expr A N) :=
     let maybe_fn :=
         fun expr'  =>
           match elift (fn ctx) expr' with
