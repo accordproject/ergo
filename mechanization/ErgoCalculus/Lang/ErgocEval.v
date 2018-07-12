@@ -277,10 +277,10 @@ Fixpoint ergo_eval_expr (ctx : ergo_context) (expr : ergoc_expr) : eresult ergo_
 
   end.
 
-Definition ergo_maybe_update_context {A : Set}
-           (ctx : A * ergo_context)
-           (result : eresult (A * ergo_context * option ergo_data))
-  : (A * ergo_context) :=
+Definition ergo_maybe_update_context
+           (ctx : compilation_ctxt * ergo_context)
+           (result : eresult (compilation_ctxt * ergo_context * option ergo_data))
+  : (compilation_ctxt * ergo_context) :=
   match result with
   | Success _ _ (sctx', dctx', _) => (sctx', dctx')
   | _ => ctx
