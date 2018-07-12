@@ -25,9 +25,8 @@ Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.ErgoCalculus.Lang.ErgocEval.
-Require ErgoSpec.ErgoCalculus.Lang.EREPLUtil.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
-Require ErgoSpec.Compiler.ErgoCompilerDriver.
+Require ErgoSpec.Compiler.ErgoDriver.
 
 
 Module ErgoCompiler.
@@ -257,35 +256,35 @@ Module ErgoCompiler.
     -> list ergo_module
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
-    := ErgoCompilerDriver.ergo_module_to_javascript_top.
+    := ErgoDriver.ergo_module_to_javascript_top.
 
   Definition ergo_module_to_javascript_cicero :
     list CTO.cto_package
     -> list ergo_module
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
-    := ErgoCompilerDriver.ergo_module_to_javascript_cicero_top.
+    := ErgoDriver.ergo_module_to_javascript_cicero_top.
 
   Definition ergo_module_to_java :
     list CTO.cto_package
     -> list ergo_module
     -> ergo_module
     -> EResult.eresult Java.java
-    := ErgoCompilerDriver.ergo_module_to_java_top.
+    := ErgoDriver.ergo_module_to_java_top.
 
-  Definition compilation_ctxt_from_inputs := ErgoCompilerDriver.compilation_ctxt_from_inputs.
-  Definition namespace_ctxt_of_compilation_ctxt := ErgoCompilerDriver.namespace_ctxt_of_compilation_ctxt.
-  Definition ergo_declaration_to_ergo_calculus := ErgoCompilerDriver.ergo_declaration_to_ergo_calculus.
+  Definition compilation_ctxt_from_inputs := ErgoDriver.compilation_ctxt_from_inputs.
+  Definition namespace_ctxt_of_compilation_ctxt := ErgoDriver.namespace_ctxt_of_compilation_ctxt.
+  Definition ergo_declaration_to_ergo_calculus := ErgoDriver.ergo_declaration_to_ergo_calculus.
 
-  Definition ergo_make_stdlib_namespace := ErgoCompilerDriver.ergo_make_stdlib_namespace.
-  Definition ergo_make_stdlib_ctxt := ErgoCompilerDriver.ergo_make_stdlib_ctxt.
+  Definition ergo_make_stdlib_namespace := ErgoDriver.ergo_make_stdlib_namespace.
+  Definition ergo_make_stdlib_ctxt := ErgoDriver.ergo_make_stdlib_ctxt.
 
   (* REPL *)
-  Definition ergo_empty_context := ErgocEval.ergo_empty_context.
-  Definition ergo_maybe_update_context := ErgocEval.ergo_maybe_update_context.
+  Definition ergo_empty_eval_context := ErgocEvalContext.ergo_empty_context.
+  Definition ergo_maybe_update_eval_context := ErgoDriver.ergo_maybe_update_context.
 
-  Definition ergo_eval_decl_via_calculus := EREPLUtil.ergo_eval_decl_via_calculus.
-  Definition ergo_string_of_result := EREPLUtil.ergo_string_of_result.
+  Definition ergo_eval_decl_via_calculus := ErgoDriver.ergo_eval_decl_via_calculus.
+  Definition ergo_string_of_result := ErgoDriver.ergo_string_of_result.
 
 End ErgoCompiler.
 

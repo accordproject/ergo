@@ -13,47 +13,46 @@
 #
 
 MODULES = \
-	Version \
-	Backend/ForeignErgo \
+  Version \
+  Backend/ForeignErgo \
   Backend/Model/DateTimeModelPart \
   Backend/Model/ErgoEnhancedModel \
-	Backend/Model/ErgoBackendModel \
-	Backend/Model/ErgoBackendRuntime \
-	Backend/Lib/ECType \
-	Backend/Lib/EData \
-	Backend/Lib/EOperators \
-	Backend/Lib/ECodeGen \
-	Backend/ErgoBackend \
-	Common/Utils/EUtil \
-	Common/Utils/EProvenance \
-	Common/Utils/ENames \
-	Common/Utils/EResult \
-	Common/Utils/EAstUtil \
-	Common/CTO/CTO \
-	Common/Types/ErgoType \
-	Common/Pattern/EPattern \
-	Ergo/Lang/Ergo \
-	Ergo/Lang/ErgoMap \
-	Ergo/Lang/ErgoSem \
-	Ergo/Lang/ErgoSugar \
+  Backend/Model/ErgoBackendModel \
+  Backend/Model/ErgoBackendRuntime \
+  Backend/Lib/ECType \
+  Backend/Lib/EData \
+  Backend/Lib/EOperators \
+  Backend/Lib/ECodeGen \
+  Backend/ErgoBackend \
+  Common/Utils/EUtil \
+  Common/Utils/EProvenance \
+  Common/Utils/ENames \
+  Common/Utils/EResult \
+  Common/Utils/EAstUtil \
+  Common/CTO/CTO \
+  Common/Types/ErgoType \
+  Common/Pattern/EPattern \
+  Ergo/Lang/Ergo \
+  Ergo/Lang/ErgoMap \
+  Ergo/Lang/ErgoSem \
+  Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
-	ErgoCalculus/Lang/ErgoCalculus \
-	ErgoCalculus/Lang/ErgoCalculusSugar \
-	ErgoCalculus/Lang/ErgocContext \
-	ErgoCalculus/Lang/ErgocEval \
-	ErgoCalculus/Lang/ErgocInline \
-	ErgoCalculus/Lang/EREPLUtil \
-	ErgoNNRC/Lang/ErgoNNRC \
-	ErgoNNRC/Lang/ErgoNNRCSugar \
-	ErgoNNRC/Lang/ErgoNNRCCall \
-	Translation/CTOtoErgo \
+  ErgoCalculus/Lang/ErgoCalculus \
+  ErgoCalculus/Lang/ErgoCalculusSugar \
+  ErgoCalculus/Lang/ErgocEvalContext \
+  ErgoCalculus/Lang/ErgocInline \
+  ErgoCalculus/Lang/ErgocEval \
+  ErgoNNRC/Lang/ErgoNNRC \
+  ErgoNNRC/Lang/ErgoNNRCSugar \
+  ErgoNNRC/Lang/ErgoNNRCCall \
+  Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
-	Translation/ErgoTypetoErgoCalculusType \
-	Translation/ErgotoErgoCalculus \
-	Translation/ErgoCalculustoErgoNNRC \
-	Translation/ErgoNNRCtoJavaScript \
-	Translation/ErgoNNRCtoJavaScriptCicero \
-	Translation/ErgoNNRCtoJava \
-	Compiler/ErgoCompilerDriver \
-	Compiler/ErgoCompiler \
-	Tests/HelloWorld
+  Translation/ErgoTypetoErgoCalculusType \
+  Translation/ErgotoErgoCalculus \
+  Translation/ErgoCalculustoErgoNNRC \
+  Translation/ErgoNNRCtoJavaScript \
+  Translation/ErgoNNRCtoJavaScriptCicero \
+  Translation/ErgoNNRCtoJava \
+  Compiler/ErgoDriver \
+  Compiler/ErgoCompiler \
+  Tests/HelloWorld
