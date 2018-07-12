@@ -22,6 +22,7 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import Common.Utils.EUtil.
 Require Import Common.Utils.EResult.
+Require Import Common.Utils.ENames.
 Require Import Common.Utils.EProvenance.
 
 Require Import ErgoSpec.Common.CTO.CTO.
@@ -40,11 +41,12 @@ Definition ergo_module := Ergo.laergo_module.
 
 Section ErgoInline.
 
-  Fixpoint ergo_map_expr
-           (ctx : ergo_context)
-           (fn : ergo_context -> ergo_expr -> option (eresult ergo_expr))
-           (expr : ergo_expr)
-    : eresult ergo_expr :=
+  Fixpoint ergo_map_expr {A : Set} {L : Set} {N : Set}
+           (ctx : A)
+           (ctx_add : A -> string -> @Ergo.ergo_expr L N -> A)
+           (fn : A -> @Ergo.ergo_expr L N -> option (eresult (@Ergo.ergo_expr L N)))
+           (expr : @Ergo.ergo_expr L N)
+    : eresult (@Ergo.ergo_expr L N) :=
     let maybe_fn :=
         fun expr'  =>
           match elift (fn ctx) expr' with
@@ -64,39 +66,39 @@ Section ErgoInline.
         elift (EArray loc)
               (fold_left
                  (fun ls na =>
-                    elift2 postpend ls (ergo_map_expr ctx fn na))
+                    elift2 postpend ls (ergo_map_expr ctx ctx_add fn na))
                  a (esuccess nil))
       | EUnaryOp loc o e =>
-        elift (EUnaryOp loc o) (ergo_map_expr ctx fn e)
+        elift (EUnaryOp loc o) (ergo_map_expr ctx ctx_add fn e)
       | EBinaryOp loc o e1 e2 =>
-        elift2 (EBinaryOp loc o) (ergo_map_expr ctx fn e1) (ergo_map_expr ctx fn e2)
+        elift2 (EBinaryOp loc o) (ergo_map_expr ctx ctx_add fn e1) (ergo_map_expr ctx ctx_add fn e2)
       | EIf loc c t f =>
         elift3 (EIf loc)
-               (ergo_map_expr ctx fn c)
-               (ergo_map_expr ctx fn t)
-               (ergo_map_expr ctx fn f)
+               (ergo_map_expr ctx ctx_add fn c)
+               (ergo_map_expr ctx ctx_add fn t)
+               (ergo_map_expr ctx ctx_add fn f)
       | ELet loc n t v b =>
         elift2 (fun v' b' => (ELet loc) n t v' b')
-               (ergo_map_expr ctx fn v)
-               (ergo_map_expr (ergo_ctx_update_local_env ctx n dunit) fn b)
+               (ergo_map_expr ctx ctx_add fn v)
+               (ergo_map_expr (ctx_add ctx n v) ctx_add fn b)
       | ERecord loc rs =>
         elift (ERecord loc)
               (fold_left
                  (fun ls nr =>
                     elift2 postpend ls
-                           (elift (fun x => (fst nr, x)) (ergo_map_expr ctx fn (snd nr))))
+                           (elift (fun x => (fst nr, x)) (ergo_map_expr ctx ctx_add fn (snd nr))))
                  rs (esuccess nil))
       | ENew loc n rs =>
         elift (ENew loc n)
               (fold_left
                  (fun ls nr =>
                     elift2 postpend ls
-                           (elift (fun x => (fst nr, x)) (ergo_map_expr ctx fn (snd nr))))
+                           (elift (fun x => (fst nr, x)) (ergo_map_expr ctx ctx_add fn (snd nr))))
                  rs (esuccess nil))
       | ECallFun loc fn' args =>
         elift (ECallFun loc fn')
               (fold_left (fun ls nv =>
-                            elift2 postpend ls (ergo_map_expr ctx fn nv))
+                            elift2 postpend ls (ergo_map_expr ctx ctx_add fn nv))
                          args (esuccess nil))
       | EForeach loc rs whr fn' =>
         elift3
@@ -104,15 +106,20 @@ Section ErgoInline.
           (fold_left
              (fun ls nr =>
                 elift2 postpend ls
-                       (elift (fun x => (fst nr, x)) (ergo_map_expr ctx fn (snd nr))))
+                       (elift (fun x => (fst nr, x)) (ergo_map_expr ctx ctx_add fn (snd nr))))
              rs (esuccess nil))
           (match whr with
-           | Some whr' => (elift Some) (ergo_map_expr ctx fn whr')
+           | Some whr' => (elift Some) (ergo_map_expr ctx ctx_add fn whr')
            | None => esuccess None
            end)
-          (ergo_map_expr ctx fn fn')
+          (ergo_map_expr ctx ctx_add fn fn')
       | EMatch _ _ _ _ => TODO
       end.
+
+  Definition ergo_map_expr_sane ctx fn expr :=
+    @ergo_map_expr ergo_context provenance absolute_name ctx
+                       (fun ctx name expr => ergo_ctx_update_local_env ctx name dunit)
+                       fn expr.
 
   Definition ergo_inline_foreach' (ctx : ergo_context) (expr : ergo_expr) :=
     match expr with
@@ -128,7 +135,7 @@ Section ErgoInline.
     | _ => None
     end.
 
-  Definition ergo_inline_foreach ctx := ergo_map_expr ctx ergo_inline_foreach'.
+  Definition ergo_inline_foreach ctx := ergo_map_expr_sane ctx ergo_inline_foreach'.
 
   Fixpoint ergo_letify_function'
            (prov : provenance)
@@ -162,7 +169,7 @@ Section ErgoInline.
   | _ => None
   end.
 
-  Definition ergo_inline_functions ctx := ergo_map_expr ctx ergo_inline_functions'.
+  Definition ergo_inline_functions ctx := ergo_map_expr_sane ctx ergo_inline_functions'.
 
   Definition ergo_inline_expr := ergo_inline_functions.
 
