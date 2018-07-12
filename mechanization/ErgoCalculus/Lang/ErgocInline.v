@@ -33,6 +33,7 @@ Require Import ErgoMap.
 Require Ergo.
 Require Import Ergo.
 Require Import ErgoCalculus.
+Require Import ErgocContext.
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
 Definition ergo_function := Ergo.laergo_function.

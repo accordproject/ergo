@@ -39,6 +39,7 @@ MODULES = \
   Ergo/Lang/ErgoExpand \
 	ErgoCalculus/Lang/ErgoCalculus \
 	ErgoCalculus/Lang/ErgoCalculusSugar \
+	ErgoCalculus/Lang/ErgocContext \
 	ErgoCalculus/Lang/ErgocEval \
 	ErgoCalculus/Lang/ErgocInline \
 	ErgoCalculus/Lang/EREPLUtil \
