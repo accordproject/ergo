@@ -31,6 +31,7 @@ Require Import Compiler.ErgoCompilerDriver.
 
 Require Import Ergo.
 Require Import ErgoCalculus.
+Require Import ErgocContext.
 Require Import ErgocEval.
 
 Section EREPLUtil.

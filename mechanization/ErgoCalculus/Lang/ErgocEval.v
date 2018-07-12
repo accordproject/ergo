@@ -32,13 +32,10 @@ Require Import Common.Utils.EResult.
 Require Import Common.Utils.EUtil.
 Require Import Common.Utils.EProvenance.
 
-(*
-Require Import Common.Utils.EFormat.
-*)
-
 Require Import Compiler.ErgoCompilerDriver.
 
 Require Import ErgoCalculus.
+Require Import ErgocContext.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 
