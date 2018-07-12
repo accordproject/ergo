@@ -82,7 +82,9 @@ Definition fmt_grn (msg : string) : string :=
 Definition fmt_mag (msg : string) : string :=
   (fmt_csi ++ "35m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
 
-Definition ergo_string_of_result {A : Set} (result : eresult (A * ergo_context * option ergo_data)) : string :=
+Definition ergo_string_of_result
+  (result : eresult (compilation_ctxt * ergo_context * option ergo_data))
+  : string :=
   match result with
   | Success _ _ (_, _, None) => ""
   | Success _ _ (_, _, Some
