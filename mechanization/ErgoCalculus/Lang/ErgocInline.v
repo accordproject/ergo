@@ -44,7 +44,7 @@ Definition ergo_module := Ergo.laergo_module.
 Section ErgoInline.
 
   Definition ergo_map_expr_sane ctx fn expr :=
-    @ergo_map_expr ergo_context provenance absolute_name ctx
+    @ergo_map_expr provenance absolute_name ergo_context ctx
                        (fun ctx name expr => ergo_ctx_update_local_env ctx name dunit)
                        fn expr.
 
