@@ -37,19 +37,19 @@ MODULES = \
   Ergo/Lang/ErgoSem \
   Ergo/Lang/ErgoSugar \
   Ergo/Lang/ErgoExpand \
-  ErgoCalculus/Lang/ErgoCalculus \
-  ErgoCalculus/Lang/ErgoCalculusSugar \
-  ErgoCalculus/Lang/ErgocEvalContext \
-  ErgoCalculus/Lang/ErgocInline \
-  ErgoCalculus/Lang/ErgocEval \
+  ErgoC/Lang/ErgoC \
+  ErgoC/Lang/ErgoCSugar \
+  ErgoC/Lang/ErgoCEvalContext \
+  ErgoC/Lang/ErgoCInline \
+  ErgoC/Lang/ErgoCEval \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
   ErgoNNRC/Lang/ErgoNNRCCall \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
-  Translation/ErgoTypetoErgoCalculusType \
-  Translation/ErgotoErgoCalculus \
-  Translation/ErgoCalculustoErgoNNRC \
+  Translation/ErgotoErgoC \
+  Translation/ErgoCtoErgoNNRCType \
+  Translation/ErgoCtoErgoNNRC \
   Translation/ErgoNNRCtoJavaScript \
   Translation/ErgoNNRCtoJavaScriptCicero \
   Translation/ErgoNNRCtoJava \

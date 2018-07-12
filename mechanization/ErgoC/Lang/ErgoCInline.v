@@ -24,8 +24,8 @@ Require Import ErgoSpec.Common.Utils.EProvenance.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoMap.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgocEvalContext.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
 
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
@@ -35,7 +35,7 @@ Definition ergo_contract := Ergo.laergo_contract.
 Definition ergo_declaration := Ergo.laergo_declaration.
 Definition ergo_module := Ergo.laergo_module.
 
-Section ErgoInline.
+Section ErgoCInline.
 
   Definition ergo_map_expr_sane ctx fn expr :=
     @ergo_map_expr provenance absolute_name eval_context ctx
@@ -94,4 +94,4 @@ Section ErgoInline.
 
   Definition ergo_inline_expr := ergo_inline_functions.
 
-End ErgoInline.
+End ErgoCInline.

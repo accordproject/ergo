@@ -23,11 +23,11 @@ Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculusSugar.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section ErgotoErgoCalculus.
+Section ErgotoErgoC.
 
   Section TranslationContext.
     Record translation_context :=
@@ -448,5 +448,5 @@ Section ErgotoErgoCalculus.
     (* Compute (declarations_calculus dl2). (* Should fail *) *)
   End Examples.
 
-End ErgotoErgoCalculus.
+End ErgotoErgoC.
 

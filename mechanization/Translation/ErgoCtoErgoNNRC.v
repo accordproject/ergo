@@ -26,13 +26,13 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRCSugar.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRCCall.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section ErgoCalculustoErgoNNRC.
+Section ErgoCtoErgoNNRC.
   Section TranslationContext.
     Record translation_context :=
       mkCompContext {
@@ -476,5 +476,5 @@ Section ErgoCalculustoErgoNNRC.
 
   End Examples.
 
-End ErgoCalculustoErgoNNRC.
+End ErgoCtoErgoNNRC.
 

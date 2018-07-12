@@ -28,13 +28,13 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgocEvalContext.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgocInline.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCInline.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
-Section ErgocEval.
+Section ErgoC.
 
   Definition ergo_unary_eval := ErgoOps.Unary.eval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
@@ -268,7 +268,7 @@ Section ErgocEval.
     | DCContract loc name contr => TODO
     end.
 
-End ErgocEval.
+End ErgoC.
 
 (*
 Section Tests.
