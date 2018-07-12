@@ -46,7 +46,17 @@ Definition ergo_eval_decl_via_calculus
   | Success _ _ (Some decl', sctx') =>
     match ergoc_eval_decl dctx decl' with
     | Failure _ _ f => efailure f
-    | Success _ _ (dctx', res) => esuccess (sctx', dctx', res)
+    | Success _ _ (dctx', None) => esuccess (sctx', dctx', None)
+    | Success _ _ (dctx', Some out) =>
+      match ergoc_unpack_output out with
+      | None => esuccess (sctx', dctx', Some out)
+      | Some (_, _, state) =>
+          esuccess (
+            sctx',
+            ergo_ctx_update_local_env dctx' "state"%string state,
+            Some out
+          )
+      end
     end
   end.
 
