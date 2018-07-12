@@ -26,7 +26,7 @@ Module ErgoEnhancedBackend := ErgoBackendRuntime.ErgoBackendRuntime <+ ErgoEnhan
 Module ErgoData := EData.EData(ErgoEnhancedBackend).
 Module ErgoOps := EOperators.EOperators(ErgoEnhancedBackend).
 Module ErgoCodeGen := ECodeGen.ECodeGen(ErgoEnhancedBackend).
-Module ErgoCalculusType := ECType.ECType(ErgoEnhancedBackend).
+Module ErgoNNRCType := ECType.ECType(ErgoEnhancedBackend).
 
 (* Useful definitions *)
 Section Defs.

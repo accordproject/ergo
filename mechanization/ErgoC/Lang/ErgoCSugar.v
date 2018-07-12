@@ -23,10 +23,10 @@ Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section ErgoCalculusSugar.
+Section ErgoCSugar.
   Definition mkResult (prov:provenance) e1 e2 e3 : ergoc_expr :=
     ERecord prov
             ((this_response, e1)
@@ -65,4 +65,4 @@ Section ErgoCalculusSugar.
   Definition EError (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
     EUnaryOp prov OpRight e.
 
-End ErgoCalculusSugar.
+End ErgoCSugar.

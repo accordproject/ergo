@@ -21,36 +21,36 @@ Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section ErgoTypetoErgoCalculusType.
+Section ErgoCtoErgoNNRCType.
 
-  (** A semantics for ErgoCalculusType packages is obtained through translation
+  (** A semantics for ErgoType is obtained through translation
       into branded types. *)
-  Program Fixpoint ergoc_type_to_nnrc_type {m:brand_relation} (t:ergoc_type) : ErgoCalculusType.ectype :=
+  Program Fixpoint ergoc_type_to_nnrc_type {m:brand_relation} (t:ergoc_type) : ErgoNNRCType.ectype :=
     match t with
-    | ErgoTypeAny _ => ErgoCalculusType.top
-    | ErgoTypeNone _ => ErgoCalculusType.empty
-    | ErgoTypeBoolean _ => ErgoCalculusType.bool
-    | ErgoTypeString _ => ErgoCalculusType.string
-    | ErgoTypeDouble _ => ErgoCalculusType.double
-    | ErgoTypeLong _ => ErgoCalculusType.integer (* XXX To be decided *)
-    | ErgoTypeInteger _ => ErgoCalculusType.integer
-    | ErgoTypeDateTime _ => ErgoCalculusType.empty (* XXX TBD *)
-    | ErgoTypeClassRef _ cr => ErgoCalculusType.brand (cr::nil)
-    | ErgoTypeOption _ t => ErgoCalculusType.option (ergoc_type_to_nnrc_type t)
+    | ErgoTypeAny _ => ErgoNNRCType.top
+    | ErgoTypeNone _ => ErgoNNRCType.empty
+    | ErgoTypeBoolean _ => ErgoNNRCType.bool
+    | ErgoTypeString _ => ErgoNNRCType.string
+    | ErgoTypeDouble _ => ErgoNNRCType.double
+    | ErgoTypeLong _ => ErgoNNRCType.integer (* XXX To be decided *)
+    | ErgoTypeInteger _ => ErgoNNRCType.integer
+    | ErgoTypeDateTime _ => ErgoNNRCType.empty (* XXX TBD *)
+    | ErgoTypeClassRef _ cr => ErgoNNRCType.brand (cr::nil)
+    | ErgoTypeOption _ t => ErgoNNRCType.option (ergoc_type_to_nnrc_type t)
     | ErgoTypeRecord _ rtl =>
-      ErgoCalculusType.record
-        ErgoCalculusType.open_kind
+      ErgoNNRCType.record
+        ErgoNNRCType.open_kind
         (rec_sort (List.map (fun xy => (fst xy, ergoc_type_to_nnrc_type (snd xy))) rtl))
         (rec_sort_sorted
            (List.map (fun xy => (fst xy, ergoc_type_to_nnrc_type (snd xy))) rtl)
            (rec_sort (List.map (fun xy => (fst xy, ergoc_type_to_nnrc_type (snd xy))) rtl))
            eq_refl)
-    | ErgoTypeArray _ t => ErgoCalculusType.array (ergoc_type_to_nnrc_type t)
-    | ErgoTypeSum _ t1 t2 => ErgoCalculusType.sum (ergoc_type_to_nnrc_type t1) (ergoc_type_to_nnrc_type t2)
+    | ErgoTypeArray _ t => ErgoNNRCType.array (ergoc_type_to_nnrc_type t)
+    | ErgoTypeSum _ t1 t2 => ErgoNNRCType.sum (ergoc_type_to_nnrc_type t1) (ergoc_type_to_nnrc_type t2)
     end.
 
-End ErgoTypetoErgoCalculusType.
+End ErgoCtoErgoNNRCType.

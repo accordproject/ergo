@@ -12,7 +12,11 @@
  * limitations under the License.
  *)
 
-(** Ergo is a language for expressing contract logic. *)
+(** ErgoC is an intermediate language for the Ergo compiler in which:
+- Clauses have been resolved to functions
+- This* expressions have been eliminated
+- Foreach expressions have only one dimension and no condition
+- Match expressions have only two branches *)
 
 (** * Abstract Syntax *)
 
@@ -24,7 +28,7 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
-Section ErgoCalculus.
+Section ErgoC.
 
   Section Syntax.
 
@@ -75,4 +79,4 @@ Section ErgoCalculus.
     (* XXX Nothing yet -- evaluation semantics should go here *)
   End Evaluation.
 
-End ErgoCalculus.
+End ErgoC.

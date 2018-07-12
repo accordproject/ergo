@@ -26,13 +26,13 @@ Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgocEvalContext.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgocEval.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCEval.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
-Require Import ErgoSpec.Translation.ErgotoErgoCalculus.
-Require Import ErgoSpec.Translation.ErgoCalculustoErgoNNRC.
+Require Import ErgoSpec.Translation.ErgotoErgoC.
+Require Import ErgoSpec.Translation.ErgoCtoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
@@ -92,7 +92,7 @@ Section ErgoDriver.
       | Failure _ _ f => init_namespace_ctxt
       end.
 
-    (* Ergo -> ErgoCalculus *)
+    (* Ergo -> ErgoC *)
     Definition ergo_module_to_ergo_calculus
                (ctxt:compilation_ctxt)
                (lm:lrergo_module) : eresult (ergoc_module * compilation_ctxt) :=
@@ -107,7 +107,7 @@ Section ErgoDriver.
                             (ergo_module_to_calculus p)) p)
              am.
 
-    (* ErgoDecl -> ErgoCalculusDecl *)
+    (* ErgoDecl -> ErgoCDecl *)
     Definition ergo_declaration_to_ergo_calculus
                (ctxt:compilation_ctxt)
                (ld:lrergo_declaration) : eresult (option ergoc_declaration * compilation_ctxt) :=

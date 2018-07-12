@@ -17,7 +17,7 @@ Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import ErgoSpec.ErgoCalculus.Lang.ErgoCalculus.
+Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 
 Section ErgocEvalContext.
 
