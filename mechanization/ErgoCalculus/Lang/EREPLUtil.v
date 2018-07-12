@@ -41,10 +41,8 @@ Definition ergo_eval_decl_via_calculus
            (decl : lrergo_declaration)
   : eresult (compilation_ctxt * ergo_context * option ergo_data) :=
   match ergo_declaration_to_ergo_calculus sctx decl with
-
   | Failure _ _ f => efailure f
   | Success _ _ (None, sctx') => esuccess (sctx', dctx, None)
-
   | Success _ _ (Some decl', sctx') =>
     match ergoc_eval_decl dctx decl' with
     | Failure _ _ f => efailure f
@@ -85,27 +83,20 @@ Definition ergo_string_of_result
   (result : eresult (compilation_ctxt * ergo_context * option ergo_data))
   : string :=
   match result with
+  | Failure _ _ f => ergo_string_of_error f
   | Success _ _ (_, _, None) => ""
-  | Success _ _ (_, _, Some
-                         (dleft
-                            (drec (("response"%string, response)
-                                     ::("state"%string, state)
-                                     ::("emit"%string, dcoll emits)
-                                     ::nil))
-                            )
-                ) =>
+  | Success _ _ (_, _, Some (dright msg)) =>
+    fmt_red ("Error. "%string) ++ (ErgoData.data_to_json_string """"%string msg)
+  | Success _ _ (_, _, Some out) =>
+    match ergoc_unpack_output out with
+    | Some (response, emits, state) =>
     (fold_left
        (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
        (map (ErgoData.data_to_json_string """"%string) emits) ""%string)
       ++ (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string """"%string response)
+    | None => ErgoData.data_to_json_string """"%string out
+    end
     (*dataToString d*) 
-  | Success _ _ (_, _, Some
-                         (dright msg)
-                ) =>
-    fmt_red ("Error. "%string) ++ (ErgoData.data_to_json_string """"%string msg)
-  | Success _ _ (_, _, Some d) =>
-    ErgoData.data_to_json_string """"%string d
-  | Failure _ _ f => ergo_string_of_error f
   end.
 
 End EREPLUtil.

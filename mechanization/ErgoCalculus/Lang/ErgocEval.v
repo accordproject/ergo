@@ -304,6 +304,18 @@ Definition ergoc_eval_decl
   | DCContract loc name contr => TODO
   end.
 
+Definition ergoc_unpack_output
+           (out : ergo_data)
+  : option (ergo_data * list ergo_data * ergo_data) :=
+  match out with
+  | (dleft (drec (("response"%string, response)
+                  ::("state"%string, state)
+                  ::("emit"%string, dcoll emits)
+                  ::nil))) =>
+    Some (response, emits, state)
+  | _ => None
+  end.
+
 End ErgocEval.
 
 (*
