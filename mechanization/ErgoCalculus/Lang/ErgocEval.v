@@ -235,22 +235,19 @@ Section ErgocEval.
 
     | EMatch loc e pes f => TODO
 
-    (* EXPECTS: each foreach has only one dimension *)
-    | EForeach loc rs whr fn =>
-      match rs with
-      | (name, arr)::nil =>
-        match ergo_eval_expr ctx arr with
-        | Failure _ _ f => efailure f
-        | Success _ _ (dcoll arr') =>
-          (elift dcoll)
-            (emaplift
-               (fun elt => ergo_eval_expr (ergo_ctx_update_local_env ctx name elt) fn)
-               arr')
-        | Success _ _ _ => efailure (RuntimeError loc "Foreach needs to be called on an array")
-        end
-      | _ => efailure (RuntimeError loc "Failed to inline foreach")
+    (* EXPECTS: each foreach has only one dimension and no where *)
+    | EForeach loc ((name,arr)::nil) None fn =>
+      match ergo_eval_expr ctx arr with
+      | Failure _ _ f => efailure f
+      | Success _ _ (dcoll arr') =>
+        (elift dcoll)
+          (emaplift
+             (fun elt => ergo_eval_expr (ergo_ctx_update_local_env ctx name elt) fn)
+             arr')
+      | Success _ _ _ => efailure (RuntimeError loc "Foreach needs to be called on an array")
       end
-
+    | EForeach loc _ _ _ =>
+      efailure (RuntimeError loc "Failed to inline foreach")
     end.
 
   Definition ergoc_eval_decl
