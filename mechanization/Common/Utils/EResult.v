@@ -166,6 +166,8 @@ Section EResult.
 
     Definition fmt_nl := String.String (ascii_of_N 10) EmptyString.
 
+    Definition fmt_dq := """"%string.
+
     Definition fmt_esc := String.String (ascii_of_N 27) EmptyString.
 
     Definition fmt_csi : string := fmt_esc ++ ("["%string).
