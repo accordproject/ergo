@@ -234,7 +234,8 @@ Section ErgoDriver.
           (fold_left
              (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
              (map (ErgoData.data_to_json_string """"%string) emits) ""%string)
-            ++ (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string """"%string response)
+            ++ (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string """"%string response) ++ fmt_nl
+            ++ (fmt_mag "State. ") ++ (ErgoData.data_to_json_string """"%string state)
         | None => ErgoData.data_to_json_string """"%string out
         end
           (*dataToString d*) 
