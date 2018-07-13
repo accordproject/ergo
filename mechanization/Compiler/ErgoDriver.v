@@ -221,28 +221,53 @@ Section ErgoDriver.
         end
       end.
 
+    Definition string_of_response (response : ergo_data) : string :=
+      (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string fmt_dq response) ++ fmt_nl.
+
+    Definition string_of_emits (emits : list ergo_data) : string :=
+      (fold_left
+         (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
+         (map (ErgoData.data_to_json_string fmt_dq) emits) ""%string).
+
+    Definition string_of_state (ctx : eval_context) (state : ergo_data)
+    : string :=
+      let jsonify := ErgoData.data_to_json_string fmt_dq in
+      let old_st := lookup String.string_dec (ctx.(ctx_local_env)) "state"%string in
+      let new_st := state in
+      match old_st with
+      | None => (fmt_blu "State. ") ++ (jsonify state)
+      | Some state' =>
+        if Data.data_eq_dec state state' then
+          ""%string
+        else
+          (fmt_blu "State. ") ++ (jsonify state) ++ fmt_nl
+      end.
+
     (* XXX May be nice to replace by a format that aligns with Ergo notations instead of JSON and move to an earlier module e.g., Common/Utils/EData *)
-    Definition string_of_result (result : option ergo_data)
+    Definition string_of_result (ctx : eval_context) (result : option ergo_data)
       : string :=
       match result with
-      | None => ""
+      | None => fmt_nl
       | Some (dright msg) =>
-        fmt_red ("Error. "%string) ++ (ErgoData.data_to_json_string """"%string msg)
+        fmt_red ("Error. "%string) ++ (ErgoData.data_to_json_string fmt_dq msg) ++ fmt_nl
       | Some out =>
         match unpack_output out with
         | Some (response, emits, state) =>
-          (fold_left
-             (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
-             (map (ErgoData.data_to_json_string """"%string) emits) ""%string)
-            ++ (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string """"%string response)
-        | None => ErgoData.data_to_json_string """"%string out
+            (string_of_emits emits) ++ (string_of_response response) ++ (string_of_state ctx state)
+        | None => (ErgoData.data_to_json_string fmt_dq out) ++ fmt_nl
         end
-          (*dataToString d*) 
+(* Note: this was previously powered by QCert's dataToString d, and I kind of
+   liked that better anyway, so we might transition back at some point. The
+   problem was that QCert treated arrays as bags and sorted them before
+   printing (!!!). *)
       end.
 
-    Definition ergo_string_of_result (result : eresult (compilation_ctxt * eval_context * option ergo_data)) : string :=
+    Definition ergo_string_of_result
+               (ctx : eval_context)
+               (result : eresult (compilation_ctxt * eval_context * option ergo_data))
+      : string :=
       elift_both
-        string_of_result
+        (string_of_result ctx)
         string_of_error
         (elift (fun x => snd x) result).
 

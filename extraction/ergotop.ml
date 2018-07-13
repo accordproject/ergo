@@ -35,6 +35,7 @@ let prompt () =
     else ()
 
 let rec read_nonempty_line () =
+    prompt () ;
     let line = read_line () in
     if line = "" then
         read_nonempty_line ()
@@ -42,14 +43,11 @@ let rec read_nonempty_line () =
         line ^ "\n"
 
 let rec repl (sctx, dctx) =
-    prompt () ;
     try
         let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
         let result = ergo_eval_decl_via_calculus sctx dctx decl in
-        let out = ergo_string_of_result result in
-        if (List.length out) > 0
-        then print_string ((string_of_char_list out) ^ "\n")
-        else ();
+        let out = ergo_string_of_result dctx result in
+        print_string (string_of_char_list out);
         repl (ergo_maybe_update_context (sctx, dctx) result)
     with
     | ErgoUtil.Ergo_Error e ->
