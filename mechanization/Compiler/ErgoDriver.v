@@ -235,10 +235,13 @@ Section ErgoDriver.
              (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
              (map (ErgoData.data_to_json_string """"%string) emits) ""%string)
             ++ (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string """"%string response) ++ fmt_nl
-            ++ (fmt_mag "State. ") ++ (ErgoData.data_to_json_string """"%string state)
+            ++ (fmt_blu "State. ") ++ (ErgoData.data_to_json_string """"%string state)
         | None => ErgoData.data_to_json_string """"%string out
         end
-          (*dataToString d*) 
+(* Note: this was previously powered by QCert's dataToString d, and I kind of
+   liked that better anyway, so we might transition back at some point. The
+   problem was that QCert treated arrays as bags and sorted them before
+   printing (!!!). *)
       end.
 
     Definition ergo_string_of_result (result : eresult (compilation_ctxt * eval_context * option ergo_data)) : string :=

@@ -176,6 +176,9 @@ Section EResult.
     Definition fmt_grn (msg : string) : string :=
       (fmt_csi ++ "32m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
 
+    Definition fmt_blu (msg : string) : string :=
+      (fmt_csi ++ "34m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
+
     Definition fmt_mag (msg : string) : string :=
       (fmt_csi ++ "35m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
 
