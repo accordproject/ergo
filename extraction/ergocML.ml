@@ -14,20 +14,6 @@
 
 open ErgoUtil
 
-let patch_cto_extension f =
-  begin try
-    let extension = Filename.extension f in
-    if extension = ".cto"
-    then
-      (Filename.chop_suffix f ".cto") ^ ".ctoj"
-    else f
-  with
-  | _ -> f
-  end
-
-let patch_argv argv =
-  Array.map patch_cto_extension argv
-
 let wrap_error e =
   begin match e with
   | Ergo_Error error ->
@@ -36,9 +22,9 @@ let wrap_error e =
       Printf.eprintf "%s\n" (string_of_error (ergo_system_error (Printexc.to_string exn))); exit 2
   end
 
-let () =
+let _ =
   begin try
-    Ergoc.main (fun x -> x) (patch_argv Sys.argv)
+    Ergoc.main (patch_argv Sys.argv)
   with
   | e ->
       wrap_error e

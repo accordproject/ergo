@@ -128,6 +128,7 @@ Section Ergo.
 
     (** Declaration *)
     Inductive ergo_declaration :=
+    | DImport : A -> @import_decl A -> ergo_declaration
     | DType : A -> @ergo_type_declaration A N -> ergo_declaration
     | DStmt : A -> ergo_stmt -> ergo_declaration
     | DConstant : A -> absolute_name -> ergo_expr -> ergo_declaration
@@ -137,6 +138,7 @@ Section Ergo.
     
     Definition decl_annot (d:ergo_declaration) : A :=
       match d with
+      | DImport a _ => a
       | DType a _ => a
       | DStmt a _ => a
       | DConstant a _ _ => a
@@ -149,7 +151,6 @@ Section Ergo.
       mkModule
         { module_annot : A;
           module_namespace : namespace_name;
-          module_imports : list (@import_decl A);
           module_declarations : list ergo_declaration; }.
 
     Inductive ergo_input :=

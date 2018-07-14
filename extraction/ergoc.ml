@@ -31,33 +31,13 @@ let args_list gconf =
        "<lang> Indicates the language for the target (default: javascript) " ^ available_targets)
     ]
 
-let anon_args gconf cto_files input_files f =
-  let extension = Filename.extension f in
-  if extension = ".ctoj"
-  then cto_files := (f, Util.string_of_file f) :: !cto_files
-  else if extension = ".ergo"
-  then input_files := f :: !input_files
-  else ergo_raise (ergo_system_error (f ^ " is not cto, ctoj or ergo file"))
-
 let usage =
   "Ergo Compiler\n"^
   "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
 
-let parse fa args l f msg =
-  try
-    Arg.parse_argv (fa args) l f msg
-  with
-  | Arg.Bad msg -> Printf.eprintf "%s" msg; exit 2
-  | Arg.Help msg -> Printf.printf "%s" msg; exit 0
-
-let parse_args fa args gconf =
-  let input_files = ref [] in
-  let cto_files = ref [] in
-  parse fa args (args_list gconf) (anon_args gconf cto_files input_files) usage;
-  (List.rev !cto_files, List.rev !input_files)
-
-let main fa args =
+let main args =
   let gconf = ErgoConfig.default_config () in
-  let (cto_files,input_files) = parse_args fa args gconf in
-  batch_compile_top gconf cto_files input_files
+  let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
+  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
+  List.iter (process_file (ErgoCompile.ergo_proc gconf)) input_files
 

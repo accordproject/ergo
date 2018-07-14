@@ -64,12 +64,14 @@ Section CTOtoErgo.
 
   Definition cto_declaration_to_ergo_declaration (d:lrcto_declaration) : lrergo_declaration :=
     DType d.(cto_declaration_annot) (cto_declaration_to_ergo_type_declaration d).
+  Definition cto_import_to_ergo_declaration (d:import_decl) : lrergo_declaration :=
+    DImport (import_annot d) d.
 
   Definition cto_package_to_ergo_module (p:lrcto_package) : lrergo_module :=
     mkModule
       p.(cto_package_annot)
       p.(cto_package_namespace)
-      p.(cto_package_imports)
-      (map cto_declaration_to_ergo_declaration p.(cto_package_declarations)).
+      ((map cto_import_to_ergo_declaration p.(cto_package_imports))
+       ++ (map cto_declaration_to_ergo_declaration p.(cto_package_declarations))).
 
 End CTOtoErgo.

@@ -22,12 +22,11 @@ let wrap_error e =
       new%js Js.error_constr (Js.string (string_of_error (ergo_system_error (Printexc.to_string exn))))
   end
 
-let () =
+let _ =
   begin try
-    Ergoc.main (fun x -> x) Sys.argv
+    Ergoc.main Sys.argv
   with
   | e ->
       Js.raise_js_error (wrap_error e)
   end
-
 

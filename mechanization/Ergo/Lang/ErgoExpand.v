@@ -183,6 +183,7 @@ Section ErgoExpand.
              (namespace:string)
              (d:laergo_declaration) : eresult laergo_declaration :=
     match d with
+    | DImport _ _ => esuccess d
     | DType _ _ => esuccess d
     | DStmt _ _ => esuccess d
     | DConstant _ _ _ => esuccess d
@@ -204,7 +205,6 @@ Section ErgoExpand.
       (fun ds => mkModule
                    p.(module_annot)
                    p.(module_namespace)
-                   p.(module_imports)
                    ds)
       (add_main_init_clauses_to_declarations p.(module_namespace) p.(module_declarations)).
 

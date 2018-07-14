@@ -99,7 +99,6 @@ contract HelloWorld over TemplateModel {
   Definition p1 : lrergo_module :=
     mkModule dummy_provenance
              "org.accordproject.helloworld"
-             nil
              (DFunc dummy_provenance "addFee" ergo_funcd1
                     ::DContract dummy_provenance "HelloWorld" c1
                     ::DContract dummy_provenance "MyContract" ergo_contractd1::nil).
@@ -149,7 +148,7 @@ contract HelloWorld over TemplateModel {
   
   Definition ergo_stdlib : lrergo_module :=
     mkModule
-      dummy_provenance stdlib_namespace nil (DType dummy_provenance ergo_typed_top::nil).
+      dummy_provenance stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
   Definition  mls:= ergo_stdlib :: nil.
 
 End HelloWorld.

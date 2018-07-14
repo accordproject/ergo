@@ -342,6 +342,7 @@ Section ErgotoErgoC.
              (d:laergo_declaration) : eresult (option (ergoc_declaration)) :=
     let ctxt := initial_translation_context in (* XXX For now only needs context per declaration *)
     match d with
+    | DImport prov import => esuccess None
     | DType prov ergo_type => esuccess None
     | DStmt prov s => elift Some (elift (DCExpr prov) (ergo_stmt_to_expr_top ctxt prov s))
     | DConstant prov v e => elift Some (elift (DCConstant prov v) (ergo_expr_to_ergoc_expr ctxt e))

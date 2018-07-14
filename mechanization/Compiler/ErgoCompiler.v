@@ -238,6 +238,8 @@ Module ErgoCompiler.
     ErgoSugar.EFunReturnEmpty.
   
   (** Declarations *)
+  Definition dimport prov id : ergo_declaration
+    := Ergo.DImport prov id.
   Definition dtype prov etd : ergo_declaration
     := Ergo.DType prov etd.
   Definition dstmt prov s : ergo_declaration

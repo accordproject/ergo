@@ -121,6 +121,8 @@ Section EResult.
     (** Call errors *)
     Definition function_not_found_error {A} prov (fname:string) : eresult A :=
       efailure (CompilationError prov ("Function '" ++ fname ++ "' not found")).
+    Definition eval_function_not_found_error {A} prov (fname:string) : eresult A :=
+      efailure (RuntimeError prov ("Function '" ++ fname ++ "' not found during eval")).
     Definition clause_not_found_error {A} prov (fname:string) : eresult A :=
       efailure (CompilationError prov ("Clause '" ++ fname ++ "' not found")).
     Definition call_params_error {A} prov (fname:string) : eresult A :=
