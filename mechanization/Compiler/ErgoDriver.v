@@ -82,7 +82,7 @@ Section ErgoDriver.
       | Success _ _ r => r
       | Failure _ _ f => (nil, init_namespace_ctxt)
       end.
-    
+
     Definition ergo_make_stdlib_namespace
                (ctos:list lrcto_package)
                (mls:list lrergo_module)
@@ -268,7 +268,7 @@ Section ErgoDriver.
       : string :=
       elift_both
         (string_of_result ctx)
-        string_of_error
+        (fun e => string_of_error e ++ fmt_nl)%string
         (elift (fun x => snd x) result).
 
   End Interpreter.
