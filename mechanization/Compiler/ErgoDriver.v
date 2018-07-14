@@ -55,16 +55,6 @@ Section ErgoDriver.
                 (namespace_ctxt_of_compilation_ctxt ctxt)
                 ns).
 
-    Definition import_namespaces_in_compilation_ctxt
-               (ctxt:compilation_ctxt)
-               (ims:list limport_decl) : eresult compilation_ctxt :=
-      let ns_ctxt := namespace_ctxt_of_compilation_ctxt ctxt in
-      let rns_ctxt := resolve_ergo_imports ns_ctxt ims in
-      elift
-        (update_namespace_ctxt
-           ctxt)
-        rns_ctxt.
-    
     (* Initialize compilation context *)
     Definition compilation_ctxt_from_inputs
                (ctos:list lrcto_package)
@@ -73,7 +63,7 @@ Section ErgoDriver.
       let imls := map InputErgo mls in
       let ctxt := init_namespace_ctxt in
       resolve_ergo_inputs ctxt (ictos ++ imls).
-    
+
     Definition ergo_make_stdlib_ctxt
                (ctos:list lrcto_package)
                (mls:list lrergo_module)

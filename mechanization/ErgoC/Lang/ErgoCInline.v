@@ -44,13 +44,13 @@ Section ErgoCInline.
 
   Definition ergo_inline_foreach' (ctx : eval_context) (expr : ergo_expr) :=
     match expr with
-    | EForeach loc rs whr fn =>
+    | EForeach prov rs whr fn =>
       (compose Some esuccess)
         (fold_right
-           (fun rcd ker => (EUnaryOp loc OpFlatten) (EForeach loc (rcd::nil) whr ker))
+           (fun rcd ker => (EUnaryOp prov OpFlatten) (EForeach prov (rcd::nil) whr ker))
            (match whr with
-            | Some whr' => (EIf loc whr' (EArray loc (fn::nil)) (EArray loc nil))
-            | None => (EArray loc (fn::nil))
+            | Some whr' => (EIf prov whr' (EArray prov (fn::nil)) (EArray prov nil))
+            | None => (EArray prov (fn::nil))
             end)
            rs)
     | _ => None
@@ -82,10 +82,10 @@ Section ErgoCInline.
 
   Definition ergo_inline_functions' (ctx : eval_context) (expr : ergo_expr) :=
   match expr with
-  | ECallFun loc fn args => Some
+  | ECallFun prov fn args => Some
       match lookup String.string_dec ctx.(ctx_function_env) fn with
       | Some fn' => ergo_letify_function fn' args
-      | None => efailure (CompilationError loc ("Function " ++ fn ++ " not found.")%string)
+      | None => eval_function_not_found_error prov fn
       end
   | _ => None
   end.

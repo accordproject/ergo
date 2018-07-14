@@ -101,18 +101,11 @@ main_decl:
     { p }
 
 emodule:
-| NAMESPACE qn = qname_prefix ims = imports ss = decls
+| NAMESPACE qn = qname_prefix ds = decls
     { { module_annot = mk_provenance $startpos $endpos;
         module_namespace = Util.char_list_of_string qn;
-        module_imports = ims;
-        module_declarations = ss; } }
+        module_declarations = ds; } }
 
-imports:
-|   { [] }
-| IMPORT qn = qname_prefix ims = imports
-    { (ErgoUtil.cto_import_decl_of_import_namespace qn) :: ims }
-
-    
 decls:
 |
     { [] }
@@ -120,6 +113,10 @@ decls:
     { s :: ss }
 
 decl:
+| IMPORT qn = qname_prefix
+    { ErgoCompiler.dimport
+        (mk_provenance $startpos $endpos)
+        (ErgoUtil.cto_import_decl_of_import_namespace qn) }
 | DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)

@@ -27,6 +27,13 @@ Section EAstUtil.
     | ImportSelf : A -> namespace_name -> import_decl
     | ImportName : A -> namespace_name -> local_name -> import_decl.
 
+    Definition import_annot (i:import_decl) :=
+    match i with
+    | ImportAll a _ => a
+    | ImportSelf a _ => a
+    | ImportName a _ _ => a
+    end.
+
     Definition extends : Set := option N.
 
   End Ast.

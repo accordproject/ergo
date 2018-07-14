@@ -204,6 +204,7 @@ Section ErgoNameResolution.
              (dls:list lrergo_declaration) : namespace_ctxt :=
       match dls with
       | nil => ctxt
+      | DImport _ _ :: rest => ctxt (* XXX To check *)
       | DType _ td :: rest =>
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         let ln := td.(type_declaration_name) in
@@ -274,14 +275,6 @@ Section ErgoNameResolution.
                  (namespace_table_app ctxt.(namespace_ctxt_current) tbl))
             (lookup_one_import ctxt ic).
     
-    Definition resolve_imports
-               (ctxt:namespace_ctxt)
-               (imports:list limport_decl) : eresult namespace_ctxt :=
-      let proc_one (acc:eresult namespace_ctxt) (import:import_decl) : eresult namespace_ctxt :=
-          eolift (fun acc => resolve_one_import acc import) acc
-      in
-      fold_left proc_one imports (esuccess ctxt).
-
     (* Resolve imports for CTO *)
     Definition is_builtin_import (ns:namespace_name) : bool :=
       if string_dec ns hyperledger_namespace
@@ -290,34 +283,6 @@ Section ErgoNameResolution.
            then true
            else false.
 
-    Definition resolve_cto_imports (ctxt:namespace_ctxt) (ims:list limport_decl) :=
-      let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
-      let imports :=
-          if is_builtin_import ctxt_ns
-          then app ims (ImportSelf dummy_provenance ctxt_ns :: nil)
-          else
-            (* Add built-in modules to import, first.
-               Make sure to add current namespace to the list of imports - i.e., import self. *)
-            (ImportAll dummy_provenance hyperledger_namespace)
-              ::(app ims (ImportSelf dummy_provenance ctxt_ns :: nil))
-      in
-      resolve_imports ctxt imports.
-      
-    (* Resolve imports for Ergo *)
-    Definition resolve_ergo_imports (ctxt:namespace_ctxt) (ims:list limport_decl) :=
-      let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
-      let imports :=
-          if is_builtin_import ctxt_ns
-          then app ims (ImportSelf dummy_provenance ctxt_ns :: nil)
-          else
-            (* Add built-in modules to import, first.
-               Make sure to add current namespace to the list of imports - i.e., import self. *)
-            (ImportAll dummy_provenance hyperledger_namespace)
-              ::(ImportAll dummy_provenance stdlib_namespace)
-              ::(app ims (ImportSelf dummy_provenance ctxt_ns :: nil))
-      in
-      resolve_imports ctxt imports.
-      
   End ResolveImports.
 
   Section NameResolution.
@@ -699,6 +664,8 @@ Section ErgoNameResolution.
       let module_ns : namespace_name := ctxt.(namespace_ctxt_namespace) in
       let tbl : namespace_table := ctxt.(namespace_ctxt_current) in
       match d with
+      | DImport prov id =>
+        elift (fun x => (DImport prov id, x)) (resolve_one_import ctxt id)
       | DType prov td =>
         let ln := td.(type_declaration_name) in
         let an := absolute_name_of_local_name module_ns ln in
@@ -738,6 +705,32 @@ Section ErgoNameResolution.
     Definition init_namespace_ctxt_from_modules (ml:list lrergo_module) :=
       namespace_ctxt_of_ergo_modules init_namespace_ctxt ml.
 
+    Definition patch_cto_imports
+               (ctxt_ns:namespace_name)
+               (decls: list lrergo_declaration) : list lrergo_declaration :=
+      if is_builtin_import ctxt_ns
+      then (DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns)) :: decls
+      else
+        (* Add built-in modules to import, first.
+           Make sure to add current namespace to the list of imports - i.e., import self. *)
+        (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
+          :: (DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns))
+          :: decls.
+
+    (* Resolve imports for Ergo *)
+    Definition patch_ergo_imports
+               (ctxt_ns:namespace_name)
+               (decls: list lrergo_declaration) : list lrergo_declaration :=
+      if is_builtin_import ctxt_ns
+      then app decls (DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns) :: nil)
+      else
+        (* Add built-in modules to import, first.
+           Make sure to add current namespace to the list of imports - i.e., import self. *)
+        (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
+          ::(DImport dummy_provenance (ImportAll dummy_provenance stdlib_namespace))
+          ::(DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns))
+          :: decls.
+      
     (* Resolve a CTO package *)
     Definition resolve_cto_package
                (ctxt:namespace_ctxt)
@@ -746,36 +739,34 @@ Section ErgoNameResolution.
       let module_ns := m.(module_namespace) in
       let ctxt := new_namespace_scope ctxt module_ns in
       let ctxt := namespace_ctxt_of_ergo_module ctxt m in (* XXX Pre-populate namespace for CTO modules to handle not-yet-declared names *)
-      let rctxt := resolve_cto_imports ctxt m.(module_imports) in
-      eolift (fun ctxt =>
-                elift
-                  (fun nc =>
-                     (mkModule
-                        m.(module_annot)
-                        module_ns
-                        nil
-                        (fst nc), snd nc))
-                  (resolve_ergo_declarations
-                     ctxt
-                     m.(module_declarations))) rctxt.
+      let declarations := m.(module_declarations) in
+      let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
+      elift
+        (fun nc =>
+           (mkModule
+              m.(module_annot)
+                  module_ns
+                  (fst nc), snd nc))
+        (resolve_ergo_declarations
+           ctxt
+           (patch_cto_imports ctxt_ns declarations)).
 
     Definition resolve_ergo_module
                (ctxt:namespace_ctxt)
                (m:lrergo_module) : eresult (laergo_module * namespace_ctxt) :=
       let module_ns := m.(module_namespace) in
       let ctxt := new_namespace_scope ctxt module_ns in
-      let rctxt := resolve_ergo_imports ctxt m.(module_imports) in
-      eolift (fun ctxt =>
-                elift
-                  (fun nc =>
-                     (mkModule
-                        m.(module_annot)
-                        module_ns
-                        nil
-                        (fst nc), snd nc))
-                  (resolve_ergo_declarations
-                     ctxt
-                     m.(module_declarations))) rctxt.
+      let declarations := m.(module_declarations) in
+      let ctxt_ns := ctxt.(namespace_ctxt_namespace) in
+      elift
+        (fun nc =>
+           (mkModule
+              m.(module_annot)
+                  module_ns
+                  (fst nc), snd nc))
+        (resolve_ergo_declarations
+           ctxt
+           (patch_ergo_imports ctxt_ns declarations)).
 
     Definition resolve_ergo_modules
                (ctxt:namespace_ctxt)
@@ -902,11 +893,11 @@ Section ErgoNameResolution.
       mkModule
         dummy_provenance
         "n1"
-        ((ImportAll dummy_provenance "n2")::nil)
-        (DFunc dummy_provenance "addFee" ergo_funcd1
-               ::DContract dummy_provenance "MyContract" ergo_contractd1
-               ::DType dummy_provenance ergo_typed1
-               ::DType dummy_provenance ergo_typed2::nil).
+        (DImport dummy_provenance (ImportAll dummy_provenance "n2")
+        ::DFunc dummy_provenance "addFee" ergo_funcd1
+        ::DContract dummy_provenance "MyContract" ergo_contractd1
+        ::DType dummy_provenance ergo_typed1
+        ::DType dummy_provenance ergo_typed2::nil).
     
     Definition ergo_typed3 : lrergo_type_declaration :=
       mkErgoTypeDeclaration
@@ -926,15 +917,15 @@ Section ErgoNameResolution.
 
     Definition ergo_module2 : lrergo_module :=
       mkModule
-        dummy_provenance "n2" nil (DType dummy_provenance ergo_typed3::nil).
+        dummy_provenance "n2" (DType dummy_provenance ergo_typed3::nil).
 
     Definition ergo_hl : lrergo_module :=
       mkModule
-        dummy_provenance hyperledger_namespace nil (DType dummy_provenance ergo_typed_top::nil).
+        dummy_provenance hyperledger_namespace (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ergo_stdlib : lrergo_module :=
       mkModule
-        dummy_provenance stdlib_namespace nil (DType dummy_provenance ergo_typed_top::nil).
+        dummy_provenance stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ml1 : list lrergo_module := ergo_hl :: ergo_stdlib :: ergo_module2 :: ergo_module1 :: nil.
     Definition aml1 := resolve_ergo_modules (empty_namespace_ctxt "TEST") ml1.

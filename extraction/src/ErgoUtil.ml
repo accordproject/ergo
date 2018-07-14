@@ -96,7 +96,7 @@ let string_of_error error =
 let ergo_version = string_of_char_list ergo_version
 
 let get_version () =
-  print_endline ("Ergo compiler version " ^ ergo_version);
+  print_endline ("Ergo version " ^ ergo_version);
   exit 0
 
 (** Additional utility functions *)
@@ -139,4 +139,40 @@ let cto_import_decl_of_import_namespace ns =
       | _ -> ImportName (dummy_provenance,namespace,char_list_of_string criteria_str)
       end
   end
+
+(** Command line args *)
+let patch_cto_extension f =
+  begin try
+    let extension = Filename.extension f in
+    if extension = ".cto"
+    then
+      (Filename.chop_suffix f ".cto") ^ ".ctoj"
+    else f
+  with
+  | _ -> f
+  end
+
+let patch_argv argv =
+  Array.map patch_cto_extension argv
+
+let anon_args gconf cto_files input_files f =
+  let extension = Filename.extension f in
+  if extension = ".ctoj"
+  then cto_files := (f, Util.string_of_file f) :: !cto_files
+  else if extension = ".ergo"
+  then input_files := f :: !input_files
+  else ergo_raise (ergo_system_error (f ^ " is not cto, ctoj or ergo file"))
+
+let parse_args args_list usage args gconf =
+  let parse args l f msg =
+    try
+      Arg.parse_argv args l f msg
+    with
+    | Arg.Bad msg -> Printf.eprintf "%s" msg; exit 2
+    | Arg.Help msg -> Printf.printf "%s" msg; exit 0
+  in
+  let input_files = ref [] in
+  let cto_files = ref [] in
+  parse args (args_list gconf) (anon_args gconf cto_files input_files) usage;
+  (List.rev !cto_files, List.rev !input_files)
 

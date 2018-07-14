@@ -58,6 +58,3 @@ let ergo_proc gconf (file_name,file_content) =
       make_file file_res.res_file file_res.res_content
     end
 
-let batch_compile_top gconf cto_files input_files =
-  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (process_file (ergo_proc gconf)) input_files

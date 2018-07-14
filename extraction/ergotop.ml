@@ -14,48 +14,62 @@
 
 open ErgoComp
 open ParseUtil
-open Unix
-
-let get_stdlib () =
-  List.map (ParseUtil.parse_ergo_module_from_string "stdlib") (List.map snd ErgoStdlib.ergo_stdlib)
-
-let get_ctos () =
-  ErgoConfig.get_ctos (ErgoConfig.default_config ())
-
-let string_of_char_list cl = String.concat "" (List.map (String.make 1) cl)
 
 let welcome () =
-    if isatty stdin
-    then print_string ("Welcome to ERGOTOP version " ^ (string_of_char_list ergo_version) ^ "\n")
-    else ()
+  if Unix.isatty Unix.stdin
+  then print_string ("Welcome to ERGOTOP version " ^ (Util.string_of_char_list ergo_version) ^ "\n")
+  else ()
 
 let prompt () =
-    if isatty stdin then
-        print_string "ergotop$ "
-    else ()
+  if Unix.isatty Unix.stdin then
+    print_string "ergotop$ "
+  else ()
 
 let rec read_nonempty_line () =
-    prompt () ;
-    let line = read_line () in
-    if line = "" then
-        read_nonempty_line ()
-    else
-        line ^ "\n"
+  prompt () ;
+  let line = read_line () in
+  if line = "" then
+    read_nonempty_line ()
+  else
+    line ^ "\n"
 
 let rec repl (sctx, dctx) =
-    try
-        let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
-        let result = ergo_eval_decl_via_calculus sctx dctx decl in
-        let out = ergo_string_of_result dctx result in
-        print_string (string_of_char_list out);
-        repl (ergo_maybe_update_context (sctx, dctx) result)
-    with
-    | ErgoUtil.Ergo_Error e ->
-        print_string (ErgoUtil.string_of_error e);
-        print_string "\n" ;
-        repl (sctx, dctx)
-    | End_of_file -> None
+  try
+    let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
+    let result = ergo_eval_decl_via_calculus sctx dctx decl in
+    let out = ergo_string_of_result dctx result in
+    print_string (Util.string_of_char_list out);
+    repl (ergo_maybe_update_context (sctx, dctx) result)
+  with
+  | ErgoUtil.Ergo_Error e ->
+      print_string (ErgoUtil.string_of_error e);
+      print_string "\n" ;
+      repl (sctx, dctx)
+  | End_of_file -> None
 
-let main =
-    welcome ();
-    repl (ergo_make_stdlib_ctxt (get_ctos ()) (get_stdlib ()), ErgoCompiler.ergo_empty_eval_context)
+let args_list gconf =
+  Arg.align
+    [
+      ("-version", Arg.Unit ErgoUtil.get_version,
+       " Prints the compiler version");
+      ("--version", Arg.Unit ErgoUtil.get_version,
+       " Prints the compiler version");
+    ]
+
+let usage =
+  "Ergo REPL\n"^
+  "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
+
+let main args =
+  let gconf = ErgoConfig.default_config () in
+  let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
+  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
+  let ctos = ErgoConfig.get_ctos gconf in
+  let modules = ErgoConfig.get_modules gconf in
+  let ctxt = ergo_make_stdlib_ctxt ctos modules in
+  welcome ();
+  repl (ctxt, ErgoCompiler.ergo_empty_eval_context)
+
+let _ =
+  main (ErgoUtil.patch_argv Sys.argv)
+
