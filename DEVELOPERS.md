@@ -78,7 +78,7 @@ If successful, you should find the following binaries in the `bin/` directory:
 * `ergotop.native`, an experimental REPL for Ergo (note: the wrapper script
   `bin/ergotop` launches `ergotop.native` via the
   [`rlwrap`](https://github.com/hanslub42/rlwrap) utility, which must be
-  installed separately.)
+  installed separately)
 
 ###  Running the Unit Test Suite
 
