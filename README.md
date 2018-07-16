@@ -9,35 +9,52 @@
 
 ## About
 
-This is the source code for the Ergo compiler. Ergo is the [Accord Project](https://accordproject.org/) language for Smart Legal Contracts.
+This is the source code for the Ergo compiler. Ergo is the [Accord
+Project](https://accordproject.org/) language for Smart Legal Contracts.
 
-The Ergo compiler is distributed as an [npm package](https://www.npmjs.com/package/@accordproject/ergo-cli). If you want to try Ergo, consult the [getting started](#getting-started) section.
+The Ergo compiler is distributed as an [npm
+package](https://www.npmjs.com/package/@accordproject/ergo-cli). If you want to
+try Ergo, consult the [getting started](#getting-started) section.
 
-The Ergo compiler is written in [Coq](https://coq.inria.fr) with a parser and some support code written in [OCaml](https://ocaml.org). It makes extensive use of the [Q*cert compiler](https://querycert.github.io) for code generation.
+The Ergo compiler is written in [Coq](https://coq.inria.fr) with a parser and
+some support code written in [OCaml](https://ocaml.org). It makes extensive use
+of the [Q*cert compiler](https://querycert.github.io) for code generation.
 
-Both the Ergo language and its compiler are in early development phase. If you would like to contribute, consult the [for developers](#for-developers) section.
+Both the Ergo language and its compiler are in early development phase. If you
+would like to contribute, consult the [for developers](#for-developers)
+section.
 
 ## Documentation
 
-The most recent documentation for Ergo is available at [https://ergo.accordproject.org/](https://ergo.accordproject.org/)
+The most recent documentation for Ergo is available at
+[https://ergo.accordproject.org/](https://ergo.accordproject.org/)
 
 ## Getting started
 
 ### Try it out
 
-If you simply want to get a peek at Ergo without installing anything, check out the examples on the [Ergo Playground](https://accordproject.github.io/ergo-playground/).
+If you simply want to get a peek at Ergo without installing anything, check out
+the examples on the [Ergo
+Playground](https://accordproject.github.io/ergo-playground/).
 
-You can also explore `ergotop`, a simple REPL for Ergo. Launch it via `./bin/ergotop` (or `./bin/ergotop.native` if you do not have `rlwrap` installed).
+You can also explore `ergotop`, a simple REPL for Ergo. Launch it via
+`./bin/ergotop` (or `./bin/ergotop.native` if you do not have `rlwrap`
+installed).
 
 ### Install Ergo
 
-The easiest way to install Ergo is as a [Node.js](https://nodejs.org/) package. Once you have Node.js installed on your machine, you can get the Ergo compiler and command-line using the Node.js package manager by typing the following in a terminal:
+The easiest way to install Ergo is as a [Node.js](https://nodejs.org/) package.
+Once you have Node.js installed on your machine, you can get the Ergo compiler
+and command-line using the Node.js package manager by typing the following in a
+terminal:
 
 ```text
 $ npm install -g @accordproject/ergo-cli
 ```
 
-This will install the compiler itself (`ergoc`) and a command-line tool (`ergo`) to execute Ergo code. You can check that both have been installed and print the version number by typing the following in a terminal:
+This will install the compiler itself (`ergoc`) and a command-line tool
+(`ergo`) to execute Ergo code. You can check that both have been installed and
+print the version number by typing the following in a terminal:
 
 ```text
 $ ergoc --version
@@ -61,7 +78,8 @@ $ ergoc ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo
 Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples/volumediscount/logic.js
 ```
 
-By default, Ergo compiles to JavaScript for execution. You can inspect the compiled code for the result in `./examples/volumediscount/logic.js`
+By default, Ergo compiles to JavaScript for execution. You can inspect the
+compiled code for the result in `./examples/volumediscount/logic.js`
 
 ### Execute a contract
 
@@ -75,12 +93,17 @@ $ ergo execute --cto ./examples/volumediscount/model.cto --ergo ./examples/volum
 
 ## For developers
 
-We welcome contributions. We encourage contributors to consult the following [Guidelines](./CONTRIBUTING.md)
+We welcome contributions. We encourage contributors to consult the following
+[Guidelines](./CONTRIBUTING.md)
 
 To setup for development, please consult the [Developer Guide](./DEVELOPERS.md)
 
 ## License <a name="license"></a>
-Accord Project source code files are made available under the Apache License, Version 2.0 (Apache-2.0), located in the [LICENSE](./LICENSE) file. Accord Project documentation files are made available under the Creative Commons Attribution 4.0 International License (CC-BY-4.0), available at http://creativecommons.org/licenses/by/4.0/.
+
+Accord Project source code files are made available under the Apache License,
+Version 2.0 (Apache-2.0), located in the [LICENSE](./LICENSE) file. Accord
+Project documentation files are made available under the Creative Commons
+Attribution 4.0 International License (CC-BY-4.0), available at
+http://creativecommons.org/licenses/by/4.0/.
 
 Copyright 2018 Clause, Inc.
-
