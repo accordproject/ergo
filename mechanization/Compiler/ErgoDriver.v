@@ -166,12 +166,12 @@ Section ErgoDriver.
 
   Section Interpreter.
     Definition ergo_maybe_update_context
-               (ctx : compilation_ctxt * eval_context)
+               (ctxt : compilation_ctxt * eval_context)
                (result : eresult (compilation_ctxt * eval_context * option ergo_data))
     : (compilation_ctxt * eval_context) :=
       match result with
-      | Success _ _ (sctx', dctx', _) => (sctx', dctx')
-      | _ => ctx
+      | Success _ _ (sctxt', dctxt', _) => (sctxt', dctxt')
+      | _ => ctxt
       end.
 
     Definition unpack_output
@@ -187,24 +187,24 @@ Section ErgoDriver.
       end.
 
     Definition ergo_eval_decl_via_calculus
-               (sctx : compilation_ctxt)
-               (dctx : eval_context)
+               (sctxt : compilation_ctxt)
+               (dctxt : eval_context)
                (decl : lrergo_declaration)
     : eresult (compilation_ctxt * eval_context * option ergo_data) :=
-      match ergo_declaration_to_ergo_calculus sctx decl with
+      match ergo_declaration_to_ergo_calculus sctxt decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (None, sctx') => esuccess (sctx', dctx, None)
-      | Success _ _ (Some decl', sctx') =>
-        match ergoc_eval_decl dctx decl' with
+      | Success _ _ (None, sctxt') => esuccess (sctxt', dctxt, None)
+      | Success _ _ (Some decl', sctxt') =>
+        match ergoc_eval_decl dctxt decl' with
         | Failure _ _ f => efailure f
-        | Success _ _ (dctx', None) => esuccess (sctx', dctx', None)
-        | Success _ _ (dctx', Some out) =>
+        | Success _ _ (dctxt', None) => esuccess (sctxt', dctxt', None)
+        | Success _ _ (dctxt', Some out) =>
           match unpack_output out with
-          | None => esuccess (sctx', dctx', Some out)
+          | None => esuccess (sctxt', dctxt', Some out)
           | Some (_, _, state) =>
             esuccess (
-                sctx',
-                ergo_ctx_update_local_env dctx' "state"%string state,
+                sctxt',
+                eval_context_update_local_env dctxt' "state"%string state,
                 Some out
               )
           end
@@ -219,10 +219,10 @@ Section ErgoDriver.
          (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
          (map (ErgoData.data_to_json_string fmt_dq) emits) ""%string).
 
-    Definition string_of_state (ctx : eval_context) (state : ergo_data)
+    Definition string_of_state (ctxt : eval_context) (state : ergo_data)
     : string :=
       let jsonify := ErgoData.data_to_json_string fmt_dq in
-      let old_st := lookup String.string_dec (ctx.(ctx_local_env)) "state"%string in
+      let old_st := lookup String.string_dec (ctxt.(eval_context_local_env)) "state"%string in
       let new_st := state in
       match old_st with
       | None => (fmt_blu "State. ") ++ (jsonify state)
@@ -234,16 +234,16 @@ Section ErgoDriver.
       end.
 
     (* XXX May be nice to replace by a format that aligns with Ergo notations instead of JSON and move to an earlier module e.g., Common/Utils/EData *)
-    Definition string_of_result (ctx : eval_context) (result : option ergo_data)
+    Definition string_of_result (ctxt : eval_context) (result : option ergo_data)
       : string :=
       match result with
-      | None => fmt_nl
+      | None => ""
       | Some (dright msg) =>
         fmt_red ("Error. "%string) ++ (ErgoData.data_to_json_string fmt_dq msg) ++ fmt_nl
       | Some out =>
         match unpack_output out with
         | Some (response, emits, state) =>
-            (string_of_emits emits) ++ (string_of_response response) ++ (string_of_state ctx state)
+            (string_of_emits emits) ++ (string_of_response response) ++ (string_of_state ctxt state)
         | None => (ErgoData.data_to_json_string fmt_dq out) ++ fmt_nl
         end
 (* Note: this was previously powered by QCert's dataToString d, and I kind of
@@ -253,11 +253,11 @@ Section ErgoDriver.
       end.
 
     Definition ergo_string_of_result
-               (ctx : eval_context)
+               (ctxt : eval_context)
                (result : eresult (compilation_ctxt * eval_context * option ergo_data))
       : string :=
       elift_both
-        (string_of_result ctx)
+        (string_of_result ctxt)
         (fun e => string_of_error e ++ fmt_nl)%string
         (elift (fun x => snd x) result).
 

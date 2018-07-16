@@ -23,43 +23,43 @@ Section ErgocEvalContext.
 
   Record eval_context :=
     mkEvalContext
-      { ctx_function_env : list (string * ergoc_function);
-        ctx_global_env : list (string * ergo_data);
-        ctx_local_env : list (string * ergo_data);
+      { eval_context_function_env : list (string * ergoc_function);
+        eval_context_global_env : list (string * ergo_data);
+        eval_context_local_env : list (string * ergo_data);
       }.
 
-  Definition ergo_ctx_update_function_env
-             (ctx : eval_context)
+  Definition eval_context_update_function_env
+             (ctxt : eval_context)
              (name : string)
              (value : ergoc_function) : eval_context :=
-    mkEvalContext ((name, value)::ctx.(ctx_function_env))
-                  ctx.(ctx_global_env)
-                  ctx.(ctx_local_env).
+    mkEvalContext ((name, value)::ctxt.(eval_context_function_env))
+                  ctxt.(eval_context_global_env)
+                  ctxt.(eval_context_local_env).
 
-  Definition ergo_ctx_update_global_env
-             (ctx : eval_context)
+  Definition eval_context_update_global_env
+             (ctxt : eval_context)
              (name : string)
              (value : ergo_data) : eval_context :=
-    mkEvalContext ctx.(ctx_function_env)
-                  ((name, value)::ctx.(ctx_global_env))
-                  ctx.(ctx_local_env).
+    mkEvalContext ctxt.(eval_context_function_env)
+                  ((name, value)::ctxt.(eval_context_global_env))
+                  ctxt.(eval_context_local_env).
 
-  Definition ergo_ctx_update_local_env
-             (ctx : eval_context)
+  Definition eval_context_update_local_env
+             (ctxt : eval_context)
              (name : string)
              (value : ergo_data) : eval_context :=
-    mkEvalContext ctx.(ctx_function_env)
-                  ctx.(ctx_global_env)
-                  ((name, value)::ctx.(ctx_local_env)).
+    mkEvalContext ctxt.(eval_context_function_env)
+                  ctxt.(eval_context_global_env)
+                  ((name, value)::ctxt.(eval_context_local_env)).
 
-  Definition ergo_ctx_set_local_env
-             (ctx : eval_context)
+  Definition eval_context_set_local_env
+             (ctxt : eval_context)
              (new_local_env : list (string * ergo_data)) : eval_context :=
-    mkEvalContext ctx.(ctx_function_env)
-                  ctx.(ctx_global_env)
+    mkEvalContext ctxt.(eval_context_function_env)
+                  ctxt.(eval_context_global_env)
                   new_local_env.
 
-  Definition ergo_empty_context :=
+  Definition empty_eval_context :=
     mkEvalContext nil nil
                   (("contract"%string, dunit)
                      ::("state"%string, dunit)

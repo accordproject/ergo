@@ -23,16 +23,15 @@ open Cto_t
 let args_list gconf =
   Arg.align
     [
-      ("-version", Arg.Unit ErgoUtil.get_version,
-       " Prints the compiler version");
-      ("--version", Arg.Unit ErgoUtil.get_version,
-       " Prints the compiler version");
+      ("-version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
+       " Print version and exit");
+      ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
+       " Print version and exit");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
        "<lang> Indicates the language for the target (default: javascript) " ^ available_targets)
     ]
 
 let usage =
-  "Ergo Compiler\n"^
   "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
 
 let main args =
