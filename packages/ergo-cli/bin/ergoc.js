@@ -27,7 +27,6 @@ try {
             args[i] = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
         }
     }
-    //Logger.info(process.argv);
     require('../lib/ergoc-lib.js');
 } catch (err) {
     Logger.info(err);

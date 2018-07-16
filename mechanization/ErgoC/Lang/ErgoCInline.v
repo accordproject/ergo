@@ -37,12 +37,12 @@ Definition ergo_module := Ergo.laergo_module.
 
 Section ErgoCInline.
 
-  Definition ergo_map_expr_sane ctx fn expr :=
-    @ergo_map_expr provenance absolute_name eval_context ctx
-                   (fun ctx name expr => ergo_ctx_update_local_env ctx name dunit)
+  Definition ergo_map_expr_sane ctxt fn expr :=
+    @ergo_map_expr provenance absolute_name eval_context ctxt
+                   (fun ctxt name expr => eval_context_update_local_env ctxt name dunit)
                    fn expr.
 
-  Definition ergo_inline_foreach' (ctx : eval_context) (expr : ergo_expr) :=
+  Definition ergo_inline_foreach' (ctxt : eval_context) (expr : ergo_expr) :=
     match expr with
     | EForeach prov rs whr fn =>
       (compose Some esuccess)
@@ -56,7 +56,7 @@ Section ErgoCInline.
     | _ => None
     end.
 
-  Definition ergo_inline_foreach ctx := ergo_map_expr_sane ctx ergo_inline_foreach'.
+  Definition ergo_inline_foreach ctxt := ergo_map_expr_sane ctxt ergo_inline_foreach'.
 
   Fixpoint ergo_letify_function'
            (prov : provenance)
@@ -80,17 +80,17 @@ Section ErgoCInline.
       end
     end.
 
-  Definition ergo_inline_functions' (ctx : eval_context) (expr : ergo_expr) :=
+  Definition ergo_inline_functions' (ctxt : eval_context) (expr : ergo_expr) :=
   match expr with
   | ECallFun prov fn args => Some
-      match lookup String.string_dec ctx.(ctx_function_env) fn with
+      match lookup String.string_dec ctxt.(eval_context_function_env) fn with
       | Some fn' => ergo_letify_function fn' args
       | None => eval_function_not_found_error prov fn
       end
   | _ => None
   end.
 
-  Definition ergo_inline_functions ctx := ergo_map_expr_sane ctx ergo_inline_functions'.
+  Definition ergo_inline_functions ctxt := ergo_map_expr_sane ctxt ergo_inline_functions'.
 
   Definition ergo_inline_expr := ergo_inline_functions.
 

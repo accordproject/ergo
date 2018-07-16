@@ -95,8 +95,8 @@ let string_of_error error =
 (** Version number *)
 let ergo_version = string_of_char_list ergo_version
 
-let get_version () =
-  print_endline ("Ergo version " ^ ergo_version);
+let get_version cmd () =
+  print_endline (cmd ^ ", version " ^ ergo_version);
   exit 0
 
 (** Additional utility functions *)

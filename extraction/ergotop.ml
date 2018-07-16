@@ -50,14 +50,13 @@ let rec repl (sctx, dctx) =
 let args_list gconf =
   Arg.align
     [
-      ("-version", Arg.Unit ErgoUtil.get_version,
-       " Prints the compiler version");
-      ("--version", Arg.Unit ErgoUtil.get_version,
-       " Prints the compiler version");
+      ("-version", Arg.Unit (ErgoUtil.get_version "The Ergo toplevel"),
+       " Print version and exit");
+      ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo toplevel"),
+       " Print version and exit");
     ]
 
 let usage =
-  "Ergo REPL\n"^
   "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
 
 let main args =

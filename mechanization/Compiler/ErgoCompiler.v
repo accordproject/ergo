@@ -281,7 +281,7 @@ Module ErgoCompiler.
   Definition ergo_make_stdlib_ctxt := ErgoDriver.ergo_make_stdlib_ctxt.
 
   (* REPL *)
-  Definition ergo_empty_eval_context := ErgoCEvalContext.ergo_empty_context.
+  Definition ergo_empty_eval_context := ErgoCEvalContext.empty_eval_context.
   Definition ergo_maybe_update_eval_context := ErgoDriver.ergo_maybe_update_context.
 
   Definition ergo_eval_decl_via_calculus := ErgoDriver.ergo_eval_decl_via_calculus.
