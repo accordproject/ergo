@@ -72,12 +72,13 @@ $ make cleanall
 $ make
 ```
 
-If successful, you should find the compiled binaries `ergotop.native` and
-`ergoc.native` in the `bin/` directory.
+If successful, you should find the following binaries in the `bin/` directory:
 
-The wrapper script `bin/ergotop` launches `ergotop.native` via the
-[`rlwrap`](https://github.com/hanslub42/rlwrap) utility, which must be
-installed separately.
+* `ergoc.native`, the Ergo compiler
+* `ergotop.native`, an experimental REPL for Ergo (note: the wrapper script
+  `bin/ergotop` launches `ergotop.native` via the
+  [`rlwrap`](https://github.com/hanslub42/rlwrap) utility, which must be
+  installed separately.)
 
 ###  Running the Unit Test Suite
 
