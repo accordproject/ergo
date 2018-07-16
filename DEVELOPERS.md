@@ -63,7 +63,7 @@ $ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdge
 $ opam install coq.8.8.0 coq-qcert.1.1.0
 ```
 
-#### Build the Ergo Compiler
+#### Build the Ergo Compiler and REPL
 
 To recompile Ergo from its source, do:
 
@@ -71,6 +71,13 @@ To recompile Ergo from its source, do:
 $ make cleanall
 $ make
 ```
+
+If successful, you should find the compiled binaries `ergotop.native` and
+`ergoc.native` in the `bin/` directory.
+
+The wrapper script `bin/ergotop` launches `ergotop.native` via the
+[`rlwrap`](https://github.com/hanslub42/rlwrap) utility, which must be
+installed separately.
 
 ###  Running the Unit Test Suite
 

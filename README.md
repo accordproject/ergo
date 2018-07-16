@@ -37,9 +37,8 @@ If you simply want to get a peek at Ergo without installing anything, check out
 the examples on the [Ergo
 Playground](https://accordproject.github.io/ergo-playground/).
 
-You can also explore `ergotop`, a simple REPL for Ergo. Launch it via
-`./bin/ergotop` (or `./bin/ergotop.native` if you do not have `rlwrap`
-installed).
+You can also try Ergo using `ergotop`, an experimental REPL for Ergo. For
+instructions on installing `ergotop`, refer to [DEVELOPERS.md](DEVELOPERS.md).
 
 ### Install Ergo
 
