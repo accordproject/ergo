@@ -114,7 +114,7 @@ Section ErgoCInline.
              (ctxt : eval_context)
              (fn : ergoc_function) : eresult ergoc_function :=
     match fn.(functionc_body) with
-    | None => TODO
+    | None => esuccess fn
     | Some expr =>
       match eolift (ergo_inline_expr ctxt) (ergo_inline_globals ctxt expr) with
       | Success _ _ new_body =>
