@@ -39,21 +39,6 @@ Section ErgoC.
   Definition ergo_unary_eval := ErgoOps.Unary.eval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
 
-  Definition ergo_inline_function
-             (ctxt : eval_context)
-             (fn : ergoc_function) : eresult ergoc_function :=
-    match fn.(functionc_body) with
-    | None => TODO
-    | Some expr =>
-      match eolift (ergo_inline_expr ctxt) (ergo_inline_globals ctxt expr) with
-      | Success _ _ new_body =>
-        esuccess (mkFuncC fn.(functionc_annot)
-                               fn.(functionc_sig)
-                                    (Some new_body))
-      | Failure _ _ f => efailure f
-      end
-    end.
-
   Fixpoint ergo_eval_expr (ctxt : eval_context) (expr : ergoc_expr) : eresult ergo_data :=
     match expr with
     | EThisContract loc => efailure (SystemError loc "No `this' in ergoc")
@@ -199,23 +184,3 @@ Section ErgoC.
     end.
 
 End ErgoC.
-
-(*
-Section Tests.
-
-  Definition cow : string := "disco".
-  Definition easy := EConst (dnat 0).
-  Definition summ := EUnaryOp (OpNatUnary NatLog2) (EConst (dnat 1024)).
-  Definition lettuce := ELet "cow" None (EConst (dnat 1024)) (EVar "cow").
-  Definition cabbage := ELet "cow" None (EConst (dnat 2048)) lettuce.
-  Definition records := ERecord ((cow, EConst (dnat 512))::(cow, EConst (dnat 4096))::nil).
-
-  (* Compute = Eval vm_compute in *)
-  Compute (ergo_eval_expr ergo_empty_context easy).
-  Compute (ergo_eval_expr ergo_empty_context summ).
-  Compute (ergo_eval_expr ergo_empty_context cabbage).
-  Compute (ergo_eval_expr ergo_empty_context records).
-
-End Tests.
-
- *)
