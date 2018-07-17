@@ -89,9 +89,40 @@ Section ErgoCInline.
       end
   | _ => None
   end.
-
   Definition ergo_inline_functions ctxt := ergo_map_expr_sane ctxt ergo_inline_functions'.
 
   Definition ergo_inline_expr := ergo_inline_functions.
+
+  Definition ergo_inline_globals'
+           (ctxt : eval_context)
+           (expr : ergoc_expr) :=
+    match expr with
+    | EVar loc name => Some
+      match lookup String.string_dec (ctxt.(eval_context_local_env)) name with
+      | Some _ => esuccess expr
+      | None =>
+        match lookup String.string_dec (ctxt.(eval_context_global_env)) name with
+        | Some val => esuccess (EConst loc val)
+        | None => esuccess expr
+        end
+      end
+    | _ => None
+    end.
+  Definition ergo_inline_globals ctxt := ergo_map_expr_sane ctxt ergo_inline_globals'.
+
+  Definition ergo_inline_function
+             (ctxt : eval_context)
+             (fn : ergoc_function) : eresult ergoc_function :=
+    match fn.(functionc_body) with
+    | None => TODO
+    | Some expr =>
+      match eolift (ergo_inline_expr ctxt) (ergo_inline_globals ctxt expr) with
+      | Success _ _ new_body =>
+        esuccess (mkFuncC fn.(functionc_annot)
+                               fn.(functionc_sig)
+                                    (Some new_body))
+      | Failure _ _ f => efailure f
+      end
+    end.
 
 End ErgoCInline.
