@@ -26,7 +26,7 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoMap.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
-Require Import ErgoSpec.Translation.ErgoInlineContext.
+Require Import ErgoSpec.Translation.ErgoCompContext.
 
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
@@ -39,11 +39,11 @@ Definition ergo_module := Ergo.laergo_module.
 Section ErgoCInline.
 
   Definition ergo_map_expr_sane ctxt fn expr :=
-    @ergo_map_expr provenance absolute_name inline_context ctxt
-                   (fun ctxt name expr => inline_context_update_local_env ctxt name expr)
+    @ergo_map_expr provenance absolute_name compilation_context ctxt
+                   (fun ctxt name expr => compilation_context_update_local_env ctxt name expr)
                    fn expr.
 
-  Definition ergo_inline_foreach' (ctxt : inline_context) (expr : ergo_expr) :=
+  Definition ergo_inline_foreach' (ctxt : compilation_context) (expr : ergo_expr) :=
     match expr with
     | EForeach prov rs whr fn =>
       (compose Some esuccess)
@@ -81,10 +81,10 @@ Section ErgoCInline.
       end
     end.
 
-  Definition ergo_inline_functions' (ctxt : inline_context) (expr : ergo_expr) :=
+  Definition ergo_inline_functions' (ctxt : compilation_context) (expr : ergo_expr) :=
   match expr with
   | ECallFun prov fn args => Some
-      match lookup String.string_dec ctxt.(inline_context_function_env) fn with
+      match lookup String.string_dec ctxt.(compilation_context_function_env) fn with
       | Some fn' => ergo_letify_function fn' args
       | None => eval_function_not_found_error prov fn
       end
@@ -95,14 +95,14 @@ Section ErgoCInline.
   Definition ergo_inline_expr := ergo_inline_functions.
 
   Definition ergo_inline_globals'
-           (ctxt : inline_context)
+           (ctxt : compilation_context)
            (expr : ergoc_expr) :=
     match expr with
     | EVar loc name => Some
-      match lookup String.string_dec (ctxt.(inline_context_local_env)) name with
+      match lookup String.string_dec (ctxt.(compilation_context_local_env)) name with
       | Some _ => esuccess expr
       | None =>
-        match lookup String.string_dec (ctxt.(inline_context_global_env)) name with
+        match lookup String.string_dec (ctxt.(compilation_context_global_env)) name with
         | Some val => esuccess val
         | None => esuccess expr
         end
@@ -112,7 +112,7 @@ Section ErgoCInline.
   Definition ergo_inline_globals ctxt := ergo_map_expr_sane ctxt ergo_inline_globals'.
 
   Definition ergo_inline_function
-             (ctxt : inline_context)
+             (ctxt : compilation_context)
              (fn : ergoc_function) : eresult ergoc_function :=
     match fn.(functionc_body) with
     | None => esuccess fn
@@ -124,6 +124,24 @@ Section ErgoCInline.
                                     (Some new_body))
       | Failure _ _ f => efailure f
       end
+    end.
+
+  Definition ergoc_inline_declaration
+             (ctxt : compilation_context)
+             (decl : ergoc_declaration)
+    : eresult (compilation_context * ergoc_declaration) :=
+    match decl with
+    | DCExpr prov expr =>
+      elift (fun x => (ctxt, DCExpr prov x)) (ergo_inline_expr ctxt expr)
+    | DCConstant prov name expr =>
+      elift (fun x =>
+               (compilation_context_update_global_env ctxt name x, DCConstant prov name x))
+            (ergo_inline_expr ctxt expr)
+    | DCFunc prov name fn =>
+      elift (fun x =>
+               (compilation_context_update_function_env ctxt name x, DCFunc prov name x))
+            (ergo_inline_function ctxt fn)
+    | DCContract _ _ _ => TODO
     end.
 
 End ErgoCInline.

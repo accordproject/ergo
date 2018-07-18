@@ -35,28 +35,19 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Section ErgoCtoErgoNNRC.
   Section TranslationContext.
     Record translation_context :=
-      mkCompContext {
+      mkTranslationContext {
           translation_context_fun_table: lookup_table;
-          translation_context_globals: list string;
           translation_context_params: list string;
         }.
 
     Definition add_params (ctxt:translation_context) (params:list string) : translation_context :=
-      mkCompContext
+      mkTranslationContext
         ctxt.(translation_context_fun_table)
-        ctxt.(translation_context_globals)
         (List.app params ctxt.(translation_context_params)).
 
-    Definition add_one_global (ctxt:translation_context) (param:string) : translation_context :=
-      mkCompContext
-        ctxt.(translation_context_fun_table)
-        (List.cons param ctxt.(translation_context_globals))
-        ctxt.(translation_context_params).
-
     Definition add_one_function (ctxt:translation_context) (fname:string) (flambda:lambdan) : translation_context :=
-      mkCompContext
+      mkTranslationContext
         (add_function_to_table ctxt.(translation_context_fun_table) fname flambda)
-        ctxt.(translation_context_globals)
         ctxt.(translation_context_params).
 
   End TranslationContext.
@@ -321,7 +312,7 @@ Section ErgoCtoErgoNNRC.
         (ergoc_expr_to_nnrc ctxt e)
     | DCConstant prov v e =>
       elift
-        (fun x => (add_one_global ctxt v, DNConstant v x)) (* Add new variable to translation_context *)
+        (fun x => (ctxt, DNConstant v x)) (* Add new variable to translation_context *)
         (ergoc_expr_to_nnrc ctxt e)
     | DCFunc prov fn f =>
       elift
@@ -333,7 +324,7 @@ Section ErgoCtoErgoNNRC.
     end.
 
   Definition init_translation_context :=
-    mkCompContext nnrc_stdlib nil nil.
+    mkTranslationContext nnrc_stdlib nil.
 
   (** Translate a module to a module+calculus *)
   Definition declarations_calculus_with_table (dl:list ergoc_declaration)

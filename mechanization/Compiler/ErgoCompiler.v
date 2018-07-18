@@ -26,8 +26,6 @@ Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
 Require ErgoSpec.Compiler.ErgoDriver.
-Require ErgoSpec.Translation.ErgoInlineContext.
-
 
 Module ErgoCompiler.
 
@@ -285,8 +283,6 @@ Module ErgoCompiler.
     -> ergo_declaration
     -> String.string * ErgoDriver.repl_context
     := ErgoDriver.ergo_repl_eval_decl.
-
-  Definition empty_inline_context := ErgoInlineContext.empty_inline_context.
 
 End ErgoCompiler.
 
