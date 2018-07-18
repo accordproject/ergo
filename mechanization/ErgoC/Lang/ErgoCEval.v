@@ -30,7 +30,6 @@ Require Import ErgoSpec.Common.Utils.EResult.
 
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCInline.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 

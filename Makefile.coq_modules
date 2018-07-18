@@ -40,15 +40,15 @@ MODULES = \
   ErgoC/Lang/ErgoC \
   ErgoC/Lang/ErgoCSugar \
   ErgoC/Lang/ErgoCEvalContext \
-  ErgoC/Lang/ErgoCInline \
   ErgoC/Lang/ErgoCEval \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
   ErgoNNRC/Lang/ErgoNNRCCall \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
-  Translation/ErgoInlineContext \
+  Translation/ErgoCompContext \
   Translation/ErgotoErgoC \
+  Translation/ErgoCInline \
   Translation/ErgoCtoErgoNNRCType \
   Translation/ErgoCtoErgoNNRC \
   Translation/ErgoNNRCtoJavaScript \

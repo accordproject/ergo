@@ -32,7 +32,8 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCEval.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import ErgoSpec.Translation.ErgotoErgoC.
-Require Import ErgoSpec.Translation.ErgoInlineContext.
+Require Import ErgoSpec.Translation.ErgoCompContext.
+Require Import ErgoSpec.Translation.ErgoCInline.
 Require Import ErgoSpec.Translation.ErgoCtoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
@@ -41,26 +42,7 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 Section ErgoDriver.
 
   Section Compiler.
-    Definition compilation_context : Set := namespace_ctxt * inline_context.
-    Definition namespace_ctxt_of_compilation_context (ctxt:compilation_context) : namespace_ctxt :=
-      fst ctxt.
-    Definition inline_context_of_compilation_context (ctxt:compilation_context) : inline_context :=
-      snd ctxt.
-    Definition update_namespace_ctxt (ctxt:compilation_context) (nsctxt:namespace_ctxt) : compilation_context :=
-      (nsctxt, snd ctxt).
-    Definition update_inline_ctxt (ctxt:compilation_context) (ictxt:inline_context) : compilation_context :=
-      (fst ctxt, ictxt).
-
-    Definition set_namespace_in_compilation_context (ns:namespace_name) (ctxt:compilation_context) : eresult compilation_context :=
-      elift
-        (update_namespace_ctxt
-           ctxt)
-        (new_ergo_module_namespace
-           (namespace_ctxt_of_compilation_context ctxt)
-           ns).
-
     (* Initialize compilation context *)
-    
     Definition compilation_context_from_inputs
                (ctos:list lrcto_package)
                (mls:list lrergo_module) : eresult compilation_context :=
@@ -69,26 +51,8 @@ Section ErgoDriver.
       let ctxt := init_namespace_ctxt in
       elift (fun resolved_mods : list laergo_module * namespace_ctxt =>
                let (mods,ns_ctxt) := resolved_mods in
-               (ns_ctxt,empty_inline_context))
+               init_compilation_context ns_ctxt)
             (resolve_ergo_inputs ctxt (ictos ++ imls)).
-
-    Definition ergo_make_stdlib_ctxt
-               (ctos:list lrcto_package)
-               (mls:list lrergo_module)
-      : compilation_context :=
-      match (compilation_context_from_inputs ctos mls) with
-      | Success _ _ r => r
-      | Failure _ _ f => (init_namespace_ctxt, empty_inline_context)
-      end.
-
-    Definition ergo_make_stdlib_namespace
-               (ctos:list lrcto_package)
-               (mls:list lrergo_module)
-      : namespace_ctxt :=
-      match (elift namespace_ctxt_of_compilation_context) (compilation_context_from_inputs ctos mls) with
-      | Success _ _ r => r
-      | Failure _ _ f => init_namespace_ctxt
-      end.
 
     (* Ergo -> ErgoC *)
     Definition ergo_module_to_ergo_calculus
@@ -97,7 +61,7 @@ Section ErgoDriver.
       let ns_ctxt := namespace_ctxt_of_compilation_context ctxt in
       let am := resolve_ergo_module ns_ctxt lm in
       eolift (fun amc =>
-                let ctxt := update_namespace_ctxt ctxt (snd amc) in
+                let ctxt := compilation_context_update_namespace ctxt (snd amc) in
                 let p := expand_ergo_module (fst amc) in
                 eolift (fun p =>
                           elift
@@ -112,7 +76,7 @@ Section ErgoDriver.
       let ns_ctxt := namespace_ctxt_of_compilation_context ctxt in
       let am := resolve_ergo_declaration ns_ctxt ld in
       eolift (fun amc =>
-                let ctxt := update_namespace_ctxt ctxt (snd amc) in
+                let ctxt := compilation_context_update_namespace ctxt (snd amc) in
                 elift
                   (fun d => (d, ctxt))
                   (declaration_to_calculus (fst amc)))
@@ -122,15 +86,13 @@ Section ErgoDriver.
                (sctxt : compilation_context)
                (decl : lrergo_declaration)
       : eresult (option ergoc_declaration * compilation_context) :=
-      let nsctxt := namespace_ctxt_of_compilation_context sctxt in
-      let ictxt := inline_context_of_compilation_context sctxt in
       match ergo_declaration_to_ergo_calculus sctxt decl with
       | Failure _ _ f => efailure f
       | Success _ _ (None, sctxt') => esuccess (None, sctxt')
       | Success _ _ (Some decl', sctxt') =>
-        match ergoc_inline_declaration ictxt decl' with
+        match ergoc_inline_declaration sctxt decl' with
         | Failure _ _ f => efailure f
-        | Success _ _ (ictxt', decl'') => esuccess (Some decl'', update_inline_ctxt sctxt' ictxt')
+        | Success _ _ (sctxt', decl'') => esuccess (Some decl'', sctxt')
         end
       end.
 
@@ -165,7 +127,7 @@ Section ErgoDriver.
     Definition ergo_module_to_javascript_cicero_top
                (ctos:list cto_package)
                (mls:list lrergo_module)
-               (p:ergo_module) : eresult ErgoCodeGen.javascript :=
+               (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
       let ctxt := init_namespace_ctxt in
       let rctos := resolve_cto_packages ctxt ctos in
       let rmods := eolift (fun rctos => resolve_ergo_modules (snd rctos) mls) rctos in

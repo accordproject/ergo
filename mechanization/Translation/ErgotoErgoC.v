@@ -17,17 +17,14 @@
 Require Import String.
 Require Import List.
 
-Require Import ErgoSpec.Backend.ForeignErgo.
+Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCInline.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
-Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Translation.ErgoInlineContext.
 
 Section ErgotoErgoC.
 
@@ -354,24 +351,6 @@ Section ErgotoErgoC.
       elift Some (elift (DCContract prov cn)
                         (let ctxt := set_current_contract ctxt cn in
                          contract_to_calculus ctxt c))
-    end.
-
-  Definition ergoc_inline_declaration
-             (ctxt : inline_context)
-             (decl : ergoc_declaration)
-    : eresult (inline_context * ergoc_declaration) :=
-    match decl with
-    | DCExpr prov expr =>
-      elift (fun x => (ctxt, DCExpr prov x)) (ergo_inline_expr ctxt expr)
-    | DCConstant prov name expr =>
-      elift (fun x =>
-               (inline_context_update_global_env ctxt name x, DCConstant prov name x))
-            (ergo_inline_expr ctxt expr)
-    | DCFunc prov name fn =>
-      elift (fun x =>
-               (inline_context_update_function_env ctxt name x, DCFunc prov name x))
-            (ergo_inline_function ctxt fn)
-    | DCContract _ _ _ => TODO
     end.
 
   (** Translate a module to a module+calculus *)
