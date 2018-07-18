@@ -41,24 +41,15 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 Section ErgoDriver.
 
   Section Compiler.
-
-    Definition compilation_context : Set := list laergo_module * namespace_ctxt * inline_context.
+    Definition compilation_context : Set := namespace_ctxt * inline_context.
     Definition namespace_ctxt_of_compilation_context (ctxt:compilation_context) : namespace_ctxt :=
-      snd (fst ctxt).
+      fst ctxt.
     Definition inline_context_of_compilation_context (ctxt:compilation_context) : inline_context :=
       snd ctxt.
-    Definition modules_of_compilation_context  (ctxt:compilation_context) : list laergo_module :=
-      fst (fst ctxt).
     Definition update_namespace_ctxt (ctxt:compilation_context) (nsctxt:namespace_ctxt) : compilation_context :=
-      ((fst (fst ctxt), nsctxt), snd ctxt).
+      (nsctxt, snd ctxt).
     Definition update_inline_ctxt (ctxt:compilation_context) (ictxt:inline_context) : compilation_context :=
       (fst ctxt, ictxt).
-    Definition update_namespace_and_inline_ctxt
-               (ctxt:compilation_context)
-               (nsctxt:namespace_ctxt)
-               (ictxt:inline_context)
-      : compilation_context :=
-      ((fst (fst ctxt), nsctxt), ictxt).
 
     Definition set_namespace_in_compilation_context (ns:namespace_name) (ctxt:compilation_context) : eresult compilation_context :=
       elift
@@ -78,7 +69,7 @@ Section ErgoDriver.
       let ctxt := init_namespace_ctxt in
       elift (fun resolved_mods : list laergo_module * namespace_ctxt =>
                let (mods,ns_ctxt) := resolved_mods in
-               (mods,ns_ctxt,empty_inline_context))
+               (ns_ctxt,empty_inline_context))
             (resolve_ergo_inputs ctxt (ictos ++ imls)).
 
     Definition ergo_make_stdlib_ctxt
@@ -87,7 +78,7 @@ Section ErgoDriver.
       : compilation_context :=
       match (compilation_context_from_inputs ctos mls) with
       | Success _ _ r => r
-      | Failure _ _ f => (nil, init_namespace_ctxt, empty_inline_context)
+      | Failure _ _ f => (init_namespace_ctxt, empty_inline_context)
       end.
 
     Definition ergo_make_stdlib_namespace
@@ -146,9 +137,8 @@ Section ErgoDriver.
     Definition ergo_module_to_javascript
                (ctxt:compilation_context)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
-      let rmods := modules_of_compilation_context ctxt in
       let pc := ergo_module_to_ergo_calculus ctxt p in
-      let pn := eolift (fun xy => ergoc_module_to_nnrc rmods (fst xy)) pc in
+      let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
       elift nnrc_module_to_javascript_top pn.
 
     Definition ergo_module_to_javascript_top
@@ -157,13 +147,12 @@ Section ErgoDriver.
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
       let ctxt := compilation_context_from_inputs ctos mls in
       eolift (fun ctxt => ergo_module_to_javascript ctxt p) ctxt.
-    
+
     Definition ergo_module_to_java
                (ctxt:compilation_context)
                (p:lrergo_module) : eresult ErgoCodeGen.java :=
-      let rmods := modules_of_compilation_context ctxt in
       let pc := ergo_module_to_ergo_calculus ctxt p in
-      let pn := eolift (fun xy => ergoc_module_to_nnrc rmods (fst xy)) pc in
+      let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
       elift nnrc_module_to_java_top pn.
 
     Definition ergo_module_to_java_top
@@ -191,7 +180,7 @@ Section ErgoDriver.
            let pn :=
                eolift
                  (fun rmods =>
-                    eolift (ergoc_module_to_nnrc (fst rmods)) pc) rmods
+                    eolift ergoc_module_to_nnrc pc) rmods
            in
            elift (ergoc_module_to_javascript_cicero contract_name (snd c).(contract_state) sigs) pn)
         ec.
