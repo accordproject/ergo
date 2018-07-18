@@ -274,13 +274,6 @@ Module ErgoCompiler.
     -> EResult.eresult Java.java
     := ErgoDriver.ergo_module_to_java_top.
 
-  Definition compilation_ctxt_from_inputs := ErgoDriver.compilation_context_from_inputs.
-  Definition namespace_ctxt_of_compilation_ctxt := ErgoDriver.namespace_ctxt_of_compilation_context.
-  Definition ergo_declaration_to_ergo_calculus := ErgoDriver.ergo_declaration_to_ergo_calculus.
-
-  Definition ergo_make_stdlib_namespace := ErgoDriver.ergo_make_stdlib_namespace.
-  Definition ergo_make_stdlib_ctxt := ErgoDriver.ergo_make_stdlib_ctxt.
-
   (** REPL *)
   Definition init_repl_context :
     list CTO.cto_package

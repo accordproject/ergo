@@ -174,7 +174,7 @@ Section ErgoNameResolution.
                (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
       update_namespace_context_current ctxt (add_function_to_namespace_table ln an).
 
-    Definition new_namespace_scope (ctxt:namespace_ctxt) (ns:namespace_name) :=
+    Definition new_namespace_scope (ctxt:namespace_ctxt) (ns:namespace_name) : namespace_ctxt :=
       let prev_ns := ctxt.(namespace_ctxt_namespace) in
       let prev_tbl := ctxt.(namespace_ctxt_current) in
       let prev_modules := ctxt.(namespace_ctxt_modules) in
@@ -696,14 +696,17 @@ Section ErgoNameResolution.
         decls
         ctxt.
 
+    Definition silently_resolve_ergo_declarations
+               (ctxt:namespace_ctxt)
+               (decls: list lrergo_declaration)
+      : eresult namespace_ctxt :=
+      elift snd (resolve_ergo_declarations ctxt decls).
+
   End NameResolution.
 
   Section Top.
     Definition init_namespace_ctxt : namespace_ctxt :=
       empty_namespace_ctxt no_namespace.
-
-    Definition init_namespace_ctxt_from_modules (ml:list lrergo_module) :=
-      namespace_ctxt_of_ergo_modules init_namespace_ctxt ml.
 
     Definition patch_cto_imports
                (ctxt_ns:namespace_name)
@@ -731,6 +734,40 @@ Section ErgoNameResolution.
           ::(DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns))
           :: decls.
       
+    (* New namespace *)
+    Definition new_cto_package_namespace
+               (ctxt:namespace_ctxt)
+               (ns:namespace_name)
+               (m:lrergo_module)
+      : eresult namespace_ctxt :=
+      if is_builtin_import ns
+      then esuccess ctxt
+      else
+        let builtin_cto_imports :=
+            (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
+              :: (DImport dummy_provenance (ImportSelf dummy_provenance ns))
+              :: nil
+        in
+        let ctxt := new_namespace_scope ctxt ns in
+        let ctxt := namespace_ctxt_of_ergo_module ctxt m in (* XXX Pre-populate namespace for CTO modules to handle not-yet-declared names *)
+        silently_resolve_ergo_declarations ctxt builtin_cto_imports.
+
+    Definition new_ergo_module_namespace
+               (ctxt:namespace_ctxt)
+               (ns:namespace_name)
+      : eresult namespace_ctxt :=
+      if is_builtin_import ns
+      then esuccess ctxt
+      else
+        let builtin_cto_imports :=
+            (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
+              ::(DImport dummy_provenance (ImportAll dummy_provenance stdlib_namespace))
+              ::(DImport dummy_provenance (ImportSelf dummy_provenance ns))
+              :: nil
+        in
+        let ctxt := new_namespace_scope ctxt ns in
+        silently_resolve_ergo_declarations ctxt builtin_cto_imports.
+
     (* Resolve a CTO package *)
     Definition resolve_cto_package
                (ctxt:namespace_ctxt)
