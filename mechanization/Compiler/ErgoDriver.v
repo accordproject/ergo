@@ -32,6 +32,7 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCEval.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import ErgoSpec.Translation.ErgotoErgoC.
+Require Import ErgoSpec.Translation.ErgoInlineContext.
 Require Import ErgoSpec.Translation.ErgoCtoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
@@ -110,6 +111,21 @@ Section ErgoDriver.
                   (declaration_to_calculus (fst amc)))
              am.
 
+    Definition ergo_declaration_to_ergo_calculus_inlined
+               (sctxt : compilation_ctxt)
+               (ictxt : inline_context)
+               (decl : lrergo_declaration)
+      : eresult (option ergoc_declaration * compilation_ctxt * inline_context) :=
+      match ergo_declaration_to_ergo_calculus sctxt decl with
+      | Failure _ _ f => efailure f
+      | Success _ _ (None, sctxt') => esuccess (None, sctxt', ictxt)
+      | Success _ _ (Some decl', sctxt') =>
+        match ergoc_inline_declaration ictxt decl' with
+        | Failure _ _ f => efailure f
+        | Success _ _ (ictxt', decl'') => esuccess (Some decl'', sctxt', ictxt')
+        end
+      end.
+
     Definition ergo_module_to_javascript
                (ctxt:compilation_ctxt)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
@@ -166,11 +182,11 @@ Section ErgoDriver.
 
   Section Interpreter.
     Definition ergo_maybe_update_context
-               (ctxt : compilation_ctxt * eval_context)
-               (result : eresult (compilation_ctxt * eval_context * option ergo_data))
-    : (compilation_ctxt * eval_context) :=
+               (ctxt : compilation_ctxt * inline_context * eval_context)
+               (result : eresult (compilation_ctxt * inline_context * eval_context * option ergo_data))
+    : (compilation_ctxt * inline_context * eval_context) :=
       match result with
-      | Success _ _ (sctxt', dctxt', _) => (sctxt', dctxt')
+      | Success _ _ (sctxt', ictxt', dctxt', _) => (sctxt', ictxt', dctxt')
       | _ => ctxt
       end.
 
@@ -188,22 +204,24 @@ Section ErgoDriver.
 
     Definition ergo_eval_decl_via_calculus
                (sctxt : compilation_ctxt)
+               (ictxt : inline_context)
                (dctxt : eval_context)
                (decl : lrergo_declaration)
-    : eresult (compilation_ctxt * eval_context * option ergo_data) :=
-      match ergo_declaration_to_ergo_calculus sctxt decl with
+    : eresult (compilation_ctxt * inline_context * eval_context * option ergo_data) :=
+      match ergo_declaration_to_ergo_calculus_inlined sctxt ictxt decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (None, sctxt') => esuccess (sctxt', dctxt, None)
-      | Success _ _ (Some decl', sctxt') =>
+      | Success _ _ (None, sctxt', ictxt') => esuccess (sctxt', ictxt', dctxt, None)
+      | Success _ _ (Some decl', sctxt', ictxt') =>
         match ergoc_eval_decl dctxt decl' with
         | Failure _ _ f => efailure f
-        | Success _ _ (dctxt', None) => esuccess (sctxt', dctxt', None)
+        | Success _ _ (dctxt', None) => esuccess (sctxt', ictxt', dctxt', None)
         | Success _ _ (dctxt', Some out) =>
           match unpack_output out with
-          | None => esuccess (sctxt', dctxt', Some out)
+          | None => esuccess (sctxt', ictxt', dctxt', Some out)
           | Some (_, _, state) =>
             esuccess (
                 sctxt',
+                ictxt',
                 eval_context_update_local_env dctxt' "state"%string state,
                 Some out
               )
@@ -254,12 +272,12 @@ Section ErgoDriver.
 
     Definition ergo_string_of_result
                (ctxt : eval_context)
-               (result : eresult (compilation_ctxt * eval_context * option ergo_data))
+               (result : eresult (compilation_ctxt * inline_context * eval_context * option ergo_data))
       : string :=
       elift_both
         (string_of_result ctxt)
         (fun e => string_of_error e ++ fmt_nl)%string
-        (elift (fun x => snd x) result).
+        (elift (fun x => match x with | (_, _, y) => y end) result).
 
   End Interpreter.
 

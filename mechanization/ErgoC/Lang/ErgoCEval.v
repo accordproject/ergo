@@ -171,15 +171,12 @@ Section ErgoC.
     : eresult (eval_context * option ergo_data) :=
     match decl with
     | DCExpr loc expr =>
-      elift (fun x => (dctxt, Some x))
-            ((eolift (ergo_eval_expr dctxt)) (ergo_inline_expr dctxt expr))
+      elift (fun x => (dctxt, Some x)) (ergo_eval_expr dctxt expr)
     | DCConstant loc name expr =>
-      let expr' := eolift (ergo_eval_expr dctxt) (ergo_inline_expr dctxt expr) in
+      let expr' := ergo_eval_expr dctxt expr in
       eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
     | DCFunc loc name func =>
-      elift (fun fn' =>
-               (eval_context_update_function_env dctxt name fn', None))
-            (ergo_inline_function dctxt func)
+      esuccess (eval_context_update_function_env dctxt name func, None)
     | DCContract loc name contr => TODO
     end.
 

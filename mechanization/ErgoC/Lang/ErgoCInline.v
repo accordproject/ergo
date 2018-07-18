@@ -21,11 +21,12 @@ Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EProvenance.
+Require Import ErgoSpec.Common.Types.ErgoType.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoMap.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
+Require Import ErgoSpec.Translation.ErgoInlineContext.
 
 Definition ergo_expr := Ergo.laergo_expr.
 Definition ergo_stmt := Ergo.laergo_stmt.
@@ -38,11 +39,11 @@ Definition ergo_module := Ergo.laergo_module.
 Section ErgoCInline.
 
   Definition ergo_map_expr_sane ctxt fn expr :=
-    @ergo_map_expr provenance absolute_name eval_context ctxt
-                   (fun ctxt name expr => eval_context_update_local_env ctxt name dunit)
+    @ergo_map_expr provenance absolute_name inline_context ctxt
+                   (fun ctxt name expr => inline_context_update_local_env ctxt name expr)
                    fn expr.
 
-  Definition ergo_inline_foreach' (ctxt : eval_context) (expr : ergo_expr) :=
+  Definition ergo_inline_foreach' (ctxt : inline_context) (expr : ergo_expr) :=
     match expr with
     | EForeach prov rs whr fn =>
       (compose Some esuccess)
@@ -80,10 +81,10 @@ Section ErgoCInline.
       end
     end.
 
-  Definition ergo_inline_functions' (ctxt : eval_context) (expr : ergo_expr) :=
+  Definition ergo_inline_functions' (ctxt : inline_context) (expr : ergo_expr) :=
   match expr with
   | ECallFun prov fn args => Some
-      match lookup String.string_dec ctxt.(eval_context_function_env) fn with
+      match lookup String.string_dec ctxt.(inline_context_function_env) fn with
       | Some fn' => ergo_letify_function fn' args
       | None => eval_function_not_found_error prov fn
       end
@@ -94,15 +95,15 @@ Section ErgoCInline.
   Definition ergo_inline_expr := ergo_inline_functions.
 
   Definition ergo_inline_globals'
-           (ctxt : eval_context)
+           (ctxt : inline_context)
            (expr : ergoc_expr) :=
     match expr with
     | EVar loc name => Some
-      match lookup String.string_dec (ctxt.(eval_context_local_env)) name with
+      match lookup String.string_dec (ctxt.(inline_context_local_env)) name with
       | Some _ => esuccess expr
       | None =>
-        match lookup String.string_dec (ctxt.(eval_context_global_env)) name with
-        | Some val => esuccess (EConst loc val)
+        match lookup String.string_dec (ctxt.(inline_context_global_env)) name with
+        | Some val => esuccess val
         | None => esuccess expr
         end
       end
@@ -111,7 +112,7 @@ Section ErgoCInline.
   Definition ergo_inline_globals ctxt := ergo_map_expr_sane ctxt ergo_inline_globals'.
 
   Definition ergo_inline_function
-             (ctxt : eval_context)
+             (ctxt : inline_context)
              (fn : ergoc_function) : eresult ergoc_function :=
     match fn.(functionc_body) with
     | None => esuccess fn

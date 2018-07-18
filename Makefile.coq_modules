@@ -47,6 +47,7 @@ MODULES = \
   ErgoNNRC/Lang/ErgoNNRCCall \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
+  Translation/ErgoInlineContext \
   Translation/ErgotoErgoC \
   Translation/ErgoCtoErgoNNRCType \
   Translation/ErgoCtoErgoNNRC \
