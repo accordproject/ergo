@@ -60,14 +60,15 @@ Section ErgoDriver.
       : compilation_context :=
       ((fst (fst ctxt), nsctxt), ictxt).
 
-    Definition set_namespace_in_compilation_context (ctxt:compilation_context) (ns:namespace_name) : compilation_context :=
-      update_namespace_ctxt
-        ctxt (new_namespace_scope
-                (namespace_ctxt_of_compilation_context ctxt)
-                ns).
+    Definition set_namespace_in_compilation_context (ns:namespace_name) (ctxt:compilation_context) : eresult compilation_context :=
+      elift
+        (update_namespace_ctxt
+           ctxt)
+        (new_ergo_module_namespace
+           (namespace_ctxt_of_compilation_context ctxt)
+           ns).
 
     (* Initialize compilation context *)
-    Locate inline_context.
     
     Definition compilation_context_from_inputs
                (ctos:list lrcto_package)
@@ -207,7 +208,9 @@ Section ErgoDriver.
                (ctos : list lrcto_package)
                (mls : list lrergo_module) : eresult repl_context :=
       elift (mkREPLCtxt ErgoCEvalContext.empty_eval_context)
-            (compilation_context_from_inputs ctos mls).
+            (eolift (set_namespace_in_compilation_context
+                       "org.accordproject.ergotop"%string)
+                    (compilation_context_from_inputs ctos mls)).
 
     Definition update_repl_ctxt_comp_ctxt
                (rctxt: repl_context)
