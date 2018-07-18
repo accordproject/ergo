@@ -41,53 +41,68 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 Section ErgoDriver.
 
   Section Compiler.
-    
-    Definition compilation_ctxt : Set := list laergo_module * namespace_ctxt.
-    Definition namespace_ctxt_of_compilation_ctxt (ctxt:compilation_ctxt) : namespace_ctxt :=
-      snd ctxt.
-    Definition modules_of_compilation_ctxt  (ctxt:compilation_ctxt) : list laergo_module :=
-      fst ctxt.
-    Definition update_namespace_ctxt (ctxt:compilation_ctxt) (ns_ctxt:namespace_ctxt) :=
-      (fst ctxt, ns_ctxt).
 
-    Definition set_namespace_in_compilation_ctxt (ctxt:compilation_ctxt) (ns:namespace_name) : compilation_ctxt :=
+    Definition compilation_context : Set := list laergo_module * namespace_ctxt * inline_context.
+    Definition namespace_ctxt_of_compilation_context (ctxt:compilation_context) : namespace_ctxt :=
+      snd (fst ctxt).
+    Definition inline_context_of_compilation_context (ctxt:compilation_context) : inline_context :=
+      snd ctxt.
+    Definition modules_of_compilation_context  (ctxt:compilation_context) : list laergo_module :=
+      fst (fst ctxt).
+    Definition update_namespace_ctxt (ctxt:compilation_context) (nsctxt:namespace_ctxt) : compilation_context :=
+      ((fst (fst ctxt), nsctxt), snd ctxt).
+    Definition update_inline_ctxt (ctxt:compilation_context) (ictxt:inline_context) : compilation_context :=
+      (fst ctxt, ictxt).
+    Definition update_namespace_and_inline_ctxt
+               (ctxt:compilation_context)
+               (nsctxt:namespace_ctxt)
+               (ictxt:inline_context)
+      : compilation_context :=
+      ((fst (fst ctxt), nsctxt), ictxt).
+
+    Definition set_namespace_in_compilation_context (ctxt:compilation_context) (ns:namespace_name) : compilation_context :=
       update_namespace_ctxt
         ctxt (new_namespace_scope
-                (namespace_ctxt_of_compilation_ctxt ctxt)
+                (namespace_ctxt_of_compilation_context ctxt)
                 ns).
 
     (* Initialize compilation context *)
-    Definition compilation_ctxt_from_inputs
+    Locate inline_context.
+    
+    Definition compilation_context_from_inputs
                (ctos:list lrcto_package)
-               (mls:list lrergo_module) : eresult compilation_ctxt :=
+               (mls:list lrergo_module) : eresult compilation_context :=
       let ictos := map InputCTO ctos in
       let imls := map InputErgo mls in
       let ctxt := init_namespace_ctxt in
-      resolve_ergo_inputs ctxt (ictos ++ imls).
+      elift (fun resolved_mods : list laergo_module * namespace_ctxt =>
+               let (mods,ns_ctxt) := resolved_mods in
+               (mods,ns_ctxt,empty_inline_context))
+            (resolve_ergo_inputs ctxt (ictos ++ imls)).
 
     Definition ergo_make_stdlib_ctxt
                (ctos:list lrcto_package)
                (mls:list lrergo_module)
-      : compilation_ctxt :=
-      match (compilation_ctxt_from_inputs ctos mls) with
+      : compilation_context :=
+      match (compilation_context_from_inputs ctos mls) with
       | Success _ _ r => r
-      | Failure _ _ f => (nil, init_namespace_ctxt)
+      | Failure _ _ f => (nil, init_namespace_ctxt, empty_inline_context)
       end.
 
     Definition ergo_make_stdlib_namespace
                (ctos:list lrcto_package)
                (mls:list lrergo_module)
       : namespace_ctxt :=
-      match (elift namespace_ctxt_of_compilation_ctxt) (compilation_ctxt_from_inputs ctos mls) with
+      match (elift namespace_ctxt_of_compilation_context) (compilation_context_from_inputs ctos mls) with
       | Success _ _ r => r
       | Failure _ _ f => init_namespace_ctxt
       end.
 
     (* Ergo -> ErgoC *)
     Definition ergo_module_to_ergo_calculus
-               (ctxt:compilation_ctxt)
-               (lm:lrergo_module) : eresult (ergoc_module * compilation_ctxt) :=
-      let ns_ctxt := namespace_ctxt_of_compilation_ctxt ctxt in
+               (ctxt:compilation_context)
+               (lm:lrergo_module) : eresult (ergoc_module * compilation_context) :=
+      let ns_ctxt := namespace_ctxt_of_compilation_context ctxt in
       let am := resolve_ergo_module ns_ctxt lm in
       eolift (fun amc =>
                 let ctxt := update_namespace_ctxt ctxt (snd amc) in
@@ -100,9 +115,9 @@ Section ErgoDriver.
 
     (* ErgoDecl -> ErgoCDecl *)
     Definition ergo_declaration_to_ergo_calculus
-               (ctxt:compilation_ctxt)
-               (ld:lrergo_declaration) : eresult (option ergoc_declaration * compilation_ctxt) :=
-      let ns_ctxt := namespace_ctxt_of_compilation_ctxt ctxt in
+               (ctxt:compilation_context)
+               (ld:lrergo_declaration) : eresult (option ergoc_declaration * compilation_context) :=
+      let ns_ctxt := namespace_ctxt_of_compilation_context ctxt in
       let am := resolve_ergo_declaration ns_ctxt ld in
       eolift (fun amc =>
                 let ctxt := update_namespace_ctxt ctxt (snd amc) in
@@ -112,24 +127,25 @@ Section ErgoDriver.
              am.
 
     Definition ergo_declaration_to_ergo_calculus_inlined
-               (sctxt : compilation_ctxt)
-               (ictxt : inline_context)
+               (sctxt : compilation_context)
                (decl : lrergo_declaration)
-      : eresult (option ergoc_declaration * compilation_ctxt * inline_context) :=
+      : eresult (option ergoc_declaration * compilation_context) :=
+      let nsctxt := namespace_ctxt_of_compilation_context sctxt in
+      let ictxt := inline_context_of_compilation_context sctxt in
       match ergo_declaration_to_ergo_calculus sctxt decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (None, sctxt') => esuccess (None, sctxt', ictxt)
+      | Success _ _ (None, sctxt') => esuccess (None, sctxt')
       | Success _ _ (Some decl', sctxt') =>
         match ergoc_inline_declaration ictxt decl' with
         | Failure _ _ f => efailure f
-        | Success _ _ (ictxt', decl'') => esuccess (Some decl'', sctxt', ictxt')
+        | Success _ _ (ictxt', decl'') => esuccess (Some decl'', update_inline_ctxt sctxt' ictxt')
         end
       end.
 
     Definition ergo_module_to_javascript
-               (ctxt:compilation_ctxt)
+               (ctxt:compilation_context)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
-      let rmods := modules_of_compilation_ctxt ctxt in
+      let rmods := modules_of_compilation_context ctxt in
       let pc := ergo_module_to_ergo_calculus ctxt p in
       let pn := eolift (fun xy => ergoc_module_to_nnrc rmods (fst xy)) pc in
       elift nnrc_module_to_javascript_top pn.
@@ -138,13 +154,13 @@ Section ErgoDriver.
                (ctos:list lrcto_package)
                (mls:list lrergo_module)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
-      let ctxt := compilation_ctxt_from_inputs ctos mls in
+      let ctxt := compilation_context_from_inputs ctos mls in
       eolift (fun ctxt => ergo_module_to_javascript ctxt p) ctxt.
     
     Definition ergo_module_to_java
-               (ctxt:compilation_ctxt)
+               (ctxt:compilation_context)
                (p:lrergo_module) : eresult ErgoCodeGen.java :=
-      let rmods := modules_of_compilation_ctxt ctxt in
+      let rmods := modules_of_compilation_context ctxt in
       let pc := ergo_module_to_ergo_calculus ctxt p in
       let pn := eolift (fun xy => ergoc_module_to_nnrc rmods (fst xy)) pc in
       elift nnrc_module_to_java_top pn.
@@ -153,7 +169,7 @@ Section ErgoDriver.
                (ctos:list lrcto_package)
                (mls:list lrergo_module)
                (p:lrergo_module) : eresult ErgoCodeGen.java :=
-      let ctxt := compilation_ctxt_from_inputs ctos mls in
+      let ctxt := compilation_context_from_inputs ctos mls in
       eolift (fun ctxt => ergo_module_to_java ctxt p) ctxt.
 
     Definition ergo_module_to_javascript_cicero_top
@@ -181,14 +197,37 @@ Section ErgoDriver.
   End Compiler.
 
   Section Interpreter.
-    Definition ergo_maybe_update_context
-               (ctxt : compilation_ctxt * inline_context * eval_context)
-               (result : eresult (compilation_ctxt * inline_context * eval_context * option ergo_data))
-    : (compilation_ctxt * inline_context * eval_context) :=
-      match result with
-      | Success _ _ (sctxt', ictxt', dctxt', _) => (sctxt', ictxt', dctxt')
-      | _ => ctxt
-      end.
+    Record repl_context :=
+      mkREPLCtxt {
+          repl_context_eval_ctxt : eval_context;
+          repl_context_comp_ctxt : compilation_context
+        }.
+    
+    Definition init_repl_context
+               (ctos : list lrcto_package)
+               (mls : list lrergo_module) : eresult repl_context :=
+      elift (mkREPLCtxt ErgoCEvalContext.empty_eval_context)
+            (compilation_context_from_inputs ctos mls).
+
+    Definition update_repl_ctxt_comp_ctxt
+               (rctxt: repl_context)
+               (sctxt: compilation_context) : repl_context :=
+      mkREPLCtxt rctxt.(repl_context_eval_ctxt) sctxt.
+    
+    Definition update_repl_ctxt_eval_ctxt
+               (rctxt: repl_context)
+               (dctxt: eval_context) : repl_context :=
+      mkREPLCtxt dctxt rctxt.(repl_context_comp_ctxt).
+    
+    Definition lift_repl_ctxt
+               (orig_ctxt : repl_context)
+               (result : eresult (option ergo_data * repl_context))
+               : repl_context
+      :=
+        elift_both
+          (fun s => snd s) (* in case of success, second part of result is the new context *)
+          (fun e => orig_ctxt)  (* in case of failure, ignore the failure and return the original context *)
+          result.
 
     Definition unpack_output
                (out : ergo_data)
@@ -203,27 +242,25 @@ Section ErgoDriver.
       end.
 
     Definition ergo_eval_decl_via_calculus
-               (sctxt : compilation_ctxt)
-               (ictxt : inline_context)
-               (dctxt : eval_context)
+               (ctxt : repl_context)
                (decl : lrergo_declaration)
-    : eresult (compilation_ctxt * inline_context * eval_context * option ergo_data) :=
-      match ergo_declaration_to_ergo_calculus_inlined sctxt ictxt decl with
+      : eresult (option ergo_data * repl_context) :=
+      match ergo_declaration_to_ergo_calculus ctxt.(repl_context_comp_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (None, sctxt', ictxt') => esuccess (sctxt', ictxt', dctxt, None)
-      | Success _ _ (Some decl', sctxt', ictxt') =>
-        match ergoc_eval_decl dctxt decl' with
+      | Success _ _ (None, sctxt') => esuccess (None, update_repl_ctxt_comp_ctxt ctxt sctxt')
+      | Success _ _ (Some decl', sctxt') =>
+        match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl' with
         | Failure _ _ f => efailure f
-        | Success _ _ (dctxt', None) => esuccess (sctxt', ictxt', dctxt', None)
+        | Success _ _ (dctxt', None) => esuccess (None, mkREPLCtxt dctxt' sctxt')
         | Success _ _ (dctxt', Some out) =>
           match unpack_output out with
-          | None => esuccess (sctxt', ictxt', dctxt', Some out)
+          | None => esuccess (Some out, mkREPLCtxt dctxt' sctxt')
           | Some (_, _, state) =>
             esuccess (
-                sctxt',
-                ictxt',
-                eval_context_update_local_env dctxt' "state"%string state,
-                Some out
+                Some out,
+                mkREPLCtxt
+                  (eval_context_update_local_env dctxt' "state"%string state)
+                  sctxt'
               )
           end
         end
@@ -271,13 +308,21 @@ Section ErgoDriver.
       end.
 
     Definition ergo_string_of_result
-               (ctxt : eval_context)
-               (result : eresult (compilation_ctxt * inline_context * eval_context * option ergo_data))
+               (rctxt : repl_context)
+               (result : eresult (option ergo_data * repl_context))
       : string :=
       elift_both
-        (string_of_result ctxt)
+        (string_of_result rctxt.(repl_context_eval_ctxt))
         (fun e => string_of_error e ++ fmt_nl)%string
-        (elift (fun x => match x with | (_, _, y) => y end) result).
+        (elift (fun x => fst x) result).
+
+    Definition ergo_repl_eval_decl
+               (rctxt : repl_context)
+               (decl : lrergo_declaration)
+      : string * repl_context :=
+      let result := ergo_eval_decl_via_calculus rctxt decl in
+      let out := ergo_string_of_result rctxt result in
+      (out, lift_repl_ctxt rctxt result).
 
   End Interpreter.
 
