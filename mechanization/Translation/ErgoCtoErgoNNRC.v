@@ -36,36 +36,25 @@ Section ErgoCtoErgoNNRC.
   Section TranslationContext.
     Record translation_context :=
       mkCompContext {
-          translation_context_modules : list laergo_module;
           translation_context_fun_table: lookup_table;
           translation_context_globals: list string;
           translation_context_params: list string;
         }.
 
-    Definition add_globals (ctxt:translation_context) (params:list string) : translation_context :=
-      mkCompContext
-        ctxt.(translation_context_modules)
-        ctxt.(translation_context_fun_table)
-        (List.app params ctxt.(translation_context_globals))
-        ctxt.(translation_context_params).
-
     Definition add_params (ctxt:translation_context) (params:list string) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_modules)
         ctxt.(translation_context_fun_table)
         ctxt.(translation_context_globals)
         (List.app params ctxt.(translation_context_params)).
 
     Definition add_one_global (ctxt:translation_context) (param:string) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_modules)
         ctxt.(translation_context_fun_table)
         (List.cons param ctxt.(translation_context_globals))
         ctxt.(translation_context_params).
 
     Definition add_one_function (ctxt:translation_context) (fname:string) (flambda:lambdan) : translation_context :=
       mkCompContext
-        ctxt.(translation_context_modules)
         (add_function_to_table ctxt.(translation_context_fun_table) fname flambda)
         ctxt.(translation_context_globals)
         ctxt.(translation_context_params).
@@ -343,14 +332,13 @@ Section ErgoCtoErgoNNRC.
             (contractc_to_nnrc ctxt cn c)
     end.
 
-  Definition initial_translation_context (ml:list laergo_module) :=
-    mkCompContext ml nnrc_stdlib nil nil.
+  Definition init_translation_context :=
+    mkCompContext nnrc_stdlib nil nil.
 
   (** Translate a module to a module+calculus *)
-  Definition declarations_calculus_with_table
-             (ml:list laergo_module) (dl:list ergoc_declaration)
+  Definition declarations_calculus_with_table (dl:list ergoc_declaration)
     : eresult (translation_context * list nnrc_declaration) :=
-    let ctxt := initial_translation_context ml in
+    let ctxt := init_translation_context in
     let init := esuccess (ctxt, nil) in
     let proc_one
           (acc:eresult (translation_context * list nnrc_declaration))
@@ -369,21 +357,20 @@ Section ErgoCtoErgoNNRC.
     List.fold_left proc_one dl init.
 
   (** Translate a module to a module+calculus *)
-  Definition module_to_nnrc_with_table
-             (ml:list laergo_module) (p:ergoc_module) : eresult nnrc_module :=
+  Definition module_to_nnrc_with_table (p:ergoc_module) : eresult nnrc_module :=
     elift
       (fun xy =>
          (mkModuleN
             p.(modulec_namespace)
                 (snd xy)))
-      (declarations_calculus_with_table ml p.(modulec_declarations)).
+      (declarations_calculus_with_table p.(modulec_declarations)).
 
-  Definition ergoc_module_to_nnrc (rml:list laergo_module) (m:ergoc_module) : eresult nnrc_module :=
-    module_to_nnrc_with_table rml m.
+  Definition ergoc_module_to_nnrc (m:ergoc_module) : eresult nnrc_module :=
+    module_to_nnrc_with_table m.
 
   Section Examples.
     Open Scope string.
-    Definition ctxt0 := initial_translation_context nil.
+    Definition ctxt0 := init_translation_context.
 
     (**r Test pattern matching on values *)
     Definition input1 := dnat 2.
