@@ -33,18 +33,18 @@ let rec read_nonempty_line () =
   else
     line ^ "\n"
 
-let rec repl (sctx, dctx) =
+let rec repl ((sctx, ictx), dctx) =
   try
     let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
-    let result = ergo_eval_decl_via_calculus sctx dctx decl in
+    let result = ergo_eval_decl_via_calculus sctx ictx dctx decl in
     let out = ergo_string_of_result dctx result in
     print_string (Util.string_of_char_list out);
-    repl (ergo_maybe_update_context (sctx, dctx) result)
+    repl (ergo_maybe_update_context ((sctx, ictx), dctx) result)
   with
   | ErgoUtil.Ergo_Error e ->
       print_string (ErgoUtil.string_of_error e);
       print_string "\n" ;
-      repl (sctx, dctx)
+      repl ((sctx, ictx), dctx)
   | End_of_file -> None
 
 let args_list gconf =
@@ -67,7 +67,7 @@ let main args =
   let modules = ErgoConfig.get_modules gconf in
   let ctxt = ergo_make_stdlib_ctxt ctos modules in
   welcome ();
-  repl (ctxt, ErgoCompiler.ergo_empty_eval_context)
+  repl ((ctxt, ErgoCompiler.empty_inline_context), ErgoCompiler.ergo_empty_eval_context)
 
 let _ =
   main (ErgoUtil.patch_argv Sys.argv)
