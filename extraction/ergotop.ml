@@ -33,18 +33,28 @@ let rec read_nonempty_line () =
   else
     line ^ "\n"
 
-let rec repl ((sctx, ictx), dctx) =
+(* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
+let safe_init_repl_ctxt ctos modules =
+  ErgoUtil.wrap_jerrors
+    (fun x -> x)
+    (init_repl_context ctos modules)
+
+(* REPL *)
+let rec repl rctxt =
   try
+    (* read *)
     let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
-    let result = ergo_eval_decl_via_calculus sctx ictx dctx decl in
-    let out = ergo_string_of_result dctx result in
+    (* eval *)
+    let (out,rctxt') = ergo_repl_eval_decl rctxt decl in
+    (* print *)
     print_string (Util.string_of_char_list out);
-    repl (ergo_maybe_update_context ((sctx, ictx), dctx) result)
+    (* loop *)
+    repl rctxt'
   with
   | ErgoUtil.Ergo_Error e ->
       print_string (ErgoUtil.string_of_error e);
       print_string "\n" ;
-      repl ((sctx, ictx), dctx)
+      repl rctxt
   | End_of_file -> None
 
 let args_list gconf =
@@ -65,9 +75,9 @@ let main args =
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   let ctos = ErgoConfig.get_ctos gconf in
   let modules = ErgoConfig.get_modules gconf in
-  let ctxt = ergo_make_stdlib_ctxt ctos modules in
+  let rctxt = safe_init_repl_ctxt ctos modules in
   welcome ();
-  repl ((ctxt, ErgoCompiler.empty_inline_context), ErgoCompiler.ergo_empty_eval_context)
+  repl rctxt
 
 let _ =
   main (ErgoUtil.patch_argv Sys.argv)
