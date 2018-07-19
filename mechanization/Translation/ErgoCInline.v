@@ -126,6 +126,32 @@ Section ErgoCInline.
       end
     end.
 
+  Definition ergoc_inline_clause
+             (coname : string)
+             (ctxt : compilation_context)
+             (clause : string * ergoc_function)
+    : eresult ((string * ergoc_function) * compilation_context) :=
+    let (clname, fn) := clause in
+    elift (fun x =>
+             ((clname,x), compilation_context_update_clause_env ctxt coname clname x))
+          (ergo_inline_function ctxt fn).
+
+  Definition ergo_inline_contract
+             (coname:string)
+             (ctxt : compilation_context)
+             (contract : ergoc_contract)
+    : eresult (ergoc_contract * compilation_context) :=
+    let clauses :=
+        elift_context_fold_left
+          (ergoc_inline_clause coname)
+          contract.(contractc_clauses)
+          ctxt
+    in
+    elift
+      (fun xy =>
+         (mkContractC contract.(contractc_annot) (fst xy), snd xy))
+      clauses.
+      
   Definition ergoc_inline_declaration
              (ctxt : compilation_context)
              (decl : ergoc_declaration)
@@ -141,7 +167,10 @@ Section ErgoCInline.
       elift (fun x =>
                (DCFunc prov name x, compilation_context_update_function_env ctxt name x))
             (ergo_inline_function ctxt fn)
-    | DCContract _ _ _ => TODO "Contract(inline)"
+    | DCContract prov name c =>
+      elift (fun xy =>
+               (DCContract prov name (fst xy), snd xy))
+            (ergo_inline_contract name ctxt c)
     end.
 
   Definition ergoc_inline_declarations
