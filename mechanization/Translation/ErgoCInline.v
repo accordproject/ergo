@@ -129,19 +129,41 @@ Section ErgoCInline.
   Definition ergoc_inline_declaration
              (ctxt : compilation_context)
              (decl : ergoc_declaration)
-    : eresult (compilation_context * ergoc_declaration) :=
+    : eresult (ergoc_declaration * compilation_context) :=
     match decl with
     | DCExpr prov expr =>
-      elift (fun x => (ctxt, DCExpr prov x)) (ergo_inline_expr ctxt expr)
+      elift (fun x => (DCExpr prov x, ctxt)) (ergo_inline_expr ctxt expr)
     | DCConstant prov name expr =>
       elift (fun x =>
-               (compilation_context_update_global_env ctxt name x, DCConstant prov name x))
+               (DCConstant prov name x, compilation_context_update_global_env ctxt name x))
             (ergo_inline_expr ctxt expr)
     | DCFunc prov name fn =>
       elift (fun x =>
-               (compilation_context_update_function_env ctxt name x, DCFunc prov name x))
+               (DCFunc prov name x, compilation_context_update_function_env ctxt name x))
             (ergo_inline_function ctxt fn)
     | DCContract _ _ _ => TODO
     end.
+
+  Definition ergoc_inline_declarations
+             (ctxt : compilation_context)
+             (decls : list ergoc_declaration)
+    : eresult (list ergoc_declaration * compilation_context) :=
+    elift_context_fold_left
+      ergoc_inline_declaration
+      decls
+      ctxt.
+      
+  Definition ergoc_inline_module
+             (ctxt : compilation_context)
+             (mod : ergoc_module)
+    : eresult (ergoc_module * compilation_context) :=
+    elift
+      (fun res : (list ergoc_declaration * compilation_context) =>
+         (mkModuleC
+            mod.(modulec_annot)
+            mod.(modulec_namespace)
+            (fst res),
+          snd res))
+      (ergoc_inline_declarations ctxt mod.(modulec_declarations)).
 
 End ErgoCInline.

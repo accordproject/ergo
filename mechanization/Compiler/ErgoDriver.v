@@ -55,7 +55,7 @@ Section ErgoDriver.
             (resolve_ergo_inputs ctxt (ictos ++ imls)).
 
     (* Ergo -> ErgoC *)
-    Definition ergo_module_to_ergo_calculus
+    Definition ergo_module_to_ergoc
                (ctxt:compilation_context)
                (lm:lrergo_module) : eresult (ergoc_module * compilation_context) :=
       let ns_ctxt := namespace_ctxt_of_compilation_context ctxt in
@@ -70,7 +70,7 @@ Section ErgoDriver.
              am.
 
     (* ErgoDecl -> ErgoCDecl *)
-    Definition ergo_declaration_to_ergo_calculus
+    Definition ergo_declaration_to_ergoc
                (ctxt:compilation_context)
                (ld:lrergo_declaration) : eresult (option ergoc_declaration * compilation_context) :=
       let ns_ctxt := namespace_ctxt_of_compilation_context ctxt in
@@ -82,24 +82,33 @@ Section ErgoDriver.
                   (declaration_to_calculus (fst amc)))
              am.
 
-    Definition ergo_declaration_to_ergo_calculus_inlined
+    Definition ergo_declaration_to_ergoc_inlined
                (sctxt : compilation_context)
                (decl : lrergo_declaration)
       : eresult (option ergoc_declaration * compilation_context) :=
-      match ergo_declaration_to_ergo_calculus sctxt decl with
-      | Failure _ _ f => efailure f
-      | Success _ _ (None, sctxt') => esuccess (None, sctxt')
-      | Success _ _ (Some decl', sctxt') =>
-        match ergoc_inline_declaration sctxt decl' with
-        | Failure _ _ f => efailure f
-        | Success _ _ (sctxt', decl'') => esuccess (Some decl'', sctxt')
-        end
-      end.
+      eolift
+        (fun xy =>
+           match fst xy with
+           | None => esuccess (None, snd xy)
+           | Some decl' =>
+             let sctxt' := snd xy in
+             elift
+               (fun xy => (Some (fst xy), snd xy))
+               (ergoc_inline_declaration sctxt decl')
+           end)
+      (ergo_declaration_to_ergoc sctxt decl).
+
+    Definition ergo_module_to_ergoc_inlined
+               (sctxt : compilation_context)
+               (p : lrergo_module)
+      : eresult (ergoc_module * compilation_context) :=
+      let pc := ergo_module_to_ergoc sctxt p in
+      eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc.
 
     Definition ergo_module_to_javascript
                (ctxt:compilation_context)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
-      let pc := ergo_module_to_ergo_calculus ctxt p in
+      let pc := ergo_module_to_ergoc ctxt p in
       let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
       elift nnrc_module_to_javascript_top pn.
 
@@ -113,7 +122,7 @@ Section ErgoDriver.
     Definition ergo_module_to_java
                (ctxt:compilation_context)
                (p:lrergo_module) : eresult ErgoCodeGen.java :=
-      let pc := ergo_module_to_ergo_calculus ctxt p in
+      let pc := ergo_module_to_ergoc ctxt p in
       let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
       elift nnrc_module_to_java_top pn.
 
@@ -199,7 +208,7 @@ Section ErgoDriver.
                (ctxt : repl_context)
                (decl : lrergo_declaration)
       : eresult (option ergo_data * repl_context) :=
-      match ergo_declaration_to_ergo_calculus ctxt.(repl_context_comp_ctxt) decl with
+      match ergo_declaration_to_ergoc_inlined ctxt.(repl_context_comp_ctxt) decl with
       | Failure _ _ f => efailure f
       | Success _ _ (None, sctxt') => esuccess (None, update_repl_ctxt_comp_ctxt ctxt sctxt')
       | Success _ _ (Some decl', sctxt') =>
