@@ -153,13 +153,13 @@ Module ErgoCompiler.
     := Ergo.lrergo_input.
 
   (** Patterns *)
-  Definition ecasedata : ErgoData.data -> EPattern.ergo_pattern
+  Definition ecasedata : EProvenance.provenance -> ErgoData.data -> EPattern.lrergo_pattern
     := EPattern.CaseData.
-  Definition ecasewildcard : EPattern.type_annotation -> EPattern.ergo_pattern
+  Definition ecasewildcard : EProvenance.provenance -> EPattern.type_annotation -> EPattern.lrergo_pattern
     := EPattern.CaseWildcard.
-  Definition ecaselet : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern
+  Definition ecaselet : EProvenance.provenance -> String.string -> EPattern.type_annotation -> EPattern.lrergo_pattern
     := EPattern.CaseLet.
-  Definition ecaseletoption : String.string -> EPattern.type_annotation -> EPattern.ergo_pattern
+  Definition ecaseletoption : EProvenance.provenance -> String.string -> EPattern.type_annotation -> EPattern.lrergo_pattern
     := EPattern.CaseLetOption.
 
   (** Expressions *)

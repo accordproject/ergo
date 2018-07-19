@@ -52,35 +52,35 @@ Section ErgoCtoErgoNNRC.
 
   End TranslationContext.
 
-  Definition ergo_pattern_to_nnrc (input_expr:nnrc_expr) (p:ergo_pattern) : (list string * nnrc_expr) :=
+  Definition ergo_pattern_to_nnrc (input_expr:nnrc_expr) (p:laergo_pattern) : (list string * nnrc_expr) :=
     match p with
-    | CaseData d =>
+    | CaseData prov d =>
       (nil, NNRCIf (NNRCBinop OpEqual input_expr (NNRCConst d))
                    (NNRCUnop OpLeft (NNRCConst (drec nil)))
                    (NNRCUnop OpRight (NNRCConst dunit)))
-    | CaseWildcard None =>
+    | CaseWildcard prov None =>
       (nil, NNRCUnop OpLeft (NNRCConst (drec nil)))
-    | CaseWildcard (Some type_name) =>
+    | CaseWildcard prov (Some type_name) =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
       (nil, NNRCEither
               (NNRCUnop (OpCast (type_name::nil)) input_expr)
               v1 (NNRCUnop OpLeft (NNRCConst (drec nil)))
               v2 (NNRCUnop OpRight (NNRCConst dunit)))
-    | CaseLet v None =>
+    | CaseLet prov v None =>
       (v::nil, NNRCUnop OpLeft (NNRCUnop (OpRec v) input_expr))
-    | CaseLet v (Some type_name) =>
+    | CaseLet prov v (Some type_name) =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
       (v::nil, NNRCEither
                  (NNRCUnop (OpCast (type_name::nil)) input_expr)
                  v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
                  v2 (NNRCUnop OpRight (NNRCConst dunit)))
-    | CaseLetOption v None =>
+    | CaseLetOption prov v None =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
       (v::nil, NNRCEither
                  input_expr
                  v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
                  v2 (NNRCUnop OpRight (NNRCConst dunit)))
-    | CaseLetOption v (Some type_name) =>
+    | CaseLetOption prov v (Some type_name) =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
       (v::nil, NNRCEither
                  input_expr
@@ -369,8 +369,8 @@ Section ErgoCtoErgoNNRC.
     Example j1 : ergoc_expr :=
       EMatch dummy_provenance
              (EConst dummy_provenance input1)
-             ((CaseData (dnat 1), EConst dummy_provenance (dstring "1"))
-                :: (CaseData (dnat 2), EConst dummy_provenance (dstring "2"))
+             ((CaseData dummy_provenance (dnat 1), EConst dummy_provenance (dstring "1"))
+                :: (CaseData dummy_provenance (dnat 2), EConst dummy_provenance (dstring "2"))
                 :: nil)
              (EConst dummy_provenance (dstring "lots")).
     Definition jc1 := ergoc_expr_to_nnrc ctxt0 j1.
@@ -380,8 +380,8 @@ Section ErgoCtoErgoNNRC.
     Example j1' : laergo_expr :=
       EMatch dummy_provenance
              (EConst dummy_provenance input1)
-             ((CaseData (dnat 1), EConst dummy_provenance (dstring "1"))
-                :: (CaseLet "v2" None, EVar dummy_provenance "v2")
+             ((CaseData dummy_provenance (dnat 1), EConst dummy_provenance (dstring "1"))
+                :: (CaseLet dummy_provenance "v2" None, EVar dummy_provenance "v2")
                 :: nil)
              (EConst dummy_provenance (dstring "lots")).
     Definition jc1' := ergoc_expr_to_nnrc ctxt0 j1'.
@@ -395,8 +395,8 @@ Section ErgoCtoErgoNNRC.
     Example j2 : laergo_expr :=
       EMatch dummy_provenance
              (EConst dummy_provenance input2)
-             ((CaseLet "v1" (Some "C1"), EConst dummy_provenance (dstring "1"))
-                :: (CaseLet "v2" (Some "C2"), EConst dummy_provenance (dstring "2"))
+             ((CaseLet dummy_provenance "v1" (Some "C1"), EConst dummy_provenance (dstring "1"))
+                :: (CaseLet dummy_provenance "v2" (Some "C2"), EConst dummy_provenance (dstring "2"))
                 :: nil)
              (EConst dummy_provenance (dstring "lots")).
 
@@ -414,7 +414,7 @@ Section ErgoCtoErgoNNRC.
     Example j3 input : laergo_expr :=
       EMatch dummy_provenance
              (EConst dummy_provenance input)
-             ((CaseLetOption "v1" None, EConst dummy_provenance (dstring "1"))
+             ((CaseLetOption dummy_provenance "v1" None, EConst dummy_provenance (dstring "1"))
                 :: nil)
              (EConst dummy_provenance (dstring "nothing")).
 

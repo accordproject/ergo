@@ -166,35 +166,35 @@ Section ErgoC.
         fold_left
           (fun default_result pe =>
              match pe with
-             | (CaseData d, res) =>
+             | (CaseData prov d, res) =>
                if Data.data_eq_dec d dat then
                  ergo_eval_expr ctxt res
                else
                  default_result
 
-             | (CaseWildcard None, res) =>
+             | (CaseWildcard prov None, res) =>
                ergo_eval_expr ctxt res
-             | (CaseLet name None, res) =>
+             | (CaseLet prov name None, res) =>
                ergo_eval_expr (eval_context_update_local_env ctxt name dat) res
-             | (CaseLetOption name None, res) =>
+             | (CaseLetOption prov name None, res) =>
                match dat with
                | dunit => default_result
                | _ => ergo_eval_expr (eval_context_update_local_env ctxt name dat) res
                end
 
-             | (CaseWildcard (Some typ), res) =>
+             | (CaseWildcard prov (Some typ), res) =>
                lift_dbrand dat typ
                            (fun dat' => ergo_eval_expr ctxt res)
                            default_result
 
-             | (CaseLet name (Some typ), res) =>
+             | (CaseLet prov name (Some typ), res) =>
                lift_dbrand dat typ
                            (fun dat' => ergo_eval_expr
                                           (eval_context_update_local_env ctxt name dat')
                                           res)
                            default_result
 
-             | (CaseLetOption name (Some typ), res) =>
+             | (CaseLetOption prov name (Some typ), res) =>
                match dat with
                | dunit => default_result
                | _ =>

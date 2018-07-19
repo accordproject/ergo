@@ -58,7 +58,7 @@ Section ErgoExpand.
       match et with
       | ErgoTypeClassRef _ type0 =>
         elift (fun x =>
-                 (CaseLet v0 (Some type0),x))
+                 (CaseLet prov v0 (Some type0),x))
               (create_call prov cname v0 effparam0 effparamrest callparams)
       | _ => main_not_a_class_error prov cname
       end
