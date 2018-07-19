@@ -27,6 +27,7 @@ Require Import Basics.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Pattern.EPattern.
 
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
@@ -147,7 +148,66 @@ Section ErgoC.
     (* EXPECTS: no function calls in expression *)
     | ECallFun loc fn args => efailure (SystemError loc "You forgot to inline a call...")
 
-    | EMatch loc e pes f => TODO "Match(eval)"
+    | EMatch loc term pes default =>
+      let lift_dbrand :=
+          fun dat brand fn default =>
+            match dat with
+            | dbrand (br::nil) rcd =>
+              if String.string_dec brand br then
+                fn dat
+              else
+                default
+            | _ => default
+            end
+      in
+      match ergo_eval_expr ctxt term with
+      | Failure _ _ f => efailure f
+      | Success _ _ dat =>
+        fold_left
+          (fun default_result pe =>
+             match pe with
+             | (CaseData d, res) =>
+               if Data.data_eq_dec d dat then
+                 ergo_eval_expr ctxt res
+               else
+                 default_result
+
+             | (CaseWildcard None, res) =>
+               ergo_eval_expr ctxt res
+             | (CaseLet name None, res) =>
+               ergo_eval_expr (eval_context_update_local_env ctxt name dat) res
+             | (CaseLetOption name None, res) =>
+               match dat with
+               | dunit => default_result
+               | _ => ergo_eval_expr (eval_context_update_local_env ctxt name dat) res
+               end
+
+             | (CaseWildcard (Some typ), res) =>
+               lift_dbrand dat typ
+                           (fun dat' => ergo_eval_expr ctxt res)
+                           default_result
+
+             | (CaseLet name (Some typ), res) =>
+               lift_dbrand dat typ
+                           (fun dat' => ergo_eval_expr
+                                          (eval_context_update_local_env ctxt name dat')
+                                          res)
+                           default_result
+
+             | (CaseLetOption name (Some typ), res) =>
+               match dat with
+               | dunit => default_result
+               | _ =>
+                lift_dbrand dat typ
+                            (fun dat' => ergo_eval_expr
+                                            (eval_context_update_local_env ctxt name dat')
+                                            res)
+                            default_result
+               end
+
+             end)
+          pes (ergo_eval_expr ctxt default)
+       end
 
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach loc ((name,arr)::nil) None fn =>
