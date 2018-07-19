@@ -18,6 +18,7 @@ Require Import Basics.
 
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Pattern.EPattern.
 
 
 
@@ -105,9 +106,22 @@ Section ErgoMap.
                            (fun pe prev =>
                               elift2
                                 (fun pe' prev' => pe' :: prev')
-                                (elift
-                                   (fun x => (fst pe, x))
-                                   (ergo_map_expr ctx ctxt_new_variable_scope fn (snd pe)))
+                                match pe with
+                                | (CaseData _ _, e) =>
+                                  elift (fun x => (fst pe, x))
+                                        (ergo_map_expr ctx ctxt_new_variable_scope fn e)
+                                | (CaseWildcard _ _, e) =>
+                                  elift (fun x => (fst pe, x))
+                                        (ergo_map_expr ctx ctxt_new_variable_scope fn e)
+                                | (CaseLet _ name _, e) =>
+                                  elift (fun x => (fst pe, x))
+                                        (ergo_map_expr (ctxt_new_variable_scope ctx name expr')
+                                                       ctxt_new_variable_scope fn e)
+                                | (CaseLetOption _ name _, e) =>
+                                  elift (fun x => (fst pe, x))
+                                        (ergo_map_expr (ctxt_new_variable_scope ctx name expr')
+                                                       ctxt_new_variable_scope fn e)
+                                end
                                 prev)
                            (esuccess nil)
                            pes))
