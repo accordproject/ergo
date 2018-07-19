@@ -175,7 +175,7 @@ Section ErgoC.
       let expr' := ergo_eval_expr dctxt expr in
       eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
     | DCFunc loc name func =>
-      esuccess (eval_context_update_function_env dctxt name func, None)
+      esuccess (dctxt, None)
     | DCContract loc name contr => TODO "Contract(decl)"
     end.
 
