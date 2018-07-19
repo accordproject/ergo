@@ -94,7 +94,7 @@ Section ErgoDriver.
              let sctxt' := snd xy in
              elift
                (fun xy => (Some (fst xy), snd xy))
-               (ergoc_inline_declaration sctxt decl')
+               (ergoc_inline_declaration sctxt' decl')
            end)
       (ergo_declaration_to_ergoc sctxt decl).
 
