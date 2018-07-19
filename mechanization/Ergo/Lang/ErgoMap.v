@@ -94,7 +94,25 @@ Section ErgoMap.
            | None => esuccess None
            end)
           (ergo_map_expr ctx ctxt_new_variable_scope fn fn')
-      | EMatch _ _ _ _ => TODO "Match(map)"
+
+      | EMatch loc expr pes def =>
+        eolift
+          (fun expr' =>
+             eolift
+               (fun def' =>
+                  elift (fun pes' => EMatch loc expr' pes' def')
+                        (fold_right
+                           (fun pe prev =>
+                              elift2
+                                (fun pe' prev' => pe' :: prev')
+                                (elift
+                                   (fun x => (fst pe, x))
+                                   (ergo_map_expr ctx ctxt_new_variable_scope fn (snd pe)))
+                                prev)
+                           (esuccess nil)
+                           pes))
+               (ergo_map_expr ctx ctxt_new_variable_scope fn def))
+          (ergo_map_expr ctx ctxt_new_variable_scope fn expr)
       end.
 
 End ErgoMap.
