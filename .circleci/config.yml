@@ -24,12 +24,12 @@ jobs:
     - run: sudo apt-get -qq update
     - run: sudo apt-get install -y ocaml-nox ocaml-native-compilers opam
     - run: export TERM=dumb && opam init -a
-    - run: export TERM=dumb && opam switch 4.06.1
+    - run: export TERM=dumb && opam switch 4.07.0
     - run: eval `opam config env`
     - run: export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
     - run: export TERM=dumb && opam update || true
     - run:
-        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen coq.8.8.0
+        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen coq.8.8.1
         no_output_timeout: 3600s
     - run:
         command: export TERM=dumb && opam install -y --jobs=2 coq-qcert.1.1.0
