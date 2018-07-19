@@ -15,17 +15,29 @@
 Require Import String.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 
 Section EPattern.
-  Local Open Scope string.
-
-  Definition type_annotation : Set := option string.
+  Section Ast.
+    Context {A:Set}. (* Type for annotations *)
+    Context {N:Set}. (* Type for names *)
   
-  Inductive ergo_pattern :=
-  | CaseData : ErgoData.data -> ergo_pattern            (**r match against value *)
-  | CaseWildcard : type_annotation -> ergo_pattern      (**r match anything *)
-  | CaseLet : string -> type_annotation -> ergo_pattern (**r match against type *)
-  | CaseLetOption : string -> type_annotation -> ergo_pattern (**r match against type *)
-  .
+    Local Open Scope string.
 
+    Definition type_annotation : Set := option N.
+
+    Inductive ergo_pattern :=
+    | CaseData : A -> ErgoData.data -> ergo_pattern                  (**r match against value *)
+    | CaseWildcard : A -> type_annotation -> ergo_pattern            (**r match anything *)
+    | CaseLet : A -> string -> type_annotation -> ergo_pattern       (**r match against type *)
+    | CaseLetOption : A -> string -> type_annotation -> ergo_pattern (**r match against type *)
+    .
+  End Ast.
+
+  Definition rergo_pattern {A} := @ergo_pattern A relative_name.
+  Definition aergo_pattern {A} := @ergo_pattern A absolute_name.
+
+  Definition lrergo_pattern := @ergo_pattern provenance relative_name.
+  Definition laergo_pattern := @ergo_pattern provenance absolute_name.
 End EPattern.

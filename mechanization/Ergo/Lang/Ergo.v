@@ -51,7 +51,7 @@ Section Ergo.
     | ERecord : A -> list (string * ergo_expr) -> ergo_expr (**r create a new record *)
     | ENew : A -> N -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
     | ECallFun : A -> string -> list ergo_expr -> ergo_expr (**r function call *)
-    | EMatch : A -> ergo_expr -> list (ergo_pattern * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
+    | EMatch : A -> ergo_expr -> list (@ergo_pattern A N * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
     | EForeach : A -> list (string * ergo_expr)
                  -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
     .
@@ -86,7 +86,7 @@ Section Ergo.
     | SLet : A -> string -> option (@ergo_type A N) -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable *)
     | SIf : A -> ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt
     | SEnforce : A -> ergo_expr -> option ergo_stmt -> ergo_stmt -> ergo_stmt (**r enforce *)
-    | SMatch : A -> ergo_expr -> (list (ergo_pattern * ergo_stmt)) -> ergo_stmt -> ergo_stmt
+    | SMatch : A -> ergo_expr -> (list (@ergo_pattern A N * ergo_stmt)) -> ergo_stmt -> ergo_stmt
     .
 
     Definition stmt_annot (e:ergo_stmt) : A :=

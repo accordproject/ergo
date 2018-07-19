@@ -40,13 +40,13 @@ Section ErgoSugar.
   Definition EOptionalDot (a:A) (pname:string) (e:rergo_expr) :=
     EMatch a
            e
-           ((CaseLetOption "$option" None,
+           ((CaseLetOption a "$option" None,
              EUnaryOp a (OpDot pname) (EVar a "$option")) :: nil)
            (EConst a dnone).
 
   Definition EOptionalDefault (a:A) (e1 e2:rergo_expr) :=
     EMatch a e1
-           ((CaseLetOption "$option" None, EVar a "$option") :: nil)
+           ((CaseLetOption a "$option" None, EVar a "$option") :: nil)
            e2.
 
 End ErgoSugar.

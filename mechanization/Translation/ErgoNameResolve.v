@@ -322,14 +322,20 @@ Section ErgoNameResolution.
       emaplift (fun xy =>
                   elift (fun t => (fst xy, t)) (resolve_ergo_type tbl (snd xy))) t.
 
-    Definition resolve_extends
+    Definition resolve_type_annotation
                (prov:provenance)
                (tbl:namespace_table)
-               (en:rextends) : eresult aextends :=
+               (en:option relative_name) : eresult (option absolute_name) :=
       match en with
       | None => esuccess None
       | Some rn => elift Some (resolve_type_name prov tbl rn)
       end.
+
+    Definition resolve_extends
+               (prov:provenance)
+               (tbl:namespace_table)
+               (en:rextends) : eresult aextends :=
+      resolve_type_annotation prov tbl en.
 
     Definition resolve_ergo_type_signature
                (tbl:namespace_table)
@@ -412,6 +418,16 @@ Section ErgoNameResolution.
       in
       elift (fun k => mkErgoTypeDeclaration decl.(type_declaration_annot) name k) edecl_desc.
 
+    Definition resolve_ergo_pattern
+               (tbl:namespace_table)
+               (p:lrergo_pattern) : eresult (laergo_pattern) :=
+      match p with
+      | CaseData prov d => esuccess (CaseData prov d)
+      | CaseWildcard prov ta => elift (CaseWildcard prov) (resolve_type_annotation prov tbl ta)
+      | CaseLet prov v ta => elift (CaseLet prov v) (resolve_type_annotation prov tbl ta)
+      | CaseLetOption prov v ta => elift (CaseLetOption prov v) (resolve_type_annotation prov tbl ta)
+      end.
+    
     (** Name resolution for expressions *)
     Fixpoint resolve_ergo_expr
              (tbl:namespace_table)
@@ -484,11 +500,15 @@ Section ErgoNameResolution.
       | EMatch prov e0 ecases edefault =>
         let ec0 := resolve_ergo_expr tbl e0 in
         let eccases :=
-            let proc_one acc ecase :=
-                eolift
-                  (fun acc =>
-                     elift (fun x => (fst ecase, x)::acc)
-                           (resolve_ergo_expr tbl (snd ecase))) acc
+            let proc_one acc (ecase : lrergo_pattern * lrergo_expr) :=
+                let (pcase, pe) := ecase in
+                let apcase := resolve_ergo_pattern tbl pcase in
+                eolift (fun apcase =>
+                          eolift
+                            (fun acc =>
+                               elift (fun x => (apcase, x)::acc)
+                                     (resolve_ergo_expr tbl pe)) acc)
+                       apcase
             in
             fold_left proc_one ecases (esuccess nil)
         in
@@ -496,7 +516,7 @@ Section ErgoNameResolution.
         eolift
           (fun ec0 : laergo_expr =>
              eolift
-               (fun eccases : list (ergo_pattern * laergo_expr) =>
+               (fun eccases : list (laergo_pattern * laergo_expr) =>
                   elift
                     (fun ecdefault : laergo_expr =>
                     EMatch prov ec0 eccases ecdefault)
@@ -582,11 +602,15 @@ Section ErgoNameResolution.
       | SMatch prov e0 scases sdefault =>
         let ec0 := resolve_ergo_expr tbl e0 in
         let sccases :=
-            let proc_one acc scase :=
-                eolift
-                  (fun acc =>
-                     elift (fun x => (fst scase, x)::acc)
-                           (resolve_ergo_stmt tbl (snd scase))) acc
+            let proc_one acc (scase : lrergo_pattern * lrergo_stmt) :=
+                let (pcase, pe) := scase in
+                let apcase := resolve_ergo_pattern tbl pcase in
+                eolift (fun apcase =>
+                          eolift
+                            (fun acc =>
+                               elift (fun x => (apcase, x)::acc)
+                                     (resolve_ergo_stmt tbl pe)) acc)
+                       apcase
             in
             fold_left proc_one scases (esuccess nil)
         in
@@ -594,7 +618,7 @@ Section ErgoNameResolution.
         eolift
           (fun ec0 : laergo_expr =>
              eolift
-               (fun sccases : list (ergo_pattern * laergo_stmt) =>
+               (fun sccases : list (laergo_pattern * laergo_stmt) =>
                   elift
                     (fun scdefault : laergo_stmt =>
                     SMatch prov ec0 sccases scdefault)
