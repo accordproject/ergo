@@ -207,8 +207,8 @@ Module ErgoCompiler.
   Definition efunreturn (prov:provenance) e : ergo_expr := e.
   Definition sthrow prov e : ergo_stmt :=
     Ergo.SThrow prov e.
-  Definition scallclause prov c el : ergo_stmt :=
-    Ergo.SCallClause prov c el.
+  Definition scallclause prov e0 c el : ergo_stmt :=
+    Ergo.SCallClause prov e0 c el.
   Definition ssetstate prov e s : ergo_stmt :=
     Ergo.SSetState prov e s.
   Definition semit prov e s : ergo_stmt :=

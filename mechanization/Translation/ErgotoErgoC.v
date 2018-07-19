@@ -188,7 +188,7 @@ Section ErgotoErgoC.
     | SThrow prov e =>
       elift (EError prov)
             (ergo_expr_to_ergoc_expr ctxt e)
-    | SCallClause prov fname el =>
+    | SCallClause prov (EThisContract _) fname el =>
       match ctxt.(trans_ctxt_current_contract) with
       | None => not_in_contract_error prov
       | Some _ =>
@@ -202,6 +202,8 @@ Section ErgotoErgoC.
                              ::(EVar prov local_emit)
                              ::el)) el
       end
+    | SCallClause _ e0 _ _ =>
+      clause_call_not_on_contract_error (expr_annot e0)
     | SSetState prov e1 s2 =>
       elift2 (setState prov)
              (ergo_expr_to_ergoc_expr ctxt e1)

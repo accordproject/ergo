@@ -40,7 +40,7 @@ Section ErgoExpand.
     match zipped with
     | None => main_parameter_mismatch_error prov
     | Some _ =>
-      esuccess (SCallClause prov cname (EVar prov v0 :: effparamrest))
+      esuccess (SCallClause prov (EThisContract prov) cname (EVar prov v0 :: effparamrest))
     end.
 
   Definition case_of_sig

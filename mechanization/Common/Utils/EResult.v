@@ -90,6 +90,8 @@ Section EResult.
 
   (** Built-in errors *)
   Section Builtin.
+    Definition clause_call_not_on_contract_error {A} prov : eresult A :=
+      efailure (CompilationError prov "Cannot call a clause except on 'contract'").
     Definition not_in_contract_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot use 'contract' variable outside of a contract").
     Definition not_in_clause_error {A} prov : eresult A :=
@@ -107,6 +109,8 @@ Section EResult.
       efailure (CompilationError prov ("Cannot find variable with name '" ++ ln ++ "'")).
     Definition function_name_not_found_error {A} prov (ln:string) : eresult A :=
       efailure (CompilationError prov ("Cannot find function with name '" ++ ln ++ "'")).
+    Definition contract_name_not_found_error {A} prov (ln:string) : eresult A :=
+      efailure (CompilationError prov ("Cannot find contract with name '" ++ ln ++ "'")).
     Definition import_name_not_found_error {A} prov (namespace:string) (name_ref:string) : eresult A :=
       efailure (CompilationError prov ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
   

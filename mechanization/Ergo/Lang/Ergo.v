@@ -80,7 +80,7 @@ Section Ergo.
     | SReturn : A -> ergo_expr -> ergo_stmt
     | SFunReturn : A -> ergo_expr -> ergo_stmt
     | SThrow : A -> ergo_expr -> ergo_stmt
-    | SCallClause : A -> string -> list ergo_expr -> ergo_stmt (**r clause call *)
+    | SCallClause : A -> ergo_expr -> string -> list ergo_expr -> ergo_stmt (**r clause call *)
     | SSetState : A -> ergo_expr -> ergo_stmt -> ergo_stmt
     | SEmit : A -> ergo_expr -> ergo_stmt -> ergo_stmt
     | SLet : A -> string -> option (@ergo_type A N) -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable *)
@@ -94,7 +94,7 @@ Section Ergo.
       | SReturn a _ => a
       | SFunReturn a _ => a
       | SThrow a _ => a
-      | SCallClause a _ _ => a
+      | SCallClause a _ _ _ => a
       | SSetState a _ _ => a
       | SEmit a _ _ => a
       | SLet a _ _ _ _ => a
