@@ -23,44 +23,32 @@ Section ErgocEvalContext.
 
   Record eval_context :=
     mkEvalContext
-      { eval_context_function_env : list (string * ergoc_function);
-        eval_context_global_env : list (string * ergo_data);
+      { eval_context_global_env : list (string * ergo_data);
         eval_context_local_env : list (string * ergo_data);
       }.
-
-  Definition eval_context_update_function_env
-             (ctxt : eval_context)
-             (name : string)
-             (value : ergoc_function) : eval_context :=
-    mkEvalContext ((name, value)::ctxt.(eval_context_function_env))
-                  ctxt.(eval_context_global_env)
-                  ctxt.(eval_context_local_env).
 
   Definition eval_context_update_global_env
              (ctxt : eval_context)
              (name : string)
              (value : ergo_data) : eval_context :=
-    mkEvalContext ctxt.(eval_context_function_env)
-                  ((name, value)::ctxt.(eval_context_global_env))
+    mkEvalContext ((name, value)::ctxt.(eval_context_global_env))
                   ctxt.(eval_context_local_env).
 
   Definition eval_context_update_local_env
              (ctxt : eval_context)
              (name : string)
              (value : ergo_data) : eval_context :=
-    mkEvalContext ctxt.(eval_context_function_env)
-                  ctxt.(eval_context_global_env)
+    mkEvalContext ctxt.(eval_context_global_env)
                   ((name, value)::ctxt.(eval_context_local_env)).
 
   Definition eval_context_set_local_env
              (ctxt : eval_context)
              (new_local_env : list (string * ergo_data)) : eval_context :=
-    mkEvalContext ctxt.(eval_context_function_env)
-                  ctxt.(eval_context_global_env)
+    mkEvalContext ctxt.(eval_context_global_env)
                   new_local_env.
 
   Definition empty_eval_context :=
-    mkEvalContext nil nil
+    mkEvalContext nil
                   (("contract"%string, dunit)
                      ::("state"%string, dunit)
                      ::("emit"%string, dcoll nil)
