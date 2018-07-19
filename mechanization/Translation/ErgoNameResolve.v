@@ -47,23 +47,27 @@ Section ErgoNameResolution.
       mkNamespaceTable
         { namespace_table_types : name_table;
           namespace_table_constants : name_table;
-          namespace_table_functions : name_table; }.
+          namespace_table_functions : name_table;
+          namespace_table_contracts : name_table; }.
 
     Definition empty_namespace_table : namespace_table :=
-      mkNamespaceTable nil nil nil.
-  
+      mkNamespaceTable nil nil nil nil.
+
     Definition one_type_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
-      mkNamespaceTable ((ln,an)::nil) nil nil.
+      mkNamespaceTable ((ln,an)::nil) nil nil nil.
     Definition one_constant_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
-      mkNamespaceTable nil ((ln,an)::nil) nil.
+      mkNamespaceTable nil ((ln,an)::nil) nil nil.
     Definition one_function_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
-      mkNamespaceTable nil nil ((ln,an)::nil).
+      mkNamespaceTable nil nil ((ln,an)::nil) nil.
+    Definition one_contract_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
+      mkNamespaceTable nil nil nil ((ln,an)::nil).
 
     Definition namespace_table_app (tbl1 tbl2:namespace_table) : namespace_table :=
       mkNamespaceTable
         (app tbl1.(namespace_table_types) tbl2.(namespace_table_types))
         (app tbl1.(namespace_table_constants) tbl2.(namespace_table_constants))
-        (app tbl1.(namespace_table_functions) tbl2.(namespace_table_functions)).
+        (app tbl1.(namespace_table_functions) tbl2.(namespace_table_functions))
+        (app tbl1.(namespace_table_contracts) tbl2.(namespace_table_contracts)).
 
     Definition lookup_type_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_types) ln with
@@ -78,6 +82,11 @@ Section ErgoNameResolution.
     Definition lookup_function_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_functions) ln with
       | None => function_name_not_found_error prov ln
+      | Some an => esuccess an
+      end.
+    Definition lookup_contract_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
+      match lookup string_dec tbl.(namespace_table_contracts) ln with
+      | None => contract_name_not_found_error prov ln
       | Some an => esuccess an
       end.
 
@@ -96,24 +105,36 @@ Section ErgoNameResolution.
       | None => lookup_function_name prov tbl (snd rn)
       | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
       end.
+    Definition resolve_contract_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
+      match fst rn with
+      | None => lookup_contract_name prov tbl (snd rn)
+      | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
+      end.
 
     Definition add_type_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=
       mkNamespaceTable
         ((ln,an)::tbl.(namespace_table_types))
         tbl.(namespace_table_constants)
-        tbl.(namespace_table_functions).
-  
+        tbl.(namespace_table_functions)
+        tbl.(namespace_table_contracts).
     Definition add_constant_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=
       mkNamespaceTable
         tbl.(namespace_table_types)
         ((ln,an)::tbl.(namespace_table_constants))
-        tbl.(namespace_table_functions).
-  
+        tbl.(namespace_table_functions)
+        tbl.(namespace_table_contracts).
     Definition add_function_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=
       mkNamespaceTable
         tbl.(namespace_table_types)
         tbl.(namespace_table_constants)
-        ((ln,an)::tbl.(namespace_table_functions)).
+        ((ln,an)::tbl.(namespace_table_functions))
+        tbl.(namespace_table_contracts).
+    Definition add_contract_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=
+      mkNamespaceTable
+        tbl.(namespace_table_types)
+        tbl.(namespace_table_constants)
+        tbl.(namespace_table_functions)
+        ((ln,an)::tbl.(namespace_table_contracts)).
 
   End NamespaceTable.
 
@@ -162,6 +183,10 @@ Section ErgoNameResolution.
                (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) (an:absolute_name) :=
       update_namespace_context_modules ctxt ns (add_function_to_namespace_table ln an).
 
+    Definition add_contract_to_namespace_ctxt
+               (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) (an:absolute_name) :=
+      update_namespace_context_modules ctxt ns (add_contract_to_namespace_table ln an).
+
     Definition add_type_to_namespace_ctxt_current
                (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
       update_namespace_context_current ctxt (add_type_to_namespace_table ln an).
@@ -173,6 +198,10 @@ Section ErgoNameResolution.
     Definition add_function_to_namespace_ctxt_current
                (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
       update_namespace_context_current ctxt (add_function_to_namespace_table ln an).
+
+    Definition add_contract_to_namespace_ctxt_current
+               (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
+      update_namespace_context_current ctxt (add_contract_to_namespace_table ln an).
 
     Definition new_namespace_scope (ctxt:namespace_ctxt) (ns:namespace_name) : namespace_ctxt :=
       let prev_ns := ctxt.(namespace_ctxt_namespace) in
@@ -221,9 +250,10 @@ Section ErgoNameResolution.
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         let an := absolute_name_of_local_name ns ln in
         add_function_to_namespace_ctxt ctxt ns ln an
-      | DContract _ _ c :: rest => (* XXX TO BE REVISED *)
+      | DContract _ ln _ :: rest => (* XXX TO BE REVISED *)
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
-        ctxt
+        let an := absolute_name_of_local_name ns ln in
+        add_contract_to_namespace_ctxt ctxt ns ln an
       end.
 
     Definition namespace_ctxt_of_ergo_module (ctxt:namespace_ctxt) (m:lrergo_module) : namespace_ctxt :=
@@ -554,8 +584,7 @@ Section ErgoNameResolution.
       | SReturn prov e => elift (SReturn prov) (resolve_ergo_expr tbl e)
       | SFunReturn prov e => elift (SFunReturn prov) (resolve_ergo_expr tbl e)
       | SThrow prov e =>  elift (SThrow prov) (resolve_ergo_expr tbl e)
-      | SCallClause prov fname el =>
-        let rfname := resolve_function_name prov tbl (None,fname) in
+      | SCallClause prov e0 fname el =>
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
@@ -563,7 +592,10 @@ Section ErgoNameResolution.
               (resolve_ergo_expr tbl e)
               acc
         in
-        elift2 (SCallClause prov) rfname (fold_right proc_one init_el el)
+        elift3 (SCallClause prov)
+               (resolve_ergo_expr tbl e0)
+               (esuccess fname)
+               (fold_right proc_one init_el el)
       | SSetState prov e1 s2 =>
         elift2 (SSetState prov)
                (resolve_ergo_expr tbl e1)
@@ -703,11 +735,11 @@ Section ErgoNameResolution.
         elift (fun x => (DConstant prov ln x, ctxt)) (resolve_ergo_expr tbl e)
       | DFunc prov ln fd =>
         let an := absolute_name_of_local_name module_ns ln in
-        let ctxt := add_function_to_namespace_ctxt_current ctxt ln an in (* XXX TBD *)
+        let ctxt := add_function_to_namespace_ctxt_current ctxt ln an in
         elift (fun x => (DFunc prov an x, ctxt)) (resolve_ergo_function module_ns tbl fd)
-      | DContract prov ln c  => (* XXX TO BE REVISED *)
-        let ctxt := ctxt in
+      | DContract prov ln c  =>
         let an := absolute_name_of_local_name module_ns ln in
+        let ctxt := add_contract_to_namespace_ctxt_current ctxt ln an in
         elift (fun x => (DContract prov an x, ctxt)) (resolve_ergo_contract module_ns tbl c)
       end.
 

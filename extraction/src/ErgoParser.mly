@@ -261,8 +261,9 @@ stmt:
 | THROW e1 = expr
     { ErgoCompiler.sthrow (mk_provenance $startpos $endpos) e1 }
 (* Call *)
-| fn = IDENT LPAREN el = exprlist RPAREN
-    { ErgoCompiler.scallclause (mk_provenance $startpos $endpos) (Util.char_list_of_string fn) el }
+| CONTRACT DOT fn = IDENT LPAREN el = exprlist RPAREN
+    { let e0 = ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos) in
+      ErgoCompiler.scallclause (mk_provenance $startpos $endpos) e0 (Util.char_list_of_string fn) el }
 | LET v = ident EQUAL e1 = expr SEMI s2 = stmt
     { ErgoCompiler.slet (mk_provenance $startpos $endpos) v e1 s2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
