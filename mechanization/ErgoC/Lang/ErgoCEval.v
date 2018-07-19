@@ -147,7 +147,7 @@ Section ErgoC.
     (* EXPECTS: no function calls in expression *)
     | ECallFun loc fn args => efailure (SystemError loc "You forgot to inline a call...")
 
-    | EMatch loc e pes f => TODO
+    | EMatch loc e pes f => TODO "Match(eval)"
 
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach loc ((name,arr)::nil) None fn =>
@@ -176,7 +176,7 @@ Section ErgoC.
       eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
     | DCFunc loc name func =>
       esuccess (eval_context_update_function_env dctxt name func, None)
-    | DCContract loc name contr => TODO
+    | DCContract loc name contr => TODO "Contract(decl)"
     end.
 
 End ErgoC.

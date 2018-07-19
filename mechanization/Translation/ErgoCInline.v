@@ -70,7 +70,7 @@ Section ErgoCInline.
 
   Definition ergo_letify_function (fn : ergoc_function) (args : list ergo_expr) :=
     match fn.(functionc_body) with
-    | None => TODO
+    | None => TODO "Function(letify)(no body)"
     | Some body =>
       match zip (map fst (fn.(functionc_sig).(sigc_params))) args with
       | Some args' => esuccess (ergo_letify_function' fn.(functionc_annot) body args')
@@ -141,7 +141,7 @@ Section ErgoCInline.
       elift (fun x =>
                (DCFunc prov name x, compilation_context_update_function_env ctxt name x))
             (ergo_inline_function ctxt fn)
-    | DCContract _ _ _ => TODO
+    | DCContract _ _ _ => TODO "Contract(inline)"
     end.
 
   Definition ergoc_inline_declarations
