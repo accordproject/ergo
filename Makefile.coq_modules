@@ -47,8 +47,8 @@ MODULES = \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
   Translation/ErgoCompContext \
-  Translation/ErgotoErgoC \
   Translation/ErgoCInline \
+  Translation/ErgotoErgoC \
   Translation/ErgoCtoErgoNNRCType \
   Translation/ErgoCtoErgoNNRC \
   Translation/ErgoNNRCtoJavaScript \
