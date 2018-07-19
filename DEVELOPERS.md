@@ -53,14 +53,14 @@ $ npm install -g
 
 #### Dependencies
 
-To rebuild the compiler from the source, you will need Coq 8.8 \(or later\) and OCaml 4.05 \(or later\) with some additional libraries.
+To rebuild the compiler from the source, you will need Coq 8.8.1 and OCaml 4.07 with some additional libraries.
 
 We recommend to install those using opam \([https://opam.ocaml.org](https://opam.ocaml.org)\), the OCaml package manager. Once you have installed opam, you can add the necessary libraries as follow:
 
 ```text
 $ opam repo add coq-released https://coq.inria.fr/opam/released
 $ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen
-$ opam install coq.8.8.0 coq-qcert.1.1.0
+$ opam install coq.8.8.1 coq-qcert.1.1.0
 ```
 
 #### Build the Ergo Compiler and REPL
