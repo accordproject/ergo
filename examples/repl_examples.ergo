@@ -10,23 +10,55 @@ return pooh;
 
 return [1, 4, 2, 5, 3, 9, 5];
 
-define constant nums = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0]
-define constant pyth = (foreach x in nums foreach y in nums foreach z in nums where (x^2.0 + y^2.0 = z^2.0) return {a: x, b: y, c: z})
+define constant nums = [\
+    1.0, 2.0, 3.0, 4.0, 5.0,\
+    6.0, 7.0, 8.0, 9.0, 10.0,\
+    11.0, 12.0, 13.0, 14.0, 15.0,\
+    16.0, 17.0, 18.0, 19.0, 20.0\
+]
+
+define constant pyth = (\
+    foreach x in nums\
+    foreach y in nums\
+    foreach z in nums\
+    where (x^2.0 + y^2.0 = z^2.0)\
+    return {a: x, b: y, c: z}\
+)
+
 return pyth;
 
-emit "One for the money"; emit "Two for the show"; emit "Three to get ready"; return "Now go, cat, go";
-enforce 2 +i 2 = 5; return "Big Brother is watching you.";
+emit "One for the money";\
+emit "Two for the show";\
+emit "Three to get ready";\
+return "Now go, cat, go";
+
+enforce 2 +i 2 = 5;\
+return "Big Brother is watching you.";
 
 set state "New York"; enforce state = "New York"; return state;
 set state (state ++ " state."); enforce state = "New York state."; return state;
 
-enforce 5 = match 1 with 2 then 5 else 5; return "(match) defaults work"; // defaults
-let sauce = "hot" ; enforce "sriracha" = match sauce with "mild" then "ketchup" with "hot" then "sriracha" else nil ; return "(match) multiple clauses work"; // multiple clauses (spicy)
+enforce 5 =\
+    match 1\
+        with 2 then 5\
+        else 5;\
+return "(match) defaults work"; // defaults
+
+let sauce = "hot" ;\
+enforce "sriracha" =\
+    match sauce\
+        with "mild" then "ketchup"\
+        with "hot" then "sriracha"\
+        else nil ;\
+return "(match) multiple clauses work"; // multiple clauses (spicy)
 
 enforce 1.0 = match 1.0 with let a then a else 3.0; return "(match) plain old let works"; // let
-return flatten([[]]);
-return flatten([["this"],["should","be"],["flat"]]);
-return max([2.0,5.0,1.0,3.3,4.1]);
-return average([2.0,5.0,1.0,3.3,4.1]);
-return sqrt(2.0);
-return some(1.0);
+
+enforce [] = flatten([[]]);\
+enforce ["this", "should", "be", "flat"] = flatten([["this"],["should","be"],["flat"]]);\
+enforce 5.0 = max([2.0,5.0,1.0,3.3,4.1]);\
+enforce 1.0 = min([2.0,5.0,1.0,3.3,4.1]);\
+enforce 3.0 = average([2.0,5.0,1.0,3.0,4.0]);\
+enforce 2.0 = sqrt(4.0);\
+enforce some(1.0) = some(1.0);\
+return "(builtins) flatten, max/min, average, sqrt, some work";

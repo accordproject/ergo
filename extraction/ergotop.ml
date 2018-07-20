@@ -20,18 +20,25 @@ let welcome () =
   then print_string ("Welcome to ERGOTOP version " ^ (Util.string_of_char_list ergo_version) ^ "\n")
   else ()
 
-let prompt () =
+let ps1 = "ergo$ "
+let ps2 = "  ... "
+
+let prompt (ps : string) =
   if Unix.isatty Unix.stdin then
-    print_string "ergotop$ "
+    print_string ps
   else ()
 
-let rec read_nonempty_line () =
-  prompt () ;
+let rec read_chunk (first : bool) =
+  prompt (if first then ps1 else ps2) ;
   let line = read_line () in
   if line = "" then
-    read_nonempty_line ()
+    read_chunk false
+  else if String.get line ((String.length line) - 1) = '\\' then
+    (String.sub line 0 ((String.length line) - 1)) ^ "\n" ^ (read_chunk false)
   else
     line ^ "\n"
+
+let rec read_nonempty_multiline () = read_chunk true
 
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
 let safe_init_repl_ctxt ctos modules =
@@ -43,7 +50,7 @@ let safe_init_repl_ctxt ctos modules =
 let rec repl rctxt =
   try
     (* read *)
-    let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_line ())) in
+    let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_multiline ())) in
     (* eval *)
     let (out,rctxt') = ergo_repl_eval_decl rctxt decl in
     (* print *)
