@@ -24,3 +24,9 @@ enforce 5 = match 1 with 2 then 5 else 5; return "(match) defaults work"; // def
 let sauce = "hot" ; enforce "sriracha" = match sauce with "mild" then "ketchup" with "hot" then "sriracha" else nil ; return "(match) multiple clauses work"; // multiple clauses (spicy)
 
 enforce 1.0 = match 1.0 with let a then a else 3.0; return "(match) plain old let works"; // let
+return flatten([[]]);
+return flatten([["this"],["should","be"],["flat"]]);
+return max([2.0,5.0,1.0,3.3,4.1]);
+return average([2.0,5.0,1.0,3.3,4.1]);
+return sqrt(2.0);
+return some(1.0);
