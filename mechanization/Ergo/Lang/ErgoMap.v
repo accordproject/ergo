@@ -82,6 +82,11 @@ Section ErgoMap.
               (fold_left (fun ls nv =>
                             elift2 postpend ls (ergo_map_expr ctx ctxt_new_variable_scope fn nv))
                          args (esuccess nil))
+      | ECallFunInGroup loc gn fn' args =>
+        elift (ECallFunInGroup loc gn fn')
+              (fold_left (fun ls nv =>
+                            elift2 postpend ls (ergo_map_expr ctx ctxt_new_variable_scope fn nv))
+                         args (esuccess nil))
       | EForeach loc rs whr fn' =>
         elift3
           (EForeach loc)

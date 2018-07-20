@@ -19,19 +19,19 @@ Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 
 Section ErgoCompContext.
-
-  (* XXX For typing, might be better to keep clauses for the same contract together
-         i.e., to have clause_env be: list (string * list (string ergoc_function)) *)
+  Definition function_group_env : Set := list (string * list (string * ergoc_function)).
+  
   Record compilation_context : Set :=
     mkCompCtxt {
-        compilation_context_namespace: namespace_ctxt;                             (**r for name resolution *)
-        compilation_context_function_env : list (string * ergoc_function);         (**r functions in scope *)
-        compilation_context_clause_env : list (string * string * ergoc_function);  (**r clauses in scope with contract/clause name *)
-        compilation_context_global_env : list (string * ergoc_expr);               (**r global variables in scope *)
-        compilation_context_local_env : list (string * ergoc_expr);                (**r local variables in scope *)
+        compilation_context_namespace: namespace_ctxt;                     (**r for name resolution *)
+        compilation_context_function_env : list (string * ergoc_function); (**r functions in scope *)
+        compilation_context_function_group_env : function_group_env;       (**r functions groups in scope *)
+        compilation_context_global_env : list (string * ergoc_expr);       (**r global variables in scope *)
+        compilation_context_local_env : list (string * ergoc_expr);        (**r local variables in scope *)
       }.
 
   Definition namespace_ctxt_of_compilation_context (ctxt:compilation_context) : namespace_ctxt :=
@@ -41,7 +41,7 @@ Section ErgoCompContext.
              (ctxt:compilation_context) (nsctxt:namespace_ctxt) : compilation_context :=
     mkCompCtxt nsctxt
                ctxt.(compilation_context_function_env)
-               ctxt.(compilation_context_clause_env)
+               ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env).
 
@@ -51,18 +51,28 @@ Section ErgoCompContext.
              (value : ergoc_function) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
                ((name, value)::ctxt.(compilation_context_function_env))
-               ctxt.(compilation_context_clause_env)
+               ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env).
 
-  Definition compilation_context_update_clause_env
+  Definition update_function_group_env
+             (gname:string)
+             (fname:string)
+             (fn:ergoc_function)
+             (fg_env:function_group_env) : function_group_env :=
+    match lookup string_dec fg_env gname with
+    | Some t => update_first string_dec fg_env gname ((fname,fn)::t)
+    | None => (gname,((fname,fn)::nil)) :: fg_env
+    end.
+      
+  Definition compilation_context_update_function_group_env
              (ctxt : compilation_context)
              (coname : string)
              (clname : string)
              (value : ergoc_function) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
                ctxt.(compilation_context_function_env)
-               ((coname,clname,value)::ctxt.(compilation_context_clause_env))
+               (update_function_group_env coname clname value ctxt.(compilation_context_function_group_env))
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env).
 
@@ -72,7 +82,7 @@ Section ErgoCompContext.
              (value : ergoc_expr) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
                ctxt.(compilation_context_function_env)
-               ctxt.(compilation_context_clause_env)
+               ctxt.(compilation_context_function_group_env)
                ((name, value)::ctxt.(compilation_context_global_env))
                ctxt.(compilation_context_local_env).
 
@@ -82,7 +92,7 @@ Section ErgoCompContext.
              (value : ergoc_expr) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
                ctxt.(compilation_context_function_env)
-               ctxt.(compilation_context_clause_env)
+               ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ((name, value)::ctxt.(compilation_context_local_env)).
 
@@ -91,7 +101,7 @@ Section ErgoCompContext.
              (new_local_env : list (string * ergoc_expr)) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
                ctxt.(compilation_context_function_env)
-               ctxt.(compilation_context_clause_env)
+               ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                new_local_env.
 
@@ -107,6 +117,6 @@ Section ErgoCompContext.
          ns).
 
   Definition init_compilation_context nsctxt : compilation_context :=
-    mkCompCtxt nsctxt nil nil nil nil.
+    mkCompCtxt nsctxt ergoc_stdlib nil nil nil.
   
 End ErgoCompContext.

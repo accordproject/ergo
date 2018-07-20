@@ -527,6 +527,16 @@ Section ErgoNameResolution.
               acc
         in
         elift2 (ECallFun prov) rfname (fold_right proc_one init_el el)
+      | ECallFunInGroup prov gname fname el =>
+        let rgname := resolve_contract_name prov tbl gname in
+        let init_el := esuccess nil in
+        let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
+            elift2
+              cons
+              (resolve_ergo_expr tbl e)
+              acc
+        in
+        elift3 (ECallFunInGroup prov) rgname (esuccess fname) (fold_right proc_one init_el el)
       | EMatch prov e0 ecases edefault =>
         let ec0 := resolve_ergo_expr tbl e0 in
         let eccases :=
@@ -842,7 +852,7 @@ Section ErgoNameResolution.
                   (fst nc), snd nc))
         (resolve_ergo_declarations
            ctxt
-           (patch_cto_imports ctxt_ns declarations)).
+           (patch_cto_imports module_ns declarations)).
 
     Definition resolve_ergo_module
                (ctxt:namespace_ctxt)
@@ -859,7 +869,7 @@ Section ErgoNameResolution.
                   (fst nc), snd nc))
         (resolve_ergo_declarations
            ctxt
-           (patch_ergo_imports ctxt_ns declarations)).
+           (patch_ergo_imports module_ns declarations)).
 
     Definition resolve_ergo_modules
                (ctxt:namespace_ctxt)

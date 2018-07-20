@@ -121,6 +121,15 @@ Section ErgotoErgoC.
             acc
       in
       elift (ECallFun prov fname) (fold_right proc_one init_el el)
+    | ECallFunInGroup prov gname fname el =>
+      let init_el := esuccess nil in
+      let proc_one (e:laergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
+          elift2
+            cons
+            (ergo_expr_to_ergoc_expr ctxt e)
+            acc
+      in
+      elift (ECallFunInGroup prov gname fname) (fold_right proc_one init_el el)
     | EMatch prov e0 ecases edefault =>
         let ec0 := ergo_expr_to_ergoc_expr ctxt e0 in
         let eccases :=
@@ -191,16 +200,18 @@ Section ErgotoErgoC.
     | SCallClause prov (EThisContract _) fname el =>
       match ctxt.(trans_ctxt_current_contract) with
       | None => not_in_contract_error prov
-      | Some _ =>
+      | Some coname =>
         let el := emaplift (ergo_expr_to_ergoc_expr ctxt) el in
         elift (fun el =>
-                 ECallFun prov
-                          fname
-                          ((EVar prov current_time)
-                             ::(thisContract prov)
-                             ::(EVar prov local_state)
-                             ::(EVar prov local_emit)
-                             ::el)) el
+                 ECallFunInGroup
+                   prov
+                   coname
+                   fname
+                   ((EVar prov current_time)
+                      ::(thisContract prov)
+                      ::(EVar prov local_state)
+                      ::(EVar prov local_emit)
+                      ::el)) el
       end
     | SCallClause _ e0 _ _ =>
       clause_call_not_on_contract_error (expr_annot e0)

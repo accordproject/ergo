@@ -68,25 +68,34 @@ Section ErgoCInline.
     | (n,v)::rest => ELet prov n None v (ergo_letify_function' prov body rest)
     end.
 
-  Definition ergo_letify_function (fn : ergoc_function) (args : list ergo_expr) :=
+  Definition ergo_letify_function (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
     match fn.(functionc_body) with
     | None => TODO "Function(letify)(no body)"
     | Some body =>
       match zip (map fst (fn.(functionc_sig).(sigc_params))) args with
       | Some args' => esuccess (ergo_letify_function' fn.(functionc_annot) body args')
       | None =>
-        efailure (CompilationError
-                    fn.(functionc_annot)
-                    ("Wrong number of arguments for function.")%string)
+        call_params_error
+          fn.(functionc_annot)
+          fname
       end
     end.
 
   Definition ergo_inline_functions' (ctxt : compilation_context) (expr : ergo_expr) :=
   match expr with
-  | ECallFun prov fn args => Some
-      match lookup String.string_dec ctxt.(compilation_context_function_env) fn with
-      | Some fn' => ergo_letify_function fn' args
-      | None => eval_function_not_found_error prov fn
+  | ECallFun prov fname args => Some
+      match lookup String.string_dec ctxt.(compilation_context_function_env) fname with
+      | Some fn => ergo_letify_function fname fn args
+      | None => function_not_found_error prov fname
+      end
+  | ECallFunInGroup prov gname fname args => Some
+      match lookup String.string_dec ctxt.(compilation_context_function_group_env) gname with
+      | Some t =>
+        match lookup String.string_dec t fname with
+        | Some fn => ergo_letify_function fname fn args
+        | None => function_not_found_error prov fname
+        end
+      | None => function_not_found_error prov fname
       end
   | _ => None
   end.
@@ -133,7 +142,7 @@ Section ErgoCInline.
     : eresult ((string * ergoc_function) * compilation_context) :=
     let (clname, fn) := clause in
     elift (fun x =>
-             ((clname,x), compilation_context_update_clause_env ctxt coname clname x))
+             ((clname,x), compilation_context_update_function_group_env ctxt coname clname x))
           (ergo_inline_function ctxt fn).
 
   Definition ergo_inline_contract

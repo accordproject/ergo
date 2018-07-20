@@ -51,6 +51,7 @@ Section Ergo.
     | ERecord : A -> list (string * ergo_expr) -> ergo_expr (**r create a new record *)
     | ENew : A -> N -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
     | ECallFun : A -> string -> list ergo_expr -> ergo_expr (**r function call *)
+    | ECallFunInGroup : A -> N -> string -> list ergo_expr -> ergo_expr (**r call function in group *)
     | EMatch : A -> ergo_expr -> list (@ergo_pattern A N * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
     | EForeach : A -> list (string * ergo_expr)
                  -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
@@ -71,6 +72,7 @@ Section Ergo.
       | ERecord a _ => a
       | ENew a _ _ => a
       | ECallFun a _ _ => a
+      | ECallFunInGroup a _ _ _ => a
       | EMatch a _ _ _ => a
       | EForeach a _ _ _ => a
       end.
