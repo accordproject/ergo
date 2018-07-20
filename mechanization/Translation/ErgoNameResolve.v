@@ -233,7 +233,9 @@ Section ErgoNameResolution.
              (dls:list lrergo_declaration) : namespace_ctxt :=
       match dls with
       | nil => ctxt
-      | DImport _ _ :: rest => ctxt (* XXX To check *)
+      | DImport _ _ :: rest =>
+        let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
+        ctxt
       | DType _ td :: rest =>
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         let ln := td.(type_declaration_name) in
