@@ -39,11 +39,11 @@ MODULES = \
   Ergo/Lang/ErgoExpand \
   ErgoC/Lang/ErgoC \
   ErgoC/Lang/ErgoCSugar \
+  ErgoC/Lang/ErgoCStdlib \
   ErgoC/Lang/ErgoCEvalContext \
   ErgoC/Lang/ErgoCEval \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
-  ErgoNNRC/Lang/ErgoNNRCCall \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
   Translation/ErgoCompContext \

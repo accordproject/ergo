@@ -41,15 +41,15 @@ Section ErgoC.
 
   Fixpoint ergo_eval_expr (ctxt : eval_context) (expr : ergoc_expr) : eresult ergo_data :=
     match expr with
-    | EThisContract loc => efailure (SystemError loc "No `this' in ergoc")
-    | EThisClause   loc => efailure (SystemError loc "No `clause' in ergoc")
-    | EThisState    loc => efailure (SystemError loc "No `state' in ergoc")
-    | EVar loc name =>
+    | EThisContract prov => efailure (SystemError prov "No `this' in ergoc")
+    | EThisClause   prov => efailure (SystemError prov "No `clause' in ergoc")
+    | EThisState    prov => efailure (SystemError prov "No `state' in ergoc")
+    | EVar prov name =>
       let opt := lookup String.string_dec (ctxt.(eval_context_local_env)++ctxt.(eval_context_global_env)) name in
-      eresult_of_option opt (RuntimeError loc ("Variable not found: " ++ name)%string)
-    | EConst loc d => esuccess d
+      eresult_of_option opt (RuntimeError prov ("Variable not found: " ++ name)%string)
+    | EConst prov d => esuccess d
 
-    | EArray loc es =>
+    | EArray prov es =>
       fold_left
         (fun ls new =>
            match ls with
@@ -58,23 +58,23 @@ Section ErgoC.
              | Success _ _ new' => esuccess (dcoll (ls' ++ (new'::nil)))
              | Failure _ _ f => efailure f
              end
-           | Success _ _ _ => efailure (RuntimeError loc "This should never happen.")
+           | Success _ _ _ => efailure (RuntimeError prov "This should never happen.")
            | Failure _ _ f => efailure f
            end)
         es (esuccess (dcoll nil))
 
-    | EUnaryOp loc o e  =>
+    | EUnaryOp prov o e  =>
       match ergo_eval_expr ctxt e with
       | Success _ _ e' =>
         (* TODO this takes a type hierarchy as a list of string * strings. *)
         match ergo_unary_eval nil o e' with
         | Some r => esuccess r
-        | None => efailure (RuntimeError loc "Unary operation failed.")
+        | None => efailure (RuntimeError prov "Unary operation failed.")
         end
       | Failure _ _ f => efailure f
       end
         
-    | EBinaryOp loc o e1 e2 =>
+    | EBinaryOp prov o e1 e2 =>
       match ergo_eval_expr ctxt e1 with
       | Success _ _ e1' =>
         match ergo_eval_expr ctxt e2 with
@@ -82,22 +82,22 @@ Section ErgoC.
           (* TODO this takes a type hierarchy as a list of string * strings. *)
           match ergo_binary_eval nil o e1' e2' with
           | Some r => esuccess r
-          | None => efailure (RuntimeError loc "Binary operation failed.")
+          | None => efailure (RuntimeError prov "Binary operation failed.")
           end
         | Failure _ _ f => efailure f
         end
       | Failure _ _ f => efailure f
       end
 
-    | EIf loc c t f =>
+    | EIf prov c t f =>
       match ergo_eval_expr ctxt c with
       | Success _ _ (dbool true) => ergo_eval_expr ctxt t
       | Success _ _ (dbool false) => ergo_eval_expr ctxt f
-      | Success _ _ _ => efailure (RuntimeError loc "'If' condition not boolean.")
+      | Success _ _ _ => efailure (RuntimeError prov "'If' condition not boolean.")
       | Failure _ _ f => efailure f
       end
 
-    | ELet loc n t v e =>
+    | ELet prov n t v e =>
       match ergo_eval_expr ctxt v with
       | Success _ _ v' =>
         let ctxt' := eval_context_update_local_env ctxt n v' in
@@ -105,7 +105,7 @@ Section ErgoC.
       | Failure _ _ f => efailure f
       end
 
-    | ERecord loc rs =>
+    | ERecord prov rs =>
       fold_left
         (fun ls nv =>
            let name := fst nv in
@@ -117,13 +117,13 @@ Section ErgoC.
              | Success _ _ value' => esuccess (drec (ls' ++ ((name, value')::nil)))
              | Failure _ _ f => efailure f
              end
-           | Success _ _ _ => efailure (RuntimeError loc "This should never happen.")
+           | Success _ _ _ => efailure (RuntimeError prov "This should never happen.")
            | Failure _ _ f => efailure f
            end)
         rs (esuccess (drec nil))
 
     (* RIP modularity *)
-    | ENew loc nr rs =>
+    | ENew prov nr rs =>
       match
         fold_left
           (fun ls nv =>
@@ -136,7 +136,7 @@ Section ErgoC.
                | Success _ _ value' => esuccess (drec (ls' ++ ((name, value')::nil)))
                | Failure _ _ f => efailure f
                end
-             | Success _ _ _ => efailure (RuntimeError loc "This should never happen.")
+             | Success _ _ _ => efailure (RuntimeError prov "This should never happen.")
              | Failure _ _ f => efailure f
              end)
           rs (esuccess (drec nil))
@@ -146,9 +146,9 @@ Section ErgoC.
       end
 
     (* EXPECTS: no function calls in expression *)
-    | ECallFun loc fn args => efailure (SystemError loc "You forgot to inline a call...")
-
-    | EMatch loc term pes default =>
+    | ECallFun prov fname args => function_not_inlined_error prov fname
+    | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
+    | EMatch prov term pes default =>
       let lift_dbrand :=
           fun dat brand fn default =>
             match dat with
@@ -210,7 +210,7 @@ Section ErgoC.
        end
 
     (* EXPECTS: each foreach has only one dimension and no where *)
-    | EForeach loc ((name,arr)::nil) None fn =>
+    | EForeach prov ((name,arr)::nil) None fn =>
       match ergo_eval_expr ctxt arr with
       | Failure _ _ f => efailure f
       | Success _ _ (dcoll arr') =>
@@ -218,10 +218,10 @@ Section ErgoC.
           (emaplift
              (fun elt => ergo_eval_expr (eval_context_update_local_env ctxt name elt) fn)
              arr')
-      | Success _ _ _ => efailure (RuntimeError loc "Foreach needs to be called on an array")
+      | Success _ _ _ => efailure (RuntimeError prov "Foreach needs to be called on an array")
       end
-    | EForeach loc _ _ _ =>
-      efailure (RuntimeError loc "Failed to inline foreach")
+    | EForeach prov _ _ _ =>
+      complex_foreach_in_calculus_error prov
     end.
 
   Definition ergoc_eval_decl
@@ -229,14 +229,14 @@ Section ErgoC.
              (decl : ergoc_declaration)
     : eresult (eval_context * option ergo_data) :=
     match decl with
-    | DCExpr loc expr =>
+    | DCExpr prov expr =>
       elift (fun x => (dctxt, Some x)) (ergo_eval_expr dctxt expr)
-    | DCConstant loc name expr =>
+    | DCConstant prov name expr =>
       let expr' := ergo_eval_expr dctxt expr in
       eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
-    | DCFunc loc name func =>
+    | DCFunc prov name func =>
       esuccess (dctxt, None)
-    | DCContract loc name contr => TODO "Contract(decl)"
+    | DCContract prov name contr => TODO "Contract(decl)"
     end.
 
 End ErgoC.
