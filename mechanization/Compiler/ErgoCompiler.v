@@ -281,7 +281,7 @@ Module ErgoCompiler.
   Definition ergo_repl_eval_decl :
     ErgoDriver.repl_context
     -> ergo_declaration
-    -> String.string * ErgoDriver.repl_context
+    -> EResult.eresult String.string * ErgoDriver.repl_context
     := ErgoDriver.ergo_repl_eval_decl.
 
 End ErgoCompiler.

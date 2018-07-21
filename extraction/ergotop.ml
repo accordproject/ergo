@@ -48,18 +48,19 @@ let safe_init_repl_ctxt ctos modules =
 
 (* REPL *)
 let rec repl rctxt =
+  let text = read_nonempty_multiline () in
   try
     (* read *)
-    let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" (read_nonempty_multiline ())) in
+    let decl = (ParseUtil.parse_ergo_declaration_from_string "stdin" text) in
     (* eval *)
     let (out,rctxt') = ergo_repl_eval_decl rctxt decl in
     (* print *)
-    print_string (Util.string_of_char_list out);
+    print_string (ErgoUtil.wrap_jerrors (fun out' -> (Util.string_of_char_list out')) out);
     (* loop *)
     repl rctxt'
   with
   | ErgoUtil.Ergo_Error e ->
-      print_string (ErgoUtil.string_of_error e);
+      print_string (ErgoUtil.string_of_error_plus e text);
       print_string "\n" ;
       repl rctxt
   | End_of_file -> None

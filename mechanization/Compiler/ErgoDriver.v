@@ -289,16 +289,15 @@ Section ErgoDriver.
     Definition ergo_string_of_result
                (rctxt : repl_context)
                (result : eresult (option ergo_data * repl_context))
-      : string :=
-      elift_both
+      : eresult string :=
+      elift
         (string_of_result rctxt.(repl_context_eval_ctxt))
-        (fun e => string_of_error e ++ fmt_nl)%string
-        (elift (fun x => fst x) result).
+        (elift fst result).
 
     Definition ergo_repl_eval_decl
                (rctxt : repl_context)
                (decl : lrergo_declaration)
-      : string * repl_context :=
+      : eresult string * repl_context :=
       let result := ergo_eval_decl_via_calculus rctxt decl in
       let out := ergo_string_of_result rctxt result in
       (out, lift_repl_ctxt rctxt result).
