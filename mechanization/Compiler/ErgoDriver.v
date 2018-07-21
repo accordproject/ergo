@@ -19,8 +19,10 @@ Require Import List.
 
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EData.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
@@ -74,43 +76,33 @@ Section ErgoDriver.
       eolift (fun amc =>
                 let ctxt := compilation_context_update_namespace ctxt (snd amc) in
                 let p := expand_ergo_module (fst amc) in
-                let pc :=
-                    eolift (fun p =>
-                              elift
-                                (fun pc => (pc, ctxt))
-                                (ergo_module_to_calculus p)) p
-                in
+                let pc := eolift (ergo_module_to_calculus ctxt) p in
                 eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc)
              am.
 
     (* ErgoDecl -> ErgoCDecl *)
     Definition ergo_declaration_to_ergoc
                (ctxt:compilation_context)
-               (ld:lrergo_declaration) : eresult (option ergoc_declaration * compilation_context) :=
+               (ld:lrergo_declaration) : eresult (list ergoc_declaration * compilation_context) :=
       let ns_ctxt := namespace_ctxt_of_compilation_context ctxt in
       let am := resolve_ergo_declaration ns_ctxt ld in
       eolift (fun amc =>
                 let ctxt := compilation_context_update_namespace ctxt (snd amc) in
-                elift
-                  (fun d => (d, ctxt))
-                  (declaration_to_calculus (fst amc)))
+                declaration_to_calculus ctxt (fst amc))
              am.
 
     Definition ergo_declaration_to_ergoc_inlined
                (sctxt : compilation_context)
                (decl : lrergo_declaration)
-      : eresult (option ergoc_declaration * compilation_context) :=
+      : eresult (list ergoc_declaration * compilation_context) :=
       eolift
-        (fun xy =>
-           match fst xy with
-           | None => esuccess (None, snd xy)
-           | Some decl' =>
-             let sctxt' := snd xy in
-             elift
-               (fun xy => (Some (fst xy), snd xy))
-               (ergoc_inline_declaration sctxt' decl')
-           end)
-      (ergo_declaration_to_ergoc sctxt decl).
+        (fun (x : list ergoc_declaration * compilation_context) =>
+           let (decls, ctxt) := x in
+           elift_context_fold_left
+             ergoc_inline_declaration
+             decls
+             ctxt)
+        (ergo_declaration_to_ergoc sctxt decl).
 
     Definition ergo_module_to_javascript
                (ctxt:compilation_context)
@@ -161,10 +153,10 @@ Section ErgoDriver.
              (fun c : local_name * ergo_contract =>
                 let contract_name := (fst c) in 
                 let sigs := lookup_contract_signatures (snd c) in
-                let pc := eolift ergo_module_to_calculus p in
                 let pc :=
                     eolift (fun ct =>
-                              eolift (fun p => ergoc_inline_module ct p) pc) ctxt
+                              eolift (fun p => ergoc_inline_module (snd p) (fst p))
+                                     (eolift (ergo_module_to_calculus ct) p)) ctxt
                 in
                 let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
                 elift (ergoc_module_to_javascript_cicero contract_name (snd c).(contract_state) sigs) pn)
@@ -208,17 +200,36 @@ Section ErgoDriver.
           (fun e => orig_ctxt)  (* in case of failure, ignore the failure and return the original context *)
           result.
 
-    Definition unpack_output
-               (out : ergo_data)
-      : option (ergo_data * list ergo_data * ergo_data) :=
-      match out with
-      | (dleft (drec (("response"%string, response)
-                        ::("state"%string, state)
-                        ::("emit"%string, dcoll emits)
-                        ::nil))) =>
-        Some (response, emits, state)
-      | _ => None
+    Definition ergoc_repl_eval_declaration
+               (ctxt:repl_context) (decl:ergoc_declaration)
+      : eresult (option ergo_data * repl_context) :=
+      let sctxt := ctxt.(repl_context_comp_ctxt) in
+      match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
+      | Failure _ _ f => efailure f
+      | Success _ _ (dctxt', None) => esuccess (None, mkREPLCtxt dctxt' sctxt)
+      | Success _ _ (dctxt', Some out) =>
+        match unpack_output out with
+        | None => esuccess (Some out, mkREPLCtxt dctxt' sctxt)
+        | Some (_, _, state) =>
+          esuccess (
+              Some out,
+              mkREPLCtxt
+                (eval_context_update_local_env dctxt' "state"%string state)
+                sctxt
+            )
+        end
       end.
+
+    Definition ergoc_repl_eval_declarations
+               (ctxt:repl_context) (decls:list ergoc_declaration)
+      : eresult (option ergo_data * repl_context) :=
+      elift
+        (fun xy =>
+           (last_some (fst xy), snd xy))
+        (elift_context_fold_left
+           ergoc_repl_eval_declaration
+           decls
+           ctxt).
 
     Definition ergo_eval_decl_via_calculus
                (ctxt : repl_context)
@@ -226,72 +237,19 @@ Section ErgoDriver.
       : eresult (option ergo_data * repl_context) :=
       match ergo_declaration_to_ergoc_inlined ctxt.(repl_context_comp_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (None, sctxt') => esuccess (None, update_repl_ctxt_comp_ctxt ctxt sctxt')
-      | Success _ _ (Some decl', sctxt') =>
-        match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl' with
-        | Failure _ _ f => efailure f
-        | Success _ _ (dctxt', None) => esuccess (None, mkREPLCtxt dctxt' sctxt')
-        | Success _ _ (dctxt', Some out) =>
-          match unpack_output out with
-          | None => esuccess (Some out, mkREPLCtxt dctxt' sctxt')
-          | Some (_, _, state) =>
-            esuccess (
-                Some out,
-                mkREPLCtxt
-                  (eval_context_update_local_env dctxt' "state"%string state)
-                  sctxt'
-              )
-          end
-        end
-      end.
-
-    Definition string_of_response (response : ergo_data) : string :=
-      (fmt_grn "Response. ") ++ (ErgoData.data_to_json_string fmt_dq response) ++ fmt_nl.
-
-    Definition string_of_emits (emits : list ergo_data) : string :=
-      (fold_left
-         (fun old new => ((fmt_mag "Emit. ") ++ new ++ fmt_nl ++ old)%string)
-         (map (ErgoData.data_to_json_string fmt_dq) emits) ""%string).
-
-    Definition string_of_state (ctxt : eval_context) (state : ergo_data)
-    : string :=
-      let jsonify := ErgoData.data_to_json_string fmt_dq in
-      let old_st := lookup String.string_dec (ctxt.(eval_context_local_env)) "state"%string in
-      let new_st := state in
-      match old_st with
-      | None => (fmt_blu "State. ") ++ (jsonify state)
-      | Some state' =>
-        if Data.data_eq_dec state state' then
-          ""%string
-        else
-          (fmt_blu "State. ") ++ (jsonify state) ++ fmt_nl
-      end.
-
-    (* XXX May be nice to replace by a format that aligns with Ergo notations instead of JSON and move to an earlier module e.g., Common/Utils/EData *)
-    Definition string_of_result (ctxt : eval_context) (result : option ergo_data)
-      : string :=
-      match result with
-      | None => ""
-      | Some (dright msg) =>
-        fmt_red ("Error. "%string) ++ (ErgoData.data_to_json_string fmt_dq msg) ++ fmt_nl
-      | Some out =>
-        match unpack_output out with
-        | Some (response, emits, state) =>
-            (string_of_emits emits) ++ (string_of_response response) ++ (string_of_state ctxt state)
-        | None => (ErgoData.data_to_json_string fmt_dq out) ++ fmt_nl
-        end
-(* Note: this was previously powered by QCert's dataToString d, and I kind of
-   liked that better anyway, so we might transition back at some point. The
-   problem was that QCert treated arrays as bags and sorted them before
-   printing (!!!). *)
+      | Success _ _ (decls, sctxt') =>
+        let rctxt' := update_repl_ctxt_comp_ctxt ctxt sctxt' in
+        ergoc_repl_eval_declarations rctxt' decls
       end.
 
     Definition ergo_string_of_result
                (rctxt : repl_context)
                (result : eresult (option ergo_data * repl_context))
       : eresult string :=
+      let local_env := rctxt.(repl_context_eval_ctxt).(eval_context_local_env) in
+      let old_state := lookup String.string_dec local_env "state"%string in
       elift
-        (string_of_result rctxt.(repl_context_eval_ctxt))
+        (string_of_result old_state)
         (elift fst result).
 
     Definition ergo_repl_eval_decl

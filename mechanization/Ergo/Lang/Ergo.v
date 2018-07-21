@@ -133,9 +133,10 @@ Section Ergo.
     | DImport : A -> @import_decl A -> ergo_declaration
     | DType : A -> @ergo_type_declaration A N -> ergo_declaration
     | DStmt : A -> ergo_stmt -> ergo_declaration
-    | DConstant : A -> absolute_name -> ergo_expr -> ergo_declaration
-    | DFunc : A -> absolute_name -> ergo_function -> ergo_declaration
-    | DContract : A -> absolute_name -> ergo_contract -> ergo_declaration
+    | DConstant : A -> local_name -> ergo_expr -> ergo_declaration
+    | DFunc : A -> local_name -> ergo_function -> ergo_declaration
+    | DContract : A -> local_name -> ergo_contract -> ergo_declaration
+    | DSetContract : A -> N -> ergo_expr -> ergo_declaration
     .
     
     Definition decl_annot (d:ergo_declaration) : A :=
@@ -146,6 +147,7 @@ Section Ergo.
       | DConstant a _ _ => a
       | DFunc a _ _ => a
       | DContract a _ _ => a
+      | DSetContract a _ _ => a
       end.
 
     (** Module. *)

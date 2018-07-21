@@ -25,41 +25,19 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
+Require Import ErgoSpec.Translation.ErgoCompContext.
 
 Section ErgotoErgoC.
-
-  Section TranslationContext.
-    Record translation_context :=
-      mkTransContext {
-          trans_ctxt_current_contract : option string;
-          trans_ctxt_current_clause : option string;
-        }.
-
-    Definition initial_translation_context :=
-      mkTransContext None None.
-
-    Definition set_current_contract (ctxt:translation_context) (cname:string) : translation_context :=
-      mkTransContext
-        (Some cname)
-        ctxt.(trans_ctxt_current_clause).
-  
-    Definition set_current_clause (ctxt:translation_context) (cname:string) : translation_context :=
-      mkTransContext
-        ctxt.(trans_ctxt_current_contract)
-        (Some cname).
-
-  End TranslationContext.
-
   (** Translate Ergo expression to calculus *)
-  Fixpoint ergo_expr_to_ergoc_expr (ctxt:translation_context) (e:laergo_expr) : eresult ergoc_expr :=
+  Fixpoint ergo_expr_to_ergoc_expr (ctxt:compilation_context) (e:laergo_expr) : eresult ergoc_expr :=
     match e with
     | EThisContract prov =>
-      match ctxt.(trans_ctxt_current_contract) with
+      match ctxt.(compilation_context_current_contract) with
       | None => not_in_contract_error prov
       | Some _ => esuccess (thisContract prov)
       end
     | EThisClause prov => 
-      match ctxt.(trans_ctxt_current_clause) with
+      match ctxt.(compilation_context_current_clause) with
       | None => not_in_clause_error prov
       | Some clause_name =>
         esuccess (thisClause prov clause_name)
@@ -181,7 +159,7 @@ Section ErgotoErgoC.
     end.
 
   (** Translate an Ergo statement to an Ergo expression *)
-  Fixpoint ergo_stmt_to_expr (ctxt:translation_context) (s:laergo_stmt) : eresult ergoc_expr :=
+  Fixpoint ergo_stmt_to_expr (ctxt:compilation_context) (s:laergo_stmt) : eresult ergoc_expr :=
     match s with
     | SReturn prov e =>
       elift (fun e =>
@@ -198,7 +176,7 @@ Section ErgotoErgoC.
       elift (EError prov)
             (ergo_expr_to_ergoc_expr ctxt e)
     | SCallClause prov (EThisContract _) fname el =>
-      match ctxt.(trans_ctxt_current_contract) with
+      match ctxt.(compilation_context_current_contract) with
       | None => not_in_contract_error prov
       | Some coname =>
         let el := emaplift (ergo_expr_to_ergoc_expr ctxt) el in
@@ -266,7 +244,7 @@ Section ErgotoErgoC.
                   scdefault) sccases) ec0
     end.
 
-  Definition ergo_stmt_to_expr_top (ctxt:translation_context) (prov:provenance) (e:ergo_stmt) : eresult ergoc_expr :=
+  Definition ergo_stmt_to_expr_top (ctxt:compilation_context) (prov:provenance) (e:ergo_stmt) : eresult ergoc_expr :=
     elift (fun e =>
              ELet prov
                   local_state
@@ -280,11 +258,11 @@ Section ErgotoErgoC.
   (** Translate a clause to clause+calculus *)
 
   Definition clause_to_calculus
-             (ctxt:translation_context)
+             (ctxt:compilation_context)
              (tem:laergo_type)
              (sta:option laergo_type)
              (c:laergo_clause) : eresult (local_name * ergoc_function) :=
-    let ctxt : translation_context := set_current_clause ctxt c.(clause_name) in
+    let ctxt : compilation_context := set_current_clause ctxt c.(clause_name) in
     (* XXX keep track of clause provenance *)
     let prov := ProvClause (loc_of_provenance c.(clause_annot)) c.(clause_name) in
     let response_type := c.(clause_sig).(type_signature_output) in
@@ -317,7 +295,7 @@ Section ErgotoErgoC.
 
   (** Translate a function to function+calculus *)
   Definition function_to_calculus
-             (ctxt:translation_context)
+             (ctxt:compilation_context)
              (f:laergo_function) : eresult ergoc_function :=
     let prov := f.(function_annot) in
     let body :=
@@ -339,7 +317,7 @@ Section ErgotoErgoC.
   (** For a contract, add 'contract' and 'now' to the comp_context *)
 
   Definition contract_to_calculus
-             (ctxt:translation_context)
+             (ctxt:compilation_context)
              (c:laergo_contract) : eresult ergoc_contract :=
     let clauses :=
         emaplift (clause_to_calculus ctxt c.(contract_template) c.(contract_state)) c.(contract_clauses)
@@ -351,48 +329,75 @@ Section ErgotoErgoC.
 
   (** Translate a statement to a statement+calculus *)
   Definition declaration_to_calculus
-             (d:laergo_declaration) : eresult (option (ergoc_declaration)) :=
-    let ctxt := initial_translation_context in (* XXX For now only needs context per declaration *)
+             (ctxt:compilation_context)
+             (d:laergo_declaration) : eresult (list ergoc_declaration * compilation_context) :=
     match d with
-    | DImport prov import => esuccess None
-    | DType prov ergo_type => esuccess None
-    | DStmt prov s => elift Some (elift (DCExpr prov) (ergo_stmt_to_expr_top ctxt prov s))
-    | DConstant prov v e => elift Some (elift (DCConstant prov v) (ergo_expr_to_ergoc_expr ctxt e))
+    | DImport prov import => esuccess (nil, ctxt)
+    | DType prov ergo_type => esuccess (nil, ctxt)
+    | DStmt prov s =>
+      elift
+        (fun x => (x::nil, ctxt))
+        (elift (DCExpr prov) (ergo_stmt_to_expr_top ctxt prov s))
+    | DConstant prov v e =>
+      elift
+        (fun x => (x::nil, ctxt))
+        (elift (DCConstant prov v) (ergo_expr_to_ergoc_expr ctxt e))
     | DFunc prov fn f =>
-      elift Some (elift (DCFunc prov fn) (function_to_calculus ctxt f))
+      elift
+        (fun x => (x::nil, ctxt))
+        (elift (DCFunc prov fn) (function_to_calculus ctxt f))
     | DContract prov cn c =>
-      elift Some (elift (DCContract prov cn)
-                        (let ctxt := set_current_contract ctxt cn in
-                         contract_to_calculus ctxt c))
+      elift
+        (fun x => (x::nil, ctxt))
+        (elift (DCContract prov cn)
+               (let ctxt := set_current_contract ctxt cn in
+                contract_to_calculus ctxt c))
+    | DSetContract prov cn e1 =>
+      let ctxt := set_current_contract ctxt cn in
+      elift
+        (fun x => (x :: nil,ctxt))
+        (elift (DCConstant prov this_contract) (ergo_expr_to_ergoc_expr ctxt e1))
     end.
 
   (** Translate a module to a module+calculus *)
   Definition declarations_calculus
-             (dl:list ergo_declaration) : eresult (list ergoc_declaration) :=
+             (ctxt:compilation_context)
+             (dl:list ergo_declaration) : eresult (list ergoc_declaration * compilation_context) :=
     let proc_one
+          (acc:eresult (list ergoc_declaration * compilation_context))
           (d:ergo_declaration)
-          (acc:eresult (list ergoc_declaration))
-        : eresult (list ergoc_declaration) :=
-        eolift (fun d =>
-                 match d with
-                 | None => acc
-                 | Some edecl => elift (fun acc => cons edecl acc) acc
-                 end)
-              (declaration_to_calculus d)
+        : eresult (list ergoc_declaration * compilation_context) :=
+        eolift
+          (fun acc : list ergoc_declaration * compilation_context =>
+             let (acc, ctxt) := acc in
+             elift (fun decls : list ergoc_declaration * compilation_context =>
+                      let (decls, ctxt) := decls in
+                      (acc ++ decls, ctxt))
+                   (declaration_to_calculus ctxt d))
+          acc
     in
-    fold_right proc_one (esuccess nil) dl.
+    fold_left proc_one dl (esuccess (nil, ctxt)).
 
   (** Translate a module to a module+calculus *)
   Definition ergo_module_to_calculus
-             (p:laergo_module) : eresult ergoc_module :=
+             (ctxt:compilation_context)
+             (p:laergo_module) : eresult (ergoc_module * compilation_context) :=
     elift
-      (mkModuleC
-         p.(module_annot)
-         p.(module_namespace))
-      (declarations_calculus p.(module_declarations)).
+      (fun res : list ergoc_declaration * compilation_context =>
+         let (decls, ctxt) := res in
+         (mkModuleC
+            p.(module_annot)
+            p.(module_namespace)
+            decls, ctxt))
+      (declarations_calculus ctxt p.(module_declarations)).
 
-  Definition ergo_modules_to_calculus (pl:list laergo_module) : eresult (list ergoc_module) :=
-    emaplift ergo_module_to_calculus pl.
+  Definition ergo_modules_to_calculus
+             (ctxt:compilation_context)
+             (pl:list laergo_module) : eresult (list ergoc_module * compilation_context) :=
+    elift_context_fold_left
+      ergo_module_to_calculus
+      pl
+      ctxt.
 
   Section Examples.
     Definition f1 : laergo_function :=

@@ -88,7 +88,7 @@ let mk_provenance
 %left DOT QUESTIONDOT
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main_module
-%start <ErgoComp.ErgoCompiler.ergo_declaration> main_decl
+%start <ErgoComp.ErgoCompiler.ergo_declaration option> main_decl
 
 %%
 
@@ -97,8 +97,10 @@ main_module:
     { p }
 
 main_decl:
+| EOF
+    { None }
 | p = decl EOF
-    { p }
+    { Some p }
 
 emodule:
 | NAMESPACE qn = qname_prefix ds = decls
@@ -156,6 +158,9 @@ decl:
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }
+| SET CONTRACT qn = qname_base OVER e = expr
+    { ErgoCompiler.dsetcontract (mk_provenance $startpos $endpos)
+        (relative_ref_of_qname_base qn) e }
 | s = stmt SEMI
     { ErgoCompiler.dstmt (mk_provenance $startpos $endpos) s }
 

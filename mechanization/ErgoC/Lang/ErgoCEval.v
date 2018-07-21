@@ -48,7 +48,6 @@ Section ErgoC.
       let opt := lookup String.string_dec (ctxt.(eval_context_local_env)++ctxt.(eval_context_global_env)) name in
       eresult_of_option opt (RuntimeError prov ("Variable not found: " ++ name)%string)
     | EConst prov d => esuccess d
-
     | EArray prov es =>
       fold_left
         (fun ls new =>
@@ -62,7 +61,6 @@ Section ErgoC.
            | Failure _ _ f => efailure f
            end)
         es (esuccess (dcoll nil))
-
     | EUnaryOp prov o e  =>
       match ergo_eval_expr ctxt e with
       | Success _ _ e' =>
@@ -73,7 +71,6 @@ Section ErgoC.
         end
       | Failure _ _ f => efailure f
       end
-        
     | EBinaryOp prov o e1 e2 =>
       match ergo_eval_expr ctxt e1 with
       | Success _ _ e1' =>
@@ -88,7 +85,6 @@ Section ErgoC.
         end
       | Failure _ _ f => efailure f
       end
-
     | EIf prov c t f =>
       match ergo_eval_expr ctxt c with
       | Success _ _ (dbool true) => ergo_eval_expr ctxt t
@@ -96,7 +92,6 @@ Section ErgoC.
       | Success _ _ _ => efailure (RuntimeError prov "'If' condition not boolean.")
       | Failure _ _ f => efailure f
       end
-
     | ELet prov n t v e =>
       match ergo_eval_expr ctxt v with
       | Success _ _ v' =>
@@ -104,7 +99,6 @@ Section ErgoC.
         ergo_eval_expr ctxt' e
       | Failure _ _ f => efailure f
       end
-
     | ERecord prov rs =>
       fold_left
         (fun ls nv =>
@@ -121,7 +115,6 @@ Section ErgoC.
            | Failure _ _ f => efailure f
            end)
         rs (esuccess (drec nil))
-
     (* RIP modularity *)
     | ENew prov nr rs =>
       match
@@ -144,7 +137,6 @@ Section ErgoC.
       | Failure _ _ f => efailure f
       | Success _ _ r => esuccess (dbrand (nr::nil) r)
       end
-
     (* EXPECTS: no function calls in expression *)
     | ECallFun prov fname args => function_not_inlined_error prov fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
@@ -171,7 +163,6 @@ Section ErgoC.
                  ergo_eval_expr ctxt res
                else
                  default_result
-
              | (CaseWildcard prov None, res) =>
                ergo_eval_expr ctxt res
              | (CaseLet prov name None, res) =>
@@ -183,19 +174,16 @@ Section ErgoC.
                | _ =>
                  efailure (RuntimeError prov "Matched LetOption without an option.")
                end
-
              | (CaseWildcard prov (Some typ), res) =>
                lift_dbrand dat typ
                            (fun dat' => ergo_eval_expr ctxt res)
                            default_result
-
              | (CaseLet prov name (Some typ), res) =>
                lift_dbrand dat typ
                            (fun dat' => ergo_eval_expr
                                           (eval_context_update_local_env ctxt name dat')
                                           res)
                            default_result
-
              | (CaseLetOption prov name (Some typ), res) =>
                match dat with
                | dright dunit => default_result
@@ -208,7 +196,6 @@ Section ErgoC.
                | _ =>
                  efailure (RuntimeError prov "Matched LetOption without an option.")
                end
-
              end)
           pes (ergo_eval_expr ctxt default)
        end
@@ -240,7 +227,8 @@ Section ErgoC.
       eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
     | DCFunc prov name func =>
       esuccess (dctxt, None)
-    | DCContract prov name contr => TODO "Contract(decl)"
+    | DCContract prov name contr =>
+      esuccess (dctxt, None)
     end.
 
 End ErgoC.

@@ -252,10 +252,13 @@ Section ErgoNameResolution.
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         let an := absolute_name_of_local_name ns ln in
         add_function_to_namespace_ctxt ctxt ns ln an
-      | DContract _ ln _ :: rest => (* XXX TO BE REVISED *)
+      | DContract _ ln _ :: rest =>
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         let an := absolute_name_of_local_name ns ln in
         add_contract_to_namespace_ctxt ctxt ns ln an
+      | DSetContract _ ln _ :: rest =>
+        let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
+        ctxt
       end.
 
     Definition namespace_ctxt_of_ergo_module (ctxt:namespace_ctxt) (m:lrergo_module) : namespace_ctxt :=
@@ -753,6 +756,11 @@ Section ErgoNameResolution.
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_contract_to_namespace_ctxt_current ctxt ln an in
         elift (fun x => (DContract prov an x, ctxt)) (resolve_ergo_contract module_ns tbl c)
+      | DSetContract prov rn e1  =>
+        eolift (fun an =>
+                  elift (fun x => (DSetContract prov an x, ctxt))
+                        (resolve_ergo_expr tbl e1))
+               (resolve_contract_name prov tbl rn)
       end.
 
     Definition resolve_ergo_declarations

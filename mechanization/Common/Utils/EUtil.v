@@ -36,4 +36,16 @@ Section EUtil.
   Definition postpend {A : Set} (ls : list A) (a : A) : list A :=
     ls ++ (a :: nil).
 
+  Fixpoint last_some {A} (l:list (option A)) : option A :=
+    let proc_one (one:option A) (acc:option A) :=
+        match acc with
+        | Some x => Some x
+        | None => one
+        end
+    in
+    fold_right
+      proc_one
+      None
+      l.
+
 End EUtil.
