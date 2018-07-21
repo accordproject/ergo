@@ -48,12 +48,12 @@ Section ErgocEvalContext.
                   new_local_env.
 
   Definition empty_eval_context :=
-    mkEvalContext nil
-                  (("contract"%string, dunit)
-                     ::("state"%string, dunit)
-                     ::("emit"%string, dcoll nil)
-                     ::("now"%string, dunit)
-                     ::nil).
+    mkEvalContext  (("contract"%string, dunit)
+                      ::nil)
+                   (("state"%string, dunit)
+                      ::("emit"%string, dcoll nil)
+                      ::("now"%string, dunit)
+                      ::nil).
   
 End ErgocEvalContext.
 

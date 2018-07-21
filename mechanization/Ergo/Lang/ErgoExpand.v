@@ -194,6 +194,7 @@ Section ErgoExpand.
         (fun dd =>
            (DContract (decl_annot d) cn dd))
         (add_main_clause_to_contract namespace cd)
+    | DSetContract _ _ _ => esuccess d
     end.
     
   Definition add_main_init_clauses_to_declarations

@@ -4,7 +4,7 @@ define function area(r : Integer) : Integer { return pi * r^2.0 }
 enforce area(1.0) = 3.14; return true;
 let pi = 10.0; enforce area(1.0) = 3.14; enforce pi = 10.0; return true;
 
-define concept Bear {}
+define concept Bear { name : String, age : Integer }
 define constant pooh = new Bear {name : "Winnie", age : 14}
 return pooh;
 
@@ -65,3 +65,18 @@ return "(builtins) flatten, max/min, average, sqrt, some work";
 
 enforce 5 = match some(5) with let a? then a else nil;\
 return "(match) match works against optionals";
+
+define concept Request{ food : String }
+define concept Response{ output : String }
+contract Happy over Bear { \
+	clause eat(request : Request) : Response { \
+    return new Response{ output: contract.name ++ " ate " ++ request.food } \
+  } \
+	clause fish(request : Request) : Response { \
+		set state "TIRED!"; \
+    return new Response{ output: contract.name ++ " fished " ++ request.food } \
+  } \
+}
+set contract Happy over new Bear{name : "Winnie", age : 14}
+contract.eat(new Request{ food : "berries" });
+contract.fish(new Request{ food : "salmon" });

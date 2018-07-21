@@ -249,6 +249,8 @@ Module ErgoCompiler.
     := Ergo.DFunc prov fn f.
   Definition dcontract prov cn c : ergo_declaration
     := Ergo.DContract prov cn c.
+  Definition dsetcontract prov cn e : ergo_declaration
+    := Ergo.DSetContract prov cn e.
 
   (** Compilation *)
   Definition ergo_module_to_javascript :

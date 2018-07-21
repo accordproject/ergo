@@ -79,6 +79,15 @@ Section EResult.
       fold_left proc_one l (esuccess a).
 
     (* Variant of Fold-left for functions passing eresults with a context *)
+    Definition elift_context_fold_left_alt {A:Set} {B:Set} {C:Set}
+               (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
+      elift_fold_left
+        (fun acc c =>
+           elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
+        l
+        (nil, c).
+
+    (* Variant of Fold-left for functions passing eresults with a context *)
     Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
                (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
       elift_fold_left
