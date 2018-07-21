@@ -78,18 +78,41 @@ let error_loc_end error =
   | RuntimeError (prov,_) -> (loc_of_provenance prov).loc_end
   end
 
+let underline_prov prov text =
+  let loc = loc_of_provenance prov in
+  let lines = String.split_on_char '\n' text in
+  let line = List.nth lines (loc.loc_start.line - 1) in
+  let underline =
+    String.init
+        (String.length line)
+        (fun n ->
+            if (n >= loc.loc_start.column && n < loc.loc_end.column)
+            then '^'
+            else ' ')
+  in
+  "\n" ^ line ^ "\n" ^ underline
+
 let string_of_error_prov prov =
   let loc = loc_of_provenance prov in
   "line " ^ (string_of_int loc.loc_start.line)
-  ^ " character " ^ (string_of_int loc.loc_start.column)
+  ^ " col " ^ (string_of_int loc.loc_start.column)
 
 let string_of_error error =
   begin match error with
   | SystemError _ -> "[SystemError] " ^ (error_message error)
   | ParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
   | CompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
-  | TypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "]" ^ (error_message error)
-  | RuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "]" ^  (error_message error)
+  | TypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
+  | RuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
+  end
+
+let string_of_error_plus error text =
+  begin match error with
+  | SystemError _ -> "[SystemError] " ^ (error_message error)
+  | ParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
+  | CompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
+  | TypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
+  | RuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
   end
 
 (** Version number *)
