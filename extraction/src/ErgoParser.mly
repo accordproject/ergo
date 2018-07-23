@@ -18,7 +18,7 @@ open LexUtil
 open ErgoUtil
 open ErgoComp
 
-let relative_name_of_qname_base qn =  
+let relative_name_of_qname qn =  
   begin match qn with
   | (None,last) -> (None,Util.char_list_of_string last)
   | (Some prefix, last) ->
@@ -102,7 +102,7 @@ main_decl:
 emodule:
 | NAMESPACE qn = qname_prefix ds = decls
     { { module_annot = mk_provenance $startpos $endpos;
-        module_namespace = Util.char_list_of_string qn;
+        module_namespace = qn;
         module_declarations = ds; } }
 
 decls:
@@ -112,10 +112,10 @@ decls:
     { s :: ss }
 
 decl:
-| IMPORT qn = qname_prefix
+| IMPORT qn = qname_import
     { ErgoCompiler.dimport
         (mk_provenance $startpos $endpos)
-        (cto_import_decl_of_import_namespace qn) }
+        qn }
 | DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
@@ -221,19 +221,8 @@ param:
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
-| qnb = qname_base
-    { begin match qnb with
-      | (None, "Boolean") -> ErgoCompiler.ergo_type_boolean (mk_provenance $startpos $endpos)
-      | (None, "String") -> ErgoCompiler.ergo_type_string (mk_provenance $startpos $endpos)
-      | (None, "Double") -> ErgoCompiler.ergo_type_double (mk_provenance $startpos $endpos)
-      | (None, "Long") -> ErgoCompiler.ergo_type_long (mk_provenance $startpos $endpos)
-      | (None, "Integer") -> ErgoCompiler.ergo_type_integer (mk_provenance $startpos $endpos)
-      | (None, "DateTime") -> ErgoCompiler.ergo_type_dateTime (mk_provenance $startpos $endpos)
-      | (None, "Empty") -> ErgoCompiler.ergo_type_none (mk_provenance $startpos $endpos)
-      | (None, "Any") -> ErgoCompiler.ergo_type_any (mk_provenance $startpos $endpos)
-      | _ ->
-          ErgoCompiler.ergo_type_class_ref (mk_provenance $startpos $endpos) (relative_name_of_qname_base qnb)
-      end }
+| tn = tname
+    { tn }
 | LCURLY rt = rectype RCURLY
     { ErgoCompiler.ergo_type_record (mk_provenance $startpos $endpos) rt }
 | pt = paramtype LBRACKET RBRACKET
@@ -489,7 +478,7 @@ qname_base:
     { (None,i) }
 | i = safeident_base DOT q = qname_base
     { if i = "*"
-      then raise (LexError "'*' can only be last in a qualified name")
+      then ergo_raise (ergo_parse_error "'*' can only be last in a qualified name" $startpos $endpos)
       else
         begin match q with
   | (None, last) -> (Some i, last)
@@ -497,14 +486,51 @@ qname_base:
   end }
 
 qname:
-| qn = qname_base
-    { relative_name_of_qname_base qn }
+| i = safeident_base
+    { relative_name_of_qname (None,i) }
+| TILDE qnb = qname_base
+    { relative_name_of_qname qnb }
+
+tname:
+| i = safeident_base
+    { begin match i with
+      | "Boolean" -> ErgoCompiler.ergo_type_boolean (mk_provenance $startpos $endpos)
+      | "String" -> ErgoCompiler.ergo_type_string (mk_provenance $startpos $endpos)
+      | "Double" -> ErgoCompiler.ergo_type_double (mk_provenance $startpos $endpos)
+      | "Long" -> ErgoCompiler.ergo_type_long (mk_provenance $startpos $endpos)
+      | "Integer" -> ErgoCompiler.ergo_type_integer (mk_provenance $startpos $endpos)
+      | "DateTime" -> ErgoCompiler.ergo_type_dateTime (mk_provenance $startpos $endpos)
+      | "Empty" -> ErgoCompiler.ergo_type_none (mk_provenance $startpos $endpos)
+      | "Any" -> ErgoCompiler.ergo_type_any (mk_provenance $startpos $endpos)
+      | _ ->
+          ErgoCompiler.ergo_type_class_ref
+            (mk_provenance $startpos $endpos)
+            (relative_name_of_qname (None,i))
+      end }
+| TILDE qnb = qname_base
+    { ErgoCompiler.ergo_type_class_ref
+        (mk_provenance $startpos $endpos)
+        (relative_name_of_qname qnb) }
 
 qname_prefix:
 | qn = qname_base
     { begin match qn with
-      | (None,last) -> last
-      | (Some prefix, last) -> prefix ^ "." ^ last
+      | (_,"*") -> ergo_raise (ergo_parse_error "Malformed namespace" $startpos $endpos)
+      | (None,last) -> Util.char_list_of_string last
+      | (Some prefix, last) -> Util.char_list_of_string (prefix ^ "." ^ last)
+      end }
+
+qname_import:
+| qn = qname_base
+    { begin match qn with
+      | (None,_) -> ergo_raise (ergo_parse_error "Malformed import" $startpos $endpos)
+      | (Some prefix, "*") ->
+          ImportAll (mk_provenance $startpos $endpos,
+                     Util.char_list_of_string prefix)
+      | (Some prefix, last) ->
+          ImportName (mk_provenance $startpos $endpos,
+                      Util.char_list_of_string prefix,
+                      Util.char_list_of_string last)
       end }
 
 (* data *)
