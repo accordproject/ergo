@@ -101,8 +101,10 @@ Section EResult.
   Section Builtin.
     Definition clause_call_not_on_contract_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot call a clause except on 'contract'").
-    Definition not_in_contract_error {A} prov : eresult A :=
+    Definition use_contract_not_in_contract_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot use 'contract' variable outside of a contract").
+    Definition call_clause_not_in_contract_error {A} prov clname : eresult A :=
+      efailure (CompilationError prov ("Cannot call clause " ++ clname ++ " outside of a contract")).
     Definition not_in_clause_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot use 'clause' variable outside of a clause").
 

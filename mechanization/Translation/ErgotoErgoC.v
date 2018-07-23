@@ -33,7 +33,7 @@ Section ErgotoErgoC.
     match e with
     | EThisContract prov =>
       match ctxt.(compilation_context_current_contract) with
-      | None => not_in_contract_error prov
+      | None => use_contract_not_in_contract_error prov
       | Some _ => esuccess (thisContract prov)
       end
     | EThisClause prov => 
@@ -175,16 +175,16 @@ Section ErgotoErgoC.
     | SThrow prov e =>
       elift (EError prov)
             (ergo_expr_to_ergoc_expr ctxt e)
-    | SCallClause prov (EThisContract _) fname el =>
+    | SCallClause prov (EThisContract _) clname el =>
       match ctxt.(compilation_context_current_contract) with
-      | None => not_in_contract_error prov
+      | None => call_clause_not_in_contract_error prov clname
       | Some coname =>
         let el := emaplift (ergo_expr_to_ergoc_expr ctxt) el in
         elift (fun el =>
                  ECallFunInGroup
                    prov
                    coname
-                   fname
+                   clname
                    ((EVar prov current_time)
                       ::(thisContract prov)
                       ::(EVar prov local_state)
