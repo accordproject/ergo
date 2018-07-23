@@ -78,5 +78,6 @@ contract Happy over Bear { \
   } \
 }
 set contract Happy over new Bear{name : "Winnie", age : 14}
-contract.eat(new Request{ food : "berries" });
-contract.fish(new Request{ food : "salmon" });
+call eat(new Request{ food : "berries" });
+call fish(new Request{ food : "salmon" });
+
