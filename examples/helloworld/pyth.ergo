@@ -20,6 +20,6 @@ contract HelloWorld over TemplateModel {
     let pyth = (foreach x in nums foreach y in nums foreach z in nums where (x^2.0 + y^2.0 = z^2.0) return {a: x, b: y, c: z});
 
     //let pyth = (foreach x in persons foreach y in x.children where y != "frank" return {p: x.name, c: y});
-    return new Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")", now : pyth }
+    return Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")", now : pyth }
   }
 }

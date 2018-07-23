@@ -3,13 +3,15 @@ namespace org.accordproject.volumediscount
 define concept DoubleRequest { value : Double }
 
 contract VolumeDiscount over TemplateModel {
-  clause createResponse(rate : DoubleRequest) : VolumeDiscountResponse { return new VolumeDiscountResponse{ discountRate: rate.value } }
+  clause createResponse(rate : DoubleRequest) : VolumeDiscountResponse {
+		return VolumeDiscountResponse{ discountRate: rate.value }
+	}
 
   clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
     if request.netAnnualChargeVolume < contract.firstVolume
-	  then contract.createResponse(new DoubleRequest{ value : contract.firstRate })
+	  then contract.createResponse(DoubleRequest{ value : contract.firstRate })
     else if request.netAnnualChargeVolume < contract.secondVolume
-	  then contract.createResponse(new DoubleRequest{ value : contract.secondRate })
-	  else contract.createResponse(new DoubleRequest{ value : contract.thirdRate })
+	  then contract.createResponse(DoubleRequest{ value : contract.secondRate })
+	  else contract.createResponse(DoubleRequest{ value : contract.thirdRate })
   }
 }

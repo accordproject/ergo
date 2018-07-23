@@ -46,7 +46,6 @@ let mk_provenance
 %token LET FOREACH IN WHERE
 %token RETURN THROW STATE CALL
 %token CONSTANT
-%token NEW
 %token MATCH WITH
 %token SET EMIT
 
@@ -360,7 +359,7 @@ expr:
     { ErgoCompiler.eoptionaldefault (mk_provenance $startpos $endpos) e1 e2 }
 | IF e1 = expr THEN e2 = expr ELSE e3 = expr
     { ErgoCompiler.eif (mk_provenance $startpos $endpos) e1 e2 e3 }
-| NEW qn = qname LCURLY r = reclist RCURLY
+| qn = qname LCURLY r = reclist RCURLY
     { ErgoCompiler.enew (mk_provenance $startpos $endpos) qn r }
 | LCURLY r = reclist RCURLY
     { ErgoCompiler.erecord (mk_provenance $startpos $endpos) r }
@@ -486,7 +485,7 @@ qname_base:
   end }
 
 qname:
-| i = safeident_base
+| i = IDENT
     { relative_name_of_qname (None,i) }
 | TILDE qnb = qname_base
     { relative_name_of_qname qnb }
@@ -586,7 +585,6 @@ safeident_base:
 | IN { "in" }
 | WHERE { "where" }
 | THROW { "throw" }
-| NEW { "new" }
 | CONSTANT { "constant" }
 | MATCH { "match" }
 | SET { "set" }

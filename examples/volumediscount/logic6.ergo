@@ -27,7 +27,7 @@ define function addFee(rate : Double) : Double {
 }
 
 define function makeResponse(x : { discountRate: Double }) : VolumeDiscountResponse {
-  return new VolumeDiscountResponse{ discountRate: x.discountRate }
+  return VolumeDiscountResponse{ discountRate: x.discountRate }
 }
 
 contract VolumeDiscount over TemplateModel {

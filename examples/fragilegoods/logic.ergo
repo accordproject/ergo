@@ -46,8 +46,8 @@ contract FragileGoods over TemplateModel {
         * shocks;
     match request.status
       with "ARRIVED" then
-        return new PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
+        return PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
       else
-	return new PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
+	return PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
   }  
 }

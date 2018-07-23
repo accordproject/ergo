@@ -16,16 +16,16 @@
 contract HelloWorldState over TemplateModel {
   // Simple Clause
   clause helloworldstate(request : MyRequest) : MyResponse {
-    set state new State{
+    set state State{
       counter: state.counter + 1.0
     };
-    return new MyResponse{
+    return MyResponse{
       output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")" ++ " (" ++ state.counter ++ ")"
     }
   }
 
   clause init(request : MyRequest) : Empty {
-    set state new State{
+    set state State{
       counter: 0.0
     };
     return
