@@ -38,6 +38,7 @@
 	      "throws", THROWS;
 	      "emits", EMITS;
 	      "state", STATE;
+	      "call", CALL;
 	      (* Expressions *)
  	      "enforce", ENFORCE;
 	      "if", IF;

@@ -44,7 +44,7 @@ let mk_provenance
 
 %token ENFORCE IF THEN ELSE
 %token LET FOREACH IN WHERE
-%token RETURN THROW STATE
+%token RETURN THROW STATE CALL
 %token CONSTANT
 %token NEW
 %token MATCH WITH
@@ -251,9 +251,9 @@ stmt:
 | THROW e1 = expr
     { ErgoCompiler.sthrow (mk_provenance $startpos $endpos) e1 }
 (* Call *)
-| CONTRACT DOT fn = IDENT LPAREN el = exprlist RPAREN
+| CALL cln = IDENT LPAREN el = exprlist RPAREN
     { let e0 = ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos) in
-      ErgoCompiler.scallclause (mk_provenance $startpos $endpos) e0 (Util.char_list_of_string fn) el }
+      ErgoCompiler.scallclause (mk_provenance $startpos $endpos) e0 (Util.char_list_of_string cln) el }
 | LET v = ident EQUAL e1 = expr SEMI s2 = stmt
     { ErgoCompiler.slet (mk_provenance $startpos $endpos) v e1 s2 }
 | LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
@@ -575,6 +575,7 @@ safeident_base:
 | THROWS { "throws" }
 | EMITS { "emits" }
 | STATE { "state" }
+| CALL { "call" }
 | ENFORCE { "enforce" }
 | IF { "if" }
 | THEN { "then" }
