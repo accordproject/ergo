@@ -108,6 +108,7 @@ rule token sbuff = parse
 | "}" { RCURLY }
 | "??" { QUESTIONQUESTION }
 | "?" { QUESTION }
+| "~" { TILDE }
 | "_" { UNDERSCORE }
 | [' ' '\t']
     { token sbuff lexbuf }

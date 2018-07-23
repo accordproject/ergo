@@ -18,17 +18,13 @@ open LexUtil
 open ErgoUtil
 open ErgoComp
 
-let qname_of_qname_base qn =  
+let relative_name_of_qname_base qn =  
   begin match qn with
   | (None,last) -> (None,Util.char_list_of_string last)
   | (Some prefix, last) ->
       (Some (Util.char_list_of_string prefix),
        Util.char_list_of_string last)
   end
-
-let relative_ref_of_qname_base qn =
-  let (prefix,localname) = qname_of_qname_base qn in
-  (prefix,localname)
 
 let mk_provenance
     (start_pos: Lexing.position)
@@ -66,6 +62,7 @@ let mk_provenance
 %token PLUSPLUS
 %token DOT QUESTIONDOT COMMA COLON SEMI
 %token QUESTION QUESTIONQUESTION UNDERSCORE
+%token TILDE
 %token LPAREN RPAREN
 %token LBRACKET RBRACKET
 %token LCURLY RCURLY
@@ -118,7 +115,7 @@ decl:
 | IMPORT qn = qname_prefix
     { ErgoCompiler.dimport
         (mk_provenance $startpos $endpos)
-        (ErgoUtil.cto_import_decl_of_import_namespace qn) }
+        (cto_import_decl_of_import_namespace qn) }
 | DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
@@ -158,17 +155,16 @@ decl:
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }
-| SET CONTRACT qn = qname_base OVER e = expr
-    { ErgoCompiler.dsetcontract (mk_provenance $startpos $endpos)
-        (relative_ref_of_qname_base qn) e }
+| SET CONTRACT qn = qname OVER e = expr
+    { ErgoCompiler.dsetcontract (mk_provenance $startpos $endpos) qn e }
 | s = stmt SEMI
     { ErgoCompiler.dstmt (mk_provenance $startpos $endpos) s }
 
 ergo_type_class_decl:
 | LCURLY rt = rectype RCURLY
     { (None, rt) }
-| EXTENDS qn = qname_base LCURLY rt = rectype RCURLY
-    { (Some (relative_ref_of_qname_base qn), rt) }
+| EXTENDS qn = qname LCURLY rt = rectype RCURLY
+    { (Some qn, rt) }
 
 ergo_type_enum_decl:
 | LCURLY il = identlist RCURLY
@@ -225,8 +221,8 @@ param:
     { (Util.char_list_of_string pn, pt) }
 
 paramtype:
-| qn = qname_base
-    { begin match qn with
+| qnb = qname_base
+    { begin match qnb with
       | (None, "Boolean") -> ErgoCompiler.ergo_type_boolean (mk_provenance $startpos $endpos)
       | (None, "String") -> ErgoCompiler.ergo_type_string (mk_provenance $startpos $endpos)
       | (None, "Double") -> ErgoCompiler.ergo_type_double (mk_provenance $startpos $endpos)
@@ -236,7 +232,7 @@ paramtype:
       | (None, "Empty") -> ErgoCompiler.ergo_type_none (mk_provenance $startpos $endpos)
       | (None, "Any") -> ErgoCompiler.ergo_type_any (mk_provenance $startpos $endpos)
       | _ ->
-          ErgoCompiler.ergo_type_class_ref (mk_provenance $startpos $endpos) (relative_ref_of_qname_base qn)
+          ErgoCompiler.ergo_type_class_ref (mk_provenance $startpos $endpos) (relative_name_of_qname_base qnb)
       end }
 | LCURLY rt = rectype RCURLY
     { ErgoCompiler.ergo_type_record (mk_provenance $startpos $endpos) rt }
@@ -315,8 +311,8 @@ fstmt:
 type_annotation:
 | (* Empty *)
     { None }
-| COLON qn = qname_base
-    { Some (relative_ref_of_qname_base qn) }
+| COLON qn = qname
+    { Some qn }
 
 cases_stmt:
 | ELSE s = stmt
@@ -502,7 +498,7 @@ qname_base:
 
 qname:
 | qn = qname_base
-    { qname_of_qname_base qn }
+    { relative_name_of_qname_base qn }
 
 qname_prefix:
 | qn = qname_base
