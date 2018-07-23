@@ -178,8 +178,10 @@ Section ErgoC.
                ergo_eval_expr (eval_context_update_local_env ctxt name dat) res
              | (CaseLetOption prov name None, res) =>
                match dat with
-               | dunit => default_result
-               | _ => ergo_eval_expr (eval_context_update_local_env ctxt name dat) res
+               | dright dunit => default_result
+               | dleft dat' => ergo_eval_expr (eval_context_update_local_env ctxt name dat') res
+               | _ =>
+                 efailure (RuntimeError prov "Matched LetOption without an option.")
                end
 
              | (CaseWildcard prov (Some typ), res) =>
@@ -196,13 +198,15 @@ Section ErgoC.
 
              | (CaseLetOption prov name (Some typ), res) =>
                match dat with
-               | dunit => default_result
-               | _ =>
-                lift_dbrand dat typ
+               | dright dunit => default_result
+               | dleft dat' =>
+                lift_dbrand dat' typ
                             (fun dat' => ergo_eval_expr
                                             (eval_context_update_local_env ctxt name dat')
                                             res)
                             default_result
+               | _ =>
+                 efailure (RuntimeError prov "Matched LetOption without an option.")
                end
 
              end)

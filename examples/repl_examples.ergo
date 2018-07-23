@@ -62,3 +62,6 @@ enforce 3.0 = average([2.0,5.0,1.0,3.0,4.0]);\
 enforce 2.0 = sqrt(4.0);\
 enforce some(1.0) = some(1.0);\
 return "(builtins) flatten, max/min, average, sqrt, some work";
+
+enforce 5 = match some(5) with let a? then a else nil;\
+return "(match) match works against optionals";
