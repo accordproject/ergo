@@ -38,22 +38,22 @@ contract PerishableGoods over TemplateModel {
       throw Error{ message : 'Units received out of range for the contract.' }
     };
     // Guard against requests for payout after the dueDate
-    enforce momentIsAfter(contract.dueDate,request.timestamp) else {
-      return new PriceCalculation{
+    enforce momentIsAfter(contract.dueDate,request.timestamp) else
+      return PriceCalculation{
         totalPrice : 0,
         penalty : 0,
         late : true
-    };
+			};
     // Guard against missing temperature readings
-    enforce var readings = request.shipment.temperatureReadings! else {
+    enforce var readings = request.shipment.temperatureReadings! else
       throw Error{ message : 'No temperature readings received.');
-    };
+    ;
     // Calculates payout
     let payOut = contract.unitPrice * request.unitCount;
     // Calculates penalty if any
     let totalPenalty = calculatePenalty(readings) * request.unitCount;
     // Returns a Price calculation, applying any penalities
-    return new PriceCalculation{
+    return PriceCalculation{
       totalPrice : max(payOut - totalPenalty, 0);
       penalty : totalPenalty;
       late : false

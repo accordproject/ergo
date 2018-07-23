@@ -31,7 +31,7 @@ contract PromissoryNote over TemplateModel {
     enforce numberOfDays >= 0.0;
     let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
 
-    return new MyResponse{
+    return MyResponse{
       outstandingBalance: compounded
     }
   }

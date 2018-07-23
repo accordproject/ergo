@@ -43,7 +43,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     };
     // Guard against force majeure
     enforce !contract.forceMajeure || !request.forceMajeure else {
-      return new LateDeliveryAndPenaltyResponse{
+      return LateDeliveryAndPenaltyResponse{
 	penalty: 0,
 	buyerMayTerminate: true
       }
@@ -52,7 +52,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     // difference between current date and agreed upon date
     let diff = momentDiffDay(agreed,now());
     let penalty = calculatePenalty(diff,request.goodsValue);
-    return new LateDeliveryAndPenaltyResponse{
+    return LateDeliveryAndPenaltyResponse{
 	penalty: capped,
 	buyerMayTerminate: diff > contract.termination.amount
     }

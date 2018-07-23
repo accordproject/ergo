@@ -50,7 +50,6 @@
 	      "in", IN;
 	      "where", WHERE;
 	      "throw", THROW;
-	      "new", NEW;
 	      "constant", CONSTANT;
 	      "match", MATCH;
 	      "set",SET;

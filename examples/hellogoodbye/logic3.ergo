@@ -20,9 +20,9 @@ define function error(v : Double) : Double {
 contract HelloGoodbye over TemplateModel {
   // Simple Clause
   clause hello(request : Request) : Response {
-     return new Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++")" }
+     return Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++")" }
   }
   clause goodbye(request : Request) : Response {
-     return new Response{ output: clause.greeting ++ " " ++ contract.name ++ " (" ++ request.input ++")" }
+     return Response{ output: clause.greeting ++ " " ++ contract.name ++ " (" ++ request.input ++")" }
   }
 }
