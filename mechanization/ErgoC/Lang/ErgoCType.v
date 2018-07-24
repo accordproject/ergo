@@ -34,6 +34,7 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
+
 Section ErgoCType.
 
   (*
@@ -41,30 +42,35 @@ Section ErgoCType.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
 *)
 
+  Context {br : brand_relation}.
+  Import ErgoCTypes.
+
   (*
-  Fixpoint ergo_type_expr (ctxt : eval_context) (expr : ergoc_expr) : eresult ergoc_type :=
+  Fixpoint ergo_type_expr (ctxt : type_context) (expr : ergoc_expr) : eresult ergoc_type :=
     match expr with
     | EThisContract prov => efailure (SystemError prov "No `this' in ergoc")
     | EThisClause   prov => efailure (SystemError prov "No `clause' in ergoc")
     | EThisState    prov => efailure (SystemError prov "No `state' in ergoc")
     | EVar prov name =>
-      let opt := lookup String.string_dec (ctxt.(eval_context_local_env)++ctxt.(eval_context_global_env)) name in
+      let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
       eresult_of_option opt (RuntimeError prov ("Variable not found: " ++ name)%string)
-    | EConst prov d => esuccess d
+    | EConst prov d =>
+      eresult_of_option (infer_data_type d) (TypeError prov "Baaad constant.")
     | EArray prov es =>
       fold_left
         (fun ls new =>
            match ls with
-           | Success _ _ (dcoll ls') =>
+           | Success _ _ (ErgoCTypes.tcoll ls') =>
              match ergo_type_expr ctxt new with
-             | Success _ _ new' => esuccess (dcoll (ls' ++ (new'::nil)))
+             | Success _ _ new' => esuccess (tcoll (ls' ++ (new'::nil)))
              | Failure _ _ f => efailure f
              end
            | Success _ _ _ => efailure (RuntimeError prov "This should never happen.")
            | Failure _ _ f => efailure f
            end)
-        es (esuccess (dcoll nil))
-    | EUnaryOp prov o e  =>
+        es (esuccess (tcoll ttop))
+    | EUnaryOp prov o e => TODO
+    (*
       match ergo_type_expr ctxt e with
       | Success _ _ e' =>
         (* TODO this takes a type hierarchy as a list of string * strings. *)
@@ -74,16 +80,20 @@ Section ErgoCType.
         end
       | Failure _ _ f => efailure f
       end
+     *)
     | EBinaryOp prov o e1 e2 =>
       match ergo_type_expr ctxt e1 with
       | Success _ _ e1' =>
         match ergo_type_expr ctxt e2 with
         | Success _ _ e2' =>
           (* TODO this takes a type hierarchy as a list of string * strings. *)
+          (*
           match ergo_binary_eval nil o e1' e2' with
           | Some r => esuccess r
           | None => efailure (RuntimeError prov "Binary operation failed.")
           end
+           *)
+          TODO
         | Failure _ _ f => efailure f
         end
       | Failure _ _ f => efailure f
@@ -98,7 +108,7 @@ Section ErgoCType.
     | ELet prov n t v e =>
       match ergo_type_expr ctxt v with
       | Success _ _ v' =>
-        let ctxt' := eval_context_update_local_env ctxt n v' in
+        let ctxt' := type_context_update_local_env ctxt n v' in
         ergo_type_expr ctxt' e
       | Failure _ _ f => efailure f
       end
@@ -169,11 +179,11 @@ Section ErgoCType.
              | (CaseWildcard prov None, res) =>
                ergo_type_expr ctxt res
              | (CaseLet prov name None, res) =>
-               ergo_type_expr (eval_context_update_local_env ctxt name dat) res
+               ergo_type_expr (type_context_update_local_env ctxt name dat) res
              | (CaseLetOption prov name None, res) =>
                match dat with
                | dright dunit => default_result
-               | dleft dat' => ergo_type_expr (eval_context_update_local_env ctxt name dat') res
+               | dleft dat' => ergo_type_expr (type_context_update_local_env ctxt name dat') res
                | _ =>
                  efailure (RuntimeError prov "Matched LetOption without an option.")
                end
@@ -184,24 +194,24 @@ Section ErgoCType.
              | (CaseLet prov name (Some typ), res) =>
                lift_dbrand dat typ
                            (fun dat' => ergo_type_expr
-                                          (eval_context_update_local_env ctxt name dat')
+                                          (type_context_update_local_env ctxt name dat')
                                           res)
                            default_result
              | (CaseLetOption prov name (Some typ), res) =>
                match dat with
                | dright dunit => default_result
                | dleft dat' =>
-                lift_dbrand dat' typ
-                            (fun dat' => ergo_type_expr
-                                            (eval_context_update_local_env ctxt name dat')
+                 lift_dbrand dat' typ
+                             (fun dat' => ergo_type_expr
+                                            (type_context_update_local_env ctxt name dat')
                                             res)
-                            default_result
+                             default_result
                | _ =>
                  efailure (RuntimeError prov "Matched LetOption without an option.")
                end
              end)
           pes (ergo_type_expr ctxt default)
-       end
+      end
 
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach prov ((name,arr)::nil) None fn =>
@@ -210,14 +220,13 @@ Section ErgoCType.
       | Success _ _ (dcoll arr') =>
         (elift dcoll)
           (emaplift
-             (fun elt => ergo_type_expr (eval_context_update_local_env ctxt name elt) fn)
+             (fun elt => ergo_type_expr (type_context_update_local_env ctxt name elt) fn)
              arr')
       | Success _ _ _ => efailure (RuntimeError prov "Foreach needs to be called on an array")
       end
     | EForeach prov _ _ _ =>
       complex_foreach_in_calculus_error prov
     end.
-*)
 
   (*
   Definition ergoc_eval_decl
@@ -235,6 +244,7 @@ Section ErgoCType.
     | DCContract prov name contr =>
       esuccess (dctxt, None)
     end.
+*)
 *)
 
 End ErgoCType.

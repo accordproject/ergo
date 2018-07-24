@@ -21,6 +21,7 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 
 Section ErgoCTypeContext.
   Context {br : brand_relation}.
+  Import ErgoCTypes.
 
   Record type_context :=
     mkEvalContext
@@ -49,11 +50,11 @@ Section ErgoCTypeContext.
                   new_local_env.
 
   Definition empty_type_context :=
-    mkEvalContext  (("contract"%string, ErgoCType.tunit)
+    mkEvalContext  (("contract"%string,tunit)
                       ::nil)
-                   (("state"%string, ErgoCType.tunit)
-                      ::("emit"%string, ErgoCType.tcoll ErgoCType.tunit)
-                      ::("now"%string, ErgoCType.tunit)
+                   (("state"%string,tunit)
+                      ::("emit"%string,tcoll tunit)
+                      ::("now"%string,tunit)
                       ::nil).
   
 End ErgoCTypeContext.

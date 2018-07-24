@@ -51,7 +51,7 @@ Module ECType(ergomodel:ErgoBackendModel).
     := RType.Unit.
   Definition tfloat {m:brand_relation} : ectype
     := RType.Float.
-  Definition tinteger {m:brand_relation} : ectype
+  Definition tnat {m:brand_relation} : ectype
     := RType.Nat.
   Definition tbool {m:brand_relation} : ectype
     := RType.Bool.
