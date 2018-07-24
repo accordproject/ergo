@@ -1,15 +1,24 @@
 {
-  "$class": "org.accordproject.promissorynote.TemplateModel",
-  "dollarAmount": 1000,
+  "$class": "org.accordproject.promissorynote.PromissoryNoteContract",
+  "contractId": "71b1ebee-6b92-4bc5-bf79-29cde51d8494",
+  "amount": {
+    "$class": "org.accordproject.money.MonetaryAmount",
+    "doubleValue": 1000,
+    "currencyCode": "USD"
+  },
   "date": "2018-01-30",
   "maker": "Daniel Selman",
   "interestRate": null,
   "individual": true,
   "makerAddress": "1 Main Street",
   "lender": "Clause",
-  "legalEntity": "Corporation",
+  "legalEntity": "CORP",
   "lenderAddress": "246 5th Ave, 3rd Fl, New York, NY 10001",
-  "principal": 500,
+  "principal": {
+    "$class": "org.accordproject.money.MonetaryAmount",
+    "doubleValue": 500,
+    "currencyCode": "USD"
+  },
   "maturityDate": "2019-01-20",
   "defaultDays": 90,
   "insolvencyDays": 90,

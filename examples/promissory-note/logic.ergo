@@ -20,18 +20,19 @@ define function compoundInterestMultiple(annualInterest : Double, numberOfDays :
     return (1.0 + annualInterest) ^ (numberOfDays / 365.0)
 }
 
-contract PromissoryNote over TemplateModel {
-  clause check(request : MyRequest) : MyResponse throws ErrorResponse {
-    enforce contract.annualInterest >= 0.0;
-    enforce contract.dollarAmount >= 0.0;
-    let outstanding = contract.dollarAmount - request.amountPaid;
+contract PromissoryNote over PromissoryNoteContract {
+  clause check(request : Payment) : Result throws ErrorResponse {
+    enforce contract.interestRate >= 0.0;
+    enforce contract.amount.doubleValue >= 0.0;
+    let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;
+		let interestRate = contract.interestRate ?? 3.4;
     enforce outstanding >= 0.0;
 
-    let numberOfDays = momentDiffDays(moment("17 May 2018 13:53:33 EST"),contract.date);
+    let numberOfDays = momentDiffDays(moment("17 May 2018 13:53:33 EST"),moment(contract.date));
     enforce numberOfDays >= 0.0;
     let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
 
-    return MyResponse{
+    return Result{
       outstandingBalance: compounded
     }
   }

@@ -14,37 +14,34 @@
 
 namespace org.accordproject.promissorynote
 
-transaction MyRequest {
-  o Double amountPaid
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+import org.accordproject.money.MonetaryAmount
+import org.accordproject.usa.business.BusinessEntity
+
+transaction Payment extends Request {
+  o MonetaryAmount amountPaid
 }
 
-transaction MyResponse {
+transaction Result extends Response {
   o Double outstandingBalance
-}
-
-enum LegalEntity {
-  o PLC
-  o LLC
-  o INC
-  o Corporation
 }
 
 /**
  * The template model
  */
-@AccordTemplateModel("promissory-note")
-concept TemplateModel {
+concept PromissoryNoteContract extends AccordContract {
   /**
    * The name for the clause
    */
-  o Double dollarAmount
+  o MonetaryAmount amount
   o DateTime date
   o String maker
   o Double interestRate optional
   o Boolean individual
   o String makerAddress
   o String lender
-  o LegalEntity legalEntity
+  o BusinessEntity legalEntity
   o String lenderAddress
   o Double principal
   o DateTime maturityDate

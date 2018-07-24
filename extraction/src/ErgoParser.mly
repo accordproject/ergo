@@ -56,6 +56,7 @@ let mk_provenance
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
+%token LTI GTI LTEQI GTEQI
 %token PLUS MINUS STAR SLASH CARROT
 %token PLUSI MINUSI STARI SLASHI
 %token PLUSPLUS
@@ -73,7 +74,7 @@ let mk_provenance
 %left OR
 %left AND
 %left EQUAL NEQUAL
-%left LT GT LTEQ GTEQ
+%left LT GT LTEQ GTEQ LTI GTI LTEQI GTEQI
 %left QUESTIONQUESTION
 %left PLUS MINUS PLUSI MINUSI
 %left STAR SLASH STARI SLASHI
@@ -392,13 +393,21 @@ expr:
 | e1 = expr NEQUAL e2 = expr
     { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opequal e1 e2) }
 | e1 = expr LT e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.oplt e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.oplt e1 e2 }
 | e1 = expr LTEQ e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.ople e1 e2 }
+    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.ople e1 e2 }
 | e1 = expr GT e2 = expr
-    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.ople e1 e2) }
+    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opgt e1 e2 }
 | e1 = expr GTEQ e2 = expr
-    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.oplt e1 e2) }
+    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opge e1 e2 }
+| e1 = expr LTI e2 = expr
+    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplti e1 e2 }
+| e1 = expr LTEQI e2 = expr
+    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplei e1 e2 }
+| e1 = expr GTI e2 = expr
+    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplei e1 e2) }
+| e1 = expr GTEQI e2 = expr
+    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplti e1 e2) }
 | e1 = expr MINUS e2 = expr
     { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opminus e1 e2 }
 | e1 = expr PLUS e2 = expr

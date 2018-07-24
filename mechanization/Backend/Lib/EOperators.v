@@ -118,6 +118,14 @@ Module EOperators(ergomodel:ErgoBackendModel).
         := BinaryOperators.OpFloatBinary BinaryOperators.FloatDiv.
       Definition oppow : op 
         := BinaryOperators.OpFloatBinary BinaryOperators.FloatPow.
+      Definition oplt : op
+        := BinaryOperators.OpFloatCompare BinaryOperators.FloatLt.
+      Definition ople : op
+        := BinaryOperators.OpFloatCompare BinaryOperators.FloatLe.
+      Definition opgt : op
+        := BinaryOperators.OpFloatCompare BinaryOperators.FloatGt.
+      Definition opge : op
+        := BinaryOperators.OpFloatCompare BinaryOperators.FloatGe.
     End Double.
 
     Module Integer.
@@ -129,6 +137,10 @@ Module EOperators(ergomodel:ErgoBackendModel).
         := BinaryOperators.OpNatBinary BinaryOperators.NatMult.
       Definition opdivi : op 
         := BinaryOperators.OpNatBinary BinaryOperators.NatDiv.
+      Definition oplti : op
+        := BinaryOperators.OpLt.
+      Definition oplei : op
+        := BinaryOperators.OpLe.
     End Integer.
 
     Module DateTime.
@@ -162,10 +174,6 @@ Module EOperators(ergomodel:ErgoBackendModel).
       := BinaryOperators.OpAnd.
     Definition opor : op
       := BinaryOperators.OpOr.
-    Definition oplt : op
-      := BinaryOperators.OpLt.
-    Definition ople : op
-      := BinaryOperators.OpLe.
     Definition opbagunion : op
       := BinaryOperators.OpBagUnion.
     Definition opbagdiff : op
