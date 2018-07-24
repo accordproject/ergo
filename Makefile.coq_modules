@@ -43,6 +43,8 @@ MODULES = \
   ErgoC/Lang/ErgoCStdlib \
   ErgoC/Lang/ErgoCEvalContext \
   ErgoC/Lang/ErgoCEval \
+  ErgoC/Lang/ErgoCTypeContext \
+  ErgoC/Lang/ErgoCType \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
   Translation/CTOtoErgo \
