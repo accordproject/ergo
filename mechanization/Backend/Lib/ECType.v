@@ -70,7 +70,7 @@ Module ECType(ergomodel:ErgoBackendModel).
 
   Definition option {m:brand_relation} : ectype -> ectype
     := RType.Option.
-  
+
   (* Additional support for brand models extraction -- will have to be tested/consolidated *)
 
   Definition brand_context_type {m:brand_relation} : Set := (String.string*ectype).

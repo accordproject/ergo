@@ -81,3 +81,5 @@ set contract Happy over Bear{name : "Winnie", age : 14}
 call eat(Request{ food : "berries" });
 call fish(Request{ food : "salmon" });
 
+//import org.accordproject.helloworld.*
+//set contract HelloWorld over TemplateModel{ name : "Winnie" }

@@ -26,6 +26,7 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoMap.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.
 Require Import ErgoSpec.Translation.ErgoCompContext.
 
 Definition ergo_expr := Ergo.laergo_expr.
@@ -69,17 +70,29 @@ Section ErgoCInline.
     end.
 
   Definition ergo_letify_function (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
-    match fn.(functionc_body) with
-    | None => TODO "Function(letify)(no body)"
-    | Some body =>
-      match zip (map fst (fn.(functionc_sig).(sigc_params))) args with
-      | Some args' => esuccess (ergo_letify_function' fn.(functionc_annot) body args')
-      | None =>
-        call_params_error
-          fn.(functionc_annot)
-          fname
-      end
-    end.
+    let prov := fn.(functionc_annot) in
+    let fn :=
+        match fn.(functionc_body) with
+        | None =>
+          match lookup String.string_dec ergoc_stdlib fname with
+          | Some fn => esuccess fn
+          | None => built_in_function_not_found_error prov fname
+          end
+        | Some _ => esuccess fn
+        end
+    in
+    eolift
+      (fun fn =>
+         match fn.(functionc_body) with
+         | None => built_in_function_without_body_error prov fname
+         | Some body =>
+           match zip (map fst (fn.(functionc_sig).(sigc_params))) args with
+           | Some args' =>
+             esuccess (ergo_letify_function' prov body args')
+           | None =>
+             call_params_error prov fname
+           end
+         end) fn.
 
   Definition ergo_inline_functions' (ctxt : compilation_context) (expr : ergo_expr) :=
   match expr with
