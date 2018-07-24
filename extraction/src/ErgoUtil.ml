@@ -79,18 +79,22 @@ let error_loc_end error =
   end
 
 let underline_prov prov text =
-  let loc = loc_of_provenance prov in
-  let lines = String.split_on_char '\n' text in
-  let line = List.nth lines (loc.loc_start.line - 1) in
-  let underline =
-    String.init
+  begin try
+    let loc = loc_of_provenance prov in
+    let lines = String.split_on_char '\n' text in
+    let line = List.nth lines (loc.loc_start.line - 1) in
+    let underline =
+      String.init
         (String.length line)
         (fun n ->
-            if (n >= loc.loc_start.column && n < loc.loc_end.column)
-            then '^'
-            else ' ')
-  in
-  "\n" ^ line ^ "\n" ^ underline
+           if (n >= loc.loc_start.column && n < loc.loc_end.column)
+           then '^'
+           else ' ')
+    in
+    "\n" ^ line ^ "\n" ^ underline
+  with
+  | Failure _ -> ""
+  end
 
 let string_of_error_prov prov =
   let loc = loc_of_provenance prov in
