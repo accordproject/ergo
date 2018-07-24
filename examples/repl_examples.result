@@ -1,0 +1,24 @@
+[32mResponse. [0mtrue
+[32mResponse. [0mtrue
+[32mResponse. [0m{"type": ["org.accordproject.ergotop.Bear"], "data": {"name": "Winnie", "age": {"nat": 14.0}}}
+[32mResponse. [0m[{"nat": 1.0}, {"nat": 4.0}, {"nat": 2.0}, {"nat": 5.0}, {"nat": 3.0}, {"nat": 9.0}, {"nat": 5.0}]
+[32mResponse. [0m[{"a": 3.0, "b": 4.0, "c": 5.0}, {"a": 4.0, "b": 3.0, "c": 5.0}, {"a": 5.0, "b": 12.0, "c": 13.0}, {"a": 6.0, "b": 8.0, "c": 10.0}, {"a": 8.0, "b": 6.0, "c": 10.0}, {"a": 8.0, "b": 15.0, "c": 17.0}, {"a": 9.0, "b": 12.0, "c": 15.0}, {"a": 12.0, "b": 5.0, "c": 13.0}, {"a": 12.0, "b": 9.0, "c": 15.0}, {"a": 12.0, "b": 16.0, "c": 20.0}, {"a": 15.0, "b": 8.0, "c": 17.0}, {"a": 16.0, "b": 12.0, "c": 20.0}]
+[35mEmit. [0m"One for the money"
+[35mEmit. [0m"Two for the show"
+[35mEmit. [0m"Three to get ready"
+[32mResponse. [0m"Now go, cat, go"
+[31mError. [0m{"type": ["org.accordproject.ergo.Error"], "data": {"message": "Enforce condition failed"}}
+[32mResponse. [0m"New York"
+[34mState. [0m"New York"
+[32mResponse. [0m"New York state."
+[34mState. [0m"New York state."
+[32mResponse. [0m"(match) defaults work"
+[32mResponse. [0m"(match) multiple clauses work"
+[32mResponse. [0m"(match) plain old let works"
+[32mResponse. [0m"(builtins) flatten, max/min, average, sqrt, some work"
+[32mResponse. [0m"(match) match works against optionals"
+[32mResponse. [0m{"type": ["org.accordproject.ergotop.Response"], "data": {"output": "Winnie ate berries"}}
+[32mResponse. [0m{"type": ["org.accordproject.ergotop.Response"], "data": {"output": "Winnie fished salmon"}}
+[34mState. [0m"TIRED!"
+[32mResponse. [0m"(comparisons on Double) work"
+[32mResponse. [0m"(comparisons on Integer) work"

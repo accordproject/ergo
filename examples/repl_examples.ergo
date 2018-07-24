@@ -81,5 +81,33 @@ set contract Happy over Bear{name : "Winnie", age : 14}
 call eat(Request{ food : "berries" });
 call fish(Request{ food : "salmon" });
 
+enforce 1.0 < 2.0; \
+enforce !(2.0 < 1.0); \
+enforce !(1.0 < 1.0); \
+enforce 1.0 <= 1.0; \
+enforce 1.0 <= 2.0; \
+enforce !(2.0 <= 1.0); \
+enforce !(1.0 >= 2.0); \
+enforce 2.0 >= 1.0; \
+enforce 1.0 >= 1.0; \
+enforce !(1.0 > 1.0); \
+enforce !(1.0 > 2.0); \
+enforce 2.0 > 1.0; \
+return "(comparisons on Double) work";
+
+enforce 1 <i 2; \
+enforce !(2 <i 1); \
+enforce !(1 <i 1); \
+enforce 1 <=i 1; \
+enforce 1 <=i 2; \
+enforce !(2 <=i 1); \
+enforce !(1 >=i 2); \
+enforce 2 >=i 1; \
+enforce 1 >=i 1; \
+enforce !(1 >i 1); \
+enforce !(1 >i 2); \
+enforce 2 >i 1; \
+return "(comparisons on Integer) work";
+
 //import org.accordproject.helloworld.*
 //set contract HelloWorld over TemplateModel{ name : "Winnie" }
