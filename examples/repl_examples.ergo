@@ -5,7 +5,7 @@ enforce area(1.0) = 3.14; return true;
 let pi = 10.0; enforce area(1.0) = 3.14; enforce pi = 10.0; return true;
 
 define concept Bear { name : String, age : Integer }
-define constant pooh = Bear {name : "Winnie", age : 14}
+define constant pooh = Bear {name : "Winnie", age : 4}
 return pooh;
 
 return [1, 4, 2, 5, 3, 9, 5];
@@ -77,7 +77,7 @@ contract Happy over Bear { \
     return Response{ output: contract.name ++ " fished " ++ request.food } \
   } \
 }
-set contract Happy over Bear{name : "Winnie", age : 14}
+set contract Happy over Bear{name : "Winnie", age : 4}
 call eat(Request{ food : "berries" });
 call fish(Request{ food : "salmon" });
 
