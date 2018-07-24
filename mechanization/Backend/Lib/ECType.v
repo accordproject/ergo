@@ -43,32 +43,32 @@ Module ECType(ergomodel:ErgoBackendModel).
   Definition sorted_pf_type {m:brand_relation} srl
       := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string ectype srl) = true.
 
-  Definition Bottom {m:brand_relation} : ectype
+  Definition tbottom {m:brand_relation} : ectype
     := RType.Bottom.  
-  Definition Top {m:brand_relation} : ectype
+  Definition ttop {m:brand_relation} : ectype
     := RType.Top.
-  Definition Unit {m:brand_relation} : ectype
+  Definition tunit {m:brand_relation} : ectype
     := RType.Unit.
-  Definition Float {m:brand_relation} : ectype
+  Definition tfloat {m:brand_relation} : ectype
     := RType.Float.
-  Definition Integer {m:brand_relation} : ectype
+  Definition tinteger {m:brand_relation} : ectype
     := RType.Nat.
-  Definition Bool {m:brand_relation} : ectype
+  Definition tbool {m:brand_relation} : ectype
     := RType.Bool.
-  Definition String {m:brand_relation} : ectype
+  Definition tstring {m:brand_relation} : ectype
     := RType.String.
-  Definition Coll {m:brand_relation} : ectype -> ectype
+  Definition tcoll {m:brand_relation} : ectype -> ectype
     := RType.Coll.
-  Definition Rec {m:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
+  Definition trec {m:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
     := RType.Rec.
-  Definition Either {m:brand_relation} : ectype -> ectype -> ectype
+  Definition teither {m:brand_relation} : ectype -> ectype -> ectype
     := RType.Either.
-  Definition Arrow {m:brand_relation} : ectype -> ectype -> ectype
+  Definition tarrow {m:brand_relation} : ectype -> ectype -> ectype
     := RType.Arrow.
-  Definition Brand {m:brand_relation} : list String.string -> ectype 
+  Definition tbrand {m:brand_relation} : list String.string -> ectype 
     := RType.Brand.
 
-  Definition Option {m:brand_relation} : ectype -> ectype
+  Definition toption {m:brand_relation} : ectype -> ectype
     := RType.Option.
   
   (* Additional support for brand models extraction -- will have to be tested/consolidated *)
