@@ -108,9 +108,6 @@ Section EResult.
     Definition not_in_clause_error {A} prov : eresult A :=
       efailure (CompilationError prov "Cannot use 'clause' variable outside of a clause").
 
-    Definition TODO {A : Set} (feature:string) : eresult A :=
-        efailure (SystemError dummy_provenance ("Feature " ++ feature ++ " not implemented.")%string).
-
     (* CTO errors *)
     Definition import_not_found_error {A} prov (import:string) : eresult A :=
       efailure (CompilationError prov ("Import not found: " ++ import)).
@@ -142,6 +139,14 @@ Section EResult.
       efailure (CompilationError prov ("Clause '" ++ fname ++ "' not found")).
     Definition call_params_error {A} prov (fname:string) : eresult A :=
       efailure (CompilationError prov ("Parameter mismatch when calling function '" ++ fname ++ "'")).
+
+    (** System errors *)
+    Definition built_in_function_not_found_error {A} prov (fname:string) : eresult A :=
+      efailure (SystemError prov ("Built in function " ++ fname ++ " not found")).
+    Definition built_in_function_without_body_error {A} prov (fname:string) : eresult A :=
+      efailure (SystemError prov ("Built in function " ++ fname ++ " does not have a body")).
+    Definition TODO {A : Set} prov (feature:string) : eresult A :=
+      efailure (SystemError prov ("Feature " ++ feature ++ " not implemented.")%string).
 
     Definition ergo_default_package : string := "org.accordproject.ergo".
     Definition ergo_default_error_proval_name : string := "Error".

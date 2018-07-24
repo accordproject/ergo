@@ -89,12 +89,26 @@ let main args =
   let gconf = ErgoConfig.default_config () in
   let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
+  List.iter (ErgoUtil.process_file (ErgoConfig.add_module_file gconf)) input_files;
   let ctos = ErgoConfig.get_ctos gconf in
   let modules = ErgoConfig.get_modules gconf in
   let rctxt = safe_init_repl_ctxt ctos modules in
   welcome ();
   repl rctxt
 
+let wrap_error e =
+  begin match e with
+  | ErgoUtil.Ergo_Error error ->
+      Printf.eprintf "%s\n" (ErgoUtil.string_of_error error); exit 2
+  | exn ->
+      Printf.eprintf "%s\n" (ErgoUtil.string_of_error (ErgoUtil.ergo_system_error (Printexc.to_string exn))); exit 2
+  end
+
 let _ =
-  main (ErgoUtil.patch_argv Sys.argv)
+  begin try
+    main (ErgoUtil.patch_argv Sys.argv)
+  with
+  | e ->
+      wrap_error e
+  end
 

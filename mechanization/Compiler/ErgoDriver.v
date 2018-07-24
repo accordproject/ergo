@@ -44,29 +44,6 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 Section ErgoDriver.
 
   Section Compiler.
-    (* Initialize compilation context *)
-    Definition compilation_context_from_inputs
-               (ctos:list lrcto_package)
-               (mls:list lrergo_module) : eresult compilation_context :=
-      let ictos := map InputCTO ctos in
-      let imls := map InputErgo mls in
-      let ctxt := init_namespace_ctxt in
-      elift (fun resolved_mods : list laergo_module * namespace_ctxt =>
-               let (_,ns_ctxt) := resolved_mods in
-               init_compilation_context ns_ctxt)
-            (resolve_ergo_inputs ctxt (ictos ++ imls)).
-
-    Definition compilation_context_from_inputs_for_cicero
-               (ctos:list lrcto_package)
-               (mls:list lrergo_module) : eresult compilation_context :=
-      let ctxt := init_namespace_ctxt in
-      let rctos := resolve_cto_packages ctxt ctos in
-      let rmods := eolift (fun rctos => resolve_ergo_modules (snd rctos) mls) rctos in
-      elift (fun resolved_mods : list laergo_module * namespace_ctxt =>
-               let (_,ns_ctxt) := resolved_mods in
-               init_compilation_context ns_ctxt)
-            rmods.
-
     (* Ergo -> ErgoC *)
     Definition ergo_module_to_ergoc
                (ctxt:compilation_context)
@@ -79,6 +56,29 @@ Section ErgoDriver.
                 let pc := eolift (ergo_module_to_calculus ctxt) p in
                 eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc)
              am.
+
+    Definition ergo_modules_to_ergoc
+               (ctxt:compilation_context)
+               (lm:list lrergo_module) : eresult (list ergoc_module * compilation_context) :=
+      elift_context_fold_left
+        ergo_module_to_ergoc
+        lm
+        ctxt.
+    
+    (* Initialize compilation context *)
+    Definition compilation_context_from_ctos
+               (ctos:list lrcto_package) : eresult compilation_context :=
+      let ctxt := init_namespace_ctxt in
+      elift (fun resolved_mods : list laergo_module * namespace_ctxt =>
+               let (_,ns_ctxt) := resolved_mods in
+               init_compilation_context ns_ctxt)
+            (resolve_cto_packages ctxt ctos).
+
+    Definition compilation_context_from_inputs
+               (ctos:list lrcto_package)
+               (mls:list lrergo_module) : eresult compilation_context :=
+      let rctxt := compilation_context_from_ctos ctos in
+      eolift (fun ctxt => elift snd (ergo_modules_to_ergoc ctxt mls)) rctxt.
 
     (* ErgoDecl -> ErgoCDecl *)
     Definition ergo_declaration_to_ergoc
@@ -136,7 +136,7 @@ Section ErgoDriver.
                (ctos:list cto_package)
                (mls:list lrergo_module)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
-      let ctxt := compilation_context_from_inputs_for_cicero ctos mls in
+      let ctxt := compilation_context_from_inputs ctos mls in
       let p :=
           eolift (fun am =>
                     let ns_ctxt := namespace_ctxt_of_compilation_context am in

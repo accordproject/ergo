@@ -38,5 +38,6 @@ let main args =
   let gconf = ErgoConfig.default_config () in
   let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (process_file (ErgoCompile.ergo_proc gconf)) input_files
+  let initmls = ref (ErgoConfig.get_modules gconf) in
+  List.iter (process_file (ErgoCompile.ergo_proc gconf initmls)) input_files
 

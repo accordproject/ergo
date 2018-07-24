@@ -150,6 +150,6 @@ Section ErgoCompContext.
                (Some cname).
 
   Definition init_compilation_context nsctxt : compilation_context :=
-    mkCompCtxt nsctxt ergoc_stdlib nil nil nil None None.
+    mkCompCtxt nsctxt nil nil nil nil None None.
   
 End ErgoCompContext.
