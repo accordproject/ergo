@@ -34,12 +34,11 @@ Section ErgoC.
 
     (** Expression *)
     Definition ergoc_expr := laergo_expr.
-    Definition ergoc_type := laergo_type.
 
     Record sigc :=
       mkSigC
-        { sigc_params: list (string * ergoc_type);
-          sigc_output : ergoc_type; }.
+        { sigc_params: list (string * laergo_type);
+          sigc_output : laergo_type; }.
 
     (** Function *)
     Record ergoc_function :=
