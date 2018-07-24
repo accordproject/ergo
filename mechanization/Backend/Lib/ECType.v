@@ -43,32 +43,32 @@ Module ECType(ergomodel:ErgoBackendModel).
   Definition sorted_pf_type {m:brand_relation} srl
       := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string ectype srl) = true.
 
-  Definition bottom {m:brand_relation} : ectype
+  Definition Bottom {m:brand_relation} : ectype
     := RType.Bottom.  
-  Definition top {m:brand_relation} : ectype
+  Definition Top {m:brand_relation} : ectype
     := RType.Top.
-  Definition empty {m:brand_relation} : ectype
+  Definition Unit {m:brand_relation} : ectype
     := RType.Unit.
-  Definition double {m:brand_relation} : ectype
+  Definition Float {m:brand_relation} : ectype
     := RType.Float.
-  Definition integer {m:brand_relation} : ectype
+  Definition Integer {m:brand_relation} : ectype
     := RType.Nat.
-  Definition bool {m:brand_relation} : ectype
+  Definition Bool {m:brand_relation} : ectype
     := RType.Bool.
-  Definition string {m:brand_relation} : ectype
+  Definition String {m:brand_relation} : ectype
     := RType.String.
-  Definition array {m:brand_relation} : ectype -> ectype
+  Definition Coll {m:brand_relation} : ectype -> ectype
     := RType.Coll.
-  Definition record {m:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
+  Definition Rec {m:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
     := RType.Rec.
-  Definition sum {m:brand_relation} : ectype -> ectype -> ectype
+  Definition Either {m:brand_relation} : ectype -> ectype -> ectype
     := RType.Either.
-  Definition arrow {m:brand_relation} : ectype -> ectype -> ectype
+  Definition Arrow {m:brand_relation} : ectype -> ectype -> ectype
     := RType.Arrow.
-  Definition brand {m:brand_relation} : list String.string -> ectype 
+  Definition Brand {m:brand_relation} : list String.string -> ectype 
     := RType.Brand.
 
-  Definition option {m:brand_relation} : ectype -> ectype
+  Definition Option {m:brand_relation} : ectype -> ectype
     := RType.Option.
   
   (* Additional support for brand models extraction -- will have to be tested/consolidated *)

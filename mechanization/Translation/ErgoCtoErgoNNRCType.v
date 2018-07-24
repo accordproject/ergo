@@ -31,26 +31,26 @@ Section ErgoCtoErgoNNRCType.
       into branded types. *)
   Program Fixpoint ergoc_type_to_nnrc_type {m:brand_relation} (t:ergoc_type) : ErgoNNRCType.ectype :=
     match t with
-    | ErgoTypeAny _ => ErgoNNRCType.top
-    | ErgoTypeNone _ => ErgoNNRCType.empty
-    | ErgoTypeBoolean _ => ErgoNNRCType.bool
-    | ErgoTypeString _ => ErgoNNRCType.string
-    | ErgoTypeDouble _ => ErgoNNRCType.double
-    | ErgoTypeLong _ => ErgoNNRCType.integer (* XXX To be decided *)
-    | ErgoTypeInteger _ => ErgoNNRCType.integer
-    | ErgoTypeDateTime _ => ErgoNNRCType.empty (* XXX TBD *)
-    | ErgoTypeClassRef _ cr => ErgoNNRCType.brand (cr::nil)
-    | ErgoTypeOption _ t => ErgoNNRCType.option (ergoc_type_to_nnrc_type t)
+    | ErgoTypeAny _ => ErgoNNRCType.Top
+    | ErgoTypeNone _ => ErgoNNRCType.Unit
+    | ErgoTypeBoolean _ => ErgoNNRCType.Bool
+    | ErgoTypeString _ => ErgoNNRCType.String
+    | ErgoTypeDouble _ => ErgoNNRCType.Float
+    | ErgoTypeLong _ => ErgoNNRCType.Integer (* XXX To be decided *)
+    | ErgoTypeInteger _ => ErgoNNRCType.Integer
+    | ErgoTypeDateTime _ => ErgoNNRCType.Unit (* XXX TBD *)
+    | ErgoTypeClassRef _ cr => ErgoNNRCType.Brand (cr::nil)
+    | ErgoTypeOption _ t => ErgoNNRCType.Option (ergoc_type_to_nnrc_type t)
     | ErgoTypeRecord _ rtl =>
-      ErgoNNRCType.record
+      ErgoNNRCType.Rec
         ErgoNNRCType.open_kind
         (rec_sort (List.map (fun xy => (fst xy, ergoc_type_to_nnrc_type (snd xy))) rtl))
         (rec_sort_sorted
            (List.map (fun xy => (fst xy, ergoc_type_to_nnrc_type (snd xy))) rtl)
            (rec_sort (List.map (fun xy => (fst xy, ergoc_type_to_nnrc_type (snd xy))) rtl))
            eq_refl)
-    | ErgoTypeArray _ t => ErgoNNRCType.array (ergoc_type_to_nnrc_type t)
-    | ErgoTypeSum _ t1 t2 => ErgoNNRCType.sum (ergoc_type_to_nnrc_type t1) (ergoc_type_to_nnrc_type t2)
+    | ErgoTypeArray _ t => ErgoNNRCType.Coll (ergoc_type_to_nnrc_type t)
+    | ErgoTypeSum _ t1 t2 => ErgoNNRCType.Either (ergoc_type_to_nnrc_type t1) (ergoc_type_to_nnrc_type t2)
     end.
 
 End ErgoCtoErgoNNRCType.
