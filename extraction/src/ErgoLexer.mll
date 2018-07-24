@@ -85,6 +85,10 @@ rule token sbuff = parse
 | ">" { GT }
 | "<=" { LTEQ }
 | ">=" { GTEQ }
+| "<i" { LTI }
+| ">i" { GTI }
+| "<=i" { LTEQI }
+| ">=i" { GTEQI }
 | "+" { PLUS }
 | "+i" { PLUSI }
 | "++" { PLUSPLUS }

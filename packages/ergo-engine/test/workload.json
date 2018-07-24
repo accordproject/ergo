@@ -216,6 +216,7 @@
     "dir": "data/promissory-note",
     "ergo": "logic.ergo",
     "models": [
+      "business.cto",
       "model.cto"
     ],
     "contract": "contract.json",
@@ -225,7 +226,7 @@
     "expected": {
       "response": {
         "outstandingBalance": 1425.4396822450633,
-        "$class": "org.accordproject.promissorynote.MyResponse"
+        "$class": "org.accordproject.promissorynote.Result"
       }
     }
   },
@@ -234,6 +235,7 @@
     "dir": "data/promissory-note",
     "ergo": "logic2.ergo",
     "models": [
+      "business.cto",
       "model2.cto"
     ],
     "contract": "contract2.json",
@@ -243,7 +245,7 @@
     "expected": {
       "response": {
         "outstandingBalance": 1425.4396822450633,
-        "$class": "org.accordproject.promissorynote.MyResponse"
+        "$class": "org.accordproject.promissorynote.Result"
       }
     }
   },
@@ -252,6 +254,7 @@
     "dir": "data/promissory-note",
     "ergo": "logic2.ergo",
     "models": [
+      "business.cto",
       "model2.cto"
     ],
     "contract": "contract3.json",
