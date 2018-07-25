@@ -150,4 +150,37 @@ Section ErgoType.
       end
     end.
 
+  Section Extends.
+    Definition extends_rel
+               (to:absolute_name)
+               (e:@extends absolute_name) : list (absolute_name * absolute_name) :=
+      match e with
+      | None => (to,to) :: nil
+      | Some from => (to,from) :: (to,to) :: nil
+      end.
+
+    Definition type_declaration_desc_extend_rel
+               (to:absolute_name)
+               (decl_desc:laergo_type_declaration_desc) : list (absolute_name * absolute_name) :=
+      match decl_desc with
+      | ErgoTypeEnum _ => extends_rel to None
+      | ErgoTypeTransaction e _ => extends_rel to e
+      | ErgoTypeConcept e _ => extends_rel to e
+      | ErgoTypeEvent e _ => extends_rel to e
+      | ErgoTypeAsset e _ => extends_rel to e
+      | ErgoTypeParticipant e _ => extends_rel to e
+      | ErgoTypeGlobal _ => nil
+      | ErgoTypeFunction _ => nil
+      | ErgoTypeContract _ _ _ => extends_rel to None
+      end.
+
+    Definition type_declaration_extend_rel
+               (decl:laergo_type_declaration) : list (absolute_name * absolute_name) :=
+      type_declaration_desc_extend_rel decl.(type_declaration_name) decl.(type_declaration_type).
+
+    Definition type_declarations_extend_rel
+               (decls:list laergo_type_declaration) : list (absolute_name * absolute_name) :=
+      List.concat (List.map type_declaration_extend_rel decls).
+  End Extends.
+  
 End ErgoType.

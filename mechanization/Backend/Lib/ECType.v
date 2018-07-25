@@ -33,53 +33,62 @@ Module ECType(ergomodel:ErgoBackendModel).
   Definition closed_kind : record_kind
     := RType.Closed.
 
-  Definition ectype_struct {m:brand_relation} : Set
+  Definition ectype_struct {br:brand_relation} : Set
     := RType.rtype₀.
-  Definition ectype {m:brand_relation} : Set
+  Definition ectype {br:brand_relation} : Set
     := RType.rtype.
-  Definition t {m:brand_relation} : Set
+  Definition t {br:brand_relation} : Set
     := ectype.
 
-  Definition sorted_pf_type {m:brand_relation} srl
+  Definition sorted_pf_type {br:brand_relation} srl
       := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string ectype srl) = true.
 
-  Definition tbottom {m:brand_relation} : ectype
+  Definition tbottom {br:brand_relation} : ectype
     := RType.Bottom.  
-  Definition ttop {m:brand_relation} : ectype
+  Definition ttop {br:brand_relation} : ectype
     := RType.Top.
-  Definition tunit {m:brand_relation} : ectype
+  Definition tunit {br:brand_relation} : ectype
     := RType.Unit.
-  Definition tfloat {m:brand_relation} : ectype
+  Definition tfloat {br:brand_relation} : ectype
     := RType.Float.
-  Definition tnat {m:brand_relation} : ectype
+  Definition tnat {br:brand_relation} : ectype
     := RType.Nat.
-  Definition tbool {m:brand_relation} : ectype
+  Definition tbool {br:brand_relation} : ectype
     := RType.Bool.
-  Definition tstring {m:brand_relation} : ectype
+  Definition tstring {br:brand_relation} : ectype
     := RType.String.
-  Definition tcoll {m:brand_relation} : ectype -> ectype
+  Definition tcoll {br:brand_relation} : ectype -> ectype
     := RType.Coll.
-  Definition trec {m:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
+  Definition trec {br:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
     := RType.Rec.
-  Definition teither {m:brand_relation} : ectype -> ectype -> ectype
+  Definition teither {br:brand_relation} : ectype -> ectype -> ectype
     := RType.Either.
-  Definition tarrow {m:brand_relation} : ectype -> ectype -> ectype
+  Definition tarrow {br:brand_relation} : ectype -> ectype -> ectype
     := RType.Arrow.
-  Definition tbrand {m:brand_relation} : list String.string -> ectype 
+  Definition tbrand {br:brand_relation} : list String.string -> ectype 
     := RType.Brand.
 
-  Definition toption {m:brand_relation} : ectype -> ectype
+  Definition toption {br:brand_relation} : ectype -> ectype
     := RType.Option.
 
-  (* Additional support for brand models extraction -- will have to be tested/consolidated *)
+  (* Support for type checking *)
+  Definition tmeet {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
+  Definition tjoin {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
 
-  Definition brand_context_type {m:brand_relation} : Set := (String.string*ectype).
-  
-  Definition brand_relation : Set := brand_relation.
-  Definition make_brand_relation := Schema.mk_brand_relation.
-  Definition brand_model : Set := brand_model.
-  Definition make_brand_model := Schema.make_brand_model_from_decls_fails.
-  Definition typing_runtime : Set := typing_runtime.
+  Definition tsubtype {br:brand_relation} : ectype -> ectype -> Prop := subtype.
+  Theorem tsubtype_dec {m:brand_model}  (t1 t2:ectype) :
+    {tsubtype t1 t2} + {~ tsubtype t1 t2}.
+  Proof.
+    apply subtype_dec.
+  Defined.
+    
+  Definition untcoll {m:brand_model} : ectype -> option ectype := tuncoll.
+  Definition unteither {m:brand_model} : ectype -> option (ectype * ectype) := tuneither.
+  Definition untrec {m:brand_model} : ectype -> option (record_kind * (list (string * ectype))) := tunrec.
+
+  Definition tinfer_data {m:brand_model} : data -> Datatypes.option ectype := infer_data_type.
+  Definition tinfer_binary_op {m:brand_model} : binary_op -> ectype -> ectype -> option (ectype * ectype * ectype) := infer_binary_op_type_sub.
+  Definition tinfer_unary_op {m:brand_model} : unary_op -> ectype -> option (ectype * ectype) := infer_unary_op_type_sub.
 
 End ECType.
 

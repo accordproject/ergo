@@ -27,6 +27,7 @@ Require Import Basics.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
@@ -34,18 +35,11 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
-
 Section ErgoCType.
+  Context {m : brand_model}.
 
-  (*
-  Definition ergo_unary_eval := ErgoOps.Unary.eval.
-  Definition ergo_binary_eval := ErgoOps.Binary.eval.
-*)
-
-  Context {br : brand_relation}.
   Import ErgoCTypes.
 
-  (*
   Fixpoint ergo_type_expr (ctxt : type_context) (expr : ergoc_expr) : eresult ergoc_type :=
     match expr with
     | EThisContract prov => efailure (SystemError prov "No `this' in ergoc")
@@ -55,21 +49,23 @@ Section ErgoCType.
       let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
       eresult_of_option opt (RuntimeError prov ("Variable not found: " ++ name)%string)
     | EConst prov d =>
-      eresult_of_option (infer_data_type d) (TypeError prov "Baaad constant.")
+      eresult_of_option
+        (infer_data_type d)
+        (TypeError prov "Bad constant.")
     | EArray prov es =>
       fold_left
-        (fun ls new =>
-           match ls with
-           | Success _ _ (ErgoCTypes.tcoll ls') =>
-             match ergo_type_expr ctxt new with
-             | Success _ _ new' => esuccess (tcoll (ls' ++ (new'::nil)))
-             | Failure _ _ f => efailure f
-             end
-           | Success _ _ _ => efailure (RuntimeError prov "This should never happen.")
-           | Failure _ _ f => efailure f
-           end)
+        (fun T new =>
+           eolift
+             (fun T' =>
+                elift
+                  (fun new' => tmeet T' new')
+                  (ergo_type_expr ctxt new))
+             T)
         es (esuccess (tcoll ttop))
-    | EUnaryOp prov o e => TODO
+    | _ => TODO dummy_provenance "No `this' in ergoc"
+    end.
+
+(*
     (*
       match ergo_type_expr ctxt e with
       | Success _ _ e' =>
@@ -245,6 +241,5 @@ Section ErgoCType.
       esuccess (dctxt, None)
     end.
 *)
-*)
-
+ *)
 End ErgoCType.
