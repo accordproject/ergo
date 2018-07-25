@@ -72,12 +72,12 @@ Module ECType(ergomodel:ErgoBackendModel).
     := RType.Option.
 
   (* Support for type checking *)
-  Definition tmeet {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
-  Definition tjoin {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
+  Definition ergoc_type_meet {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
+  Definition ergoc_type_join {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
 
-  Definition tsubtype {br:brand_relation} : ectype -> ectype -> Prop := subtype.
-  Theorem tsubtype_dec {m:brand_model}  (t1 t2:ectype) :
-    {tsubtype t1 t2} + {~ tsubtype t1 t2}.
+  Definition ergoc_type_subtype {br:brand_relation} : ectype -> ectype -> Prop := subtype.
+  Theorem ergoc_type_subtype_dec {m:brand_model}  (t1 t2:ectype) :
+    {ergoc_type_subtype t1 t2} + {~ ergoc_type_subtype t1 t2}.
   Proof.
     apply subtype_dec.
   Defined.
@@ -86,9 +86,9 @@ Module ECType(ergomodel:ErgoBackendModel).
   Definition unteither {m:brand_model} : ectype -> option (ectype * ectype) := tuneither.
   Definition untrec {m:brand_model} : ectype -> option (record_kind * (list (string * ectype))) := tunrec.
 
-  Definition tinfer_data {m:brand_model} : data -> Datatypes.option ectype := infer_data_type.
-  Definition tinfer_binary_op {m:brand_model} : binary_op -> ectype -> ectype -> option (ectype * ectype * ectype) := infer_binary_op_type_sub.
-  Definition tinfer_unary_op {m:brand_model} : unary_op -> ectype -> option (ectype * ectype) := infer_unary_op_type_sub.
+  Definition ergoc_type_infer_data {m:brand_model} : data -> Datatypes.option ectype := infer_data_type.
+  Definition ergoc_type_infer_binary_op {m:brand_model} : binary_op -> ectype -> ectype -> option (ectype * ectype * ectype) := infer_binary_op_type_sub.
+  Definition ergoc_type_infer_unary_op {m:brand_model} : unary_op -> ectype -> option (ectype * ectype) := infer_unary_op_type_sub.
 
 End ECType.
 
