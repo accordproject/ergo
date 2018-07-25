@@ -48,4 +48,12 @@ Section EUtil.
       None
       l.
 
+  (*
+  Section TopoSort.
+    Context {A:Set}.
+    (* function from node to string -> graph edges -> visited nodes -> starting node -> ordered nodes *)
+    (* This assumes no two nodes have the same string *)
+    Parameter dfs : (A -> string) -> list (string * string) -> list A -> A -> list A.
+  End TopoSort.
+*)
 End EUtil.

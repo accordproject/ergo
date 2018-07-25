@@ -171,7 +171,7 @@ Section ErgoDriver.
           repl_context_eval_ctxt : eval_context;
           repl_context_comp_ctxt : compilation_context
         }.
-    
+
     Definition init_repl_context
                (ctos : list lrcto_package)
                (mls : list lrergo_module) : eresult repl_context :=
