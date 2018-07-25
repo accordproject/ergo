@@ -33,8 +33,9 @@ Section ErgoCompContext.
         compilation_context_function_group_env : function_group_env;       (**r functions groups in scope *)
         compilation_context_global_env : list (string * ergoc_expr);       (**r global variables in scope *)
         compilation_context_local_env : list (string * ergoc_expr);        (**r local variables in scope *)
-        compilation_context_current_contract : option string;
-        compilation_context_current_clause : option string;
+        compilation_context_current_contract : option string;              (**r current contract in scope if any *)
+        compilation_context_current_clause : option string;                (**r current clause in scope if any *)
+        compilation_context_brand_relation : option ErgoCTypes.tbrand_relation; (**r relation between type names *)
       }.
 
   Definition namespace_ctxt_of_compilation_context (ctxt:compilation_context) : namespace_ctxt :=
@@ -48,7 +49,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
                ctxt.(compilation_context_current_contract)
-               ctxt.(compilation_context_current_clause).
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_brand_relation).
          
   Definition compilation_context_update_function_env
              (ctxt : compilation_context)
@@ -60,7 +62,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
                ctxt.(compilation_context_current_contract)
-               ctxt.(compilation_context_current_clause).
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_brand_relation).
 
   Definition update_function_group_env
              (gname:string)
@@ -71,7 +74,7 @@ Section ErgoCompContext.
     | Some t => update_first string_dec fg_env gname ((fname,fn)::t)
     | None => (gname,((fname,fn)::nil)) :: fg_env
     end.
-      
+
   Definition compilation_context_update_function_group_env
              (ctxt : compilation_context)
              (coname : string)
@@ -83,7 +86,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
                ctxt.(compilation_context_current_contract)
-               ctxt.(compilation_context_current_clause).
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_brand_relation).
 
   Definition compilation_context_update_global_env
              (ctxt : compilation_context)
@@ -95,7 +99,8 @@ Section ErgoCompContext.
                ((name, value)::ctxt.(compilation_context_global_env))
                ctxt.(compilation_context_local_env)
                ctxt.(compilation_context_current_contract)
-               ctxt.(compilation_context_current_clause).
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_brand_relation).
 
   Definition compilation_context_update_local_env
              (ctxt : compilation_context)
@@ -107,7 +112,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_global_env)
                ((name, value)::ctxt.(compilation_context_local_env))
                ctxt.(compilation_context_current_contract)
-               ctxt.(compilation_context_current_clause).
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_brand_relation).
 
   Definition compilation_context_set_local_env
              (ctxt : compilation_context)
@@ -118,7 +124,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_global_env)
                new_local_env
                ctxt.(compilation_context_current_contract)
-               ctxt.(compilation_context_current_clause).
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_brand_relation).
 
   Definition set_namespace_in_compilation_context
              (ns:namespace_name)
@@ -138,7 +145,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
                (Some cname)
-               ctxt.(compilation_context_current_clause).
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_brand_relation).
   
   Definition set_current_clause (ctxt:compilation_context) (cname:string) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
@@ -147,9 +155,10 @@ Section ErgoCompContext.
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
                ctxt.(compilation_context_current_contract)
-               (Some cname).
+               (Some cname)
+               ctxt.(compilation_context_brand_relation).
 
   Definition init_compilation_context nsctxt : compilation_context :=
-    mkCompCtxt nsctxt nil nil nil nil None None.
+    mkCompCtxt nsctxt nil nil nil nil None None None.
   
 End ErgoCompContext.

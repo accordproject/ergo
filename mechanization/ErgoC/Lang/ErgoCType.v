@@ -42,16 +42,16 @@ Section ErgoCType.
 
   Fixpoint ergo_type_expr (ctxt : type_context) (expr : ergoc_expr) : eresult ergoc_type :=
     match expr with
-    | EThisContract prov => efailure (SystemError prov "No `this' in ergoc")
-    | EThisClause   prov => efailure (SystemError prov "No `clause' in ergoc")
-    | EThisState    prov => efailure (SystemError prov "No `state' in ergoc")
+    | EThisContract prov => efailure (ESystemError prov "No `this' in ergoc")
+    | EThisClause   prov => efailure (ESystemError prov "No `clause' in ergoc")
+    | EThisState    prov => efailure (ESystemError prov "No `state' in ergoc")
     | EVar prov name =>
       let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
-      eresult_of_option opt (RuntimeError prov ("Variable not found: " ++ name)%string)
+      eresult_of_option opt (ERuntimeError prov ("Variable not found: " ++ name)%string)
     | EConst prov d =>
       eresult_of_option
         (infer_data_type d)
-        (TypeError prov "Bad constant.")
+        (ETypeError prov "Bad constant.")
     | EArray prov es =>
       fold_left
         (fun T new =>
@@ -67,7 +67,7 @@ Section ErgoCType.
       | Success _ _ e' =>
         match ergoc_type_infer_unary_op op e' with
         | Some (_, r) => esuccess r
-        | None => efailure (TypeError prov "Unary operation failed.")
+        | None => efailure (ETypeError prov "Unary operation failed.")
         end
       | Failure _ _ f => efailure f
       end
@@ -78,7 +78,7 @@ Section ErgoCType.
         | Success _ _ e2' =>
           match ergoc_type_infer_binary_op op e1' e2' with
           | Some (_, _, r) => esuccess r
-          | None => efailure (RuntimeError prov "Binary operation failed.")
+          | None => efailure (ERuntimeError prov "Binary operation failed.")
           end
         | Failure _ _ f => efailure f
         end
@@ -90,7 +90,7 @@ Section ErgoCType.
                   elift2 ergoc_type_meet
                          (ergo_type_expr ctxt t)
                          (ergo_type_expr ctxt f)
-                else efailure (RuntimeError prov "'If' condition not boolean."))
+                else efailure (ERuntimeError prov "'If' condition not boolean."))
              (ergo_type_expr ctxt c)
     | ELet prov n t v e =>
       (* TODO check that v : t *)
@@ -213,7 +213,7 @@ Section ErgoCType.
                   (fun typ => (elift tcoll) (ergo_type_expr (type_context_update_local_env ctxt name typ) fn))
                 (eresult_of_option
                   (untcoll arr')
-                  (TypeError prov "foreach must be called with array")))
+                  (ETypeError prov "foreach must be called with array")))
             (ergo_type_expr ctxt arr)
             
     | EForeach prov _ _ _ =>
