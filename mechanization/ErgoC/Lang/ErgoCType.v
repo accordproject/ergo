@@ -58,56 +58,51 @@ Section ErgoCType.
            eolift
              (fun T' =>
                 elift
-                  (fun new' => tmeet T' new')
+                  (fun new' => ergoc_type_meet T' new')
                   (ergo_type_expr ctxt new))
              T)
-        es (esuccess (tcoll ttop))
-    | _ => TODO dummy_provenance "No `this' in ergoc"
-    end.
-
-(*
-    (*
+        es (esuccess (tcoll tbottom))
+    | EUnaryOp prov op e =>
       match ergo_type_expr ctxt e with
       | Success _ _ e' =>
-        (* TODO this takes a type hierarchy as a list of string * strings. *)
-        match ergo_unary_eval nil o e' with
-        | Some r => esuccess r
-        | None => efailure (RuntimeError prov "Unary operation failed.")
+        match ergoc_type_infer_unary_op op e' with
+        | Some (_, r) => esuccess r
+        | None => efailure (TypeError prov "Unary operation failed.")
         end
       | Failure _ _ f => efailure f
       end
-     *)
-    | EBinaryOp prov o e1 e2 =>
+    | EBinaryOp prov op e1 e2 =>
       match ergo_type_expr ctxt e1 with
       | Success _ _ e1' =>
         match ergo_type_expr ctxt e2 with
         | Success _ _ e2' =>
-          (* TODO this takes a type hierarchy as a list of string * strings. *)
-          (*
-          match ergo_binary_eval nil o e1' e2' with
-          | Some r => esuccess r
+          match ergoc_type_infer_binary_op op e1' e2' with
+          | Some (_, _, r) => esuccess r
           | None => efailure (RuntimeError prov "Binary operation failed.")
           end
-           *)
-          TODO
         | Failure _ _ f => efailure f
         end
       | Failure _ _ f => efailure f
       end
     | EIf prov c t f =>
-      match ergo_type_expr ctxt c with
-      | Success _ _ (dbool true) => ergo_type_expr ctxt t
-      | Success _ _ (dbool false) => ergo_type_expr ctxt f
-      | Success _ _ _ => efailure (RuntimeError prov "'If' condition not boolean.")
-      | Failure _ _ f => efailure f
-      end
+      eolift (fun c' =>
+                if ergoc_type_subtype_dec c' tbool then
+                  elift2 ergoc_type_meet
+                         (ergo_type_expr ctxt t)
+                         (ergo_type_expr ctxt f)
+                else efailure (RuntimeError prov "'If' condition not boolean."))
+             (ergo_type_expr ctxt c)
     | ELet prov n t v e =>
+      (* TODO check that v : t *)
       match ergo_type_expr ctxt v with
       | Success _ _ v' =>
         let ctxt' := type_context_update_local_env ctxt n v' in
         ergo_type_expr ctxt' e
       | Failure _ _ f => efailure f
       end
+    | ERecord prov _ => TODO prov "type records"%string
+    | ENew prov _ _ => TODO prov "type new"%string
+        (*
     | ERecord prov rs =>
       fold_left
         (fun ls nv =>
@@ -146,10 +141,13 @@ Section ErgoCType.
       | Failure _ _ f => efailure f
       | Success _ _ r => esuccess (dbrand (nr::nil) r)
       end
+*)
     (* EXPECTS: no function calls in expression *)
     | ECallFun prov fname args => function_not_inlined_error prov fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
-    | EMatch prov term pes default =>
+
+    | EMatch prov term pes default => TODO prov "type match"
+      (*
       let lift_dbrand :=
           fun dat brand fn default =>
             match dat with
@@ -167,15 +165,13 @@ Section ErgoCType.
         fold_left
           (fun default_result pe =>
              match pe with
-             | (CaseData prov d, res) =>
-               if Data.data_eq_dec d dat then
-                 ergo_type_expr ctxt res
-               else
-                 default_result
+             | (CaseData prov d, res) => (* TODO can `d' ever be bad? *)
+               elift2 ergoc_type_meet default_result (ergo_type_expr ctxt res)
              | (CaseWildcard prov None, res) =>
-               ergo_type_expr ctxt res
+               elift2 ergoc_type_meet default_result (ergo_type_expr ctxt res)
              | (CaseLet prov name None, res) =>
-               ergo_type_expr (type_context_update_local_env ctxt name dat) res
+               elift2 ergoc_type_meet default_result
+                      (ergo_type_expr (type_context_update_local_env ctxt name dat) res)
              | (CaseLetOption prov name None, res) =>
                match dat with
                | dright dunit => default_result
@@ -208,18 +204,18 @@ Section ErgoCType.
              end)
           pes (ergo_type_expr ctxt default)
       end
+*)
 
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach prov ((name,arr)::nil) None fn =>
-      match ergo_type_expr ctxt arr with
-      | Failure _ _ f => efailure f
-      | Success _ _ (dcoll arr') =>
-        (elift dcoll)
-          (emaplift
-             (fun elt => ergo_type_expr (type_context_update_local_env ctxt name elt) fn)
-             arr')
-      | Success _ _ _ => efailure (RuntimeError prov "Foreach needs to be called on an array")
-      end
+      eolift (fun arr' =>
+                eolift
+                  (fun typ => (elift tcoll) (ergo_type_expr (type_context_update_local_env ctxt name typ) fn))
+                (eresult_of_option
+                  (untcoll arr')
+                  (TypeError prov "foreach must be called with array")))
+            (ergo_type_expr ctxt arr)
+            
     | EForeach prov _ _ _ =>
       complex_foreach_in_calculus_error prov
     end.
@@ -241,5 +237,4 @@ Section ErgoCType.
       esuccess (dctxt, None)
     end.
 *)
- *)
 End ErgoCType.
