@@ -90,5 +90,8 @@ Module ECType(ergomodel:ErgoBackendModel).
   Definition ergoc_type_infer_binary_op {m:brand_model} : binary_op -> ectype -> ectype -> option (ectype * ectype * ectype) := infer_binary_op_type_sub.
   Definition ergoc_type_infer_unary_op {m:brand_model} : unary_op -> ectype -> option (ectype * ectype) := infer_unary_op_type_sub.
 
+  Definition tbrand_relation : Set := brand_relation.
+  Definition mk_tbrand_relation : list (string * string) -> qresult tbrand_relation := Schema.mk_brand_relation.
+  
 End ECType.
 

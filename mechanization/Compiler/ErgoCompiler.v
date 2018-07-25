@@ -54,6 +54,18 @@ Module ErgoCompiler.
   (** Names *)
   Definition relative_name : Set := ENames.relative_name.
 
+  (** Results *)
+  Definition eerror : Set := EResult.eerror.
+  Definition system_error : provenance -> String.string -> eerror := EResult.ESystemError.
+  Definition parse_error : provenance -> String.string -> eerror := EResult.EParseError.
+  Definition compilation_error : provenance -> String.string -> eerror := EResult.ECompilationError.
+  Definition type_error : provenance -> String.string -> eerror := EResult.ETypeError.
+  Definition runtime_error : provenance -> String.string -> eerror := EResult.ERuntimeError.
+
+  Definition eresult (A:Set) : Set := EResult.eresult A.
+  Definition esuccess (A:Set) : A -> eresult A := EResult.esuccess.
+  Definition efailure (A:Set) : eerror -> eresult A := EResult.efailure.
+
   (** CTOs *)
   Definition cto_type := CTO.lrcto_type.
   Definition cto_declaration_desc := CTO.lrcto_declaration_desc.

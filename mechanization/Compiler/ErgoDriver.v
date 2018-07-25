@@ -64,7 +64,7 @@ Section ErgoDriver.
         ergo_module_to_ergoc
         lm
         ctxt.
-    
+
     (* Initialize compilation context *)
     Definition compilation_context_from_ctos
                (ctos:list lrcto_package) : eresult compilation_context :=

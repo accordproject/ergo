@@ -23,11 +23,11 @@ Require Import ErgoSpec.Common.Utils.EProvenance.
 
 Section EResult.
   Inductive eerror : Set :=
-  | SystemError : provenance -> string -> eerror
-  | ParseError : provenance -> string -> eerror
-  | CompilationError : provenance -> string -> eerror
-  | TypeError : provenance -> string -> eerror
-  | RuntimeError : provenance -> string -> eerror.
+  | ESystemError : provenance -> string -> eerror
+  | EParseError : provenance -> string -> eerror
+  | ECompilationError : provenance -> string -> eerror
+  | ETypeError : provenance -> string -> eerror
+  | ERuntimeError : provenance -> string -> eerror.
   
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
@@ -55,8 +55,7 @@ Section EResult.
       lift_failure_map f al.
     Definition eresult_of_option {A:Set} (a:option A) (e:eerror) :=
       result_of_option a e.
-    Definition option_of_eresult {A:Set} (a:eresult A) : option A :=
-      option_of_result a.
+
     Definition elift_both {A B:Set} (f: A -> B) (g:eerror -> B) (a:eresult A) : B :=
       match a with
       | Success _ _ s => f s
@@ -95,58 +94,90 @@ Section EResult.
            elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
         l
         (nil, c).
+
+    Section qcert.
+      Definition eerror_of_qerror (prov:provenance) (qe:qerror) :=
+        match qe with
+        | QResult.CompilationError msg => ECompilationError prov msg
+        | QResult.TypeError msg => ETypeError prov msg
+        | QResult.UserError msg =>  ESystemError prov "User error occured in backend"
+        end.
+
+      Definition eresult_of_qresult {A:Set} (prov:provenance) (a:qresult A) : eresult A :=
+        match a with
+        | Result.Success _ _ s => esuccess s
+        | Result.Failure _ _ e => efailure (eerror_of_qerror prov e)
+        end.
+
+      Definition option_of_eresult {A:Set} (a:eresult A) : option A :=
+        option_of_result a.
+
+    End qcert.
+
   End Lift.
 
   (** Built-in errors *)
   Section Builtin.
     Definition clause_call_not_on_contract_error {A} prov : eresult A :=
-      efailure (CompilationError prov "Cannot call a clause except on 'contract'").
+      efailure (ECompilationError prov "Cannot call a clause except on 'contract'").
     Definition use_contract_not_in_contract_error {A} prov : eresult A :=
-      efailure (CompilationError prov "Cannot use 'contract' variable outside of a contract").
+      efailure (ECompilationError prov "Cannot use 'contract' variable outside of a contract").
     Definition call_clause_not_in_contract_error {A} prov clname : eresult A :=
-      efailure (CompilationError prov ("Cannot call clause " ++ clname ++ " outside of a contract")).
+      efailure (ECompilationError prov ("Cannot call clause " ++ clname ++ " outside of a contract")).
     Definition not_in_clause_error {A} prov : eresult A :=
-      efailure (CompilationError prov "Cannot use 'clause' variable outside of a clause").
+      efailure (ECompilationError prov "Cannot use 'clause' variable outside of a clause").
 
     (* CTO errors *)
     Definition import_not_found_error {A} prov (import:string) : eresult A :=
-      efailure (CompilationError prov ("Import not found: " ++ import)).
+      efailure (ECompilationError prov ("Import not found: " ++ import)).
     Definition type_name_not_found_error {A} prov (ln:string) : eresult A :=
-      efailure (CompilationError prov ("Cannot find type with name '" ++ ln ++ "'")).
+      efailure (ECompilationError prov ("Cannot find type with name '" ++ ln ++ "'")).
     Definition variable_name_not_found_error {A} prov (ln:string) : eresult A :=
-      efailure (CompilationError prov ("Cannot find variable with name '" ++ ln ++ "'")).
+      efailure (ECompilationError prov ("Cannot find variable with name '" ++ ln ++ "'")).
     Definition function_name_not_found_error {A} prov (ln:string) : eresult A :=
-      efailure (CompilationError prov ("Cannot find function with name '" ++ ln ++ "'")).
+      efailure (ECompilationError prov ("Cannot find function with name '" ++ ln ++ "'")).
     Definition contract_name_not_found_error {A} prov (ln:string) : eresult A :=
-      efailure (CompilationError prov ("Cannot find contract with name '" ++ ln ++ "'")).
+      efailure (ECompilationError prov ("Cannot find contract with name '" ++ ln ++ "'")).
     Definition import_name_not_found_error {A} prov (namespace:string) (name_ref:string) : eresult A :=
-      efailure (CompilationError prov ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
+      efailure (ECompilationError prov ("Cannot import name '" ++ name_ref++ "' in CTO with namespace " ++ namespace)).
   
     (** Main clause creation errors *)
     Definition main_parameter_mismatch_error {A} prov : eresult A :=
-      efailure (CompilationError prov "Parameter mismatch during main creation").
+      efailure (ECompilationError prov "Parameter mismatch during main creation").
     Definition main_at_least_one_parameter_error {A} prov : eresult A :=
-      efailure (CompilationError prov "Cannot create main if not at least one parameter").
+      efailure (ECompilationError prov "Cannot create main if not at least one parameter").
     Definition main_not_a_class_error {A} prov (cname:string) : eresult A :=
-      efailure (CompilationError prov ("Cannot create main for non-class type "++cname)).
+      efailure (ECompilationError prov ("Cannot create main for non-class type "++cname)).
     
     (** Call errors *)
     Definition function_not_found_error {A} prov (fname:string) : eresult A :=
-      efailure (CompilationError prov ("Function '" ++ fname ++ "' not found")).
+      efailure (ECompilationError prov ("Function '" ++ fname ++ "' not found")).
     Definition eval_function_not_found_error {A} prov (fname:string) : eresult A :=
-      efailure (RuntimeError prov ("Function '" ++ fname ++ "' not found during eval")).
+      efailure (ERuntimeError prov ("Function '" ++ fname ++ "' not found during eval")).
     Definition clause_not_found_error {A} prov (fname:string) : eresult A :=
-      efailure (CompilationError prov ("Clause '" ++ fname ++ "' not found")).
+      efailure (ECompilationError prov ("Clause '" ++ fname ++ "' not found")).
     Definition call_params_error {A} prov (fname:string) : eresult A :=
-      efailure (CompilationError prov ("Parameter mismatch when calling function '" ++ fname ++ "'")).
+      efailure (ECompilationError prov ("Parameter mismatch when calling function '" ++ fname ++ "'")).
+
+    (** Other runtime errors *)
+    Definition eval_unary_op_error {A} prov (op:ErgoOps.Unary.op) : eresult A :=
+      efailure (ERuntimeError prov "Unary operation failed.").
+    Definition eval_binary_op_error {A} prov (op:ErgoOps.Binary.op) : eresult A :=
+      efailure (ERuntimeError prov "Binary operation failed.").
+    Definition eval_if_not_boolean_error {A} prov : eresult A :=
+      efailure (ERuntimeError prov "'If' condition not boolean.").
+    Definition eval_match_let_optional_not_on_option_error {A} prov : eresult A :=
+      efailure (ERuntimeError prov "Matched LetOption without an option.").
+    Definition eval_foreach_not_on_array_error {A} prov : eresult A :=
+      efailure (ERuntimeError prov "Foreach needs to be called on an array").
 
     (** System errors *)
     Definition built_in_function_not_found_error {A} prov (fname:string) : eresult A :=
-      efailure (SystemError prov ("Built in function " ++ fname ++ " not found")).
+      efailure (ESystemError prov ("Built in function " ++ fname ++ " not found")).
     Definition built_in_function_without_body_error {A} prov (fname:string) : eresult A :=
-      efailure (SystemError prov ("Built in function " ++ fname ++ " does not have a body")).
+      efailure (ESystemError prov ("Built in function " ++ fname ++ " does not have a body")).
     Definition TODO {A : Set} prov (feature:string) : eresult A :=
-      efailure (SystemError prov ("Feature " ++ feature ++ " not implemented.")%string).
+      efailure (ESystemError prov ("Feature " ++ feature ++ " not implemented.")%string).
 
     Definition ergo_default_package : string := "org.accordproject.ergo".
     Definition ergo_default_error_proval_name : string := "Error".
@@ -158,37 +189,28 @@ Section EResult.
                       (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
 
     Definition unresolved_name_error {A} prov : eresult A :=
-      efailure (CompilationError prov "Unresolved name").
+      efailure (ECompilationError prov "Unresolved name").
     Definition should_have_one_contract_error {A} prov : eresult A :=
-      efailure (CompilationError prov "Should have exactly one contract").
+      efailure (ECompilationError prov "Should have exactly one contract").
 
     Definition contract_in_calculus_error {A} prov : eresult A :=
-      efailure (SystemError prov "Should not find 'contract' in Ergo Calculus").
+      efailure (ESystemError prov "Should not find 'contract' in Ergo Calculus").
     Definition clause_in_calculus_error {A} prov : eresult A :=
-      efailure (SystemError prov "Should not find 'clause' in Ergo Calculus").
+      efailure (ESystemError prov "Should not find 'clause' in Ergo Calculus").
     Definition state_in_calculus_error {A} prov : eresult A :=
-      efailure (SystemError prov "Should not find 'state' in Ergo Calculus").
+      efailure (ESystemError prov "Should not find 'state' in Ergo Calculus").
     Definition complex_foreach_in_calculus_error {A} prov : eresult A :=
-      efailure (SystemError prov "Should only have single loop foreach in Ergo Calculus").
+      efailure (ESystemError prov "Should only have single loop foreach in Ergo Calculus").
     Definition function_not_inlined_error {A} prov fname : eresult A :=
-      efailure (SystemError prov ("Function " ++ fname ++ " did not get inlined")).
+      efailure (ESystemError prov ("Function " ++ fname ++ " did not get inlined")).
     Definition function_in_group_not_inlined_error {A} prov gname fname : eresult A :=
-      efailure (SystemError prov ("Clause " ++ fname ++ " in contract " ++ gname ++ " did not get inlined")).
+      efailure (ESystemError prov ("Clause " ++ fname ++ " in contract " ++ gname ++ " did not get inlined")).
   End Builtin.
 
   Section Fmt.
     Definition format_error (name : string) (prov : provenance) (msg : string) :=
       let loc := loc_of_provenance prov in
       (name ++ " at " ++ (string_of_location loc) ++ " '" ++ msg ++ "'")%string.
-
-    Definition string_of_error (err : eerror) : string :=
-      match err with
-      | SystemError loc s => "System error: " ++ s
-      | ParseError loc msg => format_error "Parse error" loc msg
-      | CompilationError loc msg => format_error "Compilation error" loc msg
-      | TypeError loc msg => format_error "Type error" loc msg
-      | RuntimeError loc msg => format_error "Runtime error" loc msg
-      end.
 
     Definition fmt_nl := String.String (ascii_of_N 10) EmptyString.
 

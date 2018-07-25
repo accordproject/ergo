@@ -28,54 +28,54 @@ let mk_position_of_loc_pair start_pos end_pos =
 let mk_provenance_of_loc_pair start_pos end_pos =
   ErgoCompiler.prov_loc (mk_position_of_loc_pair start_pos end_pos)
 let ergo_system_error msg =
-  SystemError (dummy_provenance,char_list_of_string msg)
+  ESystemError (dummy_provenance,char_list_of_string msg)
 let ergo_parse_error msg start_pos end_pos =
-  ParseError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  EParseError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 let ergo_compilation_error msg start_pos end_pos =
-  CompilationError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  ECompilationError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 let ergo_type_error msg start_pos end_pos =
-  TypeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  ETypeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 let ergo_runtime_error msg start_pos end_pos =
-  RuntimeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
+  ERuntimeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
 
 let ergo_raise error =
   raise (Ergo_Error error)
 
 let error_kind error =
   begin match error with
-  | SystemError (_,_) -> "SystemError"
-  | ParseError (_,_) -> "ParseError"
-  | CompilationError (_,_) -> "CompilationError"
-  | TypeError (_,_) -> "TypeError"
-  | RuntimeError (_,_) -> "RuntimeError"
+  | ESystemError (_,_) -> "SystemError"
+  | EParseError (_,_) -> "ParseError"
+  | ECompilationError (_,_) -> "CompilationError"
+  | ETypeError (_,_) -> "TypeError"
+  | ERuntimeError (_,_) -> "RuntimeError"
   end
 
 let error_message error =
   let msg = 
     begin match error with
-    | SystemError (_,msg) -> msg
-    | ParseError (_,msg) -> msg
-    | CompilationError (_,msg) -> msg
-    | TypeError (_,msg) -> msg
-    | RuntimeError (_,msg) -> msg
+    | ESystemError (_,msg) -> msg
+    | EParseError (_,msg) -> msg
+    | ECompilationError (_,msg) -> msg
+    | ETypeError (_,msg) -> msg
+    | ERuntimeError (_,msg) -> msg
     end
   in string_of_char_list msg
 
 let error_loc_start error =
   begin match error with
-  | SystemError (loc,_) -> (loc_of_provenance loc).loc_start
-  | ParseError (prov,_) -> (loc_of_provenance prov).loc_start
-  | CompilationError (prov,_) -> (loc_of_provenance prov).loc_start
-  | TypeError (prov,_) -> (loc_of_provenance prov).loc_start
-  | RuntimeError (prov,_) -> (loc_of_provenance prov).loc_start
+  | ESystemError (loc,_) -> (loc_of_provenance loc).loc_start
+  | EParseError (prov,_) -> (loc_of_provenance prov).loc_start
+  | ECompilationError (prov,_) -> (loc_of_provenance prov).loc_start
+  | ETypeError (prov,_) -> (loc_of_provenance prov).loc_start
+  | ERuntimeError (prov,_) -> (loc_of_provenance prov).loc_start
   end
 let error_loc_end error =
   begin match error with
-  | SystemError (prov,_) -> (loc_of_provenance prov).loc_end
-  | ParseError (prov,_) -> (loc_of_provenance prov).loc_end
-  | CompilationError (prov,_) -> (loc_of_provenance prov).loc_end
-  | TypeError (prov,_) -> (loc_of_provenance prov).loc_end
-  | RuntimeError (prov,_) -> (loc_of_provenance prov).loc_end
+  | ESystemError (prov,_) -> (loc_of_provenance prov).loc_end
+  | EParseError (prov,_) -> (loc_of_provenance prov).loc_end
+  | ECompilationError (prov,_) -> (loc_of_provenance prov).loc_end
+  | ETypeError (prov,_) -> (loc_of_provenance prov).loc_end
+  | ERuntimeError (prov,_) -> (loc_of_provenance prov).loc_end
   end
 
 let underline_prov prov text =
@@ -103,20 +103,20 @@ let string_of_error_prov prov =
 
 let string_of_error error =
   begin match error with
-  | SystemError _ -> "[SystemError] " ^ (error_message error)
-  | ParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
-  | CompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
-  | TypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
-  | RuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
+  | ESystemError _ -> "[SystemError] " ^ (error_message error)
+  | EParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
+  | ECompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
+  | ETypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
+  | ERuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
   end
 
 let string_of_error_plus error text =
   begin match error with
-  | SystemError _ -> "[SystemError] " ^ (error_message error)
-  | ParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
-  | CompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
-  | TypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
-  | RuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
+  | ESystemError _ -> "[SystemError] " ^ (error_message error)
+  | EParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
+  | ECompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
+  | ETypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
+  | ERuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
   end
 
 (** Version number *)
