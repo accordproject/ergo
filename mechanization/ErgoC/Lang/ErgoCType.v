@@ -34,6 +34,9 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
+Locate RTypetoJSON.
+Require Import Qcert.Common.TypeSystem.RTypetoJSON.
+Check rtype_to_json.
 
 Section ErgoCType.
   Context {m : brand_model}.
@@ -220,11 +223,10 @@ Section ErgoCType.
       complex_foreach_in_calculus_error prov
     end.
 
-  (*
-  Definition ergoc_eval_decl
+  Definition ergoc_type_decl
              (dctxt : eval_context)
              (decl : ergoc_declaration)
-    : eresult (eval_context * option ergo_data) :=
+    : eresult (type_context * option ergo_data) :=
     match decl with
     | DCExpr prov expr =>
       elift (fun x => (dctxt, Some x)) (ergo_eval_expr dctxt expr)
@@ -236,7 +238,7 @@ Section ErgoCType.
     | DCContract prov name contr =>
       esuccess (dctxt, None)
     end.
-*)
+
 End ErgoCType.
 
 Section TestModel.
