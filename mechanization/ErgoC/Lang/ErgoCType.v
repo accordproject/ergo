@@ -66,7 +66,7 @@ Section ErgoCType.
       match ergo_type_expr ctxt e with
       | Success _ _ e' =>
         match ergoc_type_infer_unary_op op e' with
-        | Some (_, r) => esuccess r
+        | Some (r, _) => esuccess r
         | None => efailure (ETypeError prov "Unary operation failed.")
         end
       | Failure _ _ f => efailure f
@@ -318,6 +318,10 @@ Section TestModel.
   (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("name",dstring "pooh")::nil))))). *) (* success to top - ?? semantics for it needs to be checked *)
 
   (* Compute (try_it (EUnaryOp dummy_provenance OpUnbrand (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil)))))). *) (* success - { age : Nat, cid : Nat, name : String, .. } *)
+
+  (* Compute (try_it (EUnaryOp dummy_provenance (OpBrand ("Customer"::nil)) (EConst dummy_provenance (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))). *) (* success - Customer *)
+
+  (* Compute (try_it (EUnaryOp dummy_provenance (OpBrand ("Customer"::nil)) (EConst dummy_provenance (drec (("age",dnat 14)::("name",dstring "pooh")::nil))))). *) (* Failure - subtyping *)
 
   (* Compute (try_it (EUnaryOp dummy_provenance (OpDot "name") (EUnaryOp dummy_provenance OpUnbrand (((EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))))))). *) (* success - String *)
   
