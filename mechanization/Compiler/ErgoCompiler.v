@@ -13,6 +13,7 @@
  *)
 
 Require String.
+Require Qcert.Common.Brands.BrandRelation.
 
 Require ErgoSpec.Version.
 Require ErgoSpec.Backend.ErgoBackend.
@@ -286,17 +287,22 @@ Module ErgoCompiler.
     -> EResult.eresult Java.java
     := ErgoDriver.ergo_module_to_java_top.
 
+
+  Definition test_brand_model := (ErgoBackend.ErgoCTypes.empty_brand_model tt eq_refl).
+  Definition test_brand_relation := BrandRelation.mkBrand_relation nil (eq_refl _) (eq_refl _).
+  Definition test := 418.
+
   (** REPL *)
   Definition init_repl_context :
     list CTO.cto_package
     -> list ergo_module
     -> EResult.eresult ErgoDriver.repl_context
-    := ErgoDriver.init_repl_context.
+    := @ErgoDriver.init_repl_context test_brand_model.
   Definition ergo_repl_eval_decl :
     ErgoDriver.repl_context
     -> ergo_declaration
     -> EResult.eresult String.string * ErgoDriver.repl_context
-    := ErgoDriver.ergo_repl_eval_decl.
+    := @ErgoDriver.ergo_repl_eval_decl test_brand_model.
 
 End ErgoCompiler.
 

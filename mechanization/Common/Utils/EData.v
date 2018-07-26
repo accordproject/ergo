@@ -18,6 +18,7 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EResult.
 
 Section EData.
+  Context {m:brand_model}.
 
   Definition unpack_output
              (out : ergo_data)
@@ -52,7 +53,7 @@ Section EData.
     end.
 
     (* XXX May be nice to replace by a format that aligns with Ergo notations instead of JSON and move to an earlier module e.g., Common/Utils/EData *)
-    Definition string_of_result (old_state : option ergo_data) (result : option ergo_data)
+    Definition string_of_result_data (old_state : option ergo_data) (result : option ergo_data)
       : string :=
       match result with
       | None => ""
@@ -61,7 +62,6 @@ Section EData.
       | Some out =>
         match unpack_output out with
         | Some (response, emits, state) =>
-          
           (string_of_emits emits) ++ (string_of_response response) ++ (string_of_state old_state state)
         | None => (ErgoData.data_to_json_string fmt_dq out) ++ fmt_nl
         end
@@ -69,6 +69,19 @@ Section EData.
    liked that better anyway, so we might transition back at some point. The
    problem was that QCert treated arrays as bags and sorted them before
    printing (!!!). *)
+      end.
+
+    (* XXX May be nice to replace by a format that aligns with Ergo notations instead of JSON and move to an earlier module e.g., Common/Utils/EData *)
+    Definition string_of_result_type (result : option ergoc_type)
+      : string :=
+      match result with
+      | None => ""
+      | Some typ => ErgoCTypes.ergoc_type_to_string typ
+      end.
+
+    Definition string_of_result (old_state : option ergo_data) (result : (option ergoc_type * option ergo_data)) : string :=
+      match result with
+      | (typ, dat) => (string_of_result_type typ) ++ "  :  " ++ (string_of_result_data old_state dat)
       end.
 
 End EData.
