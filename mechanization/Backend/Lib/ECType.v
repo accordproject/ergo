@@ -90,8 +90,23 @@ Module ECType(ergomodel:ErgoBackendModel).
   Definition ergoc_type_infer_binary_op {m:brand_model} : binary_op -> ectype -> ectype -> option (ectype * ectype * ectype) := infer_binary_op_type_sub.
   Definition ergoc_type_infer_unary_op {m:brand_model} : unary_op -> ectype -> option (ectype * ectype) := infer_unary_op_type_sub.
 
-  Definition tbrand_relation : Set := brand_relation.
-  Definition mk_tbrand_relation : list (string * string) -> qresult tbrand_relation := Schema.mk_brand_relation.
+  Definition unpack_ergoc_type {br:brand_relation} (t:ectype) : ectype_struct := proj1_sig t.
   
+  Definition tbrand_relation : Set := brand_relation.
+  Definition tempty_brand_relation : tbrand_relation := mkBrand_relation nil (eq_refl _) (eq_refl _).
+  Definition mk_tbrand_relation : list (string * string) -> qresult tbrand_relation := Schema.mk_brand_relation.
+
+  Definition tbrand_context_decls {br:brand_relation} : Set := brand_context_decls.
+  Definition tbrand_context {br:brand_relation} : Set := brand_context.
+  Definition mk_tbrand_context {br:brand_relation} : tbrand_context_decls -> tbrand_context :=
+    @mk_brand_context _ br.
+
+  Definition tbrand_model : Set := brand_model.
+  Definition mk_tbrand_model {br:brand_relation} : tbrand_context_decls -> qresult tbrand_model :=
+    @Schema.make_brand_model_from_decls_fails _ _ br.
+
+  Program Definition tempty_brand_model : tbrand_model :=
+    @make_brand_model _ tempty_brand_relation (mkBrand_context nil _) _.
+
 End ECType.
 

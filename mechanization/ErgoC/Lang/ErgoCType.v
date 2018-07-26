@@ -238,3 +238,87 @@ Section ErgoCType.
     end.
 *)
 End ErgoCType.
+
+Section TestModel.
+  Import ErgoCTypes.
+
+  Local Open Scope string.
+
+  (* For the CTO:
+     ============
+
+     concept Entity {}
+     concept Customer extends Entity { o Integer age o Integer cid o String name }
+     concept Purchase extends Entity { o Integer cid o String name o Integer pid o Integer quantity }
+   *)
+
+  Definition StoreHierarchy :=
+    ("Customer","Entity")::("Purchase","Entity")::nil.
+
+  Definition StoreBrandRelationMaybe : eresult tbrand_relation
+    := eresult_of_qresult dummy_provenance (mk_tbrand_relation StoreHierarchy).
+
+  Definition StoreBrandRelation : brand_relation :=
+    match StoreBrandRelationMaybe with
+    | Success _ _ s => s
+    | Failure _ _ e => tempty_brand_relation (* Not used *)
+    end.
+
+  (* Compute StoreBrandModelMaybe. *)
+  
+  Existing Instance StoreBrandRelation.
+
+  Program Definition EntityType : ergoc_type
+    := Rec Open nil _.
+
+  Program Definition CustomerType : ergoc_type
+    := Rec Open (("age", Nat)
+                 :: ("cid", Nat)
+                 :: ("name", String)
+                 :: nil) _.
+
+  Program Definition PurchaseType : ergoc_type
+    := Rec Open (("cid", Nat)
+                 :: ("name", String)
+                 :: ("pid", Nat)
+                 :: ("quantity", Nat)
+                 :: nil) _.
+
+  Definition StoreModelTypeDecls : tbrand_context_decls :=
+    (("Customer", CustomerType)
+     :: ("Entity", EntityType)
+     :: ("Purchase", PurchaseType)
+     :: nil).
+
+  Definition StoreBrandModelMaybe : eresult tbrand_model
+    := eresult_of_qresult dummy_provenance
+                          (mk_tbrand_model StoreModelTypeDecls).
+
+  (* Compute StoreBrandModelMaybe. *)
+  
+  Instance StoreBrandModel : brand_model :=
+    match StoreBrandModelMaybe with
+    | Success _ _ s => s
+    | Failure _ _ e => tempty_brand_model (* Not used *)
+    end.
+
+  Definition try_it (e:ergoc_expr) : eresult ectype_struct :=
+    elift unpack_ergoc_type (@ergo_type_expr StoreBrandModel empty_type_context e).
+
+  (* Compute (try_it (EConst dummy_provenance (dunit))). *) (* success - Unit *)
+  (* Compute (try_it (EConst dummy_provenance (dstring "pooh"))). *) (* success - String *)
+  (* Compute (try_it (EConst dummy_provenance (dnat 14))). *) (* success - Nat *)
+  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))). *) (* success - Customer *)
+  (* Compute (try_it (EConst dummy_provenance (dbrand ("Entity"::nil) (drec (("a",dunit)::nil))))). *) (* success - Entity *)
+  
+  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("a",dunit)::nil))))). *) (* success to top - ?? semantics for it needs to be checked *)
+
+  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))). *) (* success - Customer *)
+  
+  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("name",dstring "pooh")::nil))))). *) (* success to top - ?? semantics for it needs to be checked *)
+
+  (* Compute (try_it (EUnaryOp dummy_provenance OpUnbrand (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil)))))). *) (* success - { age : Nat, cid : Nat, name : String, .. } *)
+
+  (* Compute (try_it (EUnaryOp dummy_provenance (OpDot "name") (EUnaryOp dummy_provenance OpUnbrand (((EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))))))). *) (* success - String *)
+  
+End TestModel.
