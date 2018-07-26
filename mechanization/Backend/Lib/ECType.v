@@ -15,6 +15,7 @@
  *)
 
 Require Import String.
+Require Import List.
 Require Import Qcert.Common.CommonTypes.
 Require Import Qcert.Common.TypingRuntime.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
@@ -107,6 +108,34 @@ Module ECType(ergomodel:ErgoBackendModel).
 
   Program Definition tempty_brand_model : tbrand_model :=
     @make_brand_model _ tempty_brand_relation (mkBrand_context nil _) _.
+
+  Definition ergoc_type_unpack {br:brand_relation} (t:ectype) : ectype_struct := proj1_sig t.
+
+  Fixpoint rtype_to_string {br:brand_relation} (t : rtype₀) : string :=
+    match t with
+    | Bottom₀ => "Nothing"%string
+    | Top₀ => "Any"%string
+    | Unit₀ => "Unit"%string
+    | Nat₀ => "Integer"%string
+    | Float₀ => "Double"%string
+    | Bool₀ => "Boolean"%string
+    | String₀ => "String"%string
+    | Coll₀ r' => (rtype_to_string r') ++ "[]"%string
+    | Rec₀ k srl =>
+      "{"%string ++
+         (String.concat
+            (", "%string)
+            (map (fun sr => ((fst sr) ++ ": " ++ (rtype_to_string (snd sr)))%string)
+                 srl)) ++ "}"%string
+    | Either₀ tl tr => (rtype_to_string tl) ++ "?"%string
+    | Arrow₀ tin tout => (rtype_to_string tin) ++ " -> "%string ++ (rtype_to_string tout)
+    | Brand₀ (b::nil) => "~"%string ++ b
+    | Brand₀ _ => "~"%string ++ "[multiple]"
+    | Foreign₀ ft => "Foreign (probably DateTime hehe)"
+    end.
+
+  Definition ergoc_type_to_string {br:brand_relation} (t : ectype) : string :=
+    rtype_to_string (ergoc_type_unpack t).
 
 End ECType.
 
