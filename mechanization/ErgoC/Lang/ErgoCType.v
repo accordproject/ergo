@@ -35,13 +35,13 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import Qcert.Common.TypeSystem.RTypetoJSON.
-Check rtype_to_json.
 
 Section ErgoCType.
   Context {m : brand_model}.
 
   Import ErgoCTypes.
 
+  Program Definition empty_rec_type : ergoc_type := Rec Closed nil _.
   Fixpoint ergo_type_expr (ctxt : type_context) (expr : ergoc_expr) : eresult ergoc_type :=
     match expr with
     | EThisContract prov => efailure (ESystemError prov "No `this' in ergoc")
@@ -55,21 +55,22 @@ Section ErgoCType.
         (infer_data_type d)
         (ETypeError prov "Bad constant.")
     | EArray prov es =>
-      fold_left
-        (fun T new =>
-           eolift
-             (fun T' =>
-                elift
-                  (fun new' => ergoc_type_meet T' new')
-                  (ergo_type_expr ctxt new))
-             T)
-        es (esuccess (tcoll tbottom))
+      (elift tcoll)
+        (fold_left
+           (fun T new =>
+              eolift
+                (fun T' =>
+                   elift
+                     (fun new' => ergoc_type_meet T' new')
+                     (ergo_type_expr ctxt new))
+                T)
+           es (esuccess (tcoll tbottom)))
     | EUnaryOp prov op e =>
       match ergo_type_expr ctxt e with
       | Success _ _ e' =>
         match ergoc_type_infer_unary_op op e' with
         | Some (r, _) => esuccess r
-        | None => efailure (ETypeError prov "Unary operation failed.")
+        | None => efailure (TypeError prov "Ill-typed unary operation.")
         end
       | Failure _ _ f => efailure f
       end
@@ -79,8 +80,8 @@ Section ErgoCType.
         match ergo_type_expr ctxt e2 with
         | Success _ _ e2' =>
           match ergoc_type_infer_binary_op op e1' e2' with
-          | Some (_, _, r) => esuccess r
-          | None => efailure (ERuntimeError prov "Binary operation failed.")
+          | Some (r, _, _) => esuccess r
+          | None => efailure (TypeError prov "Ill-typed binary operation.")
           end
         | Failure _ _ f => efailure f
         end
@@ -92,7 +93,7 @@ Section ErgoCType.
                   elift2 ergoc_type_meet
                          (ergo_type_expr ctxt t)
                          (ergo_type_expr ctxt f)
-                else efailure (ERuntimeError prov "'If' condition not boolean."))
+                else efailure (TypeError prov "'If' condition not boolean."))
              (ergo_type_expr ctxt c)
     | ELet prov n t v e =>
       (* TODO check that v : t *)
@@ -102,7 +103,23 @@ Section ErgoCType.
         ergo_type_expr ctxt' e
       | Failure _ _ f => efailure f
       end
-    | ERecord prov _ => TODO prov "type records"%string
+    | ERecord prov rs =>
+      fold_left
+        (fun sofar next =>
+           eolift2
+             (fun sofar' val' =>
+                (elift (compose fst fst))
+                  (eresult_of_option
+                     (ergoc_type_infer_binary_op OpRecConcat sofar' val')
+                     (TypeError prov "Bad record! Failed to concat."%string)))
+             sofar
+             (eolift (fun val =>
+                        (elift fst)
+                          (eresult_of_option
+                             (ergoc_type_infer_unary_op (OpRec (fst next)) val)
+                             (TypeError prov "Bad record! Failed to init."%string)))
+                     (ergo_type_expr ctxt (snd next))))
+        rs (esuccess empty_rec_type)
     | ENew prov _ _ => TODO prov "type new"%string
         (*
     | ERecord prov rs =>

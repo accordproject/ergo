@@ -67,6 +67,11 @@ Section EResult.
       | Success _ _ None => a
       | Failure _ _ e => efailure e
       end.
+    Definition eolift2 {A B C : Set} (f : A -> B -> eresult C) (a : eresult A) (b : eresult B) : eresult C :=
+      match elift2 f a b with
+      | Failure _ _ f => efailure f
+      | Success _ _ s => s
+      end.
 
     (* Fold-left over functions returning eresults *)
     Definition elift_fold_left {A:Set} {B:Set}
