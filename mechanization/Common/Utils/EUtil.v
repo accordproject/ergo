@@ -48,6 +48,18 @@ Section EUtil.
       None
       l.
 
+  Fixpoint last_some_pair {A} {B} (l:list ((option A) * (option B))) : ((option A) * (option B)) :=
+    let proc_one (one : ((option A) * (option B))) (acc : ((option A) * (option B))) :=
+        match acc with
+        | (Some x, Some y) => acc
+        | _ => one
+        end
+    in
+    fold_right
+      proc_one
+      (None, None)
+      l.
+
   (*
   Section TopoSort.
     Context {A:Set}.

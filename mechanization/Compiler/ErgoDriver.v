@@ -29,6 +29,8 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCEval.
 Require Import ErgoSpec.Translation.CTOtoErgo.
@@ -166,8 +168,15 @@ Section ErgoDriver.
   End Compiler.
 
   Section Interpreter.
+    Context {m:brand_model}.
+
+    (*
+    Definition test_brand_model := (ErgoCTypes.empty_brand_model tt eq_refl).
+    Definition test_brand_relation := mkBrand_relation nil (eq_refl _) (eq_reflexivity _).
+*)
     Record repl_context :=
       mkREPLCtxt {
+          repl_context_type_ctxt : type_context;
           repl_context_eval_ctxt : eval_context;
           repl_context_comp_ctxt : compilation_context
         }.
@@ -175,7 +184,7 @@ Section ErgoDriver.
     Definition init_repl_context
                (ctos : list lrcto_package)
                (mls : list lrergo_module) : eresult repl_context :=
-      elift (mkREPLCtxt ErgoCEvalContext.empty_eval_context)
+      elift (mkREPLCtxt ErgoCTypeContext.empty_type_context ErgoCEvalContext.empty_eval_context)
             (eolift (set_namespace_in_compilation_context
                        "org.accordproject.ergotop"%string)
                     (compilation_context_from_inputs ctos mls)).
@@ -183,16 +192,21 @@ Section ErgoDriver.
     Definition update_repl_ctxt_comp_ctxt
                (rctxt: repl_context)
                (sctxt: compilation_context) : repl_context :=
-      mkREPLCtxt rctxt.(repl_context_eval_ctxt) sctxt.
+      mkREPLCtxt rctxt.(repl_context_type_ctxt) rctxt.(repl_context_eval_ctxt) sctxt.
+    
+    Definition update_repl_ctxt_type_ctxt
+               (rctxt: repl_context)
+               (nctxt: type_context) : repl_context :=
+      mkREPLCtxt nctxt rctxt.(repl_context_eval_ctxt) rctxt.(repl_context_comp_ctxt).
     
     Definition update_repl_ctxt_eval_ctxt
                (rctxt: repl_context)
-               (dctxt: eval_context) : repl_context :=
-      mkREPLCtxt dctxt rctxt.(repl_context_comp_ctxt).
+               (nctxt: eval_context) : repl_context :=
+      mkREPLCtxt rctxt.(repl_context_type_ctxt) nctxt rctxt.(repl_context_comp_ctxt).
     
     Definition lift_repl_ctxt
                (orig_ctxt : repl_context)
-               (result : eresult (option ergo_data * repl_context))
+               (result : eresult (option ergoc_type * option ergo_data * repl_context))
                : repl_context
       :=
         elift_both
@@ -202,30 +216,36 @@ Section ErgoDriver.
 
     Definition ergoc_repl_eval_declaration
                (ctxt:repl_context) (decl:ergoc_declaration)
-      : eresult (option ergo_data * repl_context) :=
+      : eresult (option ergoc_type * option ergo_data * repl_context) :=
       let sctxt := ctxt.(repl_context_comp_ctxt) in
-      match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
+      match ergoc_type_decl ctxt.(repl_context_type_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (dctxt', None) => esuccess (None, mkREPLCtxt dctxt' sctxt)
-      | Success _ _ (dctxt', Some out) =>
-        match unpack_output out with
-        | None => esuccess (Some out, mkREPLCtxt dctxt' sctxt)
-        | Some (_, _, state) =>
-          esuccess (
-              Some out,
-              mkREPLCtxt
-                (eval_context_update_local_env dctxt' "state"%string state)
-                sctxt
-            )
+      | Success _ _ (tctxt', typ) =>
+        match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
+        | Failure _ _ f => efailure f
+        | Success _ _ (dctxt', None) => esuccess (typ, None, mkREPLCtxt tctxt' dctxt' sctxt)
+        | Success _ _ (dctxt', Some out) =>
+          match unpack_output out with
+          | None => esuccess (typ, Some out, mkREPLCtxt tctxt' dctxt' sctxt)
+          | Some (_, _, state) =>
+            esuccess (
+                typ,
+                Some out,
+                mkREPLCtxt
+                  tctxt' (* TODO *)
+                  (eval_context_update_local_env dctxt' "state"%string state)
+                  sctxt
+              )
+          end
         end
       end.
 
     Definition ergoc_repl_eval_declarations
                (ctxt:repl_context) (decls:list ergoc_declaration)
-      : eresult (option ergo_data * repl_context) :=
+      : eresult (option ergoc_type * option ergo_data * repl_context) :=
       elift
         (fun xy =>
-           (last_some (fst xy), snd xy))
+           (last_some_pair (fst xy), snd xy))
         (elift_context_fold_left
            ergoc_repl_eval_declaration
            decls
@@ -234,7 +254,7 @@ Section ErgoDriver.
     Definition ergo_eval_decl_via_calculus
                (ctxt : repl_context)
                (decl : lrergo_declaration)
-      : eresult (option ergo_data * repl_context) :=
+      : eresult (option ergoc_type * option ergo_data * repl_context) :=
       match ergo_declaration_to_ergoc_inlined ctxt.(repl_context_comp_ctxt) decl with
       | Failure _ _ f => efailure f
       | Success _ _ (decls, sctxt') =>
@@ -244,7 +264,7 @@ Section ErgoDriver.
 
     Definition ergo_string_of_result
                (rctxt : repl_context)
-               (result : eresult (option ergo_data * repl_context))
+               (result : eresult (option ergoc_type * option ergo_data * repl_context))
       : eresult string :=
       let local_env := rctxt.(repl_context_eval_ctxt).(eval_context_local_env) in
       let old_state := lookup String.string_dec local_env "state"%string in
