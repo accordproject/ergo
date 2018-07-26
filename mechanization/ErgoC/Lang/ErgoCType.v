@@ -34,7 +34,6 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Locate RTypetoJSON.
 Require Import Qcert.Common.TypeSystem.RTypetoJSON.
 Check rtype_to_json.
 
@@ -224,15 +223,15 @@ Section ErgoCType.
     end.
 
   Definition ergoc_type_decl
-             (dctxt : eval_context)
+             (dctxt : type_context)
              (decl : ergoc_declaration)
-    : eresult (type_context * option ergo_data) :=
+    : eresult (type_context * option ergoc_type) :=
     match decl with
     | DCExpr prov expr =>
-      elift (fun x => (dctxt, Some x)) (ergo_eval_expr dctxt expr)
+      elift (fun x => (dctxt, Some x)) (ergo_type_expr dctxt expr)
     | DCConstant prov name expr =>
-      let expr' := ergo_eval_expr dctxt expr in
-      eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
+      let expr' := ergo_type_expr dctxt expr in
+      eolift (fun val => esuccess (type_context_update_global_env dctxt name val, None)) expr'
     | DCFunc prov name func =>
       esuccess (dctxt, None)
     | DCContract prov name contr =>
