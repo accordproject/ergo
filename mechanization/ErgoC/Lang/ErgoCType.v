@@ -64,7 +64,7 @@ Section ErgoCType.
                      (fun new' => ergoc_type_meet T' new')
                      (ergo_type_expr ctxt new))
                 T)
-           es (esuccess (tcoll tbottom)))
+           es (esuccess ttop))
     | EUnaryOp prov op e =>
       match ergo_type_expr ctxt e with
       | Success _ _ e' =>
