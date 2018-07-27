@@ -120,48 +120,30 @@ Section ErgoCType.
                              (ETypeError prov "Bad record! Failed to init."%string)))
                      (ergo_type_expr ctxt (snd next))))
         rs (esuccess empty_rec_type)
-    | ENew prov _ _ => TODO prov "type new"%string
-        (*
-    | ERecord prov rs =>
-      fold_left
-        (fun ls nv =>
-           let name := fst nv in
-           let value := snd nv in
-           match ls with
-           | Success _ _ (drec ls') =>
-             match ergo_type_expr ctxt value with
-             (* TODO OpRecConcat to normalize shadowing properly *)
-             | Success _ _ value' => esuccess (drec (ls' ++ ((name, value')::nil)))
-             | Failure _ _ f => efailure f
-             end
-           | Success _ _ _ => efailure (RuntimeError prov "This should never happen.")
-           | Failure _ _ f => efailure f
-           end)
-        rs (esuccess (drec nil))
-    (* RIP modularity *)
-    | ENew prov nr rs =>
-      match
-        fold_left
-          (fun ls nv =>
-             let name := fst nv in
-             let value := snd nv in
-             match ls with
-             | Success _ _ (drec ls') =>
-               match ergo_type_expr ctxt value with
-               (* TODO OpRecConcat to normalize shadowing properly *)
-               | Success _ _ value' => esuccess (drec (ls' ++ ((name, value')::nil)))
-               | Failure _ _ f => efailure f
-               end
-             | Success _ _ _ => efailure (RuntimeError prov "This should never happen.")
-             | Failure _ _ f => efailure f
-             end)
-          rs (esuccess (drec nil))
-      with
-      | Failure _ _ f => efailure f
-      | Success _ _ r => esuccess (dbrand (nr::nil) r)
-      end
-*)
-    (* EXPECTS: no function calls in expression *)
+    | ENew prov name rs =>
+      eolift
+        (fun rs' =>
+           (elift fst)
+             (eresult_of_option
+                (ergoc_type_infer_unary_op
+                   (OpBrand (name::nil)) rs')
+                (ETypeError prov "Concept name doesn't match data"%string)))
+        (fold_left
+           (fun sofar next =>
+              eolift2
+                (fun sofar' val' =>
+                   (elift (compose fst fst))
+                     (eresult_of_option
+                        (ergoc_type_infer_binary_op OpRecConcat sofar' val')
+                        (ETypeError prov "Bad record! Failed to concat."%string)))
+                sofar
+                (eolift (fun val =>
+                           (elift fst)
+                             (eresult_of_option
+                                (ergoc_type_infer_unary_op (OpRec (fst next)) val)
+                                (ETypeError prov "Bad record! Failed to init."%string)))
+                        (ergo_type_expr ctxt (snd next))))
+           rs (esuccess empty_rec_type))
     | ECallFun prov fname args => function_not_inlined_error prov fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
 
