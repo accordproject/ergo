@@ -75,13 +75,13 @@ Section EData.
     Definition string_of_result_type (result : option ergoc_type)
       : string :=
       match result with
-      | None => ""
-      | Some typ => ErgoCTypes.ergoc_type_to_string typ
+      | None => ""%string
+      | Some typ => "  :  "%string ++ (ErgoCTypes.ergoc_type_to_string typ) ++ fmt_nl
       end.
 
     Definition string_of_result (old_state : option ergo_data) (result : (option ergoc_type * option ergo_data)) : string :=
       match result with
-      | (typ, dat) => (string_of_result_type typ) ++ "  :  " ++ (string_of_result_data old_state dat)
+      | (typ, dat) => (string_of_result_data old_state dat) ++ (string_of_result_type typ)
       end.
 
 End EData.
