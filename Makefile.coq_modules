@@ -52,6 +52,7 @@ MODULES = \
   Translation/ErgoCompContext \
   Translation/ErgoCInline \
   Translation/ErgotoErgoC \
+  Translation/ErgoTypetoErgoCType \
   Translation/ErgoCtoErgoNNRC \
   Translation/ErgoNNRCtoJavaScript \
   Translation/ErgoNNRCtoJavaScriptCicero \
