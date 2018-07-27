@@ -253,7 +253,7 @@ Section TestModel.
    *)
 
   Definition StoreHierarchy :=
-    ("Customer","Entity")::("Purchase","Entity")::nil.
+    ("org.accordproject.ergotop.Customer","org.accordproject.ergotop.Entity")::("org.accordproject.ergotop.Purchase","org.accordproject.ergotop.Entity")::nil.
 
   Definition StoreBrandRelationMaybe : eresult tbrand_relation
     := eresult_of_qresult dummy_provenance (mk_tbrand_relation StoreHierarchy).
@@ -285,9 +285,9 @@ Section TestModel.
                  :: nil) _.
 
   Definition StoreModelTypeDecls : tbrand_context_decls :=
-    (("Customer", CustomerType)
-     :: ("Entity", EntityType)
-     :: ("Purchase", PurchaseType)
+    (("org.accordproject.ergotop.Customer", CustomerType)
+     :: ("org.accordproject.ergotop.Entity", EntityType)
+     :: ("org.accordproject.ergotop.Purchase", PurchaseType)
      :: nil).
 
   Definition StoreBrandModelMaybe : eresult tbrand_model
