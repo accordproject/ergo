@@ -35,7 +35,7 @@
   "devDependencies": {
     "jsdoc": "3.5.5",
     "jsdoc-sphinx": "0.0.6",
-    "lerna": "2.5.1",
+    "lerna": "2.11.0",
     "moment": "2.20.1",
     "colors": "1.1.2",
     "licensecheck": "1.3.0",

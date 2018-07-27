@@ -94,7 +94,7 @@ ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli
 %.ctoj: %.cto
 	../scripts/cto2ctoj.js parse $<
 
-extracted/StdlibResources.ml: stdlib/contract.ctoj stdlib/hyperledger.ctoj stdlib/money.ctoj stdlib/runtime.ctoj stdlib/stdlib.ergo
+extracted/StdlibResources.ml: stdlib/contract.ctoj stdlib/hyperledger.ctoj stdlib/money.ctoj stdlib/runtime.ctoj stdlib/dom.ctoj stdlib/stdlib.ergo
 	echo '(* generated ocaml file *)' > extracted/StdlibResources.ml
 	(for i in contract hyperledger money runtime; do \
          echo "let $$i = {xxx|"; \
