@@ -36,6 +36,8 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import Qcert.Common.TypeSystem.RTypetoJSON.
 
+Require Import ErgoSpec.Translation.ErgoTypetoErgoCType.
+
 Section ErgoCType.
   Context {m : brand_model}.
 
@@ -95,14 +97,25 @@ Section ErgoCType.
                          (ergo_type_expr ctxt f)
                 else efailure (ETypeError prov "'If' condition not boolean."%string))
              (ergo_type_expr ctxt c)
-    | ELet prov n t v e =>
-      (* TODO check that v : t *)
-      match ergo_type_expr ctxt v with
-      | Success _ _ v' =>
-        let ctxt' := type_context_update_local_env ctxt n v' in
-        ergo_type_expr ctxt' e
-      | Failure _ _ f => efailure f
-      end
+    | ELet prov n None v e =>
+      (eolift (fun vt =>
+                let ctxt' := type_context_update_local_env ctxt n vt in
+                ergo_type_expr ctxt' e)
+             (ergo_type_expr ctxt v))
+    | ELet prov n (Some t) v e =>
+      (eolift
+         (fun vt =>
+            let t' := (ergo_type_to_ergoc_type t) in
+            if subtype_dec vt t' then
+              let ctxt' :=
+                  type_context_update_local_env
+                    ctxt n
+                    t'
+              in
+              ergo_type_expr ctxt' e
+            else
+              efailure (ETypeError prov "`Let' type mismatch."))
+         (ergo_type_expr ctxt v))
     | ERecord prov rs =>
       fold_left
         (fun sofar next =>
