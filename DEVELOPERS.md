@@ -32,7 +32,7 @@ We recommend using [nvm](https://github.com/creationix/nvm) \(or [nvm-windows](h
 * [Lerna](https://lernajs.io): We use lerna to handle multiple npm packages in the Ergo repository. To install:
 
 ```
-npm install -g lerna
+npm install -g lerna@2.11.0
 ```
 
 ### Forking Ergo on Github
