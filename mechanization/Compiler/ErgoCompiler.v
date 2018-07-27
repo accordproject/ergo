@@ -287,10 +287,8 @@ Module ErgoCompiler.
     -> EResult.eresult Java.java
     := ErgoDriver.ergo_module_to_java_top.
 
-
-  Definition test_brand_model := (ErgoBackend.ErgoCTypes.empty_brand_model tt eq_refl).
-  Definition test_brand_relation := BrandRelation.mkBrand_relation nil (eq_refl _) (eq_refl _).
-  Definition test := 418.
+  Definition test_brand_model := ErgoCType.StoreBrandModel.
+  Definition test_brand_relation := ErgoCType.StoreBrandRelation.
 
   (** REPL *)
   Definition init_repl_context :

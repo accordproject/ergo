@@ -22,7 +22,6 @@ let welcome () =
 
 let ps1 = "ergo$ "
 let ps2 = "  ... "
-let ps3 = test
 
 let prompt (ps : string) =
   if Unix.isatty Unix.stdin then
