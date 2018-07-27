@@ -70,7 +70,7 @@ Section ErgoCType.
       | Success _ _ e' =>
         match ergoc_type_infer_unary_op op e' with
         | Some (r, _) => esuccess r
-        | None => efailure (TypeError prov "Ill-typed unary operation.")
+        | None => efailure (ETypeError prov "Ill-typed unary operation."%string)
         end
       | Failure _ _ f => efailure f
       end
@@ -81,7 +81,7 @@ Section ErgoCType.
         | Success _ _ e2' =>
           match ergoc_type_infer_binary_op op e1' e2' with
           | Some (r, _, _) => esuccess r
-          | None => efailure (TypeError prov "Ill-typed binary operation.")
+          | None => efailure (ETypeError prov "Ill-typed binary operation."%string)
           end
         | Failure _ _ f => efailure f
         end
@@ -93,7 +93,7 @@ Section ErgoCType.
                   elift2 ergoc_type_meet
                          (ergo_type_expr ctxt t)
                          (ergo_type_expr ctxt f)
-                else efailure (TypeError prov "'If' condition not boolean."))
+                else efailure (ETypeError prov "'If' condition not boolean."%string))
              (ergo_type_expr ctxt c)
     | ELet prov n t v e =>
       (* TODO check that v : t *)
@@ -111,13 +111,13 @@ Section ErgoCType.
                 (elift (compose fst fst))
                   (eresult_of_option
                      (ergoc_type_infer_binary_op OpRecConcat sofar' val')
-                     (TypeError prov "Bad record! Failed to concat."%string)))
+                     (ETypeError prov "Bad record! Failed to concat."%string)))
              sofar
              (eolift (fun val =>
                         (elift fst)
                           (eresult_of_option
                              (ergoc_type_infer_unary_op (OpRec (fst next)) val)
-                             (TypeError prov "Bad record! Failed to init."%string)))
+                             (ETypeError prov "Bad record! Failed to init."%string)))
                      (ergo_type_expr ctxt (snd next))))
         rs (esuccess empty_rec_type)
     | ENew prov _ _ => TODO prov "type new"%string
