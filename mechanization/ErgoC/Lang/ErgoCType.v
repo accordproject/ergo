@@ -63,7 +63,7 @@ Section ErgoCType.
               eolift
                 (fun T' =>
                    elift
-                     (fun new' => ergoc_type_meet T' new')
+                     (fun new' => ergoc_type_join T' new')
                      (ergo_type_expr ctxt new))
                 T)
            es (esuccess ttop))
@@ -92,7 +92,7 @@ Section ErgoCType.
     | EIf prov c t f =>
       eolift (fun c' =>
                 if ergoc_type_subtype_dec c' tbool then
-                  elift2 ergoc_type_meet
+                  elift2 ergoc_type_join
                          (ergo_type_expr ctxt t)
                          (ergo_type_expr ctxt f)
                 else efailure (ETypeError prov "'If' condition not boolean."%string))
@@ -171,29 +171,29 @@ Section ErgoCType.
                match ergoc_type_infer_data d with
                | None => efailure (ETypeError prov "Ill-typed data literal!")
                | Some dt =>
-                 elift2 ergoc_type_meet
+                 elift2 ergoc_type_join
                         default_result
                         (ergo_type_expr ctxt res)
                end
              | (CaseWildcard prov None, res) =>
-               elift2 ergoc_type_meet default_result (ergo_type_expr ctxt res)
+               elift2 ergoc_type_join default_result (ergo_type_expr ctxt res)
              | (CaseLet prov name None, res) =>
-               elift2 ergoc_type_meet default_result
+               elift2 ergoc_type_join default_result
                       (ergo_type_expr (type_context_update_local_env ctxt name typ) res)
 
              | (CaseLetOption prov name None, res) =>
                match unteither typ with
                | None => default_result
                | Some (st, ft) =>
-                 elift2 ergoc_type_meet default_result
+                 elift2 ergoc_type_join default_result
                         (ergo_type_expr (type_context_update_local_env ctxt name st) res)
                end
              | (CaseWildcard prov (Some b), res) =>
-               elift2 ergoc_type_meet default_result
+               elift2 ergoc_type_join default_result
                       (ergo_type_expr ctxt res)
 
              | (CaseLet prov name (Some b), res) =>
-               elift2 ergoc_type_meet default_result
+               elift2 ergoc_type_join default_result
                       (ergo_type_expr (type_context_update_local_env
                                          ctxt
                                          name
@@ -201,7 +201,7 @@ Section ErgoCType.
                                       res)
 
              | (CaseLetOption prov name (Some b), res) =>
-               elift2 ergoc_type_meet default_result
+               elift2 ergoc_type_join default_result
                       (ergo_type_expr (type_context_update_local_env
                                          ctxt
                                          name

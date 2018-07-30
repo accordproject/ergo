@@ -74,7 +74,7 @@ Module ECType(ergomodel:ErgoBackendModel).
 
   (* Support for type checking *)
   Definition ergoc_type_meet {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
-  Definition ergoc_type_join {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
+  Definition ergoc_type_join {br:brand_relation} : ectype -> ectype -> ectype := rtype_join.
 
   Definition ergoc_type_subtype {br:brand_relation} : ectype -> ectype -> Prop := subtype.
   Theorem ergoc_type_subtype_dec {m:brand_model}  (t1 t2:ectype) :
