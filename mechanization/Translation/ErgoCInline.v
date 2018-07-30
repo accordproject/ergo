@@ -63,10 +63,10 @@ Section ErgoCInline.
   Fixpoint ergo_letify_function'
            (prov : provenance)
            (body : ergo_expr)
-           (args : list (string * ergo_expr)) : ergo_expr :=
+           (args : list (string * ergo_type * ergo_expr)) : ergo_expr :=
     match args with
     | nil => body
-    | (n,v)::rest => ELet prov n None v (ergo_letify_function' prov body rest)
+    | (n,t,v)::rest => ELet prov n (Some t) v (ergo_letify_function' prov body rest)
     end.
 
   Definition ergo_letify_function (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
@@ -86,7 +86,7 @@ Section ErgoCInline.
          match fn.(functionc_body) with
          | None => built_in_function_without_body_error prov fname
          | Some body =>
-           match zip (map fst (fn.(functionc_sig).(sigc_params))) args with
+           match zip (fn.(functionc_sig).(sigc_params)) args with
            | Some args' =>
              esuccess (ergo_letify_function' prov body args')
            | None =>
