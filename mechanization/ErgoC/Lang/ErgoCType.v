@@ -103,6 +103,12 @@ Section ErgoCType.
                 ergo_type_expr ctxt' e)
              (ergo_type_expr ctxt v))
     | ELet prov n (Some t) v e =>
+      let fmt_err :=
+          match prov with
+            | ProvFunc _ fname => ETypeError prov ("Incorrect type of arguments to function " ++ fname)
+            | _ => ETypeError prov "`Let' type mismatch"
+          end
+      in
       (eolift
          (fun vt =>
             let t' := (ergo_type_to_ergoc_type t) in
@@ -114,7 +120,7 @@ Section ErgoCType.
               in
               ergo_type_expr ctxt' e
             else
-              efailure (ETypeError prov "`Let' type mismatch."))
+              efailure fmt_err)
          (ergo_type_expr ctxt v))
     | ERecord prov rs =>
       fold_left
