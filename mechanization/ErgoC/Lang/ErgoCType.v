@@ -63,10 +63,10 @@ Section ErgoCType.
               eolift
                 (fun T' =>
                    elift
-                     (fun new' => ergoc_type_meet T' new')
+                     (fun new' => ergoc_type_join T' new')
                      (ergo_type_expr ctxt new))
                 T)
-           es (esuccess ttop))
+           es (esuccess tbottom))
     | EUnaryOp prov op e =>
       match ergo_type_expr ctxt e with
       | Success _ _ e' =>
@@ -92,7 +92,7 @@ Section ErgoCType.
     | EIf prov c t f =>
       eolift (fun c' =>
                 if ergoc_type_subtype_dec c' tbool then
-                  elift2 ergoc_type_meet
+                  elift2 ergoc_type_join
                          (ergo_type_expr ctxt t)
                          (ergo_type_expr ctxt f)
                 else efailure (ETypeError prov "'If' condition not boolean."%string))
@@ -160,65 +160,56 @@ Section ErgoCType.
     | ECallFun prov fname args => function_not_inlined_error prov fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
 
-    | EMatch prov term pes default => TODO prov "type match"
-      (*
-      let lift_dbrand :=
-          fun dat brand fn default =>
-            match dat with
-            | dbrand (br::nil) rcd =>
-              if String.string_dec brand br then
-                fn dat
-              else
-                default
-            | _ => default
-            end
-      in
+    | EMatch prov term pes default =>
       match ergo_type_expr ctxt term with
       | Failure _ _ f => efailure f
-      | Success _ _ dat =>
+      | Success _ _ typ =>
         fold_left
           (fun default_result pe =>
              match pe with
              | (CaseData prov d, res) => (* TODO can `d' ever be bad? *)
-               elift2 ergoc_type_meet default_result (ergo_type_expr ctxt res)
+               match ergoc_type_infer_data d with
+               | None => efailure (ETypeError prov "Ill-typed data literal!")
+               | Some dt =>
+                 elift2 ergoc_type_join
+                        default_result
+                        (ergo_type_expr ctxt res)
+               end
              | (CaseWildcard prov None, res) =>
-               elift2 ergoc_type_meet default_result (ergo_type_expr ctxt res)
+               elift2 ergoc_type_join default_result (ergo_type_expr ctxt res)
              | (CaseLet prov name None, res) =>
-               elift2 ergoc_type_meet default_result
-                      (ergo_type_expr (type_context_update_local_env ctxt name dat) res)
+               elift2 ergoc_type_join default_result
+                      (ergo_type_expr (type_context_update_local_env ctxt name typ) res)
+
              | (CaseLetOption prov name None, res) =>
-               match dat with
-               | dright dunit => default_result
-               | dleft dat' => ergo_type_expr (type_context_update_local_env ctxt name dat') res
-               | _ =>
-                 efailure (RuntimeError prov "Matched LetOption without an option.")
+               match unteither typ with
+               | None => default_result
+               | Some (st, ft) =>
+                 elift2 ergoc_type_join default_result
+                        (ergo_type_expr (type_context_update_local_env ctxt name st) res)
                end
-             | (CaseWildcard prov (Some typ), res) =>
-               lift_dbrand dat typ
-                           (fun dat' => ergo_type_expr ctxt res)
-                           default_result
-             | (CaseLet prov name (Some typ), res) =>
-               lift_dbrand dat typ
-                           (fun dat' => ergo_type_expr
-                                          (type_context_update_local_env ctxt name dat')
-                                          res)
-                           default_result
-             | (CaseLetOption prov name (Some typ), res) =>
-               match dat with
-               | dright dunit => default_result
-               | dleft dat' =>
-                 lift_dbrand dat' typ
-                             (fun dat' => ergo_type_expr
-                                            (type_context_update_local_env ctxt name dat')
-                                            res)
-                             default_result
-               | _ =>
-                 efailure (RuntimeError prov "Matched LetOption without an option.")
-               end
+             | (CaseWildcard prov (Some b), res) =>
+               elift2 ergoc_type_join default_result
+                      (ergo_type_expr ctxt res)
+
+             | (CaseLet prov name (Some b), res) =>
+               elift2 ergoc_type_join default_result
+                      (ergo_type_expr (type_context_update_local_env
+                                         ctxt
+                                         name
+                                         (tbrand (b::nil)))
+                                      res)
+
+             | (CaseLetOption prov name (Some b), res) =>
+               elift2 ergoc_type_join default_result
+                      (ergo_type_expr (type_context_update_local_env
+                                         ctxt
+                                         name
+                                         (tbrand (b::nil)))
+                                      res)
              end)
           pes (ergo_type_expr ctxt default)
       end
-*)
 
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach prov ((name,arr)::nil) None fn =>
@@ -245,7 +236,21 @@ Section ErgoCType.
       let expr' := ergo_type_expr dctxt expr in
       eolift (fun val => esuccess (type_context_update_global_env dctxt name val, None)) expr'
     | DCFunc prov name func =>
-      esuccess (dctxt, None)
+      match func.(functionc_body) with
+      | None => esuccess (dctxt, None)
+      | Some body =>
+        let tsig :=
+            map (fun x => (fst x, ergo_type_to_ergoc_type (snd x)))
+                func.(functionc_sig).(sigc_params) in
+        eolift
+          (fun outt =>
+             if subtype_dec
+                  outt
+                  (ergo_type_to_ergoc_type func.(functionc_sig).(sigc_output))
+             then esuccess (dctxt, None)
+             else efailure (ETypeError prov "Function output type mismatch"%string))
+          (ergo_type_expr (type_context_set_local_env dctxt tsig) body)
+      end
     | DCContract prov name contr =>
       esuccess (dctxt, None)
     end.

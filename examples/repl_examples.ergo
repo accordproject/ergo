@@ -1,5 +1,5 @@
 define constant pi = 3.14
-define function area(r : Integer) : Integer { return pi * r^2.0 }
+define function area(r : Double) : Double { return pi * r^2.0 }
 
 enforce area(1.0) = 3.14; return true;
 let pi = 10.0; enforce area(1.0) = 3.14; enforce pi = 10.0; return true;

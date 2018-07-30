@@ -174,9 +174,8 @@ Section ErgoC.
                ergo_eval_expr (eval_context_update_local_env ctxt name dat) res
              | (CaseLetOption prov name None, res) =>
                match dat with
-               | dright dunit => default_result
                | dleft dat' => ergo_eval_expr (eval_context_update_local_env ctxt name dat') res
-               | _ => eval_match_let_optional_not_on_option_error prov
+               | _ => default_result
                end
              | (CaseWildcard prov (Some typ), res) =>
                lift_dbrand dat typ
@@ -190,14 +189,13 @@ Section ErgoC.
                            default_result
              | (CaseLetOption prov name (Some typ), res) =>
                match dat with
-               | dright dunit => default_result
                | dleft dat' =>
                 lift_dbrand dat' typ
                             (fun dat' => ergo_eval_expr
                                             (eval_context_update_local_env ctxt name dat')
                                             res)
                             default_result
-               | _ => eval_match_let_optional_not_on_option_error prov
+               | _ => default_result
                end
              end)
           pes (ergo_eval_expr ctxt default)
