@@ -236,7 +236,21 @@ Section ErgoCType.
       let expr' := ergo_type_expr dctxt expr in
       eolift (fun val => esuccess (type_context_update_global_env dctxt name val, None)) expr'
     | DCFunc prov name func =>
-      esuccess (dctxt, None)
+      match func.(functionc_body) with
+      | None => esuccess (dctxt, None)
+      | Some body =>
+        let tsig :=
+            map (fun x => (fst x, ergo_type_to_ergoc_type (snd x)))
+                func.(functionc_sig).(sigc_params) in
+        eolift
+          (fun outt =>
+             if subtype_dec
+                  outt
+                  (ergo_type_to_ergoc_type func.(functionc_sig).(sigc_output))
+             then esuccess (dctxt, None)
+             else efailure (ETypeError prov "Function output type mismatch"%string))
+          (ergo_type_expr (type_context_set_local_env dctxt tsig) body)
+      end
     | DCContract prov name contr =>
       esuccess (dctxt, None)
     end.
