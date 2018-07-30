@@ -63,14 +63,13 @@ Section ErgoCInline.
   Fixpoint ergo_letify_function'
            (prov : provenance)
            (body : ergo_expr)
-           (args : list (string * ergo_expr)) : ergo_expr :=
+           (args : list (string * ergo_type * ergo_expr)) : ergo_expr :=
     match args with
     | nil => body
-    | (n,v)::rest => ELet prov n None v (ergo_letify_function' prov body rest)
+    | (n,t,v)::rest => ELet prov n (Some t) v (ergo_letify_function' prov body rest)
     end.
 
-  Definition ergo_letify_function (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
-    let prov := fn.(functionc_annot) in
+  Definition ergo_letify_function (prov : provenance) (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
     let fn :=
         match fn.(functionc_body) with
         | None =>
@@ -86,7 +85,7 @@ Section ErgoCInline.
          match fn.(functionc_body) with
          | None => built_in_function_without_body_error prov fname
          | Some body =>
-           match zip (map fst (fn.(functionc_sig).(sigc_params))) args with
+           match zip (fn.(functionc_sig).(sigc_params)) args with
            | Some args' =>
              esuccess (ergo_letify_function' prov body args')
            | None =>
@@ -98,14 +97,14 @@ Section ErgoCInline.
   match expr with
   | ECallFun prov fname args => Some
       match lookup String.string_dec ctxt.(compilation_context_function_env) fname with
-      | Some fn => ergo_letify_function fname fn args
+      | Some fn => ergo_letify_function prov fname fn args
       | None => function_not_found_error prov fname
       end
   | ECallFunInGroup prov gname fname args => Some
       match lookup String.string_dec ctxt.(compilation_context_function_group_env) gname with
       | Some t =>
         match lookup String.string_dec t fname with
-        | Some fn => ergo_letify_function fname fn args
+        | Some fn => ergo_letify_function prov fname fn args
         | None => function_not_found_error prov fname
         end
       | None => function_not_found_error prov fname
