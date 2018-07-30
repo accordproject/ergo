@@ -63,35 +63,41 @@ Section ErgoCInline.
   Fixpoint ergo_letify_function'
            (prov : provenance)
            (body : ergo_expr)
-           (args : list (string * ergo_type * ergo_expr)) : ergo_expr :=
+           (args : list (string * option laergo_type * ergo_expr)) : ergo_expr :=
     match args with
     | nil => body
-    | (n,t,v)::rest => ELet prov n (Some t) v (ergo_letify_function' prov body rest)
+    | (n,t,v)::rest => ELet prov n t v (ergo_letify_function' prov body rest)
     end.
 
+  Definition keep_param_types (params:list (string * laergo_type)) : list (string * option laergo_type) :=
+    map (fun xy => (fst xy, Some (snd xy))) params.
+  Definition discard_param_types (params:list (string * laergo_type)) : list (string * option laergo_type) :=
+    map (fun xy => (fst xy, None)) params.
+  
   Definition ergo_letify_function (prov : provenance) (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
-    let fn :=
+    let fndesc :=
         match fn.(functionc_body) with
         | None =>
           match lookup String.string_dec ergoc_stdlib fname with
-          | Some fn => esuccess fn
+          | Some fn => esuccess (fn.(functionc_body), discard_param_types fn.(functionc_sig).(sigc_params))
           | None => built_in_function_not_found_error prov fname
           end
-        | Some _ => esuccess fn
+        | Some _ => esuccess (fn.(functionc_body), keep_param_types fn.(functionc_sig).(sigc_params))
         end
     in
     eolift
-      (fun fn =>
-         match fn.(functionc_body) with
+      (fun fndesc : option ergoc_expr * (list (string * option laergo_type)) =>
+         let (fnbody, fnparams) := fndesc in
+         match fnbody with
          | None => built_in_function_without_body_error prov fname
          | Some body =>
-           match zip (fn.(functionc_sig).(sigc_params)) args with
+           match zip fnparams args with
            | Some args' =>
              esuccess (ergo_letify_function' (ProvFunc (loc_of_provenance prov) fname) body args')
            | None =>
              call_params_error prov fname
            end
-         end) fn.
+         end) fndesc.
 
   Definition ergo_inline_functions' (ctxt : compilation_context) (expr : ergo_expr) :=
   match expr with

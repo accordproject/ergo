@@ -93,7 +93,7 @@ let underline_prov prov text =
     in
     "\n" ^ line ^ "\n" ^ underline
   with
-  | Failure _ -> ""
+  | _ -> ""
   end
 
 let string_of_error_prov prov =

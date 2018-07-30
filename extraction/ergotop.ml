@@ -105,10 +105,4 @@ let wrap_error e =
   end
 
 let _ =
-  begin try
     main (ErgoUtil.patch_argv Sys.argv)
-  with
-  | e ->
-      wrap_error e
-  end
-
