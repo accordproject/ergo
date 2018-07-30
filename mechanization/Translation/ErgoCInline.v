@@ -69,8 +69,7 @@ Section ErgoCInline.
     | (n,t,v)::rest => ELet prov n (Some t) v (ergo_letify_function' prov body rest)
     end.
 
-  Definition ergo_letify_function (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
-    let prov := fn.(functionc_annot) in
+  Definition ergo_letify_function (prov : provenance) (fname:string) (fn : ergoc_function) (args : list ergo_expr) :=
     let fn :=
         match fn.(functionc_body) with
         | None =>
@@ -98,14 +97,14 @@ Section ErgoCInline.
   match expr with
   | ECallFun prov fname args => Some
       match lookup String.string_dec ctxt.(compilation_context_function_env) fname with
-      | Some fn => ergo_letify_function fname fn args
+      | Some fn => ergo_letify_function prov fname fn args
       | None => function_not_found_error prov fname
       end
   | ECallFunInGroup prov gname fname args => Some
       match lookup String.string_dec ctxt.(compilation_context_function_group_env) gname with
       | Some t =>
         match lookup String.string_dec t fname with
-        | Some fn => ergo_letify_function fname fn args
+        | Some fn => ergo_letify_function prov fname fn args
         | None => function_not_found_error prov fname
         end
       | None => function_not_found_error prov fname
