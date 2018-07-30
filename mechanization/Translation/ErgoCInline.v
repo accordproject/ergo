@@ -87,7 +87,7 @@ Section ErgoCInline.
          | Some body =>
            match zip (fn.(functionc_sig).(sigc_params)) args with
            | Some args' =>
-             esuccess (ergo_letify_function' prov body args')
+             esuccess (ergo_letify_function' (ProvFunc (loc_of_provenance prov) fname) body args')
            | None =>
              call_params_error prov fname
            end
