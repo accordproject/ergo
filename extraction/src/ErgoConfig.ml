@@ -70,6 +70,11 @@ let get_source_lang gconf = gconf.econf_source
 let get_target_lang gconf = gconf.econf_target
 let get_ctos gconf = gconf.econf_ctos
 let get_modules gconf = gconf.econf_modules
+let get_all gconf =
+  (List.map (fun x -> ErgoComp.InputCTO x) (get_ctos gconf))
+  @ (List.map (fun x -> ErgoComp.InputErgo x) (get_modules gconf))
+let get_all_sorted gconf =
+  topo_sort_inputs (get_all gconf)
 
 let set_source_lang gconf s = gconf.econf_source <- (lang_of_name s)
 let set_target_lang gconf s = gconf.econf_target <- (lang_of_name s)

@@ -70,6 +70,7 @@ Section CTOtoErgo.
   Definition cto_package_to_ergo_module (p:lrcto_package) : lrergo_module :=
     mkModule
       p.(cto_package_annot)
+      p.(cto_package_file)
       p.(cto_package_namespace)
       ((map cto_import_to_ergo_declaration p.(cto_package_imports))
        ++ (map cto_declaration_to_ergo_declaration p.(cto_package_declarations))).

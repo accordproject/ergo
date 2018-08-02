@@ -58,19 +58,21 @@ class Ergo {
     /**
      * Compile Ergo to JavaScript
      *
-     * @param {string} ergoText text for Ergo code
+     * @param {string[]} ergoTexts texts for Ergo modules
      * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(ergoText,ctoTexts,target) {
+    static compileToJavaScript(ergoTexts,ctoTexts,target) {
         // Built-in config
         const config= {
             'source' : 'ergo',
             'target' : target
         };
-        // Clean-up naming for Sexps
-        config.ergo = ergoText;
+        config.ergo = [];
+        for (let i = 0; i < ergoTexts.length; i++) {
+            config.ergo.push(ergoTexts[i]);
+        }
         config.cto = [];
         for (let i = 0; i < ctoTexts.length; i++) {
             config.cto.push(JSON.stringify(this.parseCTOtoJSON(ctoTexts[i])));
@@ -87,13 +89,13 @@ class Ergo {
     /**
      * Compile and Link Ergo to JavaScript
      *
-     * @param {string} ergoText text for Ergo code
+     * @param {string[]} ergoTexts texts for Ergo modules
      * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
-    static compileToJavaScriptAndLink(ergoText,ctoTexts,target) {
-        const ergoCode = this.compileToJavaScript(ergoText,ctoTexts,target);
+    static compileToJavaScriptAndLink(ergoTexts,ctoTexts,target) {
+        const ergoCode = this.compileToJavaScript(ergoTexts,ctoTexts,target);
         if (ergoCode.hasOwnProperty('error')) {
             return ergoCode;
         } else {
@@ -104,26 +106,26 @@ class Ergo {
     /**
      * Compile Ergo
      *
-     * @param {string} ergoText text for Ergo code
+     * @param {string[]} ergoTexts texts for Ergo modules
      * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoText,ctoTexts,target) {
-        const result = this.compileToJavaScript(ergoText,ctoTexts,target);
+    static compile(ergoTexts,ctoTexts,target) {
+        const result = this.compileToJavaScript(ergoTexts,ctoTexts,target);
         return Promise.resolve(result);
     }
 
     /**
      * Compile and Link Ergo
      *
-     * @param {string} ergoText text for Ergo code
+     * @param {string[]} ergoTexts texts for Ergo modules
      * @param {string[]} ctoTexts texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
-    static compileAndLink(ergoText,ctoTexts,target) {
-        const result = this.compileToJavaScriptAndLink(ergoText,ctoTexts,target);
+    static compileAndLink(ergoTexts,ctoTexts,target) {
+        const result = this.compileToJavaScriptAndLink(ergoTexts,ctoTexts,target);
         return Promise.resolve(result);
     }
 

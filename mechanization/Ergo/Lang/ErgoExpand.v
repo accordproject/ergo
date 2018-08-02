@@ -205,6 +205,7 @@ Section ErgoExpand.
     elift
       (fun ds => mkModule
                    p.(module_annot)
+                   p.(module_file)
                    p.(module_namespace)
                    ds)
       (add_main_init_clauses_to_declarations p.(module_namespace) p.(module_declarations)).

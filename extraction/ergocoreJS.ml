@@ -44,7 +44,9 @@ let global_config_of_json j =
   let apply = apply gconf in
   let iter_array = iter_array gconf in
   (* CTOs *)
-  iter_array (fun gconf x -> ErgoConfig.add_cto_file gconf ("JS",x)) j##.cto;
+  iter_array (fun gconf x -> ErgoConfig.add_cto_file gconf ("JSCTO",x)) j##.cto;
+  (* Ergos *)
+  iter_array (fun gconf x -> ErgoConfig.add_module_file gconf ("JSErgo",x)) j##.ergo;
   (* Target *)
   apply ErgoConfig.set_target_lang j##.target;
   gconf
@@ -93,27 +95,18 @@ let json_of_error error =
   end
 
 let ergo_compile input =
-  let gconf =
-    begin try
-      global_config_of_json input
-    with exn ->
-      ergo_raise (ergo_system_error ("Couldn't load configuration: "^(Printexc.to_string exn)))
-    end
-  in
-  let j_s =
-    begin try
-      Js.to_string input##.ergo
-    with exn ->
-      ergo_raise (ergo_system_error ("Couldn't load contract: "^(Printexc.to_string exn)))
-    end
-  in
   begin try
-    let ergo_parsed = ParseUtil.parse_ergo_module_from_string "%JSBUFFER%" j_s in
+    let gconf = global_config_of_json input in
     let target_lang = ErgoConfig.get_target_lang gconf in
-    let ctos = ErgoConfig.get_ctos gconf in
-    let mls = ref (ErgoConfig.get_modules gconf) in
-    let res = ErgoCompile.ergo_compile target_lang ctos mls ergo_parsed in
-    json_of_result res
+    let all_modules = ErgoConfig.get_all_sorted gconf in
+    let (initmls, main) = get_last_ergo all_modules in
+    begin match main with
+    | Some main ->
+        let res = ErgoCompile.ergo_compile target_lang initmls main in
+        json_of_result res
+    | None ->
+        ergo_raise (ergo_system_error "Ergo not found")
+    end
   with
   | Ergo_Error error -> json_of_error error
   | exn -> json_of_error (ergo_system_error (Printexc.to_string exn))

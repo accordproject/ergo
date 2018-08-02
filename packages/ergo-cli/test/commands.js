@@ -29,18 +29,18 @@ describe('ergo', () => {
         it('should compile a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile(ergoPath, [ctoPath], 'javascript', false);
+            const result = await Commands.compile([ergoPath], [ctoPath], 'javascript', false);
             result.should.not.be.null;
         });
         it('should compile and link a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile(ergoPath, [ctoPath], 'javascript', true);
+            const result = await Commands.compile([ergoPath], [ctoPath], 'javascript', true);
             result.should.not.be.null;
         });
         it('should compile a smart Ergo contract without cto', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
-            const result = await Commands.compile(ergoPath, undefined, 'javascript', false);
+            const result = await Commands.compile([ergoPath], undefined, 'javascript', false);
             result.should.not.be.null;
         });
     });
@@ -51,7 +51,7 @@ describe('ergo', () => {
             const contractPath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestPath], statePath, 'org.accordproject.helloworld.HelloWorld', false);
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestPath], statePath, 'org.accordproject.helloworld.HelloWorld', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
         it('should throw when executing a smart Ergo contract without its cto', async function () {
@@ -59,7 +59,7 @@ describe('ergo', () => {
             const contractPath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
-            const result = await Commands.execute(ergoPath, undefined, contractPath, [requestPath], statePath, 'org.accordproject.helloworld.HelloWorld', false);
+            const result = await Commands.execute([ergoPath], undefined, contractPath, [requestPath], statePath, 'org.accordproject.helloworld.HelloWorld', false);
             result.should.deep.equal({'error':{'kind':'CompilationError','message':'Cannot find type with name \'TemplateModel\'','locstart':{'line':16,'character':25},'locend':{'line':16,'character':38}}});
         });
     });
@@ -70,7 +70,7 @@ describe('ergo', () => {
             const contractPath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestPath], statePath, 'org.accordproject.helloworldstate.HelloWorldState', false);
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestPath], statePath, 'org.accordproject.helloworldstate.HelloWorldState', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1)');
         });
         it('should execute a smart Ergo contract with state thrice', async function () {
@@ -79,7 +79,7 @@ describe('ergo', () => {
             const contractPath = Path.resolve(__dirname, 'data/helloworldstate', 'contract.json');
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestPath,requestPath,requestPath], statePath, 'org.accordproject.helloworldstate.HelloWorldState', false);
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestPath,requestPath,requestPath], statePath, 'org.accordproject.helloworldstate.HelloWorldState', false);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (3)');
         });
     });
@@ -89,7 +89,7 @@ describe('ergo', () => {
             const ctoPath = Path.resolve(__dirname, 'data/installment-sale', 'model.cto');
             const contractPath = Path.resolve(__dirname, 'data/installment-sale', 'contract.json');
             const requestInitPath = Path.resolve(__dirname, 'data/installment-sale', 'request-init.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestInitPath], null, 'org.accordproject.installmentsale.InstallmentSale', false);
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestInitPath], null, 'org.accordproject.installmentsale.InstallmentSale', false);
             result.state.balance_remaining.should.equal(10000.00);
         });
         it('should initialize a smart Ergo contract and execute one request', async function () {
@@ -98,7 +98,7 @@ describe('ergo', () => {
             const contractPath = Path.resolve(__dirname, 'data/installment-sale', 'contract.json');
             const requestInitPath = Path.resolve(__dirname, 'data/installment-sale', 'request-init.json');
             const requestPath = Path.resolve(__dirname, 'data/installment-sale', 'request.json');
-            const result = await Commands.execute(ergoPath, [ctoPath], contractPath, [requestInitPath,requestPath], null, 'org.accordproject.installmentsale.InstallmentSale', false);
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestInitPath,requestPath], null, 'org.accordproject.installmentsale.InstallmentSale', false);
             result.state.balance_remaining.should.equal(7612.499999999999);
         });
     });

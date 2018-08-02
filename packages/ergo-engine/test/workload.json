@@ -2,7 +2,7 @@
   {
     "name": "smoketest",
     "dir": "data/smoke",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -19,7 +19,7 @@
   {
     "name": "test1",
     "dir": "data/helloworld",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -36,7 +36,7 @@
   {
     "name": "test2",
     "dir": "data/volumediscount",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -54,7 +54,7 @@
   {
     "name": "test3",
     "dir": "data/volumediscount",
-    "ergo": "logic2.ergo",
+    "ergo": ["logic2.ergo"],
     "models": [
       "model.cto"
     ],
@@ -72,7 +72,7 @@
   {
     "name": "test4",
     "dir": "data/volumediscount",
-    "ergo": "logic3.ergo",
+    "ergo": ["logic3.ergo"],
     "models": [
       "model.cto"
     ],
@@ -90,7 +90,7 @@
   {
     "name": "test5",
     "dir": "data/volumediscount",
-    "ergo": "logic4.ergo",
+    "ergo": ["logic4.ergo"],
     "models": [
       "model.cto"
     ],
@@ -108,7 +108,7 @@
   {
     "name": "test6",
     "dir": "data/latedeliveryandpenalty",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "base.cto",
       "model.cto"
@@ -128,7 +128,7 @@
   {
     "name": "test7",
     "dir": "data/latedeliveryandpenalty",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -154,7 +154,7 @@
   {
     "name": "test7early",
     "dir": "data/latedeliveryandpenalty",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "base.cto",
       "model.cto"
@@ -176,7 +176,7 @@
   {
     "name": "test8",
     "dir": "data/acceptance-of-delivery",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -196,7 +196,7 @@
   {
     "name": "test9",
     "dir": "data/fragilegoods",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -214,7 +214,45 @@
   {
     "name": "test10",
     "dir": "data/promissory-note",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
+    "models": [
+      "business.cto",
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "org.accordproject.promissorynote.PromissoryNote",
+    "expected": {
+      "response": {
+        "outstandingBalance": 1425.4396822450633,
+        "$class": "org.accordproject.promissorynote.Result"
+      }
+    }
+  },
+  {
+    "name": "test10b",
+    "dir": "data/promissory-note",
+    "ergo": ["money.ergo","logic3.ergo"],
+    "models": [
+      "business.cto",
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "org.accordproject.promissorynote.PromissoryNote",
+    "expected": {
+      "response": {
+        "outstandingBalance": 1425.4396822450633,
+        "$class": "org.accordproject.promissorynote.Result"
+      }
+    }
+  },
+  {
+    "name": "test10c",
+    "dir": "data/promissory-note",
+    "ergo": ["logic3.ergo","money.ergo"],
     "models": [
       "business.cto",
       "model.cto"
@@ -233,7 +271,7 @@
   {
     "name": "test11",
     "dir": "data/promissory-note",
-    "ergo": "logic2.ergo",
+    "ergo": ["logic2.ergo"],
     "models": [
       "business.cto",
       "model2.cto"
@@ -252,7 +290,7 @@
   {
     "name": "test12",
     "dir": "data/promissory-note",
-    "ergo": "logic2.ergo",
+    "ergo": ["logic2.ergo"],
     "models": [
       "business.cto",
       "model2.cto"
@@ -271,7 +309,7 @@
   {
     "name": "test13",
     "dir": "data/installment-sale",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -290,7 +328,7 @@
   {
     "name": "test14",
     "dir": "data/installment-sale",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model.cto"
     ],
@@ -312,7 +350,7 @@
   {
     "name": "test14enforceerror",
     "dir": "data/installment-sale",
-    "ergo": "logic2.ergo",
+    "ergo": ["logic2.ergo"],
     "models": [
       "model.cto"
     ],
@@ -330,7 +368,7 @@
   {
     "name": "test14compileerror",
     "dir": "data/installment-sale",
-    "ergo": "logic.ergo",
+    "ergo": ["logic.ergo"],
     "models": [
       "model2.cto"
     ],

@@ -209,3 +209,22 @@ let loc_error s f x =
 
 let map_assoc f l =
   List.map (fun xy -> f (fst xy) (snd xy)) l
+
+(* Mini topo-sort *)
+(* XXX To be revised when Coq-level DFS-topological sort is complete *)
+
+exception CycleFound of string list
+
+let dfs label file graph visited start_node = 
+  let rec explore path visited node = 
+    if List.mem (label node) (List.map label path) then raise (CycleFound (List.map file path)) else
+    if List.mem (label node) (List.map label visited) then visited else     
+      let new_path = node :: path in 
+      let edges    = List.assoc (label node) (List.map (fun (x,y) -> (label x, y)) graph) in
+      let visited  = List.fold_left (explore new_path) visited edges in
+      node :: visited
+  in explore [] visited start_node
+
+let toposort label file graph = 
+  List.rev (List.fold_left (fun visited (node,_) -> dfs label file graph visited node) [] graph)
+

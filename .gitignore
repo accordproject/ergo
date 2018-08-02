@@ -34,6 +34,7 @@ ergo-*.tgz
 **/coverage
 generator-ergo-serverless/
 bin/ergoc.native
+bin/ergodep.native
 bin/ergotop.native
 website/translated_docs
 website/build/

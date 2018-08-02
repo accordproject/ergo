@@ -29,7 +29,7 @@ let relative_name_of_qname qn =
 let mk_provenance
     (start_pos: Lexing.position)
     (end_pos: Lexing.position) : provenance =
-    mk_provenance_of_loc_pair start_pos end_pos
+    mk_provenance_of_loc_pair !filename start_pos end_pos
 %}
 
 %token <int> INT
@@ -102,6 +102,7 @@ main_decl:
 emodule:
 | NAMESPACE qn = qname_prefix ds = decls
     { { module_annot = mk_provenance $startpos $endpos;
+        module_file = Util.char_list_of_string !filename;
         module_namespace = qn;
         module_declarations = ds; } }
 
@@ -486,7 +487,7 @@ qname_base:
     { (None,i) }
 | i = safeident_base DOT q = qname_base
     { if i = "*"
-      then ergo_raise (ergo_parse_error "'*' can only be last in a qualified name" $startpos $endpos)
+      then ergo_raise (ergo_parse_error "'*' can only be last in a qualified name" !filename $startpos $endpos)
       else
         begin match q with
   | (None, last) -> (Some i, last)
@@ -523,7 +524,7 @@ tname:
 qname_prefix:
 | qn = qname_base
     { begin match qn with
-      | (_,"*") -> ergo_raise (ergo_parse_error "Malformed namespace" $startpos $endpos)
+      | (_,"*") -> ergo_raise (ergo_parse_error "Malformed namespace" !filename $startpos $endpos)
       | (None,last) -> Util.char_list_of_string last
       | (Some prefix, last) -> Util.char_list_of_string (prefix ^ "." ^ last)
       end }
@@ -531,7 +532,7 @@ qname_prefix:
 qname_import:
 | qn = qname_base
     { begin match qn with
-      | (None,_) -> ergo_raise (ergo_parse_error "Malformed import" $startpos $endpos)
+      | (None,_) -> ergo_raise (ergo_parse_error "Malformed import" !filename $startpos $endpos)
       | (Some prefix, "*") ->
           ImportAll (mk_provenance $startpos $endpos,
                      Util.char_list_of_string prefix)

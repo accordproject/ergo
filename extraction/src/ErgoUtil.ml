@@ -21,22 +21,22 @@ let mk_position_point_of_loc pos =
   { offset = pos.Lexing.pos_cnum;
     line = pos.Lexing.pos_lnum;
     column = pos.Lexing.pos_cnum - pos.Lexing.pos_bol; }
-let mk_position_of_loc_pair start_pos end_pos =
-  { loc_file = None; (* XXX TO BE FIXED *)
+let mk_position_of_loc_pair filename start_pos end_pos =
+  { loc_file = Util.char_list_of_string filename;
     loc_start = mk_position_point_of_loc start_pos;
     loc_end = mk_position_point_of_loc end_pos; }
-let mk_provenance_of_loc_pair start_pos end_pos =
-  ErgoCompiler.prov_loc (mk_position_of_loc_pair start_pos end_pos)
+let mk_provenance_of_loc_pair filename start_pos end_pos =
+  ErgoCompiler.prov_loc (mk_position_of_loc_pair filename start_pos end_pos)
 let ergo_system_error msg =
   ESystemError (dummy_provenance,char_list_of_string msg)
-let ergo_parse_error msg start_pos end_pos =
-  EParseError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
-let ergo_compilation_error msg start_pos end_pos =
-  ECompilationError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
-let ergo_type_error msg start_pos end_pos =
-  ETypeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
-let ergo_runtime_error msg start_pos end_pos =
-  ERuntimeError (mk_provenance_of_loc_pair start_pos end_pos, char_list_of_string msg)
+let ergo_parse_error msg filename start_pos end_pos =
+  EParseError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
+let ergo_compilation_error msg filename start_pos end_pos =
+  ECompilationError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
+let ergo_type_error msg filename start_pos end_pos =
+  ETypeError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
+let ergo_runtime_error msg filename start_pos end_pos =
+  ERuntimeError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
 
 let ergo_raise error =
   raise (Ergo_Error error)
@@ -127,8 +127,7 @@ let get_version cmd () =
   exit 0
 
 (** Additional utility functions *)
-let process_file f file_name =
-  let file_content = string_of_file file_name in
+let process_file f (file_name, file_content) =
   f (file_name,file_content)
 
 type result_file = {
@@ -168,16 +167,21 @@ let cto_import_decl_of_import_namespace ns =
   end
 
 (** Command line args *)
-let patch_cto_extension f =
+let patch_extension f ext1 ext2 =
   begin try
     let extension = Filename.extension f in
-    if extension = ".cto"
+    if extension = ext1
     then
-      (Filename.chop_suffix f ".cto") ^ ".ctoj"
+      (Filename.chop_suffix f ext1) ^ ext2
     else f
   with
   | _ -> f
   end
+
+let patch_cto_extension f =
+  patch_extension f ".cto" ".ctoj"
+let unpatch_cto_extension f =
+  patch_extension f ".ctoj" ".cto"
 
 let patch_argv argv =
   Array.map patch_cto_extension argv
@@ -187,7 +191,7 @@ let anon_args gconf cto_files input_files f =
   if extension = ".ctoj"
   then cto_files := (f, Util.string_of_file f) :: !cto_files
   else if extension = ".ergo"
-  then input_files := f :: !input_files
+  then input_files := (f, Util.string_of_file f) :: !input_files
   else ergo_raise (ergo_system_error (f ^ " is not cto, ctoj or ergo file"))
 
 let parse_args args_list usage args gconf =
@@ -202,4 +206,110 @@ let parse_args args_list usage args gconf =
   let cto_files = ref [] in
   parse args (args_list gconf) (anon_args gconf cto_files input_files) usage;
   (List.rev !cto_files, List.rev !input_files)
+
+type label =
+  | ErgoLabel of string
+  | CTOLabel of string
+
+let label_name_of_ergo_input m =
+  Util.string_of_char_list m.module_namespace
+let label_name_of_cto_input c =
+  Util.string_of_char_list c.cto_package_namespace
+let label_of_input input : label =
+  begin match input with
+  | InputErgo m -> ErgoLabel (label_name_of_ergo_input m)
+  | InputCTO c -> CTOLabel (label_name_of_cto_input c)
+  end
+
+let file_of_input input : string =
+  begin match input with
+  | InputErgo m -> Util.string_of_char_list m.module_file
+  | InputCTO c -> Util.string_of_char_list c.cto_package_file
+  end
+
+let import_cto_name im =
+  begin match im with
+  | ImportAll (_, ns)
+  | ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns)]
+  | _ -> []
+  end
+
+let import_ergo_name im =
+  begin match im with
+  | ImportAll (_, ns)
+  | ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns);ErgoLabel (Util.string_of_char_list ns);]
+  | _ -> []
+  end
+
+let module_import_name decl =
+  begin match decl with
+  | DImport (_, im) -> import_ergo_name im
+  | _ -> []
+  end
+
+let module_imports label_name decls =
+  if label_name = "org.accordproject.ergo.stdlib"
+  then
+    (CTOLabel "org.hyperledger.composer.system")
+    :: List.concat (List.map module_import_name decls)
+  else
+    (CTOLabel "org.hyperledger.composer.system")
+    :: (CTOLabel label_name)
+    :: (ErgoLabel "org.accordproject.ergo.stdlib")
+    :: List.concat (List.map module_import_name decls)
+
+let cto_imports label_name decls =
+  if label_name = "org.hyperledger.composer.system"
+  then
+    List.concat (List.map import_cto_name decls)
+  else
+    (CTOLabel "org.hyperledger.composer.system")
+    :: List.concat (List.map import_cto_name decls)
+
+let lookup_inputs_from_label all_inputs label =
+  begin try
+    [List.assoc label (List.map (fun x -> (label_of_input x, x)) all_inputs)]
+  with
+  | _ -> []
+  end
+
+let edges_of_input all_inputs input =
+  begin match input with
+  | InputErgo m ->
+      List.concat
+        (List.map (lookup_inputs_from_label all_inputs)
+           (module_imports (label_name_of_ergo_input m) m.module_declarations))
+  | InputCTO c ->
+      List.concat
+        (List.map (lookup_inputs_from_label all_inputs)
+           (cto_imports (label_name_of_cto_input c) c.cto_package_imports))
+  end
+
+let graph_of_inputs all_inputs =
+  List.map (fun x -> (x, edges_of_input all_inputs x)) all_inputs
+
+let labels_of_graph all_inputs =
+  let graph = graph_of_inputs all_inputs in
+  List.map
+    (fun xy ->
+       (file_of_input (fst xy),
+        List.map file_of_input (snd xy)))
+    graph
+
+let topo_sort_inputs all_inputs =
+  Util.toposort label_of_input file_of_input (graph_of_inputs all_inputs)
+
+let rec get_last_ergo l =
+  begin match l with
+  | [] -> ([], None)
+  | (InputCTO x) :: rest ->
+      let (rest', last) = get_last_ergo rest in
+      (InputCTO x :: rest', last)
+  | (InputErgo x) :: rest ->
+      let (rest', last) = get_last_ergo rest in
+      begin match last with
+      | None -> (rest', Some x)
+      | Some x' -> (InputErgo x :: rest', Some x')
+      end
+  end
 

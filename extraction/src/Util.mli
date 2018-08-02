@@ -75,3 +75,9 @@ val filename_append : string -> string list -> string
 val loc_error : string -> ('a -> 'b) -> 'a -> 'b
 
 val map_assoc : ('a -> 'b -> 'c) -> (('a * 'b) list) -> 'c list
+
+(* Mini topo-sort *)
+(* XXX To be revised when Coq-level DFS-topological sort is complete *)
+
+val toposort : ('a -> 'b) -> ('a -> string) -> ('a * 'a list) list -> 'a list
+

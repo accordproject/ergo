@@ -41,10 +41,10 @@ let rec read_chunk (first : bool) =
 let rec read_nonempty_multiline () = read_chunk true
 
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
-let safe_init_repl_ctxt ctos modules =
+let safe_init_repl_ctxt inputs =
   ErgoUtil.wrap_jerrors
     (fun x -> x)
-    (init_repl_context ctos modules)
+    (init_repl_context inputs)
 
 (* REPL *)
 let rec repl rctxt =
@@ -89,10 +89,9 @@ let main args =
   let gconf = ErgoConfig.default_config () in
   let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (ErgoUtil.process_file (ErgoConfig.add_module_file gconf)) input_files;
-  let ctos = ErgoConfig.get_ctos gconf in
-  let modules = ErgoConfig.get_modules gconf in
-  let rctxt = safe_init_repl_ctxt ctos modules in
+  List.iter (ErgoConfig.add_module_file gconf) input_files;
+  let all_modules = ErgoConfig.get_all_sorted gconf in
+  let rctxt = safe_init_repl_ctxt all_modules in
   welcome ();
   repl rctxt
 

@@ -26,14 +26,19 @@ class Commands {
     /**
      * Compile Ergo contract
      *
-     * @param {string} ergoPath path to the Ergo file
-     * @param {string} ctoPaths paths to CTO models
+     * @param {string[]} ergoPaths paths to the Ergo modules
+     * @param {string[]} ctoPaths paths to CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @param {boolean} link to JavaScript runtime
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoPath,ctoPaths,target,link) {
-        const ergoText = Fs.readFileSync(ergoPath, 'utf8');
+    static compile(ergoPaths,ctoPaths,target,link) {
+        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
+        const ergoTexts = [];
+        for (let i = 0; i < ergoPaths.length; i++) {
+            const ergoText = Fs.readFileSync(ergoPaths[i], 'utf8');
+            ergoTexts.push(ergoText);
+        }
         if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
         let ctoTexts = [];
         for (let i = 0; i < ctoPaths.length; i++) {
@@ -41,16 +46,16 @@ class Commands {
             ctoTexts.push(ctoText);
         }
         if (link) {
-            return Ergo.compileAndLink(ergoText,ctoTexts,target);
+            return Ergo.compileAndLink(ergoTexts,ctoTexts,target);
         } else  {
-            return Ergo.compile(ergoText,ctoTexts,target);
+            return Ergo.compile(ergoTexts,ctoTexts,target);
         }
     }
 
     /**
      * Execute Ergo contract
      *
-     * @param {string} ergoPath path to the Ergo file
+     * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
      * @param {string} contractPath path to the contract data in JSON
      * @param {string[]} requestsPath path to the request transaction in JSON
@@ -58,8 +63,13 @@ class Commands {
      * @param {string} contractName of the contract to execute
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPath,ctoPaths,contractPath,requestsPath,statePath,contractName) {
-        const ergoText = Fs.readFileSync(ergoPath, 'utf8');
+    static execute(ergoPaths,ctoPaths,contractPath,requestsPath,statePath,contractName) {
+        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
+        const ergoTexts = [];
+        for (let i = 0; i < ergoPaths.length; i++) {
+            const ergoText = Fs.readFileSync(ergoPaths[i], 'utf8');
+            ergoTexts.push(ergoText);
+        }
         if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
         let ctoTexts = [];
         for (let i = 0; i < ctoPaths.length; i++) {
@@ -74,16 +84,16 @@ class Commands {
         const firstRequest = requestsJson[0];
         let initResponse;
         if (statePath === null) {
-            initResponse = ErgoEngine.init(ergoText,ctoTexts,contractJson,firstRequest,contractName);
+            initResponse = ErgoEngine.init(ergoTexts,ctoTexts,contractJson,firstRequest,contractName);
         } else {
             const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-            initResponse = ErgoEngine.execute(ergoText,ctoTexts,contractJson,firstRequest,stateJson,contractName);
+            initResponse = ErgoEngine.execute(ergoTexts,ctoTexts,contractJson,firstRequest,stateJson,contractName);
         }
         // Get all the other requests and chain execution through Promise.reduce()
         const otherRequests = requestsJson.slice(1, requestsJson.length);
         return otherRequests.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.execute(ergoText,ctoTexts,contractJson,requestJson,result.state,contractName);
+                return ErgoEngine.execute(ergoTexts,ctoTexts,contractJson,requestJson,result.state,contractName);
             });
         }, initResponse);
     }

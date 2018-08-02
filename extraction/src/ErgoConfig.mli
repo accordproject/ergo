@@ -41,6 +41,8 @@ val get_source_lang : global_config -> lang
 val get_target_lang : global_config -> lang
 val get_ctos : global_config -> cto_package list
 val get_modules : global_config -> ergo_module list
+val get_all : global_config -> ergo_input list
+val get_all_sorted : global_config -> ergo_input list
 
 val set_source_lang : global_config -> string -> unit
 val set_target_lang : global_config -> string -> unit

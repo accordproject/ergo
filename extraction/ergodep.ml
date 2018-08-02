@@ -27,12 +27,19 @@ let args_list gconf =
        " Print version and exit");
       ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
        " Print version and exit");
-      ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
-       "<lang> Indicates the language for the target (default: javascript) " ^ available_targets)
     ]
 
 let usage =
   "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
+
+let label_of_dependency ff dep =
+  Format.fprintf ff " %s" dep
+
+let label_of_dependencies ff deps =
+  List.iter (label_of_dependency ff) deps
+
+let print_dependency (x,ys) =
+  Format.printf "%s:%a@\n" x label_of_dependencies ys
 
 let main args =
   let gconf = ErgoConfig.default_config () in
@@ -40,10 +47,21 @@ let main args =
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;
   let all_modules = ErgoConfig.get_all_sorted gconf in
-  let (initmls, main) = get_last_ergo all_modules in
-  begin match main with
-  | Some main ->
-      ErgoCompile.ergo_proc gconf initmls main
-  | _ -> ()
+  List.iter print_dependency (labels_of_graph all_modules)
+
+let wrap_error e =
+  begin match e with
+  | Ergo_Error error ->
+      Printf.eprintf "%s\n" (string_of_error error); exit 2
+  | exn ->
+      Printf.eprintf "%s\n" (string_of_error (ergo_system_error (Printexc.to_string exn))); exit 2
+  end
+
+let _ =
+  begin try
+    main (patch_argv Sys.argv)
+  with
+  | e ->
+      wrap_error e
   end
 
