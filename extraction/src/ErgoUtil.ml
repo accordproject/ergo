@@ -296,8 +296,16 @@ let labels_of_graph all_inputs =
         List.map file_of_input (snd xy)))
     graph
 
+let cycle_of_path path =
+  String.concat " -> " path
+
 let topo_sort_inputs all_inputs =
-  Util.toposort label_of_input file_of_input (graph_of_inputs all_inputs)
+  begin try
+    Util.toposort label_of_input file_of_input (graph_of_inputs all_inputs)
+  with
+  | TopoCycle path ->
+      ergo_raise (ergo_system_error ("Circular imports: " ^ cycle_of_path path))
+  end
 
 let rec get_last_ergo l =
   begin match l with

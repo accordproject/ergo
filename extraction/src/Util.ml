@@ -213,11 +213,11 @@ let map_assoc f l =
 (* Mini topo-sort *)
 (* XXX To be revised when Coq-level DFS-topological sort is complete *)
 
-exception CycleFound of string list
+exception TopoCycle of string list
 
 let dfs label file graph visited start_node = 
   let rec explore path visited node = 
-    if List.mem (label node) (List.map label path) then raise (CycleFound (List.map file path)) else
+    if List.mem (label node) (List.map label path) then raise (TopoCycle (List.map file (node::path))) else
     if List.mem (label node) (List.map label visited) then visited else     
       let new_path = node :: path in 
       let edges    = List.assoc (label node) (List.map (fun (x,y) -> (label x, y)) graph) in
