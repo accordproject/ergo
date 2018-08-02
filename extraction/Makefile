@@ -65,15 +65,21 @@ BYTE4=$(MAIN4).$(BYTE)
 BIN4=$(MAIN4).$(NATIVE)
 DIST4=../bin/$(TARGET4)
 
+TARGET5=ergotop.$(JS)
+MAIN5=ergotoplib
+BYTE5=$(MAIN5).$(BYTE)
+BIN5=$(MAIN5).$(JS)
+DIST5=../packages/ergo-cli/lib/$(TARGET5)
+
 
 ## Toplevel
-all: $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4)
+all: $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4) $(DIST5)
 
-all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4)
+all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4) $(DIST5)
 
 top: $(DIST0)
 
-js: $(DIST2) $(DIST3)
+js: $(DIST2) $(DIST3) $(DIST4) $(DIST5)
 
 ## Extraction
 VO_FILES = $(MODULES:%=../mechanization/%.vo)
@@ -146,6 +152,13 @@ $(DIST3): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/E
 
 _build_js/$(BYTE3): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN3).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE3)
+
+$(DIST5): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE5) $(DIST1)
+	js_of_ocaml _build_js/$(BYTE5) -o _build_js/$(BIN5)
+	cp _build_js/$(BIN5) $(DIST5)
+
+_build_js/$(BYTE5): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN5).$(ML)
+	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE5)
 
 ## Clean
 
