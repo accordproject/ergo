@@ -2,6 +2,7 @@ coverage
 mechanization
 extraction
 lib/ergoc-lib.js
+lib/ergotop.js
 docs
 node_modules
 out

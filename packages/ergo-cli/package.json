@@ -30,7 +30,8 @@
   },
   "bin": {
     "ergo": "./bin/ergo.js",
-    "ergoc": "./bin/ergoc.js"
+    "ergoc": "./bin/ergoc.js",
+    "ergotop": "./bin/ergotop.js"
   },
   "devDependencies": {
     "chai": "3.5.0",
@@ -51,7 +52,8 @@
       "!./node_modules/**/*",
       "!./out/**/*",
       "!bin/*",
-      "!**ergoc-lib*"
+      "!**ergoc-lib*",
+      "!lib/ergotop.js"
     ],
     "path": "header.txt",
     "blocking": true,
