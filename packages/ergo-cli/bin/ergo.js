@@ -21,10 +21,10 @@ const Logger = require('@accordproject/ergo-compiler/lib/logger');
 require('yargs')
     .command('compile', 'compile Ergo contract to JavaScript', (yargs) => {
         yargs.option('ergo', {
-            describe: 'path to the Ergo source'
-        });
+            describe: 'paths to the Ergo sources'
+        }).array('ergo');
         yargs.option('cto', {
-            describe: 'path to CTO models'
+            describe: 'paths to CTO models'
         }).array('cto');
         yargs.option('target', {
             describe: 'target language (javascript|javascript_cicero)',
@@ -61,8 +61,8 @@ require('yargs')
             default: null
         });
         yargs.option('ergo', {
-            describe: 'path to the Ergo file'
-        });
+            describe: 'paths to the Ergo sources'
+        }).array('ergo');
         yargs.option('cto', {
             describe: 'path to CTO models'
         }).array('cto');

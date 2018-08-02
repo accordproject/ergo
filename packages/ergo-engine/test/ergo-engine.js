@@ -88,7 +88,10 @@ describe('Execute', () => {
 
         describe('#'+name, function () {
             it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
-                const ergoText = Fs.readFileSync(Path.resolve(__dirname, dir, ergo), 'utf8');
+                const ergoTexts = [];
+                for (let i = 0; i < ergo.length; i++) {
+                    ergoTexts.push(Fs.readFileSync(Path.resolve(__dirname, dir, ergo[i]), 'utf8'));
+                }
                 let ctoTexts = [];
                 for (let i = 0; i < models.length; i++) {
                     ctoTexts.push(Fs.readFileSync(Path.resolve(__dirname, dir, models[i]), 'utf8'));
@@ -96,11 +99,11 @@ describe('Execute', () => {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoText, ctoTexts, contractJson, requestJson, contractname);
+                    const actual = await ErgoEngine.init(ergoTexts, ctoTexts, contractJson, requestJson, contractname);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    const actual = await ErgoEngine.execute(ergoText, ctoTexts, contractJson, requestJson, stateJson, contractname);
+                    const actual = await ErgoEngine.execute(ergoTexts, ctoTexts, contractJson, requestJson, stateJson, contractname);
                     return compare(expected,actual);
                 }
             });

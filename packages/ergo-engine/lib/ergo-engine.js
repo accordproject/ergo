@@ -95,16 +95,16 @@ class ErgoEngine {
     /**
      * Execute Ergo (JavaScript)
      *
-     * @param {string} ergoText text for Ergo code
-     * @param {string} ctoTexts texts for CTO models
+     * @param {string[]} ergoTexts texts for Ergo modules
+     * @param {string[]} ctoTexts texts for CTO models
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
      * @param {string} contractName of the contract to execute
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoText,ctoTexts,contractJson,requestJson,stateJson,contractName) {
-        return (Ergo.compileAndLink(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
+    static execute(ergoTexts,ctoTexts,contractJson,requestJson,stateJson,contractName) {
+        return (Ergo.compileAndLink(ergoTexts,ctoTexts,'javascript')).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
@@ -116,15 +116,15 @@ class ErgoEngine {
     /**
      * Initialize Ergo contract state (JavaScript)
      *
-     * @param {string} ergoText text for Ergo code
-     * @param {string} ctoTexts texts for CTO models
+     * @param {string[]} ergoTexts texts for Ergo modules
+     * @param {string[]} ctoTexts texts for CTO models
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {string} contractName of the contract to execute
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoText,ctoTexts,contractJson,requestJson,contractName) {
-        return (Ergo.compileAndLink(ergoText,ctoTexts,'javascript')).then((ergoCode) => {
+    static init(ergoTexts,ctoTexts,contractJson,requestJson,contractName) {
+        return (Ergo.compileAndLink(ergoTexts,ctoTexts,'javascript')).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {

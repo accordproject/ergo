@@ -39,7 +39,7 @@ describe('ergo-compiler', () => {
         it('should fail when Ergo does not parse', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/bad-logic', 'model.cto'), 'utf8');
-            const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
+            const result = await Ergo.compile([ergoText], [ctoText], 'javascript');
             result.should.deep.equal({ 'error' : { 'kind' : 'ParseError', 'message' : 'Parse error', 'locstart' : { 'line' : 17, 'character' : 20 }, 'locend' : { 'line' : 17, 'character' : 23 } } });
         });
     });
@@ -59,7 +59,7 @@ describe('ergo-compiler', () => {
         it('should compile a smart Ergo contract to JavaScript', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
-            const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
+            const result = await Ergo.compile([ergoText], [ctoText], 'javascript');
             result.success.should.not.be.null;
         });
     });
@@ -67,7 +67,7 @@ describe('ergo-compiler', () => {
         it('should compile and link a smart Ergo contract to JavaScript', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
-            const result = await Ergo.compileAndLink(ergoText, [ctoText], 'javascript');
+            const result = await Ergo.compileAndLink([ergoText], [ctoText], 'javascript');
             result.success.should.not.be.null;
         });
     });
@@ -75,7 +75,7 @@ describe('ergo-compiler', () => {
         it('should compile a smart Ergo contract to JavaScript for Cicero', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/helloworld', 'model.cto'), 'utf8');
-            const result = await Ergo.compile(ergoText, [ctoText], 'javascript_cicero');
+            const result = await Ergo.compile([ergoText], [ctoText], 'javascript_cicero');
             result.success.should.not.be.null;
         });
     });
@@ -83,7 +83,7 @@ describe('ergo-compiler', () => {
         it('should fail when compiling a smart Ergo contract to JavaScript', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'model.cto'), 'utf8');
-            const result = await Ergo.compile(ergoText, [ctoText], 'javascript');
+            const result = await Ergo.compile([ergoText], [ctoText], 'javascript');
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
@@ -91,7 +91,7 @@ describe('ergo-compiler', () => {
         it('should fail when compiling and linking a smart Ergo contract to JavaScript', async function () {
             const ergoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'logic.ergo'), 'utf8');
             const ctoText = Fs.readFileSync(Path.resolve(__dirname, 'data/latedeliveryandpenalty', 'model.cto'), 'utf8');
-            const result = await Ergo.compileAndLink(ergoText, [ctoText], 'javascript');
+            const result = await Ergo.compileAndLink([ergoText], [ctoText], 'javascript');
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
