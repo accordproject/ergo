@@ -167,16 +167,21 @@ let cto_import_decl_of_import_namespace ns =
   end
 
 (** Command line args *)
-let patch_cto_extension f =
+let patch_extension f ext1 ext2 =
   begin try
     let extension = Filename.extension f in
-    if extension = ".cto"
+    if extension = ext1
     then
-      (Filename.chop_suffix f ".cto") ^ ".ctoj"
+      (Filename.chop_suffix f ext1) ^ ext2
     else f
   with
   | _ -> f
   end
+
+let patch_cto_extension f =
+  patch_extension f ".cto" ".ctoj"
+let unpatch_cto_extension f =
+  patch_extension f ".ctoj" ".cto"
 
 let patch_argv argv =
   Array.map patch_cto_extension argv
@@ -202,42 +207,64 @@ let parse_args args_list usage args gconf =
   parse args (args_list gconf) (anon_args gconf cto_files input_files) usage;
   (List.rev !cto_files, List.rev !input_files)
 
-let label_of_input input : string =
+type label =
+  | ErgoLabel of string
+  | CTOLabel of string
+
+let label_name_of_ergo_input m =
+  Util.string_of_char_list m.module_namespace
+let label_name_of_cto_input c =
+  Util.string_of_char_list c.cto_package_namespace
+let label_of_input input : label =
   begin match input with
-  | InputErgo m -> Util.string_of_char_list m.module_namespace
-  | InputCTO c -> Util.string_of_char_list c.cto_package_namespace
+  | InputErgo m -> ErgoLabel (label_name_of_ergo_input m)
+  | InputCTO c -> CTOLabel (label_name_of_cto_input c)
   end
 
-let import_name im =
+let file_of_input input : string =
+  begin match input with
+  | InputErgo m -> Util.string_of_char_list m.module_file
+  | InputCTO c -> Util.string_of_char_list c.cto_package_file
+  end
+
+let import_cto_name im =
   begin match im with
   | ImportAll (_, ns)
-  | ImportName (_, ns, _) -> [Util.string_of_char_list ns]
+  | ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns)]
+  | _ -> []
+  end
+
+let import_ergo_name im =
+  begin match im with
+  | ImportAll (_, ns)
+  | ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns);ErgoLabel (Util.string_of_char_list ns);]
   | _ -> []
   end
 
 let module_import_name decl =
   begin match decl with
-  | DImport (_, im) -> import_name im
+  | DImport (_, im) -> import_ergo_name im
   | _ -> []
   end
 
-let module_imports label decls =
-  if label = "org.accordproject.ergo.stdlib"
+let module_imports label_name decls =
+  if label_name = "org.accordproject.ergo.stdlib"
   then
-    "org.hyperledger.composer.system"
+    (CTOLabel "org.hyperledger.composer.system")
     :: List.concat (List.map module_import_name decls)
   else
-    "org.hyperledger.composer.system"
-    :: "org.accordproject.ergo.stdlib"
+    (CTOLabel "org.hyperledger.composer.system")
+    :: (CTOLabel label_name)
+    :: (ErgoLabel "org.accordproject.ergo.stdlib")
     :: List.concat (List.map module_import_name decls)
 
-let cto_imports label decls =
-  if label = "org.hyperledger.composer.system"
+let cto_imports label_name decls =
+  if label_name = "org.hyperledger.composer.system"
   then
-    List.concat (List.map import_name decls)
+    List.concat (List.map import_cto_name decls)
   else
-    "org.hyperledger.composer.system"
-    :: List.concat (List.map import_name decls)
+    (CTOLabel "org.hyperledger.composer.system")
+    :: List.concat (List.map import_cto_name decls)
 
 let lookup_inputs_from_label all_inputs label =
   begin try
@@ -247,16 +274,15 @@ let lookup_inputs_from_label all_inputs label =
   end
 
 let edges_of_input all_inputs input =
-  let label = label_of_input input in
   begin match input with
   | InputErgo m ->
       List.concat
         (List.map (lookup_inputs_from_label all_inputs)
-           (module_imports label m.module_declarations))
+           (module_imports (label_name_of_ergo_input m) m.module_declarations))
   | InputCTO c ->
       List.concat
         (List.map (lookup_inputs_from_label all_inputs)
-           (cto_imports label c.cto_package_imports))
+           (cto_imports (label_name_of_cto_input c) c.cto_package_imports))
   end
 
 let graph_of_inputs all_inputs =
@@ -266,10 +292,24 @@ let labels_of_graph all_inputs =
   let graph = graph_of_inputs all_inputs in
   List.map
     (fun xy ->
-       (label_of_input (fst xy),
-        List.map label_of_input (snd xy)))
+       (file_of_input (fst xy),
+        List.map file_of_input (snd xy)))
     graph
 
 let topo_sort_inputs all_inputs =
-  Util.toposort label_of_input (graph_of_inputs all_inputs)
+  Util.toposort label_of_input file_of_input (graph_of_inputs all_inputs)
+
+let rec get_last_ergo l =
+  begin match l with
+  | [] -> ([], None)
+  | (InputCTO x) :: rest ->
+      let (rest', last) = get_last_ergo rest in
+      (InputCTO x :: rest', last)
+  | (InputErgo x) :: rest ->
+      let (rest', last) = get_last_ergo rest in
+      begin match last with
+      | None -> (rest', Some x)
+      | Some x' -> (InputErgo x :: rest', Some x')
+      end
+  end
 

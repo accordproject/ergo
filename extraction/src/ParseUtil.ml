@@ -52,6 +52,6 @@ let parse_ergo_declaration_from_string fname s : ergo_declaration option =
   parse_string parse_ergo_declaration s
 
 let parse_cto_package_from_string fname s : cto_package =
-  filename := fname;
+  filename := unpatch_cto_extension fname;
   CtoImport.cto_import !filename (Cto_j.model_of_string s)
 

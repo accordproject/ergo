@@ -900,26 +900,16 @@ Section ErgoNameResolution.
         ctos
         ctxt.
 
-    Definition resolve_ergo_input
-               (ctxt:namespace_ctxt)
-               (input:lrergo_input) : eresult (laergo_module * namespace_ctxt) :=
-      match input with
-      | InputCTO cto =>
-        resolve_cto_package ctxt cto
-      | InputErgo m =>
-        resolve_ergo_module ctxt m
-      end.
-
     Fixpoint split_ctos_and_ergos (inputs:list lrergo_input)
       : (list lrcto_package * list lrergo_module) :=
       match inputs with
       | nil => (nil, nil)
       | InputCTO cto :: rest =>
         let split_rest := split_ctos_and_ergos rest in
-        (cto :: (fst split_rest), snd split_rest)
+        (cto :: fst split_rest, snd split_rest)
       | InputErgo ml :: rest =>
         let split_rest := split_ctos_and_ergos rest in
-        (fst split_rest, ml :: (snd split_rest))
+        (fst split_rest, ml :: snd split_rest)
       end.
 
   End Top.

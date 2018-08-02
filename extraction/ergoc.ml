@@ -40,9 +40,9 @@ let main args =
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;
   let all_modules = ErgoConfig.get_all_sorted gconf in
-  let (initmls, main) = Util.get_last all_modules in
+  let (initmls, main) = get_last_ergo all_modules in
   begin match main with
-  | Some (InputErgo main) ->
+  | Some main ->
       ErgoCompile.ergo_proc gconf initmls main
   | _ -> ()
   end
