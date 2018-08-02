@@ -99,9 +99,16 @@ Module ErgoCompiler.
   Definition cto_concept : option relative_name -> list (String.string * cto_type) -> cto_declaration_desc
     := CTO.CTOConcept.
 
-  Definition mk_cto_declaration : EProvenance.provenance -> String.string -> cto_declaration_desc -> cto_declaration
+  Definition mk_cto_declaration :
+    EProvenance.provenance -> String.string -> cto_declaration_desc -> cto_declaration
     := CTO.mkCTODeclaration.
-  Definition mk_cto_package : EProvenance.provenance -> String.string -> list EAstUtil.import_decl -> list cto_declaration -> cto_package
+  Definition mk_cto_package :
+    EProvenance.provenance
+    -> String.string
+    -> String.string
+    -> list EAstUtil.import_decl
+    -> list cto_declaration
+    -> cto_package
     := CTO.mkCTOPackage.
 
   (** Types *)
@@ -267,22 +274,19 @@ Module ErgoCompiler.
 
   (** Compilation *)
   Definition ergo_module_to_javascript :
-    list CTO.cto_package
-    -> list ergo_module
+    list ergo_input
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
     := ErgoDriver.ergo_module_to_javascript_top.
 
   Definition ergo_module_to_javascript_cicero :
-    list CTO.cto_package
-    -> list ergo_module
+    list ergo_input
     -> ergo_module
     -> EResult.eresult JavaScript.javascript
     := ErgoDriver.ergo_module_to_javascript_cicero_top.
 
   Definition ergo_module_to_java :
-    list CTO.cto_package
-    -> list ergo_module
+    list ergo_input
     -> ergo_module
     -> EResult.eresult Java.java
     := ErgoDriver.ergo_module_to_java_top.
@@ -292,8 +296,7 @@ Module ErgoCompiler.
 
   (** REPL *)
   Definition init_repl_context :
-    list CTO.cto_package
-    -> list ergo_module
+    list ergo_input
     -> EResult.eresult ErgoDriver.repl_context
     := @ErgoDriver.init_repl_context test_brand_model.
   Definition ergo_repl_eval_decl :

@@ -154,6 +154,7 @@ Section Ergo.
     Record ergo_module :=
       mkModule
         { module_annot : A;
+          module_file : string;
           module_namespace : namespace_name;
           module_declarations : list ergo_declaration; }.
 

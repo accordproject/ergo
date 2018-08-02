@@ -27,13 +27,13 @@ Section EProvenance.
       }.
   Record location :=
     mkLocation {
-        loc_file: option string;
+        loc_file: string;
         loc_start: location_point;
         loc_end: location_point;
       }.
   Definition dummy_location : location :=
     let dummy_location_point := mkLocationPoint (-1) (-1) (-1) in
-    mkLocation None dummy_location_point dummy_location_point.
+    mkLocation "" dummy_location_point dummy_location_point.
 
   (* Provenance *)
   Inductive provenance :=
@@ -78,11 +78,11 @@ Section EProvenance.
     (toString lp.(line)) ++ ":" ++ (toString lp.(column)).
 
   Definition string_of_location (loc : location) : string :=
+    let f := loc.(loc_file) in
     let file :=
-        match loc.(loc_file) with
-        | Some f => (f ++ " ")%string
-        | None => ""%string
-        end
+        if string_dec f ""%string
+        then ""%string
+        else (f ++ " ")%string
     in
     file ++
          (string_of_location_point loc.(loc_start)) ++ "-" ++

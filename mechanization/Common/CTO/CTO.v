@@ -70,6 +70,7 @@ Section CTO.
     Record cto_package :=
       mkCTOPackage
         { cto_package_annot : A;
+          cto_package_file : string;
           cto_package_namespace : namespace_name;
           cto_package_imports : list (@import_decl A);
           cto_package_declarations : list cto_declaration; }.

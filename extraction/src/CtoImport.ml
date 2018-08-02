@@ -17,6 +17,8 @@ open ErgoUtil
 open ErgoComp
 open Cto_j
 
+let filename = ref ""
+
 let enum_case_of_decl d =
   char_list_of_string d.cto_decl_content_id.cto_id_name
 
@@ -27,7 +29,7 @@ let mk_prov loc =
   begin match loc with
   | Some loc ->
       ErgoCompiler.prov_loc
-        { loc_file = None;
+        { loc_file = Util.char_list_of_string !filename;
           loc_start =
             { offset = loc.cto_location_start.cto_loc_offset;
               line = loc.cto_location_start.cto_loc_line;
@@ -121,11 +123,13 @@ let cto_declarations_of_body dl =
 let cto_import_of_import i =
   ErgoUtil.cto_import_decl_of_import_namespace i.cto_import_namespace
 
-let cto_import (m:model) : ErgoCompiler.cto_package =
+let cto_import f (m:model) : ErgoCompiler.cto_package =
+  filename := f;
   let namespace = char_list_of_string m.cto_namespace in
   let imports = List.map cto_import_of_import m.cto_imports in
   let decls = cto_declarations_of_body m.cto_body in
   { cto_package_namespace = namespace;
+    cto_package_file = Util.char_list_of_string !filename;
     cto_package_annot = dummy_provenance; (* XXX Not in JSON *)
     cto_package_imports = imports;
     cto_package_declarations = decls; }

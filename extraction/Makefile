@@ -59,11 +59,17 @@ BYTE3=$(MAIN3).$(BYTE)
 BIN3=$(MAIN3).$(JS)
 DIST3=../packages/ergo-cli/lib/$(TARGET3)
 
+TARGET4=ergodep.$(NATIVE)
+MAIN4=ergodep
+BYTE4=$(MAIN4).$(BYTE)
+BIN4=$(MAIN4).$(NATIVE)
+DIST4=../bin/$(TARGET4)
+
 
 ## Toplevel
-all: $(DIST0) $(DIST1) $(DIST2) $(DIST3)
+all: $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4)
 
-all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli $(DIST0) $(DIST1) $(DIST2) $(DIST3)
+all-refresh: extracted/ErgoComp.ml extracted/ErgoComp.mli $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4)
 
 top: $(DIST0)
 
@@ -119,6 +125,12 @@ $(DIST1): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/E
 
 $(BIN1): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN1).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN1)
+
+$(DIST4): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN4)
+	cp _build/$(BIN4) $(DIST4)
+
+$(BIN4): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN4).$(ML)
+	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN4)
 
 ## JavaScript
 $(DIST2): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE2) $(DIST1)

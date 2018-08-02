@@ -77,8 +77,8 @@ Section ErgoDriver.
             (resolve_cto_packages ctxt ctos).
 
     Definition compilation_context_from_inputs
-               (ctos:list lrcto_package)
-               (mls:list lrergo_module) : eresult compilation_context :=
+               (inputs:list lrergo_input) : eresult compilation_context :=
+      let (ctos, mls) := split_ctos_and_ergos inputs in
       let rctxt := compilation_context_from_ctos ctos in
       eolift (fun ctxt => elift snd (ergo_modules_to_ergoc ctxt mls)) rctxt.
 
@@ -114,10 +114,9 @@ Section ErgoDriver.
       elift nnrc_module_to_javascript_top pn.
 
     Definition ergo_module_to_javascript_top
-               (ctos:list lrcto_package)
-               (mls:list lrergo_module)
+               (inputs:list lrergo_input)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
-      let ctxt := compilation_context_from_inputs ctos mls in
+      let ctxt := compilation_context_from_inputs inputs in
       eolift (fun ctxt => ergo_module_to_javascript ctxt p) ctxt.
 
     Definition ergo_module_to_java
@@ -128,17 +127,15 @@ Section ErgoDriver.
       elift nnrc_module_to_java_top pn.
 
     Definition ergo_module_to_java_top
-               (ctos:list lrcto_package)
-               (mls:list lrergo_module)
+               (inputs:list lrergo_input)
                (p:lrergo_module) : eresult ErgoCodeGen.java :=
-      let ctxt := compilation_context_from_inputs ctos mls in
+      let ctxt := compilation_context_from_inputs inputs in
       eolift (fun ctxt => ergo_module_to_java ctxt p) ctxt.
 
     Definition ergo_module_to_javascript_cicero_top
-               (ctos:list cto_package)
-               (mls:list lrergo_module)
+               (inputs:list lrergo_input)
                (p:lrergo_module) : eresult ErgoCodeGen.javascript :=
-      let ctxt := compilation_context_from_inputs ctos mls in
+      let ctxt := compilation_context_from_inputs inputs in
       let p :=
           eolift (fun am =>
                     let ns_ctxt := namespace_ctxt_of_compilation_context am in
@@ -182,12 +179,11 @@ Section ErgoDriver.
         }.
 
     Definition init_repl_context
-               (ctos : list lrcto_package)
-               (mls : list lrergo_module) : eresult repl_context :=
+               (inputs : list lrergo_input) : eresult repl_context :=
       elift (mkREPLCtxt ErgoCTypeContext.empty_type_context ErgoCEvalContext.empty_eval_context)
             (eolift (set_namespace_in_compilation_context
                        "org.accordproject.ergotop"%string)
-                    (compilation_context_from_inputs ctos mls)).
+                    (compilation_context_from_inputs inputs)).
 
     Definition update_repl_ctxt_comp_ctxt
                (rctxt: repl_context)

@@ -110,9 +110,8 @@ let ergo_compile input =
   begin try
     let ergo_parsed = ParseUtil.parse_ergo_module_from_string "%JSBUFFER%" j_s in
     let target_lang = ErgoConfig.get_target_lang gconf in
-    let ctos = ErgoConfig.get_ctos gconf in
-    let mls = ref (ErgoConfig.get_modules gconf) in
-    let res = ErgoCompile.ergo_compile target_lang ctos mls ergo_parsed in
+    let all_modules = ErgoConfig.get_all_sorted gconf in
+    let res = ErgoCompile.ergo_compile target_lang all_modules ergo_parsed in
     json_of_result res
   with
   | Ergo_Error error -> json_of_error error

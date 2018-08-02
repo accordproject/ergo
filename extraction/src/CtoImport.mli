@@ -14,6 +14,5 @@
 
 open ErgoComp.ErgoCompiler
 
-val cto_import: Cto_j.model -> cto_package
-
+val cto_import: string -> Cto_j.model -> cto_package
 

@@ -17,40 +17,37 @@ open ErgoUtil
 open ErgoComp
 open ErgoConfig
 
-let compile_module_to_javascript ctos mls ergo =
-  let code = ErgoCompiler.ergo_module_to_javascript ctos mls ergo in
+let compile_module_to_javascript inputs ergo =
+  let code = ErgoCompiler.ergo_module_to_javascript inputs ergo in
   wrap_jerrors string_of_char_list code
 
-let compile_module_to_javascript_cicero ctos mls ergo =
-  let code = ErgoCompiler.ergo_module_to_javascript_cicero ctos mls ergo in
+let compile_module_to_javascript_cicero inputs ergo =
+  let code = ErgoCompiler.ergo_module_to_javascript_cicero inputs ergo in
   wrap_jerrors string_of_char_list code
 
-let compile_module_to_java ctos mls ergo =
-  let code = ErgoCompiler.ergo_module_to_java ctos mls ergo in
+let compile_module_to_java inputs ergo =
+  let code = ErgoCompiler.ergo_module_to_java inputs ergo in
   wrap_jerrors string_of_char_list code
 
-let ergo_compile target_lang ctos mls ergo_parsed =
+let ergo_compile target_lang inputs ergo_parsed =
   let result =
     begin match target_lang with
     | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
     | JavaScript ->
-        compile_module_to_javascript ctos !mls ergo_parsed
+        compile_module_to_javascript inputs ergo_parsed
     | JavaScriptCicero ->
-        compile_module_to_javascript_cicero ctos !mls ergo_parsed
+        compile_module_to_javascript_cicero inputs ergo_parsed
     | Java ->
-        compile_module_to_java ctos !mls ergo_parsed
+        compile_module_to_java inputs ergo_parsed
     end
   in
-  
-  mls := !mls @ [ergo_parsed];
   result
 
-let ergo_proc gconf initmls (file_name,file_content) =
+let ergo_proc gconf initmls ergo_parsed =
+  let file_name = Util.string_of_char_list ergo_parsed.module_file in
   Printf.printf "Compiling Ergo '%s' -- " file_name;
-  let ergo_parsed = ParseUtil.parse_ergo_module_from_string file_name file_content in
   let target_lang = ErgoConfig.get_target_lang gconf in
-  let ctos = ErgoConfig.get_ctos gconf in
-  let result = ergo_compile target_lang ctos initmls ergo_parsed in
+  let result = ergo_compile target_lang initmls ergo_parsed in
   let file_res = make_result_file (extension_of_lang target_lang) file_name result in
   if file_res.res_file <> "" then
     begin
