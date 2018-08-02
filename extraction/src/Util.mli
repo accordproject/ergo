@@ -79,5 +79,6 @@ val map_assoc : ('a -> 'b -> 'c) -> (('a * 'b) list) -> 'c list
 (* Mini topo-sort *)
 (* XXX To be revised when Coq-level DFS-topological sort is complete *)
 
+exception TopoCycle of string list
 val toposort : ('a -> 'b) -> ('a -> string) -> ('a * 'a list) list -> 'a list
 
