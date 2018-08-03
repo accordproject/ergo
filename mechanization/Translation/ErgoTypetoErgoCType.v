@@ -119,109 +119,10 @@ Section ErgoTypetoErgoCType.
 
 End ErgoTypetoErgoCType.
 
-Section TestModel.
-  Import ErgoCTypes.
-
-  Local Open Scope string.
-
-  (* For the CTO:
-     ============
-
-     concept Entity {}
-     concept Customer extends Entity { o Integer age o Integer cid o String name }
-     concept Purchase extends Entity { o Integer cid o String name o Integer pid o Integer quantity }
-   *)
-
-  Definition StoreHierarchy :=
-    ("org.accordproject.ergotop.Customer","org.accordproject.ergotop.Entity")::("org.accordproject.ergotop.Purchase","org.accordproject.ergotop.Entity")::nil.
-
-  Definition StoreBrandRelationMaybe : eresult tbrand_relation
-    := eresult_of_qresult dummy_provenance (mk_tbrand_relation StoreHierarchy).
-
-  Definition StoreBrandRelation : brand_relation :=
-    match StoreBrandRelationMaybe with
-    | Success _ _ s => s
-    | Failure _ _ e => tempty_brand_relation (* Not used *)
-    end.
-
-  (* Compute StoreBrandModelMaybe. *)
-  
-  Existing Instance StoreBrandRelation.
-
-  Program Definition EntityType : ergoc_type
-    := Rec Open nil _.
-
-  Program Definition CustomerType : ergoc_type
-    := Rec Open (("age", Nat)
-                 :: ("cid", Nat)
-                 :: ("name", String)
-                 :: nil) _.
-
-  Program Definition PurchaseType : ergoc_type
-    := Rec Open (("cid", Nat)
-                 :: ("name", String)
-                 :: ("pid", Nat)
-                 :: ("quantity", Nat)
-                 :: nil) _.
-
-  Definition StoreModelTypeDecls : tbrand_context_decls :=
-    (("org.accordproject.ergotop.Customer", CustomerType)
-     :: ("org.accordproject.ergotop.Entity", EntityType)
-     :: ("org.accordproject.ergotop.Purchase", PurchaseType)
-     :: nil).
-
-  Definition StoreBrandModelMaybe : eresult tbrand_model
-    := eresult_of_qresult dummy_provenance
-                          (mk_tbrand_model StoreModelTypeDecls).
-
-  (* Compute StoreBrandModelMaybe. *)
-  
-  Instance StoreBrandModel : brand_model :=
-    match StoreBrandModelMaybe with
-    | Success _ _ s => s
-    | Failure _ _ e => tempty_brand_model (* Not used *)
-    end.
-
-End TestModel.
-
 Section Translate.
   Local Open Scope string.
   Import ErgoCTypes.
 
-  Definition EntityDecl : laergo_type_declaration :=
-    mkErgoTypeDeclaration dummy_provenance "org.accordproject.ergotop.Entity"
-                          (ErgoTypeConcept None nil).
-  Definition CustomerDecl : laergo_type_declaration :=
-    mkErgoTypeDeclaration dummy_provenance "org.accordproject.ergotop.Customer"
-                          (ErgoTypeConcept (Some "org.accordproject.ergotop.Entity")
-                                           (("age",ErgoTypeInteger dummy_provenance)
-                                              ::("cid",ErgoTypeInteger dummy_provenance)
-                                              ::("name",ErgoTypeString dummy_provenance)
-                                              ::nil)).
-  Definition GoldCustomerDecl : laergo_type_declaration :=
-    mkErgoTypeDeclaration dummy_provenance "org.accordproject.ergotop.GoldCustomer"
-                          (ErgoTypeConcept (Some "org.accordproject.ergotop.Customer")
-                                           (("status",ErgoTypeString dummy_provenance)
-                                              ::nil)).
-  Definition PurchaseDecl : laergo_type_declaration :=
-    mkErgoTypeDeclaration dummy_provenance "org.accordproject.ergotop.Purchase"
-                          (ErgoTypeConcept (Some "org.accordproject.ergotop.Entity")
-                                           (("cid",ErgoTypeInteger dummy_provenance)
-                                              :: ("name",ErgoTypeString dummy_provenance)
-                                              :: ("pid",ErgoTypeInteger dummy_provenance)
-                                              :: ("quantity",ErgoTypeInteger dummy_provenance)
-                                              ::nil)).
-  Definition BearDecl : laergo_type_declaration :=
-    mkErgoTypeDeclaration dummy_provenance "org.accordproject.ergotop.Bear"
-                          (ErgoTypeConcept (Some "org.accordproject.ergotop.Entity")
-                                           (("name",ErgoTypeString dummy_provenance)
-                                              :: ("age",ErgoTypeInteger dummy_provenance)
-                                              ::nil)).
-  Definition StoreDecls : list laergo_type_declaration :=
-    EntityDecl :: CustomerDecl :: PurchaseDecl :: (* GoldCustomerDecl :: *) BearDecl :: nil. 
-  
-  (* Compute (hierarchy StoreDecls). *)
-  
   Definition brand_relation_maybe hierarchy : eresult tbrand_relation
     := eresult_of_qresult dummy_provenance (mk_tbrand_relation hierarchy).
 

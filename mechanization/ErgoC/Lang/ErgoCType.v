@@ -263,30 +263,3 @@ Section ErgoCType.
 
 End ErgoCType.
 
-Section TestModel.
-  Import ErgoCTypes.
-
-  Definition try_it (e:ergoc_expr) : eresult ectype_struct :=
-    elift unpack_ergoc_type (@ergo_type_expr StoreBrandModel empty_type_context e).
-
-  (* Compute (try_it (EConst dummy_provenance (dunit))). *) (* success - Unit *)
-  (* Compute (try_it (EConst dummy_provenance (dstring "pooh"))). *) (* success - String *)
-  (* Compute (try_it (EConst dummy_provenance (dnat 14))). *) (* success - Nat *)
-  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))). *) (* success - Customer *)
-  (* Compute (try_it (EConst dummy_provenance (dbrand ("Entity"::nil) (drec (("a",dunit)::nil))))). *) (* success - Entity *)
-  
-  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("a",dunit)::nil))))). *) (* success to top - ?? semantics for it needs to be checked *)
-
-  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))). *) (* success - Customer *)
-  
-  (* Compute (try_it (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("name",dstring "pooh")::nil))))). *) (* success to top - ?? semantics for it needs to be checked *)
-
-  (* Compute (try_it (EUnaryOp dummy_provenance OpUnbrand (EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil)))))). *) (* success - { age : Nat, cid : Nat, name : String, .. } *)
-
-  (* Compute (try_it (EUnaryOp dummy_provenance (OpBrand ("Customer"::nil)) (EConst dummy_provenance (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))). *) (* success - Customer *)
-
-  (* Compute (try_it (EUnaryOp dummy_provenance (OpBrand ("Customer"::nil)) (EConst dummy_provenance (drec (("age",dnat 14)::("name",dstring "pooh")::nil))))). *) (* Failure - subtyping *)
-
-  (* Compute (try_it (EUnaryOp dummy_provenance (OpDot "name") (EUnaryOp dummy_provenance OpUnbrand (((EConst dummy_provenance (dbrand ("Customer"::nil) (drec (("age",dnat 14)::("cid",dnat 0)::("name",dstring "pooh")::nil))))))))). *) (* success - String *)
-  
-End TestModel.
