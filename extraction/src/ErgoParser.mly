@@ -51,7 +51,7 @@ let mk_provenance
 
 %token OR AND NOT
 
-%token NIL
+%token NIL NONE
 %token TRUE FALSE
 
 %token EQUAL NEQUAL
@@ -338,6 +338,8 @@ expr:
 (* Constants *)
 | NIL
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) ErgoCompiler.ErgoData.dunit }
+| NONE
+    { ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dright ErgoCompiler.ErgoData.dunit) }
 | TRUE
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dbool true) }
 | FALSE
@@ -603,6 +605,7 @@ safeident_base:
 | OR { "or" }
 | AND { "and" }
 | NIL { "nil" }
+| NONE { "none" }
 | TRUE { "true" }
 | FALSE { "false" }
 
