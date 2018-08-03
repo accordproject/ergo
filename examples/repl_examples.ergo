@@ -109,5 +109,9 @@ enforce !(1 >i 2); \
 enforce 2 >i 1; \
 return "(comparisons on Integer) work";
 
+enforce none ?? 1 = 1;\
+enforce some({a:1})?.a = 1;\
+return "(optionals and optional chaining) work";
+
 //import org.accordproject.helloworld.*
 //set contract HelloWorld over TemplateModel{ name : "Winnie" }
