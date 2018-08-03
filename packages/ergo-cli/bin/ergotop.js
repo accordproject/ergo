@@ -17,22 +17,42 @@
 
 const ergotop = require('../lib/ergotop.js').ergotop;
 const readline = require('readline');
+const chalk = require('chalk');
+
+const PS1 = chalk.gray('ergo$ ');
+const PS2 = chalk.gray('  ... ');
 const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
+    prompt: PS1
 });
 
 let ctx = ergotop.initRCtxt;
+let inp = '';
 
-/** Does the thing
- * @param {string} line - the line */
-function run(line) {
-    const x = ergotop.runLine(ctx, line);
-    if (x) {
-        ctx = x.ctx;
-        process.stdout.write(x.out + '\n');
+rl.on('line', (line) => {
+    if (line.charAt(line.length - 1) === '\\') {
+        inp += line.slice(0, line.length - 1) + '\n';
+        rl.setPrompt(PS2);
+    } else {
+        inp += line + '\n';
+        rl.setPrompt(PS1);
+        const x = ergotop.runLine(ctx, inp);
+        inp = '';
+        if (x) {
+            ctx = x.ctx;
+            process.stdout.write(
+                x.out
+                    .replace(/^Response. /gm, chalk.green('Response. '))
+                    .replace(/^Emit. /gm, chalk.magenta('Emit. '))
+                    .replace(/^State. /gm, chalk.blue('State. '))
+                    .replace(/^Error. /gm, chalk.red('Error. ')) + '\n'
+            );
+        }
     }
-    rl.question('ergo$ ', run);
-}
+    rl.prompt();
+}).on('close', () => {
+    process.exit(0);
+});
 
-run('');
+rl.prompt();
