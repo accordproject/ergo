@@ -266,66 +266,6 @@ End ErgoCType.
 Section TestModel.
   Import ErgoCTypes.
 
-  Local Open Scope string.
-
-  (* For the CTO:
-     ============
-
-     concept Entity {}
-     concept Customer extends Entity { o Integer age o Integer cid o String name }
-     concept Purchase extends Entity { o Integer cid o String name o Integer pid o Integer quantity }
-   *)
-
-  Definition StoreHierarchy :=
-    ("org.accordproject.ergotop.Customer","org.accordproject.ergotop.Entity")::("org.accordproject.ergotop.Purchase","org.accordproject.ergotop.Entity")::nil.
-
-  Definition StoreBrandRelationMaybe : eresult tbrand_relation
-    := eresult_of_qresult dummy_provenance (mk_tbrand_relation StoreHierarchy).
-
-  Definition StoreBrandRelation : brand_relation :=
-    match StoreBrandRelationMaybe with
-    | Success _ _ s => s
-    | Failure _ _ e => tempty_brand_relation (* Not used *)
-    end.
-
-  (* Compute StoreBrandModelMaybe. *)
-  
-  Existing Instance StoreBrandRelation.
-
-  Program Definition EntityType : ergoc_type
-    := Rec Open nil _.
-
-  Program Definition CustomerType : ergoc_type
-    := Rec Open (("age", Nat)
-                 :: ("cid", Nat)
-                 :: ("name", String)
-                 :: nil) _.
-
-  Program Definition PurchaseType : ergoc_type
-    := Rec Open (("cid", Nat)
-                 :: ("name", String)
-                 :: ("pid", Nat)
-                 :: ("quantity", Nat)
-                 :: nil) _.
-
-  Definition StoreModelTypeDecls : tbrand_context_decls :=
-    (("org.accordproject.ergotop.Customer", CustomerType)
-     :: ("org.accordproject.ergotop.Entity", EntityType)
-     :: ("org.accordproject.ergotop.Purchase", PurchaseType)
-     :: nil).
-
-  Definition StoreBrandModelMaybe : eresult tbrand_model
-    := eresult_of_qresult dummy_provenance
-                          (mk_tbrand_model StoreModelTypeDecls).
-
-  (* Compute StoreBrandModelMaybe. *)
-  
-  Instance StoreBrandModel : brand_model :=
-    match StoreBrandModelMaybe with
-    | Success _ _ s => s
-    | Failure _ _ e => tempty_brand_model (* Not used *)
-    end.
-
   Definition try_it (e:ergoc_expr) : eresult ectype_struct :=
     elift unpack_ergoc_type (@ergo_type_expr StoreBrandModel empty_type_context e).
 

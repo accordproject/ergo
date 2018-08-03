@@ -44,6 +44,30 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 
 Section ErgoDriver.
+  Section PreCompiler.
+    Definition resolve_inputs
+               (inputs:list lrergo_input) : eresult (list laergo_module * namespace_ctxt) :=
+      let (ctos, mls) := split_ctos_and_ergos inputs in
+      let ctxt := init_namespace_ctxt in
+      let rctxt := resolve_cto_packages ctxt ctos in
+      eolift (fun ctxt =>
+                elift
+                  (fun res =>
+                     (fst ctxt ++ fst res, snd res))
+                  (resolve_ergo_modules (snd ctxt) mls))
+             rctxt.
+
+    Definition just_resolved_inputs
+               (inputs:list lrergo_input) : eresult (list laergo_module) :=
+      let resolved := resolve_inputs inputs in
+      elift fst resolved.
+
+    Definition brand_model_from_inputs (inputs : list lrergo_input) : eresult ErgoCTypes.tbrand_model :=
+      let resolved := just_resolved_inputs inputs in
+      let type_decls := elift modules_get_type_decls resolved in
+      eolift ErgoTypetoErgoCType.brand_model_of_declarations type_decls.
+
+  End PreCompiler.
 
   Section Compiler.
     (* Ergo -> ErgoC *)
@@ -165,22 +189,19 @@ Section ErgoDriver.
   End Compiler.
 
   Section Interpreter.
-    Context {m:brand_model}.
+    Context {bm:brand_model}.
 
-    (*
-    Definition test_brand_model := (ErgoCTypes.empty_brand_model tt eq_refl).
-    Definition test_brand_relation := mkBrand_relation nil (eq_refl _) (eq_reflexivity _).
-*)
     Record repl_context :=
       mkREPLCtxt {
           repl_context_type_ctxt : type_context;
+          repl_context_brand_model : brand_model;
           repl_context_eval_ctxt : eval_context;
-          repl_context_comp_ctxt : compilation_context
+          repl_context_comp_ctxt : compilation_context;
         }.
 
     Definition init_repl_context
                (inputs : list lrergo_input) : eresult repl_context :=
-      elift (mkREPLCtxt ErgoCTypeContext.empty_type_context ErgoCEvalContext.empty_eval_context)
+      elift (mkREPLCtxt ErgoCTypeContext.empty_type_context bm ErgoCEvalContext.empty_eval_context)
             (eolift (set_namespace_in_compilation_context
                        "org.accordproject.ergotop"%string)
                     (compilation_context_from_inputs inputs)).
@@ -188,18 +209,30 @@ Section ErgoDriver.
     Definition update_repl_ctxt_comp_ctxt
                (rctxt: repl_context)
                (sctxt: compilation_context) : repl_context :=
-      mkREPLCtxt rctxt.(repl_context_type_ctxt) rctxt.(repl_context_eval_ctxt) sctxt.
+      mkREPLCtxt
+        rctxt.(repl_context_type_ctxt)
+        rctxt.(repl_context_brand_model)
+        rctxt.(repl_context_eval_ctxt)
+        sctxt.
     
     Definition update_repl_ctxt_type_ctxt
                (rctxt: repl_context)
                (nctxt: type_context) : repl_context :=
-      mkREPLCtxt nctxt rctxt.(repl_context_eval_ctxt) rctxt.(repl_context_comp_ctxt).
+      mkREPLCtxt
+        nctxt
+        rctxt.(repl_context_brand_model)
+        rctxt.(repl_context_eval_ctxt)
+        rctxt.(repl_context_comp_ctxt).
     
     Definition update_repl_ctxt_eval_ctxt
                (rctxt: repl_context)
                (nctxt: eval_context) : repl_context :=
-      mkREPLCtxt rctxt.(repl_context_type_ctxt) nctxt rctxt.(repl_context_comp_ctxt).
-    
+      mkREPLCtxt
+        rctxt.(repl_context_type_ctxt)
+        rctxt.(repl_context_brand_model)
+        nctxt
+        rctxt.(repl_context_comp_ctxt).
+
     Definition lift_repl_ctxt
                (orig_ctxt : repl_context)
                (result : eresult (option ergoc_type * option ergo_data * repl_context))
@@ -219,16 +252,17 @@ Section ErgoDriver.
       | Success _ _ (tctxt', typ) =>
         match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
         | Failure _ _ f => efailure f
-        | Success _ _ (dctxt', None) => esuccess (typ, None, mkREPLCtxt tctxt' dctxt' sctxt)
+        | Success _ _ (dctxt', None) => esuccess (typ, None, mkREPLCtxt tctxt' ctxt.(repl_context_brand_model) dctxt' sctxt)
         | Success _ _ (dctxt', Some out) =>
           match unpack_output out with
-          | None => esuccess (typ, Some out, mkREPLCtxt tctxt' dctxt' sctxt)
+          | None => esuccess (typ, Some out, mkREPLCtxt tctxt' ctxt.(repl_context_brand_model) dctxt' sctxt)
           | Some (_, _, state) =>
             esuccess (
                 typ,
                 Some out,
                 mkREPLCtxt
                   tctxt' (* TODO *)
+                  ctxt.(repl_context_brand_model)
                   (eval_context_update_local_env dctxt' "state"%string state)
                   sctxt
               )

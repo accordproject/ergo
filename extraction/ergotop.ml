@@ -44,7 +44,7 @@ let rec read_nonempty_multiline () = read_chunk true
 let safe_init_repl_ctxt inputs =
   ErgoUtil.wrap_jerrors
     (fun x -> x)
-    (init_repl_context inputs)
+    (ErgoTopUtil.my_init_repl_context inputs)
 
 (* REPL *)
 let rec repl rctxt =
@@ -56,7 +56,7 @@ let rec repl rctxt =
       | Some decl ->
           begin
             (* eval *)
-            let (out,rctxt') = ergo_repl_eval_decl rctxt decl in
+            let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
             (* print *)
             print_string (ErgoUtil.wrap_jerrors Util.string_of_char_list out);
             rctxt'
@@ -104,4 +104,10 @@ let wrap_error e =
   end
 
 let _ =
+  begin try
     main (ErgoUtil.patch_argv Sys.argv)
+  with
+  | e ->
+      wrap_error e
+  end
+
