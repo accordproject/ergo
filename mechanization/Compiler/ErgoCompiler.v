@@ -34,6 +34,7 @@ Module ErgoCompiler.
   
   Module ErgoData := ErgoBackend.ErgoData.
   Module ErgoOps := ErgoBackend.ErgoOps.
+  Module ErgoCTypes := ErgoBackend.ErgoCTypes.
 
   (** Utils *)
   (* XXX Exposed so it can be called from JavaScript - Should be removed once we switch to the REPL *)
@@ -291,19 +292,20 @@ Module ErgoCompiler.
     -> EResult.eresult Java.java
     := ErgoDriver.ergo_module_to_java_top.
 
-  Definition test_brand_model := ErgoCType.StoreBrandModel.
-  Definition test_brand_relation := ErgoCType.StoreBrandRelation.
+  Definition ergo_brand_model := ErgoCTypes.tbrand_model.
+
+  Definition brand_model_from_inputs (inputs : list ergo_input) : eresult ergo_brand_model
+    := ErgoDriver.brand_model_from_inputs inputs.
 
   (** REPL *)
-  Definition init_repl_context :
-    list ergo_input
-    -> EResult.eresult ErgoDriver.repl_context
-    := @ErgoDriver.init_repl_context test_brand_model.
-  Definition ergo_repl_eval_decl :
-    ErgoDriver.repl_context
+  Definition init_repl_context {bm:ergo_brand_model} (inputs:list ergo_input)
+    := @ErgoDriver.init_repl_context bm inputs.
+
+  Definition ergo_repl_eval_decl {bm:ergo_brand_model} :
+    @ErgoDriver.repl_context bm
     -> ergo_declaration
-    -> EResult.eresult String.string * ErgoDriver.repl_context
-    := @ErgoDriver.ergo_repl_eval_decl test_brand_model.
+    -> EResult.eresult String.string * (@ErgoDriver.repl_context bm)
+    := (@ErgoDriver.ergo_repl_eval_decl bm).
 
 End ErgoCompiler.
 

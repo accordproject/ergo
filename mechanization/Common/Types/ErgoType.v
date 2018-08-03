@@ -155,8 +155,8 @@ Section ErgoType.
                (to:absolute_name)
                (e:@extends absolute_name) : list (absolute_name * absolute_name) :=
       match e with
-      | None => (to,to) :: nil
-      | Some from => (to,from) :: (to,to) :: nil
+      | None => nil
+      | Some from => (to,from) :: nil
       end.
 
     Definition type_declaration_desc_extend_rel

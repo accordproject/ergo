@@ -238,5 +238,20 @@ Section Ergo.
              (lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations)).
   End Lookup.
 
+  Section TypeDeclarations.
+    Fixpoint get_type_decls (decls:list laergo_declaration) : list laergo_type_declaration :=
+      match decls with
+      | nil => nil
+      | DType _ td :: rest => td :: (get_type_decls rest)
+      | _ :: rest => get_type_decls rest
+      end.
+
+    Definition module_get_type_decls (m:laergo_module) : list laergo_type_declaration :=
+      get_type_decls m.(module_declarations).
+
+    Definition modules_get_type_decls (m:list laergo_module) : list laergo_type_declaration :=
+      List.concat (List.map module_get_type_decls m).
+  End TypeDeclarations.
+  
 End Ergo.
 

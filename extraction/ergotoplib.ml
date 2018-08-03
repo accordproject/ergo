@@ -22,7 +22,7 @@ let repl rctxt text =
       begin match ParseUtil.parse_ergo_declaration_from_string "stdin" text with
       | Some decl ->
           begin
-            let (out,rctxt') = ergo_repl_eval_decl rctxt decl in
+            let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
             (Some (ErgoUtil.wrap_jerrors Util.string_of_char_list out), rctxt')
           end
       | None -> (None, rctxt)
@@ -51,7 +51,7 @@ let usage =
 let safe_init_repl_ctxt inputs =
   ErgoUtil.wrap_jerrors
     (fun x -> x)
-    (init_repl_context inputs)
+    (ErgoTopUtil.my_init_repl_context inputs)
 
 let make_init_rctxt =
   let gconf = ErgoConfig.default_config () in
