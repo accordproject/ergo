@@ -61,6 +61,7 @@
 	      "true", TRUE;
 	      "false", FALSE;
 	      "nil", NIL;
+	      "none", NONE;
 	    ]; tbl
     end
 
