@@ -16,7 +16,7 @@ Require Import String.
 Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EResult.
-  Require Import JsAst.JsNumber.
+Require Import JsAst.JsNumber.
 
 Section EData.
   Context {m:brand_model}.
