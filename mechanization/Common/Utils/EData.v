@@ -38,15 +38,12 @@ Section EData.
     let string_of_rec : list (string * ergo_data) -> string :=
         fun rec =>
           ("{"%string
-             ++ (fold_left
-                   (fun sofar next =>
-                      (sofar
-                         ++ (if string_dec sofar "" then "" else ", ")
-                         ++ (fst next)
-                         ++ ": "
-                         ++ (string_of_data (snd next))
-                      )%string)
-                   rec ""%string)
+              ++ (String.concat
+                    ", "%string
+                    (map
+                       (fun item =>
+                          (fst item) ++ ": " ++ (string_of_data (snd item)))
+                       rec))
              ++ "}"%string)%string in
     match d with
     | dunit => "nil"%string
@@ -57,12 +54,9 @@ Section EData.
     | dstring s => jsonify (dstring s)
     | dcoll arr =>
       "["%string
-         ++ (fold_left
-               (fun sofar next =>
-                  (sofar
-                     ++ (if string_dec sofar "" then "" else ", ")
-                     ++ (string_of_data next))%string)
-               arr ""%string)
+         ++ (String.concat
+               ", "%string
+               (map string_of_data arr))
          ++ "]"%string
     | dleft s => "some("%string ++ (string_of_data s) ++ ")"%string
     | dright _ => "none"
