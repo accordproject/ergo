@@ -186,7 +186,7 @@ Section ErgoExpand.
     | DImport _ _ => esuccess d
     | DType _ _ => esuccess d
     | DStmt _ _ => esuccess d
-    | DConstant _ _ _ => esuccess d
+    | DConstant _ _ _ _ => esuccess d
     | DFunc _ _ _ => esuccess d
     | DContract _ cn c =>
       let cd := add_init_clause_to_contract namespace c in

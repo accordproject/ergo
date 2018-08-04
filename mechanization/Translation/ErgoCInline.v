@@ -186,9 +186,9 @@ Section ErgoCInline.
     match decl with
     | DCExpr prov expr =>
       elift (fun x => (DCExpr prov x, ctxt)) (ergo_inline_expr ctxt expr)
-    | DCConstant prov name expr =>
+    | DCConstant prov name ta expr =>
       elift (fun x =>
-               (DCConstant prov name x, compilation_context_update_global_env ctxt name x))
+               (DCConstant prov name ta x, compilation_context_update_global_env ctxt name x))
             (ergo_inline_expr ctxt expr)
     | DCFunc prov name fn =>
       elift (fun x =>

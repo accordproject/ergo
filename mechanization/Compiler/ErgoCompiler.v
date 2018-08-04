@@ -264,8 +264,8 @@ Module ErgoCompiler.
     := Ergo.DType prov etd.
   Definition dstmt prov s : ergo_declaration
     := Ergo.DStmt prov s.
-  Definition dconstant prov v e : ergo_declaration
-    := Ergo.DConstant prov v e.
+  Definition dconstant prov v ta e : ergo_declaration
+    := Ergo.DConstant prov v ta e.
   Definition dfunc prov fn f : ergo_declaration
     := Ergo.DFunc prov fn f.
   Definition dcontract prov cn c : ergo_declaration

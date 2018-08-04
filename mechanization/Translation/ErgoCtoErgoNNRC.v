@@ -261,7 +261,7 @@ Section ErgoCtoErgoNNRC.
       elift
         DNExpr
         (ergoc_expr_to_nnrc nil e)
-    | DCConstant prov v e =>
+    | DCConstant prov v _ e => (* Ignores the type annotation *)
       elift
         (DNConstant v) (* Add new variable to translation_context *)
         (ergoc_expr_to_nnrc nil e)

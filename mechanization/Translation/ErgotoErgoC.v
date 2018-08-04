@@ -338,10 +338,10 @@ Section ErgotoErgoC.
       elift
         (fun x => (x::nil, ctxt))
         (elift (DCExpr prov) (ergo_stmt_to_expr_top ctxt prov s))
-    | DConstant prov v e =>
+    | DConstant prov v ta e =>
       elift
         (fun x => (x::nil, ctxt))
-        (elift (DCConstant prov v) (ergo_expr_to_ergoc_expr ctxt e))
+        (elift (DCConstant prov v ta) (ergo_expr_to_ergoc_expr ctxt e))
     | DFunc prov fn f =>
       elift
         (fun x => (x::nil, ctxt))
@@ -356,7 +356,7 @@ Section ErgotoErgoC.
       let ctxt := set_current_contract ctxt cn in
       elift
         (fun x => (x :: nil,ctxt))
-        (elift (DCConstant prov this_contract) (ergo_expr_to_ergoc_expr ctxt e1))
+        (elift (DCConstant prov this_contract None) (ergo_expr_to_ergoc_expr ctxt e1))
     end.
 
   (** Translate a module to a module+calculus *)
