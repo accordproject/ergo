@@ -151,11 +151,30 @@ Section ErgoType.
     end.
 
   Section Extends.
+    Definition fix_nothing (to:absolute_name) : list (absolute_name * absolute_name) := nil.
+    Definition fix_transaction (to:absolute_name) :=
+      if string_dec to "org.hyperledger.composer.system.Transaction"%string
+      then nil
+      else (to, "org.hyperledger.composer.system.Transaction"%string) :: nil.
+    Definition fix_event (to:absolute_name) :=
+      if string_dec to "org.hyperledger.composer.system.Event"%string
+      then nil
+      else (to, "org.hyperledger.composer.system.Event"%string) :: nil.
+    Definition fix_asset (to:absolute_name) :=
+      if string_dec to "org.hyperledger.composer.system.Asset"%string
+      then nil
+      else (to, "org.hyperledger.composer.system.Asset"%string) :: nil.
+    Definition fix_participant (to:absolute_name) :=
+      if string_dec to "org.hyperledger.composer.system.Participant"%string
+      then nil
+      else (to, "org.hyperledger.composer.system.Participant"%string) :: nil.
+    
     Definition extends_rel
+               (fix_none:absolute_name -> list (absolute_name * absolute_name))
                (to:absolute_name)
                (e:@extends absolute_name) : list (absolute_name * absolute_name) :=
       match e with
-      | None => nil
+      | None => fix_none to
       | Some from => (to,from) :: nil
       end.
 
@@ -163,15 +182,15 @@ Section ErgoType.
                (to:absolute_name)
                (decl_desc:laergo_type_declaration_desc) : list (absolute_name * absolute_name) :=
       match decl_desc with
-      | ErgoTypeEnum _ => extends_rel to None
-      | ErgoTypeTransaction e _ => extends_rel to e
-      | ErgoTypeConcept e _ => extends_rel to e
-      | ErgoTypeEvent e _ => extends_rel to e
-      | ErgoTypeAsset e _ => extends_rel to e
-      | ErgoTypeParticipant e _ => extends_rel to e
+      | ErgoTypeEnum _ => extends_rel fix_nothing to None
+      | ErgoTypeTransaction e _ => extends_rel fix_transaction to e
+      | ErgoTypeConcept e _ => extends_rel fix_nothing to e
+      | ErgoTypeEvent e _ => extends_rel fix_event to e
+      | ErgoTypeAsset e _ => extends_rel fix_asset to e
+      | ErgoTypeParticipant e _ => extends_rel fix_participant to e
       | ErgoTypeGlobal _ => nil
       | ErgoTypeFunction _ => nil
-      | ErgoTypeContract _ _ _ => extends_rel to None
+      | ErgoTypeContract _ _ _ => extends_rel fix_nothing to None
       end.
 
     Definition type_declaration_extend_rel

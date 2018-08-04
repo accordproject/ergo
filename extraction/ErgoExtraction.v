@@ -31,6 +31,9 @@ Extract Constant Digits.nat_to_string10 => "(fun x -> Util.char_list_of_string (
 
 Extract Constant String.append => "(fun s1 s2 -> Util.char_list_append s1 s2)".
 
+Require Import ErgoSpec.Common.Utils.EUtil.
+Extract Constant EUtil.coq_toposort => "(fun label file l -> Util.coq_toposort label file l)".
+
 (* Ergo modules *)
 Require ErgoCompiler.
 Extraction "ErgoComp" ErgoCompiler.ErgoCompiler.

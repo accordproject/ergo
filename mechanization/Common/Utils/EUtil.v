@@ -60,12 +60,10 @@ Section EUtil.
       (None, None)
       l.
 
-  (*
   Section TopoSort.
-    Context {A:Set}.
-    (* function from node to string -> graph edges -> visited nodes -> starting node -> ordered nodes *)
+    Context {A B:Set}.
+    (* function from node to node identifier -> function from node to node name -> graph edges -> ordered nodes *)
     (* This assumes no two nodes have the same string *)
-    Parameter dfs : (A -> string) -> list (string * string) -> list A -> A -> list A.
+    Parameter coq_toposort : (A -> B) -> (A -> string) -> list (A * list A) -> list A.
   End TopoSort.
-*)
 End EUtil.

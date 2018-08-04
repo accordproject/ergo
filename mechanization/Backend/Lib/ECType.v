@@ -20,6 +20,7 @@ Require Import Qcert.Common.CommonTypes.
 Require Import Qcert.Common.TypingRuntime.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
+Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 
 Module ECType(ergomodel:ErgoBackendModel).
 

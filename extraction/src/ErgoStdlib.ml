@@ -18,7 +18,7 @@ let ergo_stdcto =
   [ ("$ERGODIR/extraction/stdlib/hyperledger.cto", hyperledger);
     ("$ERGODIR/extraction/stdlib/contract.cto", contract);
     ("$ERGODIR/extraction/stdlib/money.cto", money);
-    ("$ERGODIR/extraction/stdlib/runtime.cto", runtime);]
+    ("$ERGODIR/extraction/stdlib/runtime.cto", runtime); ]
 let ergo_stdlib =
   [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", stdlib) ];
 

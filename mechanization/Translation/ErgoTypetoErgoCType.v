@@ -18,6 +18,7 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
@@ -47,14 +48,34 @@ Section ErgoTypeExpansion.
              (decl_desc:laergo_type_declaration_desc) : expand_ctxt :=
     match decl_desc with
     | ErgoTypeEnum _ => ctxt
-    | ErgoTypeTransaction e _ => ctxt
+    | ErgoTypeTransaction None rtl =>
+      if string_dec this "org.hyperledger.composer.system.Transaction"%string
+      then (this, (nil, rtl)) :: ctxt
+      else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Transaction"%string rtl
+    | ErgoTypeTransaction (Some super) rtl =>
+      ergo_expand_extends ctxt this super rtl
     | ErgoTypeConcept None rtl =>
       (this, (nil, rtl)) :: ctxt
     | ErgoTypeConcept (Some super) rtl =>
       ergo_expand_extends ctxt this super rtl
-    | ErgoTypeEvent e _ => ctxt
-    | ErgoTypeAsset e _ => ctxt
-    | ErgoTypeParticipant e _ => ctxt
+    | ErgoTypeEvent None rtl =>
+      if string_dec this "org.hyperledger.composer.system.Event"%string
+      then (this, (nil, rtl)) :: ctxt
+      else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Event"%string rtl
+    | ErgoTypeEvent (Some super) rtl =>
+      ergo_expand_extends ctxt this super rtl
+    | ErgoTypeAsset None rtl =>
+      if string_dec this "org.hyperledger.composer.system.Asset"%string
+      then (this, (nil, rtl)) :: ctxt
+      else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Asset"%string rtl
+    | ErgoTypeAsset (Some super) rtl =>
+      ergo_expand_extends ctxt this super rtl
+    | ErgoTypeParticipant None rtl =>
+      if string_dec this "org.hyperledger.composer.system.Participant"%string
+      then (this, (nil, rtl)) :: ctxt
+      else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Participant"%string rtl
+    | ErgoTypeParticipant (Some super) rtl =>
+      ergo_expand_extends ctxt this super rtl
     | ErgoTypeGlobal _ => ctxt
     | ErgoTypeFunction _ => ctxt
     | ErgoTypeContract _ _ _ => ctxt
@@ -90,7 +111,7 @@ Section ErgoTypetoErgoCType.
     | ErgoTypeDouble _ => tfloat
     | ErgoTypeLong _ => tfloat
     | ErgoTypeInteger _ => tnat
-    | ErgoTypeDateTime _ => tbottom
+    | ErgoTypeDateTime _ => tstring (*XXX TO FIX! *)
     | ErgoTypeClassRef _ cr => tbrand (cr::nil)
     | ErgoTypeOption _ t => teither (ergo_type_to_ergoc_type t) tunit
     | ErgoTypeRecord _ rtl =>
@@ -131,8 +152,25 @@ Section Translate.
   Definition mk_model_type_decls {br:brand_relation} (ctxt : expand_ctxt) : tbrand_context_decls :=
     @ergo_ctype_decl_from_expand br ctxt.
 
+  Definition label_of_decl (decl:laergo_type_declaration) : string :=
+    decl.(type_declaration_name).
+  Definition name_of_decl : laergo_type_declaration -> string := label_of_decl.
+  Definition decls_table (decls:list laergo_type_declaration) : list (string * laergo_type_declaration) :=
+    List.map (fun d => (d.(type_declaration_name), d)) decls.
+  Definition edge_of_decl (dt:list (string * laergo_type_declaration)) (decl:laergo_type_declaration) : laergo_type_declaration * list laergo_type_declaration :=
+    let outedges := type_declaration_extend_rel decl in
+    (decl, List.concat (List.map (fun xy => match lookup string_dec dt (snd xy) with | None => nil | Some x => x :: nil end) outedges)).
+  Definition graph_of_decls (decls:list laergo_type_declaration)
+    : list (laergo_type_declaration * list (laergo_type_declaration)) :=
+    let dt := decls_table decls in
+    map (edge_of_decl dt) decls.
+    
+  Definition sort_decls (decls:list laergo_type_declaration) : list laergo_type_declaration :=
+    coq_toposort label_of_decl name_of_decl (graph_of_decls decls).
+
   Definition brand_model_of_declarations (decls:list laergo_type_declaration)
     : eresult ErgoCTypes.tbrand_model :=
+    let decls := sort_decls decls in
     let ctxt := ergo_expand_extends_in_declarations decls in
     let hierarchy := ergo_hierarchy_from_expand ctxt in
     eolift (fun br =>
