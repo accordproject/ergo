@@ -228,3 +228,7 @@ let dfs label file graph visited start_node =
 let toposort label file graph = 
   List.rev (List.fold_left (fun visited (node,_) -> dfs label file graph visited node) [] graph)
 
+let coq_toposort label file graph =
+  let sorted = toposort label (fun x -> string_of_char_list (file x)) graph in
+  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (file x))) sorted; *)
+  sorted

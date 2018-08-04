@@ -81,4 +81,5 @@ val map_assoc : ('a -> 'b -> 'c) -> (('a * 'b) list) -> 'c list
 
 exception TopoCycle of string list
 val toposort : ('a -> 'b) -> ('a -> string) -> ('a * 'a list) list -> 'a list
+val coq_toposort : ('a -> 'b) -> ('a -> char list) -> ('a * 'a list) list -> 'a list
 
