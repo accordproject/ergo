@@ -55,6 +55,7 @@ let available_targets =
 type global_config = {
   mutable econf_source : lang;
   mutable econf_target : lang;
+  mutable econf_sources_text : (string * string) list;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
 }
@@ -62,6 +63,7 @@ type global_config = {
 let empty_config () = {
   econf_source = Ergo;
   econf_target = JavaScript;
+  econf_sources_text = [];
   econf_ctos = [];
   econf_modules = [];
 } 
@@ -78,21 +80,29 @@ let get_all_sorted gconf =
 
 let set_source_lang gconf s = gconf.econf_source <- (lang_of_name s)
 let set_target_lang gconf s = gconf.econf_target <- (lang_of_name s)
+let add_source_text gconf f fcontent =
+  gconf.econf_sources_text <-  (f,fcontent) :: gconf.econf_sources_text
 let add_cto gconf cto =
-  gconf.econf_ctos <- gconf.econf_ctos @ [cto]
-let add_cto_file gconf (f,s) =
-  add_cto gconf (ParseUtil.parse_cto_package_from_string f s)
+  gconf.econf_ctos <-  gconf.econf_ctos @ [cto]
+let add_cto_file gconf (f,fcontent) =
+  add_source_text gconf f fcontent;
+  add_cto gconf (ParseUtil.parse_cto_package_from_string f fcontent)
 let add_module gconf m =
   gconf.econf_modules <- gconf.econf_modules @ [m]
-let add_module_file gconf (f,s) =
-  add_module gconf (ParseUtil.parse_ergo_module_from_string f s)
+let add_module_file gconf (f,fcontent) =
+  add_source_text gconf f fcontent;
+  add_module gconf (ParseUtil.parse_ergo_module_from_string f fcontent)
 
 let get_stdlib () =
-  (Util.map_assoc ParseUtil.parse_cto_package_from_string (ErgoStdlib.ergo_stdcto),
-   Util.map_assoc ParseUtil.parse_ergo_module_from_string (ErgoStdlib.ergo_stdlib))
+  let stdctos = ErgoStdlib.ergo_stdcto in
+  let stdlib = ErgoStdlib.ergo_stdlib in
+  (stdctos@stdlib,
+   Util.map_assoc ParseUtil.parse_cto_package_from_string stdctos,
+   Util.map_assoc ParseUtil.parse_ergo_module_from_string stdlib)
 
 let add_stdlib gconf =
-  let (ctos, mls) = get_stdlib () in
+  let (sources,ctos,mls) = get_stdlib () in
+  gconf.econf_sources_text <- sources @  gconf.econf_sources_text;
   gconf.econf_ctos <- ctos @ gconf.econf_ctos;
   gconf.econf_modules <- mls @ gconf.econf_modules
 let default_config () =
@@ -100,3 +110,4 @@ let default_config () =
   add_stdlib gconf;
   gconf
 
+let get_source_table gconf = gconf.econf_sources_text

@@ -29,5 +29,5 @@ try {
     }
     require('../lib/ergoc-lib.js');
 } catch (err) {
-    Logger.info(err);
+    Logger.error(err.message);
 }

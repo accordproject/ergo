@@ -208,7 +208,7 @@ let loc_error s f x =
   end
 
 let map_assoc f l =
-  List.map (fun xy -> f (fst xy) (snd xy)) l
+   List.map (fun xy -> f (fst xy) (snd xy)) l
 
 (* Mini topo-sort *)
 (* XXX To be revised when Coq-level DFS-topological sort is complete *)

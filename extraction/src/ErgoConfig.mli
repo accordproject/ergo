@@ -29,12 +29,11 @@ val available_targets : string
 type global_config = {
   mutable econf_source : lang;
   mutable econf_target : lang;
+  mutable econf_sources_text : (string * string) list;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
 }
 
-val get_stdlib : unit -> (cto_package list * ergo_module list)
-val add_stdlib : global_config -> unit
 val default_config : unit -> global_config
 
 val get_source_lang : global_config -> lang
@@ -48,7 +47,7 @@ val set_source_lang : global_config -> string -> unit
 val set_target_lang : global_config -> string -> unit
 
 val add_cto_file : global_config -> string * string -> unit
-val add_cto : global_config -> cto_package -> unit
 val add_module_file : global_config -> string * string -> unit
-val add_module : global_config -> ergo_module -> unit
+
+val get_source_table : global_config -> (string * string) list
 

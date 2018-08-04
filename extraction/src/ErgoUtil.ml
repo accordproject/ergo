@@ -78,10 +78,10 @@ let error_loc_end error =
   | ERuntimeError (prov,_) -> (loc_of_provenance prov).loc_end
   end
 
-let underline_prov prov text =
+let underline_prov source prov =
   begin try
     let loc = loc_of_provenance prov in
-    let lines = String.split_on_char '\n' text in
+    let lines = String.split_on_char '\n' source in
     let line = List.nth lines (loc.loc_start.line - 1) in
     let underline =
       String.init
@@ -96,28 +96,48 @@ let underline_prov prov text =
   | _ -> ""
   end
 
+let no_file file =
+  file = "" || file = "stdin"
+
 let string_of_error_prov prov =
   let loc = loc_of_provenance prov in
-  "line " ^ (string_of_int loc.loc_start.line)
+  let file = Util.string_of_char_list loc.loc_file in
+  (if no_file file then "" else "file " ^ file ^ " ")
+  ^ "line " ^ (string_of_int loc.loc_start.line)
   ^ " col " ^ (string_of_int loc.loc_start.column)
 
-let string_of_error error =
-  begin match error with
-  | ESystemError _ -> "[SystemError] " ^ (error_message error)
-  | EParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
-  | ECompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
-  | ETypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error)
-  | ERuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error)
+let get_source source_table file =
+  begin try Some (List.assoc file source_table) with
+  | _ -> None
   end
 
-let string_of_error_plus error text =
-  begin match error with
-  | ESystemError _ -> "[SystemError] " ^ (error_message error)
-  | EParseError (prov, _) -> "[ParseError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
-  | ECompilationError (prov, _) -> "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
-  | ETypeError (prov, _) -> "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (underline_prov prov text)
-  | ERuntimeError (prov, _) -> "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (underline_prov prov text)
+let file_of_prov prov =
+  Util.string_of_char_list (loc_of_provenance prov).loc_file
+let underline_source source_table prov =
+  let file = file_of_prov prov in
+  let source = get_source source_table file in
+  begin match source with
+  | None -> ""
+  | Some source -> underline_prov source prov
   end
+
+let string_of_error f x error =
+  begin match error with
+  | ESystemError _ ->
+      "[SystemError] " ^ (error_message error)
+  | EParseError (prov, _) ->
+      "[ParseError at " ^ (string_of_error_prov prov) ^ "] " (* ^ (error_message error) *) ^ (f x prov)
+  | ECompilationError (prov, _) ->
+      "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (f x prov)
+  | ETypeError (prov, _) ->
+      "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (f x prov)
+  | ERuntimeError (prov, _) ->
+      "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (f x prov)
+  end
+let string_of_error_with_source source error =
+  string_of_error underline_prov source error
+let string_of_error_with_table source_table error =
+  string_of_error underline_source source_table error
 
 (** Version number *)
 let ergo_version = string_of_char_list ergo_version
@@ -186,7 +206,7 @@ let unpatch_cto_extension f =
 let patch_argv argv =
   Array.map patch_cto_extension argv
 
-let anon_args gconf cto_files input_files f =
+let anon_args cto_files input_files f =
   let extension = Filename.extension f in
   if extension = ".ctoj"
   then cto_files := (f, Util.string_of_file f) :: !cto_files
@@ -204,7 +224,7 @@ let parse_args args_list usage args gconf =
   in
   let input_files = ref [] in
   let cto_files = ref [] in
-  parse args (args_list gconf) (anon_args gconf cto_files input_files) usage;
+  parse args (args_list gconf) (anon_args cto_files input_files) usage;
   (List.rev !cto_files, List.rev !input_files)
 
 type label =
