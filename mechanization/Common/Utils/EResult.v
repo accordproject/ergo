@@ -225,11 +225,6 @@ Section EResult.
 
     Definition fmt_csi : string := fmt_esc ++ ("["%string).
 
-    Definition fmt_red (s : string) := s.
-    Definition fmt_grn (s : string) := s.
-    Definition fmt_blu (s : string) := s.
-    Definition fmt_mag (s : string) := s.
-(*
     Definition fmt_red (msg : string) : string :=
       (fmt_csi ++ "31m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
 
@@ -241,7 +236,6 @@ Section EResult.
 
     Definition fmt_mag (msg : string) : string :=
       (fmt_csi ++ "35m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
-*)
 
   End Fmt.
   
