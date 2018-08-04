@@ -35,6 +35,7 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoC.
+  Context {h:brand_relation}.
 
   Definition ergo_unary_eval := ErgoOps.Unary.eval.
   Definition ergo_binary_eval := ErgoOps.Binary.eval.
@@ -147,10 +148,10 @@ Section ErgoC.
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
     | EMatch prov term pes default =>
       let lift_dbrand :=
-          fun dat brand fn default =>
+          fun dat brand fn default => 
             match dat with
             | dbrand (br::nil) rcd =>
-              if String.string_dec brand br then
+              if sub_brands_dec brand_relation_brands (br::nil) (brand::nil) then
                 fn dat
               else
                 default
