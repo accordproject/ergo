@@ -34,8 +34,7 @@ let args_list gconf =
 let usage =
   "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
 
-let main args =
-  let gconf = ErgoConfig.default_config () in
+let main gconf args =
   let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;

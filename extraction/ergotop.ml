@@ -68,7 +68,7 @@ let rec repl rctxt =
     repl rctxt'
   with
   | ErgoUtil.Ergo_Error e ->
-      print_string (ErgoUtil.string_of_error_plus e text);
+      print_string (ErgoUtil.string_of_error_with_source text e);
       print_string "\n" ;
       repl rctxt
   | End_of_file -> None
@@ -85,8 +85,7 @@ let args_list gconf =
 let usage =
   "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
 
-let main args =
-  let gconf = ErgoConfig.default_config () in
+let main gconf args =
   let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;
@@ -95,19 +94,26 @@ let main args =
   welcome ();
   repl rctxt
 
-let wrap_error e =
+let wrap_error gconf e =
+  let source_table = ErgoConfig.get_source_table gconf in
   begin match e with
   | ErgoUtil.Ergo_Error error ->
-      Printf.eprintf "%s\n" (ErgoUtil.string_of_error error); exit 2
+      Printf.eprintf "%s\n"
+        (ErgoUtil.string_of_error_with_table source_table error);
+      exit 2
   | exn ->
-      Printf.eprintf "%s\n" (ErgoUtil.string_of_error (ErgoUtil.ergo_system_error (Printexc.to_string exn))); exit 2
+      Printf.eprintf "%s\n"
+        (ErgoUtil.string_of_error_with_table source_table
+           (ErgoUtil.ergo_system_error (Printexc.to_string exn)));
+      exit 2
   end
 
 let _ =
+  let gconf = ErgoConfig.default_config () in
   begin try
-    main (ErgoUtil.patch_argv Sys.argv)
+    main gconf (ErgoUtil.patch_argv Sys.argv)
   with
   | e ->
-      wrap_error e
+      wrap_error gconf e
   end
 

@@ -14,19 +14,26 @@
 
 open ErgoUtil
 
-let wrap_error e =
+let wrap_error gconf e =
+  let source_table = ErgoConfig.get_source_table gconf in
   begin match e with
-  | Ergo_Error error ->
-      Printf.eprintf "%s\n" (string_of_error error); exit 2
+  | ErgoUtil.Ergo_Error error ->
+      Printf.eprintf "%s\n"
+        (ErgoUtil.string_of_error_with_table source_table error);
+      exit 2
   | exn ->
-      Printf.eprintf "%s\n" (string_of_error (ergo_system_error (Printexc.to_string exn))); exit 2
+      Printf.eprintf "%s\n"
+        (ErgoUtil.string_of_error_with_table source_table
+           (ErgoUtil.ergo_system_error (Printexc.to_string exn)));
+      exit 2
   end
 
 let _ =
+  let gconf = ErgoConfig.default_config () in
   begin try
-    Ergoc.main (patch_argv Sys.argv)
+    Ergoc.main gconf (patch_argv Sys.argv)
   with
   | e ->
-      wrap_error e
+      wrap_error gconf e
   end
 

@@ -28,12 +28,7 @@ let repl rctxt text =
       | None -> (None, rctxt)
       end
   with
-    ErgoUtil.Ergo_Error e -> (Some (ErgoUtil.string_of_error_plus e text), rctxt)
-
-
-
-
-
+    ErgoUtil.Ergo_Error e -> (Some (ErgoUtil.string_of_error_with_source text e), rctxt)
 
 let args_list gconf =
   Arg.align
@@ -67,14 +62,6 @@ let make_init_rctxt =
   let all_modules = ErgoConfig.get_all_sorted gconf in
   let rctxt = safe_init_repl_ctxt all_modules in
   rctxt
-
-let wrap_error e =
-  begin match e with
-  | ErgoUtil.Ergo_Error error ->
-      Printf.eprintf "%s\n" (ErgoUtil.string_of_error error); exit 2
-  | exn ->
-      Printf.eprintf "%s\n" (ErgoUtil.string_of_error (ErgoUtil.ergo_system_error (Printexc.to_string exn))); exit 2
-  end
 
 let _ =
   Js.export "ergotop"
