@@ -56,7 +56,7 @@ Section ErgoC.
     (** Declaration *)
     Inductive ergoc_declaration :=
     | DCExpr : provenance -> ergoc_expr -> ergoc_declaration
-    | DCConstant : provenance -> absolute_name -> ergoc_expr -> ergoc_declaration
+    | DCConstant : provenance -> absolute_name -> option laergo_type -> ergoc_expr -> ergoc_declaration
     | DCFunc : provenance -> absolute_name -> ergoc_function -> ergoc_declaration
     | DCContract : provenance -> absolute_name -> ergoc_contract -> ergoc_declaration.
 

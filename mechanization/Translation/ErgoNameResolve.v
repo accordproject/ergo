@@ -244,7 +244,7 @@ Section ErgoNameResolution.
       | DStmt _ _ :: rest =>
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         ctxt
-      | DConstant _ ln cd :: rest =>
+      | DConstant _ ln ta cd :: rest =>
         let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
         let an := absolute_name_of_local_name ns ln in
         add_constant_to_namespace_ctxt ctxt ns ln an
@@ -744,10 +744,18 @@ Section ErgoNameResolution.
         elift (fun x => (DType prov x, ctxt)) (resolve_ergo_type_declaration module_ns tbl td)
       | DStmt prov st =>
         elift (fun x => (DStmt prov x, ctxt)) (resolve_ergo_stmt tbl st)
-      | DConstant prov ln e =>
+      | DConstant prov ln ta e =>
         let an := absolute_name_of_local_name module_ns ln in
+        let rta :=
+            match ta with
+            | None => esuccess None
+            | Some ta => elift Some (resolve_ergo_type tbl ta)
+            end
+        in
         let ctxt := add_constant_to_namespace_ctxt_current ctxt ln an in
-        elift (fun x => (DConstant prov ln x, ctxt)) (resolve_ergo_expr tbl e)
+        elift2 (fun ta x => (DConstant prov ln ta x, ctxt))
+               rta
+               (resolve_ergo_expr tbl e)
       | DFunc prov ln fd =>
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_function_to_namespace_ctxt_current ctxt ln an in

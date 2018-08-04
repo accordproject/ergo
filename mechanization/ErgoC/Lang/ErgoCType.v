@@ -238,9 +238,26 @@ Section ErgoCType.
     match decl with
     | DCExpr prov expr =>
       elift (fun x => (dctxt, Some x)) (ergo_type_expr dctxt expr)
-    | DCConstant prov name expr =>
+    | DCConstant prov name None expr =>
       let expr' := ergo_type_expr dctxt expr in
       eolift (fun val => esuccess (type_context_update_global_env dctxt name val, None)) expr'
+    | DCConstant prov name (Some t) expr =>
+      let fmt_err :=
+          match prov with
+            | ProvFunc _ fname => ETypeError prov ("Incorrect type of arguments to function " ++ fname)
+            | _ => ETypeError prov "`Constant' type mismatch"
+          end
+      in
+      let expr' := ergo_type_expr dctxt expr in
+      eolift (fun vt =>
+                let t' := (ergo_type_to_ergoc_type t) in
+                if subtype_dec vt t' then
+                  let ctxt' :=
+                      type_context_update_global_env dctxt name t'
+                  in
+                  esuccess (ctxt', None)
+            else
+              efailure fmt_err) expr'
     | DCFunc prov name func =>
       match func.(functionc_body) with
       | None => esuccess (dctxt, None)

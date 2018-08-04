@@ -133,7 +133,7 @@ Section Ergo.
     | DImport : A -> @import_decl A -> ergo_declaration
     | DType : A -> @ergo_type_declaration A N -> ergo_declaration
     | DStmt : A -> ergo_stmt -> ergo_declaration
-    | DConstant : A -> local_name -> ergo_expr -> ergo_declaration
+    | DConstant : A -> local_name -> option (@ergo_type A N) -> ergo_expr -> ergo_declaration
     | DFunc : A -> local_name -> ergo_function -> ergo_declaration
     | DContract : A -> local_name -> ergo_contract -> ergo_declaration
     | DSetContract : A -> N -> ergo_expr -> ergo_declaration
@@ -144,7 +144,7 @@ Section Ergo.
       | DImport a _ => a
       | DType a _ => a
       | DStmt a _ => a
-      | DConstant a _ _ => a
+      | DConstant a _ _ _ => a
       | DFunc a _ _ => a
       | DContract a _ _ => a
       | DSetContract a _ _ => a

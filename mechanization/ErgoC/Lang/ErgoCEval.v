@@ -223,7 +223,7 @@ Section ErgoC.
     match decl with
     | DCExpr prov expr =>
       elift (fun x => (dctxt, Some x)) (ergo_eval_expr dctxt expr)
-    | DCConstant prov name expr =>
+    | DCConstant prov name ta expr =>
       let expr' := ergo_eval_expr dctxt expr in
       eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
     | DCFunc prov name func =>

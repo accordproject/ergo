@@ -129,7 +129,9 @@ decl:
     { ErgoCompiler.dtype (mk_provenance $startpos $endpos)
         (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEnum et)) }
 | DEFINE CONSTANT v = ident EQUAL e = expr
-    { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v e }
+    { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v None e }
+| DEFINE CONSTANT v = ident COLON t = paramtype EQUAL e = expr
+    { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v (Some t) e }
 | DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype et = effecttypes LCURLY fs = fstmt RCURLY
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
