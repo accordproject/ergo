@@ -20,5 +20,5 @@ let my_init_repl_context input =
   | Failure e -> ErgoUtil.ergo_raise e
   end
 let my_ergo_repl_eval_decl rctxt decl =
-  ergo_repl_eval_decl rctxt.ErgoComp.repl_context_brand_model rctxt decl
-    
+  ergo_repl_eval_decl rctxt.ErgoComp.repl_context_comp_ctxt.ErgoComp.compilation_context_brand_model rctxt decl
+
