@@ -45,7 +45,7 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 
 Section ErgoDriver.
-  Section PreCompiler.
+  Section CompilerPre.
     Definition resolve_inputs
                (inputs:list lrergo_input) : eresult ((list laergo_module * laergo_module) * namespace_ctxt) :=
       let '(ctos, mls, p) := split_ctos_and_ergos inputs in
@@ -79,9 +79,9 @@ Section ErgoDriver.
       let type_decls := elift modules_get_type_decls resolved in
       eolift ErgoTypetoErgoCType.brand_model_of_declarations type_decls.
 
-  End PreCompiler.
+  End CompilerPre.
 
-  Section Compiler.
+  Section CompilerCore.
     Context {bm:brand_model}.
 
     (* Initialize compilation context *)
@@ -125,16 +125,33 @@ Section ErgoDriver.
     Definition ergo_declaration_to_ergoc_inlined
                (sctxt : compilation_context)
                (decl : lrergo_declaration)
-      : eresult (list ergoc_declaration * compilation_context) :=
-      eolift
-        (fun (x : list ergoc_declaration * compilation_context) =>
-           let (decls, ctxt) := x in
-           elift_context_fold_left
-             ergoc_inline_declaration
-             decls
-             ctxt)
-        (ergo_declaration_to_ergoc sctxt decl).
-
+      : eresult (list (option ergoc_type * ergoc_declaration) * compilation_context) :=
+      (* Translation *)
+      let ec := ergo_declaration_to_ergoc sctxt decl in
+      (* Inlining *)
+      let inlined : eresult (list ergoc_declaration * compilation_context) :=
+          eolift
+            (fun (x : list ergoc_declaration * compilation_context) =>
+               let (decls, ctxt) := x in
+               elift_context_fold_left
+                 ergoc_inline_declaration
+                 decls
+                 ctxt)
+            ec
+      in
+      (* Type-checking *)
+      eolift (fun xy : list ergoc_declaration * compilation_context =>
+                elift_context_fold_left
+                  (fun (sctxt : compilation_context) (decl : ergoc_declaration) =>
+                     match ergoc_type_decl sctxt.(compilation_context_type_ctxt) decl with
+                     | Failure _ _ f => efailure f
+                     | Success _ _ (tctxt', typ) =>
+                       esuccess ((typ,decl), compilation_context_update_type_ctxt sctxt tctxt')
+                     end)
+                  (fst xy)
+                  (snd xy)
+             ) inlined.
+        
     Definition ergo_module_to_javascript
                (ctxt:compilation_context)
                (p:laergo_module) : eresult ErgoCodeGen.javascript :=
@@ -167,7 +184,7 @@ Section ErgoDriver.
       let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
       elift nnrc_module_to_java_top pn.
 
-  End Compiler.
+  End CompilerCore.
 
   Section CompilerTop.
 
@@ -266,31 +283,26 @@ Section ErgoDriver.
           result.
 
     Definition ergoc_repl_eval_declaration
-               (ctxt:repl_context) (decl:ergoc_declaration)
+               (ctxt:repl_context) (typed_decl:option ergoc_type * ergoc_declaration)
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
-      let sctxt := ctxt.(repl_context_comp_ctxt) in
-      match ergoc_type_decl ctxt.(repl_context_comp_ctxt).(compilation_context_type_ctxt) decl with
+      let (typ, decl) := typed_decl in
+      match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (tctxt', typ) =>
-        let ctxt' := update_repl_ctxt_type_ctxt ctxt tctxt' in
-        match ergoc_eval_decl ctxt'.(repl_context_eval_ctxt) decl with
-        | Failure _ _ f => efailure f
-        | Success _ _ (dctxt', None) => esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt' dctxt')
-        | Success _ _ (dctxt', Some out) =>
-          match unpack_output out with
-          | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt' dctxt')
-          | Some (_, _, state) =>
-            esuccess (
-                typ,
-                Some out,
-                update_repl_ctxt_eval_ctxt ctxt' (eval_context_update_local_env dctxt' "state"%string state)
-              )
-          end
+      | Success _ _ (dctxt', None) => esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt')
+      | Success _ _ (dctxt', Some out) =>
+        match unpack_output out with
+        | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt')
+        | Some (_, _, state) =>
+          esuccess (
+              typ,
+              Some out,
+              update_repl_ctxt_eval_ctxt ctxt (eval_context_update_local_env dctxt' "state"%string state)
+            )
         end
       end.
 
     Definition ergoc_repl_eval_declarations
-               (ctxt:repl_context) (decls:list ergoc_declaration)
+               (ctxt:repl_context) (decls:list (option ergoc_type * ergoc_declaration))
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
       elift
         (fun xy =>
