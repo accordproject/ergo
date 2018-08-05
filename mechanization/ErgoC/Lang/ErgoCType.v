@@ -29,14 +29,10 @@ Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Pattern.EPattern.
-
+Require Import ErgoSpec.Common.Types.ErgoTypetoErgoCType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
-
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import Qcert.Common.TypeSystem.RTypetoJSON.
-
-Require Import ErgoSpec.Translation.ErgoTypetoErgoCType.
 
 Section ErgoCType.
   Context {m : brand_model}.

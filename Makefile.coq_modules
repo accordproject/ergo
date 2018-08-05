@@ -32,6 +32,7 @@ MODULES = \
   Common/Utils/EAstUtil \
   Common/CTO/CTO \
   Common/Types/ErgoType \
+  Common/Types/ErgoTypetoErgoCType \
   Common/Pattern/EPattern \
   Ergo/Lang/Ergo \
   Ergo/Lang/ErgoMap \
@@ -52,7 +53,6 @@ MODULES = \
   Translation/ErgoCompContext \
   Translation/ErgoCInline \
   Translation/ErgotoErgoC \
-  Translation/ErgoTypetoErgoCType \
   Translation/ErgoCtoErgoNNRC \
   Translation/ErgoNNRCtoJavaScript \
   Translation/ErgoNNRCtoJavaScriptCicero \
