@@ -19,12 +19,7 @@ type nra_logger_token_type = string
 type nrc_logger_token_type = string
 type dnrc_logger_token_type = string
 
-(**************)
-(* Data types *)
-(**************)
-
-(* Data type conversions between Coq and OCaml *)
-
+(** Conversions *)
 let string_of_char_list l =
   let b = Bytes.create (List.length l) in
   let i = ref 0 in
@@ -42,10 +37,7 @@ let char_list_append s1 s2 =
 let coq_Z_of_int i = i
 
 
-(*******)
-(* I/O *)
-(*******)
-
+(** I/O *)
 let os_newline = "\n"
 let string_of_file file =
   try
@@ -63,8 +55,7 @@ let string_of_file file =
         err;
       raise (Sys_error err)
 
-(* File print *)
-
+(** File print *)
 let make_file fout scomp =
   let oc = open_out fout in
   begin
@@ -72,8 +63,7 @@ let make_file fout scomp =
     close_out oc
   end
 
-(* Make up target file name *)
-
+(** Make up target file name *)
 let target_f dir f =
   begin match dir with
   | None -> f
@@ -83,10 +73,7 @@ let target_f dir f =
 
 let outname f suff = f ^ suff
 
-
-(**********************************)
-(* Support for Enhanced operators *)
-(**********************************)
+(** Support for Enhanced operators *)
 
 let float_sum l =
   List.fold_left (+.) 0. l
@@ -210,7 +197,7 @@ let loc_error s f x =
 let map_assoc f l =
    List.map (fun xy -> f (fst xy) (snd xy)) l
 
-(* Mini topo-sort *)
+(** Mini topo-sort *)
 (* XXX To be revised when Coq-level DFS-topological sort is complete *)
 
 exception TopoCycle of string list
