@@ -39,7 +39,7 @@ Module ErgoCompiler.
   (** Utils *)
   (* XXX Exposed so it can be called from JavaScript - Should be removed once we switch to the REPL *)
   Definition javascript_identifier_sanitizer := ErgoBackend.ErgoCodeGen.javascript_identifier_sanitizer.
-  
+
   (** Location *)
   Definition location := EProvenance.location.
   Definition provenance := EProvenance.provenance.
@@ -68,6 +68,8 @@ Module ErgoCompiler.
   Definition esuccess (A:Set) : A -> eresult A := EResult.esuccess.
   Definition efailure (A:Set) : eerror -> eresult A := EResult.efailure.
 
+  Definition result_file : Set := EUtil.result_file.
+  
   (** CTOs *)
   Definition cto_type := CTO.lrcto_type.
   Definition cto_declaration_desc := CTO.lrcto_declaration_desc.
@@ -276,20 +278,17 @@ Module ErgoCompiler.
   (** Compilation *)
   Definition ergo_module_to_javascript :
     list ergo_input
-    -> ergo_module
-    -> EResult.eresult JavaScript.javascript
+    -> EResult.eresult result_file
     := ErgoDriver.ergo_module_to_javascript_top.
 
   Definition ergo_module_to_javascript_cicero :
     list ergo_input
-    -> ergo_module
-    -> EResult.eresult JavaScript.javascript
+    -> EResult.eresult result_file
     := ErgoDriver.ergo_module_to_javascript_cicero_top.
 
   Definition ergo_module_to_java :
     list ergo_input
-    -> ergo_module
-    -> EResult.eresult Java.java
+    -> EResult.eresult result_file
     := ErgoDriver.ergo_module_to_java_top.
 
   Definition ergo_brand_model := ErgoCTypes.tbrand_model.

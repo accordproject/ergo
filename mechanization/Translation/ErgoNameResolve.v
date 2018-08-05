@@ -909,15 +909,18 @@ Section ErgoNameResolution.
         ctxt.
 
     Fixpoint split_ctos_and_ergos (inputs:list lrergo_input)
-      : (list lrcto_package * list lrergo_module) :=
+      : (list lrcto_package * list lrergo_module * option lrergo_module) :=
       match inputs with
-      | nil => (nil, nil)
+      | nil => (nil, nil, None)
       | InputCTO cto :: rest =>
-        let split_rest := split_ctos_and_ergos rest in
-        (cto :: fst split_rest, snd split_rest)
+        let '(ctos', rest', p') := split_ctos_and_ergos rest in
+        (cto :: ctos', rest', p')
       | InputErgo ml :: rest =>
-        let split_rest := split_ctos_and_ergos rest in
-        (fst split_rest, ml :: snd split_rest)
+        let '(ctos', rest', p') := split_ctos_and_ergos rest in
+        match p' with
+        | None => (ctos', rest', Some ml)
+        | Some _ => (ctos', ml :: rest', p')
+        end
       end.
 
   End Top.

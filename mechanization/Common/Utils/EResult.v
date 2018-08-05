@@ -177,6 +177,8 @@ Section EResult.
       efailure (ERuntimeError prov "Foreach needs to be called on an array").
 
     (** System errors *)
+    Definition no_ergo_module_error {A} prov : eresult A :=
+      efailure (ESystemError prov ("No input ergo found")).
     Definition built_in_function_not_found_error {A} prov (fname:string) : eresult A :=
       efailure (ESystemError prov ("Built in function " ++ fname ++ " not found")).
     Definition built_in_function_without_body_error {A} prov (fname:string) : eresult A :=

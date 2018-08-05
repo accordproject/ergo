@@ -17,41 +17,42 @@ open ErgoUtil
 open ErgoComp
 open ErgoConfig
 
-let compile_module_to_javascript inputs ergo =
-  let code = ErgoCompiler.ergo_module_to_javascript inputs ergo in
-  wrap_jerrors string_of_char_list code
+let res_convert code =
+  (string_of_char_list code.res_file, string_of_char_list code.res_content)
 
-let compile_module_to_javascript_cicero inputs ergo =
-  let code = ErgoCompiler.ergo_module_to_javascript_cicero inputs ergo in
-  wrap_jerrors string_of_char_list code
+let compile_module_to_javascript inputs =
+  let code = ErgoCompiler.ergo_module_to_javascript inputs in
+  wrap_jerrors res_convert code
 
-let compile_module_to_java inputs ergo =
-  let code = ErgoCompiler.ergo_module_to_java inputs ergo in
-  wrap_jerrors string_of_char_list code
+let compile_module_to_javascript_cicero inputs =
+  let code = ErgoCompiler.ergo_module_to_javascript_cicero inputs in
+  wrap_jerrors res_convert code
 
-let ergo_compile target_lang inputs ergo_parsed =
+let compile_module_to_java inputs =
+  let code = ErgoCompiler.ergo_module_to_java inputs in
+  wrap_jerrors res_convert code
+
+let ergo_compile target_lang inputs =
   let result =
     begin match target_lang with
     | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
     | JavaScript ->
-        compile_module_to_javascript inputs ergo_parsed
+        compile_module_to_javascript inputs
     | JavaScriptCicero ->
-        compile_module_to_javascript_cicero inputs ergo_parsed
+        compile_module_to_javascript_cicero inputs
     | Java ->
-        compile_module_to_java inputs ergo_parsed
+        compile_module_to_java inputs
     end
   in
   result
 
-let ergo_proc gconf initmls ergo_parsed =
-  let file_name = Util.string_of_char_list ergo_parsed.module_file in
-  Printf.printf "Compiling Ergo '%s' -- " file_name;
+let ergo_proc gconf inputs =
   let target_lang = ErgoConfig.get_target_lang gconf in
-  let result = ergo_compile target_lang initmls ergo_parsed in
-  let file_res = make_result_file (extension_of_lang target_lang) file_name result in
-  if file_res.res_file <> "" then
-    begin
-      Printf.printf "created '%s'\n" file_res.res_file;
-      make_file file_res.res_file file_res.res_content
-    end
+  let ext = extension_of_lang target_lang in
+  let (source_file,result) = ergo_compile target_lang inputs in
+  Printf.printf "Compiled Ergo '%s' -- " source_file;
+  let fpref = Filename.chop_extension source_file in
+  let fout = outname (target_f None fpref) ext in
+  Printf.printf "created '%s'\n" fout;
+  make_file fout result
 

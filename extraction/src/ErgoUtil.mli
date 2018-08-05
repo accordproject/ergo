@@ -57,15 +57,7 @@ val unpatch_cto_extension : string -> string
 (** Topological sort *)
 val labels_of_graph : ('a,'b) ergo_input list -> (string * string list) list
 val topo_sort_inputs : ('a,'b) ergo_input list -> ('a,'b) ergo_input list
-val get_last_ergo : ('a,'b) ergo_input list -> (('a,'b) ergo_input list) * (('a,'b) ergo_module option)
 
-(** File management *)
-type result_file = {
-  res_file : string;
-  res_content : string;
-}
-val make_result_file : string -> string -> string -> result_file
-
+(** Backend *)
 val ergo_call : string -> string
-
 

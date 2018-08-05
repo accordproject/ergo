@@ -150,17 +150,6 @@ let get_version cmd () =
 let process_file f (file_name, file_content) =
   f (file_name,file_content)
 
-type result_file = {
-  res_file : string;
-  res_content : string;
-}
-
-let make_result_file ext source_file s =
-  let fpref = Filename.chop_extension source_file in
-  let fout = outname (target_f None fpref) ext in
-  { res_file = fout;
-    res_content = s; }
-
 let wrap_jerrors f e =
   begin match e with
   | Failure e -> ergo_raise e
@@ -325,19 +314,5 @@ let topo_sort_inputs all_inputs =
   with
   | TopoCycle path ->
       ergo_raise (ergo_system_error ("Circular imports: " ^ cycle_of_path path))
-  end
-
-let rec get_last_ergo l =
-  begin match l with
-  | [] -> ([], None)
-  | (InputCTO x) :: rest ->
-      let (rest', last) = get_last_ergo rest in
-      (InputCTO x :: rest', last)
-  | (InputErgo x) :: rest ->
-      let (rest', last) = get_last_ergo rest in
-      begin match last with
-      | None -> (rest', Some x)
-      | Some x' -> (InputErgo x :: rest', Some x')
-      end
   end
 

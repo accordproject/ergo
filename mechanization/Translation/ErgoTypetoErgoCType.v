@@ -17,14 +17,13 @@
 Require Import String.
 Require Import List.
 
+Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EUtil.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import ErgoSpec.Common.Utils.EAstUtil.
 Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.ErgoC.Lang.ErgoC.
-Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoTypeExpansion.
   Definition expand_hierarchy : Set := list string.

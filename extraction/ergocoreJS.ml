@@ -99,14 +99,8 @@ let ergo_compile input =
     let gconf = global_config_of_json input in
     let target_lang = ErgoConfig.get_target_lang gconf in
     let all_modules = ErgoConfig.get_all_sorted gconf in
-    let (initmls, main) = get_last_ergo all_modules in
-    begin match main with
-    | Some main ->
-        let res = ErgoCompile.ergo_compile target_lang initmls main in
-        json_of_result res
-    | None ->
-        ergo_raise (ergo_system_error "Ergo not found")
-    end
+    let (file,res) = ErgoCompile.ergo_compile target_lang all_modules in
+    json_of_result res
   with
   | Ergo_Error error -> json_of_error error
   | exn -> json_of_error (ergo_system_error (Printexc.to_string exn))
