@@ -79,6 +79,11 @@ Section ErgoDriver.
       let type_decls := elift modules_get_type_decls resolved in
       eolift ErgoTypetoErgoCType.brand_model_of_declarations type_decls.
 
+  End PreCompiler.
+
+  Section Compiler.
+    Context {bm:brand_model}.
+
     (* Initialize compilation context *)
     Definition init_compilation_context_from_inputs
                (inputs:list lrergo_input) :
@@ -90,9 +95,6 @@ Section ErgoDriver.
            (mls, p, init_compilation_context ns_ctxt))
         rinputs.
 
-  End PreCompiler.
-
-  Section Compiler.
     (* Ergo -> ErgoC *)
     Definition ergo_module_to_ergoc
                (ctxt:compilation_context)
@@ -158,15 +160,6 @@ Section ErgoDriver.
                       (ergo_modules_to_ergoc ctxt (mls ++ (p::nil))))
              cinit.
     
-    Definition ergo_module_to_javascript_top
-               (inputs:list lrergo_input) : eresult result_file :=
-      let cinit := compilation_context_from_most_inputs inputs in
-      eolift (fun init : laergo_module * compilation_context =>
-               let (p, ctxt) := init in
-               let res := ergo_module_to_javascript ctxt p in
-               elift (mkResultFile p.(module_file)) res)
-            cinit.
-
     Definition ergo_module_to_java
                (ctxt:compilation_context)
                (p:laergo_module) : eresult ErgoCodeGen.java :=
@@ -174,51 +167,69 @@ Section ErgoDriver.
       let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
       elift nnrc_module_to_java_top pn.
 
+  End Compiler.
+
+  Section CompilerTop.
+
+    Definition ergo_module_to_javascript_top
+               (inputs:list lrergo_input) : eresult result_file :=
+      let bm : eresult brand_model := brand_model_from_inputs inputs in
+      eolift (fun bm :brand_model=>
+                let cinit := compilation_context_from_most_inputs inputs in
+                eolift (fun init : laergo_module * compilation_context =>
+                          let (p, ctxt) := init in
+                          let res := ergo_module_to_javascript ctxt p in
+                          elift (mkResultFile p.(module_file)) res)
+                       cinit) bm.
+
     Definition ergo_module_to_java_top
                (inputs:list lrergo_input) : eresult result_file :=
-      let cinit := compilation_context_from_most_inputs inputs in
-      eolift (fun init : laergo_module * compilation_context =>
-                let (p, ctxt) := init in
-                let res := ergo_module_to_java ctxt p in
-                elift (mkResultFile p.(module_file)) res)
-             cinit.
+      let bm : eresult brand_model := brand_model_from_inputs inputs in
+      eolift (fun bm :brand_model=>
+                let cinit := compilation_context_from_most_inputs inputs in
+                eolift (fun init : laergo_module * compilation_context =>
+                          let (p, ctxt) := init in
+                          let res := ergo_module_to_java ctxt p in
+                          elift (mkResultFile p.(module_file)) res)
+                       cinit) bm.
 
     Definition ergo_module_to_javascript_cicero_top
                (inputs:list lrergo_input) : eresult result_file :=
-      let ctxt := compilation_context_from_most_inputs inputs in
+      let bm : eresult brand_model := brand_model_from_inputs inputs in
       eolift
-        (fun init : laergo_module * compilation_context =>
-           let (p, ctxt) := init in
-           let res :=
-               let ec := lookup_single_contract p in
-               eolift
-                 (fun c : local_name * ergo_contract =>
-                    let contract_name := (fst c) in 
-                    let sigs := lookup_contract_signatures (snd c) in
-                    let pc := ergo_module_to_ergoc ctxt p in
-                    let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
-                    elift (ergoc_module_to_javascript_cicero contract_name (snd c).(contract_state) sigs) pn)
-                 ec
-           in
-           elift (mkResultFile p.(module_file)) res)
-        ctxt.
-
-  End Compiler.
+        (fun bm : brand_model=>
+           let ctxt := compilation_context_from_most_inputs inputs in
+           eolift
+             (fun init : laergo_module * compilation_context =>
+                let (p, ctxt) := init in
+                let res :=
+                    let ec := lookup_single_contract p in
+                    eolift
+                      (fun c : local_name * ergo_contract =>
+                         let contract_name := (fst c) in 
+                         let sigs := lookup_contract_signatures (snd c) in
+                         let pc := ergo_module_to_ergoc ctxt p in
+                         let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
+                         elift (ergoc_module_to_javascript_cicero contract_name (snd c).(contract_state) sigs) pn)
+                      ec
+                in
+                elift (mkResultFile p.(module_file)) res)
+             ctxt) bm.
+    
+  End CompilerTop.
 
   Section Interpreter.
     Context {bm:brand_model}.
 
     Record repl_context :=
       mkREPLCtxt {
-          repl_context_type_ctxt : type_context;
-          repl_context_brand_model : brand_model;
           repl_context_eval_ctxt : eval_context;
           repl_context_comp_ctxt : compilation_context;
         }.
 
     Definition init_repl_context
                (inputs : list lrergo_input) : eresult repl_context :=
-      elift (mkREPLCtxt ErgoCTypeContext.empty_type_context bm ErgoCEvalContext.empty_eval_context)
+      elift (mkREPLCtxt ErgoCEvalContext.empty_eval_context)
             (eolift (set_namespace_in_compilation_context
                        "org.accordproject.ergotop"%string)
                     (compilation_context_from_inputs inputs)).
@@ -227,26 +238,20 @@ Section ErgoDriver.
                (rctxt: repl_context)
                (sctxt: compilation_context) : repl_context :=
       mkREPLCtxt
-        rctxt.(repl_context_type_ctxt)
-        rctxt.(repl_context_brand_model)
         rctxt.(repl_context_eval_ctxt)
         sctxt.
     
     Definition update_repl_ctxt_type_ctxt
                (rctxt: repl_context)
                (nctxt: type_context) : repl_context :=
-      mkREPLCtxt
-        nctxt
-        rctxt.(repl_context_brand_model)
-        rctxt.(repl_context_eval_ctxt)
-        rctxt.(repl_context_comp_ctxt).
+      update_repl_ctxt_comp_ctxt
+        rctxt
+        (compilation_context_update_type_ctxt rctxt.(repl_context_comp_ctxt) nctxt).
     
     Definition update_repl_ctxt_eval_ctxt
                (rctxt: repl_context)
                (nctxt: eval_context) : repl_context :=
       mkREPLCtxt
-        rctxt.(repl_context_type_ctxt)
-        rctxt.(repl_context_brand_model)
         nctxt
         rctxt.(repl_context_comp_ctxt).
 
@@ -264,24 +269,21 @@ Section ErgoDriver.
                (ctxt:repl_context) (decl:ergoc_declaration)
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
       let sctxt := ctxt.(repl_context_comp_ctxt) in
-      match ergoc_type_decl ctxt.(repl_context_type_ctxt) decl with
+      match ergoc_type_decl ctxt.(repl_context_comp_ctxt).(compilation_context_type_ctxt) decl with
       | Failure _ _ f => efailure f
       | Success _ _ (tctxt', typ) =>
-        match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
+        let ctxt' := update_repl_ctxt_type_ctxt ctxt tctxt' in
+        match ergoc_eval_decl ctxt'.(repl_context_eval_ctxt) decl with
         | Failure _ _ f => efailure f
-        | Success _ _ (dctxt', None) => esuccess (typ, None, mkREPLCtxt tctxt' ctxt.(repl_context_brand_model) dctxt' sctxt)
+        | Success _ _ (dctxt', None) => esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt' dctxt')
         | Success _ _ (dctxt', Some out) =>
           match unpack_output out with
-          | None => esuccess (typ, Some out, mkREPLCtxt tctxt' ctxt.(repl_context_brand_model) dctxt' sctxt)
+          | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt' dctxt')
           | Some (_, _, state) =>
             esuccess (
                 typ,
                 Some out,
-                mkREPLCtxt
-                  tctxt' (* TODO *)
-                  ctxt.(repl_context_brand_model)
-                  (eval_context_update_local_env dctxt' "state"%string state)
-                  sctxt
+                update_repl_ctxt_eval_ctxt ctxt' (eval_context_update_local_env dctxt' "state"%string state)
               )
           end
         end

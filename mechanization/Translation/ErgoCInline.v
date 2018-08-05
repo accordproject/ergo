@@ -38,6 +38,7 @@ Definition ergo_declaration := Ergo.laergo_declaration.
 Definition ergo_module := Ergo.laergo_module.
 
 Section ErgoCInline.
+  Context {bm:brand_model}.
 
   Definition ergo_map_expr_sane ctxt fn expr :=
     @ergo_map_expr provenance absolute_name compilation_context ctxt

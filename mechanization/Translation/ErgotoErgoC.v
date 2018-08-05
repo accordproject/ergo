@@ -28,6 +28,8 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
 Require Import ErgoSpec.Translation.ErgoCompContext.
 
 Section ErgotoErgoC.
+  Context {bm:brand_model}.
+
   (** Translate Ergo expression to calculus *)
   Fixpoint ergo_expr_to_ergoc_expr (ctxt:compilation_context) (e:laergo_expr) : eresult ergoc_expr :=
     match e with
