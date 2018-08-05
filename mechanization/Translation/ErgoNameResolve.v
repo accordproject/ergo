@@ -918,7 +918,10 @@ Section ErgoNameResolution.
       | InputErgo ml :: rest =>
         let '(ctos', rest', p') := split_ctos_and_ergos rest in
         match p' with
-        | None => (ctos', rest', Some ml)
+        | None =>
+          if is_builtin_import ml.(module_namespace)
+          then (ctos', ml :: rest', None)
+          else (ctos', rest', Some ml)
         | Some _ => (ctos', ml :: rest', p')
         end
       end.
