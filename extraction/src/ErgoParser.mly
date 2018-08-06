@@ -38,7 +38,7 @@ let mk_provenance
 %token <string> IDENT
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
-%token CONCEPT TRANSACTION ENUM EXTENDS
+%token TRANSACTION CONCEPT EVENT ASSET PARTICIPANT ENUM EXTENDS
 %token CONTRACT OVER CLAUSE
 %token THROWS EMITS
 
@@ -117,14 +117,26 @@ decl:
     { ErgoCompiler.dimport
         (mk_provenance $startpos $endpos)
         qn }
-| DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
-    { let (oe,ctype) = dt in
-      ErgoCompiler.dtype (mk_provenance $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeConcept (oe,ctype))) }
 | DEFINE TRANSACTION cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
         (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeTransaction (oe,ctype))) }
+| DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in
+      ErgoCompiler.dtype (mk_provenance $startpos $endpos)
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeConcept (oe,ctype))) }
+| DEFINE EVENT cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in
+      ErgoCompiler.dtype (mk_provenance $startpos $endpos)
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEvent (oe,ctype))) }
+| DEFINE ASSET cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in
+      ErgoCompiler.dtype (mk_provenance $startpos $endpos)
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeAsset (oe,ctype))) }
+| DEFINE PARTICIPANT cn = ident dt = ergo_type_class_decl
+    { let (oe,ctype) = dt in
+      ErgoCompiler.dtype (mk_provenance $startpos $endpos)
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeParticipant (oe,ctype))) }
 | DEFINE ENUM cn = ident et = ergo_type_enum_decl
     { ErgoCompiler.dtype (mk_provenance $startpos $endpos)
         (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEnum et)) }
@@ -578,8 +590,11 @@ safeident_base:
 | IMPORT { "import" }
 | DEFINE { "define" }
 | FUNCTION { "function" }
-| CONCEPT { "concept" }
 | TRANSACTION { "transaction" }
+| CONCEPT { "concept" }
+| EVENT { "event" }
+| ASSET { "asset" }
+| PARTICIPANT { "participant" }
 | ENUM { "enum" }
 | EXTENDS { "extends" }
 | CONTRACT { "contract" }

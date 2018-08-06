@@ -27,8 +27,11 @@
 	      "define", DEFINE;
 	      "function", FUNCTION;
         (* types *)
-	      "concept", CONCEPT;
 	      "transaction", TRANSACTION;
+	      "concept", CONCEPT;
+	      "event", EVENT;
+	      "asset", ASSET;
+	      "participant", PARTICIPANT;
 	      "enum", ENUM;
 	      "extends", EXTENDS;
         (* contract *)
