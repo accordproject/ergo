@@ -274,7 +274,9 @@ Section ErgoCType.
                   (fun typ => (elift tcoll) (ergo_type_expr (type_context_update_local_env ctxt name typ) fn))
                 (eresult_of_option
                   (untcoll arr')
-                  (ETypeError prov "foreach must be called with array")))
+                  (ETypeError
+                     prov
+                     ("foreach expects an array to iterate over, but was given something of type `" ++ (ergoc_type_to_string arr') ++ "'."))))
             (ergo_type_expr ctxt arr)
             
     | EForeach prov _ _ _ =>
