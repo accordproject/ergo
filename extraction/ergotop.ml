@@ -116,4 +116,3 @@ let _ =
   | e ->
       wrap_error gconf e
   end
-
