@@ -151,7 +151,9 @@ Section ErgoCType.
           | ProvFunc _ fname =>
             ETypeError prov
                        ("Function `" ++ fname
-                                     ++ "' expected argument of type `"
+                                     ++ "' expected argument `"
+                                     ++ n
+                                     ++ "' to be of type `"
                                      ++ (ergoc_type_to_string t')
                                      ++ "' but was given argument of type `"
                                      ++ (ergoc_type_to_string vt)
@@ -159,6 +161,8 @@ Section ErgoCType.
           | _ => ETypeError prov
                             ("The let type annotation `"
                                ++ (ergoc_type_to_string t')
+                               ++ "' for the name `"
+                               ++ n
                                ++ "' does not match the actual type `"
                                ++ (ergoc_type_to_string vt)
                                ++ "'.")
