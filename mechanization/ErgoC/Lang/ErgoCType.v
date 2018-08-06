@@ -79,6 +79,10 @@ Section ErgoCType.
     | OpNatBinary NatMult => fmt_easy "*i"%string tnat tnat
     | OpNatBinary NatDiv => fmt_easy "/i"%string tnat tnat
     | OpNatBinary NatPow => fmt_easy "^i"%string tnat tnat
+    | OpFloatCompare FloatLt => fmt_easy "<"%string tfloat tfloat
+    | OpFloatCompare FloatLe => fmt_easy "<="%string tfloat tfloat
+    | OpFloatCompare FloatGt => fmt_easy ">"%string tfloat tfloat
+    | OpFloatCompare FloatGe => fmt_easy ">="%string tfloat tfloat
     | _ => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string arg2) ++ "'."
     end.
 
