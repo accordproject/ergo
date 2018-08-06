@@ -58,16 +58,27 @@ Section ErgoCType.
 
   Definition ergo_format_binop_error (op : binary_op) (arg1 : ergoc_type) (arg2 : ergoc_type) : string :=
     let fmt_easy :=
-        fun name e1 e2 a1 a2 =>
+        fun name e1 e2 =>
           ("Operator `" ++ name ++ "' expected operands of type `" ++
                         (ergoc_type_to_string e1) ++ "' and `" ++
                         (ergoc_type_to_string e2) ++
                         "' but received operands of type `" ++
-                        (ergoc_type_to_string a1) ++ "' and `" ++
-                        (ergoc_type_to_string a2) ++ "'.")%string
+                        (ergoc_type_to_string arg1) ++ "' and `" ++
+                        (ergoc_type_to_string arg2) ++ "'.")%string
     in
     match op with
-    | OpOr => fmt_easy "or"%string tbool tbool arg1 arg2
+    | OpAnd => fmt_easy "and"%string tbool tbool
+    | OpOr => fmt_easy "or"%string tbool tbool
+    | OpFloatBinary FloatPlus => fmt_easy "+"%string tfloat tfloat
+    | OpFloatBinary FloatMinus => fmt_easy "-"%string tfloat tfloat
+    | OpFloatBinary FloatMult => fmt_easy "*"%string tfloat tfloat
+    | OpFloatBinary FloatDiv => fmt_easy "/"%string tfloat tfloat
+    | OpFloatBinary FloatPow => fmt_easy "^"%string tfloat tfloat
+    | OpNatBinary NatPlus => fmt_easy "+i"%string tnat tnat
+    | OpNatBinary NatMinus => fmt_easy "-i"%string tnat tnat
+    | OpNatBinary NatMult => fmt_easy "*i"%string tnat tnat
+    | OpNatBinary NatDiv => fmt_easy "/i"%string tnat tnat
+    | OpNatBinary NatPow => fmt_easy "^i"%string tnat tnat
     | _ => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string arg2) ++ "'."
     end.
 
