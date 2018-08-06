@@ -96,21 +96,21 @@ Section ErgoCType.
            es (esuccess tbottom))
     | EUnaryOp prov op e =>
       match ergo_type_expr ctxt e with
-      | Success _ _ e' =>
-        match ergoc_type_infer_unary_op op e' with
+      | Success _ _ t =>
+        match ergoc_type_infer_unary_op op t with
         | Some (r, _) => esuccess r
-        | None => efailure (ETypeError prov (ergo_format_unop_error op e'))
+        | None => efailure (ETypeError prov (ergo_format_unop_error op t))
         end
       | Failure _ _ f => efailure f
       end
     | EBinaryOp prov op e1 e2 =>
       match ergo_type_expr ctxt e1 with
-      | Success _ _ e1' =>
+      | Success _ _ t1 =>
         match ergo_type_expr ctxt e2 with
-        | Success _ _ e2' =>
-          match ergoc_type_infer_binary_op op e1' e2' with
+        | Success _ _ t2 =>
+          match ergoc_type_infer_binary_op op t1 t2 with
           | Some (r, _, _) => esuccess r
-          | None => efailure (ETypeError prov (ergo_format_binop_error op e1' e2'))
+          | None => efailure (ETypeError prov (ergo_format_binop_error op t1 t2))
           end
         | Failure _ _ f => efailure f
         end
