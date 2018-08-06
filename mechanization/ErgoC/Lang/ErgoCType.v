@@ -129,11 +129,19 @@ Section ErgoCType.
                 let ctxt' := type_context_update_local_env ctxt n vt in
                 ergo_type_expr ctxt' e)
              (ergo_type_expr ctxt v))
-    | ELet prov n (Some t) v e =>
+    | ELet prov n (Some t) v e  =>
       let fmt_err :=
+          fun t' vt =>
           match prov with
-            | ProvFunc _ fname => ETypeError prov ("Incorrect type of arguments to function " ++ fname)
-            | _ => ETypeError prov "`Let' type mismatch"
+          | ProvFunc _ fname =>
+            ETypeError prov
+                       ("Function `" ++ fname
+                                     ++ "' expected argument of type `"
+                                     ++ (ergoc_type_to_string t')
+                                     ++ "' but was given argument of type `"
+                                     ++ (ergoc_type_to_string vt)
+                                     ++ "'." )
+          | _ => ETypeError prov "`Let' type mismatch"
           end
       in
       (eolift
@@ -147,7 +155,7 @@ Section ErgoCType.
               in
               ergo_type_expr ctxt' e
             else
-              efailure fmt_err)
+              efailure (fmt_err t' vt))
          (ergo_type_expr ctxt v))
     | ERecord prov rs =>
       fold_left
