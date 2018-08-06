@@ -58,16 +58,31 @@ Section ErgoCType.
 
   Definition ergo_format_binop_error (op : binary_op) (arg1 : ergoc_type) (arg2 : ergoc_type) : string :=
     let fmt_easy :=
-        fun name e1 e2 a1 a2 =>
+        fun name e1 e2 =>
           ("Operator `" ++ name ++ "' expected operands of type `" ++
                         (ergoc_type_to_string e1) ++ "' and `" ++
                         (ergoc_type_to_string e2) ++
                         "' but received operands of type `" ++
-                        (ergoc_type_to_string a1) ++ "' and `" ++
-                        (ergoc_type_to_string a2) ++ "'.")%string
+                        (ergoc_type_to_string arg1) ++ "' and `" ++
+                        (ergoc_type_to_string arg2) ++ "'.")%string
     in
     match op with
-    | OpOr => fmt_easy "or"%string tbool tbool arg1 arg2
+    | OpAnd => fmt_easy "and"%string tbool tbool
+    | OpOr => fmt_easy "or"%string tbool tbool
+    | OpFloatBinary FloatPlus => fmt_easy "+"%string tfloat tfloat
+    | OpFloatBinary FloatMinus => fmt_easy "-"%string tfloat tfloat
+    | OpFloatBinary FloatMult => fmt_easy "*"%string tfloat tfloat
+    | OpFloatBinary FloatDiv => fmt_easy "/"%string tfloat tfloat
+    | OpFloatBinary FloatPow => fmt_easy "^"%string tfloat tfloat
+    | OpNatBinary NatPlus => fmt_easy "+i"%string tnat tnat
+    | OpNatBinary NatMinus => fmt_easy "-i"%string tnat tnat
+    | OpNatBinary NatMult => fmt_easy "*i"%string tnat tnat
+    | OpNatBinary NatDiv => fmt_easy "/i"%string tnat tnat
+    | OpNatBinary NatPow => fmt_easy "^i"%string tnat tnat
+    | OpFloatCompare FloatLt => fmt_easy "<"%string tfloat tfloat
+    | OpFloatCompare FloatLe => fmt_easy "<="%string tfloat tfloat
+    | OpFloatCompare FloatGt => fmt_easy ">"%string tfloat tfloat
+    | OpFloatCompare FloatGe => fmt_easy ">="%string tfloat tfloat
     | _ => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string arg2) ++ "'."
     end.
 
@@ -78,7 +93,7 @@ Section ErgoCType.
     | EThisState    prov => efailure (ESystemError prov "No `state' in ergoc")
     | EVar prov name =>
       let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
-      eresult_of_option opt (ERuntimeError prov ("Variable not found: " ++ name)%string)
+      eresult_of_option opt (ETypeError prov ("Variable not found: " ++ name)%string)
     | EConst prov d =>
       eresult_of_option
         (infer_data_type d)
@@ -136,12 +151,21 @@ Section ErgoCType.
           | ProvFunc _ fname =>
             ETypeError prov
                        ("Function `" ++ fname
-                                     ++ "' expected argument of type `"
+                                     ++ "' expected argument `"
+                                     ++ n
+                                     ++ "' to be of type `"
                                      ++ (ergoc_type_to_string t')
                                      ++ "' but was given argument of type `"
                                      ++ (ergoc_type_to_string vt)
                                      ++ "'." )
-          | _ => ETypeError prov "`Let' type mismatch"
+          | _ => ETypeError prov
+                            ("The let type annotation `"
+                               ++ (ergoc_type_to_string t')
+                               ++ "' for the name `"
+                               ++ n
+                               ++ "' does not match the actual type `"
+                               ++ (ergoc_type_to_string vt)
+                               ++ "'.")
           end
       in
       (eolift
@@ -259,7 +283,9 @@ Section ErgoCType.
                   (fun typ => (elift tcoll) (ergo_type_expr (type_context_update_local_env ctxt name typ) fn))
                 (eresult_of_option
                   (untcoll arr')
-                  (ETypeError prov "foreach must be called with array")))
+                  (ETypeError
+                     prov
+                     ("foreach expects an array to iterate over, but was given something of type `" ++ (ergoc_type_to_string arr') ++ "'."))))
             (ergo_type_expr ctxt arr)
             
     | EForeach prov _ _ _ =>
@@ -278,10 +304,15 @@ Section ErgoCType.
       eolift (fun val => esuccess (type_context_update_global_env dctxt name val, None)) expr'
     | DCConstant prov name (Some t) expr =>
       let fmt_err :=
-          match prov with
-            | ProvFunc _ fname => ETypeError prov ("Incorrect type of arguments to function " ++ fname)
-            | _ => ETypeError prov "`Constant' type mismatch"
-          end
+          fun t' vt =>
+            ETypeError prov
+                       ("The type annotation `"
+                          ++ (ergoc_type_to_string t')
+                          ++ "' for the constant `"
+                          ++ name
+                          ++ "' does not match its actual type `"
+                          ++ (ergoc_type_to_string vt)
+                          ++ "'.")
       in
       let expr' := ergo_type_expr dctxt expr in
       eolift (fun vt =>
@@ -292,7 +323,7 @@ Section ErgoCType.
                   in
                   esuccess (ctxt', None)
             else
-              efailure fmt_err) expr'
+              efailure (fmt_err t' vt)) expr'
     | DCFunc prov name func =>
       match func.(functionc_body) with
       | None => esuccess (dctxt, None)
