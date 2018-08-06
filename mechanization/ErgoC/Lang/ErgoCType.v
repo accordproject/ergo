@@ -304,10 +304,15 @@ Section ErgoCType.
       eolift (fun val => esuccess (type_context_update_global_env dctxt name val, None)) expr'
     | DCConstant prov name (Some t) expr =>
       let fmt_err :=
-          match prov with
-            | ProvFunc _ fname => ETypeError prov ("Incorrect type of arguments to function " ++ fname)
-            | _ => ETypeError prov "`Constant' type mismatch"
-          end
+          fun t' vt =>
+            ETypeError prov
+                       ("The type annotation `"
+                          ++ (ergoc_type_to_string t')
+                          ++ "' for the constant `"
+                          ++ name
+                          ++ "' does not match its actual type `"
+                          ++ (ergoc_type_to_string vt)
+                          ++ "'.")
       in
       let expr' := ergo_type_expr dctxt expr in
       eolift (fun vt =>
@@ -318,7 +323,7 @@ Section ErgoCType.
                   in
                   esuccess (ctxt', None)
             else
-              efailure fmt_err) expr'
+              efailure (fmt_err t' vt)) expr'
     | DCFunc prov name func =>
       match func.(functionc_body) with
       | None => esuccess (dctxt, None)
