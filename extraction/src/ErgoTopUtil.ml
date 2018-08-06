@@ -14,11 +14,20 @@
 
 open ErgoComp.ErgoCompiler
 
+let repl_bm = ref ergo_empty_brand_model
 let my_init_repl_context input =
-  begin match brand_model_from_inputs input with
-  | Success bm -> init_repl_context bm input
+  begin match ergo_brand_model_from_inputs input with
+  | Success bm -> repl_bm := bm; init_repl_context !repl_bm input
   | Failure e -> ErgoUtil.ergo_raise e
   end
 let my_ergo_repl_eval_decl rctxt decl =
-  ergo_repl_eval_decl rctxt.ErgoComp.repl_context_comp_ctxt.ErgoComp.compilation_context_brand_model rctxt decl
+  begin match ergo_refresh_brand_model !repl_bm rctxt with
+  | Success (bm, rctxt') ->
+      repl_bm := bm;
+      ergo_repl_eval_decl
+        !repl_bm
+        rctxt'
+        decl
+  | Failure e -> ErgoUtil.ergo_raise e
+  end
 

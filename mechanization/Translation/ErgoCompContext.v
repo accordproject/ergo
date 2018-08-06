@@ -15,9 +15,10 @@
 Require Import String.
 Require Import List.
 
+Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.
@@ -38,7 +39,8 @@ Section ErgoCompContext.
         compilation_context_current_contract : option string;              (**r current contract in scope if any *)
         compilation_context_current_clause : option string;                (**r current clause in scope if any *)
         compilation_context_type_ctxt : type_context;                      (**r the type context *)
-        compilation_context_brand_model : brand_model;                     (**r keep the brand model around *)
+        compilation_context_type_decls : list laergo_type_declaration;     (**r type declarations *)
+        compilation_context_new_type_decls : list laergo_type_declaration; (**r type declarations *)
       }.
 
   Definition namespace_ctxt_of_compilation_context (ctxt:compilation_context) : namespace_ctxt :=
@@ -54,7 +56,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
          
   Definition compilation_context_update_function_env
              (ctxt : compilation_context)
@@ -68,7 +71,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
 
   Definition update_function_group_env
              (gname:string)
@@ -93,7 +97,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
 
   Definition compilation_context_update_global_env
              (ctxt : compilation_context)
@@ -107,7 +112,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
 
   Definition compilation_context_update_local_env
              (ctxt : compilation_context)
@@ -121,7 +127,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
 
   Definition compilation_context_set_local_env
              (ctxt : compilation_context)
@@ -134,7 +141,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
 
   Definition set_namespace_in_compilation_context
              (ns:namespace_name)
@@ -156,7 +164,8 @@ Section ErgoCompContext.
                (Some cname)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
   
   Definition set_current_clause (ctxt:compilation_context) (cname:string) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
@@ -167,7 +176,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                (Some cname)
                ctxt.(compilation_context_type_ctxt)
-               ctxt.(compilation_context_brand_model).
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
 
   Definition compilation_context_update_type_ctxt
              (ctxt: compilation_context)
@@ -180,9 +190,39 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                nctxt
-               ctxt.(compilation_context_brand_model).
-    
-  Definition init_compilation_context nsctxt : compilation_context :=
-    mkCompCtxt nsctxt nil nil nil nil None None ErgoCTypeContext.empty_type_context bm.
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
+
+  Definition compilation_context_update_type_declarations
+             (ctxt: compilation_context)
+             (old_decls:list laergo_type_declaration)
+             (new_decls:list laergo_type_declaration)  : compilation_context :=
+    mkCompCtxt ctxt.(compilation_context_namespace)
+               ctxt.(compilation_context_function_env)
+               ctxt.(compilation_context_function_group_env)
+               ctxt.(compilation_context_global_env)
+               ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_current_contract)
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_type_ctxt)
+               old_decls
+               new_decls.
   
+  Definition compilation_context_add_new_type_declaration
+             (ctxt: compilation_context)
+             (decl:laergo_type_declaration) : compilation_context :=
+    mkCompCtxt ctxt.(compilation_context_namespace)
+               ctxt.(compilation_context_function_env)
+               ctxt.(compilation_context_function_group_env)
+               ctxt.(compilation_context_global_env)
+               ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_current_contract)
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_type_ctxt)
+               ctxt.(compilation_context_type_decls)
+               (ctxt.(compilation_context_new_type_decls) ++ (decl::nil)).
+  
+  Definition init_compilation_context nsctxt : compilation_context :=
+    mkCompCtxt nsctxt nil nil nil nil None None ErgoCTypeContext.empty_type_context nil nil.
+
 End ErgoCompContext.
