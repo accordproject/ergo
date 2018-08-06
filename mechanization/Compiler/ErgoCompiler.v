@@ -121,6 +121,8 @@ Module ErgoCompiler.
     ErgoType.lrergo_type_declaration_desc.
   Definition ergo_type_declaration : Set :=
     ErgoType.lrergo_type_declaration.
+  Definition laergo_type_declaration : Set :=
+    ErgoType.laergo_type_declaration.
   
   Definition ergo_type_any prov : ergo_type
     := ErgoType.ErgoTypeAny prov.
@@ -291,10 +293,17 @@ Module ErgoCompiler.
     -> EResult.eresult result_file
     := ErgoDriver.ergo_module_to_java_top.
 
+  (** Brand model *)
   Definition ergo_brand_model := ErgoCTypes.tbrand_model.
 
-  Definition brand_model_from_inputs (inputs : list ergo_input) : eresult ergo_brand_model
+  Definition ergo_empty_brand_model := ErgoCTypes.tempty_brand_model.
+
+  Definition ergo_brand_model_from_inputs (inputs : list ergo_input) : eresult ergo_brand_model
     := ErgoDriver.brand_model_from_inputs inputs.
+
+  Definition ergo_refresh_brand_model {bm:ergo_brand_model} :
+    @ErgoDriver.repl_context bm -> eresult (ergo_brand_model * @ErgoDriver.repl_context bm)
+    := ErgoDriver.refresh_brand_model.
 
   (** REPL *)
   Definition init_repl_context {bm:ergo_brand_model} (inputs:list ergo_input)

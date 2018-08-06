@@ -343,5 +343,27 @@ Section ErgoDriver.
 
   End Interpreter.
 
+  Section InterpreterHack.
+    Definition refresh_brand_model_in_comp_ctxt {bm:brand_model} (ctxt:@compilation_context bm) :
+      eresult (ErgoCTypes.tbrand_model * @compilation_context bm) :=
+      match ctxt.(compilation_context_new_type_decls) with
+      | nil => esuccess (bm, ctxt)
+      | _ =>
+        let all_decls := ctxt.(compilation_context_type_decls) ++ ctxt.(compilation_context_new_type_decls) in
+        let new_bm := ErgoTypetoErgoCType.brand_model_of_declarations all_decls in
+        elift (fun bm =>
+                 let new_ctxt := compilation_context_update_type_declarations ctxt all_decls nil in
+                 (bm, new_ctxt)) new_bm
+      end.
+    
+    Definition refresh_brand_model {bm:brand_model} (ctxt:@repl_context bm) :
+      eresult (ErgoCTypes.tbrand_model * @repl_context bm) :=
+      elift (fun xy : ErgoCTypes.tbrand_model * @compilation_context bm =>
+               let (bm, sctxt) := xy in
+               (bm, update_repl_ctxt_comp_ctxt ctxt sctxt))
+            (@refresh_brand_model_in_comp_ctxt bm ctxt.(repl_context_comp_ctxt)).
+
+  End InterpreterHack.
+  
 End ErgoDriver.
 
