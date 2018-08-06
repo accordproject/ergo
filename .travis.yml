@@ -20,7 +20,7 @@ deploy:
       - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./.travis/deploy.sh; fi'
     skip_cleanup: true
     on:
-        all_branches: true
+        branch: master
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 cache:
   directories:
