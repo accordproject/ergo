@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<script src="ergotop.js"></script>
 
 <style>
 body {
@@ -33,9 +33,9 @@ pre {
     white-space: pre-wrap;
 }
 
-span.emit     { color: hotpink; }
-span.error    { color: red; }
-span.state    { color: blue; }
+span.emit { color: hotpink; }
+span.error { color: red; }
+span.state { color: blue; }
 span.response { color: green; }
 
 </style>
@@ -44,11 +44,8 @@ span.response { color: green; }
 <pre id="stdout"></pre>
 <textarea autofocus type="text" id="stdin" placeholder="return 42;" rows=5></textarea>
 <button onclick="update()">Evaluate [&#x21EA; &#x21B5;]</button>
-<a href="https://docs.accordproject.org/docs/ergo.html" target="_blank">
-  <button>What is this?</button>
-</a>
+<a href="https://docs.accordproject.org/docs/ergo.html" target="_blank"><button>What is this?</button></a>
 
-<script src="./lib/ergotop.js"></script>
 <script>
 var ctx = ergotop.initRCtxt;
 
@@ -74,10 +71,10 @@ function update() {
             x.out
             .replace(/</g, "&lt;")
 //          .replace(/Unit/g, '🌯')
-            .replace(/^Response\./gm, '<span class="response">Response.</span>')
-            .replace(/^Emit\./g, '<span class="emit">Emit.</span>')
-            .replace(/^Error\./g, '<span class="error">Error.</span>')
-            .replace(/^State\./g, '<span class="state">State.</span>')
+            .replace(/Emit./g, '<span class="emit">Emit.</span>')
+            .replace(/Error./g, '<span class="error">Error.</span>')
+            .replace(/State./g, '<span class="state">State.</span>')
+            .replace(/Response./g, '<span class="response">Response.</span>') + "\n\n";
         stdin.value = "";
     }
 }
