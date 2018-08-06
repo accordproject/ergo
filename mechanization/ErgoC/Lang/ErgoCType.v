@@ -93,7 +93,7 @@ Section ErgoCType.
     | EThisState    prov => efailure (ESystemError prov "No `state' in ergoc")
     | EVar prov name =>
       let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
-      eresult_of_option opt (ERuntimeError prov ("Variable not found: " ++ name)%string)
+      eresult_of_option opt (ETypeError prov ("Variable not found: " ++ name)%string)
     | EConst prov d =>
       eresult_of_option
         (infer_data_type d)
@@ -156,7 +156,12 @@ Section ErgoCType.
                                      ++ "' but was given argument of type `"
                                      ++ (ergoc_type_to_string vt)
                                      ++ "'." )
-          | _ => ETypeError prov "`Let' type mismatch"
+          | _ => ETypeError prov
+                            ("The let type annotation `"
+                               ++ (ergoc_type_to_string t')
+                               ++ "' does not match the actual type `"
+                               ++ (ergoc_type_to_string vt)
+                               ++ "'.")
           end
       in
       (eolift
