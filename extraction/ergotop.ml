@@ -20,8 +20,24 @@ let welcome () =
   then print_string ("Welcome to ERGOTOP version " ^ (Util.string_of_char_list ergo_version) ^ "\n")
   else ()
 
-let ps1 = "ergo$ "
-let ps2 = "  ... "
+let fmt_esc = "\x1b"
+let fmt_csi = fmt_esc ^ "["
+
+let fmt_red s = fmt_csi ^ "31m" ^ s ^ fmt_csi ^ "0m"
+let fmt_grn s = fmt_csi ^ "32m" ^ s ^ fmt_csi ^ "0m"
+let fmt_yel s = fmt_csi ^ "33m" ^ s ^ fmt_csi ^ "0m"
+let fmt_blu s = fmt_csi ^ "34m" ^ s ^ fmt_csi ^ "0m"
+let fmt_mag s = fmt_csi ^ "35m" ^ s ^ fmt_csi ^ "0m"
+
+let fmt_out s =
+  (Str.global_replace (Str.regexp "^Emit\\.") (fmt_mag "Emit.")
+  (Str.global_replace (Str.regexp "^Response\\.") (fmt_grn "Response.")
+  (Str.global_replace (Str.regexp "^State\\.") (fmt_blu "State.")
+  (Str.global_replace (Str.regexp "^Error\\.") (fmt_red "Error.")
+  s))))
+
+let ps1 = fmt_yel "ergo$ "
+let ps2 = fmt_yel "  ... "
 
 let prompt (ps : string) =
   if Unix.isatty Unix.stdin then
@@ -58,7 +74,7 @@ let rec repl rctxt =
             (* eval *)
             let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
             (* print *)
-            print_string (ErgoUtil.wrap_jerrors Util.string_of_char_list out);
+            print_string (fmt_out (ErgoUtil.wrap_jerrors Util.string_of_char_list out));
             rctxt'
           end
       | None -> rctxt

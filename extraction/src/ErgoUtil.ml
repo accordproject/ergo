@@ -124,15 +124,15 @@ let underline_source source_table prov =
 let string_of_error f x error =
   begin match error with
   | ESystemError _ ->
-      "[SystemError] " ^ (error_message error)
+      "SystemError. " ^ (error_message error)
   | EParseError (prov, _) ->
-      "[ParseError at " ^ (string_of_error_prov prov) ^ "] " (* ^ (error_message error) *) ^ (f x prov)
+      "ParseError (at " ^ (string_of_error_prov prov) ^ "). " (* ^ (error_message error) *) ^ (f x prov)
   | ECompilationError (prov, _) ->
-      "[CompilationError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (f x prov)
+      "CompilationError (at " ^ (string_of_error_prov prov) ^ "). " ^  (error_message error) ^ (f x prov)
   | ETypeError (prov, _) ->
-      "[TypeError at " ^ (string_of_error_prov prov) ^ "] " ^ (error_message error) ^ (f x prov)
+      "TypeError (at " ^ (string_of_error_prov prov) ^ "). " ^ (error_message error) ^ (f x prov)
   | ERuntimeError (prov, _) ->
-      "[RuntimeError at " ^ (string_of_error_prov prov) ^ "] " ^  (error_message error) ^ (f x prov)
+      "RuntimeError (at " ^ (string_of_error_prov prov) ^ "). " ^  (error_message error) ^ (f x prov)
   end
 let string_of_error_with_source source error =
   string_of_error underline_prov source error
