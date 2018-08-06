@@ -40,6 +40,37 @@ Section ErgoCType.
   Import ErgoCTypes.
 
   Program Definition empty_rec_type : ergoc_type := Rec Closed nil _.
+
+
+  Definition ergo_format_unop_error (op : unary_op) (arg : ergoc_type) : string :=
+    let fmt_easy :=
+        fun name expected actual =>
+          ("Operator `" ++ name ++ "' expected an operand of type `" ++
+                        (ergoc_type_to_string expected) ++
+                        "' but received an operand of type `" ++
+                        (ergoc_type_to_string actual) ++ "'.")%string
+    in
+    match op with
+    | OpNeg => fmt_easy "~"%string tbool arg
+    | OpFloatUnary FloatNeg => fmt_easy "-"%string tfloat arg
+    | _ => "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string arg) ++ "'"
+    end.
+
+  Definition ergo_format_binop_error (op : binary_op) (arg1 : ergoc_type) (arg2 : ergoc_type) : string :=
+    let fmt_easy :=
+        fun name e1 e2 a1 a2 =>
+          ("Operator `" ++ name ++ "' expected operands of type `" ++
+                        (ergoc_type_to_string e1) ++ "' and `" ++
+                        (ergoc_type_to_string e2) ++
+                        "' but received operands of type `" ++
+                        (ergoc_type_to_string a1) ++ "' and `" ++
+                        (ergoc_type_to_string a2) ++ "'.")%string
+    in
+    match op with
+    | OpOr => fmt_easy "or"%string tbool tbool arg1 arg2
+    | _ => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string arg2) ++ "'."
+    end.
+
   Fixpoint ergo_type_expr (ctxt : type_context) (expr : ergoc_expr) : eresult ergoc_type :=
     match expr with
     | EThisContract prov => efailure (ESystemError prov "No `this' in ergoc")
@@ -68,7 +99,7 @@ Section ErgoCType.
       | Success _ _ e' =>
         match ergoc_type_infer_unary_op op e' with
         | Some (r, _) => esuccess r
-        | None => efailure (ETypeError prov "Ill-typed unary operation."%string)
+        | None => efailure (ETypeError prov (ergo_format_unop_error op e'))
         end
       | Failure _ _ f => efailure f
       end
@@ -79,7 +110,7 @@ Section ErgoCType.
         | Success _ _ e2' =>
           match ergoc_type_infer_binary_op op e1' e2' with
           | Some (r, _, _) => esuccess r
-          | None => efailure (ETypeError prov "Ill-typed binary operation."%string)
+          | None => efailure (ETypeError prov (ergo_format_binop_error op e1' e2'))
           end
         | Failure _ _ f => efailure f
         end
@@ -275,4 +306,3 @@ Section ErgoCType.
     end.
 
 End ErgoCType.
-
