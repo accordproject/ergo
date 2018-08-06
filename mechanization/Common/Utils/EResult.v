@@ -218,27 +218,6 @@ Section EResult.
     Definition format_error (name : string) (prov : provenance) (msg : string) :=
       let loc := loc_of_provenance prov in
       (name ++ " at " ++ (string_of_location loc) ++ " '" ++ msg ++ "'")%string.
-
-    Definition fmt_nl := String.String (ascii_of_N 10) EmptyString.
-
-    Definition fmt_dq := """"%string.
-
-    Definition fmt_esc := String.String (ascii_of_N 27) EmptyString.
-
-    Definition fmt_csi : string := fmt_esc ++ ("["%string).
-
-    Definition fmt_red (msg : string) : string :=
-      (fmt_csi ++ "31m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
-
-    Definition fmt_grn (msg : string) : string :=
-      (fmt_csi ++ "32m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
-
-    Definition fmt_blu (msg : string) : string :=
-      (fmt_csi ++ "34m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
-
-    Definition fmt_mag (msg : string) : string :=
-      (fmt_csi ++ "35m" ++ msg ++ fmt_esc ++ fmt_csi ++ "0m")%string.
-
   End Fmt.
   
 End EResult.
