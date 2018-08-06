@@ -45,7 +45,6 @@ Section ErgoExpand.
 
   Definition case_of_sig
              (prov:provenance)
-             (namespace:string)
              (v0:string)
              (effparam0:laergo_expr)
              (effparamrest:list laergo_expr)
@@ -66,7 +65,6 @@ Section ErgoExpand.
 
   Definition match_of_sigs
              (prov:provenance)
-             (namespace:string)
              (v0:string)
              (effparam0:laergo_expr)
              (effparamrest:list laergo_expr)
@@ -75,20 +73,18 @@ Section ErgoExpand.
              SMatch prov effparam0
                     s
                     (SThrow prov
-                            (ENew prov default_throws_absolute_name
-                                  (("message"%string, EConst prov (ErgoData.dstring ""))::nil))))
-          (emaplift (case_of_sig prov namespace v0 effparam0 effparamrest) ss).
+                            (EConst prov (default_match_error_content prov ""))))
+          (emaplift (case_of_sig prov v0 effparam0 effparamrest) ss).
 
   Definition match_of_sigs_top
              (prov:provenance)
-             (namespace:string)
              (effparams:list ergo_expr)
              (ss:list (string * laergo_type_signature)) :=
     match effparams with
     | nil => main_at_least_one_parameter_error prov
     | effparam0 :: effparamrest =>
       let v0 := ("$"++clause_main_name)%string in (** XXX To be worked on *)
-      match_of_sigs prov namespace v0 effparam0 effparamrest ss
+      match_of_sigs prov v0 effparam0 effparamrest ss
     end.
 
   Definition filter_init (sigs:list (string * laergo_type_signature)) :=
@@ -96,10 +92,9 @@ Section ErgoExpand.
               if (string_dec (fst s) clause_init_name)
               then false
               else true) sigs.
-  
+
   Definition create_main_clause_for_contract
              (prov:provenance)
-             (namespace:string)
              (c:laergo_contract) : eresult laergo_clause :=
     let sigs := lookup_contract_signatures c in
     let sigs := filter_init sigs in
@@ -115,48 +110,41 @@ Section ErgoExpand.
                       None
                       None)
                    (Some disp)))
-      (match_of_sigs_top prov namespace effparams sigs).
+      (match_of_sigs_top prov effparams sigs).
 
   (* XXX Has to be fixed to use brands -- needs fixes in code-generation *)
   Definition default_state (prov:provenance) : laergo_expr :=
-    EConst
-      prov
-      (drec (("$class",dstring default_state_absolute_name)
-               :: ("stateId",dstring "1")
-               :: nil))%string.
-  Definition default_response (prov:provenance) : laergo_expr :=
-    EConst
-      prov
-      (drec (("$class",dstring default_response_absolute_name)
-               :: nil))%string.
-  
+    EUnaryOp prov
+             (OpBrand (default_state_absolute_name::nil))
+             (EConst prov (drec (("stateId",dstring "1") :: nil)))%string.
+
   Definition create_init_clause_for_contract
              (prov:provenance)
-             (namespace:string)
+             (state:laergo_type)
              (c:laergo_contract) : laergo_clause :=
     let effparams : list laergo_expr := EVar prov "request"%string :: nil in
     let init_body :=
         SSetState prov (default_state prov)
-                  (SReturn prov (default_response prov))
+                  (SReturn prov (EConst prov dunit))
     in
     mkClause prov
              clause_init_name
              (mkErgoTypeSignature
                 prov
                 (("request"%string, ErgoTypeClassRef prov default_request_absolute_name)::nil)
-                (ErgoTypeNone prov)
+                state
                 None
                 (Some (ErgoTypeClassRef prov default_emits_absolute_name)))
              (Some init_body).
 
-  Definition add_init_clause_to_contract (namespace:string) (c:laergo_contract) : laergo_contract :=
+  Definition add_init_clause_to_contract (state:laergo_type) (c:laergo_contract) : laergo_contract :=
     let prov := c.(contract_annot) in
     if in_dec string_dec clause_init_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
     then c
     else
       let init_clause :=
-          create_init_clause_for_contract prov namespace c
+          create_init_clause_for_contract prov state c
       in
       mkContract
         prov
@@ -164,7 +152,7 @@ Section ErgoExpand.
         c.(contract_state)
         (c.(contract_clauses) ++ (init_clause::nil)).
 
-  Definition add_main_clause_to_contract (namespace:string) (c:laergo_contract) : eresult laergo_contract :=
+  Definition add_main_clause_to_contract (c:laergo_contract) : eresult laergo_contract :=
     let prov := c.(contract_annot) in
     if in_dec string_dec clause_main_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
@@ -177,10 +165,9 @@ Section ErgoExpand.
              c.(contract_template)
              c.(contract_state)
              (c.(contract_clauses) ++ (main_clause::nil)))
-        (create_main_clause_for_contract prov namespace c).
+        (create_main_clause_for_contract prov c).
   
-  Definition add_main_init_clause_to_declaration
-             (namespace:string)
+  Definition ergo_expand_declaration
              (d:laergo_declaration) : eresult laergo_declaration :=
     match d with
     | DImport _ _ => esuccess d
@@ -189,33 +176,32 @@ Section ErgoExpand.
     | DConstant _ _ _ _ => esuccess d
     | DFunc _ _ _ => esuccess d
     | DContract _ cn c =>
-      let cd := add_init_clause_to_contract namespace c in
+      let cd := add_init_clause_to_contract
+                (lift_default_state_type c.(contract_annot) c.(contract_state))
+                c in
       elift
         (fun dd =>
            (DContract (decl_annot d) cn dd))
-        (add_main_clause_to_contract namespace cd)
+        (add_main_clause_to_contract cd)
     | DSetContract _ _ _ => esuccess d
     end.
     
-  Definition add_main_init_clauses_to_declarations
-             (namespace:string) (dl:list laergo_declaration) : eresult (list laergo_declaration) :=
-    emaplift (add_main_init_clause_to_declaration namespace) dl.
+  Definition ergo_expand_declarations
+             (dl:list laergo_declaration) : eresult (list laergo_declaration) :=
+    emaplift ergo_expand_declaration dl.
     
-  Definition add_main_init_clauses_to_module (p:laergo_module) : eresult laergo_module :=
+  (** Pre-processing. At the moment only add main clauses when missing *)
+  Definition ergo_expand_module (p:laergo_module) : eresult laergo_module :=
     elift
       (fun ds => mkModule
                    p.(module_annot)
                    p.(module_file)
                    p.(module_namespace)
                    ds)
-      (add_main_init_clauses_to_declarations p.(module_namespace) p.(module_declarations)).
+      (ergo_expand_declarations p.(module_declarations)).
 
-  (** Pre-processing. At the moment only add main clauses when missing *)
-  Definition expand_ergo_module (p:laergo_module) : eresult laergo_module :=
-    add_main_init_clauses_to_module p.
-
-  Definition expand_ergo_modules (pl:list laergo_module) : eresult (list laergo_module) :=
-    emaplift (add_main_init_clauses_to_module) pl.
+  Definition ergo_expand_modules (pl:list laergo_module) : eresult (list laergo_module) :=
+    emaplift (ergo_expand_module) pl.
 
 End ErgoExpand.
 

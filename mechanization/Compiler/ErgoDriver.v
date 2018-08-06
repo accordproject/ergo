@@ -131,7 +131,7 @@ Section ErgoDriver.
     Definition ergo_module_to_ergoc
                (ctxt:compilation_context)
                (lm:laergo_module) : eresult (ergoc_module * compilation_context) :=
-      let p := expand_ergo_module lm in
+      let p := ergo_expand_module lm in
       let pc := eolift (ergo_module_to_calculus ctxt) p in
       eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc.
 
@@ -151,7 +151,8 @@ Section ErgoDriver.
       let am := resolve_ergo_declaration ns_ctxt ld in
       eolift (fun amc =>
                 let ctxt := compilation_context_update_namespace ctxt (snd amc) in
-                declaration_to_calculus ctxt (fst amc))
+                let p := ergo_expand_declaration (fst amc) in
+                eolift (declaration_to_calculus ctxt) p)
              am.
 
     Definition ergo_declaration_to_ergoc_inlined
@@ -325,11 +326,23 @@ Section ErgoDriver.
         match unpack_output out with
         | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt')
         | Some (_, _, state) =>
-          esuccess (
-              typ,
-              Some out,
-              update_repl_ctxt_eval_ctxt ctxt (eval_context_update_local_env dctxt' "state"%string state)
-            )
+          let newctxt :=
+              match typ with (* XXX If we have a data, don't we also have a type ??? *)
+              | None =>
+                esuccess (update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state))
+              | Some typ =>
+                elift
+                  (fun ty =>
+                     let '(_, _, statety) := ty in
+                     let ctxt1 :=
+                         update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state)
+                     in
+                     let sctxt1 := ctxt1.(repl_context_comp_ctxt).(compilation_context_type_ctxt) in
+                     update_repl_ctxt_type_ctxt ctxt1 (type_context_update_global_env sctxt1 this_state statety))
+                  (unpack_type typ)
+              end
+          in
+          elift (fun ctxt => (typ, Some out, ctxt)) newctxt
         end
       end.
 
@@ -359,8 +372,8 @@ Section ErgoDriver.
                (rctxt : repl_context)
                (result : eresult (option ergoc_type * option ergo_data * repl_context))
       : eresult string :=
-      let local_env := rctxt.(repl_context_eval_ctxt).(eval_context_local_env) in
-      let old_state := lookup String.string_dec local_env "state"%string in
+      let global_env := rctxt.(repl_context_eval_ctxt).(eval_context_global_env) in
+      let old_state := lookup String.string_dec global_env this_state in
       elift
         (string_of_result old_state)
         (elift fst result).
@@ -387,7 +400,7 @@ Section ErgoDriver.
                  let new_ctxt := compilation_context_update_type_declarations ctxt all_decls nil in
                  (bm, new_ctxt)) new_bm
       end.
-    
+
     Definition refresh_brand_model {bm:brand_model} (ctxt:@repl_context bm) :
       eresult (ErgoCTypes.tbrand_model * @repl_context bm) :=
       elift (fun xy : ErgoCTypes.tbrand_model * @compilation_context bm =>

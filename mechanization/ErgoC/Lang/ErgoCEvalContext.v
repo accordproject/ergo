@@ -16,10 +16,11 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 
-Section ErgocEvalContext.
+Section ErgoCEvalContext.
 
   Record eval_context :=
     mkEvalContext
@@ -48,12 +49,11 @@ Section ErgocEvalContext.
                   new_local_env.
 
   Definition empty_eval_context :=
-    mkEvalContext  (("contract"%string, dunit)
+    mkEvalContext  ((current_time, dstring "")
+                      ::(this_contract, dunit)
+                      ::(this_state, dunit)
+                      ::(this_emit, dcoll nil)
                       ::nil)
-                   (("state"%string, dunit)
-                      ::("emit"%string, dcoll nil)
-                      ::("now"%string, dunit)
-                      ::nil).
-  
-End ErgocEvalContext.
+                   (nil).
 
+End ErgoCEvalContext.

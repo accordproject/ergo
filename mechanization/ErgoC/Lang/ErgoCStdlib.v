@@ -32,8 +32,8 @@ Section ErgoCStdlib.
   Definition empty_sigc prov (params:list string) :=
     mkSigC
       (List.map (fun x => (x,ErgoTypeAny prov)) params)
-      (ErgoTypeNone prov).
-  
+      (ErgoTypeNothing prov).
+
   Definition mk_naked_closure prov (params:list string) (body:ergoc_expr) : ergoc_function :=
     mkFuncC
       prov

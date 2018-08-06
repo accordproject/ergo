@@ -17,6 +17,7 @@ Require Import String.
 Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EResult.
+Require Import ErgoSpec.Common.Utils.EProvenance.
 Require Import JsAst.JsNumber.
 
 Section EData.
@@ -65,9 +66,9 @@ Section EData.
     | dleft s => "some("%string ++ (string_of_data s) ++ ")"%string
     | dright _ => "none"
     | dbrand (b::nil) d' => "~"%string ++ b ++ " "%string ++ (string_of_data d')
-    | dbrand _ _ => "???"%string
+    | dbrand _ _ => "???more than one brand???"%string
     | drec r => string_of_rec r 
-    | dforeign _ => "???"%string
+    | dforeign _ => "???foreign data???"%string
     end.
 
   Definition string_of_response (response : ergo_data) : string :=
@@ -115,5 +116,48 @@ Section EData.
       match result with
       | (typ, dat) => (string_of_result_data old_state dat) ++ (string_of_result_type typ)
       end.
+
+  Import ErgoCTypes.
+  Import String.
+
+  Definition unpack_type
+             (out : ergoc_type)
+    : eresult (ergoc_type * ergoc_type * ergoc_type) :=
+    let osuccess :=
+        match unteither out with
+        | None => None
+        | Some (tl, _) => Some tl
+        end
+    in
+    let success :=
+        eresult_of_option osuccess
+                          (ESystemError dummy_provenance ("CANNOT UNPACK TYPE; Not an either: )"
+                                                            ++ string_of_result_type (Some out)))
+    in
+    let response :=
+        elift fst
+              (eolift
+                 (fun success =>
+                    (eresult_of_option (ergoc_type_infer_unary_op (OpDot "response") success)
+                                       (ESystemError dummy_provenance ("CANNOT UNPACK TYPE; No response in: "
+                                                                         ++ string_of_result_type (Some success)))))
+                 success)
+    in
+    let emit :=
+        elift fst (eolift
+                     (fun success => (eresult_of_option (ergoc_type_infer_unary_op (OpDot "emit") success)
+                                                        (ESystemError dummy_provenance ("CANNOT UNPACK TYPE; No emit in: "
+                                                                                          ++ string_of_result_type (Some success)))))
+                     success)
+    in
+    let state :=
+        elift fst (eolift
+                     (fun success => (eresult_of_option (ergoc_type_infer_unary_op (OpDot "state") success)
+                                                        (ESystemError dummy_provenance ("CANNOT UNPACK TYPE; No state in: "
+                                                                                          ++ string_of_result_type (Some success)))))
+                     success)
+    in
+    elift3 (fun r e s => (r,e,s))
+           response emit state.
 
 End EData.

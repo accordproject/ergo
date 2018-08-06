@@ -181,17 +181,28 @@ Section ErgotoErgoC.
       match ctxt.(compilation_context_current_contract) with
       | None => call_clause_not_in_contract_error prov clname
       | Some coname =>
+        let params :=
+            if string_dec clname clause_init_name
+            then
+              ((EVar prov current_time)
+                 ::(thisContract prov)
+                 ::(EConst prov dunit)
+                 ::(EVar prov local_emit)
+                 ::el)
+            else
+              ((EVar prov current_time)
+                 ::(thisContract prov)
+                 ::(EVar prov local_state)
+                 ::(EVar prov local_emit)
+                 ::el)
+        in
         let el := emaplift (ergo_expr_to_ergoc_expr ctxt) el in
         elift (fun el =>
                  ECallFunInGroup
                    prov
                    coname
                    clname
-                   ((EVar prov current_time)
-                      ::(thisContract prov)
-                      ::(EVar prov local_state)
-                      ::(EVar prov local_emit)
-                      ::el)) el
+                   params) el
       end
     | SCallClause _ e0 _ _ =>
       clause_call_not_on_contract_error (expr_annot e0)
@@ -217,7 +228,7 @@ Section ErgotoErgoC.
     | SEnforce prov e1 None s3 =>
       elift3 (EIf prov)
              (elift (EUnaryOp prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
-             (esuccess (EError prov (EConst prov enforce_error_content)))
+             (esuccess (EError prov (EConst prov (enforce_error_content prov ""))))
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 (Some s2) s3 =>
       elift3 (EIf prov)
@@ -280,17 +291,29 @@ Section ErgotoErgoC.
           elift Some (ergo_stmt_to_expr_top ctxt prov stmt)
         end
     in
+    let clname := c.(clause_name) in
+    let params :=
+        if string_dec clname clause_init_name
+        then
+          ((current_time, (ErgoTypeDateTime prov))
+             ::(this_contract, tem)
+             ::(this_state, ErgoTypeNothing prov)
+             ::(this_emit, ErgoTypeArray prov emit_type)
+             ::c.(clause_sig).(type_signature_params))
+        else
+          ((current_time, (ErgoTypeDateTime prov))
+             ::(this_contract, tem)
+             ::(this_state, state_type)
+             ::(this_emit, ErgoTypeArray prov emit_type)
+             ::c.(clause_sig).(type_signature_params))
+    in
     elift
       (fun body =>
-         (c.(clause_name),
+         (clname,
           mkFuncC
             prov
             (mkSigC
-               ((current_time, (ErgoTypeDateTime prov))
-                  ::(this_contract, tem)
-                  ::(this_state, state_type)
-                  ::(this_emit, ErgoTypeArray prov emit_type)
-                  ::c.(clause_sig).(type_signature_params))
+               params
                (mk_output_type prov success_type error_type))
             body))
       body.
@@ -358,8 +381,9 @@ Section ErgotoErgoC.
     | DSetContract prov cn e1 =>
       let ctxt := set_current_contract ctxt cn in
       elift
-        (fun x => (x :: nil,ctxt))
-        (elift (DCConstant prov this_contract None) (ergo_expr_to_ergoc_expr ctxt e1))
+        (fun x => (x :: (DCConstant prov this_state None (EConst prov dunit)) :: nil,ctxt))
+        (elift (DCConstant prov this_contract None)
+               (ergo_expr_to_ergoc_expr ctxt e1))
     end.
 
   (** Translate a module to a module+calculus *)

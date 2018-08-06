@@ -126,8 +126,8 @@ Module ErgoCompiler.
   
   Definition ergo_type_any prov : ergo_type
     := ErgoType.ErgoTypeAny prov.
-  Definition ergo_type_none prov : ergo_type
-    := ErgoType.ErgoTypeNone prov.
+  Definition ergo_type_nothing prov : ergo_type
+    := ErgoType.ErgoTypeNothing prov.
   Definition ergo_type_boolean prov : ergo_type
     := ErgoType.ErgoTypeBoolean prov.
   Definition ergo_type_string prov : ergo_type
