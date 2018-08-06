@@ -20,6 +20,7 @@ Require Import List.
 Require Import ZArith.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EProvenance.
+Require Import ErgoSpec.Common.Utils.ENames.
 
 Section EResult.
   Inductive eerror : Set :=
@@ -28,7 +29,7 @@ Section EResult.
   | ECompilationError : provenance -> string -> eerror
   | ETypeError : provenance -> string -> eerror
   | ERuntimeError : provenance -> string -> eerror.
-  
+
   Definition eresult (A:Set) := Result A eerror.
   Definition esuccess {A:Set} (a:A) : eresult A :=
     Success A eerror a.
@@ -121,6 +122,12 @@ Section EResult.
 
   End Lift.
 
+  Section Fmt.
+    Definition format_error (name : string) (prov : provenance) (msg : string) :=
+      let loc := loc_of_provenance prov in
+      (name ++ " at " ++ (string_of_location loc) ++ " '" ++ msg ++ "'")%string.
+  End Fmt.
+  
   (** Built-in errors *)
   Section Builtin.
     Definition clause_call_not_on_contract_error {A} prov : eresult A :=
@@ -186,14 +193,18 @@ Section EResult.
     Definition TODO {A : Set} prov (feature:string) : eresult A :=
       efailure (ESystemError prov ("Feature " ++ feature ++ " not implemented.")%string).
 
-    Definition ergo_default_package : string := "org.accordproject.ergo".
-    Definition ergo_default_error_proval_name : string := "Error".
-    Definition ergo_default_error_name : string :=
-      ergo_default_package ++ "." ++ ergo_default_error_proval_name.
-
-    Definition enforce_error_content : ErgoData.data :=
-      ErgoData.dbrand (ergo_default_error_name::nil)
-                      (ErgoData.drec (("message"%string, ErgoData.dstring "Enforce condition failed")::nil)).
+    Definition make_error (message:string) : ErgoData.data :=
+      ErgoData.dbrand (default_error_absolute_name::nil)
+                      (ErgoData.drec (("message"%string, ErgoData.dstring message)::nil)).
+    Definition throw_error_content (prov:provenance) (msg:string) : ErgoData.data :=
+      let message := format_error "Throw Error" prov msg in
+      make_error message.
+    Definition enforce_error_content (prov:provenance) (msg:string) : ErgoData.data :=
+      let message := format_error "Enforce Error" prov msg in
+      make_error message.
+    Definition default_match_error_content (prov:provenance) (msg:string) : ErgoData.data :=
+      let message := format_error "DefaultMatch Error" prov msg in
+      make_error message.
 
     Definition unresolved_name_error {A} prov : eresult A :=
       efailure (ECompilationError prov "Unresolved name").
@@ -214,10 +225,4 @@ Section EResult.
       efailure (ESystemError prov ("Clause " ++ fname ++ " in contract " ++ gname ++ " did not get inlined")).
   End Builtin.
 
-  Section Fmt.
-    Definition format_error (name : string) (prov : provenance) (msg : string) :=
-      let loc := loc_of_provenance prov in
-      (name ++ " at " ++ (string_of_location loc) ++ " '" ++ msg ++ "'")%string.
-  End Fmt.
-  
 End EResult.

@@ -24,7 +24,7 @@ contract HelloWorldState over TemplateModel {
     }
   }
 
-  clause init(request : MyRequest) : Empty {
+  clause init(request : MyRequest) : Nothing {
     set state State{
       counter: 0.0
     };

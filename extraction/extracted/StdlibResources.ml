@@ -72,4 +72,9 @@ define function count(x:Any[]) : Integer
 define function flatten(x:Any[][]) : Any[]
 define function arrayAdd(x:Any[],y:Any[]) : Any[]
 define function arraySubtract(x:Any[],y:Any[]) : Any[]
+
+
+define concept ErgoErrorResponse{
+	message : String
+}
 |xxx}

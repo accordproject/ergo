@@ -29,7 +29,7 @@ Section ErgoType.
   
     Inductive ergo_type :=
     | ErgoTypeAny : A -> ergo_type                               (**r any type *)
-    | ErgoTypeNone : A -> ergo_type                              (**r none type *)
+    | ErgoTypeNothing : A -> ergo_type                           (**r nothing type *)
     | ErgoTypeBoolean : A -> ergo_type                           (**r bool atomic type *)
     | ErgoTypeString : A -> ergo_type                            (**r string atomic type *)
     | ErgoTypeDouble : A -> ergo_type                            (**r double atomic type *)
@@ -46,7 +46,7 @@ Section ErgoType.
     Definition type_annot (et:ergo_type) : A :=
       match et with
       | ErgoTypeAny a => a
-      | ErgoTypeNone a => a
+      | ErgoTypeNothing a => a
       | ErgoTypeBoolean a => a
       | ErgoTypeString a => a
       | ErgoTypeDouble a => a
@@ -126,14 +126,14 @@ Section ErgoType.
   Definition lift_default_throws_type (prov:provenance) (emits:option laergo_type) : laergo_type :=
     match emits with
     | Some e => e
-    | None => ErgoTypeClassRef prov default_throws_absolute_name
+    | None => ErgoTypeClassRef prov default_error_absolute_name
     end.
 
   Definition mk_success_type (prov:provenance) (response_type state_type emit_type: laergo_type) : laergo_type :=
     ErgoTypeRecord prov
-       (("response",response_type)
-          ::("state",state_type)
-          ::("emit",emit_type)
+       ((this_response,response_type)
+          ::(this_state,state_type)
+          ::(this_emit,ErgoTypeArray prov emit_type)
           ::nil)%string.
 
   Definition mk_error_type (prov:provenance) (throw_type: laergo_type) : laergo_type := throw_type.

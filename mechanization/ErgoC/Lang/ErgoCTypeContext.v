@@ -16,6 +16,7 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 
@@ -50,11 +51,11 @@ Section ErgoCTypeContext.
                   new_local_env.
 
   Definition empty_type_context :=
-    mkEvalContext  (("contract"%string,tunit)
+    mkEvalContext  ((this_contract,tunit)
+                      ::(this_state,tunit)
                       ::nil)
-                   (("state"%string,tunit)
-                      ::("emit"%string,tcoll tunit)
-                      ::("now"%string,tunit)
+                   ((current_time,tstring)
+                      ::(this_emit,tcoll (tbrand (default_emits_absolute_name::nil)))
                       ::nil).
   
 End ErgoCTypeContext.

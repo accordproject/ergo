@@ -12,22 +12,16 @@
  * limitations under the License.
  *)
 
-(* This is the [WIP] REFERENCE IMPLEMENTATION of the dynamic semantics of the
- * ERGO language.
- *
- * It is also being developed, and changing rapidly.
- *
- * -- Kartik, June 2018
- *)
-
 Require Import String.
 Require Import List.
 Require Import Basics.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.EUtil.
+Require Import ErgoSpec.Common.Utils.ENames.
 Require Import ErgoSpec.Common.Utils.EResult.
 Require Import ErgoSpec.Common.Utils.EProvenance.
+Require Import ErgoSpec.Common.Utils.EData.
 Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Common.Types.ErgoTypetoErgoCType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
@@ -205,7 +199,7 @@ Section ErgoCType.
              (eresult_of_option
                 (ergoc_type_infer_unary_op
                    (OpBrand (name::nil)) rs')
-                (ETypeError prov "Concept name doesn't match data"%string)))
+                (ETypeError prov ("Concept name " ++ name ++ " doesn't match data")%string)))
         (fold_left
            (fun sofar next =>
               eolift2
@@ -292,6 +286,44 @@ Section ErgoCType.
       complex_foreach_in_calculus_error prov
     end.
 
+  Definition ergoc_type_function
+             (dctxt : type_context)
+             (func : ergoc_function) : eresult type_context :=
+    let prov := func.(functionc_annot) in
+    match func.(functionc_body) with
+    | None => esuccess dctxt
+    | Some body =>
+      let tsig :=
+          map (fun x => (fst x, ergo_type_to_ergoc_type (snd x)))
+              func.(functionc_sig).(sigc_params) in
+      eolift
+        (fun outt =>
+           let expectedt := ergo_type_to_ergoc_type func.(functionc_sig).(sigc_output) in
+           if subtype_dec
+                outt
+                expectedt
+           then esuccess dctxt
+           else
+             let outs := string_of_result_type (Some outt) in
+             let expecteds := string_of_result_type (Some expectedt) in
+             efailure (ETypeError prov ("Function output type mismatch between: \n\t" ++ outs ++ "and\n\t" ++ expecteds)%string))
+        (ergo_type_expr (type_context_set_local_env dctxt tsig) body)
+    end.
+
+  Definition ergoc_type_clause
+             (dctxt : type_context)
+             (cl : string * ergoc_function) : eresult type_context :=
+    ergoc_type_function dctxt (snd cl).
+
+  Definition ergoc_type_contract
+             (dctxt : type_context)
+             (coname: absolute_name)
+             (c : ergoc_contract) : eresult type_context :=
+    elift_fold_left
+      ergoc_type_clause
+      c.(contractc_clauses)
+      dctxt.
+
   Definition ergoc_type_decl
              (dctxt : type_context)
              (decl : ergoc_declaration)
@@ -325,23 +357,9 @@ Section ErgoCType.
             else
               efailure (fmt_err t' vt)) expr'
     | DCFunc prov name func =>
-      match func.(functionc_body) with
-      | None => esuccess (dctxt, None)
-      | Some body =>
-        let tsig :=
-            map (fun x => (fst x, ergo_type_to_ergoc_type (snd x)))
-                func.(functionc_sig).(sigc_params) in
-        eolift
-          (fun outt =>
-             if subtype_dec
-                  outt
-                  (ergo_type_to_ergoc_type func.(functionc_sig).(sigc_output))
-             then esuccess (dctxt, None)
-             else efailure (ETypeError prov "Function output type mismatch"%string))
-          (ergo_type_expr (type_context_set_local_env dctxt tsig) body)
-      end
+      elift (fun ctxt => (ctxt,None)) (ergoc_type_function dctxt func)
     | DCContract prov name contr =>
-      esuccess (dctxt, None)
+      elift (fun ctxt => (ctxt,None)) (ergoc_type_contract dctxt name contr)
     end.
 
 End ErgoCType.
