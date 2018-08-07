@@ -144,7 +144,7 @@ decl:
     { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v None e }
 | DEFINE CONSTANT v = ident COLON t = paramtype EQUAL e = expr
     { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v (Some t) e }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype et = effecttypes LCURLY fs = fstmt RCURLY
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype et = effecttypes LCURLY fs = fstmt RCURLY
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
           function_sig =
@@ -154,7 +154,7 @@ decl:
             type_signature_throws = fst et;
             type_signature_emits = snd et };
           function_body = Some fs; } }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN COLON out = paramtype et = effecttypes
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype et = effecttypes
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
           function_sig =
@@ -192,7 +192,7 @@ clauses:
     { c :: cl }
 
 clause:
-| CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype et = effecttypes LCURLY s = stmt RCURLY
+| CLAUSE cn = ident LPAREN ps = params RPAREN out = outtype et = effecttypes LCURLY s = stmt RCURLY
     { { clause_annot = mk_provenance $startpos $endpos;
         clause_name = cn;
         clause_sig =
@@ -202,6 +202,12 @@ clause:
           type_signature_throws = fst et;
           type_signature_emits = snd et };
         clause_body = Some s; } }
+
+outtype:
+|
+  { ErgoCompiler.ergo_type_nothing (mk_provenance $startpos $endpos) }
+| COLON out = paramtype
+  { out }
 
 effecttypes:
 |
