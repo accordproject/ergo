@@ -27,6 +27,7 @@ MODULES = \
   Common/Utils/Misc \
   Common/Utils/Provenance \
   Common/Utils/Names \
+  Common/Utils/NamespaceContext \
   Common/Utils/Result \
   Common/Utils/Ast \
   Common/Utils/DataTypes \
