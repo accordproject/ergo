@@ -34,7 +34,6 @@ Section Names.
       | (Some ns,ln) => absolute_name_of_local_name ns ln
       end.
 
-    Parameter get_local_part : absolute_name -> option local_name.
   End ScopedNames.
 
   Section ReservedNames.

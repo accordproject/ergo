@@ -72,4 +72,9 @@ Section Misc.
     (* This assumes no two nodes have the same string *)
     Parameter coq_toposort : (A -> B) -> (A -> string) -> list (A * list A) -> list A.
   End TopoSort.
+
+  Section StringStuff.
+    (** Turns "foo.bar.baz" into "baz" if there is at least on '.' character *)
+    Parameter get_local_part : string -> option string.
+  End StringStuff.
 End Misc.

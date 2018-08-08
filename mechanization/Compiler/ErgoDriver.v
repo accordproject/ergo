@@ -177,7 +177,8 @@ Section ErgoDriver.
       eolift (fun xy : list ergoc_declaration * compilation_context =>
                 elift_context_fold_left
                   (fun (sctxt : compilation_context) (decl : ergoc_declaration) =>
-                     match ergoc_type_decl sctxt.(compilation_context_type_ctxt) decl with
+                     let nsctxt := sctxt.(compilation_context_namespace)  in
+                     match ergoc_type_decl nsctxt sctxt.(compilation_context_type_ctxt) decl with
                      | Failure _ _ f => efailure f
                      | Success _ _ (tctxt', typ) =>
                        esuccess ((typ,decl), compilation_context_update_type_ctxt sctxt tctxt')
@@ -319,6 +320,7 @@ Section ErgoDriver.
     Definition ergoc_repl_eval_declaration
                (ctxt:repl_context) (typed_decl:option ergoc_type * ergoc_declaration)
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
+      let nsctxt := ctxt.(repl_context_comp_ctxt).(compilation_context_namespace)  in
       let (typ, decl) := typed_decl in
       match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
       | Failure _ _ f => efailure f
@@ -340,7 +342,7 @@ Section ErgoDriver.
                      in
                      let sctxt1 := ctxt1.(repl_context_comp_ctxt).(compilation_context_type_ctxt) in
                      update_repl_ctxt_type_ctxt ctxt1 (type_context_update_global_env sctxt1 this_state statety))
-                  (unpack_type typ)
+                  (unpack_type nsctxt typ)
               end
           in
           elift (fun ctxt => (typ, Some out, ctxt)) newctxt
@@ -373,10 +375,11 @@ Section ErgoDriver.
                (rctxt : repl_context)
                (result : eresult (option ergoc_type * option ergo_data * repl_context))
       : eresult string :=
+      let nsctxt := rctxt.(repl_context_comp_ctxt).(compilation_context_namespace)  in
       let global_env := rctxt.(repl_context_eval_ctxt).(eval_context_global_env) in
       let old_state := lookup String.string_dec global_env this_state in
       elift
-        (string_of_result old_state)
+        (string_of_result nsctxt old_state)
         (elift fst result).
 
     Definition ergo_repl_eval_decl
