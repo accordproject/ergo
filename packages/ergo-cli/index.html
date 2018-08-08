@@ -75,9 +75,9 @@ function update() {
             .replace(/</g, "&lt;")
 //          .replace(/Unit/g, '🌯')
             .replace(/^Response\./gm, '<span class="response">Response.</span>')
-            .replace(/^Emit\./g, '<span class="emit">Emit.</span>')
-            .replace(/^Error\./g, '<span class="error">Error.</span>')
-            .replace(/^State\./g, '<span class="state">State.</span>')
+            .replace(/^Emit\./gm, '<span class="emit">Emit.</span>')
+            .replace(/^Error\./gm, '<span class="error">Error.</span>')
+            .replace(/^State\./gm, '<span class="state">State.</span>')
         stdin.value = "";
     }
 }
