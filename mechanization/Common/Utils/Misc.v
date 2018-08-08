@@ -15,7 +15,7 @@
 Require Import String.
 Require Import List.
 
-Section EUtil.
+Section Misc.
   Definition multi_append {A} separator (f:A -> string) (elems:list A) : string :=
     match elems with
     | nil => ""
@@ -72,4 +72,4 @@ Section EUtil.
     (* This assumes no two nodes have the same string *)
     Parameter coq_toposort : (A -> B) -> (A -> string) -> list (A * list A) -> list A.
   End TopoSort.
-End EUtil.
+End Misc.

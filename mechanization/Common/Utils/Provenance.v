@@ -18,7 +18,7 @@ Require Import String.
 Require Import ZArith.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section EProvenance.
+Section Provenance.
   Record location_point :=
     mkLocationPoint {
         offset: Z;
@@ -88,4 +88,4 @@ Section EProvenance.
          (string_of_location_point loc.(loc_start)) ++ "-" ++
          (string_of_location_point loc.(loc_end)).
 
-End EProvenance.
+End Provenance.

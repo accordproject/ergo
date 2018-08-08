@@ -19,13 +19,12 @@
 Require Import String.
 Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.EProvenance.
-Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EAstUtil.
+Require Import ErgoSpec.Common.Utils.Provenance.
+Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Common.Utils.Result.
+Require Import ErgoSpec.Common.Utils.Ast.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 
@@ -36,8 +35,6 @@ Section ErgoNameResolution.
 - for a module, resolve imports using the per-namespace table to build a full namespace mapping for that module
 - resolve the names within a given module using the full namespace mapping for that module *)
 
-  Definition no_namespace : string := "".
-    
   Section NamespaceTable.
     (** Maps local names to absolute names for a given ErgoType module *)
     Definition name_table : Set := list (local_name * absolute_name).

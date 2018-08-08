@@ -20,14 +20,14 @@ Require Import String.
 Require Import List.
 Require Import EquivDec.
 
-Require Import ErgoSpec.Common.Utils.EUtil.
-Require Import ErgoSpec.Common.Utils.EProvenance.
-Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Common.Utils.EAstUtil.
+(* Require Import ErgoSpec.Common.Utils.Misc. *)
+Require Import ErgoSpec.Common.Utils.Misc.
+Require Import ErgoSpec.Common.Utils.Provenance.
+Require Import ErgoSpec.Common.Utils.Result.
+Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Common.Utils.Ast.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
-Require Import ErgoSpec.Common.Pattern.EPattern.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section Ergo.

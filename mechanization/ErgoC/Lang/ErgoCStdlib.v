@@ -20,8 +20,7 @@ Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
 Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
-
-Require Import ErgoSpec.Common.Utils.EProvenance.
+Require Import ErgoSpec.Common.Utils.Provenance.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.

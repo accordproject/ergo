@@ -16,8 +16,7 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.Common.Utils.Names.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 
 Section ErgoCTypeContext.

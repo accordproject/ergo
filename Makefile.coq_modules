@@ -24,16 +24,15 @@ MODULES = \
   Backend/Lib/EOperators \
   Backend/Lib/ECodeGen \
   Backend/ErgoBackend \
-  Common/Utils/EUtil \
-  Common/Utils/EProvenance \
-  Common/Utils/ENames \
-  Common/Utils/EResult \
-  Common/Utils/EData \
-  Common/Utils/EAstUtil \
+  Common/Utils/Misc \
+  Common/Utils/Provenance \
+  Common/Utils/Names \
+  Common/Utils/Result \
+  Common/Utils/Ast \
+  Common/Utils/DataTypes \
   Common/CTO/CTO \
   Common/Types/ErgoType \
   Common/Types/ErgoTypetoErgoCType \
-  Common/Pattern/EPattern \
   Ergo/Lang/Ergo \
   Ergo/Lang/ErgoMap \
   Ergo/Lang/ErgoSem \

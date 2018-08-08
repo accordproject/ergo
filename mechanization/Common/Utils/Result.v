@@ -19,10 +19,10 @@ Require Import String.
 Require Import List.
 Require Import ZArith.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.EProvenance.
-Require Import ErgoSpec.Common.Utils.ENames.
+Require Import ErgoSpec.Common.Utils.Provenance.
+Require Import ErgoSpec.Common.Utils.Names.
 
-Section EResult.
+Section Result.
   Inductive eerror : Set :=
   | ESystemError : provenance -> string -> eerror
   | EParseError : provenance -> string -> eerror
@@ -225,4 +225,4 @@ Section EResult.
       efailure (ESystemError prov ("Clause " ++ fname ++ " in contract " ++ gname ++ " did not get inlined")).
   End Builtin.
 
-End EResult.
+End Result.

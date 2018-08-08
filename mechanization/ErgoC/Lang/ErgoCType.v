@@ -17,12 +17,12 @@ Require Import List.
 Require Import Basics.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.EUtil.
-Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EProvenance.
-Require Import ErgoSpec.Common.Utils.EData.
-Require Import ErgoSpec.Common.Pattern.EPattern.
+Require Import ErgoSpec.Common.Utils.Misc.
+Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Common.Utils.Result.
+Require Import ErgoSpec.Common.Utils.Provenance.
+Require Import ErgoSpec.Common.Utils.Ast.
+Require Import ErgoSpec.Common.Utils.DataTypes.
 Require Import ErgoSpec.Common.Types.ErgoTypetoErgoCType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
@@ -34,7 +34,6 @@ Section ErgoCType.
   Import ErgoCTypes.
 
   Program Definition empty_rec_type : ergoc_type := Rec Closed nil _.
-
 
   Definition ergo_format_unop_error (op : unary_op) (arg : ergoc_type) : string :=
     let fmt_easy :=
