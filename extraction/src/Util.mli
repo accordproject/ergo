@@ -83,3 +83,5 @@ exception TopoCycle of string list
 val toposort : ('a -> 'b) -> ('a -> string) -> ('a * 'a list) list -> 'a list
 val coq_toposort : ('a -> 'b) -> ('a -> char list) -> ('a * 'a list) list -> 'a list
 
+val get_local_part : char list -> (char list) option
+

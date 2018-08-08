@@ -19,12 +19,12 @@ Require Import List.
 
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.EUtil.
-Require Import ErgoSpec.Common.Utils.ENames.
-Require Import ErgoSpec.Common.Utils.EResult.
-Require Import ErgoSpec.Common.Utils.EProvenance.
-Require Import ErgoSpec.Common.Utils.EData.
-Require Import ErgoSpec.Common.Utils.EAstUtil.
+Require Import ErgoSpec.Common.Utils.Misc.
+Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Common.Utils.Result.
+Require Import ErgoSpec.Common.Utils.Provenance.
+Require Import ErgoSpec.Common.Utils.Ast.
+Require Import ErgoSpec.Common.Utils.DataTypes.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.

@@ -14,7 +14,7 @@
 
 Require Import String.
 
-Section ENames.
+Section Names.
   Local Open Scope string.
 
   Section ScopedNames.
@@ -34,6 +34,7 @@ Section ENames.
       | (Some ns,ln) => absolute_name_of_local_name ns ln
       end.
 
+    Parameter get_local_part : absolute_name -> option local_name.
   End ScopedNames.
 
   Section ReservedNames.
@@ -71,4 +72,8 @@ Section ENames.
       end.
   End Misc.
 
-End ENames.
+  Section Namespaces.
+    Definition no_namespace : string := "".
+  End  Namespaces.
+
+End Names.

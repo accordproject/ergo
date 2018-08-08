@@ -219,3 +219,12 @@ let coq_toposort label file graph =
   let sorted = toposort label (fun x -> string_of_char_list (file x)) graph in
   (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (file x))) sorted; *)
   sorted
+
+let get_local_part name =
+  let name = string_of_char_list name in
+  begin match String.rindex_opt name '.' with
+  | None -> None
+  | Some i ->
+      let local = String.sub name (i+1) (String.length name - (i+1)) in
+      Some (char_list_of_string local)
+  end

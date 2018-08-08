@@ -17,13 +17,12 @@ Require Qcert.Common.Brands.BrandRelation.
 
 Require ErgoSpec.Version.
 Require ErgoSpec.Backend.ErgoBackend.
-Require ErgoSpec.Common.Utils.EProvenance.
-Require ErgoSpec.Common.Utils.ENames.
-Require ErgoSpec.Common.Utils.EResult.
-Require ErgoSpec.Common.Utils.EAstUtil.
+Require ErgoSpec.Common.Utils.Provenance.
+Require ErgoSpec.Common.Utils.Names.
+Require ErgoSpec.Common.Utils.Result.
+Require ErgoSpec.Common.Utils.Ast.
 Require ErgoSpec.Common.CTO.CTO.
 Require ErgoSpec.Common.Types.ErgoType.
-Require ErgoSpec.Common.Pattern.EPattern.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
 Require ErgoSpec.Compiler.ErgoDriver.
@@ -41,34 +40,34 @@ Module ErgoCompiler.
   Definition javascript_identifier_sanitizer := ErgoBackend.ErgoCodeGen.javascript_identifier_sanitizer.
 
   (** Location *)
-  Definition location := EProvenance.location.
-  Definition provenance := EProvenance.provenance.
+  Definition location := Provenance.location.
+  Definition provenance := Provenance.provenance.
 
-  Definition loc_of_provenance := EProvenance.loc_of_provenance.
+  Definition loc_of_provenance := Provenance.loc_of_provenance.
   
-  Definition prov_func := EProvenance.ProvFunc.
-  Definition prov_clause := EProvenance.ProvClause.
-  Definition prov_this_contract := EProvenance.ProvThisContract.
-  Definition prov_this_clause := EProvenance.ProvThisClause.
-  Definition prov_this_state := EProvenance.ProvThisState.
-  Definition prov_loc := EProvenance.ProvLoc.
+  Definition prov_func := Provenance.ProvFunc.
+  Definition prov_clause := Provenance.ProvClause.
+  Definition prov_this_contract := Provenance.ProvThisContract.
+  Definition prov_this_clause := Provenance.ProvThisClause.
+  Definition prov_this_state := Provenance.ProvThisState.
+  Definition prov_loc := Provenance.ProvLoc.
 
   (** Names *)
-  Definition relative_name : Set := ENames.relative_name.
+  Definition relative_name : Set := Names.relative_name.
 
   (** Results *)
-  Definition eerror : Set := EResult.eerror.
-  Definition system_error : provenance -> String.string -> eerror := EResult.ESystemError.
-  Definition parse_error : provenance -> String.string -> eerror := EResult.EParseError.
-  Definition compilation_error : provenance -> String.string -> eerror := EResult.ECompilationError.
-  Definition type_error : provenance -> String.string -> eerror := EResult.ETypeError.
-  Definition runtime_error : provenance -> String.string -> eerror := EResult.ERuntimeError.
+  Definition eerror : Set := Result.eerror.
+  Definition system_error : provenance -> String.string -> eerror := Result.ESystemError.
+  Definition parse_error : provenance -> String.string -> eerror := Result.EParseError.
+  Definition compilation_error : provenance -> String.string -> eerror := Result.ECompilationError.
+  Definition type_error : provenance -> String.string -> eerror := Result.ETypeError.
+  Definition runtime_error : provenance -> String.string -> eerror := Result.ERuntimeError.
 
-  Definition eresult (A:Set) : Set := EResult.eresult A.
-  Definition esuccess (A:Set) : A -> eresult A := EResult.esuccess.
-  Definition efailure (A:Set) : eerror -> eresult A := EResult.efailure.
+  Definition eresult (A:Set) : Set := Result.eresult A.
+  Definition esuccess (A:Set) : A -> eresult A := Result.esuccess.
+  Definition efailure (A:Set) : eerror -> eresult A := Result.efailure.
 
-  Definition result_file : Set := EUtil.result_file.
+  Definition result_file : Set := Misc.result_file.
   
   (** CTOs *)
   Definition cto_type := CTO.lrcto_type.
@@ -103,13 +102,13 @@ Module ErgoCompiler.
     := CTO.CTOConcept.
 
   Definition mk_cto_declaration :
-    EProvenance.provenance -> String.string -> cto_declaration_desc -> cto_declaration
+    Provenance.provenance -> String.string -> cto_declaration_desc -> cto_declaration
     := CTO.mkCTODeclaration.
   Definition mk_cto_package :
-    EProvenance.provenance
+    Provenance.provenance
     -> String.string
     -> String.string
-    -> list EAstUtil.import_decl
+    -> list Ast.import_decl
     -> list cto_declaration
     -> cto_package
     := CTO.mkCTOPackage.
@@ -156,7 +155,7 @@ Module ErgoCompiler.
   Definition ergo_type_concept : option relative_name -> list (String.string * ergo_type) -> ergo_type_declaration_desc
     := ErgoType.ErgoTypeConcept.
 
-  Definition mk_ergo_type_declaration : EProvenance.provenance -> String.string -> ergo_type_declaration_desc -> ergo_type_declaration
+  Definition mk_ergo_type_declaration : Provenance.provenance -> String.string -> ergo_type_declaration_desc -> ergo_type_declaration
     := ErgoType.mkErgoTypeDeclaration.
 
   (** Ergo *)
@@ -178,14 +177,14 @@ Module ErgoCompiler.
     := Ergo.lrergo_input.
 
   (** Patterns *)
-  Definition ecasedata : EProvenance.provenance -> ErgoData.data -> EPattern.lrergo_pattern
-    := EPattern.CaseData.
-  Definition ecasewildcard : EProvenance.provenance -> EPattern.type_annotation -> EPattern.lrergo_pattern
-    := EPattern.CaseWildcard.
-  Definition ecaselet : EProvenance.provenance -> String.string -> EPattern.type_annotation -> EPattern.lrergo_pattern
-    := EPattern.CaseLet.
-  Definition ecaseletoption : EProvenance.provenance -> String.string -> EPattern.type_annotation -> EPattern.lrergo_pattern
-    := EPattern.CaseLetOption.
+  Definition ecasedata : Provenance.provenance -> ErgoData.data -> Ast.lrergo_pattern
+    := Ast.CaseData.
+  Definition ecasewildcard : Provenance.provenance -> Ast.type_annotation -> Ast.lrergo_pattern
+    := Ast.CaseWildcard.
+  Definition ecaselet : Provenance.provenance -> String.string -> Ast.type_annotation -> Ast.lrergo_pattern
+    := Ast.CaseLet.
+  Definition ecaseletoption : Provenance.provenance -> String.string -> Ast.type_annotation -> Ast.lrergo_pattern
+    := Ast.CaseLetOption.
 
   (** Expressions *)
   Definition ethis_contract prov : ergo_expr
@@ -250,15 +249,15 @@ Module ErgoCompiler.
     Ergo.SMatch prov e slp sd.
 
   (** Syntactic sugar *)
-  Definition edot : EProvenance.provenance -> String.string -> ergo_expr -> ergo_expr 
+  Definition edot : Provenance.provenance -> String.string -> ergo_expr -> ergo_expr 
     := ErgoSugar.EDot.
-  Definition eoptionaldot : EProvenance.provenance -> String.string -> ergo_expr -> ergo_expr
+  Definition eoptionaldot : Provenance.provenance -> String.string -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDot.
-  Definition eoptionaldefault : EProvenance.provenance -> ergo_expr -> ergo_expr -> ergo_expr
+  Definition eoptionaldefault : Provenance.provenance -> ergo_expr -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDefault.
-  Definition sreturnempty : EProvenance.provenance -> ergo_stmt :=
+  Definition sreturnempty : Provenance.provenance -> ergo_stmt :=
     ErgoSugar.SReturnEmpty.
-  Definition efunreturnempty : EProvenance.provenance -> ergo_expr :=
+  Definition efunreturnempty : Provenance.provenance -> ergo_expr :=
     ErgoSugar.EFunReturnEmpty.
   
   (** Declarations *)
@@ -280,17 +279,17 @@ Module ErgoCompiler.
   (** Compilation *)
   Definition ergo_module_to_javascript :
     list ergo_input
-    -> EResult.eresult result_file
+    -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_javascript_top.
 
   Definition ergo_module_to_javascript_cicero :
     list ergo_input
-    -> EResult.eresult result_file
+    -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_javascript_cicero_top.
 
   Definition ergo_module_to_java :
     list ergo_input
-    -> EResult.eresult result_file
+    -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_java_top.
 
   (** Brand model *)
@@ -312,7 +311,7 @@ Module ErgoCompiler.
   Definition ergo_repl_eval_decl {bm:ergo_brand_model} :
     @ErgoDriver.repl_context bm
     -> ergo_declaration
-    -> EResult.eresult String.string * (@ErgoDriver.repl_context bm)
+    -> Result.eresult String.string * (@ErgoDriver.repl_context bm)
     := (@ErgoDriver.ergo_repl_eval_decl bm).
 
 End ErgoCompiler.
