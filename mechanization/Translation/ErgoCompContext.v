@@ -37,6 +37,7 @@ Section ErgoCompContext.
         compilation_context_function_group_env : function_group_env;       (**r functions groups in scope *)
         compilation_context_global_env : list (string * ergoc_expr);       (**r global variables in scope *)
         compilation_context_local_env : list (string * ergoc_expr);        (**r local variables in scope *)
+        compilation_context_params_env : list string;                      (**r function parameters in scope *)
         compilation_context_current_contract : option string;              (**r current contract in scope if any *)
         compilation_context_current_clause : option string;                (**r current clause in scope if any *)
         compilation_context_type_ctxt : type_context;                      (**r the type context *)
@@ -54,6 +55,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -69,6 +71,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -95,6 +98,7 @@ Section ErgoCompContext.
                (update_function_group_env coname clname value ctxt.(compilation_context_function_group_env))
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -110,6 +114,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ((name, value)::ctxt.(compilation_context_global_env))
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -125,6 +130,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ((name, value)::ctxt.(compilation_context_local_env))
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -139,6 +145,37 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                new_local_env
+               ctxt.(compilation_context_params_env)
+               ctxt.(compilation_context_current_contract)
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_type_ctxt)
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
+
+  Definition compilation_context_update_params_env
+             (ctxt : compilation_context)
+             (param : string) : compilation_context :=
+    mkCompCtxt ctxt.(compilation_context_namespace)
+               ctxt.(compilation_context_function_env)
+               ctxt.(compilation_context_function_group_env)
+               ctxt.(compilation_context_global_env)
+               ctxt.(compilation_context_local_env)
+               (param::ctxt.(compilation_context_params_env))
+               ctxt.(compilation_context_current_contract)
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_type_ctxt)
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls).
+
+  Definition compilation_context_set_params_env
+             (ctxt : compilation_context)
+             (params : list string) : compilation_context :=
+    mkCompCtxt ctxt.(compilation_context_namespace)
+               ctxt.(compilation_context_function_env)
+               ctxt.(compilation_context_function_group_env)
+               ctxt.(compilation_context_global_env)
+               ctxt.(compilation_context_local_env)
+               params
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -162,6 +199,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                (Some cname)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -174,6 +212,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                (Some cname)
                ctxt.(compilation_context_type_ctxt)
@@ -188,6 +227,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                nctxt
@@ -203,6 +243,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -217,6 +258,7 @@ Section ErgoCompContext.
                ctxt.(compilation_context_function_group_env)
                ctxt.(compilation_context_global_env)
                ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
@@ -224,6 +266,6 @@ Section ErgoCompContext.
                (ctxt.(compilation_context_new_type_decls) ++ (decl::nil)).
   
   Definition init_compilation_context nsctxt : compilation_context :=
-    mkCompCtxt nsctxt nil nil nil nil None None ErgoCTypeContext.empty_type_context nil nil.
+    mkCompCtxt nsctxt nil nil nil nil nil None None ErgoCTypeContext.empty_type_context nil nil.
 
 End ErgoCompContext.
