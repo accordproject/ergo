@@ -33,7 +33,7 @@ let fmt_out s =
   (Str.global_replace (Str.regexp "^Emit\\.") (fmt_mag "Emit.")
   (Str.global_replace (Str.regexp "^Response\\.") (fmt_grn "Response.")
   (Str.global_replace (Str.regexp "^State\\.") (fmt_blu "State.")
-  (Str.global_replace (Str.regexp "^Error\\.") (fmt_red "Error.")
+  (Str.global_replace (Str.regexp "^Failure\\.") (fmt_red "Failure.")
   s))))
 
 let ps1 = fmt_yel "ergo$ "

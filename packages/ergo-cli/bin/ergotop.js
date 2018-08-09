@@ -46,7 +46,7 @@ rl.on('line', (line) => {
                     .replace(/^Response. /gm, chalk.green('Response. '))
                     .replace(/^Emit. /gm, chalk.magenta('Emit. '))
                     .replace(/^State. /gm, chalk.blue('State. '))
-                    .replace(/^Error. /gm, chalk.red('Error. ')) + '\n'
+                    .replace(/^Failure. /gm, chalk.red('Failure. '))
             );
         }
     }
