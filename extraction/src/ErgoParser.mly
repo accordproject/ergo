@@ -205,7 +205,7 @@ clause:
 
 outtype:
 |
-  { ErgoCompiler.ergo_type_nothing (mk_provenance $startpos $endpos) }
+  { ErgoCompiler.ergo_type_nil (mk_provenance $startpos $endpos) }
 | COLON out = paramtype
   { out }
 
@@ -531,7 +531,7 @@ tname:
       | "Long" -> ErgoCompiler.ergo_type_long (mk_provenance $startpos $endpos)
       | "Integer" -> ErgoCompiler.ergo_type_integer (mk_provenance $startpos $endpos)
       | "DateTime" -> ErgoCompiler.ergo_type_dateTime (mk_provenance $startpos $endpos)
-      | "Nothing" -> ErgoCompiler.ergo_type_nothing (mk_provenance $startpos $endpos)
+      | "Nil" -> ErgoCompiler.ergo_type_nil (mk_provenance $startpos $endpos)
       | "Any" -> ErgoCompiler.ergo_type_any (mk_provenance $startpos $endpos)
       | _ ->
           ErgoCompiler.ergo_type_class_ref
