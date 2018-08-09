@@ -130,10 +130,13 @@ Section ErgoCInline.
       match lookup String.string_dec (ctxt.(compilation_context_local_env)) name with
       | Some _ => esuccess expr
       | None =>
-        match lookup String.string_dec (ctxt.(compilation_context_global_env)) name with
-        | Some val => esuccess val
-        | None => esuccess expr
-        end
+        if in_dec String.string_dec name (ctxt.(compilation_context_params_env))
+        then esuccess expr
+        else
+          match lookup String.string_dec (ctxt.(compilation_context_global_env)) name with
+          | Some val => esuccess val
+          | None => esuccess expr
+          end
       end
     | _ => None
     end.
@@ -142,6 +145,8 @@ Section ErgoCInline.
   Definition ergo_inline_function
              (ctxt : compilation_context)
              (fn : ergoc_function) : eresult ergoc_function :=
+    let params := map fst fn.(functionc_sig).(sigc_params) in
+    let ctxt := compilation_context_set_params_env ctxt params in
     match fn.(functionc_body) with
     | None => esuccess fn
     | Some expr =>
