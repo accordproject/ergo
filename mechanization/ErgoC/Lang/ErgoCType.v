@@ -23,7 +23,7 @@ Require Import ErgoSpec.Common.Utils.NamespaceContext.
 Require Import ErgoSpec.Common.Utils.Result.
 Require Import ErgoSpec.Common.Utils.Provenance.
 Require Import ErgoSpec.Common.Utils.Ast.
-Require Import ErgoSpec.Common.Utils.DataTypes.
+Require Import ErgoSpec.Common.Utils.PrintTypedData.
 Require Import ErgoSpec.Common.Types.ErgoTypetoErgoCType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.

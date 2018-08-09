@@ -34,7 +34,7 @@ pre {
 }
 
 span.emit     { color: hotpink; }
-span.error    { color: red; }
+span.failure  { color: red; }
 span.state    { color: blue; }
 span.response { color: green; }
 
@@ -76,7 +76,7 @@ function update() {
 //          .replace(/Unit/g, '🌯')
             .replace(/^Response\./gm, '<span class="response">Response.</span>')
             .replace(/^Emit\./gm, '<span class="emit">Emit.</span>')
-            .replace(/^Error\./gm, '<span class="error">Error.</span>')
+            .replace(/^Failure\./gm, '<span class="failure">Failure.</span>')
             .replace(/^State\./gm, '<span class="state">State.</span>')
         stdin.value = "";
     }
