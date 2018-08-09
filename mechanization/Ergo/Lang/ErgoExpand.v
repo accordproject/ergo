@@ -120,7 +120,6 @@ Section ErgoExpand.
 
   Definition create_init_clause_for_contract
              (prov:provenance)
-             (state:laergo_type)
              (c:laergo_contract) : laergo_clause :=
     let effparams : list laergo_expr := EVar prov "request"%string :: nil in
     let init_body :=
@@ -132,19 +131,19 @@ Section ErgoExpand.
              (mkErgoTypeSignature
                 prov
                 (("request"%string, ErgoTypeClassRef prov default_request_absolute_name)::nil)
-                state
+                (ErgoTypeNothing prov)
                 None
                 (Some (ErgoTypeClassRef prov default_emits_absolute_name)))
              (Some init_body).
 
-  Definition add_init_clause_to_contract (state:laergo_type) (c:laergo_contract) : laergo_contract :=
+  Definition add_init_clause_to_contract (c:laergo_contract) : laergo_contract :=
     let prov := c.(contract_annot) in
     if in_dec string_dec clause_init_name
               (map (fun cl => cl.(clause_name)) c.(contract_clauses))
     then c
     else
       let init_clause :=
-          create_init_clause_for_contract prov state c
+          create_init_clause_for_contract prov c
       in
       mkContract
         prov
@@ -176,9 +175,7 @@ Section ErgoExpand.
     | DConstant _ _ _ _ => esuccess d
     | DFunc _ _ _ => esuccess d
     | DContract _ cn c =>
-      let cd := add_init_clause_to_contract
-                (lift_default_state_type c.(contract_annot) c.(contract_state))
-                c in
+      let cd := add_init_clause_to_contract c in
       elift
         (fun dd =>
            (DContract (decl_annot d) cn dd))
