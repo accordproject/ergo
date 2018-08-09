@@ -140,7 +140,7 @@ Section DataTypes.
       match t with
       | Bottom₀ => "Nothing"%string
       | Top₀ => "Any"%string
-      | Unit₀ => "Unit"%string
+      | Unit₀ => "Nil"%string
       | Nat₀ => "Integer"%string
       | Float₀ => "Double"%string
       | Bool₀ => "Boolean"%string

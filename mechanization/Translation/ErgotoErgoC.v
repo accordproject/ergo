@@ -297,7 +297,7 @@ Section ErgotoErgoC.
         then
           ((current_time, (ErgoTypeDateTime prov))
              ::(this_contract, tem)
-             ::(this_state, ErgoTypeNothing prov)
+             ::(this_state, ErgoTypeNil prov)
              ::(this_emit, ErgoTypeArray prov emit_type)
              ::c.(clause_sig).(type_signature_params))
         else
