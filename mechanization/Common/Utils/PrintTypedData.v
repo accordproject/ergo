@@ -24,10 +24,12 @@ Require Import ErgoSpec.Common.Utils.NamespaceContext.
 
 Require Import JsAst.JsNumber. (* XXX To be fixed on Q*cert side - JS *)
 
+Local Open Scope string.
+
 Section PrintTypedData.
   Definition print_brand (nsctxt:namespace_ctxt) (b:string) : string :=
     match get_local_part b with
-    | None => "~"%string ++ b
+    | None => "~" ++ b
     | Some local_name =>
       match resolve_type_name dummy_provenance nsctxt.(namespace_ctxt_current) (None,local_name) with
       | Success _ _ resolved_b =>
@@ -48,48 +50,48 @@ Section PrintTypedData.
                (out : ergo_data)
       : option (ergo_data * list ergo_data * ergo_data) :=
       match out with
-      | (dleft (drec (("response"%string, response)
-                        ::("state"%string, state)
-                        ::("emit"%string, dcoll emits)
+      | (dleft (drec (("response", response)
+                        ::("state", state)
+                        ::("emit", dcoll emits)
                         ::nil))) =>
         Some (response, emits, state)
       | _ => None
       end.
 
     Definition fmt_nl := String.String (ascii_of_N 10) EmptyString.
-    Definition fmt_dq := """"%string.
+    Definition fmt_dq := """".
 
     Fixpoint string_of_data (nsctxt:namespace_ctxt) (d : ergo_data) : string :=
       let jsonify := ErgoData.data_to_json_string fmt_dq in
       let string_of_rec : list (string * ergo_data) -> string :=
           fun rec =>
-            ("{"%string
+            ("{"
                 ++ (String.concat
-                      ", "%string
+                      ", "
                       (map
                          (fun item =>
                             (fst item) ++ ": " ++ (string_of_data nsctxt (snd item)))
                          rec))
-                ++ "}"%string)%string in
+                ++ "}") in
       match d with
-      | dunit => "nil"%string
+      | dunit => "nil"
       | dnat z => Z_to_string10 z
       | dfloat f => to_string f
-      | dbool true => "true"%string
-      | dbool false => "false"%string
+      | dbool true => "true"
+      | dbool false => "false"
       | dstring s => jsonify (dstring s)
       | dcoll arr =>
-        "["%string
+        "["
            ++ (String.concat
-                 ", "%string
+                 ", "
                  (map (string_of_data nsctxt) arr))
-           ++ "]"%string
-      | dleft s => "some("%string ++ (string_of_data nsctxt s) ++ ")"%string
+           ++ "]"
+      | dleft s => "some(" ++ (string_of_data nsctxt s) ++ ")"
       | dright _ => "none"
       | dbrand (b::nil) d' => print_brand nsctxt b ++ (string_of_data nsctxt d')
-      | dbrand _ _ => "???more than one brand???"%string
+      | dbrand _ _ => "???more than one brand???"
       | drec r => string_of_rec r 
-      | dforeign _ => "???foreign data???"%string
+      | dforeign _ => "???foreign data???"
       end.
 
   End Data.
@@ -102,24 +104,30 @@ Section PrintTypedData.
     Fixpoint rtype_to_string
                (nsctxt:namespace_ctxt) (t : rtype₀) : string :=
       match t with
-      | Bottom₀ => "Nothing"%string
-      | Top₀ => "Any"%string
-      | Unit₀ => "Nil"%string
-      | Nat₀ => "Integer"%string
-      | Float₀ => "Double"%string
-      | Bool₀ => "Boolean"%string
-      | String₀ => "String"%string
-      | Coll₀ r' => (rtype_to_string nsctxt r') ++ "[]"%string
+      | Bottom₀ => "Nothing"
+      | Top₀ => "Any"
+      | Unit₀ => "Nil"
+      | Nat₀ => "Integer"
+      | Float₀ => "Double"
+      | Bool₀ => "Boolean"
+      | String₀ => "String"
+      | Coll₀ r' => (rtype_to_string nsctxt r') ++ "[]"
       | Rec₀ k srl =>
-        "{"%string ++
-           (String.concat
-              (", "%string)
-              (map (fun sr => ((fst sr) ++ ": " ++ (rtype_to_string nsctxt (snd sr)))%string)
-                   srl)) ++ "}"%string
-      | Either₀ tl tr => (rtype_to_string nsctxt tl) ++ "?"%string
-      | Arrow₀ tin tout => (rtype_to_string nsctxt tin) ++ " -> "%string ++ (rtype_to_string nsctxt tout)
+        let recend : string :=
+            match k with
+            | Closed => ""
+            | Open => " .."
+            end
+        in
+          "{" ++
+             (String.concat
+                (", ")
+                (map (fun sr => ((fst sr) ++ ": " ++ (rtype_to_string nsctxt (snd sr))))
+                     srl)) ++ recend ++ "}"
+      | Either₀ tl tr => (rtype_to_string nsctxt tl) ++ "?"
+      | Arrow₀ tin tout => (rtype_to_string nsctxt tin) ++ " -> " ++ (rtype_to_string nsctxt tout)
       | Brand₀ (b::nil) => print_brand nsctxt b
-      | Brand₀ _ => "~"%string ++ "[multiple]"
+      | Brand₀ _ => "~" ++ "[multiple]"
       | Foreign₀ ft => "Foreign (probably DateTime hehe)"
       end.
 
@@ -131,8 +139,8 @@ Section PrintTypedData.
                (nsctxt:namespace_ctxt) (result : option ergoc_type)
       : string :=
       match result with
-      | None => ""%string
-      | Some typ => " : "%string ++ (ergoc_type_to_string nsctxt typ)
+      | None => ""
+      | Some typ => " : " ++ (ergoc_type_to_string nsctxt typ)
       end.
 
     Definition unpack_error nsctxt kind out :=
@@ -179,20 +187,13 @@ Section PrintTypedData.
                                          (unpack_error nsctxt "response" out)))
                    success)
       in
-      let emitcoll :=
+      let emit :=
           elift fst
                 (eolift
                    (fun success =>
                       (eresult_of_option (ergoc_type_infer_unary_op (OpDot "emit") success)
                                          (unpack_error nsctxt "emit" out)))
                    success)
-      in
-      let emit :=
-          eolift (fun emitcoll =>
-                   match untcoll emitcoll with
-                   | None => efailure (unpack_error nsctxt "array" emitcoll)
-                   | Some emit => esuccess emit
-                   end) emitcoll
       in
       let state :=
           elift fst
@@ -209,13 +210,26 @@ Section PrintTypedData.
   Section Both.
     Context {br:brand_model}.
 
-    Definition string_of_response (nsctxt:namespace_ctxt) (response : ergo_data) (response_type: option ergoc_type) : string :=
+    Definition string_of_response
+               (nsctxt:namespace_ctxt)
+               (response : ergo_data)
+               (response_type: option ergoc_type) : string :=
       "Response. " ++ (string_of_data nsctxt response) ++ (string_of_result_type nsctxt response_type).
 
-    Definition string_of_emits (nsctxt:namespace_ctxt) (emits : list ergo_data) (emit_type: option ergoc_type) : string :=
-      (fold_left
-         (fun old new => ("Emit. " ++ new ++ (string_of_result_type nsctxt emit_type) ++ fmt_nl ++ old)%string)
-         (map (string_of_data nsctxt) emits) ""%string).
+    Definition string_of_emits
+               (nsctxt:namespace_ctxt)
+               (emits : list ergo_data)
+               (emit_type: option ergoc_type) : string :=
+      match emits with
+      | nil => ""
+      | e1 :: erest =>
+        (fold_right
+           (fun new old =>
+              (old ++ fmt_nl ++ "Emit. " ++ new))
+           ("Emit. " ++ string_of_data nsctxt e1)
+           (map (string_of_data nsctxt) erest))
+          ++ (string_of_result_type nsctxt emit_type) ++ fmt_nl
+      end.
 
     Definition string_of_state
                (nsctxt:namespace_ctxt)
@@ -227,8 +241,8 @@ Section PrintTypedData.
       match old_state with
       | None =>  fmt_nl ++ "State. " ++ (jsonify new_state) ++ (string_of_result_type nsctxt state_type)
       | Some actual_old_state =>
-        if Data.data_eq_dec new_state actual_old_state then
-          ""%string
+        if Data.data_eq_dec new_state actual_old_state
+        then ""
         else
           fmt_nl ++ "State. " ++ (jsonify new_state) ++ (string_of_result_type nsctxt state_type)
       end.
@@ -250,7 +264,7 @@ Section PrintTypedData.
               end
             end
         in
-        "Failure. "%string ++ (string_of_data nsctxt msg) ++ (string_of_result_type nsctxt failure_type)
+        "Failure. " ++ (string_of_data nsctxt msg) ++ (string_of_result_type nsctxt failure_type)
       | out =>
         match unpack_output out with
         | Some (response, emits, state) =>
