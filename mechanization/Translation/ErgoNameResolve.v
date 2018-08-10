@@ -129,7 +129,8 @@ Section ErgoNameResolution.
              (t:lrergo_type) : eresult laergo_type :=
       match t with
       | ErgoTypeAny prov => esuccess (ErgoTypeAny prov)
-      | ErgoTypeNil prov => esuccess (ErgoTypeNil prov)
+      | ErgoTypeNothing prov => esuccess (ErgoTypeNothing prov)
+      | ErgoTypeUnit prov => esuccess (ErgoTypeUnit prov)
       | ErgoTypeBoolean prov => esuccess (ErgoTypeBoolean prov)
       | ErgoTypeString prov => esuccess (ErgoTypeString prov)
       | ErgoTypeDouble prov => esuccess (ErgoTypeDouble prov)

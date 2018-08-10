@@ -104,7 +104,8 @@ Section ErgoTypetoErgoCType.
   Fixpoint ergo_type_to_ergoc_type (t:laergo_type) : ergoc_type :=
     match t with
     | ErgoTypeAny _ => ttop
-    | ErgoTypeNil _ => tunit
+    | ErgoTypeNothing _ => tbottom
+    | ErgoTypeUnit _ => tunit
     | ErgoTypeBoolean _ => tbool
     | ErgoTypeString _ => tstring
     | ErgoTypeDouble _ => tfloat
