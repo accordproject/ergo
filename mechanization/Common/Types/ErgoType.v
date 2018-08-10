@@ -29,7 +29,8 @@ Section ErgoType.
   
     Inductive ergo_type :=
     | ErgoTypeAny : A -> ergo_type                               (**r any type *)
-    | ErgoTypeNil : A -> ergo_type                               (**r unit type *)
+    | ErgoTypeNothing : A -> ergo_type                           (**r nothing type *)
+    | ErgoTypeUnit : A -> ergo_type                              (**r unit type *)
     | ErgoTypeBoolean : A -> ergo_type                           (**r bool atomic type *)
     | ErgoTypeString : A -> ergo_type                            (**r string atomic type *)
     | ErgoTypeDouble : A -> ergo_type                            (**r double atomic type *)
@@ -46,7 +47,8 @@ Section ErgoType.
     Definition type_annot (et:ergo_type) : A :=
       match et with
       | ErgoTypeAny a => a
-      | ErgoTypeNil a => a
+      | ErgoTypeNothing a => a
+      | ErgoTypeUnit a => a
       | ErgoTypeBoolean a => a
       | ErgoTypeString a => a
       | ErgoTypeDouble a => a

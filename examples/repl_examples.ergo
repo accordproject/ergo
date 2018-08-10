@@ -49,7 +49,7 @@ enforce "sriracha" =\
     match sauce\
         with "mild" then "ketchup"\
         with "hot" then "sriracha"\
-        else nil ;\
+        else unit ;\
 return "(match) multiple clauses work"; // multiple clauses (spicy)
 
 enforce 1.0 = match 1.0 with let a then a else 3.0; return "(match) plain old let works"; // let
@@ -63,7 +63,7 @@ enforce 2.0 = sqrt(4.0);\
 enforce some(1.0) = some(1.0);\
 return "(builtins) flatten, max/min, average, sqrt, some work";
 
-enforce 5 = match some(5) with let a? then a else nil;\
+enforce 5 = match some(5) with let a? then a else unit;\
 return "(match) match works against optionals";
 
 define concept Request{ food : String }

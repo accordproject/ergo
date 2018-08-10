@@ -63,7 +63,7 @@
 	      (* Data *)
 	      "true", TRUE;
 	      "false", FALSE;
-	      "nil", NIL;
+	      "unit", UNIT;
 	      "none", NONE;
 	    ]; tbl
     end

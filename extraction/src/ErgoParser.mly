@@ -51,7 +51,7 @@ let mk_provenance
 
 %token OR AND NOT
 
-%token NIL NONE
+%token UNIT NONE
 %token TRUE FALSE
 
 %token EQUAL NEQUAL
@@ -205,7 +205,7 @@ clause:
 
 outtype:
 |
-  { ErgoCompiler.ergo_type_nil (mk_provenance $startpos $endpos) }
+  { ErgoCompiler.ergo_type_unit (mk_provenance $startpos $endpos) }
 | COLON out = paramtype
   { out }
 
@@ -356,7 +356,7 @@ expr:
 | fn = IDENT LPAREN el = exprlist RPAREN
     { ErgoCompiler.ecallfun (mk_provenance $startpos $endpos) (Util.char_list_of_string fn) el }
 (* Constants *)
-| NIL
+| UNIT
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) ErgoCompiler.ErgoData.dunit }
 | NONE
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dright ErgoCompiler.ErgoData.dunit) }
@@ -531,7 +531,8 @@ tname:
       | "Long" -> ErgoCompiler.ergo_type_long (mk_provenance $startpos $endpos)
       | "Integer" -> ErgoCompiler.ergo_type_integer (mk_provenance $startpos $endpos)
       | "DateTime" -> ErgoCompiler.ergo_type_dateTime (mk_provenance $startpos $endpos)
-      | "Nil" -> ErgoCompiler.ergo_type_nil (mk_provenance $startpos $endpos)
+      | "Unit" -> ErgoCompiler.ergo_type_unit (mk_provenance $startpos $endpos)
+      | "Nothing" -> ErgoCompiler.ergo_type_nothing (mk_provenance $startpos $endpos)
       | "Any" -> ErgoCompiler.ergo_type_any (mk_provenance $startpos $endpos)
       | _ ->
           ErgoCompiler.ergo_type_class_ref
@@ -627,7 +628,7 @@ safeident_base:
 | WITH { "with" }
 | OR { "or" }
 | AND { "and" }
-| NIL { "nil" }
+| UNIT { "unit" }
 | NONE { "none" }
 | TRUE { "true" }
 | FALSE { "false" }

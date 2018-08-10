@@ -74,7 +74,7 @@ Section PrintTypedData.
                          rec))
                 ++ "}") in
       match d with
-      | dunit => "nil"
+      | dunit => "unit"
       | dnat z => Z_to_string10 z
       | dfloat f => to_string f
       | dbool true => "true"
@@ -106,7 +106,7 @@ Section PrintTypedData.
       match t with
       | Bottom₀ => "Nothing"
       | Top₀ => "Any"
-      | Unit₀ => "Nil"
+      | Unit₀ => "Unit"
       | Nat₀ => "Integer"
       | Float₀ => "Double"
       | Bool₀ => "Boolean"
