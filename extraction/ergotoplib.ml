@@ -19,16 +19,18 @@ open ParseUtil
 
 let repl rctxt text =
   try
-      begin match ParseUtil.parse_ergo_declaration_from_string "stdin" text with
-      | Some decl ->
-          begin
-            let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
-            (Some (ErgoUtil.wrap_jerrors Util.string_of_char_list out), rctxt')
-          end
-      | None -> (None, rctxt)
-      end
+      let decls = ParseUtil.parse_ergo_declarations_from_string "stdin" text in
+      List.fold_left
+        (fun (answer,rctxt) decl ->
+           begin
+             (* eval *)
+             let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
+             (* print *)
+             (answer ^ (ErgoUtil.wrap_jerrors Util.string_of_char_list out), rctxt')
+           end)
+        ("",rctxt) decls
   with
-    ErgoUtil.Ergo_Error e -> (Some (ErgoUtil.string_of_error_with_source text e ^ "\n"), rctxt)
+    ErgoUtil.Ergo_Error e -> (ErgoUtil.string_of_error_with_source text e ^ "\n", rctxt)
 
 let args_list gconf =
   Arg.align
@@ -68,13 +70,10 @@ let _ =
     (object%js
        val initRCtxt = make_init_rctxt
        method runLine rctxt line =
-       begin
-       match repl rctxt (Js.to_string line) with
-       | (Some out, rctxt') -> Js.some
-            (object%js
-            val out = Js.string out
-            val ctx = rctxt'
-            end)
-       | (None, rctxt') -> Js.null
-       end
+         let (out, rctxt') = repl rctxt (Js.to_string line) in
+         Js.some
+           (object%js
+             val out = Js.string out
+             val ctx = rctxt'
+           end)
      end)
