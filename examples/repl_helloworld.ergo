@@ -1,0 +1,27 @@
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+
+define concept MyRequest extends Request {
+  input : String
+}
+
+define transaction MyResponse extends Response {
+  output : String
+}
+
+define transaction HelloWorldClause extends AccordClause {
+  name : String
+}
+
+contract HelloWorld over HelloWorldClause {
+  // Simple Clause
+  clause helloworld(request : MyRequest) : MyResponse {
+    return MyResponse{
+      output: "Hello " ++ contract.name ++ " " ++ request.input
+		}
+  }
+}
+
+set contract HelloWorld over HelloWorldClause{ clauseId : "cl1", name : "Fred Blogs" }
+call init(Request{});
+call helloworld(MyRequest{ input : "AccordProject" });call helloworld(MyRequest{ input : "AccordProject" });

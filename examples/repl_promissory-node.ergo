@@ -1,0 +1,46 @@
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+import org.accordproject.money.MonetaryAmount
+
+define transaction Payment extends Request {
+  amountPaid : MonetaryAmount
+}
+
+define transaction Result extends Response {
+  outstandingBalance : Double
+}
+
+define asset PromissoryNoteContract extends AccordContract {
+  amount : MonetaryAmount,
+  date : DateTime,
+  maker : String,
+  interestRate : Double,
+  individual : Boolean,
+  makerAddress : String,
+  lender : String,
+  lenderAddress : String,
+  principal : MonetaryAmount,
+  maturityDate : DateTime,
+  defaultDays :  Integer,
+  insolvencyDays : Integer,
+  jurisdiction : String,
+}
+
+define function compoundInterestMultiple(annualInterest : Double, numberOfDays : Double) : Double {
+    return (1.0 + annualInterest) ^ (numberOfDays / 365.0)
+}
+
+contract PromissoryNote over PromissoryNoteContract {
+  clause check(request : Payment) : Result throws ErrorResponse {
+    let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;
+
+    let numberOfDays = momentDiffDays(moment("17 May 2018 13:53:33 EST"),moment(contract.date));
+    let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
+
+    return Result{
+      transactionId : request.transactionId,
+      timestamp : request.timestamp,
+			outstandingBalance: compounded
+    }
+  }
+}
