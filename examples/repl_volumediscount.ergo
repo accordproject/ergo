@@ -1,0 +1,42 @@
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+
+define asset VolumeDiscountContract extends AccordContract {
+  firstVolume : Double,
+  secondVolume : Double,
+  firstRate : Double,
+  secondRate : Double,
+  thirdRate : Double
+}
+
+define transaction VolumeDiscountRequest extends Request {
+  netAnnualChargeVolume : Double
+}
+
+define transaction VolumeDiscountResponse extends Response {
+  discountRate : Double
+}
+
+contract VolumeDiscount over VolumeDiscountContract {
+   // Clause for volume discount
+   clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
+    if request.netAnnualChargeVolume < contract.firstVolume
+    then return VolumeDiscountResponse{ discountRate: contract.firstRate }
+    else if request.netAnnualChargeVolume < contract.secondVolume
+    then return VolumeDiscountResponse{ discountRate: contract.secondRate }
+    else return VolumeDiscountResponse{ discountRate: contract.thirdRate }
+  }
+}
+
+set contract VolumeDiscount over VolumeDiscountContract{
+  parties: none,
+  contractId : "cr1",
+  firstVolume: 1.0,
+  secondVolume: 10.0,
+  firstRate: 3.0,
+  secondRate: 2.9,
+  thirdRate: 2.8
+}
+call init(Request{});
+call volumediscount(VolumeDiscountRequest{ netAnnualChargeVolume : 0.4 });
+

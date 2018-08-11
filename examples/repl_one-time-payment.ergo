@@ -1,0 +1,54 @@
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+import org.accordproject.money.MonetaryAmount
+
+define concept InitRequest extends Request {}
+define concept InitResponse extends Response {}
+
+define concept PaymentReceivedRequest extends Request {}
+define concept PaymentReceivedResponse extends Response {}
+
+define asset OneTimePaymentState extends AccordContractState {
+  status : String
+}
+define asset OneTimePaymentContract extends AccordContract {
+  buyer : AccordParty,
+  seller : AccordParty,
+  initialAmount : MonetaryAmount
+}
+
+contract OneTimePayment over OneTimePaymentContract state OneTimePaymentState {
+  clause init(request : InitRequest) : InitResponse emits PaymentObligation {
+    emit PaymentObligation{
+      eventId: "event1",
+      timestamp: "now",
+      contract: contract.contractId,
+      promisor: contract.buyer,
+      promisee: contract.seller,
+      amount: contract.initialAmount,
+      description: contract.buyer.partyId ++ " should pay contract amount to " ++ contract.seller.partyId
+    };
+    set state OneTimePaymentState {
+      stateId: "1",
+      status: "OBLIGATION_EMITTED"
+    };
+    return InitResponse{}
+  }
+  clause paymentReceived(request : PaymentReceivedRequest): PaymentReceivedResponse {
+    set state OneTimePaymentState {
+      stateId: state.stateId,
+      status: "COMPLETED"
+    };
+    return PaymentReceivedResponse{}
+  }
+}
+
+define constant partyA : AccordParty = AccordParty{ partyId: "John" }
+define constant partyB : AccordParty = AccordParty{ partyId: "Jim" }
+define constant mytemplace =
+	OneTimePaymentContract{
+	  buyer: AccordParty{ partyId: "John" },
+	  seller : AccordParty{ partyId: "Jim" },
+	  initialAmount : MonetaryAmount{ doubleValue: 100.0, currencyCode : "USD" }
+  }
+set contract OneTimePayment over

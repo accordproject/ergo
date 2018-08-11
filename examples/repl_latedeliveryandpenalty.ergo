@@ -1,0 +1,23 @@
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+import org.accordproject.time.*
+
+define asset LateDeliveryAndPenaltyClause extends AccordClause {
+  forceMajeure : Boolean optional,
+  penaltyDuration : Duration,
+  penaltyPercentage : Double,
+  Double capPercentage : Double,
+  Duration termination : Duration
+  TemporalUnit fractionalPart
+}
+define transaction LateDeliveryAndPenaltyRequest extends Request {
+  o Boolean forceMajeure
+  o DateTime agreedDelivery
+  o DateTime deliveredAt optional
+  o Double goodsValue
+}
+
+define transaction LateDeliveryAndPenaltyResponse extends Response {
+  o Double penalty
+  o Boolean buyerMayTerminate
+}
