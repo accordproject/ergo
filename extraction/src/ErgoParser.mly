@@ -85,7 +85,7 @@ let mk_provenance
 %left DOT QUESTIONDOT
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main_module
-%start <ErgoComp.ErgoCompiler.ergo_declaration option> main_decl
+%start <ErgoComp.ErgoCompiler.ergo_declaration list> main_decls
 
 %%
 
@@ -93,11 +93,11 @@ main_module:
 | p = emodule EOF
     { p }
 
-main_decl:
+main_decls:
 | EOF
-    { None }
-| p = decl EOF
-    { Some p }
+    { [] }
+| p = decl dl = main_decls
+    { p :: dl }
 
 emodule:
 | NAMESPACE qn = qname_prefix ds = decls

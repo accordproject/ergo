@@ -68,17 +68,17 @@ let rec repl rctxt =
   let text = read_nonempty_multiline () in
   try
     let rctxt' =
-      begin match ParseUtil.parse_ergo_declaration_from_string "stdin" text with
-      | Some decl ->
-          begin
-            (* eval *)
-            let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
-            (* print *)
-            print_string (fmt_out (ErgoUtil.wrap_jerrors Util.string_of_char_list out));
-            rctxt'
-          end
-      | None -> rctxt
-      end
+      let decls = ParseUtil.parse_ergo_declarations_from_string "stdin" text in
+      List.fold_left
+        (fun rctxt decl ->
+           begin
+             (* eval *)
+             let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
+             (* print *)
+             print_string (fmt_out (ErgoUtil.wrap_jerrors Util.string_of_char_list out));
+             rctxt'
+           end)
+        rctxt decls
     in
     (* loop *)
     repl rctxt'

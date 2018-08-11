@@ -36,8 +36,8 @@ let parse parser lexer buf =
 
 let parse_ergo_module f : ergo_module =
   parse ErgoParser.main_module (ErgoLexer.token (string_buff ())) f
-let parse_ergo_declaration f : ergo_declaration option =
-  parse ErgoParser.main_decl (ErgoLexer.token (string_buff ())) f
+let parse_ergo_declarations f : ergo_declaration list =
+  parse ErgoParser.main_decls (ErgoLexer.token (string_buff ())) f
 
 (** Parse from buffer *)
 let parse_string p_fun s =
@@ -47,9 +47,9 @@ let parse_string p_fun s =
 let parse_ergo_module_from_string fname s : ergo_module =
   filename := fname;
   parse_string parse_ergo_module s
-let parse_ergo_declaration_from_string fname s : ergo_declaration option =
+let parse_ergo_declarations_from_string fname s : ergo_declaration list =
   filename := fname;
-  parse_string parse_ergo_declaration s
+  parse_string parse_ergo_declarations s
 
 let parse_cto_package_from_string fname s : cto_package =
   filename := unpatch_cto_extension fname;
