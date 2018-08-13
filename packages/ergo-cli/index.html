@@ -146,6 +146,7 @@ function update(editor) {
             .replace(/^Failure\./gm, '<span class="failure">Failure.</span>')
             .replace(/^State\./gm, '<span class="state">State.</span>')
             .replace(/`([^']*)'/gm, '<u>$1</u>')
+        stdout.innerHTML += "<hr/>\n"
         editor_rt.setValue("");
         editor_rt.focus();
     }
