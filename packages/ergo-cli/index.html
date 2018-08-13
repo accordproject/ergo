@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 
+<script src="https://codemirror.net/lib/codemirror.js"></script>
+<script src="https://codemirror.net/addon/mode/simple.js"></script>
+<script src="https://codemirror.net/addon/edit/matchbrackets.js"></script>
+<script src="lib/ergo-mode.js"></script>
+<link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css">
+<link rel="stylesheet" href="https://codemirror.net/theme/eclipse.css">
+
 <style>
+html, body {height: 100%}
 body {
     background: white;
     color: black;
-    padding-left:  3em;
-    padding-right: 3em;
     font-family: Georgia;
 }
 h1 {
     font-variant: small-caps;
-    letter-spacing: 1em;
-    text-align: center;
-    color: pink;
     font-weight: 100;
+    font-size: 1em;
+    text-align: right;
+    color: #aaa;
+    border-bottom: 1px solid;
+    margin: 0;
+    height: 5%;
 }
 textarea {
     width: 100%;
     font-family: monospace;
     font-size: 1em;
     border: none;
-    background: #eee;
     padding: 0.5em;
-    border-radius: 0.2em;
 }
 textarea:focus {
     outline: none;
@@ -38,22 +45,69 @@ span.failure  { color: red; }
 span.state    { color: blue; }
 span.response { color: green; }
 
+#left {width: 50%;}
+#right{width: 45%; overflow: auto;}
+
+#left, #right {
+  float: left;
+  height: 95%;
+  border-left: 1px solid #aaa;
+}
+.clearer {clear: both;}
+
+#right .CodeMirror { height: auto; background-color: #eee;}
+#left  .CodeMirror { height: 100%; }
 </style>
 
-<h1>ergotop</h1>
-<pre id="stdout"></pre>
-<textarea autofocus type="text" id="stdin" placeholder="return 42;" rows=5></textarea>
-<button onclick="update()">Evaluate [&#x21EA; &#x21B5;]</button>
-<a href="https://docs.accordproject.org/docs/ergo.html" target="_blank">
-  <button>What is this?</button>
-</a>
+<h1>
+<a href="https://docs.accordproject.org/docs/ergo.html" target="_blank">Ergo</a>
+&middot; v1.3.0
+&middot; aug 13, 2018
+</h1>
+
+
+<div id="left">
+  <textarea id="left-editor">/*
+ * Edit your contract here!
+ * Hit Cmd-Enter to apply changes.
+ */
+</textarea>
+</div>
+
+<div id="right">
+  <pre id="stdout"></pre>
+  <button onclick="update()">Evaluate [&#x2318; &#x21B5;]</button>
+  <button id="importlibs">Import "contract" library</button>
+  <textarea autofocus type="text" id="right-editor" placeholder="return 42;" rows=5></textarea>
+</div>
+
+<div class="clearer"></div>
+
+
+
 
 <script src="./lib/ergotop.js"></script>
 <script>
 var ctx = ergotop.initRCtxt;
 
-var stdin  = document.getElementById('stdin');
+var stdin  = document.getElementById('right-editor');
 var stdout = document.getElementById('stdout');
+
+
+function setup_editor(id) {
+    var editor = CodeMirror.fromTextArea(
+        document.getElementById(id),
+        {value: "123", mode: "ergo", theme: "eclipse", matchBrackets: true/*, viewportMargin: Infinity*/}
+    );
+    editor.setOption("extraKeys", {
+        "Cmd-Enter": update
+    });
+    return editor;
+}
+
+var editor_lt = setup_editor('left-editor');
+var editor_rt = setup_editor('right-editor');
+
 
 stdin.addEventListener('keydown', function(evt) {
     if (evt.keyCode === 9) {
@@ -65,11 +119,24 @@ stdin.addEventListener('keydown', function(evt) {
     }
 }, false);
 
-function update() {
-    var x = ergotop.runLine(ctx, stdin.value);
+document.getElementById('importlibs').addEventListener('click', function() {
+    var x = ergotop.runLine(
+        ctx,
+        "import org.accordproject.cicero.contract.*\n" +
+        "import org.accordproject.cicero.runtime.*\n"
+    );
     if (x) {
         ctx = x.ctx;
-        stdout.innerHTML += "<strong>" + stdin.value.replace(/</g, "&lt;") + "</strong>" + "\n";
+    }
+    this.remove();
+}, false);
+
+function update(editor) {
+    var src = editor.getValue();
+    var x = ergotop.runLine(ctx, src);
+    if (x) {
+        ctx = x.ctx;
+        stdout.innerHTML += "<em>" + src.replace(/</g, "&lt;") + "</em>" + "\n";
         stdout.innerHTML +=
             x.out
             .replace(/</g, "&lt;")
@@ -78,7 +145,9 @@ function update() {
             .replace(/^Emit\./gm, '<span class="emit">Emit.</span>')
             .replace(/^Failure\./gm, '<span class="failure">Failure.</span>')
             .replace(/^State\./gm, '<span class="state">State.</span>')
-        stdin.value = "";
+            .replace(/`([^']*)'/gm, '<u>$1</u>')
+        editor_rt.setValue("");
+        editor_rt.focus();
     }
 }
 </script>
