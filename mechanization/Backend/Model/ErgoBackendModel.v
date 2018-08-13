@@ -20,5 +20,6 @@ Require Import ErgoSpec.Backend.ForeignErgo.
 Module Type ErgoBackendModel.
   Definition ergo_foreign_data : foreign_data := enhanced_foreign_data.
   Axiom ergo_data_to_json_string : String.string -> data -> String.string.
+  Definition ergo_foreign_type : foreign_type := enhanced_foreign_type.
 End ErgoBackendModel.
 

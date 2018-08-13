@@ -18,6 +18,8 @@ open ErgoConfig
 open ErgoCompile
 open Cto_t
 
+open DateTime
+
 (* Command line args *)
 
 let args_list gconf =

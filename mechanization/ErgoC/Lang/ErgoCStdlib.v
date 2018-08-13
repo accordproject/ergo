@@ -62,35 +62,37 @@ Section ErgoCStdlib.
     List.app t1 t2.
 
   Definition foreign_unary_operator_table prov : ergo_stdlib_table :=
-    ("org.accordproject.ergo.stdlib.moment"%string,
+    ("org.accordproject.ergo.stdlib.dateTime"%string,
      mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string)))
-      :: ("org.accordproject.ergo.stdlib.momentDayOfMonth",
+      :: ("org.accordproject.ergo.stdlib.dateTimeDayOfMonth",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_DAY))))
-      :: ("org.accordproject.ergo.stdlib.momentMonth",
+      :: ("org.accordproject.ergo.stdlib.dateTimeMonth",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_MONTH))))
-      :: ("org.accordproject.ergo.stdlib.momentQuarter",
+      :: ("org.accordproject.ergo.stdlib.dateTimeQuarter",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_QUARTER))))
-      :: ("org.accordproject.ergo.stdlib.momentYear",
+      :: ("org.accordproject.ergo.stdlib.dateTimeYear",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_YEAR))))
       :: nil.
 
   Definition foreign_binary_operator_table prov : ergo_stdlib_table :=
-    ("org.accordproject.ergo.stdlib.momentIsAfter",
+    ("org.accordproject.ergo.stdlib.dateTimeIsAfter",
      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_gt)))
-  :: ("org.accordproject.ergo.stdlib.momentIsBefore",
+  :: ("org.accordproject.ergo.stdlib.dateTimeIsBefore",
       mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_lt)))
-  :: ("org.accordproject.ergo.stdlib.momentSubtract",
+  :: ("org.accordproject.ergo.stdlib.dateTimeSubtract",
       mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_minus)))
-  :: ("org.accordproject.ergo.stdlib.momentAdd",
+  :: ("org.accordproject.ergo.stdlib.dateTimeAdd",
       mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_plus)))
-  :: ("org.accordproject.ergo.stdlib.momentDiffDays",
+  :: ("org.accordproject.ergo.stdlib.dateTimeDiff",
+      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration)))
+  :: ("org.accordproject.ergo.stdlib.dateTimeDiffDays",
       mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_days)))
-  :: ("org.accordproject.ergo.stdlib.momentDiffSeconds",
+  :: ("org.accordproject.ergo.stdlib.dateTimeDiffSeconds",
       mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_seconds)))
   :: nil.
 
   Definition foreign_function_table prov : ergo_stdlib_table :=
-    ("org.accordproject.ergo.stdlib.momentIsSame",
+    ("org.accordproject.ergo.stdlib.dateTimeIsSame",
      mk_binary_expr
        prov
        (EUnaryOp
@@ -101,7 +103,7 @@ Section ErgoCStdlib.
              (OpForeignBinary (enhanced_binary_date_time_op
                                  bop_date_time_ne))
              (EVar prov "p1") (EVar prov "p2"))))
-      :: ("org.accordproject.ergo.stdlib.momentDuration",
+      :: ("org.accordproject.ergo.stdlib.dateTimeDuration",
           mk_binary_expr
             prov
             (ELet prov

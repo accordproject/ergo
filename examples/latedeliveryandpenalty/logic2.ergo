@@ -40,13 +40,13 @@ contract LateDeliveryAndPenalty over TemplateModel throws Error {
      let agreed = request.agreedDelivery;
 
      // First check if the clause applies
-     if !moment.isAfter(moment.now(),agreed) {
+     if !dateTimeIsAfter(now(),agreed) {
        error Error{ "This clause does not apply" }
      } else if forceMajeure && request.forceMajeure { // Second check if forceMajeure is and can be claimed
        return LateDeliveryAndPenaltyResponse{ 0, true }
      } else { // If not, calculate the penalty and whether the contract can be terminated
        // difference between current date and agreed upon date
-       let diff = momentDiffDay(moment.now(),agreed,penaltyDuration.unit);
+       let diff = dateTimeDiffDay(now(),agreed,penaltyDuration.unit);
        // Calls the function to calculate penalty
        let penalty = calculatePenalty(diff,request.goodsValue);
        // Return the response with the penalty and termination determination

@@ -30,5 +30,6 @@ Module ErgoBackendRuntime <: ErgoBackendModel.
 
   Definition ergo_foreign_data := enhanced_foreign_data.
   Definition ergo_data_to_json_string := NNRCtoJavaScript.dataToJS.
+  Definition ergo_foreign_type := enhanced_foreign_type.
 
 End ErgoBackendRuntime.

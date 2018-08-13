@@ -25,7 +25,7 @@ contract PromissoryNote over PromissoryNoteContract {
 		let interestRate = contract.interestRate ?? 3.4;
     enforce outstanding >= 0.0;
 
-    let numberOfDays = momentDiffDays(moment("17 May 2018 13:53:33 EST"),moment(contract.date));
+    let numberOfDays = dateTimeDiffDays(dateTime("17 May 2018 13:53:33 EST"),dateTime(contract.date));
     enforce numberOfDays >= 0.0;
     let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
 
