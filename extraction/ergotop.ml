@@ -30,10 +30,10 @@ let fmt_blu s = fmt_csi ^ "34m" ^ s ^ fmt_csi ^ "0m"
 let fmt_mag s = fmt_csi ^ "35m" ^ s ^ fmt_csi ^ "0m"
 
 let fmt_out s =
-  (Str.global_replace (Str.regexp "^Emit\\.") (fmt_mag "Emit.")
-  (Str.global_replace (Str.regexp "^Response\\.") (fmt_grn "Response.")
-  (Str.global_replace (Str.regexp "^State\\.") (fmt_blu "State.")
-  (Str.global_replace (Str.regexp "^Failure\\.") (fmt_red "Failure.")
+  (Re.Str.global_replace (Re.Str.regexp "^Emit\\.") (fmt_mag "Emit.")
+  (Re.Str.global_replace (Re.Str.regexp "^Response\\.") (fmt_grn "Response.")
+  (Re.Str.global_replace (Re.Str.regexp "^State\\.") (fmt_blu "State.")
+  (Re.Str.global_replace (Re.Str.regexp "^Failure\\.") (fmt_red "Failure.")
   s))))
 
 let ps1 = fmt_yel "ergo$ "

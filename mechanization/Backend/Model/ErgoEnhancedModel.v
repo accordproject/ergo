@@ -265,8 +265,9 @@ Definition date_time_binary_op_interp
      | bop_date_time_le => rondbooldateTime2 DATE_TIME_le d1 d2
      | bop_date_time_gt => rondbooldateTime2 DATE_TIME_gt d1 d2
      | bop_date_time_ge => rondbooldateTime2 DATE_TIME_ge d1 d2
-     | bop_date_time_duration_days => lift denhanceddateTimeinterval (onddateTime2 DATE_TIME_DURATION_days d1 d2)
-     | bop_date_time_duration_seconds => lift denhanceddateTimeinterval (onddateTime2 DATE_TIME_DURATION_seconds d1 d2)
+     | bop_date_time_duration => lift denhanceddateTimeinterval (onddateTime2 DATE_TIME_DURATION_duration d1 d2)
+     | bop_date_time_duration_days => lift dfloat (onddateTime2 DATE_TIME_DURATION_days d1 d2)
+     | bop_date_time_duration_seconds => lift dfloat (onddateTime2 DATE_TIME_DURATION_seconds d1 d2)
      end.
 
 Definition enhanced_binary_op_interp
@@ -1581,10 +1582,12 @@ Inductive date_time_binary_op_has_type {model:brand_model} :
       date_time_binary_op_has_type bop_date_time_gt DateTime DateTime Bool 
   | tbop_date_time_ge :
       date_time_binary_op_has_type bop_date_time_ge DateTime DateTime Bool
+  | tbop_date_time_duration  :
+      date_time_binary_op_has_type bop_date_time_duration DateTime DateTime DateTimeInterval
   | tbop_date_time_duration_days  :
-      date_time_binary_op_has_type bop_date_time_duration_days DateTime DateTime DateTimeInterval
+      date_time_binary_op_has_type bop_date_time_duration_days DateTime DateTime Float
   | tbop_date_time_duration_seconds  :
-      date_time_binary_op_has_type bop_date_time_duration_seconds DateTime DateTime DateTimeInterval
+      date_time_binary_op_has_type bop_date_time_duration_seconds DateTime DateTime Float
 .
 
 Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) :=
@@ -1603,10 +1606,12 @@ Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_bi
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
   | bop_date_time_ge =>
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
+  | bop_date_time_duration  =>
+    if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeInterval else None
   | bop_date_time_duration_days  =>
-    if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeInterval else None
+    if isDateTime τ₁ && isDateTime τ₂ then Some Float else None
   | bop_date_time_duration_seconds  =>
-    if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeInterval else None
+    if isDateTime τ₁ && isDateTime τ₂ then Some Float else None
   end.
 
 Lemma date_time_binary_op_typing_sound {model : brand_model}
@@ -1642,10 +1647,12 @@ Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_tim
   | bop_date_time_gt
   | bop_date_time_ge =>
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Bool
+  | bop_date_time_duration  =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeInterval
   | bop_date_time_duration_days  =>
-    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeInterval
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Float
   | bop_date_time_duration_seconds  =>
-    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeInterval
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Float
   end.
 
 Inductive enhanced_binary_op_has_type {model:brand_model} :
@@ -1680,7 +1687,7 @@ Proof.
     ; constructor
     ; repeat rewrite Nat_canon
     ; repeat rewrite Foreign_canon
-    ; constructor.
+    ; try constructor.
 Qed.
 
 Lemma enhanced_binary_op_typing_infer_least

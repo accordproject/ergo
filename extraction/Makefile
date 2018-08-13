@@ -24,7 +24,7 @@ ERGO_HOME=$(CURDIR)/..
 ############# Shouldn't have to be changed after this
 OCAMLBUILD= ocamlbuild \
 		-no-links -classic-display \
-		-tags annot -use-ocamlfind -package atdgen -package unix -package base64 -package str
+		-tags annot -use-ocamlfind -package atdgen -package unix -package base64 -package re.str -package calendar
 
 MENHIRFLAG=-use-menhir
 #MENHIRFLAG=

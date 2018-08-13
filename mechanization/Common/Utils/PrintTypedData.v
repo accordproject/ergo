@@ -91,7 +91,11 @@ Section PrintTypedData.
       | dbrand (b::nil) d' => print_brand nsctxt b ++ (string_of_data nsctxt d')
       | dbrand _ _ => "???more than one brand???"
       | drec r => string_of_rec r 
-      | dforeign _ => "???foreign data???"
+      | dforeign (ErgoEnhancedModel.enhanceddateTime dt) =>
+        "dateTime(""" ++ DateTimeModelPart.DATE_TIME_to_string dt ++ """)"
+      | dforeign (ErgoEnhancedModel.enhanceddateTimeinterval dti) =>
+        "duration(" ++ DateTimeModelPart.DATE_TIME_DURATION_to_string dti ++ ")"
+      | dforeign _ => "???UnknownForeign???"
       end.
 
   End Data.
@@ -128,7 +132,9 @@ Section PrintTypedData.
       | Arrow₀ tin tout => (rtype_to_string nsctxt tin) ++ " -> " ++ (rtype_to_string nsctxt tout)
       | Brand₀ (b::nil) => print_brand nsctxt b
       | Brand₀ _ => "~" ++ "[multiple]"
-      | Foreign₀ ft => "Foreign (probably DateTime hehe)"
+      | Foreign₀ ErgoEnhancedModel.enhancedDateTime => "DateTime"
+      | Foreign₀ ErgoEnhancedModel.enhancedDateTimeInterval => "Duration"
+      | Foreign₀ _ => "(unknown foreign type)"
       end.
 
     Definition ergoc_type_to_string
