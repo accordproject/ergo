@@ -38,7 +38,7 @@ Section ErgoC.
     Record sigc :=
       mkSigC
         { sigc_params: list (string * laergo_type);
-          sigc_output : laergo_type; }.
+          sigc_output : option laergo_type; }.
 
     (** Function *)
     Record ergoc_function :=

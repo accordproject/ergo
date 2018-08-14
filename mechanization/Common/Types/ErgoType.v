@@ -66,9 +66,9 @@ Section ErgoType.
       mkErgoTypeSignature
         { type_signature_annot : A;
           type_signature_params : list (string * ergo_type);
-          type_signature_output : ergo_type;
+          type_signature_output : option ergo_type;
           type_signature_throws : option ergo_type;
-          type_signature_emits : option ergo_type; }.
+          type_signature_emits  : option ergo_type; }.
 
     Inductive ergo_type_declaration_desc :=
     | ErgoTypeEnum : list string -> ergo_type_declaration_desc

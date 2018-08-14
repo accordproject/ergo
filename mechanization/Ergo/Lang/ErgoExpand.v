@@ -106,7 +106,7 @@ Section ErgoExpand.
                    (mkErgoTypeSignature
                       prov
                       (("request"%string,ErgoTypeClassRef prov default_request_absolute_name)::nil)
-                      (ErgoTypeClassRef prov default_response_absolute_name)
+                      (Some (ErgoTypeClassRef prov default_response_absolute_name))
                       None
                       None)
                    (Some disp)))
@@ -131,7 +131,7 @@ Section ErgoExpand.
              (mkErgoTypeSignature
                 prov
                 (("request"%string, ErgoTypeClassRef prov default_request_absolute_name)::nil)
-                (ErgoTypeUnit prov)
+                (Some (ErgoTypeUnit prov))
                 None
                 (Some (ErgoTypeClassRef prov default_emits_absolute_name)))
              (Some init_body).

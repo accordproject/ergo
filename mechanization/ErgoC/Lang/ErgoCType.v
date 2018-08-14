@@ -299,15 +299,20 @@ Section ErgoCType.
               func.(functionc_sig).(sigc_params) in
       eolift
         (fun outt =>
-           let expectedt := ergo_type_to_ergoc_type func.(functionc_sig).(sigc_output) in
-           if subtype_dec
-                outt
-                expectedt
-           then esuccess dctxt
-           else
-             let outs := string_of_result_type nsctxt (Some outt) in
-             let expecteds := string_of_result_type nsctxt (Some expectedt) in
-             efailure (ETypeError prov ("Function output type mismatch between: \n\t" ++ outs ++ "and\n\t" ++ expecteds)%string))
+           let eoutt := func.(functionc_sig).(sigc_output) in
+           match eoutt with
+           | None => esuccess dctxt
+           | Some eoutt' =>
+             let expectedt := ergo_type_to_ergoc_type eoutt' in
+             if subtype_dec
+                  outt
+                  expectedt
+             then esuccess dctxt
+             else
+               let outs := string_of_result_type nsctxt (Some outt) in
+               let expecteds := string_of_result_type nsctxt (Some expectedt) in
+               efailure (ETypeError prov ("Function output type mismatch between: \n\t" ++ outs ++ "and\n\t" ++ expecteds)%string)
+           end)
         (ergo_type_expr nsctxt (type_context_set_local_env dctxt tsig) body)
     end.
 
