@@ -31,7 +31,7 @@ Section ErgoNNRC.
     Record lambdan :=
       mkLambdaN
         { lambdan_params: list (string * nnrc_type);
-          lambdan_output : nnrc_type;
+          lambdan_output : option nnrc_type;
           lambdan_body : nnrc_expr; }.
 
     (** Function *)

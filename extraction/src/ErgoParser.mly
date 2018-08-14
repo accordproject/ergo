@@ -205,9 +205,9 @@ clause:
 
 outtype:
 |
-  { ErgoCompiler.ergo_type_unit (mk_provenance $startpos $endpos) }
+  { None }
 | COLON out = paramtype
-  { out }
+  { Some out }
 
 effecttypes:
 |

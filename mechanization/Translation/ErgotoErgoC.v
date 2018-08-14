@@ -278,12 +278,19 @@ Section ErgotoErgoC.
     let ctxt : compilation_context := set_current_clause ctxt c.(clause_name) in
     (* XXX keep track of clause provenance *)
     let prov := ProvClause (loc_of_provenance c.(clause_annot)) c.(clause_name) in
-    let response_type := c.(clause_sig).(type_signature_output) in
     let emit_type := lift_default_emits_type prov c.(clause_sig).(type_signature_emits) in
     let state_type :=  lift_default_state_type prov sta in
-    let success_type := mk_success_type prov response_type state_type emit_type in
     let throw_type := lift_default_throws_type prov c.(clause_sig).(type_signature_throws) in
-    let error_type := mk_error_type prov throw_type in
+    let output_type :=
+        let response_type' := c.(clause_sig).(type_signature_output) in
+        match response_type' with
+        | None => None
+        | Some response_type =>
+          let success_type := mk_success_type prov response_type state_type emit_type in
+          let error_type := mk_error_type prov throw_type in
+          Some (mk_output_type prov success_type error_type)
+        end
+    in
     let body :=
         match c.(clause_body) with
         | None => esuccess None
@@ -314,7 +321,7 @@ Section ErgotoErgoC.
             prov
             (mkSigC
                params
-               (mk_output_type prov success_type error_type))
+               output_type)
             body))
       body.
 
@@ -432,7 +439,7 @@ Section ErgotoErgoC.
              (mkErgoTypeSignature
                 dummy_provenance
                 (("rate"%string, ErgoTypeDouble dummy_provenance)::nil)
-                (ErgoTypeAny dummy_provenance)
+                (Some (ErgoTypeAny dummy_provenance))
                 None
                 None)
              (Some (EConst dummy_provenance (dfloat float_one))).
@@ -441,7 +448,7 @@ Section ErgotoErgoC.
              (mkErgoTypeSignature
                 dummy_provenance
                 (("rate"%string, ErgoTypeDouble dummy_provenance)::nil)
-                (ErgoTypeAny dummy_provenance)
+                (Some (ErgoTypeAny dummy_provenance))
                 None
                 None)
              (Some (EThisContract dummy_provenance)).
@@ -451,7 +458,7 @@ Section ErgotoErgoC.
                (mkErgoTypeSignature
                   dummy_provenance
                   (("request"%string, ErgoTypeClassRef dummy_provenance default_request_absolute_name)::nil)
-                  (ErgoTypeAny dummy_provenance)
+                  (Some (ErgoTypeAny dummy_provenance))
                   None
                   None)
                (Some (SReturn
@@ -464,7 +471,7 @@ Section ErgotoErgoC.
                (mkErgoTypeSignature
                   dummy_provenance
                   (("request"%string, ErgoTypeClassRef dummy_provenance default_request_absolute_name)::nil)
-                  (ErgoTypeAny dummy_provenance)
+                  (Some (ErgoTypeAny dummy_provenance))
                   None
                   None)
                (Some (SReturn

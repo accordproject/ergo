@@ -148,9 +148,9 @@ Section ErgoNNRCtoJavaScriptCicero.
         | nil => filter_signatures namespace rest
         | (_,reqtype)::nil =>
           match reqtype, outtype, emitstype with
-          | ErgoTypeClassRef _ reqname, ErgoTypeClassRef _ outname, Some (ErgoTypeClassRef _ emitsname) =>
+          | ErgoTypeClassRef _ reqname, Some (ErgoTypeClassRef _ outname), Some (ErgoTypeClassRef _ emitsname) =>
             (fname,reqname,outname,emitsname) :: (filter_signatures namespace rest)
-          | ErgoTypeClassRef _ reqname, ErgoTypeClassRef _ outname, None =>
+          | ErgoTypeClassRef _ reqname, Some (ErgoTypeClassRef _ outname), None =>
             let emitsname := default_emits_absolute_name in
             (fname,reqname,outname,emitsname) :: (filter_signatures namespace rest)
           | _, _, _ =>
