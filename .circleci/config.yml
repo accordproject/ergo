@@ -29,7 +29,7 @@ jobs:
     - run: export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
     - run: export TERM=dumb && opam update || true
     - run:
-        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen re.str calendar coq.8.8.1
+        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen re calendar coq.8.8.1
         no_output_timeout: 3600s
     - run:
         command: export TERM=dumb && opam install -y --jobs=2 coq-qcert.1.2.0
