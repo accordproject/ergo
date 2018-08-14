@@ -10,7 +10,7 @@ define transaction Result extends Response {
   outstandingBalance : Double
 }
 
-define asset PromissoryNoteContract extends AccordContract {
+define asset PromissoryNoteClause extends AccordClause {
   amount : MonetaryAmount,
   date : DateTime,
   maker : String,
@@ -30,11 +30,11 @@ define function compoundInterestMultiple(annualInterest : Double, numberOfDays :
     return (1.0 + annualInterest) ^ (numberOfDays / 365.0)
 }
 
-contract PromissoryNote over PromissoryNoteContract {
+contract PromissoryNote over PromissoryNoteClause {
   clause check(request : Payment) : Result throws ErrorResponse {
     let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;
 
-    let numberOfDays = dateTimeDiffDays(dateTime("17 May 2018 13:53:33 EST"),dateTime(contract.date));
+    let numberOfDays = dateTimeDiffDays(dateTime("17 May 2018 13:53:33"),contract.date);
     let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
 
     return Result{
@@ -43,12 +43,13 @@ contract PromissoryNote over PromissoryNoteContract {
   }
 }
 
-set contract PromissoryNote over PromissoryNoteContract{
+set contract PromissoryNote over PromissoryNoteClause{
+	clauseId : "1231",
   amount: MonetaryAmount{
-    doubleValue: 1000,
+    doubleValue: 1000.0,
     currencyCode: "USD"
   },
-  date: "2018-01-30",
+  date: dateTime("30 Jan 2018 00:00:00"),
   maker: "Daniel Selman",
   interestRate: 3.8,
   individual: true,
@@ -57,11 +58,14 @@ set contract PromissoryNote over PromissoryNoteContract{
   legalEntity: "CORP",
   lenderAddress: "246 5th Ave, 3rd Fl, New York, NY 10001",
   principal: MonetaryAmount{
-    doubleValue: 500,
+    doubleValue: 500.0,
     currencyCode: "USD"
   },
-  maturityDate: "2019-01-20",
+  maturityDate: dateTime("20 Jan 2019 00:00:00"),
   defaultDays: 90,
   insolvencyDays: 90,
   jurisdiction: "New York, NY"
 }
+call init(Request{});
+call check(Payment{ amountPaid : MonetaryAmount{ doubleValue : 100.0, currencyCode: "USD" } });
+

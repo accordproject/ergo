@@ -77,6 +77,9 @@ Defined.
 Axiom DATE_TIME : Set.
 Extract Constant DATE_TIME => "DateTime.dateTime".
 
+Axiom DATE_TIME_now : DATE_TIME.
+Extract Inlined Constant DATE_TIME_now => "(DateTime.now ())".
+
 Axiom DATE_TIME_eq : DATE_TIME -> DATE_TIME -> bool.
 Extract Inlined Constant DATE_TIME_eq => "(fun x y -> DateTime.eq x y)".
 

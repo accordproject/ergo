@@ -50,7 +50,7 @@ Section ErgoCTypeContext.
                   new_local_env.
 
   Definition empty_type_context :=
-    mkEvalContext  ((current_time,tstring)
+    mkEvalContext  ((current_time,tdateTime)
                       ::(this_contract,tunit)
                       ::(this_state,tunit)
                       ::(this_emit,tcoll tbottom)

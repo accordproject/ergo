@@ -22,6 +22,9 @@ type dateTime = Calendar.t
 let from_string (x:string) : dateTime = Printer.Calendar.from_fstring "%d %b %Y %H:%M:%S" x
 let to_string (x:dateTime) : string = Printer.Calendar.sprint "%d %b %Y %H:%M:%S" x
 
+(** Initial *)
+let now () : dateTime = Calendar.now()
+
 (** Components *)
 let day (x:dateTime) : int = Calendar.day_of_month x
 let month (x:dateTime) : int = Date.int_of_month (Calendar.month x)

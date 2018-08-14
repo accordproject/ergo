@@ -82,6 +82,8 @@ Inductive enhanced_data : Set
   | enhanceddateTimeinterval : DATE_TIME_DURATION -> enhanced_data
 .
 
+Definition enhanceddateTime_now := DATE_TIME_now.
+
 Inductive enhanced_type : Set
   :=
   | enhancedTop : enhanced_type
