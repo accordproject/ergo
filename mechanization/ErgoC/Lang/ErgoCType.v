@@ -87,7 +87,7 @@ Section ErgoCType.
     | EThisState    prov => efailure (ESystemError prov "No `state' in ergoc")
     | EVar prov name =>
       let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
-      eresult_of_option opt (ETypeError prov ("Variable not found: " ++ name)%string)
+      eresult_of_option opt (ETypeError prov ("Variable `" ++ name ++ "' not found.")%string)
     | EConst prov d =>
       eresult_of_option
         (infer_data_type d)
@@ -309,9 +309,9 @@ Section ErgoCType.
                   expectedt
              then esuccess dctxt
              else
-               let outs := string_of_result_type nsctxt (Some outt) in
-               let expecteds := string_of_result_type nsctxt (Some expectedt) in
-               efailure (ETypeError prov ("Function output type mismatch between: \n\t" ++ outs ++ "and\n\t" ++ expecteds)%string)
+               let outs := (ergoc_type_to_string nsctxt outt) in
+               let expecteds := (ergoc_type_to_string nsctxt expectedt) in
+               efailure (ETypeError prov ("This function is annotated to return `" ++ expecteds ++ "' but actually returns `" ++ outs ++ "'")%string)
            end)
         (ergo_type_expr nsctxt (type_context_set_local_env dctxt tsig) body)
     end.
