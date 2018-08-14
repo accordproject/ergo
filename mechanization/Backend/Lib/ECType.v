@@ -59,6 +59,10 @@ Module ECType(ergomodel:ErgoBackendModel).
     := RType.Bool.
   Definition tstring {br:brand_relation} : ectype
     := RType.String.
+  Definition tdateTime {br:brand_relation} : ectype
+    := DateTime.
+  Definition tduration {br:brand_relation} : ectype
+    := DateTimeInterval.
   Definition tcoll {br:brand_relation} : ectype -> ectype
     := RType.Coll.
   Definition trec {br:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
