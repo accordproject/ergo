@@ -14,6 +14,7 @@
 
 open ErgoComp.ErgoCompiler
 open ParseUtil
+open ErgoUtil
 
 (* REPL *)
 
@@ -50,30 +51,43 @@ let safe_init_repl_ctxt inputs =
     (fun x -> x)
     (ErgoTopUtil.my_init_repl_context inputs)
 
-let make_init_rctxt =
-  let gconf = ErgoConfig.default_config () in
-  (*
-  let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
-  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (ErgoUtil.process_file (ErgoConfig.add_module_file gconf)) input_files;
-  *)
-  (*
-  let ctos = ErgoConfig.get_ctos gconf in
-  let modules = ErgoConfig.get_modules gconf in
-  *)
+let make_init_rctxt gconf =
   let all_modules = ErgoConfig.get_all_sorted gconf in
   let rctxt = safe_init_repl_ctxt all_modules in
   rctxt
 
-let _ =
+let main gconf args =
+  let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
+  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
+  List.iter (ErgoConfig.add_module_file gconf) input_files;
   Js.export "ergotop"
     (object%js
-       val initRCtxt = make_init_rctxt
-       method runLine rctxt line =
-         let (out, rctxt') = repl rctxt (Js.to_string line) in
-         Js.some
-           (object%js
-             val out = Js.string out
-             val ctx = rctxt'
-           end)
-     end)
+      val initRCtxt = make_init_rctxt gconf
+      method runLine rctxt line =
+        let (out, rctxt') = repl rctxt (Js.to_string line) in
+        Js.some
+          (object%js
+            val out = Js.string out
+            val ctx = rctxt'
+          end)
+    end)
+
+let wrap_error gconf e =
+  let source_table = ErgoConfig.get_source_table gconf in
+  begin match e with
+  | Ergo_Error error ->
+      new%js Js.error_constr (Js.string (string_of_error_with_table source_table error))
+  | exn ->
+      new%js Js.error_constr (Js.string (string_of_error_with_table source_table (ergo_system_error (Printexc.to_string exn))))
+  end
+
+let _ =
+  let gconf = ErgoConfig.default_config () in
+  begin try
+    main gconf (ErgoUtil.patch_argv Sys.argv)
+  with
+  | e ->
+      Js.raise_js_error (wrap_error gconf e)
+  end
+
+
