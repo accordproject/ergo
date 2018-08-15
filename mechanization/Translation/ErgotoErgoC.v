@@ -369,7 +369,7 @@ Section ErgotoErgoC.
     | DImport prov import => esuccess (nil, ctxt)
     | DType prov ergo_type =>
       let name := ergo_type.(type_declaration_name) in
-      if containsb name (map type_declaration_name
+      if in_dec string_dec name (map type_declaration_name
                             (ctxt.(compilation_context_new_type_decls) ++
                              ctxt.(compilation_context_type_decls))) then
         efailure (ETypeError prov ("Cannot redefine type `" ++ name ++ "'"))
