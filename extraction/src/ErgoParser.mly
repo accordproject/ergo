@@ -144,25 +144,25 @@ decl:
     { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v None e }
 | DEFINE CONSTANT v = ident COLON t = paramtype EQUAL e = expr
     { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v (Some t) e }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype et = effecttypes LCURLY fs = fstmt RCURLY
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype LCURLY fs = fstmt RCURLY
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
           function_sig =
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
             type_signature_output = out;
-            type_signature_throws = fst et;
-            type_signature_emits = snd et };
+            type_signature_throws = None;
+            type_signature_emits = None };
           function_body = Some fs; } }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype et = effecttypes
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
           function_sig =
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
             type_signature_output = out;
-            type_signature_throws = fst et;
-            type_signature_emits = snd et };
+            type_signature_throws = None;
+            type_signature_emits = None };
           function_body = None; } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
     { ErgoCompiler.dcontract (mk_provenance $startpos $endpos) cn
