@@ -1,3 +1,5 @@
+namespace org.accordproject.promissorynote
+
 import org.accordproject.cicero.contract.*
 import org.accordproject.cicero.runtime.*
 import org.accordproject.money.MonetaryAmount

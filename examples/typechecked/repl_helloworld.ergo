@@ -1,3 +1,5 @@
+namespace org.accordproject.helloworld
+
 import org.accordproject.cicero.contract.*
 import org.accordproject.cicero.runtime.*
 

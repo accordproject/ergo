@@ -364,6 +364,7 @@ Section ErgotoErgoC.
              (ctxt:compilation_context)
              (d:laergo_declaration) : eresult (list ergoc_declaration * compilation_context) :=
     match d with
+    | DNamespace prov ns => esuccess (nil, ctxt)
     | DImport prov import => esuccess (nil, ctxt)
     | DType prov ergo_type =>
       esuccess (nil, compilation_context_add_new_type_declaration ctxt ergo_type)

@@ -169,6 +169,7 @@ Section ErgoExpand.
   Definition ergo_expand_declaration
              (d:laergo_declaration) : eresult laergo_declaration :=
     match d with
+    | DNamespace _ _ => esuccess d
     | DImport _ _ => esuccess d
     | DType _ _ => esuccess d
     | DStmt _ _ => esuccess d
