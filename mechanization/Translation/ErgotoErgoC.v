@@ -18,6 +18,7 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Utils.Misc.
 Require Import ErgoSpec.Common.Utils.Provenance.
 Require Import ErgoSpec.Common.Utils.Names.
 Require Import ErgoSpec.Common.Utils.Result.
@@ -367,7 +368,13 @@ Section ErgotoErgoC.
     | DNamespace prov ns => esuccess (nil, ctxt)
     | DImport prov import => esuccess (nil, ctxt)
     | DType prov ergo_type =>
-      esuccess (nil, compilation_context_add_new_type_declaration ctxt ergo_type)
+      let name := ergo_type.(type_declaration_name) in
+      if containsb name (map type_declaration_name
+                            (ctxt.(compilation_context_new_type_decls) ++
+                             ctxt.(compilation_context_type_decls))) then
+        efailure (ETypeError prov ("Cannot redefine type `" ++ name ++ "'"))
+      else
+        esuccess (nil, compilation_context_add_new_type_declaration ctxt ergo_type)
     | DStmt prov s =>
       elift
         (fun x => (x::nil, ctxt))
