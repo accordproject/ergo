@@ -16,6 +16,15 @@ Require Import String.
 Require Import List.
 
 Section Misc.
+  Fixpoint containsb (x : string) (ls : list string) : bool :=
+    match ls with
+    | nil => false
+    | x'::ls' =>
+      if String.string_dec x x'
+      then true
+      else containsb x ls'
+    end.
+
   Definition multi_append {A} separator (f:A -> string) (elems:list A) : string :=
     match elems with
     | nil => ""
