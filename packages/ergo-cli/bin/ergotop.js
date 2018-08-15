@@ -15,7 +15,7 @@
 
 'use strict';
 
-const ergotop = require('../lib/ergotop.js').ergotop;
+const ergotop = require('../lib/ergotop-lib.js').ergotop;
 const readline = require('readline');
 const chalk = require('chalk');
 
