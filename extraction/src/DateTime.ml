@@ -19,8 +19,63 @@ open CalendarLib
 type dateTime = Calendar.t
 
 (** Parse/Print *)
-let from_string (x:string) : dateTime = Printer.Calendar.from_fstring "%d %b %Y %H:%M:%S" x
-let to_string (x:dateTime) : string = Printer.Calendar.sprint "%d %b %Y %H:%M:%S" x
+let lift_error fcont f x =
+  begin try f x with
+  | _ -> fcont x
+  end
+let rec lift_error_map fl fe =
+  begin match fl with
+  | [] -> fe
+  | f::morefl ->
+      lift_error (lift_error_map morefl fe) f
+  end
+type format =
+  | FDate of string
+  | FDateTime of string
+let f_of_format fmt =
+  begin match fmt with
+  | FDateTime s ->
+      (fun x ->
+         Printer.Calendar.from_fstring s x)
+  | FDate s ->
+      (fun x ->
+         let d = Printer.Date.from_fstring s x in
+         Calendar.create d (Time.lmake ()))
+  end
+let multi_parse fl fe x =
+  lift_error_map (List.map f_of_format fl) fe x
+
+let error_dt (x:string) : dateTime = Calendar.lmake 0 ()
+let iso8610 =
+  [ FDate "%Y-%m-%d";
+    FDate "%Y%m%d";
+    FDateTime "%Y-%m-%dT%H:%M:%S";
+    FDateTime "%Y-%m-%d %H:%M:%S";
+    FDateTime "%Y-%m-%dT%H:%M:%S%:z";
+    FDateTime "%Y-%m-%d %H:%M:%S%:z";
+    FDate "%d %b %Y";
+    FDate "%d %b %y";
+    FDateTime "%d %b %y %H:%M:%S";
+    FDateTime "%d %b %Y %H:%M:%S";
+    FDateTime "%d %b %y %H:%M:%S %z";
+    FDateTime "%d %b %Y %H:%M:%S %z";
+    FDate "%a %d %b %Y";
+    FDate "%a %d %b %y";
+    FDateTime "%a %d %b %y %H:%M:%S";
+    FDateTime "%a %d %b %Y %H:%M:%S";
+    FDateTime "%a %d %b %y %H:%M:%S %z";
+    FDateTime "%a %d %b %Y %H:%M:%S %z";
+    FDate "%a, %d %b %Y";
+    FDate "%a, %d %b %y";
+    FDateTime "%a, %d %b %y %H:%M:%S";
+    FDateTime "%a, %d %b %Y %H:%M:%S";
+    FDateTime "%a, %d %b %y %H:%M:%S %z";
+    FDateTime "%a, %d %b %Y %H:%M:%S %z"; ]
+
+let from_string (x:string) : dateTime =
+  multi_parse iso8610 error_dt x
+let to_string (x:dateTime) : string =
+  Printer.Calendar.sprint "%Y-%m-%d %H:%M:%S%:z" x
 
 (** Initial *)
 let now () : dateTime = Calendar.now()
