@@ -37,7 +37,7 @@ let parse parser lexer buf =
 let parse_ergo_module f : ergo_module =
   parse ErgoParser.main_module (ErgoLexer.token (string_buff ())) f
 let parse_ergo_declarations f : ergo_declaration list =
-  parse ErgoParser.main_decls (ErgoLexer.token (string_buff ())) f
+  parse ErgoParser.top_decls (ErgoLexer.token (string_buff ())) f
 
 (** Parse from buffer *)
 let parse_string p_fun s =

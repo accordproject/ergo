@@ -130,6 +130,7 @@ Section Ergo.
 
     (** Declaration *)
     Inductive ergo_declaration :=
+    | DNamespace : A -> namespace_name -> ergo_declaration
     | DImport : A -> @import_decl A -> ergo_declaration
     | DType : A -> @ergo_type_declaration A N -> ergo_declaration
     | DStmt : A -> ergo_stmt -> ergo_declaration
@@ -141,6 +142,7 @@ Section Ergo.
     
     Definition decl_annot (d:ergo_declaration) : A :=
       match d with
+      | DNamespace a _ => a
       | DImport a _ => a
       | DType a _ => a
       | DStmt a _ => a

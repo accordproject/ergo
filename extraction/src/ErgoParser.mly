@@ -85,7 +85,7 @@ let mk_provenance
 %left DOT QUESTIONDOT
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main_module
-%start <ErgoComp.ErgoCompiler.ergo_declaration list> main_decls
+%start <ErgoComp.ErgoCompiler.ergo_declaration list> top_decls
 
 %%
 
@@ -93,11 +93,11 @@ main_module:
 | p = emodule EOF
     { p }
 
-main_decls:
+top_decls:
 | EOF
     { [] }
-| p = decl dl = main_decls
-    { p :: dl }
+| d = top_decl dl = top_decls
+    { d :: dl }
 
 emodule:
 | NAMESPACE qn = qname_prefix ds = decls
@@ -109,8 +109,20 @@ emodule:
 decls:
 |
     { [] }
-| s = decl ss = decls
-    { s :: ss }
+| d = decl dl = decls
+    { d :: dl }
+
+top_decl:
+| d = decl
+    { d }
+| NAMESPACE qn = qname_prefix
+    { ErgoCompiler.dnamespace
+        (mk_provenance $startpos $endpos)
+        qn }
+| SET CONTRACT qn = qname OVER e = expr
+    { ErgoCompiler.dsetcontract (mk_provenance $startpos $endpos) qn e }
+| s = stmt SEMI
+    { ErgoCompiler.dstmt (mk_provenance $startpos $endpos) s }
 
 decl:
 | IMPORT qn = qname_import
@@ -170,10 +182,6 @@ decl:
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }
-| SET CONTRACT qn = qname OVER e = expr
-    { ErgoCompiler.dsetcontract (mk_provenance $startpos $endpos) qn e }
-| s = stmt SEMI
-    { ErgoCompiler.dstmt (mk_provenance $startpos $endpos) s }
 
 ergo_type_class_decl:
 | LCURLY rt = rectype RCURLY

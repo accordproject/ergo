@@ -42,12 +42,13 @@ Section ErgoNameResolution.
   Fixpoint namespace_ctxt_of_ergo_decls
            (ctxt:namespace_ctxt)
            (ns:namespace_name)
-           (dls:list lrergo_declaration) : namespace_ctxt :=
+           (dls:list lrergo_declaration) : (namespace_name * namespace_ctxt) :=
     match dls with
-    | nil => ctxt
+    | nil => (ns, ctxt)
+    | DNamespace _ ns' :: rest =>
+      (ns', ctxt)
     | DImport _ _ :: rest =>
-      let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
-      ctxt
+      namespace_ctxt_of_ergo_decls ctxt ns rest
     | DType tname td :: rest =>
       let ln := td.(type_declaration_name) in
       let an := absolute_name_of_local_name ns ln in
@@ -57,30 +58,29 @@ Section ErgoNameResolution.
           then update_namespace_context_enums ctxt (an::ectxt)
           else ctxt
       in
-      let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
-      add_type_to_namespace_ctxt ctxt ns ln an
+      let (ns, ctxt) := namespace_ctxt_of_ergo_decls ctxt ns rest in
+      (ns, add_type_to_namespace_ctxt ctxt ns ln an)
     | DStmt _ _ :: rest =>
       let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
       ctxt
     | DConstant _ ln ta cd :: rest =>
-      let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
       let an := absolute_name_of_local_name ns ln in
-      add_constant_to_namespace_ctxt ctxt ns ln an
+      let (ns, ctxt) := namespace_ctxt_of_ergo_decls ctxt ns rest in
+      (ns, add_constant_to_namespace_ctxt ctxt ns ln an)
     | DFunc _ ln fd :: rest =>
-      let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
       let an := absolute_name_of_local_name ns ln in
-      add_function_to_namespace_ctxt ctxt ns ln an
+      let (ns, ctxt) := namespace_ctxt_of_ergo_decls ctxt ns rest in
+      (ns, add_function_to_namespace_ctxt ctxt ns ln an)
     | DContract _ ln _ :: rest =>
-      let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
       let an := absolute_name_of_local_name ns ln in
-      add_contract_to_namespace_ctxt ctxt ns ln an
+      let (ns, ctxt) := namespace_ctxt_of_ergo_decls ctxt ns rest in
+      (ns, add_contract_to_namespace_ctxt ctxt ns ln an)
     | DSetContract _ ln _ :: rest =>
-      let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
-      ctxt
+      namespace_ctxt_of_ergo_decls ctxt ns rest
     end.
 
   Definition namespace_ctxt_of_ergo_module (ctxt:namespace_ctxt) (m:lrergo_module) : namespace_ctxt :=
-    namespace_ctxt_of_ergo_decls ctxt m.(module_namespace) m.(module_declarations).
+    snd (namespace_ctxt_of_ergo_decls ctxt m.(module_namespace) m.(module_declarations)).
 
   Definition namespace_ctxt_of_ergo_modules (ctxt:namespace_ctxt) (ml:list lrergo_module) : namespace_ctxt :=
     fold_left namespace_ctxt_of_ergo_module ml ctxt.
@@ -582,6 +582,8 @@ Section ErgoNameResolution.
       let ectxt := ctxt.(namespace_ctxt_enums) in
       let tbl : namespace_table := ctxt.(namespace_ctxt_current) in
       match d with
+      | DNamespace prov ns =>
+        esuccess (DNamespace prov ns, new_namespace_scope ctxt ns)
       | DImport prov id =>
         elift (fun x => (DImport prov id, x)) (resolve_one_import ctxt id)
       | DType prov td =>
