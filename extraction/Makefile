@@ -65,12 +65,11 @@ BYTE4=$(MAIN4).$(BYTE)
 BIN4=$(MAIN4).$(NATIVE)
 DIST4=../bin/$(TARGET4)
 
-TARGET5=ergotop.$(JS)
-MAIN5=ergotoplib
+TARGET5=ergotop-lib.$(JS)
+MAIN5=ergotopJS
 BYTE5=$(MAIN5).$(BYTE)
 BIN5=$(MAIN5).$(JS)
 DIST5=../packages/ergo-cli/lib/$(TARGET5)
-
 
 ## Toplevel
 all: $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4) $(DIST5)
