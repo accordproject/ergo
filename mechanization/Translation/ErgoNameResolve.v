@@ -583,7 +583,7 @@ Section ErgoNameResolution.
       let tbl : namespace_table := ctxt.(namespace_ctxt_current) in
       match d with
       | DNamespace prov ns =>
-        esuccess (DNamespace prov ns, new_namespace_scope ctxt ns)
+        esuccess (DNamespace prov ns, local_namespace_scope ctxt ns)
       | DImport prov id =>
         elift (fun x => (DImport prov id, x)) (resolve_one_import ctxt id)
       | DType prov td =>

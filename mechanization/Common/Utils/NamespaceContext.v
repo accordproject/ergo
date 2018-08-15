@@ -229,5 +229,16 @@ Section NamespaceContext.
           prev_enums
       end.
 
+  Definition local_namespace_scope (ctxt:namespace_ctxt) (ns:namespace_name) : namespace_ctxt :=
+    let prev_ns := ctxt.(namespace_ctxt_namespace) in
+    let prev_tbl := ctxt.(namespace_ctxt_current) in
+    let prev_modules := ctxt.(namespace_ctxt_modules) in
+    let prev_enums := ctxt.(namespace_ctxt_enums) in
+    mkNamespaceCtxt
+      prev_modules
+      ns
+      prev_tbl
+      prev_enums.
+
 End NamespaceContext.
 
