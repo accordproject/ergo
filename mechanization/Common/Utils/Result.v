@@ -101,6 +101,12 @@ Section Result.
         l
         (nil, c).
 
+    Definition eflatmaplift {A B:Set} (f:A -> eresult (list B)) (al:list A) : eresult (list B) :=
+      elift_fold_left
+        (fun acc c =>
+           elift (fun mc => acc ++ mc) (f c))
+        al nil.
+
     Section qcert.
       Definition eerror_of_qerror (prov:provenance) (qe:qerror) :=
         match qe with

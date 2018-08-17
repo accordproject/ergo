@@ -48,7 +48,7 @@ Section ErgoExpand.
              (v0:string)
              (effparam0:laergo_expr)
              (effparamrest:list laergo_expr)
-             (s: (string * laergo_type_signature)) : eresult (ergo_pattern * laergo_stmt) :=
+             (s: (string * laergo_type_signature)) : eresult (list (ergo_pattern * laergo_stmt)) :=
     let cname := (fst s) in
     let callparams := (snd s).(type_signature_params) in
     match callparams with
@@ -57,9 +57,9 @@ Section ErgoExpand.
       match et with
       | ErgoTypeClassRef _ type0 =>
         elift (fun x =>
-                 (CaseLet prov v0 (Some type0),x))
+                 ((CaseLet prov v0 (Some type0),x)::nil))
               (create_call prov cname v0 effparam0 effparamrest callparams)
-      | _ => main_not_a_class_error prov cname
+      | _ => esuccess  nil (* XXX May want to make this a warning *)
       end
     end.
 
@@ -74,7 +74,7 @@ Section ErgoExpand.
                     s
                     (SThrow prov
                             (EConst prov (default_match_error_content prov ""))))
-          (emaplift (case_of_sig prov v0 effparam0 effparamrest) ss).
+          (eflatmaplift (case_of_sig prov v0 effparam0 effparamrest) ss).
 
   Definition match_of_sigs_top
              (prov:provenance)
@@ -106,7 +106,7 @@ Section ErgoExpand.
                    (mkErgoTypeSignature
                       prov
                       (("request"%string,ErgoTypeClassRef prov default_request_absolute_name)::nil)
-                      (Some (ErgoTypeClassRef prov default_response_absolute_name))
+                      None (* XXX lets type inference do its magic *)
                       None
                       None)
                    (Some disp)))
