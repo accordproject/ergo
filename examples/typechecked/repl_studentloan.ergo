@@ -1,0 +1,53 @@
+
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+
+define concept LoanModel {rate : Double}
+define concept LoanPayment {amount : Double}
+define concept LoanState {balance : Double}
+
+define concept LoanPaidOffEvent extends Event {}
+define concept LoanDefaultEvent extends Event {}
+
+define function add_monthly_interest (
+  balance : Double,
+  rate : Double
+) : Double
+{
+    let percent_rate = rate / 100.0;
+    let monthly_rate = percent_rate / 12.0;
+    let interest = monthly_rate * balance;
+    return balance + interest
+}
+
+contract StudentLoan over LoanModel state LoanState
+{
+    clause init(principle : Double) {
+        set state LoanState {balance: principle};
+        return "Welcome to Amazing Bank, LLC."
+    }
+
+    clause monthly_payment(req : LoanPayment) {
+        set state LoanState {
+          balance: add_monthly_interest(state.balance, contract.rate)
+        };
+        if req.amount <= 0.0 then
+            emit LoanDefaultEvent {};
+            return Response {}
+        else if req.amount >= state.balance then
+      		set state LoanState {balance: 0.0};
+      		emit LoanPaidOffEvent {};
+      		return Response {}
+        else
+      		set state LoanState {balance: state.balance - req.amount};
+            return Response {}
+    }
+}
+
+set contract StudentLoan over LoanModel {rate : 5.1} // ~ the federal rate!
+call init(10000.0); // how many semesters does that cover, do you think?
+
+call monthly_payment(LoanPayment {amount: 100.0}); // already feels like a lot
+call monthly_payment(LoanPayment {amount: 0.0}); // oh no please send help
+call monthly_payment(LoanPayment {amount: -10.0}); // hmm maybe i can cheat the system
+call monthly_payment(LoanPayment {amount: 10000000.0}); // hey look i found a job
