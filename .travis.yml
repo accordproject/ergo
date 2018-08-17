@@ -20,8 +20,8 @@ deploy:
       - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./.travis/deploy.sh; fi'
     skip_cleanup: true
     on:
-      branch:
-         - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+      tags: true
+      all_branches: true
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 cache:
   directories:
