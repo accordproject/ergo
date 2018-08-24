@@ -13,6 +13,8 @@ body {
     background: white;
     color: black;
     font-family: Georgia;
+    margin: 0;
+    font-size: 14pt;
 }
 h1 {
     font-variant: small-caps;
@@ -38,25 +40,31 @@ textarea:focus {
 pre {
     padding-left: 0.5em;
     white-space: pre-wrap;
+    color: #555;
 }
+
+pre, .CodeMirror {
+    font-family: Menlo;
+}
+
 
 span.emit     { color: hotpink; }
 span.failure  { color: red; }
 span.state    { color: blue; }
 span.response { color: green; }
 
-#left {width: 50%;}
-#right{width: 45%; overflow: auto;}
+#left  {width: 49%;}
+#right {width: 49%; overflow: auto;}
 
 #left, #right {
   float: left;
-  height: 95%;
+  height: 90%;
   border-left: 1px solid #aaa;
 }
-.clearer {clear: both;}
+.clearer {clear: both; border-top: 1px solid #aaa;}
 
 #right .CodeMirror { height: auto; background-color: #eee;}
-#left  .CodeMirror { height: 100%; }
+#left  .CodeMirror { height: 100%;}
 </style>
 
 <h1>
@@ -69,17 +77,14 @@ span.response { color: green; }
 
 
 <div id="left">
-  <textarea id="left-editor">/*
- * Edit your contract here!
- * Hit Cmd-Enter to apply changes.
- */
-</textarea>
+  <textarea id="left-editor"></textarea>
 </div>
 
 <div id="right">
   <pre id="stdout"></pre>
   <button onclick="update()">Evaluate [&#x2318; &#x21B5;]</button>
   <button id="importlibs">Import "contract" library</button>
+  <button id="clearctxts">Clear</button>
   <textarea autofocus type="text" id="right-editor" placeholder="return 42;" rows=5></textarea>
 </div>
 
@@ -99,14 +104,14 @@ function setup_editor(id) {
         {value: "123", mode: "ergo", theme: "eclipse", matchBrackets: true/*, viewportMargin: Infinity*/}
     );
     editor.setOption("extraKeys", {
-        "Cmd-Enter": update
+        "Cmd-Enter": update,
+        "Ctrl-P": cheat
     });
     return editor;
 }
 
 var editor_lt = setup_editor('left-editor');
 var editor_rt = setup_editor('right-editor');
-
 
 stdin.addEventListener('keydown', function(evt) {
     if (evt.keyCode === 9) {
@@ -130,16 +135,20 @@ document.getElementById('importlibs').addEventListener('click', function() {
     this.remove();
 }, false);
 
+document.getElementById('clearctxts').addEventListener('click', function() {
+    ctx = ergotop.initRCtxt;
+    stdout.innerHTML = '';
+}, false);
+
 function update(editor) {
     var src = editor.getValue();
     var x = ergotop.runLine(ctx, src);
     if (x) {
         ctx = x.ctx;
-        stdout.innerHTML += "<em>" + src.replace(/</g, "&lt;") + "</em>" + "\n";
+        stdout.innerHTML += "<small>" + src.replace(/</g, "&lt;") + "</small>" + "\n";
         stdout.innerHTML +=
             x.out
             .replace(/</g, "&lt;")
-//          .replace(/Unit/g, '🌯')
             .replace(/^Response\./gm, '<span class="response">Response.</span>')
             .replace(/^Emit\./gm, '<span class="emit">Emit.</span>')
             .replace(/^Failure\./gm, '<span class="failure">Failure.</span>')
@@ -149,5 +158,77 @@ function update(editor) {
         editor_rt.setValue("");
         editor_rt.focus();
     }
+}
+
+cheatsheet = (`\
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+
+///
+define concept ShippingContract {penalty : Double}
+define concept LateRequest {weeks : Double}
+define concept LateResponse {message: String}
+
+///
+define concept ShippingState {}
+define concept InTransitState extends ShippingState {}
+define concept DeliveredState extends ShippingState {}
+
+///
+define concept Cheating extends ErgoErrorResponse {}
+define concept BillingEvent extends Event {amount: Double}
+
+///
+contract Shipping
+  over ShippingContract
+  state ShippingState
+{
+///
+  clause init()
+  {
+    set state InTransitState {};
+    return
+  }
+  
+///
+  clause late_delivery(req : LateRequest)
+    : LateResponse
+    throws Cheating
+  {
+///
+    emit BillingEvent {
+      amount:
+      req.weeks * contract.penalty
+    };
+
+///
+    enforce req.weeks > 0.0
+    else throw Cheating{
+      message: "Not actually late!"
+    };
+
+///
+    set state DeliveredState {};
+
+///
+    return LateResponse{message: "Delivery processed."}
+  }
+}
+
+///
+set contract Shipping
+  over ShippingContract {penalty : 5.0}
+
+///
+call init();
+///
+call late_delivery(LateRequest {weeks: 2.0});
+///
+call late_delivery(LateRequest {weeks: -1.0});
+`).split('///\n')
+
+function cheat(editor) {
+    editor.setValue(editor.getValue() + (cheatsheet.shift() || ""));
+    editor.setCursor(1000000, 0);
 }
 </script>
