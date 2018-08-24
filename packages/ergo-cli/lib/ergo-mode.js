@@ -15,7 +15,7 @@
 CodeMirror.defineSimpleMode("ergo", {
   start: [
     {regex: /"(?:[^\\]|\\.)*?(?:"|$)/, token: "string"},
-    {regex: /(?:define|function|constant|concept|transaction|participant|set|contract|clause|over|throws|namespace|import|enforce|emit|call|state|foreach|in|where|return|match|with|then|if|else|let)\b/,
+    {regex: /(?:define|function|constant|concept|transaction|participant|set|contract|clause|over|throws|emits|extends|namespace|import|enforce|emit|call|throw|state|foreach|in|where|return|match|with|then|if|else|let)\b/,
      token: "keyword"},
     {regex: /true|false|unit|some|none|now/, token: "atom"},
     {regex: /Any|Nothing|Unit|Integer|Double|String|Request|Response/, token: "variable-2"},
