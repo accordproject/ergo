@@ -21,7 +21,7 @@ define function compoundInterestMultiple(annualInterest : Double, numberOfDays :
 }
 
 contract PromissoryNote over PromissoryNoteContract {
-  clause check(request : Payment) : Result throws ErrorResponse {
+  clause check(request : Payment) : Result {
     enforce contract.interestRate >= 0.0;
     enforce contract.amount.doubleValue >= 0.0;
     let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;

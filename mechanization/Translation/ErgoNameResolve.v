@@ -208,13 +208,6 @@ Section ErgoNameResolution.
             elift Some (resolve_ergo_type ectxt tbl out_ty)
           end
       in
-      let throws_type : eresult (option laergo_type) :=
-          match sig.(type_signature_throws) with
-          | None => esuccess None
-          | Some throw_ty =>
-            elift Some (resolve_ergo_type ectxt tbl throw_ty)
-          end
-      in
       let emits_type : eresult (option laergo_type) :=
           match sig.(type_signature_emits) with
           | None => esuccess None
@@ -222,11 +215,10 @@ Section ErgoNameResolution.
             elift Some (resolve_ergo_type ectxt tbl emits_ty)
           end
       in
-      elift4 (mkErgoTypeSignature
+      elift3 (mkErgoTypeSignature
                 sig.(type_signature_annot))
              params_types
              output_type
-             throws_type
              emits_type.
 
     Definition resolve_ergo_type_clauses
@@ -807,7 +799,6 @@ Section ErgoNameResolution.
            dummy_provenance
            nil
            (Some (ErgoTypeBoolean dummy_provenance))
-           None
            None)
         None.
     
@@ -818,7 +809,6 @@ Section ErgoNameResolution.
            dummy_provenance
            nil
            (Some (ErgoTypeBoolean dummy_provenance))
-           None
            None)
         (Some (ECallFun dummy_provenance "addFee" nil)).
 
@@ -830,7 +820,6 @@ Section ErgoNameResolution.
            dummy_provenance
            nil
            (Some (ErgoTypeBoolean dummy_provenance))
-           None
            None)
         (Some (SReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
 

@@ -45,7 +45,6 @@ contract HelloWorld over TemplateModel {
                 dummy_provenance
                 (("request", ErgoTypeClassRef dummy_provenance (None,"Request"))::nil)
                 (Some (ErgoTypeClassRef dummy_provenance (None,"Response")))
-                None
                 None)
              (Some (SReturn dummy_provenance (EVar dummy_provenance "request"))).
 
@@ -62,7 +61,6 @@ contract HelloWorld over TemplateModel {
          dummy_provenance
          (("req",ErgoTypeBoolean dummy_provenance)::nil)
          (Some (ErgoTypeBoolean dummy_provenance))
-         None
          None)
       None.
     
@@ -73,7 +71,6 @@ contract HelloWorld over TemplateModel {
          dummy_provenance
          nil
          (Some (ErgoTypeBoolean dummy_provenance))
-         None
          None)
       (Some (ECallFun dummy_provenance "addFee" nil)).
 
@@ -85,7 +82,6 @@ contract HelloWorld over TemplateModel {
          dummy_provenance
          (("request", ErgoTypeClassRef dummy_provenance (None,"Request"))::nil)
          (Some (ErgoTypeClassRef dummy_provenance (None,"Response")))
-         None
          None)
       (Some (SReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
 

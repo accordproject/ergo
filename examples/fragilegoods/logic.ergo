@@ -32,7 +32,7 @@ define function shocks(maxAcc : Double, minAcc : Double, accelerometerReadings :
 }
 
 contract FragileGoods over TemplateModel {
-  clause fragilegoods(request : DeliveryUpdate) : PayOut throws ErrorResponse {
+  clause fragilegoods(request : DeliveryUpdate) : PayOut {
     let shocks =
         numberOfShocks(contract.accelerationMax,
 		       contract.accelerationMin,

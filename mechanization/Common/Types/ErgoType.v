@@ -67,7 +67,6 @@ Section ErgoType.
         { type_signature_annot : A;
           type_signature_params : list (string * ergo_type);
           type_signature_output : option ergo_type;
-          type_signature_throws : option ergo_type;
           type_signature_emits  : option ergo_type; }.
 
     Inductive ergo_type_declaration_desc :=
@@ -125,11 +124,8 @@ Section ErgoType.
     | None => ErgoTypeClassRef prov default_state_absolute_name
     end.
 
-  Definition lift_default_throws_type (prov:provenance) (emits:option laergo_type) : laergo_type :=
-    match emits with
-    | Some e => e
-    | None => ErgoTypeClassRef prov default_error_absolute_name
-    end.
+  Definition default_throws_type (prov:provenance) : laergo_type :=
+    ErgoTypeClassRef prov default_error_absolute_name.
 
   Definition mk_success_type (prov:provenance) (response_type state_type emit_type: laergo_type) : laergo_type :=
     ErgoTypeRecord prov
