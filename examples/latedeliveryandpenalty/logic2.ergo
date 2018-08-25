@@ -32,7 +32,7 @@ define function calculatePenalty(diff : Double, goodsValue : Double) : Double {
 }
 
 // Declare a contract over a template model
-contract LateDeliveryAndPenalty over TemplateModel throws Error {
+contract LateDeliveryAndPenalty over TemplateModel {
     // Defines a function to calculate the penalty
    // Clause for volume discount
    clause latedeliveryandpenalty(request : LateDeliveryAndPenaltyRequest) : LateDeliveryAndPenaltyResponse {

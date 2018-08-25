@@ -38,7 +38,6 @@
 	      "contract", CONTRACT;
 	      "over", OVER;
 	      "clause", CLAUSE;
-	      "throws", THROWS;
 	      "emits", EMITS;
 	      "state", STATE;
 	      "call", CALL;

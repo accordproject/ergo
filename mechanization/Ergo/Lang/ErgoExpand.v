@@ -107,7 +107,6 @@ Section ErgoExpand.
                       prov
                       (("request"%string,ErgoTypeClassRef prov default_request_absolute_name)::nil)
                       None (* XXX lets type inference do its magic *)
-                      None
                       None)
                    (Some disp)))
       (match_of_sigs_top prov effparams sigs).
@@ -132,7 +131,6 @@ Section ErgoExpand.
                 prov
                 (("request"%string, ErgoTypeClassRef prov default_request_absolute_name)::nil)
                 (Some (ErgoTypeUnit prov))
-                None
                 (Some (ErgoTypeClassRef prov default_emits_absolute_name)))
              (Some init_body).
 

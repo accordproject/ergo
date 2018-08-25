@@ -39,7 +39,7 @@ contract LateDeliveryAndPenalty over TemplateModel {
     // Guard against calling late delivery clause too early
     let agreed = request.agreedDelivery;
     enforce dateTimeIsBefore(agreed,now()) else {
-      throw Error{ message : "Cannot exercise late delivery before delivery date" }
+      throw "Cannot exercise late delivery before delivery date"
     };
     // Guard against force majeure
     enforce !contract.forceMajeure || !request.forceMajeure else {

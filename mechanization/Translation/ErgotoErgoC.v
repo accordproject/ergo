@@ -229,7 +229,8 @@ Section ErgotoErgoC.
     | SEnforce prov e1 None s3 =>
       elift3 (EIf prov)
              (elift (EUnaryOp prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
-             (esuccess (EError prov (EConst prov (enforce_error_content prov ""))))
+             (esuccess (EError prov
+                               (EConst prov (enforce_error_content prov ""))))
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 (Some s2) s3 =>
       elift3 (EIf prov)
@@ -281,7 +282,7 @@ Section ErgotoErgoC.
     let prov := ProvClause (loc_of_provenance c.(clause_annot)) c.(clause_name) in
     let emit_type := lift_default_emits_type prov c.(clause_sig).(type_signature_emits) in
     let state_type :=  lift_default_state_type prov sta in
-    let throw_type := lift_default_throws_type prov c.(clause_sig).(type_signature_throws) in
+    let throw_type := default_throws_type prov in
     let output_type :=
         let response_type' := c.(clause_sig).(type_signature_output) in
         match response_type' with
@@ -448,7 +449,6 @@ Section ErgotoErgoC.
                 dummy_provenance
                 (("rate"%string, ErgoTypeDouble dummy_provenance)::nil)
                 (Some (ErgoTypeAny dummy_provenance))
-                None
                 None)
              (Some (EConst dummy_provenance (dfloat float_one))).
     Definition f2 : laergo_function :=
@@ -457,7 +457,6 @@ Section ErgotoErgoC.
                 dummy_provenance
                 (("rate"%string, ErgoTypeDouble dummy_provenance)::nil)
                 (Some (ErgoTypeAny dummy_provenance))
-                None
                 None)
              (Some (EThisContract dummy_provenance)).
     Definition cl1 : laergo_clause :=
@@ -467,7 +466,6 @@ Section ErgotoErgoC.
                   dummy_provenance
                   (("request"%string, ErgoTypeClassRef dummy_provenance default_request_absolute_name)::nil)
                   (Some (ErgoTypeAny dummy_provenance))
-                  None
                   None)
                (Some (SReturn
                         dummy_provenance
@@ -480,7 +478,6 @@ Section ErgotoErgoC.
                   dummy_provenance
                   (("request"%string, ErgoTypeClassRef dummy_provenance default_request_absolute_name)::nil)
                   (Some (ErgoTypeAny dummy_provenance))
-                  None
                   None)
                (Some (SReturn
                         dummy_provenance

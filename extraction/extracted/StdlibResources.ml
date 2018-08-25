@@ -10,6 +10,8 @@ let runtime = {xxx|
 let stdlib = {xxx|
 namespace org.accordproject.ergo.stdlib
 
+import org.accordproject.cicero.runtime.*
+
 define concept Duration {
 	duration : String
 }
@@ -74,7 +76,7 @@ define function flatten(x:Any[][]) : Any[]
 define function arrayAdd(x:Any[],y:Any[]) : Any[]
 define function arraySubtract(x:Any[],y:Any[]) : Any[]
 
-define concept ErgoErrorResponse{
+define transaction ErgoErrorResponse extends ErrorResponse{
 	message : String
 }
 |xxx}

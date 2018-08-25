@@ -40,7 +40,7 @@ let mk_provenance
 %token NAMESPACE IMPORT DEFINE FUNCTION
 %token TRANSACTION CONCEPT EVENT ASSET PARTICIPANT ENUM EXTENDS
 %token CONTRACT OVER CLAUSE
-%token THROWS EMITS
+%token EMITS
 
 %token ENFORCE IF THEN ELSE
 %token LET FOREACH IN WHERE
@@ -163,7 +163,6 @@ decl:
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
             type_signature_output = out;
-            type_signature_throws = None;
             type_signature_emits = None };
           function_body = Some fs; } }
 | DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype
@@ -173,7 +172,6 @@ decl:
           { type_signature_annot = (mk_provenance $startpos $endpos);
             type_signature_params = ps;
             type_signature_output = out;
-            type_signature_throws = None;
             type_signature_emits = None };
           function_body = None; } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
@@ -200,15 +198,14 @@ clauses:
     { c :: cl }
 
 clause:
-| CLAUSE cn = ident LPAREN ps = params RPAREN out = outtype et = effecttypes LCURLY s = stmt RCURLY
+| CLAUSE cn = ident LPAREN ps = params RPAREN out = outtype et = emittypes LCURLY s = stmt RCURLY
     { { clause_annot = mk_provenance $startpos $endpos;
         clause_name = cn;
         clause_sig =
         { type_signature_annot = (mk_provenance $startpos $endpos);
           type_signature_params = ps;
           type_signature_output = out;
-          type_signature_throws = fst et;
-          type_signature_emits = snd et };
+          type_signature_emits = et };
         clause_body = Some s; } }
 
 outtype:
@@ -217,17 +214,11 @@ outtype:
 | COLON out = paramtype
   { Some out }
 
-effecttypes:
+emittypes:
 |
-  { (None,None) }
-| THROWS tt = paramtype
-  { (Some tt,None) }
+  { None }
 | EMITS et = paramtype
-  { (None,Some et) }
-| THROWS tt = paramtype EMITS et = paramtype
-  { (Some tt,Some et) }
-| EMITS et = paramtype THROWS tt = paramtype
-  { (Some tt,Some et) }
+  { Some et }
 
 mayhavestate:
 |
@@ -615,7 +606,6 @@ safeident_base:
 | CONTRACT { "contract" }
 | OVER { "over" }
 | CLAUSE { "clause" }
-| THROWS { "throws" }
 | EMITS { "emits" }
 | STATE { "state" }
 | CALL { "call" }
