@@ -76,7 +76,7 @@ let identchar = ['A'-'Z' 'a'-'z' '_' '\'' '0'-'9']
 let digit = ['0'-'9']
 let frac = '.' digit*
 let exp = ['e' 'E'] ['-' '+']? digit+
-let float = digit* (frac exp? | exp)
+let float = digit+ (frac exp? | exp)
 let int = ['0'-'9']+
 
 rule token sbuff = parse
@@ -121,16 +121,16 @@ rule token sbuff = parse
     { token sbuff lexbuf }
 | newline
     { Lexing.new_line lexbuf; token sbuff lexbuf }
+| letter identchar*
+    { let s = Lexing.lexeme lexbuf in
+      try Hashtbl.find keyword_table s
+      with Not_found -> IDENT s }
 | float as f
     { FLOAT (float_of_string f) }
 | int as i
     { INT (int_of_string i) }
 | '"'
     { reset_string sbuff; string sbuff lexbuf }
-| letter identchar*
-    { let s = Lexing.lexeme lexbuf in
-      try Hashtbl.find keyword_table s
-      with Not_found -> IDENT s }
 | "/*"
     { comment 1 lexbuf; token sbuff lexbuf }
 | "//"
