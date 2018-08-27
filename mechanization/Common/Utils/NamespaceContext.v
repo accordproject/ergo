@@ -129,12 +129,13 @@ Section NamespaceContext.
     mkNamespaceCtxt {
         namespace_ctxt_modules : list (namespace_name * namespace_table);
         namespace_ctxt_namespace : namespace_name;
-        namespace_ctxt_current : namespace_table;
+        namespace_ctxt_current_module : namespace_table;
+        namespace_ctxt_current_in_scope : namespace_table;
         namespace_ctxt_enums : enum_ctxt;
       }.
 
   Definition empty_namespace_ctxt (ns:namespace_name) : namespace_ctxt :=
-    mkNamespaceCtxt nil ns empty_namespace_table nil.
+    mkNamespaceCtxt nil ns empty_namespace_table empty_namespace_table nil.
 
   Definition update_namespace_context_modules
              (ctxt:namespace_ctxt)
@@ -144,21 +145,42 @@ Section NamespaceContext.
     | Some t =>
       mkNamespaceCtxt (update_first string_dec ctxt.(namespace_ctxt_modules) ns (update t))
                       ctxt.(namespace_ctxt_namespace)
-                      ctxt.(namespace_ctxt_current)
+                      ctxt.(namespace_ctxt_current_module)
+                      ctxt.(namespace_ctxt_current_in_scope)
                       ctxt.(namespace_ctxt_enums)
     | None =>
       mkNamespaceCtxt ((ns, update empty_namespace_table) :: ctxt.(namespace_ctxt_modules))
                       ctxt.(namespace_ctxt_namespace)
-                      ctxt.(namespace_ctxt_current)
+                      ctxt.(namespace_ctxt_current_module)
+                      ctxt.(namespace_ctxt_current_in_scope)
                       ctxt.(namespace_ctxt_enums)
     end.
 
-  Definition update_namespace_context_current
+  Definition update_namespace_context_current_module
              (ctxt:namespace_ctxt)
              (update:namespace_table -> namespace_table) : namespace_ctxt :=
     mkNamespaceCtxt ctxt.(namespace_ctxt_modules)
                     ctxt.(namespace_ctxt_namespace)
-                    (update ctxt.(namespace_ctxt_current))
+                    (update ctxt.(namespace_ctxt_current_module))
+                    ctxt.(namespace_ctxt_current_in_scope)
+                    ctxt.(namespace_ctxt_enums).
+  
+  Definition update_namespace_context_current_in_scope
+             (ctxt:namespace_ctxt)
+             (update:namespace_table -> namespace_table) : namespace_ctxt :=
+    mkNamespaceCtxt ctxt.(namespace_ctxt_modules)
+                    ctxt.(namespace_ctxt_namespace)
+                    ctxt.(namespace_ctxt_current_module)
+                    (update ctxt.(namespace_ctxt_current_in_scope))
+                    ctxt.(namespace_ctxt_enums).
+  
+  Definition update_namespace_context_current_both
+             (ctxt:namespace_ctxt)
+             (update:namespace_table -> namespace_table) : namespace_ctxt :=
+    mkNamespaceCtxt ctxt.(namespace_ctxt_modules)
+                    ctxt.(namespace_ctxt_namespace)
+                    (update ctxt.(namespace_ctxt_current_module))
+                    (update ctxt.(namespace_ctxt_current_in_scope))
                     ctxt.(namespace_ctxt_enums).
   
   Definition update_namespace_context_enums
@@ -166,7 +188,8 @@ Section NamespaceContext.
              (ectxt:enum_ctxt) : namespace_ctxt :=
     mkNamespaceCtxt ctxt.(namespace_ctxt_modules)
                     ctxt.(namespace_ctxt_namespace)
-                    ctxt.(namespace_ctxt_current)
+                    ctxt.(namespace_ctxt_current_module)
+                    ctxt.(namespace_ctxt_current_in_scope)
                     ectxt.
     
   Definition add_type_to_namespace_ctxt
@@ -187,23 +210,23 @@ Section NamespaceContext.
 
   Definition add_type_to_namespace_ctxt_current
              (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
-    update_namespace_context_current ctxt (add_type_to_namespace_table ln an).
+    update_namespace_context_current_both ctxt (add_type_to_namespace_table ln an).
     
   Definition add_constant_to_namespace_ctxt_current
              (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
-    update_namespace_context_current ctxt (add_constant_to_namespace_table ln an).
+    update_namespace_context_current_both ctxt (add_constant_to_namespace_table ln an).
   
   Definition add_function_to_namespace_ctxt_current
              (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
-    update_namespace_context_current ctxt (add_function_to_namespace_table ln an).
+    update_namespace_context_current_both ctxt (add_function_to_namespace_table ln an).
 
   Definition add_contract_to_namespace_ctxt_current
              (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
-    update_namespace_context_current ctxt (add_contract_to_namespace_table ln an).
+    update_namespace_context_current_both ctxt (add_contract_to_namespace_table ln an).
 
   Definition new_namespace_scope (ctxt:namespace_ctxt) (ns:namespace_name) : namespace_ctxt :=
     let prev_ns := ctxt.(namespace_ctxt_namespace) in
-    let prev_tbl := ctxt.(namespace_ctxt_current) in
+    let prev_tbl_current_module := ctxt.(namespace_ctxt_current_module) in
     let prev_modules := ctxt.(namespace_ctxt_modules) in
     let prev_enums := ctxt.(namespace_ctxt_enums) in
     if string_dec prev_ns no_namespace (* Do not push empty namespace to stack *)
@@ -212,32 +235,37 @@ Section NamespaceContext.
         prev_modules
         ns
         empty_namespace_table
+        empty_namespace_table
         prev_enums
     else
       match lookup string_dec prev_modules prev_ns with
       | Some t =>
         mkNamespaceCtxt
-          (update_first string_dec prev_modules prev_ns (namespace_table_app prev_tbl t))
+          (update_first string_dec prev_modules prev_ns (namespace_table_app prev_tbl_current_module t))
           ns
+          empty_namespace_table
           empty_namespace_table
           prev_enums
       | None =>
         mkNamespaceCtxt
-          ((prev_ns, prev_tbl) :: prev_modules)
+          ((prev_ns, prev_tbl_current_module) :: prev_modules)
           ns
+          empty_namespace_table
           empty_namespace_table
           prev_enums
       end.
 
   Definition local_namespace_scope (ctxt:namespace_ctxt) (ns:namespace_name) : namespace_ctxt :=
     let prev_ns := ctxt.(namespace_ctxt_namespace) in
-    let prev_tbl := ctxt.(namespace_ctxt_current) in
+    let prev_tbl_current_module := ctxt.(namespace_ctxt_current_module) in
+    let prev_tbl_current_in_scope := ctxt.(namespace_ctxt_current_in_scope) in
     let prev_modules := ctxt.(namespace_ctxt_modules) in
     let prev_enums := ctxt.(namespace_ctxt_enums) in
     mkNamespaceCtxt
       prev_modules
       ns
-      prev_tbl
+      prev_tbl_current_module
+      prev_tbl_current_in_scope
       prev_enums.
 
 End NamespaceContext.

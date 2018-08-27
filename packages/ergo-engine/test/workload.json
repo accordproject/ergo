@@ -167,8 +167,8 @@
       "error": {
         "kind": "ErgoError",
         "message": {
-          "$class": "org.accordproject.ergo.stdlib.ErgoErrorResponse",
-          "message": "Cannot exercise late delivery before delivery date"
+            "$class": "org.accordproject.ergo.stdlib.ErgoErrorResponse",
+            "message": "Cannot exercise late delivery before delivery date"
         }
       }
     }
@@ -362,8 +362,8 @@
       "error": {
         "kind": "ErgoError",
         "message": {
-          "$class": "org.accordproject.ergo.stdlib.ErgoErrorResponse",
-          "message": "Month should be initialized to 3.0"
+            "$class": "org.accordproject.ergo.stdlib.ErgoErrorResponse",
+            "message": "Month should be initialized to 3.0"
         }
       }
     }

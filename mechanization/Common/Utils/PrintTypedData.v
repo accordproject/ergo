@@ -31,7 +31,7 @@ Section PrintTypedData.
     match get_local_part b with
     | None => "~" ++ b
     | Some local_name =>
-      match resolve_type_name dummy_provenance nsctxt.(namespace_ctxt_current) (None,local_name) with
+      match resolve_type_name dummy_provenance nsctxt.(namespace_ctxt_current_in_scope) (None,local_name) with
       | Success _ _ resolved_b =>
         if string_dec resolved_b b
         then
