@@ -123,10 +123,11 @@ Section ErgoNameResolution.
                mkNamespaceCtxt
                  ctxt.(namespace_ctxt_modules)
                  ctxt.(namespace_ctxt_namespace)
-                 (namespace_table_app ctxt.(namespace_ctxt_current) tbl)
+                 ctxt.(namespace_ctxt_current_module) (* Only update in-scope for modules *)
+                 (namespace_table_app ctxt.(namespace_ctxt_current_in_scope) tbl)
                  ctxt.(namespace_ctxt_enums))
             (lookup_one_import ctxt ic).
-    
+
     (* Resolve imports for CTO *)
     Definition is_builtin_import (ns:namespace_name) : bool :=
       if string_dec ns hyperledger_namespace
@@ -572,7 +573,7 @@ Section ErgoNameResolution.
       : eresult (laergo_declaration * namespace_ctxt) :=
       let module_ns : namespace_name := ctxt.(namespace_ctxt_namespace) in
       let ectxt := ctxt.(namespace_ctxt_enums) in
-      let tbl : namespace_table := ctxt.(namespace_ctxt_current) in
+      let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
       match d with
       | DNamespace prov ns =>
         esuccess (DNamespace prov ns, local_namespace_scope ctxt ns)

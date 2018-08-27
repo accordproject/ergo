@@ -205,7 +205,8 @@ Section Result.
                       (ErgoData.drec (("message"%string, ErgoData.dstring message)::nil)).
     Definition default_match_error_content (prov:provenance) (msg:string) : ErgoData.data :=
       let message := format_error "DefaultMatch Error" prov msg in
-      ErgoData.dstring message.
+      ErgoData.dbrand (default_error_absolute_name::nil)
+                      (ErgoData.drec (("message"%string, ErgoData.dstring message)::nil)).
 
     Definition unresolved_name_error {A} prov : eresult A :=
       efailure (ECompilationError prov "Unresolved name").

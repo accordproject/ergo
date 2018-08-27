@@ -19,7 +19,7 @@ contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse {
     let received = request.deliverableReceivedAt;
     enforce dateTimeIsBefore(received,now()) else
-      throw ErrorResponse{ error : "Transaction time is before the deliverable date." }
+      throw ErgoErrorResponse{ message : "Transaction time is before the deliverable date." }
     ;
 
     let status =
