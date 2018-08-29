@@ -116,5 +116,67 @@ Module ECType(ergomodel:ErgoBackendModel).
 
   Definition ergoc_type_unpack {br:brand_relation} (t:ectype) : ectype_struct := proj1_sig t.
 
+  Program Definition ergoc_closed_from_open {m:brand_model} (t:ectype) : ectype :=
+    match untrec t with
+    | None => t
+    | Some (k, fields) => Rec Closed fields _
+    end.
+  Next Obligation.
+    assert (untrec t0 = Some (k, fields)) by auto; clear Heq_anonymous.
+    generalize (tunrec_correct k t0 H); intros.
+    elim H0; clear H0; intros.
+    auto.
+  Qed.
+
+  (* Stricter version of brand typing -- checks that t is a subtype of the closed form for type of b *)
+  Definition infer_brand_strict {m:brand_model} (b:brands) (t:ectype) : option (rtype * ectype) :=
+    if (subtype_dec t (ergoc_closed_from_open (brands_type b)))
+    then Some (Brand b, t)
+    else None.
+
+  Definition recminus {br:brand_relation} (rt:list (string*rtype)) (sl:list string) : list (string*rtype) :=
+    fold_left rremove sl rt.
+
+  (* Returns a pair with: fields in the expected brand not in the actual record + fields in the actual record not in the expected brand *)
+  Definition diff_record_types {m:brand_model} (b:brands) (t:ectype) : option (list string * list string) :=
+    match tunrec t with
+    | None => None
+    | Some (_, actual_rt) =>
+      match tunrec (ergoc_closed_from_open (brands_type b)) with
+      | None => None
+      | Some (_, expected_rt) =>
+        let in_expected_not_in_actual := recminus expected_rt (map fst actual_rt) in
+        let in_actual_not_in_expected := recminus actual_rt (map fst expected_rt) in
+        Some (map fst in_expected_not_in_actual, map fst in_actual_not_in_expected)
+      end
+    end.
+
+  Fixpoint rec_fields_that_are_not_subtype {m:brand_model} (t1 t2:list (string*ectype)) : list (string * ectype * ectype) :=
+    match t1, t2 with
+    | nil, _ => nil
+    | _, nil => nil
+    | (name1,t1)::rest1, (name2,t2)::rest2 =>
+      if string_dec name1 name2
+      then
+        if subtype_dec t2 t1
+        then
+          rec_fields_that_are_not_subtype rest1 rest2
+        else
+          (name1, t1, t2) :: rec_fields_that_are_not_subtype rest1 rest2
+      else
+        rec_fields_that_are_not_subtype rest1 rest2
+    end.
+  
+  Definition fields_that_are_not_subtype {m:brand_model} (b:brands) (t:ectype) : list (string * ectype * ectype) :=
+    match tunrec t with
+    | None => nil
+    | Some (_, actual_rt) =>
+      match tunrec (ergoc_closed_from_open (brands_type b)) with
+      | None => nil
+      | Some (_, expected_rt) =>
+        rec_fields_that_are_not_subtype expected_rt actual_rt
+      end
+    end.
+  
 End ECType.
 
