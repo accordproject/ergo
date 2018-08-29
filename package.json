@@ -1,7 +1,7 @@
 {
   "name": "@accordproject/ergo",
   "description": "The Ergo Language for Smart Legal Contracts",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "scripts": {
     "postinstall": "npm run pkgcheck && npm run bootstrap",
     "bootstrap": "lerna bootstrap",
