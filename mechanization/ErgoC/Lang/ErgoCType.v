@@ -81,6 +81,30 @@ Section ErgoCType.
     | _ => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string nsctxt arg2) ++ "'."
     end.
 
+  Definition ergo_format_new_error nsctxt (name:string) (actual:ergoc_type) : string :=
+    let concept_name := ergoc_type_to_string nsctxt (Brand (name::nil)) in
+    (* First check if all the fields are present and no extra field is present *)
+    match diff_record_types (name::nil) actual with
+    | None => "Concept name " ++ name ++ " does not match data"
+    | Some (nil, nil) =>
+      (* If all the fields are right, check if any of them is not a subtype *)
+      match fields_that_are_not_subtype (name::nil) actual with
+      | nil => "Concept " ++ name ++ " doesn't match data (one field is not a subtype)"
+      | (expected_name, expected_type, actual_type) :: _ =>
+        "Field `" ++ expected_name
+                  ++ "' has type `" ++ (ergoc_type_to_string nsctxt actual_type)
+                  ++ "' but should have type `" ++ (ergoc_type_to_string nsctxt expected_type) ++ "'"
+      end
+    | Some (nil, actual_name::nil) =>
+      "Unexpected field `" ++ actual_name ++ "' in type `" ++ concept_name ++ "'"
+    | Some (nil, actual_names) =>
+      "Unexpected fields `" ++ String.concat "', `" actual_names ++ "' in type `" ++ concept_name ++ "'"
+    | Some (expected_name::nil, _) =>
+      "Missing field `" ++ expected_name ++ "' in type `" ++ concept_name ++ "'"
+    | Some (expected_names, _) =>
+      "Missing fields `" ++ String.concat "', `" expected_names ++ "' in type `" ++ concept_name ++ "'"
+    end.
+
   Fixpoint ergo_type_expr nsctxt (ctxt : type_context) (expr : ergoc_expr) : eresult ergoc_type :=
     match expr with
     | EThisContract prov => efailure (ESystemError prov "No `this' in ergoc")
@@ -198,9 +222,8 @@ Section ErgoCType.
         (fun rs' =>
            (elift fst)
              (eresult_of_option
-                (ergoc_type_infer_unary_op
-                   (OpBrand (name::nil)) rs')
-                (ETypeError prov ("Concept name " ++ name ++ " doesn't match data")%string)))
+                (infer_brand_strict (name::nil) rs')
+                (ETypeError prov (ergo_format_new_error nsctxt name rs'))))
         (fold_left
            (fun sofar next =>
               eolift2
