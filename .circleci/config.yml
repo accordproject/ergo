@@ -12,7 +12,7 @@ jobs:
     steps:
     - run: echo 'export PATH=~/ergo/bin/:$PATH' >> $BASH_ENV 
     - checkout
-    - run: npm install -g lerna@2.11.0
+    - run: npm install lerna@2.11.0
     - run: sudo wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin
     - run: export TERM=dumb && opam init -a
     - run: export TERM=dumb && opam switch 4.07.0
