@@ -71,11 +71,11 @@ Section ErgoType.
 
     Inductive ergo_type_declaration_desc :=
     | ErgoTypeEnum : list string -> ergo_type_declaration_desc
-    | ErgoTypeTransaction : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
-    | ErgoTypeConcept : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
-    | ErgoTypeEvent : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
-    | ErgoTypeAsset : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
-    | ErgoTypeParticipant : @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeTransaction : is_abstract -> @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeConcept : is_abstract -> @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeEvent : is_abstract -> @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeAsset : is_abstract -> @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
+    | ErgoTypeParticipant : is_abstract -> @extends N -> list (string * ergo_type) -> ergo_type_declaration_desc
     | ErgoTypeGlobal : ergo_type -> ergo_type_declaration_desc
     | ErgoTypeFunction : ergo_type_signature -> ergo_type_declaration_desc
     | ErgoTypeContract :
@@ -90,6 +90,34 @@ Section ErgoType.
           type_declaration_name : local_name;
           type_declaration_type : ergo_type_declaration_desc; }.
 
+    Section Abstract.
+      Definition type_declaration_is_abstract
+                 (decl_desc:ergo_type_declaration_desc) : is_abstract :=
+        match decl_desc with
+        | ErgoTypeEnum _ => false
+        | ErgoTypeTransaction isabs _ _ => isabs
+        | ErgoTypeConcept isabs _ _ => isabs
+        | ErgoTypeEvent isabs _ _ => isabs
+        | ErgoTypeAsset isabs _ _ => isabs
+        | ErgoTypeParticipant isabs _ _ => isabs
+        | ErgoTypeGlobal _ => false
+        | ErgoTypeFunction _ => false
+        | ErgoTypeContract _ _ _ => false
+        end.
+
+    End Abstract.
+
+    Section Enum.
+      Definition type_declaration_is_enum
+                 (d:ergo_type_declaration_desc)
+      : bool :=
+        match d with
+        | ErgoTypeEnum _ => true
+        | _ => false
+        end.
+
+  End Enum.
+  
   End Ast.
 
   Definition rergo_type {A} : Set := @ergo_type A relative_name.
@@ -181,11 +209,11 @@ Section ErgoType.
                (decl_desc:laergo_type_declaration_desc) : list (absolute_name * absolute_name) :=
       match decl_desc with
       | ErgoTypeEnum _ => extends_rel fix_nothing to None
-      | ErgoTypeTransaction e _ => extends_rel fix_transaction to e
-      | ErgoTypeConcept e _ => extends_rel fix_nothing to e
-      | ErgoTypeEvent e _ => extends_rel fix_event to e
-      | ErgoTypeAsset e _ => extends_rel fix_asset to e
-      | ErgoTypeParticipant e _ => extends_rel fix_participant to e
+      | ErgoTypeTransaction _ e _ => extends_rel fix_transaction to e
+      | ErgoTypeConcept _ e _ => extends_rel fix_nothing to e
+      | ErgoTypeEvent _ e _ => extends_rel fix_event to e
+      | ErgoTypeAsset _ e _ => extends_rel fix_asset to e
+      | ErgoTypeParticipant _ e _ => extends_rel fix_participant to e
       | ErgoTypeGlobal _ => nil
       | ErgoTypeFunction _ => nil
       | ErgoTypeContract _ _ _ => extends_rel fix_nothing to None

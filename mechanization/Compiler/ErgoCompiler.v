@@ -96,9 +96,11 @@ Module ErgoCompiler.
 
   Definition cto_enum : list String.string -> cto_declaration_desc
     := CTO.CTOEnum.
-  Definition cto_transaction : option relative_name -> list (String.string * cto_type) -> cto_declaration_desc
+  Definition cto_transaction :
+    bool -> option relative_name -> list (String.string * cto_type) -> cto_declaration_desc
     := CTO.CTOTransaction.
-  Definition cto_concept : option relative_name -> list (String.string * cto_type) -> cto_declaration_desc
+  Definition cto_concept :
+    bool -> option relative_name -> list (String.string * cto_type) -> cto_declaration_desc
     := CTO.CTOConcept.
 
   Definition mk_cto_declaration :
@@ -152,12 +154,15 @@ Module ErgoCompiler.
 
   Definition ergo_type_enum : list String.string -> ergo_type_declaration_desc
     := ErgoType.ErgoTypeEnum.
-  Definition ergo_type_transaction : option relative_name -> list (String.string * ergo_type) -> ergo_type_declaration_desc
+  Definition ergo_type_transaction :
+    bool -> option relative_name -> list (String.string * ergo_type) -> ergo_type_declaration_desc
     := ErgoType.ErgoTypeTransaction.
-  Definition ergo_type_concept : option relative_name -> list (String.string * ergo_type) -> ergo_type_declaration_desc
+  Definition ergo_type_concept :
+    bool -> option relative_name -> list (String.string * ergo_type) -> ergo_type_declaration_desc
     := ErgoType.ErgoTypeConcept.
 
-  Definition mk_ergo_type_declaration : Provenance.provenance -> String.string -> ergo_type_declaration_desc -> ergo_type_declaration
+  Definition mk_ergo_type_declaration :
+    Provenance.provenance -> String.string -> ergo_type_declaration_desc -> ergo_type_declaration
     := ErgoType.mkErgoTypeDeclaration.
 
   (** Ergo *)

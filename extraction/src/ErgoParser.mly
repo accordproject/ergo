@@ -38,7 +38,7 @@ let mk_provenance
 %token <string> IDENT
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
-%token TRANSACTION CONCEPT EVENT ASSET PARTICIPANT ENUM EXTENDS
+%token ABSTRACT TRANSACTION CONCEPT EVENT ASSET PARTICIPANT ENUM EXTENDS
 %token CONTRACT OVER CLAUSE
 %token EMITS
 
@@ -129,26 +129,26 @@ decl:
     { ErgoCompiler.dimport
         (mk_provenance $startpos $endpos)
         qn }
-| DEFINE TRANSACTION cn = ident dt = ergo_type_class_decl
+| DEFINE ma = maybe_abstract TRANSACTION cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeTransaction (oe,ctype))) }
-| DEFINE CONCEPT cn = ident dt = ergo_type_class_decl
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeTransaction (ma,oe,ctype))) }
+| DEFINE ma = maybe_abstract CONCEPT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeConcept (oe,ctype))) }
-| DEFINE EVENT cn = ident dt = ergo_type_class_decl
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeConcept (ma,oe,ctype))) }
+| DEFINE ma = maybe_abstract EVENT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEvent (oe,ctype))) }
-| DEFINE ASSET cn = ident dt = ergo_type_class_decl
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEvent (ma,oe,ctype))) }
+| DEFINE ma = maybe_abstract ASSET cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeAsset (oe,ctype))) }
-| DEFINE PARTICIPANT cn = ident dt = ergo_type_class_decl
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeAsset (ma,oe,ctype))) }
+| DEFINE ma = maybe_abstract PARTICIPANT cn = ident dt = ergo_type_class_decl
     { let (oe,ctype) = dt in
       ErgoCompiler.dtype (mk_provenance $startpos $endpos)
-        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeParticipant (oe,ctype))) }
+        (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeParticipant (ma,oe,ctype))) }
 | DEFINE ENUM cn = ident et = ergo_type_enum_decl
     { ErgoCompiler.dtype (mk_provenance $startpos $endpos)
         (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEnum et)) }
@@ -180,6 +180,12 @@ decl:
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }
+
+maybe_abstract:
+|
+    { false }
+| ABSTRACT
+    { true }
 
 ergo_type_class_decl:
 | LCURLY rt = rectype RCURLY
@@ -596,6 +602,7 @@ safeident_base:
 | IMPORT { "import" }
 | DEFINE { "define" }
 | FUNCTION { "function" }
+| ABSTRACT { "abstract" }
 | TRANSACTION { "transaction" }
 | CONCEPT { "concept" }
 | EVENT { "event" }

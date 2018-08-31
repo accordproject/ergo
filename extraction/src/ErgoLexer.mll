@@ -27,6 +27,7 @@
 	      "define", DEFINE;
 	      "function", FUNCTION;
         (* types *)
+	      "abstract", ABSTRACT;
 	      "transaction", TRANSACTION;
 	      "concept", CONCEPT;
 	      "event", EVENT;

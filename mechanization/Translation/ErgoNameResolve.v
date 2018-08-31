@@ -31,14 +31,6 @@ Require Import ErgoSpec.Translation.CTOtoErgo.
 
 Section ErgoNameResolution.
 
-  Definition type_declaration_is_enum
-             (d:lrergo_type_declaration_desc)
-  : bool :=
-    match d with
-    | ErgoTypeEnum _ => true
-    | _ => false
-    end.
-
   Fixpoint namespace_ctxt_of_ergo_decls
            (ctxt:namespace_ctxt)
            (ns:namespace_name)
@@ -125,7 +117,8 @@ Section ErgoNameResolution.
                  ctxt.(namespace_ctxt_namespace)
                  ctxt.(namespace_ctxt_current_module) (* Only update in-scope for modules *)
                  (namespace_table_app ctxt.(namespace_ctxt_current_in_scope) tbl)
-                 ctxt.(namespace_ctxt_enums))
+                 ctxt.(namespace_ctxt_enums)
+                 ctxt.(namespace_ctxt_abstract))
             (lookup_one_import ctxt ic).
 
     (* Resolve imports for CTO *)
@@ -237,24 +230,24 @@ Section ErgoNameResolution.
       : eresult laergo_type_declaration_desc :=
       match d with
       | ErgoTypeEnum l => esuccess (ErgoTypeEnum l)
-      | ErgoTypeTransaction extends_name ergo_type_struct =>
-        elift2 ErgoTypeTransaction
+      | ErgoTypeTransaction isabs extends_name ergo_type_struct =>
+        elift2 (ErgoTypeTransaction isabs)
                (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
-      | ErgoTypeConcept extends_name ergo_type_struct =>
-        elift2 ErgoTypeConcept
+      | ErgoTypeConcept isabs extends_name ergo_type_struct =>
+        elift2 (ErgoTypeConcept isabs)
                (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
-      | ErgoTypeEvent extends_name ergo_type_struct =>
-        elift2 ErgoTypeEvent
+      | ErgoTypeEvent isabs extends_name ergo_type_struct =>
+        elift2 (ErgoTypeEvent isabs)
                (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
-      | ErgoTypeAsset extends_name ergo_type_struct =>
-        elift2 ErgoTypeAsset
+      | ErgoTypeAsset isabs extends_name ergo_type_struct =>
+        elift2 (ErgoTypeAsset isabs)
                (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
-      | ErgoTypeParticipant extends_name ergo_type_struct =>
-        elift2 ErgoTypeParticipant
+      | ErgoTypeParticipant isabs extends_name ergo_type_struct =>
+        elift2 (ErgoTypeParticipant isabs)
                (resolve_extends prov tbl extends_name)
                (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
       | ErgoTypeGlobal ergo_type =>
@@ -272,19 +265,25 @@ Section ErgoNameResolution.
     Definition resolve_ergo_type_declaration
                (module_ns:namespace_name)
                (tbl:namespace_table)
-               (decl: enum_ctxt * lrergo_type_declaration) : eresult (enum_ctxt * laergo_type_declaration) :=
-      let (ectxt,decl) := decl in
+               (decl: enum_ctxt * abstract_ctxt * lrergo_type_declaration)
+      : eresult (enum_ctxt * abstract_ctxt * laergo_type_declaration) :=
+      let '(ectxt,actxt,decl) := decl in
       let name := absolute_name_of_local_name module_ns decl.(type_declaration_name) in
       let ectxt :=
           if type_declaration_is_enum decl.(type_declaration_type)
           then name :: ectxt
           else ectxt
       in
+      let actxt :=
+          if type_declaration_is_abstract decl.(type_declaration_type)
+          then name :: actxt
+          else actxt
+      in
       let edecl_desc :=
           resolve_ergo_type_declaration_desc
             decl.(type_declaration_annot) ectxt tbl decl.(type_declaration_type)
       in
-      elift (fun k => (ectxt, mkErgoTypeDeclaration decl.(type_declaration_annot) name k)) edecl_desc.
+      elift (fun k => (ectxt, actxt, mkErgoTypeDeclaration decl.(type_declaration_annot) name k)) edecl_desc.
 
     Definition resolve_ergo_pattern
                (tbl:namespace_table)
@@ -573,6 +572,7 @@ Section ErgoNameResolution.
       : eresult (laergo_declaration * namespace_ctxt) :=
       let module_ns : namespace_name := ctxt.(namespace_ctxt_namespace) in
       let ectxt := ctxt.(namespace_ctxt_enums) in
+      let actxt := ctxt.(namespace_ctxt_abstract) in
       let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
       match d with
       | DNamespace prov ns =>
@@ -583,10 +583,12 @@ Section ErgoNameResolution.
         let ln := td.(type_declaration_name) in
         let an := absolute_name_of_local_name module_ns ln in
         let ctxt := add_type_to_namespace_ctxt_current ctxt ln an in
-        elift (fun xy : enum_ctxt * laergo_type_declaration =>
-                 let (ectxt,x) := xy in
+        elift (fun xy : enum_ctxt * abstract_ctxt * laergo_type_declaration =>
+                 let '(ectxt,actxt,x) := xy in
                  let ctxt := update_namespace_context_enums ctxt ectxt in
-                 (DType prov x, ctxt)) (resolve_ergo_type_declaration module_ns tbl (ectxt, td))
+                 let ctxt := update_namespace_context_abstract ctxt actxt in
+                 (DType prov x, ctxt))
+              (resolve_ergo_type_declaration module_ns tbl (ectxt, actxt, td))
       | DStmt prov st =>
         elift (fun x => (DStmt prov x, ctxt)) (resolve_ergo_stmt ectxt tbl st)
       | DConstant prov ln ta e =>
@@ -780,6 +782,7 @@ Section ErgoNameResolution.
         dummy_provenance
         "c1"
         (ErgoTypeConcept
+           false
            None
            (("a", ErgoTypeBoolean dummy_provenance)
               ::("b", (ErgoTypeClassRef dummy_provenance (None, "c3")))::nil)).
@@ -789,6 +792,7 @@ Section ErgoNameResolution.
         dummy_provenance
         "c2"
         (ErgoTypeConcept
+           false
            None
            (("c", ErgoTypeBoolean dummy_provenance)
               ::("d", (ErgoTypeClassRef dummy_provenance (None, "c1")))::nil)).
@@ -847,6 +851,7 @@ Section ErgoNameResolution.
         dummy_provenance
         "c3"
         (ErgoTypeConcept
+           false
            None
            (("a", ErgoTypeBoolean dummy_provenance)
               ::("b", ErgoTypeString dummy_provenance)::nil)).

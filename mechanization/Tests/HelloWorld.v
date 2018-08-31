@@ -105,6 +105,7 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       "TemplateModel"
       (CTOConcept
+         false
          None
          (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_typed_rq : lrcto_declaration :=
@@ -112,6 +113,7 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       "Request"
       (CTOConcept
+         false
          None
          (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_typed_rs : lrcto_declaration :=
@@ -119,6 +121,7 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       "Response"
       (CTOConcept
+         false
          None
          (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_model : lrcto_package :=
@@ -134,6 +137,7 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       "top"
       (CTOConcept
+         false
          None
          (("x",(CTOBoolean dummy_provenance))::nil)).
   Definition cto_hl : lrcto_package :=

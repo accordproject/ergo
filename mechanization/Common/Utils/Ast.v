@@ -44,6 +44,11 @@ Section Ast.
     Definition aextends : Set := @extends absolute_name.
   End Imports.
 
+  Section Abstract.
+    Definition is_abstract : Set := bool.
+    
+  End Abstract.
+
   Section Patterns.
     Section Defn.
       Local Open Scope string.
