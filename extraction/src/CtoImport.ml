@@ -25,6 +25,12 @@ let enum_case_of_decl d =
 let cto_enum_of_decls dl =
   List.map enum_case_of_decl dl
 
+let mk_abstract j =
+  begin match j with
+  | None -> false
+  | Some _ -> true
+  end
+
 let mk_prov loc =
   begin match loc with
   | Some loc ->
@@ -90,25 +96,27 @@ let cto_event_of_decls dl =
 let cto_declaration_of_defn d =
   let decl_class = d.cto_defn_id.cto_id_name in
   let loc = mk_prov d.cto_defn_location in
+  let abstract = mk_abstract d.cto_defn_abstract in
+  (* if abstract then Printf.printf "Found abstract class: %s !\n" decl_class; *)
   let decl_type = 
     begin match d.cto_defn_ttype with
     | "EnumDeclaration" ->
         CTOEnum (cto_enum_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "TransactionDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOTransaction (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOTransaction (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "ConceptDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOConcept (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOConcept (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "EventDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOEvent (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOEvent (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "AssetDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOAsset (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOAsset (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "ParticipantDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOParticipant (None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOParticipant (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
         ergo_raise (ergo_system_error ("Can't import CTO kind: " ^ other))
     end

@@ -44,16 +44,16 @@ Section CTOtoErgo.
              (dk:lrcto_declaration_desc) : lrergo_type_declaration_desc :=
     match dk with
     | CTOEnum ls => ErgoTypeEnum ls
-    | CTOTransaction on crec =>
-      ErgoTypeTransaction on (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
-    | CTOConcept on crec =>
-      ErgoTypeConcept on (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
-    | CTOEvent on crec =>
-      ErgoTypeEvent on (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
-    | CTOAsset on crec =>
-      ErgoTypeAsset on (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
-    | CTOParticipant on crec =>
-      ErgoTypeParticipant on (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
+    | CTOTransaction on isabs crec =>
+      ErgoTypeTransaction on isabs (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
+    | CTOConcept on isabs crec =>
+      ErgoTypeConcept on isabs (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
+    | CTOEvent on isabs crec =>
+      ErgoTypeEvent on isabs (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
+    | CTOAsset on isabs crec =>
+      ErgoTypeAsset on isabs (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
+    | CTOParticipant on isabs crec =>
+      ErgoTypeParticipant on isabs (map (fun xy => (fst xy, cto_type_to_ergo_type (snd xy))) crec)
     end.  
 
   Definition cto_declaration_to_ergo_type_declaration (d:lrcto_declaration) : lrergo_type_declaration :=

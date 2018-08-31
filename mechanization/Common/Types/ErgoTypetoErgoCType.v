@@ -48,33 +48,33 @@ Section ErgoTypetoErgoCType.
                (decl_desc:laergo_type_declaration_desc) : expand_ctxt :=
       match decl_desc with
       | ErgoTypeEnum _ => ctxt
-      | ErgoTypeTransaction None rtl =>
+      | ErgoTypeTransaction _ None rtl =>
         if string_dec this "org.hyperledger.composer.system.Transaction"%string
         then (this, (nil, rtl)) :: ctxt
         else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Transaction"%string rtl
-      | ErgoTypeTransaction (Some super) rtl =>
+      | ErgoTypeTransaction _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
-      | ErgoTypeConcept None rtl =>
+      | ErgoTypeConcept _ None rtl =>
         (this, (nil, rtl)) :: ctxt
-      | ErgoTypeConcept (Some super) rtl =>
+      | ErgoTypeConcept _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
-      | ErgoTypeEvent None rtl =>
+      | ErgoTypeEvent _ None rtl =>
         if string_dec this "org.hyperledger.composer.system.Event"%string
         then (this, (nil, rtl)) :: ctxt
         else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Event"%string rtl
-      | ErgoTypeEvent (Some super) rtl =>
+      | ErgoTypeEvent _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
-      | ErgoTypeAsset None rtl =>
+      | ErgoTypeAsset _ None rtl =>
         if string_dec this "org.hyperledger.composer.system.Asset"%string
         then (this, (nil, rtl)) :: ctxt
         else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Asset"%string rtl
-      | ErgoTypeAsset (Some super) rtl =>
+      | ErgoTypeAsset _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
-      | ErgoTypeParticipant None rtl =>
+      | ErgoTypeParticipant _ None rtl =>
         if string_dec this "org.hyperledger.composer.system.Participant"%string
         then (this, (nil, rtl)) :: ctxt
         else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Participant"%string rtl
-      | ErgoTypeParticipant (Some super) rtl =>
+      | ErgoTypeParticipant _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
       | ErgoTypeGlobal _ => ctxt
       | ErgoTypeFunction _ => ctxt

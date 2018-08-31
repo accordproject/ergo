@@ -268,4 +268,11 @@ Section ErgoCompContext.
   Definition init_compilation_context nsctxt : compilation_context :=
     mkCompCtxt nsctxt nil nil nil nil nil None None ErgoCTypeContext.empty_type_context nil nil.
 
+  Definition is_abstract_class
+             (ctxt: compilation_context)
+             (n:string) :=
+    if in_dec string_dec n ctxt.(compilation_context_namespace).(namespace_ctxt_abstract)
+    then true
+    else false.
+  
 End ErgoCompContext.

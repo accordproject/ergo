@@ -55,11 +55,11 @@ Section CTO.
 
     Inductive cto_declaration_desc :=
     | CTOEnum : list string -> cto_declaration_desc
-    | CTOTransaction : @extends N -> list (string * cto_type) -> cto_declaration_desc
-    | CTOConcept : @extends N -> list (string * cto_type) -> cto_declaration_desc
-    | CTOEvent : @extends N -> list (string * cto_type) -> cto_declaration_desc
-    | CTOAsset : @extends N -> list (string * cto_type) -> cto_declaration_desc
-    | CTOParticipant : @extends N -> list (string * cto_type) -> cto_declaration_desc.
+    | CTOTransaction : is_abstract -> @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOConcept : is_abstract -> @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOEvent : is_abstract -> @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOAsset : is_abstract -> @extends N -> list (string * cto_type) -> cto_declaration_desc
+    | CTOParticipant : is_abstract -> @extends N -> list (string * cto_type) -> cto_declaration_desc.
 
     Record cto_declaration :=
       mkCTODeclaration

@@ -78,13 +78,17 @@ Section ErgotoErgoC.
              (ergo_expr_to_ergoc_expr ctxt e1)
              (ergo_expr_to_ergoc_expr ctxt e2)
     | ENew prov cr el =>
-      let init_rec := esuccess nil in
-      let proc_one (att:string * laergo_expr) (acc:eresult (list (string * ergoc_expr))) :=
-          let attname := fst att in
-          let e := ergo_expr_to_ergoc_expr ctxt (snd att) in
-          elift2 (fun e => fun acc => (attname,e)::acc) e acc
-      in
-      elift (ENew prov cr) (fold_right proc_one init_rec el)
+      if is_abstract_class ctxt cr
+      then
+        efailure (ECompilationError prov ("Cannot create instance of abstract type `" ++ cr ++ "'"))
+      else
+        let init_rec := esuccess nil in
+        let proc_one (att:string * laergo_expr) (acc:eresult (list (string * ergoc_expr))) :=
+            let attname := fst att in
+            let e := ergo_expr_to_ergoc_expr ctxt (snd att) in
+            elift2 (fun e => fun acc => (attname,e)::acc) e acc
+        in
+        elift (ENew prov cr) (fold_right proc_one init_rec el)
     | ERecord prov el =>
       let init_rec := esuccess nil in
       let proc_one (att:string * laergo_expr) (acc:eresult (list (string * ergoc_expr))) :=
@@ -373,7 +377,7 @@ Section ErgotoErgoC.
       if in_dec string_dec name (map type_declaration_name
                             (ctxt.(compilation_context_new_type_decls) ++
                              ctxt.(compilation_context_type_decls))) then
-        efailure (ETypeError prov ("Cannot redefine type `" ++ name ++ "'"))
+        efailure (ECompilationError prov ("Cannot redefine type `" ++ name ++ "'"))
       else
         esuccess (nil, compilation_context_add_new_type_declaration ctxt ergo_type)
     | DStmt prov s =>

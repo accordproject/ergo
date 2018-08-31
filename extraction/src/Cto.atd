@@ -74,6 +74,7 @@ type definition = {
     id : id;
     ?classExtension : classExtension nullable;
     body : definition_content;
+    ?abstract : json nullable;
     ?location : location nullable;
 } <ocaml field_prefix="cto_defn_">
 type import = {
