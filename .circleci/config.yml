@@ -7,7 +7,7 @@ jobs:
     environment:
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+    - image: circleci/node:8
       command: /sbin/init
     steps:
     - run: echo 'export PATH=~/ergo/bin/:$PATH' >> $BASH_ENV 
@@ -17,12 +17,7 @@ jobs:
         - v1-dep-{{ .Branch }}-
         - v1-dep-master-
         - v1-dep-
-    - run: curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-    - run: sudo apt-get install -y nodejs
-    - run: npm install -g lerna@2.11.0
-    - run: sudo add-apt-repository -y ppa:avsm/ppa
-    - run: sudo apt-get -qq update
-    - run: sudo apt-get install -y ocaml-nox ocaml-native-compilers opam
+    - run: sudo wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin
     - run: export TERM=dumb && opam init -a
     - run: export TERM=dumb && opam switch 4.07.0
     - run: eval `opam config env`
