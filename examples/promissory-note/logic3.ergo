@@ -19,15 +19,15 @@ import org.accordproject.ergo.money.*
 
 contract PromissoryNote over PromissoryNoteContract {
   clause check(request : Payment) : Result {
-    enforce contract.interestRate >= 0.0;
+		let interestRate = contract.interestRate ?? 3.4;
+    enforce interestRate >= 0.0;
     enforce contract.amount.doubleValue >= 0.0;
     let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;
-		let interestRate = contract.interestRate ?? 3.4;
     enforce outstanding >= 0.0;
 
-    let numberOfDays = dateTimeDiffDays(dateTime("17 May 2018 13:53:33 EST"),dateTime(contract.date));
+    let numberOfDays = dateTimeDiffDays(dateTime("17 May 2018 13:53:33 EST"),contract.date);
     enforce numberOfDays >= 0.0;
-    let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
+    let compounded =  outstanding * compoundInterestMultiple(interestRate, numberOfDays);
 
     return Result{
       outstandingBalance: compounded

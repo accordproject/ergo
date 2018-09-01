@@ -17,18 +17,12 @@ import org.accordproject.cicero.runtime.*
 
 define function numberOfShocks(maxAcc : Double, minAcc : Double, accelerometerReadings : Double[]) : Double {
   return
-    count(
+    integerToDouble(count(
        foreach r in accelerometerReadings
        where r > maxAcc or r < minAcc
        return r
     )
-}
-
-define function shocks(maxAcc : Double, minAcc : Double, accelerometerReadings : Double[]) : Double {
-  return
-    foreach r in accelerometerReadings
-    where r > maxAcc or r < minAcc
-    return r
+	)
 }
 
 contract FragileGoods over TemplateModel {
@@ -37,17 +31,13 @@ contract FragileGoods over TemplateModel {
         numberOfShocks(contract.accelerationMax,
 		       contract.accelerationMin,
 		       request.accelerometerReadings);
-    let shocks2 =
-        shocks(contract.accelerationMax,
-		       contract.accelerationMin,
-		       request.accelerometerReadings);
     let shockPenalty =
         contract.accelerationBreachPenalty
         * shocks;
     match request.status
       with "ARRIVED" then
-        return PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
+        return PayOut{ amount : contract.deliveryPrice - shockPenalty }
       else
-	return PayOut{ amount : contract.deliveryPrice - shockPenalty, shocks: shocks2 }
+	return PayOut{ amount : contract.deliveryPrice - shockPenalty }
   }  
 }

@@ -338,8 +338,6 @@
     "contractname": "org.accordproject.installmentsale.InstallmentSale",
     "expected": {
       "state": {
-        "$class": "org.accordproject.installmentsale.InstallmentSaleState",
-        "stateId": "org.accordproject.installmentsale.InstallmentSaleState#1",
         "status": "WaitingForFirstDayOfNextMonth",
         "balance_remaining": 10000.0,
         "total_paid": 0.0,

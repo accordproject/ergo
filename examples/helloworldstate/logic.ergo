@@ -13,14 +13,15 @@
  */
  namespace org.accordproject.helloworldstate
 
-contract HelloWorldState over TemplateModel {
+contract HelloWorldState over TemplateModel state State {
   // Simple Clause
   clause helloworldstate(request : MyRequest) : MyResponse {
     set state State{
       counter: state.counter + 1.0
     };
     return MyResponse{
-      output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")" ++ " (" ++ state.counter ++ ")"
+      output: "Hello " ++ contract.name ++
+			" (" ++ request.input ++ ")" ++ " (" ++ toString(state.counter) ++ ")"
     }
   }
 

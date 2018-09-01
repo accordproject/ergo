@@ -148,7 +148,7 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.min", mk_unary prov OpFloatBagMin)
       :: ("org.accordproject.ergo.stdlib.average", mk_unary prov OpFloatMean)
       :: ("org.accordproject.ergo.stdlib.sum", mk_unary prov OpFloatSum)
-      :: ("org.accordproject.ergo.stdlib.doubletoInteger", mk_unary prov OpFloatTruncate)
+      :: ("org.accordproject.ergo.stdlib.doubleToInteger", mk_unary prov OpFloatTruncate)
       :: ("org.accordproject.ergo.stdlib.truncate", mk_unary prov OpFloatTruncate)
       (* Arrays *)
       :: ("org.accordproject.ergo.stdlib.distinct", mk_unary prov OpDistinct)

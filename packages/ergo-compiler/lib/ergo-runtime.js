@@ -498,8 +498,7 @@ function natArithMean(b) {
     }
 }
 function count(v) {
-    //return { "nat" : v.length };
-    return v.length; /* XXX To be fixed */
+    return { "nat" : v.length };
 }
 function floatOfNat(v) {
     return v.nat;
