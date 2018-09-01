@@ -25,7 +25,7 @@ concept TemplateModel {
   /**
    * Does the clause include a force majeure provision?
    */
-  o Boolean forceMajeure optional
+  o Boolean forceMajeure
 
   /**
    * For every penaltyDuration that the goods are late

@@ -265,8 +265,8 @@ rectype:
     { at :: rt }
 
 attributetype:
-| an = IDENT COLON pt = paramtype
-    { (Util.char_list_of_string an, pt) }
+| a = safeident COLON pt = paramtype
+    { (a, pt) }
 
 stmt:
 (* Statments *)

@@ -360,13 +360,13 @@ Section ErgoCType.
              (nsctxt: namespace_ctxt)
              (dctxt : type_context)
              (decl : ergoc_declaration)
-    : eresult (type_context * option ergoc_type) :=
+    : eresult (option ergoc_type * type_context) :=
     match decl with
     | DCExpr prov expr =>
-      elift (fun x => (dctxt, Some x)) (ergo_type_expr nsctxt dctxt expr)
+      elift (fun x => (Some x, dctxt)) (ergo_type_expr nsctxt dctxt expr)
     | DCConstant prov name None expr =>
       let expr' := ergo_type_expr nsctxt dctxt expr in
-      eolift (fun val => esuccess (type_context_update_global_env dctxt name val, None)) expr'
+      eolift (fun val => esuccess (None, type_context_update_global_env dctxt name val)) expr'
     | DCConstant prov name (Some t) expr =>
       let fmt_err :=
           fun t' vt =>
@@ -386,13 +386,24 @@ Section ErgoCType.
                   let ctxt' :=
                       type_context_update_global_env dctxt name t'
                   in
-                  esuccess (ctxt', None)
+                  esuccess (None, ctxt')
             else
               efailure (fmt_err t' vt)) expr'
     | DCFunc prov name func =>
-      elift (fun ctxt => (ctxt,None)) (ergoc_type_function nsctxt dctxt func)
+      elift (fun ctxt => (None,ctxt)) (ergoc_type_function nsctxt dctxt func)
     | DCContract prov name contr =>
-      elift (fun ctxt => (ctxt,None)) (ergoc_type_contract nsctxt dctxt name contr)
+      elift (fun ctxt => (None,ctxt)) (ergoc_type_contract nsctxt dctxt name contr)
     end.
 
+  Definition ergoc_type_module
+             (nsctxt: namespace_ctxt)
+             (dctxt : type_context)
+             (mod : ergoc_module)
+    : eresult (ergoc_module * type_context) :=
+    elift (fun x => (mod, snd x))
+          (elift_context_fold_left
+             (ergoc_type_decl nsctxt)
+             mod.(modulec_declarations)
+             dctxt).
+  
 End ErgoCType.

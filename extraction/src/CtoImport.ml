@@ -82,7 +82,7 @@ let field_of_decl d =
     begin match d.cto_decl_content_optional with
     | None -> field_type
     | Some opt ->
-        ErgoCompiler.cto_option loc (ErgoCompiler.cto_array loc base_type)
+        ErgoCompiler.cto_option loc base_type
     end
   in
   (field_name, field_type)

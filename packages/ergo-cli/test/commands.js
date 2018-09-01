@@ -71,7 +71,7 @@ describe('ergo', () => {
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
             const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestPath], statePath, 'org.accordproject.helloworldstate.HelloWorldState', false);
-            result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1)');
+            result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1.0)');
         });
         it('should execute a smart Ergo contract with state thrice', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworldstate', 'logic.ergo');
@@ -80,7 +80,7 @@ describe('ergo', () => {
             const requestPath = Path.resolve(__dirname, 'data/helloworldstate', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworldstate', 'state.json');
             const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestPath,requestPath,requestPath], statePath, 'org.accordproject.helloworldstate.HelloWorldState', false);
-            result.response.output.should.equal('Hello Fred Blogs (Accord Project) (3)');
+            result.response.output.should.equal('Hello Fred Blogs (Accord Project) (3.0)');
         });
     });
     describe('#executeinstallmentsale', function () {

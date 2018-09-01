@@ -134,7 +134,16 @@ Section ErgoDriver.
                (lm:laergo_module) : eresult (ergoc_module * compilation_context) :=
       let p := ergo_expand_module lm in
       let pc := eolift (ergo_module_to_calculus ctxt) p in
-      eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc.
+      let pc := eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc in
+      eolift (fun xy : ergoc_module * compilation_context =>
+                let (mod,ctxt) := xy in
+                let nsctxt := ctxt.(compilation_context_namespace) in
+                let sctxt := ctxt.(compilation_context_type_ctxt) in
+                let pctypes := ergoc_type_module nsctxt sctxt mod in
+                elift (fun xy : ergoc_module * type_context =>
+                         let (mod, sctxt') := xy in
+                         (mod, compilation_context_update_type_ctxt ctxt sctxt')) pctypes
+             ) pc.
 
     Definition ergo_modules_to_ergoc
                (ctxt:compilation_context)
@@ -180,7 +189,7 @@ Section ErgoDriver.
                      let nsctxt := sctxt.(compilation_context_namespace)  in
                      match ergoc_type_decl nsctxt sctxt.(compilation_context_type_ctxt) decl with
                      | Failure _ _ f => efailure f
-                     | Success _ _ (tctxt', typ) =>
+                     | Success _ _ (typ, tctxt') =>
                        esuccess ((typ,decl), compilation_context_update_type_ctxt sctxt tctxt')
                      end)
                   (fst xy)

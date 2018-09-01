@@ -311,13 +311,13 @@ Section ErgotoErgoC.
           ((current_time, (ErgoTypeDateTime prov))
              ::(this_contract, tem)
              ::(this_state, ErgoTypeUnit prov)
-             ::(this_emit, ErgoTypeArray prov emit_type)
+             ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
              ::c.(clause_sig).(type_signature_params))
         else
           ((current_time, (ErgoTypeDateTime prov))
              ::(this_contract, tem)
              ::(this_state, state_type)
-             ::(this_emit, ErgoTypeArray prov emit_type)
+             ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
              ::c.(clause_sig).(type_signature_params))
     in
     elift
