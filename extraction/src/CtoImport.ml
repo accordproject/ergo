@@ -31,6 +31,12 @@ let mk_abstract j =
   | Some _ -> true
   end
 
+let mk_extends j =
+  begin match j with
+  | None -> None
+  | Some ce -> Some (None, Util.char_list_of_string ce.cto_extends_class.cto_extends_name)
+  end
+
 let mk_prov loc =
   begin match loc with
   | Some loc ->
@@ -97,6 +103,8 @@ let cto_declaration_of_defn d =
   let decl_class = d.cto_defn_id.cto_id_name in
   let loc = mk_prov d.cto_defn_location in
   let abstract = mk_abstract d.cto_defn_abstract in
+  let extends = mk_extends d.cto_defn_classExtension in
+  (* if abstract then Printf.printf "Found abstract class: %s !\n" decl_class; *)
   (* if abstract then Printf.printf "Found abstract class: %s !\n" decl_class; *)
   let decl_type = 
     begin match d.cto_defn_ttype with
@@ -104,19 +112,19 @@ let cto_declaration_of_defn d =
         CTOEnum (cto_enum_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "TransactionDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOTransaction (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOTransaction (abstract, extends, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "ConceptDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOConcept (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOConcept (abstract, extends, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "EventDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOEvent (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOEvent (abstract, extends, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "AssetDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOAsset (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOAsset (abstract, extends, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | "ParticipantDeclaration" ->
         (* XXX First parameter is inheritance TBD *)
-        CTOParticipant (abstract, None, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
+        CTOParticipant (abstract, extends, cto_concept_of_decls d.cto_defn_body.cto_defn_content_declarations)
     | other ->
         ergo_raise (ergo_system_error ("Can't import CTO kind: " ^ other))
     end
