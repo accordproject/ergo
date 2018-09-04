@@ -1,6 +1,6 @@
 namespace org.accordproject.smoke
 
-define concept A{ a : Integer? }
+define concept A{ a : Integer }
 define concept C{ contract : String }
 
 contract Smoke over TemplateModel {
@@ -11,11 +11,11 @@ contract Smoke over TemplateModel {
 		enforce(-i1 = 0 -i 1);
 		enforce("Hello" ++ " " ++ "World!" = "Hello World!");
 		enforce(some(1) ?? 2 = 1);
-		enforce(A{ a : some(1) }?.a = some(1));
-		enforce(A{ a : some(1) }?.a != none);
-//		enforce(A{ a : none }?.a = none);
-//		enforce(A{ a : none }?.a ?? 2 = 2);
-		enforce(A{ a : some(1) }?.a ?? 2 = 1);
+		enforce(some(A{ a : 1 })?.a = some(1));
+		enforce(some(A{ a : 1 })?.a != none);
+		enforce(none?.a = none);
+		enforce(none?.a ?? 2 = 2);
+		enforce(some(A{ a : 1 })?.a ?? 2 = 1);
 		enforce(C{ contract : "foo" }.contract = "foo");
 		enforce(C{ contract : "foo" }.contract = "foo");
 		return MyResponse{
