@@ -334,11 +334,11 @@ cases_stmt:
     { ([],s) }
 | WITH d = data THEN s = stmt cs = cases_stmt
     { ((ErgoCompiler.ecasedata (mk_provenance $startpos $endpos) d,s)::(fst cs), snd cs) }
-| WITH LET v = ident ta = type_annotation THEN s = stmt cs = cases_stmt
-    { ((ErgoCompiler.ecaselet (mk_provenance $startpos $endpos) v ta,s)::(fst cs), snd cs) }
 | WITH UNDERSCORE ta = type_annotation THEN e = stmt cs = cases_stmt
     { ((ErgoCompiler.ecasewildcard (mk_provenance $startpos $endpos) ta,e)::(fst cs), snd cs) }
-| WITH LET v = ident QUESTION ta = type_annotation THEN s = stmt cs = cases_stmt
+| WITH LET v = ident ta = type_annotation THEN s = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecaselet (mk_provenance $startpos $endpos) v ta,s)::(fst cs), snd cs) }
+| WITH LET QUESTION v = ident ta = type_annotation THEN s = stmt cs = cases_stmt
     { ((ErgoCompiler.ecaseletoption (mk_provenance $startpos $endpos) v ta,s)::(fst cs), snd cs) }
 
 cases_fstmt:
@@ -346,11 +346,11 @@ cases_fstmt:
     { ([],s) }
 | WITH d = data THEN s = fstmt cs = cases_fstmt
     { ((ErgoCompiler.ecasedata (mk_provenance $startpos $endpos) d,s)::(fst cs), snd cs) }
-| WITH LET v = ident ta = type_annotation THEN s = fstmt cs = cases_fstmt
-    { ((ErgoCompiler.ecaselet (mk_provenance $startpos $endpos) v ta,s)::(fst cs), snd cs) }
 | WITH UNDERSCORE ta = type_annotation THEN e = fstmt cs = cases_fstmt
     { ((ErgoCompiler.ecasewildcard (mk_provenance $startpos $endpos) ta,e)::(fst cs), snd cs) }
-| WITH LET v = ident QUESTION ta = type_annotation THEN s = fstmt cs = cases_fstmt
+| WITH LET v = ident ta = type_annotation THEN s = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecaselet (mk_provenance $startpos $endpos) v ta,s)::(fst cs), snd cs) }
+| WITH LET QUESTION v = ident ta = type_annotation THEN s = fstmt cs = cases_fstmt
     { ((ErgoCompiler.ecaseletoption (mk_provenance $startpos $endpos) v ta ,s)::(fst cs), snd cs) }
 
 expr:
@@ -490,7 +490,7 @@ cases:
     { ((ErgoCompiler.ecasewildcard (mk_provenance $startpos $endpos) ta,e)::(fst cs), snd cs) }
 | WITH LET v = ident ta = type_annotation THEN e = expr cs = cases
     { ((ErgoCompiler.ecaselet (mk_provenance $startpos $endpos) v ta,e)::(fst cs), snd cs) }
-| WITH LET v = ident QUESTION ta = type_annotation THEN e = expr tcs = cases
+| WITH LET QUESTION v = ident ta = type_annotation THEN e = expr tcs = cases
     { ((ErgoCompiler.ecaseletoption (mk_provenance $startpos $endpos) v ta,e)::(fst tcs), snd tcs) }
 
 (* New struct *)
