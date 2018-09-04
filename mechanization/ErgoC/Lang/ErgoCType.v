@@ -34,6 +34,18 @@ Section ErgoCType.
 
   Import ErgoCTypes.
 
+  Definition ergoc_type_join_safe prov (t1 t2:ergoc_type) : eresult ergoc_type :=
+    let jt := ergoc_type_join t1 t2 in
+    if ergoc_type_subtype_dec ttop jt
+    then efailure (ETypeError prov ("Join between types is TOP.")%string)
+    else esuccess jt.
+
+  Definition ergoc_type_meet_safe prov (t1 t2:ergoc_type) : eresult ergoc_type :=
+    let jt := ergoc_type_meet t1 t2 in
+    if ergoc_type_subtype_dec jt tbottom
+    then efailure (ETypeError prov ("Meet between types is BOTTOM.")%string)
+    else esuccess jt.
+
   Program Definition empty_rec_type : ergoc_type := Rec Closed nil _.
 
   Definition ergo_format_unop_error nsctxt (op : unary_op) (arg : ergoc_type) : string :=
@@ -242,11 +254,10 @@ Section ErgoCType.
            rs (esuccess empty_rec_type))
     | ECallFun prov fname args => function_not_inlined_error prov fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
-
     | EMatch prov term pes default =>
       match ergo_type_expr nsctxt ctxt term with
       | Failure _ _ f => efailure f
-      | Success _ _ typ =>
+      | Success _ _ t0 =>
         fold_left
           (fun default_result pe =>
              match pe with
@@ -262,10 +273,9 @@ Section ErgoCType.
                elift2 ergoc_type_join default_result (ergo_type_expr nsctxt ctxt res)
              | (CaseLet prov name None, res) =>
                elift2 ergoc_type_join default_result
-                      (ergo_type_expr nsctxt (type_context_update_local_env ctxt name typ) res)
-
+                      (ergo_type_expr nsctxt (type_context_update_local_env ctxt name t0) res)
              | (CaseLetOption prov name None, res) =>
-               match unteither typ with
+               match unteither t0 with
                | None => default_result
                | Some (st, ft) =>
                  elift2 ergoc_type_join default_result
@@ -282,7 +292,6 @@ Section ErgoCType.
                                          name
                                          (tbrand (b::nil)))
                                       res)
-
              | (CaseLetOption prov name (Some b), res) =>
                elift2 ergoc_type_join default_result
                       (ergo_type_expr nsctxt (type_context_update_local_env
