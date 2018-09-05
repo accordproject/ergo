@@ -57,7 +57,7 @@ Section ErgoCType.
                         (ergoc_type_to_string nsctxt actual) ++ "'.")%string
     in
     match op with
-    | OpNeg => fmt_easy "~"%string tbool arg
+    | OpNeg => fmt_easy "!"%string tbool arg
     | OpFloatUnary FloatNeg => fmt_easy "-"%string tfloat arg
     | OpDot name => "The field " ++ name ++ " does not belong to type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
     | _ => "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
