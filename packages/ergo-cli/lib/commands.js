@@ -34,21 +34,23 @@ class Commands {
      */
     static compile(ergoPaths,ctoPaths,target,link) {
         if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
-        const ergoTexts = [];
+        const ergoSources = [];
         for (let i = 0; i < ergoPaths.length; i++) {
-            const ergoText = Fs.readFileSync(ergoPaths[i], 'utf8');
-            ergoTexts.push(ergoText);
+            const ergoFile = ergoPaths[i];
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
         }
         if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
-        let ctoTexts = [];
+        let ctoSources = [];
         for (let i = 0; i < ctoPaths.length; i++) {
-            const ctoText = Fs.readFileSync(ctoPaths[i], 'utf8');
-            ctoTexts.push(ctoText);
+            const ctoFile = ctoPaths[i];
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
         }
         if (link) {
-            return Ergo.compileAndLink(ergoTexts,ctoTexts,target);
+            return Ergo.compileAndLink(ergoSources,ctoSources,target);
         } else  {
-            return Ergo.compile(ergoTexts,ctoTexts,target);
+            return Ergo.compile(ergoSources,ctoSources,target);
         }
     }
 
@@ -65,16 +67,18 @@ class Commands {
      */
     static execute(ergoPaths,ctoPaths,contractPath,requestsPath,statePath,contractName) {
         if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
-        const ergoTexts = [];
+        const ergoSources = [];
         for (let i = 0; i < ergoPaths.length; i++) {
-            const ergoText = Fs.readFileSync(ergoPaths[i], 'utf8');
-            ergoTexts.push(ergoText);
+            const ergoFile = ergoPaths[i];
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
         }
         if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
-        let ctoTexts = [];
+        let ctoSources = [];
         for (let i = 0; i < ctoPaths.length; i++) {
-            const ctoText = Fs.readFileSync(ctoPaths[i], 'utf8');
-            ctoTexts.push(ctoText);
+            const ctoFile = ctoPaths[i];
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
         }
         const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
         let requestsJson = [];
@@ -84,16 +88,16 @@ class Commands {
         const firstRequest = requestsJson[0];
         let initResponse;
         if (statePath === null) {
-            initResponse = ErgoEngine.init(ergoTexts,ctoTexts,contractJson,firstRequest,contractName);
+            initResponse = ErgoEngine.init(ergoSources,ctoSources,contractJson,firstRequest,contractName);
         } else {
             const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-            initResponse = ErgoEngine.execute(ergoTexts,ctoTexts,contractJson,firstRequest,stateJson,contractName);
+            initResponse = ErgoEngine.execute(ergoSources,ctoSources,contractJson,firstRequest,stateJson,contractName);
         }
         // Get all the other requests and chain execution through Promise.reduce()
         const otherRequests = requestsJson.slice(1, requestsJson.length);
         return otherRequests.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.execute(ergoTexts,ctoTexts,contractJson,requestJson,result.state,contractName);
+                return ErgoEngine.execute(ergoSources,ctoSources,contractJson,requestJson,result.state,contractName);
             });
         }, initResponse);
     }
@@ -105,8 +109,8 @@ class Commands {
      * @returns {string} The name of the generated CTOJ model file
      */
     static parseCTOtoFileSync(ctoPath) {
-        const ctoText = Fs.readFileSync(ctoPath, 'utf8');
-        const result = Ergo.parseCTOtoJSON(ctoText);
+        const ctoSource = Fs.readFileSync(ctoPath, 'utf8');
+        const result = Ergo.parseCTOtoJSON(ctoSource);
         const outFile = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
         Fs.writeFileSync(outFile, JSON.stringify(result));
         return outFile;

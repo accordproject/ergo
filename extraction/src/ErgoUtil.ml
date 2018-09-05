@@ -101,10 +101,19 @@ let no_file file =
 
 let string_of_error_prov prov =
   let loc = loc_of_provenance prov in
-  let file = Util.string_of_char_list loc.loc_file in
-  (if no_file file then "" else "file " ^ file ^ " ")
-  ^ "line " ^ (string_of_int loc.loc_start.line)
-  ^ " col " ^ (string_of_int loc.loc_start.column)
+  let error_message = 
+    let file = Util.string_of_char_list loc.loc_file in
+    (if no_file file then "" else "file " ^ file ^ " ") ^
+    (if (loc.loc_start.line != -1 && loc.loc_start.column != -1)
+     then
+       "line " ^ (string_of_int loc.loc_start.line)
+       ^ " col " ^ (string_of_int loc.loc_start.column)
+     else
+       "")
+  in
+  if (error_message = "") then ""
+  else
+    " (at " ^ error_message ^ ")"
 
 let get_source source_table file =
   begin try Some (List.assoc file source_table) with
@@ -124,18 +133,20 @@ let underline_source source_table prov =
 let string_of_error f x error =
   begin match error with
   | ESystemError _ ->
-      "SystemError. " ^ (error_message error)
+      "System error. " ^ (error_message error)
   | EParseError (prov, _) ->
-      "ParseError (at " ^ (string_of_error_prov prov) ^ "). " (* ^ (error_message error) *) ^ (f x prov)
+      "Parse error" ^ (string_of_error_prov prov) ^ ". " (* ^ (error_message error) *) ^ (f x prov)
   | ECompilationError (prov, _) ->
-      "CompilationError (at " ^ (string_of_error_prov prov) ^ "). " ^  (error_message error) ^ (f x prov)
+      "Compilation error" ^ (string_of_error_prov prov) ^ ". " ^  (error_message error) ^ (f x prov)
   | ETypeError (prov, _) ->
-      "TypeError (at " ^ (string_of_error_prov prov) ^ "). " ^ (error_message error) ^ (f x prov)
+      "Type error" ^ (string_of_error_prov prov) ^ ". " ^ (error_message error) ^ (f x prov)
   | ERuntimeError (prov, _) ->
-      "RuntimeError (at " ^ (string_of_error_prov prov) ^ "). " ^  (error_message error) ^ (f x prov)
+      "Runtime error" ^ (string_of_error_prov prov) ^ ". " ^  (error_message error) ^ (f x prov)
   end
-let string_of_error_with_source source error =
+let string_of_error_with_source_text source error =
   string_of_error underline_prov source error
+let string_of_error_with_source_file source error =
+  string_of_error underline_prov (string_of_file source) error
 let string_of_error_with_table source_table error =
   string_of_error underline_source source_table error
 

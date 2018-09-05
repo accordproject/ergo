@@ -108,9 +108,9 @@ Section ErgoCType.
                   ++ "' but should have type `" ++ (ergoc_type_to_string nsctxt expected_type) ++ "'"
       end
     | Some (nil, actual_name::nil) =>
-      "Unexpected field `" ++ actual_name ++ "' in type `" ++ concept_name ++ "'"
+      "Unknown field `" ++ actual_name ++ "' in type `" ++ concept_name ++ "'"
     | Some (nil, actual_names) =>
-      "Unexpected fields `" ++ String.concat "', `" actual_names ++ "' in type `" ++ concept_name ++ "'"
+      "Unknown fields `" ++ String.concat "', `" actual_names ++ "' in type `" ++ concept_name ++ "'"
     | Some (expected_name::nil, _) =>
       "Missing field `" ++ expected_name ++ "' in type `" ++ concept_name ++ "'"
     | Some (expected_names, _) =>

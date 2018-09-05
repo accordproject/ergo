@@ -27,26 +27,36 @@ open ErgoConfig
 (* XXX g is applied to json value if it exists, f is the configuration setter, taking the result of g XXX *)
 let apply_gen gconf f g o = Js.Optdef.iter o (fun j -> f gconf (g j))
 let apply gconf f o = apply_gen gconf f Js.to_string o
-let iter_array_gen gconf f o = Js.Optdef.iter o (fun a -> f gconf a)
+let iter_array_gen gconf f o =
+  Js.Optdef.iter o (fun a -> f gconf a)
 let iter_array gconf f o =
   iter_array_gen gconf
     (fun gconf a ->
        let a = Js.str_array a in
        ignore (Js.array_map (fun s -> f gconf (Js.to_string s)) a)) o
+let iter_inputs gconf f g h o =
+  iter_array_gen gconf
+    (fun gconf a ->
+       ignore (Js.array_map (fun x -> f gconf (Js.to_string (g x), Js.to_string (h x))) a)) o
 
 (**********************************)
 (* Equivalent to qcert cmd        *)
 (**********************************)
 
-let global_config_of_json j =
-  let gconf = default_config () in
+let global_config_of_json gconf j =
   (* Specialize apply/iter for this given gconf *)
   let apply = apply gconf in
-  let iter_array = iter_array gconf in
+  let iter_inputs = iter_inputs gconf in
   (* CTOs *)
-  iter_array (fun gconf x -> ErgoConfig.add_cto_file gconf ("JSCTO",x)) j##.cto;
+  iter_inputs (fun gconf x -> ErgoConfig.add_cto_file gconf x)
+    (fun x -> x##.name)
+    (fun x -> x##.content)
+    j##.cto;
   (* Ergos *)
-  iter_array (fun gconf x -> ErgoConfig.add_module_file gconf ("JSErgo",x)) j##.ergo;
+  iter_inputs (fun gconf x -> ErgoConfig.add_module_file gconf x)
+    (fun x -> x##.name)
+    (fun x -> x##.content)
+    j##.ergo;
   (* Target *)
   apply ErgoConfig.set_target_lang j##.target;
   gconf
@@ -64,12 +74,14 @@ let json_loc_of_loc loc =
 
 let json_loc_missing () = json_loc_of_loc dummy_location.loc_start
 
-let json_of_ergo_error error =
+let json_of_ergo_error gconf error =
+  let source_table = ErgoConfig.get_source_table gconf in
   object%js
     val kind = Js.string (error_kind error)
     val message= Js.string (error_message error)
     val locstart = json_loc_of_loc (error_loc_start error)
     val locend = json_loc_of_loc (error_loc_end error)
+    val verbose= Js.string (string_of_error_with_table source_table error)
   end
 
 let json_of_ergo_success () =
@@ -78,6 +90,7 @@ let json_of_ergo_success () =
     val message= Js.string ""
     val locstart = json_loc_missing ()
     val locend = json_loc_missing ()
+    val verbose = Js.string ""
   end
 
 let json_of_result res =
@@ -87,23 +100,24 @@ let json_of_result res =
     val code = Js.bool false
   end
 
-let json_of_error error =
+let json_of_error gconf error =
   object%js
-    val error = json_of_ergo_error error
+    val error = json_of_ergo_error gconf error
     val result = Js.string ""
     val code = Js.bool true
   end
 
 let ergo_compile input =
+  let gconf = default_config () in
   begin try
-    let gconf = global_config_of_json input in
+    let gconf = global_config_of_json gconf input in
     let target_lang = ErgoConfig.get_target_lang gconf in
     let all_modules = ErgoConfig.get_all_sorted gconf in
     let (file,res) = ErgoCompile.ergo_compile target_lang all_modules in
     json_of_result res
   with
-  | Ergo_Error error -> json_of_error error
-  | exn -> json_of_error (ergo_system_error (Printexc.to_string exn))
+  | Ergo_Error error -> json_of_error gconf error
+  | exn -> json_of_error gconf (ergo_system_error (Printexc.to_string exn))
   end
 
 let ergo_version unit =
