@@ -60,7 +60,10 @@ describe('ergo', () => {
             const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
             const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
             const result = await Commands.execute([ergoPath], undefined, contractPath, [requestPath], statePath, 'org.accordproject.helloworld.HelloWorld', false);
-            result.should.deep.equal({'error':{'kind':'CompilationError','message':'Cannot find type with name \'TemplateModel\'','locstart':{'line':16,'character':25},'locend':{'line':16,'character':38}}});
+            result.error.kind.should.equal('CompilationError');
+            result.error.message.should.equal('Cannot find type with name \'TemplateModel\'');
+            result.error.locstart.should.deep.equal({ 'line' : 16, 'character' : 25 });
+            result.error.locend.should.deep.equal({ 'line' : 16, 'character' : 38 });
         });
     });
     describe('#executehellostate', function () {

@@ -140,6 +140,7 @@
       "error": {
         "kind": "CompilationError",
         "message": "Import not found: org.accordproject.base",
+        "verbose": "Compilation error. Import not found: org.accordproject.base",
         "locstart": {
           "line": -1,
           "character": -1
@@ -381,6 +382,7 @@
        "error": {
         "kind": "CompilationError",
         "message": "Import not found: org.accordproject.base",
+        "verbose": "Compilation error. Import not found: org.accordproject.base",
         "locstart": {
           "line": -1,
           "character": -1

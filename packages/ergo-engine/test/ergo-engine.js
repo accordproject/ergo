@@ -88,22 +88,26 @@ describe('Execute', () => {
 
         describe('#'+name, function () {
             it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
-                const ergoTexts = [];
+                const ergoSources = [];
                 for (let i = 0; i < ergo.length; i++) {
-                    ergoTexts.push(Fs.readFileSync(Path.resolve(__dirname, dir, ergo[i]), 'utf8'));
+                    const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
+                    const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+                    ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
                 }
-                let ctoTexts = [];
+                let ctoSources = [];
                 for (let i = 0; i < models.length; i++) {
-                    ctoTexts.push(Fs.readFileSync(Path.resolve(__dirname, dir, models[i]), 'utf8'));
+                    const ctoFile = Path.resolve(__dirname, dir, models[i]);
+                    const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+                    ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
                 }
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoTexts, ctoTexts, contractJson, requestJson, contractname);
+                    const actual = await ErgoEngine.init(ergoSources, ctoSources, contractJson, requestJson, contractname);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    const actual = await ErgoEngine.execute(ergoTexts, ctoTexts, contractJson, requestJson, stateJson, contractname);
+                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, contractJson, requestJson, stateJson, contractname);
                     return compare(expected,actual);
                 }
             });

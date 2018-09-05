@@ -501,7 +501,11 @@ function count(v) {
     return { "nat" : v.length };
 }
 function floatOfNat(v) {
-    return v.nat;
+    if(v.hasOwnProperty('nat')){
+        return "" + v.nat;
+    } else {
+        return v;
+    }
 }
 function substring(v, start, len) {
     return v.substring(start,len);

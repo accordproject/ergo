@@ -31,7 +31,7 @@ let repl rctxt text =
            end)
         ("",rctxt) decls
   with
-    ErgoUtil.Ergo_Error e -> (ErgoUtil.string_of_error_with_source text e ^ "\n", rctxt)
+    ErgoUtil.Ergo_Error e -> (ErgoUtil.string_of_error_with_source_text text e ^ "\n", rctxt)
 
 let args_list gconf =
   Arg.align

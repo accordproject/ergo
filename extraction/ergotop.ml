@@ -84,7 +84,7 @@ let rec repl rctxt =
     repl rctxt'
   with
   | ErgoUtil.Ergo_Error e ->
-      print_string (ErgoUtil.string_of_error_with_source text e);
+      print_string (ErgoUtil.string_of_error_with_source_text text e);
       print_string "\n" ;
       repl rctxt
   | End_of_file -> None
