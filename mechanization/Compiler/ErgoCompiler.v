@@ -204,6 +204,10 @@ Module ErgoCompiler.
     := Ergo.EVar prov v.
   Definition econst prov d :ergo_expr
     := Ergo.EConst prov d.
+  Definition enone prov : ergo_expr
+    := Ergo.ENone prov.
+  Definition esome prov : ergo_expr -> ergo_expr
+    := Ergo.ESome prov.
   Definition earray prov arr : ergo_expr
     := Ergo.EArray prov arr.
   Definition eunaryop prov u e : ergo_expr

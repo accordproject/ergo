@@ -129,8 +129,6 @@ Section ErgoCStdlib.
 
   Definition unary_operator_table prov : ergo_stdlib_table :=
     ("org.accordproject.ergo.stdlib.toString", mk_unary prov OpToString)
-      (* Data *)
-      :: ("org.accordproject.ergo.stdlib.some", mk_unary prov OpLeft)
       (* Natural numbers // Integer or Long *)
       :: ("org.accordproject.ergo.stdlib.integerAbs", mk_unary prov (OpNatUnary NatAbs))
       :: ("org.accordproject.ergo.stdlib.integerLog2", mk_unary prov (OpNatUnary NatLog2))

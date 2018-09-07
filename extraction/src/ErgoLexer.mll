@@ -65,6 +65,7 @@
 	      "false", FALSE;
 	      "unit", UNIT;
 	      "none", NONE;
+	      "some", SOME;
 	    ]; tbl
     end
 

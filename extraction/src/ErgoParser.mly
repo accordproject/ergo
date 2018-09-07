@@ -51,7 +51,7 @@ let mk_provenance
 
 %token OR AND NOT
 
-%token UNIT NONE
+%token UNIT NONE SOME
 %token TRUE FALSE
 
 %token EQUAL NEQUAL
@@ -364,7 +364,9 @@ expr:
 | UNIT
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) ErgoCompiler.ErgoData.dunit }
 | NONE
-    { ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dright ErgoCompiler.ErgoData.dunit) }
+    { ErgoCompiler.enone (mk_provenance $startpos $endpos) }
+| SOME LPAREN e = expr RPAREN
+    { ErgoCompiler.esome (mk_provenance $startpos $endpos) e }
 | TRUE
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dbool true) }
 | FALSE
@@ -635,6 +637,7 @@ safeident_base:
 | AND { "and" }
 | UNIT { "unit" }
 | NONE { "none" }
+| SOME { "some" }
 | TRUE { "true" }
 | FALSE { "false" }
 

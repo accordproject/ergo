@@ -39,6 +39,9 @@ Section ErgoMap.
       | EThisState _ => esuccess expr
       | EVar _ _ => esuccess expr
       | EConst _ _ => esuccess expr
+      | ENone _ => esuccess expr
+      | ESome loc e =>
+        elift (ESome loc) (ergo_map_expr ctx ctxt_new_variable_scope fn e)
       | EArray loc a =>
         elift (EArray loc)
               (fold_left

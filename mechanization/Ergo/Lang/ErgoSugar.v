@@ -41,9 +41,9 @@ Section ErgoSugar.
     EMatch a
            e
            ((CaseLetOption a "$option" None,
-             (EUnaryOp a OpLeft
-                       (EDot a pname (EVar a "$option")))) :: nil)
-           (EConst a dnone).
+             (ESome a
+                    (EDot a pname (EVar a "$option")))) :: nil)
+           (ENone a).
 
   Definition EOptionalDefault (a:A) (e1 e2:rergo_expr) :=
     EMatch a e1

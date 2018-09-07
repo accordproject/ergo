@@ -51,6 +51,12 @@ Section ErgotoErgoC.
       esuccess (EVar prov v)
     | EConst prov d =>
       esuccess (EConst prov d)
+    | ENone prov =>
+      esuccess (ENone prov)
+    | ESome prov e =>
+      elift
+        (ESome prov)
+        (ergo_expr_to_ergoc_expr ctxt e)
     | EArray prov el =>
       let init_el := esuccess nil in
       let proc_one (e:laergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=

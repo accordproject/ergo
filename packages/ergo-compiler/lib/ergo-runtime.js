@@ -365,7 +365,7 @@ function unbrand(v) {
         } else {
             return ("data" in v) ? v.data : v;
         }
-    throw "TypeError: unbrand called on non-object";
+    throw ("TypeError: unbrand called on non-object" + JSON.stringify(v));
 }
 function brand(b,v) {
     v['$class'] = b[0];
