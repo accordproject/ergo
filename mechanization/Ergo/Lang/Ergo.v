@@ -116,6 +116,12 @@ Section Ergo.
           function_sig : @ergo_type_signature A N;
           function_body : option ergo_expr; }.
 
+    Definition body_annot (f:ergo_function) : A :=
+      match f.(function_body) with
+      | None => f.(function_annot)
+      | Some e => expr_annot e
+      end.
+    
     (** Clause *)
     Record ergo_clause :=
       mkClause

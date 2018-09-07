@@ -47,6 +47,12 @@ Section ErgoC.
           functionc_sig : sigc;
           functionc_body : option ergoc_expr; }.
 
+    Definition bodyc_annot (f:ergoc_function) : provenance :=
+      match f.(functionc_body) with
+      | None => f.(functionc_annot)
+      | Some e => expr_annot e
+      end.
+    
     (** Contract *)
     Record ergoc_contract :=
       mkContractC

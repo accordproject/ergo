@@ -117,6 +117,16 @@ Section ErgoCType.
       "Missing fields `" ++ String.concat "', `" expected_names ++ "' in type `" ++ concept_name ++ "'"
     end.
 
+  Definition ergo_format_clause_return_error nsctxt (name:string) (actual expected:ergoc_type) : string :=
+    let actual_s := ergoc_type_to_string nsctxt actual in
+    let expected_s := ergoc_type_to_string nsctxt expected in
+    "Clause " ++ name ++ " should return `" ++ expected_s ++ "' but actually returns `" ++ actual_s ++ "'".
+  
+  Definition ergo_format_function_return_error nsctxt (name:string) (actual expected:ergoc_type) : string :=
+    let actual_s := ergoc_type_to_string nsctxt actual in
+    let expected_s := ergoc_type_to_string nsctxt expected in
+    "Function " ++ name ++ " should return `" ++ expected_s ++ "' but actually returns `" ++ actual_s ++ "'".
+  
   Fixpoint ergo_type_expr nsctxt (ctxt : type_context) (expr : ergoc_expr) : eresult ergoc_type :=
     match expr with
     | EThisContract prov => efailure (ESystemError prov "No `this' in ergoc")
@@ -304,7 +314,6 @@ Section ErgoCType.
              end)
           pes (ergo_type_expr nsctxt ctxt default)
       end
-
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach prov ((name,arr)::nil) None fn =>
       eolift (fun arr' =>
@@ -323,9 +332,9 @@ Section ErgoCType.
 
   Definition ergoc_type_function
              (nsctxt: namespace_ctxt)
+             (name:string)
              (dctxt : type_context)
              (func : ergoc_function) : eresult type_context :=
-    let prov := func.(functionc_annot) in
     match func.(functionc_body) with
     | None => esuccess dctxt
     | Some body =>
@@ -344,9 +353,15 @@ Section ErgoCType.
                   expectedt
              then esuccess dctxt
              else
-               let outs := (ergoc_type_to_string nsctxt outt) in
-               let expecteds := (ergoc_type_to_string nsctxt expectedt) in
-               efailure (ETypeError prov ("This function is annotated to return `" ++ expecteds ++ "' but actually returns `" ++ outs ++ "'")%string)
+               let body_prov := bodyc_annot func in
+               match func.(functionc_annot) with
+               | ProvClause _ name =>
+                 efailure (ETypeError body_prov (ergo_format_clause_return_error nsctxt name outt expectedt))
+               | ProvFunc _ name =>
+                 efailure (ETypeError body_prov (ergo_format_function_return_error nsctxt name outt expectedt))
+               | _ =>
+                 efailure (ETypeError body_prov (ergo_format_function_return_error nsctxt name outt expectedt))
+               end
            end)
         (ergo_type_expr nsctxt (type_context_set_local_env dctxt tsig) body)
     end.
@@ -355,7 +370,8 @@ Section ErgoCType.
              (nsctxt: namespace_ctxt)
              (dctxt : type_context)
              (cl : string * ergoc_function) : eresult type_context :=
-    ergoc_type_function nsctxt dctxt (snd cl).
+    let (name,body) := cl in
+    ergoc_type_function nsctxt name dctxt body.
 
   Definition ergoc_type_contract
              (nsctxt: namespace_ctxt)
@@ -363,7 +379,7 @@ Section ErgoCType.
              (coname: absolute_name)
              (c : ergoc_contract) : eresult type_context :=
     elift_fold_left
-      (ergoc_type_clause  nsctxt)
+      (ergoc_type_clause nsctxt)
       c.(contractc_clauses)
       dctxt.
 
@@ -401,7 +417,7 @@ Section ErgoCType.
             else
               efailure (fmt_err t' vt)) expr'
     | DCFunc prov name func =>
-      elift (fun ctxt => (None,ctxt)) (ergoc_type_function nsctxt dctxt func)
+      elift (fun ctxt => (None,ctxt)) (ergoc_type_function nsctxt name dctxt func)
     | DCContract prov name contr =>
       elift (fun ctxt => (None,ctxt)) (ergoc_type_contract nsctxt dctxt name contr)
     end.

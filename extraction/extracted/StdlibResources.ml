@@ -78,4 +78,9 @@ define function arraySubtract(x:Any[],y:Any[]) : Any[]
 define transaction ErgoErrorResponse extends ErrorResponse{
 	message : String
 }
+define function failure(x:String) : ErgoErrorResponse {
+	return ErgoErrorResponse{
+		message: x
+	}
+}
 |xxx}
