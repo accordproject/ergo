@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-engine",
-  "version": "0.4.0-alpha",
+  "version": "0.4.0-alpha2",
   "description": "Ergo Engine",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/ergo-compiler": "0.4.0-alpha",
+    "@accordproject/ergo-compiler": "0.4.0-alpha2",
     "composer-common": "0.19.12",
     "moment": "2.20.1",
     "vm2": "3.5.0",
