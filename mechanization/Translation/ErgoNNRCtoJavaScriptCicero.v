@@ -91,7 +91,7 @@ Section ErgoNNRCtoJavaScriptCicero.
       ++ "    context.emit = emitResult;" ++ eol
       ++ "    return context;" ++ eol
       ++ "  } else {" ++ eol
-      ++ "    throw new Error(result.right);" ++ eol
+      ++ "    throw new Error(result.right.message);" ++ eol
       ++ "  }" ++ eol
       ++ "}" ++ eol.
 

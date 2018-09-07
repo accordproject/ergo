@@ -59,7 +59,6 @@ define function minPair(x:Double, y:Double) : Double
 
 // Polymorphic operations
 define function toString(x:Any) : String
-define function some(x:Any) : Any
 define function distinct(x:Any[]) : Any[]
 define function count(x:Any[]) : Integer
 define function flatten(x:Any[][]) : Any[]

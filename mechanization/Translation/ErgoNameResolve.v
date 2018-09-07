@@ -306,6 +306,10 @@ Section ErgoNameResolution.
       | EThisState prov => esuccess (EThisState prov)
       | EVar prov v => esuccess (EVar prov v)
       | EConst prov d => esuccess (EConst prov d)
+      | ENone prov => esuccess (ENone prov)
+      | ESome prov e =>
+        elift (ESome prov)
+              (resolve_ergo_expr ectxt tbl e)
       | EArray prov el =>
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=

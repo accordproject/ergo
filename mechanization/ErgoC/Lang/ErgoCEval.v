@@ -51,6 +51,8 @@ Section ErgoC.
       | Some d => esuccess d
       end
     | EConst prov d => esuccess d
+    | ENone prov => esuccess dnone
+    | ESome prov e => elift dsome (ergo_eval_expr ctxt e)
     | EArray prov es =>
       let rcoll :=
           fold_left

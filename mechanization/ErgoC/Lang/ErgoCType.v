@@ -129,6 +129,8 @@ Section ErgoCType.
       eresult_of_option
         (infer_data_type d)
         (ETypeError prov "Bad constant.")
+    | ENone prov => esuccess (toption tbottom)
+    | ESome prov e => elift toption (ergo_type_expr nsctxt ctxt e)
     | EArray prov es =>
       (elift tcoll)
         (fold_left

@@ -54,20 +54,22 @@ Section ErgoCtoErgoNNRC.
                  v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
                  v2 (NNRCUnop OpRight (NNRCConst dunit)))
     | CaseLetOption prov v None =>
-      let (v1,v2) := fresh_var2 "$case" "$case" nil in
-      (v::nil, NNRCEither
-                 input_expr
-                 v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
-                 v2 (NNRCUnop OpRight (NNRCConst dunit)))
+      let v1 := fresh_var "$case" nil in
+      (v::nil, (NNRCLet v1 input_expr
+                        (NNRCIf
+                           (NNRCBinop OpEqual (NNRCVar v1) (NNRCConst dunit))
+                           (NNRCUnop OpRight (NNRCConst dunit))
+                           (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1))))))
     | CaseLetOption prov v (Some type_name) =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
-      (v::nil, NNRCEither
-                 input_expr
-                 v1 (NNRCEither
-                       (NNRCUnop (OpCast (type_name::nil)) (NNRCVar v1))
-                       v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
-                       v2 (NNRCUnop OpRight (NNRCConst dunit)))
-                 v2 (NNRCUnop OpRight (NNRCConst dunit)))
+      (v::nil, (NNRCLet v1 input_expr
+                        (NNRCIf
+                           (NNRCBinop OpEqual (NNRCVar v1) (NNRCConst dunit))
+                           (NNRCUnop OpRight (NNRCConst dunit))
+                           (NNRCEither
+                              (NNRCUnop (OpCast (type_name::nil)) (NNRCVar v1))
+                              v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
+                              v2 (NNRCUnop OpRight (NNRCConst dunit))))))
     end.
 
   Definition pack_pattern
@@ -106,6 +108,8 @@ Section ErgoCtoErgoNNRC.
       else esuccess (NNRCVar v)
     | EConst prov d =>
       esuccess (NNRCConst d)
+    | ENone prov => esuccess (NNRCConst dunit) (* XXX Not safe ! *)
+    | ESome prov e => ergoc_expr_to_nnrc env e (* XXX Not safe ! *)
     | EArray prov el =>
       let init_el := esuccess nil in
       let proc_one (e:ergo_expr) (acc:eresult (list nnrc_expr)) : eresult (list nnrc_expr) :=
