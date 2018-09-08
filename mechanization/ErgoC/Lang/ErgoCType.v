@@ -117,10 +117,65 @@ Section ErgoCType.
       "Missing fields `" ++ String.concat "', `" expected_names ++ "' in type `" ++ concept_name ++ "'"
     end.
 
-  Definition ergo_format_clause_return_error nsctxt (name:string) (actual expected:ergoc_type) : string :=
+  Definition ergo_format_clause_return_fallback_error
+             nsctxt
+             (name:string)
+             (actual expected:ergoc_type) : string :=
     let actual_s := ergoc_type_to_string nsctxt actual in
     let expected_s := ergoc_type_to_string nsctxt expected in
-    "Clause " ++ name ++ " should return `" ++ expected_s ++ "' but actually returns `" ++ actual_s ++ "'".
+    "Clause " ++ name ++ " should return `" ++ expected_s
+              ++ "' but actually returns `" ++ actual_s ++ "'".
+
+  Definition ergo_format_clause_return_component_error
+             nsctxt
+             (name:string)
+             (component1 component2:string)
+             (actual expected:ergoc_type) : string :=
+    let actual_s := ergoc_type_to_string nsctxt actual in
+    let expected_s := ergoc_type_to_string nsctxt expected in
+    "Clause " ++ name ++ " should " ++ component1 ++ " `" ++ expected_s
+              ++ "' but actually " ++ component2 ++ " `" ++ actual_s ++ "'".
+
+  Definition ergo_format_clause_return_normal_error
+             nsctxt
+             (name:string)
+             (actual expected:ergoc_type)
+             (actual_quad expected_quad:ergoc_type * ergoc_type * ergoc_type * ergoc_type)
+    : string :=
+    let '(actual_resp, actual_emit, actual_state, actual_error) := actual_quad in
+    let '(expected_resp, expected_emit, expected_state, expected_error) := expected_quad in
+    if ergoc_type_subtype_dec actual_resp expected_resp
+    then
+      if ergoc_type_subtype_dec actual_emit expected_emit
+      then
+        if ergoc_type_subtype_dec actual_state expected_state
+        then
+          if ergoc_type_subtype_dec actual_error expected_error
+          then
+            ergo_format_clause_return_fallback_error nsctxt name actual expected
+          else
+            ergo_format_clause_return_component_error
+              nsctxt name "fail with" "fails with" actual_error expected_error
+        else
+          ergo_format_clause_return_component_error
+            nsctxt name "set state" "sets state" actual_state expected_state
+      else
+        ergo_format_clause_return_component_error
+          nsctxt name "emit" "emits" actual_emit expected_emit
+    else
+      ergo_format_clause_return_component_error
+        nsctxt name "respond" "responds" actual_resp expected_resp.
+
+  Definition ergo_format_clause_return_error nsctxt (name:string) (actual expected:ergoc_type) : string :=
+    let actual_quad := unpack_output_type nsctxt actual in
+    let expected_quad := unpack_output_type nsctxt expected in
+    let normal_error := ergo_format_clause_return_normal_error nsctxt name actual expected in
+    let fallback_error := fun e => ergo_format_clause_return_fallback_error nsctxt name actual expected in
+    elift2_both
+      normal_error
+      fallback_error
+      actual_quad
+      expected_quad.
   
   Definition ergo_format_function_return_error nsctxt (name:string) (actual expected:ergoc_type) : string :=
     let actual_s := ergoc_type_to_string nsctxt actual in

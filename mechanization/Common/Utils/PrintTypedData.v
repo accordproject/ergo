@@ -172,7 +172,7 @@ Section PrintTypedData.
 
     Definition unpack_success_type
                (nsctxt:namespace_ctxt)
-               (out : ergoc_type)
+               (out:ergoc_type)
       : eresult (ergoc_type * ergoc_type * ergoc_type) :=
       let osuccess :=
           match unteither out with
@@ -211,6 +211,17 @@ Section PrintTypedData.
       in
       elift3 (fun r e s => (r,e,s))
              response emit state.
+
+    Definition unpack_output_type
+               (nsctxt:namespace_ctxt)
+               (out:ergoc_type) : eresult (ergoc_type * ergoc_type * ergoc_type * ergoc_type) :=
+      elift2
+        (fun x y =>
+           let '(respt,emitt,statet) := x in
+           (respt,emitt,statet,y))
+        (unpack_success_type nsctxt out)
+        (unpack_failure_type nsctxt out).
+
   End Types.
 
   Section Both.
@@ -218,14 +229,14 @@ Section PrintTypedData.
 
     Definition string_of_response
                (nsctxt:namespace_ctxt)
-               (response : ergo_data)
-               (response_type: option ergoc_type) : string :=
+               (response:ergo_data)
+               (response_type:option ergoc_type) : string :=
       "Response. " ++ (string_of_data nsctxt response) ++ (string_of_result_type nsctxt response_type).
 
     Definition string_of_emits
                (nsctxt:namespace_ctxt)
-               (emits : list ergo_data)
-               (emit_type: option ergoc_type) : string :=
+               (emits:list ergo_data)
+               (emit_type:option ergoc_type) : string :=
       match emits with
       | nil => ""
       | e1 :: erest =>
