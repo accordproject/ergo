@@ -62,13 +62,22 @@ Section Result.
       | Success _ _ s => f s
       | Failure _ _ e => g e
       end.
+    Definition elift2_both {A B C:Set} (f: A -> B -> C) (g:eerror -> C) (a:eresult A) (b:eresult B) : C :=
+      match a with
+      | Success _ _ s1 =>
+        match b with
+        | Success _ _ s2 => f s1 s2
+        | Failure _ _ e => g e
+        end
+      | Failure _ _ e => g e
+      end.
     Definition elift_maybe {A:Set} (f: A -> option (eresult A)) (a:eresult A) : eresult A :=
       match elift f a with
       | Success _ _ (Some s) => s
       | Success _ _ None => a
       | Failure _ _ e => efailure e
       end.
-    Definition eolift2 {A B C : Set} (f : A -> B -> eresult C) (a : eresult A) (b : eresult B) : eresult C :=
+    Definition eolift2 {A B C:Set} (f : A -> B -> eresult C) (a : eresult A) (b : eresult B) : eresult C :=
       match elift2 f a b with
       | Failure _ _ f => efailure f
       | Success _ _ s => s
