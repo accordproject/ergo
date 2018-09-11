@@ -34,11 +34,11 @@ The most recent documentation for Ergo is available at
 ### Try it out
 
 If you simply want to get a peek at Ergo without installing anything, check out
-the examples on the [Ergo
+the REPL at examples on the [Ergo
 Playground](https://accordproject.github.io/ergo-playground/).
 
-You can also try Ergo using `ergotop`, an experimental REPL for Ergo. For
-instructions on installing `ergotop`, refer to [DEVELOPERS.md](DEVELOPERS.md).
+You can also try the interactive [REPL](https://ergorepl.netlify.com)
+(read-eval-print-loop) for Ergo.
 
 ### Install Ergo
 

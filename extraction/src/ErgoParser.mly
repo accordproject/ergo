@@ -152,11 +152,9 @@ decl:
 | DEFINE ENUM cn = ident et = ergo_type_enum_decl
     { ErgoCompiler.dtype (mk_provenance $startpos $endpos)
         (ErgoCompiler.mk_ergo_type_declaration (mk_provenance $startpos $endpos) cn (ErgoTypeEnum et)) }
-| DEFINE CONSTANT v = ident EQUAL e = expr
-    { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v None e }
-| DEFINE CONSTANT v = ident COLON t = paramtype EQUAL e = expr
-    { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) v (Some t) e }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype LCURLY fs = fstmt RCURLY
+| DEFINE CONSTANT vt = identannot EQUAL e = expr
+    { ErgoCompiler.dconstant (mk_provenance $startpos $endpos) (fst vt) (snd vt) e }
+| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype fb = fbody
     { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
         { function_annot = mk_provenance $startpos $endpos;
           function_sig =
@@ -164,22 +162,20 @@ decl:
             type_signature_params = ps;
             type_signature_output = out;
             type_signature_emits = None };
-          function_body = Some fs; } }
-| DEFINE FUNCTION fn = ident LPAREN ps = params RPAREN out = outtype
-    { ErgoCompiler.dfunc (mk_provenance $startpos $endpos) fn
-        { function_annot = mk_provenance $startpos $endpos;
-          function_sig =
-          { type_signature_annot = (mk_provenance $startpos $endpos);
-            type_signature_params = ps;
-            type_signature_output = out;
-            type_signature_emits = None };
-          function_body = None; } }
+          function_body = fb; } }
 | CONTRACT cn = ident OVER tn = paramtype ms = mayhavestate LCURLY ds = clauses RCURLY
     { ErgoCompiler.dcontract (mk_provenance $startpos $endpos) cn
         { contract_annot = mk_provenance $startpos $endpos;
           contract_template = tn;
           contract_state = ms;
           contract_clauses = ds; } }
+
+fbody:
+|
+    { None }
+| LCURLY fs = fstmt RCURLY
+    { Some fs }
+
 
 maybe_abstract:
 |
@@ -204,13 +200,14 @@ clauses:
     { c :: cl }
 
 clause:
-| CLAUSE cn = ident LPAREN ps = params RPAREN out = outtype et = emittypes LCURLY s = stmt RCURLY
+(* | CLAUSE cn = ident LPAREN ps = params RPAREN out = outtype et = emittypes LCURLY s = stmt RCURLY -- XXX Force explicit declaration of output for now due to Cicero target bug *)
+| CLAUSE cn = ident LPAREN ps = params RPAREN COLON out = paramtype et = emittypes LCURLY s = stmt RCURLY
     { { clause_annot = mk_provenance $startpos $endpos;
         clause_name = cn;
         clause_sig =
         { type_signature_annot = (mk_provenance $startpos $endpos);
           type_signature_params = ps;
-          type_signature_output = out;
+          type_signature_output = Some out;
           type_signature_emits = et };
         clause_body = Some s; } }
 
@@ -280,10 +277,8 @@ stmt:
 | CALL cln = IDENT LPAREN el = exprlist RPAREN
     { let e0 = ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos) in
       ErgoCompiler.scallclause (mk_provenance $startpos $endpos) e0 (Util.char_list_of_string cln) el }
-| LET v = ident EQUAL e1 = expr SEMI s2 = stmt
-    { ErgoCompiler.slet (mk_provenance $startpos $endpos) v e1 s2 }
-| LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = stmt
-    { ErgoCompiler.slet_typed (mk_provenance $startpos $endpos) v t e1 s2 }
+| LET vt = identannot EQUAL e1 = expr SEMI s2 = stmt
+    { ErgoCompiler.slet (mk_provenance $startpos $endpos) (fst vt) (snd vt) e1 s2 }
 | IF e1 = expr THEN s2 = stmt ELSE s3 = stmt
     { ErgoCompiler.sif (mk_provenance $startpos $endpos) e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = stmt SEMI s3 = stmt
@@ -305,10 +300,8 @@ fstmt:
     { ErgoCompiler.efunreturn (mk_provenance $startpos $endpos) e1 }
 | THROW e1 = expr
     { raise (LexError ("Cannot throw inside a function, you have to be in a Clause")) }
-| LET v = ident EQUAL e1 = expr SEMI s2 = fstmt
-    { ErgoCompiler.elet (mk_provenance $startpos $endpos) v None e1 s2 }
-| LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI s2 = fstmt
-    { ErgoCompiler.elet (mk_provenance $startpos $endpos) v (Some t) e1 s2 }
+| LET vt = identannot EQUAL e1 = expr SEMI s2 = fstmt
+    { ErgoCompiler.elet (mk_provenance $startpos $endpos) (fst vt) (snd vt) e1 s2 }
 | IF e1 = expr THEN s2 = fstmt ELSE s3 = fstmt
     { ErgoCompiler.eif (mk_provenance $startpos $endpos) e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = fstmt SEMI s3 = fstmt
@@ -400,10 +393,8 @@ expr:
     { ErgoCompiler.ethis_clause (mk_provenance $startpos $endpos) }
 | STATE
     { ErgoCompiler.ethis_state (mk_provenance $startpos $endpos) }
-| LET v = ident EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet (mk_provenance $startpos $endpos) v None e1 e2 }
-| LET v = ident COLON t = paramtype EQUAL e1 = expr SEMI e2 = expr
-    { ErgoCompiler.elet (mk_provenance $startpos $endpos) v (Some t) e1 e2 }
+| LET vt = identannot EQUAL e1 = expr SEMI e2 = expr
+    { ErgoCompiler.elet (mk_provenance $startpos $endpos) (fst vt) (snd vt) e1 e2 }
 | MATCH e0 = expr csd = cases
     { ErgoCompiler.ematch (mk_provenance $startpos $endpos) e0 (fst csd) (snd csd) }
 | FOREACH fl = foreachlist RETURN e2 = expr
@@ -585,6 +576,11 @@ data:
 ident:
 | i = IDENT
     { Util.char_list_of_string i }
+identannot:
+| i = ident
+    { (i, None) }
+| i = ident COLON t = paramtype
+    { (i, Some t) }
 
 (* identlist *)
 identlist:
