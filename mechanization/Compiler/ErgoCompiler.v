@@ -248,10 +248,8 @@ Module ErgoCompiler.
     Ergo.SSetState prov e s.
   Definition semit prov e s : ergo_stmt :=
     Ergo.SEmit prov e s.
-  Definition slet prov (v:String.string) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
-    Ergo.SLet prov v None e1 s2.
-  Definition slet_typed prov (v:String.string) (t:ErgoType.ergo_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
-    Ergo.SLet prov v (Some t) e1 s2.
+  Definition slet prov (v:String.string) (t:option ErgoType.ergo_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
+    Ergo.SLet prov v t e1 s2.
   Definition sif prov e1 s2 s3 : ergo_stmt :=
     Ergo.SIf prov e1 s2 s3.
   Definition senforce prov (e1:ergo_expr) (s2: option ergo_stmt) (s3:ergo_stmt) : ergo_stmt :=
