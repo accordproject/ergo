@@ -95,8 +95,8 @@ class ErgoEngine {
     /**
      * Execute Ergo (JavaScript)
      *
-     * @param {{name:string, content:string}[]} ergoSources Ergo modules
-     * @param {{name:string, content:string}[]} ctoSources CTO models
+     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
+     * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
@@ -116,8 +116,8 @@ class ErgoEngine {
     /**
      * Initialize Ergo contract state (JavaScript)
      *
-     * @param {{name:string, content:string}[]} ergoSources Ergo modules
-     * @param {{name:string, content:string}[]} ctoSources CTO models
+     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
+     * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {string} contractName of the contract to execute

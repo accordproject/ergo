@@ -13,16 +13,26 @@ This is the source code for the Ergo compiler. Ergo is the [Accord
 Project](https://accordproject.org/) language for Smart Legal Contracts.
 
 The Ergo compiler is distributed as an [npm
-package](https://www.npmjs.com/package/@accordproject/ergo-cli). If you want to
-try Ergo, consult the [getting started](#getting-started) section.
+package](https://www.npmjs.com/package/@accordproject/ergo-cli). If
+you want to install Ergo, consult the [getting
+started](#getting-started) section.
 
 The Ergo compiler is written in [Coq](https://coq.inria.fr) with a parser and
 some support code written in [OCaml](https://ocaml.org). It makes extensive use
 of the [Q*cert compiler](https://querycert.github.io) for code generation.
 
-Both the Ergo language and its compiler are in early development phase. If you
-would like to contribute, consult the [for developers](#for-developers)
-section.
+Both the Ergo language and its compiler are in early development
+phase. If you would like to build from source or to contribute,
+consult the [for developers](#for-developers) section.
+
+## Try it out
+
+If you simply want to take a peek at Ergo without installing anything,
+check out the examples on the [Ergo
+Playground](https://accordproject.github.io/ergo-playground/).
+
+You can also try the interactive [REPL](https://ergorepl.netlify.com)
+(read-eval-print-loop) for Ergo.
 
 ## Documentation
 
@@ -30,15 +40,6 @@ The most recent documentation for Ergo is available at
 [https://ergo.accordproject.org/](https://ergo.accordproject.org/)
 
 ## Getting started
-
-### Try it out
-
-If you simply want to get a peek at Ergo without installing anything, check out
-the REPL at examples on the [Ergo
-Playground](https://accordproject.github.io/ergo-playground/).
-
-You can also try the interactive [REPL](https://ergorepl.netlify.com)
-(read-eval-print-loop) for Ergo.
 
 ### Install Ergo
 
