@@ -62,7 +62,6 @@ publish:
 ## Documentation
 documentation:
 	$(MAKE) -C mechanization documentation
-	./scripts/build_api_md.sh
 
 ## Testing
 test:

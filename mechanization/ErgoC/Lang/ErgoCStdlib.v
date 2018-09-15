@@ -56,6 +56,11 @@ Section ErgoCStdlib.
       prov
       (EBinaryOp prov op (EVar prov "p1") (EVar prov "p2")).
 
+  Definition mk_binary_rev prov op : ergoc_function :=
+    mk_binary_expr
+      prov
+      (EBinaryOp prov op (EVar prov "p2") (EVar prov "p1")).
+
   Definition ergo_stdlib_table : Set := list (string * ergoc_function).
   
   Definition backend_compose_table (t1 t2:ergo_stdlib_table) : ergo_stdlib_table :=
@@ -164,7 +169,8 @@ Section ErgoCStdlib.
         :: ("org.accordproject.ergo.stdlib.maxPair", mk_binary prov (OpFloatBinary FloatMax))
         (* Arrays *)
         :: ("org.accordproject.ergo.stdlib.arrayAdd", mk_binary prov OpBagUnion)
-        :: ("org.accordproject.ergo.stdlib.arraySubstract", mk_binary prov OpBagDiff)
+        :: ("org.accordproject.ergo.stdlib.arraySubtract", mk_binary_rev prov OpBagDiff)
+        :: ("org.accordproject.ergo.stdlib.inArray", mk_binary prov OpContains)
         :: nil.
 
     Definition builtin_table prov : ergo_stdlib_table :=

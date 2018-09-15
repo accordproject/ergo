@@ -58,8 +58,8 @@ class Ergo {
     /**
      * Compile Ergo to JavaScript
      *
-     * @param {{name:string, content:string}[]} ergoSources Ergo modules
-     * @param {{name:string, content:string}[]} ctoSources CTO models
+     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
+     * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {string} The compiled JavaScript code
      */
@@ -91,8 +91,8 @@ class Ergo {
     /**
      * Compile and Link Ergo to JavaScript
      *
-     * @param {{name:string, content:string}[]} ergoSources texts for Ergo modules
-     * @param {{name:string, content:string}[]} ctoSources texts for CTO models
+     * @param {Array<{name:string, content:string}>} ergoSources texts for Ergo modules
+     * @param {Array<{name:string, content:string}>} ctoSources texts for CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
@@ -108,8 +108,8 @@ class Ergo {
     /**
      * Compile Ergo
      *
-     * @param {{name:string, content:string}[]} ergoSources Ergo modules
-     * @param {{name:string, content:string}[]} ctoSources CTO models
+     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
+     * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled JavaScript code
      */
@@ -121,8 +121,8 @@ class Ergo {
     /**
      * Compile and Link Ergo
      *
-     * @param {{name:string, content:string}[]} ergoSources Ergo modules
-     * @param {{name:string, content:string}[]} ctoSources CTO models
+     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
+     * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} target language (javascript|javascript_cicero)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
