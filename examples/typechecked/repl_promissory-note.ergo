@@ -62,7 +62,6 @@ set contract PromissoryNote over PromissoryNoteContract{
   individual: true,
   makerAddress: "1 Main Street",
   lender: "Clause",
-  legalEntity: "CORP",
   lenderAddress: "246 5th Ave, 3rd Fl, New York, NY 10001",
   principal: MonetaryAmount{
     doubleValue: 500.0,
@@ -73,6 +72,6 @@ set contract PromissoryNote over PromissoryNoteContract{
   insolvencyDays: 90,
   jurisdiction: "New York, NY"
 }
-call init(Request{});
-call check(Payment{ amountPaid : MonetaryAmount{ doubleValue : 100.0, currencyCode: "USD" } });
+call init(Request{})
+call check(Payment{ amountPaid : MonetaryAmount{ doubleValue : 100.0, currencyCode: "USD" } })
 

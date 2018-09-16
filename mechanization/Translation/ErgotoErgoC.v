@@ -217,6 +217,36 @@ Section ErgotoErgoC.
       end
     | SCallClause _ e0 _ _ =>
       clause_call_not_on_contract_error (expr_annot e0)
+    | SCallContract prov (EThisContract _) el =>
+      let clname := clause_main_name in
+      match ctxt.(compilation_context_current_contract) with
+      | None => call_clause_not_in_contract_error prov clname
+      | Some coname =>
+        let params :=
+            if string_dec clname clause_init_name
+            then
+              ((EVar prov current_time)
+                 ::(thisContract prov)
+                 ::(EConst prov dunit)
+                 ::(EVar prov local_emit)
+                 ::el)
+            else
+              ((EVar prov current_time)
+                 ::(thisContract prov)
+                 ::(EVar prov local_state)
+                 ::(EVar prov local_emit)
+                 ::el)
+        in
+        let el := emaplift (ergo_expr_to_ergoc_expr ctxt) el in
+        elift (fun el =>
+                 ECallFunInGroup
+                   prov
+                   coname
+                   clname
+                   params) el
+      end
+    | SCallContract _ e0 _ =>
+      clause_call_not_on_contract_error (expr_annot e0)
     | SSetState prov e1 s2 =>
       elift2 (setState prov)
              (ergo_expr_to_ergoc_expr ctxt e1)

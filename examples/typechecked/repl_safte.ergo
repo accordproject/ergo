@@ -1,0 +1,74 @@
+namespace org.accordproject.safte
+
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+
+// Token sale Request/Response
+define transaction TokenSale extends Request {
+  tokenPrice : Double
+}
+define transaction TokenShare extends Response {
+  tokenAmount : Double
+}
+
+// Equity financing Request/Response
+define transaction EquityFinancing extends Request {
+  sharePrice : Double
+}
+define transaction EquityShare extends Response {
+  equityAmount : Double
+}
+
+// Dissolution Request/Response
+define transaction DissolutionEvent extends Request {
+  cause : String
+}
+define transaction PayOut extends Response {
+ amount : Double
+}
+
+define asset SafteContract extends AccordContract {
+  companyName : String,
+  purchaser : String,
+  purchaseAmount : Double,
+  discount : Double,
+  projectName : String,
+  amount : Double,
+  months : Integer
+}
+
+contract Safte over SafteContract {
+  clause tokenSale(request : TokenSale) : TokenShare {
+    let discountRate = (100.0 - contract.discount) / 100.00;
+    let discountPrice = request.tokenPrice * discountRate;
+    return TokenShare{ tokenAmount : contract.purchaseAmount / discountPrice }
+  }
+
+  clause equityFinancing(request : EquityFinancing) : EquityShare {
+    let discountRate = (100.0 - contract.discount) / 100.00;
+    let discountPrice = request.sharePrice * discountRate;
+    return EquityShare{ equityAmount : contract.purchaseAmount / discountPrice }
+  }
+
+  clause dissolutionEvent(request : DissolutionEvent) : PayOut {
+    return PayOut{ amount : contract.purchaseAmount }
+  }
+}
+
+set contract Safte over SafteContract{
+  contractId: "Umbrella#231",
+  parties: none,
+  companyName: "ACME",
+  purchaser: "Dan",
+  purchaseAmount: 25.0,
+  discount: 7.0,
+  projectName: "Umbrella Tokens",
+  amount : 1000.0,
+  months : 12
+}
+
+call init(Request{})
+call dissolutionEvent(DissolutionEvent{ cause : "Cold feet" })
+call tokenSale(TokenSale{ tokenPrice: 3.14 })
+call equityFinancing(EquityFinancing{ sharePrice: 2.98 })
+

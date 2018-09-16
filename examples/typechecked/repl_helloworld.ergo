@@ -25,5 +25,5 @@ contract HelloWorld over HelloWorldClause {
 }
 
 set contract HelloWorld over HelloWorldClause{ clauseId : "cl1", name : "Fred Blogs" }
-call init(Request{});
-call helloworld(MyRequest{ input : "AccordProject" });call helloworld(MyRequest{ input : "AccordProject" });
+call init(Request{})
+call helloworld(MyRequest{ input : "AccordProject" });call helloworld(MyRequest{ input : "AccordProject" })
