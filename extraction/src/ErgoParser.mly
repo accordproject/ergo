@@ -44,7 +44,7 @@ let mk_provenance
 
 %token ENFORCE IF THEN ELSE
 %token LET FOREACH IN WHERE
-%token RETURN THROW STATE CALL
+%token RETURN THROW STATE CALL SEND
 %token CONSTANT
 %token MATCH WITH
 %token SET EMIT
@@ -71,6 +71,7 @@ let mk_provenance
 %left SEMI
 %left ELSE
 %left RETURN
+%left MATCH IF LET CONTRACT
 %left OR
 %left AND
 %left EQUAL NEQUAL
@@ -121,7 +122,7 @@ top_decl:
         qn }
 | SET CONTRACT qn = qname OVER e = expr
     { ErgoCompiler.dsetcontract (mk_provenance $startpos $endpos) qn e }
-| s = stmt SEMI
+| s = stmt
     { ErgoCompiler.dstmt (mk_provenance $startpos $endpos) s }
 
 decl:
@@ -277,6 +278,9 @@ stmt:
 | CALL cln = IDENT LPAREN el = exprlist RPAREN
     { let e0 = ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos) in
       ErgoCompiler.scallclause (mk_provenance $startpos $endpos) e0 (Util.char_list_of_string cln) el }
+| SEND e1 = expr
+    { let e0 = ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos) in
+      ErgoCompiler.scallcontract (mk_provenance $startpos $endpos) e0 e1 }
 | LET vt = identannot EQUAL e1 = expr SEMI s2 = stmt
     { ErgoCompiler.slet (mk_provenance $startpos $endpos) (fst vt) (snd vt) e1 s2 }
 | IF e1 = expr THEN s2 = stmt ELSE s3 = stmt
@@ -614,6 +618,7 @@ safeident_base:
 | EMITS { "emits" }
 | STATE { "state" }
 | CALL { "call" }
+| SEND { "send" }
 | ENFORCE { "enforce" }
 | IF { "if" }
 | THEN { "then" }

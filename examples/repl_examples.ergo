@@ -1,14 +1,14 @@
 define constant pi = 3.14
 define function area(r : Double) : Double { return pi * r^2.0 }
 
-enforce area(1.0) = 3.14; return true;
-let pi = 10.0; enforce area(1.0) = 3.14; enforce pi = 10.0; return true;
+enforce area(1.0) = 3.14; return true
+let pi = 10.0; enforce area(1.0) = 3.14; enforce pi = 10.0; return true
 
 define concept Bear { name : String, age : Integer }
 define constant pooh = Bear {name : "Winnie", age : 4}
-return pooh;
+return pooh
 
-return [1, 4, 2, 5, 3, 9, 5];
+return [1, 4, 2, 5, 3, 9, 5]
 
 define constant nums = [\
     1.0, 2.0, 3.0, 4.0, 5.0,\
@@ -25,24 +25,24 @@ define constant pyth = (\
     return {a: x, b: y, c: z}\
 )
 
-return pyth;
+return pyth
 
 emit "One for the money";\
 emit "Two for the show";\
 emit "Three to get ready";\
-return "Now go, cat, go";
+return "Now go, cat, go"
 
 enforce 2 +i 2 = 5;\
-return "Big Brother is watching you.";
+return "Big Brother is watching you."
 
-set state "New York"; enforce state = "New York"; return state;
-set state (state ++ " state."); enforce state = "New York state."; return state;
+set state "New York"; enforce state = "New York"; return state
+set state (state ++ " state."); enforce state = "New York state."; return state
 
 enforce 5 =\
     match 1\
         with 2 then 5\
         else 5;\
-return "(match) defaults work"; // defaults
+return "(match) defaults work" // defaults
 
 let sauce = "hot" ;\
 enforce "sriracha" =\
@@ -50,9 +50,9 @@ enforce "sriracha" =\
         with "mild" then "ketchup"\
         with "hot" then "sriracha"\
         else unit ;\
-return "(match) multiple clauses work"; // multiple clauses (spicy)
+return "(match) multiple clauses work" // multiple clauses (spicy)
 
-enforce 1.0 = match 1.0 with let a then a else 3.0; return "(match) plain old let works"; // let
+enforce 1.0 = match 1.0 with let a then a else 3.0; return "(match) plain old let works" // let
 
 enforce [] = flatten([[]]);\
 enforce ["this", "should", "be", "flat"] = flatten([["this"],["should","be"],["flat"]]);\
@@ -61,14 +61,18 @@ enforce 1.0 = min([2.0,5.0,1.0,3.3,4.1]);\
 enforce 3.0 = average([2.0,5.0,1.0,3.0,4.0]);\
 enforce 2.0 = sqrt(4.0);\
 enforce some(1.0) = some(1.0);\
-return "(builtins) flatten, max/min, average, sqrt, some work";
+return "(builtins) flatten, max/min, average, sqrt, some work"
 
-enforce 5 = match some(5) with let a? then a else unit;\
-return "(match) match works against optionals";
+enforce 5 = match some(5) with let? a then a else unit;\
+return "(match) match works against optionals"
 
 define concept Request{ food : String }
 define concept Response{ output : String }
-contract Happy over Bear { \
+contract Happy over Bear state String { \
+	clause init() : Unit { \
+		set state "HAPPY!"; \
+		return \
+	} \
 	clause eat(request : Request) : Response { \
     return Response{ output: contract.name ++ " ate " ++ request.food } \
   } \
@@ -78,8 +82,9 @@ contract Happy over Bear { \
   } \
 }
 set contract Happy over Bear{name : "Winnie", age : 4}
-call eat(Request{ food : "berries" });
-call fish(Request{ food : "salmon" });
+call init()
+call eat(Request{ food : "berries" })
+call fish(Request{ food : "salmon" })
 
 enforce 1.0 < 2.0; \
 enforce !(2.0 < 1.0); \
@@ -93,7 +98,7 @@ enforce 1.0 >= 1.0; \
 enforce !(1.0 > 1.0); \
 enforce !(1.0 > 2.0); \
 enforce 2.0 > 1.0; \
-return "(comparisons on Double) work";
+return "(comparisons on Double) work"
 
 enforce 1 <i 2; \
 enforce !(2 <i 1); \
@@ -107,11 +112,13 @@ enforce 1 >=i 1; \
 enforce !(1 >i 1); \
 enforce !(1 >i 2); \
 enforce 2 >i 1; \
-return "(comparisons on Integer) work";
+return "(comparisons on Integer) work"
+
+define concept A{ a : Integer }
 
 enforce none ?? 1 = 1;\
-enforce some({a:1})?.a = 1;\
-return "(optionals and optional chaining) work";
+enforce some(A{a:1})?.a = some(1);\
+return "(optionals and optional chaining) work"
 
 //import org.accordproject.helloworld.*
 //set contract HelloWorld over TemplateModel{ name : "Winnie" }

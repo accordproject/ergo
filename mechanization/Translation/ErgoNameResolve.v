@@ -449,6 +449,17 @@ Section ErgoNameResolution.
                (resolve_ergo_expr ectxt tbl e0)
                (esuccess fname)
                (fold_right proc_one init_el el)
+      | SCallContract prov e0 el =>
+        let init_el := esuccess nil in
+        let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
+            elift2
+              cons
+              (resolve_ergo_expr ectxt tbl e)
+              acc
+        in
+        elift2 (SCallContract prov)
+               (resolve_ergo_expr ectxt tbl e0)
+               (fold_right proc_one init_el el)
       | SSetState prov e1 s2 =>
         elift2 (SSetState prov)
                (resolve_ergo_expr ectxt tbl e1)

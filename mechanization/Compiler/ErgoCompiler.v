@@ -244,6 +244,8 @@ Module ErgoCompiler.
     Ergo.SThrow prov e.
   Definition scallclause prov e0 c el : ergo_stmt :=
     Ergo.SCallClause prov e0 c el.
+  Definition scallcontract prov (e0 e1:ergo_expr) : ergo_stmt :=
+    Ergo.SCallContract prov e0 (e1::nil).
   Definition ssetstate prov e s : ergo_stmt :=
     Ergo.SSetState prov e s.
   Definition semit prov e s : ergo_stmt :=

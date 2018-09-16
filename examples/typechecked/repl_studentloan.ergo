@@ -22,12 +22,12 @@ define function add_monthly_interest (
 
 contract StudentLoan over LoanModel state LoanState
 {
-    clause init(principle : Double) {
+    clause init(principle : Double) : String {
         set state LoanState {balance: principle};
         return "Welcome to Amazing Bank, LLC."
     }
 
-    clause monthly_payment(req : LoanPayment) {
+    clause monthly_payment(req : LoanPayment) : Response {
         set state LoanState {
           balance: add_monthly_interest(state.balance, contract.rate)
         };
@@ -45,9 +45,9 @@ contract StudentLoan over LoanModel state LoanState
 }
 
 set contract StudentLoan over LoanModel {rate : 5.1} // ~ the federal rate!
-call init(10000.0); // how many semesters does that cover, do you think?
+call init(10000.0) // how many semesters does that cover, do you think?
 
-call monthly_payment(LoanPayment {amount: 100.0}); // already feels like a lot
-call monthly_payment(LoanPayment {amount: 0.0}); // oh no please send help
-call monthly_payment(LoanPayment {amount: -10.0}); // hmm maybe i can cheat the system
-call monthly_payment(LoanPayment {amount: 10000000.0}); // hey look i found a job
+call monthly_payment(LoanPayment {amount: 100.0}) // already feels like a lot
+call monthly_payment(LoanPayment {amount: 0.0}) // oh no please send help
+call monthly_payment(LoanPayment {amount: -10.0}) // hmm maybe i can cheat the system
+call monthly_payment(LoanPayment {amount: 10000000.0}) // hey look i found a job

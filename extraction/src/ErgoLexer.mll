@@ -42,6 +42,7 @@
 	      "emits", EMITS;
 	      "state", STATE;
 	      "call", CALL;
+	      "send", SEND;
 	      (* Expressions *)
  	      "enforce", ENFORCE;
 	      "if", IF;

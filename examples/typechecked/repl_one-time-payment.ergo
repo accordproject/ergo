@@ -29,9 +29,10 @@ define asset OneTimePaymentContract extends AccordContract {
 contract OneTimePayment over OneTimePaymentContract state OneTimePaymentState {
   clause init(request : InitRequest) : InitResponse emits PaymentObligation {
     emit PaymentObligation{
-      contract: contract.contractId,
-      promisor: contract.buyer,
-      promisee: contract.seller,
+      contract: contract,
+      promisor: some(contract.buyer),
+      promisee: some(contract.seller),
+			deadline: none,
       amount: contract.initialAmount,
       description: contract.buyer.partyId ++ " should pay contract amount to " ++ contract.seller.partyId
     };
@@ -46,7 +47,7 @@ contract OneTimePayment over OneTimePaymentContract state OneTimePaymentState {
    * Update the contract state once we've recieved a payment
    */
   clause paymentReceived(request : PaymentReceivedRequest): PaymentReceivedResponse {
-    enforce (state.status = "OBLIGATION_EMITTED") ;
+    enforce state.status = "OBLIGATION_EMITTED";
     set state OneTimePaymentState {
       stateId: state.stateId,
       status: "COMPLETED"
@@ -69,5 +70,5 @@ set contract OneTimePayment over OneTimePaymentContract{
     currencyCode: "USD"
   }
 }
-call init(InitRequest{});
-call paymentReceived(PaymentReceivedRequest{});
+call init(InitRequest{})
+call paymentReceived(PaymentReceivedRequest{})
