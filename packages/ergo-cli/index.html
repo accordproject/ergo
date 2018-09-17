@@ -91,6 +91,7 @@ span.response { color: green; }
 <div class="clearer"></div>
 
 <script src="./lib/ergotop-lib.js"></script>
+<script src="./cheatsheet.js"></script>
 <script>
 var ctx = ergotop.initRCtxt;
 
@@ -105,6 +106,9 @@ function setup_editor(id) {
     );
     editor.setOption("extraKeys", {
         "Cmd-Enter": update,
+        "Cmd-1": selectcheat1,
+        "Cmd-2": selectcheat2,
+        "Cmd-3": selectcheat3,
         "Ctrl-P": cheat
     });
     return editor;
@@ -160,73 +164,19 @@ function update(editor) {
     }
 }
 
-cheatsheet = (`\
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
-
-///
-define concept ShippingContract {penalty : Double}
-define concept LateRequest {weeks : Double}
-define concept LateResponse {message: String}
-
-///
-define concept ShippingState {}
-define concept InTransitState extends ShippingState {}
-define concept DeliveredState extends ShippingState {}
-
-///
-define concept Cheating extends ErgoErrorResponse {}
-define concept BillingEvent extends Event {amount: Double}
-
-///
-contract Shipping
-  over ShippingContract
-  state ShippingState
-{
-///
-  clause init()
-  {
-    set state InTransitState {};
-    return
-  }
-  
-///
-  clause late_delivery(req : LateRequest)
-    : LateResponse
-    throws Cheating
-  {
-///
-    emit BillingEvent {
-      amount:
-      req.weeks * contract.penalty
-    };
-
-///
-    enforce req.weeks > 0.0
-    else throw Cheating{
-      message: "Not actually late!"
-    };
-
-///
-    set state DeliveredState {};
-
-///
-    return LateResponse{message: "Delivery processed."}
-  }
-}
-
-///
-set contract Shipping
-  over ShippingContract {penalty : 5.0}
-
-///
-call init();
-///
-call late_delivery(LateRequest {weeks: 2.0});
-///
-call late_delivery(LateRequest {weeks: -1.0});
-`).split('///\n')
-
+cheatsheet = allcheatsheets[0];
+function pickcheat(num) {
+    cheatsheet = allcheatsheets[num-1];
+};
+function selectcheat1(editor) {
+    pickcheat(1);
+};
+function selectcheat2(editor) {
+    pickcheat(2);
+};
+function selectcheat3(editor) {
+    pickcheat(3);
+};
 function cheat(editor) {
     editor.setValue(editor.getValue() + (cheatsheet.shift() || ""));
     editor.setCursor(1000000, 0);
