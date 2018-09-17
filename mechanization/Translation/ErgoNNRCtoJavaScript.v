@@ -17,6 +17,7 @@
 Require Import String.
 Require Import List.
 
+Require Import ErgoSpec.Version.
 Require Import ErgoSpec.Common.Utils.Misc.
 Require Import ErgoSpec.Common.Utils.Result.
 Require Import ErgoSpec.Common.Utils.Names.
@@ -108,7 +109,8 @@ Section ErgoNNRCtoJavaScript.
              ++ "}" ++ eol.
 
   Definition preamble (eol:string) :=
-    "" ++ "'use strict';" ++ eol
+    "" ++ "/* Generated using ergoc version " ++ ergo_version ++ " */" ++ eol
+       ++ "'use strict';" ++ eol
        ++ "/*eslint-disable no-unused-vars*/" ++ eol
        ++ "/*eslint-disable no-undef*/" ++ eol
        ++ "/*eslint-disable no-var*/" ++ eol

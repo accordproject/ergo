@@ -17,6 +17,7 @@
 Require Import String.
 Require Import List.
 
+Require Import ErgoSpec.Version.
 Require Import ErgoSpec.Common.Utils.Misc.
 Require Import ErgoSpec.Common.Utils.Result.
 Require Import ErgoSpec.Common.Utils.Names.
@@ -84,11 +85,14 @@ Section ErgoNNRCtoJava.
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
     let tname := ft.(function_tablen_name) in
-    "class " ++ tname ++ " {" ++ eol
+    "public class " ++ tname ++ " implements ErgoContract {" ++ eol
              ++ (java_methods_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel) ++ eol
              ++ "}" ++ eol.
 
-  Definition preamble (eol:string) := eol.
+  Definition preamble (eol:string) :=
+    "" ++ "/* Generated using ergoc version " ++ ergo_version ++ " */" ++ eol
+       ++ "import com.google.gson.*;" ++ eol
+       ++ "import org.ergo.runtime.*;" ++ eol.
 
   Definition postamble (eol:string) := eol.
     
