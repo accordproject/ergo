@@ -3,6 +3,25 @@ namespace org.accordproject.safte
 import org.accordproject.cicero.contract.*
 import org.accordproject.cicero.runtime.*
 
+// Contract parameters
+define asset SafteContract extends AccordContract {
+  companyName : String,
+  purchaser : String,
+  purchaseAmount : Double,
+  discount : Double,
+  projectName : String,
+  amount : Double,
+  months : Integer
+}
+
+// Contract state
+define enum SafteStatus {
+  PENDING, EXECUTED
+}
+define asset SafteState extends AccordContractState {
+  status : SafteStatus
+}
+
 // Token sale Request/Response
 define transaction TokenSale extends Request {
   tokenPrice : Double
@@ -27,31 +46,52 @@ define transaction PayOut extends Response {
  amount : Double
 }
 
-define asset SafteContract extends AccordContract {
-  companyName : String,
-  purchaser : String,
-  purchaseAmount : Double,
-  discount : Double,
-  projectName : String,
-  amount : Double,
-  months : Integer
-}
+contract Safte
+  over SafteContract
+  state SafteState {
+  clause init() : Unit {
+    set state SafteState {
+      stateId: "1",
+      status: "PENDING"
+    };
+    return
+  }
 
-contract Safte over SafteContract {
   clause tokenSale(request : TokenSale) : TokenShare {
+    enforce state.status = "PENDING";
     let discountRate = (100.0 - contract.discount) / 100.00;
     let discountPrice = request.tokenPrice * discountRate;
-    return TokenShare{ tokenAmount : contract.purchaseAmount / discountPrice }
+    set state SafteState {
+      stateId: "1",
+      status: "EXECUTED"
+    };
+    return TokenShare{
+      tokenAmount : contract.purchaseAmount / discountPrice
+    }
   }
 
   clause equityFinancing(request : EquityFinancing) : EquityShare {
+    enforce state.status = "PENDING";
     let discountRate = (100.0 - contract.discount) / 100.00;
     let discountPrice = request.sharePrice * discountRate;
-    return EquityShare{ equityAmount : contract.purchaseAmount / discountPrice }
+    set state SafteState {
+      stateId: "1",
+      status: "EXECUTED"
+    };
+    return EquityShare{
+      equityAmount : contract.purchaseAmount / discountPrice
+    }
   }
 
   clause dissolutionEvent(request : DissolutionEvent) : PayOut {
-    return PayOut{ amount : contract.purchaseAmount }
+    enforce state.status = "PENDING";
+    set state SafteState {
+      stateId: "1",
+      status: "EXECUTED"
+    };
+    return PayOut{
+      amount : contract.purchaseAmount
+    }
   }
 }
 
@@ -67,7 +107,7 @@ set contract Safte over SafteContract{
   months : 12
 }
 
-call init(Request{})
+call init()
 call dissolutionEvent(DissolutionEvent{ cause : "Cold feet" })
 call tokenSale(TokenSale{ tokenPrice: 3.14 })
 call equityFinancing(EquityFinancing{ sharePrice: 2.98 })
