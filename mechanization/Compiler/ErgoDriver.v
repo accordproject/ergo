@@ -224,9 +224,10 @@ Section ErgoDriver.
     Definition ergo_module_to_java
                (ctxt:compilation_context)
                (p:laergo_module) : eresult ErgoCodeGen.java :=
+      let filename := p.(module_prefix) in
       let pc := ergo_module_to_ergoc ctxt p in
       let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
-      elift nnrc_module_to_java_top pn.
+      elift (nnrc_module_to_java_top filename) pn.
 
   End CompilerCore.
 

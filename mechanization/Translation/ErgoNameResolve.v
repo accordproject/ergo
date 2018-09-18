@@ -729,6 +729,7 @@ Section ErgoNameResolution.
            (mkModule
               m.(module_annot)
               m.(module_file)
+              m.(module_prefix)
               module_ns
               (fst nc), snd nc))
         (resolve_ergo_declarations
@@ -747,6 +748,7 @@ Section ErgoNameResolution.
            (mkModule
               m.(module_annot)
               m.(module_file)
+              m.(module_prefix)
               module_ns
               (fst nc), snd nc))
         (resolve_ergo_declarations
@@ -854,6 +856,7 @@ Section ErgoNameResolution.
       mkModule
         dummy_provenance
         ""
+        ""
         "n1"
         (DImport dummy_provenance (ImportAll dummy_provenance "n2")
         ::DFunc dummy_provenance "addFee" ergo_funcd1
@@ -880,15 +883,15 @@ Section ErgoNameResolution.
 
     Definition ergo_module2 : lrergo_module :=
       mkModule
-        dummy_provenance "" "n2" (DType dummy_provenance ergo_typed3::nil).
+        dummy_provenance "" "" "n2" (DType dummy_provenance ergo_typed3::nil).
 
     Definition ergo_hl : lrergo_module :=
       mkModule
-        dummy_provenance "" hyperledger_namespace (DType dummy_provenance ergo_typed_top::nil).
+        dummy_provenance "" "" hyperledger_namespace (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ergo_stdlib : lrergo_module :=
       mkModule
-        dummy_provenance "" stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
+        dummy_provenance "" "" stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ml1 : list lrergo_module := ergo_hl :: ergo_stdlib :: ergo_module2 :: ergo_module1 :: nil.
     Definition aml1 := resolve_ergo_modules (empty_namespace_ctxt "TEST") ml1.
