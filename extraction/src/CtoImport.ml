@@ -146,6 +146,7 @@ let cto_import f (m:model) : ErgoCompiler.cto_package =
   let decls = cto_declarations_of_body m.cto_body in
   { cto_package_namespace = namespace;
     cto_package_file = Util.char_list_of_string !filename;
+    cto_package_prefix = Util.char_list_of_string (Filename.chop_extension (Filename.basename !filename));
     cto_package_annot = dummy_provenance; (* XXX Not in JSON *)
     cto_package_imports = imports;
     cto_package_declarations = decls; }

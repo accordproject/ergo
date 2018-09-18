@@ -41,8 +41,6 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
   
   Definition nnrc_expr_to_javascript := NNRCtoJavaScript.nnrcToJS.
   
-  Definition nnrc_expr_to_javascript_fun := NNRCtoJavaScript.nnrcToJSFun.
-  
   Definition nnrc_expr_to_javascript_method := NNRCtoJavaScript.nnrcToJSMethod.
   
   Definition nnrc_expr_to_javascript_fun_lift
@@ -61,6 +59,8 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
   Definition java_quotel_double := NNRCtoJava.quotel_double.
   Definition java_eol_newline := NNRCtoJava.eol_newline.
 
+  Definition java_identifier_sanitizer := NNRCtoJava.javaIdentifierSanitize.
+  
   Definition java := CompLang.java.
   
   Definition nnrc_expr_to_java := NNRCtoJava.nnrcToJava.
@@ -73,7 +73,8 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
              (eol:String.string)
              (quotel:String.string)
              (ivs:list (String.string * String.string))
-    := NNRCtoJava.nnrcToJavaFun
+    := let e := cNNRCShadow.closeFreeVars "_" NNRCtoJava.javaIdentifierSanitize (cNNRC.NNRCVar input_v) e (List.map fst ivs) in (* XXX This line is a patch for a bug in Q*cert code-gen for Java - should be moved there *)
+       NNRCtoJava.nnrcToJavaFun
          i input_v e eol quotel ivs.
 
   (** java_data -- Internally data is kept as JSON *)

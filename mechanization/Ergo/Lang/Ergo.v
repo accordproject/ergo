@@ -169,6 +169,7 @@ Section Ergo.
       mkModule
         { module_annot : A;
           module_file : string;
+          module_prefix : string;
           module_namespace : namespace_name;
           module_declarations : list ergo_declaration; }.
 

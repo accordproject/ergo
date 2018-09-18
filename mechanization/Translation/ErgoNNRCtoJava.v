@@ -52,7 +52,7 @@ Section ErgoNNRCtoJava.
       * nat
     := 
       let '(s1, e1, t2) := ErgoCodeGen.nnrc_expr_to_java bind t i eol quotel nil in
-      let v0 := "v" ++ v in
+      let v0 := ErgoCodeGen.java_identifier_sanitizer ("v" ++ v) in
       (s1 ++ (ErgoCodeGen.java_indent i) ++ "var " ++ v0 ++ " = " ++ (ErgoCodeGen.from_java_data e1) ++ ";" ++ eol,
        ErgoCodeGen.mk_java_data v0,
        t2).
@@ -64,7 +64,7 @@ Section ErgoNNRCtoJava.
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
     let input_v := "context" in
-    ErgoCodeGen.nnrc_expr_to_java_method input_v e 1 eol quotel ((input_v, input_v)::nil) fname.
+    ErgoCodeGen.nnrc_expr_to_java_method input_v e 1 eol quotel ((input_v, input_v)::nil) (ErgoCodeGen.java_identifier_sanitizer fname).
 
   Definition java_method_of_nnrc_function
              (f:nnrc_function)
@@ -81,10 +81,11 @@ Section ErgoNNRCtoJava.
     multi_append eol (fun f => java_method_of_nnrc_function f eol quotel) fl.
 
   Definition java_class_of_nnrc_function_table
+             (filename:string)
              (ft:nnrc_function_table)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
-    let tname := ft.(function_tablen_name) in
+    let tname := ErgoCodeGen.java_identifier_sanitizer filename in (* XXX For Java class name has to be filename *)
     "public class " ++ tname ++ " implements ErgoContract {" ++ eol
              ++ (java_methods_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel) ++ eol
              ++ "}" ++ eol.
@@ -92,11 +93,12 @@ Section ErgoNNRCtoJava.
   Definition preamble (eol:string) :=
     "" ++ "/* Generated using ergoc version " ++ ergo_version ++ " */" ++ eol
        ++ "import com.google.gson.*;" ++ eol
-       ++ "import org.ergo.runtime.*;" ++ eol.
+       ++ "import org.accordproject.ergo.runtime.*;" ++ eol.
 
   Definition postamble (eol:string) := eol.
     
   Definition java_of_declaration
+             (filename:string)
              (s : nnrc_declaration)   (* statement to translate *)
              (t : nat)                (* next available unused temporary *)
              (i : nat)                (* indentation level *)
@@ -110,10 +112,11 @@ Section ErgoNNRCtoJava.
       | DNExpr e => java_of_expression e t i eol quotel
       | DNConstant v e => java_of_constant v e t i eol quotel
       | DNFunc f => ("",ErgoCodeGen.mk_java_data "",t) (* XXX Not sure what to do with functions *)
-      | DNFuncTable ft => (java_class_of_nnrc_function_table ft eol quotel,ErgoCodeGen.mk_java_data "null",t)
+      | DNFuncTable ft => (java_class_of_nnrc_function_table filename ft eol quotel,ErgoCodeGen.mk_java_data "null",t)
       end.
 
   Definition java_of_declarations
+             (filename:string)
              (sl : list nnrc_declaration) (* statements to translate *)
              (t : nat)                    (* next available unused temporary *)
              (i : nat)                    (* indentation level *)
@@ -124,7 +127,7 @@ Section ErgoNNRCtoJava.
              (s:nnrc_declaration)
              (acc:ErgoCodeGen.java * nat) : ErgoCodeGen.java * nat :=
            let '(s0, t0) := acc in
-           let '(s1, e1, t1) := java_of_declaration s t0 i eol quotel in
+           let '(s1, e1, t1) := java_of_declaration filename s t0 i eol quotel in
            (s0 ++ s1,
             t1) (* XXX Ignores e1! *)
        in
@@ -132,16 +135,18 @@ Section ErgoNNRCtoJava.
        sn.
 
   Definition nnrc_module_to_java
+             (filename:string)
              (p:nnrc_module)
              (eol:string)
              (quotel:string) : ErgoCodeGen.java :=
     (preamble eol) ++ eol
-                   ++ (java_of_declarations p.(modulen_declarations) 0 0 eol quotel)
+                   ++ (java_of_declarations filename p.(modulen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
   Definition nnrc_module_to_java_top
+             (filename:string)
              (p:nnrc_module) : ErgoCodeGen.java :=
-    nnrc_module_to_java p ErgoCodeGen.java_eol_newline ErgoCodeGen.java_quotel_double.
+    nnrc_module_to_java filename p ErgoCodeGen.java_eol_newline ErgoCodeGen.java_quotel_double.
 
 End ErgoNNRCtoJava.
 

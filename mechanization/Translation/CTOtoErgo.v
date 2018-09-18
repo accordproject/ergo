@@ -71,6 +71,7 @@ Section CTOtoErgo.
     mkModule
       p.(cto_package_annot)
       p.(cto_package_file)
+      p.(cto_package_prefix)
       p.(cto_package_namespace)
       ((map cto_import_to_ergo_declaration p.(cto_package_imports))
        ++ (map cto_declaration_to_ergo_declaration p.(cto_package_declarations))).

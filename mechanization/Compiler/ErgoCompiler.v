@@ -110,6 +110,7 @@ Module ErgoCompiler.
     Provenance.provenance
     -> String.string
     -> String.string
+    -> String.string
     -> list Ast.import_decl
     -> list cto_declaration
     -> cto_package

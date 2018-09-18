@@ -192,6 +192,7 @@ Section ErgoExpand.
       (fun ds => mkModule
                    p.(module_annot)
                    p.(module_file)
+                   p.(module_prefix)
                    p.(module_namespace)
                    ds)
       (ergo_expand_declarations p.(module_declarations)).
