@@ -1,0 +1,15 @@
+namespace org.accordproject.sample.corda.iou
+
+import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money.cto
+import org.accordproject.cicero.contract.* from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.runtime.* from https://models.accordproject.org/cicero/runtime.cto
+
+transaction IOURequest extends Request {
+  o Integer value
+}
+
+asset IOUContractModel extends AccordContract {
+  o String lender
+  o String borrower
+  o Integer value
+}

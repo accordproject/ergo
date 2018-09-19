@@ -18,15 +18,17 @@ open ErgoComp.ErgoCompiler
 
 type lang =
   | Ergo
-  | JavaScript
-  | JavaScriptCicero
+  | ES5
+  | ES6
+  | Cicero
   | Java
 
 let lang_of_name s =
   begin match s with
   | "ergo" -> Ergo
-  | "javascript" -> JavaScript
-  | "javascript_cicero" -> JavaScriptCicero
+  | "es5" -> ES5
+  | "es6" -> ES6
+  | "cicero" -> Cicero
   | "java" -> Java
   | _ -> ergo_raise (ergo_system_error ("Unknown language: " ^ s))
   end
@@ -34,20 +36,22 @@ let lang_of_name s =
 let name_of_lang s =
   begin match s with
   | Ergo -> "ergo"
-  | JavaScript -> "javascript"
-  | JavaScriptCicero -> "javascript_cicero"
+  | ES5 -> "es5"
+  | ES6 -> "es6"
+  | Cicero -> "cicero"
   | Java -> "java"
   end
 
 let extension_of_lang lang =
   begin match lang with
   | Ergo -> ".ergo"
-  | JavaScript -> ".js"
-  | JavaScriptCicero -> ".js"
+  | ES5 -> "_es5.js"
+  | ES6 -> ".js"
+  | Cicero -> "_cicero.js"
   | Java -> ".java"
   end
 
-let targets = [JavaScript;JavaScriptCicero (* ;Java *)]
+let targets = [ES5;ES6;Cicero;Java]
 
 let available_targets =
   "(available: " ^ (String.concat "," (List.map name_of_lang targets)) ^ ")"
@@ -62,7 +66,7 @@ type global_config = {
 
 let empty_config () = {
   econf_source = Ergo;
-  econf_target = JavaScript;
+  econf_target = ES6;
   econf_sources_text = [];
   econf_ctos = [];
   econf_modules = [];

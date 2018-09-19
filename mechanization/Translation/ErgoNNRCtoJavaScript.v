@@ -85,6 +85,13 @@ Section ErgoNNRCtoJavaScript.
     let fname := function_name_in_table tname f.(functionn_name) in
     javascript_function_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel.
 
+  Definition javascript_functions_of_nnrc_functions
+             (fl:list nnrc_function)
+             (tname:option string)
+             (eol:string)
+             (quotel:string) : ErgoCodeGen.javascript :=
+    multi_append eol (fun f => javascript_function_of_nnrc_function f tname eol quotel) fl.
+
   Definition javascript_method_of_nnrc_function
              (f:nnrc_function)
              (eol:string)
@@ -99,7 +106,15 @@ Section ErgoNNRCtoJavaScript.
              (quotel:string) : ErgoCodeGen.javascript :=
     multi_append eol (fun f => javascript_method_of_nnrc_function f eol quotel) fl.
 
-  Definition javascript_class_of_nnrc_function_table
+  Definition es5_of_nnrc_function_table
+             (ft:nnrc_function_table)
+             (eol:string)
+             (quotel:string) : ErgoCodeGen.javascript :=
+    (* let tname := ErgoCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in *)
+    let tname := None in
+    javascript_functions_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel ++ eol.
+
+  Definition es6_of_nnrc_function_table
              (ft:nnrc_function_table)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
@@ -107,6 +122,16 @@ Section ErgoNNRCtoJavaScript.
     "class " ++ tname ++ " {" ++ eol
              ++ (javascript_methods_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel) ++ eol
              ++ "}" ++ eol.
+
+  Definition javascript_of_nnrc_function_table
+             (version:jsversion)
+             (ft:nnrc_function_table)
+             (eol:string)
+             (quotel:string) : ErgoCodeGen.javascript :=
+    match version with
+    | ES5 => es5_of_nnrc_function_table ft eol quotel
+    | ES6 => es6_of_nnrc_function_table ft eol quotel
+    end.
 
   Definition preamble (eol:string) :=
     "" ++ "/* Generated using ergoc version " ++ ergo_version ++ " */" ++ eol
@@ -123,6 +148,7 @@ Section ErgoNNRCtoJavaScript.
        ++ eol.
     
   Definition javascript_of_declaration
+             (version:jsversion)
              (s : nnrc_declaration)   (* statement to translate *)
              (t : nat)                (* next available unused temporary *)
              (i : nat)                (* indentation level *)
@@ -136,10 +162,11 @@ Section ErgoNNRCtoJavaScript.
       | DNExpr e => javascript_of_expression e t i eol quotel
       | DNConstant v e => javascript_of_constant v e t i eol quotel
       | DNFunc f => (javascript_function_of_nnrc_function f None eol quotel,"null",t)
-      | DNFuncTable ft => (javascript_class_of_nnrc_function_table ft eol quotel,"null",t)
+      | DNFuncTable ft => (javascript_of_nnrc_function_table version ft eol quotel,"null",t)
       end.
 
   Definition javascript_of_declarations
+             (version:jsversion)
              (sl : list nnrc_declaration) (* statements to translate *)
              (t : nat)                    (* next available unused temporary *)
              (i : nat)                    (* indentation level *)
@@ -150,7 +177,7 @@ Section ErgoNNRCtoJavaScript.
              (s:nnrc_declaration)
              (acc:ErgoCodeGen.javascript * nat) : ErgoCodeGen.javascript * nat :=
            let '(s0, t0) := acc in
-           let '(s1, e1, t1) := javascript_of_declaration s t0 i eol quotel in
+           let '(s1, e1, t1) := javascript_of_declaration version s t0 i eol quotel in
            (s0 ++ s1,
             t1) (* XXX Ignores e1! *)
        in
@@ -158,16 +185,18 @@ Section ErgoNNRCtoJavaScript.
        sn.
 
   Definition nnrc_module_to_javascript
+             (version:jsversion)
              (p:nnrc_module)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
     (preamble eol) ++ eol
-                   ++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
+                   ++ (javascript_of_declarations version p.(modulen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
   Definition nnrc_module_to_javascript_top
+             (version:jsversion)
              (p:nnrc_module) : ErgoCodeGen.javascript :=
-    nnrc_module_to_javascript p ErgoCodeGen.javascript_eol_newline ErgoCodeGen.javascript_quotel_double.
+    nnrc_module_to_javascript version p ErgoCodeGen.javascript_eol_newline ErgoCodeGen.javascript_quotel_double.
 
 End ErgoNNRCtoJavaScript.
 

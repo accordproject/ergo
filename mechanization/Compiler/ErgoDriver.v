@@ -42,7 +42,7 @@ Require Import ErgoSpec.Translation.ErgoCompContext.
 Require Import ErgoSpec.Translation.ErgoCInline.
 Require Import ErgoSpec.Translation.ErgoCtoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
-Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScriptCicero.
+Require Import ErgoSpec.Translation.ErgoNNRCtoCicero.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 
 Section ErgoDriver.
@@ -197,11 +197,12 @@ Section ErgoDriver.
              ) inlined.
         
     Definition ergo_module_to_javascript
+               (version:jsversion)
                (ctxt:compilation_context)
                (p:laergo_module) : eresult ErgoCodeGen.javascript :=
       let pc := ergo_module_to_ergoc ctxt p in
       let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
-      elift nnrc_module_to_javascript_top pn.
+      elift (nnrc_module_to_javascript_top version) pn.
 
     Definition compilation_context_from_inputs
                (inputs:list lrergo_input) : eresult (laergo_module * compilation_context) :=
@@ -234,13 +235,14 @@ Section ErgoDriver.
   Section CompilerTop.
 
     Definition ergo_module_to_javascript_top
+               (version:jsversion)
                (inputs:list lrergo_input) : eresult result_file :=
       let bm : eresult brand_model := brand_model_from_inputs inputs in
       eolift (fun bm :brand_model=>
                 let cinit := compilation_context_from_inputs inputs in
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
-                          let res := ergo_module_to_javascript ctxt p in
+                          let res := ergo_module_to_javascript version ctxt p in
                           elift (mkResultFile p.(module_file)) res)
                        cinit) bm.
 
@@ -255,7 +257,7 @@ Section ErgoDriver.
                           elift (mkResultFile p.(module_file)) res)
                        cinit) bm.
 
-    Definition ergo_module_to_javascript_cicero_top
+    Definition ergo_module_to_cicero_top
                (inputs:list lrergo_input) : eresult result_file :=
       let bm : eresult brand_model := brand_model_from_inputs inputs in
       eolift
@@ -272,7 +274,7 @@ Section ErgoDriver.
                          let sigs := lookup_contract_signatures (snd c) in
                          let pc := ergo_module_to_ergoc ctxt p in
                          let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
-                         elift (ergoc_module_to_javascript_cicero contract_name (snd c).(contract_state) sigs) pn)
+                         elift (ergoc_module_to_cicero contract_name (snd c).(contract_state) sigs) pn)
                       ec
                 in
                 elift (mkResultFile p.(module_file)) res)

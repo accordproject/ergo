@@ -104,7 +104,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static execute(ergoSources,ctoSources,contractJson,requestJson,stateJson,contractName) {
-        return (Ergo.compileAndLink(ergoSources,ctoSources,'javascript')).then((ergoCode) => {
+        return (Ergo.compileAndLink(ergoSources,ctoSources,'es6')).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
@@ -124,7 +124,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static init(ergoSources,ctoSources,contractJson,requestJson,contractName) {
-        return (Ergo.compileAndLink(ergoSources,ctoSources,'javascript')).then((ergoCode) => {
+        return (Ergo.compileAndLink(ergoSources,ctoSources,'es6')).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {

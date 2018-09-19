@@ -17,6 +17,7 @@
 Require Import String.
 Require Import List.
 
+Require Import ErgoSpec.Common.Utils.Misc.
 Require Import ErgoSpec.Common.Utils.Result.
 Require Import ErgoSpec.Common.Utils.Names.
 Require Import ErgoSpec.Common.Types.ErgoType.
@@ -24,7 +25,7 @@ Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 
-Section ErgoNNRCtoJavaScriptCicero.
+Section ErgoNNRCtoCicero.
   Local Open Scope string_scope.
 
   Definition accord_annotation
@@ -128,7 +129,7 @@ Section ErgoNNRCtoJavaScriptCicero.
              (quotel:string) : ErgoCodeGen.javascript :=
     (preamble eol) ++ eol
                    ++ (wrapper_functions contract_name signatures eol quotel)
-                   ++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
+                   ++ (javascript_of_declarations ES6 p.(modulen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
   Fixpoint filter_signatures
@@ -174,7 +175,7 @@ Section ErgoNNRCtoJavaScriptCicero.
       (nil, "")
     end.
 
-  Definition ergoc_module_to_javascript_cicero
+  Definition ergoc_module_to_cicero
              (contract_name:string)
              (contract_state_type:option ergo_type)
              (sigs: list (string * ergo_type_signature))
@@ -186,5 +187,5 @@ Section ErgoNNRCtoJavaScriptCicero.
       ErgoCodeGen.javascript_eol_newline
       ErgoCodeGen.javascript_quotel_double.
 
-End ErgoNNRCtoJavaScriptCicero.
+End ErgoNNRCtoCicero.
 

@@ -1,0 +1,4 @@
+{
+    "$class": "org.accordproject.sample.corda.iou.IOURequest",
+    "value": -10
+}

@@ -55,7 +55,7 @@ MODULES = \
   Translation/ErgotoErgoC \
   Translation/ErgoCtoErgoNNRC \
   Translation/ErgoNNRCtoJavaScript \
-  Translation/ErgoNNRCtoJavaScriptCicero \
+  Translation/ErgoNNRCtoCicero \
   Translation/ErgoNNRCtoJava \
   Compiler/ErgoDriver \
   Compiler/ErgoCompiler \
