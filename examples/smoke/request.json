@@ -1,4 +1,5 @@
 {
     "$class": "org.accordproject.smoke.MyRequest",
-    "input": "Accord Project"
+    "input": "Accord Project",
+    "someint": 1
 }

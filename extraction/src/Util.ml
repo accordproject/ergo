@@ -228,3 +228,10 @@ let get_local_part name =
       let local = String.sub name (i+1) (String.length name - (i+1)) in
       Some (char_list_of_string local)
   end
+
+let class_prefix_of_filename filename =
+  begin try
+    Filename.chop_extension (Filename.basename filename)
+  with
+  | Invalid_argument _ -> "logic"
+  end

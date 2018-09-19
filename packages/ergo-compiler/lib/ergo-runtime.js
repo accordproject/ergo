@@ -78,6 +78,12 @@ function fastdistinct(b) {
 }
 function compare(v1, v2) {
     var t1 = typeof v1, t2 = typeof v2;
+    if (t1 == "object" && v1 !== null) {
+        if (v1.hasOwnProperty('nat')) { t1 = "number"; v1 = v1.nat; }
+    };
+    if (t2 == "object" && v2 !== null) {
+        if (v2.hasOwnProperty('nat')) { t2 = "number"; v2 = v2.nat; }
+    };
     if (t1 != t2)
         return t1 < t2 ? -1 : +1;
     var a1 = {}.toString.apply(v1), a2 = {}.toString.apply(v2);
@@ -437,68 +443,70 @@ function escapeRegExp(string){
 }
 
 // Nat operations
-
+function natUnbox(v) {
+    var t = typeof v;
+    if (t == "number") { return Math.floor(v); }
+    if (t == "object") { if (v !== null) if (v.hasOwnProperty('nat')) return Math.floor(v.nat) };
+    return v;
+}
 function natPlus(v1, v2) {
-    return { "nat" : v1.nat + v2.nat };
+    return natUnbox(v1) + natUnbox(v2);
 }
 function natMinus(v1, v2) {
-    return { "nat" : v1.nat - v2.nat };
+    return natUnbox(v1) - natUnbox(v2);
 }
 function natMult(v1, v2) {
-    return { "nat" : v1.nat * v2.nat };
+    return natUnbox(v1) * natUnbox(v2);
 }
 function natDiv(v1, v2) {
-    return { "nat" : Math.floor(v1.nat / v2.nat) };
-}
-function natDiv(v1, v2) {
-    return { "nat" : Math.floor(v1.nat / v2.nat) };
+    return Math.floor(natUnbox(v1) / natUnbox(v2));
 }
 function natRem(v1, v2) {
-    return { "nat" : Math.floor(v1.nat % v2.nat) };
+    return Math.floor(natUnbox(v1) % natUnbox(v2));
 }
 function natMin(v1, v2) {
-    return { "nat" : Math.min(v1.nat,v2.nat) };
+    return Math.min(natUnbox(v1),natUnbox(v2));
 }
 function natMax(v1, v2) {
-    return { "nat" : Math.max(v1.nat,v2.nat) };
+    return Math.max(natUnbox(v1),natUnbox(v2));
 }
 function natAbs(v) {
-    return { "nat" : Math.abs(v.nat) };
+    return Math.abs(natUnbox(v1),natUnbox(v2));
 }
 function natLog2(v) {
-    return { "nat" : Math.floor(Math.log2(v.nat)) }; // Default Z.log2 is log_inf, biggest integer lower than log2
+    return Math.floor(Math.log2(natUnbox(v))); // Default Z.log2 is log_inf, biggest integer lower than log2
 }
 function natSqrt(v) {
-    return { "nat" : Math.floor(Math.sqrt(v.nat)) }; // See Z.sqrt biggest integer lower than sqrt
+    return Math.floor(Math.sqrt(natUnbox(v))); // See Z.sqrt biggest integer lower than sqrt
 }
 function natSum(b) {
     var result = 0;
     for (var i=0; i<b.length; i++)
-        result += b[i].nat;
-    return { "nat" : result };
+        result += natUnbox(b[i]);
+    return result;
 }
 function natMinApply(b) {
     var numbers = [ ];
     for (var i=0; i<b.length; i++)
-        numbers.push(b[i].nat);
-    return { "nat" : Math.min.apply(Math,numbers) };
+        numbers.push(natUnbox(b[i].nat));
+    return Math.min.apply(Math,numbers);
 }
 function natMaxApply(b) {
     var numbers = [ ];
     for (var i=0; i<b.length; i++)
-        numbers.push(b[i].nat);
-    return { "nat" : Math.max.apply(Math,numbers) };
+        numbers.push(natUnbox(b[i]));
+    return Math.max.apply(Math,numbers);
 }
 function natArithMean(b) {
     var len = b.length;
     if(len == 0) {
-        return { "nat" : 0 };
+        return 0;
     } else {
-        return { "nat" : Math.floor(natSum(b)/len) };
+        return Math.floor(natSum(b)/len);
     }
 }
 function count(v) {
-    return { "nat" : v.length };
+    return v.length;
 }
 function floatOfNat(v) {
     if(v.hasOwnProperty('nat')){
