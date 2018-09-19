@@ -17,6 +17,7 @@ Require Qcert.Common.Brands.BrandRelation.
 
 Require ErgoSpec.Version.
 Require ErgoSpec.Backend.ErgoBackend.
+Require ErgoSpec.Common.Utils.Misc.
 Require ErgoSpec.Common.Utils.Provenance.
 Require ErgoSpec.Common.Utils.Names.
 Require ErgoSpec.Common.Utils.Result.
@@ -292,14 +293,15 @@ Module ErgoCompiler.
 
   (** Compilation *)
   Definition ergo_module_to_javascript :
-    list ergo_input
+    Misc.jsversion
+    -> list ergo_input
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_javascript_top.
 
-  Definition ergo_module_to_javascript_cicero :
+  Definition ergo_module_to_cicero :
     list ergo_input
     -> Result.eresult result_file
-    := ErgoDriver.ergo_module_to_javascript_cicero_top.
+    := ErgoDriver.ergo_module_to_cicero_top.
 
   Definition ergo_module_to_java :
     list ergo_input

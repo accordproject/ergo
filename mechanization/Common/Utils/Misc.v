@@ -77,4 +77,11 @@ Section Misc.
     (** Turns "foo.bar.baz" into "baz" if there is at least on '.' character *)
     Parameter get_local_part : string -> option string.
   End StringStuff.
+
+  Section Config.
+    Inductive jsversion :=
+    | ES5 : jsversion
+    | ES6 : jsversion.
+  End Config.
+
 End Misc.

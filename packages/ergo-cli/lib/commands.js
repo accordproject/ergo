@@ -28,7 +28,7 @@ class Commands {
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} target language (javascript|javascript_cicero)
+     * @param {string} target language (es5|es6|cicero|java)
      * @param {boolean} link to JavaScript runtime
      * @returns {object} Promise to the compiled JavaScript code
      */

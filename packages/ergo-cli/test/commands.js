@@ -29,18 +29,18 @@ describe('ergo', () => {
         it('should compile a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile([ergoPath], [ctoPath], 'javascript', false);
+            const result = await Commands.compile([ergoPath], [ctoPath], 'es6', false);
             result.should.not.be.null;
         });
         it('should compile and link a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile([ergoPath], [ctoPath], 'javascript', true);
+            const result = await Commands.compile([ergoPath], [ctoPath], 'es6', true);
             result.should.not.be.null;
         });
         it('should compile a smart Ergo contract without cto', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
-            const result = await Commands.compile([ergoPath], undefined, 'javascript', false);
+            const result = await Commands.compile([ergoPath], undefined, 'es6', false);
             result.should.not.be.null;
         });
     });

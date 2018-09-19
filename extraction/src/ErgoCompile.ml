@@ -20,12 +20,12 @@ open ErgoConfig
 let res_convert code =
   (string_of_char_list code.res_file, string_of_char_list code.res_content)
 
-let compile_module_to_javascript inputs =
-  let code = ErgoCompiler.ergo_module_to_javascript inputs in
+let compile_module_to_javascript version inputs =
+  let code = ErgoCompiler.ergo_module_to_javascript version inputs in
   wrap_jerrors res_convert code
 
-let compile_module_to_javascript_cicero inputs =
-  let code = ErgoCompiler.ergo_module_to_javascript_cicero inputs in
+let compile_module_to_cicero inputs =
+  let code = ErgoCompiler.ergo_module_to_cicero inputs in
   wrap_jerrors res_convert code
 
 let compile_module_to_java inputs =
@@ -36,10 +36,12 @@ let ergo_compile target_lang inputs =
   let result =
     begin match target_lang with
     | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
-    | JavaScript ->
-        compile_module_to_javascript inputs
-    | JavaScriptCicero ->
-        compile_module_to_javascript_cicero inputs
+    | ES5 ->
+        compile_module_to_javascript ES5 inputs
+    | ES6 ->
+        compile_module_to_javascript ES6 inputs
+    | Cicero ->
+        compile_module_to_cicero inputs
     | Java ->
         compile_module_to_java inputs
     end

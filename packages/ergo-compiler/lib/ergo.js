@@ -60,7 +60,7 @@ class Ergo {
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} target language (javascript|javascript_cicero)
+     * @param {string} target language (es5|es6|cicero|java)
      * @returns {string} The compiled JavaScript code
      */
     static compileToJavaScript(ergoSources,ctoSources,target) {
@@ -93,7 +93,7 @@ class Ergo {
      *
      * @param {Array<{name:string, content:string}>} ergoSources texts for Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources texts for CTO models
-     * @param {string} target language (javascript|javascript_cicero)
+     * @param {string} target language (es5|es6|cicero|java)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
     static compileToJavaScriptAndLink(ergoSources,ctoSources,target) {
@@ -110,7 +110,7 @@ class Ergo {
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} target language (javascript|javascript_cicero)
+     * @param {string} target language (es5|es6|cicero|java)
      * @returns {object} Promise to the compiled JavaScript code
      */
     static compile(ergoSources,ctoSources,target) {
@@ -123,7 +123,7 @@ class Ergo {
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} target language (javascript|javascript_cicero)
+     * @param {string} target language (es5|es6|cicero|java)
      * @returns {object} Promise to the compiled and linked JavaScript code
      */
     static compileAndLink(ergoSources,ctoSources,target) {

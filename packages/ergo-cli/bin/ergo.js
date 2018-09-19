@@ -27,7 +27,7 @@ require('yargs')
             describe: 'paths to CTO models'
         }).array('cto');
         yargs.option('target', {
-            describe: 'target language (javascript|javascript_cicero)',
+            describe: 'target language (es5|es6|cicero|java)',
             type: 'string',
             default: 'javascript'
         });

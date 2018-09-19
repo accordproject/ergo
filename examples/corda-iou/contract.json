@@ -1,0 +1,7 @@
+{
+  "$class": "org.accordproject.sample.corda.iou.IOUContractModel",
+  "contractId": "3332c23d-6792-4bb5-8fee-a3a43f5c4f38",
+  "lender": "Matt",
+  "borrower": "Jerome",
+  "value": 10
+}

@@ -41,7 +41,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/bad-logic', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'javascript');
+            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6');
             result.error.kind.should.equal('ParseError');
             result.error.message.should.equal('Parse error');
             result.error.locstart.should.deep.equal({ 'line' : 17, 'character' : 20 });
@@ -66,33 +66,47 @@ describe('ergo-compiler', () => {
             result.should.deep.equal('Import not found: org.accordproject.base');
         });
     });
-    describe('#compilehellojs', function () {
-        it('should compile a smart Ergo contract to JavaScript', async function () {
+    describe('#compile', function () {
+        it('should compile a smart Ergo contract to JavaScript (ES5)', async function () {
             const ergoFile = Path.resolve('test', 'data/helloworld', 'logic.ergo');
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'javascript');
+            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es5');
             result.success.should.not.be.null;
         });
-    });
-    describe('#compileandlinkhellojs', function () {
-        it('should compile and link a smart Ergo contract to JavaScript', async function () {
+        it('should compile a smart Ergo contract to JavaScript (ES6)', async function () {
             const ergoFile = Path.resolve('test', 'data/helloworld', 'logic.ergo');
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compileAndLink([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'javascript');
+            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6');
+            result.success.should.not.be.null;
+        });
+        it('should compile and link a smart Ergo contract to JavaScript (ES5)', async function () {
+            const ergoFile = Path.resolve('test', 'data/helloworld', 'logic.ergo');
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            const result = await Ergo.compileAndLink([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es5');
+            result.success.should.not.be.null;
+        });
+        it('should compile and link a smart Ergo contract to JavaScript (ES6)', async function () {
+            const ergoFile = Path.resolve('test', 'data/helloworld', 'logic.ergo');
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            const result = await Ergo.compileAndLink([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6');
             result.success.should.not.be.null;
         });
     });
     describe('#compilehellocicero', function () {
-        it('should compile a smart Ergo contract to JavaScript for Cicero', async function () {
+        it('should compile a smart Ergo contract for Cicero', async function () {
             const ergoFile = Path.resolve('test', 'data/helloworld', 'logic.ergo');
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'javascript_cicero');
+            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'cicero');
             result.success.should.not.be.null;
         });
     });
@@ -102,7 +116,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'javascript');
+            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6');
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.base', 'verbose' : 'Compilation error. Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
@@ -112,7 +126,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compileAndLink([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'javascript');
+            const result = await Ergo.compileAndLink([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6');
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.base', 'verbose' : 'Compilation error. Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });

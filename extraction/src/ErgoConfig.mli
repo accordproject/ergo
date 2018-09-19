@@ -16,8 +16,9 @@ open ErgoComp.ErgoCompiler
 
 type lang =
   | Ergo
-  | JavaScript
-  | JavaScriptCicero
+  | ES5
+  | ES6
+  | Cicero
   | Java
 
 val lang_of_name : string -> lang
