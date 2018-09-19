@@ -28,16 +28,17 @@ const {
  */
 class ErgoEngine {
     /**
-     * Execute compiled Ergo code
+     * Execute Ergo code compiled to ES6
      *
      * @param {string} ergoCode JavaScript code for ergo logic
+     * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
      * @param {string} contractName of the contract to execute
      * @returns {object} Promise to the result of execution
      */
-    static executeErgoCode(ergoCode,contractJson,requestJson,stateJson,contractName) {
+    static executeErgoCode(ergoCode,codeKind,contractJson,requestJson,stateJson,contractName) {
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -50,8 +51,15 @@ class ErgoEngine {
         const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': Moment() };
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
-        const contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
-        const clauseCall = 'contract.main(params);'; // Create the clause call
+        let contract;
+        let clauseCall;
+        if (codeKind === 'es5') {
+            contract = '';
+            clauseCall = 'main(params);'; // Create the clause call
+        } else {
+            contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
+            clauseCall = 'contract.main(params);'; // Create the clause call
+        }
         const result = vm.run(contract + clauseCall); // Call the logic
         if (result.hasOwnProperty('left')) {
             return Promise.resolve(result.left);
@@ -64,12 +72,13 @@ class ErgoEngine {
      * Initialize state
      *
      * @param {string} ergoCode JavaScript code for ergo logic
+     * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {string} contractName of the contract to initialize
      * @returns {object} Promise to the result of initialization
      */
-    static initErgoCode(ergoCode,contractJson,requestJson,contractName) {
+    static initErgoCode(ergoCode,codeKind,contractJson,requestJson,contractName) {
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -82,8 +91,15 @@ class ErgoEngine {
         const params = { 'contract': contractJson, 'request': requestJson, 'state': {}, 'emit': [], 'now': Moment() };
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
-        const contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
-        const clauseCall = 'contract.init(params);'; // Create the clause call
+        let contract;
+        let clauseCall;
+        if (codeKind === 'es5') {
+            contract = '';
+            clauseCall = 'init(params);'; // Create the clause call
+        } else {
+            contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
+            clauseCall = 'contract.init(params);'; // Create the clause call
+        }
         const result = vm.run(contract + clauseCall); // Call the logic
         if (result.hasOwnProperty('left')) {
             return Promise.resolve(result.left);
@@ -97,18 +113,19 @@ class ErgoEngine {
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
+     * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
      * @param {string} contractName of the contract to execute
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoSources,ctoSources,contractJson,requestJson,stateJson,contractName) {
-        return (Ergo.compileAndLink(ergoSources,ctoSources,'es6')).then((ergoCode) => {
+    static execute(ergoSources,ctoSources,codeKind,contractJson,requestJson,stateJson,contractName) {
+        return (Ergo.compileAndLink(ergoSources,ctoSources,codeKind)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
-                return this.executeErgoCode(ergoCode.success,contractJson,requestJson,stateJson,contractName);
+                return this.executeErgoCode(ergoCode.success,codeKind,contractJson,requestJson,stateJson,contractName);
             }
         });
     }
@@ -118,17 +135,18 @@ class ErgoEngine {
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
+     * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {string} contractName of the contract to execute
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoSources,ctoSources,contractJson,requestJson,contractName) {
-        return (Ergo.compileAndLink(ergoSources,ctoSources,'es6')).then((ergoCode) => {
+    static init(ergoSources,ctoSources,codeKind,contractJson,requestJson,contractName) {
+        return (Ergo.compileAndLink(ergoSources,ctoSources,codeKind)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
-                return this.initErgoCode(ergoCode.success,contractJson,requestJson,contractName);
+                return this.initErgoCode(ergoCode.success,codeKind,contractJson,requestJson,contractName);
             }
         });
     }

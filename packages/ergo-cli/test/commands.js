@@ -44,6 +44,13 @@ describe('ergo', () => {
             result.should.not.be.null;
         });
     });
+    describe('#compilemissing', function () {
+        it('should fail when compiling missing Ergo', async function () {
+            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
+            const result = await Commands.compile(undefined, [ctoPath], 'es6', false);
+            result.error.message.should.equal('No input ergo found');
+        });
+    });
     describe('#executehello', function () {
         it('should execute a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
@@ -64,6 +71,16 @@ describe('ergo', () => {
             result.error.message.should.equal('Cannot find type with name \'TemplateModel\'');
             result.error.locstart.should.deep.equal({ 'line' : 16, 'character' : 25 });
             result.error.locend.should.deep.equal({ 'line' : 16, 'character' : 38 });
+        });
+    });
+    describe('#executemissing', function () {
+        it('should fail when executing missing Ergo', async function () {
+            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
+            const contractPath = Path.resolve(__dirname, 'data/helloworld', 'contract.json');
+            const requestPath = Path.resolve(__dirname, 'data/helloworld', 'request.json');
+            const statePath = Path.resolve(__dirname, 'data/helloworld', 'state.json');
+            const result = await Commands.execute(undefined, [ctoPath], contractPath, [requestPath], statePath, 'org.accordproject.helloworld.HelloWorld', false);
+            result.error.message.should.equal('No input ergo found');
         });
     });
     describe('#executehellostate', function () {
@@ -103,6 +120,31 @@ describe('ergo', () => {
             const requestPath = Path.resolve(__dirname, 'data/installment-sale', 'request.json');
             const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestInitPath,requestPath], null, 'org.accordproject.installmentsale.InstallmentSale', false);
             result.state.balance_remaining.should.equal(7612.499999999999);
+        });
+    });
+    describe('#executepromissorynote', function () {
+        it('should execute a smart Ergo contract', async function () {
+            const ergoPath = Path.resolve(__dirname, 'data/promissory-note', 'logic.ergo');
+            const ctoPath1 = Path.resolve(__dirname, 'data/promissory-note', 'business.cto');
+            const ctoPath2 = Path.resolve(__dirname, 'data/promissory-note', 'model.cto');
+            const contractPath = Path.resolve(__dirname, 'data/promissory-note', 'contract.json');
+            const requestPath = Path.resolve(__dirname, 'data/promissory-note', 'request.json');
+            const statePath = Path.resolve(__dirname, 'data/promissory-note', 'state.json');
+            const result = await Commands.execute([ergoPath], [ctoPath1, ctoPath2], contractPath, [requestPath], statePath, 'org.accordproject.promissorynote.PromissoryNote', false);
+            result.response.outstandingBalance.should.equal(1425.4396822450633);
+        });
+    });
+    describe('#executepromissorynotemodule', function () {
+        it('should execute a smart Ergo contract with two modules', async function () {
+            const ergoPath1 = Path.resolve(__dirname, 'data/promissory-note', 'money.ergo');
+            const ergoPath2 = Path.resolve(__dirname, 'data/promissory-note', 'logic3.ergo');
+            const ctoPath1 = Path.resolve(__dirname, 'data/promissory-note', 'business.cto');
+            const ctoPath2 = Path.resolve(__dirname, 'data/promissory-note', 'model.cto');
+            const contractPath = Path.resolve(__dirname, 'data/promissory-note', 'contract.json');
+            const requestPath = Path.resolve(__dirname, 'data/promissory-note', 'request.json');
+            const statePath = Path.resolve(__dirname, 'data/promissory-note', 'state.json');
+            const result = await Commands.execute([ergoPath1, ergoPath2], [ctoPath1, ctoPath2], contractPath, [requestPath], statePath, 'org.accordproject.promissorynote.PromissoryNote', false);
+            result.response.outstandingBalance.should.equal(1425.4396822450633);
         });
     });
     describe('#parsectotofile', function () {

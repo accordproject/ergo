@@ -64,7 +64,7 @@ function compare(expected,actual) {
     }
 }
 
-describe('Execute', () => {
+describe('Execute ES6', () => {
 
     afterEach(() => {});
 
@@ -103,11 +103,61 @@ describe('Execute', () => {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoSources, ctoSources, contractJson, requestJson, contractname);
+                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, requestJson, contractname);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, contractJson, requestJson, stateJson, contractname);
+                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es6', contractJson, requestJson, stateJson, contractname);
+                    return compare(expected,actual);
+                }
+            });
+        });
+    }
+});
+describe('Execute ES5', () => {
+
+    afterEach(() => {});
+
+    for (const i in workload) {
+        const test = workload[i];
+        const name = test.name;
+        const dir = test.dir;
+        const ergo = test.ergo;
+        const models = test.models;
+        const contract = test.contract;
+        const request = test.request;
+        const state = test.state;
+        const contractname = test.contractname;
+        const expected = test.expected;
+        let resultKind;
+        if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
+            resultKind = 'fail';
+        } else {
+            resultKind = 'succeed';
+        }
+
+        describe('#'+name, function () {
+            it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
+                const ergoSources = [];
+                for (let i = 0; i < ergo.length; i++) {
+                    const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
+                    const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+                    ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
+                }
+                let ctoSources = [];
+                for (let i = 0; i < models.length; i++) {
+                    const ctoFile = Path.resolve(__dirname, dir, models[i]);
+                    const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+                    ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
+                }
+                const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
+                const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
+                if (state === null) {
+                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es5', contractJson, requestJson, contractname);
+                    return compare(expected,actual);
+                } else {
+                    const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
+                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es5', contractJson, requestJson, stateJson, contractname);
                     return compare(expected,actual);
                 }
             });

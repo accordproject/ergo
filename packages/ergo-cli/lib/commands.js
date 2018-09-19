@@ -88,16 +88,16 @@ class Commands {
         const firstRequest = requestsJson[0];
         let initResponse;
         if (statePath === null) {
-            initResponse = ErgoEngine.init(ergoSources,ctoSources,contractJson,firstRequest,contractName);
+            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,firstRequest,contractName);
         } else {
             const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-            initResponse = ErgoEngine.execute(ergoSources,ctoSources,contractJson,firstRequest,stateJson,contractName);
+            initResponse = ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,firstRequest,stateJson,contractName);
         }
         // Get all the other requests and chain execution through Promise.reduce()
         const otherRequests = requestsJson.slice(1, requestsJson.length);
         return otherRequests.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.execute(ergoSources,ctoSources,contractJson,requestJson,result.state,contractName);
+                return ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,requestJson,result.state,contractName);
             });
         }, initResponse);
     }
