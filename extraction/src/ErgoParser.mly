@@ -104,7 +104,7 @@ emodule:
 | NAMESPACE qn = qname_prefix ds = decls
     { { module_annot = mk_provenance $startpos $endpos;
         module_file = Util.char_list_of_string !filename;
-        module_prefix = Util.char_list_of_string (Filename.chop_extension (Filename.basename !filename));
+        module_prefix = Util.char_list_of_string (Util.class_prefix_of_filename !filename);
         module_namespace = qn;
         module_declarations = ds; } }
 

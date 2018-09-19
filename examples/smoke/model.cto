@@ -16,6 +16,7 @@ namespace org.accordproject.smoke
 
 transaction MyRequest {
   o String input
+  o Integer someint
 }
 
 transaction MyResponse {

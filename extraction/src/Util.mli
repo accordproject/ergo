@@ -85,3 +85,6 @@ val coq_toposort : ('a -> 'b) -> ('a -> char list) -> ('a * 'a list) list -> 'a 
 
 val get_local_part : char list -> (char list) option
 
+val class_prefix_of_filename : string -> string
+
+
