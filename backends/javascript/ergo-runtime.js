@@ -552,7 +552,7 @@ function dateTimeDurationFromString(stringDuration) {
     // TODO verify what the string format for durations is going to be.
     // Here we assume a number adjoined to a valid unit with a dash.
     if (typeof stringDuration === "string") {
-	      parts = stringDuration.split("-");
+	      var parts = stringDuration.split("-");
 	      if (parts.length === 2) {
 	          mustBeUnit(parts[1]);
             return moment.duration(parseFloat(parts[0]),parts[1]+"s");

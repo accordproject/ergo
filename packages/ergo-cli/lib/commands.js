@@ -47,11 +47,7 @@ class Commands {
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
         }
-        if (link) {
-            return Ergo.compileAndLink(ergoSources,ctoSources,target);
-        } else  {
-            return Ergo.compile(ergoSources,ctoSources,target);
-        }
+        return Ergo.compile(ergoSources,ctoSources,target,link);
     }
 
     /**
