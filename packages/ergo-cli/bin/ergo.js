@@ -29,7 +29,7 @@ require('yargs')
         yargs.option('target', {
             describe: 'target language (es5|es6|cicero|java)',
             type: 'string',
-            default: 'javascript'
+            default: 'es6'
         });
         yargs.option('link', {
             describe: 'link to JavaScript runtime',
