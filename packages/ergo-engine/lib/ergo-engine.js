@@ -121,7 +121,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static execute(ergoSources,ctoSources,codeKind,contractJson,requestJson,stateJson,contractName) {
-        return (Ergo.compileAndLink(ergoSources,ctoSources,codeKind)).then((ergoCode) => {
+        return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
@@ -142,7 +142,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static init(ergoSources,ctoSources,codeKind,contractJson,requestJson,contractName) {
-        return (Ergo.compileAndLink(ergoSources,ctoSources,codeKind)).then((ergoCode) => {
+        return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {

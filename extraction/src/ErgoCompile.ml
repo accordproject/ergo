@@ -48,13 +48,21 @@ let ergo_compile target_lang inputs =
   in
   result
 
+let ergo_link gconf result =
+  if should_link gconf
+  then
+    result ^ StdlibResources.ergo_runtime
+  else
+    result
+
 let ergo_proc gconf inputs =
   let target_lang = ErgoConfig.get_target_lang gconf in
   let ext = extension_of_lang target_lang in
   let (source_file,result) = ergo_compile target_lang inputs in
-  Printf.printf "Compiled Ergo '%s' -- " source_file;
+  Printf.printf "Compiling Ergo '%s' -- " source_file;
   let fpref = Filename.chop_extension source_file in
   let fout = outname (target_f None fpref) ext in
-  Printf.printf "created '%s'\n" fout;
+  let result = ergo_link gconf result in
+  Printf.printf "creating '%s'\n" fout;
   make_file fout result
 

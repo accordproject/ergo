@@ -33,6 +33,7 @@ type global_config = {
   mutable econf_sources_text : (string * string) list;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
+  mutable econf_link : bool;
 }
 
 val default_config : unit -> global_config
@@ -51,4 +52,8 @@ val add_cto_file : global_config -> string * string -> unit
 val add_module_file : global_config -> string * string -> unit
 
 val get_source_table : global_config -> (string * string) list
+
+val set_link : global_config -> unit -> unit
+
+val should_link : global_config -> bool
 

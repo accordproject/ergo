@@ -27,6 +27,7 @@ open ErgoConfig
 (* XXX g is applied to json value if it exists, f is the configuration setter, taking the result of g XXX *)
 let apply_gen gconf f g o = Js.Optdef.iter o (fun j -> f gconf (g j))
 let apply gconf f o = apply_gen gconf f Js.to_string o
+let apply_bool gconf f o = apply_gen gconf f Js.to_bool o
 let iter_array_gen gconf f o =
   Js.Optdef.iter o (fun a -> f gconf a)
 let iter_array gconf f o =
@@ -46,6 +47,7 @@ let iter_inputs gconf f g h o =
 let global_config_of_json gconf j =
   (* Specialize apply/iter for this given gconf *)
   let apply = apply gconf in
+  let apply_bool = apply_bool gconf in
   let iter_inputs = iter_inputs gconf in
   (* CTOs *)
   iter_inputs (fun gconf x -> ErgoConfig.add_cto_file gconf x)
@@ -58,6 +60,7 @@ let global_config_of_json gconf j =
     (fun x -> x##.content)
     j##.ergo;
   (* Target *)
+  apply_bool (fun gconf b -> if b then ErgoConfig.set_link gconf ()) j##.link;
   apply ErgoConfig.set_target_lang j##.target;
   gconf
 
@@ -114,6 +117,7 @@ let ergo_compile input =
     let target_lang = ErgoConfig.get_target_lang gconf in
     let all_modules = ErgoConfig.get_all_sorted gconf in
     let (file,res) = ErgoCompile.ergo_compile target_lang all_modules in
+    let res = ErgoCompile.ergo_link gconf res in
     json_of_result res
   with
   | Ergo_Error error -> json_of_error gconf error

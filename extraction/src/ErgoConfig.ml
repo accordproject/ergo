@@ -51,6 +51,15 @@ let extension_of_lang lang =
   | Java -> ".java"
   end
 
+let can_link_runtime lang =
+  begin match lang with
+  | Ergo -> false
+  | ES5 -> true
+  | ES6 -> true
+  | Cicero -> true
+  | Java -> false
+  end
+
 let targets = [ES5;ES6;Cicero;Java]
 
 let available_targets =
@@ -62,6 +71,7 @@ type global_config = {
   mutable econf_sources_text : (string * string) list;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
+  mutable econf_link : bool;
 }
 
 let empty_config () = {
@@ -70,6 +80,7 @@ let empty_config () = {
   econf_sources_text = [];
   econf_ctos = [];
   econf_modules = [];
+  econf_link = false;
 } 
 
 let get_source_lang gconf = gconf.econf_source
@@ -115,3 +126,15 @@ let default_config () =
   gconf
 
 let get_source_table gconf = gconf.econf_sources_text
+
+let set_link gconf () = gconf.econf_link <- true
+let should_link gconf =
+  if gconf.econf_link
+  then
+    if can_link_runtime gconf.econf_target
+    then true
+    else ergo_raise
+           (ergo_system_error
+              ("Cannot link for target: " ^ (name_of_lang gconf.econf_target)))
+  else
+    false

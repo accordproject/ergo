@@ -30,7 +30,9 @@ let args_list gconf =
       ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
        " Print version and exit");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
-       "<lang> Indicates the language for the target (default: javascript) " ^ available_targets)
+       "<lang> Indicates the language for the target (default: es6) " ^ available_targets);
+      ("--link", Arg.Unit (ErgoConfig.set_link gconf),
+       "Links to the runtime (for es5,es6 and cicero only)")
     ]
 
 let usage =
