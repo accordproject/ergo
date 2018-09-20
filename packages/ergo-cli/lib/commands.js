@@ -24,33 +24,6 @@ const ErgoEngine = require('@accordproject/ergo-engine/lib/ergo-engine');
  */
 class Commands {
     /**
-     * Compile Ergo contract
-     *
-     * @param {string[]} ergoPaths paths to the Ergo modules
-     * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} target language (es5|es6|cicero|java)
-     * @param {boolean} link to JavaScript runtime
-     * @returns {object} Promise to the compiled JavaScript code
-     */
-    static compile(ergoPaths,ctoPaths,target,link) {
-        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
-        const ergoSources = [];
-        for (let i = 0; i < ergoPaths.length; i++) {
-            const ergoFile = ergoPaths[i];
-            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
-        }
-        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
-        let ctoSources = [];
-        for (let i = 0; i < ctoPaths.length; i++) {
-            const ctoFile = ctoPaths[i];
-            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
-        }
-        return Ergo.compile(ergoSources,ctoSources,target,link);
-    }
-
-    /**
      * Execute Ergo contract
      *
      * @param {string[]} ergoPaths paths to the Ergo modules

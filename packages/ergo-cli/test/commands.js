@@ -25,32 +25,6 @@ describe('ergo', () => {
 
     afterEach(() => {});
 
-    describe('#compilehello', function () {
-        it('should compile a smart Ergo contract', async function () {
-            const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
-            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile([ergoPath], [ctoPath], 'es6', false);
-            result.should.not.be.null;
-        });
-        it('should compile and link a smart Ergo contract', async function () {
-            const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
-            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile([ergoPath], [ctoPath], 'es6', true);
-            result.should.not.be.null;
-        });
-        it('should compile a smart Ergo contract without cto', async function () {
-            const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');
-            const result = await Commands.compile([ergoPath], undefined, 'es6', false);
-            result.should.not.be.null;
-        });
-    });
-    describe('#compilemissing', function () {
-        it('should fail when compiling missing Ergo', async function () {
-            const ctoPath = Path.resolve(__dirname, 'data/helloworld', 'model.cto');
-            const result = await Commands.compile(undefined, [ctoPath], 'es6', false);
-            result.error.message.should.equal('No input ergo found');
-        });
-    });
     describe('#executehello', function () {
         it('should execute a smart Ergo contract', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/helloworld', 'logic.ergo');

@@ -19,35 +19,6 @@ const Commands = require('../lib/commands');
 const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 require('yargs')
-    .command('compile', 'compile Ergo contract to JavaScript', (yargs) => {
-        yargs.option('ergo', {
-            describe: 'paths to the Ergo sources'
-        }).array('ergo');
-        yargs.option('cto', {
-            describe: 'paths to CTO models'
-        }).array('cto');
-        yargs.option('target', {
-            describe: 'target language (es5|es6|cicero|java)',
-            type: 'string',
-            default: 'es6'
-        });
-        yargs.option('link', {
-            describe: 'link to JavaScript runtime',
-            type: 'boolean',
-            default: false
-        });
-    }, (argv) => {
-        if (argv.verbose) {
-            Logger.info(`compile Ergo file ${argv.ergo} and CTOs ${argv.cto}`);
-        }
-        return Commands.compile(argv.ergo,argv.cto,argv.target,argv.link)
-            .then((result) => {
-                Logger.info(result);
-            })
-            .catch((err) => {
-                Logger.error(err.message + ' ' + JSON.stringify(err));
-            });
-    })
     .command('execute', 'execute Ergo contract', (yargs) => {
         yargs.option('contract', {
             describe: 'path to the contract data'
