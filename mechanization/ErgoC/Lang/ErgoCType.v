@@ -235,7 +235,7 @@ Section ErgoCType.
                   elift2 ergoc_type_join
                          (ergo_type_expr nsctxt ctxt t)
                          (ergo_type_expr nsctxt ctxt f)
-                else efailure (ETypeError prov "'If' condition not boolean."%string))
+                else efailure (ETypeError (expr_annot c) "'if' condition not boolean."%string))
              (ergo_type_expr nsctxt ctxt c)
     | ELet prov n None v e =>
       (eolift (fun vt =>

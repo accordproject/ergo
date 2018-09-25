@@ -52,20 +52,18 @@ terminal:
 $ npm install -g @accordproject/ergo-cli
 ```
 
-This will install the compiler itself (`ergoc`) and a command-line tool
-(`ergo`) to execute Ergo code. You can check that both have been installed and
-print the version number by typing the following in a terminal:
+This will install the compiler itself (`ergoc`) and command-line tools (`ergorun` and `ergotop`) to create and invoke Ergo contracts. You can check that both have been installed and print the version number by typing the following in a terminal:
 
 ```text
 $ ergoc --version
-$ ergo --version
+$ ergorun --version
 ```
 
 Then, to get command line help:
 
 ```text
 $ ergoc --help
-$ ergo execute --help
+$ ergorun --help
 ```
 
 ### Compiling your first contract
@@ -81,12 +79,12 @@ Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples
 By default, Ergo compiles to JavaScript for execution. You can inspect the
 compiled code for the result in `./examples/volumediscount/logic.js`
 
-### Execute a contract
+### Invoke a contract
 
-To compile and execute that contract:
+To compile and invoke that contract:
 
 ```text
-$ ergo execute --cto ./examples/volumediscount/model.cto --ergo ./examples/volumediscount/logic.ergo --contractname org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergorun ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractname org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 13:40:03 - info: Logging initialized. 2018-06-17T17:40:03.587Z
 13:40:03 - info: {"emit":[],"state":{"$class":"org.accordproject.cicero.contract.AccordContractState","stateId":"1"},"response":{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"}}
 ```
