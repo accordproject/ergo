@@ -21,7 +21,7 @@ define function addFee(rate : Double) : Double {
   return rate + fee
 }
 
-contract VolumeDiscount over TemplateModel {
+contract VolumeDiscount over VolumeDiscountContract {
    // Clause for volume discount
    clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
     if request.netAnnualChargeVolume < contract.firstVolume

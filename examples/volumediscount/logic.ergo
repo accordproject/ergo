@@ -12,10 +12,9 @@
  * limitations under the License.
  */
 
-/* Volume discount logic in Ergo */
 namespace org.accordproject.volumediscount
 
-contract VolumeDiscount over TemplateModel {
+contract VolumeDiscount over VolumeDiscountContract {
    // Clause for volume discount
    clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
     if request.netAnnualChargeVolume < contract.firstVolume

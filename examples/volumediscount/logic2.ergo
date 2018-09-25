@@ -14,7 +14,7 @@
 
 namespace org.accordproject.volumediscount
 
-contract VolumeDiscount over TemplateModel {
+contract VolumeDiscount over VolumeDiscountContract {
    // Clause for volume discount
    clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
     let rate = 

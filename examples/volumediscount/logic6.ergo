@@ -30,7 +30,7 @@ define function makeResponse(x : { discountRate: Double }) : VolumeDiscountRespo
   return VolumeDiscountResponse{ discountRate: x.discountRate }
 }
 
-contract VolumeDiscount over TemplateModel {
+contract VolumeDiscount over VolumeDiscountContract {
   // Clause for volume discount
   clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
     if request.netAnnualChargeVolume < contract.firstVolume

@@ -2,7 +2,7 @@ namespace org.accordproject.volumediscount
 
 define concept DoubleRequest { value : Double }
 
-contract VolumeDiscount over TemplateModel {
+contract VolumeDiscount over VolumeDiscountContract {
   clause createResponse(rate : DoubleRequest) : VolumeDiscountResponse {
 		return VolumeDiscountResponse{ discountRate: rate.value }
 	}
