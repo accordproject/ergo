@@ -30,8 +30,8 @@
     "chalk": "2.4.1"
   },
   "bin": {
-    "ergo": "./bin/ergo.js",
     "ergoc": "./bin/ergoc.js",
+    "ergorun": "./bin/ergorun.js",
     "ergotop": "./bin/ergotop.js"
   },
   "devDependencies": {

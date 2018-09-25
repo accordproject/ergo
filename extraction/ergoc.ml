@@ -25,18 +25,16 @@ open DateTime
 let args_list gconf =
   Arg.align
     [
-      ("-version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
-       " Print version and exit");
       ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
        " Print version and exit");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
-       "<lang> Indicates the language for the target (default: es6) " ^ available_targets);
+       "<lang> Target platform (default: es6) " ^ available_targets);
       ("--link", Arg.Unit (ErgoConfig.set_link gconf),
-       "Links to the runtime (for es5,es6 and cicero only)")
+       " Adds the Ergo runtime to the target code (es5,es6,cicero only)")
     ]
 
 let usage =
-  "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
+  "Usage: "^Filename.basename (Sys.argv.(0))^" [options] [cto files] [ergo files]"
 
 let main gconf args =
   let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in

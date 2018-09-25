@@ -133,7 +133,10 @@ rule token sbuff = parse
 | int as i
     { INT (int_of_string i) }
 | '"'
-    { reset_string sbuff; string sbuff lexbuf }
+    { let string_start = lexbuf.lex_start_p in
+      reset_string sbuff; string sbuff lexbuf;
+      lexbuf.lex_start_p <- string_start;
+      let s = get_string sbuff in STRING s }
 | "/*"
     { comment 1 lexbuf; token sbuff lexbuf }
 | "//"
@@ -145,7 +148,7 @@ and string sbuff = parse
   | "\"\"" { add_char_to_string sbuff '"'; string sbuff lexbuf }                         (* Escaped quote *)
   | "\013\n" { add_char_to_string sbuff '\n'; string sbuff lexbuf }
   | "\013" { add_char_to_string sbuff '\n'; string sbuff lexbuf }
-  | '"'    { let s = get_string sbuff in STRING s }  (* End of string *)
+  | '"'    { () }  (* End of string *)
   | eof    { raise (LexError "String not terminated.\n") }
   | _      { add_char_to_string sbuff (Lexing.lexeme_char lexbuf 0); string sbuff lexbuf }
 
