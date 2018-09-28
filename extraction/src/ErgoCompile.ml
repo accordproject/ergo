@@ -51,7 +51,7 @@ let ergo_compile target_lang inputs =
 let ergo_link gconf result =
   if should_link gconf
   then
-    result ^ StdlibResources.ergo_runtime
+    result ^ Resources.ergo_runtime
   else
     result
 

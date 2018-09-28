@@ -16,6 +16,9 @@ open ErgoComp.ErgoCompiler
 open ParseUtil
 open ErgoUtil
 
+let welcome () =
+  print_string ("Welcome to ERGOTOP version " ^ ergo_version ^ "\n")
+
 (* REPL *)
 
 let repl rctxt text =
@@ -27,7 +30,7 @@ let repl rctxt text =
              (* eval *)
              let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
-             (answer ^ (ErgoUtil.wrap_jerrors Util.string_of_char_list out), rctxt')
+             (answer ^ (wrap_jerrors Util.string_of_char_list out), rctxt')
            end)
         ("",rctxt) decls
   with
@@ -36,9 +39,9 @@ let repl rctxt text =
 let args_list gconf =
   Arg.align
     [
-      ("-version", Arg.Unit (ErgoUtil.get_version "The Ergo toplevel"),
+      ("-version", Arg.Unit (get_version "The Ergo toplevel"),
        " Print version and exit");
-      ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo toplevel"),
+      ("--version", Arg.Unit (get_version "The Ergo toplevel"),
        " Print version and exit");
     ]
 
@@ -60,9 +63,13 @@ let main gconf args =
   let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;
+  let rctxt = make_init_rctxt gconf in
+  welcome ();
   Js.export "ergotop"
     (object%js
-      val initRCtxt = make_init_rctxt gconf
+      val initRCtxt = rctxt
+      val version = Js.string ergo_version
+      val buildate = Js.string Resources.builddate
       method runLine rctxt line =
         let (out, rctxt') = repl rctxt (Js.to_string line) in
         Js.some
