@@ -105,63 +105,64 @@ ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli
 %.ctoj: %.cto
 	../scripts/cto2ctoj.js parse $<
 
-extracted/StdlibResources.ml: stdlib/contract.ctoj stdlib/hyperledger.ctoj stdlib/money.ctoj stdlib/runtime.ctoj stdlib/dom.ctoj stdlib/stdlib.ergo ../backends/javascript/ergo-runtime.js
-	echo '(* generated ocaml file *)' > extracted/StdlibResources.ml
+extracted/Resources.ml: stdlib/contract.ctoj stdlib/hyperledger.ctoj stdlib/money.ctoj stdlib/runtime.ctoj stdlib/dom.ctoj stdlib/stdlib.ergo ../backends/javascript/ergo-runtime.js
+	echo '(* generated ocaml file *)' > extracted/Resources.ml
 	(for i in contract hyperledger money runtime; do \
          echo "let $$i = {xxx|"; \
          cat stdlib/$$i.ctoj; \
-         echo '|xxx}'; \
-         done) >> extracted/StdlibResources.ml
+         echo "|xxx}"; \
+         done) >> extracted/Resources.ml
 	(for i in stdlib; do \
          echo "let $$i = {xxx|"; \
          cat stdlib/$$i.ergo; \
-         echo '|xxx}'; \
-         done) >> extracted/StdlibResources.ml
+         echo "|xxx}"; \
+         done) >> extracted/Resources.ml
 	(for i in runtime; do \
          echo "let ergo_$$i = {xxx|"; \
          cat ../backends/javascript/ergo-$$i.js; \
-         echo '|xxx}'; \
-         done) >> extracted/StdlibResources.ml
+         echo "|xxx}"; \
+         done) >> extracted/Resources.ml
+	(echo `date "+let builddate = {xxx|%b %d, %Y|xxx}"`) >> extracted/Resources.ml
 
 ## Native
-$(DIST0): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN0)
+$(DIST0): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN0)
 	cp _build/$(BIN0) $(DIST0)
 
-$(BIN0): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN0).$(ML)
+$(BIN0): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN0).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN0)
 
-$(DIST1): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN1)
+$(DIST1): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN1)
 	cp _build/$(BIN1) $(DIST1)
 
-$(BIN1): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN1).$(ML)
+$(BIN1): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN1).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN1)
 
-$(DIST4): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN4)
+$(DIST4): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(BIN4)
 	cp _build/$(BIN4) $(DIST4)
 
-$(BIN4): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN4).$(ML)
+$(BIN4): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN4).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -Is extracted -Is src $(BIN4)
 
 ## JavaScript
-$(DIST2): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE2) $(DIST1)
+$(DIST2): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE2) $(DIST1)
 	js_of_ocaml _build_js/$(BYTE2) -o _build_js/$(BIN2)
 	cp _build_js/$(BIN2) $(DIST2)
 
-_build_js/$(BYTE2): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN2).$(ML)
+_build_js/$(BYTE2): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN2).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE2)
 
-$(DIST3): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE3) $(DIST1)
+$(DIST3): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE3) $(DIST1)
 	js_of_ocaml _build_js/$(BYTE3) -o _build_js/$(BIN3)
 	cp _build_js/$(BIN3) $(DIST3)
 
-_build_js/$(BYTE3): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN3).$(ML)
+_build_js/$(BYTE3): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN3).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE3)
 
-$(DIST5): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE5) $(DIST1)
+$(DIST5): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE5) $(DIST1)
 	js_of_ocaml _build_js/$(BYTE5) -o _build_js/$(BIN5)
 	cp _build_js/$(BIN5) $(DIST5)
 
-_build_js/$(BYTE5): $(ATDS) extracted/StdlibResources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN5).$(ML)
+_build_js/$(BYTE5): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN5).$(ML)
 	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE5)
 
 ## Clean
@@ -172,7 +173,7 @@ clean:
 	rm -rf _build_js
 	rm -f $(DIST0)
 	rm -f $(DIST1)
-	rm -f extracted/StdlibResources.ml
+	rm -f extracted/Resources.ml
 	rm -f stdlib/*.ctoj
 	rm -f $(ATDS)
 

@@ -20,6 +20,7 @@
 extracted/StaticConfig.ml
 extracted/ErgoComp.ml
 extracted/ErgoComp.mli
+extracted/Resources.ml
 src/Cto_j.ml
 src/Cto_j.mli
 src/Cto_t.ml

@@ -4,6 +4,7 @@
 <script src="https://codemirror.net/addon/mode/simple.js"></script>
 <script src="https://codemirror.net/addon/edit/matchbrackets.js"></script>
 <script src="lib/ergo-mode.js"></script>
+<script src="./lib/ergotop-lib.js"></script>
 <link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css">
 <link rel="stylesheet" href="https://codemirror.net/theme/eclipse.css">
 
@@ -69,8 +70,8 @@ span.response { color: green; }
 
 <h1>
 <a href="https://docs.accordproject.org/docs/ergo.html" target="_blank">Ergo</a>
-&middot; v0.4.3
-&middot; sep 27, 2018
+&middot; v<script type="text/javascript">document.write(ergotop.version);</script>
+&middot; <script type="text/javascript">document.write(ergotop.buildate);</script>
 &middot;
 <img height="20" align="right" src="ergologo.png"/>
 </h1>
@@ -90,14 +91,12 @@ span.response { color: green; }
 
 <div class="clearer"></div>
 
-<script src="./lib/ergotop-lib.js"></script>
 <script src="./cheatsheet.js"></script>
 <script>
 var ctx = ergotop.initRCtxt;
 
 var stdin  = document.getElementById('right-editor');
 var stdout = document.getElementById('stdout');
-
 
 function setup_editor(id) {
     var editor = CodeMirror.fromTextArea(

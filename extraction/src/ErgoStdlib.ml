@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-open StdlibResources
+open Resources
 
 let ergo_stdcto =
   [ ("$ERGODIR/extraction/stdlib/hyperledger.cto", hyperledger);

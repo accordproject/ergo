@@ -14,10 +14,11 @@
 
 open ErgoComp.ErgoCompiler
 open ParseUtil
+open ErgoUtil
 
 let welcome () =
   if Unix.isatty Unix.stdin
-  then print_string ("Welcome to ERGOTOP version " ^ (Util.string_of_char_list ergo_version) ^ "\n")
+  then print_string ("Welcome to ERGOTOP version " ^ ergo_version ^ "\n")
   else ()
 
 let fmt_esc = "\x1b"
@@ -58,7 +59,7 @@ let rec read_nonempty_multiline () = read_chunk true
 
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
 let safe_init_repl_ctxt inputs =
-  ErgoUtil.wrap_jerrors
+  wrap_jerrors
     (fun x -> x)
     (ErgoTopUtil.my_init_repl_context inputs)
 
@@ -75,7 +76,7 @@ let rec repl rctxt =
              (* eval *)
              let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
-             print_string (fmt_out (ErgoUtil.wrap_jerrors Util.string_of_char_list out));
+             print_string (fmt_out (wrap_jerrors Util.string_of_char_list out));
              rctxt'
            end)
         rctxt decls
@@ -83,8 +84,8 @@ let rec repl rctxt =
     (* loop *)
     repl rctxt'
   with
-  | ErgoUtil.Ergo_Error e ->
-      print_string (ErgoUtil.string_of_error_with_source_text text e);
+  | Ergo_Error e ->
+      print_string (string_of_error_with_source_text text e);
       print_string "\n" ;
       repl rctxt
   | End_of_file -> None
@@ -92,9 +93,9 @@ let rec repl rctxt =
 let args_list gconf =
   Arg.align
     [
-      ("-version", Arg.Unit (ErgoUtil.get_version "The Ergo toplevel"),
+      ("-version", Arg.Unit (get_version "The Ergo toplevel"),
        " Print version and exit");
-      ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo toplevel"),
+      ("--version", Arg.Unit (get_version "The Ergo toplevel"),
        " Print version and exit");
     ]
 
@@ -102,7 +103,7 @@ let usage =
   "Usage: "^Sys.argv.(0)^" [options] cto1 cto2 ... contract1 contract2 ..."
 
 let main gconf args =
-  let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
+  let (cto_files,input_files) = parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;
   let all_modules = ErgoConfig.get_all_sorted gconf in
@@ -113,21 +114,21 @@ let main gconf args =
 let wrap_error gconf e =
   let source_table = ErgoConfig.get_source_table gconf in
   begin match e with
-  | ErgoUtil.Ergo_Error error ->
+  | Ergo_Error error ->
       Printf.eprintf "%s\n"
-        (ErgoUtil.string_of_error_with_table source_table error);
+        (string_of_error_with_table source_table error);
       exit 2
   | exn ->
       Printf.eprintf "%s\n"
-        (ErgoUtil.string_of_error_with_table source_table
-           (ErgoUtil.ergo_system_error (Printexc.to_string exn)));
+        (string_of_error_with_table source_table
+           (ergo_system_error (Printexc.to_string exn)));
       exit 2
   end
 
 let _ =
   let gconf = ErgoConfig.default_config () in
   begin try
-    main gconf (ErgoUtil.patch_argv Sys.argv)
+    main gconf (patch_argv Sys.argv)
   with
   | e ->
       wrap_error gconf e
