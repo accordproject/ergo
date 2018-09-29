@@ -159,6 +159,8 @@ Section Result.
       efailure (ECompilationError prov ("Import not found: " ++ import)).
     Definition type_name_not_found_error {A} prov (ln:string) : eresult A :=
       efailure (ECompilationError prov ("Cannot find type with name '" ++ ln ++ "'")).
+    Definition namespace_not_found_error {A} prov (ns:string) : eresult A :=
+      efailure (ECompilationError prov ("Cannot find namespace '" ++ ns ++ "'")).
     Definition variable_name_not_found_error {A} prov (ln:string) : eresult A :=
       efailure (ECompilationError prov ("Cannot find variable with name '" ++ ln ++ "'")).
     Definition function_name_not_found_error {A} prov (ln:string) : eresult A :=
