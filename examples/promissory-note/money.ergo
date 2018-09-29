@@ -14,7 +14,8 @@
 
 namespace org.accordproject.ergo.money
 
+define constant days_in_year = 365.0
 define function compoundInterestMultiple(annualInterest : Double, numberOfDays : Double) : Double {
-    return (1.0 + annualInterest) ^ (numberOfDays / 365.0)
+    return (1.0 + annualInterest) ^ (numberOfDays / days_in_year)
 }
 

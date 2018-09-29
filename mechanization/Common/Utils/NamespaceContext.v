@@ -77,27 +77,6 @@ Section NamespaceContext.
       | Some an => esuccess an
       end.
 
-    Definition resolve_type_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
-      match fst rn with
-      | None => lookup_type_name prov tbl (snd rn)
-      | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
-      end.
-    Definition resolve_constant_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
-      match fst rn with
-      | None => lookup_constant_name prov tbl (snd rn)
-      | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
-      end.
-    Definition resolve_function_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
-      match fst rn with
-      | None => lookup_function_name prov tbl (snd rn)
-      | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
-      end.
-    Definition resolve_contract_name (prov:provenance) (tbl:namespace_table) (rn:relative_name) :=
-      match fst rn with
-      | None => lookup_contract_name prov tbl (snd rn)
-      | Some ns => esuccess (absolute_name_of_local_name ns (snd rn))
-      end.
-
     Definition add_type_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=
       mkNamespaceTable
         ((ln,an)::tbl.(namespace_table_types))
@@ -291,6 +270,54 @@ Section NamespaceContext.
       prev_tbl_current_in_scope
       prev_enums
       prev_abstract.
+
+  Definition verify_name
+             (f_lookup: provenance -> namespace_table -> local_name -> eresult absolute_name)
+             (prov:provenance)
+             (ctxt:namespace_ctxt)
+             (ns:namespace_name)
+             (ln:local_name) : eresult absolute_name :=
+    let current_ns := ctxt.(namespace_ctxt_namespace) in
+    let current_tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
+    let all_modules := (current_ns, current_tbl) :: ctxt.(namespace_ctxt_modules) in
+    match lookup string_dec all_modules ns with
+    | None => namespace_not_found_error prov ns
+    | Some tbl => f_lookup prov tbl ln
+    end.
+
+  Definition verify_type_name (prov:provenance) (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) :=
+    verify_name lookup_type_name prov ctxt ns ln.
+  Definition verify_constant_name (prov:provenance) (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) :=
+    verify_name lookup_constant_name prov ctxt ns ln.
+  Definition verify_function_name (prov:provenance) (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) :=
+    verify_name lookup_function_name prov ctxt ns ln.
+  Definition verify_contract_name (prov:provenance) (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) :=
+    verify_name lookup_contract_name prov ctxt ns ln.
+
+  Definition resolve_type_name (prov:provenance) (ctxt:namespace_ctxt) (rn:relative_name) :=
+    let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
+    match fst rn with
+    | None => lookup_type_name prov tbl (snd rn)
+    | Some ns => verify_type_name prov ctxt ns (snd rn)
+    end.
+  Definition resolve_constant_name (prov:provenance) (ctxt:namespace_ctxt) (rn:relative_name) :=
+    let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
+    match fst rn with
+    | None => lookup_constant_name prov tbl (snd rn)
+    | Some ns => verify_constant_name prov ctxt ns (snd rn)
+    end.
+  Definition resolve_function_name (prov:provenance) (ctxt:namespace_ctxt) (rn:relative_name) :=
+    let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
+    match fst rn with
+    | None => lookup_function_name prov tbl (snd rn)
+    | Some ns => verify_function_name prov ctxt ns (snd rn)
+    end.
+  Definition resolve_contract_name (prov:provenance) (ctxt:namespace_ctxt) (rn:relative_name) :=
+    let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
+    match fst rn with
+    | None => lookup_contract_name prov tbl (snd rn)
+    | Some ns => verify_contract_name prov ctxt ns (snd rn)
+    end.
 
 End NamespaceContext.
 

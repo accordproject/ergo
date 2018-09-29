@@ -135,7 +135,7 @@ Section ErgoNameResolution.
     (** Name resolution for type declarations *)
     Fixpoint resolve_ergo_type
              (ectxt: enum_ctxt)
-             (tbl:namespace_table)
+             (nsctxt:namespace_ctxt)
              (t:lrergo_type) : eresult laergo_type :=
       match t with
       | ErgoTypeAny prov => esuccess (ErgoTypeAny prov)
@@ -148,65 +148,65 @@ Section ErgoNameResolution.
       | ErgoTypeInteger prov => esuccess (ErgoTypeInteger prov)
       | ErgoTypeDateTime prov => esuccess (ErgoTypeDateTime prov)
       | ErgoTypeClassRef prov rn =>
-        let an := resolve_type_name prov tbl rn in
+        let an := resolve_type_name prov nsctxt rn in
         elift (fun an =>
                  if in_dec string_dec an ectxt (* XXX Enums are uninterpreted, i.e., treated as String *)
                  then ErgoTypeString prov
                  else ErgoTypeClassRef prov an)
               an
       | ErgoTypeOption prov t =>
-        elift (ErgoTypeOption prov) (resolve_ergo_type ectxt tbl t)
+        elift (ErgoTypeOption prov) (resolve_ergo_type ectxt nsctxt t)
       | ErgoTypeRecord prov r =>
-        let initial_map := map (fun xy => (fst xy, resolve_ergo_type ectxt tbl (snd xy))) r in
+        let initial_map := map (fun xy => (fst xy, resolve_ergo_type ectxt nsctxt (snd xy))) r in
         let lifted_map := emaplift (fun xy => elift (fun t => (fst xy, t)) (snd xy)) initial_map in
         elift (ErgoTypeRecord prov) lifted_map
       | ErgoTypeArray prov t =>
-        elift (ErgoTypeArray prov) (resolve_ergo_type ectxt tbl t)
+        elift (ErgoTypeArray prov) (resolve_ergo_type ectxt nsctxt t)
       | ErgoTypeSum prov t1 t2 =>
         elift2 (ErgoTypeSum prov)
-               (resolve_ergo_type ectxt tbl t1)
-               (resolve_ergo_type ectxt tbl t2)
+               (resolve_ergo_type ectxt nsctxt t1)
+               (resolve_ergo_type ectxt nsctxt t2)
       end.
 
     Definition resolve_ergo_type_struct
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (t:list (string * lrergo_type)) : eresult (list (string * laergo_type)) :=
       emaplift (fun xy =>
-                  elift (fun t => (fst xy, t)) (resolve_ergo_type ectxt tbl (snd xy))) t.
+                  elift (fun t => (fst xy, t)) (resolve_ergo_type ectxt nsctxt (snd xy))) t.
 
     Definition resolve_type_annotation
                (prov:provenance)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (en:option relative_name) : eresult (option absolute_name) :=
       match en with
       | None => esuccess None
-      | Some rn => elift Some (resolve_type_name prov tbl rn)
+      | Some rn => elift Some (resolve_type_name prov nsctxt rn)
       end.
 
     Definition resolve_extends
                (prov:provenance)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (en:rextends) : eresult aextends :=
-      resolve_type_annotation prov tbl en.
+      resolve_type_annotation prov nsctxt en.
 
     Definition resolve_ergo_type_signature
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (sig:lrergo_type_signature) : eresult laergo_type_signature :=
-      let params_types := resolve_ergo_type_struct ectxt tbl (sig.(type_signature_params)) in
+      let params_types := resolve_ergo_type_struct ectxt nsctxt (sig.(type_signature_params)) in
       let output_type : eresult (option laergo_type) :=
           match sig.(type_signature_output) with
           | None => esuccess None
           | Some out_ty =>
-            elift Some (resolve_ergo_type ectxt tbl out_ty)
+            elift Some (resolve_ergo_type ectxt nsctxt out_ty)
           end
       in
       let emits_type : eresult (option laergo_type) :=
           match sig.(type_signature_emits) with
           | None => esuccess None
           | Some emits_ty =>
-            elift Some (resolve_ergo_type ectxt tbl emits_ty)
+            elift Some (resolve_ergo_type ectxt nsctxt emits_ty)
           end
       in
       elift3 (mkErgoTypeSignature
@@ -217,54 +217,54 @@ Section ErgoNameResolution.
 
     Definition resolve_ergo_type_clauses
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (cls:list (string * lrergo_type_signature)) : eresult (list (string * laergo_type_signature)) :=
       emaplift (fun xy => elift (fun r => (fst xy, r))
-                                (resolve_ergo_type_signature ectxt tbl (snd xy))) cls.
+                                (resolve_ergo_type_signature ectxt nsctxt (snd xy))) cls.
 
     Definition resolve_ergo_type_declaration_desc
                (prov:provenance)
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (d:lrergo_type_declaration_desc)
       : eresult laergo_type_declaration_desc :=
       match d with
       | ErgoTypeEnum l => esuccess (ErgoTypeEnum l)
       | ErgoTypeTransaction isabs extends_name ergo_type_struct =>
         elift2 (ErgoTypeTransaction isabs)
-               (resolve_extends prov tbl extends_name)
-               (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
+               (resolve_extends prov nsctxt extends_name)
+               (resolve_ergo_type_struct ectxt nsctxt ergo_type_struct)
       | ErgoTypeConcept isabs extends_name ergo_type_struct =>
         elift2 (ErgoTypeConcept isabs)
-               (resolve_extends prov tbl extends_name)
-               (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
+               (resolve_extends prov nsctxt extends_name)
+               (resolve_ergo_type_struct ectxt nsctxt ergo_type_struct)
       | ErgoTypeEvent isabs extends_name ergo_type_struct =>
         elift2 (ErgoTypeEvent isabs)
-               (resolve_extends prov tbl extends_name)
-               (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
+               (resolve_extends prov nsctxt extends_name)
+               (resolve_ergo_type_struct ectxt nsctxt ergo_type_struct)
       | ErgoTypeAsset isabs extends_name ergo_type_struct =>
         elift2 (ErgoTypeAsset isabs)
-               (resolve_extends prov tbl extends_name)
-               (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
+               (resolve_extends prov nsctxt extends_name)
+               (resolve_ergo_type_struct ectxt nsctxt ergo_type_struct)
       | ErgoTypeParticipant isabs extends_name ergo_type_struct =>
         elift2 (ErgoTypeParticipant isabs)
-               (resolve_extends prov tbl extends_name)
-               (resolve_ergo_type_struct ectxt tbl ergo_type_struct)
+               (resolve_extends prov nsctxt extends_name)
+               (resolve_ergo_type_struct ectxt nsctxt ergo_type_struct)
       | ErgoTypeGlobal ergo_type =>
-        elift ErgoTypeGlobal (resolve_ergo_type ectxt tbl ergo_type)
+        elift ErgoTypeGlobal (resolve_ergo_type ectxt nsctxt ergo_type)
       | ErgoTypeFunction ergo_type_signature =>
         elift ErgoTypeFunction
-              (resolve_ergo_type_signature ectxt tbl ergo_type_signature)
+              (resolve_ergo_type_signature ectxt nsctxt ergo_type_signature)
       | ErgoTypeContract template_type state_type clauses_sigs =>
         elift3 ErgoTypeContract
-               (resolve_ergo_type ectxt tbl template_type)
-               (resolve_ergo_type ectxt tbl state_type)
-               (resolve_ergo_type_clauses ectxt tbl clauses_sigs)
+               (resolve_ergo_type ectxt nsctxt template_type)
+               (resolve_ergo_type ectxt nsctxt state_type)
+               (resolve_ergo_type_clauses ectxt nsctxt clauses_sigs)
       end.
  
     Definition resolve_ergo_type_declaration
                (module_ns:namespace_name)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (decl: enum_ctxt * abstract_ctxt * lrergo_type_declaration)
       : eresult (enum_ctxt * abstract_ctxt * laergo_type_declaration) :=
       let '(ectxt,actxt,decl) := decl in
@@ -281,24 +281,24 @@ Section ErgoNameResolution.
       in
       let edecl_desc :=
           resolve_ergo_type_declaration_desc
-            decl.(type_declaration_annot) ectxt tbl decl.(type_declaration_type)
+            decl.(type_declaration_annot) ectxt nsctxt decl.(type_declaration_type)
       in
       elift (fun k => (ectxt, actxt, mkErgoTypeDeclaration decl.(type_declaration_annot) name k)) edecl_desc.
 
     Definition resolve_ergo_pattern
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (p:lrergo_pattern) : eresult (laergo_pattern) :=
       match p with
       | CaseData prov d => esuccess (CaseData prov d)
-      | CaseWildcard prov ta => elift (CaseWildcard prov) (resolve_type_annotation prov tbl ta)
-      | CaseLet prov v ta => elift (CaseLet prov v) (resolve_type_annotation prov tbl ta)
-      | CaseLetOption prov v ta => elift (CaseLetOption prov v) (resolve_type_annotation prov tbl ta)
+      | CaseWildcard prov ta => elift (CaseWildcard prov) (resolve_type_annotation prov nsctxt ta)
+      | CaseLet prov v ta => elift (CaseLet prov v) (resolve_type_annotation prov nsctxt ta)
+      | CaseLetOption prov v ta => elift (CaseLetOption prov v) (resolve_type_annotation prov nsctxt ta)
       end.
     
     (** Name resolution for expressions *)
     Fixpoint resolve_ergo_expr
              (ectxt: enum_ctxt)
-             (tbl:namespace_table)
+             (nsctxt:namespace_ctxt)
              (e:lrergo_expr) : eresult laergo_expr :=
       match e with
       | EThisContract prov => esuccess (EThisContract prov)
@@ -309,45 +309,45 @@ Section ErgoNameResolution.
       | ENone prov => esuccess (ENone prov)
       | ESome prov e =>
         elift (ESome prov)
-              (resolve_ergo_expr ectxt tbl e)
+              (resolve_ergo_expr ectxt nsctxt e)
       | EArray prov el =>
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
-              (resolve_ergo_expr ectxt tbl e)
+              (resolve_ergo_expr ectxt nsctxt e)
               acc
         in
         elift (EArray prov) (fold_right proc_one init_el el)
       | EUnaryOp prov u e =>
         elift (EUnaryOp prov u)
-              (resolve_ergo_expr ectxt tbl e)
+              (resolve_ergo_expr ectxt nsctxt e)
       | EBinaryOp prov b e1 e2 =>
         elift2 (EBinaryOp prov b)
-               (resolve_ergo_expr ectxt tbl e1)
-               (resolve_ergo_expr ectxt tbl e2)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_expr ectxt nsctxt e2)
       | EIf prov e1 e2 e3 =>
         elift3 (EIf prov)
-               (resolve_ergo_expr ectxt tbl e1)
-               (resolve_ergo_expr ectxt tbl e2)
-               (resolve_ergo_expr ectxt tbl e3)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_expr ectxt nsctxt e2)
+               (resolve_ergo_expr ectxt nsctxt e3)
       | ELet prov v ta e1 e2 =>
         let rta :=
             match ta with
             | None => esuccess None
-            | Some ta => elift Some (resolve_ergo_type ectxt tbl ta)
+            | Some ta => elift Some (resolve_ergo_type ectxt nsctxt ta)
             end
         in
         elift3 (ELet prov v)
                rta
-               (resolve_ergo_expr ectxt tbl e1)
-               (resolve_ergo_expr ectxt tbl e2)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_expr ectxt nsctxt e2)
       | ENew prov cr el =>
-        let rcr := resolve_type_name prov tbl cr in
+        let rcr := resolve_type_name prov nsctxt cr in
         let init_rec := esuccess nil in
         let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
-            let e := resolve_ergo_expr ectxt tbl (snd att) in
+            let e := resolve_ergo_expr ectxt nsctxt (snd att) in
             elift2 (fun e => fun acc => (attname,e)::acc) e acc
         in
         elift2 (ENew prov) rcr (fold_right proc_one init_rec el)
@@ -355,46 +355,46 @@ Section ErgoNameResolution.
         let init_rec := esuccess nil in
         let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
-            let e := resolve_ergo_expr ectxt tbl (snd att) in
+            let e := resolve_ergo_expr ectxt nsctxt (snd att) in
             elift2 (fun e => fun acc => (attname,e)::acc) e acc
         in
         elift (ERecord prov) (fold_right proc_one init_rec el)
       | ECallFun prov fname el =>
-        let rfname := resolve_function_name prov tbl (None,fname) in
+        let rfname := resolve_function_name prov nsctxt (None,fname) in
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
-              (resolve_ergo_expr ectxt tbl e)
+              (resolve_ergo_expr ectxt nsctxt e)
               acc
         in
         elift2 (ECallFun prov) rfname (fold_right proc_one init_el el)
       | ECallFunInGroup prov gname fname el =>
-        let rgname := resolve_contract_name prov tbl gname in
+        let rgname := resolve_contract_name prov nsctxt gname in
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
-              (resolve_ergo_expr ectxt tbl e)
+              (resolve_ergo_expr ectxt nsctxt e)
               acc
         in
         elift3 (ECallFunInGroup prov) rgname (esuccess fname) (fold_right proc_one init_el el)
       | EMatch prov e0 ecases edefault =>
-        let ec0 := resolve_ergo_expr ectxt tbl e0 in
+        let ec0 := resolve_ergo_expr ectxt nsctxt e0 in
         let eccases :=
             let proc_one acc (ecase : lrergo_pattern * lrergo_expr) :=
                 let (pcase, pe) := ecase in
-                let apcase := resolve_ergo_pattern tbl pcase in
+                let apcase := resolve_ergo_pattern nsctxt pcase in
                 eolift (fun apcase =>
                           eolift
                             (fun acc =>
                                elift (fun x => (apcase, x)::acc)
-                                     (resolve_ergo_expr ectxt tbl pe)) acc)
+                                     (resolve_ergo_expr ectxt nsctxt pe)) acc)
                        apcase
             in
             fold_left proc_one ecases (esuccess nil)
         in
-        let ecdefault := resolve_ergo_expr ectxt tbl edefault in
+        let ecdefault := resolve_ergo_expr ectxt nsctxt edefault in
         eolift
           (fun ec0 : laergo_expr =>
              eolift
@@ -404,11 +404,11 @@ Section ErgoNameResolution.
                     EMatch prov ec0 eccases ecdefault)
                     ecdefault) eccases) ec0
       | EForeach prov foreachs econd e2 =>
-        let re2 := resolve_ergo_expr ectxt tbl e2 in
+        let re2 := resolve_ergo_expr ectxt nsctxt e2 in
         let recond :=
             match econd with
             | None => esuccess None
-            | Some econd => elift Some (resolve_ergo_expr ectxt tbl econd)
+            | Some econd => elift Some (resolve_ergo_expr ectxt nsctxt econd)
             end
         in
         let init_e := esuccess nil in
@@ -417,7 +417,7 @@ Section ErgoNameResolution.
               (acc:eresult (list (string * laergo_expr)))
             : eresult (list (string * laergo_expr)) :=
             let v := fst foreach in
-            let e := resolve_ergo_expr ectxt tbl (snd foreach) in
+            let e := resolve_ergo_expr ectxt nsctxt (snd foreach) in
             elift2 (fun e => fun acc => (v,e)::acc)
                  e
                  acc
@@ -431,22 +431,22 @@ Section ErgoNameResolution.
     (** Name resolution for statements *)
     Fixpoint resolve_ergo_stmt
              (ectxt: enum_ctxt)
-             (tbl:namespace_table)
+             (nsctxt:namespace_ctxt)
              (e:lrergo_stmt) : eresult laergo_stmt :=
       match e with
-      | SReturn prov e => elift (SReturn prov) (resolve_ergo_expr ectxt tbl e)
-      | SFunReturn prov e => elift (SFunReturn prov) (resolve_ergo_expr ectxt tbl e)
-      | SThrow prov e =>  elift (SThrow prov) (resolve_ergo_expr ectxt tbl e)
+      | SReturn prov e => elift (SReturn prov) (resolve_ergo_expr ectxt nsctxt e)
+      | SFunReturn prov e => elift (SFunReturn prov) (resolve_ergo_expr ectxt nsctxt e)
+      | SThrow prov e =>  elift (SThrow prov) (resolve_ergo_expr ectxt nsctxt e)
       | SCallClause prov e0 fname el =>
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
-              (resolve_ergo_expr ectxt tbl e)
+              (resolve_ergo_expr ectxt nsctxt e)
               acc
         in
         elift3 (SCallClause prov)
-               (resolve_ergo_expr ectxt tbl e0)
+               (resolve_ergo_expr ectxt nsctxt e0)
                (esuccess fname)
                (fold_right proc_one init_el el)
       | SCallContract prov e0 el =>
@@ -454,63 +454,63 @@ Section ErgoNameResolution.
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
-              (resolve_ergo_expr ectxt tbl e)
+              (resolve_ergo_expr ectxt nsctxt e)
               acc
         in
         elift2 (SCallContract prov)
-               (resolve_ergo_expr ectxt tbl e0)
+               (resolve_ergo_expr ectxt nsctxt e0)
                (fold_right proc_one init_el el)
       | SSetState prov e1 s2 =>
         elift2 (SSetState prov)
-               (resolve_ergo_expr ectxt tbl e1)
-               (resolve_ergo_stmt ectxt tbl s2)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_stmt ectxt nsctxt s2)
       | SEmit prov e1 s2 =>
         elift2 (SEmit prov)
-               (resolve_ergo_expr ectxt tbl e1)
-               (resolve_ergo_stmt ectxt tbl s2)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_stmt ectxt nsctxt s2)
       | SLet prov v ta e1 s2 =>
         let rta :=
             match ta with
             | None => esuccess None
-            | Some ta => elift Some (resolve_ergo_type ectxt tbl ta)
+            | Some ta => elift Some (resolve_ergo_type ectxt nsctxt ta)
             end
         in
         elift3 (SLet prov v)
                rta
-               (resolve_ergo_expr ectxt tbl e1)
-               (resolve_ergo_stmt ectxt tbl s2)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_stmt ectxt nsctxt s2)
       | SIf prov e1 s2 s3 =>
         elift3 (SIf prov)
-               (resolve_ergo_expr ectxt tbl e1)
-               (resolve_ergo_stmt ectxt tbl s2)
-               (resolve_ergo_stmt ectxt tbl s3)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_stmt ectxt nsctxt s2)
+               (resolve_ergo_stmt ectxt nsctxt s3)
       | SEnforce prov e1 os2 s3 =>
         let rs2 :=
             match os2 with
             | None => esuccess None
-            | Some s2 => elift Some (resolve_ergo_stmt ectxt tbl s2)
+            | Some s2 => elift Some (resolve_ergo_stmt ectxt nsctxt s2)
             end
         in
         elift3 (SEnforce prov)
-               (resolve_ergo_expr ectxt tbl e1)
+               (resolve_ergo_expr ectxt nsctxt e1)
                rs2
-               (resolve_ergo_stmt ectxt tbl s3)
+               (resolve_ergo_stmt ectxt nsctxt s3)
       | SMatch prov e0 scases sdefault =>
-        let ec0 := resolve_ergo_expr ectxt tbl e0 in
+        let ec0 := resolve_ergo_expr ectxt nsctxt e0 in
         let sccases :=
             let proc_one acc (scase : lrergo_pattern * lrergo_stmt) :=
                 let (pcase, pe) := scase in
-                let apcase := resolve_ergo_pattern tbl pcase in
+                let apcase := resolve_ergo_pattern nsctxt pcase in
                 eolift (fun apcase =>
                           eolift
                             (fun acc =>
                                elift (fun x => (apcase, x)::acc)
-                                     (resolve_ergo_stmt ectxt tbl pe)) acc)
+                                     (resolve_ergo_stmt ectxt nsctxt pe)) acc)
                        apcase
             in
             fold_left proc_one scases (esuccess nil)
         in
-        let scdefault := resolve_ergo_stmt ectxt tbl sdefault in
+        let scdefault := resolve_ergo_stmt ectxt nsctxt sdefault in
         eolift
           (fun ec0 : laergo_expr =>
              eolift
@@ -526,111 +526,110 @@ Section ErgoNameResolution.
     Definition resolve_ergo_function
                (module_ns:namespace_name)
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (f:lrergo_function) : eresult laergo_function :=
       let prov := f.(function_annot) in
       let rbody :=
           match f.(function_body) with
           | None => esuccess None
-          | Some body => elift Some (resolve_ergo_expr ectxt tbl body)
+          | Some body => elift Some (resolve_ergo_expr ectxt nsctxt body)
           end
       in
       elift2 (mkFunc prov)
-             (resolve_ergo_type_signature ectxt tbl f.(function_sig))
+             (resolve_ergo_type_signature ectxt nsctxt f.(function_sig))
              rbody.
     
     Definition resolve_ergo_clause
                (module_ns:namespace_name)
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (c:ergo_clause) : eresult laergo_clause :=
       let prov := c.(clause_annot) in
       let rcname := c.(clause_name) in
       let rbody :=
           match c.(clause_body) with
           | None => esuccess None
-          | Some body => elift Some (resolve_ergo_stmt ectxt tbl body)
+          | Some body => elift Some (resolve_ergo_stmt ectxt nsctxt body)
           end
       in
       elift2 (mkClause prov rcname)
-             (resolve_ergo_type_signature ectxt tbl c.(clause_sig))
+             (resolve_ergo_type_signature ectxt nsctxt c.(clause_sig))
              rbody.
 
     Definition resolve_ergo_clauses
                (module_ns:namespace_name)
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (cl:list ergo_clause) : eresult (list laergo_clause) :=
-      emaplift (resolve_ergo_clause module_ns ectxt tbl) cl.
+      emaplift (resolve_ergo_clause module_ns ectxt nsctxt) cl.
 
     Definition resolve_ergo_contract
                (module_ns:namespace_name)
                (ectxt: enum_ctxt)
-               (tbl:namespace_table)
+               (nsctxt:namespace_ctxt)
                (c:lrergo_contract) : eresult laergo_contract :=
       let prov := c.(contract_annot) in
-      let rtemplate := resolve_ergo_type ectxt tbl c.(contract_template) in
+      let rtemplate := resolve_ergo_type ectxt nsctxt c.(contract_template) in
       let rstate :=
           match c.(contract_state) with
           | None => esuccess None
-          | Some state => elift Some (resolve_ergo_type ectxt tbl state)
+          | Some state => elift Some (resolve_ergo_type ectxt nsctxt state)
           end
       in
       elift3 (mkContract prov)
              rtemplate
              rstate
-             (resolve_ergo_clauses module_ns ectxt tbl c.(contract_clauses)).
+             (resolve_ergo_clauses module_ns ectxt nsctxt c.(contract_clauses)).
 
     Definition resolve_ergo_declaration
-               (ctxt:namespace_ctxt)
+               (nsctxt:namespace_ctxt)
                (d:lrergo_declaration)
       : eresult (laergo_declaration * namespace_ctxt) :=
-      let module_ns : namespace_name := ctxt.(namespace_ctxt_namespace) in
-      let ectxt := ctxt.(namespace_ctxt_enums) in
-      let actxt := ctxt.(namespace_ctxt_abstract) in
-      let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
+      let module_ns : namespace_name := nsctxt.(namespace_ctxt_namespace) in
+      let ectxt := nsctxt.(namespace_ctxt_enums) in
+      let actxt := nsctxt.(namespace_ctxt_abstract) in
       match d with
       | DNamespace prov ns =>
-        esuccess (DNamespace prov ns, local_namespace_scope ctxt ns)
+        esuccess (DNamespace prov ns, local_namespace_scope nsctxt ns)
       | DImport prov id =>
-        elift (fun x => (DImport prov id, x)) (resolve_one_import ctxt id)
+        elift (fun x => (DImport prov id, x)) (resolve_one_import nsctxt id)
       | DType prov td =>
         let ln := td.(type_declaration_name) in
         let an := absolute_name_of_local_name module_ns ln in
-        let ctxt := add_type_to_namespace_ctxt_current ctxt ln an in
+        let nsctxt := add_type_to_namespace_ctxt_current nsctxt ln an in
         elift (fun xy : enum_ctxt * abstract_ctxt * laergo_type_declaration =>
                  let '(ectxt,actxt,x) := xy in
-                 let ctxt := update_namespace_context_enums ctxt ectxt in
-                 let ctxt := update_namespace_context_abstract ctxt actxt in
-                 (DType prov x, ctxt))
-              (resolve_ergo_type_declaration module_ns tbl (ectxt, actxt, td))
+                 let nsctxt := update_namespace_context_enums nsctxt ectxt in
+                 let nsctxt := update_namespace_context_abstract nsctxt actxt in
+                 (DType prov x, nsctxt))
+              (resolve_ergo_type_declaration module_ns nsctxt (ectxt, actxt, td))
       | DStmt prov st =>
-        elift (fun x => (DStmt prov x, ctxt)) (resolve_ergo_stmt ectxt tbl st)
+        elift (fun x => (DStmt prov x, nsctxt)) (resolve_ergo_stmt ectxt nsctxt st)
       | DConstant prov ln ta e =>
         let an := absolute_name_of_local_name module_ns ln in
         let rta :=
             match ta with
             | None => esuccess None
-            | Some ta => elift Some (resolve_ergo_type ectxt tbl ta)
+            | Some ta => elift Some (resolve_ergo_type ectxt nsctxt ta)
             end
         in
-        let ctxt := add_constant_to_namespace_ctxt_current ctxt ln an in
-        elift2 (fun ta x => (DConstant prov ln ta x, ctxt))
+        let nsctxt := add_constant_to_namespace_ctxt_current nsctxt ln an in
+        elift2 (fun ta x => (DConstant prov ln ta x, nsctxt))
                rta
-               (resolve_ergo_expr ectxt tbl e)
+               (resolve_ergo_expr ectxt nsctxt e)
       | DFunc prov ln fd =>
         let an := absolute_name_of_local_name module_ns ln in
-        let ctxt := add_function_to_namespace_ctxt_current ctxt ln an in
-        elift (fun x => (DFunc prov an x, ctxt)) (resolve_ergo_function module_ns ectxt tbl fd)
+        let nsctxt := add_function_to_namespace_ctxt_current nsctxt ln an in
+        elift (fun x => (DFunc prov an x, nsctxt)) (resolve_ergo_function module_ns ectxt nsctxt fd)
       | DContract prov ln c  =>
         let an := absolute_name_of_local_name module_ns ln in
-        let ctxt := add_contract_to_namespace_ctxt_current ctxt ln an in
-        elift (fun x => (DContract prov an x, ctxt)) (resolve_ergo_contract module_ns ectxt tbl c)
+        let nsctxt := add_contract_to_namespace_ctxt_current nsctxt ln an in
+        elift (fun x => (DContract prov an x, nsctxt)) (resolve_ergo_contract module_ns ectxt nsctxt c)
       | DSetContract prov rn e1  =>
         eolift (fun an =>
-                  elift (fun x => (DSetContract prov an x, ctxt))
-                        (resolve_ergo_expr ectxt tbl e1))
-               (resolve_contract_name prov tbl rn)
+                  elift (fun x => (DSetContract prov an x, nsctxt))
+                        (resolve_ergo_expr ectxt nsctxt e1))
+               (resolve_contract_name prov nsctxt rn)
       end.
 
     Definition resolve_ergo_declarations
