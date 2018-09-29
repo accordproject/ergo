@@ -5,7 +5,7 @@
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 [![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
 
-[http://ergo.accordproject.org](http://ergo.accordproject.org)
+[https://docs.accordproject.org/docs/ergo](https://docs.accordproject.org/docs/ergo.html)
 
 ## About
 
