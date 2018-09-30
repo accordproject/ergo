@@ -52,7 +52,7 @@ Section Ergo.
     | ELet : A -> string -> option (@ergo_type A N) -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
     | ERecord : A -> list (string * ergo_expr) -> ergo_expr (**r create a new record *)
     | ENew : A -> N -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
-    | ECallFun : A -> string -> list ergo_expr -> ergo_expr (**r function call *)
+    | ECallFun : A -> N -> list ergo_expr -> ergo_expr (**r function call *)
     | ECallFunInGroup : A -> N -> string -> list ergo_expr -> ergo_expr (**r call function in group *)
     | EMatch : A -> ergo_expr -> list (@ergo_pattern A N * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
     | EForeach : A -> list (string * ergo_expr)
