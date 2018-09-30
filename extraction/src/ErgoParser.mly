@@ -356,8 +356,8 @@ expr:
 | LPAREN e = expr RPAREN
     { e }
 (* Call *)
-| fn = IDENT LPAREN el = exprlist RPAREN
-    { ErgoCompiler.ecallfun (mk_provenance $startpos $endpos) (Util.char_list_of_string fn) el }
+| fn = qname LPAREN el = exprlist RPAREN
+    { ErgoCompiler.ecallfun (mk_provenance $startpos $endpos) fn el }
 (* Constants *)
 | UNIT
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) ErgoCompiler.ErgoData.dunit }

@@ -72,7 +72,7 @@ contract HelloWorld over TemplateModel {
          nil
          (Some (ErgoTypeBoolean dummy_provenance))
          None)
-      (Some (ECallFun dummy_provenance "addFee" nil)).
+      (Some (ECallFun dummy_provenance (None,"addFee") nil)).
 
   Definition ergo_clause2 : lrergo_clause :=
     mkClause
@@ -83,7 +83,7 @@ contract HelloWorld over TemplateModel {
          (("request", ErgoTypeClassRef dummy_provenance (None,"Request"))::nil)
          (Some (ErgoTypeClassRef dummy_provenance (None,"Response")))
          None)
-      (Some (SReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
+      (Some (SReturn dummy_provenance (ECallFun dummy_provenance (None,"addFee") nil))).
 
   Definition ergo_contractd1 : lrergo_contract :=
     mkContract

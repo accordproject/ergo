@@ -509,7 +509,7 @@ Section ErgotoErgoC.
                   None)
                (Some (SReturn
                         dummy_provenance
-                        (ECallFun dummy_provenance "addFee"
+                        (ECallFun dummy_provenance "addFee"%string
                                   (EConst dummy_provenance (dfloat float_zero)::nil)))).
     Definition cl2 : laergo_clause :=
       mkClause dummy_provenance
@@ -521,7 +521,7 @@ Section ErgotoErgoC.
                   None)
                (Some (SReturn
                         dummy_provenance
-                        (ECallFun dummy_provenance "addFee"
+                        (ECallFun dummy_provenance "addFee"%string
                                   (EThisContract dummy_provenance::nil)))).
     Definition co1 : laergo_contract :=
       mkContract

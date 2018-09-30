@@ -360,7 +360,7 @@ Section ErgoNameResolution.
         in
         elift (ERecord prov) (fold_right proc_one init_rec el)
       | ECallFun prov fname el =>
-        let rfname := resolve_function_name prov nsctxt (None,fname) in
+        let rfname := resolve_function_name prov nsctxt fname in
         let init_el := esuccess nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
@@ -831,7 +831,7 @@ Section ErgoNameResolution.
            nil
            (Some (ErgoTypeBoolean dummy_provenance))
            None)
-        (Some (ECallFun dummy_provenance "addFee" nil)).
+        (Some (ECallFun dummy_provenance (None,"addFee") nil)).
 
     Definition ergo_clause2 : lrergo_clause :=
       mkClause
@@ -842,7 +842,7 @@ Section ErgoNameResolution.
            nil
            (Some (ErgoTypeBoolean dummy_provenance))
            None)
-        (Some (SReturn dummy_provenance (ECallFun dummy_provenance "addFee" nil))).
+        (Some (SReturn dummy_provenance (ECallFun dummy_provenance (None,"addFee") nil))).
 
     Definition ergo_contractd1 : lrergo_contract :=
       mkContract
