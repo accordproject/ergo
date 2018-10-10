@@ -120,6 +120,17 @@ Section ErgoNNRCtoCicero.
                                           sig
                                           eol
                                           quotel) (fst signatures)).
+  Definition javascript_main_dispatch_and_init
+             (contract_name:string)
+             (eol:string)
+             (quotel:string) : ErgoCodeGen.javascript :=
+    "" ++ "const contract = new " ++ ErgoCodeGen.javascript_identifier_sanitizer contract_name ++ "();" ++ eol
+       ++ "function dispatch(context) {" ++ eol
+       ++ "  return contract.main(context);" ++ eol
+       ++ "}" ++ eol
+       ++ "function init(context) {" ++ eol
+       ++ "  return contract.init(context);" ++ eol
+       ++ "}" ++ eol.
 
   Definition javascript_of_module_with_dispatch
              (contract_name:string)
@@ -130,6 +141,7 @@ Section ErgoNNRCtoCicero.
     (preamble eol) ++ eol
                    ++ (wrapper_functions contract_name signatures eol quotel)
                    ++ (javascript_of_declarations ES6 p.(modulen_declarations) 0 0 eol quotel)
+                   ++ (javascript_main_dispatch_and_init contract_name eol quotel)
                    ++ (postamble eol).
 
   Fixpoint filter_signatures
