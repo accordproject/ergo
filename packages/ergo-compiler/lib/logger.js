@@ -25,14 +25,14 @@ if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
 }
 
-let logger = new(winston.Logger)({
+let logger = winston.createLogger({
     transports: [
-        new(winston.transports.Console)({
+        new winston.transports.Console({
             colorize: true,
             timestamp: tsFormat,
             level: 'info'
         }),
-        new(winston.transports.File)({
+        new winston.transports.File({
             name: 'logs-file',
             filename: `${logDir}/trace.log`,
             level: env === 'development' ? 'debug' : 'info'

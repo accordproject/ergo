@@ -15,7 +15,7 @@
 'use strict';
 
 const Compiler=require('./ergo-core.js');
-const CTOParser = require('composer-common/lib/introspect/parser');
+const CTOParser = require('composer-concerto/lib/introspect/parser');
 
 /**
  * Utility class that implements the internals for Ergo.
