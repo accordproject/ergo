@@ -62,8 +62,8 @@ describe('ergo-compiler', () => {
     });
     describe('#compilationerrormessage', function () {
         it('should format compilation error', async function () {
-            const result = await Ergo.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
-            result.should.deep.equal('Import not found: org.accordproject.base');
+            const result = await Ergo.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
+            result.should.deep.equal('Import not found: org.accordproject.test');
         });
     });
     describe('#compile', function () {
@@ -117,7 +117,7 @@ describe('ergo-compiler', () => {
             const ctoFile = Path.resolve('test', 'data/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
-            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.base', 'verbose' : 'Compilation error. Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
+            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.test', 'verbose' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
     describe('#compilelatedeliveryandlinkfail', function () {
@@ -127,7 +127,7 @@ describe('ergo-compiler', () => {
             const ctoFile = Path.resolve('test', 'data/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', true);
-            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.base', 'verbose' : 'Compilation error. Import not found: org.accordproject.base', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
+            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.test', 'verbose' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
     describe('#parsecto', function () {

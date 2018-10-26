@@ -13,7 +13,7 @@
  */
 namespace org.accordproject.installmentsale
 
-import org.accordproject.base.*
+import org.accordproject.test.*
 
 transaction Initialize {
   o Double firstMonth

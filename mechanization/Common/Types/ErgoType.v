@@ -143,7 +143,7 @@ Section ErgoType.
   Definition lift_default_emits_type (prov:provenance) (emits:option laergo_type) : laergo_type :=
     match emits with
     | Some e => e
-    | None => ErgoTypeClassRef prov default_emits_absolute_name
+    | None => ErgoTypeClassRef prov default_event_absolute_name
     end.
 
   Definition lift_default_state_type (prov:provenance) (state:option laergo_type) : laergo_type :=
@@ -179,21 +179,21 @@ Section ErgoType.
   Section Extends.
     Definition fix_nothing (to:absolute_name) : list (absolute_name * absolute_name) := nil.
     Definition fix_transaction (to:absolute_name) :=
-      if string_dec to "org.hyperledger.composer.system.Transaction"%string
+      if string_dec to default_transaction_absolute_name
       then nil
-      else (to, "org.hyperledger.composer.system.Transaction"%string) :: nil.
+      else (to, default_transaction_absolute_name) :: nil.
     Definition fix_event (to:absolute_name) :=
-      if string_dec to "org.hyperledger.composer.system.Event"%string
+      if string_dec to default_event_absolute_name
       then nil
-      else (to, "org.hyperledger.composer.system.Event"%string) :: nil.
+      else (to, default_event_absolute_name) :: nil.
     Definition fix_asset (to:absolute_name) :=
-      if string_dec to "org.hyperledger.composer.system.Asset"%string
+      if string_dec to default_asset_absolute_name
       then nil
-      else (to, "org.hyperledger.composer.system.Asset"%string) :: nil.
+      else (to, default_asset_absolute_name) :: nil.
     Definition fix_participant (to:absolute_name) :=
-      if string_dec to "org.hyperledger.composer.system.Participant"%string
+      if string_dec to default_participant_absolute_name
       then nil
-      else (to, "org.hyperledger.composer.system.Participant"%string) :: nil.
+      else (to, default_participant_absolute_name) :: nil.
     
     Definition extends_rel
                (fix_none:absolute_name -> list (absolute_name * absolute_name))

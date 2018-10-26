@@ -130,7 +130,7 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       ""
       ""
-      hyperledger_namespace
+      accordproject_base_namespace
       nil
       (cto_typed_tm::cto_typed_rq::cto_typed_rs::nil).
 
@@ -147,14 +147,14 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       ""
       ""
-      hyperledger_namespace
+      accordproject_base_namespace
       nil
       (cto_typed_top::nil).
   Definition ctos : list lrcto_package := cto_hl::cto_model::nil.
   
   Definition ergo_stdlib : lrergo_module :=
     mkModule
-      dummy_provenance "" "" stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
+      dummy_provenance "" "" accordproject_stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
   Definition  mls:= ergo_stdlib :: nil.
 
 End HelloWorld.

@@ -49,9 +49,9 @@ Section ErgoTypetoErgoCType.
       match decl_desc with
       | ErgoTypeEnum _ => ctxt
       | ErgoTypeTransaction _ None rtl =>
-        if string_dec this "org.hyperledger.composer.system.Transaction"%string
+        if string_dec this default_transaction_absolute_name
         then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Transaction"%string rtl
+        else ergo_expand_extends ctxt this default_transaction_absolute_name rtl
       | ErgoTypeTransaction _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
       | ErgoTypeConcept _ None rtl =>
@@ -59,21 +59,21 @@ Section ErgoTypetoErgoCType.
       | ErgoTypeConcept _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
       | ErgoTypeEvent _ None rtl =>
-        if string_dec this "org.hyperledger.composer.system.Event"%string
+        if string_dec this default_event_absolute_name
         then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Event"%string rtl
+        else ergo_expand_extends ctxt this default_event_absolute_name rtl
       | ErgoTypeEvent _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
       | ErgoTypeAsset _ None rtl =>
-        if string_dec this "org.hyperledger.composer.system.Asset"%string
+        if string_dec this default_asset_absolute_name
         then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Asset"%string rtl
+        else ergo_expand_extends ctxt this default_asset_absolute_name rtl
       | ErgoTypeAsset _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
       | ErgoTypeParticipant _ None rtl =>
-        if string_dec this "org.hyperledger.composer.system.Participant"%string
+        if string_dec this default_participant_absolute_name
         then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this "org.hyperledger.composer.system.Participant"%string rtl
+        else ergo_expand_extends ctxt this default_participant_absolute_name rtl
       | ErgoTypeParticipant _ (Some super) rtl =>
         ergo_expand_extends ctxt this super rtl
       | ErgoTypeGlobal _ => ctxt
