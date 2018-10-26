@@ -165,7 +165,7 @@ Section ErgoNNRCtoCicero.
           | ErgoTypeClassRef _ reqname, Some (ErgoTypeClassRef _ outname), Some (ErgoTypeClassRef _ emitsname) =>
             (fname,reqparam,reqname,outname,emitsname) :: (filter_signatures namespace rest)
           | ErgoTypeClassRef _ reqname, Some (ErgoTypeClassRef _ outname), None =>
-            let emitsname := default_emits_absolute_name in
+            let emitsname := default_event_absolute_name in
             (fname,reqparam,reqname,outname,emitsname) :: (filter_signatures namespace rest)
           | _, _, _ =>
             filter_signatures namespace rest

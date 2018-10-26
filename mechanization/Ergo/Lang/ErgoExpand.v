@@ -131,7 +131,7 @@ Section ErgoExpand.
                 prov
                 (("request"%string, ErgoTypeClassRef prov default_request_absolute_name)::nil)
                 (Some (ErgoTypeUnit prov))
-                (Some (ErgoTypeClassRef prov default_emits_absolute_name)))
+                (Some (ErgoTypeClassRef prov default_event_absolute_name)))
              (Some init_body).
 
   Definition add_init_clause_to_contract (c:laergo_contract) : laergo_contract :=

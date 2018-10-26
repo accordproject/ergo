@@ -52,15 +52,33 @@ Section Names.
   End ReservedNames.
   
   Section TypeNames.
-    Definition hyperledger_namespace : string := "org.hyperledger.composer.system"%string.
-    Definition stdlib_namespace : string := "org.accordproject.ergo.stdlib"%string.
-    Definition ergotop_namespace : string := "org.accordproject.ergo.top"%string.
-    
-    Definition default_request_absolute_name : string := "org.accordproject.cicero.runtime.Request".
-    Definition default_response_absolute_name : string := "org.accordproject.cicero.runtime.Response".
-    Definition default_emits_absolute_name : string := "org.hyperledger.composer.system.Event".
-    Definition default_state_absolute_name : string := "org.accordproject.cicero.contract.AccordContractState".
-    Definition default_error_absolute_name : string := "org.accordproject.ergo.stdlib.ErgoErrorResponse".
+    Definition accordproject_base_namespace : string := "org.accordproject.base"%string.
+    Definition accordproject_runtime_namespace : string := "org.accordproject.cicero.runtime"%string.
+    Definition accordproject_contract_namespace : string := "org.accordproject.cicero.contract"%string.
+    Definition accordproject_stdlib_namespace : string := "org.accordproject.ergo.stdlib"%string.
+    Definition accordproject_ergotop_namespace : string := "org.accordproject.ergo.top"%string.
+
+    (* Accord Project system types *)
+    Definition default_event_absolute_name : string :=
+      absolute_name_of_local_name accordproject_base_namespace "Event".
+    Definition default_transaction_absolute_name : string :=
+      absolute_name_of_local_name accordproject_base_namespace "Transaction".
+    Definition default_asset_absolute_name : string :=
+      absolute_name_of_local_name accordproject_base_namespace "Asset".
+    Definition default_participant_absolute_name : string :=
+      absolute_name_of_local_name accordproject_base_namespace "Participant".
+
+    (* Accord Project common types *)
+    Definition default_request_absolute_name : string :=
+      absolute_name_of_local_name accordproject_runtime_namespace "Request".
+    Definition default_response_absolute_name : string :=
+      absolute_name_of_local_name accordproject_runtime_namespace "Response".
+    Definition default_state_absolute_name : string :=
+      absolute_name_of_local_name accordproject_contract_namespace "AccordContractState".
+
+    (* Ergo types *)
+    Definition default_error_absolute_name : string :=
+      absolute_name_of_local_name accordproject_stdlib_namespace "ErgoErrorResponse".
 
   End TypeNames.
 

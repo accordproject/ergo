@@ -110,7 +110,7 @@
     "dir": "data/latedeliveryandpenalty",
     "ergo": ["logic.ergo"],
     "models": [
-      "base.cto",
+      "test.cto",
       "model.cto"
     ],
     "contract": "contract.json",
@@ -139,8 +139,8 @@
     "expected": {
       "error": {
         "kind": "CompilationError",
-        "message": "Import not found: org.accordproject.base",
-        "verbose": "Compilation error. Import not found: org.accordproject.base",
+        "message": "Import not found: org.accordproject.test",
+        "verbose": "Compilation error. Import not found: org.accordproject.test",
         "locstart": {
           "line": -1,
           "character": -1
@@ -157,7 +157,7 @@
     "dir": "data/latedeliveryandpenalty",
     "ergo": ["logic.ergo"],
     "models": [
-      "base.cto",
+      "test.cto",
       "model.cto"
     ],
     "contract": "contract.json",
@@ -381,8 +381,8 @@
     "expected": {
        "error": {
         "kind": "CompilationError",
-        "message": "Import not found: org.accordproject.base",
-        "verbose": "Compilation error. Import not found: org.accordproject.base",
+        "message": "Import not found: org.accordproject.test",
+        "verbose": "Compilation error. Import not found: org.accordproject.test",
         "locstart": {
           "line": -1,
           "character": -1

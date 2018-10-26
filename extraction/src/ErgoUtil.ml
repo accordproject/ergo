@@ -267,23 +267,25 @@ let module_import_name decl =
   | _ -> []
   end
 
+let ocaml_accordproject_stdlib_namespace = Util.string_of_char_list accordproject_stdlib_namespace
+let ocaml_accordproject_base_namespace = Util.string_of_char_list accordproject_base_namespace
 let module_imports label_name decls =
-  if label_name = "org.accordproject.ergo.stdlib"
+  if label_name = ocaml_accordproject_stdlib_namespace
   then
-    (CTOLabel "org.hyperledger.composer.system")
+    (CTOLabel ocaml_accordproject_base_namespace)
     :: List.concat (List.map module_import_name decls)
   else
-    (CTOLabel "org.hyperledger.composer.system")
+    (CTOLabel ocaml_accordproject_base_namespace)
     :: (CTOLabel label_name)
-    :: (ErgoLabel "org.accordproject.ergo.stdlib")
+    :: (ErgoLabel ocaml_accordproject_stdlib_namespace)
     :: List.concat (List.map module_import_name decls)
 
 let cto_imports label_name decls =
-  if label_name = "org.hyperledger.composer.system"
+  if label_name = ocaml_accordproject_base_namespace
   then
     List.concat (List.map import_cto_name decls)
   else
-    (CTOLabel "org.hyperledger.composer.system")
+    (CTOLabel ocaml_accordproject_base_namespace)
     :: List.concat (List.map import_cto_name decls)
 
 let lookup_inputs_from_label all_inputs label =

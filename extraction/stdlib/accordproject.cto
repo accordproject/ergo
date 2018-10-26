@@ -1,4 +1,4 @@
-(*
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -10,15 +10,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *)
+ */
 
-open Resources
-
-let ergo_stdcto =
-  [ ("$ERGODIR/extraction/stdlib/accordproject.cto", accordproject);
-    ("$ERGODIR/extraction/stdlib/contract.cto", contract);
-    ("$ERGODIR/extraction/stdlib/money.cto", money);
-    ("$ERGODIR/extraction/stdlib/runtime.cto", runtime); ]
-let ergo_stdlib =
-  [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", stdlib) ];
-
+namespace org.accordproject.base
+abstract asset Asset {  }
+abstract participant Participant {  }
+abstract transaction Transaction {  }
+abstract event Event {  }

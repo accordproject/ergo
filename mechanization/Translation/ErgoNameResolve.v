@@ -123,9 +123,9 @@ Section ErgoNameResolution.
 
     (* Resolve imports for CTO *)
     Definition is_builtin_import (ns:namespace_name) : bool :=
-      if string_dec ns hyperledger_namespace
+      if string_dec ns accordproject_base_namespace
       then true
-      else if string_dec ns stdlib_namespace
+      else if string_dec ns accordproject_stdlib_namespace
            then true
            else false.
 
@@ -661,7 +661,7 @@ Section ErgoNameResolution.
       else
         (* Add built-in modules to import, first.
            Make sure to add current namespace to the list of imports - i.e., import self. *)
-        (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
+        (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
           :: (DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns))
           :: decls.
 
@@ -674,8 +674,8 @@ Section ErgoNameResolution.
       else
         (* Add built-in modules to import, first.
            Make sure to add current namespace to the list of imports - i.e., import self. *)
-        (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
-          ::(DImport dummy_provenance (ImportAll dummy_provenance stdlib_namespace))
+        (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
+          ::(DImport dummy_provenance (ImportAll dummy_provenance accordproject_stdlib_namespace))
           ::(DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns))
           :: decls.
       
@@ -689,7 +689,7 @@ Section ErgoNameResolution.
       then esuccess ctxt
       else
         let builtin_cto_imports :=
-            (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
+            (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
               :: (DImport dummy_provenance (ImportSelf dummy_provenance ns))
               :: nil
         in
@@ -705,8 +705,8 @@ Section ErgoNameResolution.
       then esuccess ctxt
       else
         let builtin_cto_imports :=
-            (DImport dummy_provenance (ImportAll dummy_provenance hyperledger_namespace))
-              ::(DImport dummy_provenance (ImportAll dummy_provenance stdlib_namespace))
+            (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
+              ::(DImport dummy_provenance (ImportAll dummy_provenance accordproject_stdlib_namespace))
               ::(DImport dummy_provenance (ImportSelf dummy_provenance ns))
               :: nil
         in
@@ -886,11 +886,11 @@ Section ErgoNameResolution.
 
     Definition ergo_hl : lrergo_module :=
       mkModule
-        dummy_provenance "" "" hyperledger_namespace (DType dummy_provenance ergo_typed_top::nil).
+        dummy_provenance "" "" accordproject_base_namespace (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ergo_stdlib : lrergo_module :=
       mkModule
-        dummy_provenance "" "" stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
+        dummy_provenance "" "" accordproject_stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ml1 : list lrergo_module := ergo_hl :: ergo_stdlib :: ergo_module2 :: ergo_module1 :: nil.
     Definition aml1 := resolve_ergo_modules (empty_namespace_ctxt "TEST") ml1.
