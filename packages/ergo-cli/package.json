@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-cli",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "description": "Ergo CLI",
   "repository": {
     "type": "git",
@@ -24,8 +24,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/ergo-compiler": "0.5.0",
-    "@accordproject/ergo-engine": "0.5.0",
+    "@accordproject/ergo-compiler": "0.5.2",
+    "@accordproject/ergo-engine": "0.5.2",
     "yargs": "9.0.1",
     "chalk": "2.4.1"
   },
