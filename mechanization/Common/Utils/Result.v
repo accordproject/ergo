@@ -140,7 +140,7 @@ Section Result.
   Section Fmt.
     Definition format_error (name : string) (prov : provenance) (msg : string) :=
       let loc := loc_of_provenance prov in
-      (name ++ " at " ++ (string_of_location loc) ++ " '" ++ msg ++ "'")%string.
+      (name ++ " at " ++ (string_of_location_no_file loc) ++ " '" ++ msg ++ "'")%string.
   End Fmt.
   
   (** Built-in errors *)
