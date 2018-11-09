@@ -1,0 +1,31 @@
+namespace org.accordproject.math
+
+define concept A{ a : Integer }
+define concept C{ contract : String }
+
+contract Smoke over TemplateModel {
+
+	clause test(request : MyRequest) : MyResponse {
+    	enforce(sin(0.0) = 0.0);
+		enforce(cos(0.0) = 1.0);
+		enforce(tan(0.0) = 0.0);
+
+		enforce(sin(PI/2) = 1);
+		enforce(cos(2 * PI) = 1);
+		enforce(tan(PI/4) = 0.9999999999999999);
+
+		enforce(asin(sin(1.0)) = 1.0);
+		enforce(acos(cos(1.0)) = 1.0);
+		enforce(atan(tan(1.0)) = 1.0);
+
+		enforce(sinh(0.0) = 0.0);
+		enforce(cosh(0.0) = 1.0);
+		enforce(tanh(0.0) = 0.0);
+
+		enforce(atan2(1.0, 1.0) = atan(1.0));
+
+		return MyResponse{
+			output: "Smoke.test successful"
+		}
+	}
+}

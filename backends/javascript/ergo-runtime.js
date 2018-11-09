@@ -521,6 +521,21 @@ function substring(v, start, len) {
 function substringNoLength(v, start) {
     return v.substring(start);
 }
+
+// Math operations
+function acos(x) { return Math.acos(x); }
+function asin(x) { return Math.asin(x); }
+function atan(x) { return Math.atan(x); }
+function atan2(y, x) { return Math.atan2(y, x); }
+function cos(x) { return Math.cos(x); }
+function cosh(x) { return Math.cosh(x); }
+function sin(x) { return Math.sin(x); }
+function sinh(x) { return Math.sinh(x); }
+function tan(x) { return Math.tan(x); }
+function tanh(x) { return Math.tanh(x); }
+function constantPi() { return Math.PI; }
+function constantE() { return Math.E; }
+
 /* Addendum to for dateTime and duration */
 
 var DAY = "day";

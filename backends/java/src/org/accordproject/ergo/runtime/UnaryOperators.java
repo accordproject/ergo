@@ -56,6 +56,54 @@ public class UnaryOperators {
 	public static JsonElement neg(JsonElement e) {
 		return new JsonPrimitive(! e.getAsBoolean());
 	}
+
+	public static JsonElement acos(JsonElement e) {
+		return new JsonPrimitive(Math.acos(e.getAsDouble()));
+	}
+	public static JsonElement asin(JsonElement e) {
+		return new JsonPrimitive(Math.asin(e.getAsDouble()));
+	}
+	public static JsonElement atan(JsonElement e) {
+		return new JsonPrimitive(Math.atan(e.getAsDouble()));
+	}
+	public static JsonElement atan2(JsonElement y, JsonElement x) {
+		return new JsonPrimitive(Math.atan2(y.getAsDouble(), x.getAsDouble()));
+	}
+	public static JsonElement cos(JsonElement e) {
+		return new JsonPrimitive(Math.cos(e.getAsDouble()));
+	}
+	public static JsonElement cosh(JsonElement e) {
+		return new JsonPrimitive(Math.cosh(e.getAsDouble()));
+	}
+	public static JsonElement sin(JsonElement e) {
+		return new JsonPrimitive(Math.sin(e.getAsDouble()));
+	}
+	public static JsonElement sinh(JsonElement e) {
+		return new JsonPrimitive(Math.sinh(e.getAsDouble()));
+	}
+	public static JsonElement tan(JsonElement e) {
+		return new JsonPrimitive(Math.tan(e.getAsDouble()));
+	}
+	public static JsonElement tanh(JsonElement e) {
+		return new JsonPrimitive(Math.tanh(e.getAsDouble()));
+	}
+	public static JsonElement constantPi() {
+		return new JsonPrimitive(Math.PI);
+	}
+	public static JsonElement constantE() {
+		return new JsonPrimitive(Math.E);
+	}
+
+	/**
+function cosh(x) { return Math.cosh(x); }
+function sin(x) { return Math.sin(x); }
+function sinh(x) { return Math.sinh(x); }
+function tan(x) { return Math.tan(x); }
+function tanh(x) { return Math.tanh(x); }
+function constantPi() { return Math.PI; }
+function constantE() { return Math.E; }
+
+	 */
 	
 	public static JsonElement coll(JsonElement e) {
 		JsonArray dst = new JsonArray();
