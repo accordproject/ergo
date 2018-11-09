@@ -88,4 +88,11 @@ Section Provenance.
          (string_of_location_point loc.(loc_start)) ++ "-" ++
          (string_of_location_point loc.(loc_end)).
 
+  Definition string_of_location_no_file (loc : location) : string :=
+    let file := ""%string
+    in
+    file ++
+         (string_of_location_point loc.(loc_start)) ++ "-" ++
+         (string_of_location_point loc.(loc_end)).
+
 End Provenance.
