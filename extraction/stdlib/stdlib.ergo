@@ -57,6 +57,21 @@ define function truncate(x:Double) : Integer
 define function maxPair(x:Double, y:Double) : Double
 define function minPair(x:Double, y:Double) : Double
 
+// Math operations
+define function acos(x:Double) : Double
+define function asin(x:Double) : Double
+define function atan(x:Double) : Double
+define function atan2(x:Double, y:Double) : Double
+define function cos(x:Double) : Double
+define function cosh(x:Double) : Double
+define function sin(x:Double) : Double
+define function sinh(x:Double) : Double
+define function tan(x:Double) : Double
+define function tanh(x:Double) : Double
+
+//define constant PI = 4.0 * atan(1.0)
+//define constant E = exp(1.0)
+
 // Polymorphic operations
 define function toString(x:Any) : String
 define function distinct(x:Any[]) : Any[]

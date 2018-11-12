@@ -239,6 +239,9 @@ public class BinaryOperators {
 		return new JsonPrimitive(asDouble(e1)>=asDouble(e2));
 	}
 
+	public static JsonElement atan2(JsonElement y, JsonElement x) {
+		return new JsonPrimitive(Math.atan2(y.getAsDouble(), x.getAsDouble()));
+	}
 	
 	public static JsonElement sql_date_plus(JsonElement e1, JsonElement e2) {
 		return null;

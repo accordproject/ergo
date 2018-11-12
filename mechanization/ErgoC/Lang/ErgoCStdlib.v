@@ -16,6 +16,7 @@ Require Import String.
 Require Import List.
 
 Require Import Qcert.Common.CommonSystem.
+Require Import ErgoSpec.Backend.Model.MathModelPart.
 Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
 Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require Import ErgoSpec.Backend.ForeignErgo.
@@ -67,8 +68,28 @@ Section ErgoCStdlib.
     List.app t1 t2.
 
   Definition foreign_unary_operator_table prov : ergo_stdlib_table :=
-    ("org.accordproject.ergo.stdlib.dateTime"%string,
-     mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string)))
+    (* Math *)
+    ("org.accordproject.ergo.stdlib.acos"%string,
+     mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_acos)))
+      :: ("org.accordproject.ergo.stdlib.asin",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_asin)))
+      :: ("org.accordproject.ergo.stdlib.atan",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_atan)))
+      :: ("org.accordproject.ergo.stdlib.cos",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_cos)))
+      :: ("org.accordproject.ergo.stdlib.cosh",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_cosh)))
+      :: ("org.accordproject.ergo.stdlib.sin",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_sin)))
+      :: ("org.accordproject.ergo.stdlib.sinh",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_sinh)))
+      :: ("org.accordproject.ergo.stdlib.tan",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_tan)))
+      :: ("org.accordproject.ergo.stdlib.tanh",
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_tanh)))
+    (* Date/Time *)
+      :: ("org.accordproject.ergo.stdlib.dateTime"%string,
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string)))
       :: ("org.accordproject.ergo.stdlib.dateTimeDayOfMonth",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_DAY))))
       :: ("org.accordproject.ergo.stdlib.dateTimeMonth",
@@ -80,21 +101,25 @@ Section ErgoCStdlib.
       :: nil.
 
   Definition foreign_binary_operator_table prov : ergo_stdlib_table :=
-    ("org.accordproject.ergo.stdlib.dateTimeIsAfter",
-     mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_gt)))
-  :: ("org.accordproject.ergo.stdlib.dateTimeIsBefore",
-      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_lt)))
-  :: ("org.accordproject.ergo.stdlib.dateTimeSubtract",
-      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_minus)))
-  :: ("org.accordproject.ergo.stdlib.dateTimeAdd",
-      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_plus)))
-  :: ("org.accordproject.ergo.stdlib.dateTimeDiff",
-      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration)))
-  :: ("org.accordproject.ergo.stdlib.dateTimeDiffDays",
-      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_days)))
-  :: ("org.accordproject.ergo.stdlib.dateTimeDiffSeconds",
-      mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_seconds)))
-  :: nil.
+    (* Math *)
+    ("org.accordproject.ergo.stdlib.atan2"%string,
+     mk_binary prov (OpForeignBinary (enhanced_binary_math_op bop_math_atan2)))
+    (* Date/Time *)
+      :: ("org.accordproject.ergo.stdlib.dateTimeIsAfter",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_gt)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeIsBefore",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_lt)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeSubtract",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_minus)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeAdd",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_plus)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeDiff",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeDiffDays",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_days)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeDiffSeconds",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_seconds)))
+      :: nil.
 
   Definition foreign_function_table prov : ergo_stdlib_table :=
     ("org.accordproject.ergo.stdlib.dateTimeIsSame",

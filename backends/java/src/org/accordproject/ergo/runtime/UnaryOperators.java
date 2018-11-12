@@ -66,9 +66,6 @@ public class UnaryOperators {
 	public static JsonElement atan(JsonElement e) {
 		return new JsonPrimitive(Math.atan(e.getAsDouble()));
 	}
-	public static JsonElement atan2(JsonElement y, JsonElement x) {
-		return new JsonPrimitive(Math.atan2(y.getAsDouble(), x.getAsDouble()));
-	}
 	public static JsonElement cos(JsonElement e) {
 		return new JsonPrimitive(Math.cos(e.getAsDouble()));
 	}

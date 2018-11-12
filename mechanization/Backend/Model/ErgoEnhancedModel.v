@@ -42,6 +42,7 @@ Require Import Qcert.DNNRC.Lang.DNNRCBase.
 Require Import Qcert.tDNNRC.Lang.tDNNRC.
 Require Import Qcert.DNNRC.Lang.Dataframe.
 
+Require Import ErgoSpec.Backend.Model.MathModelPart.
 Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
 
 Import ListNotations.
@@ -61,8 +62,8 @@ Definition enforce_unary_op_schema
            (ts1:rtype*rtype) (tr:rtype)
   : option (rtype*rtype)
   := if check_subtype_pairs (ts1::nil)
-    then Some (tr, (snd ts1))
-    else None.
+     then Some (tr, (snd ts1))
+     else None.
 
 Definition enforce_binary_op_schema
            {br:brand_relation}
@@ -70,8 +71,8 @@ Definition enforce_binary_op_schema
            (ts1:rtype*rtype) (ts2:rtype*rtype) (tr:rtype)
   : option (rtype*rtype*rtype)
   := if check_subtype_pairs (ts1::ts2::nil)
-    then Some (tr, (snd ts1), (snd ts2))
-    else None.
+     then Some (tr, (snd ts1), (snd ts2))
+     else None.
 
 Inductive enhanced_data : Set
   :=
@@ -171,6 +172,7 @@ Definition jenhancedstring s := JENHANCED_string s.
 
 Inductive enhanced_unary_op
   :=
+  | enhanced_unary_math_op : math_unary_op -> enhanced_unary_op
   | enhanced_unary_date_time_op : date_time_unary_op -> enhanced_unary_op.
 
 Definition onddateTime {A} (f : DATE_TIME -> A) (d : data) : option A
@@ -185,6 +187,25 @@ Definition ondstring {A} (f : String.string -> A) (d : data) : option A
      | _ => None
      end.
 
+Definition ondfloat {A} (f : float -> A) (d : data) : option A
+  := match d with
+     | dfloat s => Some (f s)
+     | _ => None
+     end.
+
+Definition math_unary_op_interp (op:math_unary_op) (d:data) : option data
+  := match op with
+     | uop_math_acos => lift dfloat (ondfloat FLOAT_acos d)
+     | uop_math_asin => lift dfloat (ondfloat FLOAT_asin d)
+     | uop_math_atan => lift dfloat (ondfloat FLOAT_atan d)
+     | uop_math_cos => lift dfloat (ondfloat FLOAT_cos d)
+     | uop_math_cosh => lift dfloat (ondfloat FLOAT_cosh d)
+     | uop_math_sin => lift dfloat (ondfloat FLOAT_sin d)
+     | uop_math_sinh => lift dfloat (ondfloat FLOAT_sinh d)
+     | uop_math_tan => lift dfloat (ondfloat FLOAT_tan d)
+     | uop_math_tanh => lift dfloat (ondfloat FLOAT_tanh d)
+     end.
+
 Definition date_time_unary_op_interp (op:date_time_unary_op) (d:data) : option data
   := match op with
      | uop_date_time_component part =>
@@ -195,12 +216,12 @@ Definition date_time_unary_op_interp (op:date_time_unary_op) (d:data) : option d
        lift denhanceddateTimeinterval (ondstring DATE_TIME_DURATION_from_string d)
      end.
 
-
 Definition enhanced_unary_op_interp
            (br:brand_relation_t)
            (op:enhanced_unary_op)
            (d:data) : option data
   := match op with
+     | enhanced_unary_math_op f => math_unary_op_interp f d
      | enhanced_unary_date_time_op f => date_time_unary_op_interp f d
      end.
 
@@ -214,15 +235,19 @@ Next Obligation.
   change ({x = y} + {x <> y}).
   decide equality.
   - decide equality.
+  - decide equality.
     decide equality.
 Defined.
 Next Obligation.
   constructor; intros op.
   destruct op.
+  - exact (math_unary_op_tostring m).
   - exact (date_time_unary_op_tostring d).
 Defined.
 Next Obligation.
   destruct op; simpl in H.
+  - destruct m; simpl in H; unfold ondfloat, lift in H; simpl in H;
+      destruct d; simpl in H; try discriminate; invcs H; repeat constructor.
   - destruct d0; simpl in H;
       unfold onddateTime, denhanceddateTime, denhanceddateTimeinterval, lift in H; simpl in H;
         destruct d; simpl in H; try discriminate.
@@ -233,8 +258,15 @@ Qed.
 
 Inductive enhanced_binary_op
   :=
+  | enhanced_binary_math_op : math_binary_op -> enhanced_binary_op
   | enhanced_binary_date_time_op : date_time_binary_op -> enhanced_binary_op
 .
+
+Definition ondfloat2 {A} (f : float -> float -> A) (d1 d2 : data) : option A
+  := match d1, d2 with
+     | dfloat fd1, dfloat fd2 => Some (f fd1 fd2)
+     | _, _ => None
+     end.
 
 Definition onddateTime2 {A} (f : DATE_TIME -> DATE_TIME -> A) (d1 d2 : data) : option A
   := match d1, d2 with
@@ -245,21 +277,27 @@ Definition onddateTime2 {A} (f : DATE_TIME -> DATE_TIME -> A) (d1 d2 : data) : o
 Definition rondbooldateTime2 (f: DATE_TIME -> DATE_TIME -> bool) (d1 d2:data) : option data
   := lift dbool (onddateTime2 f d1 d2).
 
+Definition math_binary_op_interp
+           (op:math_binary_op) (d1 d2:data) : option data
+  := match op with
+     | bop_math_atan2 => lift dfloat (ondfloat2 FLOAT_atan2 d1 d2)
+     end.
+
 Definition date_time_binary_op_interp
            (op:date_time_binary_op) (d1 d2:data) : option data
   := match op with
      | bop_date_time_plus
        => match d1, d2 with
-       | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeinterval td)
-         => Some (denhanceddateTime (DATE_TIME_plus tp td))
-       | _,_ => None
-       end
+          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeinterval td)
+            => Some (denhanceddateTime (DATE_TIME_plus tp td))
+          | _,_ => None
+          end
      | bop_date_time_minus
        => match d1, d2 with
-       | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeinterval td)
-         => Some (denhanceddateTime (DATE_TIME_minus tp td))
-       | _,_ => None
-       end
+          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeinterval td)
+            => Some (denhanceddateTime (DATE_TIME_minus tp td))
+          | _,_ => None
+          end
      | bop_date_time_ne => rondbooldateTime2 DATE_TIME_ne d1 d2
      | bop_date_time_lt => rondbooldateTime2 DATE_TIME_lt d1 d2
      | bop_date_time_le => rondbooldateTime2 DATE_TIME_le d1 d2
@@ -275,6 +313,7 @@ Definition enhanced_binary_op_interp
            (op:enhanced_binary_op)
            (d1 d2:data) : option data
   := match op with
+     | enhanced_binary_math_op f => math_binary_op_interp f d1 d2
      | enhanced_binary_date_time_op f => date_time_binary_op_interp f d1 d2
      end.
 
@@ -286,14 +325,24 @@ Next Obligation.
   change ({x = y} + {x <> y}).
   decide equality.
   - decide equality.
+  - decide equality.
 Defined.
 Next Obligation.
   constructor; intros op.
   destruct op.
+  - exact (math_binary_op_tostring m).
   - exact (date_time_binary_op_tostring d).
 Defined.
 Next Obligation.
   destruct op; simpl in H.
+  - destruct m; simpl in H;
+      unfold ondfloat2, lift in H
+      ; destruct d1; simpl in H; try discriminate
+      ; destruct f; simpl in H; try discriminate
+      ; destruct d2; simpl in H; try discriminate
+      ; try (destruct f; simpl in H; try discriminate)
+      ; invcs H
+      ; repeat constructor.
   - destruct d; simpl in H;
       unfold rondbooldateTime2, onddateTime2, denhanceddateTime, lift in H
       ; destruct d1; simpl in H; try discriminate
@@ -321,10 +370,12 @@ Definition enhanced_to_java_data
      end.
 
 Definition enhanced_to_java_unary_op
-             (indent:nat) (eol:String.string)
-             (quotel:String.string) (fu:enhanced_unary_op)
-             (d:java_json) : java_json
+           (indent:nat) (eol:String.string)
+           (quotel:String.string) (fu:enhanced_unary_op)
+           (d:java_json) : java_json
   := match fu with
+     | enhanced_unary_math_op op =>
+       math_to_java_unary_op indent eol quotel op d
      | enhanced_unary_date_time_op op =>
        date_time_to_java_unary_op indent eol quotel op d
      end.
@@ -334,6 +385,8 @@ Definition enhanced_to_java_binary_op
            (quotel:String.string) (fb:enhanced_binary_op)
            (d1 d2:java_json) : java_json
   := match fb with
+     | enhanced_binary_math_op op =>
+       math_to_java_binary_op indent eol quotel op d1 d2
      | enhanced_binary_date_time_op op =>
        date_time_to_java_binary_op indent eol quotel op d1 d2
      end.
@@ -356,10 +409,12 @@ Definition enhanced_to_javascript_data
 
 (* Java equivalent: JavaScriptBackend.foreign_to_javascript_unary_op *)
 Definition enhanced_to_javascript_unary_op
-             (indent:nat) (eol:String.string)
-             (quotel:String.string) (fu:enhanced_unary_op)
-             (d:String.string) : String.string
+           (indent:nat) (eol:String.string)
+           (quotel:String.string) (fu:enhanced_unary_op)
+           (d:String.string) : String.string
   := match fu with
+     | enhanced_unary_math_op op =>
+       math_to_javascript_unary_op indent eol quotel op d
      | enhanced_unary_date_time_op op =>
        date_time_to_javascript_unary_op indent eol quotel op d
      end.
@@ -370,14 +425,18 @@ Definition enhanced_to_javascript_binary_op
            (quotel:String.string) (fb:enhanced_binary_op)
            (d1 d2:String.string) : String.string
   := match fb with
+     | enhanced_binary_math_op op =>
+       math_to_javascript_binary_op indent eol quotel op d1 d2
      | enhanced_binary_date_time_op op =>
        date_time_to_javascript_binary_op indent eol quotel op d1 d2
      end.
 
 Definition enhanced_to_ajavascript_unary_op
-             (fu:enhanced_unary_op)
-             (e:JsSyntax.expr) : JsSyntax.expr
+           (fu:enhanced_unary_op)
+           (e:JsSyntax.expr) : JsSyntax.expr
   := match fu with
+     | enhanced_unary_math_op op =>
+       math_to_ajavascript_unary_op op e
      | enhanced_unary_date_time_op op =>
        date_time_to_ajavascript_unary_op op e
      end.
@@ -386,6 +445,8 @@ Definition enhanced_to_ajavascript_binary_op
            (fb:enhanced_binary_op)
            (e1 e2:JsSyntax.expr) : JsSyntax.expr
   := match fb with
+     | enhanced_binary_math_op op =>
+       math_to_ajavascript_binary_op op e1 e2
      | enhanced_binary_date_time_op op =>
        date_time_to_ajavascript_binary_op op e1 e2
      end.
@@ -406,7 +467,8 @@ Instance enhanced_foreign_to_ajavascript :
 
 Definition enhanced_to_scala_unary_op (op: enhanced_unary_op) (d: string) : string :=
   match op with
-    | enhanced_unary_date_time_op op => "EnhancedModel: date time ops not supported for now."
+  | enhanced_unary_math_op op => "EnhancedModel: math ops not supported for now."
+  | enhanced_unary_date_time_op op => "EnhancedModel: date time ops not supported for now."
   end.
 
 Definition enhanced_to_scala_spark_datatype {ftype: foreign_type} (ft: foreign_type_type) : string :=
@@ -422,7 +484,7 @@ Instance enhanced_foreign_to_scala {ftype: foreign_type}:
 (* TODO: add general support for "tagged" stuff in JSON.
     Like our left/right encoding.  so that we can use it for
     timescale/timepoint.  just using a string may work for now.
-*)
+ *)
 
 
 
@@ -439,23 +501,23 @@ Next Obligation.
   - exact (jstring (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) d)).
 Defined.
 
-  Inductive enhanced_numeric_type :=
-  | enhanced_numeric_int
-  | enhanced_numeric_float.
+Inductive enhanced_numeric_type :=
+| enhanced_numeric_int
+| enhanced_numeric_float.
 
-  Global Instance enhanced_numeric_type_eqdec : EqDec enhanced_numeric_type eq.
-  Proof.
-    red. unfold equiv, complement.
-    change (forall x y : enhanced_numeric_type, {x = y} + {x <> y}).
-    decide equality.
-  Defined.
+Global Instance enhanced_numeric_type_eqdec : EqDec enhanced_numeric_type eq.
+Proof.
+  red. unfold equiv, complement.
+  change (forall x y : enhanced_numeric_type, {x = y} + {x <> y}).
+  decide equality.
+Defined.
 
-  Definition enhanced_to_cld_numeric_type
-             (typ:enhanced_numeric_type) : CldMR.cld_numeric_type
-    := match typ with
-       | enhanced_numeric_int => CldMR.Cld_int
-       | enhanced_numeric_float => CldMR.Cld_float
-       end.
+Definition enhanced_to_cld_numeric_type
+           (typ:enhanced_numeric_type) : CldMR.cld_numeric_type
+  := match typ with
+     | enhanced_numeric_int => CldMR.Cld_int
+     | enhanced_numeric_float => CldMR.Cld_float
+     end.
 
 Inductive enhanced_reduce_op
   := RedOpCount : enhanced_reduce_op
@@ -519,36 +581,36 @@ Definition enhanced_reduce_op_interp
            (op:enhanced_reduce_op)
            (dl:list data) : option data
   := match op with
-      | RedOpCount | RedOpSum _ | RedOpMin _ | RedOpMax _ | RedOpArithMean _ =>
-        let uop :=
-            match op with
-            | RedOpCount  => OpCount
-            | RedOpSum typ => enhanced_numeric_sum typ
-            | RedOpMin typ => enhanced_numeric_min typ
-            | RedOpMax typ => enhanced_numeric_max typ
-            | RedOpArithMean typ => enhanced_numeric_arith_mean typ
-            | RedOpStats _ => OpCount (* assert false *)
-            end
-        in
-        unary_op_eval br uop (dcoll dl) 
-      | RedOpStats typ =>
-        let coll := dcoll dl in
-        let count := unary_op_eval br OpCount coll in
-        let sum := unary_op_eval br (enhanced_numeric_sum typ) coll in
-        let min := unary_op_eval br (enhanced_numeric_min typ) coll in
-        let max := unary_op_eval br (enhanced_numeric_max typ) coll in
-        let v :=
-            match (count, sum, min, max) with
-              | (Some count, Some sum, Some min, Some max) =>
-                Some (drec (("count"%string, count)
-                              ::("max"%string, max)
-                              ::("min"%string, min)
-                              ::("sum"%string, sum)
-                              ::nil))
-              | _ => None
-            end
-        in
-        v
+     | RedOpCount | RedOpSum _ | RedOpMin _ | RedOpMax _ | RedOpArithMean _ =>
+                                                           let uop :=
+                                                               match op with
+                                                               | RedOpCount  => OpCount
+                                                               | RedOpSum typ => enhanced_numeric_sum typ
+                                                               | RedOpMin typ => enhanced_numeric_min typ
+                                                               | RedOpMax typ => enhanced_numeric_max typ
+                                                               | RedOpArithMean typ => enhanced_numeric_arith_mean typ
+                                                               | RedOpStats _ => OpCount (* assert false *)
+                                                               end
+                                                           in
+                                                           unary_op_eval br uop (dcoll dl) 
+     | RedOpStats typ =>
+       let coll := dcoll dl in
+       let count := unary_op_eval br OpCount coll in
+       let sum := unary_op_eval br (enhanced_numeric_sum typ) coll in
+       let min := unary_op_eval br (enhanced_numeric_min typ) coll in
+       let max := unary_op_eval br (enhanced_numeric_max typ) coll in
+       let v :=
+           match (count, sum, min, max) with
+           | (Some count, Some sum, Some min, Some max) =>
+             Some (drec (("count"%string, count)
+                           ::("max"%string, max)
+                           ::("min"%string, min)
+                           ::("sum"%string, sum)
+                           ::nil))
+           | _ => None
+           end
+       in
+       v
      end.
 
 Program Instance enhanced_foreign_reduce_op : foreign_reduce_op
@@ -678,20 +740,20 @@ Definition enhanced_to_spark_reduce_op
            (rop:enhanced_reduce_op)
            (scala_endl quotel:string) : string
   := match rop with
-      | RedOpCount => ".count().toString()"
-      | RedOpSum enhanced_numeric_int => ".aggregate(0)(_ + _.toInt, _ + _).toString()"
-      | RedOpSum enhanced_numeric_float => ".aggregate(0.0)(_ + _.toDouble, _ + _).toString()"
-      | RedOpMin enhanced_numeric_int => ".aggregate(Int.MaxValue)(((x, y) => Math.min(x, y.toInt)), Math.min).toString()"
-      | RedOpMin enhanced_numeric_float => ".aggregate(Double.MaxValue)(((x, y) => Math.min(x, y.toDouble)), Math.min).toString()"
-      | RedOpMax enhanced_numeric_int =>
-        ".aggregate(Int.MinValue)(((x, y) => Math.max(x, y.toInt)), Math.max).toString()"
-      | RedOpMax enhanced_numeric_float =>
-        ".aggregate(Double.MinValue)(((x, y) => Math.max(x, y.toDouble)), Math.max).toString()"
-      | RedOpStats _ =>
-        ".aggregate("""")(statsReduce, statsRereduce).toString()" ++ scala_endl ++
-                     "  sc.parallelize(Array(res))"
-      | RedOpArithMean _ => (* assert false *)
-        ".arithmean /* ArithMean must be removed before code generation */"
+     | RedOpCount => ".count().toString()"
+     | RedOpSum enhanced_numeric_int => ".aggregate(0)(_ + _.toInt, _ + _).toString()"
+     | RedOpSum enhanced_numeric_float => ".aggregate(0.0)(_ + _.toDouble, _ + _).toString()"
+     | RedOpMin enhanced_numeric_int => ".aggregate(Int.MaxValue)(((x, y) => Math.min(x, y.toInt)), Math.min).toString()"
+     | RedOpMin enhanced_numeric_float => ".aggregate(Double.MaxValue)(((x, y) => Math.min(x, y.toDouble)), Math.min).toString()"
+     | RedOpMax enhanced_numeric_int =>
+       ".aggregate(Int.MinValue)(((x, y) => Math.max(x, y.toInt)), Math.max).toString()"
+     | RedOpMax enhanced_numeric_float =>
+       ".aggregate(Double.MinValue)(((x, y) => Math.max(x, y.toDouble)), Math.max).toString()"
+     | RedOpStats _ =>
+       ".aggregate("""")(statsReduce, statsRereduce).toString()" ++ scala_endl ++
+                    "  sc.parallelize(Array(res))"
+     | RedOpArithMean _ => (* assert false *)
+       ".arithmean /* ArithMean must be removed before code generation */"
      end.
 
 (* NNRCMR rewrites *)
@@ -699,129 +761,129 @@ Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.NNRCMR.NNRCMRRuntime.
 Require Import Qcert.NNRCMR.Optim.NNRCMRRewrite.
 
-  (* Java equivalent: MROptimizer.min_max_to_stats *)
-  Definition min_max_to_stats avoid (mr: mr) :=
-    match mr.(mr_reduce) with
-    | RedOp (RedOpForeign op) =>
-      match op with
-      | RedOpMin typ | RedOpMax typ =>
-        let stats_field :=
-            match op with
-            | RedOpMin _ => "min"%string
-            | RedOpMax _ => "max"%string
-            | _ => "ERROR"%string (* assert false *)
-            end
-        in
-        let (tmp, avoid) := fresh_mr_var "stats$" avoid in
-        let mr1 :=
-           mkMR
-             mr.(mr_input)
-             tmp
-             mr.(mr_map)
-             (RedOp (RedOpForeign (RedOpStats typ)))
-        in
-        let x := "stats"%string in
-        let mr2 :=
-            mkMR
-              tmp
-              mr.(mr_output)
-              (MapScalar (x, NNRCUnop OpBag (NNRCUnop (OpDot stats_field) (NNRCVar x))))
-              RedSingleton
-        in
-        Some (mr1::mr2::nil)
-      | _ => None
-      end
+(* Java equivalent: MROptimizer.min_max_to_stats *)
+Definition min_max_to_stats avoid (mr: mr) :=
+  match mr.(mr_reduce) with
+  | RedOp (RedOpForeign op) =>
+    match op with
+    | RedOpMin typ | RedOpMax typ =>
+                     let stats_field :=
+                         match op with
+                         | RedOpMin _ => "min"%string
+                         | RedOpMax _ => "max"%string
+                         | _ => "ERROR"%string (* assert false *)
+                         end
+                     in
+                     let (tmp, avoid) := fresh_mr_var "stats$" avoid in
+                     let mr1 :=
+                         mkMR
+                           mr.(mr_input)
+                                tmp
+                                mr.(mr_map)
+                                     (RedOp (RedOpForeign (RedOpStats typ)))
+                     in
+                     let x := "stats"%string in
+                     let mr2 :=
+                         mkMR
+                           tmp
+                           mr.(mr_output)
+                                (MapScalar (x, NNRCUnop OpBag (NNRCUnop (OpDot stats_field) (NNRCVar x))))
+                                RedSingleton
+                     in
+                     Some (mr1::mr2::nil)
     | _ => None
-    end.
+    end
+  | _ => None
+  end.
 
-  (* Java equivalent: MROptimizer.arithmean_to_stats *)
-  Definition arithmean_to_stats avoid (mr: mr) :=
-    match mr.(mr_reduce) with
-    | RedOp (RedOpForeign op) =>
-      match op with
-      | RedOpArithMean typ =>
-        let (tmp, avoid) := fresh_mr_var "stats$" avoid in
-        let mr1 :=
-           mkMR
-             mr.(mr_input)
-             tmp
-             mr.(mr_map)
-             (RedOp (RedOpForeign (RedOpStats typ)))
-        in
-        let map :=
-            match typ with
-            | enhanced_numeric_int =>
-              let zero := NNRCConst (dnat 0) in
-              let x := "stats"%string in
-              MapScalar (x, NNRCUnop OpBag
-                                    (NNRCIf (NNRCBinop OpEqual (NNRCUnop (OpDot "count"%string) (NNRCVar x)) zero)
+(* Java equivalent: MROptimizer.arithmean_to_stats *)
+Definition arithmean_to_stats avoid (mr: mr) :=
+  match mr.(mr_reduce) with
+  | RedOp (RedOpForeign op) =>
+    match op with
+    | RedOpArithMean typ =>
+      let (tmp, avoid) := fresh_mr_var "stats$" avoid in
+      let mr1 :=
+          mkMR
+            mr.(mr_input)
+                 tmp
+                 mr.(mr_map)
+                      (RedOp (RedOpForeign (RedOpStats typ)))
+      in
+      let map :=
+          match typ with
+          | enhanced_numeric_int =>
+            let zero := NNRCConst (dnat 0) in
+            let x := "stats"%string in
+            MapScalar (x, NNRCUnop OpBag
+                                   (NNRCIf (NNRCBinop OpEqual (NNRCUnop (OpDot "count"%string) (NNRCVar x)) zero)
                                            zero
                                            (NNRCBinop (OpNatBinary NatDiv)
-                                                     (NNRCUnop (OpDot "sum"%string) (NNRCVar x))
-                                                     (NNRCUnop (OpDot "count"%string) (NNRCVar x)))))
-            | enhanced_numeric_float =>
-              let zero := NNRCConst (dnat 0) in
-              let zerof := NNRCConst (dfloat float_zero) in
-              let x := "stats"%string in
-              MapScalar (x, NNRCUnop OpBag
-                                    (NNRCIf (NNRCBinop OpEqual (NNRCUnop (OpDot "count"%string) (NNRCVar x)) zero)
+                                                      (NNRCUnop (OpDot "sum"%string) (NNRCVar x))
+                                                      (NNRCUnop (OpDot "count"%string) (NNRCVar x)))))
+          | enhanced_numeric_float =>
+            let zero := NNRCConst (dnat 0) in
+            let zerof := NNRCConst (dfloat float_zero) in
+            let x := "stats"%string in
+            MapScalar (x, NNRCUnop OpBag
+                                   (NNRCIf (NNRCBinop OpEqual (NNRCUnop (OpDot "count"%string) (NNRCVar x)) zero)
                                            zerof
                                            (NNRCBinop (OpFloatBinary FloatDiv)
-                                                     (NNRCUnop (OpDot "sum"%string) (NNRCVar x))
-                                                     (NNRCUnop (OpFloatOfNat)
-                                                       (NNRCUnop (OpDot "count"%string) (NNRCVar x))))))
-            end
-        in
-        let mr2 :=
-            mkMR
-              tmp
-              mr.(mr_output)
-              map
-              RedSingleton
-        in
-        Some (mr1::mr2::nil)
-      | _ => None
-      end
+                                                      (NNRCUnop (OpDot "sum"%string) (NNRCVar x))
+                                                      (NNRCUnop (OpFloatOfNat)
+                                                                (NNRCUnop (OpDot "count"%string) (NNRCVar x))))))
+          end
+      in
+      let mr2 :=
+          mkMR
+            tmp
+            mr.(mr_output)
+                 map
+                 RedSingleton
+      in
+      Some (mr1::mr2::nil)
     | _ => None
-    end.
+    end
+  | _ => None
+  end.
 
-  Definition min_max_free_reduce (src:reduce_fun)
-    := match src with
-       | RedOp (RedOpForeign (RedOpMin _|RedOpMax _)) => False
-       | _ => True
-       end.
+Definition min_max_free_reduce (src:reduce_fun)
+  := match src with
+     | RedOp (RedOpForeign (RedOpMin _|RedOpMax _)) => False
+     | _ => True
+     end.
 
-  Definition arithmean_free_reduce (src:reduce_fun)
-    := match src with
-       | RedOp (RedOpForeign (RedOpArithMean _)) => False
-       | _ => True
-       end.
+Definition arithmean_free_reduce (src:reduce_fun)
+  := match src with
+     | RedOp (RedOpForeign (RedOpArithMean _)) => False
+     | _ => True
+     end.
 
-  Definition min_max_free_mr (src:mr)
-    := min_max_free_reduce src.(mr_reduce).
+Definition min_max_free_mr (src:mr)
+  := min_max_free_reduce src.(mr_reduce).
 
-  Definition arithmean_free_mr (src:mr)
-    := arithmean_free_reduce src.(mr_reduce).
+Definition arithmean_free_mr (src:mr)
+  := arithmean_free_reduce src.(mr_reduce).
 
-  Definition min_max_free_mr_chain (src:list mr)
-    := Forall min_max_free_mr src.
+Definition min_max_free_mr_chain (src:list mr)
+  := Forall min_max_free_mr src.
 
-  Definition min_max_free_nnrcmr (src:nnrcmr)
-    := min_max_free_mr_chain src.(mr_chain).
+Definition min_max_free_nnrcmr (src:nnrcmr)
+  := min_max_free_mr_chain src.(mr_chain).
 
-  Definition arithmean_free_mr_chain (src:list mr)
-    := Forall arithmean_free_mr src.
+Definition arithmean_free_mr_chain (src:list mr)
+  := Forall arithmean_free_mr src.
 
-  Definition arithmean_free_nnrcmr (src:nnrcmr)
-    := arithmean_free_mr_chain src.(mr_chain).
+Definition arithmean_free_nnrcmr (src:nnrcmr)
+  := arithmean_free_mr_chain src.(mr_chain).
 
-  Definition to_spark_nnrcmr (l: nnrcmr) :=
-    let avoid := get_nnrcmr_vars l in
-    let l := apply_rewrite (arithmean_to_stats avoid) l in
-    l.
+Definition to_spark_nnrcmr (l: nnrcmr) :=
+  let avoid := get_nnrcmr_vars l in
+  let l := apply_rewrite (arithmean_to_stats avoid) l in
+  l.
 
-  Definition to_spark_nnrcmr_prepared (src:nnrcmr)
-    := arithmean_free_nnrcmr src.
+Definition to_spark_nnrcmr_prepared (src:nnrcmr)
+  := arithmean_free_nnrcmr src.
 
 Program Instance enhanced_foreign_to_spark : foreign_to_spark
   := mk_foreign_to_spark
@@ -848,274 +910,274 @@ Definition enhanced_to_cloudant_reduce_op
      | RedOpArithMean _ => CldMR.CldRedOpStats CldMR.Cld_int (* assert false *)
      end.
 
-  (* Java equivalent: MROptimizer.foreign_to_cloudant_prepare_nnrcmr *)
-  Definition to_cloudant_nnrcmr (l: nnrcmr) :=
-    let avoid := get_nnrcmr_vars l in
-    let l := apply_rewrite (min_max_to_stats avoid) l in
-    let l := apply_rewrite (arithmean_to_stats avoid) l in
-    l.
+(* Java equivalent: MROptimizer.foreign_to_cloudant_prepare_nnrcmr *)
+Definition to_cloudant_nnrcmr (l: nnrcmr) :=
+  let avoid := get_nnrcmr_vars l in
+  let l := apply_rewrite (min_max_to_stats avoid) l in
+  let l := apply_rewrite (arithmean_to_stats avoid) l in
+  l.
 
-  Definition to_cloudant_nnrcmr_prepared (src:nnrcmr)
-    := min_max_free_nnrcmr src /\ arithmean_free_nnrcmr src.
+Definition to_cloudant_nnrcmr_prepared (src:nnrcmr)
+  := min_max_free_nnrcmr src /\ arithmean_free_nnrcmr src.
 
-  Program Instance enhanced_foreign_to_cloudant : foreign_to_cloudant
-    :=
-      { foreign_to_cloudant_reduce_op := enhanced_to_cloudant_reduce_op
-        ; foreign_to_cloudant_prepare_nnrcmr := to_cloudant_nnrcmr
-        ; foreign_to_cloudant_nnrcmr_prepared := to_cloudant_nnrcmr_prepared
-      }.
-  Next Obligation.
-    unfold to_cloudant_nnrcmr.
-    unfold to_cloudant_nnrcmr_prepared.
-    unfold min_max_free_nnrcmr, min_max_free_mr_chain, min_max_free_mr, min_max_free_reduce.
-    split.
-    - unfold apply_rewrite, min_max_to_stats.
-      unfold mr_chain_apply_rewrite.
-      apply Forall_forall; intros ? inn.
-      simpl in *.
-      apply in_flat_map in inn.
-      destruct inn as [? [inn1 inn2]].
-      destruct x; simpl.
-      destruct mr_reduce; simpl in *;
-        unfold min_max_free_mr;
-        simpl;
+Program Instance enhanced_foreign_to_cloudant : foreign_to_cloudant
+  :=
+    { foreign_to_cloudant_reduce_op := enhanced_to_cloudant_reduce_op
+      ; foreign_to_cloudant_prepare_nnrcmr := to_cloudant_nnrcmr
+      ; foreign_to_cloudant_nnrcmr_prepared := to_cloudant_nnrcmr_prepared
+    }.
+Next Obligation.
+  unfold to_cloudant_nnrcmr.
+  unfold to_cloudant_nnrcmr_prepared.
+  unfold min_max_free_nnrcmr, min_max_free_mr_chain, min_max_free_mr, min_max_free_reduce.
+  split.
+  - unfold apply_rewrite, min_max_to_stats.
+    unfold mr_chain_apply_rewrite.
+    apply Forall_forall; intros ? inn.
+    simpl in *.
+    apply in_flat_map in inn.
+    destruct inn as [? [inn1 inn2]].
+    destruct x; simpl.
+    destruct mr_reduce; simpl in *;
+      unfold min_max_free_mr;
+      simpl;
       trivial.
-      destruct r; simpl in *; trivial.
-      destruct x0; simpl in *.
-      destruct mr_reduce; simpl in *;
-        try solve [invcs inn2; invcs H].
-      destruct r; simpl in * .
-      destruct f0; simpl in *.
-      + intuition.
-        invcs H; trivial.
-      + intuition.
-        invcs H; trivial.
-      + apply in_flat_map in inn1.
-        destruct inn1 as [? [inn1 inn3]].
-        destruct x.
-        simpl in inn3.
-        destruct mr_reduce
-        ; try solve [simpl in inn3; intuition
-                     ; invcs H].
-        destruct r; destruct f0
-        ; simpl in inn3; intuition
-        ; invcs H0
-        ; try solve [invcs H | invcs H1].
-      + apply in_flat_map in inn1.
-        destruct inn1 as [? [inn1 inn3]].
-        destruct x.
-        simpl in inn3.
-        destruct mr_reduce
-        ; try solve [simpl in inn3; intuition
-                     ; invcs H].
-        destruct r; destruct f0
-        ; simpl in inn3; intuition
-        ; invcs H0
-        ; try solve [invcs H | invcs H1].
-      + intuition.
-        invcs H; trivial.
-        intuition.
-        invcs H0; trivial.
-      + intuition.
-        invcs H; trivial.
-    - unfold apply_rewrite, mr_chain_apply_rewrite, arithmean_free_nnrcmr, arithmean_free_mr_chain.
-      simpl in *.
-      apply Forall_forall; intros ? inn.
-      apply in_flat_map in inn.
-      destruct inn as [? [inn1 inn2]].
-      destruct x; simpl.
-      destruct mr_reduce; simpl in *;
-        unfold arithmean_free_mr;
-        simpl;
+    destruct r; simpl in *; trivial.
+    destruct x0; simpl in *.
+    destruct mr_reduce; simpl in *;
+      try solve [invcs inn2; invcs H].
+    destruct r; simpl in * .
+    destruct f0; simpl in *.
+    + intuition.
+      invcs H; trivial.
+    + intuition.
+      invcs H; trivial.
+    + apply in_flat_map in inn1.
+      destruct inn1 as [? [inn1 inn3]].
+      destruct x.
+      simpl in inn3.
+      destruct mr_reduce
+      ; try solve [simpl in inn3; intuition
+                   ; invcs H].
+      destruct r; destruct f0
+      ; simpl in inn3; intuition
+      ; invcs H0
+      ; try solve [invcs H | invcs H1].
+    + apply in_flat_map in inn1.
+      destruct inn1 as [? [inn1 inn3]].
+      destruct x.
+      simpl in inn3.
+      destruct mr_reduce
+      ; try solve [simpl in inn3; intuition
+                   ; invcs H].
+      destruct r; destruct f0
+      ; simpl in inn3; intuition
+      ; invcs H0
+      ; try solve [invcs H | invcs H1].
+    + intuition.
+      invcs H; trivial.
+      intuition.
+      invcs H0; trivial.
+    + intuition.
+      invcs H; trivial.
+  - unfold apply_rewrite, mr_chain_apply_rewrite, arithmean_free_nnrcmr, arithmean_free_mr_chain.
+    simpl in *.
+    apply Forall_forall; intros ? inn.
+    apply in_flat_map in inn.
+    destruct inn as [? [inn1 inn2]].
+    destruct x; simpl.
+    destruct mr_reduce; simpl in *;
+      unfold arithmean_free_mr;
+      simpl;
       trivial.
-      destruct r; simpl in *; trivial.
-      destruct x0; simpl in *.
-      destruct mr_reduce; simpl in *;
-        try solve [invcs inn2; invcs H].
-      destruct r; simpl in * .
-      destruct f0; simpl in *.
-      + intuition.
-        invcs H; trivial.
-      + intuition.
-        invcs H; trivial.
-      + intuition.
-        invcs H; trivial.
-      + intuition.
-        invcs H; trivial.
-      + intuition.
-        invcs H; trivial.
-        invcs H0; trivial.
-      + intuition.
-        invcs H; trivial.
-  Qed.
+    destruct r; simpl in *; trivial.
+    destruct x0; simpl in *.
+    destruct mr_reduce; simpl in *;
+      try solve [invcs inn2; invcs H].
+    destruct r; simpl in * .
+    destruct f0; simpl in *.
+    + intuition.
+      invcs H; trivial.
+    + intuition.
+      invcs H; trivial.
+    + intuition.
+      invcs H; trivial.
+    + intuition.
+      invcs H; trivial.
+    + intuition.
+      invcs H; trivial.
+      invcs H0; trivial.
+    + intuition.
+      invcs H; trivial.
+Qed.
 
-  (* nra optimizer logger support *)
-  Axiom OPTIMIZER_LOGGER_nraenv_token_type : Set.
-  Extract Constant OPTIMIZER_LOGGER_nraenv_token_type => "Util.nra_logger_token_type".
+(* nra optimizer logger support *)
+Axiom OPTIMIZER_LOGGER_nraenv_token_type : Set.
+Extract Constant OPTIMIZER_LOGGER_nraenv_token_type => "Util.nra_logger_token_type".
 
-  Axiom OPTIMIZER_LOGGER_nraenv_startPass :
-    String.string -> nraenv -> OPTIMIZER_LOGGER_nraenv_token_type.
+Axiom OPTIMIZER_LOGGER_nraenv_startPass :
+  String.string -> nraenv -> OPTIMIZER_LOGGER_nraenv_token_type.
 
-  Extract Constant OPTIMIZER_LOGGER_nraenv_startPass =>
-  "(fun name input -> Logger.nra_log_startPass (Util.string_of_char_list name) input)".
+Extract Constant OPTIMIZER_LOGGER_nraenv_startPass =>
+"(fun name input -> Logger.nra_log_startPass (Util.string_of_char_list name) input)".
 
-  Axiom OPTIMIZER_LOGGER_nraenv_step :
-    OPTIMIZER_LOGGER_nraenv_token_type -> String.string ->
-    nraenv -> nraenv ->
-    OPTIMIZER_LOGGER_nraenv_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_nraenv_step =>
-  "(fun token name input output -> Logger.nra_log_step token (Util.string_of_char_list name) input output)".
+Axiom OPTIMIZER_LOGGER_nraenv_step :
+  OPTIMIZER_LOGGER_nraenv_token_type -> String.string ->
+  nraenv -> nraenv ->
+  OPTIMIZER_LOGGER_nraenv_token_type.
 
-  Axiom OPTIMIZER_LOGGER_nraenv_endPass :
-    OPTIMIZER_LOGGER_nraenv_token_type -> nraenv -> OPTIMIZER_LOGGER_nraenv_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_nraenv_endPass =>
-  "(fun token output -> Logger.nra_log_endPass token output)".
+Extract Inlined Constant OPTIMIZER_LOGGER_nraenv_step =>
+"(fun token name input output -> Logger.nra_log_step token (Util.string_of_char_list name) input output)".
 
-  Instance foreign_nraenv_optimizer_logger :
-    optimizer_logger string nraenv
-    :=
-      {
-        optimizer_logger_token_type := OPTIMIZER_LOGGER_nraenv_token_type
-        ; logStartPass := OPTIMIZER_LOGGER_nraenv_startPass
-        ; logStep :=  OPTIMIZER_LOGGER_nraenv_step
-        ; logEndPass :=  OPTIMIZER_LOGGER_nraenv_endPass
-      } .
+Axiom OPTIMIZER_LOGGER_nraenv_endPass :
+  OPTIMIZER_LOGGER_nraenv_token_type -> nraenv -> OPTIMIZER_LOGGER_nraenv_token_type.
 
-  (* nrc optimizer logger support *)
-  Axiom OPTIMIZER_LOGGER_nnrc_token_type : Set.
-  Extract Constant OPTIMIZER_LOGGER_nnrc_token_type => "Util.nrc_logger_token_type".
+Extract Inlined Constant OPTIMIZER_LOGGER_nraenv_endPass =>
+"(fun token output -> Logger.nra_log_endPass token output)".
 
-  Axiom OPTIMIZER_LOGGER_nnrc_startPass :
-    String.string -> nnrc -> OPTIMIZER_LOGGER_nnrc_token_type.
+Instance foreign_nraenv_optimizer_logger :
+  optimizer_logger string nraenv
+  :=
+    {
+      optimizer_logger_token_type := OPTIMIZER_LOGGER_nraenv_token_type
+      ; logStartPass := OPTIMIZER_LOGGER_nraenv_startPass
+      ; logStep :=  OPTIMIZER_LOGGER_nraenv_step
+      ; logEndPass :=  OPTIMIZER_LOGGER_nraenv_endPass
+    } .
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrc_startPass =>
-  "(fun name input -> Logger.nrc_log_startPass (Util.string_of_char_list name) input)".
+(* nrc optimizer logger support *)
+Axiom OPTIMIZER_LOGGER_nnrc_token_type : Set.
+Extract Constant OPTIMIZER_LOGGER_nnrc_token_type => "Util.nrc_logger_token_type".
 
-  Axiom OPTIMIZER_LOGGER_nnrc_step :
-    OPTIMIZER_LOGGER_nnrc_token_type -> String.string ->
-    nnrc -> nnrc ->
-    OPTIMIZER_LOGGER_nnrc_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrc_step =>
-  "(fun token name input output -> Logger.nrc_log_step token (Util.string_of_char_list name) input output)".
+Axiom OPTIMIZER_LOGGER_nnrc_startPass :
+  String.string -> nnrc -> OPTIMIZER_LOGGER_nnrc_token_type.
 
-  Axiom OPTIMIZER_LOGGER_nnrc_endPass :
-    OPTIMIZER_LOGGER_nnrc_token_type -> nnrc -> OPTIMIZER_LOGGER_nnrc_token_type.
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrc_startPass =>
+"(fun name input -> Logger.nrc_log_startPass (Util.string_of_char_list name) input)".
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrc_endPass =>
-  "(fun token output -> Logger.nrc_log_endPass token output)".
+Axiom OPTIMIZER_LOGGER_nnrc_step :
+  OPTIMIZER_LOGGER_nnrc_token_type -> String.string ->
+  nnrc -> nnrc ->
+  OPTIMIZER_LOGGER_nnrc_token_type.
 
-    Instance foreign_nnrc_optimizer_logger :
-    optimizer_logger string nnrc
-    :=
-      {
-        optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrc_token_type
-        ; logStartPass := OPTIMIZER_LOGGER_nnrc_startPass
-        ; logStep :=  OPTIMIZER_LOGGER_nnrc_step
-        ; logEndPass :=  OPTIMIZER_LOGGER_nnrc_endPass
-      } .
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrc_step =>
+"(fun token name input output -> Logger.nrc_log_step token (Util.string_of_char_list name) input output)".
 
-    (* nnrs_imp optimizer logger support *)
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_token_type : Set.
-  Extract Constant OPTIMIZER_LOGGER_nnrs_imp_expr_token_type => "Util.nnrs_imp_expr_logger_token_type".
+Axiom OPTIMIZER_LOGGER_nnrc_endPass :
+  OPTIMIZER_LOGGER_nnrc_token_type -> nnrc -> OPTIMIZER_LOGGER_nnrc_token_type.
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_startPass :
-    String.string -> nnrs_imp_expr -> OPTIMIZER_LOGGER_nnrs_imp_expr_token_type.
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrc_endPass =>
+"(fun token output -> Logger.nrc_log_endPass token output)".
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_expr_startPass =>
-  "(fun name input -> Logger.nnrs_imp_expr_log_startPass (Util.string_of_char_list name) input)".
+Instance foreign_nnrc_optimizer_logger :
+  optimizer_logger string nnrc
+  :=
+    {
+      optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrc_token_type
+      ; logStartPass := OPTIMIZER_LOGGER_nnrc_startPass
+      ; logStep :=  OPTIMIZER_LOGGER_nnrc_step
+      ; logEndPass :=  OPTIMIZER_LOGGER_nnrc_endPass
+    } .
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_step :
-    OPTIMIZER_LOGGER_nnrs_imp_expr_token_type -> String.string ->
-    nnrs_imp_expr -> nnrs_imp_expr ->
-    OPTIMIZER_LOGGER_nnrs_imp_expr_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_expr_step =>
-  "(fun token name input output -> Logger.nnrs_imp_expr_log_step token (Util.string_of_char_list name) input output)".
+(* nnrs_imp optimizer logger support *)
+Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_token_type : Set.
+Extract Constant OPTIMIZER_LOGGER_nnrs_imp_expr_token_type => "Util.nnrs_imp_expr_logger_token_type".
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_endPass :
-    OPTIMIZER_LOGGER_nnrs_imp_expr_token_type -> nnrs_imp_expr -> OPTIMIZER_LOGGER_nnrs_imp_expr_token_type.
+Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_startPass :
+  String.string -> nnrs_imp_expr -> OPTIMIZER_LOGGER_nnrs_imp_expr_token_type.
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_expr_endPass =>
-  "(fun token output -> Logger.nnrs_imp_expr_log_endPass token output)".
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_expr_startPass =>
+"(fun name input -> Logger.nnrs_imp_expr_log_startPass (Util.string_of_char_list name) input)".
 
-    Instance foreign_nnrs_imp_expr_optimizer_logger :
-    optimizer_logger string nnrs_imp_expr
-    :=
-      {
-        optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrs_imp_expr_token_type
-        ; logStartPass := OPTIMIZER_LOGGER_nnrs_imp_expr_startPass
-        ; logStep :=  OPTIMIZER_LOGGER_nnrs_imp_expr_step
-        ; logEndPass :=  OPTIMIZER_LOGGER_nnrs_imp_expr_endPass
-      } .
+Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_step :
+  OPTIMIZER_LOGGER_nnrs_imp_expr_token_type -> String.string ->
+  nnrs_imp_expr -> nnrs_imp_expr ->
+  OPTIMIZER_LOGGER_nnrs_imp_expr_token_type.
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type : Set.
-  Extract Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type => "Util.nnrs_imp_stmt_logger_token_type".
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_expr_step =>
+"(fun token name input output -> Logger.nnrs_imp_expr_log_step token (Util.string_of_char_list name) input output)".
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_startPass :
-    String.string -> nnrs_imp_stmt -> OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type.
+Axiom OPTIMIZER_LOGGER_nnrs_imp_expr_endPass :
+  OPTIMIZER_LOGGER_nnrs_imp_expr_token_type -> nnrs_imp_expr -> OPTIMIZER_LOGGER_nnrs_imp_expr_token_type.
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_startPass =>
-  "(fun name input -> Logger.nnrs_imp_stmt_log_startPass (Util.string_of_char_list name) input)".
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_expr_endPass =>
+"(fun token output -> Logger.nnrs_imp_expr_log_endPass token output)".
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_step :
-    OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type -> String.string ->
-    nnrs_imp_stmt -> nnrs_imp_stmt ->
-    OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_step =>
-  "(fun token name input output -> Logger.nnrs_imp_stmt_log_step token (Util.string_of_char_list name) input output)".
+Instance foreign_nnrs_imp_expr_optimizer_logger :
+  optimizer_logger string nnrs_imp_expr
+  :=
+    {
+      optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrs_imp_expr_token_type
+      ; logStartPass := OPTIMIZER_LOGGER_nnrs_imp_expr_startPass
+      ; logStep :=  OPTIMIZER_LOGGER_nnrs_imp_expr_step
+      ; logEndPass :=  OPTIMIZER_LOGGER_nnrs_imp_expr_endPass
+    } .
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_endPass :
-    OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type -> nnrs_imp_stmt -> OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type.
+Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type : Set.
+Extract Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type => "Util.nnrs_imp_stmt_logger_token_type".
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_endPass =>
-  "(fun token output -> Logger.nnrs_imp_stmt_log_endPass token output)".
+Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_startPass :
+  String.string -> nnrs_imp_stmt -> OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type.
 
-    Instance foreign_nnrs_imp_stmt_optimizer_logger :
-    optimizer_logger string nnrs_imp_stmt
-    :=
-      {
-        optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type
-        ; logStartPass := OPTIMIZER_LOGGER_nnrs_imp_stmt_startPass
-        ; logStep :=  OPTIMIZER_LOGGER_nnrs_imp_stmt_step
-        ; logEndPass :=  OPTIMIZER_LOGGER_nnrs_imp_stmt_endPass
-      } .
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_startPass =>
+"(fun name input -> Logger.nnrs_imp_stmt_log_startPass (Util.string_of_char_list name) input)".
 
-      Axiom OPTIMIZER_LOGGER_nnrs_imp_token_type : Set.
-  Extract Constant OPTIMIZER_LOGGER_nnrs_imp_token_type => "Util.nnrs_imp_logger_token_type".
+Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_step :
+  OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type -> String.string ->
+  nnrs_imp_stmt -> nnrs_imp_stmt ->
+  OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type.
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_startPass :
-    String.string -> nnrs_imp -> OPTIMIZER_LOGGER_nnrs_imp_token_type.
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_step =>
+"(fun token name input output -> Logger.nnrs_imp_stmt_log_step token (Util.string_of_char_list name) input output)".
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_startPass =>
-  "(fun name input -> Logger.nnrs_imp_log_startPass (Util.string_of_char_list name) input)".
+Axiom OPTIMIZER_LOGGER_nnrs_imp_stmt_endPass :
+  OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type -> nnrs_imp_stmt -> OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type.
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_step :
-    OPTIMIZER_LOGGER_nnrs_imp_token_type -> String.string ->
-    nnrs_imp -> nnrs_imp ->
-    OPTIMIZER_LOGGER_nnrs_imp_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_step =>
-  "(fun token name input output -> Logger.nnrs_imp_log_step token (Util.string_of_char_list name) input output)".
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_stmt_endPass =>
+"(fun token output -> Logger.nnrs_imp_stmt_log_endPass token output)".
 
-  Axiom OPTIMIZER_LOGGER_nnrs_imp_endPass :
-    OPTIMIZER_LOGGER_nnrs_imp_token_type -> nnrs_imp -> OPTIMIZER_LOGGER_nnrs_imp_token_type.
+Instance foreign_nnrs_imp_stmt_optimizer_logger :
+  optimizer_logger string nnrs_imp_stmt
+  :=
+    {
+      optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrs_imp_stmt_token_type
+      ; logStartPass := OPTIMIZER_LOGGER_nnrs_imp_stmt_startPass
+      ; logStep :=  OPTIMIZER_LOGGER_nnrs_imp_stmt_step
+      ; logEndPass :=  OPTIMIZER_LOGGER_nnrs_imp_stmt_endPass
+    } .
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_endPass =>
-  "(fun token output -> Logger.nnrs_imp_log_endPass token output)".
+Axiom OPTIMIZER_LOGGER_nnrs_imp_token_type : Set.
+Extract Constant OPTIMIZER_LOGGER_nnrs_imp_token_type => "Util.nnrs_imp_logger_token_type".
 
-    Instance foreign_nnrs_imp_optimizer_logger :
-    optimizer_logger string nnrs_imp
-    :=
-      {
-        optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrs_imp_token_type
-        ; logStartPass := OPTIMIZER_LOGGER_nnrs_imp_startPass
-        ; logStep :=  OPTIMIZER_LOGGER_nnrs_imp_step
-        ; logEndPass :=  OPTIMIZER_LOGGER_nnrs_imp_endPass
-      } .
+Axiom OPTIMIZER_LOGGER_nnrs_imp_startPass :
+  String.string -> nnrs_imp -> OPTIMIZER_LOGGER_nnrs_imp_token_type.
+
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_startPass =>
+"(fun name input -> Logger.nnrs_imp_log_startPass (Util.string_of_char_list name) input)".
+
+Axiom OPTIMIZER_LOGGER_nnrs_imp_step :
+  OPTIMIZER_LOGGER_nnrs_imp_token_type -> String.string ->
+  nnrs_imp -> nnrs_imp ->
+  OPTIMIZER_LOGGER_nnrs_imp_token_type.
+
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_step =>
+"(fun token name input output -> Logger.nnrs_imp_log_step token (Util.string_of_char_list name) input output)".
+
+Axiom OPTIMIZER_LOGGER_nnrs_imp_endPass :
+  OPTIMIZER_LOGGER_nnrs_imp_token_type -> nnrs_imp -> OPTIMIZER_LOGGER_nnrs_imp_token_type.
+
+Extract Inlined Constant OPTIMIZER_LOGGER_nnrs_imp_endPass =>
+"(fun token output -> Logger.nnrs_imp_log_endPass token output)".
+
+Instance foreign_nnrs_imp_optimizer_logger :
+  optimizer_logger string nnrs_imp
+  :=
+    {
+      optimizer_logger_token_type := OPTIMIZER_LOGGER_nnrs_imp_token_type
+      ; logStartPass := OPTIMIZER_LOGGER_nnrs_imp_startPass
+      ; logStep :=  OPTIMIZER_LOGGER_nnrs_imp_step
+      ; logEndPass :=  OPTIMIZER_LOGGER_nnrs_imp_endPass
+    } .
 
 (** Foreign typing, used to build the basic_model *)
 
@@ -1169,22 +1231,22 @@ Instance enhanced_type_lattice : Lattice enhanced_type eq
 Proof.
   - red; intros t1 t2.
     destruct t1; destruct t2; simpl;
-    reflexivity.
+      reflexivity.
   - red; intros t1 t2 t3.
     destruct t1; destruct t2; destruct t3; simpl;
-    reflexivity.
+      reflexivity.
   - red; intros t1.
     simpl.
     destruct t1; simpl; try reflexivity.
   - red; intros t1 t2.
     destruct t1; destruct t2; simpl;
-    reflexivity.
+      reflexivity.
   - red; intros t1 t2 t3.
     destruct t1; destruct t2; destruct t3; simpl;
-    reflexivity.
+      reflexivity.
   - red; intros t1.
     destruct t1; simpl;
-    reflexivity.
+      reflexivity.
   - red; intros t1 t2.
     destruct t1; destruct t2; simpl;
       reflexivity.
@@ -1199,7 +1261,7 @@ Proof.
   split.
   - destruct a; destruct b; inversion 1; simpl; reflexivity.
   - destruct a; destruct b; inversion 1; simpl;
-    constructor.
+      constructor.
 Qed.
 
 Program Instance enhanced_foreign_type : foreign_type
@@ -1276,40 +1338,40 @@ Defined.
 Definition dnnrc_for_log {br:brand_relation}
   := (@dnnrc_base enhanced_foreign_runtime (type_annotation unit) dataframe).
 
-  (* dnnrc optimizer logger support *)
-  Axiom OPTIMIZER_LOGGER_dnnrc_token_type : Set.
-  Extract Constant OPTIMIZER_LOGGER_dnnrc_token_type => "Util.dnrc_logger_token_type".
+(* dnnrc optimizer logger support *)
+Axiom OPTIMIZER_LOGGER_dnnrc_token_type : Set.
+Extract Constant OPTIMIZER_LOGGER_dnnrc_token_type => "Util.dnrc_logger_token_type".
 
-  Axiom OPTIMIZER_LOGGER_dnnrc_startPass :
-    forall {br:brand_relation}, String.string -> dnnrc_for_log -> OPTIMIZER_LOGGER_dnnrc_token_type.
+Axiom OPTIMIZER_LOGGER_dnnrc_startPass :
+  forall {br:brand_relation}, String.string -> dnnrc_for_log -> OPTIMIZER_LOGGER_dnnrc_token_type.
 
-  Extract Inlined Constant OPTIMIZER_LOGGER_dnnrc_startPass =>
-  "(fun br name input -> Logger.dnrc_log_startPass (Util.string_of_char_list name) input)".
+Extract Inlined Constant OPTIMIZER_LOGGER_dnnrc_startPass =>
+"(fun br name input -> Logger.dnrc_log_startPass (Util.string_of_char_list name) input)".
 
-  Axiom OPTIMIZER_LOGGER_dnnrc_step :
-    forall  {br:brand_relation}, 
+Axiom OPTIMIZER_LOGGER_dnnrc_step :
+  forall  {br:brand_relation}, 
     OPTIMIZER_LOGGER_dnnrc_token_type -> String.string ->
     dnnrc_for_log -> dnnrc_for_log ->
     OPTIMIZER_LOGGER_dnnrc_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_dnnrc_step =>
-  "(fun br token name input output -> Logger.dnrc_log_step token (Util.string_of_char_list name) input output)".
 
-  Axiom OPTIMIZER_LOGGER_dnnrc_endPass :
-    forall {br:brand_relation}, OPTIMIZER_LOGGER_dnnrc_token_type -> dnnrc_for_log -> OPTIMIZER_LOGGER_dnnrc_token_type.
-  
-  Extract Inlined Constant OPTIMIZER_LOGGER_dnnrc_endPass =>
-  "(fun br token output -> Logger.dnrc_log_endPass token output)".
+Extract Inlined Constant OPTIMIZER_LOGGER_dnnrc_step =>
+"(fun br token name input output -> Logger.dnrc_log_step token (Util.string_of_char_list name) input output)".
 
-  Instance foreign_dnnrc_optimizer_logger  {br:brand_relation} :
-    optimizer_logger string dnnrc_for_log
-    :=
-      {
-        optimizer_logger_token_type := OPTIMIZER_LOGGER_dnnrc_token_type
-        ; logStartPass := OPTIMIZER_LOGGER_dnnrc_startPass
-        ; logStep :=  OPTIMIZER_LOGGER_dnnrc_step
-        ; logEndPass :=  OPTIMIZER_LOGGER_dnnrc_endPass
-      } .
+Axiom OPTIMIZER_LOGGER_dnnrc_endPass :
+  forall {br:brand_relation}, OPTIMIZER_LOGGER_dnnrc_token_type -> dnnrc_for_log -> OPTIMIZER_LOGGER_dnnrc_token_type.
+
+Extract Inlined Constant OPTIMIZER_LOGGER_dnnrc_endPass =>
+"(fun br token output -> Logger.dnrc_log_endPass token output)".
+
+Instance foreign_dnnrc_optimizer_logger  {br:brand_relation} :
+  optimizer_logger string dnnrc_for_log
+  :=
+    {
+      optimizer_logger_token_type := OPTIMIZER_LOGGER_dnnrc_token_type
+      ; logStartPass := OPTIMIZER_LOGGER_dnnrc_startPass
+      ; logStep :=  OPTIMIZER_LOGGER_dnnrc_step
+      ; logEndPass :=  OPTIMIZER_LOGGER_dnnrc_endPass
+    } .
 
 Module EnhancedRuntime <: CompilerRuntime.
   Definition compiler_foreign_type : foreign_type
@@ -1381,24 +1443,43 @@ Definition isString {model : brand_model} (τ:rtype) :=
   | _ => false
   end.
 
-  Definition tuncoll {model:brand_model} (τ:rtype) : option rtype.
-  Proof.
-    destruct τ.
-    destruct x.
-    - exact None.
-    - exact None.
-    - exact None.
-    - exact None.
-    - exact None.
-    - exact None.
-    - exact None.
-    - exact (Some (exist (fun τ₀ : rtype₀ => wf_rtype₀ τ₀ = true) x e)). 
-    - exact None.
-    - exact None.
-    - exact None.
-    - exact None.
-    - exact None.
-  Defined.
+Definition isFloat {model : brand_model} (τ:rtype) :=
+  match proj1_sig τ with
+  | Float₀ => true
+  | _ => false
+  end.
+
+Definition tuncoll {model:brand_model} (τ:rtype) : option rtype.
+Proof.
+  destruct τ.
+  destruct x.
+  - exact None.
+  - exact None.
+  - exact None.
+  - exact None.
+  - exact None.
+  - exact None.
+  - exact None.
+  - exact (Some (exist (fun τ₀ : rtype₀ => wf_rtype₀ τ₀ = true) x e)). 
+  - exact None.
+  - exact None.
+  - exact None.
+  - exact None.
+  - exact None.
+Defined.
+
+Inductive math_unary_op_has_type {model:brand_model} :
+  math_unary_op -> rtype -> rtype -> Prop
+  :=
+  | tuop_math_acos : math_unary_op_has_type uop_math_acos Float Float
+  | tuop_math_asin : math_unary_op_has_type uop_math_asin Float Float
+  | tuop_math_atan : math_unary_op_has_type uop_math_atan Float Float
+  | tuop_math_cos : math_unary_op_has_type uop_math_cos Float Float
+  | tuop_math_cosh : math_unary_op_has_type uop_math_cosh Float Float
+  | tuop_math_sin : math_unary_op_has_type uop_math_sin Float Float
+  | tuop_math_sinh : math_unary_op_has_type uop_math_sinh Float Float
+  | tuop_math_tan : math_unary_op_has_type uop_math_tan Float Float
+  | tuop_math_tanh : math_unary_op_has_type uop_math_tanh Float Float.
 
 Inductive date_time_unary_op_has_type {model:brand_model} :
   date_time_unary_op -> rtype -> rtype -> Prop
@@ -1407,6 +1488,9 @@ Inductive date_time_unary_op_has_type {model:brand_model} :
   | tuop_date_time_from_string : date_time_unary_op_has_type uop_date_time_from_string RType.String DateTime
   | tuop_date_time_duration_from_string : date_time_unary_op_has_type uop_date_time_duration_from_string RType.String DateTimeInterval
 .
+
+Definition math_unary_op_type_infer {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option rtype :=
+  if isFloat τ₁ then Some Float else None.
 
 Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_unary_op) (τ₁:rtype) : option rtype :=
   match op with
@@ -1418,6 +1502,9 @@ Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_una
     if isString τ₁ then Some DateTimeInterval else None
   end.
 
+Definition math_unary_op_type_infer_sub {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
+  enforce_unary_op_schema (τ₁,Float) Float.
+
 Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
   match op with
   | uop_date_time_component part =>
@@ -1427,6 +1514,23 @@ Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time
   | uop_date_time_duration_from_string =>
     enforce_unary_op_schema (τ₁,RType.String) DateTimeInterval
   end.
+
+Lemma math_unary_op_typing_sound {model : brand_model}
+      (fu : math_unary_op) (τin τout : rtype) :
+  math_unary_op_has_type fu τin τout ->
+  forall din : data,
+    din ▹ τin ->
+    exists dout : data,
+      math_unary_op_interp fu din = Some dout /\ dout ▹ τout.
+Proof.
+  inversion 1; subst;
+    try solve[inversion 1; subst;
+              try invcs H0;
+              try invcs H3;
+              simpl; simpl;
+              eexists; split; try reflexivity;
+              repeat constructor].
+Qed.
 
 Lemma date_time_unary_op_typing_sound {model : brand_model}
       (fu : date_time_unary_op) (τin τout : rtype) :
@@ -1438,103 +1542,127 @@ Lemma date_time_unary_op_typing_sound {model : brand_model}
 Proof.
   inversion 1; subst;
     try solve[inversion 1; subst;
-      try invcs H0;
-      try invcs H3;
-      simpl; unfold denhanceddateTime, denhanceddateTimeinterval; simpl;
-      eexists; split; try reflexivity;
-      repeat constructor].
+              try invcs H0;
+              try invcs H3;
+              simpl; unfold denhanceddateTime, denhanceddateTimeinterval; simpl;
+              eexists; split; try reflexivity;
+              repeat constructor].
 Qed.
 
-  Inductive enhanced_unary_op_has_type {model:brand_model} : enhanced_unary_op -> rtype -> rtype -> Prop
-    :=
-    | tenhanced_unary_date_time_op fu τin τout:
-        date_time_unary_op_has_type fu τin τout ->
-        enhanced_unary_op_has_type (enhanced_unary_date_time_op fu) τin τout.
+Inductive enhanced_unary_op_has_type {model:brand_model} : enhanced_unary_op -> rtype -> rtype -> Prop
+  :=
+  | tenhanced_unary_math_op fu τin τout:
+      math_unary_op_has_type fu τin τout ->
+      enhanced_unary_op_has_type (enhanced_unary_math_op fu) τin τout
+  | tenhanced_unary_date_time_op fu τin τout:
+      date_time_unary_op_has_type fu τin τout ->
+      enhanced_unary_op_has_type (enhanced_unary_date_time_op fu) τin τout.
 
-  Definition enhanced_unary_op_typing_infer {model:brand_model} (fu:enhanced_unary_op) (τ:rtype) : option rtype :=
-    match fu with
-    | enhanced_unary_date_time_op op => date_time_unary_op_type_infer op τ
-    end.
+Definition enhanced_unary_op_typing_infer {model:brand_model} (fu:enhanced_unary_op) (τ:rtype) : option rtype :=
+  match fu with
+  | enhanced_unary_math_op op => math_unary_op_type_infer op τ
+  | enhanced_unary_date_time_op op => date_time_unary_op_type_infer op τ
+  end.
 
-  Lemma enhanced_unary_op_typing_infer_correct
-        {model:brand_model}
-        (fu:foreign_unary_op_type)
-        {τ₁ τout} :
-    enhanced_unary_op_typing_infer fu τ₁ = Some τout ->
-    enhanced_unary_op_has_type fu τ₁ τout.
-  Proof.
-    intros.
-    destruct fu; simpl.
-    - destruct d; simpl in *.
-      + destruct τ₁; simpl in *; try congruence;
+Lemma enhanced_unary_op_typing_infer_correct
+      {model:brand_model}
+      (fu:foreign_unary_op_type)
+      {τ₁ τout} :
+  enhanced_unary_op_typing_infer fu τ₁ = Some τout ->
+  enhanced_unary_op_has_type fu τ₁ τout.
+Proof.
+  intros.
+  destruct fu; simpl.
+  - destruct m; simpl in *;
+      destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
-        destruct ft; simpl in *; try congruence;
-        inversion H; subst; clear H; constructor;
-        rewrite Foreign_canon; constructor.
-      + destruct τ₁; simpl in *; try congruence;
+          inversion H; subst; clear H; constructor;
+            rewrite Float_canon; constructor.
+  - destruct d; simpl in *.
+    + destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
-        inversion H; subst; clear H; constructor;
-        rewrite String_canon; constructor.
-      + destruct τ₁; simpl in *; try congruence;
+          destruct ft; simpl in *; try congruence;
+            inversion H; subst; clear H; constructor;
+              rewrite Foreign_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          inversion H; subst; clear H; constructor;
+            rewrite String_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence.
-        inversion H; subst; clear H; constructor.
-        rewrite String_canon; constructor.
-  Qed.
+      inversion H; subst; clear H; constructor.
+      rewrite String_canon; constructor.
+Qed.
 
-  Lemma enhanced_unary_op_typing_infer_least
-        {model:brand_model}
-        (fu:foreign_unary_op_type)
-        {τ₁ τout₁ τout₂} :
-    enhanced_unary_op_typing_infer fu τ₁ = Some τout₁ ->
-    enhanced_unary_op_has_type fu τ₁ τout₂ ->
-    τout₁ ≤ τout₂.
-  Proof.
-    intros.
-    destruct fu; simpl in *.
-    - destruct d; simpl in *;
+Lemma enhanced_unary_op_typing_infer_least
+      {model:brand_model}
+      (fu:foreign_unary_op_type)
+      {τ₁ τout₁ τout₂} :
+  enhanced_unary_op_typing_infer fu τ₁ = Some τout₁ ->
+  enhanced_unary_op_has_type fu τ₁ τout₂ ->
+  τout₁ ≤ τout₂.
+Proof.
+  intros.
+  destruct fu; simpl in *.
+  - destruct m; simpl in *;
       destruct τ₁; simpl in *; try congruence;
-      destruct x; simpl in *; try congruence.
-      + destruct ft; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          inversion H; subst; clear H;
+            rewrite Float_canon in H0;
+            inversion H0; subst; clear H0;
+              inversion H1; subst; clear H1;
+                reflexivity.
+  - destruct d; simpl in *;
+      destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence.
+    + destruct ft; simpl in *; try congruence;
         inversion H; subst; clear H;
-        rewrite Foreign_canon in H0;
-        inversion H0; subst; clear H0;
-        inversion H1; subst; clear H1;
-        reflexivity.
-      + inversion H; subst; clear H;
+          rewrite Foreign_canon in H0;
+          inversion H0; subst; clear H0;
+            inversion H1; subst; clear H1;
+              reflexivity.
+    + inversion H; subst; clear H;
         rewrite String_canon in H0;
         inversion H0; subst; clear H0;
-        inversion H1; subst; clear H1;
-        reflexivity.
-      + inversion H; subst; clear H;
+          inversion H1; subst; clear H1;
+            reflexivity.
+    + inversion H; subst; clear H;
         rewrite String_canon in H0;
         inversion H0; subst; clear H0;
-        inversion H1; subst; clear H1;
-        reflexivity.
-  Qed.
+          inversion H1; subst; clear H1;
+            reflexivity.
+Qed.
 
-  Lemma enhanced_unary_op_typing_infer_complete
-        {model:brand_model}
-        (fu:foreign_unary_op_type)
-        {τ₁ τout} : 
-    enhanced_unary_op_typing_infer fu τ₁ = None ->
-    ~ enhanced_unary_op_has_type fu τ₁ τout.
-  Proof.
-    intros.
-    destruct fu; simpl in *.
-    - destruct d; simpl in *;
+Lemma enhanced_unary_op_typing_infer_complete
+      {model:brand_model}
+      (fu:foreign_unary_op_type)
+      {τ₁ τout} : 
+  enhanced_unary_op_typing_infer fu τ₁ = None ->
+  ~ enhanced_unary_op_has_type fu τ₁ τout.
+Proof.
+  intros.
+  destruct fu; simpl in *.
+  - destruct m; simpl in *;
       destruct τ₁; simpl in *; try congruence;
-      destruct x; simpl in *; try congruence;
-      unfold not; intros;
-      inversion H0; subst; clear H0;
-      inversion H2; subst; clear H2.
-      + simpl in H; congruence.
-  Qed.
+        destruct x; simpl in *; try congruence;
+          unfold not; intros;
+            inversion H0; subst; clear H0;
+              inversion H2; subst; clear H2; inversion H.
+  - destruct d; simpl in *;
+      destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          unfold not; intros;
+            inversion H0; subst; clear H0;
+              inversion H2; subst; clear H2.
+    + simpl in H; congruence.
+Qed.
 
-  Definition enhanced_unary_op_typing_infer_sub {model:brand_model} (fu:enhanced_unary_op) (τ:rtype) : option (rtype*rtype) :=
-    match fu with
-    | enhanced_unary_date_time_op op => date_time_unary_op_type_infer_sub op τ
-    end.
-    
+Definition enhanced_unary_op_typing_infer_sub {model:brand_model} (fu:enhanced_unary_op) (τ:rtype) : option (rtype*rtype) :=
+  match fu with
+  | enhanced_unary_math_op op => math_unary_op_type_infer_sub op τ
+  | enhanced_unary_date_time_op op => date_time_unary_op_type_infer_sub op τ
+  end.
+
 Lemma enhanced_unary_op_typing_sound {model : brand_model}
       (fu : foreign_unary_op_type) (τin τout : rtype) :
   enhanced_unary_op_has_type fu τin τout ->
@@ -1545,11 +1673,12 @@ Lemma enhanced_unary_op_typing_sound {model : brand_model}
 Proof.
   intros.
   destruct H.
+  - eapply math_unary_op_typing_sound; eauto.
   - eapply date_time_unary_op_typing_sound; eauto.
 Qed.
 
 Instance enhanced_foreign_unary_op_typing
-        {model:brand_model} :
+         {model:brand_model} :
   @foreign_unary_op_typing
     enhanced_foreign_data
     enhanced_foreign_unary_op
@@ -1564,6 +1693,12 @@ Instance enhanced_foreign_unary_op_typing
        ; foreign_unary_op_typing_infer_complete := enhanced_unary_op_typing_infer_complete
        ; foreign_unary_op_typing_infer_sub := enhanced_unary_op_typing_infer_sub
      }.
+
+Inductive math_binary_op_has_type {model:brand_model} :
+  math_binary_op -> rtype -> rtype -> rtype -> Prop
+  :=
+  | tbop_math_atan2 :
+      math_binary_op_has_type bop_math_atan2 Float Float Float.
 
 Inductive date_time_binary_op_has_type {model:brand_model} :
   date_time_binary_op -> rtype -> rtype -> rtype -> Prop
@@ -1590,6 +1725,12 @@ Inductive date_time_binary_op_has_type {model:brand_model} :
       date_time_binary_op_has_type bop_date_time_duration_seconds DateTime DateTime Float
 .
 
+Definition math_binary_op_type_infer {model : brand_model} (op:math_binary_op) (τ₁ τ₂:rtype) :=
+  match op with
+  | bop_math_atan2 =>
+    if isFloat τ₁ && isFloat τ₂ then Some Float else None
+  end.
+
 Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) :=
   match op with
   | bop_date_time_plus =>
@@ -1614,6 +1755,25 @@ Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_bi
     if isDateTime τ₁ && isDateTime τ₂ then Some Float else None
   end.
 
+Lemma math_binary_op_typing_sound {model : brand_model}
+      (fb : math_binary_op) (τin₁ τin₂ τout : rtype) :
+  math_binary_op_has_type fb τin₁ τin₂ τout ->
+  forall din₁ din₂ : data,
+    din₁ ▹ τin₁ ->
+    din₂ ▹ τin₂ ->
+    exists dout : data,
+      math_binary_op_interp fb din₁ din₂ = Some dout /\ dout ▹ τout.
+Proof.
+  inversion 1; subst;
+    inversion 1; subst;
+      inversion 1; subst;
+        invcs H0;
+        invcs H1;
+        simpl; 
+        eexists; split; try reflexivity;
+          repeat constructor.
+Qed.
+
 Lemma date_time_binary_op_typing_sound {model : brand_model}
       (fb : date_time_binary_op) (τin₁ τin₂ τout : rtype) :
   date_time_binary_op_has_type fb τin₁ τin₂ τout ->
@@ -1623,18 +1783,24 @@ Lemma date_time_binary_op_typing_sound {model : brand_model}
     exists dout : data,
       date_time_binary_op_interp fb din₁ din₂ = Some dout /\ dout ▹ τout.
 Proof.
+  inversion 1; subst;
     inversion 1; subst;
       inversion 1; subst;
-        inversion 1; subst;
-      try invcs H0;
-      try invcs H1;
-      invcs H3;
-      try invcs H4;
-      simpl; 
+        try invcs H0;
+        try invcs H1;
+        invcs H3;
+        try invcs H4;
+        simpl; 
         eexists; split; try reflexivity;
           repeat constructor.
 Qed.
-         
+
+Definition math_binary_op_type_infer_sub {model : brand_model} (op:math_binary_op) (τ₁ τ₂:rtype) : option (rtype*rtype*rtype) :=
+  match op with
+  | bop_math_atan2 =>
+    enforce_binary_op_schema (τ₁,Float) (τ₂,Float) Float
+  end.
+
 Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) : option (rtype*rtype*rtype) :=
   match op with
   | bop_date_time_plus =>
@@ -1657,13 +1823,17 @@ Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_tim
 
 Inductive enhanced_binary_op_has_type {model:brand_model} :
   enhanced_binary_op -> rtype -> rtype -> rtype -> Prop
-    :=
-    | tenhanced_binary_date_time_op fb τin₁ τin₂ τout:
-        date_time_binary_op_has_type fb τin₁ τin₂ τout ->
-        enhanced_binary_op_has_type (enhanced_binary_date_time_op fb) τin₁ τin₂ τout.
+  :=
+  | tenhanced_binary_math_op fb τin₁ τin₂ τout:
+      math_binary_op_has_type fb τin₁ τin₂ τout ->
+      enhanced_binary_op_has_type (enhanced_binary_math_op fb) τin₁ τin₂ τout
+  | tenhanced_binary_date_time_op fb τin₁ τin₂ τout:
+      date_time_binary_op_has_type fb τin₁ τin₂ τout ->
+      enhanced_binary_op_has_type (enhanced_binary_date_time_op fb) τin₁ τin₂ τout.
 
 Definition enhanced_binary_op_typing_infer {model:brand_model} (op:enhanced_binary_op) (τ₁ τ₂:rtype) :=
   match op with
+  | enhanced_binary_math_op fb => math_binary_op_type_infer fb τ₁ τ₂
   | enhanced_binary_date_time_op fb => date_time_binary_op_type_infer fb τ₁ τ₂
   end.
 
@@ -1676,18 +1846,27 @@ Lemma enhanced_binary_op_typing_infer_correct
 Proof.
   intros.
   destruct fb; simpl.
+  - destruct m; simpl in *;
+      destruct τ₁; destruct τ₂; simpl in *; try discriminate
+      ; destruct x; simpl in H; try discriminate
+      ; destruct x0; simpl in H; try discriminate
+      ; try (destruct ft; simpl in H; try discriminate)
+      ; invcs H
+      ; constructor
+      ; repeat rewrite Float_canon
+      ; try constructor.
   - destruct d; simpl in *;
-    destruct τ₁; destruct τ₂; simpl in *; try discriminate;
-         unfold isDateTime, isDateTimeInterval, isNat in *
-         ; destruct x; simpl in H; try discriminate
-    ; destruct ft; simpl in H; try discriminate
-    ; destruct x0; simpl in H; try discriminate
-    ; try (destruct ft; simpl in H; try discriminate)
-    ; invcs H
-    ; constructor
-    ; repeat rewrite Nat_canon
-    ; repeat rewrite Foreign_canon
-    ; try constructor.
+      destruct τ₁; destruct τ₂; simpl in *; try discriminate;
+        unfold isDateTime, isDateTimeInterval, isNat in *
+        ; destruct x; simpl in H; try discriminate
+        ; destruct ft; simpl in H; try discriminate
+        ; destruct x0; simpl in H; try discriminate
+        ; try (destruct ft; simpl in H; try discriminate)
+        ; invcs H
+        ; constructor
+        ; repeat rewrite Nat_canon
+        ; repeat rewrite Foreign_canon
+        ; try constructor.
 Qed.
 
 Lemma enhanced_binary_op_typing_infer_least
@@ -1700,18 +1879,28 @@ Lemma enhanced_binary_op_typing_infer_least
 Proof.
   intros.
   destruct fb; simpl.
+  - destruct m; simpl in *;
+      destruct τ₁; destruct τ₂; simpl in *; try discriminate
+      ; destruct x; simpl in H; try discriminate
+      ; destruct x0; simpl in H; try discriminate
+      ; try (destruct ft; simpl in H; try discriminate)
+      ; invcs H
+      ; repeat rewrite Float_canon in H0
+      ; invcs H0
+      ; invcs H1
+      ; reflexivity.
   - destruct d; simpl in *;
       destruct τ₁; destruct τ₂; simpl in *; try discriminate
-    ; unfold isDateTime, isDateTimeInterval, isNat in *
-    ; destruct x; simpl in H; try discriminate
-    ; destruct ft; simpl in H; try discriminate
-    ; destruct x0; simpl in H; try discriminate
-    ; try (destruct ft; simpl in H; try discriminate)
-    ; invcs H
-    ; repeat rewrite Foreign_canon in H0
-    ; invcs H0
-    ; invcs H1
-    ; reflexivity.
+      ; unfold isDateTime, isDateTimeInterval, isNat in *
+      ; destruct x; simpl in H; try discriminate
+      ; destruct ft; simpl in H; try discriminate
+      ; destruct x0; simpl in H; try discriminate
+      ; try (destruct ft; simpl in H; try discriminate)
+      ; invcs H
+      ; repeat rewrite Foreign_canon in H0
+      ; invcs H0
+      ; invcs H1
+      ; reflexivity.
 Qed.
 
 Lemma enhanced_binary_op_typing_infer_complete
@@ -1723,11 +1912,14 @@ Lemma enhanced_binary_op_typing_infer_complete
 Proof.
   destruct fb; simpl; intros.
   - intro HH; invcs HH.
+    destruct m; simpl in *; invcs H1; simpl in H; try discriminate.
+  - intro HH; invcs HH.
     destruct d; simpl in *; invcs H1; simpl in H; try discriminate.
 Qed.
 
 Definition enhanced_binary_op_typing_infer_sub {model:brand_model} (op:enhanced_binary_op) (τ₁ τ₂:rtype) :=
   match op with
+  | enhanced_binary_math_op fb => math_binary_op_type_infer_sub fb τ₁ τ₂
   | enhanced_binary_date_time_op fb => date_time_binary_op_type_infer_sub fb τ₁ τ₂
   end.
 
@@ -1742,6 +1934,7 @@ Lemma enhanced_binary_op_typing_sound {model : brand_model}
 Proof.
   intros.
   destruct H.
+  - eapply math_binary_op_typing_sound; eauto.
   - eapply date_time_binary_op_typing_sound; eauto.
 Qed.
 
@@ -1782,7 +1975,6 @@ Instance enhanced_basic_model {model:brand_model} :
        enhanced_foreign_type
        model
        enhanced_foreign_typing.
-
 
 Module EnhancedForeignType <: CompilerForeignType.
   Definition compiler_foreign_type : foreign_type
@@ -1835,42 +2027,42 @@ End EnhancedModel.
 
 Module CompEnhanced.
   Module Enhanced.
-  Module Model.
-    Definition basic_model (bm:brand_model) : basic_model
-      := @enhanced_basic_model bm.
-
-    Definition foreign_type : foreign_type
-      := enhanced_foreign_type.
-
-    Definition foreign_typing (bm:brand_model) : foreign_typing
-      := @enhanced_foreign_typing bm.
-
-  End Model.
-
+    Module Model.
+      Definition basic_model (bm:brand_model) : basic_model
+        := @enhanced_basic_model bm.
+      
+      Definition foreign_type : foreign_type
+        := enhanced_foreign_type.
+      
+      Definition foreign_typing (bm:brand_model) : foreign_typing
+        := @enhanced_foreign_typing bm.
+      
+    End Model.
+    
     Module Data.
       Definition dstringblob (s : STRING) : data
         := dforeign (enhancedstring s).
       Definition jstringblob (s : STRING) : json
         := jstring (jenhancedstring s).
-
+      
       (* intended for generated coq code, to stand out and be more
-          easily distinguished from variables (hackily distinguished
-          that is) *)
+           easily distinguished from variables (hackily distinguished
+          t       hat is) *)
       
       Definition date_time_part := date_time_component.
       Definition date_time_day : date_time_part := date_time_DAY.
       Definition date_time_month : date_time_part := date_time_MONTH.
       Definition date_time_quarter : date_time_part := date_time_QUARTER.
       Definition date_time_year : date_time_part := date_time_YEAR.
-
+      
       Definition ddate_time (d:DATE_TIME) : data
         := dforeign (enhanceddateTime d).
-
+      
       Definition ddate_time_duration (d:DATE_TIME_DURATION) : data
         := dforeign (enhanceddateTimeinterval d).
-
+      
     End Data.
-
+    
     Module Ops.
       Module Unary.
         Definition date_time_component (component:date_time_component)
@@ -1917,12 +2109,11 @@ Module CompEnhanced.
         Definition OpDateTimeLe := date_time_le.
         Definition OpDateTimeGt := date_time_gt.
         Definition OpDateTimeGe := date_time_ge.
-
+        
         Definition OpDateTimeIntervalDays := date_time_duration_days.
         Definition OpDateTimeIntervalSeconds := date_time_duration_seconds.
-
+        
       End Binary.
     End Ops.
   End Enhanced.
 End CompEnhanced.  
-
