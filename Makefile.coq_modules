@@ -16,6 +16,7 @@ MODULES = \
   Version \
   Backend/ForeignErgo \
   Backend/Model/DateTimeModelPart \
+  Backend/Model/MathModelPart \
   Backend/Model/ErgoEnhancedModel \
   Backend/Model/ErgoBackendModel \
   Backend/Model/ErgoBackendRuntime \
