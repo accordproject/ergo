@@ -7,8 +7,7 @@ jobs:
     environment:
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     docker:
-    - image: circleci/node:8
-      command: /sbin/init
+    - image: circleci/node:8.14
     steps:
     - run: echo 'export PATH=~/ergo/bin/:$PATH' >> $BASH_ENV 
     - checkout
