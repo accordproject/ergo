@@ -224,6 +224,9 @@ function toStringQ(v, quote) {
         }
         return result + "]";
     }
+    if (v.hasOwnProperty('_isAMomentObject')) {
+        return v.format();
+    }
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;
     }
@@ -547,7 +550,7 @@ function dateTimeComponent(part, date) {
     date = mustBeDate(date);
     switch(part) {
     case DAY:
-        return date.dayOfMonth();
+        return date.date();
     case MONTH:
         return date.month();
     case YEAR:
@@ -671,4 +674,16 @@ function mustBeUnit(unit) {
     if (unit === DAY || unit === MONTH || unit === QUARTER || unit === YEAR)
 	      return;
     throw new Error("Expected a duration unit but got " + JSON.stringify(unit));
+}
+
+function dateTimeStartOf(part, date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.startOf(part);
+}
+
+function dateTimeEndOf(part, date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.endOf(part);
 }

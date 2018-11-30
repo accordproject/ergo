@@ -149,6 +149,30 @@ Extract Inlined Constant DATE_TIME_quarter => "(fun x -> DateTime.quarter x)".
 Axiom DATE_TIME_year : DATE_TIME -> Z.
 Extract Inlined Constant DATE_TIME_year => "(fun x -> DateTime.year x)".
 
+Axiom DATE_TIME_start_of_day : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_start_of_day => "(fun x -> DateTime.start_of_day x)".
+
+Axiom DATE_TIME_start_of_month : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_start_of_month => "(fun x -> DateTime.start_of_month x)".
+
+Axiom DATE_TIME_start_of_quarter : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_start_of_quarter => "(fun x -> DateTime.start_of_quarter x)".
+
+Axiom DATE_TIME_start_of_year : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_start_of_year => "(fun x -> DateTime.start_of_year x)".
+
+Axiom DATE_TIME_end_of_day : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_end_of_day => "(fun x -> DateTime.end_of_day x)".
+
+Axiom DATE_TIME_end_of_month : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_end_of_month => "(fun x -> DateTime.end_of_month x)".
+
+Axiom DATE_TIME_end_of_quarter : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_end_of_quarter => "(fun x -> DateTime.end_of_quarter x)".
+
+Axiom DATE_TIME_end_of_year : DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_end_of_year => "(fun x -> DateTime.end_of_year x)".
+
 Definition DATE_TIME_component (part:date_time_component) (dt:DATE_TIME) : Z :=
   match part with
   | date_time_DAY => DATE_TIME_day dt
@@ -157,9 +181,27 @@ Definition DATE_TIME_component (part:date_time_component) (dt:DATE_TIME) : Z :=
   | date_time_YEAR => DATE_TIME_year dt
   end.
 
+Definition DATE_TIME_start_of (part:date_time_component) (dt:DATE_TIME) : DATE_TIME :=
+  match part with
+  | date_time_DAY => DATE_TIME_start_of_day dt
+  | date_time_MONTH => DATE_TIME_start_of_month dt
+  | date_time_QUARTER => DATE_TIME_start_of_quarter dt
+  | date_time_YEAR => DATE_TIME_start_of_year dt
+  end.
+
+Definition DATE_TIME_end_of (part:date_time_component) (dt:DATE_TIME) : DATE_TIME :=
+  match part with
+  | date_time_DAY => DATE_TIME_end_of_day dt
+  | date_time_MONTH => DATE_TIME_end_of_month dt
+  | date_time_QUARTER => DATE_TIME_end_of_quarter dt
+  | date_time_YEAR => DATE_TIME_end_of_year dt
+  end.
+
 Inductive date_time_unary_op
   :=
   | uop_date_time_component : date_time_component -> date_time_unary_op
+  | uop_date_time_start_of : date_time_component -> date_time_unary_op
+  | uop_date_time_end_of : date_time_component -> date_time_unary_op
   | uop_date_time_from_string
   | uop_date_time_duration_from_string
 .
@@ -170,6 +212,10 @@ Definition date_time_unary_op_tostring (f:date_time_unary_op) : String.string
   := match f with
      | uop_date_time_component part =>
        "(dateTimeComponent" ++ (date_time_component_tostring part) ++ ")"
+     | uop_date_time_start_of part =>
+       "(dateTimeStartOf" ++ (date_time_component_tostring part) ++ ")"
+     | uop_date_time_end_of part =>
+       "(dateTimeEndOf" ++ (date_time_component_tostring part) ++ ")"
      | uop_date_time_from_string => "DateTimeFromString"
      | uop_date_time_duration_from_string => "DateTimeDurationFromString"
      end.
@@ -185,7 +231,6 @@ Definition date_time_component_to_java_string (part:date_time_component): string
      | date_time_YEAR => "UnaryOperators.year"
      end.
 
-  
 Definition date_time_to_java_unary_op
              (indent:nat) (eol:String.string)
              (quotel:String.string) (fu:date_time_unary_op)
@@ -193,6 +238,10 @@ Definition date_time_to_java_unary_op
   := match fu with
      | uop_date_time_component part =>
        mk_java_unary_op1 "date_time_component" (date_time_component_to_java_string part) d
+     | uop_date_time_start_of part =>
+       mk_java_unary_op1 "date_time_start_of" (date_time_component_to_java_string part) d
+     | uop_date_time_end_of part =>
+       mk_java_unary_op1 "date_time_end_of" (date_time_component_to_java_string part) d
      | uop_date_time_from_string => mk_java_unary_op0 "date_time_from_string" d
      | uop_date_time_duration_from_string => mk_java_unary_op0 "date_time_duration_from_string" d
      end.
@@ -203,6 +252,8 @@ Definition date_time_to_javascript_unary_op
              (d:String.string) : String.string
   := match fu with
      | uop_date_time_component part => "dateTimeComponent(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
+     | uop_date_time_start_of part => "dateTimeStartOf(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
+     | uop_date_time_end_of part => "dateTimeEndOf(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
      | uop_date_time_from_string => "dateTimeFromString(" ++ d ++ ")"
      | uop_date_time_duration_from_string => "dateTimeDurationFromString(" ++ d ++ ")"
      end.
@@ -213,6 +264,10 @@ Definition date_time_to_ajavascript_unary_op
   := match fu with
      | uop_date_time_component part =>
        call_runtime "dateTimeComponent" [ expr_literal (literal_string (toString part)); e ]
+     | uop_date_time_start_of part =>
+       call_runtime "dateTimeStartOf" [ expr_literal (literal_string (toString part)); e ]
+     | uop_date_time_end_of part =>
+       call_runtime "dateTimeEndOf" [ expr_literal (literal_string (toString part)); e ]
      | uop_date_time_from_string => call_runtime "dateTimeFromString" [ e ]
      | uop_date_time_duration_from_string => call_runtime "dateTimeDurationFromString" [ e ]
      end.

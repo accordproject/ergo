@@ -113,3 +113,13 @@ let dseconds (x1:dateTime) (x2:dateTime) : float =
 let plus (x1:dateTime) (d1:duration) : dateTime = Calendar.add x1 d1
 let minus (x1:dateTime) (d1:duration) : dateTime = Calendar.rem x1 d1
 
+let start_of_day (x1:dateTime) = raise Not_found
+let start_of_month (x1:dateTime) = raise Not_found
+let start_of_quarter (x1:dateTime) = raise Not_found
+let start_of_year (x1:dateTime) = raise Not_found
+
+let end_of_day (x1:dateTime) = raise Not_found
+let end_of_month (x1:dateTime) = raise Not_found
+let end_of_quarter (x1:dateTime) = raise Not_found
+let end_of_year (x1:dateTime) = raise Not_found
+

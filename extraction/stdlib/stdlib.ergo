@@ -10,10 +10,22 @@ define concept Duration {
 define function now() : DateTime
 define function dateTime(x:String) : DateTime
 
-define function dateTimeDayOfMonth(x:DateTime) : Double
-define function dateTimeMonth(x:DateTime) : Double
-define function dateTimeQuarter(x:DateTime) : Double
-define function dateTimeYear(x:DateTime) : Double
+define function dateTimeDayOfMonth(x:DateTime) : Integer
+define function dateTimeMonth(x:DateTime) : Integer
+define function dateTimeQuarter(x:DateTime) : Integer
+define function dateTimeYear(x:DateTime) : Integer
+
+define enum DateTimeComponent {
+	DAY, MONTH, QUARTER, YEAR
+}
+
+define function dateTimeComponent(x:DateTime, y:DateTimeComponent) : Integer {
+	match y
+	with "DAY" then return dateTimeDayOfMonth(x)
+	with "MONTH" then return dateTimeMonth(x)
+	with "QUARTER" then return dateTimeQuarter(x)
+	else return dateTimeYear(x)
+}
 
 define function dateTimeIsAfter(x:DateTime, y:DateTime) : Boolean
 define function dateTimeIsBefore(x:DateTime, y:DateTime) : Boolean
@@ -26,8 +38,31 @@ define function dateTimeDiff(x:DateTime, y:DateTime) : Duration
 define function dateTimeDiffDays(x:DateTime, y:DateTime) : Double
 define function dateTimeDiffSeconds(x:DateTime, y:DateTime) : Double
 
-define function min(x:Double[]) : Double
-define function count(x:Double[]) : Integer
+define function dateTimeStartOfDayOfMonth(x:DateTime) : DateTime
+define function dateTimeStartOfMonth(x:DateTime) : DateTime
+define function dateTimeStartOfQuarter(x:DateTime) : DateTime
+define function dateTimeStartOfYear(x:DateTime) : DateTime
+
+define function dateTimeStartOf(x:DateTime, y:DateTimeComponent) : DateTime {
+	match y
+	with "DAY" then return dateTimeStartOfDayOfMonth(x)
+	with "MONTH" then return dateTimeStartOfMonth(x)
+	with "QUARTER" then return dateTimeStartOfQuarter(x)
+	else return dateTimeStartOfYear(x)
+}
+
+define function dateTimeEndOfDayOfMonth(x:DateTime) : DateTime
+define function dateTimeEndOfMonth(x:DateTime) : DateTime
+define function dateTimeEndOfQuarter(x:DateTime) : DateTime
+define function dateTimeEndOfYear(x:DateTime) : DateTime
+
+define function dateTimeEndOf(x:DateTime, y:DateTimeComponent) : DateTime {
+	match y
+	with "DAY" then return dateTimeEndOfDayOfMonth(x)
+	with "MONTH" then return dateTimeEndOfMonth(x)
+	with "QUARTER" then return dateTimeEndOfQuarter(x)
+	else return dateTimeEndOfYear(x)
+}
 
 // Integer operations
 define function integerAbs(x:Integer) : Integer

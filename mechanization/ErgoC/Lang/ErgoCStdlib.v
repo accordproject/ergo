@@ -98,6 +98,24 @@ Section ErgoCStdlib.
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_QUARTER))))
       :: ("org.accordproject.ergo.stdlib.dateTimeYear",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_YEAR))))
+
+      :: ("org.accordproject.ergo.stdlib.dateTimeStartOfDayOfMonth",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_DAY))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeStartOfMonth",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_MONTH))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeStartOfQuarter",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_QUARTER))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeStartOfYear",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_YEAR))))
+
+      :: ("org.accordproject.ergo.stdlib.dateTimeEndOfDayOfMonth",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_DAY))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeEndOfMonth",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_MONTH))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeEndOfQuarter",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_QUARTER))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeEndOfYear",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_YEAR))))
       :: nil.
 
   Definition foreign_binary_operator_table prov : ergo_stdlib_table :=
