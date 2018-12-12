@@ -123,3 +123,7 @@ let end_of_month (x1:dateTime) = raise Not_found
 let end_of_quarter (x1:dateTime) = raise Not_found
 let end_of_year (x1:dateTime) = raise Not_found
 
+let durationday (x:int) = Calendar.Period.day x
+let durationmonth (x:int) = Calendar.Period.month x
+let durationyear (x:int) = Calendar.Period.year x
+let durationquarter (x:int) = Calendar.Period.month (x * 3)

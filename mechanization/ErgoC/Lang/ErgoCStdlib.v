@@ -99,6 +99,15 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.dateTimeYear",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_YEAR))))
 
+      :: ("org.accordproject.ergo.stdlib.dateTimeDurationDayOfMonth",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_DAY))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeDurationMonth",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_MONTH))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeDurationQuarter",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_QUARTER))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeDurationYear",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_YEAR))))
+
       :: ("org.accordproject.ergo.stdlib.dateTimeStartOfDayOfMonth",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_DAY))))
       :: ("org.accordproject.ergo.stdlib.dateTimeStartOfMonth",
@@ -151,23 +160,6 @@ Section ErgoCStdlib.
              (OpForeignBinary (enhanced_binary_date_time_op
                                  bop_date_time_ne))
              (EVar prov "p1") (EVar prov "p2"))))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDuration",
-          mk_binary_expr
-            prov
-            (ELet prov
-                  "v1"%string
-                  None
-                  (EUnaryOp prov OpToString (EVar prov "p1"%string))
-                  (ELet prov "v2"%string None
-                        (EBinaryOp prov OpStringConcat
-                                   (EConst prov (dstring "-"%string))
-                                   (EVar prov "p2"%string))
-                        (EUnaryOp prov
-                                  (OpForeignUnary
-                                     (enhanced_unary_date_time_op uop_date_time_duration_from_string))
-                                  (EBinaryOp prov OpStringConcat
-                                             (EVar prov "v1"%string)
-                                             (EVar prov "v2"%string))))))
       :: nil.
 
   Definition foreign_table prov : ergo_stdlib_table :=

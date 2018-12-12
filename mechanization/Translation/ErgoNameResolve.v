@@ -147,6 +147,7 @@ Section ErgoNameResolution.
       | ErgoTypeLong prov => esuccess (ErgoTypeLong prov)
       | ErgoTypeInteger prov => esuccess (ErgoTypeInteger prov)
       | ErgoTypeDateTime prov => esuccess (ErgoTypeDateTime prov)
+      | ErgoTypeDuration prov => esuccess (ErgoTypeDuration prov)
       | ErgoTypeClassRef prov rn =>
         let an := resolve_type_name prov nsctxt rn in
         elift (fun an =>

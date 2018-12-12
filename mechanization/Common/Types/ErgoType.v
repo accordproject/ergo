@@ -37,6 +37,7 @@ Section ErgoType.
     | ErgoTypeLong : A -> ergo_type                              (**r long atomic type *)
     | ErgoTypeInteger : A -> ergo_type                           (**r integer atomic type *)
     | ErgoTypeDateTime : A -> ergo_type                          (**r date and time atomic type *)
+    | ErgoTypeDuration : A -> ergo_type                          (**r duration atomic type *)
     | ErgoTypeClassRef : A -> N -> ergo_type                     (**r relative class reference *)
     | ErgoTypeOption : A -> ergo_type -> ergo_type               (**r optional type *)
     | ErgoTypeRecord : A -> list (string*ergo_type) -> ergo_type (**r record type *)
@@ -55,6 +56,7 @@ Section ErgoType.
       | ErgoTypeLong a => a
       | ErgoTypeInteger a => a
       | ErgoTypeDateTime a => a
+      | ErgoTypeDuration a => a
       | ErgoTypeClassRef a _ => a
       | ErgoTypeOption a _ => a
       | ErgoTypeRecord a _ => a

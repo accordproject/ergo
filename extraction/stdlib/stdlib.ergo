@@ -2,68 +2,6 @@ namespace org.accordproject.ergo.stdlib
 
 import org.accordproject.cicero.runtime.*
 
-define concept Duration {
-	duration : String
-}
-
-// DateTime operations
-define function now() : DateTime
-define function dateTime(x:String) : DateTime
-
-define function dateTimeDayOfMonth(x:DateTime) : Integer
-define function dateTimeMonth(x:DateTime) : Integer
-define function dateTimeQuarter(x:DateTime) : Integer
-define function dateTimeYear(x:DateTime) : Integer
-
-define enum DateTimeComponent {
-	DAY, MONTH, QUARTER, YEAR
-}
-
-define function dateTimeComponent(x:DateTime, y:DateTimeComponent) : Integer {
-	match y
-	with "DAY" then return dateTimeDayOfMonth(x)
-	with "MONTH" then return dateTimeMonth(x)
-	with "QUARTER" then return dateTimeQuarter(x)
-	else return dateTimeYear(x)
-}
-
-define function dateTimeIsAfter(x:DateTime, y:DateTime) : Boolean
-define function dateTimeIsBefore(x:DateTime, y:DateTime) : Boolean
-define function dateTimeIsSame(x:DateTime, y:DateTime) : Boolean
-
-define function dateTimeDuration(x:String, y:String) : Duration
-define function dateTimeSubtract(x:DateTime, y:Duration) : DateTime
-define function dateTimeAdd(x:DateTime, y:Duration) : DateTime
-define function dateTimeDiff(x:DateTime, y:DateTime) : Duration
-define function dateTimeDiffDays(x:DateTime, y:DateTime) : Double
-define function dateTimeDiffSeconds(x:DateTime, y:DateTime) : Double
-
-define function dateTimeStartOfDayOfMonth(x:DateTime) : DateTime
-define function dateTimeStartOfMonth(x:DateTime) : DateTime
-define function dateTimeStartOfQuarter(x:DateTime) : DateTime
-define function dateTimeStartOfYear(x:DateTime) : DateTime
-
-define function dateTimeStartOf(x:DateTime, y:DateTimeComponent) : DateTime {
-	match y
-	with "DAY" then return dateTimeStartOfDayOfMonth(x)
-	with "MONTH" then return dateTimeStartOfMonth(x)
-	with "QUARTER" then return dateTimeStartOfQuarter(x)
-	else return dateTimeStartOfYear(x)
-}
-
-define function dateTimeEndOfDayOfMonth(x:DateTime) : DateTime
-define function dateTimeEndOfMonth(x:DateTime) : DateTime
-define function dateTimeEndOfQuarter(x:DateTime) : DateTime
-define function dateTimeEndOfYear(x:DateTime) : DateTime
-
-define function dateTimeEndOf(x:DateTime, y:DateTimeComponent) : DateTime {
-	match y
-	with "DAY" then return dateTimeEndOfDayOfMonth(x)
-	with "MONTH" then return dateTimeEndOfMonth(x)
-	with "QUARTER" then return dateTimeEndOfQuarter(x)
-	else return dateTimeEndOfYear(x)
-}
-
 // Integer operations
 define function integerAbs(x:Integer) : Integer
 define function integerLog2(x:Integer) : Integer
@@ -106,6 +44,116 @@ define function tanh(x:Double) : Double
 
 //define constant PI = 4.0 * atan(1.0)
 //define constant E = exp(1.0)
+
+// DateTime operations
+define function now() : DateTime
+define function dateTime(x:String) : DateTime
+
+// XXX Should be replaced by org.accordproject.time.TemporalUnit
+define enum DateTimeComponent {
+	DAY, MONTH, QUARTER, YEAR,
+	DAYS, MONTHS, QUARTERS, YEARS,
+	day, month, quarter, year,
+	days, months, quarters, years
+}
+
+define function dateTimeDayOfMonth(x:DateTime) : Integer
+define function dateTimeMonth(x:DateTime) : Integer
+define function dateTimeQuarter(x:DateTime) : Integer
+define function dateTimeYear(x:DateTime) : Integer
+
+define function dateTimeComponent(x:DateTime, y:DateTimeComponent) : Integer {
+	match y
+	with "DAY" then return dateTimeDayOfMonth(x)
+	with "DAYS" then return dateTimeDayOfMonth(x)
+	with "day" then return dateTimeDayOfMonth(x)
+	with "days" then return dateTimeDayOfMonth(x)
+	with "MONTH" then return dateTimeMonth(x)
+	with "MONTHS" then return dateTimeMonth(x)
+	with "month" then return dateTimeMonth(x)
+	with "months" then return dateTimeMonth(x)
+	with "QUARTER" then return dateTimeQuarter(x)
+	with "QUARTERS" then return dateTimeQuarter(x)
+	with "quarter" then return dateTimeQuarter(x)
+	with "quarters" then return dateTimeQuarter(x)
+	else return dateTimeYear(x)
+}
+
+define function dateTimeDurationDayOfMonth(x:Integer) : Duration
+define function dateTimeDurationMonth(x:Integer) : Duration
+define function dateTimeDurationQuarter(x:Integer) : Duration
+define function dateTimeDurationYear(x:Integer) : Duration
+
+define function dateTimeDuration(x:Double, y:DateTimeComponent) : Duration {
+	match y
+	with "DAY" then return dateTimeDurationDayOfMonth(doubleToInteger(x))
+	with "DAYS" then return dateTimeDurationDayOfMonth(doubleToInteger(x))
+	with "day" then return dateTimeDurationDayOfMonth(doubleToInteger(x))
+	with "days" then return dateTimeDurationDayOfMonth(doubleToInteger(x))
+	with "MONTH" then return dateTimeDurationMonth(doubleToInteger(x))
+	with "MONTHS" then return dateTimeDurationMonth(doubleToInteger(x))
+	with "month" then return dateTimeDurationMonth(doubleToInteger(x))
+	with "months" then return dateTimeDurationMonth(doubleToInteger(x))
+	with "QUARTER" then return dateTimeDurationQuarter(doubleToInteger(x))
+	with "QUARTERS" then return dateTimeDurationQuarter(doubleToInteger(x))
+	with "quarter" then return dateTimeDurationQuarter(doubleToInteger(x))
+	with "quarters" then return dateTimeDurationQuarter(doubleToInteger(x))
+	else return dateTimeDurationYear(doubleToInteger(x))
+}
+
+define function dateTimeIsAfter(x:DateTime, y:DateTime) : Boolean
+define function dateTimeIsBefore(x:DateTime, y:DateTime) : Boolean
+define function dateTimeIsSame(x:DateTime, y:DateTime) : Boolean
+
+define function dateTimeSubtract(x:DateTime, y:Duration) : DateTime
+define function dateTimeAdd(x:DateTime, y:Duration) : DateTime
+define function dateTimeDiff(x:DateTime, y:DateTime) : Duration
+define function dateTimeDiffDays(x:DateTime, y:DateTime) : Double
+define function dateTimeDiffSeconds(x:DateTime, y:DateTime) : Double
+
+define function dateTimeStartOfDayOfMonth(x:DateTime) : DateTime
+define function dateTimeStartOfMonth(x:DateTime) : DateTime
+define function dateTimeStartOfQuarter(x:DateTime) : DateTime
+define function dateTimeStartOfYear(x:DateTime) : DateTime
+
+define function dateTimeStartOf(x:DateTime, y:DateTimeComponent) : DateTime {
+	match y
+	with "DAY" then return dateTimeStartOfDayOfMonth(x)
+	with "DAYS" then return dateTimeStartOfDayOfMonth(x)
+	with "day" then return dateTimeStartOfDayOfMonth(x)
+	with "days" then return dateTimeStartOfDayOfMonth(x)
+	with "MONTH" then return dateTimeStartOfMonth(x)
+	with "MONTHS" then return dateTimeStartOfMonth(x)
+	with "month" then return dateTimeStartOfMonth(x)
+	with "months" then return dateTimeStartOfMonth(x)
+	with "QUARTER" then return dateTimeStartOfQuarter(x)
+	with "QUARTERS" then return dateTimeStartOfQuarter(x)
+	with "quarter" then return dateTimeStartOfQuarter(x)
+	with "quarters" then return dateTimeStartOfQuarter(x)
+	else return dateTimeStartOfYear(x)
+}
+
+define function dateTimeEndOfDayOfMonth(x:DateTime) : DateTime
+define function dateTimeEndOfMonth(x:DateTime) : DateTime
+define function dateTimeEndOfQuarter(x:DateTime) : DateTime
+define function dateTimeEndOfYear(x:DateTime) : DateTime
+
+define function dateTimeEndOf(x:DateTime, y:DateTimeComponent) : DateTime {
+	match y
+	with "DAY" then return dateTimeEndOfDayOfMonth(x)
+	with "DAYS" then return dateTimeEndOfDayOfMonth(x)
+	with "day" then return dateTimeEndOfDayOfMonth(x)
+	with "days" then return dateTimeEndOfDayOfMonth(x)
+	with "MONTH" then return dateTimeEndOfMonth(x)
+	with "MONTHS" then return dateTimeEndOfMonth(x)
+	with "month" then return dateTimeEndOfMonth(x)
+	with "months" then return dateTimeEndOfMonth(x)
+	with "QUARTER" then return dateTimeEndOfQuarter(x)
+	with "QUARTERS" then return dateTimeEndOfQuarter(x)
+	with "quarter" then return dateTimeEndOfQuarter(x)
+	with "quarters" then return dateTimeEndOfQuarter(x)
+	else return dateTimeEndOfYear(x)
+}
 
 // Polymorphic operations
 define function toString(x:Any) : String

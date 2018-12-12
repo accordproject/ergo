@@ -145,6 +145,8 @@ Module ErgoCompiler.
     := ErgoType.ErgoTypeInteger prov.
   Definition ergo_type_dateTime prov : ergo_type
     := ErgoType.ErgoTypeDateTime prov.
+  Definition ergo_type_duration prov : ergo_type
+    := ErgoType.ErgoTypeDuration prov.
   Definition ergo_type_class_ref prov relative_name : ergo_type
     := ErgoType.ErgoTypeClassRef prov relative_name.
   Definition ergo_type_option prov et : ergo_type

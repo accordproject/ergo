@@ -534,6 +534,7 @@ tname:
       | "Long" -> ErgoCompiler.ergo_type_long (mk_provenance $startpos $endpos)
       | "Integer" -> ErgoCompiler.ergo_type_integer (mk_provenance $startpos $endpos)
       | "DateTime" -> ErgoCompiler.ergo_type_dateTime (mk_provenance $startpos $endpos)
+      | "Duration" -> ErgoCompiler.ergo_type_duration (mk_provenance $startpos $endpos)
       | "Unit" -> ErgoCompiler.ergo_type_unit (mk_provenance $startpos $endpos)
       | "Nothing" -> ErgoCompiler.ergo_type_nothing (mk_provenance $startpos $endpos)
       | "Any" -> ErgoCompiler.ergo_type_any (mk_provenance $startpos $endpos)

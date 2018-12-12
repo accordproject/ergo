@@ -13,6 +13,7 @@
  *)
 
 Require Import List.
+Require Import ZArith.
 Require Import EquivDec.
 Require Import Qcert.Utils.Utils.
 Require Import Qcert.Common.CommonSystem.
@@ -181,6 +182,12 @@ Definition onddateTime {A} (f : DATE_TIME -> A) (d : data) : option A
      | _ => None
      end.
 
+Definition onddateTimeDurationNat {A} (f : Z -> A) (d : data) : option A
+  := match d with
+     | dnat z => Some (f z)
+     | _ => None
+     end.
+
 Definition ondstring {A} (f : String.string -> A) (d : data) : option A
   := match d with
      | dstring s => Some (f s)
@@ -218,6 +225,8 @@ Definition date_time_unary_op_interp (op:date_time_unary_op) (d:data) : option d
        lift denhanceddateTime (ondstring DATE_TIME_from_string d)
      | uop_date_time_duration_from_string =>
        lift denhanceddateTimeinterval (ondstring DATE_TIME_DURATION_from_string d)
+     | uop_date_time_duration_from_nat part =>
+       lift denhanceddateTimeinterval (onddateTimeDurationNat (DATE_TIME_DURATION_from_nat part) d)
      end.
 
 Definition enhanced_unary_op_interp
@@ -243,6 +252,7 @@ Next Obligation.
     decide equality.
     decide equality.
     decide equality.
+    decide equality.
 Defined.
 Next Obligation.
   constructor; intros op.
@@ -260,6 +270,7 @@ Next Obligation.
     + destruct f; invcs H; repeat constructor.
     + destruct f; invcs H; repeat constructor.
     + destruct f; invcs H; repeat constructor.
+    + invcs H; repeat constructor.
     + invcs H; repeat constructor.
     + invcs H; repeat constructor.
 Qed.
@@ -1497,6 +1508,7 @@ Inductive date_time_unary_op_has_type {model:brand_model} :
   | tuop_date_time_end_of part : date_time_unary_op_has_type (uop_date_time_end_of part) DateTime DateTime
   | tuop_date_time_from_string : date_time_unary_op_has_type uop_date_time_from_string RType.String DateTime
   | tuop_date_time_duration_from_string : date_time_unary_op_has_type uop_date_time_duration_from_string RType.String DateTimeInterval
+  | tuop_date_time_duration_from_nat part : date_time_unary_op_has_type (uop_date_time_duration_from_nat part) RType.Nat DateTimeInterval
 .
 
 Definition math_unary_op_type_infer {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option rtype :=
@@ -1514,6 +1526,8 @@ Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_una
     if isString τ₁ then Some DateTime else None
   | uop_date_time_duration_from_string =>
     if isString τ₁ then Some DateTimeInterval else None
+  | uop_date_time_duration_from_nat part =>
+    if isNat τ₁ then Some DateTimeInterval else None
   end.
 
 Definition math_unary_op_type_infer_sub {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
@@ -1531,6 +1545,8 @@ Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time
     enforce_unary_op_schema (τ₁,RType.String) DateTime
   | uop_date_time_duration_from_string =>
     enforce_unary_op_schema (τ₁,RType.String) DateTimeInterval
+  | uop_date_time_duration_from_nat part =>
+    enforce_unary_op_schema (τ₁,RType.Nat) DateTimeInterval
   end.
 
 Lemma math_unary_op_typing_sound {model : brand_model}
@@ -1620,6 +1636,10 @@ Proof.
         destruct x; simpl in *; try congruence.
       inversion H; subst; clear H; constructor.
       rewrite String_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence.
+      inversion H; subst; clear H; constructor.
+      rewrite Nat_canon; constructor.
 Qed.
 
 Lemma enhanced_unary_op_typing_infer_least
@@ -1668,6 +1688,11 @@ Proof.
             reflexivity.
     + inversion H; subst; clear H;
         rewrite String_canon in H0;
+        inversion H0; subst; clear H0;
+          inversion H1; subst; clear H1;
+            reflexivity.
+    + inversion H; subst; clear H;
+        rewrite Nat_canon in H0;
         inversion H0; subst; clear H0;
           inversion H1; subst; clear H1;
             reflexivity.
@@ -2117,6 +2142,8 @@ Module CompEnhanced.
           := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string).
         Definition date_time_duration_from_string
           := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_duration_from_string).
+        Definition date_time_duration_from_nat (component:date_time_component)
+          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat component)).
 
         (* for coq style syntax *)
         Definition OpDateTimeGetComponent := date_time_get_component.
@@ -2124,6 +2151,7 @@ Module CompEnhanced.
         Definition OpDateTimeEndOf := date_time_end_of.
         Definition OpDateTimeFromString := date_time_from_string.
         Definition OpDateTimeIntervalFromString := date_time_duration_from_string.
+        Definition OpDateTimeIntervalFromNat := date_time_duration_from_nat.
         
       End Unary.
       
