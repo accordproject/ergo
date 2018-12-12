@@ -553,10 +553,10 @@ function dateTimeComponent(part, date) {
         return date.date();
     case MONTH:
         return date.month();
-    case YEAR:
-        return date.year();
     case QUARTER:
         return date.quarter();
+    case YEAR:
+        return date.year();
     default:
         throw new Error("Unknown date part: " + part);
     }
@@ -579,6 +579,13 @@ function dateTimeDurationFromString(stringDuration) {
     throw new Error("Not well formed duration input: " + stringDuration);
 }
 
+function dateTimeDurationFromNat(part, v) {
+    mustBeUnit(part);
+    let num;
+    if (v.hasOwnProperty('nat')) { num = v.nat; } else { num = v; }
+    return moment.duration(num,part);
+}
+
 function dateTimePointPlus(date, duration) {
     date = mustBeDate(date);
     duration = mustBeDuration(duration);
@@ -588,7 +595,7 @@ function dateTimePointPlus(date, duration) {
 function dateTimePointMinus(date, duration) {
     date = mustBeDate(date);
     duration = mustBeDuration(duration);
-    return date.substract(duration);
+    return date.subtract(duration);
 }
 
 function dateTimePointNe(date1, date2) {
@@ -671,7 +678,10 @@ function mustBeDuration(duration) {
 }
 
 function mustBeUnit(unit) {
-    if (unit === DAY || unit === MONTH || unit === QUARTER || unit === YEAR)
+    if (unit === DAY
+        || unit === MONTH
+        || unit === QUARTER
+        || unit === YEAR)
 	      return;
     throw new Error("Expected a duration unit but got " + JSON.stringify(unit));
 }

@@ -149,6 +149,18 @@ Extract Inlined Constant DATE_TIME_quarter => "(fun x -> DateTime.quarter x)".
 Axiom DATE_TIME_year : DATE_TIME -> Z.
 Extract Inlined Constant DATE_TIME_year => "(fun x -> DateTime.year x)".
 
+Axiom DATE_TIME_DURATION_day : Z -> DATE_TIME_DURATION.
+Extract Inlined Constant DATE_TIME_DURATION_day => "(fun x -> DateTime.durationday x)".
+  
+Axiom DATE_TIME_DURATION_month : Z -> DATE_TIME_DURATION.
+Extract Inlined Constant DATE_TIME_DURATION_month => "(fun x -> DateTime.durationmonth x)".
+  
+Axiom DATE_TIME_DURATION_quarter : Z -> DATE_TIME_DURATION.
+Extract Inlined Constant DATE_TIME_DURATION_quarter => "(fun x -> DateTime.durationquarter x)".
+  
+Axiom DATE_TIME_DURATION_year : Z -> DATE_TIME_DURATION.
+Extract Inlined Constant DATE_TIME_DURATION_year => "(fun x -> DateTime.durationyear x)".
+
 Axiom DATE_TIME_start_of_day : DATE_TIME -> DATE_TIME.
 Extract Inlined Constant DATE_TIME_start_of_day => "(fun x -> DateTime.start_of_day x)".
 
@@ -181,6 +193,14 @@ Definition DATE_TIME_component (part:date_time_component) (dt:DATE_TIME) : Z :=
   | date_time_YEAR => DATE_TIME_year dt
   end.
 
+Definition DATE_TIME_DURATION_from_nat (part:date_time_component) (z:Z) : DATE_TIME_DURATION :=
+  match part with
+  | date_time_DAY => DATE_TIME_DURATION_day z
+  | date_time_MONTH => DATE_TIME_DURATION_month z
+  | date_time_QUARTER => DATE_TIME_DURATION_quarter z
+  | date_time_YEAR => DATE_TIME_DURATION_year z
+  end.
+
 Definition DATE_TIME_start_of (part:date_time_component) (dt:DATE_TIME) : DATE_TIME :=
   match part with
   | date_time_DAY => DATE_TIME_start_of_day dt
@@ -204,6 +224,7 @@ Inductive date_time_unary_op
   | uop_date_time_end_of : date_time_component -> date_time_unary_op
   | uop_date_time_from_string
   | uop_date_time_duration_from_string
+  | uop_date_time_duration_from_nat : date_time_component -> date_time_unary_op
 .
 
 Local Open Scope string.
@@ -218,6 +239,8 @@ Definition date_time_unary_op_tostring (f:date_time_unary_op) : String.string
        "(dateTimeEndOf" ++ (date_time_component_tostring part) ++ ")"
      | uop_date_time_from_string => "DateTimeFromString"
      | uop_date_time_duration_from_string => "DateTimeDurationFromString"
+     | uop_date_time_duration_from_nat part =>
+       "(DateTimeDurationFromNat" ++ (date_time_component_tostring part) ++ ")"
      end.
 
 Require Import Qcert.Translation.ForeignToJava.
@@ -244,6 +267,8 @@ Definition date_time_to_java_unary_op
        mk_java_unary_op1 "date_time_end_of" (date_time_component_to_java_string part) d
      | uop_date_time_from_string => mk_java_unary_op0 "date_time_from_string" d
      | uop_date_time_duration_from_string => mk_java_unary_op0 "date_time_duration_from_string" d
+     | uop_date_time_duration_from_nat part =>
+       mk_java_unary_op1 "date_time_duration_from_nat" (date_time_component_to_java_string part) d
      end.
 
 Definition date_time_to_javascript_unary_op
@@ -256,6 +281,7 @@ Definition date_time_to_javascript_unary_op
      | uop_date_time_end_of part => "dateTimeEndOf(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
      | uop_date_time_from_string => "dateTimeFromString(" ++ d ++ ")"
      | uop_date_time_duration_from_string => "dateTimeDurationFromString(" ++ d ++ ")"
+     | uop_date_time_duration_from_nat part => "dateTimeDurationFromNat(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
      end.
 
 Definition date_time_to_ajavascript_unary_op
@@ -270,6 +296,8 @@ Definition date_time_to_ajavascript_unary_op
        call_runtime "dateTimeEndOf" [ expr_literal (literal_string (toString part)); e ]
      | uop_date_time_from_string => call_runtime "dateTimeFromString" [ e ]
      | uop_date_time_duration_from_string => call_runtime "dateTimeDurationFromString" [ e ]
+     | uop_date_time_duration_from_nat part =>
+       call_runtime "dateTimeDurationFromNat" [ expr_literal (literal_string (toString part)); e ]
      end.
 
 Axiom DATE_TIME_plus : DATE_TIME -> DATE_TIME_DURATION -> DATE_TIME.
@@ -366,7 +394,7 @@ Definition date_time_to_javascript_binary_op
      | bop_date_time_duration => jsFunc "dateTimeDuration" d1 d2
      | bop_date_time_duration_days => jsFunc "dateTimeDurationDays" d1 d2
      | bop_date_time_duration_seconds => jsFunc "dateTimeDurationSeconds" d1 d2
-     end.  
+     end.
 
 Definition date_time_to_ajavascript_binary_op
              (fb:date_time_binary_op)
