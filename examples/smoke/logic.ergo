@@ -25,6 +25,7 @@ contract Smoke over TemplateModel {
 		enforce(some(A{ a : 1 })?.a ?? 2 = 1);
 		enforce(C{ contract : "foo" }.contract = "foo");
 		enforce(C{ contract : "foo" }.contract = "foo");
+		enforce(dateTimeIsSame(dateTimeAdd(dateTime("2018-01-02"),	dateTimeDuration(1.0, "DAY")),dateTimeAdd(dateTime("2018-01-01"),	dateTimeDuration(2.0, "DAY"))));
 		return MyResponse{
 			output: "Smoke.test successful"
 		}
