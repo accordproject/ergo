@@ -15,9 +15,7 @@
 (* This module contains a few basic utilities *)
 
 (* this can't go in Logger, since that creates a circular dependency *)
-type nra_logger_token_type = string
 type nrc_logger_token_type = string
-type dnrc_logger_token_type = string
 
 (** Conversions *)
 let string_of_char_list l =
@@ -235,3 +233,4 @@ let class_prefix_of_filename filename =
   with
   | Invalid_argument _ -> "logic"
   end
+

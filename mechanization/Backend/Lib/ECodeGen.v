@@ -15,6 +15,7 @@
 Require String.
 
 Require Qcert.Compiler.Driver.CompLang.
+Require Import Qcert.Compiler.Driver.CompDriver.
 
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
@@ -23,6 +24,8 @@ Require Import ErgoSpec.Backend.Lib.ENNRCtoJavaScript.
 
 Module ECodeGen(ergomodel:ErgoBackendModel).
   (* NNRC *)
+  Definition nnrc_optim := CompDriver.nnrc_optim_default.
+  
   Definition nnrc_expr := NNRC.nnrc.
 
   Definition nnrc_expr_let := cNNRC.NNRCLet.
@@ -38,11 +41,16 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
   
   Definition javascript := CompLang.javascript.
   
-  Definition nnrc_expr_javascript_unshadow := ENNRCtoJavaScript.nnrcToJSunshadow.
-  Definition nnrc_expr_to_javascript := ENNRCtoJavaScript.nnrcToJS.
+
+  Definition nnrc_expr_javascript_unshadow n t1 t2 s1 s2 v h :=
+    ENNRCtoJavaScript.nnrcToJSunshadow (nnrc_optim n) t1 t2 s1 s2 v h.
   
-  Definition nnrc_expr_to_javascript_method := ENNRCtoJavaScript.nnrcToJSMethod.
-  
+  Definition nnrc_expr_to_javascript n t1 t2 s1 s2 h :=
+    ENNRCtoJavaScript.nnrcToJS (nnrc_optim n) t1 t2 s1 s2 h.
+
+  Definition nnrc_expr_to_javascript_method s0 n s1 s2 ls s3 :=
+    ENNRCtoJavaScript.nnrcToJSMethod s0 (nnrc_optim n) s1 s2 ls s3.
+
   Definition nnrc_expr_to_javascript_fun_lift
              (e:nnrc_expr)
              (fname:String.string)
