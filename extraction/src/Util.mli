@@ -87,4 +87,3 @@ val get_local_part : char list -> (char list) option
 
 val class_prefix_of_filename : string -> string
 
-
