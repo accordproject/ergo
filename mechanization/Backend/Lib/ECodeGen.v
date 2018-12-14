@@ -19,6 +19,8 @@ Require Qcert.Compiler.Driver.CompLang.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
 
+Require Import ErgoSpec.Backend.Lib.ENNRCtoJavaScript.
+
 Module ECodeGen(ergomodel:ErgoBackendModel).
   (* NNRC *)
   Definition nnrc_expr := NNRC.nnrc.
@@ -28,18 +30,18 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
   Definition nnrc_expr_java_unshadow := NNRCtoJava.nnrcToJavaunshadow.
 
   (* JavaScript code generation *)
-  Definition javascript_indent := NNRCtoJavaScript.indent.
-  Definition javascript_quotel_double := NNRCtoJavaScript.quotel_double.
-  Definition javascript_eol_newline := NNRCtoJavaScript.eol_newline.
+  Definition javascript_indent := ENNRCtoJavaScript.indent.
+  Definition javascript_quotel_double := ENNRCtoJavaScript.quotel_double.
+  Definition javascript_eol_newline := ENNRCtoJavaScript.eol_newline.
 
-  Definition javascript_identifier_sanitizer := NNRCtoJavaScript.jsIdentifierSanitize.
+  Definition javascript_identifier_sanitizer := ENNRCtoJavaScript.jsIdentifierSanitize.
   
   Definition javascript := CompLang.javascript.
   
-  Definition nnrc_expr_javascript_unshadow := NNRCtoJavaScript.nnrcToJSunshadow.
-  Definition nnrc_expr_to_javascript := NNRCtoJavaScript.nnrcToJS.
+  Definition nnrc_expr_javascript_unshadow := ENNRCtoJavaScript.nnrcToJSunshadow.
+  Definition nnrc_expr_to_javascript := ENNRCtoJavaScript.nnrcToJS.
   
-  Definition nnrc_expr_to_javascript_method := NNRCtoJavaScript.nnrcToJSMethod.
+  Definition nnrc_expr_to_javascript_method := ENNRCtoJavaScript.nnrcToJSMethod.
   
   Definition nnrc_expr_to_javascript_fun_lift
              (e:nnrc_expr)
@@ -49,7 +51,7 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
              (eol:String.string)
              (quotel:String.string) : javascript :=
     cNNRC.lift_nnrc_core
-        (fun e => NNRCtoJavaScript.nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname)
+        (fun e => ENNRCtoJavaScript.nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname)
         (NNRC.nnrc_to_nnrc_core e).
 
   (* Java code generation *)
