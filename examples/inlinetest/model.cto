@@ -20,8 +20,8 @@ transaction Request2 {
 }
 
 transaction Response {
- o Integer x
- o DateTime y
+ o Double x
+ o Double y
 }
 
 /**
