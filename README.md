@@ -37,7 +37,7 @@ You can also try the interactive [REPL](https://ergorepl.netlify.com)
 ## Documentation
 
 The most recent documentation for Ergo is available at
-[https://ergo.accordproject.org/](https://ergo.accordproject.org/)
+[https://docs.accordproject.org/docs/ergo.html](https://docs.accordproject.org/docs/ergo)
 
 ## Getting started
 
