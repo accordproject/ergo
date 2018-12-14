@@ -25,9 +25,6 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
 
   Definition nnrc_expr_let := cNNRC.NNRCLet.
 
-  Definition nnrc_expr_unshadow := cNNRCShadow.unshadow.
-  Definition nnrc_expr_subst_const_to_var := cNNRCShadow.nnrc_subst_const_to_var.
-  Definition nnrc_expr_javascript_unshadow := NNRCtoJavaScript.nnrcToJSunshadow.
   Definition nnrc_expr_java_unshadow := NNRCtoJava.nnrcToJavaunshadow.
 
   (* JavaScript code generation *)
@@ -39,6 +36,7 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
   
   Definition javascript := CompLang.javascript.
   
+  Definition nnrc_expr_javascript_unshadow := NNRCtoJavaScript.nnrcToJSunshadow.
   Definition nnrc_expr_to_javascript := NNRCtoJavaScript.nnrcToJS.
   
   Definition nnrc_expr_to_javascript_method := NNRCtoJavaScript.nnrcToJSMethod.

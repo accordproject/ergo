@@ -26,6 +26,7 @@ Require ErgoSpec.Common.CTO.CTO.
 Require ErgoSpec.Common.Types.ErgoType.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
+Require ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require ErgoSpec.Compiler.ErgoDriver.
 
 Module ErgoCompiler.
@@ -68,7 +69,7 @@ Module ErgoCompiler.
   Definition esuccess (A:Set) : A -> eresult A := Result.esuccess.
   Definition efailure (A:Set) : eerror -> eresult A := Result.efailure.
 
-  Definition result_file : Set := Misc.result_file.
+  Definition result_file : Set := ErgoNNRC.result_file.
   
   (** CTOs *)
   Definition cto_type := CTO.lrcto_type.

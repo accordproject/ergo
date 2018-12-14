@@ -60,12 +60,6 @@ Section Misc.
       (None, None)
       l.
 
-  Record result_file :=
-    mkResultFile {
-        res_file : string;
-        res_content : string;
-      }.
-  
   Section TopoSort.
     Context {A B:Set}.
     (* function from node to node identifier -> function from node to node name -> graph edges -> ordered nodes *)

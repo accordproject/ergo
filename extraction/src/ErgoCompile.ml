@@ -17,7 +17,10 @@ open ErgoUtil
 open ErgoComp
 open ErgoConfig
 
+open PrettyIL
+
 let res_convert code =
+  (* Printf.printf "NNRC Module: %s" (pretty_nnrc_module false 0 false (Jarray []) false code.res_nnrc); *)
   (string_of_char_list code.res_file, string_of_char_list code.res_content)
 
 let compile_module_to_javascript version inputs =

@@ -17,12 +17,18 @@ Require Import List.
 Require Import ErgoSpec.Common.Utils.Provenance.
 Require Import ErgoSpec.Common.Utils.Names.
 Require Import ErgoSpec.Common.Utils.Result.
+Require Import ErgoSpec.Common.Utils.Misc.
 Require Import ErgoSpec.Common.CTO.CTO.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
+Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Compiler.ErgoCompiler.
+Require Import ErgoSpec.Compiler.ErgoDriver.
+Require Import ErgoSpec.Translation.ErgoCompContext. 
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
+Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Backend.Lib.ECType.
 
 Section HelloWorld.
   Open Scope string_scope.
@@ -98,8 +104,7 @@ contract HelloWorld over TemplateModel {
              ""
              "org.accordproject.helloworld"
              (DFunc dummy_provenance "addFee" ergo_funcd1
-                    ::DContract dummy_provenance "HelloWorld" c1
-                    ::DContract dummy_provenance "MyContract" ergo_contractd1::nil).
+                    ::nil).
 
   Definition cto_typed_tm : lrcto_declaration :=
     mkCTODeclaration
@@ -150,12 +155,36 @@ contract HelloWorld over TemplateModel {
       accordproject_base_namespace
       nil
       (cto_typed_top::nil).
-  Definition ctos : list lrcto_package := cto_hl::cto_model::nil.
+  Definition ctos : list ergo_input := InputCTO cto_hl::nil.
   
   Definition ergo_stdlib : lrergo_module :=
     mkModule
       dummy_provenance "" "" accordproject_stdlib_namespace (DType dummy_provenance ergo_typed_top::nil).
   Definition  mls:= ergo_stdlib :: nil.
 
+  Definition ergos : list ergo_input := InputErgo ergo_stdlib :: nil.
+  Definition inputs (p:lrergo_module) : list ergo_input :=
+    List.app (List.app ctos ergos) (InputErgo p::nil).
+
+  (*
+  Definition ergo_module_to_javascript_top
+             (version:jsversion)
+             (inputs:list lrergo_input) : eresult result_file :=
+    let bm : eresult brand_model := brand_model_from_inputs inputs in
+    eolift (fun bm :brand_model=>
+              let cinit := compilation_context_from_inputs inputs in
+              eolift (fun init : laergo_module * compilation_context =>
+                        let (p, ctxt) := init in
+                        let res := ergo_module_to_javascript version ctxt p in
+                        elift (mkResultFile p.(module_file)) res)
+                     cinit) bm.
+
+  Definition test(p:lrergo_module) : string :=
+    match ergo_module_to_javascript_top ES6 (inputs p) with
+    | Success _ _ f => f.(res_content)
+    | Failure _ _ _ => "FAILURE"
+    end.
+*)
+  (* Eval vm_compute in (test p1). *)
 End HelloWorld.
 

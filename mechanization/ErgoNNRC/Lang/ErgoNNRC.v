@@ -61,6 +61,13 @@ Section ErgoNNRC.
 
   End Syntax.
 
+  Record result_file :=
+    mkResultFile {
+        res_file : string;
+        res_nnrc : nnrc_module;
+        res_content : string;
+      }.
+  
   Section Semantics.
     (* XXX Nothing yet -- relational semantics should go here *)
   End Semantics.
