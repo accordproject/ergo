@@ -43,8 +43,8 @@ Section ErgoCStdlib.
   Definition mk_unary prov op : ergoc_function :=
     mk_naked_closure
       prov
-      ("p1"::nil)
-      (EUnaryOp prov op (EVar prov "p1")).
+      ("p0"::nil)
+      (EUnaryOp prov op (EVar prov "p0")).
 
   Definition mk_binary_expr prov e : ergoc_function :=
     mk_naked_closure
