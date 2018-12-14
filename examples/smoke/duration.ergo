@@ -1,0 +1,16 @@
+namespace org.accordproject.smoke
+
+define concept A{ a : Integer }
+define concept C{ contract : String }
+
+contract Duration over TemplateModel {
+  clause test(request : MyRequest) : MyResponse {
+    enforce(dateTimeIsSame(dateTimeAdd(dateTime("2018-01-02"), dateTimeDuration(1.0, "DAY")),
+                           dateTimeAdd(dateTime("2018-01-01"), dateTimeDuration(2.0, "DAY"))));
+    enforce(dateTimeIsSame(dateTimeAdd(dateTime("2018-03-01"), dateTimeDuration(1.0, "MONTH")),
+                           dateTimeAdd(dateTime("2018-02-01"), dateTimeDuration(2.0, "MONTH"))));
+    return MyResponse{
+      output: "Duration.test successful"
+    }
+  }
+}

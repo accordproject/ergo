@@ -17,6 +17,23 @@
     }
   },
   {
+    "name": "durationtest",
+    "dir": "data/smoke",
+    "ergo": ["duration.ergo"],
+    "models": [
+      "model.cto"
+    ],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "org.accordproject.smoke.Duration",
+    "expected": {
+      "response": {
+        "output": "Duration.test successful"
+      }
+    }
+  },
+  {
     "name": "test1",
     "dir": "data/helloworld",
     "ergo": ["logic.ergo"],
