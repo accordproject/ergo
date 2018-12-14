@@ -13,19 +13,26 @@
  */
 namespace org.accordproject.inlinetest
 
+define constant pi = 3.14
+
+define function f(p1:Double,p2:Double) : Double {
+	return p1 + p2
+}
+
+define function g(p1:Double) : Double {
+	return p1
+}
+
+define function h() : Response{
+	return Response{
+		x: g(0.0),
+		y: f(10.0,12.0)
+	}
+}
+
 contract InlineTest over TemplateModel {
   // Simple Clause
   clause test1(request : Request1) : Response {
-    return Response{
-			x: doubleToInteger(0.0),
-			y: dateTimeAdd(dateTime("2018-01-01"), dateTimeDuration(10.0, "month"))
-		}
-  }
-  clause test2(request : Request2) : Response {
-		let zero = doubleToInteger(0.0);
-    return Response{
-			x: zero,
-			y: dateTimeAdd(dateTime("2018-01-01"), dateTimeDuration(10.0, "month"))
-		}
+		return h()
   }
 }
