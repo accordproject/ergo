@@ -93,8 +93,10 @@ Section PrintTypedData.
       | drec r => string_of_rec r 
       | dforeign (ErgoEnhancedModel.enhanceddateTime dt) =>
         "dateTime(""" ++ DateTimeModelPart.DATE_TIME_to_string dt ++ """)"
-      | dforeign (ErgoEnhancedModel.enhanceddateTimeinterval dti) =>
+      | dforeign (ErgoEnhancedModel.enhanceddateTimeduration dti) =>
         "duration(" ++ DateTimeModelPart.DATE_TIME_DURATION_to_string dti ++ ")"
+      | dforeign (ErgoEnhancedModel.enhanceddateTimeperiod dti) =>
+        "period(" ++ DateTimeModelPart.DATE_TIME_PERIOD_to_string dti ++ ")"
       | dforeign _ => "???UnknownForeign???"
       end.
 
@@ -133,7 +135,8 @@ Section PrintTypedData.
       | Brand₀ (b::nil) => print_brand nsctxt b
       | Brand₀ _ => "~" ++ "[multiple]"
       | Foreign₀ ErgoEnhancedModel.enhancedDateTime => "DateTime"
-      | Foreign₀ ErgoEnhancedModel.enhancedDateTimeInterval => "Duration"
+      | Foreign₀ ErgoEnhancedModel.enhancedDateTimeDuration => "InternalDuration"
+      | Foreign₀ ErgoEnhancedModel.enhancedDateTimePeriod => "InternalPeriod"
       | Foreign₀ _ => "(unknown foreign type)"
       end.
 

@@ -120,10 +120,6 @@ let add_stdlib gconf =
   gconf.econf_sources_text <- sources @  gconf.econf_sources_text;
   gconf.econf_ctos <- ctos @ gconf.econf_ctos;
   gconf.econf_modules <- mls @ gconf.econf_modules
-let default_config () =
-  let gconf = empty_config () in
-  add_stdlib gconf;
-  gconf
 
 let get_source_table gconf = gconf.econf_sources_text
 
@@ -138,3 +134,16 @@ let should_link gconf =
               ("Cannot link for target: " ^ (name_of_lang gconf.econf_target)))
   else
     false
+
+let default_config () =
+  begin try
+    let gconf = empty_config () in
+    add_stdlib gconf;
+    gconf
+  with
+  | ErgoUtil.Ergo_Error error ->
+      Printf.eprintf "Cannot log Ergo stdlib:\n%s\n"
+        (ErgoUtil.string_of_error_with_table [] error);
+      exit 2
+  end
+

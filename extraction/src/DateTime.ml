@@ -16,7 +16,9 @@
 
 open CalendarLib
 
-type dateTime = Calendar.t
+(** Misc *)
+let undefined_error op =
+  raise (Failure ("Operation " ^ op ^ " not defined in REPL"))
 
 (** Parse/Print *)
 let lift_error fcont f x =
@@ -45,7 +47,6 @@ let f_of_format fmt =
 let multi_parse fl fe x =
   lift_error_map (List.map f_of_format fl) fe x
 
-let error_dt (x:string) : dateTime = Calendar.lmake 0 ()
 let iso8610 =
   [ FDate "%Y-%m-%d";
     FDate "%Y%m%d";
@@ -72,58 +73,82 @@ let iso8610 =
     FDateTime "%a, %d %b %y %H:%M:%S %z";
     FDateTime "%a, %d %b %Y %H:%M:%S %z"; ]
 
+(** Duration *)
+type duration = Calendar.Period.t
+let duration_eq (d1:duration) (d2:duration) : bool = Calendar.Period.equal d1 d2
+let duration_amount (x:duration) : int = undefined_error "duration_amount"
+let duration_to_string (x:duration) : string = "_" (* XXX To be figured out *)
+let duration_from_string (x:string) : duration = undefined_error "duration_from_string"
+
+(** Period *)
+type period = Calendar.Period.t
+
+let period_eq (d1:period) (d2:period) : bool = Calendar.Period.equal d1 d2
+let period_to_string (x:duration) : string = "_" (* XXX To be figured out *)
+let period_from_string (x:string) : period = undefined_error "period_from_string"
+
+(** DateTime *)
+type dateTime = Calendar.t
+
+(** Initial *)
+let now () : dateTime = Calendar.now()
+
+(** Serialize/deserialize *)
+let error_dt (x:string) : dateTime = Calendar.lmake 0 ()
 let from_string (x:string) : dateTime =
   multi_parse iso8610 error_dt x
 let to_string (x:dateTime) : string =
   Printer.Calendar.sprint "%Y-%m-%d %H:%M:%S%:z" x
 
-(** Initial *)
-let now () : dateTime = Calendar.now()
-
 (** Components *)
-let day (x:dateTime) : int = Calendar.day_of_month x
-let month (x:dateTime) : int = Date.int_of_month (Calendar.month x)
-let quarter (x:dateTime) : int = ((month x) mod 3) + 1
-let year (x:dateTime) : int = Calendar.year x
+let get_second (x:dateTime) : int = undefined_error "get_second"
+let get_minute (x:dateTime) : int = undefined_error "get_minute"
+let get_hour (x:dateTime) : int = undefined_error "get_hour"
+let get_day (x:dateTime) : int = Calendar.day_of_month x
+let get_week (x:dateTime) : int = undefined_error "get_week"
+let get_month (x:dateTime) : int = Date.int_of_month (Calendar.month x)
+let get_quarter (x:dateTime) : int = ((get_month x) mod 3) + 1
+let get_year (x:dateTime) : int = Calendar.year x
 
 (** Comparisons *)
 let eq (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 = 0
-let ne (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 != 0
-let lt (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 < 0
-let le (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 <= 0
-let gt (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 > 0
-let ge (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 >= 0
+let is_before (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 < 0
+let is_after (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 > 0
 
 (** Arithmetics *)
-
-type duration = Calendar.Period.t
-
-let deq (d1:duration) (d2:duration) : bool = Calendar.Period.equal d1 d2
-let dfrom_string (x:string) : duration = raise Not_found
-let dto_string (x:duration) : string = "_" (* XXX To be figured out *)
-let dduration (x1:dateTime) (x2:dateTime) : duration = Calendar.sub x1 x2
-let ddays (x1:dateTime) (x2:dateTime) : float =
-  let d = Calendar.Period.to_date (dduration x1 x2) in
+let diff (x1:dateTime) (x2:dateTime) : duration = Calendar.sub x1 x2
+let diff_days (x1:dateTime) (x2:dateTime) : float =
+  let d = Calendar.Period.to_date (diff x1 x2) in
   let d = Date.Period.nb_days d in
   float_of_int d
-let dseconds (x1:dateTime) (x2:dateTime) : float =
-  let t = Calendar.Period.to_time (dduration x1 x2) in
+let diff_seconds (x1:dateTime) (x2:dateTime) : float =
+  let t = Calendar.Period.to_time (diff x1 x2) in
   Time.Second.to_float (Time.Period.to_seconds t)
 
-let plus (x1:dateTime) (d1:duration) : dateTime = Calendar.add x1 d1
-let minus (x1:dateTime) (d1:duration) : dateTime = Calendar.rem x1 d1
+let add (x1:dateTime) (d1:duration) : dateTime = Calendar.add x1 d1
+let subtract (x1:dateTime) (d1:duration) : dateTime = Calendar.rem x1 d1
 
-let start_of_day (x1:dateTime) = raise Not_found
-let start_of_month (x1:dateTime) = raise Not_found
-let start_of_quarter (x1:dateTime) = raise Not_found
-let start_of_year (x1:dateTime) = raise Not_found
+let start_of_day (x1:dateTime) = undefined_error "start_of_day"
+let start_of_week (x1:dateTime) = undefined_error "start_of_week"
+let start_of_month (x1:dateTime) = undefined_error "start_of_month"
+let start_of_quarter (x1:dateTime) = undefined_error "start_of_quarter"
+let start_of_year (x1:dateTime) = undefined_error "start_of_year"
 
-let end_of_day (x1:dateTime) = raise Not_found
-let end_of_month (x1:dateTime) = raise Not_found
-let end_of_quarter (x1:dateTime) = raise Not_found
-let end_of_year (x1:dateTime) = raise Not_found
+let end_of_day (x1:dateTime) = undefined_error "end_of_day"
+let end_of_week (x1:dateTime) = undefined_error "end_of_week"
+let end_of_month (x1:dateTime) = undefined_error "end_of_month"
+let end_of_quarter (x1:dateTime) = undefined_error "end_of_quarter"
+let end_of_year (x1:dateTime) = undefined_error "end_of_year"
 
-let durationday (x:int) = Calendar.Period.day x
-let durationmonth (x:int) = Calendar.Period.month x
-let durationyear (x:int) = Calendar.Period.year x
-let durationquarter (x:int) = Calendar.Period.month (x * 3)
+let duration_seconds (x:int) = undefined_error "duration_seconds"
+let duration_minutes (x:int) = undefined_error "duration_minutes"
+let duration_hours (x:int) = undefined_error "duration_hours"
+let duration_days (x:int) = Calendar.Period.day x
+let duration_weeks (x:int) = undefined_error "duration_weeks"
+let duration_years (x:int) = Calendar.Period.year x
+
+let period_days (x:int) = Calendar.Period.day x
+let period_weeks (x:int) = undefined_error "period_weeks"
+let period_months (x:int) = Calendar.Period.month x
+let period_years (x:int) = Calendar.Period.year x
+let period_quarters (x:int) = Calendar.Period.month (x * 3)

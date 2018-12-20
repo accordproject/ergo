@@ -198,14 +198,16 @@ let string_of_foreign_data (fd:enhanced_data) : string =
   begin match fd with
   | Enhancedstring s -> "S\"" ^ s ^ "\""
   | EnhanceddateTime ts -> DateTime.to_string ts
-  | EnhanceddateTimeinterval ts -> DateTime.dto_string ts
+  | EnhanceddateTimeduration ts -> DateTime.duration_to_string ts
+  | EnhanceddateTimeperiod ts -> DateTime.period_to_string ts
   end
 
 let pretty_foreign_data ff fd =
   begin match fd with
   | Enhancedstring s -> fprintf ff "S\"%s\"" s
   | EnhanceddateTime ts -> fprintf ff "DateTime(\"%s\")" (DateTime.to_string ts)
-  | EnhanceddateTimeinterval ts -> fprintf ff "Duration(\"%s\")" (DateTime.dto_string ts)
+  | EnhanceddateTimeduration ts -> fprintf ff "Duration(\"%s\")" (DateTime.duration_to_string ts)
+  | EnhanceddateTimeperiod ts -> fprintf ff "Duration(\"%s\")" (DateTime.period_to_string ts)
   end
 
 let rec pretty_data ff d =
@@ -227,16 +229,18 @@ let rec pretty_data ff d =
   end
 
 and pretty_coll ff dl =
-  match dl with
-    [] -> ()
+  begin match dl with
+  | [] -> ()
   | d :: [] -> fprintf ff "%a" pretty_data d
   | d :: dl' -> fprintf ff "%a,@ %a" pretty_data d pretty_coll dl'
+  end
 
 and pretty_rec ff rl =
-  match rl with
-    [] -> ()
+  begin match rl with
+  | [] -> ()
   | (ra,rd) :: [] -> fprintf ff "%s : %a" (Util.string_of_char_list ra) pretty_data rd
   | (ra,rd) :: rl' -> fprintf ff "%s : %a;@ %a" (Util.string_of_char_list ra) pretty_data rd pretty_rec rl'
+  end
 
 (** Pretty rtype *)
 
@@ -259,10 +263,11 @@ let rec pretty_rtype_aux sym ff rt =
   end
 
 and pretty_rec_type sym ff rl =
-  match rl with
-    [] -> ()
+  begin match rl with
+  | [] -> ()
   | (ra,rd) :: [] -> fprintf ff "%s : %a" (Util.string_of_char_list ra) (pretty_rtype_aux sym) rd
   | (ra,rd) :: rl' -> fprintf ff "%s : %a;@ %a" (Util.string_of_char_list ra) (pretty_rtype_aux sym) rd (pretty_rec_type sym) rl'
+  end
 
 let pretty_rtype greek margin annot rt =
   let conf = make_pretty_config greek margin annot in
@@ -378,10 +383,33 @@ let pretty_float_arith_unary_op p sym callb ff ua a =
 
 let date_time_component_to_string part =
   begin match part with
-  | Date_time_DAY -> "DAY"
-  | Date_time_MONTH -> "MONTH"
-  | Date_time_QUARTER -> "QUARTER"
-  | Date_time_YEAR -> "YEAR"
+  | Date_time_component_SECONDS -> "SECONDS"
+  | Date_time_component_MINUTES -> "MINUTES"
+  | Date_time_component_HOURS -> "HOURS"
+  | Date_time_component_DAYS -> "DAYS"
+  | Date_time_component_WEEKS -> "WEEKS"
+  | Date_time_component_MONTHS -> "MONTHS"
+  | Date_time_component_QUARTERS -> "QUARTERS"
+  | Date_time_component_YEARS -> "YEARS"
+  end
+
+let date_time_duration_unit_to_string part =
+  begin match part with
+  | Date_time_duration_SECONDS -> "SECONDS"
+  | Date_time_duration_MINUTES -> "MINUTES"
+  | Date_time_duration_HOURS -> "HOURS"
+  | Date_time_duration_DAYS -> "DAYS"
+  | Date_time_duration_WEEKS -> "WEEKS"
+  | Date_time_duration_YEARS -> "YEARS"
+  end
+
+let date_time_period_to_string part =
+  begin match part with
+  | Date_time_period_DAYS -> "DAYS"
+  | Date_time_period_WEEKS -> "WEEKS"
+  | Date_time_period_MONTHS -> "MONTHS"
+  | Date_time_period_QUARTERS -> "QUARTERS"
+  | Date_time_period_YEARS -> "YEARS"
   end
 
 let string_of_foreign_unary_op fu : string =
@@ -400,7 +428,9 @@ let string_of_foreign_unary_op fu : string =
   | Enhanced_unary_date_time_op (Uop_date_time_end_of _) -> "DateTimeEndOf"
   | Enhanced_unary_date_time_op Uop_date_time_from_string -> "DateTimeFromString"
   | Enhanced_unary_date_time_op Uop_date_time_duration_from_string -> "DateTimeDurationFromString"
-  | Enhanced_unary_date_time_op (Uop_date_time_duration_from_nat _) -> "DateTimeFromString"
+  | Enhanced_unary_date_time_op (Uop_date_time_duration_from_nat _) -> "DateTimeDurationFromString"
+  | Enhanced_unary_date_time_op Uop_date_time_period_from_string -> "DateTimePeriodFromString"
+  | Enhanced_unary_date_time_op (Uop_date_time_period_from_nat _) -> "DateTimePeriodFromString"
   end
 
 let pretty_foreign_unary_op p sym callb ff fu a =
@@ -573,42 +603,31 @@ let pretty_float_compare_binary_op p sym callb ff ba a1 a2 =
 let string_of_foreign_binary_op fb =
   begin match fb with
   | Enhanced_binary_math_op -> "atan2"
-  | Enhanced_binary_date_time_op Bop_date_time_plus -> "DateTimePlus"
-  | Enhanced_binary_date_time_op Bop_date_time_minus -> "DateTimeMinus"
-  | Enhanced_binary_date_time_op Bop_date_time_ne -> "DateTimeNe"
-  | Enhanced_binary_date_time_op Bop_date_time_lt -> "DateTimeLt"
-  | Enhanced_binary_date_time_op Bop_date_time_le -> "DateTimeLe"
-  | Enhanced_binary_date_time_op Bop_date_time_gt -> "DateTimeGt"
-  | Enhanced_binary_date_time_op Bop_date_time_ge -> "DateTimeGe"
-  | Enhanced_binary_date_time_op Bop_date_time_duration -> "DateTimeDurarion"
-  | Enhanced_binary_date_time_op Bop_date_time_duration_days -> "DateTimeDurationDays"
-  | Enhanced_binary_date_time_op Bop_date_time_duration_seconds -> "DateTimeDurationSeconds"
+  | Enhanced_binary_date_time_op Bop_date_time_add -> "DateTimeAdd"
+  | Enhanced_binary_date_time_op Bop_date_time_subtract -> "DateTimeSubtract"
+  | Enhanced_binary_date_time_op Bop_date_time_is_same -> "DateTimeIsSame"
+  | Enhanced_binary_date_time_op Bop_date_time_is_before -> "DateTimeIsBefore"
+  | Enhanced_binary_date_time_op Bop_date_time_is_after -> "DateTimeIsAfter"
+  | Enhanced_binary_date_time_op Bop_date_time_diff -> "DateTimeDiff"
   end
 
 let pretty_foreign_binary_op p sym callb ff fb a1 a2 =
-  match fb with
+  begin match fb with
   | Enhanced_binary_math_op ->
      pretty_infix_exp p 18 sym callb ("atan2",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_plus ->
+  | Enhanced_binary_date_time_op Bop_date_time_add ->
      pretty_infix_exp p 18 sym callb ("T+",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_minus ->
+  | Enhanced_binary_date_time_op Bop_date_time_subtract ->
      pretty_infix_exp p 18 sym callb ("T-",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_ne ->
-     pretty_infix_exp p 18 sym callb ("T!=",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_lt ->
+  | Enhanced_binary_date_time_op Bop_date_time_is_same ->
+     pretty_infix_exp p 18 sym callb ("T=",1) ff a1 a2
+  | Enhanced_binary_date_time_op Bop_date_time_is_before ->
      pretty_infix_exp p 18 sym callb ("T<",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_le ->
-     pretty_infix_exp p 18 sym callb ("T<=",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_gt ->
+  | Enhanced_binary_date_time_op Bop_date_time_is_after ->
      pretty_infix_exp p 18 sym callb ("T>",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_ge ->
-     pretty_infix_exp p 18 sym callb ("T>=",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_duration ->
-     pretty_infix_exp p 18 sym callb ("TD",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_duration_days ->
-     pretty_infix_exp p 18 sym callb ("TD_d",1) ff a1 a2
-  | Enhanced_binary_date_time_op Bop_date_time_duration_seconds ->
-     pretty_infix_exp p 18 sym callb ("TD_s",1) ff a1 a2
+  | Enhanced_binary_date_time_op Bop_date_time_diff ->
+      pretty_infix_exp p 18 sym callb ("TD",1) ff a1 a2
+  end
 
 let string_of_binary_op b =
   begin match b with

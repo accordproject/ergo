@@ -105,9 +105,9 @@ ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli
 %.ctoj: %.cto
 	../scripts/cto2ctoj.js parse $<
 
-extracted/Resources.ml: stdlib/contract.ctoj stdlib/accordproject.ctoj stdlib/money.ctoj stdlib/runtime.ctoj stdlib/dom.ctoj stdlib/stdlib.ergo ../backends/javascript/ergo-runtime.js
+extracted/Resources.ml: stdlib/contract.ctoj stdlib/accordproject.ctoj stdlib/money.ctoj stdlib/time.ctoj stdlib/runtime.ctoj stdlib/dom.ctoj stdlib/stdlib.ergo ../backends/javascript/ergo-runtime.js
 	echo '(* generated ocaml file *)' > extracted/Resources.ml
-	(for i in contract accordproject money runtime; do \
+	(for i in contract accordproject money time runtime; do \
          echo "let $$i = {xxx|"; \
          cat stdlib/$$i.ctoj; \
          echo "|xxx}"; \

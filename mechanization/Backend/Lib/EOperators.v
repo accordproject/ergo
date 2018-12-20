@@ -144,24 +144,16 @@ Module EOperators(ergomodel:ErgoBackendModel).
     End Integer.
 
     Module DateTime.
-      Definition opdateplus : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimePlus.
-      Definition opdateminus : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeMinus.
-      Definition opdatene : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeNe.
-      Definition opdatelt : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeLt.
-      Definition opdatele : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeLe.
-      Definition opdategt : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeGt.
-      Definition opdatege : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeGe.
-      Definition opdateintervaldays : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIntervalDays.
-      Definition opdateintervalseconds : op
-        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIntervalSeconds.
+      Definition opdateadd : op
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeAdd.
+      Definition opdatesubtract : op
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeSubtract.
+      Definition opdateisbefore : op
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIsBefore.
+      Definition opdateisafter : op
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeIsAfter.
+      Definition opdatediff : op
+        := ErgoEnhancedModel.CompEnhanced.Enhanced.Ops.Binary.OpDateTimeDiff.
     End DateTime.
 
     Definition opequal : op

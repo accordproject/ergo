@@ -111,10 +111,11 @@ Section ErgoTypetoErgoCType.
       | ErgoTypeBoolean _ => tbool
       | ErgoTypeString _ => tstring
       | ErgoTypeDouble _ => tfloat
-      | ErgoTypeLong _ => tfloat
+      | ErgoTypeLong _ => tnat
       | ErgoTypeInteger _ => tnat
       | ErgoTypeDateTime _ => tdateTime
       | ErgoTypeDuration _ => tduration
+      | ErgoTypePeriod _ => tperiod
       | ErgoTypeClassRef _ cr => tbrand (cr::nil)
       | ErgoTypeOption _ t => teither (ergo_type_to_ergoc_type t) tunit
       | ErgoTypeRecord _ rtl =>
