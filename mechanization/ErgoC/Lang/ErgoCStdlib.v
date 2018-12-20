@@ -90,41 +90,71 @@ Section ErgoCStdlib.
     (* Date/Time *)
       :: ("org.accordproject.ergo.stdlib.dateTime"%string,
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string)))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDayOfMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_DAY))))
-      :: ("org.accordproject.ergo.stdlib.dateTimeMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_MONTH))))
-      :: ("org.accordproject.ergo.stdlib.dateTimeQuarter",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_QUARTER))))
-      :: ("org.accordproject.ergo.stdlib.dateTimeYear",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_YEAR))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetSecond",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_SECONDS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetMinute",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_MINUTES))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetHour",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_HOURS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetDay",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_DAYS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetWeek",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_WEEKS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetMonth",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_MONTHS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetQuarter",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_QUARTERS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeGetYear",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_YEARS))))
 
-      :: ("org.accordproject.ergo.stdlib.dateTimeDurationDayOfMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_DAY))))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDurationMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_MONTH))))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDurationQuarter",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_QUARTER))))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDurationYear",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_YEAR))))
+      :: ("org.accordproject.ergo.stdlib.durationSeconds",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_SECONDS))))
+      :: ("org.accordproject.ergo.stdlib.durationMinutes",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_MINUTES))))
+      :: ("org.accordproject.ergo.stdlib.durationHours",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_HOURS))))
+      :: ("org.accordproject.ergo.stdlib.durationDays",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_DAYS))))
+      :: ("org.accordproject.ergo.stdlib.durationWeeks",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_WEEKS))))
+      :: ("org.accordproject.ergo.stdlib.durationYears",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_YEARS))))
 
-      :: ("org.accordproject.ergo.stdlib.dateTimeStartOfDayOfMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_DAY))))
+      :: ("org.accordproject.ergo.stdlib.durationAmount",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_duration_amount)))
+
+      :: ("org.accordproject.ergo.stdlib.periodDays",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_period_from_nat date_time_period_DAYS))))
+      :: ("org.accordproject.ergo.stdlib.periodWeeks",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_period_from_nat date_time_period_WEEKS))))
+      :: ("org.accordproject.ergo.stdlib.periodMonths",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_period_from_nat date_time_period_MONTHS))))
+      :: ("org.accordproject.ergo.stdlib.periodQuarters",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_period_from_nat date_time_period_QUARTERS))))
+      :: ("org.accordproject.ergo.stdlib.periodYears",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_period_from_nat date_time_period_YEARS))))
+
+      :: ("org.accordproject.ergo.stdlib.dateTimeStartOfDay",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_DAYS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeStartOfWeek",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_WEEKS))))
       :: ("org.accordproject.ergo.stdlib.dateTimeStartOfMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_MONTH))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_MONTHS))))
       :: ("org.accordproject.ergo.stdlib.dateTimeStartOfQuarter",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_QUARTER))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_QUARTERS))))
       :: ("org.accordproject.ergo.stdlib.dateTimeStartOfYear",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_YEAR))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_YEARS))))
 
-      :: ("org.accordproject.ergo.stdlib.dateTimeEndOfDayOfMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_DAY))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeEndOfDay",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_DAYS))))
+      :: ("org.accordproject.ergo.stdlib.dateTimeEndOfWeek",
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_WEEKS))))
       :: ("org.accordproject.ergo.stdlib.dateTimeEndOfMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_MONTH))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_MONTHS))))
       :: ("org.accordproject.ergo.stdlib.dateTimeEndOfQuarter",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_QUARTER))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_QUARTERS))))
       :: ("org.accordproject.ergo.stdlib.dateTimeEndOfYear",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_YEAR))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_YEARS))))
       :: nil.
 
   Definition foreign_binary_operator_table prov : ergo_stdlib_table :=
@@ -132,40 +162,23 @@ Section ErgoCStdlib.
     ("org.accordproject.ergo.stdlib.atan2"%string,
      mk_binary prov (OpForeignBinary (enhanced_binary_math_op bop_math_atan2)))
     (* Date/Time *)
-      :: ("org.accordproject.ergo.stdlib.dateTimeIsAfter",
-          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_gt)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeAddInternal",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeSubtractInternal",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_subtract)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeIsSame",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_same)))
       :: ("org.accordproject.ergo.stdlib.dateTimeIsBefore",
-          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_lt)))
-      :: ("org.accordproject.ergo.stdlib.dateTimeSubtract",
-          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_minus)))
-      :: ("org.accordproject.ergo.stdlib.dateTimeAdd",
-          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_plus)))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDiff",
-          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration)))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDiffDays",
-          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_days)))
-      :: ("org.accordproject.ergo.stdlib.dateTimeDiffSeconds",
-          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_duration_seconds)))
-      :: nil.
-
-  Definition foreign_function_table prov : ergo_stdlib_table :=
-    ("org.accordproject.ergo.stdlib.dateTimeIsSame",
-     mk_binary_expr
-       prov
-       (EUnaryOp
-          prov
-          OpNeg
-          (EBinaryOp
-             prov
-             (OpForeignBinary (enhanced_binary_date_time_op
-                                 bop_date_time_ne))
-             (EVar prov "p1") (EVar prov "p2"))))
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_before)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeIsAfter",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_after)))
+      :: ("org.accordproject.ergo.stdlib.dateTimeDiffInternal",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_diff)))
       :: nil.
 
   Definition foreign_table prov : ergo_stdlib_table :=
-    backend_compose_table (foreign_function_table prov)
-                          (backend_compose_table (foreign_unary_operator_table prov)
-                                                 (foreign_binary_operator_table prov)).
+    backend_compose_table (foreign_unary_operator_table prov)
+                          (foreign_binary_operator_table prov).
 
   Definition unary_operator_table prov : ergo_stdlib_table :=
     ("org.accordproject.ergo.stdlib.toString", mk_unary prov OpToString)

@@ -18,6 +18,7 @@ let ergo_stdcto =
   [ ("$ERGODIR/extraction/stdlib/accordproject.cto", accordproject);
     ("$ERGODIR/extraction/stdlib/contract.cto", contract);
     ("$ERGODIR/extraction/stdlib/money.cto", money);
+    ("$ERGODIR/extraction/stdlib/time.cto", time);
     ("$ERGODIR/extraction/stdlib/runtime.cto", runtime); ]
 let ergo_stdlib =
   [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", stdlib) ];

@@ -14,6 +14,7 @@
 namespace org.accordproject.acceptanceofdelivery
 
 import org.accordproject.cicero.runtime.*
+import org.accordproject.time.*
 
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse {
@@ -23,7 +24,7 @@ contract AcceptanceOfDelivery over TemplateModel {
     ;
 
     let status =
-      if dateTimeIsAfter(now(), dateTimeAdd(received, dateTimeDuration(contract.businessDays, "day")))
+      if dateTimeIsAfter(now(), dateTimeAdd(received, Duration{amount:contract.businessDays, unit: "days"}))
       then "OUTSIDE_INSPECTION_PERIOD"
       else if request.inspectionPassed
       then "PASSED_TESTING"
