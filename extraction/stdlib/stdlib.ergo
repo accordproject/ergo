@@ -1,7 +1,20 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 namespace org.accordproject.ergo.stdlib
 
 import org.accordproject.cicero.runtime.*
-import org.accordproject.time.*
 
 // Integer operations
 define function integerAbs(x:Integer) : Integer
@@ -42,186 +55,6 @@ define function sin(x:Double) : Double
 define function sinh(x:Double) : Double
 define function tan(x:Double) : Double
 define function tanh(x:Double) : Double
-
-//define constant PI = 4.0 * atan(1.0)
-//define constant E = exp(1.0)
-
-// DateTime operations
-// Current DateTime
-define function now() : DateTime
-// Parse a DateTime
-define function dateTime(x:String) : DateTime
-
-// DateTime components
-define function dateTimeGetSecond(x:DateTime) : Long
-define function dateTimeGetMinute(x:DateTime) : Long
-define function dateTimeGetHour(x:DateTime) : Long
-define function dateTimeGetDay(x:DateTime) : Integer
-define function dateTimeGetWeek(x:DateTime) : Integer
-define function dateTimeGetMonth(x:DateTime) : Integer
-define function dateTimeGetQuarter(x:DateTime) : Integer
-define function dateTimeGetYear(x:DateTime) : Integer
-
-// Durations
-define function durationSeconds(x:Long) : InternalDuration
-define function durationMinutes(x:Long) : InternalDuration
-define function durationHours(x:Long) : InternalDuration
-define function durationDays(x:Long) : InternalDuration
-define function durationWeeks(x:Long) : InternalDuration
-define function durationYears(x:Integer) : InternalDuration
-
-define function durationToInternalDuration(du:Duration) : InternalDuration {
-	match du.unit
-	with "seconds" then return durationSeconds(du.amount)
-	with "minutes" then return durationMinutes(du.amount)
-	with "hours" then return durationHours(du.amount)
-	with "days" then return durationDays(du.amount)
-	with "weeks" then return durationWeeks(du.amount)
-	with "years" then return durationYears(du.amount)
-	else return durationSeconds(du.amount) // Defaults to seconds
-}
-
-define function durationAmount(du:InternalDuration) : Long
-
-define function internalDurationToDuration(du:InternalDuration) : Duration {
-	return Duration{ unit: "seconds", amount: durationAmount(du) }
-}
-
-define function durationAs(du:Duration, u:TemporalUnit) : Duration {
-	if u = du.unit
-	then return du
-	else
-	  let amount = 
-  	  match u
-	    with "seconds" then
-	      match du.unit
-	      with "minutes" then du.amount *i 60
-	      with "hours" then du.amount *i 60 *i 60
-	      with "days" then du.amount *i 60 *i 60 *i 24
-	      with "weeks" then du.amount *i 60 *i 60 *i 24 *i 7
-	      with "years" then du.amount *i 60 *i 60 *i 24 *i 365
-	      else du.amount // Default to seconds
-	    with "minutes" then
-	      match du.unit
-	      with "seconds" then du.amount /i 60
-	      with "hours" then du.amount *i 60
-	      with "days" then du.amount *i 60 *i 24
-	      with "weeks" then du.amount *i 60 *i 24 *i 7
-	      with "years" then du.amount *i 60 *i 24 *i 365
-	      else du.amount *i 60 // Default to seconds
-	    with "hours" then
-	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60
-	      with "minutes" then du.amount *i 60
-	      with "days" then du.amount *i 24
-	      with "weeks" then du.amount *i 24 *i 7
-	      with "years" then du.amount *i 24 *i 365
-	      else du.amount *i 60 *i 60 // Default to seconds
-	    with "days" then
-	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60 /i 24
-	      with "minutes" then du.amount *i 60 /i 24
-	      with "hours" then du.amount /i 24
-	      with "weeks" then du.amount *i 7
-	      with "years" then du.amount *i 365
-	      else du.amount /i 60 /i 60 /i 24 // Default to seconds
-	    with "weeks" then
-	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 7
-	      with "minutes" then du.amount *i 60 /i 24 /i 7
-	      with "hours" then du.amount /i 24 /i 7
-	      with "days" then du.amount /i 7
-	      with "years" then doubleToInteger(integerToDouble(du.amount) * 52.143) // XXX
-	      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds
-	    with "years" then
-	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 365
-	      with "minutes" then du.amount *i 60 /i 24 /i 365
-	      with "hours" then du.amount /i 24 /i 365
-	      with "days" then du.amount /i 365
-	      with "weeks" then doubleToInteger(integerToDouble(du.amount) / 52.143) // XXX
-	      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds
-	    else // Default to seconds
-	      match du.unit
-	      with "minutes" then du.amount *i 60
-	      with "hours" then du.amount *i 60 *i 60
-	      with "days" then du.amount *i 60 *i 60 *i 24
-	      with "week" then du.amount *i 60 *i 60 *i 24 *i 7
-	      with "years" then du.amount *i 60 *i 60 *i 24 *i 365
-	      else du.amount // Default to seconds
-		;
-		return Duration{ unit: u, amount: amount }
-}
-
-define function dateTimeAddInternal(x:DateTime, y:InternalDuration) : DateTime
-define function dateTimeAdd(x:DateTime, y:Duration) : DateTime {
-	return dateTimeAddInternal(x,durationToInternalDuration(y))
-}
-
-define function dateTimeSubtractInternal(x:DateTime, y:InternalDuration) : DateTime
-define function dateTimeSubtract(x:DateTime, y:Duration) : DateTime {
-	return dateTimeSubtractInternal(x,durationToInternalDuration(y))
-}
-
-define function dateTimeIsAfter(x:DateTime, y:DateTime) : Boolean
-define function dateTimeIsBefore(x:DateTime, y:DateTime) : Boolean
-define function dateTimeIsSame(x:DateTime, y:DateTime) : Boolean
-
-define function dateTimeDiffInternal(x:DateTime, y:DateTime) : InternalDuration
-define function dateTimeDiffWithUnit(x:DateTime, y:DateTime, z:TemporalUnit) : Duration {
-	return durationAs(internalDurationToDuration(dateTimeDiffInternal(x,y)),z)
-}
-define function dateTimeDiff(x:DateTime, y:DateTime) : Duration {
-	return dateTimeDiffWithUnit(x, y, "seconds") // Defaults to seconds
-}
-
-define function periodDays(x:Long) : InternalPeriod
-define function periodWeeks(x:Long) : InternalPeriod
-define function periodMonths(x:Long) : InternalPeriod
-define function periodQuarters(x:Long) : InternalPeriod
-define function periodYears(x:Long) : InternalPeriod
-
-define function periodToInternalPeriod(du:Period) : InternalPeriod {
-	match du.unit
-	with "days" then return periodDays(du.amount)
-	with "weeks" then return periodWeeks(du.amount)
-	with "months" then return periodMonths(du.amount)
-	with "quarters" then return periodQuarters(du.amount)
-	with "years" then return periodYears(du.amount)
-	else return periodDays(du.amount) // Defaults to days
-}
-
-define function dateTimeStartOfDay(x:DateTime) : DateTime
-define function dateTimeStartOfWeek(x:DateTime) : DateTime
-define function dateTimeStartOfMonth(x:DateTime) : DateTime
-define function dateTimeStartOfQuarter(x:DateTime) : DateTime
-define function dateTimeStartOfYear(x:DateTime) : DateTime
-
-define function dateTimeStartOf(x:DateTime, y:PeriodUnit) : DateTime {
-	match y
-	with "days" then return dateTimeStartOfDay(x)
-	with "weeks" then return dateTimeStartOfWeek(x)
-	with "months" then return dateTimeStartOfMonth(x)
-	with "quarters" then return dateTimeStartOfQuarter(x)
-	with "years" then return dateTimeStartOfYear(x)
-	else return dateTimeStartOfDay(x) // Default to days
-}
-
-define function dateTimeEndOfDay(x:DateTime) : DateTime
-define function dateTimeEndOfWeek(x:DateTime) : DateTime
-define function dateTimeEndOfMonth(x:DateTime) : DateTime
-define function dateTimeEndOfQuarter(x:DateTime) : DateTime
-define function dateTimeEndOfYear(x:DateTime) : DateTime
-
-define function dateTimeEndOf(x:DateTime, y:PeriodUnit) : DateTime {
-	match y
-	with "days" then return dateTimeEndOfDay(x)
-	with "weeks" then return dateTimeEndOfWeek(x)
-	with "months" then return dateTimeEndOfMonth(x)
-	with "quarters" then return dateTimeEndOfQuarter(x)
-	with "years" then return dateTimeEndOfYear(x)
-	else return dateTimeEndOfDay(x) // Default to days
-}
 
 // Polymorphic operations
 define function toString(x:Any) : String
