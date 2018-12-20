@@ -19,12 +19,12 @@ import org.accordproject.time.*
 contract AcceptanceOfDelivery over TemplateModel {
   clause acceptanceofdelivery(request : InspectDeliverable) : InspectionResponse {
     let received = request.deliverableReceivedAt;
-    enforce dateTimeIsBefore(received,now()) else
+    enforce isBefore(received,now()) else
       throw ErgoErrorResponse{ message : "Transaction time is before the deliverable date." }
     ;
 
     let status =
-      if dateTimeIsAfter(now(), dateTimeAdd(received, Duration{amount:contract.businessDays, unit: "days"}))
+      if isAfter(now(), add(received, Duration{amount:contract.businessDays, unit: "days"}))
       then "OUTSIDE_INSPECTION_PERIOD"
       else if request.inspectionPassed
       then "PASSED_TESTING"
