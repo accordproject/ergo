@@ -42,4 +42,3 @@ let main gconf args =
   List.iter (ErgoConfig.add_module_file gconf) input_files;
   let all_modules = ErgoConfig.get_all_sorted gconf in
   ErgoCompile.ergo_proc gconf all_modules
-

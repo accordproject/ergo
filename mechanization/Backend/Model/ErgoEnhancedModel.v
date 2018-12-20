@@ -79,7 +79,8 @@ Inductive enhanced_data : Set
   :=
   | enhancedstring : STRING -> enhanced_data
   | enhanceddateTime : DATE_TIME -> enhanced_data
-  | enhanceddateTimeinterval : DATE_TIME_DURATION -> enhanced_data
+  | enhanceddateTimeduration : DATE_TIME_DURATION -> enhanced_data
+  | enhanceddateTimeperiod : DATE_TIME_PERIOD -> enhanced_data
 .
 
 Definition enhanceddateTime_now := DATE_TIME_now.
@@ -90,7 +91,8 @@ Inductive enhanced_type : Set
   | enhancedBottom : enhanced_type
   | enhancedString : enhanced_type
   | enhancedDateTime : enhanced_type
-  | enhancedDateTimeInterval : enhanced_type
+  | enhancedDateTimeDuration : enhanced_type
+  | enhancedDateTimePeriod : enhanced_type
 .
 
 Definition enhanced_type_to_string (et:enhanced_type) : string :=
@@ -99,7 +101,8 @@ Definition enhanced_type_to_string (et:enhanced_type) : string :=
   | enhancedBottom => "EBottom"
   | enhancedString => "EString"
   | enhancedDateTime => "EDateTime"
-  | enhancedDateTimeInterval => "EDateTimeInterval"
+  | enhancedDateTimeDuration => "EDateTimeDuration"
+  | enhancedDateTimePeriod => "EDateTimePeriod"
   end.
 
 Definition string_to_enhanced_type (s:string) : option enhanced_type :=
@@ -108,7 +111,8 @@ Definition string_to_enhanced_type (s:string) : option enhanced_type :=
   | "EBottom"%string => Some enhancedBottom
   | "EString"%string => Some enhancedString
   | "EDateTime"%string => Some enhancedDateTime
-  | "EDateTimeInterval"%string => Some enhancedDateTimeInterval
+  | "EDateTimeDuration"%string => Some enhancedDateTimeDuration
+  | "EDateTimePeriod"%string => Some enhancedDateTimePeriod
   | _ => None
   end.
 
@@ -117,6 +121,7 @@ Require Import Equivalence.
 
 Existing Instance date_time_foreign_data.
 Existing Instance date_time_duration_foreign_data.
+Existing Instance date_time_period_foreign_data.
 
 Program Instance enhanced_foreign_data : foreign_data
   := mk_foreign_data enhanced_data _ _ _ _ _ _.
@@ -139,6 +144,9 @@ Next Obligation.
   - destruct (@equiv_dec _ _ _ (@foreign_data_dec date_time_duration_foreign_data) d d0).
     + left; congruence.
     + right; congruence.
+  - destruct (@equiv_dec _ _ _ (@foreign_data_dec date_time_period_foreign_data) d d0).
+    + left; congruence.
+    + right; congruence.
 Defined.
 Next Obligation.
   (* normalized? *)
@@ -146,12 +154,14 @@ Next Obligation.
   - exact True.
   - exact (@foreign_data_normalized date_time_foreign_data d).
   - exact (@foreign_data_normalized date_time_duration_foreign_data d).
+  - exact (@foreign_data_normalized date_time_period_foreign_data d).
 Defined.
 Next Obligation.
   destruct a.
   - simpl; trivial.
   - exact (@foreign_data_normalize_normalizes date_time_foreign_data d).
   - exact (@foreign_data_normalize_normalizes date_time_duration_foreign_data d).
+  - exact (@foreign_data_normalize_normalizes date_time_period_foreign_data d).
 Defined.
 Next Obligation.
   constructor.
@@ -159,10 +169,12 @@ Next Obligation.
   - exact (STRING_tostring s).
   - exact (@toString _ (@foreign_data_tostring date_time_foreign_data) d).
   - exact (@toString _ (@foreign_data_tostring date_time_duration_foreign_data) d).
+  - exact (@toString _ (@foreign_data_tostring date_time_period_foreign_data) d).
 Defined.
 
 Definition denhanceddateTime td := dforeign (enhanceddateTime td).
-Definition denhanceddateTimeinterval td := dforeign (enhanceddateTimeinterval td).
+Definition denhanceddateTimeduration td := dforeign (enhanceddateTimeduration td).
+Definition denhanceddateTimeperiod td := dforeign (enhanceddateTimeperiod td).
 
 Require Import Qcert.Utils.JSON.
 
@@ -182,7 +194,19 @@ Definition onddateTime {A} (f : DATE_TIME -> A) (d : data) : option A
      | _ => None
      end.
 
+Definition onddateTimeduration {A} (f : DATE_TIME_DURATION -> A) (d : data) : option A
+  := match d with
+     | dforeign (enhanceddateTimeduration fd) => Some (f fd)
+     | _ => None
+     end.
+
 Definition onddateTimeDurationNat {A} (f : Z -> A) (d : data) : option A
+  := match d with
+     | dnat z => Some (f z)
+     | _ => None
+     end.
+
+Definition onddateTimePeriodNat {A} (f : Z -> A) (d : data) : option A
   := match d with
      | dnat z => Some (f z)
      | _ => None
@@ -223,10 +247,16 @@ Definition date_time_unary_op_interp (op:date_time_unary_op) (d:data) : option d
        lift denhanceddateTime (onddateTime (DATE_TIME_end_of part) d)
      | uop_date_time_from_string =>
        lift denhanceddateTime (ondstring DATE_TIME_from_string d)
+     | uop_date_time_duration_amount =>
+       lift dnat (onddateTimeduration DATE_TIME_DURATION_amount d)
      | uop_date_time_duration_from_string =>
-       lift denhanceddateTimeinterval (ondstring DATE_TIME_DURATION_from_string d)
+       lift denhanceddateTimeduration (ondstring DATE_TIME_DURATION_from_string d)
      | uop_date_time_duration_from_nat part =>
-       lift denhanceddateTimeinterval (onddateTimeDurationNat (DATE_TIME_DURATION_from_nat part) d)
+       lift denhanceddateTimeduration (onddateTimeDurationNat (DATE_TIME_DURATION_from_nat part) d)
+     | uop_date_time_period_from_string =>
+       lift denhanceddateTimeperiod (ondstring DATE_TIME_PERIOD_from_string d)
+     | uop_date_time_period_from_nat part =>
+       lift denhanceddateTimeperiod (onddateTimePeriodNat (DATE_TIME_PERIOD_from_nat part) d)
      end.
 
 Definition enhanced_unary_op_interp
@@ -253,6 +283,7 @@ Next Obligation.
     decide equality.
     decide equality.
     decide equality.
+    decide equality.
 Defined.
 Next Obligation.
   constructor; intros op.
@@ -265,11 +296,17 @@ Next Obligation.
   - destruct m; simpl in H; unfold ondfloat, lift in H; simpl in H;
       destruct d; simpl in H; try discriminate; invcs H; repeat constructor.
   - destruct d0; simpl in H;
-      unfold onddateTime, denhanceddateTime, denhanceddateTimeinterval, lift in H; simpl in H;
-        destruct d; simpl in H; try discriminate.
+      unfold onddateTime, onddateTimeduration,
+      denhanceddateTime, denhanceddateTimeduration,
+      denhanceddateTimeperiod, lift in H;
+      simpl in H;
+      destruct d; simpl in H; try discriminate.
     + destruct f; invcs H; repeat constructor.
     + destruct f; invcs H; repeat constructor.
     + destruct f; invcs H; repeat constructor.
+    + invcs H; repeat constructor.
+    + destruct f; invcs H; repeat constructor.
+    + invcs H; repeat constructor.
     + invcs H; repeat constructor.
     + invcs H; repeat constructor.
     + invcs H; repeat constructor.
@@ -305,26 +342,22 @@ Definition math_binary_op_interp
 Definition date_time_binary_op_interp
            (op:date_time_binary_op) (d1 d2:data) : option data
   := match op with
-     | bop_date_time_plus
+     | bop_date_time_add
        => match d1, d2 with
-          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeinterval td)
-            => Some (denhanceddateTime (DATE_TIME_plus tp td))
+          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeduration td)
+            => Some (denhanceddateTime (DATE_TIME_add tp td))
           | _,_ => None
           end
-     | bop_date_time_minus
+     | bop_date_time_subtract
        => match d1, d2 with
-          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeinterval td)
-            => Some (denhanceddateTime (DATE_TIME_minus tp td))
+          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeduration td)
+            => Some (denhanceddateTime (DATE_TIME_subtract tp td))
           | _,_ => None
           end
-     | bop_date_time_ne => rondbooldateTime2 DATE_TIME_ne d1 d2
-     | bop_date_time_lt => rondbooldateTime2 DATE_TIME_lt d1 d2
-     | bop_date_time_le => rondbooldateTime2 DATE_TIME_le d1 d2
-     | bop_date_time_gt => rondbooldateTime2 DATE_TIME_gt d1 d2
-     | bop_date_time_ge => rondbooldateTime2 DATE_TIME_ge d1 d2
-     | bop_date_time_duration => lift denhanceddateTimeinterval (onddateTime2 DATE_TIME_DURATION_duration d1 d2)
-     | bop_date_time_duration_days => lift dfloat (onddateTime2 DATE_TIME_DURATION_days d1 d2)
-     | bop_date_time_duration_seconds => lift dfloat (onddateTime2 DATE_TIME_DURATION_seconds d1 d2)
+     | bop_date_time_is_same => rondbooldateTime2 DATE_TIME_eq d1 d2
+     | bop_date_time_is_before => rondbooldateTime2 DATE_TIME_is_before d1 d2
+     | bop_date_time_is_after => rondbooldateTime2 DATE_TIME_is_after d1 d2
+     | bop_date_time_diff => lift denhanceddateTimeduration (onddateTime2 DATE_TIME_diff d1 d2)
      end.
 
 Definition enhanced_binary_op_interp
@@ -385,7 +418,8 @@ Definition enhanced_to_java_data
   := match fd with
      | enhancedstring s => mk_java_json (STRING_tostring s)
      | enhanceddateTime tp => mk_java_json (@toString _ date_time_foreign_data.(@foreign_data_tostring ) tp)
-     | enhanceddateTimeinterval tp => mk_java_json (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) tp)
+     | enhanceddateTimeduration tp => mk_java_json (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) tp)
+     | enhanceddateTimeperiod tp => mk_java_json (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) tp)
      end.
 
 Definition enhanced_to_java_unary_op
@@ -423,7 +457,8 @@ Definition enhanced_to_javascript_data
   := match fd with
      | enhancedstring s => STRING_tostring s
      | enhanceddateTime tp => (@toString _ date_time_foreign_data.(@foreign_data_tostring ) tp)
-     | enhanceddateTimeinterval tp => (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) tp)
+     | enhanceddateTimeduration tp => (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) tp)
+     | enhanceddateTimeperiod tp => (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) tp)
      end.
 
 (* Java equivalent: JavaScriptBackend.foreign_to_javascript_unary_op *)
@@ -505,8 +540,6 @@ Instance enhanced_foreign_to_scala {ftype: foreign_type}:
     timescale/timepoint.  just using a string may work for now.
  *)
 
-
-
 Program Instance enhanced_foreign_to_JSON : foreign_to_JSON
   := mk_foreign_to_JSON enhanced_foreign_data _ _.
 Next Obligation.
@@ -518,6 +551,7 @@ Next Obligation.
   - exact (jstring (jenhancedstring s)).
   - exact (jstring (@toString _ date_time_foreign_data.(@foreign_data_tostring ) d)).
   - exact (jstring (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) d)).
+  - exact (jstring (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) d)).
 Defined.
 
 Inductive enhanced_numeric_type :=
@@ -1206,7 +1240,8 @@ Definition enhanced_type_join (t1 t2:enhanced_type)
      | _, enhancedBottom => t1
      | enhancedString, enhancedString => enhancedString
      | enhancedDateTime, enhancedDateTime => enhancedDateTime
-     | enhancedDateTimeInterval, enhancedDateTimeInterval => enhancedDateTimeInterval
+     | enhancedDateTimeDuration, enhancedDateTimeDuration => enhancedDateTimeDuration
+     | enhancedDateTimePeriod, enhancedDateTimePeriod => enhancedDateTimePeriod
      | _, _ => enhancedTop
      end.
 
@@ -1216,7 +1251,8 @@ Definition enhanced_type_meet (t1 t2:enhanced_type)
      | _, enhancedTop => t1
      | enhancedString, enhancedString => enhancedString
      | enhancedDateTime, enhancedDateTime => enhancedDateTime
-     | enhancedDateTimeInterval, enhancedDateTimeInterval => enhancedDateTimeInterval
+     | enhancedDateTimeDuration, enhancedDateTimeDuration => enhancedDateTimeDuration
+     | enhancedDateTimePeriod, enhancedDateTimePeriod => enhancedDateTimePeriod
      | _, _ => enhancedBottom
      end.
 
@@ -1309,14 +1345,16 @@ Inductive enhanced_has_type : enhanced_data -> enhanced_type -> Prop :=
 | enhanced_has_type_top fd : enhanced_has_type fd enhancedTop
 | enhanced_has_type_string (s:STRING) : enhanced_has_type (enhancedstring s) enhancedString
 | enhanced_has_type_dateTime (tp:DATE_TIME) : enhanced_has_type (enhanceddateTime tp) enhancedDateTime
-| enhanced_has_type_dateTimeinterval (tp:DATE_TIME_DURATION) : enhanced_has_type (enhanceddateTimeinterval tp) enhancedDateTimeInterval
+| enhanced_has_type_dateTimeduration (tp:DATE_TIME_DURATION) : enhanced_has_type (enhanceddateTimeduration tp) enhancedDateTimeDuration
+| enhanced_has_type_dateTimeperiod (tp:DATE_TIME_PERIOD) : enhanced_has_type (enhanceddateTimeperiod tp) enhancedDateTimePeriod
 .
 
 Definition enhanced_infer_type (d:enhanced_data) : option enhanced_type
   := match d with
      | enhancedstring _ => Some enhancedString
      | enhanceddateTime _ => Some enhancedDateTime
-     | enhanceddateTimeinterval _ => Some enhancedDateTimeInterval
+     | enhanceddateTimeduration _ => Some enhancedDateTimeDuration
+     | enhanceddateTimeperiod _ => Some enhancedDateTimePeriod
      end.
 
 Program Instance enhanced_foreign_data_typing :
@@ -1331,6 +1369,7 @@ Next Obligation.
   inversion H; subst;
     simpl; trivial.
   - destruct d; simpl; constructor.
+  - constructor.
   - constructor.
   - constructor.
 Defined.
@@ -1436,7 +1475,8 @@ Module EnhancedRuntime <: CompilerRuntime.
 End EnhancedRuntime.
 
 Definition DateTime {br:brand_relation} : rtype := Foreign enhancedDateTime.
-Definition DateTimeInterval {br:brand_relation} : rtype := Foreign enhancedDateTimeInterval.
+Definition DateTimeDuration {br:brand_relation} : rtype := Foreign enhancedDateTimeDuration.
+Definition DateTimePeriod {br:brand_relation} : rtype := Foreign enhancedDateTimePeriod.
 
 Definition isDateTime {model : brand_model} (τ:rtype) :=
   match proj1_sig τ with
@@ -1444,9 +1484,15 @@ Definition isDateTime {model : brand_model} (τ:rtype) :=
   | _ => false
   end.
 
-Definition isDateTimeInterval {model : brand_model} (τ:rtype) :=
+Definition isDateTimeDuration {model : brand_model} (τ:rtype) :=
   match proj1_sig τ with
-  | Foreign₀ enhancedDateTimeInterval => true
+  | Foreign₀ enhancedDateTimeDuration => true
+  | _ => false
+  end.
+
+Definition isDateTimePeriod {model : brand_model} (τ:rtype) :=
+  match proj1_sig τ with
+  | Foreign₀ enhancedDateTimePeriod => true
   | _ => false
   end.
 
@@ -1507,8 +1553,11 @@ Inductive date_time_unary_op_has_type {model:brand_model} :
   | tuop_date_time_start_of part : date_time_unary_op_has_type (uop_date_time_start_of part) DateTime DateTime
   | tuop_date_time_end_of part : date_time_unary_op_has_type (uop_date_time_end_of part) DateTime DateTime
   | tuop_date_time_from_string : date_time_unary_op_has_type uop_date_time_from_string RType.String DateTime
-  | tuop_date_time_duration_from_string : date_time_unary_op_has_type uop_date_time_duration_from_string RType.String DateTimeInterval
-  | tuop_date_time_duration_from_nat part : date_time_unary_op_has_type (uop_date_time_duration_from_nat part) RType.Nat DateTimeInterval
+  | tuop_date_time_duration_amount : date_time_unary_op_has_type uop_date_time_duration_amount DateTimeDuration Nat
+  | tuop_date_time_duration_from_string : date_time_unary_op_has_type uop_date_time_duration_from_string RType.String DateTimeDuration
+  | tuop_date_time_duration_from_nat part : date_time_unary_op_has_type (uop_date_time_duration_from_nat part) RType.Nat DateTimeDuration
+  | tuop_date_time_period_from_string : date_time_unary_op_has_type uop_date_time_period_from_string RType.String DateTimePeriod
+  | tuop_date_time_period_from_nat part : date_time_unary_op_has_type (uop_date_time_period_from_nat part) RType.Nat DateTimePeriod
 .
 
 Definition math_unary_op_type_infer {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option rtype :=
@@ -1524,10 +1573,16 @@ Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_una
     if isDateTime τ₁ then Some DateTime else None
   | uop_date_time_from_string =>
     if isString τ₁ then Some DateTime else None
+  | uop_date_time_duration_amount =>
+    if isDateTimeDuration τ₁ then Some Nat else None
   | uop_date_time_duration_from_string =>
-    if isString τ₁ then Some DateTimeInterval else None
+    if isString τ₁ then Some DateTimeDuration else None
   | uop_date_time_duration_from_nat part =>
-    if isNat τ₁ then Some DateTimeInterval else None
+    if isNat τ₁ then Some DateTimeDuration else None
+  | uop_date_time_period_from_string =>
+    if isString τ₁ then Some DateTimePeriod else None
+  | uop_date_time_period_from_nat part =>
+    if isNat τ₁ then Some DateTimePeriod else None
   end.
 
 Definition math_unary_op_type_infer_sub {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
@@ -1543,10 +1598,16 @@ Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time
     enforce_unary_op_schema (τ₁,DateTime) DateTime
   | uop_date_time_from_string =>
     enforce_unary_op_schema (τ₁,RType.String) DateTime
+  | uop_date_time_duration_amount =>
+    enforce_unary_op_schema (τ₁,DateTimeDuration) Nat
   | uop_date_time_duration_from_string =>
-    enforce_unary_op_schema (τ₁,RType.String) DateTimeInterval
+    enforce_unary_op_schema (τ₁,RType.String) DateTimeDuration
   | uop_date_time_duration_from_nat part =>
-    enforce_unary_op_schema (τ₁,RType.Nat) DateTimeInterval
+    enforce_unary_op_schema (τ₁,RType.Nat) DateTimeDuration
+  | uop_date_time_period_from_string =>
+    enforce_unary_op_schema (τ₁,RType.String) DateTimePeriod
+  | uop_date_time_period_from_nat part =>
+    enforce_unary_op_schema (τ₁,RType.Nat) DateTimePeriod
   end.
 
 Lemma math_unary_op_typing_sound {model : brand_model}
@@ -1578,7 +1639,7 @@ Proof.
     try solve[inversion 1; subst;
               try invcs H0;
               try invcs H3;
-              simpl; unfold denhanceddateTime, denhanceddateTimeinterval; simpl;
+              simpl; unfold denhanceddateTime, denhanceddateTimeduration; simpl;
               eexists; split; try reflexivity;
               repeat constructor].
 Qed.
@@ -1633,6 +1694,19 @@ Proof.
           inversion H; subst; clear H; constructor;
             rewrite String_canon; constructor.
     + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          destruct ft; simpl in *; try congruence;
+            inversion H; subst; clear H; constructor;
+              rewrite Foreign_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence.
+      inversion H; subst; clear H; constructor.
+      rewrite String_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence.
+      inversion H; subst; clear H; constructor.
+      rewrite Nat_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence.
       inversion H; subst; clear H; constructor.
       rewrite String_canon; constructor.
@@ -1686,6 +1760,22 @@ Proof.
         inversion H0; subst; clear H0;
           inversion H1; subst; clear H1;
             reflexivity.
+    + destruct ft; simpl in *; try congruence;
+        inversion H; subst; clear H;
+          rewrite Foreign_canon in H0;
+          inversion H0; subst; clear H0;
+            inversion H1; subst; clear H1;
+              reflexivity.
+    + inversion H; subst; clear H;
+        rewrite String_canon in H0;
+        inversion H0; subst; clear H0;
+          inversion H1; subst; clear H1;
+            reflexivity.
+    + inversion H; subst; clear H;
+        rewrite Nat_canon in H0;
+        inversion H0; subst; clear H0;
+          inversion H1; subst; clear H1;
+            reflexivity.
     + inversion H; subst; clear H;
         rewrite String_canon in H0;
         inversion H0; subst; clear H0;
@@ -1719,6 +1809,7 @@ Proof.
           unfold not; intros;
             inversion H0; subst; clear H0;
               inversion H2; subst; clear H2.
+    + simpl in H; congruence.
     + simpl in H; congruence.
     + simpl in H; congruence.
     + simpl in H; congruence.
@@ -1770,26 +1861,18 @@ Inductive math_binary_op_has_type {model:brand_model} :
 Inductive date_time_binary_op_has_type {model:brand_model} :
   date_time_binary_op -> rtype -> rtype -> rtype -> Prop
   :=
-  | tbop_date_time_plus :
-      date_time_binary_op_has_type bop_date_time_plus DateTime DateTimeInterval DateTime 
-  | tbop_date_time_minus :
-      date_time_binary_op_has_type bop_date_time_minus DateTime DateTimeInterval DateTime 
-  | tbop_date_time_ne :
-      date_time_binary_op_has_type bop_date_time_ne DateTime DateTime Bool 
-  | tbop_date_time_lt :
-      date_time_binary_op_has_type bop_date_time_lt DateTime DateTime Bool 
-  | tbop_date_time_le :
-      date_time_binary_op_has_type bop_date_time_le DateTime DateTime Bool 
-  | tbop_date_time_gt :
-      date_time_binary_op_has_type bop_date_time_gt DateTime DateTime Bool 
-  | tbop_date_time_ge :
-      date_time_binary_op_has_type bop_date_time_ge DateTime DateTime Bool
-  | tbop_date_time_duration  :
-      date_time_binary_op_has_type bop_date_time_duration DateTime DateTime DateTimeInterval
-  | tbop_date_time_duration_days  :
-      date_time_binary_op_has_type bop_date_time_duration_days DateTime DateTime Float
-  | tbop_date_time_duration_seconds  :
-      date_time_binary_op_has_type bop_date_time_duration_seconds DateTime DateTime Float
+  | tbop_date_time_add :
+      date_time_binary_op_has_type bop_date_time_add DateTime DateTimeDuration DateTime 
+  | tbop_date_time_subtract :
+      date_time_binary_op_has_type bop_date_time_subtract DateTime DateTimeDuration DateTime 
+  | tbop_date_time_is_same :
+      date_time_binary_op_has_type bop_date_time_is_same DateTime DateTime Bool 
+  | tbop_date_time_is_before :
+      date_time_binary_op_has_type bop_date_time_is_before DateTime DateTime Bool 
+  | tbop_date_time_is_after :
+      date_time_binary_op_has_type bop_date_time_is_after DateTime DateTime Bool 
+  | tbop_date_time_diff  :
+      date_time_binary_op_has_type bop_date_time_diff DateTime DateTime DateTimeDuration
 .
 
 Definition math_binary_op_type_infer {model : brand_model} (op:math_binary_op) (τ₁ τ₂:rtype) :=
@@ -1800,26 +1883,18 @@ Definition math_binary_op_type_infer {model : brand_model} (op:math_binary_op) (
 
 Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) :=
   match op with
-  | bop_date_time_plus =>
-    if isDateTime τ₁ && isDateTimeInterval τ₂ then Some DateTime else None
-  | bop_date_time_minus =>
-    if isDateTime τ₁ && isDateTimeInterval τ₂ then Some DateTime else None
-  | bop_date_time_ne =>
+  | bop_date_time_add =>
+    if isDateTime τ₁ && isDateTimeDuration τ₂ then Some DateTime else None
+  | bop_date_time_subtract =>
+    if isDateTime τ₁ && isDateTimeDuration τ₂ then Some DateTime else None
+  | bop_date_time_is_same =>
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
-  | bop_date_time_lt =>
+  | bop_date_time_is_before =>
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
-  | bop_date_time_le =>
+  | bop_date_time_is_after =>
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
-  | bop_date_time_gt =>
-    if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
-  | bop_date_time_ge =>
-    if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
-  | bop_date_time_duration  =>
-    if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeInterval else None
-  | bop_date_time_duration_days  =>
-    if isDateTime τ₁ && isDateTime τ₂ then Some Float else None
-  | bop_date_time_duration_seconds  =>
-    if isDateTime τ₁ && isDateTime τ₂ then Some Float else None
+  | bop_date_time_diff  =>
+    if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeDuration else None
   end.
 
 Lemma math_binary_op_typing_sound {model : brand_model}
@@ -1870,22 +1945,18 @@ Definition math_binary_op_type_infer_sub {model : brand_model} (op:math_binary_o
 
 Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) : option (rtype*rtype*rtype) :=
   match op with
-  | bop_date_time_plus =>
-    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeInterval) DateTime
-  | bop_date_time_minus =>
-    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeInterval) DateTime
-  | bop_date_time_ne
-  | bop_date_time_lt
-  | bop_date_time_le
-  | bop_date_time_gt
-  | bop_date_time_ge =>
+  | bop_date_time_add =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeDuration) DateTime
+  | bop_date_time_subtract =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeDuration) DateTime
+  | bop_date_time_is_same =>
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Bool
-  | bop_date_time_duration  =>
-    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeInterval
-  | bop_date_time_duration_days  =>
-    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Float
-  | bop_date_time_duration_seconds  =>
-    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Float
+  | bop_date_time_is_before =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Bool
+  | bop_date_time_is_after =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Bool
+  | bop_date_time_diff  =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeDuration
   end.
 
 Inductive enhanced_binary_op_has_type {model:brand_model} :
@@ -1924,7 +1995,7 @@ Proof.
       ; try constructor.
   - destruct d; simpl in *;
       destruct τ₁; destruct τ₂; simpl in *; try discriminate;
-        unfold isDateTime, isDateTimeInterval, isNat in *
+        unfold isDateTime, isDateTimeDuration, isNat in *
         ; destruct x; simpl in H; try discriminate
         ; destruct ft; simpl in H; try discriminate
         ; destruct x0; simpl in H; try discriminate
@@ -1958,7 +2029,7 @@ Proof.
       ; reflexivity.
   - destruct d; simpl in *;
       destruct τ₁; destruct τ₂; simpl in *; try discriminate
-      ; unfold isDateTime, isDateTimeInterval, isNat in *
+      ; unfold isDateTime, isDateTimeDuration, isNat in *
       ; destruct x; simpl in H; try discriminate
       ; destruct ft; simpl in H; try discriminate
       ; destruct x0; simpl in H; try discriminate
@@ -2113,20 +2184,27 @@ Module CompEnhanced.
         := jstring (jenhancedstring s).
       
       (* intended for generated coq code, to stand out and be more
-           easily distinguished from variables (hackily distinguished
-          t       hat is) *)
-      
-      Definition date_time_part := date_time_component.
-      Definition date_time_day : date_time_part := date_time_DAY.
-      Definition date_time_month : date_time_part := date_time_MONTH.
-      Definition date_time_quarter : date_time_part := date_time_QUARTER.
-      Definition date_time_year : date_time_part := date_time_YEAR.
+         easily distinguished from variables (hackily distinguished
+         that is) *)
+
+      Definition date_time_component := date_time_component.
+      Definition date_time_component_seconds : date_time_component := date_time_component_SECONDS.
+      Definition date_time_component_minutes : date_time_component := date_time_component_MINUTES.
+      Definition date_time_component_hours : date_time_component := date_time_component_HOURS.
+      Definition date_time_component_days : date_time_component := date_time_component_DAYS.
+      Definition date_time_component_weeks : date_time_component := date_time_component_WEEKS.
+      Definition date_time_component_months : date_time_component := date_time_component_MONTHS.
+      Definition date_time_component_quarters : date_time_component := date_time_component_QUARTERS.
+      Definition date_time_component_years : date_time_component := date_time_component_YEARS.
       
       Definition ddate_time (d:DATE_TIME) : data
         := dforeign (enhanceddateTime d).
       
       Definition ddate_time_duration (d:DATE_TIME_DURATION) : data
-        := dforeign (enhanceddateTimeinterval d).
+        := dforeign (enhanceddateTimeduration d).
+      
+      Definition ddate_time_period (d:DATE_TIME_PERIOD) : data
+        := dforeign (enhanceddateTimeperiod d).
       
     End Data.
     
@@ -2134,60 +2212,56 @@ Module CompEnhanced.
       Module Unary.
         Definition date_time_get_component (component:date_time_component)
           := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component component)).
-        Definition date_time_start_of (component:date_time_component)
-          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of component)).
-        Definition date_time_end_of (component:date_time_component)
-          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of component)).
+        Definition date_time_start_of (unit:date_time_period_unit)
+          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of unit)).
+        Definition date_time_end_of (unit:date_time_period_unit)
+          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of unit)).
         Definition date_time_from_string
           := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string).
+        Definition date_time_duration_amount
+          := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_duration_amount).
         Definition date_time_duration_from_string
           := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_duration_from_string).
-        Definition date_time_duration_from_nat (component:date_time_component)
-          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat component)).
+        Definition date_time_duration_from_nat (unit:date_time_duration_unit)
+          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat unit)).
+        Definition date_time_period_from_string
+          := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_period_from_string).
+        Definition date_time_period_from_nat (unit:date_time_period_unit)
+          := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_period_from_nat unit)).
 
         (* for coq style syntax *)
         Definition OpDateTimeGetComponent := date_time_get_component.
         Definition OpDateTimeStartOf := date_time_start_of.
         Definition OpDateTimeEndOf := date_time_end_of.
         Definition OpDateTimeFromString := date_time_from_string.
-        Definition OpDateTimeIntervalFromString := date_time_duration_from_string.
-        Definition OpDateTimeIntervalFromNat := date_time_duration_from_nat.
-        
+        Definition OpDateTimeDurationFromString := date_time_duration_from_string.
+        Definition OpDateTimeDurationFromNat := date_time_duration_from_nat.
+        Definition OpDateTimePeriodFromString := date_time_period_from_string.
+        Definition OpDateTimePeriodFromNat := date_time_period_from_nat.
+
       End Unary.
       
       Module Binary.
         (* for ocaml *)
-        Definition date_time_plus
-          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_plus).
-        Definition date_time_minus
-          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_minus).
-        Definition date_time_ne 
-          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_ne).
-        Definition date_time_lt 
-          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_lt).
-        Definition date_time_le 
-          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_le).
-        Definition date_time_gt 
-          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_gt).
-        Definition date_time_ge 
-          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_ge).
-
-        Definition date_time_duration_days
-          := OpForeignBinary (enhanced_binary_date_time_op (bop_date_time_duration_days)).
-        Definition date_time_duration_seconds 
-          := OpForeignBinary (enhanced_binary_date_time_op (bop_date_time_duration_seconds)).
+        Definition date_time_add
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add).
+        Definition date_time_subtract
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_subtract).
+        Definition date_time_is_same
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_same).
+        Definition date_time_is_before
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_before).
+        Definition date_time_is_after
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_after).
+        Definition date_time_diff
+          := OpForeignBinary (enhanced_binary_date_time_op (bop_date_time_diff)).
         
         (* for coq style syntax *)
-        Definition OpDateTimePlus := date_time_plus.
-        Definition OpDateTimeMinus := date_time_minus.
-        Definition OpDateTimeNe := date_time_ne.
-        Definition OpDateTimeLt := date_time_lt.
-        Definition OpDateTimeLe := date_time_le.
-        Definition OpDateTimeGt := date_time_gt.
-        Definition OpDateTimeGe := date_time_ge.
-        
-        Definition OpDateTimeIntervalDays := date_time_duration_days.
-        Definition OpDateTimeIntervalSeconds := date_time_duration_seconds.
+        Definition OpDateTimeAdd := date_time_add.
+        Definition OpDateTimeSubtract := date_time_subtract.
+        Definition OpDateTimeIsBefore := date_time_is_before.
+        Definition OpDateTimeIsAfter := date_time_is_after.
+        Definition OpDateTimeDiff := date_time_diff.
         
       End Binary.
     End Ops.

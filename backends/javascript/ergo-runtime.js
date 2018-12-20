@@ -542,29 +542,45 @@ function constantE() { return Math.E; }
 
 /* Addendum to for dateTime and duration */
 
-var DAY = "day";
-var MONTH = "month";
+var SECONDS = "seconds";
+var MINUTES = "minutes";
+var HOURS = "hours";
+var DAYS = "days";
+var WEEKS = "weeks";
+var MONTHS = "months";
 var QUARTER = "quarter";
 var YEAR = "year";
 
 function dateTimeComponent(part, date) {
     date = mustBeDate(date);
     switch(part) {
-    case DAY:
-        return date.date();
-    case MONTH:
-        return date.month();
-    case QUARTER:
-        return date.quarter();
-    case YEAR:
-        return date.year();
+    case SECONDS:
+        return date.seconds();
+    case MINUTES:
+        return date.minutes();
+    case HOURS:
+        return date.hours();
+    case DAYS:
+        return date.dates();
+    case WEEKS:
+        return date.weeks();
+    case MONTHS:
+        return date.months();
+    case QUARTERS:
+        return date.quarters();
+    case YEARS:
+        return date.years();
     default:
-        throw new Error("Unknown date part: " + part);
+        throw new Error("Unknown DateTime component: " + part);
     }
 }
 
 function dateTimeFromString(stringDate) {
     return moment(stringDate);
+}
+
+function dateTimeDurationAmount(v) {
+    return v.seconds();
 }
 
 function dateTimeDurationFromString(stringDuration) {
@@ -580,54 +596,36 @@ function dateTimeDurationFromString(stringDuration) {
     throw new Error("Not well formed duration input: " + stringDuration);
 }
 
+function dateTimePeriodFromString(stringDuration) {
+    return dateTimeDurationFromString(stringDuration);
+}
+
 function dateTimeDurationFromNat(part, v) {
     mustBeUnit(part);
     let num;
     if (v.hasOwnProperty('nat')) { num = v.nat; } else { num = v; }
-    return moment.duration(num,part);
+    // 'quarters' not built into durations
+    if (part === 'quarters') {
+        return moment.duration(num * 3,'months');
+    } else {
+        return moment.duration(num,part);
+    }
 }
 
-function dateTimePointPlus(date, duration) {
+function dateTimePeriodFromNat(part, v) {
+    return dateTimeDurationFromNat(part, v);
+}
+
+function dateTimeAdd(date, duration) {
     date = mustBeDate(date);
     duration = mustBeDuration(duration);
     return date.add(duration);
 }
 
-function dateTimePointMinus(date, duration) {
+function dateTimeSubtract(date, duration) {
     date = mustBeDate(date);
     duration = mustBeDuration(duration);
     return date.subtract(duration);
-}
-
-function dateTimePointNe(date1, date2) {
-    return compareDates(date1, date2) != 0;
-}
-
-function dateTimePointLt(date1, date2) {
-    return compareDates(date1,date2) < 0;
-}
-
-function dateTimePointLe(date1, date2) {
-    return compareDates(date1, date2) <= 0;
-}
-
-function dateTimePointGt(date1, date2) {
-    return compareDates(date1, date2) > 0;
-}
-
-function dateTimePointGe(date1, date2) {
-    return compareDates(date1, date2) >= 0;
-}
-
-function dateTimeDurationDays(date1, date2) {
-    date1 = mustBeDate(date1);
-    date2 = mustBeDate(date2);
-    return date1.diff(date2,'days');
-}
-function dateTimeDurationSeconds(date1, date2) {
-    date1 = mustBeDate(date1);
-    date2 = mustBeDate(date2);
-    return date1.diff(date2,'seconds');
 }
 
 function compareDates(date1, date2) {
@@ -643,23 +641,22 @@ function compareDates(date1, date2) {
     throw new Error("Unexpected failure: compareDates")
 }
 
-function dateNewYear(date, year) {
-    date = mustBeDate(date);
-    return date.year(year);
+function dateTimeIsSame(date1, date2) {
+    return compareDates(date1, date2) = 0;
 }
 
-function dateNewMonth(date, month) {
-    date = mustBeDate(date);
-    return date.month(month);
+function dateTimeIsBefore(date1, date2) {
+    return compareDates(date1,date2) < 0;
 }
 
-function dateNewDay(date, day) {
-    date = mustBeDate(date);
-    return date.day(day);
+function dateTimeIsAfter(date1, date2) {
+    return compareDates(date1, date2) > 0;
 }
 
-function makeDate(year, month, day) {
-    return moment({ 'year' :year, 'month' :month, 'day' :day });
+function dateTimeDiff(date1, date2) {
+    date1 = mustBeDate(date1);
+    date2 = mustBeDate(date2);
+    return date1.diff(date2,'seconds');
 }
 
 function mustBeDate(date) {
@@ -679,10 +676,14 @@ function mustBeDuration(duration) {
 }
 
 function mustBeUnit(unit) {
-    if (unit === DAY
-        || unit === MONTH
-        || unit === QUARTER
-        || unit === YEAR)
+    if (unit === SECONDS
+        || unit === MINUTES
+        || unit === HOURS
+        || unit === DAYS
+        || unit === WEEKS
+        || unit === MONTHS
+        || unit === QUARTERS
+        || unit === YEARS)
 	      return;
     throw new Error("Expected a duration unit but got " + JSON.stringify(unit));
 }
