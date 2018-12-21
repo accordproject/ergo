@@ -28,6 +28,74 @@ Require Import Qcert.Translation.ForeignToJavaScript.
 
 Local Open Scope string_scope.
 
+Section ENNRCtoJavaScript.
+
+  Context {fruntime:foreign_runtime}.
+  Context {ftojavascript:foreign_to_javascript}.
+  Context {ftjson:foreign_to_JSON}.
+
+  Section global_rename.
+    (* Java equivalent: NnnrcOptimizer.unshadow *)
+
+    Definition varmap : Set := list (string*string).
+
+    Definition picknewvar (x:string) (vm:varmap) : (string * varmap) :=
+      match lookup string_dec vm x with
+      | None => (x,(x,x)::vm)
+      | Some _ =>
+        let x' := fresh_var_from "$" x (List.map snd vm) in
+        (x',(x,x')::vm)
+      end.
+  
+    Fixpoint rename (vm:varmap) (e:nnrc) : (nnrc * varmap) :=
+      match e with
+      | NNRCGetConstant x => (NNRCGetConstant x, vm)
+      | NNRCVar x =>
+        (* lookup in varmap for new name *)
+        match lookup string_dec vm x with
+        | Some x' => (NNRCVar x', vm)
+        | None => (NNRCVar x, vm)
+        end
+      | NNRCConst d =>
+        (NNRCConst d, vm)
+      | NNRCBinop bop e1 e2 =>
+        let (e1',vm1) := rename vm e1 in
+        let (e2',vm2) := rename vm1 e2 in
+        (NNRCBinop bop e1' e2', vm2)
+      | NNRCUnop uop e1 =>
+        let (e1',vm1) := rename vm e1 in
+        (NNRCUnop uop e1', vm1)
+      | NNRCLet x e1 e2 =>
+        let (e1',vm1) := rename vm e1 in
+        let (x',vm1') := picknewvar x vm1 in
+        let (e2',vm2) := rename vm1' e2 in
+        (NNRCLet x' e1' e2',vm2)
+      | NNRCFor x e1 e2 => 
+        let (e1',vm1) := rename vm e1 in
+        let (x',vm1') := picknewvar x vm1 in
+        let (e2',vm2) := rename vm1' e2 in
+        (NNRCFor x' e1' e2',vm2)
+      | NNRCIf e1 e2 e3 =>
+        let (e1',vm1) := rename vm e1 in
+        let (e2',vm2) := rename vm1 e2 in
+        let (e3',vm3) := rename vm2 e3 in
+        (NNRCIf e1' e2' e3', vm3)
+      | NNRCEither ed xl el xr er =>
+        let (ed',vmd) := rename vm ed in
+        let (xl',vml) := picknewvar xl vmd in
+        let (el',vml') := rename vml el in
+        let (xr',vmr) := picknewvar xr vml' in
+        let (er',vmr') := rename vmr er in
+        (NNRCEither ed' xl' el' xr' er', vmr')
+      | NNRCGroupBy g sl e1 =>
+        let (e1',vm1) := rename vm e1 in
+        (NNRCGroupBy g sl e1', vm1)
+      end.
+
+    Definition rename_top (e:nnrc) : nnrc :=
+      fst (rename nil e).
+  End global_rename.
+
 Section sanitizer.
   Import ListNotations.
   
@@ -119,20 +187,10 @@ Section sanitizer.
      ; "yield"].
 
   (* Java equivalent: JavaScriptBackend.unshadow_js *)
-  Definition unshadow_js {fruntime:foreign_runtime} (avoid:list var) (e:nnrc) : nnrc
-    := unshadow jsSafeSeparator jsIdentifierSanitize (avoid++jsAvoidList) e.
-
-  Definition jsSanitizeNNRC {fruntime:foreign_runtime} (e:nnrc) : nnrc
-    := unshadow_js nil e.
+  Definition unshadow_js (avoid:list var) (e:nnrc) : nnrc
+    := rename_top (unshadow jsSafeSeparator jsIdentifierSanitize (avoid++jsAvoidList) e).
 
 End sanitizer.
-
-Section ENNRCtoJavaScript.
-
-  Context {fruntime:foreign_runtime}.
-  Context {ftojavascript:foreign_to_javascript}.
-  Context {ftjson:foreign_to_JSON}.
-
   Definition varvalue := 100.
   Definition varenv := 1.
 
@@ -526,5 +584,30 @@ Section ENNRCtoJavaScript.
 
   End NNRCJS.
 
-End ENNRCtoJavaScript.
+  Section CodeGenTest.
+    
+    Definition e_in : nnrc :=
+      NNRCBinop OpRecConcat
+                (NNRCUnop (UnaryOperators.OpRec "a")
+                          (NNRCLet "p1"
+                                   (NNRCConst (dstring "hi"))
+                                   (NNRCVar "p1")))
+                (NNRCUnop (OpRec "b")
+                          (NNRCLet "p1"
+                                   (NNRCConst (dstring "boo"))
+                                   (NNRCVar "p1"))).
 
+    Definition test_gen (e:nnrc) :=
+      nnrc_to_js_top e_in.
+
+    Definition test_gen_rename (e:nnrc) :=
+      nnrc_to_js_top (rename_top e_in).
+
+(*    
+    Eval vm_compute in rename_top e_in.
+    Eval vm_compute in test_gen e_in.
+    Eval vm_compute in test_gen_rename e_in.
+ *)
+
+  End CodeGenTest.
+End ENNRCtoJavaScript.
