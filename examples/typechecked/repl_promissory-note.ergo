@@ -2,6 +2,7 @@ namespace org.accordproject.promissorynote
 
 import org.accordproject.cicero.contract.*
 import org.accordproject.cicero.runtime.*
+import org.accordproject.time.*
 import org.accordproject.money.MonetaryAmount
 
 define transaction Payment extends Request {
@@ -39,7 +40,7 @@ contract PromissoryNote over PromissoryNoteContract {
     let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;
     enforce outstanding >= 0.0;
 
-    let numberOfDays = dateTimeDiffDays(now(),contract.date);
+    let numberOfDays = diffWithUnit(now(),contract.date,"days");
     enforce numberOfDays >= 0.0;
     let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
 
@@ -56,7 +57,7 @@ set contract PromissoryNote over PromissoryNoteContract{
     doubleValue: 1000.0,
     currencyCode: "USD"
   },
-  date: dateTime("30 Jan 2018 00:00:00"),
+  date: parse("30 Jan 2018 00:00:00"),
   maker: "Daniel Selman",
   interestRate: 3.8,
   individual: true,
@@ -67,7 +68,7 @@ set contract PromissoryNote over PromissoryNoteContract{
     doubleValue: 500.0,
     currencyCode: "USD"
   },
-  maturityDate: dateTime("20 Jan 2019 00:00:00"),
+  maturityDate: parse("20 Jan 2019 00:00:00"),
   defaultDays: 90,
   insolvencyDays: 90,
   jurisdiction: "New York, NY"

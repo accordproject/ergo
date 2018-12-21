@@ -427,6 +427,7 @@ let string_of_foreign_unary_op fu : string =
   | Enhanced_unary_date_time_op (Uop_date_time_start_of _) -> "DateTimeStartOf"
   | Enhanced_unary_date_time_op (Uop_date_time_end_of _) -> "DateTimeEndOf"
   | Enhanced_unary_date_time_op Uop_date_time_from_string -> "DateTimeFromString"
+  | Enhanced_unary_date_time_op Uop_date_time_duration_amount -> "DateTimeDurationAmount"
   | Enhanced_unary_date_time_op Uop_date_time_duration_from_string -> "DateTimeDurationFromString"
   | Enhanced_unary_date_time_op (Uop_date_time_duration_from_nat _) -> "DateTimeDurationFromString"
   | Enhanced_unary_date_time_op Uop_date_time_period_from_string -> "DateTimePeriodFromString"
