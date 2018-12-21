@@ -38,7 +38,7 @@ contract PerishableGoods over TemplateModel {
       throw "Units received out of range for the contract."
     };
     // Guard against requests for payout after the dueDate
-    enforce dateTimeIsAfter(contract.dueDate,request.timestamp) else
+    enforce isAfter(contract.dueDate,request.timestamp) else
       return PriceCalculation{
         totalPrice : 0,
         penalty : 0,

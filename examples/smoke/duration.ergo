@@ -1,5 +1,7 @@
 namespace org.accordproject.smoke
 
+import org.accordproject.time.*
+
 define concept A{ a : Integer }
 define concept C{ contract : String }
 
@@ -21,10 +23,10 @@ define concept TemplateModel {
 
 contract Duration over TemplateModel {
   clause test(request : MyRequest) : MyResponse {
-    enforce(dateTimeIsSame(dateTimeAdd(dateTime("2018-01-02"), dateTimeDuration(1.0, "DAY")),
-                           dateTimeAdd(dateTime("2018-01-01"), dateTimeDuration(2.0, "DAY"))));
-    enforce(dateTimeIsSame(dateTimeAdd(dateTime("2018-03-01"), dateTimeDuration(1.0, "MONTH")),
-                           dateTimeAdd(dateTime("2018-02-01"), dateTimeDuration(2.0, "MONTH"))));
+    enforce(isSame(add(parse("2018-01-02"), Duration{amount:1, unit: "days"}),
+			             add(parse("2018-01-01"), Duration{amount:2, unit: "days"})));
+    enforce(isSame(add(parse("2019-01-01"), Duration{amount:1, unit: "years"}),
+			             add(parse("2018-01-01"), Duration{amount:2, unit: "years"})));
     return MyResponse{
       output: "Duration.test successful"
     }

@@ -1,0 +1,21 @@
+namespace org.accordproject.smoke
+
+import org.accordproject.time.*
+
+define concept A{ a : Integer }
+define concept C{ contract : String }
+define concept R{ output1: DateTime, output2: DateTime, output3: Duration, test: Boolean }
+
+contract Duration over TemplateModel {
+  clause test(request : MyRequest) : R {
+		let d1 = parse("2018-01-30");
+		let d2 = parse("17 May 2018 13:53:33 EST");
+    return R{
+      output1: d1,
+      output2: d2,
+			output3: diffWithUnit(d1, d2, "weeks"),
+			test: isSame(add(parse("2018-01-02"), Duration{amount:1, unit: "days"}),
+   				         add(parse("2018-01-01"), Duration{amount:2, unit: "days"}))
+    }
+  }
+}

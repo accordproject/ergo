@@ -15,6 +15,7 @@
 namespace org.accordproject.promissorynote
 
 import org.accordproject.cicero.runtime.*
+import org.accordproject.time.*
 import org.accordproject.ergo.money.*
 
 contract PromissoryNote over PromissoryNoteContract {
@@ -25,8 +26,8 @@ contract PromissoryNote over PromissoryNoteContract {
     let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;
     enforce outstanding >= 0.0;
 
-    let numberOfDays = dateTimeDiffDays(dateTime("17 May 2018 13:53:33 EST"),contract.date);
-    enforce numberOfDays >= 0.0;
+    let numberOfDays = diffWithUnit(parse("17 May 2018 13:53:33 EST"),contract.date,"days").amount;
+    enforce numberOfDays >=i 0;
     let compounded =  outstanding * compoundInterestMultiple(interestRate, numberOfDays);
 
     return Result{

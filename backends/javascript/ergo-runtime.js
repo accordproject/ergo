@@ -326,8 +326,6 @@ function mustBeArray(obj) {
     throw e;
 }
 function cast(brands,v) {
-    //logger.info("CASTING: "+brands[0]);
-    //logger.info("FOR OBJECT: "+JSON.stringify(v));
     mustBeArray(brands);
     if ("$class" in v)
         return enhanced_cast(brands,v);
@@ -548,8 +546,8 @@ var HOURS = "hours";
 var DAYS = "days";
 var WEEKS = "weeks";
 var MONTHS = "months";
-var QUARTER = "quarter";
-var YEAR = "year";
+var QUARTERS = "quarters";
+var YEARS = "years";
 
 function dateTimeComponent(part, date) {
     date = mustBeDate(date);
@@ -580,7 +578,8 @@ function dateTimeFromString(stringDate) {
 }
 
 function dateTimeDurationAmount(v) {
-    return v.seconds();
+    v = mustBeDuration(v);
+    return v.asSeconds();
 }
 
 function dateTimeDurationFromString(stringDuration) {
@@ -605,7 +604,7 @@ function dateTimeDurationFromNat(part, v) {
     let num;
     if (v.hasOwnProperty('nat')) { num = v.nat; } else { num = v; }
     // 'quarters' not built into durations
-    if (part === 'quarters') {
+    if (part === QUARTERS) {
         return moment.duration(num * 3,'months');
     } else {
         return moment.duration(num,part);
@@ -622,10 +621,10 @@ function dateTimeAdd(date, duration) {
     return date.add(duration);
 }
 
-function dateTimeSubtract(date, duration) {
+function dateTimeSubtract(date, d) {
     date = mustBeDate(date);
-    duration = mustBeDuration(duration);
-    return date.subtract(duration);
+    d = mustBeDuration(d);
+    return date.subtract(d);
 }
 
 function compareDates(date1, date2) {
@@ -642,7 +641,7 @@ function compareDates(date1, date2) {
 }
 
 function dateTimeIsSame(date1, date2) {
-    return compareDates(date1, date2) = 0;
+    return compareDates(date1, date2) === 0;
 }
 
 function dateTimeIsBefore(date1, date2) {
@@ -656,7 +655,7 @@ function dateTimeIsAfter(date1, date2) {
 function dateTimeDiff(date1, date2) {
     date1 = mustBeDate(date1);
     date2 = mustBeDate(date2);
-    return date1.diff(date2,'seconds');
+    return moment.duration(date1.diff(date2,'seconds'),'seconds');
 }
 
 function mustBeDate(date) {
@@ -667,11 +666,11 @@ function mustBeDate(date) {
     }
 }
 
-function mustBeDuration(duration) {
-    if (typeof duration == "string") {
-        return moment.duration(duration);
+function mustBeDuration(d) {
+    if (typeof d == "string") {
+        return moment.duration(d);
     } else {
-        return duration.clone();
+        return d.clone();
     }
 }
 
