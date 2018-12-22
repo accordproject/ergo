@@ -417,7 +417,8 @@ function deref(receiver, member) {
             ans = left(ans);
         return ans;
     }
-    return undefined;
+    // Treat a missing field as a field containing null
+    return null;
 }
 function looksLikeRelationship(v) {
     // As the name suggests, this is only heuristic.  We call it a relationship if it has two or three members.
