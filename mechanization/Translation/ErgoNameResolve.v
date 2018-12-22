@@ -121,13 +121,26 @@ Section ErgoNameResolution.
                  ctxt.(namespace_ctxt_abstract))
             (lookup_one_import ctxt ic).
 
-    (* Resolve imports for CTO *)
+    (* Stdlib modules imported automatically *)
+    Definition builtin_imports :=
+      accordproject_base_namespace
+        :: accordproject_stdlib_namespace
+        :: nil.
     Definition is_builtin_import (ns:namespace_name) : bool :=
-      if string_dec ns accordproject_base_namespace
+      if in_dec string_dec ns builtin_imports
       then true
-      else if string_dec ns accordproject_stdlib_namespace
-           then true
-           else false.
+      else false.
+
+    (* All Stdlib modules, including those not imported automatically *)
+    Definition stdlib_imports :=
+      accordproject_base_namespace
+        :: accordproject_stdlib_namespace
+        :: accordproject_time_namespace
+        :: nil.
+    Definition is_stdlib_import (ns:namespace_name) : bool :=
+      if in_dec string_dec ns stdlib_imports
+      then true
+      else false.
 
   End ResolveImports.
 
@@ -784,7 +797,7 @@ Section ErgoNameResolution.
         let '(ctos', rest', p') := split_ctos_and_ergos rest in
         match p' with
         | None =>
-          if is_builtin_import ml.(module_namespace)
+          if is_stdlib_import ml.(module_namespace)
           then (ctos', ml :: rest', None)
           else (ctos', rest', Some ml)
         | Some _ => (ctos', ml :: rest', p')
