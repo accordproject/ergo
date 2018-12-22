@@ -146,7 +146,7 @@ Section ErgoC.
       | Success _ _ r => esuccess (dbrand (nr::nil) (drec r))
       end
     (* EXPECTS: no function calls in expression *)
-    | ECallFun prov fname args => function_not_inlined_error prov fname
+    | ECallFun prov fname args => function_not_inlined_error prov "eval" fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
     | EMatch prov term pes default =>
       let lift_dbrand :=

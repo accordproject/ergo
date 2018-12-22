@@ -165,7 +165,7 @@ Section ErgoCtoErgoNNRC.
                  acc (elift (NNRCUnop (OpRec attname)) e)
       in
       fold_left proc_one rest init_rec
-    | ECallFun prov fname _ => function_not_inlined_error prov fname
+    | ECallFun prov fname _ => function_not_inlined_error prov "ec2en/expr" fname
     | ECallFunInGroup prov gname fname _ => function_in_group_not_inlined_error prov gname fname
     | EMatch prov e0 ecases edefault =>
       let ec0 := ergoc_expr_to_nnrc env e0 in
@@ -228,7 +228,7 @@ Section ErgoCtoErgoNNRC.
               f.(functionc_sig).(sigc_params)
               f.(functionc_sig).(sigc_output))
            (ergoc_expr_to_nnrc env body))
-    | None => function_not_inlined_error dummy_provenance fn
+    | None => function_not_inlined_error f.(functionc_annot) "ec2en/function" fn
     end.
 
   (** Translate a declaration to a declaration+calculus *)
