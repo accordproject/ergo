@@ -82,7 +82,7 @@ Section ErgoDriver.
                 | Some p => esuccess (mls, p, ctxt)
                 | None => no_ergo_module_error dummy_provenance
                 end) (resolve_inputs_opt inputs).
-      
+
     Definition resolve_inputs_no_main
                (inputs:list lrergo_input)
       : eresult (list laergo_module * namespace_ctxt) :=

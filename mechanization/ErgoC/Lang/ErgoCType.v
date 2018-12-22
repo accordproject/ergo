@@ -319,7 +319,7 @@ Section ErgoCType.
                                 (ETypeError prov "Bad record! Failed to init."%string)))
                         (ergo_type_expr nsctxt ctxt (snd next))))
            rs (esuccess empty_rec_type))
-    | ECallFun prov fname args => function_not_inlined_error prov fname
+    | ECallFun prov fname args => function_not_inlined_error prov "typing" fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
     | EMatch prov term pes default =>
       match ergo_type_expr nsctxt ctxt term with

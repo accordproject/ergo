@@ -232,8 +232,8 @@ Section Result.
       efailure (ESystemError prov "Should not find 'state' in Ergo Calculus").
     Definition complex_foreach_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should only have single loop foreach in Ergo Calculus").
-    Definition function_not_inlined_error {A} prov fname : eresult A :=
-      efailure (ESystemError prov ("Function " ++ fname ++ " did not get inlined")).
+    Definition function_not_inlined_error {A} prov msg fname : eresult A :=
+      efailure (ESystemError prov ("[" ++ msg ++ "] " ++ "Function " ++ fname ++ " did not get inlined")).
     Definition function_in_group_not_inlined_error {A} prov gname fname : eresult A :=
       efailure (ESystemError prov ("Clause " ++ fname ++ " in contract " ++ gname ++ " did not get inlined")).
   End Builtin.
