@@ -76,7 +76,7 @@ let iso8610 =
 (** Duration *)
 type duration = Calendar.Period.t
 let duration_eq (d1:duration) (d2:duration) : bool = Calendar.Period.equal d1 d2
-let duration_amount (x:duration) : int = undefined_error "duration_amount"
+let duration_amount (x:duration) : int = Calendar.Time.Period.to_seconds (Calendar.Period.to_time x)
 let duration_to_string (x:duration) : string = "_" (* XXX To be figured out *)
 let duration_from_string (x:string) : duration = undefined_error "duration_from_string"
 
@@ -101,13 +101,13 @@ let to_string (x:dateTime) : string =
   Printer.Calendar.sprint "%Y-%m-%d %H:%M:%S%:z" x
 
 (** Components *)
-let get_second (x:dateTime) : int = undefined_error "get_second"
-let get_minute (x:dateTime) : int = undefined_error "get_minute"
-let get_hour (x:dateTime) : int = undefined_error "get_hour"
+let get_second (x:dateTime) : int = Calendar.Time.second (Calendar.to_time x)
+let get_minute (x:dateTime) : int = Calendar.Time.minute (Calendar.to_time x)
+let get_hour (x:dateTime) : int = Calendar.Time.hour (Calendar.to_time x)
 let get_day (x:dateTime) : int = Calendar.day_of_month x
-let get_week (x:dateTime) : int = undefined_error "get_week"
+let get_week (x:dateTime) : int = Calendar.week x
 let get_month (x:dateTime) : int = Date.int_of_month (Calendar.month x)
-let get_quarter (x:dateTime) : int = ((get_month x) mod 3) + 1
+let get_quarter (x:dateTime) : int = ((get_month x) / 3) + 1
 let get_year (x:dateTime) : int = Calendar.year x
 
 (** Comparisons *)

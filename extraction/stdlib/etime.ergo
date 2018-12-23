@@ -21,14 +21,14 @@ define function now() : DateTime
 define function parse(x:String) : DateTime
 
 // DateTime components
-define function getSeconds(x:DateTime) : Long
-define function getMinutes(x:DateTime) : Long
-define function getHours(x:DateTime) : Long
-define function getDays(x:DateTime) : Integer
-define function getWeeks(x:DateTime) : Integer
-define function getMonths(x:DateTime) : Integer
-define function getQuarters(x:DateTime) : Integer
-define function getYears(x:DateTime) : Integer
+define function getSecond(x:DateTime) : Long
+define function getMinute(x:DateTime) : Long
+define function getHour(x:DateTime) : Long
+define function getDay(x:DateTime) : Integer
+define function getWeek(x:DateTime) : Integer
+define function getMonth(x:DateTime) : Integer
+define function getQuarter(x:DateTime) : Integer
+define function getYear(x:DateTime) : Integer
 
 // Durations
 define function durationSeconds(x:Long) : InternalDuration
