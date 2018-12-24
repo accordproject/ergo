@@ -140,15 +140,15 @@ let end_of_month (x1:dateTime) = undefined_error "end_of_month"
 let end_of_quarter (x1:dateTime) = undefined_error "end_of_quarter"
 let end_of_year (x1:dateTime) = undefined_error "end_of_year"
 
-let duration_seconds (x:int) = undefined_error "duration_seconds"
-let duration_minutes (x:int) = undefined_error "duration_minutes"
-let duration_hours (x:int) = undefined_error "duration_hours"
+let duration_seconds (x:int) = Calendar.Period.second x
+let duration_minutes (x:int) = Calendar.Period.minute x
+let duration_hours (x:int) = Calendar.Period.hour x
 let duration_days (x:int) = Calendar.Period.day x
-let duration_weeks (x:int) = undefined_error "duration_weeks"
+let duration_weeks (x:int) = Calendar.Period.week x
 let duration_years (x:int) = Calendar.Period.year x
 
 let period_days (x:int) = Calendar.Period.day x
-let period_weeks (x:int) = undefined_error "period_weeks"
+let period_weeks (x:int) = Calendar.Period.week x
 let period_months (x:int) = Calendar.Period.month x
-let period_years (x:int) = Calendar.Period.year x
 let period_quarters (x:int) = Calendar.Period.month (x * 3)
+let period_years (x:int) = Calendar.Period.year x
