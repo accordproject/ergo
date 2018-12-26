@@ -89,12 +89,12 @@ Inductive date_time_duration_unit :=
 
 Definition date_time_duration_unit_tostring (part:date_time_duration_unit) : String.string :=
   match part with
-  | date_time_duration_SECONDS => "seconds"
-  | date_time_duration_MINUTES => "minutes"
-  | date_time_duration_HOURS => "hours"
-  | date_time_duration_DAYS => "days"
-  | date_time_duration_WEEKS => "weeks"
-  | date_time_duration_YEARS => "years"
+  | date_time_duration_SECONDS => "SECONDS"
+  | date_time_duration_MINUTES => "MINUTES"
+  | date_time_duration_HOURS => "HOURS"
+  | date_time_duration_DAYS => "DAYS"
+  | date_time_duration_WEEKS => "WEEKS"
+  | date_time_duration_YEARS => "YEARS"
   end.
 
 Global Instance date_time_duration_unit_to_string : ToString date_time_duration_unit
@@ -152,11 +152,11 @@ Inductive date_time_period_unit :=
 
 Definition date_time_period_unit_tostring (part:date_time_period_unit) : String.string :=
   match part with
-  | date_time_period_DAYS => "days"
-  | date_time_period_WEEKS => "weeks"
-  | date_time_period_MONTHS => "months"
-  | date_time_period_QUARTERS => "quarters"
-  | date_time_period_YEARS => "years"
+  | date_time_period_DAYS => "DAYS"
+  | date_time_period_WEEKS => "WEEKS"
+  | date_time_period_MONTHS => "MONTHS"
+  | date_time_period_QUARTERS => "QUARTERS"
+  | date_time_period_YEARS => "YEARS"
   end.
 
 Global Instance date_time_period_unit_to_string : ToString date_time_period_unit
@@ -220,14 +220,14 @@ Inductive date_time_component :=
 
 Definition date_time_component_tostring (part:date_time_component) : String.string :=
   match part with
-  | date_time_component_SECONDS => "seconds"
-  | date_time_component_MINUTES => "minutes"
-  | date_time_component_HOURS => "hours"
-  | date_time_component_DAYS => "days"
-  | date_time_component_WEEKS => "weeks"
-  | date_time_component_MONTHS => "months"
-  | date_time_component_QUARTERS => "quarters"
-  | date_time_component_YEARS => "years"
+  | date_time_component_SECONDS => "SECONDS"
+  | date_time_component_MINUTES => "MINUTES"
+  | date_time_component_HOURS => "HOURS"
+  | date_time_component_DAYS => "DAYS"
+  | date_time_component_WEEKS => "WEEKS"
+  | date_time_component_MONTHS => "MONTHS"
+  | date_time_component_QUARTERS => "QUARTERS"
+  | date_time_component_YEARS => "YEARS"
   end.
 
 Global Instance date_time_component_to_string : ToString date_time_component
@@ -464,15 +464,15 @@ Definition date_time_to_javascript_unary_op
              (quotel:String.string) (fu:date_time_unary_op)
              (d:String.string) : String.string :=
   match fu with
-  | uop_date_time_component part => "dateTimeComponent(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
-  | uop_date_time_start_of part => "dateTimeStartOf(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
-  | uop_date_time_end_of part => "dateTimeEndOf(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
+  | uop_date_time_component part => "dateTimeComponent(" ++ (toString part) ++ ", " ++ d ++ ")"
+  | uop_date_time_start_of part => "dateTimeStartOf(" ++ (toString part) ++ ", " ++ d ++ ")"
+  | uop_date_time_end_of part => "dateTimeEndOf(" ++ (toString part) ++ ", " ++ d ++ ")"
   | uop_date_time_from_string => "dateTimeFromString(" ++ d ++ ")"
   | uop_date_time_duration_amount => "dateTimeDurationAmount(" ++ d ++ ")"
   | uop_date_time_duration_from_string => "dateTimeDurationFromString(" ++ d ++ ")"
-  | uop_date_time_duration_from_nat part => "dateTimeDurationFromNat(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
+  | uop_date_time_duration_from_nat part => "dateTimeDurationFromNat(" ++ (toString part) ++ ", " ++ d ++ ")"
   | uop_date_time_period_from_string => "dateTimePeriodFromString(" ++ d ++ ")"
-  | uop_date_time_period_from_nat part => "dateTimePeriodFromNat(" ++ quotel ++ (toString part) ++ quotel ++ ", " ++ d ++ ")"
+  | uop_date_time_period_from_nat part => "dateTimePeriodFromNat(" ++ (toString part) ++ ", " ++ d ++ ")"
   end.
 
 Definition date_time_to_ajavascript_unary_op
