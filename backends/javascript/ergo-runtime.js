@@ -540,34 +540,34 @@ function constantE() { return Math.E; }
 
 /* Addendum to for dateTime and duration */
 
-var SECONDS = "seconds";
-var MINUTES = "minutes";
-var HOURS = "hours";
-var DAYS = "days";
-var WEEKS = "weeks";
-var MONTHS = "months";
-var QUARTERS = "quarters";
-var YEARS = "years";
+var SECONDS = "second";
+var MINUTES = "minute";
+var HOURS = "hour";
+var DAYS = "day";
+var WEEKS = "week";
+var MONTHS = "month";
+var QUARTERS = "quarter";
+var YEARS = "year";
 
 function dateTimeComponent(part, date) {
     date = mustBeDate(date);
     switch(part) {
     case SECONDS:
-        return date.seconds();
+        return date.second();
     case MINUTES:
-        return date.minutes();
+        return date.minute();
     case HOURS:
-        return date.hours();
+        return date.hour();
     case DAYS:
-        return date.dates();
+        return date.date();
     case WEEKS:
-        return date.weeks();
+        return date.week();
     case MONTHS:
-        return date.months();
+        return date.month();
     case QUARTERS:
-        return date.quarters();
+        return date.quarter();
     case YEARS:
-        return date.years();
+        return date.year();
     default:
         throw new Error("Unknown DateTime component: " + part);
     }
