@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 aI=104,nN=56319,oa=254,w=108,le=365180284,v2="Invalid_argument",uM=-59,kZ="Map.bal",f4=16777215,nM="@[",vl=32082,a1=242,v1="emit",eD=176,vk="state",g_=0.5,wG="Expected ':' but found",jg=65599,uL="import",dA=148,v0="%ni",uK=-45,wE=3268,wF=846,a3=119,t=115,bR=162,jm=198,nV=512,vZ=262,uJ=", line",wD="Unterminated comment",d0=166,ln=513,aQ=128,cM=135,bT=241,gq=194,bV=235,dK=179,e$="0",wC=1026,bW=248,vj=" Display this list of options",dJ=136,vi="transaction",uI="Sys_blocked_io",vh="fd ",wB=2440588,aF=121,wA=1023,lm=2440587.5,f3=107,eS=174,dU=197,jf=237,k_=365,wz=">",cG=156,n4=131,c_=141,uH=-97,vg="Line",dI="out-of-bounds substring position or length",cF=212,vf="%B",vY="File %s, line",uG="%u",cY=186,o=105,m=110,wy="throw",ve=-214748365,c1="Unexpected end of input",vX="%Y-%m-%d %H:%M:%S%:z",c9=152,nL="@{",vd=-80,n$="e",uF=" : flags Open_rdonly and Open_wronly are not compatible",du=183,vc="([^/]*)",g6="-",g8=139,uE=" : file already exists",am=109,uD="%s '%s'",wx=737456202,k9="namespace",a2=233,vW="::z",dz=205,vb="Out_of_memory",dH=229,ww="  ",f=101,n3=238,va="index out of bounds",fz=230,u$=3654863,c6=217,dT=195,cr=86400,kY=":\n",vV="event",aY=142,uC="participant",uB=-60,jo=146097,cL=224,cO=140,cX=214,vU="enum",u_=1027,dG=211,vT="in",cK=222,e_=250,jr=1024,vS=-12,de=187,a0=231,dF=173,vR="none",ag=102,dc=220,ih=529348384,wv="AM",ca=113,eR=172,wt=620821490,n_="\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\xff\xff\x03\0\0\0\x86\0\xff\xff\x03\0\xff\xff\x86\0E\x01\x92\x019\0\xff\xffE\x01\x92\x01\xff\xff\xff\xff\xff\xff\xff\xff}\0\x8a\0\xff\xff\0\0\xff\xff\0\0\x03\0\xa9\0\x86\0\xae\0\xff\xff\0\0\n\x01E\x01\x92\x01\f\x01\0\0\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x05\0s\0\0\0}\0\x81\0\x05\0\xec\x01\x88\0\xff\x01&\0\xff\xff\n\0\x88\0f\0:\0\0\0k\0f\0\xff\xff\x0b\0\0\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x1d\0&\0\0\0o\0\xd0\0\xe9\0\xff\0\f\x01\x0f\0\x11\0<\0\x0b\0\n\0\0\0\x14\0\x18\0\x1f\0 \0\"\0\x16\0\x1a\0\0\0\x0e\0\x1b\0!\0\x12\0\x17\0\0\0\x10\0\x13\0#\0(\0$\0&\0\0\0)\0*\0+\0,\0-\0.\0:\0R\0\x0b\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0'\0?\0'\0'\0'\0'\0'\0'\0'\0'\0'\0'\0U\0\x8c\0<\0\r\0\x8f\0\x90\0\x91\x000\0\x93\x000\0\x94\0'\x000\x000\x000\x000\x000\x000\x000\x000\x000\x000\x001\x001\x001\x001\x001\x001\x001\x001\x001\x001\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0A\0'\0\x95\0\x96\0\x9c\0?\0\x9d\x003\0\x9e\x003\0\x9f\x002\x003\x003\x003\x003\x003\x003\x003\x003\x003\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x005\x005\x005\x005\x005\x005\x005\x005\x005\x005\0\x9b\x002\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xa1\0\xa2\0\x9b\0[\0A\0\0\x007\x007\x007\x007\x007\x007\x007\x007\x007\x007\x009\0D\0f\0k\0s\0\x83\0\x85\0\x85\0}\0\x8a\0\x85\0\xa3\0^\0\xa5\0D\0\xa6\0\xa7\0\xa8\0\xab\0o\0\xac\0\xad\0\xce\0\xcb\0\xcf\0\xd2\0\xd3\0:\0R\0\x85\0\xd4\0\xd5\0\xd6\0\xd7\0\xd9\0\x8c\0\xda\0a\0\xdb\0\xdc\0w\0\xdd\0\xde\0\xdf\0\x85\0[\0\xcb\0\"\x01>\x01\xe9\0\x98\0\x01\x01P\x01\xf7\0<\0\xfb\x006\x01:\x01Q\x01D\0)\x01R\x01S\x01\x06\x01\x1a\x01D\0w\0\x1e\x01\x0f\x01D\0^\0\x0f\x01T\x01U\x01V\x01G\x01X\x01D\0\xcb\x002\x01G\x01D\0Y\x01D\0D\0G\0G\0G\0G\0G\0G\0G\0G\0G\0G\0a\0L\x01w\0Z\x01?\0\x01\x01\\\x01G\0G\0G\0G\0G\0G\0N\0N\0N\0N\0N\0N\0N\0N\0N\0N\0\x98\0L\x01]\x01_\x01a\x01b\x01-\x01N\0N\0N\0N\0N\0N\0c\x01\x98\0d\x01G\0G\0G\0G\0G\0G\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\x14\x01L\x01A\0\x14\x01e\x01f\x01h\x01N\0N\0N\0N\0N\0N\0O\0O\0O\0O\0O\0O\0O\0O\0O\0O\0i\x01j\x01-\x01$\x01k\x01l\x01m\x01O\0O\0O\0O\0O\0O\0P\0P\0P\0P\0P\0P\0P\0P\0P\0P\0n\x01\x1a\x01y\x01\x9d\x01\x1e\x01\x9e\x01\x14\x01P\0P\0P\0P\0P\0P\0[\0\x9f\x01>\x01O\0O\0O\0O\0O\0O\0\xf7\0\xa0\x01\xfb\0\xa1\x01:\x01D\0V\0V\0V\0V\0V\0V\0V\0V\0V\0V\0^\0P\0P\0P\0P\0P\0P\0V\0V\0V\0V\0V\0V\0W\0W\0W\0W\0W\0W\0W\0W\0W\0W\0$\x01)\x01a\0\xa2\x01\xa3\x01w\0\x01\x01W\0W\0W\0W\0W\0W\0\xa5\x016\x01\x98\0V\0V\0V\0V\0V\0V\0\x06\x01\xa6\x01\xa7\x01\xa8\x01\x0f\x01\xa9\x01X\0X\0X\0X\0X\0X\0X\0X\0X\0X\x002\x01W\0W\0W\0W\0W\0W\0X\0X\0X\0X\0X\0X\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0_\0\x85\x01\xaa\x01\xab\x01\x9a\x01\x85\x01\xac\x01Y\0Y\0Y\0Y\0Y\0Y\0_\0\xb0\0\xad\x01X\0X\0X\0X\0X\0X\0-\x01\xae\x01\xaf\x01\xb0\0\xb0\x01\x9a\x01\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0z\x01Y\0Y\0Y\0Y\0Y\0Y\0\x94\x01\xb1\x01\x14\x01\xb2\x01b\0\x94\x01\xb3\x01\xb4\x01\xb5\x01\xb6\x01\xb7\x01\xd8\x01\xc1\x01_\0\x9a\x01\xd8\x01\xcd\x01b\0\xde\x01_\0\xcd\x01\xe5\x01\x01\x02_\0\xda\x01$\x01\xd7\x01\xd7\x01\x02\x02\xda\x01\xd7\x01_\0\x04\x02\x05\x02\xd8\x01_\0\x06\x02_\0_\0`\0`\0`\0`\0`\0`\0`\0`\0`\0`\0\xd7\x01\x07\x02z\x01\b\x02\t\x02\n\x02\x0b\x02`\0`\0`\0`\0`\0`\0b\0\f\x02\xd7\x01\xf7\x01\r\x02\x0e\x02b\0\x0f\x02}\x01\x80\x01b\0\x10\x02\xdc\x01\x11\x02\xfb\x01\x12\x02\x13\x02\x14\x02b\0y\x01\x15\x02\xc2\x01b\0\x16\x02b\0b\0`\0`\0`\0`\0`\0`\0c\0c\0c\0c\0c\0c\0c\0c\0c\0c\0\xe7\x01\x17\x02\xee\x01\x18\x02\xfb\x01\xee\x01\x19\x02c\0c\0c\0c\0c\0c\0d\0d\0d\0d\0d\0d\0d\0d\0d\0d\0\xf3\x01}\x01\x80\x01\xe0\x01\x1a\x02\xc5\x01\x1b\x02d\0d\0d\0d\0d\0d\0\x1c\x02\xc2\x01\x1d\x02c\0c\0c\0c\0c\0c\0\x1e\x02\x1f\x02 \x02\xc8\x01\xe7\x01\x85\x01e\0e\0e\0e\0e\0e\0e\0e\0e\0e\0\xff\xffd\0d\0d\0d\0d\0d\0e\0e\0e\0e\0e\0e\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xff\xff\xff\xff\xc5\x01\xb0\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb9\0\xff\xffe\0e\0e\0e\0e\0e\0\xc8\x01\xe0\x01\xff\xff\xb9\0\xcd\x01z\x01\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xc0\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc0\0\xc1\x01\xf7\x01\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc7\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xc7\0}\x01\x80\x01\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xcc\0\xc2\x01\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe7\x01\xff\xff\xff\xff\xc7\0\xdc\x01\xee\x01\xfb\x01\xff\xff\xc7\0\xf3\x01\xff\xff\xcc\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xe1\0\xff\xff\xe1\0\xff\xff\xe0\x01\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xcd\0\xc5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xcc\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xff\xff\xff\xff\xff\xff\xff\xff\xc8\x01\xff\xff\xff\xff\xe4\0\xff\xff\xe4\0\xff\xff\xe3\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xff\xff\xe3\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xb9\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xed\0\xff\xffM\x01\xff\xffM\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01\xff\xffM\x01\xff\xff\xff\xff\xc0\0\xff\xff\xff\xff\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0M\x01\xff\xff\xff\xff\xff\xff\xed\0\xc7\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xff\xff\xf2\0\xff\xff\xff\xff\xf0\0\xff\xff\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xff\xff\xff\xff\xff\xff\xff\xff\xf2\0\xff\xff\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xed\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xff\xff\xff\xff\xff\xff\xff\xff\xf5\0\xff\xff\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0B\x01B\x01\xff\xff\xff\xffB\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xffB\x01\xff\xff\xff\xff\xff\xff\xff\xffO\x01B\x01\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xffB\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01\xff\xff\xff\xffB\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf2\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01p\x01\xff\xffp\x01\xff\xffB\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01\xff\xff\xff\xffB\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01B\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xff\xff\xffr\x01\xff\xff\xff\xffB\x01\xff\xff\xff\xffs\x01\xff\xffs\x01\xff\xffB\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01\xff\xffr\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01\xff\xff~\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff\x81\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\xff\xff\x9b\x01\xff\xff\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x9b\x01\xff\xff~\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01~\x01\xff\xff\xff\xffB\x01~\x01\x81\x01~\x01~\x01\xff\xff\x81\x01\xff\xff\xff\xff\x9b\x01\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\x81\x01\x81\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\xff\xff\xff\xff\xff\xff\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\xff\xff\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\xb8\x01\x8a\x01\xb8\x01\xff\xff\xff\xff\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xff\xff\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8a\x01\xff\xff\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8d\x01\xff\xff\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8f\x01\x8f\x01\xff\xff\xff\xff\x8f\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc6\x01\x8f\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\x9c\x01\x8f\x01\xff\xff\xff\xff\xff\xff\xc6\x01\x8f\x01\xff\xff\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8a\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xc6\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xc6\x01\xff\xff\xff\xff\xff\xff\xc6\x01\xba\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xc6\x01\xff\xff\xff\xff\x8f\x01\xc6\x01\xff\xff\xc6\x01\xc6\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xbb\x01\xff\xff\xbb\x01\xff\xff\xba\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xc9\x01\xc9\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xff\xff\xff\xff\xff\xff\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xff\xff\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xff\xff\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xd2\x01\xff\xff\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xd5\x01\xff\xff\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",wu="infinity",u9="constant",dt=208,ar="",ws="then",nK="^",cW=143,ld=417088404,n9=55296,vQ=992015837,vP="Cannot use enforce inside a function, you have to be in a Clause",n=100,vO="Integer",v=103,nU=297,uA="Match_failure",ds=169,vN=" Print version and exit",f2=1e3,c8=223,e9=".",ll=221,dS=201,ig="+",jl=65535,n8="File ",n2=138,d3=184,wr=-44,uz="%li",bO=206,vM=214748365,eQ=168,uy="Expected ',' or ']' but found",cn=153,jk=210,g7="ttype",dR=171,hv=127,nJ=-32,e=111,k8=257,e8=196,vL=")",wp="call",wq="enforce",u8="Invalid escape sequence",vK="let",gt=256,aZ=118,bN=236,n1="nan",u7="PM",wo=65520,eP=180,dQ=191,u6="%.12g",k7=56320,n7="%s",ux="z",dP=185,uw="%",f1="/",wn="Assert_failure",nT="Expected string or identifier but found",i=114,jj="lib/read.mll",gs=190,c5=146,uv=-2147483648,dO=129,b6=123,vJ="send",bU=239,vI="src/time_Zone.ml",dE=177,u5="bytes %i-%i",ji='"',eM=332064784,uu=".\n",cI=163,vH="function",nI="jsError",cH=-37,dN=225,wm="return",ut=864e5,u4="bytes ",vG="a float",k6="--help",vF="End_of_file",wl="Invalid low surrogate for code point beyond U+FFFF",d2=120,vD="..",vE="Failure",u3="Parse error",dD=144,u2="Long",vC="with",A=117,vB=-20,dM=150,wk=".cto",dy=226,dd=164,us="over",cs=126,n0="\xff\xff\xff\xff\xff\xff\x11\0\xff\xff\x13\0\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\x07\0\xff\xff\x13\0\x13\0\x13\0\x13\0\x13\0\x13\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\b\0\b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\t\0\xff\xff\t\0\xff\xff\t\0\xff\xff\xff\xff\x0e\0\xff\xff\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\x01\0\xff\xff\x04\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x04\0\x04\0\x04\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\0\0\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\x03\0\x05\0\x05\0\x05\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\x03\0\xff\xff\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x10\0\xff\xff\x12\0\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\x07\0\xff\xff\x12\0\x12\0\x12\0\x12\0\x12\0\x12\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\b\0\xff\xff\b\0\xff\xff\b\0\xff\xff\xff\xff\r\0\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\t\0\xff\xff\x0b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\x06\0\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\x04\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",gp=188,ur="and",k5=" '",df=167,wj=32044,d_="camlinternalFormat.ml",bM=232,u1="Division_by_zero",g5=1900,nH=43200,uq=-34,cV=145,vA="Sys_error",wi="String",u=112,u0="if",je=1073741823,uZ=": ",a4=161,up=823,dr=193,eO=182,k4=". ",n6="%d",g4=803994948,k3=57343,wh="asset",ij=200,wg="%s %i, %s:\n%s",g3="extracted/ErgoComp.ml",dC=218,lb=132,lc="int_of_string",uY="Double",ct=160,dx=157,nZ="name",vz=":z",vx="Missing escape sequence representing low surrogate for code point beyond U+FFFF",vy="unit",g9=-48,wf="The Ergo toplevel",vw="or",we="set",f0=240,wd=2048,uo="define",eL=178,cS=216,uX="body",wc="byte ",um="%s '%s%s'",un="0x",c2=154,Vf=159,ie="\n",nR=".ctoj",nS="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x03\0\x04\0\0\0\x03\0\x03\0\x86\0\0\0\x03\0\0\0\x86\0E\x01\x92\x01\xff\xff\0\0E\x01\x92\x01\0\0\0\0\0\0\0\0\x7f\0\x8b\0\0\0\x03\0\0\0\f\0\x03\0\xaa\0\x86\0\xaf\0\0\0\x07\0\x0b\x01E\x01\x92\x01\x0e\x01\r\x001\0\x05\0\n\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\x008\0v\0\x06\0\x81\0\x82\x009\0\xed\x01\x89\0\0\x021\0\0\x000\0\x8a\0j\0>\0\x0e\0n\0i\0\0\x001\0\x0f\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x1e\x000\0\b\0r\0\xd1\0\xec\0\0\x01\r\x01\x1d\0\x16\0\xff\xff0\x000\0\x11\0\x15\0\x19\0 \0!\0#\0\x17\0\x1b\0\x10\0\x1f\0\x1c\0\"\0\x13\0\x18\0\x12\0\x1a\0\x14\0$\0)\0%\x000\0\t\0*\0+\0,\0-\0.\0/\0=\0U\x000\0&\0'\0'\0'\0'\0'\0'\0'\0'\0'\x001\0C\0'\0'\0'\0'\0'\0'\0'\0'\0'\0'\0V\0\x8f\0\xff\xff(\0\x90\0\x91\0\x92\x007\0\x94\x007\0\x95\x000\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0\xff\xff0\0\x96\0\x97\0\xa1\0B\0\x9e\x005\0\x9f\x005\0\xa0\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\xa5\x003\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xa2\0\xa3\0\xa6\0]\0\xff\xff\x02\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xff\xffM\0g\0l\0t\0\x84\0\x86\0\x87\0\x80\0\x8b\0\x86\0\xa4\0]\0\xab\0M\0\xa7\0\xa8\0\xa9\0\xac\0p\0\xad\0\xae\0\xd2\0\xe2\0\xd0\0\xd3\0\xd4\0;\0S\0\x86\0\xd5\0\xd6\0\xd7\0\xd8\0\xda\0\x8d\0\xdb\0]\0\xdc\0\xdd\0{\0\xde\0\xdf\0\xe0\0\x88\0_\0\xe1\0#\x01A\x01\xea\0\x9b\0\x05\x01a\x01\xfa\0\xff\xff\xfe\x009\x01=\x01_\x01M\0,\x01\\\x01X\x01\t\x01\x1d\x01L\0|\0!\x01\x12\x01K\0b\0\x13\x01U\x01V\x01W\x01x\x01Y\x01J\0\xe1\x005\x01y\x01I\0Z\x01H\0G\0N\0N\0N\0N\0N\0N\0N\0N\0N\0N\0b\0q\x01z\0[\x01@\0\x04\x01]\x01N\0N\0N\0N\0N\0N\0O\0O\0O\0O\0O\0O\0O\0O\0O\0O\0\x9c\0p\x01^\x01`\x01b\x01c\x011\x01O\0O\0O\0O\0O\0O\0d\x01\x9d\0e\x01N\0N\0N\0N\0N\0N\0\xb7\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\x18\x01p\x01\xff\xff\x19\x01f\x01g\x01i\x01O\0O\0O\0O\0O\0O\0P\0P\0P\0P\0P\0P\0P\0P\0P\0P\0j\x01k\x010\x01(\x01l\x01m\x01n\x01P\0P\0P\0P\0P\0P\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0o\x01\x1b\x01\xff\xff\xab\x01\x1f\x01\xaa\x01\x17\x01Q\0Q\0Q\0Q\0Q\0Q\0\\\0\xa8\x01?\x01P\0P\0P\0P\0P\0P\0\xf8\0\xa5\x01\xfc\0\xa2\x01;\x01E\0W\0W\0W\0W\0W\0W\0W\0W\0W\0W\0\xff\xffQ\0Q\0Q\0Q\0Q\0Q\0W\0W\0W\0W\0W\0W\0X\0X\0X\0X\0X\0X\0X\0X\0X\0X\0'\x01*\x01\xff\xff\xa3\x01\xa4\x01x\0\x02\x01X\0X\0X\0X\0X\0X\0\xa6\x017\x01\x99\0W\0W\0W\0W\0W\0W\0\x07\x01\xa7\x01\xa4\x01\xa9\x01\x10\x01\xa4\x01Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\x003\x01X\0X\0X\0X\0X\0X\0Y\0Y\0Y\0Y\0Y\0Y\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0a\0\x89\x01\xa4\x01\xac\x01\xb9\x01\x88\x01\xad\x01Z\0Z\0Z\0Z\0Z\0Z\0a\0\xb3\0\xae\x01Y\0Y\0Y\0Y\0Y\0Y\0.\x01\xaf\x01\xb0\x01\xb4\0\xa4\x01\xb8\x01\xb5\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0|\x01Z\0Z\0Z\0Z\0Z\0Z\0\xc0\x01\xb2\x01\x15\x01\xb3\x01a\0\xc1\x01\xb4\x01\xb5\x01\xb6\x01\xb7\x01\xa4\x01\xd8\x01\xff\xffa\0\xb8\x01\xd8\x01\xd1\x01a\0\xdf\x01a\0\xd0\x01\xe6\x01\x03\x02a\0\xdb\x01%\x01\xd8\x01\xd9\x01\x03\x02\xdc\x01\xd8\x01a\0\x03\x02\x03\x02\xd8\x01a\0\x03\x02a\0`\0c\0c\0c\0c\0c\0c\0c\0c\0c\0c\0\xd8\x01\x03\x02~\x01\x03\x02\x03\x02\x03\x02\x03\x02c\0c\0c\0c\0c\0c\0a\0\x03\x02\xda\x01\xfa\x01\x03\x02\x03\x02a\0\x03\x02|\x01|\x01a\0\x03\x02\xdd\x01\x03\x02\xfd\x01\x03\x02\x03\x02\x03\x02a\0\xff\xff\x03\x02\xc4\x01a\0\x03\x02a\0`\0c\0c\0c\0c\0c\0c\0d\0d\0d\0d\0d\0d\0d\0d\0d\0d\0\xeb\x01\x03\x02\xf1\x01\x03\x02\xff\x01\xf2\x01\x03\x02d\0d\0d\0d\0d\0d\0e\0e\0e\0e\0e\0e\0e\0e\0e\0e\0\xf6\x01\x81\x01\x81\x01\xe4\x01\x03\x02\xc4\x01\x03\x02e\0e\0e\0e\0e\0e\0\x03\x02\xc6\x01\x03\x02d\0d\0d\0d\0d\0d\0\x03\x02\x03\x02\x03\x02\xc4\x01\xea\x01\x86\x01a\0a\0a\0a\0a\0a\0a\0a\0a\0a\0\0\0e\0e\0e\0e\0e\0e\0a\0a\0a\0a\0a\0a\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\0\0\0\0\xc9\x01\xb1\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xbc\0\0\0a\0a\0a\0a\0a\0a\0\xc9\x01\xe3\x01\0\0\xbf\0\xce\x01{\x01\xbd\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbd\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xc3\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc6\0\xff\xff\xf8\x01\xc4\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc4\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xca\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xcd\0\xff\xff\xff\xff\xcb\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe2\0\xc3\x01\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe8\x01\0\0\0\0\xce\0\xdd\x01\xef\x01\xfe\x01\0\0\xcf\0\xf4\x01\0\0\xe1\0\xcb\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe8\0\0\0\xe8\0\0\0\xe1\x01\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xd9\0\xff\xff\0\0\0\0\0\0\0\0\xe1\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\0\0\0\0\0\0\0\0\xff\xff\0\0\0\0\xe6\0\0\0\xe6\0\0\0\xe4\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\0\0\xe4\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xba\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\0\0\0\0\0\0\0\0\0\0\xf1\0\0\0q\x01\0\0M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01\0\0p\x01\0\0\0\0\xc1\0\0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0p\x01\0\0\0\0\0\0\xf0\0\xc8\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\0\0\xf6\0\0\0\0\0\xf0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\xf5\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xee\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\xf5\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0E\x01F\x01\0\0\0\0E\x01L\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0E\x01\0\0N\x01\0\0\0\0\0\0\0\0h\x01I\x01\0\0\0\0\0\0\0\0O\x01\0\0G\x01L\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01\0\0\0\0H\x01\0\0\0\0\0\0\0\0\0\0\xf3\0\0\0\0\0\0\0\0\0\0\0\0\0P\x01w\x01\0\0w\x01\0\0Q\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01\0\0\0\0J\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01S\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0R\x01\0\0\0\0s\x01\0\0\0\0T\x01\0\0\0\0u\x01\0\0u\x01\0\0K\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01\0\0s\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01\0\0\x80\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\xb9\x01\0\0\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\0\0\0\0\0\0\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xb8\x01\0\0\x80\x01\0\0\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\x80\x01\0\0\0\0D\x01\x80\x01\x80\x01\x80\x01\x7f\x01\0\0\x80\x01\0\0\0\0\xb8\x01\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\0\0\x80\x01\x7f\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\0\0\0\0\0\0\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\0\0\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\xbf\x01\x8e\x01\xbf\x01\0\0\0\0\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\0\0\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\x8d\x01\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\x8d\x01\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x92\x01\x93\x01\0\0\0\0\x92\x01\x9a\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\x92\x01\0\0\x99\x01\0\0\0\0\0\0\0\0\xb1\x01\x96\x01\0\0\0\0\0\0\xc8\x01\x9c\x01\0\0\x94\x01\x9a\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\x95\x01\0\0\0\0\0\0\0\0\0\0\0\0\x8b\x01\0\0\0\0\0\0\0\0\0\0\x9d\x01\0\0\0\0\0\0\0\0\x9e\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xc8\x01\0\0\x97\x01\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\xc8\x01\xbb\x01\0\0\xa0\x01\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\x9f\x01\xc8\x01\0\0\xc8\x01\xc7\x01\0\0\xa1\x01\0\0\0\0\0\0\0\0\0\0\0\0\x98\x01\0\0\0\0\0\0\0\0\xbd\x01\0\0\xbd\x01\0\0\xbb\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\0\0\x91\x01\xc8\x01\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\xc8\x01\0\0\xc8\x01\xc7\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\0\0\0\0\0\0\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\0\0\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\0\0\xd6\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\xd5\x01\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\xd5\x01\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xd3\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",dL=227,lk=207,bP=234,wb=-52,dq=175,kX=32768,nQ="lib/core.ml",bL=219,b5=125,uW=" : flags Open_text and Open_binary are not compatible",vv="%Li",jq="*",uV=2147483647,c4=255,dp=199,wa="else",uU=65536,c3=213,jn=1461,k="src/ErgoParser.ml",v$="match",ul=292,b7=246,dn=165,uT="contract",cJ=151,lj=204,v_="Unix.Unix_error",nP="\0\0\xec\xff\xed\xff\x03\0\xef\xff\x10\0\xf2\xff\xf3\xff\xf4\xff\xf5\xff\0\0\x1f\0\xf9\xffU\0\x01\0\0\0\0\0\x01\0\0\0\x01\0\x02\0\xff\xff\0\0\0\0\x03\0\xfe\xff\x01\0\x04\0\xfd\xff\x0b\0\xfc\xff\x03\0\x01\0\x03\0\x02\0\x03\0\0\0\xfb\xff\x15\0a\0\n\0\x16\0\x14\0\x10\0\x16\0\f\0\b\0\xfa\xffw\0\x81\0\x8b\0\xa1\0\xab\0\xb5\0\xc1\0\xd1\0\xf0\xff\x0b\0&\0\xfc\xffA\0\xfe\xff\xff\xffn\0\xfc\xff\xa3\0\xfe\xff\xff\xff\xea\0\xf7\xff\xf8\xff0\x01\xfa\xff\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xffG\x01~\x01\x95\x01\xf9\xff'\0\xfd\xff\xfe\xff&\0\xbb\x01\xd2\x01\xf8\x01\x0f\x02\xff\xff\xdc\0\xfd\xff\xff\xff\xf5\0'\x02m\x02\x0e\x01X\x02\xa4\x02\xbb\x02\xe1\x02\r\0\xfc\xff\xfd\xff\xfe\xff\xff\xff\x0e\0\xfd\xff\xfe\xff\xff\xff\x1e\0\xfd\xff\xfe\xff\xff\xff\x0f\0\xfd\xff\xfe\xff\xff\xff\x11\x01\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xff\x13\0\xfc\xff\xfd\xff\xfe\xff\x0f\0\xff\xff\x10\0\xff\xff\b\x01\x05\0\xfd\xff\x17\0\xfe\xff\x14\0\xff\xff.\0\xfd\xff\xfe\xff*\x004\x005\0\xff\xff5\x000\0[\0\\\0\xff\xff\x1b\x01\xfa\xff\xfb\xff\x89\0h\0Y\0X\0j\0\xff\xff\x8f\0\x89\0\xb1\0\xfe\xff\xb7\0\xa8\0\xa6\0\xb7\0\x02\0\xfd\xff\xb1\0\xac\0\xbb\0\x04\0\xfc\xff5\x02\xfb\xff\xfc\xff\xfd\xffg\x01\xff\xff\xf8\x02\xfe\xff\x06\x03\x1e\x03\xfc\xff\xfd\xff\xfe\xff\xff\xff(\x032\x03J\x03\xfc\xff\xfd\xff\xfe\xff\xff\xff=\x03T\x03l\x03\xf9\xff\xfa\xff\xfb\xff\xf4\0x\x03\x8e\x03\xb3\0\xc2\0\x0f\0\xff\xff\xbe\0\xbc\0\xbb\0\xc1\0\xb7\0\xb3\0\xfe\xff\xbf\0\xc9\0\xc8\0\xc4\0\xcb\0\xc1\0\xbd\0\xfd\xff\x9d\x03_\x03\xae\x03\xc4\x03\xce\x03\xd8\x03\xe4\x03\xef\x03<\0\xfd\xff\xfe\xff\xff\xff\f\x04\xfc\xff\xfd\xffW\x04\xff\xff\x91\x04\xfc\xff\xfd\xff\xdd\x04\xff\xff\xe5\0\xfd\xff\xfe\xff\xff\xff\xe7\0\xfd\xff\xfe\xff\xff\xff\x02\0\xff\xff\x12\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff\"\x01\xfd\xff\xfe\xff\xff\xff\0\0\xff\xff\x03\0\xfe\xff\xff\xff&\x01\xfc\xff\xfd\xff\xfe\xff\xff\xffx\x01\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xff\xd0\0\xfd\xff\xfe\xff\xff\xff\xd3\0\xfd\xff\xfe\xff\xff\xff\xbd\0\xff\xff\x8f\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff\r\x01\xfd\xff\xfe\xff\xff\xff_\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff2\x01\xfd\xff\xfe\xff\xff\xff\x1a\x01\xfd\xff\xfe\xff\xff\xff\xe9\0\xfd\xff\xfe\xff\xff\xff\xde\0\xfd\xff\xfe\xff\xff\xffO\x05\xed\xff\xee\xff\n\0\xf0\xff,\x01\xf3\xff\xf4\xff\xf5\xff\xf6\xff=\x01\x02\x04\xf9\xff-\x05\xd1\0\xe4\0\xd3\0\xe8\0\xe1\0\xdf\0\xf0\0\xff\xff\xeb\0\xea\0\b\x01\xfe\xff\x04\x01\x17\x01\xfd\xff6\x01\xfc\xff\x1f\x01\x1d\x01 \x01'\x011\x01-\x01\xfb\xff9\x01R\x01P\x01N\x01T\x01J\x01V\x01\xfa\xffn\x05\f\x04{\x05\x9b\x05\xa5\x05\xb1\x05\xbb\x05\xc5\x05\xf1\xff\xc7\x01M\x02\xfd\xff\xff\xff\x9a\x02\xde\x05\xd1\x05\x9b\x02\xef\x055\x06L\x06r\x06\x10\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x98\x06\xfc\xff\xfd\xff\xe3\x06\xff\xffU\x07\xf4\xff\xf5\xff\x0b\0\xf7\xffL\x02\xfa\xff\xfb\xff\xfc\xff\xfd\xff\xfe\xff\x1f\x02\xf3\x053\x07d\x01s\x01h\x01\x85\x01v\x01\x9a\x01\xab\x01\xff\xff\xad\x01\xb0\x01\xbf\x01\xb9\x01\xbb\x01\xfd\x01\xe6\x01\xe6\x01\xea\x01\xf7\x01\xed\x01\xea\x01\t\x02\x13\x02\x13\x02\x0f\x02\x15\x02\x0b\x02\x07\x02\x8e\x06\x98\x06t\x07\xaa\x07\xb4\x07\xbe\x07\xc8\x07\xd2\x07\xf8\xffx\x02\xa7\x02\xfd\xff\xff\xff\xd8\x02R\x07\xdc\x07\xec\x02\xf4\x07:\bQ\bw\bL\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x9d\b\xfc\xff\xfd\xff\xe8\b\xff\xff\x87\x02x\x02\xfd\xffd\x02\xfe\xff\xb6\x02\xff\xff\x0b\x02\xff\xff\xcc\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff.\x02\xff\xff\xb2\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x17\0\xff\xff\xb7\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\xbb\x02\xfd\xff\xfe\xff\xff\xffy\x02\xfd\xff\xfe\xff\xff\xff\xb8\x02\xfc\xff\xfd\xff\xfe\xff\x13\0\xff\xff\x8c\x01\x92\x01\xff\xff\x96\x01\x97\x01\x9a\x01\xa8\x01\xaa\x01\xab\x01\xac\x01\xad\x01\xb5\x01\xb8\x01\xb9\x01\xbb\x01\xbf\x01\xc1\x01\xc3\x01\xc4\x01\xc5\x01\xc8\x01\xcb\x01\xdf\x01\xe1\x01\xe4\x01\xf9\x01\xfb\x01\x02\x02\x04\x02\x0b\x02\f\x02\r\x02\0\0",vt="stdin",vu="foreach",jh="-help",gr=122,bK=228,cU=149,v9="Stack_overflow",dm=134,uS=290,g2="src/printer.ml",v8="Not_found",n5="\x01\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\x009\0<\0\0\0<\0\0\0\0\0A\0\0\0A\0\0\0\0\0F\0\0\0\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0T\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0^\0\0\0\0\0a\0\xff\xff\xff\xffa\0\xff\xff\xff\xff\xff\xff\xff\xffh\0\0\0\0\0\0\0\0\0m\0\0\0\0\0\0\0q\0\0\0\0\0\0\0u\0\0\0\0\0\0\0y\0\0\0\0\0\0\0\0\0\0\0~\0\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\x8a\0\0\0\x8e\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x9a\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xb2\0\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xbb\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xc2\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xc9\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xeb\0\0\0\0\0\0\0\xef\0\0\0\0\0\xff\xff\0\0\xf4\0\0\0\0\0\xff\xff\0\0\xf9\0\0\0\0\0\0\0\xfd\0\0\0\0\0\0\0\xff\xff\0\0\x03\x01\0\0\0\0\0\0\0\0\b\x01\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\x11\x01\0\0\0\0\0\0\0\0\x16\x01\0\0\0\0\0\0\0\0\0\0\x1c\x01\0\0\0\0\0\0 \x01\0\0\0\0\0\0\xff\xff\0\0&\x01\0\0\0\0\0\0\0\0+\x01\0\0\0\0\0\0/\x01\0\0\0\0\0\0\0\x004\x01\0\0\0\0\0\x008\x01\0\0\0\0\0\0<\x01\0\0\0\0\0\0@\x01\0\0\0\0\0\0C\x01\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0y\x01}\x01\0\0\0\0\x80\x01\xff\xff\xff\xff\x80\x01\xff\xff\xff\xff\xff\xff\xff\xff\x87\x01\0\0\0\0\0\0\0\0\x8c\x01\0\0\0\0\xff\xff\0\0\x90\x01\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xc1\x01\xc5\x01\0\0\0\0\xc8\x01\xff\xff\xff\xff\xc8\x01\xff\xff\xff\xff\xff\xff\xff\xff\xcf\x01\0\0\0\0\0\0\0\0\xd4\x01\0\0\0\0\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xdc\x01\0\0\xff\xff\0\0\xe2\x01\0\0\0\0\0\0\0\0\xff\xff\0\0\xe9\x01\0\0\0\0\0\0\0\0\xff\xff\0\0\xf0\x01\0\0\0\0\0\0\0\0\xf5\x01\0\0\0\0\0\0\xf9\x01\0\0\0\0\0\0\xfc\x01\0\0\0\0\0\0\xff\xff\0\0\x02\x02\x04\x02\0\0\x05\x02\x06\x02\x07\x02\b\x02\t\x02\n\x02\x0b\x02\f\x02\r\x02\x0e\x02\x0f\x02\x10\x02\x11\x02\x12\x02\x13\x02\x14\x02\x15\x02\x16\x02\x17\x02\x18\x02\x19\x02\x1a\x02\x1b\x02\x1c\x02\x1d\x02\x1e\x02\x1f\x02 \x02!\x02\x03\x02",dw=203,vs="Re.repn",v7=-46,kW="Invalid token",ep=170,dv=155,ii=", ",vr="static/",dB=189,ap=106,vq="src/date.ml",kV=215,uk="Expected ',' or '}' but found",li="Int overflow",uR="clause",uQ="emits",c7=124,nY=252,lh="false",nO=130,vo=400,vp="an integer",v6="byte %i",cT=181,cN=133,fy=" ",vn="Undefined_recursive_module",v5=1525,bS=209,k2=2400000.5,jp=202,jd=1582,eN=192,nX=137,g=116,ui="DateTime",uj="abstract",la=127686388,lg="src/calendar_builder.ml",uh="Boolean",k1=2299161,k$="Set.bal",v4="_",lf=32752,ug="some",nG=158,dZ=3600,cZ=147,nW="%i",uO=969837588,uP="where",v3="id",k0="true",vm="extends",uN="concept";function
 acH(d,b,e,c,f){if(c<=b)for(var
 =======
@@ -22,14 +23,18 @@ adH(d,b,e,c,f){if(c<=b)for(var
 aJ=104,nQ=56319,oe=254,x=108,ld=365180284,wa="Invalid_argument",uW=-59,kY="Map.bal",f6=16777215,nP="@[",vv=32082,a2=242,v$="emit",eE=176,vu="state",ha=0.5,wP="Expected ':' but found",jf=65599,uV="import",dA=148,v_="%ni",uU=-45,wN=3268,wO=846,a4=119,u=115,bR=162,jl=198,nY=512,v9=262,uT=", line",wM="Unterminated comment",dZ=166,lm=513,aQ=128,cM=135,bT=241,gu=194,bV=235,dK=179,fb="0",wL=1026,bW=248,vt=" Display this list of options",dJ=136,vs="transaction",uS="Sys_blocked_io",vr="fd ",wK=2440588,aD=121,wJ=1023,ll=2440587.5,eD=107,eV=174,dU=197,je=237,k9=365,wI=">",cG=156,n7=131,c_=141,uR=-97,vq="Line",dI="out-of-bounds substring position or length",cF=212,vp="%B",v8="File %s, line",uQ="%u",cX=186,n=105,m=110,wH="throw",vo=-214748365,c1="Unexpected end of input",v7="%Y-%m-%d %H:%M:%S%:z",c9=152,nO="@{",vn=-80,od="e",uP=" : flags Open_rdonly and Open_wronly are not compatible",du=183,vm="([^/]*)",g8="-",g_=139,uO=" : file already exists",ac=109,uN="%s '%s'",wG=737456202,k8="namespace",a3=233,v6="::z",dz=205,vl="Out_of_memory",dH=229,wF="  ",f=101,n6=238,vk="index out of bounds",fB=230,vj=3654863,c6=217,dT=195,cr=86400,kX=":\n",v5="event",aZ=142,uM="participant",uL=-60,jn=146097,cL=224,cO=140,cW=214,v4="enum",vi=1027,dG=211,v3="in",cK=222,fa=250,jq=1024,v2=-12,de=187,a1=231,dF=173,v1="none",aj=102,dc=220,ik=529348384,wE="AM",ca=113,eU=172,wC=620821490,oc="\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\xff\xff\x03\0\0\0\x86\0\xff\xff\x03\0\xff\xff\x86\0E\x01\x92\x019\0\xff\xffE\x01\x92\x01\xff\xff\xff\xff\xff\xff\xff\xff}\0\x8a\0\xff\xff\0\0\xff\xff\0\0\x03\0\xa9\0\x86\0\xae\0\xff\xff\0\0\n\x01E\x01\x92\x01\f\x01\0\0\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x05\0s\0\0\0}\0\x81\0\x05\0\xec\x01\x88\0\xff\x01&\0\xff\xff\n\0\x88\0f\0:\0\0\0k\0f\0\xff\xff\x0b\0\0\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x1d\0&\0\0\0o\0\xd0\0\xe9\0\xff\0\f\x01\x0f\0\x11\0<\0\x0b\0\n\0\0\0\x14\0\x18\0\x1f\0 \0\"\0\x16\0\x1a\0\0\0\x0e\0\x1b\0!\0\x12\0\x17\0\0\0\x10\0\x13\0#\0(\0$\0&\0\0\0)\0*\0+\0,\0-\0.\0:\0R\0\x0b\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0'\0?\0'\0'\0'\0'\0'\0'\0'\0'\0'\0'\0U\0\x8c\0<\0\r\0\x8f\0\x90\0\x91\x000\0\x93\x000\0\x94\0'\x000\x000\x000\x000\x000\x000\x000\x000\x000\x000\x001\x001\x001\x001\x001\x001\x001\x001\x001\x001\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0A\0'\0\x95\0\x96\0\x9c\0?\0\x9d\x003\0\x9e\x003\0\x9f\x002\x003\x003\x003\x003\x003\x003\x003\x003\x003\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x005\x005\x005\x005\x005\x005\x005\x005\x005\x005\0\x9b\x002\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xa1\0\xa2\0\x9b\0[\0A\0\0\x007\x007\x007\x007\x007\x007\x007\x007\x007\x007\x009\0D\0f\0k\0s\0\x83\0\x85\0\x85\0}\0\x8a\0\x85\0\xa3\0^\0\xa5\0D\0\xa6\0\xa7\0\xa8\0\xab\0o\0\xac\0\xad\0\xce\0\xcb\0\xcf\0\xd2\0\xd3\0:\0R\0\x85\0\xd4\0\xd5\0\xd6\0\xd7\0\xd9\0\x8c\0\xda\0a\0\xdb\0\xdc\0w\0\xdd\0\xde\0\xdf\0\x85\0[\0\xcb\0\"\x01>\x01\xe9\0\x98\0\x01\x01P\x01\xf7\0<\0\xfb\x006\x01:\x01Q\x01D\0)\x01R\x01S\x01\x06\x01\x1a\x01D\0w\0\x1e\x01\x0f\x01D\0^\0\x0f\x01T\x01U\x01V\x01G\x01X\x01D\0\xcb\x002\x01G\x01D\0Y\x01D\0D\0G\0G\0G\0G\0G\0G\0G\0G\0G\0G\0a\0L\x01w\0Z\x01?\0\x01\x01\\\x01G\0G\0G\0G\0G\0G\0N\0N\0N\0N\0N\0N\0N\0N\0N\0N\0\x98\0L\x01]\x01_\x01a\x01b\x01-\x01N\0N\0N\0N\0N\0N\0c\x01\x98\0d\x01G\0G\0G\0G\0G\0G\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\x14\x01L\x01A\0\x14\x01e\x01f\x01h\x01N\0N\0N\0N\0N\0N\0O\0O\0O\0O\0O\0O\0O\0O\0O\0O\0i\x01j\x01-\x01$\x01k\x01l\x01m\x01O\0O\0O\0O\0O\0O\0P\0P\0P\0P\0P\0P\0P\0P\0P\0P\0n\x01\x1a\x01y\x01\x9d\x01\x1e\x01\x9e\x01\x14\x01P\0P\0P\0P\0P\0P\0[\0\x9f\x01>\x01O\0O\0O\0O\0O\0O\0\xf7\0\xa0\x01\xfb\0\xa1\x01:\x01D\0V\0V\0V\0V\0V\0V\0V\0V\0V\0V\0^\0P\0P\0P\0P\0P\0P\0V\0V\0V\0V\0V\0V\0W\0W\0W\0W\0W\0W\0W\0W\0W\0W\0$\x01)\x01a\0\xa2\x01\xa3\x01w\0\x01\x01W\0W\0W\0W\0W\0W\0\xa5\x016\x01\x98\0V\0V\0V\0V\0V\0V\0\x06\x01\xa6\x01\xa7\x01\xa8\x01\x0f\x01\xa9\x01X\0X\0X\0X\0X\0X\0X\0X\0X\0X\x002\x01W\0W\0W\0W\0W\0W\0X\0X\0X\0X\0X\0X\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0_\0\x85\x01\xaa\x01\xab\x01\x9a\x01\x85\x01\xac\x01Y\0Y\0Y\0Y\0Y\0Y\0_\0\xb0\0\xad\x01X\0X\0X\0X\0X\0X\0-\x01\xae\x01\xaf\x01\xb0\0\xb0\x01\x9a\x01\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0z\x01Y\0Y\0Y\0Y\0Y\0Y\0\x94\x01\xb1\x01\x14\x01\xb2\x01b\0\x94\x01\xb3\x01\xb4\x01\xb5\x01\xb6\x01\xb7\x01\xd8\x01\xc1\x01_\0\x9a\x01\xd8\x01\xcd\x01b\0\xde\x01_\0\xcd\x01\xe5\x01\x01\x02_\0\xda\x01$\x01\xd7\x01\xd7\x01\x02\x02\xda\x01\xd7\x01_\0\x04\x02\x05\x02\xd8\x01_\0\x06\x02_\0_\0`\0`\0`\0`\0`\0`\0`\0`\0`\0`\0\xd7\x01\x07\x02z\x01\b\x02\t\x02\n\x02\x0b\x02`\0`\0`\0`\0`\0`\0b\0\f\x02\xd7\x01\xf7\x01\r\x02\x0e\x02b\0\x0f\x02}\x01\x80\x01b\0\x10\x02\xdc\x01\x11\x02\xfb\x01\x12\x02\x13\x02\x14\x02b\0y\x01\x15\x02\xc2\x01b\0\x16\x02b\0b\0`\0`\0`\0`\0`\0`\0c\0c\0c\0c\0c\0c\0c\0c\0c\0c\0\xe7\x01\x17\x02\xee\x01\x18\x02\xfb\x01\xee\x01\x19\x02c\0c\0c\0c\0c\0c\0d\0d\0d\0d\0d\0d\0d\0d\0d\0d\0\xf3\x01}\x01\x80\x01\xe0\x01\x1a\x02\xc5\x01\x1b\x02d\0d\0d\0d\0d\0d\0\x1c\x02\xc2\x01\x1d\x02c\0c\0c\0c\0c\0c\0\x1e\x02\x1f\x02 \x02\xc8\x01\xe7\x01\x85\x01e\0e\0e\0e\0e\0e\0e\0e\0e\0e\0\xff\xffd\0d\0d\0d\0d\0d\0e\0e\0e\0e\0e\0e\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xff\xff\xff\xff\xc5\x01\xb0\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb9\0\xff\xffe\0e\0e\0e\0e\0e\0\xc8\x01\xe0\x01\xff\xff\xb9\0\xcd\x01z\x01\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xc0\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc0\0\xc1\x01\xf7\x01\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc7\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xc7\0}\x01\x80\x01\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xcc\0\xc2\x01\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe7\x01\xff\xff\xff\xff\xc7\0\xdc\x01\xee\x01\xfb\x01\xff\xff\xc7\0\xf3\x01\xff\xff\xcc\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xe1\0\xff\xff\xe1\0\xff\xff\xe0\x01\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xcd\0\xc5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xcc\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xff\xff\xff\xff\xff\xff\xff\xff\xc8\x01\xff\xff\xff\xff\xe4\0\xff\xff\xe4\0\xff\xff\xe3\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xff\xff\xe3\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xb9\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xed\0\xff\xffM\x01\xff\xffM\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01\xff\xffM\x01\xff\xff\xff\xff\xc0\0\xff\xff\xff\xff\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0M\x01\xff\xff\xff\xff\xff\xff\xed\0\xc7\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xff\xff\xf2\0\xff\xff\xff\xff\xf0\0\xff\xff\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xff\xff\xff\xff\xff\xff\xff\xff\xf2\0\xff\xff\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xed\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xff\xff\xff\xff\xff\xff\xff\xff\xf5\0\xff\xff\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0B\x01B\x01\xff\xff\xff\xffB\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xffB\x01\xff\xff\xff\xff\xff\xff\xff\xffO\x01B\x01\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xffB\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01\xff\xff\xff\xffB\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf2\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01p\x01\xff\xffp\x01\xff\xffB\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01\xff\xff\xff\xffB\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01B\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xff\xff\xffr\x01\xff\xff\xff\xffB\x01\xff\xff\xff\xffs\x01\xff\xffs\x01\xff\xffB\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01\xff\xffr\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01\xff\xff~\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff\x81\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\xff\xff\x9b\x01\xff\xff\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x9b\x01\xff\xff~\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01~\x01\xff\xff\xff\xffB\x01~\x01\x81\x01~\x01~\x01\xff\xff\x81\x01\xff\xff\xff\xff\x9b\x01\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\x81\x01\x81\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\xff\xff\xff\xff\xff\xff\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\xff\xff\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\xb8\x01\x8a\x01\xb8\x01\xff\xff\xff\xff\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xff\xff\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8a\x01\xff\xff\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8d\x01\xff\xff\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8f\x01\x8f\x01\xff\xff\xff\xff\x8f\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc6\x01\x8f\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\x9c\x01\x8f\x01\xff\xff\xff\xff\xff\xff\xc6\x01\x8f\x01\xff\xff\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8a\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xc6\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xc6\x01\xff\xff\xff\xff\xff\xff\xc6\x01\xba\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xc6\x01\xff\xff\xff\xff\x8f\x01\xc6\x01\xff\xff\xc6\x01\xc6\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xbb\x01\xff\xff\xbb\x01\xff\xff\xba\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xc9\x01\xc9\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xff\xff\xff\xff\xff\xff\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xff\xff\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xff\xff\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xd2\x01\xff\xff\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xd5\x01\xff\xff\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",wD="infinity",vh="constant",dt=208,ar="",wB="then",nN="^",cV=143,lc=417088404,ob=55296,v0=992015837,vZ="Cannot use enforce inside a function, you have to be in a Clause",p=100,vY="Integer",v=103,nX=297,uK="Match_failure",ds=169,vX=" Print version and exit",f5=1e3,c8=223,e$=".",lk=221,dS=201,ij="+",jk=65535,oa="File ",n5=138,d4=184,wA=-44,uJ="%li",bO=206,vW=214748365,eT=168,uI="Expected ',' or ']' but found",cn=153,jj=210,g9="ttype",dR=171,hx=127,nM=-32,e=111,k7=257,e_=196,vV=")",wy="call",wz="enforce",vg="Invalid escape sequence",vU="let",gx=256,a0=118,bN=236,n4="nan",vf="PM",wx=65520,eS=180,dQ=191,ve="%.12g",k6=56320,n$="%s",uH="z",dP=185,uG="%",f4="/",ww="Assert_failure",nW="Expected string or identifier but found",h=114,ji="lib/read.mll",gw=190,c5=146,uF=-2147483648,dO=129,b6=123,vT="send",bU=239,vS="src/time_Zone.ml",dE=177,vd="bytes %i-%i",jh='"',eP=332064784,uE=".\n",cI=163,vR="function",nL="jsError",cH=-37,dN=225,wv="return",uD=864e5,vc="bytes ",vQ="a float",k5="--help",vP="End_of_file",wu="Invalid low surrogate for code point beyond U+FFFF",d3=120,vN="..",vO="Failure",vb="Parse error",dD=144,va="Long",vM="with",z=117,vL=-20,dM=150,wt=".cto",dy=226,dd=164,uC="over",cs=126,n3="\xff\xff\xff\xff\xff\xff\x11\0\xff\xff\x13\0\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\x07\0\xff\xff\x13\0\x13\0\x13\0\x13\0\x13\0\x13\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\b\0\b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\t\0\xff\xff\t\0\xff\xff\t\0\xff\xff\xff\xff\x0e\0\xff\xff\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\x01\0\xff\xff\x04\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x04\0\x04\0\x04\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\0\0\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\x03\0\x05\0\x05\0\x05\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\x03\0\xff\xff\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x10\0\xff\xff\x12\0\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\x07\0\xff\xff\x12\0\x12\0\x12\0\x12\0\x12\0\x12\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\b\0\xff\xff\b\0\xff\xff\b\0\xff\xff\xff\xff\r\0\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\t\0\xff\xff\x0b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\x06\0\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\x04\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",gt=188,uB="and",k4=" '",df=167,ws=32044,d$="camlinternalFormat.ml",bM=232,u$="Division_by_zero",g7=1900,nK=43200,uA=-34,cU=145,vK="Sys_error",wr="String",t=112,u_="if",jd=1073741823,u9=": ",a5=161,uz=823,dr=193,eR=182,k3=". ",n_="%d",g6=803994948,k2=57343,wq="asset",im=200,wp="%s %i, %s:\n%s",g5="extracted/ErgoComp.ml",dC=218,la=132,lb="int_of_string",u8="Double",ct=160,dx=157,n2="name",vJ=":z",vH="Missing escape sequence representing low surrogate for code point beyond U+FFFF",vI="unit",g$=-48,wo="The Ergo toplevel",vG="or",wn="set",f3=240,wm=2048,uy="define",eO=178,cQ=216,u7="body",wl="byte ",uw="%s '%s%s'",ux="0x",c2=154,Vf=159,ii="\n",nU=".ctoj",nV="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x03\0\x04\0\0\0\x03\0\x03\0\x86\0\0\0\x03\0\0\0\x86\0E\x01\x92\x01\xff\xff\0\0E\x01\x92\x01\0\0\0\0\0\0\0\0\x7f\0\x8b\0\0\0\x03\0\0\0\f\0\x03\0\xaa\0\x86\0\xaf\0\0\0\x07\0\x0b\x01E\x01\x92\x01\x0e\x01\r\x001\0\x05\0\n\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\x008\0v\0\x06\0\x81\0\x82\x009\0\xed\x01\x89\0\0\x021\0\0\x000\0\x8a\0j\0>\0\x0e\0n\0i\0\0\x001\0\x0f\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x1e\x000\0\b\0r\0\xd1\0\xec\0\0\x01\r\x01\x1d\0\x16\0\xff\xff0\x000\0\x11\0\x15\0\x19\0 \0!\0#\0\x17\0\x1b\0\x10\0\x1f\0\x1c\0\"\0\x13\0\x18\0\x12\0\x1a\0\x14\0$\0)\0%\x000\0\t\0*\0+\0,\0-\0.\0/\0=\0U\x000\0&\0'\0'\0'\0'\0'\0'\0'\0'\0'\x001\0C\0'\0'\0'\0'\0'\0'\0'\0'\0'\0'\0V\0\x8f\0\xff\xff(\0\x90\0\x91\0\x92\x007\0\x94\x007\0\x95\x000\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0\xff\xff0\0\x96\0\x97\0\xa1\0B\0\x9e\x005\0\x9f\x005\0\xa0\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\xa5\x003\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xa2\0\xa3\0\xa6\0]\0\xff\xff\x02\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xff\xffM\0g\0l\0t\0\x84\0\x86\0\x87\0\x80\0\x8b\0\x86\0\xa4\0]\0\xab\0M\0\xa7\0\xa8\0\xa9\0\xac\0p\0\xad\0\xae\0\xd2\0\xe2\0\xd0\0\xd3\0\xd4\0;\0S\0\x86\0\xd5\0\xd6\0\xd7\0\xd8\0\xda\0\x8d\0\xdb\0]\0\xdc\0\xdd\0{\0\xde\0\xdf\0\xe0\0\x88\0_\0\xe1\0#\x01A\x01\xea\0\x9b\0\x05\x01a\x01\xfa\0\xff\xff\xfe\x009\x01=\x01_\x01M\0,\x01\\\x01X\x01\t\x01\x1d\x01L\0|\0!\x01\x12\x01K\0b\0\x13\x01U\x01V\x01W\x01x\x01Y\x01J\0\xe1\x005\x01y\x01I\0Z\x01H\0G\0N\0N\0N\0N\0N\0N\0N\0N\0N\0N\0b\0q\x01z\0[\x01@\0\x04\x01]\x01N\0N\0N\0N\0N\0N\0O\0O\0O\0O\0O\0O\0O\0O\0O\0O\0\x9c\0p\x01^\x01`\x01b\x01c\x011\x01O\0O\0O\0O\0O\0O\0d\x01\x9d\0e\x01N\0N\0N\0N\0N\0N\0\xb7\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\x18\x01p\x01\xff\xff\x19\x01f\x01g\x01i\x01O\0O\0O\0O\0O\0O\0P\0P\0P\0P\0P\0P\0P\0P\0P\0P\0j\x01k\x010\x01(\x01l\x01m\x01n\x01P\0P\0P\0P\0P\0P\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0o\x01\x1b\x01\xff\xff\xab\x01\x1f\x01\xaa\x01\x17\x01Q\0Q\0Q\0Q\0Q\0Q\0\\\0\xa8\x01?\x01P\0P\0P\0P\0P\0P\0\xf8\0\xa5\x01\xfc\0\xa2\x01;\x01E\0W\0W\0W\0W\0W\0W\0W\0W\0W\0W\0\xff\xffQ\0Q\0Q\0Q\0Q\0Q\0W\0W\0W\0W\0W\0W\0X\0X\0X\0X\0X\0X\0X\0X\0X\0X\0'\x01*\x01\xff\xff\xa3\x01\xa4\x01x\0\x02\x01X\0X\0X\0X\0X\0X\0\xa6\x017\x01\x99\0W\0W\0W\0W\0W\0W\0\x07\x01\xa7\x01\xa4\x01\xa9\x01\x10\x01\xa4\x01Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\x003\x01X\0X\0X\0X\0X\0X\0Y\0Y\0Y\0Y\0Y\0Y\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0a\0\x89\x01\xa4\x01\xac\x01\xb9\x01\x88\x01\xad\x01Z\0Z\0Z\0Z\0Z\0Z\0a\0\xb3\0\xae\x01Y\0Y\0Y\0Y\0Y\0Y\0.\x01\xaf\x01\xb0\x01\xb4\0\xa4\x01\xb8\x01\xb5\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0|\x01Z\0Z\0Z\0Z\0Z\0Z\0\xc0\x01\xb2\x01\x15\x01\xb3\x01a\0\xc1\x01\xb4\x01\xb5\x01\xb6\x01\xb7\x01\xa4\x01\xd8\x01\xff\xffa\0\xb8\x01\xd8\x01\xd1\x01a\0\xdf\x01a\0\xd0\x01\xe6\x01\x03\x02a\0\xdb\x01%\x01\xd8\x01\xd9\x01\x03\x02\xdc\x01\xd8\x01a\0\x03\x02\x03\x02\xd8\x01a\0\x03\x02a\0`\0c\0c\0c\0c\0c\0c\0c\0c\0c\0c\0\xd8\x01\x03\x02~\x01\x03\x02\x03\x02\x03\x02\x03\x02c\0c\0c\0c\0c\0c\0a\0\x03\x02\xda\x01\xfa\x01\x03\x02\x03\x02a\0\x03\x02|\x01|\x01a\0\x03\x02\xdd\x01\x03\x02\xfd\x01\x03\x02\x03\x02\x03\x02a\0\xff\xff\x03\x02\xc4\x01a\0\x03\x02a\0`\0c\0c\0c\0c\0c\0c\0d\0d\0d\0d\0d\0d\0d\0d\0d\0d\0\xeb\x01\x03\x02\xf1\x01\x03\x02\xff\x01\xf2\x01\x03\x02d\0d\0d\0d\0d\0d\0e\0e\0e\0e\0e\0e\0e\0e\0e\0e\0\xf6\x01\x81\x01\x81\x01\xe4\x01\x03\x02\xc4\x01\x03\x02e\0e\0e\0e\0e\0e\0\x03\x02\xc6\x01\x03\x02d\0d\0d\0d\0d\0d\0\x03\x02\x03\x02\x03\x02\xc4\x01\xea\x01\x86\x01a\0a\0a\0a\0a\0a\0a\0a\0a\0a\0\0\0e\0e\0e\0e\0e\0e\0a\0a\0a\0a\0a\0a\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\0\0\0\0\xc9\x01\xb1\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xbc\0\0\0a\0a\0a\0a\0a\0a\0\xc9\x01\xe3\x01\0\0\xbf\0\xce\x01{\x01\xbd\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbd\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xc3\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc6\0\xff\xff\xf8\x01\xc4\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc4\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xca\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xcd\0\xff\xff\xff\xff\xcb\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe2\0\xc3\x01\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe8\x01\0\0\0\0\xce\0\xdd\x01\xef\x01\xfe\x01\0\0\xcf\0\xf4\x01\0\0\xe1\0\xcb\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe8\0\0\0\xe8\0\0\0\xe1\x01\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xd9\0\xff\xff\0\0\0\0\0\0\0\0\xe1\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\0\0\0\0\0\0\0\0\xff\xff\0\0\0\0\xe6\0\0\0\xe6\0\0\0\xe4\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\0\0\xe4\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xba\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\0\0\0\0\0\0\0\0\0\0\xf1\0\0\0q\x01\0\0M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01\0\0p\x01\0\0\0\0\xc1\0\0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0p\x01\0\0\0\0\0\0\xf0\0\xc8\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\0\0\xf6\0\0\0\0\0\xf0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\xf5\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xee\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\xf5\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0E\x01F\x01\0\0\0\0E\x01L\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0E\x01\0\0N\x01\0\0\0\0\0\0\0\0h\x01I\x01\0\0\0\0\0\0\0\0O\x01\0\0G\x01L\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01\0\0\0\0H\x01\0\0\0\0\0\0\0\0\0\0\xf3\0\0\0\0\0\0\0\0\0\0\0\0\0P\x01w\x01\0\0w\x01\0\0Q\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01\0\0\0\0J\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01S\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0R\x01\0\0\0\0s\x01\0\0\0\0T\x01\0\0\0\0u\x01\0\0u\x01\0\0K\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01\0\0s\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01\0\0\x80\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\xb9\x01\0\0\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\0\0\0\0\0\0\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xb8\x01\0\0\x80\x01\0\0\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\x80\x01\0\0\0\0D\x01\x80\x01\x80\x01\x80\x01\x7f\x01\0\0\x80\x01\0\0\0\0\xb8\x01\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\0\0\x80\x01\x7f\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\0\0\0\0\0\0\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\0\0\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\xbf\x01\x8e\x01\xbf\x01\0\0\0\0\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\0\0\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\x8d\x01\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\x8d\x01\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x92\x01\x93\x01\0\0\0\0\x92\x01\x9a\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\x92\x01\0\0\x99\x01\0\0\0\0\0\0\0\0\xb1\x01\x96\x01\0\0\0\0\0\0\xc8\x01\x9c\x01\0\0\x94\x01\x9a\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\x95\x01\0\0\0\0\0\0\0\0\0\0\0\0\x8b\x01\0\0\0\0\0\0\0\0\0\0\x9d\x01\0\0\0\0\0\0\0\0\x9e\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xc8\x01\0\0\x97\x01\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\xc8\x01\xbb\x01\0\0\xa0\x01\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\x9f\x01\xc8\x01\0\0\xc8\x01\xc7\x01\0\0\xa1\x01\0\0\0\0\0\0\0\0\0\0\0\0\x98\x01\0\0\0\0\0\0\0\0\xbd\x01\0\0\xbd\x01\0\0\xbb\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\0\0\x91\x01\xc8\x01\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\xc8\x01\0\0\xc8\x01\xc7\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\0\0\0\0\0\0\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\0\0\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\0\0\xd6\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\xd5\x01\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\xd5\x01\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xd3\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",dL=227,lj=207,bP=234,wk=-52,dq=175,kW=32768,nT="lib/core.ml",bL=219,b5=125,u6=" : flags Open_text and Open_binary are not compatible",vF="%Li",jp="*",u5=2147483647,c4=255,dp=199,wj="else",u4=65536,c3=213,jm=1461,k="src/ErgoParser.ml",wi="match",uv=292,b7=246,dn=165,u3="contract",cJ=151,li=204,wh="Unix.Unix_error",nS="\0\0\xec\xff\xed\xff\x03\0\xef\xff\x10\0\xf2\xff\xf3\xff\xf4\xff\xf5\xff\0\0\x1f\0\xf9\xffU\0\x01\0\0\0\0\0\x01\0\0\0\x01\0\x02\0\xff\xff\0\0\0\0\x03\0\xfe\xff\x01\0\x04\0\xfd\xff\x0b\0\xfc\xff\x03\0\x01\0\x03\0\x02\0\x03\0\0\0\xfb\xff\x15\0a\0\n\0\x16\0\x14\0\x10\0\x16\0\f\0\b\0\xfa\xffw\0\x81\0\x8b\0\xa1\0\xab\0\xb5\0\xc1\0\xd1\0\xf0\xff\x0b\0&\0\xfc\xffA\0\xfe\xff\xff\xffn\0\xfc\xff\xa3\0\xfe\xff\xff\xff\xea\0\xf7\xff\xf8\xff0\x01\xfa\xff\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xffG\x01~\x01\x95\x01\xf9\xff'\0\xfd\xff\xfe\xff&\0\xbb\x01\xd2\x01\xf8\x01\x0f\x02\xff\xff\xdc\0\xfd\xff\xff\xff\xf5\0'\x02m\x02\x0e\x01X\x02\xa4\x02\xbb\x02\xe1\x02\r\0\xfc\xff\xfd\xff\xfe\xff\xff\xff\x0e\0\xfd\xff\xfe\xff\xff\xff\x1e\0\xfd\xff\xfe\xff\xff\xff\x0f\0\xfd\xff\xfe\xff\xff\xff\x11\x01\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xff\x13\0\xfc\xff\xfd\xff\xfe\xff\x0f\0\xff\xff\x10\0\xff\xff\b\x01\x05\0\xfd\xff\x17\0\xfe\xff\x14\0\xff\xff.\0\xfd\xff\xfe\xff*\x004\x005\0\xff\xff5\x000\0[\0\\\0\xff\xff\x1b\x01\xfa\xff\xfb\xff\x89\0h\0Y\0X\0j\0\xff\xff\x8f\0\x89\0\xb1\0\xfe\xff\xb7\0\xa8\0\xa6\0\xb7\0\x02\0\xfd\xff\xb1\0\xac\0\xbb\0\x04\0\xfc\xff5\x02\xfb\xff\xfc\xff\xfd\xffg\x01\xff\xff\xf8\x02\xfe\xff\x06\x03\x1e\x03\xfc\xff\xfd\xff\xfe\xff\xff\xff(\x032\x03J\x03\xfc\xff\xfd\xff\xfe\xff\xff\xff=\x03T\x03l\x03\xf9\xff\xfa\xff\xfb\xff\xf4\0x\x03\x8e\x03\xb3\0\xc2\0\x0f\0\xff\xff\xbe\0\xbc\0\xbb\0\xc1\0\xb7\0\xb3\0\xfe\xff\xbf\0\xc9\0\xc8\0\xc4\0\xcb\0\xc1\0\xbd\0\xfd\xff\x9d\x03_\x03\xae\x03\xc4\x03\xce\x03\xd8\x03\xe4\x03\xef\x03<\0\xfd\xff\xfe\xff\xff\xff\f\x04\xfc\xff\xfd\xffW\x04\xff\xff\x91\x04\xfc\xff\xfd\xff\xdd\x04\xff\xff\xe5\0\xfd\xff\xfe\xff\xff\xff\xe7\0\xfd\xff\xfe\xff\xff\xff\x02\0\xff\xff\x12\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff\"\x01\xfd\xff\xfe\xff\xff\xff\0\0\xff\xff\x03\0\xfe\xff\xff\xff&\x01\xfc\xff\xfd\xff\xfe\xff\xff\xffx\x01\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xff\xd0\0\xfd\xff\xfe\xff\xff\xff\xd3\0\xfd\xff\xfe\xff\xff\xff\xbd\0\xff\xff\x8f\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff\r\x01\xfd\xff\xfe\xff\xff\xff_\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff2\x01\xfd\xff\xfe\xff\xff\xff\x1a\x01\xfd\xff\xfe\xff\xff\xff\xe9\0\xfd\xff\xfe\xff\xff\xff\xde\0\xfd\xff\xfe\xff\xff\xffO\x05\xed\xff\xee\xff\n\0\xf0\xff,\x01\xf3\xff\xf4\xff\xf5\xff\xf6\xff=\x01\x02\x04\xf9\xff-\x05\xd1\0\xe4\0\xd3\0\xe8\0\xe1\0\xdf\0\xf0\0\xff\xff\xeb\0\xea\0\b\x01\xfe\xff\x04\x01\x17\x01\xfd\xff6\x01\xfc\xff\x1f\x01\x1d\x01 \x01'\x011\x01-\x01\xfb\xff9\x01R\x01P\x01N\x01T\x01J\x01V\x01\xfa\xffn\x05\f\x04{\x05\x9b\x05\xa5\x05\xb1\x05\xbb\x05\xc5\x05\xf1\xff\xc7\x01M\x02\xfd\xff\xff\xff\x9a\x02\xde\x05\xd1\x05\x9b\x02\xef\x055\x06L\x06r\x06\x10\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x98\x06\xfc\xff\xfd\xff\xe3\x06\xff\xffU\x07\xf4\xff\xf5\xff\x0b\0\xf7\xffL\x02\xfa\xff\xfb\xff\xfc\xff\xfd\xff\xfe\xff\x1f\x02\xf3\x053\x07d\x01s\x01h\x01\x85\x01v\x01\x9a\x01\xab\x01\xff\xff\xad\x01\xb0\x01\xbf\x01\xb9\x01\xbb\x01\xfd\x01\xe6\x01\xe6\x01\xea\x01\xf7\x01\xed\x01\xea\x01\t\x02\x13\x02\x13\x02\x0f\x02\x15\x02\x0b\x02\x07\x02\x8e\x06\x98\x06t\x07\xaa\x07\xb4\x07\xbe\x07\xc8\x07\xd2\x07\xf8\xffx\x02\xa7\x02\xfd\xff\xff\xff\xd8\x02R\x07\xdc\x07\xec\x02\xf4\x07:\bQ\bw\bL\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x9d\b\xfc\xff\xfd\xff\xe8\b\xff\xff\x87\x02x\x02\xfd\xffd\x02\xfe\xff\xb6\x02\xff\xff\x0b\x02\xff\xff\xcc\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff.\x02\xff\xff\xb2\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x17\0\xff\xff\xb7\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\xbb\x02\xfd\xff\xfe\xff\xff\xffy\x02\xfd\xff\xfe\xff\xff\xff\xb8\x02\xfc\xff\xfd\xff\xfe\xff\x13\0\xff\xff\x8c\x01\x92\x01\xff\xff\x96\x01\x97\x01\x9a\x01\xa8\x01\xaa\x01\xab\x01\xac\x01\xad\x01\xb5\x01\xb8\x01\xb9\x01\xbb\x01\xbf\x01\xc1\x01\xc3\x01\xc4\x01\xc5\x01\xc8\x01\xcb\x01\xdf\x01\xe1\x01\xe4\x01\xf9\x01\xfb\x01\x02\x02\x04\x02\x0b\x02\f\x02\r\x02\0\0",vD="stdin",vE="foreach",jg="-help",gv=122,bK=228,cT=149,wg="Stack_overflow",dm=134,u2=290,g4="src/printer.ml",wf="Not_found",n9="\x01\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\x009\0<\0\0\0<\0\0\0\0\0A\0\0\0A\0\0\0\0\0F\0\0\0\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0T\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0^\0\0\0\0\0a\0\xff\xff\xff\xffa\0\xff\xff\xff\xff\xff\xff\xff\xffh\0\0\0\0\0\0\0\0\0m\0\0\0\0\0\0\0q\0\0\0\0\0\0\0u\0\0\0\0\0\0\0y\0\0\0\0\0\0\0\0\0\0\0~\0\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\x8a\0\0\0\x8e\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x9a\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xb2\0\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xbb\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xc2\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xc9\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xeb\0\0\0\0\0\0\0\xef\0\0\0\0\0\xff\xff\0\0\xf4\0\0\0\0\0\xff\xff\0\0\xf9\0\0\0\0\0\0\0\xfd\0\0\0\0\0\0\0\xff\xff\0\0\x03\x01\0\0\0\0\0\0\0\0\b\x01\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\x11\x01\0\0\0\0\0\0\0\0\x16\x01\0\0\0\0\0\0\0\0\0\0\x1c\x01\0\0\0\0\0\0 \x01\0\0\0\0\0\0\xff\xff\0\0&\x01\0\0\0\0\0\0\0\0+\x01\0\0\0\0\0\0/\x01\0\0\0\0\0\0\0\x004\x01\0\0\0\0\0\x008\x01\0\0\0\0\0\0<\x01\0\0\0\0\0\0@\x01\0\0\0\0\0\0C\x01\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0y\x01}\x01\0\0\0\0\x80\x01\xff\xff\xff\xff\x80\x01\xff\xff\xff\xff\xff\xff\xff\xff\x87\x01\0\0\0\0\0\0\0\0\x8c\x01\0\0\0\0\xff\xff\0\0\x90\x01\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xc1\x01\xc5\x01\0\0\0\0\xc8\x01\xff\xff\xff\xff\xc8\x01\xff\xff\xff\xff\xff\xff\xff\xff\xcf\x01\0\0\0\0\0\0\0\0\xd4\x01\0\0\0\0\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xdc\x01\0\0\xff\xff\0\0\xe2\x01\0\0\0\0\0\0\0\0\xff\xff\0\0\xe9\x01\0\0\0\0\0\0\0\0\xff\xff\0\0\xf0\x01\0\0\0\0\0\0\0\0\xf5\x01\0\0\0\0\0\0\xf9\x01\0\0\0\0\0\0\xfc\x01\0\0\0\0\0\0\xff\xff\0\0\x02\x02\x04\x02\0\0\x05\x02\x06\x02\x07\x02\b\x02\t\x02\n\x02\x0b\x02\f\x02\r\x02\x0e\x02\x0f\x02\x10\x02\x11\x02\x12\x02\x13\x02\x14\x02\x15\x02\x16\x02\x17\x02\x18\x02\x19\x02\x1a\x02\x1b\x02\x1c\x02\x1d\x02\x1e\x02\x1f\x02 \x02!\x02\x03\x02",dw=203,vC="Re.repn",we=-46,kV="Invalid token",eq=170,dv=155,il=", ",vB="static/",dB=189,ah=106,vA="src/date.ml",kU=215,uu="Expected ',' or '}' but found",lh="Int overflow",u1="clause",u0="emits",c7=124,n1=252,lg="false",nR=130,vy=400,vz="an integer",wd="byte %i",cS=181,cN=133,fA=" ",vx="Undefined_recursive_module",wc=1525,bS=209,k1=2400000.5,jo=202,jc=1582,eQ=192,n0=137,g=116,us="DateTime",ut="abstract",k$=127686388,lf="src/calendar_builder.ml",ur="Boolean",k0=2299161,k_="Set.bal",n8="_",le=32752,uq="some",nJ=158,dY=3600,cY=147,nZ="%i",uY=969837588,uZ="where",wb="id",kZ="true",vw="extends",uX="concept";function
 adE(d,b,e,c,f){if(c<=b)for(var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+aJ=104,nQ=56319,oe=254,x=108,ld=365180284,wa="Invalid_argument",uW=-59,kY="Map.bal",f7=16777215,nP="@[",vv=32082,a2=242,v$="emit",eE=176,vu="state",ha=0.5,wP="Expected ':' but found",jf=65599,uV="import",dA=148,v_="%ni",uU=-45,wN=3268,wO=846,a4=119,u=115,bR=162,jl=198,nY=512,v9=262,uT=", line",wM="Unterminated comment",dZ=166,lm=513,aQ=128,cM=135,bT=241,gu=194,bV=235,dK=179,fb="0",wL=1026,bW=248,vt=" Display this list of options",dJ=136,vs="transaction",uS="Sys_blocked_io",vr="fd ",wK=2440588,aD=121,wJ=1023,ll=2440587.5,eD=107,eV=174,dU=197,je=237,k9=365,wI=">",cG=156,n7=131,c_=141,uR=-97,vq="Line",dI="out-of-bounds substring position or length",cF=212,vp="%B",v8="File %s, line",uQ="%u",cX=186,n=105,m=110,wH="throw",vo=-214748365,c1="Unexpected end of input",v7="%Y-%m-%d %H:%M:%S%:z",c9=152,nO="@{",vn=-80,od="e",uP=" : flags Open_rdonly and Open_wronly are not compatible",du=183,vm="([^/]*)",g8="-",g_=139,uO=" : file already exists",ac=109,uN="%s '%s'",wG=737456202,k8="namespace",a3=233,v6="::z",dz=205,vl="Out_of_memory",dH=229,wF="  ",f=101,n6=238,vk="index out of bounds",fC=230,vj=3654863,c6=217,dT=195,cr=86400,kX=":\n",v5="event",aZ=142,uM="participant",uL=-60,jn=146097,cL=224,cO=140,cW=214,v4="enum",vi=1027,dG=211,v3="in",cK=222,fa=250,jq=1024,v2=-12,de=187,a1=231,dF=173,v1="none",aj=102,dc=220,ik=529348384,wE="AM",ca=113,eU=172,wC=620821490,oc="\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\xff\xff\x03\0\0\0\x86\0\xff\xff\x03\0\xff\xff\x86\0E\x01\x92\x019\0\xff\xffE\x01\x92\x01\xff\xff\xff\xff\xff\xff\xff\xff}\0\x8a\0\xff\xff\0\0\xff\xff\0\0\x03\0\xa9\0\x86\0\xae\0\xff\xff\0\0\n\x01E\x01\x92\x01\f\x01\0\0\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x05\0s\0\0\0}\0\x81\0\x05\0\xec\x01\x88\0\xff\x01&\0\xff\xff\n\0\x88\0f\0:\0\0\0k\0f\0\xff\xff\x0b\0\0\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x1d\0&\0\0\0o\0\xd0\0\xe9\0\xff\0\f\x01\x0f\0\x11\0<\0\x0b\0\n\0\0\0\x14\0\x18\0\x1f\0 \0\"\0\x16\0\x1a\0\0\0\x0e\0\x1b\0!\0\x12\0\x17\0\0\0\x10\0\x13\0#\0(\0$\0&\0\0\0)\0*\0+\0,\0-\0.\0:\0R\0\x0b\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0\r\0'\0?\0'\0'\0'\0'\0'\0'\0'\0'\0'\0'\0U\0\x8c\0<\0\r\0\x8f\0\x90\0\x91\x000\0\x93\x000\0\x94\0'\x000\x000\x000\x000\x000\x000\x000\x000\x000\x000\x001\x001\x001\x001\x001\x001\x001\x001\x001\x001\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0A\0'\0\x95\0\x96\0\x9c\0?\0\x9d\x003\0\x9e\x003\0\x9f\x002\x003\x003\x003\x003\x003\x003\x003\x003\x003\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x005\x005\x005\x005\x005\x005\x005\x005\x005\x005\0\x9b\x002\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xa1\0\xa2\0\x9b\0[\0A\0\0\x007\x007\x007\x007\x007\x007\x007\x007\x007\x007\x009\0D\0f\0k\0s\0\x83\0\x85\0\x85\0}\0\x8a\0\x85\0\xa3\0^\0\xa5\0D\0\xa6\0\xa7\0\xa8\0\xab\0o\0\xac\0\xad\0\xce\0\xcb\0\xcf\0\xd2\0\xd3\0:\0R\0\x85\0\xd4\0\xd5\0\xd6\0\xd7\0\xd9\0\x8c\0\xda\0a\0\xdb\0\xdc\0w\0\xdd\0\xde\0\xdf\0\x85\0[\0\xcb\0\"\x01>\x01\xe9\0\x98\0\x01\x01P\x01\xf7\0<\0\xfb\x006\x01:\x01Q\x01D\0)\x01R\x01S\x01\x06\x01\x1a\x01D\0w\0\x1e\x01\x0f\x01D\0^\0\x0f\x01T\x01U\x01V\x01G\x01X\x01D\0\xcb\x002\x01G\x01D\0Y\x01D\0D\0G\0G\0G\0G\0G\0G\0G\0G\0G\0G\0a\0L\x01w\0Z\x01?\0\x01\x01\\\x01G\0G\0G\0G\0G\0G\0N\0N\0N\0N\0N\0N\0N\0N\0N\0N\0\x98\0L\x01]\x01_\x01a\x01b\x01-\x01N\0N\0N\0N\0N\0N\0c\x01\x98\0d\x01G\0G\0G\0G\0G\0G\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\xb4\0\x14\x01L\x01A\0\x14\x01e\x01f\x01h\x01N\0N\0N\0N\0N\0N\0O\0O\0O\0O\0O\0O\0O\0O\0O\0O\0i\x01j\x01-\x01$\x01k\x01l\x01m\x01O\0O\0O\0O\0O\0O\0P\0P\0P\0P\0P\0P\0P\0P\0P\0P\0n\x01\x1a\x01y\x01\x9d\x01\x1e\x01\x9e\x01\x14\x01P\0P\0P\0P\0P\0P\0[\0\x9f\x01>\x01O\0O\0O\0O\0O\0O\0\xf7\0\xa0\x01\xfb\0\xa1\x01:\x01D\0V\0V\0V\0V\0V\0V\0V\0V\0V\0V\0^\0P\0P\0P\0P\0P\0P\0V\0V\0V\0V\0V\0V\0W\0W\0W\0W\0W\0W\0W\0W\0W\0W\0$\x01)\x01a\0\xa2\x01\xa3\x01w\0\x01\x01W\0W\0W\0W\0W\0W\0\xa5\x016\x01\x98\0V\0V\0V\0V\0V\0V\0\x06\x01\xa6\x01\xa7\x01\xa8\x01\x0f\x01\xa9\x01X\0X\0X\0X\0X\0X\0X\0X\0X\0X\x002\x01W\0W\0W\0W\0W\0W\0X\0X\0X\0X\0X\0X\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0_\0\x85\x01\xaa\x01\xab\x01\x9a\x01\x85\x01\xac\x01Y\0Y\0Y\0Y\0Y\0Y\0_\0\xb0\0\xad\x01X\0X\0X\0X\0X\0X\0-\x01\xae\x01\xaf\x01\xb0\0\xb0\x01\x9a\x01\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0\xb0\0z\x01Y\0Y\0Y\0Y\0Y\0Y\0\x94\x01\xb1\x01\x14\x01\xb2\x01b\0\x94\x01\xb3\x01\xb4\x01\xb5\x01\xb6\x01\xb7\x01\xd8\x01\xc1\x01_\0\x9a\x01\xd8\x01\xcd\x01b\0\xde\x01_\0\xcd\x01\xe5\x01\x01\x02_\0\xda\x01$\x01\xd7\x01\xd7\x01\x02\x02\xda\x01\xd7\x01_\0\x04\x02\x05\x02\xd8\x01_\0\x06\x02_\0_\0`\0`\0`\0`\0`\0`\0`\0`\0`\0`\0\xd7\x01\x07\x02z\x01\b\x02\t\x02\n\x02\x0b\x02`\0`\0`\0`\0`\0`\0b\0\f\x02\xd7\x01\xf7\x01\r\x02\x0e\x02b\0\x0f\x02}\x01\x80\x01b\0\x10\x02\xdc\x01\x11\x02\xfb\x01\x12\x02\x13\x02\x14\x02b\0y\x01\x15\x02\xc2\x01b\0\x16\x02b\0b\0`\0`\0`\0`\0`\0`\0c\0c\0c\0c\0c\0c\0c\0c\0c\0c\0\xe7\x01\x17\x02\xee\x01\x18\x02\xfb\x01\xee\x01\x19\x02c\0c\0c\0c\0c\0c\0d\0d\0d\0d\0d\0d\0d\0d\0d\0d\0\xf3\x01}\x01\x80\x01\xe0\x01\x1a\x02\xc5\x01\x1b\x02d\0d\0d\0d\0d\0d\0\x1c\x02\xc2\x01\x1d\x02c\0c\0c\0c\0c\0c\0\x1e\x02\x1f\x02 \x02\xc8\x01\xe7\x01\x85\x01e\0e\0e\0e\0e\0e\0e\0e\0e\0e\0\xff\xffd\0d\0d\0d\0d\0d\0e\0e\0e\0e\0e\0e\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xff\xff\xff\xff\xc5\x01\xb0\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb9\0\xff\xffe\0e\0e\0e\0e\0e\0\xc8\x01\xe0\x01\xff\xff\xb9\0\xcd\x01z\x01\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xb9\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xbf\0\xc0\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc0\0\xc1\x01\xf7\x01\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc0\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc6\0\xc7\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xe2\0\xc7\0}\x01\x80\x01\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xc7\0\xcc\0\xc2\x01\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe7\x01\xff\xff\xff\xff\xc7\0\xdc\x01\xee\x01\xfb\x01\xff\xff\xc7\0\xf3\x01\xff\xff\xcc\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xcd\0\xe1\0\xff\xff\xe1\0\xff\xff\xe0\x01\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xe1\0\xcd\0\xc5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xcc\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xff\xff\xff\xff\xff\xff\xff\xff\xc8\x01\xff\xff\xff\xff\xe4\0\xff\xff\xe4\0\xff\xff\xe3\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe4\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xe6\0\xff\xff\xe3\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xb9\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xe8\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xed\0\xff\xffM\x01\xff\xffM\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01q\x01\xff\xffM\x01\xff\xff\xff\xff\xc0\0\xff\xff\xff\xff\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0M\x01\xff\xff\xff\xff\xff\xff\xed\0\xc7\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xed\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xff\xff\xf2\0\xff\xff\xff\xff\xf0\0\xff\xff\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xff\xff\xff\xff\xff\xff\xff\xff\xf2\0\xff\xff\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xf2\0\xed\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xff\xff\xff\xff\xff\xff\xff\xff\xf5\0\xff\xff\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0B\x01B\x01\xff\xff\xff\xffB\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01O\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xffB\x01\xff\xff\xff\xff\xff\xff\xff\xffO\x01B\x01\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xffB\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01B\x01\xff\xff\xff\xffB\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf2\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01p\x01\xff\xffp\x01\xff\xffB\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01p\x01\xff\xff\xff\xffB\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01B\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffB\x01\xff\xff\xff\xffr\x01\xff\xff\xff\xffB\x01\xff\xff\xff\xffs\x01\xff\xffs\x01\xff\xffB\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01s\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01\xff\xffr\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01u\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01w\x01\xff\xff~\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff\x81\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\xff\xff\x9b\x01\xff\xff\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x7f\x01\x9b\x01\xff\xff~\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff~\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01~\x01\xff\xff\xff\xffB\x01~\x01\x81\x01~\x01~\x01\xff\xff\x81\x01\xff\xff\xff\xff\x9b\x01\xff\xff\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\xff\xff\xff\xff\x81\x01\xff\xff\x81\x01\x81\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\xff\xff\xff\xff\xff\xff\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\xff\xff\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\xb8\x01\x8a\x01\xb8\x01\xff\xff\xff\xff\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb8\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xb9\x01\xff\xff\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8a\x01\xff\xff\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8a\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8d\x01\xff\xff\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8f\x01\x8f\x01\xff\xff\xff\xff\x8f\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\x9c\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc6\x01\x8f\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\x9c\x01\x8f\x01\xff\xff\xff\xff\xff\xff\xc6\x01\x8f\x01\xff\xff\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\x8f\x01\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8a\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xc6\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xc6\x01\xff\xff\xff\xff\xff\xff\xc6\x01\xba\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xc6\x01\xff\xff\xff\xff\x8f\x01\xc6\x01\xff\xff\xc6\x01\xc6\x01\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xff\xff\xff\xff\xff\xff\xff\xff\xbb\x01\xff\xff\xbb\x01\xff\xff\xba\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbb\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbd\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xbf\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xc7\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\x8f\x01\xc9\x01\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xff\xff\xff\xff\xc9\x01\xff\xff\xc9\x01\xc9\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xff\xff\xff\xff\xff\xff\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xff\xff\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xff\xff\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xd2\x01\xff\xff\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd2\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xd5\x01\xff\xff\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xd2\x01\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",wD="infinity",vh="constant",dt=208,ar="",wB="then",nN="^",cV=143,lc=417088404,ob=55296,v0=992015837,vZ="Cannot use enforce inside a function, you have to be in a Clause",p=100,vY="Integer",v=103,nX=297,uK="Match_failure",ds=169,vX=" Print version and exit",f6=1e3,c8=223,e$=".",lk=221,dS=201,ij="+",jk=65535,oa="File ",n5=138,d4=184,wA=-44,uJ="%li",bO=206,vW=214748365,eT=168,uI="Expected ',' or ']' but found",cn=153,jj=210,g9="ttype",dR=171,hy=127,nM=-32,e=111,k7=257,e_=196,vV=")",wy="call",wz="enforce",vg="Invalid escape sequence",vU="let",gx=256,a0=118,bN=236,n4="nan",vf="PM",wx=65520,eS=180,dQ=191,ve="%.12g",k6=56320,n$="%s",uH="z",dP=185,uG="%",f5="/",ww="Assert_failure",nW="Expected string or identifier but found",h=114,ji="lib/read.mll",gw=190,c5=146,uF=-2147483648,dO=129,b6=123,vT="send",bU=239,vS="src/time_Zone.ml",dE=177,vd="bytes %i-%i",jh='"',eP=332064784,uE=".\n",cI=163,vR="function",nL="jsError",cH=-37,dN=225,wv="return",uD=864e5,vc="bytes ",vQ="a float",k5="--help",vP="End_of_file",wu="Invalid low surrogate for code point beyond U+FFFF",d3=120,vN="..",vO="Failure",vb="Parse error",dD=144,va="Long",vM="with",z=117,vL=-20,dM=150,wt=".cto",dy=226,dd=164,uC="over",cs=126,n3="\xff\xff\xff\xff\xff\xff\x11\0\xff\xff\x13\0\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\x07\0\xff\xff\x13\0\x13\0\x13\0\x13\0\x13\0\x13\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\b\0\b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\t\0\xff\xff\t\0\xff\xff\t\0\xff\xff\xff\xff\x0e\0\xff\xff\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\x01\0\xff\xff\x04\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x04\0\x04\0\x04\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\0\0\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\x03\0\x05\0\x05\0\x05\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\x03\0\xff\xff\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x10\0\xff\xff\x12\0\xff\xff\xff\xff\xff\xff\xff\xff\x07\0\x07\0\xff\xff\x12\0\x12\0\x12\0\x12\0\x12\0\x12\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\b\0\xff\xff\b\0\xff\xff\b\0\xff\xff\xff\xff\r\0\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\t\0\xff\xff\x0b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\x06\0\xff\xff\xff\xff\xff\xff\x01\0\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\x04\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff",gt=188,uB="and",k4=" '",df=167,ws=32044,d$="camlinternalFormat.ml",bM=232,u$="Division_by_zero",g7=1900,nK=43200,uA=-34,cU=145,vK="Sys_error",wr="String",t=112,u_="if",jd=1073741823,u9=": ",a5=161,uz=823,dr=193,eR=182,k3=". ",n_="%d",g6=803994948,k2=57343,wq="asset",im=200,wp="%s %i, %s:\n%s",g5="extracted/ErgoComp.ml",dC=218,la=132,lb="int_of_string",u8="Double",ct=160,dx=157,n2="name",vJ=":z",vH="Missing escape sequence representing low surrogate for code point beyond U+FFFF",vI="unit",g$=-48,wo="The Ergo toplevel",vG="or",wn="set",f4=240,wm=2048,uy="define",eO=178,cQ=216,u7="body",wl="byte ",uw="%s '%s%s'",ux="0x",c2=154,Vf=159,ii="\n",nU=".ctoj",nV="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x03\0\x04\0\0\0\x03\0\x03\0\x86\0\0\0\x03\0\0\0\x86\0E\x01\x92\x01\xff\xff\0\0E\x01\x92\x01\0\0\0\0\0\0\0\0\x7f\0\x8b\0\0\0\x03\0\0\0\f\0\x03\0\xaa\0\x86\0\xaf\0\0\0\x07\0\x0b\x01E\x01\x92\x01\x0e\x01\r\x001\0\x05\0\n\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\x008\0v\0\x06\0\x81\0\x82\x009\0\xed\x01\x89\0\0\x021\0\0\x000\0\x8a\0j\0>\0\x0e\0n\0i\0\0\x001\0\x0f\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x0b\0\x1e\x000\0\b\0r\0\xd1\0\xec\0\0\x01\r\x01\x1d\0\x16\0\xff\xff0\x000\0\x11\0\x15\0\x19\0 \0!\0#\0\x17\0\x1b\0\x10\0\x1f\0\x1c\0\"\0\x13\0\x18\0\x12\0\x1a\0\x14\0$\0)\0%\x000\0\t\0*\0+\0,\0-\0.\0/\0=\0U\x000\0&\0'\0'\0'\0'\0'\0'\0'\0'\0'\x001\0C\0'\0'\0'\0'\0'\0'\0'\0'\0'\0'\0V\0\x8f\0\xff\xff(\0\x90\0\x91\0\x92\x007\0\x94\x007\0\x95\x000\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0\xff\xff0\0\x96\0\x97\0\xa1\0B\0\x9e\x005\0\x9f\x005\0\xa0\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\xa5\x003\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xa2\0\xa3\0\xa6\0]\0\xff\xff\x02\x006\x006\x006\x006\x006\x006\x006\x006\x006\x006\0\xff\xffM\0g\0l\0t\0\x84\0\x86\0\x87\0\x80\0\x8b\0\x86\0\xa4\0]\0\xab\0M\0\xa7\0\xa8\0\xa9\0\xac\0p\0\xad\0\xae\0\xd2\0\xe2\0\xd0\0\xd3\0\xd4\0;\0S\0\x86\0\xd5\0\xd6\0\xd7\0\xd8\0\xda\0\x8d\0\xdb\0]\0\xdc\0\xdd\0{\0\xde\0\xdf\0\xe0\0\x88\0_\0\xe1\0#\x01A\x01\xea\0\x9b\0\x05\x01a\x01\xfa\0\xff\xff\xfe\x009\x01=\x01_\x01M\0,\x01\\\x01X\x01\t\x01\x1d\x01L\0|\0!\x01\x12\x01K\0b\0\x13\x01U\x01V\x01W\x01x\x01Y\x01J\0\xe1\x005\x01y\x01I\0Z\x01H\0G\0N\0N\0N\0N\0N\0N\0N\0N\0N\0N\0b\0q\x01z\0[\x01@\0\x04\x01]\x01N\0N\0N\0N\0N\0N\0O\0O\0O\0O\0O\0O\0O\0O\0O\0O\0\x9c\0p\x01^\x01`\x01b\x01c\x011\x01O\0O\0O\0O\0O\0O\0d\x01\x9d\0e\x01N\0N\0N\0N\0N\0N\0\xb7\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\x18\x01p\x01\xff\xff\x19\x01f\x01g\x01i\x01O\0O\0O\0O\0O\0O\0P\0P\0P\0P\0P\0P\0P\0P\0P\0P\0j\x01k\x010\x01(\x01l\x01m\x01n\x01P\0P\0P\0P\0P\0P\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0Q\0o\x01\x1b\x01\xff\xff\xab\x01\x1f\x01\xaa\x01\x17\x01Q\0Q\0Q\0Q\0Q\0Q\0\\\0\xa8\x01?\x01P\0P\0P\0P\0P\0P\0\xf8\0\xa5\x01\xfc\0\xa2\x01;\x01E\0W\0W\0W\0W\0W\0W\0W\0W\0W\0W\0\xff\xffQ\0Q\0Q\0Q\0Q\0Q\0W\0W\0W\0W\0W\0W\0X\0X\0X\0X\0X\0X\0X\0X\0X\0X\0'\x01*\x01\xff\xff\xa3\x01\xa4\x01x\0\x02\x01X\0X\0X\0X\0X\0X\0\xa6\x017\x01\x99\0W\0W\0W\0W\0W\0W\0\x07\x01\xa7\x01\xa4\x01\xa9\x01\x10\x01\xa4\x01Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\0Y\x003\x01X\0X\0X\0X\0X\0X\0Y\0Y\0Y\0Y\0Y\0Y\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0Z\0a\0\x89\x01\xa4\x01\xac\x01\xb9\x01\x88\x01\xad\x01Z\0Z\0Z\0Z\0Z\0Z\0a\0\xb3\0\xae\x01Y\0Y\0Y\0Y\0Y\0Y\0.\x01\xaf\x01\xb0\x01\xb4\0\xa4\x01\xb8\x01\xb5\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0|\x01Z\0Z\0Z\0Z\0Z\0Z\0\xc0\x01\xb2\x01\x15\x01\xb3\x01a\0\xc1\x01\xb4\x01\xb5\x01\xb6\x01\xb7\x01\xa4\x01\xd8\x01\xff\xffa\0\xb8\x01\xd8\x01\xd1\x01a\0\xdf\x01a\0\xd0\x01\xe6\x01\x03\x02a\0\xdb\x01%\x01\xd8\x01\xd9\x01\x03\x02\xdc\x01\xd8\x01a\0\x03\x02\x03\x02\xd8\x01a\0\x03\x02a\0`\0c\0c\0c\0c\0c\0c\0c\0c\0c\0c\0\xd8\x01\x03\x02~\x01\x03\x02\x03\x02\x03\x02\x03\x02c\0c\0c\0c\0c\0c\0a\0\x03\x02\xda\x01\xfa\x01\x03\x02\x03\x02a\0\x03\x02|\x01|\x01a\0\x03\x02\xdd\x01\x03\x02\xfd\x01\x03\x02\x03\x02\x03\x02a\0\xff\xff\x03\x02\xc4\x01a\0\x03\x02a\0`\0c\0c\0c\0c\0c\0c\0d\0d\0d\0d\0d\0d\0d\0d\0d\0d\0\xeb\x01\x03\x02\xf1\x01\x03\x02\xff\x01\xf2\x01\x03\x02d\0d\0d\0d\0d\0d\0e\0e\0e\0e\0e\0e\0e\0e\0e\0e\0\xf6\x01\x81\x01\x81\x01\xe4\x01\x03\x02\xc4\x01\x03\x02e\0e\0e\0e\0e\0e\0\x03\x02\xc6\x01\x03\x02d\0d\0d\0d\0d\0d\0\x03\x02\x03\x02\x03\x02\xc4\x01\xea\x01\x86\x01a\0a\0a\0a\0a\0a\0a\0a\0a\0a\0\0\0e\0e\0e\0e\0e\0e\0a\0a\0a\0a\0a\0a\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\xb6\0\0\0\0\0\xc9\x01\xb1\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xb8\0\xbc\0\0\0a\0a\0a\0a\0a\0a\0\xc9\x01\xe3\x01\0\0\xbf\0\xce\x01{\x01\xbd\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbd\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xbe\0\xc3\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc6\0\xff\xff\xf8\x01\xc4\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc4\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xc5\0\xca\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xcd\0\xff\xff\xff\xff\xcb\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe2\0\xc3\x01\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe8\x01\0\0\0\0\xce\0\xdd\x01\xef\x01\xfe\x01\0\0\xcf\0\xf4\x01\0\0\xe1\0\xcb\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xcc\0\xe8\0\0\0\xe8\0\0\0\xe1\x01\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xd9\0\xff\xff\0\0\0\0\0\0\0\0\xe1\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\xe3\0\0\0\0\0\0\0\0\0\xff\xff\0\0\0\0\xe6\0\0\0\xe6\0\0\0\xe4\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\xe5\0\0\0\xe4\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xba\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\xe7\0\0\0\0\0\0\0\0\0\0\0\xf1\0\0\0q\x01\0\0M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01\0\0p\x01\0\0\0\0\xc1\0\0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0p\x01\0\0\0\0\0\0\xf0\0\xc8\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\0\0\xf6\0\0\0\0\0\xf0\0\0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\xf5\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xee\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\0\0\0\0\0\0\0\0\xf5\0\0\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0\xf5\0E\x01F\x01\0\0\0\0E\x01L\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0E\x01\0\0N\x01\0\0\0\0\0\0\0\0h\x01I\x01\0\0\0\0\0\0\0\0O\x01\0\0G\x01L\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01M\x01\0\0\0\0H\x01\0\0\0\0\0\0\0\0\0\0\xf3\0\0\0\0\0\0\0\0\0\0\0\0\0P\x01w\x01\0\0w\x01\0\0Q\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01\0\0\0\0J\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01r\x01S\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0R\x01\0\0\0\0s\x01\0\0\0\0T\x01\0\0\0\0u\x01\0\0u\x01\0\0K\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01\0\0s\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01t\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01v\x01\0\0\x80\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\xb9\x01\0\0\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\0\0\0\0\0\0\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\x82\x01\xb8\x01\0\0\x80\x01\0\0\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\x80\x01\0\0\0\0D\x01\x80\x01\x80\x01\x80\x01\x7f\x01\0\0\x80\x01\0\0\0\0\xb8\x01\0\0\0\0\0\0\0\0\x80\x01\0\0\0\0\0\0\x80\x01\0\0\x80\x01\x7f\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\0\0\0\0\0\0\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\x83\x01\0\0\0\0\0\0\0\0\0\0\0\0\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\0\0\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x84\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\xbf\x01\x8e\x01\xbf\x01\0\0\0\0\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\0\0\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x80\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\x8d\x01\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\0\0\0\0\0\0\0\0\x8d\x01\0\0\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x8d\x01\x92\x01\x93\x01\0\0\0\0\x92\x01\x9a\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\x92\x01\0\0\x99\x01\0\0\0\0\0\0\0\0\xb1\x01\x96\x01\0\0\0\0\0\0\xc8\x01\x9c\x01\0\0\x94\x01\x9a\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\x9b\x01\0\0\0\0\x95\x01\0\0\0\0\0\0\0\0\0\0\0\0\x8b\x01\0\0\0\0\0\0\0\0\0\0\x9d\x01\0\0\0\0\0\0\0\0\x9e\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xba\x01\xc8\x01\0\0\x97\x01\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\xc8\x01\xbb\x01\0\0\xa0\x01\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\x9f\x01\xc8\x01\0\0\xc8\x01\xc7\x01\0\0\xa1\x01\0\0\0\0\0\0\0\0\0\0\0\0\x98\x01\0\0\0\0\0\0\0\0\xbd\x01\0\0\xbd\x01\0\0\xbb\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbc\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xbe\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\xca\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\0\0\x91\x01\xc8\x01\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\0\0\0\0\0\0\xc8\x01\0\0\xc8\x01\xc7\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\0\0\0\0\0\0\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\xcb\x01\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\0\0\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xcc\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\0\0\xd6\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xc8\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\xd5\x01\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\xd5\x01\0\0\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\xd5\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xd3\x01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",dL=227,lj=207,bP=234,wk=-52,dq=175,kW=32768,nT="lib/core.ml",bL=219,b5=125,u6=" : flags Open_text and Open_binary are not compatible",vF="%Li",jp="*",u5=2147483647,c4=255,dp=199,wj="else",u4=65536,c3=213,jm=1461,k="src/ErgoParser.ml",wi="match",uv=292,b7=246,dn=165,u3="contract",cJ=151,li=204,wh="Unix.Unix_error",nS="\0\0\xec\xff\xed\xff\x03\0\xef\xff\x10\0\xf2\xff\xf3\xff\xf4\xff\xf5\xff\0\0\x1f\0\xf9\xffU\0\x01\0\0\0\0\0\x01\0\0\0\x01\0\x02\0\xff\xff\0\0\0\0\x03\0\xfe\xff\x01\0\x04\0\xfd\xff\x0b\0\xfc\xff\x03\0\x01\0\x03\0\x02\0\x03\0\0\0\xfb\xff\x15\0a\0\n\0\x16\0\x14\0\x10\0\x16\0\f\0\b\0\xfa\xffw\0\x81\0\x8b\0\xa1\0\xab\0\xb5\0\xc1\0\xd1\0\xf0\xff\x0b\0&\0\xfc\xffA\0\xfe\xff\xff\xffn\0\xfc\xff\xa3\0\xfe\xff\xff\xff\xea\0\xf7\xff\xf8\xff0\x01\xfa\xff\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xffG\x01~\x01\x95\x01\xf9\xff'\0\xfd\xff\xfe\xff&\0\xbb\x01\xd2\x01\xf8\x01\x0f\x02\xff\xff\xdc\0\xfd\xff\xff\xff\xf5\0'\x02m\x02\x0e\x01X\x02\xa4\x02\xbb\x02\xe1\x02\r\0\xfc\xff\xfd\xff\xfe\xff\xff\xff\x0e\0\xfd\xff\xfe\xff\xff\xff\x1e\0\xfd\xff\xfe\xff\xff\xff\x0f\0\xfd\xff\xfe\xff\xff\xff\x11\x01\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xff\x13\0\xfc\xff\xfd\xff\xfe\xff\x0f\0\xff\xff\x10\0\xff\xff\b\x01\x05\0\xfd\xff\x17\0\xfe\xff\x14\0\xff\xff.\0\xfd\xff\xfe\xff*\x004\x005\0\xff\xff5\x000\0[\0\\\0\xff\xff\x1b\x01\xfa\xff\xfb\xff\x89\0h\0Y\0X\0j\0\xff\xff\x8f\0\x89\0\xb1\0\xfe\xff\xb7\0\xa8\0\xa6\0\xb7\0\x02\0\xfd\xff\xb1\0\xac\0\xbb\0\x04\0\xfc\xff5\x02\xfb\xff\xfc\xff\xfd\xffg\x01\xff\xff\xf8\x02\xfe\xff\x06\x03\x1e\x03\xfc\xff\xfd\xff\xfe\xff\xff\xff(\x032\x03J\x03\xfc\xff\xfd\xff\xfe\xff\xff\xff=\x03T\x03l\x03\xf9\xff\xfa\xff\xfb\xff\xf4\0x\x03\x8e\x03\xb3\0\xc2\0\x0f\0\xff\xff\xbe\0\xbc\0\xbb\0\xc1\0\xb7\0\xb3\0\xfe\xff\xbf\0\xc9\0\xc8\0\xc4\0\xcb\0\xc1\0\xbd\0\xfd\xff\x9d\x03_\x03\xae\x03\xc4\x03\xce\x03\xd8\x03\xe4\x03\xef\x03<\0\xfd\xff\xfe\xff\xff\xff\f\x04\xfc\xff\xfd\xffW\x04\xff\xff\x91\x04\xfc\xff\xfd\xff\xdd\x04\xff\xff\xe5\0\xfd\xff\xfe\xff\xff\xff\xe7\0\xfd\xff\xfe\xff\xff\xff\x02\0\xff\xff\x12\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff\"\x01\xfd\xff\xfe\xff\xff\xff\0\0\xff\xff\x03\0\xfe\xff\xff\xff&\x01\xfc\xff\xfd\xff\xfe\xff\xff\xffx\x01\xfb\xff\xfc\xff\xfd\xff\xfe\xff\xff\xff\xd0\0\xfd\xff\xfe\xff\xff\xff\xd3\0\xfd\xff\xfe\xff\xff\xff\xbd\0\xff\xff\x8f\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff\r\x01\xfd\xff\xfe\xff\xff\xff_\x01\xfc\xff\xfd\xff\xfe\xff\xff\xff2\x01\xfd\xff\xfe\xff\xff\xff\x1a\x01\xfd\xff\xfe\xff\xff\xff\xe9\0\xfd\xff\xfe\xff\xff\xff\xde\0\xfd\xff\xfe\xff\xff\xffO\x05\xed\xff\xee\xff\n\0\xf0\xff,\x01\xf3\xff\xf4\xff\xf5\xff\xf6\xff=\x01\x02\x04\xf9\xff-\x05\xd1\0\xe4\0\xd3\0\xe8\0\xe1\0\xdf\0\xf0\0\xff\xff\xeb\0\xea\0\b\x01\xfe\xff\x04\x01\x17\x01\xfd\xff6\x01\xfc\xff\x1f\x01\x1d\x01 \x01'\x011\x01-\x01\xfb\xff9\x01R\x01P\x01N\x01T\x01J\x01V\x01\xfa\xffn\x05\f\x04{\x05\x9b\x05\xa5\x05\xb1\x05\xbb\x05\xc5\x05\xf1\xff\xc7\x01M\x02\xfd\xff\xff\xff\x9a\x02\xde\x05\xd1\x05\x9b\x02\xef\x055\x06L\x06r\x06\x10\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x98\x06\xfc\xff\xfd\xff\xe3\x06\xff\xffU\x07\xf4\xff\xf5\xff\x0b\0\xf7\xffL\x02\xfa\xff\xfb\xff\xfc\xff\xfd\xff\xfe\xff\x1f\x02\xf3\x053\x07d\x01s\x01h\x01\x85\x01v\x01\x9a\x01\xab\x01\xff\xff\xad\x01\xb0\x01\xbf\x01\xb9\x01\xbb\x01\xfd\x01\xe6\x01\xe6\x01\xea\x01\xf7\x01\xed\x01\xea\x01\t\x02\x13\x02\x13\x02\x0f\x02\x15\x02\x0b\x02\x07\x02\x8e\x06\x98\x06t\x07\xaa\x07\xb4\x07\xbe\x07\xc8\x07\xd2\x07\xf8\xffx\x02\xa7\x02\xfd\xff\xff\xff\xd8\x02R\x07\xdc\x07\xec\x02\xf4\x07:\bQ\bw\bL\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x9d\b\xfc\xff\xfd\xff\xe8\b\xff\xff\x87\x02x\x02\xfd\xffd\x02\xfe\xff\xb6\x02\xff\xff\x0b\x02\xff\xff\xcc\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff.\x02\xff\xff\xb2\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\x17\0\xff\xff\xb7\x02\xfc\xff\xfd\xff\xfe\xff\xff\xff\xbb\x02\xfd\xff\xfe\xff\xff\xffy\x02\xfd\xff\xfe\xff\xff\xff\xb8\x02\xfc\xff\xfd\xff\xfe\xff\x13\0\xff\xff\x8c\x01\x92\x01\xff\xff\x96\x01\x97\x01\x9a\x01\xa8\x01\xaa\x01\xab\x01\xac\x01\xad\x01\xb5\x01\xb8\x01\xb9\x01\xbb\x01\xbf\x01\xc1\x01\xc3\x01\xc4\x01\xc5\x01\xc8\x01\xcb\x01\xdf\x01\xe1\x01\xe4\x01\xf9\x01\xfb\x01\x02\x02\x04\x02\x0b\x02\f\x02\r\x02\0\0",vD="stdin",vE="foreach",jg="-help",gv=122,bK=228,cT=149,wg="Stack_overflow",dm=134,u2=290,g4="src/printer.ml",wf="Not_found",n9="\x01\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\x009\0<\0\0\0<\0\0\0\0\0A\0\0\0A\0\0\0\0\0F\0\0\0\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0T\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0^\0\0\0\0\0a\0\xff\xff\xff\xffa\0\xff\xff\xff\xff\xff\xff\xff\xffh\0\0\0\0\0\0\0\0\0m\0\0\0\0\0\0\0q\0\0\0\0\0\0\0u\0\0\0\0\0\0\0y\0\0\0\0\0\0\0\0\0\0\0~\0\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\x8a\0\0\0\x8e\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\0\0\x9a\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xb2\0\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\xff\xff\xbb\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xc2\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xc9\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xeb\0\0\0\0\0\0\0\xef\0\0\0\0\0\xff\xff\0\0\xf4\0\0\0\0\0\xff\xff\0\0\xf9\0\0\0\0\0\0\0\xfd\0\0\0\0\0\0\0\xff\xff\0\0\x03\x01\0\0\0\0\0\0\0\0\b\x01\0\0\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\x11\x01\0\0\0\0\0\0\0\0\x16\x01\0\0\0\0\0\0\0\0\0\0\x1c\x01\0\0\0\0\0\0 \x01\0\0\0\0\0\0\xff\xff\0\0&\x01\0\0\0\0\0\0\0\0+\x01\0\0\0\0\0\0/\x01\0\0\0\0\0\0\0\x004\x01\0\0\0\0\0\x008\x01\0\0\0\0\0\0<\x01\0\0\0\0\0\0@\x01\0\0\0\0\0\0C\x01\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0y\x01}\x01\0\0\0\0\x80\x01\xff\xff\xff\xff\x80\x01\xff\xff\xff\xff\xff\xff\xff\xff\x87\x01\0\0\0\0\0\0\0\0\x8c\x01\0\0\0\0\xff\xff\0\0\x90\x01\0\0\0\0\xff\xff\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\xc1\x01\xc5\x01\0\0\0\0\xc8\x01\xff\xff\xff\xff\xc8\x01\xff\xff\xff\xff\xff\xff\xff\xff\xcf\x01\0\0\0\0\0\0\0\0\xd4\x01\0\0\0\0\xff\xff\0\0\xff\xff\xff\xff\0\0\xff\xff\0\0\xdc\x01\0\0\xff\xff\0\0\xe2\x01\0\0\0\0\0\0\0\0\xff\xff\0\0\xe9\x01\0\0\0\0\0\0\0\0\xff\xff\0\0\xf0\x01\0\0\0\0\0\0\0\0\xf5\x01\0\0\0\0\0\0\xf9\x01\0\0\0\0\0\0\xfc\x01\0\0\0\0\0\0\xff\xff\0\0\x02\x02\x04\x02\0\0\x05\x02\x06\x02\x07\x02\b\x02\t\x02\n\x02\x0b\x02\f\x02\r\x02\x0e\x02\x0f\x02\x10\x02\x11\x02\x12\x02\x13\x02\x14\x02\x15\x02\x16\x02\x17\x02\x18\x02\x19\x02\x1a\x02\x1b\x02\x1c\x02\x1d\x02\x1e\x02\x1f\x02 \x02!\x02\x03\x02",dw=203,vC="Re.repn",we=-46,kV="Invalid token",ep=170,dv=155,il=", ",vB="static/",dB=189,ah=106,vA="src/date.ml",kU=215,uu="Expected ',' or '}' but found",lh="Int overflow",u1="clause",u0="emits",c7=124,n1=252,lg="false",nR=130,vy=400,vz="an integer",wd="byte %i",cS=181,cN=133,fB=" ",vx="Undefined_recursive_module",wc=1525,bS=209,k1=2400000.5,jo=202,jc=1582,eQ=192,n0=137,g=116,us="DateTime",ut="abstract",k$=127686388,lf="src/calendar_builder.ml",ur="Boolean",k0=2299161,k_="Set.bal",n8="_",le=32752,uq="some",nJ=158,dY=3600,cY=147,nZ="%i",uY=969837588,uZ="where",wb="id",kZ="true",vw="extends",uX="concept";function
+ady(d,b,e,c,f){if(c<=b)for(var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=1;a<=f;a++)e[c+a]=d[b+a];else
 for(var
 a=f;a>=1;a--)e[c+a]=d[b+a];return 0}function
-adG(a){var
+adA(a){var
 c=[0];while(a!==0){var
 d=a[1];for(var
 b=1;b<d.length;b++)c.push(d[b]);a=a[2]}return c}function
-adH(e,f,d){var
+adB(e,f,d){var
 a=new
 Array(d+1);a[0]=0;for(var
 b=1,c=f+1;b<=d;b++,c++)a[b]=e[c];return a}function
@@ -55,7 +60,7 @@ a=c-1;a>=0;a--)h[f+a]=g[e+a];else{var
 i=Math.min(c,g.length-e);for(var
 a=0;a<i;a++)h[f+a]=g.charCodeAt(e+a);for(;a<c;a++)h[f+a]=0}}return 0}function
 hb(d,a,e,b,c){return gy(d,a,e,b,c)}function
-aek(b,a){throw[0,b,a]}function
+aee(b,a){throw[0,b,a]}function
 is(b,a){if(a.repeat)return a.repeat(b);var
 c=ar,d=0;if(b==0)return c;for(;;){if(b&1)c+=a;b>>=1;if(b==0)return c;a+=a;d++;if(d==9)a.slice(0,1)}}function
 <<<<<<< HEAD
@@ -76,11 +81,15 @@ wV(a){if(a.length<24){for(var
 gz(a){if(a.t==2)a.c+=is(a.l-a.c.length,"\0");else
 a.c=oq(a.c,0,a.c.length);a.t=0}function
 wX(a){if(a.length<24){for(var
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=0;b<a.length;b++)if(a.charCodeAt(b)>hx)return false;return true}else
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+b=0;b<a.length;b++)if(a.charCodeAt(b)>hy)return false;return true}else
+>>>>>>> (fix) Directly use time constants in generated JS code
 return!/[^\x00-\x7f]/.test(a)}function
-aew(e){for(var
+aeq(e){for(var
 j=ar,c=ar,g,f,h,a,b=0,i=e.length;b<i;b++){f=e.charCodeAt(b);if(f<aQ){for(var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -116,19 +125,25 @@ eW(c,a,b){this.t=c;this.c=a;this.l=b}eW.prototype.toString=function(){return aey
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 d=b+1;d<i&&(f=e.charCodeAt(d))<aQ;d++);if(d-b>nY){c.substr(0,1);j+=c;c=ar;j+=e.slice(b,d)}else
-c+=e.slice(b,d);if(d==i)break;b=d}a=1;if(++b<i&&((h=e.charCodeAt(b))&-64)==aQ){g=h+(f<<6);if(f<cL){a=g-12416;if(a<aQ)a=1}else{a=2;if(++b<i&&((h=e.charCodeAt(b))&-64)==aQ){g=h+(g<<6);if(f<f3){a=g-925824;if(a<wm||a>=55295&&a<57344)a=2}else{a=3;if(++b<i&&((h=e.charCodeAt(b))&-64)==aQ&&f<245){a=h-63447168+(g<<6);if(a<u4||a>1114111)a=3}}}}}if(a<4){b-=a;c+="\ufffd"}else
+c+=e.slice(b,d);if(d==i)break;b=d}a=1;if(++b<i&&((h=e.charCodeAt(b))&-64)==aQ){g=h+(f<<6);if(f<cL){a=g-12416;if(a<aQ)a=1}else{a=2;if(++b<i&&((h=e.charCodeAt(b))&-64)==aQ){g=h+(g<<6);if(f<f4){a=g-925824;if(a<wm||a>=55295&&a<57344)a=2}else{a=3;if(++b<i&&((h=e.charCodeAt(b))&-64)==aQ&&f<245){a=h-63447168+(g<<6);if(a<u4||a>1114111)a=3}}}}}if(a<4){b-=a;c+="\ufffd"}else
 if(a>jk)c+=String.fromCharCode(55232+(a>>10),k6+(a&wJ));else
 c+=String.fromCharCode(a);if(c.length>jq){c.substr(0,1);j+=c;c=ar}}return j+c}function
-aev(a){switch(a.t){case
+aep(a){switch(a.t){case
 9:return a.c;default:gz(a);case
 0:if(wX(a.c)){a.t=9;return a.c}a.t=8;case
+<<<<<<< HEAD
 8:return aew(a.c)}}function
 eW(c,a,b){this.t=c;this.c=a;this.l=b}eW.prototype.toString=function(){return aev(this)};function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+8:return aeq(a.c)}}function
+eW(c,a,b){this.t=c;this.c=a;this.l=b}eW.prototype.toString=function(){return aep(this)};function
+>>>>>>> (fix) Directly use time constants in generated JS code
 d(a){return new
 eW(0,a,a.length)}function
-oo(b,a){aek(b,d(a))}var
+oo(b,a){aee(b,d(a))}var
 dW=[0];function
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 hx(a){ok(dW.Invalid_argument,a)}function
@@ -141,17 +156,22 @@ oo(){hz(vi)}function
 hz(a){oo(dW.Invalid_argument,a)}function
 op(){hz(vk)}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+hA(a){oo(dW.Invalid_argument,a)}function
+op(){hA(vk)}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 l(a,b){switch(a.t&6){default:if(b>=a.c.length)return 0;case
 0:return a.c.charCodeAt(b);case
 4:return a.c[b]}}function
-eo(b,a){if(a>>>0>=b.l)op();return l(b,a)}function
+en(b,a){if(a>>>0>=b.l)op();return l(b,a)}function
 dV(a,c,b){b&=c4;if(a.t!=4){if(c==a.c.length){a.c+=String.fromCharCode(b);if(c+1==a.l)a.t=0;return 0}ln(a)}a.c[c]=b;return 0}function
 eX(b,a,c){if(a>>>0>=b.l)op();return dV(b,a,c)}function
-aeD(c,e){var
+aex(c,e){var
 d=c.length,b=new
 Array(d+1),a=0;for(;a<d;a++)b[a]=c[a];b[a]=e;return b}function
-fC(b,a){if(b.fun)return fC(b.fun,a);var
+fD(b,a){if(b.fun)return fD(b.fun,a);var
 c=b.length,d=a.length,e=c-d;if(e==0)return b.apply(null,a);else
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -193,6 +213,18 @@ lq(a,b){if(a<b)return-1;if(a==b)return 0;return 1}function
 w_(a,b){a.t&6&&gz(a);b.t&6&&gz(b);return a.c<b.c?-1:a.c>b.c?1:0}function
 hy(a,b,h){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+if(e<0)return fD(b.apply(null,lu(a,0,c)),lu(a,c,d-c));else
+return function(c){return fD(b,aex(a,c))}}function
+adz(){hA(vk)}function
+aO(a,b){if(b>>>0>=a.length-1)adz();return a}function
+adC(a){if(isFinite(a)){if(Math.abs(a)>=2.22507385850720138e-308)return 0;if(a!=0)return 1;return 2}return isNaN(a)?4:3}function
+adO(a,b){var
+c=a[3]<<16,d=b[3]<<16;if(c>d)return 1;if(c<d)return-1;if(a[2]>b[2])return 1;if(a[2]<b[2])return-1;if(a[1]>b[1])return 1;if(a[1]<b[1])return-1;return 0}function
+lq(a,b){if(a<b)return-1;if(a==b)return 0;return 1}function
+w_(a,b){a.t&6&&gz(a);b.t&6&&gz(b);return a.c<b.c?-1:a.c>b.c?1:0}function
+hz(a,b,h){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=[];for(;;){if(!(h&&a===b))if(a
 instanceof
 eW)if(b
@@ -225,9 +257,9 @@ if(e!=f)return e<f?-1:1;else
 switch(e){case
 248:var
 c=lq(a[2],b[2]);if(c!=0)return c;break;case
-251:hz("equal: abstract value");case
+251:hA("equal: abstract value");case
 255:var
-c=adU(a,b);if(c!=0)return c;break;default:if(a.length!=b.length)return a.length<b.length?-1:1;if(a.length>1)d.push(a,b,1)}}else
+c=adO(a,b);if(c!=0)return c;break;default:if(a.length!=b.length)return a.length<b.length?-1:1;if(a.length>1)d.push(a,b,1)}}else
 return 1}else
 if(b
 instanceof
@@ -238,8 +270,9 @@ if(typeof
 a!="number"&&a&&a.compare){var
 i=a.compare(b,h);if(i!=0)return i}else
 if(typeof
-a=="function")hz("compare: functional value");else{if(a<b)return-1;if(a>b)return 1;if(a!=b){if(!h)return NaN;if(a==a)return 1;if(b==b)return-1}}if(d.length==0)return 0;var
+a=="function")hA("compare: functional value");else{if(a<b)return-1;if(a>b)return 1;if(a!=b){if(!h)return NaN;if(a==a)return 1;if(b==b)return-1}}if(d.length==0)return 0;var
 g=d.pop();b=d.pop();a=d.pop();if(g+1<a.length)d.push(a,b,g+1);a=a[g];b=b[g]}}function
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 f7(a,b){return hw(a,b,true)}function
@@ -286,12 +319,17 @@ b;a=io(a);b=+a;if(a.length>0&&b===b)return b;a=a.replace(/_/g,ar);b=+a;if(a.leng
 =======
 adJ(a){return(Math.exp(a)+Math.exp(-a))/2}function
 c$(a){if(a<0)hz("Bytes.create");return new
+=======
+f_(a,b){return hz(a,b,true)}function
+adD(a){return(Math.exp(a)+Math.exp(-a))/2}function
+c$(a){if(a<0)hA("Bytes.create");return new
+>>>>>>> (fix) Directly use time constants in generated JS code
 eW(a?2:9,ar,a)}function
 w6(a){throw a}function
 w7(){w6(dW.Division_by_zero)}function
 wS(b,a){if(a==0)w7();return b/a|0}function
-ea(a,b){return+(hy(a,b,false)==0)}function
-adK(a,c,b,d){if(b>0)if(c==0&&(b>=a.l||a.t==2&&b>=a.c.length))if(d==0){a.c=ar;a.t=2}else{a.c=is(b,String.fromCharCode(d));a.t=b==a.l?0:2}else{if(a.t!=4)ln(a);for(b+=c;c<b;c++)a.c[c]=d}return 0}function
+ea(a,b){return+(hz(a,b,false)==0)}function
+adE(a,c,b,d){if(b>0)if(c==0&&(b>=a.l||a.t==2&&b>=a.c.length))if(d==0){a.c=ar;a.t=2}else{a.c=is(b,String.fromCharCode(d));a.t=b==a.l?0:2}else{if(a.t!=4)ln(a);for(b+=c;c<b;c++)a.c[c]=d}return 0}function
 io(a){oo(dW.Failure,a)}function
 ip(a){if((a.t&6)!=0)gz(a);return a.c}function
 lo(a){var
@@ -300,8 +338,8 @@ b;a=ip(a);b=+a;if(a.length>0&&b===b)return b;a=a.replace(/_/g,ar);b=+a;if(a.leng
 c=/^ *([+-]?)0x([0-9a-f]+)\.?([0-9a-f]*)p([+-]?[0-9]+)/i.exec(a);if(c){var
 d=c[3].replace(/0+$/,ar),f=parseInt(c[1]+c[2]+d,16),e=(c[4]|0)-4*d.length;b=f*Math.pow(2,e);return b}if(/^\+?inf(inity)?$/i.test(a))return Infinity;if(/^-inf(inity)?$/i.test(a))return-Infinity;io("float_of_string")}function
 on(d){d=ip(d);var
-e=d.length;if(e>31)hz("format_int: format too long");var
-a={justify:ij,signstyle:g8,filler:fA,alternate:false,base:0,signedconv:false,width:0,uppercase:false,sign:1,prec:-1,conv:"f"};for(var
+e=d.length;if(e>31)hA("format_int: format too long");var
+a={justify:ij,signstyle:g8,filler:fB,alternate:false,base:0,signedconv:false,width:0,uppercase:false,sign:1,prec:-1,conv:"f"};for(var
 c=0;c<e;c++){var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -327,15 +365,20 @@ og(a,f){if(a.uppercase)f=f.toUpperCase();var
 oh(a,f){if(a.uppercase)f=f.toUpperCase();var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 e=f.length;if(a.signedconv&&(a.sign<0||a.signstyle!=g8))e++;if(a.alternate){if(a.base==8)e+=1;if(a.base==16)e+=2}var
-b=ar;if(a.justify==ij&&a.filler==fA)for(var
-c=e;c<a.width;c++)b+=fA;if(a.signedconv)if(a.sign<0)b+=g8;else
+b=ar;if(a.justify==ij&&a.filler==fB)for(var
+c=e;c<a.width;c++)b+=fB;if(a.signedconv)if(a.sign<0)b+=g8;else
 if(a.signstyle!=g8)b+=a.signstyle;if(a.alternate&&a.base==8)b+=fb;if(a.alternate&&a.base==16)b+=ux;if(a.justify==ij&&a.filler==fb)for(var
 c=e;c<a.width;c++)b+=fb;b+=f;if(a.justify==g8)for(var
-c=e;c<a.width;c++)b+=fA;return d(b)}function
+c=e;c<a.width;c++)b+=fB;return d(b)}function
 wT(i,c){var
+<<<<<<< HEAD
 a,e=on(i),d=e.prec<0?6:e.prec;if(c<0||c==0&&1/c==-Infinity){e.sign=-1;c=-c}if(isNaN(c)){a=n4;e.filler=fA}else
 if(!isFinite(c)){a="inf";e.filler=fA}else
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+a,e=on(i),d=e.prec<0?6:e.prec;if(c<0||c==0&&1/c==-Infinity){e.sign=-1;c=-c}if(isNaN(c)){a=n4;e.filler=fB}else
+if(!isFinite(c)){a="inf";e.filler=fB}else
+>>>>>>> (fix) Directly use time constants in generated JS code
 switch(e.conv){case"e":var
 a=c.toExponential(d),b=a.length;if(a.charAt(b-3)==od)a=a.slice(0,b-1)+fb+a.slice(b-1);break;case"f":a=c.toFixed(d);break;case"g":d=d?d:1;a=c.toExponential(d-1);var
 h=a.indexOf(od),g=+a.slice(h+1);if(g<-4||c>=1e+21||c.toFixed(0).length>d){var
@@ -346,18 +389,18 @@ b=a.length-1;while(a.charAt(b)==fb)b--;if(a.charAt(b)==e$)b--;a=a.slice(0,b+1)}}
 lp(e,b){if(ip(e)==n_)return d(ar+b);var
 a=on(e);if(b<0)if(a.signedconv){a.sign=-1;b=-b}else
 b>>>=0;var
-c=b.toString(a.base);if(a.prec>=0){a.filler=fA;var
+c=b.toString(a.base);if(a.prec>=0){a.filler=fB;var
 f=a.prec-c.length;if(f>0)c=is(f,fb)+c}return oh(a,c)}var
-aeg=0;function
-b1(){return aeg++}function
-oi(a,b){return+(hy(a,b,false)>=0)}function
-adL(a,b){return+(hy(a,b,false)>0)}if(!Math.imul)Math.imul=function(b,a){a|=0;return((b>>16)*a<<16)+(b&jk)*a|0};var
-f$=Math.imul;function
-fD(b,a){a=f$(a,3432918353|0);a=a<<15|a>>>32-15;a=f$(a,461845907);b^=a;b=b<<13|b>>>32-13;return(b+(b<<2)|0)+(3864292196|0)|0}function
-adO(b,a){var
-d=a[1]|a[2]<<24,c=a[2]>>>8|a[3]<<16;b=fD(b,c^d);return b}var
-aeC=Math.log2&&Math.log2(1.12355820928894744e+307)==1020;function
-aeB(a){if(aeC)return Math.floor(Math.log2(a));var
+aea=0;function
+b1(){return aea++}function
+oi(a,b){return+(hz(a,b,false)>=0)}function
+adF(a,b){return+(hz(a,b,false)>0)}if(!Math.imul)Math.imul=function(b,a){a|=0;return((b>>16)*a<<16)+(b&jk)*a|0};var
+ga=Math.imul;function
+fE(b,a){a=ga(a,3432918353|0);a=a<<15|a>>>32-15;a=ga(a,461845907);b^=a;b=b<<13|b>>>32-13;return(b+(b<<2)|0)+(3864292196|0)|0}function
+adI(b,a){var
+d=a[1]|a[2]<<24,c=a[2]>>>8|a[3]<<16;b=fE(b,c^d);return b}var
+aew=Math.log2&&Math.log2(1.12355820928894744e+307)==1020;function
+aev(a){if(aew)return Math.floor(Math.log2(a));var
 b=0;if(a==0)return-Infinity;if(a>=1)while(a>=2){a/=2;b++}else
 while(a<1){a*=2;b--}return b}function
 <<<<<<< HEAD
@@ -385,6 +428,7 @@ b=aeE(a)+wH;if(b<=0){b=0;a/=Math.pow(2,-wJ)}else{a/=Math.pow(2,b-vg);if(a<16){a*
 =======
 wU(a){if(!isFinite(a)){if(isNaN(a))return[c4,1,0,le];return a>0?[c4,0,0,le]:[c4,0,0,wx]}var
 f=a==0&&1/a==-Infinity?kW:a>=0?0:kW;if(f)a=-a;var
+<<<<<<< HEAD
 b=aeB(a)+wJ;if(b<=0){b=0;a/=Math.pow(2,-wL)}else{a/=Math.pow(2,b-vi);if(a<16){a*=2;b-=1}if(b==0)a/=2}var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 d=Math.pow(2,24),c=a|0;a=(a-c)*d;var
@@ -395,13 +439,24 @@ b=wU(e),d=b[1]|b[2]<<24,c=b[2]>>>8|b[3]<<16;a=fD(a,d);a=fD(a,c);return a}functio
 adQ(d,b){var
 e=b.length,a,c;for(a=0;a+4<=e;a+=4){c=b[a]|b[a+1]<<8|b[a+2]<<16|b[a+3]<<24;d=fD(d,c)}c=0;switch(e&3){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+b=aev(a)+wJ;if(b<=0){b=0;a/=Math.pow(2,-wL)}else{a/=Math.pow(2,b-vi);if(a<16){a*=2;b-=1}if(b==0)a/=2}var
+d=Math.pow(2,24),c=a|0;a=(a-c)*d;var
+e=a|0;a=(a-e)*d;var
+g=a|0;c=c&15|f|b<<4;return[c4,g,e,c]}function
+adH(a,e){var
+b=wU(e),d=b[1]|b[2]<<24,c=b[2]>>>8|b[3]<<16;a=fE(a,d);a=fE(a,c);return a}function
+adK(d,b){var
+e=b.length,a,c;for(a=0;a+4<=e;a+=4){c=b[a]|b[a+1]<<8|b[a+2]<<16|b[a+3]<<24;d=fE(d,c)}c=0;switch(e&3){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 3:c=b[a+2]<<16;case
 2:c|=b[a+1]<<8;case
-1:c|=b[a];d=fD(d,c)}d^=e;return d}function
-adR(d,b){var
-e=b.length,a,c;for(a=0;a+4<=e;a+=4){c=b.charCodeAt(a)|b.charCodeAt(a+1)<<8|b.charCodeAt(a+2)<<16|b.charCodeAt(a+3)<<24;d=fD(d,c)}c=0;switch(e&3){case
+1:c|=b[a];d=fE(d,c)}d^=e;return d}function
+adL(d,b){var
+e=b.length,a,c;for(a=0;a+4<=e;a+=4){c=b.charCodeAt(a)|b.charCodeAt(a+1)<<8|b.charCodeAt(a+2)<<16|b.charCodeAt(a+3)<<24;d=fE(d,c)}c=0;switch(e&3){case
 3:c=b.charCodeAt(a+2)<<16;case
 2:c|=b.charCodeAt(a+1)<<8;case
+<<<<<<< HEAD
 <<<<<<< HEAD
 1:c|=b.charCodeAt(a);d=fB(d,c)}d^=e;return d}function
 acS(a,b){switch(b.t&6){default:gv(b);case
@@ -427,25 +482,32 @@ adP(a,b){switch(b.t&6){default:gz(b);case
 0:a=adR(a,b.c);break;case
 2:a=adQ(a,b.c)}return a}function
 adM(a){a^=a>>>16;a=f$(a,2246822507|0);a^=a>>>13;a=f$(a,3266489909|0);a^=a>>>16;return a}var
+=======
+1:c|=b.charCodeAt(a);d=fE(d,c)}d^=e;return d}function
+adJ(a,b){switch(b.t&6){default:gz(b);case
+0:a=adL(a,b.c);break;case
+2:a=adK(a,b.c)}return a}function
+adG(a){a^=a>>>16;a=ga(a,2246822507|0);a^=a>>>13;a=ga(a,3266489909|0);a^=a>>>16;return a}var
+>>>>>>> (fix) Directly use time constants in generated JS code
 wQ=gx;function
 oj(j,k,m,l){var
 f,g,h,d,c,b,a,e,i;d=k;if(d<0||d>wQ)d=wQ;c=j;b=m;f=[l];g=0;h=1;while(g<h&&c>0){a=f[g++];if(a
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 instanceof
 Array&&a[0]===(a[0]|0))switch(a[0]){case
-248:b=fD(b,a[2]);c--;break;case
+248:b=fE(b,a[2]);c--;break;case
 250:f[--g]=a[1];break;case
-255:b=adO(b,a);c--;break;default:var
-n=a.length-1<<10|a[0];b=fD(b,n);for(e=1,i=a.length;e<i;e++){if(h>=d)break;f[h++]=a[e]}break}else
+255:b=adI(b,a);c--;break;default:var
+n=a.length-1<<10|a[0];b=fE(b,n);for(e=1,i=a.length;e<i;e++){if(h>=d)break;f[h++]=a[e]}break}else
 if(a
 instanceof
-eW){b=adP(b,a);c--}else
-if(a===(a|0)){b=fD(b,a+a+1);c--}else
-if(a===+a){b=adN(b,a);c--}else
+eW){b=adJ(b,a);c--}else
+if(a===(a|0)){b=fE(b,a+a+1);c--}else
+if(a===+a){b=adH(b,a);c--}else
 if(a&&a.hash&&typeof
-a.hash==="function")b=fD(b,a.hash())}b=adM(b);return b&jd}function
-ad2(a){return[a[3]>>8,a[3]&c4,a[2]>>16,a[2]>>8&c4,a[2]&c4,a[1]>>16,a[1]>>8&c4,a[1]&c4]}function
-adS(d,g,a){var
+a.hash==="function")b=fE(b,a.hash())}b=adG(b);return b&jd}function
+adW(a){return[a[3]>>8,a[3]&c4,a[2]>>16,a[2]>>8&c4,a[2]&c4,a[1]>>16,a[1]>>8&c4,a[1]&c4]}function
+adM(d,g,a){var
 b=0;function
 f(a){g--;if(d<0||g<0)return;if(a
 instanceof
@@ -467,6 +529,7 @@ if(a===+a){d--;var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 j=ac5(wL(a));for(var
 =======
 j=adW(wS(a));for(var
@@ -480,10 +543,13 @@ j=ad5(wS(a));for(var
 =======
 j=ad2(wU(a));for(var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+j=adW(wU(a));for(var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=7;c>=0;c--)b=b*19+j[c]|0}else
 if(a&&a.hash&&typeof
 a.hash==="function")b=b*jf+a.hash()|0}f(a);return b&jd}function
-aex(e){for(var
+aer(e){for(var
 f=ar,b=f,a,h,c=0,g=e.length;c<g;c++){a=e.charCodeAt(c);if(a<aQ){for(var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -518,6 +584,7 @@ if(a>=nP||c+1==g||(h=e.charCodeAt(c+1))<k5||h>k1)b+="\xef\xbf\xbd";else{c++;a=(a
 d=c+1;d<g&&(a=e.charCodeAt(d))<aQ;d++);if(d-c>nY){b.substr(0,1);f+=b;b=ar;f+=e.slice(c,d)}else
 b+=e.slice(c,d);if(d==g)break;c=d}if(a<wm){b+=String.fromCharCode(eQ|a>>6);b+=String.fromCharCode(aQ|a&63)}else
 if(a<ob||a>=k2)b+=String.fromCharCode(cL|a>>12,aQ|a>>6&63,aQ|a&63);else
+<<<<<<< HEAD
 if(a>=nQ||c+1==g||(h=e.charCodeAt(c+1))<k6||h>k2)b+="\xef\xbf\xbd";else{c++;a=(a<<10)+h-56613888;b+=String.fromCharCode(f3|a>>18,aQ|a>>12&63,aQ|a>>6&63,aQ|a&63)}if(b.length>jq){b.substr(0,1);f+=b;b=ar}}return f+b}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 f_(a){var
@@ -529,6 +596,13 @@ adW(a,c,k){if(!isFinite(a)){if(isNaN(a))return f_(n3);return f_(a>0?wB:"-infinit
 =======
 adT(a,c,k){if(!isFinite(a)){if(isNaN(a))return f_(n4);return f_(a>0?wD:"-infinity")}var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+if(a>=nQ||c+1==g||(h=e.charCodeAt(c+1))<k6||h>k2)b+="\xef\xbf\xbd";else{c++;a=(a<<10)+h-56613888;b+=String.fromCharCode(f4|a>>18,aQ|a>>12&63,aQ|a>>6&63,aQ|a&63)}if(b.length>jq){b.substr(0,1);f+=b;b=ar}}return f+b}function
+f$(a){var
+b=9;if(!wX(a))b=8,a=aer(a);return new
+eW(b,a,a.length)}function
+adN(a,c,k){if(!isFinite(a)){if(isNaN(a))return f$(n4);return f$(a>0?wD:"-infinity")}var
+>>>>>>> (fix) Directly use time constants in generated JS code
 i=a==0&&1/a==-Infinity?1:a>=0?0:1;if(i)a=-a;var
 d=0;if(a==0);else
 if(a<1)while(a<1&&d>-1022){a*=2;d--}else
@@ -536,7 +610,7 @@ while(a>=2){a/=2;d++}var
 j=d<0?ar:ij,e=ar;if(i)e=g8;else
 switch(k){case
 43:e=ij;break;case
-32:e=fA;break;default:break}if(c>=0&&c<13){var
+32:e=fB;break;default:break}if(c>=0&&c<13){var
 g=Math.pow(2,c*4);a=Math.round(a*g)/g}var
 b=a.toString(16);if(c>=0){var
 <<<<<<< HEAD
@@ -629,39 +703,39 @@ is(a,b){switch(a.t&6){default:if(b>=a.c.length)return 0;case
 =======
 h=b.indexOf(e$);if(h<0)b+=e$+is(c,fb);else{var
 f=h+1+c;if(b.length<f)b+=is(f-b.length,fb);else
-b=b.substr(0,f)}}return f_(e+ux+b+"p"+j+d.toString(10))}function
+b=b.substr(0,f)}}return f$(e+ux+b+"p"+j+d.toString(10))}function
 ok(a){var
 c=(a[3]&32767)>>4;if(c==2047)return(a[1]|a[2]|a[3]&15)==0?a[3]&kW?-Infinity:Infinity:NaN;var
 d=Math.pow(2,-24),b=(a[1]*d+a[2])*d+(a[3]&15);if(c>0){b+=16;b*=Math.pow(2,c-vi)}else
 b*=Math.pow(2,-wL);if(a[3]&kW)b=-b;return b}function
-adX(a){return(a[3]|a[2]|a[1])==0}function
-ad0(a){return[c4,a&f6,a>>24&f6,a>>31&jk]}function
+adR(a){return(a[3]|a[2]|a[1])==0}function
+adU(a){return[c4,a&f7,a>>24&f7,a>>31&jk]}function
 w4(d){var
 c=d.length,b=new
 Array(c);for(var
 a=0;a<c;a++)b[a]=d[a];return b}function
-ad1(a,b){var
-c=a[1]-b[1],d=a[2]-b[2]+(c>>24),e=a[3]-b[3]+(d>>24);return[c4,c&f6,d&f6,e&jk]}function
+adV(a,b){var
+c=a[1]-b[1],d=a[2]-b[2]+(c>>24),e=a[3]-b[3]+(d>>24);return[c4,c&f7,d&f7,e&jk]}function
 wW(a,b){if(a[3]>b[3])return 1;if(a[3]<b[3])return-1;if(a[2]>b[2])return 1;if(a[2]<b[2])return-1;if(a[1]>b[1])return 1;if(a[1]<b[1])return-1;return 0}function
-wV(a){a[3]=a[3]<<1|a[2]>>23;a[2]=(a[2]<<1|a[1]>>23)&f6;a[1]=a[1]<<1&f6}function
-adY(a){a[1]=(a[1]>>>1|a[2]<<23)&f6;a[2]=(a[2]>>>1|a[3]<<23)&f6;a[3]=a[3]>>>1}function
-ad4(e,f){var
-c=0,b=w4(e),a=w4(f),d=[c4,0,0,0];while(wW(b,a)>0){c++;wV(a)}while(c>=0){c--;wV(d);if(wW(b,a)>=0){d[1]++;b=ad1(b,a)}adY(a)}return[0,d,b]}function
-ad3(a){return a[1]|a[2]<<24}function
-adW(a){return a[3]<<16<0}function
-adZ(a){var
-b=-a[1],c=-a[2]+(b>>24),d=-a[3]+(c>>24);return[c4,b&f6,c&f6,d&jk]}function
-adV(g,c){var
-a=on(g);if(a.signedconv&&adW(c)){a.sign=-1;c=adZ(c)}var
-b=ar,h=ad0(a.base),f="0123456789abcdef";do{var
-e=ad4(c,h);c=e[1];b=f.charAt(ad3(e[2]))+b}while(!adX(c));if(a.prec>=0){a.filler=fA;var
+wV(a){a[3]=a[3]<<1|a[2]>>23;a[2]=(a[2]<<1|a[1]>>23)&f7;a[1]=a[1]<<1&f7}function
+adS(a){a[1]=(a[1]>>>1|a[2]<<23)&f7;a[2]=(a[2]>>>1|a[3]<<23)&f7;a[3]=a[3]>>>1}function
+adY(e,f){var
+c=0,b=w4(e),a=w4(f),d=[c4,0,0,0];while(wW(b,a)>0){c++;wV(a)}while(c>=0){c--;wV(d);if(wW(b,a)>=0){d[1]++;b=adV(b,a)}adS(a)}return[0,d,b]}function
+adX(a){return a[1]|a[2]<<24}function
+adQ(a){return a[3]<<16<0}function
+adT(a){var
+b=-a[1],c=-a[2]+(b>>24),d=-a[3]+(c>>24);return[c4,b&f7,c&f7,d&jk]}function
+adP(g,c){var
+a=on(g);if(a.signedconv&&adQ(c)){a.sign=-1;c=adT(c)}var
+b=ar,h=adU(a.base),f="0123456789abcdef";do{var
+e=adY(c,h);c=e[1];b=f.charAt(adX(e[2]))+b}while(!adR(c));if(a.prec>=0){a.filler=fB;var
 d=a.prec-b.length;if(d>0)b=is(d,fb)+b}return oh(a,b)}function
 it(a,b){switch(a.t&6){default:if(b>=a.c.length)return 0;case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 0:return a.c.charCodeAt(b);case
 4:return a.c[b]}}function
 ai(a){return a.l}function
-aeh(c){var
+aeb(c){var
 a=0,e=ai(c),b=10,d=1;if(e>0)switch(it(c,a)){case
 45:a++;d=-1;break;case
 43:a++;d=1;break}if(a+1<e&&it(c,a)==48)switch(it(c,a+1)){case
@@ -699,18 +773,22 @@ ad8(){return typeof
 =======
 w5(a){if(a>=48&&a<=57)return a-48;if(a>=65&&a<=90)return a-55;if(a>=97&&a<=gv)return a-87;return-1}function
 lr(f){var
-h=aeh(f),c=h[0],i=h[1],d=h[2],g=ai(f),j=-1>>>0,e=c<g?it(f,c):0,b=w5(e);if(b<0||b>=d)io(lb);var
+h=aeb(f),c=h[0],i=h[1],d=h[2],g=ai(f),j=-1>>>0,e=c<g?it(f,c):0,b=w5(e);if(b<0||b>=d)io(lb);var
 a=b;for(c++;c<g;c++){e=it(f,c);if(e==95)continue;b=w5(e);if(b<0||b>=d)break;a=d*a+b;if(a>j)io(lb)}if(c!=g)io(lb);a=i*a;if(d==10&&(a|0)!=a)io(lb);return a|0}function
+<<<<<<< HEAD
 ad5(){return typeof
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+adZ(){return typeof
+>>>>>>> (fix) Directly use time constants in generated JS code
 module!=="undefined"&&module&&module.exports?module.exports:da}function
-aeE(c,e){var
+aey(c,e){var
 d=c.length,b=new
 Array(d+1);b[0]=e;for(var
 a=1;a<=d;a++)b[a]=c[a-1];return b}function
-ad6(a){return function(){return fC(a,aeE(arguments,this))}}function
-ol(a,b){return+(hy(a,b,false)<=0)}function
-fE(a,b){return+(hy(a,b,false)<0)}function
+ad0(a){return function(){return fD(a,aey(arguments,this))}}function
+ol(a,b){return+(hz(a,b,false)<=0)}function
+fF(a,b){return+(hz(a,b,false)<0)}function
 js(b){b=ip(b);var
 d=b.length/2,c=new
 Array(d);for(var
@@ -729,8 +807,8 @@ w(c){var
 b=0;for(var
 a=c.length-1;a>=0;a--){var
 d=c[a];b=[0,d,b]}return b}function
-ad7(a){return Math.LOG10E*Math.log(a)}function
-fm(a,d){var
+ad1(a){return Math.LOG10E*Math.log(a)}function
+fn(a,d){var
 a=a+1|0,b=new
 Array(a);b[0]=0;for(var
 c=1;c<a;c++)b[c]=d;return b}function
@@ -756,8 +834,12 @@ aea=function(){function
 =======
 w$(a){return new
 eW(4,a,a.length)}var
+<<<<<<< HEAD
 ad9=function(){function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+ad3=function(){function
+>>>>>>> (fix) Directly use time constants in generated JS code
 l(a,b){return a+b|0}function
 a(d,a,c,f,b,e){a=l(l(a,d),l(f,e));return l(a<<b|a>>>32-b,c)}function
 g(c,b,d,e,h,f,g){return a(b&d|~b&e,c,b,h,f,g)}function
@@ -799,31 +881,32 @@ eY(a){return a.l}var
 fc=new
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 Array();function
-ad_(b){var
+ad4(b){var
 a=fc[b];return a.file.length()}function
-aen(a){delete
+aeh(a){delete
 dW.fds[a];return 0}function
-fn(a){oo(dW.Sys_error,a)}function
+fo(a){oo(dW.Sys_error,a)}function
 iq(c){var
-a=fc[c];if(!a.opened)fn("Cannot flush a closed channel");if(!a.buffer||a.buffer==ar)return 0;if(a.fd&&dW.fds[a.fd]&&dW.fds[a.fd].output){var
+a=fc[c];if(!a.opened)fo("Cannot flush a closed channel");if(!a.buffer||a.buffer==ar)return 0;if(a.fd&&dW.fds[a.fd]&&dW.fds[a.fd].output){var
 b=dW.fds[a.fd].output;switch(b.length){case
 2:b(c,a.buffer);break;default:b(a.buffer)}}a.buffer=ar;return 0}function
-ad$(b){var
-a=fc[b];iq(b);a.opened=false;a.file.close();aen(a.fd);return 0}function
-aed(a){var
+ad5(b){var
+a=fc[b];iq(b);a.opened=false;a.file.close();aeh(a.fd);return 0}function
+ad9(a){var
 c=a.refill(),b=eY(c);if(b==0)a.refill=null;a.file.write(a.file.length(),c,0,b);return b}function
-aea(d,f,e,b){var
-a=fc[d],c=a.file.length()-a.offset;if(c==0&&a.refill!=null)c=aed(a);if(c<b)b=c;a.file.read(a.offset,f,e,b);a.offset+=b;return b}if(da.process&&da.process.cwd)var
-jr=da.process.cwd().replace(/\\/g,f4);else
+ad6(d,f,e,b){var
+a=fc[d],c=a.file.length()-a.offset;if(c==0&&a.refill!=null)c=ad9(a);if(c<b)b=c;a.file.read(a.offset,f,e,b);a.offset+=b;return b}if(da.process&&da.process.cwd)var
+jr=da.process.cwd().replace(/\\/g,f5);else
 var
-jr="/static";if(jr.slice(-1)!==f4)jr+=f4;function
-ad8(a){a=a
+jr="/static";if(jr.slice(-1)!==f5)jr+=f5;function
+ad2(a){a=a
 instanceof
 eW?a.toString():a;if(a.charCodeAt(0)!=47)a=jr+a;var
-d=a.split(f4),b=[];for(var
+d=a.split(f5),b=[];for(var
 c=0;c<d.length;c++)switch(d[c]){case"..":if(b.length>1)b.pop();break;case".":break;case"":if(b.length==0)b.push(ar);break;default:b.push(d[c]);break}b.orig=a;return b}function
-aei(a){a=a
+aec(a){a=a
 instanceof
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 eT?a.toString():a;fm(a+": No such file or directory")}function
@@ -845,16 +928,24 @@ er(a){this.data=a}er.prototype=new
 wR();er.prototype.truncate=function(a){var
 b=this.data;this.data=c$(a|0);gy(b,0,this.data,0,a)};er.prototype.length=function(){return eY(this.data)};er.prototype.write=function(b,d,g,a){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+eW?a.toString():a;fo(a+": No such file or directory")}function
+wR(){}function
+eq(a){this.data=a}eq.prototype=new
+wR();eq.prototype.truncate=function(a){var
+b=this.data;this.data=c$(a|0);gy(b,0,this.data,0,a)};eq.prototype.length=function(){return eY(this.data)};eq.prototype.write=function(b,d,g,a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=this.length();if(b+a>=c){var
-e=c$(b+a),f=this.data;this.data=e;gy(f,0,this.data,0,c)}gy(d,g,this.data,b,a);return 0};er.prototype.read=function(c,a,d,b){var
-e=this.length();gy(this.data,c,a,d,b);return 0};er.prototype.read_one=function(a){return eo(this.data,a)};er.prototype.close=function(){};er.prototype.constructor=er;function
-fl(b,a){this.content={};this.root=b;this.lookupFun=a}fl.prototype.nm=function(a){return this.root+a};fl.prototype.lookup=function(a){if(!this.content[a]&&this.lookupFun){var
+e=c$(b+a),f=this.data;this.data=e;gy(f,0,this.data,0,c)}gy(d,g,this.data,b,a);return 0};eq.prototype.read=function(c,a,d,b){var
+e=this.length();gy(this.data,c,a,d,b);return 0};eq.prototype.read_one=function(a){return en(this.data,a)};eq.prototype.close=function(){};eq.prototype.constructor=eq;function
+fm(b,a){this.content={};this.root=b;this.lookupFun=a}fm.prototype.nm=function(a){return this.root+a};fm.prototype.lookup=function(a){if(!this.content[a]&&this.lookupFun){var
 b=this.lookupFun(d(this.root),d(a));if(b!=0)this.content[a]=new
-er(b[1])}};fl.prototype.exists=function(a){if(a==ar)return 1;var
-c=a+f4,d=new
+eq(b[1])}};fm.prototype.exists=function(a){if(a==ar)return 1;var
+c=a+f5,d=new
 RegExp(nN+c);for(var
 b
 in
+<<<<<<< HEAD
 <<<<<<< HEAD
 this.content)if(b.match(d))return 1;this.lookup(a);return this.content[a]?1:0};fk.prototype.readdir=function(c){var
 f=c==ar?ar:c+f1,g=new
@@ -868,23 +959,33 @@ RegExp(nK+d+vc),f=[];for(var
 =======
 this.content)if(b.match(d))return 1;this.lookup(a);return this.content[a]?1:0};fl.prototype.readdir=function(c){var
 f=c==ar?ar:c+f4,g=new
+=======
+this.content)if(b.match(d))return 1;this.lookup(a);return this.content[a]?1:0};fm.prototype.readdir=function(c){var
+f=c==ar?ar:c+f5,g=new
+>>>>>>> (fix) Directly use time constants in generated JS code
 RegExp(nN+f+vm),d={},b=[];for(var
 e
 in
 this.content){var
+<<<<<<< HEAD
 a=e.match(g);if(a&&!d[a[1]]){d[a[1]]=true;b.push(a[1])}}return b};fl.prototype.is_dir=function(a){var
 d=a==ar?ar:a+f4,e=new
 <<<<<<< HEAD
 RegExp(nM+d+vk),f=[];for(var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
+=======
+a=e.match(g);if(a&&!d[a[1]]){d[a[1]]=true;b.push(a[1])}}return b};fm.prototype.is_dir=function(a){var
+d=a==ar?ar:a+f5,e=new
+>>>>>>> (fix) Directly use time constants in generated JS code
 RegExp(nN+d+vm),f=[];for(var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c
 in
 this.content){var
-b=c.match(e);if(b)return 1}return 0};fl.prototype.unlink=function(a){var
+b=c.match(e);if(b)return 1}return 0};fm.prototype.unlink=function(a){var
 b=this.content[a]?true:false;delete
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 this.content[a];return b};fk.prototype.open=function(a,b){if(b.rdonly&&b.wronly)fm(this.nm(a)+uF);if(b.text&&b.binary)fm(this.nm(a)+uW);this.lookup(a);if(this.content[a]){if(this.is_dir(a))fm(this.nm(a)+" : is a directory");if(b.create&&b.excl)fm(this.nm(a)+uE);var
@@ -914,12 +1015,20 @@ if(b.create){this.content[a]=new
 er(c$(0));return this.content[a]}else
 aei(this.nm(a))};fl.prototype.register=function(b,a){if(this.content[b])fn(this.nm(b)+uO);if(a
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+this.content[a];return b};fm.prototype.open=function(a,b){if(b.rdonly&&b.wronly)fo(this.nm(a)+uP);if(b.text&&b.binary)fo(this.nm(a)+u6);this.lookup(a);if(this.content[a]){if(this.is_dir(a))fo(this.nm(a)+" : is a directory");if(b.create&&b.excl)fo(this.nm(a)+uO);var
+c=this.content[a];if(b.truncate)c.truncate();return c}else
+if(b.create){this.content[a]=new
+eq(c$(0));return this.content[a]}else
+aec(this.nm(a))};fm.prototype.register=function(b,a){if(this.content[b])fo(this.nm(b)+uO);if(a
+>>>>>>> (fix) Directly use time constants in generated JS code
 instanceof
 eW)this.content[b]=new
-er(a);else
+eq(a);else
 if(a
 instanceof
 Array)this.content[b]=new
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 eq(w2(a));else
@@ -935,10 +1044,14 @@ er(w9(a));else
 =======
 er(w$(a));else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+eq(w$(a));else
+>>>>>>> (fix) Directly use time constants in generated JS code
 if(a.toString){var
 c=d(a.toString());this.content[b]=new
-er(c)}};fl.prototype.constructor=fl;var
+eq(c)}};fm.prototype.constructor=fm;var
 of=da.Buffer;function
+<<<<<<< HEAD
 f8(a){this.fs=require("fs");this.fd=a}f8.prototype=new
 <<<<<<< HEAD
 wP();f8.prototype.truncate=function(a){this.fs.ftruncateSync(this.fd,a|0)};f8.prototype.length=function(){return this.fs.fstatSync(this.fd).size};f8.prototype.write=function(f,b,c,e){var
@@ -946,33 +1059,38 @@ a=of(b);if(!(a
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 wR();f8.prototype.truncate=function(a){this.fs.ftruncateSync(this.fd,a|0)};f8.prototype.length=function(){return this.fs.fstatSync(this.fd).size};f8.prototype.write=function(f,b,c,e){var
+=======
+f9(a){this.fs=require("fs");this.fd=a}f9.prototype=new
+wR();f9.prototype.truncate=function(a){this.fs.ftruncateSync(this.fd,a|0)};f9.prototype.length=function(){return this.fs.fstatSync(this.fd).size};f9.prototype.write=function(f,b,c,e){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=og(b);if(!(a
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 instanceof
 da.Uint8Array))a=new(da.Uint8Array)(a);var
 d=new
-of(a);this.fs.writeSync(this.fd,d,c,e,f);return 0};f8.prototype.read=function(g,d,c,f){var
+of(a);this.fs.writeSync(this.fd,d,c,e,f);return 0};f9.prototype.read=function(g,d,c,f){var
 a=og(d);if(!(a
 instanceof
 da.Uint8Array))a=new(da.Uint8Array)(a);var
 e=new
 of(a);this.fs.readSync(this.fd,e,c,f,g);for(var
-b=0;b<f;b++)eX(d,c+b,e[c+b]);return 0};f8.prototype.read_one=function(c){var
+b=0;b<f;b++)eX(d,c+b,e[c+b]);return 0};f9.prototype.read_one=function(c){var
 b=new(da.Uint8Array)(1),a=new
-of(b);this.fs.readSync(this.fd,a,0,1,c);return a[0]};f8.prototype.close=function(){this.fs.closeSync(this.fd)};f8.prototype.constructor=f8;function
-f7(a){this.fs=require("fs");this.root=a}f7.prototype.nm=function(a){return this.root+a};f7.prototype.exists=function(a){return this.fs.existsSync(this.nm(a))?1:0};f7.prototype.readdir=function(a){return this.fs.readdirSync(this.nm(a))};f7.prototype.is_dir=function(a){return this.fs.statSync(this.nm(a)).isDirectory()?1:0};f7.prototype.unlink=function(a){var
-b=this.fs.existsSync(this.nm(a))?1:0;this.fs.unlinkSync(this.nm(a));return b};f7.prototype.open=function(f,c){var
+of(b);this.fs.readSync(this.fd,a,0,1,c);return a[0]};f9.prototype.close=function(){this.fs.closeSync(this.fd)};f9.prototype.constructor=f9;function
+f8(a){this.fs=require("fs");this.root=a}f8.prototype.nm=function(a){return this.root+a};f8.prototype.exists=function(a){return this.fs.existsSync(this.nm(a))?1:0};f8.prototype.readdir=function(a){return this.fs.readdirSync(this.nm(a))};f8.prototype.is_dir=function(a){return this.fs.statSync(this.nm(a)).isDirectory()?1:0};f8.prototype.unlink=function(a){var
+b=this.fs.existsSync(this.nm(a))?1:0;this.fs.unlinkSync(this.nm(a));return b};f8.prototype.open=function(f,c){var
 a=require("constants"),b=0;for(var
 e
 in
 c)switch(e){case"rdonly":b|=a.O_RDONLY;break;case"wronly":b|=a.O_WRONLY;break;case"append":b|=a.O_WRONLY|a.O_APPEND;break;case"create":b|=a.O_CREAT;break;case"truncate":b|=a.O_TRUNC;break;case"excl":b|=a.O_EXCL;break;case"binary":b|=a.O_BINARY;break;case"text":b|=a.O_TEXT;break;case"nonblock":b|=a.O_NONBLOCK;break}var
 d=this.fs.openSync(this.nm(f),b);return new
-f8(d)};f7.prototype.rename=function(b,a){this.fs.renameSync(this.nm(b),this.nm(a))};f7.prototype.constructor=f7;var
+f9(d)};f8.prototype.rename=function(b,a){this.fs.renameSync(this.nm(b),this.nm(a))};f8.prototype.constructor=f8;var
 ir=jr.match(/[^\/]*\//)[0];function
-aey(){return typeof
+aes(){return typeof
 da.process!=="undefined"&&typeof
 da.process.versions!=="undefined"&&typeof
 da.process.versions.node!=="undefined"}var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1028,26 +1146,34 @@ aeC(a){var
 =======
 ju=[];if(aey())ju.push({path:ir,device:new
 f7(ir)});else
+=======
+ju=[];if(aes())ju.push({path:ir,device:new
+f8(ir)});else
+>>>>>>> (fix) Directly use time constants in generated JS code
 ju.push({path:ir,device:new
-fl(ir)});ju.push({path:ir+vB,device:new
-fl(ir+vB)});function
-aeF(b){var
-f=ad8(b),b=f.join(f4),e=b+f4,c;for(var
+fm(ir)});ju.push({path:ir+vB,device:new
+fm(ir+vB)});function
+aez(b){var
+f=ad2(b),b=f.join(f5),e=b+f5,c;for(var
 d=0;d<ju.length;d++){var
 a=ju[d];if(e.search(a.path)==0&&(!c||c.path.length<a.path.length))c={path:a.path,device:a.device,rest:b.substring(a.path.length,b.length)}}return c}function
 w9(e,f){var
 a=fc[e],c=d(f),b=ai(c);a.file.write(a.offset,c,0,b);a.offset+=b;return 0}function
+<<<<<<< HEAD
 aez(a){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+aet(a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=da;if(b.process&&b.process.stdout&&b.process.stdout.write)b.process.stderr.write(a);else{if(a.charCodeAt(a.length-1)==10)a=a.substr(0,a.length-1);var
 c=b.console;c&&c.error&&c.error(a)}}function
-aeA(a){var
+aeu(a){var
 b=da;if(b.process&&b.process.stdout&&b.process.stdout.write)b.process.stdout.write(a);else{if(a.charCodeAt(a.length-1)==10)a=a.substr(0,a.length-1);var
 c=b.console;c&&c.log&&c.log(a)}}function
 lt(c,e,d,a){if(dW.fds===undefined)dW.fds=new
 Array();a=a?a:{};var
 b={};b.file=d;b.offset=a.append?d.length():0;b.flags=a;b.output=e;dW.fds[c]=b;if(!dW.fd_last_idx||c>dW.fd_last_idx)dW.fd_last_idx=c;return c}function
-aes(c,b,g){var
+aem(c,b,g){var
 a={};while(b){switch(b[1]){case
 0:a.rdonly=1;break;case
 1:a.wronly=1;break;case
@@ -1057,6 +1183,7 @@ a={};while(b){switch(b[1]){case
 5:a.excl=1;break;case
 6:a.binary=1;break;case
 7:a.text=1;break;case
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 8:a.nonblock=1;break}b=b[2]}if(a.rdonly&&a.wronly)fm(c.toString()+uF);if(a.text&&a.binary)fm(c.toString()+uW);var
@@ -1095,34 +1222,46 @@ er(c$(0)));lt(1,aeA,new
 er(c$(0)));lt(2,aez,new
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 er(c$(0)));function
+=======
+8:a.nonblock=1;break}b=b[2]}if(a.rdonly&&a.wronly)fo(c.toString()+uP);if(a.text&&a.binary)fo(c.toString()+u6);var
+d=aez(c),e=d.device.open(d.rest,a),f=dW.fd_last_idx?dW.fd_last_idx:0;return lt(f+1,w9,e,a)}lt(0,w9,new
+eq(c$(0)));lt(1,aeu,new
+eq(c$(0)));lt(2,aet,new
+eq(c$(0)));function
+>>>>>>> (fix) Directly use time constants in generated JS code
 wY(c){var
-b=dW.fds[c];if(b.flags.wronly)fn(vr+c+" is writeonly");var
+b=dW.fds[c];if(b.flags.wronly)fo(vr+c+" is writeonly");var
 a={file:b.file,offset:b.offset,fd:c,opened:true,out:false,refill:null};fc[a.fd]=a;return a.fd}function
 wZ(c){var
-b=dW.fds[c];if(b.flags.rdonly)fn(vr+c+" is readonly");var
+b=dW.fds[c];if(b.flags.rdonly)fo(vr+c+" is readonly");var
 a={file:b.file,offset:b.offset,fd:c,opened:true,out:true,buffer:ar};fc[a.fd]=a;return a.fd}function
-aeb(){var
+ad7(){var
 b=0;for(var
 a=0;a<fc.length;a++)if(fc[a]&&fc[a].opened&&fc[a].out)b=[0,fc[a].fd,b];return b}function
-aec(g,d,h,f){var
-a=fc[g];if(!a.opened)fn("Cannot output to a closed channel");var
+ad8(g,d,h,f){var
+a=fc[g];if(!a.opened)fo("Cannot output to a closed channel");var
 c;if(h==0&&eY(d)==f)c=d;else{c=c$(f);gy(d,h,c,0,f)}var
 b=ip(c),e=b.lastIndexOf("\n");if(e<0)a.buffer+=b;else{a.buffer+=b.substr(0,e+1);iq(g);a.buffer+=b.substr(e+1)}return 0}function
-om(b,a,d,c){return aec(b,a,d,c)}function
+om(b,a,d,c){return ad8(b,a,d,c)}function
 w0(b,a){var
 c=d(String.fromCharCode(a));om(b,c,0,1);return 0}function
-aee(){return 0}function
+ad_(){return 0}function
 w1(b,a){if(a==0)w7();return b%a}function
+<<<<<<< HEAD
 hA(a){if(isFinite(a)){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+hB(a){if(isFinite(a)){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=1/a<0;a=Math.abs(a);var
 b=Math.floor(a),c=a-b;if(d){b=-b;c=-c}return[0,c,b]}if(isNaN(a))return[0,NaN,NaN];return[0,1/a,a]}function
-jt(a,b){return+(hy(a,b,false)!=0)}function
-aef(b,a){b[0]=a;return 0}function
+jt(a,b){return+(hz(a,b,false)!=0)}function
+ad$(b,a){b[0]=a;return 0}function
 eZ(a){return a
 instanceof
 Array?a[0]:a
 instanceof
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1160,12 +1299,20 @@ w3={};function
 ael(a,b){w3[ip(a)]=b;return 0}function
 aem(a){return(Math.exp(a)-Math.exp(-a))/2}function
 ez(a,b){if(a===b)return 1;a.t&6&&gz(a);b.t&6&&gz(b);return a.c==b.c?1:0}function
+=======
+eW?n1:f6}function
+fp(c,b,a){dW[c+1]=b;if(a)dW[a]=b}var
+w3={};function
+aef(a,b){w3[ip(a)]=b;return 0}function
+aeg(a){return(Math.exp(a)-Math.exp(-a))/2}function
+ey(a,b){if(a===b)return 1;a.t&6&&gz(a);b.t&6&&gz(b);return a.c==b.c?1:0}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 aS(b,a){if(a>>>0>=b.l)op();return it(b,a)}function
-aV(a,b){return 1-ez(a,b)}function
-aeo(){return u5/4|0}function
-aep(b){var
-a=da;if(a.quit)a.quit(b);if(a.process&&a.process.exit)a.process.exit(b);hz("Function 'exit' not implemented")}function
-aeq(){var
+aV(a,b){return 1-ey(a,b)}function
+aei(){return u5/4|0}function
+aej(b){var
+a=da;if(a.quit)a.quit(b);if(a.process&&a.process.exit)a.process.exit(b);hA("Function 'exit' not implemented")}function
+aek(){var
 a=da,f="a.out",b=[];if(a.process&&a.process.argv&&a.process.argv.length>1){var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1195,17 +1342,22 @@ aew(){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 c=a.process.argv;f=c[1];b=lu(c,2,c.length-2)}var
-g=f_(f),e=[0,g];for(var
-d=0;d<b.length;d++)e.push(f_(b[d]));return[0,g,e]}function
-aer(){return[0,d("Unix"),32,0]}function
-aej(){w6(dW.Not_found)}function
+g=f$(f),e=[0,g];for(var
+d=0;d<b.length;d++)e.push(f$(b[d]));return[0,g,e]}function
+ael(){return[0,d("Unix"),32,0]}function
+aed(){w6(dW.Not_found)}function
 ls(c){var
+<<<<<<< HEAD
 a=da,b=c.toString();if(a.process&&a.process.env&&a.process.env[b]!=undefined)return f_(a.process.env[b]);aej()}function
 aet(){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+a=da,b=c.toString();if(a.process&&a.process.env&&a.process.env[b]!=undefined)return f$(a.process.env[b]);aed()}function
+aen(){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=new
 Date()^4294967295*Math.random();return[0,a]}function
-aeu(a){var
+aeo(a){var
 b=Math.exp(a),c=Math.exp(-a);return(b-c)/(b+c)}function
 aL(a){var
 b=1;while(a&&a.joo_tramp){a=a.joo_tramp.apply(null,a.joo_args);b++}return a}function
@@ -1249,21 +1401,25 @@ da.RangeError&&a.message&&a.message.match(/maximum call stack/i))return w8(dW.St
 instanceof
 da.InternalError&&a.message&&a.message.match(/too much recursion/i))return w8(dW.Stack_overflow);if(a
 instanceof
-da.Error&&w2(nL))return[0,w2(nL),a];return[0,dW.Failure,f_(String(a))]}function
+da.Error&&w2(nL))return[0,w2(nL),a];return[0,dW.Failure,f$(String(a))]}function
 lv(){return new
-Date().getTime()/f5}function
+Date().getTime()/f6}function
 iu(d){var
 a=new
-Date(d*f5),c=new
+Date(d*f6),c=new
 Date(Date.UTC(a.getUTCFullYear(),0,1)),b=Math.floor((a-c)/uD);return[0,a.getUTCSeconds(),a.getUTCMinutes(),a.getUTCHours(),a.getUTCDate(),a.getUTCMonth(),a.getUTCFullYear()-g7,a.getUTCDay(),b,false|0]}function
 lw(){return 0}function
-aeG(g){var
+aeA(g){var
 a=new
+<<<<<<< HEAD
 Date(g*f5),d=new
 <<<<<<< HEAD
 Date(a.getFullYear(),0,1),b=Math.floor((a-d)/uB),c=new
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
+=======
+Date(g*f6),d=new
+>>>>>>> (fix) Directly use time constants in generated JS code
 Date(a.getFullYear(),0,1),b=Math.floor((a-d)/uD),c=new
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 Date(a.getFullYear(),0,1),e=new
@@ -1292,6 +1448,7 @@ xj=d("input"),xi=[0,0,[0,6,0]],xg=d("output_substring"),xe=d(u7),xd=d(e9),xa=d(l
 >>>>>>> (fix) All tests pass again with the new DateTime support
 Date(a.getFullYear(),6,1),f=Math.max(c.getTimezoneOffset(),e.getTimezoneOffset());return[0,a.getSeconds(),a.getMinutes(),a.getHours(),a.getDate(),a.getMonth(),a.getFullYear()-g7,a.getDay(),b,a.getTimezoneOffset()<f|0]}function
 or(){return Math.floor(lv())}function
+<<<<<<< HEAD
 j(a,b){return a.length==1?a(b):fC(a,[b])}function
 s(a,b,c){return a.length==2?a(b,c):fC(a,[b,c])}function
 aP(a,b,c,d){return a.length==3?a(b,c,d):fC(a,[b,c,d])}function
@@ -1348,7 +1505,21 @@ adD(a,b,c,d,e,f,g,h){return a.length==7?a(b,c,d,e,f,g,h):fC(a,[b,c,d,e,f,g,h])}v
 oZ=[bW,d(vl),-1],jv=[bW,d(vK),-2],ga=[bW,d(vO),-3],fF=[bW,d(wa),-4],ox=[bW,d(vP),-5],aU=[bW,d(wf),-7],o1=[bW,d(uK),-8],o0=[bW,d(wg),-9],i=[bW,d(ww),-11],o2=[bW,d(vx),v2],oM=[0,d(ar),1,0,0],lV=[0,[11,d('File "'),[2,0,[11,d('", line '),[4,0,0,0,[11,d(", characters "),[4,0,0,0,[12,45,[4,0,0,0,[11,d(u9),[2,0,0]]]]]]]]]],d('File "%s", line %d, characters %d-%d: %s')],l6=d(e$),l8=d(e$),iD=[0,[0,0,c4],0],pM=[0,0,0],hH=[0,0,0],e4=[0,d(nS),d(n3),d(n9),d(nV),d(oc),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)],db=[0,d(nS),d(n3),d(n9),d(nV),d(oc),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)],q8=[0,17],sJ=[0,0,0],sK=[0,0,0],h0=[0,ac,[0,97,[0,n,[0,m,0]]]],h1=[0,n,[0,m,[0,n,[0,g,0]]]],hp=[0,99,[0,e,[0,m,[0,g,[0,h,[0,97,[0,99,[0,g,0]]]]]]]],fj=[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]],hq=[0,f,[0,ac,[0,n,[0,g,0]]]],sb=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,0]]]]]]]],h2=[0,x,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]],gW=[0,x,[0,f,[0,ac,[0,n,[0,g,0]]]]],gX=[0,m,[0,e,[0,a4,0]]],fP=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,98,97,u,f]),h3=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98]),ne=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,g,e,t]),fR=[0,0,0,0,0],tB=d(vM),tC=d(uZ),tD=d(vI),tE=d(kZ),tF=d(vs),tG=d(wH),tH=d(wB),tI=d(vu),tJ=[0,0,d(jp)],tK=d(uq),tL=d(wn),tM=d(vT),tN=d(wv),tO=d(uM),tP=d(uC),tQ=d(vG),tR=d(v1),tS=d(k8),tT=d(wi),tU=d(vU),tV=d(v3),tW=d(uV),tX=d(u_),tY=d(vR),tZ=d(vE),t0=d(lg),t1=d(vw),t2=d(v5),t3=d(v4),t4=d(wz),t5=d(u0),t6=d(v$),t7=d(wj),t8=d(uy),t9=d(u3),t_=d(vh),t$=d(uX),ua=d(u1),ub=d(wy),uc=d(wq),ud=d(uB),ue=d(ut),kx=[0,d('\0\0\xd2\xff\xd5\xffQ\0v\0\x01\0\xd9\xff\xda\xff\xdb\xff\xdc\xff\xdf\xff\xe0\xff\xe1\xff\xe2\xff\xe3\xff\xe4\xff\xe5\xff\xe6\xffN\0\xe8\xff\xe9\xff\x17\0h\0\xee\xff"\x001\0#\0\x95\0\x03\0\xfe\xff\xff\xff\xfc\xff\xf7\xff%\0\xf5\xff\xf6\xff&\0\xf4\xff\xf1\xff\xf2\xff\xef\xff\xd3\xff\xd4\xff\xec\xff\xea\xff\xde\xff\xe7\xff\xd2\0\xdc\0\xf2\0\xc1\0\xfc\0\x06\x01\x12\x01\x01\0\xfa\xff\xfb\xff\x02\0\x02\0\xff\xff\xfe\xff\x86\0\xfb\xff\x05\0\xfc\xff\xfd\xffb\0j\0\xff\xff\xfe\xff\x8b\0\xfd\xff\x06\0\xfe\xff\xff\xff'),d("\xff\xff\xff\xff\xff\xff)\0'\0&\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\"\0\xff\xff\xff\xff\x14\0\x12\0\xff\xff\x0f\0\f\0\x05\0\x04\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x06\0\xff\xff\xff\xff\x07\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff(\0\xff\xff(\0\xff\xff(\0\xff\xff\xff\xff\xff\xff\xff\xff\x02\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\xff\xff\x04\0\x04\0\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff"),d("\x01\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xff\xff\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\0\0\0\0\xff\xff\0\0\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff7\0\0\0\0\0\xff\xff\xff\xff\0\0\0\0>\0\0\0\xff\xff\0\0\0\0\xff\xff\xff\xff\0\0\0\0G\0\0\0\xff\xff\0\0\0\0"),d("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x07\0\x06\0\x06\0<\0\x05\x009\0@\0I\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x07\0\x1c\0\x02\0:\0;\0\0\0\0\0\0\0\x0f\0\x0e\0\x18\0\x19\0\x14\0\x15\0\x11\0\x16\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x13\0\x10\0\x1b\0\x1d\0\x1a\0\x12\0\x1f\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\r\0&\0\f\0\x17\0\b\0$\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x0b\0.\0\n\0\t\x000\0,\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0(\0#\0-\0\"\0%\0@\0E\0*\0?\0D\0I\0/\0)\0H\0\0\0'\0\0\0\0\0\x04\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0B\0\0\0\0\0\0\0\0\0C\0/\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0+\0!\0\0\0\0\0\x04\0\0\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0\0\0\0\x005\0 \x005\0\x1e\x008\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x000\x000\x000\x000\x000\x000\x000\x000\x000\x000\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x003\0\0\x003\0\0\x001\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\0\x001\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0A\0\0\0\0\0\0\0\0\0J\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),d("\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\x05\x009\0\0\x006\0?\0H\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\0\x006\0:\0\xff\xff\xff\xff\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x1c\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x19\0\0\0\0\0\0\0\x1a\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x12\0\0\0\0\0\x03\0\x15\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x18\0\x1a\0\x12\0!\0$\0=\0B\0\x16\0=\0C\0F\0\x03\0\x16\0F\0\xff\xff\x19\0\xff\xff\xff\xff\x04\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0=\0\xff\xff\xff\xff\xff\xff\xff\xff=\0\x03\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x16\0\x1b\0\xff\xff\xff\xff\x04\0\xff\xff\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0\xff\xff\xff\xff/\0\x1b\0/\0\0\x006\0/\0/\0/\0/\0/\0/\0/\0/\0/\0/\x000\x000\x000\x000\x000\x000\x000\x000\x000\x000\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff1\0\xff\xff1\0\xff\xff0\x001\x001\x001\x001\x001\x001\x001\x001\x001\x001\x003\x003\x003\x003\x003\x003\x003\x003\x003\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\xff\xff0\x005\x005\x005\x005\x005\x005\x005\x005\x005\x005\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff=\0\xff\xff\xff\xff\xff\xff\xff\xffF\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)];fo(11,o2,vx);fo(10,i,ww);fo(9,[bW,d(uS),-10],uS);fo(8,o0,wg);fo(7,o1,uK);fo(6,aU,wf);fo(5,[bW,d(u$),-6],u$);fo(4,ox,vP);fo(3,fF,wa);fo(2,ga,vO);fo(1,jv,vK);fo(0,oZ,vl);var
 xr=d("input"),xq=[0,0,[0,6,0]],xo=d("output_substring"),xm=d(ve),xl=d(e$),xi=d(lg),xj=d(kZ),xk=d("bool_of_string"),xf=d(kZ),xg=d(lg),xa=[c4,0,0,le],xb=[c4,0,0,wx],xc=[c4,1,0,le],xw=[0,d("list.ml"),v9,11],xu=d("nth"),xv=d("List.nth"),xy=d("\\\\"),xz=d("\\'"),xA=d("\\b"),xB=d("\\t"),xC=d("\\n"),xD=d("\\r"),xx=d("Char.chr"),xK=d("String.blit / Bytes.blit_string"),xJ=d("Bytes.blit"),xI=d("String.sub / Bytes.sub"),xP=d("String.contains_from / Bytes.contains_from"),xN=d(ar),xM=d("String.concat"),xV=d("Array.blit"),xU=d("Array.fill"),xT=d("Array.sub"),x1=d("Set.remove_min_elt"),x2=[0,0,0,0],x3=[0,0,0],x4=[0,d("set.ml"),510,18],xX=d(k_),xY=d(k_),xZ=d(k_),x0=d(k_),x_=d("Map.remove_min_elt"),x$=[0,0,0,0],ya=[0,d("map.ml"),393,10],yb=[0,0,0],x6=d(kY),x7=d(kY),x8=d(kY),x9=d(kY),yd=d("CamlinternalLazy.Undefined"),yj=d("Buffer.add_channel"),yh=d("Buffer.add_substring/add_subbytes"),yg=d("Buffer.add: cannot grow buffer"),ys=d("%c"),yt=d(n$),yu=d(nZ),yv=d(uJ),yw=d(v_),yx=d(vF),yy=d("%f"),yz=d(vp),yA=d("%{"),yB=d("%}"),yC=d("%("),yD=d("%)"),yE=d("%a"),yF=d("%t"),yG=d("%?"),yH=d("%r"),yI=d("%_r"),yJ=[0,d(d$),wO,23],yU=[0,d(d$),810,21],yM=[0,d(d$),811,21],yV=[0,d(d$),814,21],yN=[0,d(d$),815,21],yW=[0,d(d$),818,19],yO=[0,d(d$),819,19],yX=[0,d(d$),822,22],yP=[0,d(d$),uz,22],yY=[0,d(d$),827,30],yQ=[0,d(d$),828,30],yS=[0,d(d$),832,26],yK=[0,d(d$),833,26],yT=[0,d(d$),842,28],yL=[0,d(d$),843,28],yR=[0,d(d$),847,23],z1=d(uQ),zZ=[0,d(d$),wc,4],z0=d("Printf: bad conversion %["),z2=[0,d(d$),1593,39],z3=[0,d(d$),1616,31],z4=[0,d(d$),1617,31],z5=d("Printf: bad conversion %_"),z6=d(nO),z7=d(nP),z8=d(nO),z9=d(nP),z_=d(nO),z$=d(nP),zW=d(n4),zX=d(e$),zU=d("neg_infinity"),zV=d(wD),zP=d(ve),zC=d("%nd"),zD=d("%+nd"),zE=d("% nd"),zF=d(v_),zG=d("%+ni"),zH=d("% ni"),zI=d("%nx"),zJ=d("%#nx"),zK=d("%nX"),zL=d("%#nX"),zM=d("%no"),zN=d("%#no"),zO=d("%nu"),zp=d("%ld"),zq=d("%+ld"),zr=d("% ld"),zs=d(uJ),zt=d("%+li"),zu=d("% li"),zv=d("%lx"),zw=d("%#lx"),zx=d("%lX"),zy=d("%#lX"),zz=d("%lo"),zA=d("%#lo"),zB=d("%lu"),zc=d("%Ld"),zd=d("%+Ld"),ze=d("% Ld"),zf=d(vF),zg=d("%+Li"),zh=d("% Li"),zi=d("%Lx"),zj=d("%#Lx"),zk=d("%LX"),zl=d("%#LX"),zm=d("%Lo"),zn=d("%#Lo"),zo=d("%Lu"),y1=d(n_),y2=d("%+d"),y3=d("% d"),y4=d(nZ),y5=d("%+i"),y6=d("% i"),y7=d("%x"),y8=d("%#x"),y9=d("%X"),y_=d("%#X"),y$=d("%o"),za=d("%#o"),zb=d(uQ),yk=d("@]"),yl=d("@}"),ym=d("@?"),yn=d("@\n"),yo=d("@."),yp=d("@@"),yq=d("@%"),yr=d("@"),yZ=d("CamlinternalFormat.Type_mismatch"),AR=d(ar),AS=d(ii),AF=d("a boolean"),AG=d(vz),AH=d(vz),AI=d(vQ),AJ=d(vQ),AK=d(ar),AL=d(fA),AM=d(ar),AN=d("one of: "),AO=d("Arg.Expand is is only allowed with Arg.parse_and_expand_argv_dynamic"),AE=d("no argument"),AD=d("(?)"),Av=d(k5),Aw=d(jg),Ax=[0,[2,0,[11,d(": unknown option '"),[2,0,[11,d("'.\n"),0]]]],d("%s: unknown option '%s'.\n")],AA=[0,[2,0,[11,d(": wrong argument '"),[2,0,[11,d("'; option '"),[2,0,[11,d("' expects "),[2,0,[11,d(uE),0]]]]]]]],d("%s: wrong argument '%s'; option '%s' expects %s.\n")],AB=[0,[2,0,[11,d(": option '"),[2,0,[11,d("' needs an argument.\n"),0]]]],d("%s: option '%s' needs an argument.\n")],AC=[0,[2,0,[11,d(u9),[2,0,[11,d(uE),0]]]],d("%s: %s.\n")],Ay=[0,d(jg)],Az=[0,d(k5)],As=[0,[2,0,[12,10,0]],d("%s\n")],Ar=d(jg),Am=d(vt),An=d(jg),Aq=d(k5),Ao=d(vt),Ap=d(k5),Al=[0,d(jg)],Ag=[0,[11,d(wF),[2,0,[12,32,[2,0,[12,10,0]]]]],d("  %s %s\n")],Ah=d("}"),Ai=d("|"),Aj=d("{"),Ak=[0,[11,d(wF),[2,0,[12,32,[2,0,[2,0,[12,10,0]]]]]],d("  %s %s%s\n")],Af=d("<none>"),Ab=d("Arg.Bad"),Ac=d("Arg.Help"),Ad=d("Arg.Stop"),AW=d(ar),AX=[0,[11,d(il),[2,0,[2,0,0]]],d(", %s%s")],A3=d("Out of memory"),A4=d("Stack overflow"),A5=d("Pattern matching failed"),A6=d("Assertion failed"),A7=d("Undefined recursive module"),AZ=[0,[12,40,[2,0,[2,0,[12,41,0]]]],d("(%s%s)")],A0=d(ar),A1=d(ar),A2=[0,[12,40,[2,0,[12,41,0]]],d("(%s)")],AV=[0,[4,0,0,0,0],d(n_)],AT=[0,[3,0,0],d("%S")],AU=d(n8),A8=d("x"),Bk=[0,0],Bb=[0,d("hashtbl.ml"),x,23],adA=d("OCAMLRUNPARAM"),ady=d("CAMLRUNPARAM"),A9=d(ar),BA=[3,0,3],BB=d(e$),Bw=d(wI),Bx=d("</"),Bt=d(wI),Bu=d("<"),Br=d(ii),Bl=d("Format.Empty_queue"),Bq=[0,d(ar)],B6=d("Filename.chop_extension"),B4=d(ar),B3=d("Filename.chop_suffix"),BT=d(ar),BQ=d("./"),BP=d(".\\"),BO=d("../"),BN=d("..\\"),BF=d(ar),BE=d(ar),BG=d(e$),adw=d("TMPDIR"),BH=d("/tmp"),BI=d("'\\''"),BL=d(vN),BM=d("\\"),adu=d("TEMP"),BR=d(e$),BW=d(vN),BX=d(f4),B0=d("Cygwin"),B1=d("Win32"),B8=d("Js.Error"),B9=d(nL),Cd=d("E2BIG"),Cf=d("EACCES"),Cg=d("EAGAIN"),Ch=d("EBADF"),Ci=d("EBUSY"),Cj=d("ECHILD"),Ck=d("EDEADLK"),Cl=d("EDOM"),Cm=d("EEXIST"),Cn=d("EFAULT"),Co=d("EFBIG"),Cp=d("EINTR"),Cq=d("EINVAL"),Cr=d("EIO"),Cs=d("EISDIR"),Ct=d("EMFILE"),Cu=d("EMLINK"),Cv=d("ENAMETOOLONG"),Cw=d("ENFILE"),Cx=d("ENODEV"),Cy=d("ENOENT"),Cz=d("ENOEXEC"),CA=d("ENOLCK"),CB=d("ENOMEM"),CC=d("ENOSPC"),CD=d("ENOSYS"),CE=d("ENOTDIR"),CF=d("ENOTEMPTY"),CG=d("ENOTTY"),CH=d("ENXIO"),CI=d("EPERM"),CJ=d("EPIPE"),CK=d("ERANGE"),CL=d("EROFS"),CM=d("ESPIPE"),CN=d("ESRCH"),CO=d("EXDEV"),CP=d("EWOULDBLOCK"),CQ=d("EINPROGRESS"),CR=d("EALREADY"),CS=d("ENOTSOCK"),CT=d("EDESTADDRREQ"),CU=d("EMSGSIZE"),CV=d("EPROTOTYPE"),CW=d("ENOPROTOOPT"),CX=d("EPROTONOSUPPORT"),CY=d("ESOCKTNOSUPPORT"),CZ=d("EOPNOTSUPP"),C0=d("EPFNOSUPPORT"),C1=d("EAFNOSUPPORT"),C2=d("EADDRINUSE"),C3=d("EADDRNOTAVAIL"),C4=d("ENETDOWN"),C5=d("ENETUNREACH"),C6=d("ENETRESET"),C7=d("ECONNABORTED"),C8=d("ECONNRESET"),C9=d("ENOBUFS"),C_=d("EISCONN"),C$=d("ENOTCONN"),Da=d("ESHUTDOWN"),Db=d("ETOOMANYREFS"),Dc=d("ETIMEDOUT"),Dd=d("ECONNREFUSED"),De=d("EHOSTDOWN"),Df=d("EHOSTUNREACH"),Dg=d("ELOOP"),Dh=d("EOVERFLOW"),Di=[0,[11,d("EUNKNOWNERR "),[4,0,0,0,0]],d("EUNKNOWNERR %d")],Ce=[0,[11,d("Unix.Unix_error(Unix."),[2,0,[11,d(il),[3,0,[11,d(il),[3,0,[12,41,0]]]]]]],d("Unix.Unix_error(Unix.%s, %S, %S)")],B$=d(wh),Ca=d(ar),Cb=d(ar),Cc=d(wh),Dj=d("0.0.0.0"),Dk=d("127.0.0.1"),adt=d("::"),ads=d("::1"),Du=[0,d("lib/automata.ml"),360,21],Dq=[1,0],DL=[0,d(nT),709,4],D_=d("Re.exec"),DW=d("Re.compl"),DP=[0,1],DN=d(vC),DO=d(vC),DM=[0,d(nT),742,13],DK=[0,d(nT),497,35],DD=[0,0,0,0,0,0,0,0,0,0,0],DH=[0,eq,[0,cS,[0,cX,[0,c8,[0,c4,0]]]]],D8=d("\t "),D$=d("Re__Emacs.Parse_error"),Ea=d("Re__Emacs.Not_supported"),Ee=[0,d(vS),51,4],Ed=[0,d(vS),57,34],Gp=d("Not a month"),Gn=d("Not a day"),Gk=d("from_business: bad week"),Gl=d("from_business: bad date"),Fx=[0,d(vA),a4,4],Fw=[0,d(vA),gv,4],Fr=[0,jc,10,14],Fs=[0,jc,10,5],Fp=[0,-4713,12,31],Fq=[0,wN,1,23],Fn=d("Date.Out_of_bounds"),Fo=d("Date.Undefined"),FN=d("Date.Period.Not_computable"),FW=[0,31,59,90,d3,cJ,cS,cF,243,273,304,334,k9],Gt=[0,d(lf),429,6],Gs=[0,d(lf),fB,4],Gr=[0,d(lf),df,6],Gq=[0,d(lf),67,4],H1=d("calendar"),HZ=d("seconds_since_1970"),HW=d("second"),HU=d("minute"),HS=d("hour"),HO=d("date"),HL=d("Cannot create the "),HH=d("%j (year not provided)"),Ht=d("%:"),Hs=d("%::::"),HJ=[0,d(g4),402,6],Hu=d(uH),Hv=d(":::z"),Hw=d(v6),Hx=d(vJ),Hy=[0,d(g4),509,12],Hz=d("am"),HA=d("pm"),HB=d(jh),HC=d(jh),HD=d("%P"),HE=d("%V"),HF=d("%W"),HG=d("%j"),HI=d("%w"),Hr=d(uG),HK=[0,d(g4),lm,6],Hn=d("[\\+-]"),Ho=d(ij),Hp=d(g8),Hq=[0,d(g4),396,8],Hi=d(wE),Hj=d(vf),Hk=d(jh),Hl=d(jh),Hm=d("%p"),Hg=d(" (either week or year is not provided)"),Hh=d("[0-9][0-9]\\(\\.[0-9]*\\)?"),Hd=d("z\\|:z\\|::z"),G$=d(v6),Ha=d(vJ),Hb=d(uH),Hc=[0,d(g4),278,13],G_=d(uG),He=[0,d(g4),283,6],Hf=[0,d(g4),nX,6],G9=d(wE),G8=d(vf),G2=d(" does not match the format "),G1=d("bad format: "),G0=[0,d(g4),81,2],GO=d("January"),GP=d("February"),GQ=d("March"),GR=d("April"),GS=d("May"),GT=d("June"),GU=d("July"),GV=d("August"),GW=d("September"),GX=d("October"),GY=d("November"),GZ=d("December"),GH=d("Sunday"),GI=d("Monday"),GJ=d("Tuesday"),GK=d("Wednesday"),GL=d("Thursday"),GM=d("Friday"),GN=d("Saturday"),G3=d("%b"),G4=d(vp),G5=d("%A"),G6=d("[a-zA-Z]+"),HQ=d(nZ),H3=d("%i %T"),H$=d("Buf.extend: reached Sys.max_string_length"),JL=[0,d(ji),72,32],I_=d(c1),I$=d(c1),Ja=d(vg),Jb=d(c1),Jc=d(wu),Jd=d(vH),Je=d(c1),Jf=d("Expected '>' but found"),Jg=d(c1),Jh=d(wM),Ji=d(lh),Jj=d(lh),Jk=d("Expected an integer but found a string that doesn't even represent an integer"),Jl=d("Expected integer but found"),Jm=d(c1),Jn=d("Expected '\"' but found"),Jo=d(c1),Jp=d(nW),Jq=d(c1),Jr=d("Expected '[' but found"),Js=d(c1),Jt=d(uI),Ju=d(c1),Jv=d("Expected ',' or ')' but found"),Jw=d(c1),Jx=d("Expected '{' but found"),Jy=d(c1),Jz=d(uu),JA=d(c1),JB=d(wP),JC=d(c1),JD=d(c1),JE=d(kV),JF=d("Invalid string literal"),JG=d(c1),JH=d("Expected ':' or '>' but found"),JI=d(c1),JJ=d(nW),JK=d(c1),I1=[0,[2,0,[11,d(k4),[2,0,[2,0,[12,39,0]]]]],d(uw)],I0=[0,d(ji),72,32],IZ=[0,[2,0,[11,d(k4),[2,0,[12,39,0]]]],d(uN)],IU=[0,[11,d(oa),[2,0,[11,d(uT),0]]],d(v8)],IY=d(vq),IV=[0,[11,d(wl),[4,3,0,0,0]],d(wd)],IX=[0,[11,d(vc),[4,3,0,0,[12,45,[4,3,0,0,0]]]],d(vd)],IW=[0,[2,0,[12,32,[4,3,0,0,[11,d(il),[2,0,[11,d(kX),[2,0,0]]]]]]],d(wp)],IT=[0,d(ji),44,13],Iy=[0,wG,1],Iz=[0,wG,0],IA=d(kV),IB=d(kV),IC=d(c1),ID=d(kV),IE=d(c1),IF=d(vg),IG=d(c1),IH=d(wu),II=d(vH),IJ=d(c1),IK=d(wM),IL=d(nW),IM=d(c1),IN=d(uI),IO=d(c1),IP=d(uu),IQ=d(c1),IR=d(wP),IS=d(c1),It=d(lh),Ir=d(lh),Io=[0,[2,0,[11,d(k4),[2,0,[2,0,[12,39,0]]]]],d(uw)],In=[0,d(ji),72,32],Im=[0,[2,0,[11,d(k4),[2,0,[12,39,0]]]],d(uN)],Ih=[0,[11,d(oa),[2,0,[11,d(uT),0]]],d(v8)],Il=d(vq),Ii=[0,[11,d(wl),[4,3,0,0,0]],d(wd)],Ik=[0,[11,d(vc),[4,3,0,0,[12,45,[4,3,0,0,0]]]],d(vd)],Ij=[0,[2,0,[12,32,[4,3,0,0,[11,d(il),[2,0,[11,d(kX),[2,0,0]]]]]]],d(wp)],Ig=[0,d(ji),44,13],If=[0,d("common.ml"),57,4],Ia=d("Yojson.Json_error"),Ic=d("Yojson.End_of_array"),Id=d("Yojson.End_of_object"),Ie=d("Yojson.End_of_tuple"),Ip=d("Yojson.Basic.Int_overflow"),I2=d("Yojson.Safe.Int_overflow"),JN=[0,d(nS),d(n3),d(n9),d(nV),d(oc),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)],JW=[0,d("atdgen-runtime/src/oj_run.ml"),v9,2],JS=d(il),JT=d("s"),JV=d(ar),JU=[0,[11,d("Missing record field"),[2,0,[12,32,[2,0,0]]]],d("Missing record field%s %s")],JQ=[0,[11,d(oa),[2,0,[11,d(", line "),[4,3,0,0,[11,d(kX),[2,0,0]]]]]],d("File %s, line %i:\n%s")],JR=[0,[11,d("Line "),[4,3,0,0,[11,d(kX),[2,0,0]]]],d("Line %i:\n%s")],JO=d("Atdgen_runtime__Oj_run.Error"),Km=d("period_weeks"),Kl=d("duration_weeks"),Kk=d("duration_hours"),Kj=d("duration_minutes"),Ki=d("duration_seconds"),Kh=d("end_of_year"),Kg=d("end_of_quarter"),Kf=d("end_of_month"),Ke=d("end_of_week"),Kd=d("end_of_day"),Kc=d("start_of_year"),Kb=d("start_of_quarter"),Ka=d("start_of_month"),J$=d("start_of_week"),J_=d("start_of_day"),J9=d(v7),J6=d("period_from_string"),J5=d(n8),J4=d("duration_from_string"),J3=d(n8),J2=d("duration_amount"),JX=d(" not defined in REPL"),JY=d("Operation "),J1=w([[0,d("%Y-%m-%d")],[0,d("%Y%m%d")],[1,d("%Y-%m-%dT%H:%M:%S")],[1,d("%Y-%m-%d %H:%M:%S")],[1,d("%Y-%m-%dT%H:%M:%S%:z")],[1,d(v7)],[0,d("%d %b %Y")],[0,d("%d %b %y")],[1,d("%d %b %y %H:%M:%S")],[1,d("%d %b %Y %H:%M:%S")],[1,d("%d %b %y %H:%M:%S %z")],[1,d("%d %b %Y %H:%M:%S %z")],[0,d("%a %d %b %Y")],[0,d("%a %d %b %y")],[1,d("%a %d %b %y %H:%M:%S")],[1,d("%a %d %b %Y %H:%M:%S")],[1,d("%a %d %b %y %H:%M:%S %z")],[1,d("%a %d %b %Y %H:%M:%S %z")],[0,d("%a, %d %b %Y")],[0,d("%a, %d %b %y")],[1,d("%a, %d %b %y %H:%M:%S")],[1,d("%a, %d %b %Y %H:%M:%S")],[1,d("%a, %d %b %y %H:%M:%S %z")],[1,d("%a, %d %b %Y %H:%M:%S %z")]]),Ks=d("logic"),Kp=d(jh),Kq=d('S"'),Ko=d(fb),Kn=[0,[11,d("Could not read the file "),[2,0,[11,d(", got error Sys_error "),[2,0,[12,10,[17,2,0]]]]]],d("Could not read the file %s, got error Sys_error %s\n@?")],Kr=d("Util.TopoCycle"),KJ=[0,0,0],KK=[0,d(g5),1406,25],KL=[0,d(g5),1422,25],KM=[0,d(g5),1419,22],KN=[0,d(g5),1443,45],KO=[0,d(g5),1437,19],KP=[0,0],KR=[0,0],KS=[0,0],KV=[0,0],K4=[0,58,[0,32,0]],KY=[0,m,[0,z,[0,x,[0,x,0]]]],KZ=[0,g,[0,h,[0,z,[0,f,0]]]],K0=[0,aj,[0,97,[0,x,[0,u,[0,f,0]]]]],K1=[0,93,0],K2=[0,44,[0,32,0]],K3=[0,91,0],K5=[0,b5,0],K6=[0,44,[0,32,0]],K7=[0,b6,0],K_=[0,m,[0,97,[0,g,0]]],K$=[0,x,[0,f,[0,aj,[0,g,0]]]],La=[0,h,[0,n,[0,v,[0,aJ,[0,g,0]]]]],Lb=[0,p,[0,97,[0,g,[0,97,0]]]],Lc=[0,g,[0,aD,[0,t,[0,f,0]]]],Ln=[0,45,[0,62,0]],Li=[0,85,[0,78,[0,73,[0,84,0]]]],Lj=[0,93,0],Lk=[0,44,[0,32,0]],Ll=[0,91,0],Lm=[0,b5,0],Lo=[0,44,0],Lp=[0,b6,0],Lq=[0,41,0],Lr=[0,76,[0,f,[0,aj,[0,g,[0,40,0]]]]],Ls=[0,41,0],Lt=[0,82,[0,n,[0,v,[0,aJ,[0,g,[0,40,0]]]]]],Lu=[0,62,0],Lv=[0,58,0],Lw=[0,60,0],Lx=[0,0],Mj=[0,0],Ok=[0,58,[0,32,0]],Oj=[0,b5,0],Ol=[0,44,[0,32,0]],Om=[0,b6,0],On=[0,z,[0,m,[0,n,[0,g,0]]]],Oo=[0,g,[0,h,[0,z,[0,f,0]]]],Op=[0,aj,[0,97,[0,x,[0,u,[0,f,0]]]]],Oq=[0,93,0],Or=[0,44,[0,32,0]],Os=[0,91,0],Ot=[0,41,0],Ou=[0,u,[0,e,[0,ac,[0,f,[0,40,0]]]]],Ov=[0,m,[0,e,[0,m,[0,f,0]]]],Ow=w([63,63,63,ac,e,h,f,32,g,aJ,97,m,32,e,m,f,32,98,h,97,m,p,63,63,63]),Ox=w([63,63,63,ac,e,h,f,32,g,aJ,97,m,32,e,m,f,32,98,h,97,m,p,63,63,63]),Oy=w([63,63,63,85,m,eD,m,e,a4,m,70,e,h,f,n,v,m,63,63,63]),Oz=[0,34,[0,41,0]],OA=[0,p,[0,97,[0,g,[0,f,[0,84,[0,n,[0,ac,[0,f,[0,40,[0,34,0]]]]]]]]]],OB=[0,41,0],OC=[0,p,[0,z,[0,h,[0,97,[0,g,[0,n,[0,e,[0,m,[0,40,0]]]]]]]]],OD=[0,41,0],OE=[0,t,[0,f,[0,h,[0,n,[0,e,[0,p,[0,40,0]]]]]]],OP=[0,58,[0,32,0]],OF=[0,78,[0,e,[0,g,[0,aJ,[0,n,[0,m,[0,v,0]]]]]]],OG=[0,65,[0,m,[0,aD,0]]],OH=[0,85,[0,m,[0,n,[0,g,0]]]],OI=[0,73,[0,m,[0,g,[0,f,[0,v,[0,f,[0,h,0]]]]]]],OJ=[0,68,[0,e,[0,z,[0,98,[0,x,[0,f,0]]]]]],OK=[0,66,[0,e,[0,e,[0,x,[0,f,[0,97,[0,m,0]]]]]]],OL=[0,83,[0,g,[0,h,[0,n,[0,m,[0,v,0]]]]]],OM=[0,91,[0,93,0]],ON=[0,32,[0,46,[0,46,0]]],OO=[0,b5,0],OQ=[0,44,[0,32,0]],OR=[0,b6,0],OS=[0,63,0],OT=[0,32,[0,45,[0,62,[0,32,0]]]],OU=[0,91,[0,ac,[0,z,[0,x,[0,g,[0,n,[0,t,[0,x,[0,f,[0,93,0]]]]]]]]]],OV=[0,cs,0],OW=[0,91,[0,ac,[0,z,[0,x,[0,g,[0,n,[0,t,[0,x,[0,f,[0,93,0]]]]]]]]]],OX=[0,cs,0],OZ=[0,68,[0,97,[0,g,[0,f,[0,84,[0,n,[0,ac,[0,f,0]]]]]]]],O0=w([73,m,g,f,h,m,97,x,68,z,h,97,g,n,e,m]),O1=w([73,m,g,f,h,m,97,x,80,f,h,n,e,p]),OY=w([40,z,m,eD,m,e,a4,m,32,aj,e,h,f,n,v,m,32,g,aD,t,f,41]),Q6=[0,39,[0,46,0]],Q7=w([aj,e,h,f,97,99,aJ,32,f,d3,t,f,99,g,u,32,97,m,32,97,h,h,97,aD,32,g,e,32,n,g,f,h,97,g,f,32,e,a0,f,h,44,32,98,z,g,32,a4,97,u,32,v,n,a0,f,m,32,u,e,ac,f,g,aJ,n,m,v,32,e,aj,32,g,aD,t,f,32,96]),Q5=w([73,x,x,45,g,aD,t,f,p,32,p,97,g,97,32,x,n,g,f,h,97,x,33]),Q3=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,99,e,m,99,97,g,46]),Q2=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,n,m,n,g,46]),Q1=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,99,e,m,99,97,g,46]),Q0=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,n,m,n,g,46]),QW=[0,39,[0,46,0]],QX=w([39,32,p,e,f,u,32,m,e,g,32,ac,97,g,99,aJ,32,g,aJ,f,32,97,99,g,z,97,x,32,g,aD,t,f,32,96]),QY=w([39,32,aj,e,h,32,g,aJ,f,32,m,97,ac,f,32,96]),QZ=w([84,aJ,f,32,x,f,g,32,g,aD,t,f,32,97,m,m,e,g,97,g,n,e,m,32,96]),QR=[0,39,[0,46,0]],QS=w([39,32,98,z,g,32,a4,97,u,32,v,n,a0,f,m,32,97,h,v,z,ac,f,m,g,32,e,aj,32,g,aD,t,f,32,96]),QT=w([39,32,g,e,32,98,f,32,e,aj,32,g,aD,t,f,32,96]),QU=w([39,32,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,32,96]),QV=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,[0,96,0]]]]]]]]]],QQ=w([39,n,aj,39,32,99,e,m,p,n,g,n,e,m,32,m,e,g,32,98,e,e,x,f,97,m,46]),QK=w([78,e,32,96,g,aJ,n,u,39,32,n,m,32,f,h,v,e,99]),QL=w([78,e,32,96,99,x,97,z,u,f,39,32,n,m,32,f,h,v,e,99]),QM=w([78,e,32,96,u,g,97,g,f,39,32,n,m,32,f,h,v,e,99]),QN=w([39,32,m,e,g,32,aj,e,z,m,p,46]),QO=[0,86,[0,97,[0,h,[0,n,[0,97,[0,98,[0,x,[0,f,[0,32,[0,96,0]]]]]]]]]],QP=w([66,97,p,32,99,e,m,u,g,97,m,g,46]),Q4=[0,g,[0,aD,[0,t,[0,n,[0,m,[0,v,0]]]]]],Re=[0,f,[0,a0,[0,97,[0,x,0]]]],Rl=[0,[0,0,0],0],TO=[4,0],TM=[0,39,0],TN=w([67,97,m,m,e,g,32,99,h,f,97,g,f,32,n,m,u,g,97,m,99,f,32,e,aj,32,97,98,u,g,h,97,99,g,32,g,aD,t,f,32,96]),TP=[0,39,0],TQ=w([67,97,m,m,e,g,32,h,f,p,f,aj,n,m,f,32,g,aD,t,f,32,96]),TG=[0,m,[0,e,[0,a4,0]]],TH=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,m,e,a4]),Ts=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,65,h,h,97,aD]),Tt=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,h,h,97,aD,83,z,98,g,h,97,99,g]),Tu=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,h,h,97,aD,65,p,p]),Tv=[1,6],Tw=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,97,d3,80,97,n,h]),Tx=[1,5],Ty=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,n,m,80,97,n,h]),Tz=[0,6],TA=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,77,97,d3]),TB=[0,5],TC=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,77,n,m]),TD=[0,4],TE=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,77,e,p]),SY=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,aj,x,97,g,g,f,m]),SZ=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,e,z,m,g]),S0=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,p,n,u,g,n,m,99,g]),S1=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,h,z,m,99,97,g,f]),S2=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,p,e,z,98,x,f,84,e,73,m,g,f,v,f,h]),S3=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,z,ac]),S4=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,a0,f,h,97,v,f]),S5=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,n,m]),S6=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,97,d3]),S7=[10,7],S8=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,98,u]),S9=[10,6],S_=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,aj,x,e,e,h]),S$=[10,5],Ta=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,f,n,x]),Tb=[10,4],Tc=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,x,e,v,49,48]),Td=[10,3],Te=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,x,e,v]),Tf=[10,2],Tg=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,f,d3,t]),Th=[10,1],Ti=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,ca,h,g]),Tj=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,84,e,68,e,z,98,x,f]),Tk=[9,2],Tl=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,83,ca,h,g]),Tm=[9,1],Tn=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,76,e,v,50]),To=[9,0],Tp=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,65,98,u]),Tq=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,e,83,g,h,n,m,v]),SJ=[0,5],SK=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,n,aj,aj,73,m,g,f,h,m,97,x]),SL=[0,4],SM=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,n,u,65,aj,g,f,h]),SN=[0,3],SO=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,n,u,66,f,aj,e,h,f]),SP=[0,2],SQ=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,n,u,83,97,ac,f]),SR=[0,1],SS=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,z,98,g,h,97,99,g,73,m,g,f,h,m,97,x]),ST=[0,0],SU=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,97,p,p,73,m,g,f,h,m,97,x]),SV=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,g,97,m,50]),Rt=[1,[2,4]],Ru=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,89,f,97,h]),Rv=[1,[2,3]],Rw=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,81,z,97,h,g,f,h]),Rx=[1,[2,2]],Ry=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,77,e,m,g,aJ]),Rz=[1,[2,1]],RA=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,87,f,f,eD]),RB=[1,[2,0]],RC=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,68,97,aD]),RD=[1,[2,4]],RE=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,89,f,97,h]),RF=[1,[2,3]],RG=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,81,z,97,h,g,f,h]),RH=[1,[2,2]],RI=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,77,e,m,g,aJ]),RJ=[1,[2,1]],RK=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,87,f,f,eD]),RL=[1,[2,0]],RM=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,68,97,aD]),RN=[1,[4,4]],RO=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,89,f,97,h,u]),RP=[1,[4,3]],RQ=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,81,z,97,h,g,f,h,u]),RR=[1,[4,2]],RS=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,77,e,m,g,aJ,u]),RT=[1,[4,1]],RU=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,87,f,f,eD,u]),RV=[1,[4,0]],RW=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,68,97,aD,u]),RX=[1,1],RY=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,65,ac,e,z,m,g]),RZ=[1,[3,5]],R0=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,89,f,97,h,u]),R1=[1,[3,4]],R2=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,87,f,f,eD,u]),R3=[1,[3,3]],R4=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,68,97,aD,u]),R5=[1,[3,2]],R6=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,72,e,z,h,u]),R7=[1,[3,1]],R8=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,77,n,m,z,g,f,u]),R9=[1,[3,0]],R_=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,83,f,99,e,m,p,u]),R$=[1,[0,7]],Sa=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,89,f,97,h]),Sb=[1,[0,6]],Sc=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,81,z,97,h,g,f,h]),Sd=[1,[0,5]],Se=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,77,e,m,g,aJ]),Sf=[1,[0,4]],Sg=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,87,f,f,eD]),Sh=[1,[0,3]],Si=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,68,97,aD]),Sj=[1,[0,2]],Sk=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,72,e,z,h]),Sl=[1,[0,1]],Sm=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,77,n,m,z,g,f]),Sn=[1,[0,0]],So=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,83,f,99,e,m,p]),Sp=[1,0],Sq=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,97,h,u,f]),Sr=[0,8],Ss=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,97,m,aJ]),St=[0,7],Su=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,97,m]),Sv=[0,6],Sw=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,n,m,aJ]),Sx=[0,5],Sy=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,n,m]),Sz=[0,4],SA=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,e,u,aJ]),SB=[0,3],SC=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,e,u]),SD=[0,2],SE=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,g,97,m]),SF=[0,1],SG=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,u,n,m]),SH=[0,0],SI=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,99,e,u]),Rr=[0,t,[0,49,0]],Rs=[0,t,[0,50,0]],Rp=[0,t,[0,50,0]],Rq=[0,t,[0,49,0]],Ro=[0,[0,t,[0,49,0]],[0,[0,t,[0,50,0]],0]],Rm=[0,t,[0,48,0]],Rn=[0,[0,t,[0,48,0]],0],Q8=[0,39,[0,46,0]],Q9=w([39,32,p,e,f,u,32,m,e,g,32,ac,97,g,99,aJ,32,n,g,u,32,97,99,g,z,97,x,32,g,aD,t,f,32,96]),Q_=w([39,32,aj,e,h,32,g,aJ,f,32,99,e,m,u,g,97,m,g,32,96]),Q$=w([84,aJ,f,32,g,aD,t,f,32,97,m,m,e,g,97,g,n,e,m,32,96]),QG=[0,39,0],QH=w([39,32,98,z,g,32,97,99,g,z,97,x,x,aD,32,h,f,g,z,h,m,u,32,96]),QI=w([32,u,aJ,e,z,x,p,32,h,f,g,z,h,m,32,96]),QJ=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,0]]]]]]]]],Qy=[0,aj,[0,97,[0,n,[0,x,[0,u,[0,32,[0,a4,[0,n,[0,g,[0,aJ,0]]]]]]]]]],Qz=[0,aj,[0,97,[0,n,[0,x,[0,32,[0,a4,[0,n,[0,g,[0,aJ,0]]]]]]]]],QA=[0,u,[0,f,[0,g,[0,u,[0,32,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]]]]]],QB=[0,u,[0,f,[0,g,[0,32,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]]]]],QC=[0,f,[0,ac,[0,n,[0,g,[0,u,0]]]]],QD=[0,f,[0,ac,[0,n,[0,g,0]]]],QE=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,p,[0,u,0]]]]]]]],QF=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,p,0]]]]]]],Qs=[0,39,0],Qt=[0,32,[0,96,0]],Qu=w([39,32,98,z,g,32,97,99,g,z,97,x,x,aD,32]),Qv=[0,32,[0,96,0]],Qw=[0,32,[0,u,[0,aJ,[0,e,[0,z,[0,x,[0,p,[0,32,0]]]]]]]],Qx=[0,67,[0,x,[0,97,[0,z,[0,u,[0,f,[0,32,0]]]]]]],Qo=[0,39,0],Qp=w([39,32,98,z,g,32,97,99,g,z,97,x,x,aD,32,h,f,g,z,h,m,u,32,96]),Qq=w([32,u,aJ,e,z,x,p,32,h,f,g,z,h,m,32,96]),Qr=[0,67,[0,x,[0,97,[0,z,[0,u,[0,f,[0,32,0]]]]]]],P4=[0,39,0],P5=w([39,32,n,m,32,g,aD,t,f,32,96]),P6=[0,39,[0,44,[0,32,[0,96,0]]]],P7=w([77,n,u,u,n,m,v,32,aj,n,f,x,p,u,32,96]),P8=[0,39,0],P9=w([39,32,n,m,32,g,aD,t,f,32,96]),P_=w([77,n,u,u,n,m,v,32,aj,n,f,x,p,32,96]),P$=[0,39,0],Qa=w([39,32,n,m,32,g,aD,t,f,32,96]),Qb=[0,39,[0,44,[0,32,[0,96,0]]]],Qc=w([85,m,eD,m,e,a4,m,32,aj,n,f,x,p,u,32,96]),Qd=[0,39,0],Qe=w([39,32,n,m,32,g,aD,t,f,32,96]),Qf=w([85,m,eD,m,e,a4,m,32,aj,n,f,x,p,32,96]),Qg=[0,39,0],Qh=w([39,32,98,z,g,32,u,aJ,e,z,x,p,32,aJ,97,a0,f,32,g,aD,t,f,32,96]),Qi=w([39,32,aJ,97,u,32,g,aD,t,f,32,96]),Qj=[0,70,[0,n,[0,f,[0,x,[0,p,[0,32,[0,96,0]]]]]]],Qk=w([32,p,e,f,u,m,39,g,32,ac,97,g,99,aJ,32,p,97,g,97,32,40,e,m,f,32,aj,n,f,x,p,32,n,u,32,m,e,g,32,97,32,u,z,98,g,aD,t,f,41]),Ql=[0,67,[0,e,[0,m,[0,99,[0,f,[0,t,[0,g,[0,32,0]]]]]]]],Qm=w([32,p,e,f,u,32,m,e,g,32,ac,97,g,99,aJ,32,p,97,g,97]),Qn=w([67,e,m,99,f,t,g,32,m,97,ac,f,32]),PA=[0,39,[0,46,0]],PB=[0,39,[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]]],PC=w([39,32,98,z,g,32,h,f,99,f,n,a0,f,p,32,e,t,f,h,97,m,p,u,32,e,aj,32,g,aD,t,f,32,96]),PD=[0,39,[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]]],PE=w([39,32,f,d3,t,f,99,g,f,p,32,e,t,f,h,97,m,p,u,32,e,aj,32,g,aD,t,f,32,96]),PF=[0,79,[0,t,[0,f,[0,h,[0,97,[0,g,[0,e,[0,h,[0,32,[0,96,0]]]]]]]]]],PK=[0,97,[0,m,[0,p,0]]],PL=[0,e,[0,h,0]],PM=[0,43,[0,n,0]],PN=[0,45,[0,n,0]],PO=[0,42,[0,n,0]],PP=[0,47,[0,n,0]],PQ=[0,94,[0,n,0]],PR=[0,43,0],PS=[0,45,0],PT=[0,42,0],PU=[0,47,0],PV=[0,94,0],PW=[0,39,[0,46,0]],PX=[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]],PY=[0,39,[0,32,0]],PZ=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,u,32,e,aj,32,g,aD,t,f,32,96]),P0=[0,60,0],P1=[0,60,[0,61,0]],P2=[0,62,0],P3=[0,62,[0,61,0]],PG=[0,39,[0,46,0]],PH=[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]],PI=[0,39,[0,32,0]],PJ=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,u,32,e,aj,32,g,aD,t,f,32,96]),Pn=[0,39,[0,46,0]],Po=w([39,32,98,z,g,32,h,f,99,f,n,a0,f,p,32,97,m,32,e,t,f,h,97,m,p,32,e,aj,32,g,aD,t,f,32,96]),Pp=w([39,32,f,d3,t,f,99,g,f,p,32,97,m,32,e,t,f,h,97,m,p,32,e,aj,32,g,aD,t,f,32,96]),Pq=[0,79,[0,t,[0,f,[0,h,[0,97,[0,g,[0,e,[0,h,[0,32,[0,96,0]]]]]]]]]],Pt=[0,33,0],Pu=[0,39,0],Pv=w([32,p,e,f,u,32,m,e,g,32,98,f,x,e,m,v,32,g,e,32,g,aD,t,f,32,96]),Pw=[0,84,[0,aJ,[0,f,[0,32,[0,aj,[0,n,[0,f,[0,x,[0,p,[0,32,0]]]]]]]]]],Py=[0,39,0],Pz=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,97,m,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,32,e,aj,32,g,aD,t,f,32,96]),Px=[0,45,0],Pr=[0,39,0],Ps=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,97,m,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,32,e,aj,32,g,aD,t,f,32,96]),Pm=[0,h,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Pl=[5,[0,[0,[0,u,[0,g,[0,97,[0,g,[0,f,[0,73,[0,p,0]]]]]]],[3,[0,49,0]]],0]],Pk=[0,h,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Pj=[0,h,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Pi=[0,36,0],Ph=[0,70,[0,97,[0,n,[0,x,[0,z,[0,h,[0,f,[0,46,[0,32,0]]]]]]]]],Pf=[0,83,[0,g,[0,97,[0,g,[0,f,[0,46,[0,32,0]]]]]]],Pg=[0,83,[0,g,[0,97,[0,g,[0,f,[0,46,[0,32,0]]]]]]],Pe=[0,69,[0,ac,[0,n,[0,g,[0,46,[0,32,0]]]]]],Pd=[0,69,[0,ac,[0,n,[0,g,[0,46,[0,32,0]]]]]],Pc=[0,82,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,[0,46,[0,32,0]]]]]]]]]],Pa=[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]],Pb=[1,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]],O_=[0,f,[0,ac,[0,n,[0,g,0]]]],O$=[1,[0,f,[0,ac,[0,n,[0,g,0]]]]],O8=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,0]]]]]]]],O9=[1,[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,0]]]]]]]]],O7=[0,f,[0,n,[0,g,[0,aJ,[0,f,[0,h,0]]]]]],O6=[0,f,[0,n,[0,g,[0,aJ,[0,f,[0,h,0]]]]]],O3=[0,41,0],O4=w([32,40,f,d3,t,f,99,g,f,p,32]),O5=w([67,97,m,m,e,g,32,z,m,t,97,99,eD,32,g,aD,t,f,58,32]),O2=[0,32,[0,58,[0,32,0]]],Of=[0,cs,0],Og=[0,cs,0],Oh=[0,cs,0],Vg=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],Vh=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],Oc=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],Od=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],N5=w([32,p,n,p,32,m,e,g,32,v,f,g,32,n,m,x,n,m,f,p]),N6=w([32,n,m,32,99,e,m,g,h,97,99,g,32]),N7=[0,67,[0,x,[0,97,[0,z,[0,u,[0,f,[0,32,0]]]]]]],N1=w([32,p,n,p,32,m,e,g,32,v,f,g,32,n,m,x,n,m,f,p]),N2=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,0]]]]]]]]],N3=[0,93,[0,32,0]],N4=[0,91,0],N0=w([83,aJ,e,z,x,p,32,e,m,x,aD,32,aJ,97,a0,f,32,u,n,m,v,x,f,32,x,e,e,t,32,aj,e,h,f,97,99,aJ,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NZ=w([83,aJ,e,z,x,p,32,m,e,g,32,aj,n,m,p,32,39,u,g,97,g,f,39,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NY=w([83,aJ,e,z,x,p,32,m,e,g,32,aj,n,m,p,32,39,99,x,97,z,u,f,39,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NX=w([83,aJ,e,z,x,p,32,m,e,g,32,aj,n,m,p,32,39,99,e,m,g,h,97,99,g,39,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NV=w([68,f,aj,97,z,x,g,77,97,g,99,aJ,32,69,h,h,e,h]),NW=[0,ac,[0,f,[0,u,[0,u,[0,97,[0,v,[0,f,0]]]]]]],NT=w([69,m,aj,e,h,99,f,32,69,h,h,e,h]),NU=[0,ac,[0,f,[0,u,[0,u,[0,97,[0,v,[0,f,0]]]]]]],NR=w([32,p,e,f,u,32,m,e,g,32,aJ,97,a0,f,32,97,32,98,e,p,aD]),NS=w([66,z,n,x,g,32,n,m,32,aj,z,m,99,g,n,e,m,32]),NP=[0,32,[0,m,[0,e,[0,g,[0,32,[0,aj,[0,e,[0,z,[0,m,[0,p,0]]]]]]]]]],NQ=w([66,z,n,x,g,32,n,m,32,aj,z,m,99,g,n,e,m,32]),NO=w([70,e,h,f,97,99,aJ,32,m,f,f,p,u,32,g,e,32,98,f,32,99,97,x,x,f,p,32,e,m,32,97,m,32,97,h,h,97,aD]),NN=w([39,73,aj,39,32,99,e,m,p,n,g,n,e,m,32,m,e,g,32,98,e,e,x,f,97,m,46]),NM=w([66,n,m,97,h,aD,32,e,t,f,h,97,g,n,e,m,32,aj,97,n,x,f,p,46]),NL=w([85,m,97,h,aD,32,e,t,f,h,97,g,n,e,m,32,aj,97,n,x,f,p,46]),NJ=[0,39,0],NK=w([80,97,h,97,ac,f,g,f,h,32,ac,n,u,ac,97,g,99,aJ,32,a4,aJ,f,m,32,99,97,x,x,n,m,v,32,aj,z,m,99,g,n,e,m,32,39]),NH=w([39,32,m,e,g,32,aj,e,z,m,p]),NI=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,[0,39,0]]]]]]]]]],NG=w([67,97,m,m,e,g,32,99,h,f,97,g,f,32,ac,97,n,m,32,n,aj,32,m,e,g,32,97,g,32,x,f,97,u,g,32,e,m,f,32,t,97,h,97,ac,f,g,f,h]),NF=w([80,97,h,97,ac,f,g,f,h,32,ac,n,u,ac,97,g,99,aJ,32,p,z,h,n,m,v,32,ac,97,n,m,32,99,h,f,97,g,n,e,m]),ND=w([39,32,n,m,32,67,84,79,32,a4,n,g,aJ,32,m,97,ac,f,u,t,97,99,f,32]),NE=w([67,97,m,m,e,g,32,n,ac,t,e,h,g,32,m,97,ac,f,32,39]),NB=[0,39,0],NC=w([67,97,m,m,e,g,32,aj,n,m,p,32,99,e,m,g,h,97,99,g,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Nz=[0,39,0],NA=w([67,97,m,m,e,g,32,aj,n,m,p,32,aj,z,m,99,g,n,e,m,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Nx=[0,39,0],Ny=w([67,97,m,m,e,g,32,aj,n,m,p,32,a0,97,h,n,97,98,x,f,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Nv=[0,39,0],Nw=w([67,97,m,m,e,g,32,aj,n,m,p,32,m,97,ac,f,u,t,97,99,f,32,39]),Nt=[0,39,0],Nu=w([67,97,m,m,e,g,32,aj,n,m,p,32,g,aD,t,f,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Ns=w([73,ac,t,e,h,g,32,m,e,g,32,aj,e,z,m,p,58,32]),Nr=w([67,97,m,m,e,g,32,z,u,f,32,39,99,x,97,z,u,f,39,32,a0,97,h,n,97,98,x,f,32,e,z,g,u,n,p,f,32,e,aj,32,97,32,99,x,97,z,u,f]),Np=w([32,e,z,g,u,n,p,f,32,e,aj,32,97,32,99,e,m,g,h,97,99,g]),Nq=w([67,97,m,m,e,g,32,99,97,x,x,32,99,x,97,z,u,f,32]),No=w([67,97,m,m,e,g,32,z,u,f,32,39,99,e,m,g,h,97,99,g,39,32,a0,97,h,n,97,98,x,f,32,e,z,g,u,n,p,f,32,e,aj,32,97,32,99,e,m,g,h,97,99,g]),Nn=w([67,97,m,m,e,g,32,99,97,x,x,32,97,32,99,x,97,z,u,f,32,f,d3,99,f,t,g,32,e,m,32,39,99,e,m,g,h,97,99,g,39]),Nk=[0,39,0],Nl=[0,32,[0,39,0]],Nm=[0,32,[0,97,[0,g,[0,32,0]]]],Nj=w([85,u,f,h,32,f,h,h,e,h,32,e,99,99,z,h,f,p,32,n,m,32,98,97,99,eD,f,m,p]),M_=[0,46,0],M9=[0,45,0],M8=[0,58,0],MP=[10,0],MQ=[10,7],MR=[10,3],MS=[10,1],MT=[1,0],MU=[1,1],MV=[1,2],MW=[1,5],MX=[1,6],MY=[1,3],MZ=[1,4],M0=[2,0],M1=[2,1],M2=[2,2],M3=[2,3],M4=[0,0],M5=[0,1],M6=[0,2],M7=[0,3],My=[0,2],Mz=[0,3],MA=[0,4],MB=[0,5],Mm=[0,w([83,z,98,g,aD,t,n,m,v,32,a0,n,e,x,97,g,n,e,m,32,n,m,32,98,h,97,m,p,32,ac,e,p,f,x])],Mn=[0,w([66,h,97,m,p,32,a4,n,g,aJ,e,z,g,32,97,32,p,f,99,x,97,h,f,p,32,g,aD,t,f,32,n,m,32,98,h,97,m,p,32,ac,e,p,f,x])],Mk=[0,w([66,h,97,m,p,32,h,f,x,97,g,n,e,m,32,n,u,32,m,e,g,32,97,u,u,aD,ac,f,g,h,n,99])],Ml=[0,w([66,h,97,m,p,32,h,f,x,97,g,n,e,m,32,n,u,32,m,e,g,32,g,h,97,m,u,n,g,n,a0,f])],Mh=[0,d(g5),47186,12],Mi=[0,d(g5),47187,7],Me=[0,0,1],Mf=[0,1,0],Mg=[0,0,0],Mb=[0,0,1],Mc=[0,1,0],Md=[0,0,0],L_=[0,0,1],L$=[0,1,0],Ma=[0,0,0],L7=[0,0,1],L8=[0,1,0],L9=[0,0,0],L6=[0,d(g5),47061,36],L3=[0,0,1],L4=[0,1,0],L5=[0,0,0],L0=[0,0,1],L1=[0,1,0],L2=[0,0,0],LW=[0,0,1],LX=[0,1,0],LZ=[0,1,1],LY=[0,0,0],LS=[0,0,1],LT=[0,1,0],LV=[0,1,1],LU=[0,0,0],LO=[0,0,1],LP=[0,1,0],LR=[0,1,1],LQ=[0,0,0],LK=[0,0,1],LL=[0,1,0],LN=[0,1,1],LM=[0,0,0],LG=[0,0,1],LH=[0,1,0],LI=[0,1,1],LJ=[0,0,0],LE=[0,1,1],LF=[0,0,1],LC=[0,1,1],LD=[0,1,0],LA=[2,1],LB=[2,0],Lz=[0,[4,0]],Ly=[0,0],Lh=[0,32,[0,38,[0,32,0]]],Lg=[0,84,[0,82,[0,85,[0,69,0]]]],Lf=[0,70,[0,65,[0,76,[0,83,[0,69,0]]]]],K9=[7,0],KX=[0,92,[0,34,0]],KI=[0,48,0],KH=[0,48,0],KD=[0,0,0],KA=[0,0,1],Kz=[0,0,1],Ky=[0,0,1],Kx=[0,1,0],Kw=[0,1,[0,1]],Kv=[0,1,0],Ku=[0,1],K8=w([48,46,54,46,48,45,97,x,t,aJ,97]),MD=[0,0],MF=[0,1],MH=[0,3],MJ=[0,4],ML=[0,5],M$=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,99,n,99,f,h,e,46,h,z,m,g,n,ac,f]),Na=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,99,n,99,f,h,e,46,99,e,m,g,h,97,99,g]),Nb=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f]),Nc=[0,69,[0,a0,[0,f,[0,m,[0,g,0]]]]],Nd=w([84,h,97,m,u,97,99,g,n,e,m]),Ne=[0,65,[0,u,[0,u,[0,f,[0,g,0]]]]],Nf=w([80,97,h,g,n,99,n,t,97,m,g]),Ng=[0,82,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Nh=w([65,99,99,e,h,p,67,e,m,g,h,97,99,g,83,g,97,g,f]),Ni=w([69,h,v,e,69,h,h,e,h,82,f,u,t,e,m,u,f]),Oi=[0,34,0],Ra=[4,0],TS=d('\n{"type":"Program","namespace":"org.accordproject.cicero.contract","imports":[],"body":[{"type":"AssetDeclaration","id":{"type":"Identifier","name":"AccordContractState"},"classExtension":null,"idField":{"type":"Identifier","name":"stateId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"stateId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":250,"line":10,"column":3},"end":{"offset":267,"line":11,"column":1}}}],"location":{"start":{"offset":250,"line":10,"column":3},"end":{"offset":267,"line":11,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":198,"line":9,"column":1},"end":{"offset":268,"line":11,"column":2}}},{"type":"ParticipantDeclaration","id":{"type":"Identifier","name":"AccordParty"},"classExtension":null,"idField":{"type":"Identifier","name":"partyId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"partyId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":348,"line":15,"column":3},"end":{"offset":365,"line":16,"column":1}}}],"location":{"start":{"offset":348,"line":15,"column":3},"end":{"offset":365,"line":16,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":298,"line":14,"column":1},"end":{"offset":366,"line":16,"column":2}}},{"type":"AssetDeclaration","id":{"type":"Identifier","name":"AccordContract"},"classExtension":null,"idField":{"type":"Identifier","name":"contractId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"contractId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":490,"line":20,"column":3},"end":{"offset":512,"line":21,"column":3}}},{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"parties"},"propertyType":{"type":"Identifier","name":"AccordParty"},"array":"[]","optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":512,"line":21,"column":3},"end":{"offset":547,"line":22,"column":1}}}],"location":{"start":{"offset":490,"line":20,"column":3},"end":{"offset":547,"line":22,"column":1}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":431,"line":19,"column":1},"end":{"offset":548,"line":22,"column":2}}},{"type":"AssetDeclaration","id":{"type":"Identifier","name":"AccordClause"},"classExtension":null,"idField":{"type":"Identifier","name":"clauseId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"clauseId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":665,"line":26,"column":3},"end":{"offset":683,"line":27,"column":1}}}],"location":{"start":{"offset":665,"line":26,"column":3},"end":{"offset":683,"line":27,"column":1}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":610,"line":25,"column":1},"end":{"offset":684,"line":27,"column":2}}}]}'),TT=d('\n{"type":"Program","namespace":"org.accordproject.base","imports":[],"body":[{"type":"AssetDeclaration","id":{"type":"Identifier","name":"Asset"},"classExtension":null,"idField":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":616,"line":16,"column":25},"end":{"offset":616,"line":16,"column":25}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":592,"line":16,"column":1},"end":{"offset":617,"line":16,"column":26}}},{"type":"ParticipantDeclaration","id":{"type":"Identifier","name":"Participant"},"classExtension":null,"idField":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":654,"line":17,"column":37},"end":{"offset":654,"line":17,"column":37}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":618,"line":17,"column":1},"end":{"offset":655,"line":17,"column":38}}},{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"Transaction"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":692,"line":18,"column":37},"end":{"offset":692,"line":18,"column":37}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":656,"line":18,"column":1},"end":{"offset":693,"line":18,"column":38}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"Event"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":718,"line":19,"column":25},"end":{"offset":718,"line":19,"column":25}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":694,"line":19,"column":1},"end":{"offset":719,"line":19,"column":26}}}]}'),TU=d('\n{"type":"Program","namespace":"org.accordproject.money","imports":[],"body":[{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"CryptoMonetaryAmount"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"doubleValue"},"propertyType":{"name":"Double"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":118,"line":7,"column":3},"end":{"offset":141,"line":8,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"cryptoCurrencyCode"},"propertyType":{"type":"Identifier","name":"CryptoCurrencyCode"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":141,"line":8,"column":3},"end":{"offset":181,"line":9,"column":1}}}],"location":{"start":{"offset":118,"line":7,"column":3},"end":{"offset":181,"line":9,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":85,"line":6,"column":1},"end":{"offset":182,"line":9,"column":2}}},{"type":"EnumDeclaration","id":{"type":"Identifier","name":"CryptoCurrencyCode"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ADA"},"optional":null,"decorators":[],"location":{"start":{"offset":304,"line":15,"column":3},"end":{"offset":312,"line":16,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BCH"},"optional":null,"decorators":[],"location":{"start":{"offset":312,"line":16,"column":3},"end":{"offset":320,"line":17,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BTC"},"optional":null,"decorators":[],"location":{"start":{"offset":320,"line":17,"column":3},"end":{"offset":328,"line":18,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DASH"},"optional":null,"decorators":[],"location":{"start":{"offset":328,"line":18,"column":3},"end":{"offset":337,"line":19,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"EOS"},"optional":null,"decorators":[],"location":{"start":{"offset":337,"line":19,"column":3},"end":{"offset":345,"line":20,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ETC"},"optional":null,"decorators":[],"location":{"start":{"offset":345,"line":20,"column":3},"end":{"offset":353,"line":21,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ETH"},"optional":null,"decorators":[],"location":{"start":{"offset":353,"line":21,"column":3},"end":{"offset":361,"line":22,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LTC"},"optional":null,"decorators":[],"location":{"start":{"offset":361,"line":22,"column":3},"end":{"offset":369,"line":23,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NEO"},"optional":null,"decorators":[],"location":{"start":{"offset":369,"line":23,"column":3},"end":{"offset":377,"line":24,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XLM"},"optional":null,"decorators":[],"location":{"start":{"offset":377,"line":24,"column":3},"end":{"offset":385,"line":25,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XMR"},"optional":null,"decorators":[],"location":{"start":{"offset":385,"line":25,"column":3},"end":{"offset":393,"line":26,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XRP"},"optional":null,"decorators":[],"location":{"start":{"offset":393,"line":26,"column":3},"end":{"offset":401,"line":27,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZEC"},"optional":null,"decorators":[],"location":{"start":{"offset":401,"line":27,"column":3},"end":{"offset":407,"line":28,"column":1}}}]},"decorators":[],"location":{"start":{"offset":276,"line":14,"column":1},"end":{"offset":408,"line":28,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"MonetaryAmount"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"doubleValue"},"propertyType":{"name":"Double"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":478,"line":34,"column":3},"end":{"offset":528,"line":35,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"currencyCode"},"propertyType":{"type":"Identifier","name":"CurrencyCode"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":528,"line":35,"column":3},"end":{"offset":556,"line":36,"column":1}}}],"location":{"start":{"offset":478,"line":34,"column":3},"end":{"offset":556,"line":36,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":451,"line":33,"column":1},"end":{"offset":557,"line":36,"column":2}}},{"type":"EnumDeclaration","id":{"type":"Identifier","name":"CurrencyCode"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AED"},"optional":null,"decorators":[],"location":{"start":{"offset":711,"line":43,"column":1},"end":{"offset":717,"line":44,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AFN"},"optional":null,"decorators":[],"location":{"start":{"offset":717,"line":44,"column":1},"end":{"offset":723,"line":45,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ALL"},"optional":null,"decorators":[],"location":{"start":{"offset":723,"line":45,"column":1},"end":{"offset":729,"line":46,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AMD"},"optional":null,"decorators":[],"location":{"start":{"offset":729,"line":46,"column":1},"end":{"offset":735,"line":47,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ANG"},"optional":null,"decorators":[],"location":{"start":{"offset":735,"line":47,"column":1},"end":{"offset":741,"line":48,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AOA"},"optional":null,"decorators":[],"location":{"start":{"offset":741,"line":48,"column":1},"end":{"offset":747,"line":49,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ARS"},"optional":null,"decorators":[],"location":{"start":{"offset":747,"line":49,"column":1},"end":{"offset":753,"line":50,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AUD"},"optional":null,"decorators":[],"location":{"start":{"offset":753,"line":50,"column":1},"end":{"offset":759,"line":51,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AWG"},"optional":null,"decorators":[],"location":{"start":{"offset":759,"line":51,"column":1},"end":{"offset":765,"line":52,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AZN"},"optional":null,"decorators":[],"location":{"start":{"offset":765,"line":52,"column":1},"end":{"offset":771,"line":53,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BAM"},"optional":null,"decorators":[],"location":{"start":{"offset":771,"line":53,"column":1},"end":{"offset":777,"line":54,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BBD"},"optional":null,"decorators":[],"location":{"start":{"offset":777,"line":54,"column":1},"end":{"offset":783,"line":55,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BDT"},"optional":null,"decorators":[],"location":{"start":{"offset":783,"line":55,"column":1},"end":{"offset":789,"line":56,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BGN"},"optional":null,"decorators":[],"location":{"start":{"offset":789,"line":56,"column":1},"end":{"offset":795,"line":57,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BHD"},"optional":null,"decorators":[],"location":{"start":{"offset":795,"line":57,"column":1},"end":{"offset":801,"line":58,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BIF"},"optional":null,"decorators":[],"location":{"start":{"offset":801,"line":58,"column":1},"end":{"offset":807,"line":59,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BMD"},"optional":null,"decorators":[],"location":{"start":{"offset":807,"line":59,"column":1},"end":{"offset":813,"line":60,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BND"},"optional":null,"decorators":[],"location":{"start":{"offset":813,"line":60,"column":1},"end":{"offset":819,"line":61,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BOB"},"optional":null,"decorators":[],"location":{"start":{"offset":819,"line":61,"column":1},"end":{"offset":825,"line":62,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BOV"},"optional":null,"decorators":[],"location":{"start":{"offset":825,"line":62,"column":1},"end":{"offset":831,"line":63,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BRL"},"optional":null,"decorators":[],"location":{"start":{"offset":831,"line":63,"column":1},"end":{"offset":837,"line":64,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BSD"},"optional":null,"decorators":[],"location":{"start":{"offset":837,"line":64,"column":1},"end":{"offset":843,"line":65,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BTN"},"optional":null,"decorators":[],"location":{"start":{"offset":843,"line":65,"column":1},"end":{"offset":849,"line":66,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BWP"},"optional":null,"decorators":[],"location":{"start":{"offset":849,"line":66,"column":1},"end":{"offset":855,"line":67,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BYN"},"optional":null,"decorators":[],"location":{"start":{"offset":855,"line":67,"column":1},"end":{"offset":861,"line":68,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BZD"},"optional":null,"decorators":[],"location":{"start":{"offset":861,"line":68,"column":1},"end":{"offset":867,"line":69,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CAD"},"optional":null,"decorators":[],"location":{"start":{"offset":867,"line":69,"column":1},"end":{"offset":873,"line":70,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CDF"},"optional":null,"decorators":[],"location":{"start":{"offset":873,"line":70,"column":1},"end":{"offset":879,"line":71,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CHE"},"optional":null,"decorators":[],"location":{"start":{"offset":879,"line":71,"column":1},"end":{"offset":885,"line":72,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CHF"},"optional":null,"decorators":[],"location":{"start":{"offset":885,"line":72,"column":1},"end":{"offset":891,"line":73,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CHW"},"optional":null,"decorators":[],"location":{"start":{"offset":891,"line":73,"column":1},"end":{"offset":897,"line":74,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CLF"},"optional":null,"decorators":[],"location":{"start":{"offset":897,"line":74,"column":1},"end":{"offset":903,"line":75,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CLP"},"optional":null,"decorators":[],"location":{"start":{"offset":903,"line":75,"column":1},"end":{"offset":909,"line":76,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CNY"},"optional":null,"decorators":[],"location":{"start":{"offset":909,"line":76,"column":1},"end":{"offset":915,"line":77,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"COP"},"optional":null,"decorators":[],"location":{"start":{"offset":915,"line":77,"column":1},"end":{"offset":921,"line":78,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"COU"},"optional":null,"decorators":[],"location":{"start":{"offset":921,"line":78,"column":1},"end":{"offset":927,"line":79,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CRC"},"optional":null,"decorators":[],"location":{"start":{"offset":927,"line":79,"column":1},"end":{"offset":933,"line":80,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CUC"},"optional":null,"decorators":[],"location":{"start":{"offset":933,"line":80,"column":1},"end":{"offset":939,"line":81,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CUP"},"optional":null,"decorators":[],"location":{"start":{"offset":939,"line":81,"column":1},"end":{"offset":945,"line":82,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CVE"},"optional":null,"decorators":[],"location":{"start":{"offset":945,"line":82,"column":1},"end":{"offset":951,"line":83,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CZK"},"optional":null,"decorators":[],"location":{"start":{"offset":951,"line":83,"column":1},"end":{"offset":957,"line":84,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DJF"},"optional":null,"decorators":[],"location":{"start":{"offset":957,"line":84,"column":1},"end":{"offset":963,"line":85,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DKK"},"optional":null,"decorators":[],"location":{"start":{"offset":963,"line":85,"column":1},"end":{"offset":969,"line":86,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DOP"},"optional":null,"decorators":[],"location":{"start":{"offset":969,"line":86,"column":1},"end":{"offset":975,"line":87,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DZD"},"optional":null,"decorators":[],"location":{"start":{"offset":975,"line":87,"column":1},"end":{"offset":981,"line":88,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"EGP"},"optional":null,"decorators":[],"location":{"start":{"offset":981,"line":88,"column":1},"end":{"offset":987,"line":89,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ERN"},"optional":null,"decorators":[],"location":{"start":{"offset":987,"line":89,"column":1},"end":{"offset":993,"line":90,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ETB"},"optional":null,"decorators":[],"location":{"start":{"offset":993,"line":90,"column":1},"end":{"offset":999,"line":91,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"EUR"},"optional":null,"decorators":[],"location":{"start":{"offset":999,"line":91,"column":1},"end":{"offset":1005,"line":92,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"FJD"},"optional":null,"decorators":[],"location":{"start":{"offset":1005,"line":92,"column":1},"end":{"offset":1011,"line":93,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"FKP"},"optional":null,"decorators":[],"location":{"start":{"offset":1011,"line":93,"column":1},"end":{"offset":1017,"line":94,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GBP"},"optional":null,"decorators":[],"location":{"start":{"offset":1017,"line":94,"column":1},"end":{"offset":1023,"line":95,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GEL"},"optional":null,"decorators":[],"location":{"start":{"offset":1023,"line":95,"column":1},"end":{"offset":1029,"line":96,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GHS"},"optional":null,"decorators":[],"location":{"start":{"offset":1029,"line":96,"column":1},"end":{"offset":1035,"line":97,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GIP"},"optional":null,"decorators":[],"location":{"start":{"offset":1035,"line":97,"column":1},"end":{"offset":1041,"line":98,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GMD"},"optional":null,"decorators":[],"location":{"start":{"offset":1041,"line":98,"column":1},"end":{"offset":1047,"line":99,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GNF"},"optional":null,"decorators":[],"location":{"start":{"offset":1047,"line":99,"column":1},"end":{"offset":1053,"line":100,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GTQ"},"optional":null,"decorators":[],"location":{"start":{"offset":1053,"line":100,"column":1},"end":{"offset":1059,"line":101,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GYD"},"optional":null,"decorators":[],"location":{"start":{"offset":1059,"line":101,"column":1},"end":{"offset":1065,"line":102,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HKD"},"optional":null,"decorators":[],"location":{"start":{"offset":1065,"line":102,"column":1},"end":{"offset":1071,"line":103,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HNL"},"optional":null,"decorators":[],"location":{"start":{"offset":1071,"line":103,"column":1},"end":{"offset":1077,"line":104,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HRK"},"optional":null,"decorators":[],"location":{"start":{"offset":1077,"line":104,"column":1},"end":{"offset":1083,"line":105,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HTG"},"optional":null,"decorators":[],"location":{"start":{"offset":1083,"line":105,"column":1},"end":{"offset":1089,"line":106,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HUF"},"optional":null,"decorators":[],"location":{"start":{"offset":1089,"line":106,"column":1},"end":{"offset":1095,"line":107,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"IDR"},"optional":null,"decorators":[],"location":{"start":{"offset":1095,"line":107,"column":1},"end":{"offset":1101,"line":108,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ILS"},"optional":null,"decorators":[],"location":{"start":{"offset":1101,"line":108,"column":1},"end":{"offset":1107,"line":109,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"INR"},"optional":null,"decorators":[],"location":{"start":{"offset":1107,"line":109,"column":1},"end":{"offset":1113,"line":110,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"IQD"},"optional":null,"decorators":[],"location":{"start":{"offset":1113,"line":110,"column":1},"end":{"offset":1119,"line":111,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"IRR"},"optional":null,"decorators":[],"location":{"start":{"offset":1119,"line":111,"column":1},"end":{"offset":1125,"line":112,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ISK"},"optional":null,"decorators":[],"location":{"start":{"offset":1125,"line":112,"column":1},"end":{"offset":1131,"line":113,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"JMD"},"optional":null,"decorators":[],"location":{"start":{"offset":1131,"line":113,"column":1},"end":{"offset":1137,"line":114,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"JOD"},"optional":null,"decorators":[],"location":{"start":{"offset":1137,"line":114,"column":1},"end":{"offset":1143,"line":115,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"JPY"},"optional":null,"decorators":[],"location":{"start":{"offset":1143,"line":115,"column":1},"end":{"offset":1149,"line":116,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KES"},"optional":null,"decorators":[],"location":{"start":{"offset":1149,"line":116,"column":1},"end":{"offset":1155,"line":117,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KGS"},"optional":null,"decorators":[],"location":{"start":{"offset":1155,"line":117,"column":1},"end":{"offset":1161,"line":118,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KHR"},"optional":null,"decorators":[],"location":{"start":{"offset":1161,"line":118,"column":1},"end":{"offset":1167,"line":119,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KMF"},"optional":null,"decorators":[],"location":{"start":{"offset":1167,"line":119,"column":1},"end":{"offset":1173,"line":120,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KPW"},"optional":null,"decorators":[],"location":{"start":{"offset":1173,"line":120,"column":1},"end":{"offset":1179,"line":121,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KRW"},"optional":null,"decorators":[],"location":{"start":{"offset":1179,"line":121,"column":1},"end":{"offset":1185,"line":122,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KWD"},"optional":null,"decorators":[],"location":{"start":{"offset":1185,"line":122,"column":1},"end":{"offset":1191,"line":123,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KYD"},"optional":null,"decorators":[],"location":{"start":{"offset":1191,"line":123,"column":1},"end":{"offset":1197,"line":124,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KZT"},"optional":null,"decorators":[],"location":{"start":{"offset":1197,"line":124,"column":1},"end":{"offset":1203,"line":125,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LAK"},"optional":null,"decorators":[],"location":{"start":{"offset":1203,"line":125,"column":1},"end":{"offset":1209,"line":126,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LBP"},"optional":null,"decorators":[],"location":{"start":{"offset":1209,"line":126,"column":1},"end":{"offset":1215,"line":127,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LKR"},"optional":null,"decorators":[],"location":{"start":{"offset":1215,"line":127,"column":1},"end":{"offset":1221,"line":128,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LRD"},"optional":null,"decorators":[],"location":{"start":{"offset":1221,"line":128,"column":1},"end":{"offset":1227,"line":129,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LSL"},"optional":null,"decorators":[],"location":{"start":{"offset":1227,"line":129,"column":1},"end":{"offset":1233,"line":130,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LYD"},"optional":null,"decorators":[],"location":{"start":{"offset":1233,"line":130,"column":1},"end":{"offset":1239,"line":131,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MAD"},"optional":null,"decorators":[],"location":{"start":{"offset":1239,"line":131,"column":1},"end":{"offset":1245,"line":132,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MDL"},"optional":null,"decorators":[],"location":{"start":{"offset":1245,"line":132,"column":1},"end":{"offset":1251,"line":133,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MGA"},"optional":null,"decorators":[],"location":{"start":{"offset":1251,"line":133,"column":1},"end":{"offset":1257,"line":134,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MKD"},"optional":null,"decorators":[],"location":{"start":{"offset":1257,"line":134,"column":1},"end":{"offset":1263,"line":135,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MMK"},"optional":null,"decorators":[],"location":{"start":{"offset":1263,"line":135,"column":1},"end":{"offset":1269,"line":136,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MNT"},"optional":null,"decorators":[],"location":{"start":{"offset":1269,"line":136,"column":1},"end":{"offset":1275,"line":137,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MOP"},"optional":null,"decorators":[],"location":{"start":{"offset":1275,"line":137,"column":1},"end":{"offset":1281,"line":138,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MRU"},"optional":null,"decorators":[],"location":{"start":{"offset":1281,"line":138,"column":1},"end":{"offset":1287,"line":139,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MUR"},"optional":null,"decorators":[],"location":{"start":{"offset":1287,"line":139,"column":1},"end":{"offset":1293,"line":140,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MVR"},"optional":null,"decorators":[],"location":{"start":{"offset":1293,"line":140,"column":1},"end":{"offset":1299,"line":141,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MWK"},"optional":null,"decorators":[],"location":{"start":{"offset":1299,"line":141,"column":1},"end":{"offset":1305,"line":142,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MXN"},"optional":null,"decorators":[],"location":{"start":{"offset":1305,"line":142,"column":1},"end":{"offset":1311,"line":143,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MXV"},"optional":null,"decorators":[],"location":{"start":{"offset":1311,"line":143,"column":1},"end":{"offset":1317,"line":144,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MYR"},"optional":null,"decorators":[],"location":{"start":{"offset":1317,"line":144,"column":1},"end":{"offset":1323,"line":145,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MZN"},"optional":null,"decorators":[],"location":{"start":{"offset":1323,"line":145,"column":1},"end":{"offset":1329,"line":146,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NAD"},"optional":null,"decorators":[],"location":{"start":{"offset":1329,"line":146,"column":1},"end":{"offset":1335,"line":147,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NGN"},"optional":null,"decorators":[],"location":{"start":{"offset":1335,"line":147,"column":1},"end":{"offset":1341,"line":148,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NIO"},"optional":null,"decorators":[],"location":{"start":{"offset":1341,"line":148,"column":1},"end":{"offset":1347,"line":149,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NOK"},"optional":null,"decorators":[],"location":{"start":{"offset":1347,"line":149,"column":1},"end":{"offset":1353,"line":150,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NPR"},"optional":null,"decorators":[],"location":{"start":{"offset":1353,"line":150,"column":1},"end":{"offset":1359,"line":151,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NZD"},"optional":null,"decorators":[],"location":{"start":{"offset":1359,"line":151,"column":1},"end":{"offset":1365,"line":152,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"OMR"},"optional":null,"decorators":[],"location":{"start":{"offset":1365,"line":152,"column":1},"end":{"offset":1371,"line":153,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PAB"},"optional":null,"decorators":[],"location":{"start":{"offset":1371,"line":153,"column":1},"end":{"offset":1377,"line":154,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PEN"},"optional":null,"decorators":[],"location":{"start":{"offset":1377,"line":154,"column":1},"end":{"offset":1383,"line":155,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PGK"},"optional":null,"decorators":[],"location":{"start":{"offset":1383,"line":155,"column":1},"end":{"offset":1389,"line":156,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PHP"},"optional":null,"decorators":[],"location":{"start":{"offset":1389,"line":156,"column":1},"end":{"offset":1395,"line":157,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PKR"},"optional":null,"decorators":[],"location":{"start":{"offset":1395,"line":157,"column":1},"end":{"offset":1401,"line":158,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PLN"},"optional":null,"decorators":[],"location":{"start":{"offset":1401,"line":158,"column":1},"end":{"offset":1407,"line":159,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PYG"},"optional":null,"decorators":[],"location":{"start":{"offset":1407,"line":159,"column":1},"end":{"offset":1413,"line":160,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"QAR"},"optional":null,"decorators":[],"location":{"start":{"offset":1413,"line":160,"column":1},"end":{"offset":1419,"line":161,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RON"},"optional":null,"decorators":[],"location":{"start":{"offset":1419,"line":161,"column":1},"end":{"offset":1425,"line":162,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RSD"},"optional":null,"decorators":[],"location":{"start":{"offset":1425,"line":162,"column":1},"end":{"offset":1431,"line":163,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RUB"},"optional":null,"decorators":[],"location":{"start":{"offset":1431,"line":163,"column":1},"end":{"offset":1437,"line":164,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RWF"},"optional":null,"decorators":[],"location":{"start":{"offset":1437,"line":164,"column":1},"end":{"offset":1443,"line":165,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SAR"},"optional":null,"decorators":[],"location":{"start":{"offset":1443,"line":165,"column":1},"end":{"offset":1449,"line":166,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SBD"},"optional":null,"decorators":[],"location":{"start":{"offset":1449,"line":166,"column":1},"end":{"offset":1455,"line":167,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SCR"},"optional":null,"decorators":[],"location":{"start":{"offset":1455,"line":167,"column":1},"end":{"offset":1461,"line":168,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SDG"},"optional":null,"decorators":[],"location":{"start":{"offset":1461,"line":168,"column":1},"end":{"offset":1467,"line":169,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SEK"},"optional":null,"decorators":[],"location":{"start":{"offset":1467,"line":169,"column":1},"end":{"offset":1473,"line":170,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SGD"},"optional":null,"decorators":[],"location":{"start":{"offset":1473,"line":170,"column":1},"end":{"offset":1479,"line":171,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SHP"},"optional":null,"decorators":[],"location":{"start":{"offset":1479,"line":171,"column":1},"end":{"offset":1485,"line":172,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SLL"},"optional":null,"decorators":[],"location":{"start":{"offset":1485,"line":172,"column":1},"end":{"offset":1491,"line":173,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SOS"},"optional":null,"decorators":[],"location":{"start":{"offset":1491,"line":173,"column":1},"end":{"offset":1497,"line":174,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SRD"},"optional":null,"decorators":[],"location":{"start":{"offset":1497,"line":174,"column":1},"end":{"offset":1503,"line":175,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SSP"},"optional":null,"decorators":[],"location":{"start":{"offset":1503,"line":175,"column":1},"end":{"offset":1509,"line":176,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"STN"},"optional":null,"decorators":[],"location":{"start":{"offset":1509,"line":176,"column":1},"end":{"offset":1515,"line":177,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SVC"},"optional":null,"decorators":[],"location":{"start":{"offset":1515,"line":177,"column":1},"end":{"offset":1521,"line":178,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SYP"},"optional":null,"decorators":[],"location":{"start":{"offset":1521,"line":178,"column":1},"end":{"offset":1527,"line":179,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SZL"},"optional":null,"decorators":[],"location":{"start":{"offset":1527,"line":179,"column":1},"end":{"offset":1533,"line":180,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"THB"},"optional":null,"decorators":[],"location":{"start":{"offset":1533,"line":180,"column":1},"end":{"offset":1539,"line":181,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TJS"},"optional":null,"decorators":[],"location":{"start":{"offset":1539,"line":181,"column":1},"end":{"offset":1545,"line":182,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TMT"},"optional":null,"decorators":[],"location":{"start":{"offset":1545,"line":182,"column":1},"end":{"offset":1551,"line":183,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TND"},"optional":null,"decorators":[],"location":{"start":{"offset":1551,"line":183,"column":1},"end":{"offset":1557,"line":184,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TOP"},"optional":null,"decorators":[],"location":{"start":{"offset":1557,"line":184,"column":1},"end":{"offset":1563,"line":185,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TRY"},"optional":null,"decorators":[],"location":{"start":{"offset":1563,"line":185,"column":1},"end":{"offset":1569,"line":186,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TTD"},"optional":null,"decorators":[],"location":{"start":{"offset":1569,"line":186,"column":1},"end":{"offset":1575,"line":187,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TWD"},"optional":null,"decorators":[],"location":{"start":{"offset":1575,"line":187,"column":1},"end":{"offset":1581,"line":188,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TZS"},"optional":null,"decorators":[],"location":{"start":{"offset":1581,"line":188,"column":1},"end":{"offset":1587,"line":189,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UAH"},"optional":null,"decorators":[],"location":{"start":{"offset":1587,"line":189,"column":1},"end":{"offset":1593,"line":190,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UGX"},"optional":null,"decorators":[],"location":{"start":{"offset":1593,"line":190,"column":1},"end":{"offset":1599,"line":191,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"USD"},"optional":null,"decorators":[],"location":{"start":{"offset":1599,"line":191,"column":1},"end":{"offset":1605,"line":192,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"USN"},"optional":null,"decorators":[],"location":{"start":{"offset":1605,"line":192,"column":1},"end":{"offset":1611,"line":193,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UYI"},"optional":null,"decorators":[],"location":{"start":{"offset":1611,"line":193,"column":1},"end":{"offset":1617,"line":194,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UYU"},"optional":null,"decorators":[],"location":{"start":{"offset":1617,"line":194,"column":1},"end":{"offset":1623,"line":195,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UZS"},"optional":null,"decorators":[],"location":{"start":{"offset":1623,"line":195,"column":1},"end":{"offset":1629,"line":196,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"VEF"},"optional":null,"decorators":[],"location":{"start":{"offset":1629,"line":196,"column":1},"end":{"offset":1635,"line":197,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"VND"},"optional":null,"decorators":[],"location":{"start":{"offset":1635,"line":197,"column":1},"end":{"offset":1641,"line":198,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"VUV"},"optional":null,"decorators":[],"location":{"start":{"offset":1641,"line":198,"column":1},"end":{"offset":1647,"line":199,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"WST"},"optional":null,"decorators":[],"location":{"start":{"offset":1647,"line":199,"column":1},"end":{"offset":1653,"line":200,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XAF"},"optional":null,"decorators":[],"location":{"start":{"offset":1653,"line":200,"column":1},"end":{"offset":1659,"line":201,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XAG"},"optional":null,"decorators":[],"location":{"start":{"offset":1659,"line":201,"column":1},"end":{"offset":1665,"line":202,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XAU"},"optional":null,"decorators":[],"location":{"start":{"offset":1665,"line":202,"column":1},"end":{"offset":1671,"line":203,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBA"},"optional":null,"decorators":[],"location":{"start":{"offset":1671,"line":203,"column":1},"end":{"offset":1677,"line":204,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBB"},"optional":null,"decorators":[],"location":{"start":{"offset":1677,"line":204,"column":1},"end":{"offset":1683,"line":205,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBC"},"optional":null,"decorators":[],"location":{"start":{"offset":1683,"line":205,"column":1},"end":{"offset":1689,"line":206,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBD"},"optional":null,"decorators":[],"location":{"start":{"offset":1689,"line":206,"column":1},"end":{"offset":1695,"line":207,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XCD"},"optional":null,"decorators":[],"location":{"start":{"offset":1695,"line":207,"column":1},"end":{"offset":1701,"line":208,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XDR"},"optional":null,"decorators":[],"location":{"start":{"offset":1701,"line":208,"column":1},"end":{"offset":1707,"line":209,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XOF"},"optional":null,"decorators":[],"location":{"start":{"offset":1707,"line":209,"column":1},"end":{"offset":1713,"line":210,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XPD"},"optional":null,"decorators":[],"location":{"start":{"offset":1713,"line":210,"column":1},"end":{"offset":1719,"line":211,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XPF"},"optional":null,"decorators":[],"location":{"start":{"offset":1719,"line":211,"column":1},"end":{"offset":1725,"line":212,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XPT"},"optional":null,"decorators":[],"location":{"start":{"offset":1725,"line":212,"column":1},"end":{"offset":1731,"line":213,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XSU"},"optional":null,"decorators":[],"location":{"start":{"offset":1731,"line":213,"column":1},"end":{"offset":1737,"line":214,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XTS"},"optional":null,"decorators":[],"location":{"start":{"offset":1737,"line":214,"column":1},"end":{"offset":1743,"line":215,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XUA"},"optional":null,"decorators":[],"location":{"start":{"offset":1743,"line":215,"column":1},"end":{"offset":1749,"line":216,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XXX"},"optional":null,"decorators":[],"location":{"start":{"offset":1749,"line":216,"column":1},"end":{"offset":1755,"line":217,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"YER"},"optional":null,"decorators":[],"location":{"start":{"offset":1755,"line":217,"column":1},"end":{"offset":1761,"line":218,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZAR"},"optional":null,"decorators":[],"location":{"start":{"offset":1761,"line":218,"column":1},"end":{"offset":1767,"line":219,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZMW"},"optional":null,"decorators":[],"location":{"start":{"offset":1767,"line":219,"column":1},"end":{"offset":1773,"line":220,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZWL"},"optional":null,"decorators":[],"location":{"start":{"offset":1773,"line":220,"column":1},"end":{"offset":1779,"line":221,"column":1}}}]},"decorators":[],"location":{"start":{"offset":691,"line":42,"column":1},"end":{"offset":1780,"line":221,"column":2}}}]}'),TV=d('\n{"type":"Program","namespace":"org.accordproject.time","imports":[],"body":[{"type":"EnumDeclaration","id":{"type":"Identifier","name":"TemporalUnit"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"seconds"},"optional":null,"decorators":[],"location":{"start":{"offset":89,"line":7,"column":3},"end":{"offset":101,"line":8,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"minutes"},"optional":null,"decorators":[],"location":{"start":{"offset":101,"line":8,"column":3},"end":{"offset":113,"line":9,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"hours"},"optional":null,"decorators":[],"location":{"start":{"offset":113,"line":9,"column":3},"end":{"offset":123,"line":10,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"days"},"optional":null,"decorators":[],"location":{"start":{"offset":123,"line":10,"column":3},"end":{"offset":132,"line":11,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"weeks"},"optional":null,"decorators":[],"location":{"start":{"offset":132,"line":11,"column":3},"end":{"offset":142,"line":12,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"years"},"optional":null,"decorators":[],"location":{"start":{"offset":142,"line":12,"column":3},"end":{"offset":150,"line":13,"column":1}}}]},"decorators":[],"location":{"start":{"offset":67,"line":6,"column":1},"end":{"offset":151,"line":13,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Duration"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"amount"},"propertyType":{"name":"Long"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":219,"line":19,"column":3},"end":{"offset":235,"line":20,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"unit"},"propertyType":{"type":"Identifier","name":"TemporalUnit"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":235,"line":20,"column":3},"end":{"offset":255,"line":21,"column":1}}}],"location":{"start":{"offset":219,"line":19,"column":3},"end":{"offset":255,"line":21,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":198,"line":18,"column":1},"end":{"offset":256,"line":21,"column":2}}},{"type":"EnumDeclaration","id":{"type":"Identifier","name":"PeriodUnit"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"days"},"optional":null,"decorators":[],"location":{"start":{"offset":314,"line":27,"column":3},"end":{"offset":323,"line":28,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"weeks"},"optional":null,"decorators":[],"location":{"start":{"offset":323,"line":28,"column":3},"end":{"offset":333,"line":29,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"months"},"optional":null,"decorators":[],"location":{"start":{"offset":333,"line":29,"column":3},"end":{"offset":344,"line":30,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"quarters"},"optional":null,"decorators":[],"location":{"start":{"offset":344,"line":30,"column":3},"end":{"offset":357,"line":31,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"years"},"optional":null,"decorators":[],"location":{"start":{"offset":357,"line":31,"column":3},"end":{"offset":365,"line":32,"column":1}}}]},"decorators":[],"location":{"start":{"offset":294,"line":26,"column":1},"end":{"offset":366,"line":32,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Period"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"amount"},"propertyType":{"name":"Long"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":436,"line":38,"column":3},"end":{"offset":452,"line":39,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"unit"},"propertyType":{"type":"Identifier","name":"PeriodUnit"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":452,"line":39,"column":3},"end":{"offset":470,"line":40,"column":1}}}],"location":{"start":{"offset":436,"line":38,"column":3},"end":{"offset":470,"line":40,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":417,"line":37,"column":1},"end":{"offset":471,"line":40,"column":2}}}]}'),TW=d('\n{"type":"Program","namespace":"org.accordproject.cicero.runtime","imports":[{"namespace":"org.accordproject.cicero.contract.*","uri":"https://models.accordproject.org/cicero/contract.cto"},{"namespace":"org.accordproject.money.MonetaryAmount","uri":"https://models.accordproject.org/money.cto"}],"body":[{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"Request"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":384,"line":12,"column":22},"end":{"offset":384,"line":12,"column":22}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":363,"line":12,"column":1},"end":{"offset":385,"line":12,"column":23}}},{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"Response"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":443,"line":15,"column":23},"end":{"offset":443,"line":15,"column":23}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":421,"line":15,"column":1},"end":{"offset":444,"line":15,"column":24}}},{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"ErrorResponse"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":514,"line":18,"column":37},"end":{"offset":514,"line":18,"column":37}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":478,"line":18,"column":1},"end":{"offset":515,"line":18,"column":38}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"Obligation"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"contract"},"propertyType":{"type":"Identifier","name":"AccordContract"},"array":null,"optional":null,"decorators":[],"location":{"start":{"offset":699,"line":23,"column":3},"end":{"offset":766,"line":26,"column":3}}},{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"promisor"},"propertyType":{"type":"Identifier","name":"Participant"},"array":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":766,"line":26,"column":3},"end":{"offset":917,"line":29,"column":3}}},{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"promisee"},"propertyType":{"type":"Identifier","name":"Participant"},"array":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":917,"line":29,"column":3},"end":{"offset":1078,"line":32,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"deadline"},"propertyType":{"name":"DateTime"},"array":null,"default":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":1078,"line":32,"column":3},"end":{"offset":1107,"line":33,"column":1}}}],"location":{"start":{"offset":699,"line":23,"column":3},"end":{"offset":1107,"line":33,"column":1}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":589,"line":21,"column":1},"end":{"offset":1108,"line":33,"column":2}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"PaymentObligation"},"classExtension":{"type":"ClassExtension","class":{"type":"Identifier","name":"Obligation"}},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"amount"},"propertyType":{"type":"Identifier","name":"MonetaryAmount"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1156,"line":36,"column":3},"end":{"offset":1182,"line":37,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"description"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1182,"line":37,"column":3},"end":{"offset":1203,"line":38,"column":1}}}],"location":{"start":{"offset":1156,"line":36,"column":3},"end":{"offset":1203,"line":38,"column":1}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":1110,"line":35,"column":1},"end":{"offset":1204,"line":38,"column":2}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"NotificationObligation"},"classExtension":{"type":"ClassExtension","class":{"type":"Identifier","name":"Obligation"}},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"title"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1258,"line":41,"column":3},"end":{"offset":1275,"line":42,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"message"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1275,"line":42,"column":3},"end":{"offset":1292,"line":43,"column":1}}}],"location":{"start":{"offset":1258,"line":41,"column":3},"end":{"offset":1292,"line":43,"column":1}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":1206,"line":40,"column":1},"end":{"offset":1293,"line":43,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Payload"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"contract"},"propertyType":{"type":"Identifier","name":"AccordContract"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1372,"line":47,"column":3},"end":{"offset":1422,"line":48,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"request"},"propertyType":{"type":"Identifier","name":"Request"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1422,"line":48,"column":3},"end":{"offset":1442,"line":49,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"state"},"propertyType":{"type":"Identifier","name":"AccordContractState"},"array":null,"default":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":1442,"line":49,"column":3},"end":{"offset":1479,"line":50,"column":1}}}],"location":{"start":{"offset":1372,"line":47,"column":3},"end":{"offset":1479,"line":50,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":1352,"line":46,"column":1},"end":{"offset":1480,"line":50,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Success"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"response"},"propertyType":{"type":"Identifier","name":"Response"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1609,"line":54,"column":3},"end":{"offset":1631,"line":55,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"state"},"propertyType":{"type":"Identifier","name":"AccordContractState"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1631,"line":55,"column":3},"end":{"offset":1661,"line":56,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"emit"},"propertyType":{"type":"Identifier","name":"Event"},"array":"[]","default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1661,"line":56,"column":3},"end":{"offset":1676,"line":57,"column":1}}}],"location":{"start":{"offset":1609,"line":54,"column":3},"end":{"offset":1676,"line":57,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":1589,"line":53,"column":1},"end":{"offset":1677,"line":57,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Failure"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"error"},"propertyType":{"type":"Identifier","name":"ErrorResponse"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1768,"line":60,"column":3},"end":{"offset":1790,"line":61,"column":1}}}],"location":{"start":{"offset":1768,"line":60,"column":3},"end":{"offset":1790,"line":61,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":1748,"line":59,"column":1},"end":{"offset":1791,"line":61,"column":2}}}]}'),TX=d('\n/*\n * Licensed under the Apache License, Version 2.0 (the "License");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an "AS IS" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\nnamespace org.accordproject.ergo.stdlib\n\nimport org.accordproject.cicero.runtime.*\n\n// Integer operations\ndefine function integerAbs(x:Integer) : Integer\ndefine function integerLog2(x:Integer) : Integer\ndefine function integerSqrt(x:Integer) : Integer\ndefine function integerToDouble(x:Integer) : Double\n\ndefine function integerMod(x:Integer, y:Integer) : Integer\ndefine function integerMin(x:Integer, y:Integer) : Integer\ndefine function integerMax(x:Integer, y:Integer) : Integer\n\n// Double operations\ndefine function sqrt(x:Double) : Double\ndefine function exp(x:Double) : Double\ndefine function log(x:Double) : Double\ndefine function log10(x:Double) : Double\ndefine function ceil(x:Double) : Double\ndefine function floor(x:Double) : Double\ndefine function abs(x:Double) : Double\ndefine function max(x:Double[]) : Double\ndefine function min(x:Double[]) : Double\ndefine function average(x:Double[]) : Double\ndefine function sum(x:Double[]) : Double\ndefine function doubleToInteger(x:Double) : Integer\ndefine function truncate(x:Double) : Integer\n\ndefine function maxPair(x:Double, y:Double) : Double\ndefine function minPair(x:Double, y:Double) : Double\n\n// Math operations\ndefine function acos(x:Double) : Double\ndefine function asin(x:Double) : Double\ndefine function atan(x:Double) : Double\ndefine function atan2(x:Double, y:Double) : Double\ndefine function cos(x:Double) : Double\ndefine function cosh(x:Double) : Double\ndefine function sin(x:Double) : Double\ndefine function sinh(x:Double) : Double\ndefine function tan(x:Double) : Double\ndefine function tanh(x:Double) : Double\n\n// Polymorphic operations\ndefine function toString(x:Any) : String\ndefine function distinct(x:Any[]) : Any[]\ndefine function count(x:Any[]) : Integer\ndefine function flatten(x:Any[][]) : Any[]\ndefine function arrayAdd(x:Any[],y:Any[]) : Any[]\ndefine function arraySubtract(x:Any[],y:Any[]) : Any[]\ndefine function inArray(x:Any,y:Any[]) : Boolean\ndefine function containsAll(l1:Any[], l2:Any[]) : Boolean {\n\treturn arraySubtract(l1,l2) = []\n}\n\ndefine transaction ErgoErrorResponse extends ErrorResponse{\n\tmessage : String\n}\ndefine function failure(x:String) : ErgoErrorResponse {\n\treturn ErgoErrorResponse{\n\t\tmessage: x\n\t}\n}\n'),TY=d('\n/*\n * Licensed under the Apache License, Version 2.0 (the "License");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an "AS IS" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\nnamespace org.accordproject.time\n\n// DateTime operations\n// Current DateTime\ndefine function now() : DateTime\n// Parse a DateTime\ndefine function parse(x:String) : DateTime\n\n// DateTime components\ndefine function getSecond(x:DateTime) : Long\ndefine function getMinute(x:DateTime) : Long\ndefine function getHour(x:DateTime) : Long\ndefine function getDay(x:DateTime) : Integer\ndefine function getWeek(x:DateTime) : Integer\ndefine function getMonth(x:DateTime) : Integer\ndefine function getQuarter(x:DateTime) : Integer\ndefine function getYear(x:DateTime) : Integer\n\n// Durations\ndefine function durationSeconds(x:Long) : InternalDuration\ndefine function durationMinutes(x:Long) : InternalDuration\ndefine function durationHours(x:Long) : InternalDuration\ndefine function durationDays(x:Long) : InternalDuration\ndefine function durationWeeks(x:Long) : InternalDuration\ndefine function durationYears(x:Integer) : InternalDuration\n\ndefine function durationToInternalDuration(du:Duration) : InternalDuration {\n\tmatch du.unit\n\twith "seconds" then return durationSeconds(du.amount)\n\twith "minutes" then return durationMinutes(du.amount)\n\twith "hours" then return durationHours(du.amount)\n\twith "days" then return durationDays(du.amount)\n\twith "weeks" then return durationWeeks(du.amount)\n\twith "years" then return durationYears(du.amount)\n\telse return durationSeconds(du.amount) // Defaults to seconds\n}\n\ndefine function durationAmount(du:InternalDuration) : Long\n\ndefine function internalDurationToDuration(du:InternalDuration) : Duration {\n\treturn Duration{ unit: "seconds", amount: durationAmount(du) }\n}\n\ndefine function durationAs(du:Duration, u:TemporalUnit) : Duration {\n\tif u = du.unit\n\tthen return du\n\telse\n\t  let amount = \n  \t  match u\n\t    with "seconds" then\n\t      match du.unit\n\t      with "minutes" then du.amount *i 60\n\t      with "hours" then du.amount *i 60 *i 60\n\t      with "days" then du.amount *i 60 *i 60 *i 24\n\t      with "weeks" then du.amount *i 60 *i 60 *i 24 *i 7\n\t      with "years" then du.amount *i 60 *i 60 *i 24 *i 365\n\t      else du.amount // Default to seconds\n\t    with "minutes" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60\n\t      with "hours" then du.amount *i 60\n\t      with "days" then du.amount *i 60 *i 24\n\t      with "weeks" then du.amount *i 60 *i 24 *i 7\n\t      with "years" then du.amount *i 60 *i 24 *i 365\n\t      else du.amount *i 60 // Default to seconds\n\t    with "hours" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60\n\t      with "minutes" then du.amount *i 60\n\t      with "days" then du.amount *i 24\n\t      with "weeks" then du.amount *i 24 *i 7\n\t      with "years" then du.amount *i 24 *i 365\n\t      else du.amount *i 60 *i 60 // Default to seconds\n\t    with "days" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60 /i 24\n\t      with "minutes" then du.amount *i 60 /i 24\n\t      with "hours" then du.amount /i 24\n\t      with "weeks" then du.amount *i 7\n\t      with "years" then du.amount *i 365\n\t      else du.amount /i 60 /i 60 /i 24 // Default to seconds\n\t    with "weeks" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 7\n\t      with "minutes" then du.amount *i 60 /i 24 /i 7\n\t      with "hours" then du.amount /i 24 /i 7\n\t      with "days" then du.amount /i 7\n\t      with "years" then doubleToInteger(integerToDouble(du.amount) * 52.143) // XXX\n\t      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds\n\t    with "years" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 365\n\t      with "minutes" then du.amount *i 60 /i 24 /i 365\n\t      with "hours" then du.amount /i 24 /i 365\n\t      with "days" then du.amount /i 365\n\t      with "weeks" then doubleToInteger(integerToDouble(du.amount) / 52.143) // XXX\n\t      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds\n\t    else // Default to seconds\n\t      match du.unit\n\t      with "minutes" then du.amount *i 60\n\t      with "hours" then du.amount *i 60 *i 60\n\t      with "days" then du.amount *i 60 *i 60 *i 24\n\t      with "week" then du.amount *i 60 *i 60 *i 24 *i 7\n\t      with "years" then du.amount *i 60 *i 60 *i 24 *i 365\n\t      else du.amount // Default to seconds\n\t\t;\n\t\treturn Duration{ unit: u, amount: amount }\n}\n\ndefine function addInternal(x:DateTime, y:InternalDuration) : DateTime\ndefine function add(x:DateTime, y:Duration) : DateTime {\n\treturn addInternal(x,durationToInternalDuration(y))\n}\n\ndefine function subtractInternal(x:DateTime, y:InternalDuration) : DateTime\ndefine function subtract(x:DateTime, y:Duration) : DateTime {\n\treturn subtractInternal(x,durationToInternalDuration(y))\n}\n\ndefine function isAfter(x:DateTime, y:DateTime) : Boolean\ndefine function isBefore(x:DateTime, y:DateTime) : Boolean\ndefine function isSame(x:DateTime, y:DateTime) : Boolean\n\ndefine function diffInternal(x:DateTime, y:DateTime) : InternalDuration\ndefine function diffWithUnit(x:DateTime, y:DateTime, z:TemporalUnit) : Duration {\n\treturn durationAs(internalDurationToDuration(diffInternal(x,y)),z)\n}\ndefine function diff(x:DateTime, y:DateTime) : Duration {\n\treturn diffWithUnit(x, y, "seconds") // Defaults to seconds\n}\n\ndefine function periodDays(x:Long) : InternalPeriod\ndefine function periodWeeks(x:Long) : InternalPeriod\ndefine function periodMonths(x:Long) : InternalPeriod\ndefine function periodQuarters(x:Long) : InternalPeriod\ndefine function periodYears(x:Long) : InternalPeriod\n\ndefine function periodToInternalPeriod(du:Period) : InternalPeriod {\n\tmatch du.unit\n\twith "days" then return periodDays(du.amount)\n\twith "weeks" then return periodWeeks(du.amount)\n\twith "months" then return periodMonths(du.amount)\n\twith "quarters" then return periodQuarters(du.amount)\n\twith "years" then return periodYears(du.amount)\n\telse return periodDays(du.amount) // Defaults to days\n}\n\ndefine function startOfDay(x:DateTime) : DateTime\ndefine function startOfWeek(x:DateTime) : DateTime\ndefine function startOfMonth(x:DateTime) : DateTime\ndefine function startOfQuarter(x:DateTime) : DateTime\ndefine function startOfYear(x:DateTime) : DateTime\n\ndefine function startOf(x:DateTime, y:PeriodUnit) : DateTime {\n\tmatch y\n\twith "days" then return startOfDay(x)\n\twith "weeks" then return startOfWeek(x)\n\twith "months" then return startOfMonth(x)\n\twith "quarters" then return startOfQuarter(x)\n\twith "years" then return startOfYear(x)\n\telse return startOfDay(x) // Default to days\n}\n\ndefine function endOfDay(x:DateTime) : DateTime\ndefine function endOfWeek(x:DateTime) : DateTime\ndefine function endOfMonth(x:DateTime) : DateTime\ndefine function endOfQuarter(x:DateTime) : DateTime\ndefine function endOfYear(x:DateTime) : DateTime\n\ndefine function endOf(x:DateTime, y:PeriodUnit) : DateTime {\n\tmatch y\n\twith "days" then return endOfDay(x)\n\twith "weeks" then return endOfWeek(x)\n\twith "months" then return endOfMonth(x)\n\twith "quarters" then return endOfQuarter(x)\n\twith "years" then return endOfYear(x)\n\telse return endOfDay(x) // Default to days\n}\n\n'),TZ=d("$ERGODIR/extraction/stdlib/runtime.cto"),T0=d("$ERGODIR/extraction/stdlib/time.cto"),T1=d("$ERGODIR/extraction/stdlib/money.cto"),T2=d("$ERGODIR/extraction/stdlib/contract.cto"),T3=d("$ERGODIR/extraction/stdlib/accordproject.cto"),T4=d("$ERGODIR/extraction/stdlib/etime.ergo"),T5=d("$ERGODIR/extraction/stdlib/stdlib.ergo"),UR=d("Circular imports: "),UP=d(" -> "),UK=[0,[2,0,0],d(n$)],UL=[0,[2,0,0],d(n$)],UH=d(nU),UI=d(".ergo"),UJ=d(" is not cto, ctoj or ergo file"),UE=d(wt),UF=d(nU),UC=d(nU),UD=d(wt),Uy=d(jp),Uz=d("' (should have at least one '.')"),UA=d("Malformed import: '"),Ux=d(", version "),Un=d("System error. "),Uo=d(k3),Up=d(vb),Uq=d(k3),Ur=d("Compilation error"),Us=d(k3),Ut=d("Type error"),Uu=d(k3),Uv=d("Runtime error"),Um=d(ar),Ui=d(" col "),Uj=d("line "),Ua=d(ar),Ub=d(ar),Ug=d(fA),Uh=d("file "),Uc=d(ar),Ud=d(ar),Ue=d(vV),Uf=d(" (at "),T_=d(ar),T$=d(vD),T8=d(ii),T9=d(ii),T7=d(ar),T6=d("ErgoUtil.Ergo_Error"),VJ=d(dI),VI=d(dI),VE=d(u7),VF=d("imports"),VG=d(k8),VH=d(g9),VC=d(dI),VB=d(dI),Vy=d(u7),Vz=d(wb),VA=d(g9),Vw=d(dI),Vv=d(dI),Vt=d("class"),Vu=d(g9),Vs=d(dI),Vr=d(dI),Vp=d(n2),Vq=d(g9),Vo=d(dI),Vn=d(dI),Vl=d("declarations"),Vm=d(g9),Vk=d(dI),Vj=d(dI),Vi=[0,d(g9),d(wb),d("optional"),d("decorators"),d("location")],Vd=d(dI),Vc=d(dI),Va=d(n2),Vb=d(g9),U$=d(dI),U_=d(dI),U9=d(k8),U7=d(dI),U6=d(dI),U4=d("end"),U5=d("start"),U3=d(dI),U2=d(dI),UZ=d("column"),U0=d("line"),U1=d("offset"),UY=d(dI),UX=d(dI),UW=d(g9),UU=d(dI),UT=d(dI),US=d(n2),VX=d("AssetDeclaration"),VY=d("ConceptDeclaration"),VZ=d("EnumDeclaration"),V0=d("EventDeclaration"),V1=d("ParticipantDeclaration"),V2=d("TransactionDeclaration"),V3=d("Can't import CTO kind: "),VU=d("[]"),VV=d("Mal-formed array option in CTO JSON representation"),VM=d(ur),VN=d(us),VO=d(u8),VP=d(vY),VQ=d(va),VR=d(wr),VS=d("Missing propertyType in CTO"),VK=d(ar),V5=d("LexUtil.LexError"),V8=d(ar),W5=[0,d(k),511,4],W6=[0,d(k),542,12],W7=[0,d(k),546,8],W8=[0,d(k),557,4],W9=[0,d(k),572,12],W_=[0,d(k),576,8],W$=[0,d(k),626,8],Xg=[0,d(k),638,8],Xh=[0,d(k),696,16],Xi=[0,d(k),700,12],Xd=[0,d(k),707,8],Xe=[0,d(k),735,16],Xf=[0,d(k),739,12],Xa=[0,d(k),746,8],Xb=[0,d(k),778,16],Xc=[0,d(k),782,12],Xj=[0,d(k),798,8],Xk=[0,d(k),uz,12],Xl=[0,d(k),878,8],Xm=[0,d(k),904,12],Xn=[0,d(k),wO,8],Xo=[0,d(k),871,12],Xp=[0,d(k),917,4],Xr=[0,d(k),944,12],Xq=[0,d(k),958,8],Xs=[0,d(k),1124,8],Xt=[0,d(k),1150,12],Xw=[0,d(k),1349,8],Xx=[0,d(k),1369,12],Xy=[0,d(k),1176,8],XC=[0,d(k),1312,12],Xz=[0,d(k),1195,12],XA=[0,d(k),1290,20],XB=[0,d(k),1306,16],XD=[0,d(k),1319,8],XE=[0,d(k),1342,12],XF=[0,d(k),1675,8],XG=[0,d(k),1694,12],XH=[0,d(k),1551,8],XI=[0,d(k),1651,16],XJ=[0,d(k),1668,12],XK=[0,d(k),wc,8],XL=[0,d(k),1544,12],XM=[0,d(k),1401,8],XO=[0,d(k),1505,16],XN=[0,d(k),1518,12],Xu=[0,d(k),1376,8],Xv=[0,d(k),1394,12],XP=[0,d(k),1709,8],XQ=[0,d(k),1739,12],XR=[0,d(k),1846,8],XS=[0,d(k),1882,12],XT=[0,d(k),2034,8],XU=[0,d(k),2092,16],XV=[0,d(k),2096,12],XW=[0,d(k),1965,8],XX=[0,d(k),2023,16],XY=[0,d(k),2027,12],XZ=[0,d(k),1896,8],X0=[0,d(k),1954,16],X1=[0,d(k),1958,12],X2=[0,d(k),2103,8],X3=[0,d(k),2131,16],X4=[0,d(k),2135,12],X8=[0,d(k),2181,8],X9=[0,d(k),2209,16],X_=[0,d(k),2213,12],X5=[0,d(k),2142,8],X6=[0,d(k),2170,16],X7=[0,d(k),2174,12],Yf=[0,d(k),2220,8],Yg=[0,d(k),2252,16],Yh=[0,d(k),2256,12],Yc=[0,d(k),2263,8],Yd=[0,d(k),2295,16],Ye=[0,d(k),2299,12],X$=[0,d(k),2306,8],Ya=[0,d(k),2338,16],Yb=[0,d(k),2342,12],Ym=[0,d(k),2369,8],Yo=[0,d(k),2473,20],Yn=[0,d(k),2487,16],Yp=[0,d(k),2493,12],Yi=[0,d(k),2516,8],Yj=[0,d(k),2620,20],Yk=[0,d(k),2624,16],Yl=[0,d(k),2630,12],Yq=[0,d(k),2643,4],Yr=[0,d(k),2656,12],Ys=[0,d(k),2672,8],Yu=[0,d(k),2731,12],Yw=[0,d(k),2710,16],Yv=[0,d(k),2714,12],Yt=[0,d(k),2735,8],Yx=[0,d(k),2762,8],Yy=[0,d(k),2819,8],Yz=[0,d(k),2884,12],YA=[0,d(k),2888,8],YB=[0,d(k),2960,8],YC=[0,d(k),3017,8],YD=[0,d(k),3030,8],YE=[0,d(k),3087,8],YF=[0,d(k),3144,8],YG=[0,d(k),3201,8],YH=[0,d(k),3437,8],YI=[0,d(k),3458,12],YJ=[0,d(k),3410,8],YK=[0,d(k),3418,12],YL=[0,d(k),3397,8],YM=[0,d(k),3405,12],YN=[0,d(k),3384,8],YO=[0,d(k),3392,12],YP=d(vZ),YQ=[0,d(k),3237,8],YR=[0,d(k),3262,16],YS=[0,d(k),3266,12],YT=d("Cannot emit inside a function, you have to be in a Clause"),YU=d(vZ),YV=[0,d(k),3287,8],YW=[0,d(k),3315,16],YX=[0,d(k),3319,12],YY=[0,d(k),3358,8],YZ=[0,d(k),3366,12],Y0=d("Cannot set state inside a function, you have to be in a Clause"),Y2=[0,d(k),3624,12],Y4=[0,d(k),3603,16],Y3=[0,d(k),3607,12],Y1=[0,d(k),3628,8],Y5=[0,d(k),3685,8],Y6=[0,d(k),3736,8],Y7=[0,d(k),3759,12],Y8=[0,d(k),3695,8],Y9=[0,d(k),3718,12],Y_=[0,d(k),3797,8],Za=[0,d(k),3855,16],Y$=[0,d(k),3913,16],Zb=[0,d(k),3917,12],Zc=[0,d(k),3978,8],Zd=[0,d(k),4035,8],Ze=[0,d(k),4092,8],Zf=[0,d(k),4149,8],Zg=[0,d(k),4206,8],Zh=[0,d(k),4301,8],Zi=[0,d(k),4358,8],Zj=[0,d(k),4415,8],Zk=[0,d(k),4472,8],Zl=[0,d(k),4529,8],Zm=[0,d(k),4586,8],Zn=[0,d(k),4643,8],Zo=[0,d(k),4700,8],Zp=[0,d(k),4757,8],Zq=[0,d(k),4814,8],Zr=[0,d(k),4871,8],Zs=[0,d(k),4928,8],Zt=[0,d(k),4985,8],Zu=[0,d(k),5042,8],Zv=[0,d(k),5099,8],Zw=[0,d(k),5156,8],Zx=[0,d(k),5213,8],Zy=[0,d(k),5308,8],Zz=[0,d(k),5365,8],ZA=[0,d(k),5422,8],ZF=[0,d(k),5728,8],ZG=[0,d(k),5786,16],ZH=[0,d(k),5790,12],ZI=[0,d(k),5620,8],ZJ=[0,d(k),5717,16],ZK=[0,d(k),5721,12],ZB=[0,d(k),5442,8],ZD=[0,d(k),5598,16],ZE=[0,d(k),5539,16],ZC=[0,d(k),5602,12],ZL=[0,d(k),5804,8],ZM=[0,d(k),5816,12],ZN=[0,d(k),5852,4],ZO=[0,d(k),5886,8],ZP=[0,d(k),5909,8],ZR=[0,d(k),6071,12],ZT=[0,d(k),6050,16],ZS=[0,d(k),6054,12],ZQ=[0,d(k),6075,8],ZU=[0,d(k),6106,8],ZV=[0,d(k),6119,8],ZW=[0,[11,d("Internal failure -- please contact the parser generator's developers.\n"),[10,0]],d("Internal failure -- please contact the parser generator's developers.\n%!")],ZX=[0,d(k),6128,4],ZY=[0,d(k),6223,8],ZZ=[0,d(k),6238,8],Z0=[0,d(k),6260,12],Z1=[0,d(k),6277,8],Z2=[0,d(k),6303,8],Z6=[0,d(k),6313,8],Z7=[0,d(k),6368,16],Z8=[0,d(k),6372,12],Z3=[0,d(k),6379,8],Z4=[0,d(k),6434,16],Z5=[0,d(k),6438,12],_a=[0,d(k),6445,8],_b=[0,d(k),6500,16],_c=[0,d(k),6504,12],Z9=[0,d(k),6511,8],Z_=[0,d(k),6566,16],Z$=[0,d(k),6570,12],_d=[0,d(k),6671,8],_e=[0,d(k),6768,8],_g=[0,d(k),6887,12],_f=[0,d(k),6907,8],_j=[0,d(k),6960,8],_k=[0,d(k),6983,12],_h=[0,d(k),6919,8],_i=[0,d(k),6942,12],_l=[0,d(k),6990,8],_m=[0,d(k),7019,12],_n=[0,d(k),11414,8],_o=[0,d(k),11482,12],_s=[0,d(k),11324,8],_u=[0,d(k),11397,16],_t=[0,d(k),11409,12],_v=[0,d(k),11201,8],_x=[0,d(k),11307,16],_y=[0,d(k),11240,16],_w=[0,d(k),11319,12],_z=[0,d(k),11109,8],_B=[0,d(k),11192,16],_A=[0,d(k),11196,12],_C=[0,d(k),11019,8],_E=[0,d(k),11092,16],_D=[0,d(k),11104,12],_F=[0,d(k),10956,8],_G=[0,d(k),11014,12],_H=[0,d(k),10883,8],_I=[0,d(k),10951,12],_J=[0,d(k),10809,8],_K=[0,d(k),10878,12],_L=[0,d(k),10719,8],_N=[0,d(k),10792,16],_M=[0,d(k),10804,12],_O=[0,d(k),10646,8],_P=[0,d(k),10714,12],_Q=[0,d(k),10572,8],_R=[0,d(k),10641,12],_S=[0,d(k),10486,8],_U=[0,d(k),10555,16],_T=[0,d(k),10567,12],_V=[0,d(k),10371,8],_X=[0,d(k),10469,16],_Y=[0,d(k),10406,16],_W=[0,d(k),10481,12],_Z=[0,d(k),10283,8],_1=[0,d(k),10362,16],_0=[0,d(k),10366,12],_2=[0,d(k),10197,8],_4=[0,d(k),10266,16],_3=[0,d(k),10278,12],_5=[0,d(k),10134,8],_6=[0,d(k),10192,12],_7=[0,d(k),10062,8],_8=[0,d(k),10129,12],_9=[0,d(k),9976,8],_$=[0,d(k),10045,16],__=[0,d(k),10057,12],$a=[0,d(k),9682,8],$b=[0,d(k),9740,12],$c=[0,d(k),9619,8],$d=[0,d(k),9677,12],$e=[0,d(k),9556,8],$f=[0,d(k),9614,12],$g=[0,d(k),9485,8],$h=[0,d(k),9551,12],$i=[0,d(k),9422,8],$j=[0,d(k),9480,12],$k=[0,d(k),9207,8],$l=[0,d(k),9277,12],$m=[0,d(k),8833,8],$n=[0,d(k),8903,12],$o=[0,d(k),8715,8],$q=[0,d(k),8780,16],$p=[0,d(k),8828,12],$r=[0,d(k),8523,8],$s=[0,d(k),8592,12],$t=[0,d(k),8448,8],$u=[0,d(k),8518,12],$v=[0,d(k),8330,8],$x=[0,d(k),8431,16],$w=[0,d(k),8443,12],$y=[0,d(k),8164,8],$z=[0,d(k),8228,12],$A=[0,d(k),8099,8],$B=[0,d(k),8159,12],$C=[0,d(k),8050,8],$D=[0,d(k),8094,12],$E=[0,d(k),8001,8],$F=[0,d(k),8045,12],$G=[0,d(k),7952,8],$H=[0,d(k),7996,12],$I=[0,d(k),7903,8],$J=[0,d(k),7947,12],$K=[0,d(k),7854,8],$L=[0,d(k),7898,12],$M=[0,d(k),7805,8],$N=[0,d(k),7849,12],$O=[0,d(k),7756,8],$P=[0,d(k),7800,12],$Q=[0,d(k),7707,8],$R=[0,d(k),7751,12],$S=[0,d(k),7642,8],$T=[0,d(k),7702,12],$U=[0,d(k),7571,8],$V=[0,d(k),7637,12],$W=[0,d(k),7532,8],$X=[0,d(k),7566,12],$Y=[0,d(k),7493,8],$Z=[0,d(k),7527,12],$0=[0,d(k),7454,8],$1=[0,d(k),7488,12],$2=[0,d(k),7415,8],$3=[0,d(k),7449,12],$4=[0,d(k),7368,8],$5=[0,d(k),7410,12],$6=[0,d(k),7337,8],$7=[0,d(k),7363,12],$8=[0,d(k),7306,8],$9=[0,d(k),7332,12],$_=[0,d(k),7275,8],$$=[0,d(k),7301,12],aaa=[0,d(k),7246,8],aab=[0,d(k),7270,12],aac=[0,d(k),7219,8],aad=[0,d(k),7241,12],aae=[0,d(k),7188,8],aaf=[0,d(k),7214,12],aag=[0,d(k),8233,8],aai=[0,d(k),8269,16],aaj=[0,d(k),8250,16],aah=[0,d(k),8325,12],aak=[0,d(k),8597,8],aam=[0,d(k),8706,16],aal=[0,d(k),8710,12],aan=[0,d(k),8908,8],aao=[0,d(k),9086,12],aap=[0,d(k),8972,12],aaq=[0,d(k),9067,20],aar=[0,d(k),9080,16],aas=[0,d(k),9091,8],aau=[0,d(k),9190,16],aat=[0,d(k),9202,12],aav=[0,d(k),9282,8],aaw=[0,d(k),9354,12],aax=[0,d(k),9359,8],aay=[0,d(k),9417,12],aaz=[0,d(k),9745,8],aaA=[0,d(k),9767,12],aaB=[0,d(k),9772,8],aaC=[0,d(k),9794,12],aaD=[0,d(k),9799,8],aaE=[0,d(k),9821,12],aaF=[0,d(k),9826,8],aaG=[0,d(k),9901,12],aaH=[0,d(k),9906,8],aaJ=[0,d(k),9971,12],aaI=d("Cannot throw inside a function, you have to be in a Clause"),_p=[0,d(k),7061,8],_r=[0,d(k),7124,16],_q=[0,d(k),7183,12],aaP=d(jp),aaQ=d("Malformed import"),aaR=d(jp),aaS=d("'*' can only be last in a qualified name"),aaT=d(e$),aaK=d(jp),aaO=d("Malformed namespace"),aaL=d(e$),aaM=[0,d(k),11612,12],aaN=[0,d(k),11624,16],aa0=[0,d(k),11653,8],aa2=[0,d(k),11748,16],aa1=[0,d(k),11763,12],aaU=[0,d(k),11782,12],aaV=[0,d(k),11879,20],aaW=[0,d(k),11883,16],aaX=[0,d(k),11890,12],aaY=[0,d(k),11945,20],aaZ=[0,d(k),11949,16],aa3=d("InternalDuration"),aa9=d("Any"),aa_=d(ur),aa$=d(us),aba=d(u8),abb=d(vY),aa4=d("InternalPeriod"),aa5=d(va),aa6=d("Nothing"),aa7=d(wr),aa8=d("Unit"),abc=[0,d(k),12072,8],abd=[0,d(k),12310,8],abe=[0,d(k),12318,12],abf=[0,d(k),12297,8],abg=[0,d(k),12305,12],abh=[0,d(k),12284,8],abi=[0,d(k),12292,12],abj=[0,d(k),12124,8],abk=[0,d(k),12153,16],abl=[0,d(k),12157,12],abm=[0,d(k),12181,8],abn=[0,d(k),12213,16],abo=[0,d(k),12217,12],abp=[0,d(k),12258,8],abq=[0,d(k),12266,12],abr=[0,d(k),12340,8],abs=[0,d(k),12375,12],abt=[0,d(k),12383,16],abu=[0,d(k),12387,12],abv=[0,d(k),12449,4],abz=[0,d(k),12491,12],abx=[0,d(k),12463,12],abw=[0,d(k),12477,12],abB=[0,d(k),12505,12],abA=[0,d(k),12519,12],aby=[0,d(k),12523,8],abC=[0,d(k),12553,8],abD=[0,d(k),12568,16],abE=[0,d(k),12572,12],abN=[0,d(k),12778,8],abO=[0,d(k),12786,12],abL=[0,d(k),12765,8],abM=[0,d(k),12773,12],abP=[0,d(k),13043,8],abQ=[0,d(k),13051,12],abR=[0,d(k),13056,8],abS=[0,d(k),13064,12],abT=[0,d(k),13017,8],abU=[0,d(k),13032,16],abV=[0,d(k),13036,12],abW=[0,d(k),12906,8],abX=[0,d(k),13006,16],abY=[0,d(k),13010,12],abZ=[0,d(k),12893,8],ab0=[0,d(k),12901,12],ab1=[0,d(k),12880,8],ab2=[0,d(k),12888,12],ab3=[0,d(k),12867,8],ab4=[0,d(k),12875,12],ab5=[0,d(k),12854,8],ab6=[0,d(k),12862,12],ab7=[0,d(k),12841,8],ab8=[0,d(k),12849,12],ab9=[0,d(k),12817,8],ab_=[0,d(k),12830,16],ab$=[0,d(k),12834,12],aca=[0,d(k),12791,8],acb=[0,d(k),12799,12],acc=[0,d(k),12804,8],acd=[0,d(k),12812,12],abI=[0,d(k),12579,8],abJ=[0,d(k),12637,16],abK=[0,d(k),12641,12],abF=[0,d(k),12648,8],abG=[0,d(k),12745,16],abH=[0,d(k),12758,12],ace=[0,d(k),13208,8],acf=[0,d(k),13316,12],acg=[0,d(k),13320,8],ach=[0,d(k),13379,8],aci=[0,d(k),13454,8],acj=[0,d(k),13511,8],ack=[0,d(k),13568,8],acl=[0,d(k),13625,8],acm=[0,d(k),13638,8],acn=[0,d(k),13735,8],aco=[0,d(k),13794,8],acp=[0,d(k),13877,8],acq=[0,d(k),13911,8],acr=[0,d(k),13926,8],acs=[0,d(k),15728,8],act=[0,d(k),15751,12],acu=[0,d(k),15757,8],acv=[0,d(k),15816,8],acw=[0,d(k),15887,8],acx=[0,d(k),15984,8],acy=[0,d(k),16041,8],acz=[0,d(k),16054,8],acA=[0,d(k),16151,8],acB=[0,d(k),16208,8],acC=[0,d(k),16280,8],acD=[0,d(k),16337,8],acE=[0,d(k),16401,12],acG=[0,d(k),16387,12],acH=[0,d(k),16373,12],acF=[0,d(k),16413,8],acI=[0,d(k),16428,8],acK=[0,d(k),16502,16],acL=[0,d(k),16506,12],acJ=[0,d(k),16512,8],acM=[0,d(k),16646,12],acN=[0,d(k),16650,8],acO=[0,d(k),16697,8],V9=d("ErgoParser.MenhirBasics.Error"),acT=[0,[11,d("At offset "),[4,0,0,0,[11,d(": unexpected character.\n"),0]]],d("At offset %d: unexpected character.\n")],acU=d("String not terminated.\n"),acV=d("Unterminated comment\n"),acP=w([[0,d(k8),34],[0,d(uV),47],[0,d(uy),66],[0,d(vR),53],[0,d(ut),77],[0,d(vs),5],[0,d(uX),69],[0,d(v5),57],[0,d(wq),75],[0,d(uM),28],[0,d(v4),60],[0,d(vw),56],[0,d(u3),67],[0,d(uC),29],[0,d(u1),72],[0,d(u0),62],[0,d(vu),9],[0,d(wy),74],[0,d(vT),16],[0,d(wz),61],[0,d(u_),48],[0,d(wB),8],[0,d(wj),64],[0,d(vU),43],[0,d(vE),54],[0,d(wv),19],[0,d(v3),46],[0,d(uZ),1],[0,d(wH),7],[0,d(vh),68],[0,d(wi),37],[0,d(wn),15],[0,d(v$),63],[0,d(vM),0],[0,d(vG),30],[0,d(uB),76],[0,d(kZ),4],[0,d(lg),55],[0,d(vI),2],[0,d(v1),32],[0,d(uq),12]]),acW=d(vb),ada=[0,[11,d("Cannot log Ergo stdlib:\n"),[2,0,[12,10,0]]],d("Cannot log Ergo stdlib:\n%s\n")],ac0=d("ergo"),ac1=d("es5"),ac2=d("es6"),ac3=d("cicero"),ac4=d("java"),ac5=[0,1,[0,2,[0,3,[0,4,0]]]],ac6=d(vV),ac7=d(","),ac8=d("(available: "),adh=d(vX),adi=d(wo),adj=d("--version"),adk=d(vX),adl=d(wo),adm=d("-version"),adf=d(vD),adg=d(ar),ade=d(ii),adb=d(ii),adc=d("Welcome to ERGOTOP version "),adn=d(" [options] cto1 cto2 ... contract1 contract2 ..."),ado=d("Usage: ");function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+=======
+j(a,b){return a.length==1?a(b):fD(a,[b])}function
+s(a,b,c){return a.length==2?a(b,c):fD(a,[b,c])}function
+aP(a,b,c,d){return a.length==3?a(b,c,d):fD(a,[b,c,d])}function
+g3(a,b,c,d,e){return a.length==4?a(b,c,d,e):fD(a,[b,c,d,e])}function
+kT(a,b,c,d,e,f){return a.length==5?a(b,c,d,e,f):fD(a,[b,c,d,e,f])}function
+adw(a,b,c,d,e,f,g){return a.length==6?a(b,c,d,e,f,g):fD(a,[b,c,d,e,f,g])}function
+adx(a,b,c,d,e,f,g,h){return a.length==7?a(b,c,d,e,f,g,h):fD(a,[b,c,d,e,f,g,h])}var
+oZ=[bW,d(vl),-1],jv=[bW,d(vK),-2],gb=[bW,d(vO),-3],fG=[bW,d(wa),-4],ox=[bW,d(vP),-5],aU=[bW,d(wf),-7],o1=[bW,d(uK),-8],o0=[bW,d(wg),-9],i=[bW,d(ww),-11],o2=[bW,d(vx),v2],oM=[0,d(ar),1,0,0],lV=[0,[11,d('File "'),[2,0,[11,d('", line '),[4,0,0,0,[11,d(", characters "),[4,0,0,0,[12,45,[4,0,0,0,[11,d(u9),[2,0,0]]]]]]]]]],d('File "%s", line %d, characters %d-%d: %s')],l6=d(e$),l8=d(e$),iD=[0,[0,0,c4],0],pM=[0,0,0],hI=[0,0,0],e4=[0,d(nS),d(n3),d(n9),d(nV),d(oc),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)],db=[0,d(nS),d(n3),d(n9),d(nV),d(oc),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)],q8=[0,17],sJ=[0,0,0],sK=[0,0,0],h0=[0,ac,[0,97,[0,n,[0,m,0]]]],h1=[0,n,[0,m,[0,n,[0,g,0]]]],hq=[0,99,[0,e,[0,m,[0,g,[0,h,[0,97,[0,99,[0,g,0]]]]]]]],fk=[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]],hr=[0,f,[0,ac,[0,n,[0,g,0]]]],sb=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,0]]]]]]]],h2=[0,x,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]],gW=[0,x,[0,f,[0,ac,[0,n,[0,g,0]]]]],gX=[0,m,[0,e,[0,a4,0]]],fQ=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,98,97,u,f]),h3=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98]),ne=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,g,e,t]),fS=[0,0,0,0,0],tB=d(vM),tC=d(uZ),tD=d(vI),tE=d(kZ),tF=d(vs),tG=d(wH),tH=d(wB),tI=d(vu),tJ=[0,0,d(jp)],tK=d(uq),tL=d(wn),tM=d(vT),tN=d(wv),tO=d(uM),tP=d(uC),tQ=d(vG),tR=d(v1),tS=d(k8),tT=d(wi),tU=d(vU),tV=d(v3),tW=d(uV),tX=d(u_),tY=d(vR),tZ=d(vE),t0=d(lg),t1=d(vw),t2=d(v5),t3=d(v4),t4=d(wz),t5=d(u0),t6=d(v$),t7=d(wj),t8=d(uy),t9=d(u3),t_=d(vh),t$=d(uX),ua=d(u1),ub=d(wy),uc=d(wq),ud=d(uB),ue=d(ut),kx=[0,d('\0\0\xd2\xff\xd5\xffQ\0v\0\x01\0\xd9\xff\xda\xff\xdb\xff\xdc\xff\xdf\xff\xe0\xff\xe1\xff\xe2\xff\xe3\xff\xe4\xff\xe5\xff\xe6\xffN\0\xe8\xff\xe9\xff\x17\0h\0\xee\xff"\x001\0#\0\x95\0\x03\0\xfe\xff\xff\xff\xfc\xff\xf7\xff%\0\xf5\xff\xf6\xff&\0\xf4\xff\xf1\xff\xf2\xff\xef\xff\xd3\xff\xd4\xff\xec\xff\xea\xff\xde\xff\xe7\xff\xd2\0\xdc\0\xf2\0\xc1\0\xfc\0\x06\x01\x12\x01\x01\0\xfa\xff\xfb\xff\x02\0\x02\0\xff\xff\xfe\xff\x86\0\xfb\xff\x05\0\xfc\xff\xfd\xffb\0j\0\xff\xff\xfe\xff\x8b\0\xfd\xff\x06\0\xfe\xff\xff\xff'),d("\xff\xff\xff\xff\xff\xff)\0'\0&\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\"\0\xff\xff\xff\xff\x14\0\x12\0\xff\xff\x0f\0\f\0\x05\0\x04\0\x02\0\xff\xff\xff\xff\xff\xff\xff\xff\x06\0\xff\xff\xff\xff\x07\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff(\0\xff\xff(\0\xff\xff(\0\xff\xff\xff\xff\xff\xff\xff\xff\x02\0\x03\0\xff\xff\xff\xff\xff\xff\xff\xff\x03\0\xff\xff\xff\xff\x04\0\x04\0\xff\xff\xff\xff\xff\xff\xff\xff\x01\0\xff\xff\xff\xff"),d("\x01\0\0\0\0\0\xff\xff\xff\xff\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xff\xff\0\0\0\0\xff\xff\xff\xff\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\0\0\0\0\xff\xff\0\0\0\0\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff7\0\0\0\0\0\xff\xff\xff\xff\0\0\0\0>\0\0\0\xff\xff\0\0\0\0\xff\xff\xff\xff\0\0\0\0G\0\0\0\xff\xff\0\0\0\0"),d("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x07\0\x06\0\x06\0<\0\x05\x009\0@\0I\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x07\0\x1c\0\x02\0:\0;\0\0\0\0\0\0\0\x0f\0\x0e\0\x18\0\x19\0\x14\0\x15\0\x11\0\x16\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x13\0\x10\0\x1b\0\x1d\0\x1a\0\x12\0\x1f\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\r\0&\0\f\0\x17\0\b\0$\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x0b\0.\0\n\0\t\x000\0,\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0(\0#\0-\0\"\0%\0@\0E\0*\0?\0D\0I\0/\0)\0H\0\0\0'\0\0\0\0\0\x04\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0B\0\0\0\0\0\0\0\0\0C\0/\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0+\0!\0\0\0\0\0\x04\0\0\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0\0\0\0\x005\0 \x005\0\x1e\x008\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\x000\x000\x000\x000\x000\x000\x000\x000\x000\x000\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x003\0\0\x003\0\0\x001\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\0\x001\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0A\0\0\0\0\0\0\0\0\0J\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),d("\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\x05\x009\0\0\x006\0?\0H\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\0\0\0\0\0\x006\0:\0\xff\xff\xff\xff\xff\xff\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x1c\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x19\0\0\0\0\0\0\0\x1a\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x12\0\0\0\0\0\x03\0\x15\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x03\0\x18\0\x1a\0\x12\0!\0$\0=\0B\0\x16\0=\0C\0F\0\x03\0\x16\0F\0\xff\xff\x19\0\xff\xff\xff\xff\x04\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0=\0\xff\xff\xff\xff\xff\xff\xff\xff=\0\x03\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x16\0\x1b\0\xff\xff\xff\xff\x04\0\xff\xff\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\0\x04\x002\x002\x002\x002\x002\x002\x002\x002\x002\x002\0\xff\xff\xff\xff/\0\x1b\0/\0\0\x006\0/\0/\0/\0/\0/\0/\0/\0/\0/\0/\x000\x000\x000\x000\x000\x000\x000\x000\x000\x000\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff1\0\xff\xff1\0\xff\xff0\x001\x001\x001\x001\x001\x001\x001\x001\x001\x001\x003\x003\x003\x003\x003\x003\x003\x003\x003\x003\x004\x004\x004\x004\x004\x004\x004\x004\x004\x004\0\xff\xff0\x005\x005\x005\x005\x005\x005\x005\x005\x005\x005\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff=\0\xff\xff\xff\xff\xff\xff\xff\xffF\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)];fp(11,o2,vx);fp(10,i,ww);fp(9,[bW,d(uS),-10],uS);fp(8,o0,wg);fp(7,o1,uK);fp(6,aU,wf);fp(5,[bW,d(u$),-6],u$);fp(4,ox,vP);fp(3,fG,wa);fp(2,gb,vO);fp(1,jv,vK);fp(0,oZ,vl);var
+xr=d("input"),xq=[0,0,[0,6,0]],xo=d("output_substring"),xm=d(ve),xl=d(e$),xi=d(lg),xj=d(kZ),xk=d("bool_of_string"),xf=d(kZ),xg=d(lg),xa=[c4,0,0,le],xb=[c4,0,0,wx],xc=[c4,1,0,le],xw=[0,d("list.ml"),v9,11],xu=d("nth"),xv=d("List.nth"),xy=d("\\\\"),xz=d("\\'"),xA=d("\\b"),xB=d("\\t"),xC=d("\\n"),xD=d("\\r"),xx=d("Char.chr"),xK=d("String.blit / Bytes.blit_string"),xJ=d("Bytes.blit"),xI=d("String.sub / Bytes.sub"),xP=d("String.contains_from / Bytes.contains_from"),xN=d(ar),xM=d("String.concat"),xV=d("Array.blit"),xU=d("Array.fill"),xT=d("Array.sub"),x1=d("Set.remove_min_elt"),x2=[0,0,0,0],x3=[0,0,0],x4=[0,d("set.ml"),510,18],xX=d(k_),xY=d(k_),xZ=d(k_),x0=d(k_),x_=d("Map.remove_min_elt"),x$=[0,0,0,0],ya=[0,d("map.ml"),393,10],yb=[0,0,0],x6=d(kY),x7=d(kY),x8=d(kY),x9=d(kY),yd=d("CamlinternalLazy.Undefined"),yj=d("Buffer.add_channel"),yh=d("Buffer.add_substring/add_subbytes"),yg=d("Buffer.add: cannot grow buffer"),ys=d("%c"),yt=d(n$),yu=d(nZ),yv=d(uJ),yw=d(v_),yx=d(vF),yy=d("%f"),yz=d(vp),yA=d("%{"),yB=d("%}"),yC=d("%("),yD=d("%)"),yE=d("%a"),yF=d("%t"),yG=d("%?"),yH=d("%r"),yI=d("%_r"),yJ=[0,d(d$),wO,23],yU=[0,d(d$),810,21],yM=[0,d(d$),811,21],yV=[0,d(d$),814,21],yN=[0,d(d$),815,21],yW=[0,d(d$),818,19],yO=[0,d(d$),819,19],yX=[0,d(d$),822,22],yP=[0,d(d$),uz,22],yY=[0,d(d$),827,30],yQ=[0,d(d$),828,30],yS=[0,d(d$),832,26],yK=[0,d(d$),833,26],yT=[0,d(d$),842,28],yL=[0,d(d$),843,28],yR=[0,d(d$),847,23],z1=d(uQ),zZ=[0,d(d$),wc,4],z0=d("Printf: bad conversion %["),z2=[0,d(d$),1593,39],z3=[0,d(d$),1616,31],z4=[0,d(d$),1617,31],z5=d("Printf: bad conversion %_"),z6=d(nO),z7=d(nP),z8=d(nO),z9=d(nP),z_=d(nO),z$=d(nP),zW=d(n4),zX=d(e$),zU=d("neg_infinity"),zV=d(wD),zP=d(ve),zC=d("%nd"),zD=d("%+nd"),zE=d("% nd"),zF=d(v_),zG=d("%+ni"),zH=d("% ni"),zI=d("%nx"),zJ=d("%#nx"),zK=d("%nX"),zL=d("%#nX"),zM=d("%no"),zN=d("%#no"),zO=d("%nu"),zp=d("%ld"),zq=d("%+ld"),zr=d("% ld"),zs=d(uJ),zt=d("%+li"),zu=d("% li"),zv=d("%lx"),zw=d("%#lx"),zx=d("%lX"),zy=d("%#lX"),zz=d("%lo"),zA=d("%#lo"),zB=d("%lu"),zc=d("%Ld"),zd=d("%+Ld"),ze=d("% Ld"),zf=d(vF),zg=d("%+Li"),zh=d("% Li"),zi=d("%Lx"),zj=d("%#Lx"),zk=d("%LX"),zl=d("%#LX"),zm=d("%Lo"),zn=d("%#Lo"),zo=d("%Lu"),y1=d(n_),y2=d("%+d"),y3=d("% d"),y4=d(nZ),y5=d("%+i"),y6=d("% i"),y7=d("%x"),y8=d("%#x"),y9=d("%X"),y_=d("%#X"),y$=d("%o"),za=d("%#o"),zb=d(uQ),yk=d("@]"),yl=d("@}"),ym=d("@?"),yn=d("@\n"),yo=d("@."),yp=d("@@"),yq=d("@%"),yr=d("@"),yZ=d("CamlinternalFormat.Type_mismatch"),AR=d(ar),AS=d(ii),AF=d("a boolean"),AG=d(vz),AH=d(vz),AI=d(vQ),AJ=d(vQ),AK=d(ar),AL=d(fB),AM=d(ar),AN=d("one of: "),AO=d("Arg.Expand is is only allowed with Arg.parse_and_expand_argv_dynamic"),AE=d("no argument"),AD=d("(?)"),Av=d(k5),Aw=d(jg),Ax=[0,[2,0,[11,d(": unknown option '"),[2,0,[11,d("'.\n"),0]]]],d("%s: unknown option '%s'.\n")],AA=[0,[2,0,[11,d(": wrong argument '"),[2,0,[11,d("'; option '"),[2,0,[11,d("' expects "),[2,0,[11,d(uE),0]]]]]]]],d("%s: wrong argument '%s'; option '%s' expects %s.\n")],AB=[0,[2,0,[11,d(": option '"),[2,0,[11,d("' needs an argument.\n"),0]]]],d("%s: option '%s' needs an argument.\n")],AC=[0,[2,0,[11,d(u9),[2,0,[11,d(uE),0]]]],d("%s: %s.\n")],Ay=[0,d(jg)],Az=[0,d(k5)],As=[0,[2,0,[12,10,0]],d("%s\n")],Ar=d(jg),Am=d(vt),An=d(jg),Aq=d(k5),Ao=d(vt),Ap=d(k5),Al=[0,d(jg)],Ag=[0,[11,d(wF),[2,0,[12,32,[2,0,[12,10,0]]]]],d("  %s %s\n")],Ah=d("}"),Ai=d("|"),Aj=d("{"),Ak=[0,[11,d(wF),[2,0,[12,32,[2,0,[2,0,[12,10,0]]]]]],d("  %s %s%s\n")],Af=d("<none>"),Ab=d("Arg.Bad"),Ac=d("Arg.Help"),Ad=d("Arg.Stop"),AW=d(ar),AX=[0,[11,d(il),[2,0,[2,0,0]]],d(", %s%s")],A3=d("Out of memory"),A4=d("Stack overflow"),A5=d("Pattern matching failed"),A6=d("Assertion failed"),A7=d("Undefined recursive module"),AZ=[0,[12,40,[2,0,[2,0,[12,41,0]]]],d("(%s%s)")],A0=d(ar),A1=d(ar),A2=[0,[12,40,[2,0,[12,41,0]]],d("(%s)")],AV=[0,[4,0,0,0,0],d(n_)],AT=[0,[3,0,0],d("%S")],AU=d(n8),A8=d("x"),Bk=[0,0],Bb=[0,d("hashtbl.ml"),x,23],adu=d("OCAMLRUNPARAM"),ads=d("CAMLRUNPARAM"),A9=d(ar),BA=[3,0,3],BB=d(e$),Bw=d(wI),Bx=d("</"),Bt=d(wI),Bu=d("<"),Br=d(ii),Bl=d("Format.Empty_queue"),Bq=[0,d(ar)],B6=d("Filename.chop_extension"),B4=d(ar),B3=d("Filename.chop_suffix"),BT=d(ar),BQ=d("./"),BP=d(".\\"),BO=d("../"),BN=d("..\\"),BF=d(ar),BE=d(ar),BG=d(e$),adq=d("TMPDIR"),BH=d("/tmp"),BI=d("'\\''"),BL=d(vN),BM=d("\\"),ado=d("TEMP"),BR=d(e$),BW=d(vN),BX=d(f5),B0=d("Cygwin"),B1=d("Win32"),B8=d("Js.Error"),B9=d(nL),Cd=d("E2BIG"),Cf=d("EACCES"),Cg=d("EAGAIN"),Ch=d("EBADF"),Ci=d("EBUSY"),Cj=d("ECHILD"),Ck=d("EDEADLK"),Cl=d("EDOM"),Cm=d("EEXIST"),Cn=d("EFAULT"),Co=d("EFBIG"),Cp=d("EINTR"),Cq=d("EINVAL"),Cr=d("EIO"),Cs=d("EISDIR"),Ct=d("EMFILE"),Cu=d("EMLINK"),Cv=d("ENAMETOOLONG"),Cw=d("ENFILE"),Cx=d("ENODEV"),Cy=d("ENOENT"),Cz=d("ENOEXEC"),CA=d("ENOLCK"),CB=d("ENOMEM"),CC=d("ENOSPC"),CD=d("ENOSYS"),CE=d("ENOTDIR"),CF=d("ENOTEMPTY"),CG=d("ENOTTY"),CH=d("ENXIO"),CI=d("EPERM"),CJ=d("EPIPE"),CK=d("ERANGE"),CL=d("EROFS"),CM=d("ESPIPE"),CN=d("ESRCH"),CO=d("EXDEV"),CP=d("EWOULDBLOCK"),CQ=d("EINPROGRESS"),CR=d("EALREADY"),CS=d("ENOTSOCK"),CT=d("EDESTADDRREQ"),CU=d("EMSGSIZE"),CV=d("EPROTOTYPE"),CW=d("ENOPROTOOPT"),CX=d("EPROTONOSUPPORT"),CY=d("ESOCKTNOSUPPORT"),CZ=d("EOPNOTSUPP"),C0=d("EPFNOSUPPORT"),C1=d("EAFNOSUPPORT"),C2=d("EADDRINUSE"),C3=d("EADDRNOTAVAIL"),C4=d("ENETDOWN"),C5=d("ENETUNREACH"),C6=d("ENETRESET"),C7=d("ECONNABORTED"),C8=d("ECONNRESET"),C9=d("ENOBUFS"),C_=d("EISCONN"),C$=d("ENOTCONN"),Da=d("ESHUTDOWN"),Db=d("ETOOMANYREFS"),Dc=d("ETIMEDOUT"),Dd=d("ECONNREFUSED"),De=d("EHOSTDOWN"),Df=d("EHOSTUNREACH"),Dg=d("ELOOP"),Dh=d("EOVERFLOW"),Di=[0,[11,d("EUNKNOWNERR "),[4,0,0,0,0]],d("EUNKNOWNERR %d")],Ce=[0,[11,d("Unix.Unix_error(Unix."),[2,0,[11,d(il),[3,0,[11,d(il),[3,0,[12,41,0]]]]]]],d("Unix.Unix_error(Unix.%s, %S, %S)")],B$=d(wh),Ca=d(ar),Cb=d(ar),Cc=d(wh),Dj=d("0.0.0.0"),Dk=d("127.0.0.1"),adn=d("::"),adm=d("::1"),Du=[0,d("lib/automata.ml"),360,21],Dq=[1,0],DL=[0,d(nT),709,4],D_=d("Re.exec"),DW=d("Re.compl"),DP=[0,1],DN=d(vC),DO=d(vC),DM=[0,d(nT),742,13],DK=[0,d(nT),497,35],DD=[0,0,0,0,0,0,0,0,0,0,0],DH=[0,ep,[0,cS,[0,cX,[0,c8,[0,c4,0]]]]],D8=d("\t "),D$=d("Re__Emacs.Parse_error"),Ea=d("Re__Emacs.Not_supported"),Ee=[0,d(vS),51,4],Ed=[0,d(vS),57,34],Gp=d("Not a month"),Gn=d("Not a day"),Gk=d("from_business: bad week"),Gl=d("from_business: bad date"),Fx=[0,d(vA),a4,4],Fw=[0,d(vA),gv,4],Fr=[0,jc,10,14],Fs=[0,jc,10,5],Fp=[0,-4713,12,31],Fq=[0,wN,1,23],Fn=d("Date.Out_of_bounds"),Fo=d("Date.Undefined"),FN=d("Date.Period.Not_computable"),FW=[0,31,59,90,d3,cJ,cS,cF,243,273,304,334,k9],Gt=[0,d(lf),429,6],Gs=[0,d(lf),fC,4],Gr=[0,d(lf),df,6],Gq=[0,d(lf),67,4],H1=d("calendar"),HZ=d("seconds_since_1970"),HW=d("second"),HU=d("minute"),HS=d("hour"),HO=d("date"),HL=d("Cannot create the "),HH=d("%j (year not provided)"),Ht=d("%:"),Hs=d("%::::"),HJ=[0,d(g4),402,6],Hu=d(uH),Hv=d(":::z"),Hw=d(v6),Hx=d(vJ),Hy=[0,d(g4),509,12],Hz=d("am"),HA=d("pm"),HB=d(jh),HC=d(jh),HD=d("%P"),HE=d("%V"),HF=d("%W"),HG=d("%j"),HI=d("%w"),Hr=d(uG),HK=[0,d(g4),lm,6],Hn=d("[\\+-]"),Ho=d(ij),Hp=d(g8),Hq=[0,d(g4),396,8],Hi=d(wE),Hj=d(vf),Hk=d(jh),Hl=d(jh),Hm=d("%p"),Hg=d(" (either week or year is not provided)"),Hh=d("[0-9][0-9]\\(\\.[0-9]*\\)?"),Hd=d("z\\|:z\\|::z"),G$=d(v6),Ha=d(vJ),Hb=d(uH),Hc=[0,d(g4),278,13],G_=d(uG),He=[0,d(g4),283,6],Hf=[0,d(g4),nX,6],G9=d(wE),G8=d(vf),G2=d(" does not match the format "),G1=d("bad format: "),G0=[0,d(g4),81,2],GO=d("January"),GP=d("February"),GQ=d("March"),GR=d("April"),GS=d("May"),GT=d("June"),GU=d("July"),GV=d("August"),GW=d("September"),GX=d("October"),GY=d("November"),GZ=d("December"),GH=d("Sunday"),GI=d("Monday"),GJ=d("Tuesday"),GK=d("Wednesday"),GL=d("Thursday"),GM=d("Friday"),GN=d("Saturday"),G3=d("%b"),G4=d(vp),G5=d("%A"),G6=d("[a-zA-Z]+"),HQ=d(nZ),H3=d("%i %T"),H$=d("Buf.extend: reached Sys.max_string_length"),JL=[0,d(ji),72,32],I_=d(c1),I$=d(c1),Ja=d(vg),Jb=d(c1),Jc=d(wu),Jd=d(vH),Je=d(c1),Jf=d("Expected '>' but found"),Jg=d(c1),Jh=d(wM),Ji=d(lh),Jj=d(lh),Jk=d("Expected an integer but found a string that doesn't even represent an integer"),Jl=d("Expected integer but found"),Jm=d(c1),Jn=d("Expected '\"' but found"),Jo=d(c1),Jp=d(nW),Jq=d(c1),Jr=d("Expected '[' but found"),Js=d(c1),Jt=d(uI),Ju=d(c1),Jv=d("Expected ',' or ')' but found"),Jw=d(c1),Jx=d("Expected '{' but found"),Jy=d(c1),Jz=d(uu),JA=d(c1),JB=d(wP),JC=d(c1),JD=d(c1),JE=d(kV),JF=d("Invalid string literal"),JG=d(c1),JH=d("Expected ':' or '>' but found"),JI=d(c1),JJ=d(nW),JK=d(c1),I1=[0,[2,0,[11,d(k4),[2,0,[2,0,[12,39,0]]]]],d(uw)],I0=[0,d(ji),72,32],IZ=[0,[2,0,[11,d(k4),[2,0,[12,39,0]]]],d(uN)],IU=[0,[11,d(oa),[2,0,[11,d(uT),0]]],d(v8)],IY=d(vq),IV=[0,[11,d(wl),[4,3,0,0,0]],d(wd)],IX=[0,[11,d(vc),[4,3,0,0,[12,45,[4,3,0,0,0]]]],d(vd)],IW=[0,[2,0,[12,32,[4,3,0,0,[11,d(il),[2,0,[11,d(kX),[2,0,0]]]]]]],d(wp)],IT=[0,d(ji),44,13],Iy=[0,wG,1],Iz=[0,wG,0],IA=d(kV),IB=d(kV),IC=d(c1),ID=d(kV),IE=d(c1),IF=d(vg),IG=d(c1),IH=d(wu),II=d(vH),IJ=d(c1),IK=d(wM),IL=d(nW),IM=d(c1),IN=d(uI),IO=d(c1),IP=d(uu),IQ=d(c1),IR=d(wP),IS=d(c1),It=d(lh),Ir=d(lh),Io=[0,[2,0,[11,d(k4),[2,0,[2,0,[12,39,0]]]]],d(uw)],In=[0,d(ji),72,32],Im=[0,[2,0,[11,d(k4),[2,0,[12,39,0]]]],d(uN)],Ih=[0,[11,d(oa),[2,0,[11,d(uT),0]]],d(v8)],Il=d(vq),Ii=[0,[11,d(wl),[4,3,0,0,0]],d(wd)],Ik=[0,[11,d(vc),[4,3,0,0,[12,45,[4,3,0,0,0]]]],d(vd)],Ij=[0,[2,0,[12,32,[4,3,0,0,[11,d(il),[2,0,[11,d(kX),[2,0,0]]]]]]],d(wp)],Ig=[0,d(ji),44,13],If=[0,d("common.ml"),57,4],Ia=d("Yojson.Json_error"),Ic=d("Yojson.End_of_array"),Id=d("Yojson.End_of_object"),Ie=d("Yojson.End_of_tuple"),Ip=d("Yojson.Basic.Int_overflow"),I2=d("Yojson.Safe.Int_overflow"),JN=[0,d(nS),d(n3),d(n9),d(nV),d(oc),d(ar),d(ar),d(ar),d(ar),d(ar),d(ar)],JW=[0,d("atdgen-runtime/src/oj_run.ml"),v9,2],JS=d(il),JT=d("s"),JV=d(ar),JU=[0,[11,d("Missing record field"),[2,0,[12,32,[2,0,0]]]],d("Missing record field%s %s")],JQ=[0,[11,d(oa),[2,0,[11,d(", line "),[4,3,0,0,[11,d(kX),[2,0,0]]]]]],d("File %s, line %i:\n%s")],JR=[0,[11,d("Line "),[4,3,0,0,[11,d(kX),[2,0,0]]]],d("Line %i:\n%s")],JO=d("Atdgen_runtime__Oj_run.Error"),Kg=d("end_of_year"),Kf=d("end_of_quarter"),Ke=d("end_of_month"),Kd=d("end_of_week"),Kc=d("end_of_day"),Kb=d("start_of_year"),Ka=d("start_of_quarter"),J$=d("start_of_month"),J_=d("start_of_week"),J9=d("start_of_day"),J8=d(v7),J5=d("period_from_string"),J4=d(n8),J3=d("duration_from_string"),J2=d(n8),JX=d(" not defined in REPL"),JY=d("Operation "),J1=w([[0,d("%Y-%m-%d")],[0,d("%Y%m%d")],[1,d("%Y-%m-%dT%H:%M:%S")],[1,d("%Y-%m-%d %H:%M:%S")],[1,d("%Y-%m-%dT%H:%M:%S%:z")],[1,d(v7)],[0,d("%d %b %Y")],[0,d("%d %b %y")],[1,d("%d %b %y %H:%M:%S")],[1,d("%d %b %Y %H:%M:%S")],[1,d("%d %b %y %H:%M:%S %z")],[1,d("%d %b %Y %H:%M:%S %z")],[0,d("%a %d %b %Y")],[0,d("%a %d %b %y")],[1,d("%a %d %b %y %H:%M:%S")],[1,d("%a %d %b %Y %H:%M:%S")],[1,d("%a %d %b %y %H:%M:%S %z")],[1,d("%a %d %b %Y %H:%M:%S %z")],[0,d("%a, %d %b %Y")],[0,d("%a, %d %b %y")],[1,d("%a, %d %b %y %H:%M:%S")],[1,d("%a, %d %b %Y %H:%M:%S")],[1,d("%a, %d %b %y %H:%M:%S %z")],[1,d("%a, %d %b %Y %H:%M:%S %z")]]),Km=d("logic"),Kj=d(jh),Kk=d('S"'),Ki=d(fb),Kh=[0,[11,d("Could not read the file "),[2,0,[11,d(", got error Sys_error "),[2,0,[12,10,[17,2,0]]]]]],d("Could not read the file %s, got error Sys_error %s\n@?")],Kl=d("Util.TopoCycle"),KD=[0,0,0],KE=[0,d(g5),1406,25],KF=[0,d(g5),1422,25],KG=[0,d(g5),1419,22],KH=[0,d(g5),1443,45],KI=[0,d(g5),1437,19],KJ=[0,0],KL=[0,0],KM=[0,0],KP=[0,0],KY=[0,58,[0,32,0]],KS=[0,m,[0,z,[0,x,[0,x,0]]]],KT=[0,g,[0,h,[0,z,[0,f,0]]]],KU=[0,aj,[0,97,[0,x,[0,u,[0,f,0]]]]],KV=[0,93,0],KW=[0,44,[0,32,0]],KX=[0,91,0],KZ=[0,b5,0],K0=[0,44,[0,32,0]],K1=[0,b6,0],K4=[0,m,[0,97,[0,g,0]]],K5=[0,x,[0,f,[0,aj,[0,g,0]]]],K6=[0,h,[0,n,[0,v,[0,aJ,[0,g,0]]]]],K7=[0,p,[0,97,[0,g,[0,97,0]]]],K8=[0,g,[0,aD,[0,t,[0,f,0]]]],Lh=[0,45,[0,62,0]],Lc=[0,85,[0,78,[0,73,[0,84,0]]]],Ld=[0,93,0],Le=[0,44,[0,32,0]],Lf=[0,91,0],Lg=[0,b5,0],Li=[0,44,0],Lj=[0,b6,0],Lk=[0,41,0],Ll=[0,76,[0,f,[0,aj,[0,g,[0,40,0]]]]],Lm=[0,41,0],Ln=[0,82,[0,n,[0,v,[0,aJ,[0,g,[0,40,0]]]]]],Lo=[0,62,0],Lp=[0,58,0],Lq=[0,60,0],Lr=[0,0],Md=[0,0],Oe=[0,58,[0,32,0]],Od=[0,b5,0],Of=[0,44,[0,32,0]],Og=[0,b6,0],Oh=[0,z,[0,m,[0,n,[0,g,0]]]],Oi=[0,g,[0,h,[0,z,[0,f,0]]]],Oj=[0,aj,[0,97,[0,x,[0,u,[0,f,0]]]]],Ok=[0,93,0],Ol=[0,44,[0,32,0]],Om=[0,91,0],On=[0,41,0],Oo=[0,u,[0,e,[0,ac,[0,f,[0,40,0]]]]],Op=[0,m,[0,e,[0,m,[0,f,0]]]],Oq=w([63,63,63,ac,e,h,f,32,g,aJ,97,m,32,e,m,f,32,98,h,97,m,p,63,63,63]),Or=w([63,63,63,ac,e,h,f,32,g,aJ,97,m,32,e,m,f,32,98,h,97,m,p,63,63,63]),Os=w([63,63,63,85,m,eD,m,e,a4,m,70,e,h,f,n,v,m,63,63,63]),Ot=[0,34,[0,41,0]],Ou=[0,p,[0,97,[0,g,[0,f,[0,84,[0,n,[0,ac,[0,f,[0,40,[0,34,0]]]]]]]]]],Ov=[0,41,0],Ow=[0,p,[0,z,[0,h,[0,97,[0,g,[0,n,[0,e,[0,m,[0,40,0]]]]]]]]],Ox=[0,41,0],Oy=[0,t,[0,f,[0,h,[0,n,[0,e,[0,p,[0,40,0]]]]]]],OJ=[0,58,[0,32,0]],Oz=[0,78,[0,e,[0,g,[0,aJ,[0,n,[0,m,[0,v,0]]]]]]],OA=[0,65,[0,m,[0,aD,0]]],OB=[0,85,[0,m,[0,n,[0,g,0]]]],OC=[0,73,[0,m,[0,g,[0,f,[0,v,[0,f,[0,h,0]]]]]]],OD=[0,68,[0,e,[0,z,[0,98,[0,x,[0,f,0]]]]]],OE=[0,66,[0,e,[0,e,[0,x,[0,f,[0,97,[0,m,0]]]]]]],OF=[0,83,[0,g,[0,h,[0,n,[0,m,[0,v,0]]]]]],OG=[0,91,[0,93,0]],OH=[0,32,[0,46,[0,46,0]]],OI=[0,b5,0],OK=[0,44,[0,32,0]],OL=[0,b6,0],OM=[0,63,0],ON=[0,32,[0,45,[0,62,[0,32,0]]]],OO=[0,91,[0,ac,[0,z,[0,x,[0,g,[0,n,[0,t,[0,x,[0,f,[0,93,0]]]]]]]]]],OP=[0,cs,0],OQ=[0,91,[0,ac,[0,z,[0,x,[0,g,[0,n,[0,t,[0,x,[0,f,[0,93,0]]]]]]]]]],OR=[0,cs,0],OT=[0,68,[0,97,[0,g,[0,f,[0,84,[0,n,[0,ac,[0,f,0]]]]]]]],OU=w([73,m,g,f,h,m,97,x,68,z,h,97,g,n,e,m]),OV=w([73,m,g,f,h,m,97,x,80,f,h,n,e,p]),OS=w([40,z,m,eD,m,e,a4,m,32,aj,e,h,f,n,v,m,32,g,aD,t,f,41]),Q0=[0,39,[0,46,0]],Q1=w([aj,e,h,f,97,99,aJ,32,f,d3,t,f,99,g,u,32,97,m,32,97,h,h,97,aD,32,g,e,32,n,g,f,h,97,g,f,32,e,a0,f,h,44,32,98,z,g,32,a4,97,u,32,v,n,a0,f,m,32,u,e,ac,f,g,aJ,n,m,v,32,e,aj,32,g,aD,t,f,32,96]),QZ=w([73,x,x,45,g,aD,t,f,p,32,p,97,g,97,32,x,n,g,f,h,97,x,33]),QX=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,99,e,m,99,97,g,46]),QW=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,n,m,n,g,46]),QV=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,99,e,m,99,97,g,46]),QU=w([66,97,p,32,h,f,99,e,h,p,33,32,70,97,n,x,f,p,32,g,e,32,n,m,n,g,46]),QQ=[0,39,[0,46,0]],QR=w([39,32,p,e,f,u,32,m,e,g,32,ac,97,g,99,aJ,32,g,aJ,f,32,97,99,g,z,97,x,32,g,aD,t,f,32,96]),QS=w([39,32,aj,e,h,32,g,aJ,f,32,m,97,ac,f,32,96]),QT=w([84,aJ,f,32,x,f,g,32,g,aD,t,f,32,97,m,m,e,g,97,g,n,e,m,32,96]),QL=[0,39,[0,46,0]],QM=w([39,32,98,z,g,32,a4,97,u,32,v,n,a0,f,m,32,97,h,v,z,ac,f,m,g,32,e,aj,32,g,aD,t,f,32,96]),QN=w([39,32,g,e,32,98,f,32,e,aj,32,g,aD,t,f,32,96]),QO=w([39,32,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,32,96]),QP=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,[0,96,0]]]]]]]]]],QK=w([39,n,aj,39,32,99,e,m,p,n,g,n,e,m,32,m,e,g,32,98,e,e,x,f,97,m,46]),QE=w([78,e,32,96,g,aJ,n,u,39,32,n,m,32,f,h,v,e,99]),QF=w([78,e,32,96,99,x,97,z,u,f,39,32,n,m,32,f,h,v,e,99]),QG=w([78,e,32,96,u,g,97,g,f,39,32,n,m,32,f,h,v,e,99]),QH=w([39,32,m,e,g,32,aj,e,z,m,p,46]),QI=[0,86,[0,97,[0,h,[0,n,[0,97,[0,98,[0,x,[0,f,[0,32,[0,96,0]]]]]]]]]],QJ=w([66,97,p,32,99,e,m,u,g,97,m,g,46]),QY=[0,g,[0,aD,[0,t,[0,n,[0,m,[0,v,0]]]]]],Q_=[0,f,[0,a0,[0,97,[0,x,0]]]],Rf=[0,[0,0,0],0],TI=[4,0],TG=[0,39,0],TH=w([67,97,m,m,e,g,32,99,h,f,97,g,f,32,n,m,u,g,97,m,99,f,32,e,aj,32,97,98,u,g,h,97,99,g,32,g,aD,t,f,32,96]),TJ=[0,39,0],TK=w([67,97,m,m,e,g,32,h,f,p,f,aj,n,m,f,32,g,aD,t,f,32,96]),TA=[0,m,[0,e,[0,a4,0]]],TB=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,m,e,a4]),Tm=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,65,h,h,97,aD]),Tn=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,h,h,97,aD,83,z,98,g,h,97,99,g]),To=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,h,h,97,aD,65,p,p]),Tp=[1,6],Tq=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,97,d3,80,97,n,h]),Tr=[1,5],Ts=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,n,m,80,97,n,h]),Tt=[0,6],Tu=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,77,97,d3]),Tv=[0,5],Tw=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,77,n,m]),Tx=[0,4],Ty=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,77,e,p]),SS=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,aj,x,97,g,g,f,m]),ST=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,e,z,m,g]),SU=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,p,n,u,g,n,m,99,g]),SV=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,h,z,m,99,97,g,f]),SW=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,p,e,z,98,x,f,84,e,73,m,g,f,v,f,h]),SX=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,z,ac]),SY=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,a0,f,h,97,v,f]),SZ=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,n,m]),S0=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,ac,97,d3]),S1=[10,7],S2=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,98,u]),S3=[10,6],S4=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,aj,x,e,e,h]),S5=[10,5],S6=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,f,n,x]),S7=[10,4],S8=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,x,e,v,49,48]),S9=[10,3],S_=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,x,e,v]),S$=[10,2],Ta=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,f,d3,t]),Tb=[10,1],Tc=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,ca,h,g]),Td=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,84,e,68,e,z,98,x,f]),Te=[9,2],Tf=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,83,ca,h,g]),Tg=[9,1],Th=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,76,e,v,50]),Ti=[9,0],Tj=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,n,m,g,f,v,f,h,65,98,u]),Tk=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,e,83,g,h,n,m,v]),SD=[0,5],SE=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,n,aj,aj,73,m,g,f,h,m,97,x]),SF=[0,4],SG=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,n,u,65,aj,g,f,h]),SH=[0,3],SI=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,n,u,66,f,aj,e,h,f]),SJ=[0,2],SK=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,n,u,83,97,ac,f]),SL=[0,1],SM=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,z,98,g,h,97,99,g,73,m,g,f,h,m,97,x]),SN=[0,0],SO=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,97,p,p,73,m,g,f,h,m,97,x]),SP=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,g,97,m,50]),Rn=[1,[2,4]],Ro=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,89,f,97,h]),Rp=[1,[2,3]],Rq=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,81,z,97,h,g,f,h]),Rr=[1,[2,2]],Rs=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,77,e,m,g,aJ]),Rt=[1,[2,1]],Ru=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,87,f,f,eD]),Rv=[1,[2,0]],Rw=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,f,m,p,79,aj,68,97,aD]),Rx=[1,[2,4]],Ry=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,89,f,97,h]),Rz=[1,[2,3]],RA=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,81,z,97,h,g,f,h]),RB=[1,[2,2]],RC=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,77,e,m,g,aJ]),RD=[1,[2,1]],RE=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,87,f,f,eD]),RF=[1,[2,0]],RG=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,u,g,97,h,g,79,aj,68,97,aD]),RH=[1,[4,4]],RI=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,89,f,97,h,u]),RJ=[1,[4,3]],RK=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,81,z,97,h,g,f,h,u]),RL=[1,[4,2]],RM=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,77,e,m,g,aJ,u]),RN=[1,[4,1]],RO=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,87,f,f,eD,u]),RP=[1,[4,0]],RQ=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,f,h,n,e,p,68,97,aD,u]),RR=[1,1],RS=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,65,ac,e,z,m,g]),RT=[1,[3,5]],RU=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,89,f,97,h,u]),RV=[1,[3,4]],RW=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,87,f,f,eD,u]),RX=[1,[3,3]],RY=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,68,97,aD,u]),RZ=[1,[3,2]],R0=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,72,e,z,h,u]),R1=[1,[3,1]],R2=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,77,n,m,z,g,f,u]),R3=[1,[3,0]],R4=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,p,z,h,97,g,n,e,m,83,f,99,e,m,p,u]),R5=[1,[0,7]],R6=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,89,f,97,h]),R7=[1,[0,6]],R8=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,81,z,97,h,g,f,h]),R9=[1,[0,5]],R_=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,77,e,m,g,aJ]),R$=[1,[0,4]],Sa=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,87,f,f,eD]),Sb=[1,[0,3]],Sc=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,68,97,aD]),Sd=[1,[0,2]],Se=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,72,e,z,h]),Sf=[1,[0,1]],Sg=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,77,n,m,z,g,f]),Sh=[1,[0,0]],Si=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,v,f,g,83,f,99,e,m,p]),Sj=[1,0],Sk=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f,46,t,97,h,u,f]),Sl=[0,8],Sm=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,97,m,aJ]),Sn=[0,7],So=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,g,97,m]),Sp=[0,6],Sq=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,n,m,aJ]),Sr=[0,5],Ss=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,u,n,m]),St=[0,4],Su=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,e,u,aJ]),Sv=[0,3],Sw=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,99,e,u]),Sx=[0,2],Sy=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,g,97,m]),Sz=[0,1],SA=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,u,n,m]),SB=[0,0],SC=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,f,h,v,e,46,u,g,p,x,n,98,46,97,99,e,u]),Rl=[0,t,[0,49,0]],Rm=[0,t,[0,50,0]],Rj=[0,t,[0,50,0]],Rk=[0,t,[0,49,0]],Ri=[0,[0,t,[0,49,0]],[0,[0,t,[0,50,0]],0]],Rg=[0,t,[0,48,0]],Rh=[0,[0,t,[0,48,0]],0],Q2=[0,39,[0,46,0]],Q3=w([39,32,p,e,f,u,32,m,e,g,32,ac,97,g,99,aJ,32,n,g,u,32,97,99,g,z,97,x,32,g,aD,t,f,32,96]),Q4=w([39,32,aj,e,h,32,g,aJ,f,32,99,e,m,u,g,97,m,g,32,96]),Q5=w([84,aJ,f,32,g,aD,t,f,32,97,m,m,e,g,97,g,n,e,m,32,96]),QA=[0,39,0],QB=w([39,32,98,z,g,32,97,99,g,z,97,x,x,aD,32,h,f,g,z,h,m,u,32,96]),QC=w([32,u,aJ,e,z,x,p,32,h,f,g,z,h,m,32,96]),QD=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,0]]]]]]]]],Qs=[0,aj,[0,97,[0,n,[0,x,[0,u,[0,32,[0,a4,[0,n,[0,g,[0,aJ,0]]]]]]]]]],Qt=[0,aj,[0,97,[0,n,[0,x,[0,32,[0,a4,[0,n,[0,g,[0,aJ,0]]]]]]]]],Qu=[0,u,[0,f,[0,g,[0,u,[0,32,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]]]]]],Qv=[0,u,[0,f,[0,g,[0,32,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]]]]],Qw=[0,f,[0,ac,[0,n,[0,g,[0,u,0]]]]],Qx=[0,f,[0,ac,[0,n,[0,g,0]]]],Qy=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,p,[0,u,0]]]]]]]],Qz=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,p,0]]]]]]],Qm=[0,39,0],Qn=[0,32,[0,96,0]],Qo=w([39,32,98,z,g,32,97,99,g,z,97,x,x,aD,32]),Qp=[0,32,[0,96,0]],Qq=[0,32,[0,u,[0,aJ,[0,e,[0,z,[0,x,[0,p,[0,32,0]]]]]]]],Qr=[0,67,[0,x,[0,97,[0,z,[0,u,[0,f,[0,32,0]]]]]]],Qi=[0,39,0],Qj=w([39,32,98,z,g,32,97,99,g,z,97,x,x,aD,32,h,f,g,z,h,m,u,32,96]),Qk=w([32,u,aJ,e,z,x,p,32,h,f,g,z,h,m,32,96]),Ql=[0,67,[0,x,[0,97,[0,z,[0,u,[0,f,[0,32,0]]]]]]],PY=[0,39,0],PZ=w([39,32,n,m,32,g,aD,t,f,32,96]),P0=[0,39,[0,44,[0,32,[0,96,0]]]],P1=w([77,n,u,u,n,m,v,32,aj,n,f,x,p,u,32,96]),P2=[0,39,0],P3=w([39,32,n,m,32,g,aD,t,f,32,96]),P4=w([77,n,u,u,n,m,v,32,aj,n,f,x,p,32,96]),P5=[0,39,0],P6=w([39,32,n,m,32,g,aD,t,f,32,96]),P7=[0,39,[0,44,[0,32,[0,96,0]]]],P8=w([85,m,eD,m,e,a4,m,32,aj,n,f,x,p,u,32,96]),P9=[0,39,0],P_=w([39,32,n,m,32,g,aD,t,f,32,96]),P$=w([85,m,eD,m,e,a4,m,32,aj,n,f,x,p,32,96]),Qa=[0,39,0],Qb=w([39,32,98,z,g,32,u,aJ,e,z,x,p,32,aJ,97,a0,f,32,g,aD,t,f,32,96]),Qc=w([39,32,aJ,97,u,32,g,aD,t,f,32,96]),Qd=[0,70,[0,n,[0,f,[0,x,[0,p,[0,32,[0,96,0]]]]]]],Qe=w([32,p,e,f,u,m,39,g,32,ac,97,g,99,aJ,32,p,97,g,97,32,40,e,m,f,32,aj,n,f,x,p,32,n,u,32,m,e,g,32,97,32,u,z,98,g,aD,t,f,41]),Qf=[0,67,[0,e,[0,m,[0,99,[0,f,[0,t,[0,g,[0,32,0]]]]]]]],Qg=w([32,p,e,f,u,32,m,e,g,32,ac,97,g,99,aJ,32,p,97,g,97]),Qh=w([67,e,m,99,f,t,g,32,m,97,ac,f,32]),Pu=[0,39,[0,46,0]],Pv=[0,39,[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]]],Pw=w([39,32,98,z,g,32,h,f,99,f,n,a0,f,p,32,e,t,f,h,97,m,p,u,32,e,aj,32,g,aD,t,f,32,96]),Px=[0,39,[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]]],Py=w([39,32,f,d3,t,f,99,g,f,p,32,e,t,f,h,97,m,p,u,32,e,aj,32,g,aD,t,f,32,96]),Pz=[0,79,[0,t,[0,f,[0,h,[0,97,[0,g,[0,e,[0,h,[0,32,[0,96,0]]]]]]]]]],PE=[0,97,[0,m,[0,p,0]]],PF=[0,e,[0,h,0]],PG=[0,43,[0,n,0]],PH=[0,45,[0,n,0]],PI=[0,42,[0,n,0]],PJ=[0,47,[0,n,0]],PK=[0,94,[0,n,0]],PL=[0,43,0],PM=[0,45,0],PN=[0,42,0],PO=[0,47,0],PP=[0,94,0],PQ=[0,39,[0,46,0]],PR=[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]],PS=[0,39,[0,32,0]],PT=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,u,32,e,aj,32,g,aD,t,f,32,96]),PU=[0,60,0],PV=[0,60,[0,61,0]],PW=[0,62,0],PX=[0,62,[0,61,0]],PA=[0,39,[0,46,0]],PB=[0,32,[0,97,[0,m,[0,p,[0,32,[0,96,0]]]]]],PC=[0,39,[0,32,0]],PD=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,u,32,e,aj,32,g,aD,t,f,32,96]),Ph=[0,39,[0,46,0]],Pi=w([39,32,98,z,g,32,h,f,99,f,n,a0,f,p,32,97,m,32,e,t,f,h,97,m,p,32,e,aj,32,g,aD,t,f,32,96]),Pj=w([39,32,f,d3,t,f,99,g,f,p,32,97,m,32,e,t,f,h,97,m,p,32,e,aj,32,g,aD,t,f,32,96]),Pk=[0,79,[0,t,[0,f,[0,h,[0,97,[0,g,[0,e,[0,h,[0,32,[0,96,0]]]]]]]]]],Pn=[0,33,0],Po=[0,39,0],Pp=w([32,p,e,f,u,32,m,e,g,32,98,f,x,e,m,v,32,g,e,32,g,aD,t,f,32,96]),Pq=[0,84,[0,aJ,[0,f,[0,32,[0,aj,[0,n,[0,f,[0,x,[0,p,[0,32,0]]]]]]]]]],Ps=[0,39,0],Pt=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,97,m,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,32,e,aj,32,g,aD,t,f,32,96]),Pr=[0,45,0],Pl=[0,39,0],Pm=w([84,aJ,n,u,32,e,t,f,h,97,g,e,h,32,h,f,99,f,n,a0,f,p,32,97,m,32,z,m,f,d3,t,f,99,g,f,p,32,97,h,v,z,ac,f,m,g,32,e,aj,32,g,aD,t,f,32,96]),Pg=[0,h,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Pf=[5,[0,[0,[0,u,[0,g,[0,97,[0,g,[0,f,[0,73,[0,p,0]]]]]]],[3,[0,49,0]]],0]],Pe=[0,h,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Pd=[0,h,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Pc=[0,36,0],Pb=[0,70,[0,97,[0,n,[0,x,[0,z,[0,h,[0,f,[0,46,[0,32,0]]]]]]]]],O$=[0,83,[0,g,[0,97,[0,g,[0,f,[0,46,[0,32,0]]]]]]],Pa=[0,83,[0,g,[0,97,[0,g,[0,f,[0,46,[0,32,0]]]]]]],O_=[0,69,[0,ac,[0,n,[0,g,[0,46,[0,32,0]]]]]],O9=[0,69,[0,ac,[0,n,[0,g,[0,46,[0,32,0]]]]]],O8=[0,82,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,[0,46,[0,32,0]]]]]]]]]],O6=[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]],O7=[1,[0,u,[0,g,[0,97,[0,g,[0,f,0]]]]]],O4=[0,f,[0,ac,[0,n,[0,g,0]]]],O5=[1,[0,f,[0,ac,[0,n,[0,g,0]]]]],O2=[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,0]]]]]]]],O3=[1,[0,h,[0,f,[0,u,[0,t,[0,e,[0,m,[0,u,[0,f,0]]]]]]]]],O1=[0,f,[0,n,[0,g,[0,aJ,[0,f,[0,h,0]]]]]],O0=[0,f,[0,n,[0,g,[0,aJ,[0,f,[0,h,0]]]]]],OX=[0,41,0],OY=w([32,40,f,d3,t,f,99,g,f,p,32]),OZ=w([67,97,m,m,e,g,32,z,m,t,97,99,eD,32,g,aD,t,f,58,32]),OW=[0,32,[0,58,[0,32,0]]],N$=[0,cs,0],Oa=[0,cs,0],Ob=[0,cs,0],Vg=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],Vh=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],N8=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],N9=[0,36,[0,e,[0,t,[0,g,[0,n,[0,e,[0,m,0]]]]]]],NZ=w([32,p,n,p,32,m,e,g,32,v,f,g,32,n,m,x,n,m,f,p]),N0=w([32,n,m,32,99,e,m,g,h,97,99,g,32]),N1=[0,67,[0,x,[0,97,[0,z,[0,u,[0,f,[0,32,0]]]]]]],NV=w([32,p,n,p,32,m,e,g,32,v,f,g,32,n,m,x,n,m,f,p]),NW=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,0]]]]]]]]],NX=[0,93,[0,32,0]],NY=[0,91,0],NU=w([83,aJ,e,z,x,p,32,e,m,x,aD,32,aJ,97,a0,f,32,u,n,m,v,x,f,32,x,e,e,t,32,aj,e,h,f,97,99,aJ,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NT=w([83,aJ,e,z,x,p,32,m,e,g,32,aj,n,m,p,32,39,u,g,97,g,f,39,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NS=w([83,aJ,e,z,x,p,32,m,e,g,32,aj,n,m,p,32,39,99,x,97,z,u,f,39,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NR=w([83,aJ,e,z,x,p,32,m,e,g,32,aj,n,m,p,32,39,99,e,m,g,h,97,99,g,39,32,n,m,32,69,h,v,e,32,67,97,x,99,z,x,z,u]),NP=w([68,f,aj,97,z,x,g,77,97,g,99,aJ,32,69,h,h,e,h]),NQ=[0,ac,[0,f,[0,u,[0,u,[0,97,[0,v,[0,f,0]]]]]]],NN=w([69,m,aj,e,h,99,f,32,69,h,h,e,h]),NO=[0,ac,[0,f,[0,u,[0,u,[0,97,[0,v,[0,f,0]]]]]]],NL=w([32,p,e,f,u,32,m,e,g,32,aJ,97,a0,f,32,97,32,98,e,p,aD]),NM=w([66,z,n,x,g,32,n,m,32,aj,z,m,99,g,n,e,m,32]),NJ=[0,32,[0,m,[0,e,[0,g,[0,32,[0,aj,[0,e,[0,z,[0,m,[0,p,0]]]]]]]]]],NK=w([66,z,n,x,g,32,n,m,32,aj,z,m,99,g,n,e,m,32]),NI=w([70,e,h,f,97,99,aJ,32,m,f,f,p,u,32,g,e,32,98,f,32,99,97,x,x,f,p,32,e,m,32,97,m,32,97,h,h,97,aD]),NH=w([39,73,aj,39,32,99,e,m,p,n,g,n,e,m,32,m,e,g,32,98,e,e,x,f,97,m,46]),NG=w([66,n,m,97,h,aD,32,e,t,f,h,97,g,n,e,m,32,aj,97,n,x,f,p,46]),NF=w([85,m,97,h,aD,32,e,t,f,h,97,g,n,e,m,32,aj,97,n,x,f,p,46]),ND=[0,39,0],NE=w([80,97,h,97,ac,f,g,f,h,32,ac,n,u,ac,97,g,99,aJ,32,a4,aJ,f,m,32,99,97,x,x,n,m,v,32,aj,z,m,99,g,n,e,m,32,39]),NB=w([39,32,m,e,g,32,aj,e,z,m,p]),NC=[0,70,[0,z,[0,m,[0,99,[0,g,[0,n,[0,e,[0,m,[0,32,[0,39,0]]]]]]]]]],NA=w([67,97,m,m,e,g,32,99,h,f,97,g,f,32,ac,97,n,m,32,n,aj,32,m,e,g,32,97,g,32,x,f,97,u,g,32,e,m,f,32,t,97,h,97,ac,f,g,f,h]),Nz=w([80,97,h,97,ac,f,g,f,h,32,ac,n,u,ac,97,g,99,aJ,32,p,z,h,n,m,v,32,ac,97,n,m,32,99,h,f,97,g,n,e,m]),Nx=w([39,32,n,m,32,67,84,79,32,a4,n,g,aJ,32,m,97,ac,f,u,t,97,99,f,32]),Ny=w([67,97,m,m,e,g,32,n,ac,t,e,h,g,32,m,97,ac,f,32,39]),Nv=[0,39,0],Nw=w([67,97,m,m,e,g,32,aj,n,m,p,32,99,e,m,g,h,97,99,g,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Nt=[0,39,0],Nu=w([67,97,m,m,e,g,32,aj,n,m,p,32,aj,z,m,99,g,n,e,m,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Nr=[0,39,0],Ns=w([67,97,m,m,e,g,32,aj,n,m,p,32,a0,97,h,n,97,98,x,f,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Np=[0,39,0],Nq=w([67,97,m,m,e,g,32,aj,n,m,p,32,m,97,ac,f,u,t,97,99,f,32,39]),Nn=[0,39,0],No=w([67,97,m,m,e,g,32,aj,n,m,p,32,g,aD,t,f,32,a4,n,g,aJ,32,m,97,ac,f,32,39]),Nm=w([73,ac,t,e,h,g,32,m,e,g,32,aj,e,z,m,p,58,32]),Nl=w([67,97,m,m,e,g,32,z,u,f,32,39,99,x,97,z,u,f,39,32,a0,97,h,n,97,98,x,f,32,e,z,g,u,n,p,f,32,e,aj,32,97,32,99,x,97,z,u,f]),Nj=w([32,e,z,g,u,n,p,f,32,e,aj,32,97,32,99,e,m,g,h,97,99,g]),Nk=w([67,97,m,m,e,g,32,99,97,x,x,32,99,x,97,z,u,f,32]),Ni=w([67,97,m,m,e,g,32,z,u,f,32,39,99,e,m,g,h,97,99,g,39,32,a0,97,h,n,97,98,x,f,32,e,z,g,u,n,p,f,32,e,aj,32,97,32,99,e,m,g,h,97,99,g]),Nh=w([67,97,m,m,e,g,32,99,97,x,x,32,97,32,99,x,97,z,u,f,32,f,d3,99,f,t,g,32,e,m,32,39,99,e,m,g,h,97,99,g,39]),Ne=[0,39,0],Nf=[0,32,[0,39,0]],Ng=[0,32,[0,97,[0,g,[0,32,0]]]],Nd=w([85,u,f,h,32,f,h,h,e,h,32,e,99,99,z,h,f,p,32,n,m,32,98,97,99,eD,f,m,p]),M4=[0,46,0],M3=[0,45,0],M2=[0,58,0],MJ=[10,0],MK=[10,7],ML=[10,3],MM=[10,1],MN=[1,0],MO=[1,1],MP=[1,2],MQ=[1,5],MR=[1,6],MS=[1,3],MT=[1,4],MU=[2,0],MV=[2,1],MW=[2,2],MX=[2,3],MY=[0,0],MZ=[0,1],M0=[0,2],M1=[0,3],Ms=[0,2],Mt=[0,3],Mu=[0,4],Mv=[0,5],Mg=[0,w([83,z,98,g,aD,t,n,m,v,32,a0,n,e,x,97,g,n,e,m,32,n,m,32,98,h,97,m,p,32,ac,e,p,f,x])],Mh=[0,w([66,h,97,m,p,32,a4,n,g,aJ,e,z,g,32,97,32,p,f,99,x,97,h,f,p,32,g,aD,t,f,32,n,m,32,98,h,97,m,p,32,ac,e,p,f,x])],Me=[0,w([66,h,97,m,p,32,h,f,x,97,g,n,e,m,32,n,u,32,m,e,g,32,97,u,u,aD,ac,f,g,h,n,99])],Mf=[0,w([66,h,97,m,p,32,h,f,x,97,g,n,e,m,32,n,u,32,m,e,g,32,g,h,97,m,u,n,g,n,a0,f])],Mb=[0,d(g5),47186,12],Mc=[0,d(g5),47187,7],L_=[0,0,1],L$=[0,1,0],Ma=[0,0,0],L7=[0,0,1],L8=[0,1,0],L9=[0,0,0],L4=[0,0,1],L5=[0,1,0],L6=[0,0,0],L1=[0,0,1],L2=[0,1,0],L3=[0,0,0],L0=[0,d(g5),47061,36],LX=[0,0,1],LY=[0,1,0],LZ=[0,0,0],LU=[0,0,1],LV=[0,1,0],LW=[0,0,0],LQ=[0,0,1],LR=[0,1,0],LT=[0,1,1],LS=[0,0,0],LM=[0,0,1],LN=[0,1,0],LP=[0,1,1],LO=[0,0,0],LI=[0,0,1],LJ=[0,1,0],LL=[0,1,1],LK=[0,0,0],LE=[0,0,1],LF=[0,1,0],LH=[0,1,1],LG=[0,0,0],LA=[0,0,1],LB=[0,1,0],LC=[0,1,1],LD=[0,0,0],Ly=[0,1,1],Lz=[0,0,1],Lw=[0,1,1],Lx=[0,1,0],Lu=[2,1],Lv=[2,0],Lt=[0,[4,0]],Ls=[0,0],Lb=[0,32,[0,38,[0,32,0]]],La=[0,84,[0,82,[0,85,[0,69,0]]]],K$=[0,70,[0,65,[0,76,[0,83,[0,69,0]]]]],K3=[7,0],KR=[0,92,[0,34,0]],KC=[0,48,0],KB=[0,48,0],Kx=[0,0,0],Ku=[0,0,1],Kt=[0,0,1],Ks=[0,0,1],Kr=[0,1,0],Kq=[0,1,[0,1]],Kp=[0,1,0],Ko=[0,1],K2=w([48,46,54,46,48,45,97,x,t,aJ,97]),Mx=[0,0],Mz=[0,1],MB=[0,3],MD=[0,4],MF=[0,5],M5=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,99,n,99,f,h,e,46,h,z,m,g,n,ac,f]),M6=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,99,n,99,f,h,e,46,99,e,m,g,h,97,99,g]),M7=w([e,h,v,46,97,99,99,e,h,p,t,h,e,ah,f,99,g,46,g,n,ac,f]),M8=[0,69,[0,a0,[0,f,[0,m,[0,g,0]]]]],M9=w([84,h,97,m,u,97,99,g,n,e,m]),M_=[0,65,[0,u,[0,u,[0,f,[0,g,0]]]]],M$=w([80,97,h,g,n,99,n,t,97,m,g]),Na=[0,82,[0,f,[0,ca,[0,z,[0,f,[0,u,[0,g,0]]]]]]],Nb=w([65,99,99,e,h,p,67,e,m,g,h,97,99,g,83,g,97,g,f]),Nc=w([69,h,v,e,69,h,h,e,h,82,f,u,t,e,m,u,f]),Oc=[0,34,0],Q6=[4,0],TM=d('\n{"type":"Program","namespace":"org.accordproject.cicero.contract","imports":[],"body":[{"type":"AssetDeclaration","id":{"type":"Identifier","name":"AccordContractState"},"classExtension":null,"idField":{"type":"Identifier","name":"stateId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"stateId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":250,"line":10,"column":3},"end":{"offset":267,"line":11,"column":1}}}],"location":{"start":{"offset":250,"line":10,"column":3},"end":{"offset":267,"line":11,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":198,"line":9,"column":1},"end":{"offset":268,"line":11,"column":2}}},{"type":"ParticipantDeclaration","id":{"type":"Identifier","name":"AccordParty"},"classExtension":null,"idField":{"type":"Identifier","name":"partyId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"partyId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":348,"line":15,"column":3},"end":{"offset":365,"line":16,"column":1}}}],"location":{"start":{"offset":348,"line":15,"column":3},"end":{"offset":365,"line":16,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":298,"line":14,"column":1},"end":{"offset":366,"line":16,"column":2}}},{"type":"AssetDeclaration","id":{"type":"Identifier","name":"AccordContract"},"classExtension":null,"idField":{"type":"Identifier","name":"contractId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"contractId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":490,"line":20,"column":3},"end":{"offset":512,"line":21,"column":3}}},{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"parties"},"propertyType":{"type":"Identifier","name":"AccordParty"},"array":"[]","optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":512,"line":21,"column":3},"end":{"offset":547,"line":22,"column":1}}}],"location":{"start":{"offset":490,"line":20,"column":3},"end":{"offset":547,"line":22,"column":1}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":431,"line":19,"column":1},"end":{"offset":548,"line":22,"column":2}}},{"type":"AssetDeclaration","id":{"type":"Identifier","name":"AccordClause"},"classExtension":null,"idField":{"type":"Identifier","name":"clauseId"},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"clauseId"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":665,"line":26,"column":3},"end":{"offset":683,"line":27,"column":1}}}],"location":{"start":{"offset":665,"line":26,"column":3},"end":{"offset":683,"line":27,"column":1}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":610,"line":25,"column":1},"end":{"offset":684,"line":27,"column":2}}}]}'),TN=d('\n{"type":"Program","namespace":"org.accordproject.base","imports":[],"body":[{"type":"AssetDeclaration","id":{"type":"Identifier","name":"Asset"},"classExtension":null,"idField":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":616,"line":16,"column":25},"end":{"offset":616,"line":16,"column":25}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":592,"line":16,"column":1},"end":{"offset":617,"line":16,"column":26}}},{"type":"ParticipantDeclaration","id":{"type":"Identifier","name":"Participant"},"classExtension":null,"idField":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":654,"line":17,"column":37},"end":{"offset":654,"line":17,"column":37}}},"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":618,"line":17,"column":1},"end":{"offset":655,"line":17,"column":38}}},{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"Transaction"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":692,"line":18,"column":37},"end":{"offset":692,"line":18,"column":37}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":656,"line":18,"column":1},"end":{"offset":693,"line":18,"column":38}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"Event"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":718,"line":19,"column":25},"end":{"offset":718,"line":19,"column":25}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":694,"line":19,"column":1},"end":{"offset":719,"line":19,"column":26}}}]}'),TO=d('\n{"type":"Program","namespace":"org.accordproject.money","imports":[],"body":[{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"CryptoMonetaryAmount"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"doubleValue"},"propertyType":{"name":"Double"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":118,"line":7,"column":3},"end":{"offset":141,"line":8,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"cryptoCurrencyCode"},"propertyType":{"type":"Identifier","name":"CryptoCurrencyCode"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":141,"line":8,"column":3},"end":{"offset":181,"line":9,"column":1}}}],"location":{"start":{"offset":118,"line":7,"column":3},"end":{"offset":181,"line":9,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":85,"line":6,"column":1},"end":{"offset":182,"line":9,"column":2}}},{"type":"EnumDeclaration","id":{"type":"Identifier","name":"CryptoCurrencyCode"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ADA"},"optional":null,"decorators":[],"location":{"start":{"offset":304,"line":15,"column":3},"end":{"offset":312,"line":16,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BCH"},"optional":null,"decorators":[],"location":{"start":{"offset":312,"line":16,"column":3},"end":{"offset":320,"line":17,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BTC"},"optional":null,"decorators":[],"location":{"start":{"offset":320,"line":17,"column":3},"end":{"offset":328,"line":18,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DASH"},"optional":null,"decorators":[],"location":{"start":{"offset":328,"line":18,"column":3},"end":{"offset":337,"line":19,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"EOS"},"optional":null,"decorators":[],"location":{"start":{"offset":337,"line":19,"column":3},"end":{"offset":345,"line":20,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ETC"},"optional":null,"decorators":[],"location":{"start":{"offset":345,"line":20,"column":3},"end":{"offset":353,"line":21,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ETH"},"optional":null,"decorators":[],"location":{"start":{"offset":353,"line":21,"column":3},"end":{"offset":361,"line":22,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LTC"},"optional":null,"decorators":[],"location":{"start":{"offset":361,"line":22,"column":3},"end":{"offset":369,"line":23,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NEO"},"optional":null,"decorators":[],"location":{"start":{"offset":369,"line":23,"column":3},"end":{"offset":377,"line":24,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XLM"},"optional":null,"decorators":[],"location":{"start":{"offset":377,"line":24,"column":3},"end":{"offset":385,"line":25,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XMR"},"optional":null,"decorators":[],"location":{"start":{"offset":385,"line":25,"column":3},"end":{"offset":393,"line":26,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XRP"},"optional":null,"decorators":[],"location":{"start":{"offset":393,"line":26,"column":3},"end":{"offset":401,"line":27,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZEC"},"optional":null,"decorators":[],"location":{"start":{"offset":401,"line":27,"column":3},"end":{"offset":407,"line":28,"column":1}}}]},"decorators":[],"location":{"start":{"offset":276,"line":14,"column":1},"end":{"offset":408,"line":28,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"MonetaryAmount"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"doubleValue"},"propertyType":{"name":"Double"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":478,"line":34,"column":3},"end":{"offset":528,"line":35,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"currencyCode"},"propertyType":{"type":"Identifier","name":"CurrencyCode"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":528,"line":35,"column":3},"end":{"offset":556,"line":36,"column":1}}}],"location":{"start":{"offset":478,"line":34,"column":3},"end":{"offset":556,"line":36,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":451,"line":33,"column":1},"end":{"offset":557,"line":36,"column":2}}},{"type":"EnumDeclaration","id":{"type":"Identifier","name":"CurrencyCode"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AED"},"optional":null,"decorators":[],"location":{"start":{"offset":711,"line":43,"column":1},"end":{"offset":717,"line":44,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AFN"},"optional":null,"decorators":[],"location":{"start":{"offset":717,"line":44,"column":1},"end":{"offset":723,"line":45,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ALL"},"optional":null,"decorators":[],"location":{"start":{"offset":723,"line":45,"column":1},"end":{"offset":729,"line":46,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AMD"},"optional":null,"decorators":[],"location":{"start":{"offset":729,"line":46,"column":1},"end":{"offset":735,"line":47,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ANG"},"optional":null,"decorators":[],"location":{"start":{"offset":735,"line":47,"column":1},"end":{"offset":741,"line":48,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AOA"},"optional":null,"decorators":[],"location":{"start":{"offset":741,"line":48,"column":1},"end":{"offset":747,"line":49,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ARS"},"optional":null,"decorators":[],"location":{"start":{"offset":747,"line":49,"column":1},"end":{"offset":753,"line":50,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AUD"},"optional":null,"decorators":[],"location":{"start":{"offset":753,"line":50,"column":1},"end":{"offset":759,"line":51,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AWG"},"optional":null,"decorators":[],"location":{"start":{"offset":759,"line":51,"column":1},"end":{"offset":765,"line":52,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"AZN"},"optional":null,"decorators":[],"location":{"start":{"offset":765,"line":52,"column":1},"end":{"offset":771,"line":53,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BAM"},"optional":null,"decorators":[],"location":{"start":{"offset":771,"line":53,"column":1},"end":{"offset":777,"line":54,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BBD"},"optional":null,"decorators":[],"location":{"start":{"offset":777,"line":54,"column":1},"end":{"offset":783,"line":55,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BDT"},"optional":null,"decorators":[],"location":{"start":{"offset":783,"line":55,"column":1},"end":{"offset":789,"line":56,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BGN"},"optional":null,"decorators":[],"location":{"start":{"offset":789,"line":56,"column":1},"end":{"offset":795,"line":57,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BHD"},"optional":null,"decorators":[],"location":{"start":{"offset":795,"line":57,"column":1},"end":{"offset":801,"line":58,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BIF"},"optional":null,"decorators":[],"location":{"start":{"offset":801,"line":58,"column":1},"end":{"offset":807,"line":59,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BMD"},"optional":null,"decorators":[],"location":{"start":{"offset":807,"line":59,"column":1},"end":{"offset":813,"line":60,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BND"},"optional":null,"decorators":[],"location":{"start":{"offset":813,"line":60,"column":1},"end":{"offset":819,"line":61,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BOB"},"optional":null,"decorators":[],"location":{"start":{"offset":819,"line":61,"column":1},"end":{"offset":825,"line":62,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BOV"},"optional":null,"decorators":[],"location":{"start":{"offset":825,"line":62,"column":1},"end":{"offset":831,"line":63,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BRL"},"optional":null,"decorators":[],"location":{"start":{"offset":831,"line":63,"column":1},"end":{"offset":837,"line":64,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BSD"},"optional":null,"decorators":[],"location":{"start":{"offset":837,"line":64,"column":1},"end":{"offset":843,"line":65,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BTN"},"optional":null,"decorators":[],"location":{"start":{"offset":843,"line":65,"column":1},"end":{"offset":849,"line":66,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BWP"},"optional":null,"decorators":[],"location":{"start":{"offset":849,"line":66,"column":1},"end":{"offset":855,"line":67,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BYN"},"optional":null,"decorators":[],"location":{"start":{"offset":855,"line":67,"column":1},"end":{"offset":861,"line":68,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"BZD"},"optional":null,"decorators":[],"location":{"start":{"offset":861,"line":68,"column":1},"end":{"offset":867,"line":69,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CAD"},"optional":null,"decorators":[],"location":{"start":{"offset":867,"line":69,"column":1},"end":{"offset":873,"line":70,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CDF"},"optional":null,"decorators":[],"location":{"start":{"offset":873,"line":70,"column":1},"end":{"offset":879,"line":71,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CHE"},"optional":null,"decorators":[],"location":{"start":{"offset":879,"line":71,"column":1},"end":{"offset":885,"line":72,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CHF"},"optional":null,"decorators":[],"location":{"start":{"offset":885,"line":72,"column":1},"end":{"offset":891,"line":73,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CHW"},"optional":null,"decorators":[],"location":{"start":{"offset":891,"line":73,"column":1},"end":{"offset":897,"line":74,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CLF"},"optional":null,"decorators":[],"location":{"start":{"offset":897,"line":74,"column":1},"end":{"offset":903,"line":75,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CLP"},"optional":null,"decorators":[],"location":{"start":{"offset":903,"line":75,"column":1},"end":{"offset":909,"line":76,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CNY"},"optional":null,"decorators":[],"location":{"start":{"offset":909,"line":76,"column":1},"end":{"offset":915,"line":77,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"COP"},"optional":null,"decorators":[],"location":{"start":{"offset":915,"line":77,"column":1},"end":{"offset":921,"line":78,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"COU"},"optional":null,"decorators":[],"location":{"start":{"offset":921,"line":78,"column":1},"end":{"offset":927,"line":79,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CRC"},"optional":null,"decorators":[],"location":{"start":{"offset":927,"line":79,"column":1},"end":{"offset":933,"line":80,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CUC"},"optional":null,"decorators":[],"location":{"start":{"offset":933,"line":80,"column":1},"end":{"offset":939,"line":81,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CUP"},"optional":null,"decorators":[],"location":{"start":{"offset":939,"line":81,"column":1},"end":{"offset":945,"line":82,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CVE"},"optional":null,"decorators":[],"location":{"start":{"offset":945,"line":82,"column":1},"end":{"offset":951,"line":83,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"CZK"},"optional":null,"decorators":[],"location":{"start":{"offset":951,"line":83,"column":1},"end":{"offset":957,"line":84,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DJF"},"optional":null,"decorators":[],"location":{"start":{"offset":957,"line":84,"column":1},"end":{"offset":963,"line":85,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DKK"},"optional":null,"decorators":[],"location":{"start":{"offset":963,"line":85,"column":1},"end":{"offset":969,"line":86,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DOP"},"optional":null,"decorators":[],"location":{"start":{"offset":969,"line":86,"column":1},"end":{"offset":975,"line":87,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"DZD"},"optional":null,"decorators":[],"location":{"start":{"offset":975,"line":87,"column":1},"end":{"offset":981,"line":88,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"EGP"},"optional":null,"decorators":[],"location":{"start":{"offset":981,"line":88,"column":1},"end":{"offset":987,"line":89,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ERN"},"optional":null,"decorators":[],"location":{"start":{"offset":987,"line":89,"column":1},"end":{"offset":993,"line":90,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ETB"},"optional":null,"decorators":[],"location":{"start":{"offset":993,"line":90,"column":1},"end":{"offset":999,"line":91,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"EUR"},"optional":null,"decorators":[],"location":{"start":{"offset":999,"line":91,"column":1},"end":{"offset":1005,"line":92,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"FJD"},"optional":null,"decorators":[],"location":{"start":{"offset":1005,"line":92,"column":1},"end":{"offset":1011,"line":93,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"FKP"},"optional":null,"decorators":[],"location":{"start":{"offset":1011,"line":93,"column":1},"end":{"offset":1017,"line":94,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GBP"},"optional":null,"decorators":[],"location":{"start":{"offset":1017,"line":94,"column":1},"end":{"offset":1023,"line":95,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GEL"},"optional":null,"decorators":[],"location":{"start":{"offset":1023,"line":95,"column":1},"end":{"offset":1029,"line":96,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GHS"},"optional":null,"decorators":[],"location":{"start":{"offset":1029,"line":96,"column":1},"end":{"offset":1035,"line":97,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GIP"},"optional":null,"decorators":[],"location":{"start":{"offset":1035,"line":97,"column":1},"end":{"offset":1041,"line":98,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GMD"},"optional":null,"decorators":[],"location":{"start":{"offset":1041,"line":98,"column":1},"end":{"offset":1047,"line":99,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GNF"},"optional":null,"decorators":[],"location":{"start":{"offset":1047,"line":99,"column":1},"end":{"offset":1053,"line":100,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GTQ"},"optional":null,"decorators":[],"location":{"start":{"offset":1053,"line":100,"column":1},"end":{"offset":1059,"line":101,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"GYD"},"optional":null,"decorators":[],"location":{"start":{"offset":1059,"line":101,"column":1},"end":{"offset":1065,"line":102,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HKD"},"optional":null,"decorators":[],"location":{"start":{"offset":1065,"line":102,"column":1},"end":{"offset":1071,"line":103,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HNL"},"optional":null,"decorators":[],"location":{"start":{"offset":1071,"line":103,"column":1},"end":{"offset":1077,"line":104,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HRK"},"optional":null,"decorators":[],"location":{"start":{"offset":1077,"line":104,"column":1},"end":{"offset":1083,"line":105,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HTG"},"optional":null,"decorators":[],"location":{"start":{"offset":1083,"line":105,"column":1},"end":{"offset":1089,"line":106,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"HUF"},"optional":null,"decorators":[],"location":{"start":{"offset":1089,"line":106,"column":1},"end":{"offset":1095,"line":107,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"IDR"},"optional":null,"decorators":[],"location":{"start":{"offset":1095,"line":107,"column":1},"end":{"offset":1101,"line":108,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ILS"},"optional":null,"decorators":[],"location":{"start":{"offset":1101,"line":108,"column":1},"end":{"offset":1107,"line":109,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"INR"},"optional":null,"decorators":[],"location":{"start":{"offset":1107,"line":109,"column":1},"end":{"offset":1113,"line":110,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"IQD"},"optional":null,"decorators":[],"location":{"start":{"offset":1113,"line":110,"column":1},"end":{"offset":1119,"line":111,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"IRR"},"optional":null,"decorators":[],"location":{"start":{"offset":1119,"line":111,"column":1},"end":{"offset":1125,"line":112,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ISK"},"optional":null,"decorators":[],"location":{"start":{"offset":1125,"line":112,"column":1},"end":{"offset":1131,"line":113,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"JMD"},"optional":null,"decorators":[],"location":{"start":{"offset":1131,"line":113,"column":1},"end":{"offset":1137,"line":114,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"JOD"},"optional":null,"decorators":[],"location":{"start":{"offset":1137,"line":114,"column":1},"end":{"offset":1143,"line":115,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"JPY"},"optional":null,"decorators":[],"location":{"start":{"offset":1143,"line":115,"column":1},"end":{"offset":1149,"line":116,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KES"},"optional":null,"decorators":[],"location":{"start":{"offset":1149,"line":116,"column":1},"end":{"offset":1155,"line":117,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KGS"},"optional":null,"decorators":[],"location":{"start":{"offset":1155,"line":117,"column":1},"end":{"offset":1161,"line":118,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KHR"},"optional":null,"decorators":[],"location":{"start":{"offset":1161,"line":118,"column":1},"end":{"offset":1167,"line":119,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KMF"},"optional":null,"decorators":[],"location":{"start":{"offset":1167,"line":119,"column":1},"end":{"offset":1173,"line":120,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KPW"},"optional":null,"decorators":[],"location":{"start":{"offset":1173,"line":120,"column":1},"end":{"offset":1179,"line":121,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KRW"},"optional":null,"decorators":[],"location":{"start":{"offset":1179,"line":121,"column":1},"end":{"offset":1185,"line":122,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KWD"},"optional":null,"decorators":[],"location":{"start":{"offset":1185,"line":122,"column":1},"end":{"offset":1191,"line":123,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KYD"},"optional":null,"decorators":[],"location":{"start":{"offset":1191,"line":123,"column":1},"end":{"offset":1197,"line":124,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"KZT"},"optional":null,"decorators":[],"location":{"start":{"offset":1197,"line":124,"column":1},"end":{"offset":1203,"line":125,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LAK"},"optional":null,"decorators":[],"location":{"start":{"offset":1203,"line":125,"column":1},"end":{"offset":1209,"line":126,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LBP"},"optional":null,"decorators":[],"location":{"start":{"offset":1209,"line":126,"column":1},"end":{"offset":1215,"line":127,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LKR"},"optional":null,"decorators":[],"location":{"start":{"offset":1215,"line":127,"column":1},"end":{"offset":1221,"line":128,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LRD"},"optional":null,"decorators":[],"location":{"start":{"offset":1221,"line":128,"column":1},"end":{"offset":1227,"line":129,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LSL"},"optional":null,"decorators":[],"location":{"start":{"offset":1227,"line":129,"column":1},"end":{"offset":1233,"line":130,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"LYD"},"optional":null,"decorators":[],"location":{"start":{"offset":1233,"line":130,"column":1},"end":{"offset":1239,"line":131,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MAD"},"optional":null,"decorators":[],"location":{"start":{"offset":1239,"line":131,"column":1},"end":{"offset":1245,"line":132,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MDL"},"optional":null,"decorators":[],"location":{"start":{"offset":1245,"line":132,"column":1},"end":{"offset":1251,"line":133,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MGA"},"optional":null,"decorators":[],"location":{"start":{"offset":1251,"line":133,"column":1},"end":{"offset":1257,"line":134,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MKD"},"optional":null,"decorators":[],"location":{"start":{"offset":1257,"line":134,"column":1},"end":{"offset":1263,"line":135,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MMK"},"optional":null,"decorators":[],"location":{"start":{"offset":1263,"line":135,"column":1},"end":{"offset":1269,"line":136,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MNT"},"optional":null,"decorators":[],"location":{"start":{"offset":1269,"line":136,"column":1},"end":{"offset":1275,"line":137,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MOP"},"optional":null,"decorators":[],"location":{"start":{"offset":1275,"line":137,"column":1},"end":{"offset":1281,"line":138,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MRU"},"optional":null,"decorators":[],"location":{"start":{"offset":1281,"line":138,"column":1},"end":{"offset":1287,"line":139,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MUR"},"optional":null,"decorators":[],"location":{"start":{"offset":1287,"line":139,"column":1},"end":{"offset":1293,"line":140,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MVR"},"optional":null,"decorators":[],"location":{"start":{"offset":1293,"line":140,"column":1},"end":{"offset":1299,"line":141,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MWK"},"optional":null,"decorators":[],"location":{"start":{"offset":1299,"line":141,"column":1},"end":{"offset":1305,"line":142,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MXN"},"optional":null,"decorators":[],"location":{"start":{"offset":1305,"line":142,"column":1},"end":{"offset":1311,"line":143,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MXV"},"optional":null,"decorators":[],"location":{"start":{"offset":1311,"line":143,"column":1},"end":{"offset":1317,"line":144,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MYR"},"optional":null,"decorators":[],"location":{"start":{"offset":1317,"line":144,"column":1},"end":{"offset":1323,"line":145,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"MZN"},"optional":null,"decorators":[],"location":{"start":{"offset":1323,"line":145,"column":1},"end":{"offset":1329,"line":146,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NAD"},"optional":null,"decorators":[],"location":{"start":{"offset":1329,"line":146,"column":1},"end":{"offset":1335,"line":147,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NGN"},"optional":null,"decorators":[],"location":{"start":{"offset":1335,"line":147,"column":1},"end":{"offset":1341,"line":148,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NIO"},"optional":null,"decorators":[],"location":{"start":{"offset":1341,"line":148,"column":1},"end":{"offset":1347,"line":149,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NOK"},"optional":null,"decorators":[],"location":{"start":{"offset":1347,"line":149,"column":1},"end":{"offset":1353,"line":150,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NPR"},"optional":null,"decorators":[],"location":{"start":{"offset":1353,"line":150,"column":1},"end":{"offset":1359,"line":151,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"NZD"},"optional":null,"decorators":[],"location":{"start":{"offset":1359,"line":151,"column":1},"end":{"offset":1365,"line":152,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"OMR"},"optional":null,"decorators":[],"location":{"start":{"offset":1365,"line":152,"column":1},"end":{"offset":1371,"line":153,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PAB"},"optional":null,"decorators":[],"location":{"start":{"offset":1371,"line":153,"column":1},"end":{"offset":1377,"line":154,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PEN"},"optional":null,"decorators":[],"location":{"start":{"offset":1377,"line":154,"column":1},"end":{"offset":1383,"line":155,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PGK"},"optional":null,"decorators":[],"location":{"start":{"offset":1383,"line":155,"column":1},"end":{"offset":1389,"line":156,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PHP"},"optional":null,"decorators":[],"location":{"start":{"offset":1389,"line":156,"column":1},"end":{"offset":1395,"line":157,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PKR"},"optional":null,"decorators":[],"location":{"start":{"offset":1395,"line":157,"column":1},"end":{"offset":1401,"line":158,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PLN"},"optional":null,"decorators":[],"location":{"start":{"offset":1401,"line":158,"column":1},"end":{"offset":1407,"line":159,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"PYG"},"optional":null,"decorators":[],"location":{"start":{"offset":1407,"line":159,"column":1},"end":{"offset":1413,"line":160,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"QAR"},"optional":null,"decorators":[],"location":{"start":{"offset":1413,"line":160,"column":1},"end":{"offset":1419,"line":161,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RON"},"optional":null,"decorators":[],"location":{"start":{"offset":1419,"line":161,"column":1},"end":{"offset":1425,"line":162,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RSD"},"optional":null,"decorators":[],"location":{"start":{"offset":1425,"line":162,"column":1},"end":{"offset":1431,"line":163,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RUB"},"optional":null,"decorators":[],"location":{"start":{"offset":1431,"line":163,"column":1},"end":{"offset":1437,"line":164,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"RWF"},"optional":null,"decorators":[],"location":{"start":{"offset":1437,"line":164,"column":1},"end":{"offset":1443,"line":165,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SAR"},"optional":null,"decorators":[],"location":{"start":{"offset":1443,"line":165,"column":1},"end":{"offset":1449,"line":166,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SBD"},"optional":null,"decorators":[],"location":{"start":{"offset":1449,"line":166,"column":1},"end":{"offset":1455,"line":167,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SCR"},"optional":null,"decorators":[],"location":{"start":{"offset":1455,"line":167,"column":1},"end":{"offset":1461,"line":168,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SDG"},"optional":null,"decorators":[],"location":{"start":{"offset":1461,"line":168,"column":1},"end":{"offset":1467,"line":169,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SEK"},"optional":null,"decorators":[],"location":{"start":{"offset":1467,"line":169,"column":1},"end":{"offset":1473,"line":170,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SGD"},"optional":null,"decorators":[],"location":{"start":{"offset":1473,"line":170,"column":1},"end":{"offset":1479,"line":171,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SHP"},"optional":null,"decorators":[],"location":{"start":{"offset":1479,"line":171,"column":1},"end":{"offset":1485,"line":172,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SLL"},"optional":null,"decorators":[],"location":{"start":{"offset":1485,"line":172,"column":1},"end":{"offset":1491,"line":173,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SOS"},"optional":null,"decorators":[],"location":{"start":{"offset":1491,"line":173,"column":1},"end":{"offset":1497,"line":174,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SRD"},"optional":null,"decorators":[],"location":{"start":{"offset":1497,"line":174,"column":1},"end":{"offset":1503,"line":175,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SSP"},"optional":null,"decorators":[],"location":{"start":{"offset":1503,"line":175,"column":1},"end":{"offset":1509,"line":176,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"STN"},"optional":null,"decorators":[],"location":{"start":{"offset":1509,"line":176,"column":1},"end":{"offset":1515,"line":177,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SVC"},"optional":null,"decorators":[],"location":{"start":{"offset":1515,"line":177,"column":1},"end":{"offset":1521,"line":178,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SYP"},"optional":null,"decorators":[],"location":{"start":{"offset":1521,"line":178,"column":1},"end":{"offset":1527,"line":179,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"SZL"},"optional":null,"decorators":[],"location":{"start":{"offset":1527,"line":179,"column":1},"end":{"offset":1533,"line":180,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"THB"},"optional":null,"decorators":[],"location":{"start":{"offset":1533,"line":180,"column":1},"end":{"offset":1539,"line":181,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TJS"},"optional":null,"decorators":[],"location":{"start":{"offset":1539,"line":181,"column":1},"end":{"offset":1545,"line":182,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TMT"},"optional":null,"decorators":[],"location":{"start":{"offset":1545,"line":182,"column":1},"end":{"offset":1551,"line":183,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TND"},"optional":null,"decorators":[],"location":{"start":{"offset":1551,"line":183,"column":1},"end":{"offset":1557,"line":184,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TOP"},"optional":null,"decorators":[],"location":{"start":{"offset":1557,"line":184,"column":1},"end":{"offset":1563,"line":185,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TRY"},"optional":null,"decorators":[],"location":{"start":{"offset":1563,"line":185,"column":1},"end":{"offset":1569,"line":186,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TTD"},"optional":null,"decorators":[],"location":{"start":{"offset":1569,"line":186,"column":1},"end":{"offset":1575,"line":187,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TWD"},"optional":null,"decorators":[],"location":{"start":{"offset":1575,"line":187,"column":1},"end":{"offset":1581,"line":188,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"TZS"},"optional":null,"decorators":[],"location":{"start":{"offset":1581,"line":188,"column":1},"end":{"offset":1587,"line":189,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UAH"},"optional":null,"decorators":[],"location":{"start":{"offset":1587,"line":189,"column":1},"end":{"offset":1593,"line":190,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UGX"},"optional":null,"decorators":[],"location":{"start":{"offset":1593,"line":190,"column":1},"end":{"offset":1599,"line":191,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"USD"},"optional":null,"decorators":[],"location":{"start":{"offset":1599,"line":191,"column":1},"end":{"offset":1605,"line":192,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"USN"},"optional":null,"decorators":[],"location":{"start":{"offset":1605,"line":192,"column":1},"end":{"offset":1611,"line":193,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UYI"},"optional":null,"decorators":[],"location":{"start":{"offset":1611,"line":193,"column":1},"end":{"offset":1617,"line":194,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UYU"},"optional":null,"decorators":[],"location":{"start":{"offset":1617,"line":194,"column":1},"end":{"offset":1623,"line":195,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"UZS"},"optional":null,"decorators":[],"location":{"start":{"offset":1623,"line":195,"column":1},"end":{"offset":1629,"line":196,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"VEF"},"optional":null,"decorators":[],"location":{"start":{"offset":1629,"line":196,"column":1},"end":{"offset":1635,"line":197,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"VND"},"optional":null,"decorators":[],"location":{"start":{"offset":1635,"line":197,"column":1},"end":{"offset":1641,"line":198,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"VUV"},"optional":null,"decorators":[],"location":{"start":{"offset":1641,"line":198,"column":1},"end":{"offset":1647,"line":199,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"WST"},"optional":null,"decorators":[],"location":{"start":{"offset":1647,"line":199,"column":1},"end":{"offset":1653,"line":200,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XAF"},"optional":null,"decorators":[],"location":{"start":{"offset":1653,"line":200,"column":1},"end":{"offset":1659,"line":201,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XAG"},"optional":null,"decorators":[],"location":{"start":{"offset":1659,"line":201,"column":1},"end":{"offset":1665,"line":202,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XAU"},"optional":null,"decorators":[],"location":{"start":{"offset":1665,"line":202,"column":1},"end":{"offset":1671,"line":203,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBA"},"optional":null,"decorators":[],"location":{"start":{"offset":1671,"line":203,"column":1},"end":{"offset":1677,"line":204,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBB"},"optional":null,"decorators":[],"location":{"start":{"offset":1677,"line":204,"column":1},"end":{"offset":1683,"line":205,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBC"},"optional":null,"decorators":[],"location":{"start":{"offset":1683,"line":205,"column":1},"end":{"offset":1689,"line":206,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XBD"},"optional":null,"decorators":[],"location":{"start":{"offset":1689,"line":206,"column":1},"end":{"offset":1695,"line":207,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XCD"},"optional":null,"decorators":[],"location":{"start":{"offset":1695,"line":207,"column":1},"end":{"offset":1701,"line":208,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XDR"},"optional":null,"decorators":[],"location":{"start":{"offset":1701,"line":208,"column":1},"end":{"offset":1707,"line":209,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XOF"},"optional":null,"decorators":[],"location":{"start":{"offset":1707,"line":209,"column":1},"end":{"offset":1713,"line":210,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XPD"},"optional":null,"decorators":[],"location":{"start":{"offset":1713,"line":210,"column":1},"end":{"offset":1719,"line":211,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XPF"},"optional":null,"decorators":[],"location":{"start":{"offset":1719,"line":211,"column":1},"end":{"offset":1725,"line":212,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XPT"},"optional":null,"decorators":[],"location":{"start":{"offset":1725,"line":212,"column":1},"end":{"offset":1731,"line":213,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XSU"},"optional":null,"decorators":[],"location":{"start":{"offset":1731,"line":213,"column":1},"end":{"offset":1737,"line":214,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XTS"},"optional":null,"decorators":[],"location":{"start":{"offset":1737,"line":214,"column":1},"end":{"offset":1743,"line":215,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XUA"},"optional":null,"decorators":[],"location":{"start":{"offset":1743,"line":215,"column":1},"end":{"offset":1749,"line":216,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"XXX"},"optional":null,"decorators":[],"location":{"start":{"offset":1749,"line":216,"column":1},"end":{"offset":1755,"line":217,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"YER"},"optional":null,"decorators":[],"location":{"start":{"offset":1755,"line":217,"column":1},"end":{"offset":1761,"line":218,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZAR"},"optional":null,"decorators":[],"location":{"start":{"offset":1761,"line":218,"column":1},"end":{"offset":1767,"line":219,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZMW"},"optional":null,"decorators":[],"location":{"start":{"offset":1767,"line":219,"column":1},"end":{"offset":1773,"line":220,"column":1}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"ZWL"},"optional":null,"decorators":[],"location":{"start":{"offset":1773,"line":220,"column":1},"end":{"offset":1779,"line":221,"column":1}}}]},"decorators":[],"location":{"start":{"offset":691,"line":42,"column":1},"end":{"offset":1780,"line":221,"column":2}}}]}'),TP=d('\n{"type":"Program","namespace":"org.accordproject.time","imports":[],"body":[{"type":"EnumDeclaration","id":{"type":"Identifier","name":"TemporalUnit"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"seconds"},"optional":null,"decorators":[],"location":{"start":{"offset":89,"line":7,"column":3},"end":{"offset":101,"line":8,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"minutes"},"optional":null,"decorators":[],"location":{"start":{"offset":101,"line":8,"column":3},"end":{"offset":113,"line":9,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"hours"},"optional":null,"decorators":[],"location":{"start":{"offset":113,"line":9,"column":3},"end":{"offset":123,"line":10,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"days"},"optional":null,"decorators":[],"location":{"start":{"offset":123,"line":10,"column":3},"end":{"offset":132,"line":11,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"weeks"},"optional":null,"decorators":[],"location":{"start":{"offset":132,"line":11,"column":3},"end":{"offset":142,"line":12,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"years"},"optional":null,"decorators":[],"location":{"start":{"offset":142,"line":12,"column":3},"end":{"offset":150,"line":13,"column":1}}}]},"decorators":[],"location":{"start":{"offset":67,"line":6,"column":1},"end":{"offset":151,"line":13,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Duration"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"amount"},"propertyType":{"name":"Long"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":219,"line":19,"column":3},"end":{"offset":235,"line":20,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"unit"},"propertyType":{"type":"Identifier","name":"TemporalUnit"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":235,"line":20,"column":3},"end":{"offset":255,"line":21,"column":1}}}],"location":{"start":{"offset":219,"line":19,"column":3},"end":{"offset":255,"line":21,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":198,"line":18,"column":1},"end":{"offset":256,"line":21,"column":2}}},{"type":"EnumDeclaration","id":{"type":"Identifier","name":"PeriodUnit"},"body":{"type":"EnumDeclarationBody","declarations":[{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"days"},"optional":null,"decorators":[],"location":{"start":{"offset":314,"line":27,"column":3},"end":{"offset":323,"line":28,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"weeks"},"optional":null,"decorators":[],"location":{"start":{"offset":323,"line":28,"column":3},"end":{"offset":333,"line":29,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"months"},"optional":null,"decorators":[],"location":{"start":{"offset":333,"line":29,"column":3},"end":{"offset":344,"line":30,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"quarters"},"optional":null,"decorators":[],"location":{"start":{"offset":344,"line":30,"column":3},"end":{"offset":357,"line":31,"column":3}}},{"type":"EnumPropertyDeclaration","id":{"type":"Identifier","name":"years"},"optional":null,"decorators":[],"location":{"start":{"offset":357,"line":31,"column":3},"end":{"offset":365,"line":32,"column":1}}}]},"decorators":[],"location":{"start":{"offset":294,"line":26,"column":1},"end":{"offset":366,"line":32,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Period"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"amount"},"propertyType":{"name":"Long"},"array":null,"range":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":436,"line":38,"column":3},"end":{"offset":452,"line":39,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"unit"},"propertyType":{"type":"Identifier","name":"PeriodUnit"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":452,"line":39,"column":3},"end":{"offset":470,"line":40,"column":1}}}],"location":{"start":{"offset":436,"line":38,"column":3},"end":{"offset":470,"line":40,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":417,"line":37,"column":1},"end":{"offset":471,"line":40,"column":2}}}]}'),TQ=d('\n{"type":"Program","namespace":"org.accordproject.cicero.runtime","imports":[{"namespace":"org.accordproject.cicero.contract.*","uri":"https://models.accordproject.org/cicero/contract.cto"},{"namespace":"org.accordproject.money.MonetaryAmount","uri":"https://models.accordproject.org/money.cto"}],"body":[{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"Request"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":384,"line":12,"column":22},"end":{"offset":384,"line":12,"column":22}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":363,"line":12,"column":1},"end":{"offset":385,"line":12,"column":23}}},{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"Response"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":443,"line":15,"column":23},"end":{"offset":443,"line":15,"column":23}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":421,"line":15,"column":1},"end":{"offset":444,"line":15,"column":24}}},{"type":"TransactionDeclaration","id":{"type":"Identifier","name":"ErrorResponse"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[],"location":{"start":{"offset":514,"line":18,"column":37},"end":{"offset":514,"line":18,"column":37}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":478,"line":18,"column":1},"end":{"offset":515,"line":18,"column":38}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"Obligation"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"contract"},"propertyType":{"type":"Identifier","name":"AccordContract"},"array":null,"optional":null,"decorators":[],"location":{"start":{"offset":699,"line":23,"column":3},"end":{"offset":766,"line":26,"column":3}}},{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"promisor"},"propertyType":{"type":"Identifier","name":"Participant"},"array":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":766,"line":26,"column":3},"end":{"offset":917,"line":29,"column":3}}},{"type":"RelationshipDeclaration","id":{"type":"Identifier","name":"promisee"},"propertyType":{"type":"Identifier","name":"Participant"},"array":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":917,"line":29,"column":3},"end":{"offset":1078,"line":32,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"deadline"},"propertyType":{"name":"DateTime"},"array":null,"default":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":1078,"line":32,"column":3},"end":{"offset":1107,"line":33,"column":1}}}],"location":{"start":{"offset":699,"line":23,"column":3},"end":{"offset":1107,"line":33,"column":1}}},"idField":null,"abstract":["abstract",null],"decorators":[],"location":{"start":{"offset":589,"line":21,"column":1},"end":{"offset":1108,"line":33,"column":2}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"PaymentObligation"},"classExtension":{"type":"ClassExtension","class":{"type":"Identifier","name":"Obligation"}},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"amount"},"propertyType":{"type":"Identifier","name":"MonetaryAmount"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1156,"line":36,"column":3},"end":{"offset":1182,"line":37,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"description"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1182,"line":37,"column":3},"end":{"offset":1203,"line":38,"column":1}}}],"location":{"start":{"offset":1156,"line":36,"column":3},"end":{"offset":1203,"line":38,"column":1}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":1110,"line":35,"column":1},"end":{"offset":1204,"line":38,"column":2}}},{"type":"EventDeclaration","id":{"type":"Identifier","name":"NotificationObligation"},"classExtension":{"type":"ClassExtension","class":{"type":"Identifier","name":"Obligation"}},"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"title"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1258,"line":41,"column":3},"end":{"offset":1275,"line":42,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"message"},"propertyType":{"name":"String"},"array":null,"regex":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1275,"line":42,"column":3},"end":{"offset":1292,"line":43,"column":1}}}],"location":{"start":{"offset":1258,"line":41,"column":3},"end":{"offset":1292,"line":43,"column":1}}},"idField":null,"abstract":null,"decorators":[],"location":{"start":{"offset":1206,"line":40,"column":1},"end":{"offset":1293,"line":43,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Payload"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"contract"},"propertyType":{"type":"Identifier","name":"AccordContract"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1372,"line":47,"column":3},"end":{"offset":1422,"line":48,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"request"},"propertyType":{"type":"Identifier","name":"Request"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1422,"line":48,"column":3},"end":{"offset":1442,"line":49,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"state"},"propertyType":{"type":"Identifier","name":"AccordContractState"},"array":null,"default":null,"optional":{"type":"Optional"},"decorators":[],"location":{"start":{"offset":1442,"line":49,"column":3},"end":{"offset":1479,"line":50,"column":1}}}],"location":{"start":{"offset":1372,"line":47,"column":3},"end":{"offset":1479,"line":50,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":1352,"line":46,"column":1},"end":{"offset":1480,"line":50,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Success"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"response"},"propertyType":{"type":"Identifier","name":"Response"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1609,"line":54,"column":3},"end":{"offset":1631,"line":55,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"state"},"propertyType":{"type":"Identifier","name":"AccordContractState"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1631,"line":55,"column":3},"end":{"offset":1661,"line":56,"column":3}}},{"type":"FieldDeclaration","id":{"type":"Identifier","name":"emit"},"propertyType":{"type":"Identifier","name":"Event"},"array":"[]","default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1661,"line":56,"column":3},"end":{"offset":1676,"line":57,"column":1}}}],"location":{"start":{"offset":1609,"line":54,"column":3},"end":{"offset":1676,"line":57,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":1589,"line":53,"column":1},"end":{"offset":1677,"line":57,"column":2}}},{"type":"ConceptDeclaration","id":{"type":"Identifier","name":"Failure"},"classExtension":null,"body":{"type":"ClassDeclarationBody","declarations":[{"type":"FieldDeclaration","id":{"type":"Identifier","name":"error"},"propertyType":{"type":"Identifier","name":"ErrorResponse"},"array":null,"default":null,"optional":null,"decorators":[],"location":{"start":{"offset":1768,"line":60,"column":3},"end":{"offset":1790,"line":61,"column":1}}}],"location":{"start":{"offset":1768,"line":60,"column":3},"end":{"offset":1790,"line":61,"column":1}}},"abstract":null,"decorators":[],"location":{"start":{"offset":1748,"line":59,"column":1},"end":{"offset":1791,"line":61,"column":2}}}]}'),TR=d('\n/*\n * Licensed under the Apache License, Version 2.0 (the "License");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an "AS IS" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\nnamespace org.accordproject.ergo.stdlib\n\nimport org.accordproject.cicero.runtime.*\n\n// Integer operations\ndefine function integerAbs(x:Integer) : Integer\ndefine function integerLog2(x:Integer) : Integer\ndefine function integerSqrt(x:Integer) : Integer\ndefine function integerToDouble(x:Integer) : Double\n\ndefine function integerMod(x:Integer, y:Integer) : Integer\ndefine function integerMin(x:Integer, y:Integer) : Integer\ndefine function integerMax(x:Integer, y:Integer) : Integer\n\n// Double operations\ndefine function sqrt(x:Double) : Double\ndefine function exp(x:Double) : Double\ndefine function log(x:Double) : Double\ndefine function log10(x:Double) : Double\ndefine function ceil(x:Double) : Double\ndefine function floor(x:Double) : Double\ndefine function abs(x:Double) : Double\ndefine function max(x:Double[]) : Double\ndefine function min(x:Double[]) : Double\ndefine function average(x:Double[]) : Double\ndefine function sum(x:Double[]) : Double\ndefine function doubleToInteger(x:Double) : Integer\ndefine function truncate(x:Double) : Integer\n\ndefine function maxPair(x:Double, y:Double) : Double\ndefine function minPair(x:Double, y:Double) : Double\n\n// Math operations\ndefine function acos(x:Double) : Double\ndefine function asin(x:Double) : Double\ndefine function atan(x:Double) : Double\ndefine function atan2(x:Double, y:Double) : Double\ndefine function cos(x:Double) : Double\ndefine function cosh(x:Double) : Double\ndefine function sin(x:Double) : Double\ndefine function sinh(x:Double) : Double\ndefine function tan(x:Double) : Double\ndefine function tanh(x:Double) : Double\n\n// Polymorphic operations\ndefine function toString(x:Any) : String\ndefine function distinct(x:Any[]) : Any[]\ndefine function count(x:Any[]) : Integer\ndefine function flatten(x:Any[][]) : Any[]\ndefine function arrayAdd(x:Any[],y:Any[]) : Any[]\ndefine function arraySubtract(x:Any[],y:Any[]) : Any[]\ndefine function inArray(x:Any,y:Any[]) : Boolean\ndefine function containsAll(l1:Any[], l2:Any[]) : Boolean {\n\treturn arraySubtract(l1,l2) = []\n}\n\ndefine transaction ErgoErrorResponse extends ErrorResponse{\n\tmessage : String\n}\ndefine function failure(x:String) : ErgoErrorResponse {\n\treturn ErgoErrorResponse{\n\t\tmessage: x\n\t}\n}\n'),TS=d('\n/*\n * Licensed under the Apache License, Version 2.0 (the "License");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an "AS IS" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\nnamespace org.accordproject.time\n\n// DateTime operations\n// Current DateTime\ndefine function now() : DateTime\n// Parse a DateTime\ndefine function parse(x:String) : DateTime\n\n// DateTime components\ndefine function getSecond(x:DateTime) : Long\ndefine function getMinute(x:DateTime) : Long\ndefine function getHour(x:DateTime) : Long\ndefine function getDay(x:DateTime) : Integer\ndefine function getWeek(x:DateTime) : Integer\ndefine function getMonth(x:DateTime) : Integer\ndefine function getQuarter(x:DateTime) : Integer\ndefine function getYear(x:DateTime) : Integer\n\n// Durations\ndefine function durationSeconds(x:Long) : InternalDuration\ndefine function durationMinutes(x:Long) : InternalDuration\ndefine function durationHours(x:Long) : InternalDuration\ndefine function durationDays(x:Long) : InternalDuration\ndefine function durationWeeks(x:Long) : InternalDuration\ndefine function durationYears(x:Integer) : InternalDuration\n\ndefine function durationToInternalDuration(du:Duration) : InternalDuration {\n\tmatch du.unit\n\twith "seconds" then return durationSeconds(du.amount)\n\twith "minutes" then return durationMinutes(du.amount)\n\twith "hours" then return durationHours(du.amount)\n\twith "days" then return durationDays(du.amount)\n\twith "weeks" then return durationWeeks(du.amount)\n\twith "years" then return durationYears(du.amount)\n\telse return durationSeconds(du.amount) // Defaults to seconds\n}\n\ndefine function durationAmount(du:InternalDuration) : Long\n\ndefine function internalDurationToDuration(du:InternalDuration) : Duration {\n\treturn Duration{ unit: "seconds", amount: durationAmount(du) }\n}\n\ndefine function durationAs(du:Duration, u:TemporalUnit) : Duration {\n\tif u = du.unit\n\tthen return du\n\telse\n\t  let amount = \n  \t  match u\n\t    with "seconds" then\n\t      match du.unit\n\t      with "minutes" then du.amount *i 60\n\t      with "hours" then du.amount *i 60 *i 60\n\t      with "days" then du.amount *i 60 *i 60 *i 24\n\t      with "weeks" then du.amount *i 60 *i 60 *i 24 *i 7\n\t      with "years" then du.amount *i 60 *i 60 *i 24 *i 365\n\t      else du.amount // Default to seconds\n\t    with "minutes" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60\n\t      with "hours" then du.amount *i 60\n\t      with "days" then du.amount *i 60 *i 24\n\t      with "weeks" then du.amount *i 60 *i 24 *i 7\n\t      with "years" then du.amount *i 60 *i 24 *i 365\n\t      else du.amount *i 60 // Default to seconds\n\t    with "hours" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60\n\t      with "minutes" then du.amount *i 60\n\t      with "days" then du.amount *i 24\n\t      with "weeks" then du.amount *i 24 *i 7\n\t      with "years" then du.amount *i 24 *i 365\n\t      else du.amount *i 60 *i 60 // Default to seconds\n\t    with "days" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60 /i 24\n\t      with "minutes" then du.amount *i 60 /i 24\n\t      with "hours" then du.amount /i 24\n\t      with "weeks" then du.amount *i 7\n\t      with "years" then du.amount *i 365\n\t      else du.amount /i 60 /i 60 /i 24 // Default to seconds\n\t    with "weeks" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 7\n\t      with "minutes" then du.amount *i 60 /i 24 /i 7\n\t      with "hours" then du.amount /i 24 /i 7\n\t      with "days" then du.amount /i 7\n\t      with "years" then doubleToInteger(integerToDouble(du.amount) * 52.143) // XXX\n\t      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds\n\t    with "years" then\n\t      match du.unit\n\t      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 365\n\t      with "minutes" then du.amount *i 60 /i 24 /i 365\n\t      with "hours" then du.amount /i 24 /i 365\n\t      with "days" then du.amount /i 365\n\t      with "weeks" then doubleToInteger(integerToDouble(du.amount) / 52.143) // XXX\n\t      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds\n\t    else // Default to seconds\n\t      match du.unit\n\t      with "minutes" then du.amount *i 60\n\t      with "hours" then du.amount *i 60 *i 60\n\t      with "days" then du.amount *i 60 *i 60 *i 24\n\t      with "week" then du.amount *i 60 *i 60 *i 24 *i 7\n\t      with "years" then du.amount *i 60 *i 60 *i 24 *i 365\n\t      else du.amount // Default to seconds\n\t\t;\n\t\treturn Duration{ unit: u, amount: amount }\n}\n\ndefine function addInternal(x:DateTime, y:InternalDuration) : DateTime\ndefine function add(x:DateTime, y:Duration) : DateTime {\n\treturn addInternal(x,durationToInternalDuration(y))\n}\n\ndefine function subtractInternal(x:DateTime, y:InternalDuration) : DateTime\ndefine function subtract(x:DateTime, y:Duration) : DateTime {\n\treturn subtractInternal(x,durationToInternalDuration(y))\n}\n\ndefine function isAfter(x:DateTime, y:DateTime) : Boolean\ndefine function isBefore(x:DateTime, y:DateTime) : Boolean\ndefine function isSame(x:DateTime, y:DateTime) : Boolean\n\ndefine function diffInternal(x:DateTime, y:DateTime) : InternalDuration\ndefine function diffWithUnit(x:DateTime, y:DateTime, z:TemporalUnit) : Duration {\n\treturn durationAs(internalDurationToDuration(diffInternal(x,y)),z)\n}\ndefine function diff(x:DateTime, y:DateTime) : Duration {\n\treturn diffWithUnit(x, y, "seconds") // Defaults to seconds\n}\n\ndefine function periodDays(x:Long) : InternalPeriod\ndefine function periodWeeks(x:Long) : InternalPeriod\ndefine function periodMonths(x:Long) : InternalPeriod\ndefine function periodQuarters(x:Long) : InternalPeriod\ndefine function periodYears(x:Long) : InternalPeriod\n\ndefine function periodToInternalPeriod(du:Period) : InternalPeriod {\n\tmatch du.unit\n\twith "days" then return periodDays(du.amount)\n\twith "weeks" then return periodWeeks(du.amount)\n\twith "months" then return periodMonths(du.amount)\n\twith "quarters" then return periodQuarters(du.amount)\n\twith "years" then return periodYears(du.amount)\n\telse return periodDays(du.amount) // Defaults to days\n}\n\ndefine function startOfDay(x:DateTime) : DateTime\ndefine function startOfWeek(x:DateTime) : DateTime\ndefine function startOfMonth(x:DateTime) : DateTime\ndefine function startOfQuarter(x:DateTime) : DateTime\ndefine function startOfYear(x:DateTime) : DateTime\n\ndefine function startOf(x:DateTime, y:PeriodUnit) : DateTime {\n\tmatch y\n\twith "days" then return startOfDay(x)\n\twith "weeks" then return startOfWeek(x)\n\twith "months" then return startOfMonth(x)\n\twith "quarters" then return startOfQuarter(x)\n\twith "years" then return startOfYear(x)\n\telse return startOfDay(x) // Default to days\n}\n\ndefine function endOfDay(x:DateTime) : DateTime\ndefine function endOfWeek(x:DateTime) : DateTime\ndefine function endOfMonth(x:DateTime) : DateTime\ndefine function endOfQuarter(x:DateTime) : DateTime\ndefine function endOfYear(x:DateTime) : DateTime\n\ndefine function endOf(x:DateTime, y:PeriodUnit) : DateTime {\n\tmatch y\n\twith "days" then return endOfDay(x)\n\twith "weeks" then return endOfWeek(x)\n\twith "months" then return endOfMonth(x)\n\twith "quarters" then return endOfQuarter(x)\n\twith "years" then return endOfYear(x)\n\telse return endOfDay(x) // Default to days\n}\n\n'),TT=d("$ERGODIR/extraction/stdlib/runtime.cto"),TU=d("$ERGODIR/extraction/stdlib/time.cto"),TV=d("$ERGODIR/extraction/stdlib/money.cto"),TW=d("$ERGODIR/extraction/stdlib/contract.cto"),TX=d("$ERGODIR/extraction/stdlib/accordproject.cto"),TY=d("$ERGODIR/extraction/stdlib/etime.ergo"),TZ=d("$ERGODIR/extraction/stdlib/stdlib.ergo"),UL=d("Circular imports: "),UJ=d(" -> "),UE=[0,[2,0,0],d(n$)],UF=[0,[2,0,0],d(n$)],UB=d(nU),UC=d(".ergo"),UD=d(" is not cto, ctoj or ergo file"),Uy=d(wt),Uz=d(nU),Uw=d(nU),Ux=d(wt),Us=d(jp),Ut=d("' (should have at least one '.')"),Uu=d("Malformed import: '"),Ur=d(", version "),Uh=d("System error. "),Ui=d(k3),Uj=d(vb),Uk=d(k3),Ul=d("Compilation error"),Um=d(k3),Un=d("Type error"),Uo=d(k3),Up=d("Runtime error"),Ug=d(ar),Uc=d(" col "),Ud=d("line "),T6=d(ar),T7=d(ar),Ua=d(fB),Ub=d("file "),T8=d(ar),T9=d(ar),T_=d(vV),T$=d(" (at "),T4=d(ar),T5=d(vD),T2=d(ii),T3=d(ii),T1=d(ar),T0=d("ErgoUtil.Ergo_Error"),VD=d(dI),VC=d(dI),Vy=d(u7),Vz=d("imports"),VA=d(k8),VB=d(g9),Vw=d(dI),Vv=d(dI),Vs=d(u7),Vt=d(wb),Vu=d(g9),Vq=d(dI),Vp=d(dI),Vn=d("class"),Vo=d(g9),Vm=d(dI),Vl=d(dI),Vj=d(n2),Vk=d(g9),Vi=d(dI),Ve=d(dI),Vc=d("declarations"),Vd=d(g9),Vb=d(dI),Va=d(dI),U$=[0,d(g9),d(wb),d("optional"),d("decorators"),d("location")],U9=d(dI),U8=d(dI),U6=d(n2),U7=d(g9),U5=d(dI),U4=d(dI),U3=d(k8),U1=d(dI),U0=d(dI),UY=d("end"),UZ=d("start"),UX=d(dI),UW=d(dI),UT=d("column"),UU=d("line"),UV=d("offset"),US=d(dI),UR=d(dI),UQ=d(g9),UO=d(dI),UN=d(dI),UM=d(n2),VR=d("AssetDeclaration"),VS=d("ConceptDeclaration"),VT=d("EnumDeclaration"),VU=d("EventDeclaration"),VV=d("ParticipantDeclaration"),VW=d("TransactionDeclaration"),VX=d("Can't import CTO kind: "),VO=d("[]"),VP=d("Mal-formed array option in CTO JSON representation"),VG=d(ur),VH=d(us),VI=d(u8),VJ=d(vY),VK=d(va),VL=d(wr),VM=d("Missing propertyType in CTO"),VE=d(ar),VZ=d("LexUtil.LexError"),V2=d(ar),WZ=[0,d(k),511,4],W0=[0,d(k),542,12],W1=[0,d(k),546,8],W2=[0,d(k),557,4],W3=[0,d(k),572,12],W4=[0,d(k),576,8],W5=[0,d(k),626,8],Xa=[0,d(k),638,8],Xb=[0,d(k),696,16],Xc=[0,d(k),700,12],W9=[0,d(k),707,8],W_=[0,d(k),735,16],W$=[0,d(k),739,12],W6=[0,d(k),746,8],W7=[0,d(k),778,16],W8=[0,d(k),782,12],Xd=[0,d(k),798,8],Xe=[0,d(k),uz,12],Xf=[0,d(k),878,8],Xg=[0,d(k),904,12],Xh=[0,d(k),wO,8],Xi=[0,d(k),871,12],Xj=[0,d(k),917,4],Xl=[0,d(k),944,12],Xk=[0,d(k),958,8],Xm=[0,d(k),1124,8],Xn=[0,d(k),1150,12],Xq=[0,d(k),1349,8],Xr=[0,d(k),1369,12],Xs=[0,d(k),1176,8],Xw=[0,d(k),1312,12],Xt=[0,d(k),1195,12],Xu=[0,d(k),1290,20],Xv=[0,d(k),1306,16],Xx=[0,d(k),1319,8],Xy=[0,d(k),1342,12],Xz=[0,d(k),1675,8],XA=[0,d(k),1694,12],XB=[0,d(k),1551,8],XC=[0,d(k),1651,16],XD=[0,d(k),1668,12],XE=[0,d(k),wc,8],XF=[0,d(k),1544,12],XG=[0,d(k),1401,8],XI=[0,d(k),1505,16],XH=[0,d(k),1518,12],Xo=[0,d(k),1376,8],Xp=[0,d(k),1394,12],XJ=[0,d(k),1709,8],XK=[0,d(k),1739,12],XL=[0,d(k),1846,8],XM=[0,d(k),1882,12],XN=[0,d(k),2034,8],XO=[0,d(k),2092,16],XP=[0,d(k),2096,12],XQ=[0,d(k),1965,8],XR=[0,d(k),2023,16],XS=[0,d(k),2027,12],XT=[0,d(k),1896,8],XU=[0,d(k),1954,16],XV=[0,d(k),1958,12],XW=[0,d(k),2103,8],XX=[0,d(k),2131,16],XY=[0,d(k),2135,12],X2=[0,d(k),2181,8],X3=[0,d(k),2209,16],X4=[0,d(k),2213,12],XZ=[0,d(k),2142,8],X0=[0,d(k),2170,16],X1=[0,d(k),2174,12],X$=[0,d(k),2220,8],Ya=[0,d(k),2252,16],Yb=[0,d(k),2256,12],X8=[0,d(k),2263,8],X9=[0,d(k),2295,16],X_=[0,d(k),2299,12],X5=[0,d(k),2306,8],X6=[0,d(k),2338,16],X7=[0,d(k),2342,12],Yg=[0,d(k),2369,8],Yi=[0,d(k),2473,20],Yh=[0,d(k),2487,16],Yj=[0,d(k),2493,12],Yc=[0,d(k),2516,8],Yd=[0,d(k),2620,20],Ye=[0,d(k),2624,16],Yf=[0,d(k),2630,12],Yk=[0,d(k),2643,4],Yl=[0,d(k),2656,12],Ym=[0,d(k),2672,8],Yo=[0,d(k),2731,12],Yq=[0,d(k),2710,16],Yp=[0,d(k),2714,12],Yn=[0,d(k),2735,8],Yr=[0,d(k),2762,8],Ys=[0,d(k),2819,8],Yt=[0,d(k),2884,12],Yu=[0,d(k),2888,8],Yv=[0,d(k),2960,8],Yw=[0,d(k),3017,8],Yx=[0,d(k),3030,8],Yy=[0,d(k),3087,8],Yz=[0,d(k),3144,8],YA=[0,d(k),3201,8],YB=[0,d(k),3437,8],YC=[0,d(k),3458,12],YD=[0,d(k),3410,8],YE=[0,d(k),3418,12],YF=[0,d(k),3397,8],YG=[0,d(k),3405,12],YH=[0,d(k),3384,8],YI=[0,d(k),3392,12],YJ=d(vZ),YK=[0,d(k),3237,8],YL=[0,d(k),3262,16],YM=[0,d(k),3266,12],YN=d("Cannot emit inside a function, you have to be in a Clause"),YO=d(vZ),YP=[0,d(k),3287,8],YQ=[0,d(k),3315,16],YR=[0,d(k),3319,12],YS=[0,d(k),3358,8],YT=[0,d(k),3366,12],YU=d("Cannot set state inside a function, you have to be in a Clause"),YW=[0,d(k),3624,12],YY=[0,d(k),3603,16],YX=[0,d(k),3607,12],YV=[0,d(k),3628,8],YZ=[0,d(k),3685,8],Y0=[0,d(k),3736,8],Y1=[0,d(k),3759,12],Y2=[0,d(k),3695,8],Y3=[0,d(k),3718,12],Y4=[0,d(k),3797,8],Y6=[0,d(k),3855,16],Y5=[0,d(k),3913,16],Y7=[0,d(k),3917,12],Y8=[0,d(k),3978,8],Y9=[0,d(k),4035,8],Y_=[0,d(k),4092,8],Y$=[0,d(k),4149,8],Za=[0,d(k),4206,8],Zb=[0,d(k),4301,8],Zc=[0,d(k),4358,8],Zd=[0,d(k),4415,8],Ze=[0,d(k),4472,8],Zf=[0,d(k),4529,8],Zg=[0,d(k),4586,8],Zh=[0,d(k),4643,8],Zi=[0,d(k),4700,8],Zj=[0,d(k),4757,8],Zk=[0,d(k),4814,8],Zl=[0,d(k),4871,8],Zm=[0,d(k),4928,8],Zn=[0,d(k),4985,8],Zo=[0,d(k),5042,8],Zp=[0,d(k),5099,8],Zq=[0,d(k),5156,8],Zr=[0,d(k),5213,8],Zs=[0,d(k),5308,8],Zt=[0,d(k),5365,8],Zu=[0,d(k),5422,8],Zz=[0,d(k),5728,8],ZA=[0,d(k),5786,16],ZB=[0,d(k),5790,12],ZC=[0,d(k),5620,8],ZD=[0,d(k),5717,16],ZE=[0,d(k),5721,12],Zv=[0,d(k),5442,8],Zx=[0,d(k),5598,16],Zy=[0,d(k),5539,16],Zw=[0,d(k),5602,12],ZF=[0,d(k),5804,8],ZG=[0,d(k),5816,12],ZH=[0,d(k),5852,4],ZI=[0,d(k),5886,8],ZJ=[0,d(k),5909,8],ZL=[0,d(k),6071,12],ZN=[0,d(k),6050,16],ZM=[0,d(k),6054,12],ZK=[0,d(k),6075,8],ZO=[0,d(k),6106,8],ZP=[0,d(k),6119,8],ZQ=[0,[11,d("Internal failure -- please contact the parser generator's developers.\n"),[10,0]],d("Internal failure -- please contact the parser generator's developers.\n%!")],ZR=[0,d(k),6128,4],ZS=[0,d(k),6223,8],ZT=[0,d(k),6238,8],ZU=[0,d(k),6260,12],ZV=[0,d(k),6277,8],ZW=[0,d(k),6303,8],Z0=[0,d(k),6313,8],Z1=[0,d(k),6368,16],Z2=[0,d(k),6372,12],ZX=[0,d(k),6379,8],ZY=[0,d(k),6434,16],ZZ=[0,d(k),6438,12],Z6=[0,d(k),6445,8],Z7=[0,d(k),6500,16],Z8=[0,d(k),6504,12],Z3=[0,d(k),6511,8],Z4=[0,d(k),6566,16],Z5=[0,d(k),6570,12],Z9=[0,d(k),6671,8],Z_=[0,d(k),6768,8],_a=[0,d(k),6887,12],Z$=[0,d(k),6907,8],_d=[0,d(k),6960,8],_e=[0,d(k),6983,12],_b=[0,d(k),6919,8],_c=[0,d(k),6942,12],_f=[0,d(k),6990,8],_g=[0,d(k),7019,12],_h=[0,d(k),11414,8],_i=[0,d(k),11482,12],_m=[0,d(k),11324,8],_o=[0,d(k),11397,16],_n=[0,d(k),11409,12],_p=[0,d(k),11201,8],_r=[0,d(k),11307,16],_s=[0,d(k),11240,16],_q=[0,d(k),11319,12],_t=[0,d(k),11109,8],_v=[0,d(k),11192,16],_u=[0,d(k),11196,12],_w=[0,d(k),11019,8],_y=[0,d(k),11092,16],_x=[0,d(k),11104,12],_z=[0,d(k),10956,8],_A=[0,d(k),11014,12],_B=[0,d(k),10883,8],_C=[0,d(k),10951,12],_D=[0,d(k),10809,8],_E=[0,d(k),10878,12],_F=[0,d(k),10719,8],_H=[0,d(k),10792,16],_G=[0,d(k),10804,12],_I=[0,d(k),10646,8],_J=[0,d(k),10714,12],_K=[0,d(k),10572,8],_L=[0,d(k),10641,12],_M=[0,d(k),10486,8],_O=[0,d(k),10555,16],_N=[0,d(k),10567,12],_P=[0,d(k),10371,8],_R=[0,d(k),10469,16],_S=[0,d(k),10406,16],_Q=[0,d(k),10481,12],_T=[0,d(k),10283,8],_V=[0,d(k),10362,16],_U=[0,d(k),10366,12],_W=[0,d(k),10197,8],_Y=[0,d(k),10266,16],_X=[0,d(k),10278,12],_Z=[0,d(k),10134,8],_0=[0,d(k),10192,12],_1=[0,d(k),10062,8],_2=[0,d(k),10129,12],_3=[0,d(k),9976,8],_5=[0,d(k),10045,16],_4=[0,d(k),10057,12],_6=[0,d(k),9682,8],_7=[0,d(k),9740,12],_8=[0,d(k),9619,8],_9=[0,d(k),9677,12],__=[0,d(k),9556,8],_$=[0,d(k),9614,12],$a=[0,d(k),9485,8],$b=[0,d(k),9551,12],$c=[0,d(k),9422,8],$d=[0,d(k),9480,12],$e=[0,d(k),9207,8],$f=[0,d(k),9277,12],$g=[0,d(k),8833,8],$h=[0,d(k),8903,12],$i=[0,d(k),8715,8],$k=[0,d(k),8780,16],$j=[0,d(k),8828,12],$l=[0,d(k),8523,8],$m=[0,d(k),8592,12],$n=[0,d(k),8448,8],$o=[0,d(k),8518,12],$p=[0,d(k),8330,8],$r=[0,d(k),8431,16],$q=[0,d(k),8443,12],$s=[0,d(k),8164,8],$t=[0,d(k),8228,12],$u=[0,d(k),8099,8],$v=[0,d(k),8159,12],$w=[0,d(k),8050,8],$x=[0,d(k),8094,12],$y=[0,d(k),8001,8],$z=[0,d(k),8045,12],$A=[0,d(k),7952,8],$B=[0,d(k),7996,12],$C=[0,d(k),7903,8],$D=[0,d(k),7947,12],$E=[0,d(k),7854,8],$F=[0,d(k),7898,12],$G=[0,d(k),7805,8],$H=[0,d(k),7849,12],$I=[0,d(k),7756,8],$J=[0,d(k),7800,12],$K=[0,d(k),7707,8],$L=[0,d(k),7751,12],$M=[0,d(k),7642,8],$N=[0,d(k),7702,12],$O=[0,d(k),7571,8],$P=[0,d(k),7637,12],$Q=[0,d(k),7532,8],$R=[0,d(k),7566,12],$S=[0,d(k),7493,8],$T=[0,d(k),7527,12],$U=[0,d(k),7454,8],$V=[0,d(k),7488,12],$W=[0,d(k),7415,8],$X=[0,d(k),7449,12],$Y=[0,d(k),7368,8],$Z=[0,d(k),7410,12],$0=[0,d(k),7337,8],$1=[0,d(k),7363,12],$2=[0,d(k),7306,8],$3=[0,d(k),7332,12],$4=[0,d(k),7275,8],$5=[0,d(k),7301,12],$6=[0,d(k),7246,8],$7=[0,d(k),7270,12],$8=[0,d(k),7219,8],$9=[0,d(k),7241,12],$_=[0,d(k),7188,8],$$=[0,d(k),7214,12],aaa=[0,d(k),8233,8],aac=[0,d(k),8269,16],aad=[0,d(k),8250,16],aab=[0,d(k),8325,12],aae=[0,d(k),8597,8],aag=[0,d(k),8706,16],aaf=[0,d(k),8710,12],aah=[0,d(k),8908,8],aai=[0,d(k),9086,12],aaj=[0,d(k),8972,12],aak=[0,d(k),9067,20],aal=[0,d(k),9080,16],aam=[0,d(k),9091,8],aao=[0,d(k),9190,16],aan=[0,d(k),9202,12],aap=[0,d(k),9282,8],aaq=[0,d(k),9354,12],aar=[0,d(k),9359,8],aas=[0,d(k),9417,12],aat=[0,d(k),9745,8],aau=[0,d(k),9767,12],aav=[0,d(k),9772,8],aaw=[0,d(k),9794,12],aax=[0,d(k),9799,8],aay=[0,d(k),9821,12],aaz=[0,d(k),9826,8],aaA=[0,d(k),9901,12],aaB=[0,d(k),9906,8],aaD=[0,d(k),9971,12],aaC=d("Cannot throw inside a function, you have to be in a Clause"),_j=[0,d(k),7061,8],_l=[0,d(k),7124,16],_k=[0,d(k),7183,12],aaJ=d(jp),aaK=d("Malformed import"),aaL=d(jp),aaM=d("'*' can only be last in a qualified name"),aaN=d(e$),aaE=d(jp),aaI=d("Malformed namespace"),aaF=d(e$),aaG=[0,d(k),11612,12],aaH=[0,d(k),11624,16],aaU=[0,d(k),11653,8],aaW=[0,d(k),11748,16],aaV=[0,d(k),11763,12],aaO=[0,d(k),11782,12],aaP=[0,d(k),11879,20],aaQ=[0,d(k),11883,16],aaR=[0,d(k),11890,12],aaS=[0,d(k),11945,20],aaT=[0,d(k),11949,16],aaX=d("InternalDuration"),aa3=d("Any"),aa4=d(ur),aa5=d(us),aa6=d(u8),aa7=d(vY),aaY=d("InternalPeriod"),aaZ=d(va),aa0=d("Nothing"),aa1=d(wr),aa2=d("Unit"),aa8=[0,d(k),12072,8],aa9=[0,d(k),12310,8],aa_=[0,d(k),12318,12],aa$=[0,d(k),12297,8],aba=[0,d(k),12305,12],abb=[0,d(k),12284,8],abc=[0,d(k),12292,12],abd=[0,d(k),12124,8],abe=[0,d(k),12153,16],abf=[0,d(k),12157,12],abg=[0,d(k),12181,8],abh=[0,d(k),12213,16],abi=[0,d(k),12217,12],abj=[0,d(k),12258,8],abk=[0,d(k),12266,12],abl=[0,d(k),12340,8],abm=[0,d(k),12375,12],abn=[0,d(k),12383,16],abo=[0,d(k),12387,12],abp=[0,d(k),12449,4],abt=[0,d(k),12491,12],abr=[0,d(k),12463,12],abq=[0,d(k),12477,12],abv=[0,d(k),12505,12],abu=[0,d(k),12519,12],abs=[0,d(k),12523,8],abw=[0,d(k),12553,8],abx=[0,d(k),12568,16],aby=[0,d(k),12572,12],abH=[0,d(k),12778,8],abI=[0,d(k),12786,12],abF=[0,d(k),12765,8],abG=[0,d(k),12773,12],abJ=[0,d(k),13043,8],abK=[0,d(k),13051,12],abL=[0,d(k),13056,8],abM=[0,d(k),13064,12],abN=[0,d(k),13017,8],abO=[0,d(k),13032,16],abP=[0,d(k),13036,12],abQ=[0,d(k),12906,8],abR=[0,d(k),13006,16],abS=[0,d(k),13010,12],abT=[0,d(k),12893,8],abU=[0,d(k),12901,12],abV=[0,d(k),12880,8],abW=[0,d(k),12888,12],abX=[0,d(k),12867,8],abY=[0,d(k),12875,12],abZ=[0,d(k),12854,8],ab0=[0,d(k),12862,12],ab1=[0,d(k),12841,8],ab2=[0,d(k),12849,12],ab3=[0,d(k),12817,8],ab4=[0,d(k),12830,16],ab5=[0,d(k),12834,12],ab6=[0,d(k),12791,8],ab7=[0,d(k),12799,12],ab8=[0,d(k),12804,8],ab9=[0,d(k),12812,12],abC=[0,d(k),12579,8],abD=[0,d(k),12637,16],abE=[0,d(k),12641,12],abz=[0,d(k),12648,8],abA=[0,d(k),12745,16],abB=[0,d(k),12758,12],ab_=[0,d(k),13208,8],ab$=[0,d(k),13316,12],aca=[0,d(k),13320,8],acb=[0,d(k),13379,8],acc=[0,d(k),13454,8],acd=[0,d(k),13511,8],ace=[0,d(k),13568,8],acf=[0,d(k),13625,8],acg=[0,d(k),13638,8],ach=[0,d(k),13735,8],aci=[0,d(k),13794,8],acj=[0,d(k),13877,8],ack=[0,d(k),13911,8],acl=[0,d(k),13926,8],acm=[0,d(k),15728,8],acn=[0,d(k),15751,12],aco=[0,d(k),15757,8],acp=[0,d(k),15816,8],acq=[0,d(k),15887,8],acr=[0,d(k),15984,8],acs=[0,d(k),16041,8],act=[0,d(k),16054,8],acu=[0,d(k),16151,8],acv=[0,d(k),16208,8],acw=[0,d(k),16280,8],acx=[0,d(k),16337,8],acy=[0,d(k),16401,12],acA=[0,d(k),16387,12],acB=[0,d(k),16373,12],acz=[0,d(k),16413,8],acC=[0,d(k),16428,8],acE=[0,d(k),16502,16],acF=[0,d(k),16506,12],acD=[0,d(k),16512,8],acG=[0,d(k),16646,12],acH=[0,d(k),16650,8],acI=[0,d(k),16697,8],V3=d("ErgoParser.MenhirBasics.Error"),acN=[0,[11,d("At offset "),[4,0,0,0,[11,d(": unexpected character.\n"),0]]],d("At offset %d: unexpected character.\n")],acO=d("String not terminated.\n"),acP=d("Unterminated comment\n"),acJ=w([[0,d(k8),34],[0,d(uV),47],[0,d(uy),66],[0,d(vR),53],[0,d(ut),77],[0,d(vs),5],[0,d(uX),69],[0,d(v5),57],[0,d(wq),75],[0,d(uM),28],[0,d(v4),60],[0,d(vw),56],[0,d(u3),67],[0,d(uC),29],[0,d(u1),72],[0,d(u0),62],[0,d(vu),9],[0,d(wy),74],[0,d(vT),16],[0,d(wz),61],[0,d(u_),48],[0,d(wB),8],[0,d(wj),64],[0,d(vU),43],[0,d(vE),54],[0,d(wv),19],[0,d(v3),46],[0,d(uZ),1],[0,d(wH),7],[0,d(vh),68],[0,d(wi),37],[0,d(wn),15],[0,d(v$),63],[0,d(vM),0],[0,d(vG),30],[0,d(uB),76],[0,d(kZ),4],[0,d(lg),55],[0,d(vI),2],[0,d(v1),32],[0,d(uq),12]]),acQ=d(vb),ac6=[0,[11,d("Cannot log Ergo stdlib:\n"),[2,0,[12,10,0]]],d("Cannot log Ergo stdlib:\n%s\n")],acU=d("ergo"),acV=d("es5"),acW=d("es6"),acX=d("cicero"),acY=d("java"),acZ=[0,1,[0,2,[0,3,[0,4,0]]]],ac0=d(vV),ac1=d(","),ac2=d("(available: "),adb=d(vX),adc=d(wo),add=d("--version"),ade=d(vX),adf=d(wo),adg=d("-version"),ac$=d(vD),ada=d(ar),ac_=d(ii),ac7=d(ii),ac8=d("Welcome to ERGOTOP version "),adh=d(" [options] cto1 cto2 ... contract1 contract2 ..."),adi=d("Usage: ");function
+>>>>>>> (fix) Directly use time constants in generated JS code
+>>>>>>> (fix) Directly use time constants in generated JS code
 dg(a){if(typeof
 a==="number")return 0;else
 switch(a[0]){case
@@ -1368,26 +1539,30 @@ b=a[1];return[9,b,b,dg(a[3])];case
 11:return[11,dg(a[1])];case
 12:return[12,dg(a[1])];case
 13:return[13,dg(a[1])];default:return[14,dg(a[1])]}}function
-es(a,b){if(typeof
+er(a,b){if(typeof
 a==="number")return b;else
 switch(a[0]){case
-0:return[0,es(a[1],b)];case
-1:return[1,es(a[1],b)];case
-2:return[2,es(a[1],b)];case
-3:return[3,es(a[1],b)];case
-4:return[4,es(a[1],b)];case
-5:return[5,es(a[1],b)];case
-6:return[6,es(a[1],b)];case
-7:return[7,es(a[1],b)];case
+0:return[0,er(a[1],b)];case
+1:return[1,er(a[1],b)];case
+2:return[2,er(a[1],b)];case
+3:return[3,er(a[1],b)];case
+4:return[4,er(a[1],b)];case
+5:return[5,er(a[1],b)];case
+6:return[6,er(a[1],b)];case
+7:return[7,er(a[1],b)];case
 8:var
-c=a[1];return[8,c,es(a[2],b)];case
+c=a[1];return[8,c,er(a[2],b)];case
 9:var
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=a[2],e=a[1];return[9,e,d,er(a[3],b)];case
 10:return[10,er(a[1],b)];case
 11:return[11,er(a[1],b)];case
 12:return[12,er(a[1],b)];case
 13:return[13,er(a[1],b)];default:return[14,er(a[1],b)]}}function
+<<<<<<< HEAD
 c0(a,b){if(typeof
 =======
 d=a[2],e=a[1];return[9,e,d,es(a[3],b)];case
@@ -1395,6 +1570,8 @@ d=a[2],e=a[1];return[9,e,d,es(a[3],b)];case
 11:return[11,es(a[1],b)];case
 12:return[12,es(a[1],b)];case
 13:return[13,es(a[1],b)];default:return[14,es(a[1],b)]}}function
+=======
+>>>>>>> (fix) Directly use time constants in generated JS code
 cZ(a,b){if(typeof
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 a==="number")return b;else
@@ -1479,8 +1656,8 @@ is(d,c){var
 =======
 F=a[1];return[23,F,cZ(a[2],b)];default:var
 G=a[2],H=a[1];return[24,H,G,cZ(a[3],b)]}}function
-os(a){throw[0,ga,a]}function
-aM(a){throw[0,fF,a]}b1(0);function
+os(a){throw[0,gb,a]}function
+aM(a){throw[0,fG,a]}b1(0);function
 gA(b,a){return ol(b,a)?b:a}function
 ed(b,a){return oi(b,a)?b:a}function
 gB(a){return 0<=a?a:-a|0}var
@@ -1495,20 +1672,20 @@ c=aS(b,a),f=48<=c?58<=c?0:1:45===c?1:0;if(f){var
 a=a+1|0;continue}return b}}function
 fd(a,b){if(a){var
 c=a[1];return[0,c,fd(a[2],b)]}return b}wY(0);var
-hB=wZ(1),lx=wZ(2);function
+hC=wZ(1),lx=wZ(2);function
 xn(b){function
 a(b){var
 a=b;for(;;){if(a){var
 c=a[2],d=a[1];try{iq(d)}catch(a){a=aI(a);if(a[1]!==jv)throw a}var
-a=c;continue}return 0}}return a(aeb(0))}function
-hC(b,a){return om(b,a,0,ai(a))}var
+a=c;continue}return 0}}return a(ad7(0))}function
+hD(b,a){return om(b,a,0,ai(a))}var
 ly=[0,xn];function
 xp(b){var
-a=wY(aes(b,xq,0));aee(a,b);return a}function
+a=wY(aem(b,xq,0));ad_(a,b);return a}function
 xs(a){var
 b=ly[1];ly[1]=function(c){j(a,0);return j(b,0)};return 0}function
 oy(a){return j(ly[1],0)}function
-jw(a){oy(0);return aep(a)}function
+jw(a){oy(0);return aej(a)}function
 jx(c){var
 b=0,a=c;for(;;){if(a){var
 b=b+1|0,a=a[2];continue}return b}}function
@@ -1529,7 +1706,7 @@ iv(d,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=d,b=c;for(;;){if(a){var
 e=[0,a[1],b],a=a[2],b=e;continue}return b}}function
-gb(a){return iv(a,0)}function
+gc(a){return iv(a,0)}function
 hc(a){if(a){var
 b=a[1];return fd(b,hc(a[2]))}return 0}function
 co(b,a){if(a){var
@@ -1538,7 +1715,7 @@ e0(c,b){var
 a=b;for(;;){if(a){var
 d=a[2];j(c,a[1]);var
 a=d;continue}return 0}}function
-gc(e,d,c){var
+gd(e,d,c){var
 b=d,a=c;for(;;){if(a){var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1583,7 +1760,7 @@ e=a[2],b=j(d,a[1]);if(b)return b;var
 a=e;continue}return 0}}function
 lA(d,c){var
 a=c;for(;;){if(a){var
-e=a[2],b=0===f9(a[1],d)?1:0;if(b)return b;var
+e=a[2],b=0===f_(a[1],d)?1:0;if(b)return b;var
 a=e;continue}return 0}}function
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1601,6 +1778,7 @@ lB(d,c){var
 a=c;for(;;){if(a){var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 b=a[1],e=a[2],f=b[2];if(0===f7(b[1],d))return f;var
 a=e;continue}throw aO}}function
 ox(d,c){var
@@ -1615,6 +1793,9 @@ b=a[1],e=a[2],f=b[2];if(0===f8(b[1],d))return f;var
 =======
 b=a[1],e=a[2],f=b[2];if(0===f9(b[1],d))return f;var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+b=a[1],e=a[2],f=b[2];if(0===f_(b[1],d))return f;var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=e;continue}throw aU}}function
 oC(d,c){var
 a=c;for(;;){if(a){var
@@ -1634,6 +1815,7 @@ f=0;return function(g){var
 b=f,a=g;for(;;){if(a){var
 c=a[2],d=a[1];if(j(e,d)){var
 b=[0,d,b],a=c;continue}var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 a=c;continue}return f_(b)}}}function
@@ -1671,6 +1853,9 @@ a=c;continue}return gb(b)}}}function
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 oE(d,c){var
 =======
+=======
+a=c;continue}return gc(b)}}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 oF(d,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=d,a=c;for(;;){if(0===b)return a;if(a){var
@@ -1687,7 +1872,7 @@ d=bW<=a?oe<a?1:0:1;if(d)return a}}return a+nM|0}function
 xG(a){if(65<=a)if(!(90<a))return a+32|0;return a}function
 xH(a){if(97<=a)if(!(gv<a))return a+nM|0;return a}function
 gD(a,c){var
-b=c$(a);adK(b,0,a,c);return b}function
+b=c$(a);adE(b,0,a,c);return b}function
 lC(a){var
 b=eY(a),c=c$(b);gy(a,0,c,0,b);return c}function
 <<<<<<< HEAD
@@ -1712,7 +1897,7 @@ lE(c,b,a){if(0<=b)if(0<=a)if(!((eY(c)-a|0)<b)){var
 d=c$(a);gy(c,b,d,0,a);return d}return aM(xI)}function
 iw(c,b,a){return lE(c,b,a)}function
 jy(e,c,d,b,a){if(0<=a)if(0<=c)if(!((eY(e)-a|0)<c))if(0<=b)if(!((eY(d)-a|0)<b))return gy(e,c,d,b,a);return aM(xJ)}function
-fp(e,c,d,b,a){if(0<=a)if(0<=c)if(!((ai(e)-a|0)<c))if(0<=b)if(!((eY(d)-a|0)<b))return hb(e,c,d,b,a);return aM(xK)}function
+fq(e,c,d,b,a){if(0<=a)if(0<=c)if(!((ai(e)-a|0)<c))if(0<=b)if(!((eY(d)-a|0)<b))return hb(e,c,d,b,a);return aM(xK)}function
 ix(f,b){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=eY(b);if(0===c)return b;var
@@ -1721,6 +1906,7 @@ d=c$(c),e=c-1|0,g=0;if(!(e<0)){var
 a=g;for(;;){dV(d,a,j(f,l(b,a)));var
 h=a+1|0;if(e!==a){var
 a=h;continue}break}}return d}function
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 ga(b,a){return gA(b,a)}function
@@ -1734,6 +1920,9 @@ gd(b,a){return gD(b,a)}function
 xJ(d,g){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
+=======
+ge(b,a){return gD(b,a)}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 xL(d,g){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=c$(d),c=d-1|0,e=0;if(!(c<0)){var
@@ -1845,12 +2034,12 @@ oK(d,b){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 xS(a){return ix(xE,a)}var
-lH=aeq(0)[2],oJ=aer(0)[1],lI=aeo(0),ge=(4*lI|0)-1|0;b1(0);function
-oK(c,b,a){if(0<=b)if(0<=a)if(!((c.length-1-a|0)<b))return adH(c,b,a);return aM(xT)}function
+lH=aek(0)[2],oJ=ael(0)[1],lI=aei(0),gf=(4*lI|0)-1|0;b1(0);function
+oK(c,b,a){if(0<=b)if(0<=a)if(!((c.length-1-a|0)<b))return adB(c,b,a);return aM(xT)}function
 oL(d,b){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=b.length-1;if(0===c)return[0];var
-e=fm(c,j(d,b[1])),f=c-1|0,g=1;if(!(f<1)){var
+e=fn(c,j(d,b[1])),f=c-1|0,g=1;if(!(f<1)){var
 a=g;for(;;){e[a+1]=j(d,b[a+1]);var
 h=a+1|0;if(f!==a){var
 a=h;continue}break}}return e}b1(0);function
@@ -1882,9 +2071,9 @@ x3(d){function
 =======
 oN(a){var
 c=[0],d=1,e=0,f=0,g=0,h=0,i=0,j=ai(a),b=lC(a);return[0,function(a){a[9]=1;return 0},b,j,i,h,g,f,e,d,c,oM,oM]}function
-gf(a){return iw(a[2],a[5],a[6]-a[5]|0)}function
+gg(a){return iw(a[2],a[5],a[6]-a[5]|0)}function
 lJ(c,a,b){return iw(c[2],a,b-a|0)}function
-ee(b,a){return eo(b[2],a)}function
+ee(b,a){return en(b[2],a)}function
 xW(a){return a[11][4]}function
 lK(b){var
 a=b[12];b[12]=[0,a[1],a[2]+1|0,a[4],a[4]];return 0}function
@@ -2446,19 +2635,24 @@ yd(a){throw yc}function
 =======
 ye=[bW,yd,b1(0)];function
 yf(a){throw ye}function
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 fG(a){var
+=======
+fH(a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=a[1];a[1]=yf;try{var
-b=j(c,0);a[1]=b;aef(a,fa);return b}catch(b){b=aI(b);a[1]=function(a){throw b};throw b}}b1(0);b1(0);function
+b=j(c,0);a[1]=b;ad$(a,fa);return b}catch(b){b=aI(b);a[1]=function(a){throw b};throw b}}b1(0);b1(0);function
 gE(a){var
-b=1<=a?a:1,c=ge<b?ge:b,d=c$(c);return[0,d,0,c,d]}function
+b=1<=a?a:1,c=gf<b?gf:b,d=c$(c);return[0,d,0,c,d]}function
 gF(a){return iw(a[1],0,a[2])}function
 jA(a,c){var
-b=[0,a[3]];for(;;){if(b[1]<(a[2]+c|0)){b[1]=2*b[1]|0;continue}if(ge<b[1])if((a[2]+c|0)<=ge)b[1]=ge;else
+b=[0,a[3]];for(;;){if(b[1]<(a[2]+c|0)){b[1]=2*b[1]|0;continue}if(gf<b[1])if((a[2]+c|0)<=gf)b[1]=gf;else
 os(yg);var
 d=c$(b[1]);jy(a[1],0,d,0,a[2]);a[1]=d;a[3]=b[1];return 0}}function
 fe(a,c){var
 b=a[2];if(a[3]<=b)jA(a,1);dV(a[1],b,c);a[2]=b+1|0;return 0}function
+<<<<<<< HEAD
 fH(a,c){var
 <<<<<<< HEAD
 b=ai(c),d=a[2]+b|0;if(a[3]<d)jz(a,b);fp(c,0,a[1],a[2],b);a[2]=d;return 0}function
@@ -2474,12 +2668,18 @@ b=ai(c),d=a[2]+b|0;if(a[3]<d)jA(a,b);fp(c,0,a[1],a[2],b);a[2]=d;return 0}functio
 yi(a,i,c){var
 j=c<0?1:0,k=j||(ge<c?1:0);if(k)aM(yj);if(a[3]<(a[2]+c|0))jA(a,c);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+fI(a,c){var
+b=ai(c),d=a[2]+b|0;if(a[3]<d)jA(a,b);fq(c,0,a[1],a[2],b);a[2]=d;return 0}function
+yi(a,i,c){var
+j=c<0?1:0,k=j||(gf<c?1:0);if(k)aM(yj);if(a[3]<(a[2]+c|0))jA(a,c);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=c;for(;;){var
 g=0<b?1:0;if(g){var
 f=a[2],h=a[1];if(0<=f)if(0<=b)if((eY(h)-b|0)<f)var
 e=0;else
 var
-d=aea(i,h,f,b),e=1;else
+d=ad6(i,h,f,b),e=1;else
 var
 e=0;else
 var
@@ -2541,7 +2741,7 @@ var
 f=d;return f}function
 iy(a,b){oP(a,1);eX(a[2],a[1],b);a[1]=a[1]+1|0;return 0}function
 ef(a,c){var
-b=ai(c);oP(a,b);fp(c,0,a[2],a[1],b);a[1]=a[1]+b|0;return 0}function
+b=ai(c);oP(a,b);fq(c,0,a[2],a[1],b);a[1]=a[1]+b|0;return 0}function
 oQ(a){return iw(a[2],0,a[1])}function
 lM(a){if(typeof
 a==="number")switch(a){case
@@ -2555,6 +2755,7 @@ switch(a[0]){case
 0:return a[1];case
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 1:return a[1];default:return as(yp,gc(1,a[1]))}}function
 lN(b,c){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
@@ -2564,6 +2765,9 @@ lM(b,c){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 1:return a[1];default:return as(yr,gd(1,a[1]))}}function
+=======
+1:return a[1];default:return as(yr,ge(1,a[1]))}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 lN(b,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=c;for(;;)if(typeof
@@ -3202,69 +3406,69 @@ switch(c[0]){case
 7:return eF(c,d,a);case
 8:return eF([8,c[1],c[2]],d,a);case
 9:var
-aS=c[1],_=eA(c[2],d,a),$=_[2];return[0,[23,[9,aS,_[1]],$[1]],$[2]];case
+aS=c[1],_=ez(c[2],d,a),$=_[2];return[0,[23,[9,aS,_[1]],$[1]],$[2]];case
 10:return eF(c,d,a);default:return eF(c,d,a)}}throw eb}function
-eA(b,c,a){if(typeof
+ez(b,c,a){if(typeof
 b==="number")return[0,0,cq(c,a)];else
 switch(b[0]){case
 0:if(typeof
 a!=="number"&&0===a[0]){var
-f=eA(b[1],c,a[1]);return[0,[0,f[1]],f[2]]}break;case
+f=ez(b[1],c,a[1]);return[0,[0,f[1]],f[2]]}break;case
 1:if(typeof
 a!=="number"&&1===a[0]){var
-g=eA(b[1],c,a[1]);return[0,[1,g[1]],g[2]]}break;case
+g=ez(b[1],c,a[1]);return[0,[1,g[1]],g[2]]}break;case
 2:if(typeof
 a!=="number"&&2===a[0]){var
-h=eA(b[1],c,a[1]);return[0,[2,h[1]],h[2]]}break;case
+h=ez(b[1],c,a[1]);return[0,[2,h[1]],h[2]]}break;case
 3:if(typeof
 a!=="number"&&3===a[0]){var
-i=eA(b[1],c,a[1]);return[0,[3,i[1]],i[2]]}break;case
+i=ez(b[1],c,a[1]);return[0,[3,i[1]],i[2]]}break;case
 4:if(typeof
 a!=="number"&&4===a[0]){var
-k=eA(b[1],c,a[1]);return[0,[4,k[1]],k[2]]}break;case
+k=ez(b[1],c,a[1]);return[0,[4,k[1]],k[2]]}break;case
 5:if(typeof
 a!=="number"&&5===a[0]){var
-l=eA(b[1],c,a[1]);return[0,[5,l[1]],l[2]]}break;case
+l=ez(b[1],c,a[1]);return[0,[5,l[1]],l[2]]}break;case
 6:if(typeof
 a!=="number"&&6===a[0]){var
-m=eA(b[1],c,a[1]);return[0,[6,m[1]],m[2]]}break;case
+m=ez(b[1],c,a[1]);return[0,[6,m[1]],m[2]]}break;case
 7:if(typeof
 a!=="number"&&7===a[0]){var
-n=eA(b[1],c,a[1]);return[0,[7,n[1]],n[2]]}break;case
+n=ez(b[1],c,a[1]);return[0,[7,n[1]],n[2]]}break;case
 8:if(typeof
 a!=="number"&&8===a[0]){var
 o=a[1],w=a[2],x=b[2];if(jt([0,b[1]],[0,o]))throw eb;var
-p=eA(x,c,w);return[0,[8,o,p[1]],p[2]]}break;case
+p=ez(x,c,w);return[0,[8,o,p[1]],p[2]]}break;case
 9:if(typeof
 a!=="number"&&9===a[0]){var
 d=a[2],e=a[1],y=a[3],z=b[3],A=b[2],B=b[1],C=[0,dg(e)];if(jt([0,dg(B)],C))throw eb;var
 D=[0,dg(d)];if(jt([0,dg(A)],D))throw eb;var
 q=eg(d7(d5(e),d)),E=q[4];j(q[2],0);j(E,0);var
-r=eA(dg(z),c,y),F=r[2];return[0,[9,e,d,d5(r[1])],F]}break;case
+r=ez(dg(z),c,y),F=r[2];return[0,[9,e,d,d5(r[1])],F]}break;case
 10:if(typeof
 a!=="number"&&10===a[0]){var
-s=eA(b[1],c,a[1]);return[0,[10,s[1]],s[2]]}break;case
+s=ez(b[1],c,a[1]);return[0,[10,s[1]],s[2]]}break;case
 11:if(typeof
 a!=="number"&&11===a[0]){var
-t=eA(b[1],c,a[1]);return[0,[11,t[1]],t[2]]}break;case
+t=ez(b[1],c,a[1]);return[0,[11,t[1]],t[2]]}break;case
 13:if(typeof
 a!=="number"&&13===a[0]){var
-u=eA(b[1],c,a[1]);return[0,[13,u[1]],u[2]]}break;case
+u=ez(b[1],c,a[1]);return[0,[13,u[1]],u[2]]}break;case
 14:if(typeof
 a!=="number"&&14===a[0]){var
-v=eA(b[1],c,a[1]);return[0,[14,v[1]],v[2]]}break}throw eb}function
+v=ez(b[1],c,a[1]);return[0,[14,v[1]],v[2]]}break}throw eb}function
 eG(k,i,a){var
 b=ai(a),j=0<=i?k:0,d=gB(i);if(d<=b)return a;var
 l=2===j?48:32,c=gD(d,l);switch(j){case
-0:fp(a,0,c,0,b);break;case
-1:fp(a,0,c,d-b|0,b);break;default:if(0<b){if(43===aS(a,0))var
+0:fq(a,0,c,0,b);break;case
+1:fq(a,0,c,d-b|0,b);break;default:if(0<b){if(43===aS(a,0))var
 e=1;else
 if(45===aS(a,0))var
 e=1;else
 if(32===aS(a,0))var
 e=1;else
 var
-g=0,e=0;if(e){eX(c,0,aS(a,0));fp(a,1,c,(d-b|0)+1|0,b-1|0);var
+g=0,e=0;if(e){eX(c,0,aS(a,0));fq(a,1,c,(d-b|0)+1|0,b-1|0);var
 g=1}}else
 var
 g=0;if(!g){if(1<b)if(48===aS(a,0)){if(d3===aS(a,1))var
@@ -3272,11 +3476,12 @@ h=1;else
 if(88===aS(a,1))var
 h=1;else
 var
-f=0,h=0;if(h){eX(c,1,aS(a,1));fp(a,2,c,(d-b|0)+2|0,b-2|0);var
+f=0,h=0;if(h){eX(c,1,aS(a,1));fq(a,2,c,(d-b|0)+2|0,b-2|0);var
 f=1}}else
 var
 f=0;else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 f=0;if(!f)fo(a,0,c,d-b|0,b)}}return c}function
 hB(j,b){var
@@ -3285,6 +3490,10 @@ e=71<=d?5<(d+uH|0)>>>0?1:0:65<=d?0:1;else{if(32===d)var
 =======
 f=0;if(!f)fp(a,0,c,d-b|0,b)}}return c}function
 hD(j,b){var
+=======
+f=0;if(!f)fq(a,0,c,d-b|0,b)}}return c}function
+hE(j,b){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=gB(j),a=ai(b),d=aS(b,0);if(58<=d)var
 <<<<<<< HEAD
 e=71<=d?5<(d+uP|0)>>>0?1:0:65<=d?0:1;else{if(32===d)var
@@ -3296,7 +3505,7 @@ f=1;else
 if(43<=d)switch(d-43|0){case
 5:if(a<(c+2|0))if(1<a){var
 k=d3===aS(b,1)?0:88===aS(b,1)?0:1;if(!k){var
-h=gD(c+2|0,48);eX(h,1,aS(b,1));fp(b,2,h,(c-a|0)+4|0,a-2|0);return h}}var
+h=gD(c+2|0,48);eX(h,1,aS(b,1));fq(b,2,h,(c-a|0)+4|0,a-2|0);return h}}var
 e=0,f=0;break;case
 0:case
 2:var
@@ -3308,8 +3517,9 @@ e=1,f=0;break;default:var
 e=0,f=0}else
 var
 e=1,f=0;if(f){if(a<(c+1|0)){var
-g=gD(c+1|0,48);eX(g,0,d);fp(b,1,g,(c-a|0)+2|0,a-1|0);return g}var
+g=gD(c+1|0,48);eX(g,0,d);fq(b,1,g,(c-a|0)+2|0,a-1|0);return g}var
 e=1}}if(!e)if(a<c){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 i=gA(c,48);fo(b,0,i,c-a|0,a);return i}return b}function
 yR(d){var
@@ -3319,6 +3529,9 @@ h=l(d,o);if(32<=h){var
 v=h+uq|0;if(58<v>>>0)if(93<=v)var
 =======
 i=gD(c,48);fp(b,0,i,c-a|0,a);return i}return b}function
+=======
+i=gD(c,48);fq(b,0,i,c-a|0,a);return i}return b}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 y0(d){var
 n=0;for(;;){if(ai(d)<=n)var
 z=0;else{var
@@ -3373,7 +3586,7 @@ b=c$(a[1]);a[1]=0;var
 y=eY(d)-1|0,D=0;if(!(y<0)){var
 j=D;for(;;){var
 c=l(d,j);if(35<=c)var
-e=92===c?1:hx<=c?0:2;else
+e=92===c?1:hy<=c?0:2;else
 if(32<=c)var
 e=34<=c?1:2;else
 if(14<=c)var
@@ -3502,6 +3715,7 @@ a=zc;break;case
 10:var
 a=zd;break;case
 11:var
+<<<<<<< HEAD
 a=ze;break;default:var
 a=zf}return acY(a,b)}function
 gd(b,l,g){if(16<=b){if(17<=b)switch(b-17|0){case
@@ -3732,6 +3946,11 @@ a=zo}return adV(a,b)}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 gg(b,l,g){if(16<=b){if(17<=b)switch(b-17|0){case
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+a=zn;break;default:var
+a=zo}return adP(a,b)}function
+gh(b,l,g){if(16<=b){if(17<=b)switch(b-17|0){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 2:var
 i=0;break;case
 0:case
@@ -3741,6 +3960,7 @@ j=32,i=1}else
 var
 i=0;if(!i)var
 j=45;var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3759,6 +3979,9 @@ m=adW(g,l,j);return 19<=b?iw(xF,m):m}if(15===b)var
 n=zN;else{var
 =======
 m=adT(g,l,j);return 19<=b?ix(xH,m):m}if(15===b)var
+=======
+m=adN(g,l,j);return 19<=b?ix(xH,m):m}if(15===b)var
+>>>>>>> (fix) Directly use time constants in generated JS code
 n=zP;else{var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 q=gB(l);switch(b){case
@@ -3841,8 +4064,12 @@ o=adL(g),r=ai(e);if(3===o)return g<0?zS:zT;if(4<=o)return zU;var
 21:iy(c,32);break}iy(c,46);ef(c,d(ar+q));iy(c,a);var
 n=oQ(c)}var
 e=wT(n,g);if(15===b){var
+<<<<<<< HEAD
 o=adI(g),r=ai(e);if(3===o)return g<0?zU:zV;if(4<=o)return zW;var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+o=adC(g),r=ai(e);if(3===o)return g<0?zU:zV;if(4<=o)return zW;var
+>>>>>>> (fix) Directly use time constants in generated JS code
 h=0;for(;;){if(h===r)var
 p=0;else{var
 k=aS(e,h)+we|0,s=23<k>>>0?55===k?1:0:21<(k-1|0)>>>0?1:0;if(!s){var
@@ -3856,14 +4083,14 @@ p=1}return p?e:as(e,zX)}}return e}function
 jC(g,f,e,d,h,c,b,a){if(typeof
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 h==="number"){if(typeof
-c==="number")return 0===c?function(c){return b2(g,f,[4,e,s(b,a,c)],d)}:function(h,c){return b2(g,f,[4,e,hD(h,s(b,a,c))],d)};var
-l=c[1];return function(c){return b2(g,f,[4,e,hD(l,s(b,a,c))],d)}}else{if(0===h[0]){var
+c==="number")return 0===c?function(c){return b2(g,f,[4,e,s(b,a,c)],d)}:function(h,c){return b2(g,f,[4,e,hE(h,s(b,a,c))],d)};var
+l=c[1];return function(c){return b2(g,f,[4,e,hE(l,s(b,a,c))],d)}}else{if(0===h[0]){var
 i=h[2],j=h[1];if(typeof
-c==="number")return 0===c?function(c){return b2(g,f,[4,e,eG(j,i,s(b,a,c))],d)}:function(h,c){return b2(g,f,[4,e,eG(j,i,hD(h,s(b,a,c)))],d)};var
-m=c[1];return function(c){return b2(g,f,[4,e,eG(j,i,hD(m,s(b,a,c)))],d)}}var
+c==="number")return 0===c?function(c){return b2(g,f,[4,e,eG(j,i,s(b,a,c))],d)}:function(h,c){return b2(g,f,[4,e,eG(j,i,hE(h,s(b,a,c)))],d)};var
+m=c[1];return function(c){return b2(g,f,[4,e,eG(j,i,hE(m,s(b,a,c)))],d)}}var
 k=h[1];if(typeof
-c==="number")return 0===c?function(h,c){return b2(g,f,[4,e,eG(k,h,s(b,a,c))],d)}:function(i,h,c){return b2(g,f,[4,e,eG(k,i,hD(h,s(b,a,c)))],d)};var
-n=c[1];return function(h,c){return b2(g,f,[4,e,eG(k,h,hD(n,s(b,a,c)))],d)}}}function
+c==="number")return 0===c?function(h,c){return b2(g,f,[4,e,eG(k,h,s(b,a,c))],d)}:function(i,h,c){return b2(g,f,[4,e,eG(k,i,hE(h,s(b,a,c)))],d)};var
+n=c[1];return function(h,c){return b2(g,f,[4,e,eG(k,h,hE(n,s(b,a,c)))],d)}}}function
 lO(f,e,d,c,a,b){if(typeof
 a==="number")return function(a){return b2(f,e,[4,d,j(b,a)],c)};else{if(0===a[0]){var
 g=a[2],h=a[1];return function(a){return b2(f,e,[4,d,eG(h,g,j(b,a))],c)}}var
@@ -3893,7 +4120,7 @@ f=xx,d=2;else
 =======
 f=xy,d=2;else
 var
-d=hx<=a?0:1;else
+d=hy<=a?0:1;else
 if(32<=a)if(39<=a)var
 f=xz,d=2;else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -3980,12 +4207,13 @@ F=d[2],G=d[1];return lO(c,e,b,F,G,function(a){return a});case
 8:var
 h=d[4],k=d[3],m=d[2],l=d[1];if(typeof
 m==="number"){if(typeof
-k==="number")return 0===k?function(a){return b2(c,e,[4,b,gg(l,lL,a)],h)}:function(d,a){return b2(c,e,[4,b,gg(l,d,a)],h)};var
-X=k[1];return function(a){return b2(c,e,[4,b,gg(l,X,a)],h)}}else{if(0===m[0]){var
+k==="number")return 0===k?function(a){return b2(c,e,[4,b,gh(l,lL,a)],h)}:function(d,a){return b2(c,e,[4,b,gh(l,d,a)],h)};var
+X=k[1];return function(a){return b2(c,e,[4,b,gh(l,X,a)],h)}}else{if(0===m[0]){var
 q=m[2],r=m[1];if(typeof
-k==="number")return 0===k?function(a){return b2(c,e,[4,b,eG(r,q,gg(l,lL,a))],h)}:function(d,a){return b2(c,e,[4,b,eG(r,q,gg(l,d,a))],h)};var
-Y=k[1];return function(a){return b2(c,e,[4,b,eG(r,q,gg(l,Y,a))],h)}}var
+k==="number")return 0===k?function(a){return b2(c,e,[4,b,eG(r,q,gh(l,lL,a))],h)}:function(d,a){return b2(c,e,[4,b,eG(r,q,gh(l,d,a))],h)};var
+Y=k[1];return function(a){return b2(c,e,[4,b,eG(r,q,gh(l,Y,a))],h)}}var
 t=m[1];if(typeof
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 k==="number")return 0===k?function(d,a){return b2(c,e,[4,b,eG(t,d,gf(l,lL,a))],h)}:function(f,d,a){return b2(c,e,[4,b,eG(t,f,gf(l,d,a))],h)};var
@@ -4000,6 +4228,10 @@ Z=k[1];return function(d,a){return b2(c,e,[4,b,eG(t,d,gg(l,Z,a))],h)}}case
 =======
 k==="number")return 0===k?function(d,a){return b2(c,e,[4,b,eG(t,d,gg(l,lL,a))],h)}:function(f,d,a){return b2(c,e,[4,b,eG(t,f,gg(l,d,a))],h)};var
 Z=k[1];return function(d,a){return b2(c,e,[4,b,eG(t,d,gg(l,Z,a))],h)}}case
+=======
+k==="number")return 0===k?function(d,a){return b2(c,e,[4,b,eG(t,d,gh(l,lL,a))],h)}:function(f,d,a){return b2(c,e,[4,b,eG(t,f,gh(l,d,a))],h)};var
+Z=k[1];return function(d,a){return b2(c,e,[4,b,eG(t,d,gh(l,Z,a))],h)}}case
+>>>>>>> (fix) Directly use time constants in generated JS code
 9:return lO(c,e,b,d[2],d[1],xe);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 10:var
@@ -4134,7 +4366,7 @@ p=b[1];return function(a){return e1(f,e,d,p,c)};case
 8:var
 q=b[2];return function(a){return e1(f,e,d,q,c)};case
 9:var
-r=b[3],s=b[2],t=d7(d5(b[1]),s);return function(a){return e1(f,e,d,es(t,r),c)};case
+r=b[3],s=b[2],t=d7(d5(b[1]),s);return function(a){return e1(f,e,d,er(t,r),c)};case
 10:var
 u=b[1];return function(b,a){return e1(f,e,d,u,c)};case
 11:var
@@ -4182,16 +4414,21 @@ h=[4,g,e];return i<50?ja(i+1|0,d,c,h,b):a(ja,[0,d,c,h,b])}function
 b2(a,b,c,d){return aL(ja(0,a,b,c,d))}function
 e1(a,b,c,d,e){return aL(nD(0,a,b,c,d,e))}function
 zY(a,b,c,d,e,f){return aL(nC(0,a,b,c,d,e,f))}function
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 gh(b,e){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+gi(b,e){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=e;for(;;)if(typeof
 a==="number")return 0;else
 switch(a[0]){case
 0:var
-f=a[1],g=lM(a[2]);gh(b,f);return hC(b,g);case
+f=a[1],g=lM(a[2]);gi(b,f);return hD(b,g);case
 1:var
 c=a[2],d=a[1];if(0===c[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4213,14 +4450,20 @@ h=c[1];gh(b,d);hC(b,z6);var
 a=h;continue}var
 i=c[1];gh(b,d);hC(b,z7);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+h=c[1];gi(b,d);hD(b,z6);var
+a=h;continue}var
+i=c[1];gi(b,d);hD(b,z7);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=i;continue;case
 6:var
-m=a[2];gh(b,a[1]);return j(m,b);case
-7:gh(b,a[1]);return iq(b);case
+m=a[2];gi(b,a[1]);return j(m,b);case
+7:gi(b,a[1]);return iq(b);case
 8:var
-n=a[2];gh(b,a[1]);return aM(n);case
+n=a[2];gi(b,a[1]);return aM(n);case
 2:case
 4:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 k=a[2];ge(b,a[1]);return hA(b,k);default:var
@@ -4237,15 +4480,20 @@ l=a[2];gh(b,a[1]);return wY(b,l)}}function
 =======
 l=a[2];gh(b,a[1]);return w0(b,l)}}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+k=a[2];gi(b,a[1]);return hD(b,k);default:var
+l=a[2];gi(b,a[1]);return w0(b,l)}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 gG(b,e){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 a=e;for(;;)if(typeof
 a==="number")return 0;else
 switch(a[0]){case
 0:var
-f=a[1],g=lM(a[2]);gG(b,f);return fH(b,g);case
+f=a[1],g=lM(a[2]);gG(b,f);return fI(b,g);case
 1:var
 c=a[2],d=a[1];if(0===c[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 h=c[1];gD(b,d);fF(b,zZ);var
@@ -4261,6 +4509,11 @@ h=c[1];gG(b,d);fH(b,z8);var
 a=h;continue}var
 i=c[1];gG(b,d);fH(b,z9);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+h=c[1];gG(b,d);fI(b,z8);var
+a=h;continue}var
+i=c[1];gG(b,d);fI(b,z9);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=i;continue;case
 6:var
 m=a[2];gG(b,a[1]);return j(m,b);case
@@ -4270,16 +4523,17 @@ a=a[1];continue;case
 n=a[2];gG(b,a[1]);return aM(n);case
 2:case
 4:var
-k=a[2];gG(b,a[1]);return fH(b,k);default:var
+k=a[2];gG(b,a[1]);return fI(b,k);default:var
 l=a[2];gG(b,a[1]);return fe(b,l)}}function
 gH(b,e){var
 a=e;for(;;)if(typeof
 a==="number")return 0;else
 switch(a[0]){case
 0:var
-f=a[1],g=lM(a[2]);gH(b,f);return fH(b,g);case
+f=a[1],g=lM(a[2]);gH(b,f);return fI(b,g);case
 1:var
 c=a[2],d=a[1];if(0===c[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 h=c[1];gE(b,d);fF(b,z1);var
@@ -4295,15 +4549,21 @@ h=c[1];gH(b,d);fH(b,z_);var
 a=h;continue}var
 i=c[1];gH(b,d);fH(b,z$);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+h=c[1];gH(b,d);fI(b,z_);var
+a=h;continue}var
+i=c[1];gH(b,d);fI(b,z$);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=i;continue;case
 6:var
-m=a[2];gH(b,a[1]);return fH(b,j(m,0));case
+m=a[2];gH(b,a[1]);return fI(b,j(m,0));case
 7:var
 a=a[1];continue;case
 8:var
 n=a[2];gH(b,a[1]);return aM(n);case
 2:case
 4:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 k=a[2];gE(b,a[1]);return fF(b,k);default:var
 l=a[2];gE(b,a[1]);return fc(b,l)}}function
@@ -4365,17 +4625,20 @@ v(a){switch(a[0]){case
 x=a[1],h=e(0),i=Ak(h);if(i){j(x,i[1]);return d(0)}throw[0,fp,[1,f,h,Aw]];case
 =======
 k=a[2];gH(b,a[1]);return fH(b,k);default:var
+=======
+k=a[2];gH(b,a[1]);return fI(b,k);default:var
+>>>>>>> (fix) Directly use time constants in generated JS code
 l=a[2];gH(b,a[1]);return fe(b,l)}}function
 lP(d,c){var
-a=c[1],b=0;return b2(function(b,a){gh(b,a);return 0},d,b,a)}function
+a=c[1],b=0;return b2(function(b,a){gi(b,a);return 0},d,b,a)}function
 hd(d,c){var
 a=c[1],b=0;return b2(function(b,a){gG(b,a);return 0},d,b,a)}function
-Aa(a){return lP(hB,a)}function
+Aa(a){return lP(hC,a)}function
 lQ(a){return lP(lx,a)}function
 c0(b){var
 a=b[1];return b2(function(c,b){var
 a=gE(64);gH(a,b);return gF(a)},0,0,a)}var
-lR=[bW,Ab,b1(0)],oR=[bW,Ac,b1(0)],fq=[bW,Ad,b1(0)];function
+lR=[bW,Ab,b1(0)],oR=[bW,Ac,b1(0)],fr=[bW,Ad,b1(0)];function
 jD(d,c){var
 a=c;for(;;){if(a){var
 b=a[1],e=a[2],f=b[2];if(ea(b[1],d))return f;var
@@ -4383,8 +4646,8 @@ a=e;continue}throw aU}}function
 Ae(a){var
 b=lG(a,61),c=cp(a,b+1|0,ai(a)-(b+1|0)|0);return[0,cp(a,0,b),c]}function
 oS(d,c,b,a){if(a){var
-e=a[2],f=as(d,a[1]);return as(gc(function(b,a){return as(b,as(c,a))},f,e),b)}return Af}function
-oT(a){throw[0,fq,Al]}function
+e=a[2],f=as(d,a[1]);return as(gd(function(b,a){return as(b,as(c,a))},f,e),b)}return Af}function
+oT(a){throw[0,fr,Al]}function
 oU(a){try{jD(Ar,a);var
 e=0,b=e}catch(a){a=aI(a);if(a!==aU)throw a;var
 b=[0,[0,An,[0,oT],Am],0]}try{jD(Aq,a);var
@@ -4392,11 +4655,11 @@ d=0,c=d}catch(a){a=aI(a);if(a!==aU)throw a;var
 c=[0,[0,Ap,[0,oT],Ao],0]}return fd(a,fd(b,c))}var
 oV=[0,0];function
 At(a){try{var
-b=[0,xh(a)];return b}catch(a){a=aI(a);if(a[1]===fF)return 0;throw a}}function
+b=[0,xh(a)];return b}catch(a){a=aI(a);if(a[1]===fG)return 0;throw a}}function
 oW(a){try{var
-b=[0,lr(a)];return b}catch(a){a=aI(a);if(a[1]===ga)return 0;throw a}}function
+b=[0,lr(a)];return b}catch(a){a=aI(a);if(a[1]===gb)return 0;throw a}}function
 oX(a){try{var
-b=[0,lo(a)];return b}catch(a){a=aI(a);if(a[1]===ga)return 0;throw a}}function
+b=[0,lo(a)];return b}catch(a){a=aI(a);if(a[1]===gb)return 0;throw a}}function
 Au(w,b,c,e,n,m){var
 f=b[1];function
 h(a){var
@@ -4414,19 +4677,23 @@ a=c[3],d=c[2],e=c[1],f=0<ai(a)?1:0;if(f){if(11===d[0]){var
 g=oS(Aj,Ai,Ah,d[1]);return aP(hd(b,Ak),e,g,a)}return s(hd(b,Ag),e,a)}return f},h);if(!ea(a,Ay))if(!ea(a,Az))return[0,lR,gF(b)];return[0,oR,gF(b)]}b[1]++;for(;;){if(b[1]<c[1].length-1){try{var
 i=b[1],a=aO(c[1],i)[i+1];if(1<=ai(a))if(45===aS(a,0)){try{var
 u=0,v=jD(a,e[1]),l=v,d=u}catch(b){b=aI(b);if(b!==aU)throw b;try{var
-k=Ae(a),o=[0,k[2]],p=jD(k[1],e[1])}catch(b){b=aI(b);if(b===aU)throw[0,fq,[0,a]];throw b}var
+k=Ae(a),o=[0,k[2]],p=jD(k[1],e[1])}catch(b){b=aI(b);if(b===aU)throw[0,fr,[0,a]];throw b}var
 l=p,d=o}var
-q=function(b,a){return function(c){if(a)throw[0,fq,[1,b,a[1],AE]];return 0}}(a,d),r=function(e,d){return function(f){if(d)return d[1];if((b[1]+1|0)<c[1].length-1){var
-a=b[1]+1|0;return aO(c[1],a)[a+1]}throw[0,fq,[2,e]]}}(a,d),t=function(a){return function(c){return a?0:(b[1]++,0)}}(d);(function(f,u,e,d){function
+q=function(b,a){return function(c){if(a)throw[0,fr,[1,b,a[1],AE]];return 0}}(a,d),r=function(e,d){return function(f){if(d)return d[1];if((b[1]+1|0)<c[1].length-1){var
+a=b[1]+1|0;return aO(c[1],a)[a+1]}throw[0,fr,[2,e]]}}(a,d),t=function(a){return function(c){return a?0:(b[1]++,0)}}(d);(function(f,u,e,d){function
 v(a){switch(a[0]){case
 0:return j(a[1],0);case
 1:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 x=a[1],h=e(0),i=Ar(h);if(i){j(x,i[1]);return d(0)}throw[0,fq,[1,f,h,AD]];case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 x=a[1],h=e(0),i=At(h);if(i){j(x,i[1]);return d(0)}throw[0,fq,[1,f,h,AF]];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+x=a[1],h=e(0),i=At(h);if(i){j(x,i[1]);return d(0)}throw[0,fr,[1,f,h,AF]];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 2:var
 y=a[1];u(0);y[1]=1;return 0;case
 3:var
@@ -4436,6 +4703,7 @@ A=a[1];j(A,e(0));return d(0);case
 5:var
 B=a[1];B[1]=e(0);return d(0);case
 6:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 C=a[1],k=e(0),l=oS(k);if(l){j(C,l[1]);return d(0)}throw[0,fp,[1,f,k,Ax]];case
@@ -4460,11 +4728,15 @@ C=a[1],k=e(0),l=oV(k);if(l){j(C,l[1]);return d(0)}throw[0,fq,[1,f,k,AE]];case
 =======
 C=a[1],k=e(0),l=oW(k);if(l){j(C,l[1]);return d(0)}throw[0,fq,[1,f,k,AG]];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+C=a[1],k=e(0),l=oW(k);if(l){j(C,l[1]);return d(0)}throw[0,fr,[1,f,k,AG]];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 7:var
-D=a[1],m=e(0),n=oW(m);if(n){D[1]=n[1];return d(0)}throw[0,fq,[1,f,m,AH]];case
+D=a[1],m=e(0),n=oW(m);if(n){D[1]=n[1];return d(0)}throw[0,fr,[1,f,m,AH]];case
 8:var
-E=a[1],o=e(0),p=oX(o);if(p){j(E,p[1]);return d(0)}throw[0,fq,[1,f,o,AI]];case
+E=a[1],o=e(0),p=oX(o);if(p){j(E,p[1]);return d(0)}throw[0,fr,[1,f,o,AI]];case
 9:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 F=a[1],q=e(0),r=oW(q);if(r){F[1]=r[1];return d(0)}throw[0,fq,[1,f,q,AH]];case
 10:return eZ(v,a[1]);case
@@ -4482,11 +4754,18 @@ F=a[1],q=e(0),r=oX(q);if(r){F[1]=r[1];return d(0)}throw[0,fq,[1,f,q,AJ]];case
 11:var
 s=a[1],G=a[2],g=e(0);if(lA(g,s)){j(G,g);return d(0)}throw[0,fq,[1,f,g,as(AN,oS(AM,AL,AK,s))]];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+F=a[1],q=e(0),r=oX(q);if(r){F[1]=r[1];return d(0)}throw[0,fr,[1,f,q,AJ]];case
+10:return e0(v,a[1]);case
+11:var
+s=a[1],G=a[2],g=e(0);if(lA(g,s)){j(G,g);return d(0)}throw[0,fr,[1,f,g,as(AN,oS(AM,AL,AK,s))]];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 12:var
 H=a[1];for(;;){if(b[1]<(c[1].length-1-1|0)){var
 t=b[1]+1|0;j(H,aO(c[1],t)[t+1]);d(0);continue}return 0}default:var
-I=a[1];if(1-w)throw[0,fF,AO];var
+I=a[1];if(1-w)throw[0,fG,AO];var
 J=j(I,e(0));d(0);var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4501,10 +4780,14 @@ K=oJ(c[1],0,b[1]+1|0);c[1]=adJ([0,K,[0,J,[0,oJ(c[1],b[1]+1|0,(c[1].length-1-b[1]
 =======
 K=oK(c[1],0,b[1]+1|0);c[1]=adG([0,K,[0,J,[0,oK(c[1],b[1]+1|0,(c[1].length-1-b[1]|0)-1|0),0]]]);return 0}}return v}(a,q,r,t)(l));var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+K=oK(c[1],0,b[1]+1|0);c[1]=adA([0,K,[0,J,[0,oK(c[1],b[1]+1|0,(c[1].length-1-b[1]|0)-1|0),0]]]);return 0}}return v}(a,q,r,t)(l));var
+>>>>>>> (fix) Directly use time constants in generated JS code
 g=1}else
 var
 g=0;else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4568,6 +4851,9 @@ b=a?a[1]:oU,h=[0,f],c=[0,b]?b:oU;return As(0,c,[0,g],h,e,d)}function
 lR(b){var
 =======
 g=0;if(!g)j(n,a)}catch(a){a=aI(a);if(a[1]===lR)throw h([3,a[2]]);if(a[1]===fq)throw h(a[2]);throw a}b[1]++;continue}return 0}}function
+=======
+g=0;if(!g)j(n,a)}catch(a){a=aI(a);if(a[1]===lR)throw h([3,a[2]]);if(a[1]===fr)throw h(a[2]);throw a}b[1]++;continue}return 0}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 AP(a,g,f,e,d){var
 b=a?a[1]:oV,h=[0,f],c=[0,b]?b:oV;return Au(0,c,[0,g],h,e,d)}function
 lS(b){var
@@ -4595,21 +4881,21 @@ c=oY(a,2),d=lW(a,1);return s(c0(AZ),d,c)}switch(b){case
 1:return A1;default:var
 e=lW(a,1);return j(c0(A2),e)}}function
 lX(a){lU[1]=[0,a,lU[1]];return 0}function
-fr(a){return oj(10,p,0,a)}function
+fs(a){return oj(10,p,0,a)}function
 jE(a){var
 b=a.length-1<4?1:0,c=b||(a[4]<0?1:0);return c}function
 gI(a){a[4]=-a[4]|0;return 0}try{var
-adB=ls(adA),o4=adB}catch(a){a=aI(a);if(a!==aU)throw a;try{var
-adz=ls(ady),o3=adz}catch(a){a=aI(a);if(a!==aU)throw a;var
+adv=ls(adu),o4=adv}catch(a){a=aI(a);if(a!==aU)throw a;try{var
+adt=ls(ads),o3=adt}catch(a){a=aI(a);if(a!==aU)throw a;var
 o3=A9}var
 o4=o3}var
 A_=xQ(o4,82),jF=[b7,function(w){var
-m=aet(0),b=[0,fm(55,0),0],i=0===m.length-1?[0,0]:m,j=i.length-1,a=0;for(;;){aO(b[1],a)[a+1]=a;var
+m=aen(0),b=[0,fn(55,0),0],i=0===m.length-1?[0,0]:m,j=i.length-1,a=0;for(;;){aO(b[1],a)[a+1]=a;var
 v=a+1|0;if(54!==a){var
 a=v;continue}var
 g=[0,A8],k=54+ed(55,j)|0,r=0;if(!(k<0)){var
 c=r;for(;;){var
-e=c%55|0,l=w1(c,j),s=aO(i,l)[l+1],h=as(g[1],d(ar+s));g[1]=ad9(h,0,ai(h));var
+e=c%55|0,l=w1(c,j),s=aO(i,l)[l+1],h=as(g[1],d(ar+s));g[1]=ad3(h,0,ai(h));var
 f=g[1],n=aS(f,3)<<24,o=aS(f,2)<<16,p=aS(f,1)<<8,q=((aS(f,0)+p|0)+o|0)+n|0,t=(aO(b[1],e)[e+1]^q)&jd;aO(b[1],e)[e+1]=t;var
 u=c+1|0;if(k!==c){var
 c=u;continue}break}}b[2]=0;return b}}];function
@@ -4627,10 +4913,11 @@ lY(h,k){var
 l=h?h[1]:A_,b=16;for(;;){if(!(k<=b))if(!(lI<(b*2|0))){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=b*2|0;continue}if(l){var
-i=eZ(jF),a=fa===i?jF[1]:b7===i?fG(jF):jF;a[2]=(a[2]+1|0)%55|0;var
+i=eZ(jF),a=fa===i?jF[1]:b7===i?fH(jF):jF;a[2]=(a[2]+1|0)%55|0;var
 c=a[2],d=aO(a[1],c)[c+1],e=(a[2]+24|0)%55|0,f=(aO(a[1],e)[e+1]+(d^(d>>>25|0)&31)|0)&jd,g=a[2];aO(a[1],g)[g+1]=f;var
 j=f}else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 j=0;return[0,0,fl(b,0),j,b]}}function
 o1(b){b[1]=0;var
@@ -4640,6 +4927,9 @@ j=0;return[0,0,fm(b,0),j,b]}}function
 o4(b){b[1]=0;var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
+=======
+j=0;return[0,0,fn(b,0),j,b]}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 o5(b){b[1]=0;var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=b[2].length-1-1|0,d=0;if(!(c<0)){var
@@ -4676,7 +4966,7 @@ m=fm(f,0),g=fm(f,0),h=1-jD(e);e[2]=m;var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 A$(a){var
-b=a[2].length-1;if(4<=a.length-1)if(b!==gB(a[4])){a[1]=0;a[2]=fm(gB(a[4]),0);return 0}return o5(a)}function
+b=a[2].length-1;if(4<=a.length-1)if(b!==gB(a[4])){a[1]=0;a[2]=fn(gB(a[4]),0);return 0}return o5(a)}function
 Ba(b){if(b){var
 d=b[3],g=[0,b[1],b[2],d],c=g,a=d;for(;;){if(a){var
 e=a[3],f=[0,a[1],a[2],e];if(c){c[3]=f;var
@@ -4686,8 +4976,12 @@ b=a[4],c=a[3],d=oL(Ba,a[2]);return[0,a[1],d,c,b]}function
 Bd(a){return a[1]}function
 lZ(v,e){var
 j=e[2],k=j.length-1,f=k*2|0,l=f<lI?1:0;if(l){var
+<<<<<<< HEAD
 m=fm(f,0),g=fm(f,0),h=1-jE(e);e[2]=m;var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+m=fn(f,0),g=fn(f,0),h=1-jE(e);e[2]=m;var
+>>>>>>> (fix) Directly use time constants in generated JS code
 p=k-1|0,y=0;if(!(p<0)){var
 d=y;a:for(;;){var
 a=aO(j,d)[d+1];for(;;){if(a){var
@@ -4725,14 +5019,14 @@ r=h;var
 t=r}else
 var
 t=l;return t}function
-l0(a,b){return 3<=a.length-1?oj(10,p,a[3],b)&(a[2].length-1-1|0):w1(adS(10,p,b),a[2].length-1)}function
+l0(a,b){return 3<=a.length-1?oj(10,p,a[3],b)&(a[2].length-1-1|0):w1(adM(10,p,b),a[2].length-1)}function
 Be(f,b){var
 g=l0(f,b),c=aO(f[2],g)[g+1];if(c){var
-d=c[3],j=c[2];if(0===f9(b,c[1]))return j;if(d){var
-e=d[3],k=d[2];if(0===f9(b,d[1]))return k;if(e){var
-l=e[2],m=e[3];if(0===f9(b,e[1]))return l;var
+d=c[3],j=c[2];if(0===f_(b,c[1]))return j;if(d){var
+e=d[3],k=d[2];if(0===f_(b,d[1]))return k;if(e){var
+l=e[2],m=e[3];if(0===f_(b,e[1]))return l;var
 a=m;for(;;){if(a){var
-h=a[2],i=a[3];if(0===f9(b,a[1]))return h;var
+h=a[2],i=a[3];if(0===f_(b,a[1]))return h;var
 a=i;continue}throw aU}}throw aU}throw aU}throw aU}function
 <<<<<<< HEAD
 Bd(g,a){function
@@ -4825,7 +5119,7 @@ o=d[1];d[1]=ed(o,o6(0,j[b+1]));var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 p=b+1|0;if(h!==b){var
 b=p;continue}break}}var
-i=d[1],e=fm(i+1|0,0),k=c[2],g=k.length-1-1|0,l=0;if(!(g<0)){var
+i=d[1],e=fn(i+1|0,0),k=c[2],g=k.length-1-1|0,l=0;if(!(g<0)){var
 a=l;for(;;){var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4931,7 +5225,7 @@ l2(b,a){return aP(b[17],a,0,ai(a))}function
 l3(a){return j(a[19],0)}function
 he(a,c,b){l3(a);a[11]=1;a[10]=gA(a[8],(a[6]-b|0)+c|0);a[9]=a[6]-a[10]|0;return j(a[21],a[10])}function
 o$(b,a){return he(b,0,a)}function
-hE(a,b){a[9]=a[9]-b|0;return j(a[20],b)}function
+hF(a,b){a[9]=a[9]-b|0;return j(a[20],b)}function
 Bm(a){var
 b=a[2];if(b){var
 c=b[1],d=c[2],e=c[1],f=a[9]<d?1:0;if(f){if(0!==e)return 5<=e?0:o$(a,d);var
@@ -4953,7 +5247,7 @@ b==="number")switch(b){case
 0:var
 k=a[3];if(k){var
 l=k[1][1],m=function(b,a){if(a){var
-c=a[1],d=a[2];return fE(b,c)?[0,b,a]:[0,c,m(b,d)]}return[0,b,0]};l[1]=m(a[6]-a[9]|0,l[1]);return 0}return 0;case
+c=a[1],d=a[2];return fF(b,c)?[0,b,a]:[0,c,m(b,d)]}return[0,b,0]};l[1]=m(a[6]-a[9]|0,l[1]);return 0}return 0;case
 1:var
 n=a[2];return n?(a[2]=n[2],0):0;case
 2:var
@@ -4986,11 +5280,11 @@ B=b[1];a[9]=a[9]-f|0;l2(a,B);a[11]=0;return 0;case
 1:var
 c=b[2],e=b[1],r=a[2];if(r){var
 s=r[1],d=s[2];switch(s[1]){case
-0:return hE(a,e);case
+0:return hF(a,e);case
 1:return he(a,c,d);case
 2:return he(a,c,d);case
-3:return a[9]<f?he(a,c,d):hE(a,e);case
-4:return a[11]?hE(a,e):a[9]<f?he(a,c,d):((a[6]-d|0)+c|0)<a[10]?he(a,c,d):hE(a,e);default:return hE(a,e)}}return 0;case
+3:return a[9]<f?he(a,c,d):hF(a,e);case
+4:return a[11]?hF(a,e):a[9]<f?he(a,c,d):((a[6]-d|0)+c|0)<a[10]?he(a,c,d):hF(a,e);default:return hF(a,e)}}return 0;case
 2:var
 h=a[6]-a[9]|0,t=a[3],C=b[2],D=b[1];if(t){var
 u=t[1][1],E=function(d,c){var
@@ -5003,7 +5297,7 @@ w=F}var
 i=w}else
 var
 i=h;var
-x=i-h|0;return 0<=x?hE(a,x+D|0):he(a,i+C|0,a[6])}return 0;case
+x=i-h|0;return 0<=x?hF(a,x+D|0):he(a,i+C|0,a[6])}return 0;case
 3:var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5081,7 +5375,7 @@ pf(a,d,c){var
 b=a[14]<a[15]?1:0;return b?pb(a,d,c):b}function
 l4(b,a){return pf(b,ai(a),a)}function
 pg(b,a){return l4(b,d(ar+a))}function
-jH(b,a){return pf(b,1,gd(1,a))}function
+jH(b,a){return pf(b,1,ge(1,a))}function
 ph(a,h){var
 g=a[4];e0(function(f){if(a[23])jG(a,[0,0,5,0]);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -5152,7 +5446,7 @@ ph=gd(80,32);function
 pi(b,d){var
 =======
 d=a[16];pb(a,ai(d),d)}return j(a[18],0)}}var
-pi=gd(80,32);function
+pi=ge(80,32);function
 pj(b,d){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=d;for(;;){var
@@ -5194,17 +5488,23 @@ c=eZ(a)===bW?a:a[1];return aeo(b,c)}function
 l4(d,f,a){if(ez(a,BC))return f;var
 =======
 h=b<0?1:0,e=h||((ai(g)-b|0)<c?1:0);if(e)aM(yh);var
-f=a[2]+b|0;if(a[3]<f)jA(a,b);fp(g,c,a[1],a[2],b);a[2]=f;return 0},b)}var
-BC=nY,BD=function(a){return gE(BC)}(0),pn=pl(hB);pl(lx);pm(BD);xs(function(a){return ph(pn,a)});function
+f=a[2]+b|0;if(a[3]<f)jA(a,b);fq(g,c,a[1],a[2],b);a[2]=f;return 0},b)}var
+BC=nY,BD=function(a){return gE(BC)}(0),pn=pl(hC);pl(lx);pm(BD);xs(function(a){return ph(pn,a)});function
 po(b,a){var
+<<<<<<< HEAD
 c=eZ(a)===bW?a:a[1];return ael(b,c)}function
 l5(d,f,a){if(ez(a,BE))return f;var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+c=eZ(a)===bW?a:a[1];return aef(b,c)}function
+l5(d,f,a){if(ey(a,BE))return f;var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=ai(a)-1|0;for(;;){if(0<=b){if(s(d,a,b)){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 b=b-1|0;continue}var
 e=b+1|0,c=b;for(;;){if(0<=c){if(s(d,a,c))return cp(a,c+1|0,(e-c|0)-1|0);var
 c=c-1|0;continue}return cp(a,0,e)}}return cp(a,0,1)}}function
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 pl(e,f,a){if(ey(a,Bw))return f;var
@@ -5222,6 +5522,9 @@ b=ah(a)-1|0;for(;;){if(0<=b){if(s(e,a,b)){var
 =======
 pp(e,f,a){if(ez(a,BF))return f;var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+pp(e,f,a){if(ey(a,BF))return f;var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=ai(a)-1|0;for(;;){if(0<=b){if(s(e,a,b)){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 b=b-1|0;continue}var
@@ -5250,13 +5553,13 @@ pq=BF}function
 BH(c){var
 =======
 pq(b,a){return 47===aS(b,a)?1:0}try{var
-adx=ls(adw),pr=adx}catch(a){a=aI(a);if(a!==aU)throw a;var
+adr=ls(adq),pr=adr}catch(a){a=aI(a);if(a!==aU)throw a;var
 pr=BH}function
 BJ(c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 d=ai(c),a=gE(d+20|0);fe(a,39);var
 e=d-1|0,f=0;if(!(e<0)){var
-b=f;for(;;){if(39===aS(c,b))fH(a,BI);else
+b=f;for(;;){if(39===aS(c,b))fI(a,BI);else
 fe(a,aS(c,b));var
 g=b+1|0;if(e!==b){var
 b=g;continue}break}}fe(a,39);return gF(a)}function
@@ -5339,9 +5642,10 @@ ps(b,a){var
 pt(b,a){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=ai(a)<=ai(b)?1:0;if(c)var
-e=cp(b,ai(b)-ai(a)|0,ai(a)),f=oI(a),d=ez(oI(e),f);else
+e=cp(b,ai(b)-ai(a)|0,ai(a)),f=oI(a),d=ey(oI(e),f);else
 var
 d=c;return d}try{var
+<<<<<<< HEAD
 <<<<<<< HEAD
 ady=lr(adx),pt=ady}catch(a){a=aI(a);if(a!==aU)throw a;var
 pt=BP}function
@@ -5356,6 +5660,9 @@ h=ah(g),c=gE(h+20|0);fd(c,34);function
 =======
 =======
 adv=ls(adu),pu=adv}catch(a){a=aI(a);if(a!==aU)throw a;var
+=======
+adp=ls(ado),pu=adp}catch(a){a=aI(a);if(a!==aU)throw a;var
+>>>>>>> (fix) Directly use time constants in generated JS code
 pu=BR}function
 BS(g){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -5444,6 +5751,7 @@ pz=da;function
 B5(a){var
 b=px(a);return 0===b?aM(B6):cp(a,0,ai(a)-b|0)}var
 B7=pz.Array,pA=[bW,B8,b1(0)],pB=pz.Error;po(B9,[0,pA,{}]);function
+<<<<<<< HEAD
 B_(a){throw a}lX(function(a){return a[1]===pA?[0,f_(a[2].toString())]:0});lX(function(a){return a
 instanceof
 <<<<<<< HEAD
@@ -5459,10 +5767,17 @@ pB=[bW,B9,b1(0)];pn(Ca,[0,pB,0,B$,B_]);lW(function(b){if(b[1]===pB){var
 B7?0:[0,f_(a.toString())]});var
 pC=[bW,B$,b1(0)];po(Cc,[0,pC,0,Cb,Ca]);lX(function(b){if(b[1]===pC){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+B_(a){throw a}lX(function(a){return a[1]===pA?[0,f$(a[2].toString())]:0});lX(function(a){return a
+instanceof
+B7?0:[0,f$(a.toString())]});var
+pC=[bW,B$,b1(0)];po(Cc,[0,pC,0,Cb,Ca]);lX(function(b){if(b[1]===pC){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=b[2],e=b[4],f=b[3];if(typeof
 c==="number"){var
 d=c;if(34<=d)switch(d){case
 34:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 a=CD;break;case
@@ -5607,6 +5922,8 @@ eZ(l,k){var
 =======
 a=CK;break;case
 =======
+=======
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=CM;break;case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 35:var
@@ -5744,6 +6061,7 @@ a=CK;break;default:var
 a=CL}}else
 var
 <<<<<<< HEAD
+<<<<<<< HEAD
 g=c[1],a=j(c0(Dg),g);return[0,aP(c0(Cc),a,f,e)]}return 0});lv(Dh);lv(Di);try{lv(adw)}catch(a){a=aI(a);if(a[1]!==ga)throw a}try{lv(adv)}catch(a){a=aI(a);if(a[1]!==ga)throw a}lX(0,7);function
 pC(b,a){return 0!==(b&a)?1:0}var
 <<<<<<< HEAD
@@ -5754,6 +6072,9 @@ e1(l,k){var
 Dj=-1,l9=1,iz=2,Dk=4,pD=32;function
 =======
 g=c[1],a=j(c0(Di),g);return[0,aP(c0(Ce),a,f,e)]}return 0});lw(Dj);lw(Dk);try{lw(adt)}catch(a){a=aI(a);if(a[1]!==ga)throw a}try{lw(ads)}catch(a){a=aI(a);if(a[1]!==ga)throw a}lY(0,7);function
+=======
+g=c[1],a=j(c0(Di),g);return[0,aP(c0(Ce),a,f,e)]}return 0});lw(Dj);lw(Dk);try{lw(adn)}catch(a){a=aI(a);if(a[1]!==gb)throw a}try{lw(adm)}catch(a){a=aI(a);if(a[1]!==gb)throw a}lY(0,7);function
+>>>>>>> (fix) Directly use time constants in generated JS code
 pD(b,a){return 0!==(b&a)?1:0}var
 Dl=-1,l_=1,iA=2,Dm=4,pE=32;function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -5763,13 +6084,13 @@ b=l,a=k;for(;;){if(a){if(b){var
 g=a[2],i=a[1],c=i[2],d=i[1],h=b[2],j=b[1],e=j[2],f=j[1];if((e+1|0)<d)return[0,[0,f,e],e2(h,a)];if((c+1|0)<f)return[0,[0,d,c],e2(b,g)];if(e<c){var
 b=h,a=[0,[0,gA(f,d),c],g];continue}var
 b=[0,[0,gA(f,d),e],h],a=g;continue}return a}return b}}function
-hF(l,k){var
+hG(l,k){var
 b=l,a=k;for(;;){if(a){if(b){var
-g=a[2],h=a[1],c=h[2],d=h[1],i=b[2],j=b[1],e=j[2],f=j[1];if(fE(e,d)){var
-b=i;continue}if(fE(c,f)){var
-a=g;continue}if(fE(e,c)){var
-m=hF(i,a);return[0,[0,ed(f,d),e],m]}var
-n=hF(b,g);return[0,[0,ed(f,d),c],n]}return 0}return 0}}function
+g=a[2],h=a[1],c=h[2],d=h[1],i=b[2],j=b[1],e=j[2],f=j[1];if(fF(e,d)){var
+b=i;continue}if(fF(c,f)){var
+a=g;continue}if(fF(e,c)){var
+m=hG(i,a);return[0,[0,ed(f,d),e],m]}var
+n=hG(b,g);return[0,[0,ed(f,d),c],n]}return 0}return 0}}function
 iB(m,l){var
 b=m,a=l;for(;;){if(a){if(b){var
 e=a[2],i=a[1],f=i[2],g=i[1],h=b[2],j=b[1],c=j[2],d=j[1];if(c<g)return[0,[0,d,c],iB(h,a)];if(f<d){var
@@ -5829,16 +6150,20 @@ b=a[1],c=b[2],d=b[1];return(d+(13*c|0)|0)+(k7*pG(a[2])|0)|0}return 0}function
 Dn(a){if(a)if(!a[2]){var
 b=a[1],c=b[1];if(ea(c,b[2]))return[0,c]}return 0}var
 l$=yc([0,function(b,a){var
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 d=a[2],e=b[2],c=f9(b[1],a[1]);return 0===c?f9(e,d):c}]);function
+=======
+d=a[2],e=b[2],c=f_(b[1],a[1]);return 0===c?f_(e,d):c}]);function
+>>>>>>> (fix) Directly use time constants in generated JS code
 Do(c,b,a){return lz(a,c,b)}function
 iC(a){return pF(a)}var
 pH=x5([0,lq]);function
-fI(b,a){return(a*jf|0)+b|0}var
+fJ(b,a){return(a*jf|0)+b|0}var
 Dp=[0,0,pH[1]];function
 pI(d,g){var
-h=fI(oj(10,p,0,d[2]),g),a=d[1],b=h;for(;;){if(a){var
-c=a[1],e=a[2],f=c[1],a=e,b=fI(f,fI(c[2],b));continue}return b}}function
+h=fJ(oj(10,p,0,d[2]),g),a=d[1],b=h;for(;;){if(a){var
+c=a[1],e=a[2],f=c[1],a=e,b=fJ(f,fJ(c[2],b));continue}return b}}function
 pJ(b,a){if(a){var
 c=a[1];if(-1===c[2]){var
 d=c[1];return[0,[0,d,b],pJ(b,a[2])]}}return a}function
@@ -5848,6 +6173,7 @@ pL(d,c){var
 a=c;for(;;){if(a){var
 e=a[2],b=j(d,a[1]);if(b)return b;var
 a=e;continue}return 0}}function
+<<<<<<< HEAD
 eB(a,b){a[1]++;return[0,a[1],b]}function
 <<<<<<< HEAD
 pM(a){return eB(a,Do)}function
@@ -5860,12 +6186,18 @@ e2(f,e,b,a){var
 pN(a){return eB(a,Dq)}function
 jK(b,a){return a?a[2]?eB(b,[1,a]):a[1]:pN(b)}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+eA(a,b){a[1]++;return[0,a[1],b]}function
+pN(a){return eA(a,Dq)}function
+jK(b,a){return a?a[2]?eA(b,[1,a]):a[1]:pN(b)}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 e3(f,e,b,a){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 c=b[2],d=a[2];if(typeof
 c!=="number"&&1===c[0])if(!c[1])return b;if(typeof
 d!=="number"&&1===d[0])if(!d[1])return a;if(typeof
 c==="number")return a;if(typeof
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 d==="number")if(eM===e)return b;return eA(f,[2,e,b,a])}function
@@ -5884,22 +6216,26 @@ d==="number")if(eP===e)return b;return eB(f,[2,e,b,a])}function
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 pN(a){return typeof
 =======
+=======
+d==="number")if(eP===e)return b;return eA(f,[2,e,b,a])}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 pO(a){return typeof
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a[2]==="number"?1:0}function
-iE(a){return eB(a,0)}function
-pP(b,a){return eB(b,[4,a])}function
-gJ(b,a){return eB(b,[6,a])}function
-hg(b,a){return eB(b,[7,a])}function
+iE(a){return eA(a,0)}function
+pP(b,a){return eA(b,[4,a])}function
+gJ(b,a){return eA(b,[6,a])}function
+hg(b,a){return eA(b,[7,a])}function
 hh(b,c){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 a=c[2];if(typeof
 a!=="number")switch(a[0]){case
 1:var
-d=a[1];return eB(b,[1,co(function(a){return hh(b,a)},d)]);case
+d=a[1];return eA(b,[1,co(function(a){return hh(b,a)},d)]);case
 2:var
-e=a[2],f=a[1],g=hh(b,a[3]);return eB(b,[2,f,hh(b,e),g]);case
+e=a[2],f=a[1],g=hh(b,a[3]);return eA(b,[2,f,hh(b,e),g]);case
 3:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 h=a[2],i=a[1];return eA(b,[3,i,h,hf(b,a[3])])}return eA(b,c[2])}function
 pM(o,n){var
@@ -5909,6 +6245,9 @@ h=a[2],i=a[1];return eB(b,[3,i,h,hh(b,a[3])])}return eB(b,c[2])}function
 pP(o,n){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
+=======
+h=a[2],i=a[1];return eA(b,[3,i,h,hh(b,a[3])])}return eA(b,c[2])}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 pQ(o,n){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=o,a=n;for(;;){if(b){var
@@ -5969,15 +6308,15 @@ pR(e,d){var
 a=e,b=d;for(;;){if(a){var
 c=a[1];switch(c[0]){case
 0:var
-f=a[2],g=c[2],h=pR(c[1],b),a=f,b=fI(388635598,fI(g[1],h));continue;case
+f=a[2],g=c[2],h=pR(c[1],b),a=f,b=fJ(388635598,fJ(g[1],h));continue;case
 1:var
-i=a[2],j=c[2],k=pI(c[1],b),a=i,b=fI(726404471,fI(j[1],k));continue;default:var
-l=a[2],a=l,b=fI(471882453,pI(c[1],b));continue}}return b}}function
+i=a[2],j=c[2],k=pI(c[1],b),a=i,b=fJ(726404471,fJ(j[1],k));continue;default:var
+l=a[2],a=l,b=fJ(471882453,pI(c[1],b));continue}}return b}}function
 gK(e,a,d,b){if(a){var
 c=a[1];if(1===c[0])if(typeof
 c[2][2]==="number")if(!a[2])return[0,[1,c[1],d],b];return[0,[0,a,d,e],b]}return b}var
 Dr=[0,-1,Dl,0,0,-1];function
-pS(c,b,a){return[0,c,b,a,0,pR(a,fI(c,fI(b,0)))&jd]}function
+pS(c,b,a){return[0,c,b,a,0,pR(a,fJ(c,fJ(b,0)))&jd]}function
 Ds(b,a){return pS(0,b,[0,[1,Dp,a],0])}function
 Dt(b,a){var
 d=b[5]===a[5]?1:0;if(d){var
@@ -6166,6 +6505,7 @@ n=d[1];if(2===n[0]){var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 r=j(jL,d[2]),s=f_(m);return gH(c,s,b,iE(l,k,i,g,b,gH(c,r,b,f)))}var
 m=[0,n,m],d=d[2];continue}throw[0,h,Dl]}}var
 p=gH(c,j(jL,e),b,f);return q<50?jc(q+1|0,l,k,i,g,b,p):a(jc,[0,l,k,i,g,b,p])}return gH(c,e,b,f)}function
@@ -6203,6 +6543,9 @@ mb(b){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 r=j(jL,d[2]),s=gb(m);return gK(c,s,b,iH(l,k,h,g,b,gK(c,r,b,f)))}var
+=======
+r=j(jL,d[2]),s=gc(m);return gK(c,s,b,iH(l,k,h,g,b,gK(c,r,b,f)))}var
+>>>>>>> (fix) Directly use time constants in generated JS code
 m=[0,n,m],d=d[2];continue}throw[0,i,Du]}}var
 p=gK(c,j(jL,e),b,f);return q<50?jb(q+1|0,l,k,h,g,b,p):a(jb,[0,l,k,h,g,b,p])}return gK(c,e,b,f)}function
 iH(a,b,c,d,e,f){return aL(jb(0,a,b,c,d,e,f))}function
@@ -6218,7 +6561,7 @@ mc(b){var
 d=b[4];if(d)return d[1];var
 e=b[3];if(e){var
 f=e[1];if(2===f[0]){var
-g=f[1],h=g[1],j=g[2],i=-1,c=fm(gc(function(b,a){return ed(b,a[1])},i,h)+1|0,-1);e0(function(a){var
+g=f[1],h=g[1],j=g[2],i=-1,c=fn(gd(function(b,a){return ed(b,a[1])},i,h)+1|0,-1);e0(function(a){var
 b=a[1],d=a[2];return aO(c,b)[b+1]=d},h);var
 a=[0,c,j]}else
 var
@@ -6242,8 +6585,12 @@ b=e,a=c;for(;;){if(0===b)return a;var
 b=b-1|0,a=j(d,a);continue}}var
 Dx=-2,Dy=-3;function
 jM(g,e){if(-1===e)return l_;if(e===g[6])return 28;var
+<<<<<<< HEAD
 a=eo(g[4],e);if(eq<=a)if(de<=a)var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+a=en(g[4],e);if(ep<=a)if(de<=a)var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=a-192|0,b=54<c>>>0?56<=c?1:0:23===c?0:1;else
 var
 f=a-171|0,b=14<f>>>0?1:10===f?1:0;else
@@ -6285,6 +6632,7 @@ c=0;if(!c)var
 b=1;var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 f=0,g=b?pR:fl(e,Dq),h=a[1],i=b?Dp:a[1];return[0,i,h,g,f,a]}function
 me(c,b){try{var
 a=r(mb[7],c[8],b);return a}catch(a){a=aJ(a);if(a===aO){var
@@ -6309,6 +6657,9 @@ n=v[5],o=d[1][7],k=iE(0,ma(w,m,n[2],n[3],0),pL)[1],c=o[1],f=c.length-1,t=0,u=0;i
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 f=0,g=b?pV:fm(e,Dz),h=a[1],i=b?Dy:a[1];return[0,i,h,g,f,a]}function
+=======
+f=0,g=b?pV:fn(e,Dz),h=a[1],i=b?Dy:a[1];return[0,i,h,g,f,a]}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 md(c,b){try{var
 a=s(ma[7],c[8],b);return a}catch(a){a=aI(a);if(a===aU){var
 d=DA(c[5],b);aP(ma[5],c[8],b,d);return d}throw a}}function
@@ -6350,12 +6701,12 @@ h=0;if(!h)aM(xS);j(pS(c),k);var
 h=0;if(!h)aM(xU);j(pT(c),k);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 g=c.length-1,a=0;for(;;){if(a!==g)if(aO(c,a)[a+1]){var
-a=a+1|0;continue}if(a===g)o[1]=fm(2*g|0,0);var
+a=a+1|0;continue}if(a===g)o[1]=fn(2*g|0,0);var
 l=pS(a,m,iG(a,k)),b=d[3].length-1,p=l[1]===b?1:0,x=p?0<b?1:0:p;if(x){var
-q=d[3];d[3]=fm(2*b|0,0);var
-r=d[3],y=0<=b?(q.length-1-b|0)<0?0:(r.length-1-b|0)<0?0:(adE(q,0,r,0,b),1):0;if(!y)aM(xV)}return l}}function
+q=d[3];d[3]=fn(2*b|0,0);var
+r=d[3],y=0<=b?(q.length-1-b|0)<0?0:(r.length-1-b|0)<0?0:(ady(q,0,r,0,b),1):0;if(!y)aM(xV)}return l}}function
 pW(a,e,d,c){var
-f=aS(e,d),b=eo(a[2],f),g=me(a,jM(a[1],b),b,c),h=md(a[1],g);return aO(c[3],b)[b+1]=h}function
+f=aS(e,d),b=en(a[2],f),g=me(a,jM(a[1],b),b,c),h=md(a[1],g);return aO(c[3],b)[b+1]=h}function
 DB(f,a,c){try{var
 b=oC(c,a[4]);return b}catch(b){b=aI(b);if(b===aU){var
 d=me(f,c,-1,a),g=mc(d),e=[0,d[1],g];a[4]=[0,[0,c,e],a[4]];return e}throw b}}function
@@ -6364,7 +6715,7 @@ b=oC(c,a[2]);return b}catch(b){b=aI(b);if(b===aU){var
 d=md(a,Ds(c,a[1]));a[2]=[0,[0,c,d],a[2]];return d}throw b}}function
 pX(c,b,a){if(0<=a){var
 d=ai(b);if(d<=a)return-1;if(a===(d-1|0))if(-1!==c[6])if(10===aS(b,a))return c[6];var
-e=aS(b,a);return eo(c[3],e)}return-1}function
+e=aS(b,a);return en(c[3],e)}return-1}function
 pY(a,d,r,o){var
 s=a[4],f=a[5];if(f===ai(d))if(-1!==a[1][6])if(s<f)if(10===aS(d,f-1|0)){var
 <<<<<<< HEAD
@@ -6377,11 +6728,11 @@ C=f-1|0;for(;;){var
 z=c[1][6],e=aO(j[3],z)[z+1];if(0<=e[1]){if(o){var
 A=e[1];aO(c[3],A)[A+1]=C+1|0}return e}if(e[1]===-3){if(o){var
 B=e[2];aO(c[3],B)[B+1]=C+1|0}return e}var
-q=c[1][6],H=eo(c[2],10),I=me(c,jM(c[1],q),H,j),J=md(c[1],I);aO(j[3],q)[q+1]=J;continue}}if(o){var
+q=c[1][6],H=en(c[2],10),I=me(c,jM(c[1],q),H,j),J=md(c[1],I);aO(j[3],q)[q+1]=J;continue}}if(o){var
 l=s,k=r;a:for(;;){if(l<a[5]){var
-D=aS(d,l),t=eo(a[2],D),g=l,p=k,b=aO(k[3],t)[t+1];for(;;){if(0<=b[1]){var
+D=aS(d,l),t=en(a[2],D),g=l,p=k,b=aO(k[3],t)[t+1];for(;;){if(0<=b[1]){var
 h=g+1|0;if(h<a[5]){var
-E=aS(d,h),u=eo(a[2],E),F=aO(b[3],u)[u+1],v=b[1];aO(a[3],v)[v+1]=h;var
+E=aS(d,h),u=en(a[2],E),F=aO(b[3],u)[u+1],v=b[1];aO(a[3],v)[v+1]=h;var
 g=h,p=b,b=F;continue}var
 <<<<<<< HEAD
 w=b[1];aN(a[3],w)[w+1]=h;return b}if(b[1]===-3){var
@@ -6404,16 +6755,16 @@ w=b[1];aO(a[3],w)[w+1]=h;return b}if(b[1]===-3){var
 x=b[2];aO(a[3],x)[x+1]=g+1|0;return b}pW(a,d,g,p);var
 l=g,k=p;continue a}}return k}}var
 i=s,m=r;for(;;){if(i<f){var
-G=aS(d,i),y=eo(a[2],G),n=aO(m[3],y)[y+1];if(0<=n[1]){var
+G=aS(d,i),y=en(a[2],G),n=aO(m[3],y)[y+1];if(0<=n[1]){var
 i=i+1|0,m=n;continue}if(n[1]===-3)return n;pW(a,d,i,m);continue}return m}}function
-hG(b,a){return ol(b,a)?[0,[0,b,a],0]:[0,[0,a,b],0]}function
+hH(b,a){return ol(b,a)?[0,[0,b,a],0]:[0,[0,a,b],0]}function
 pZ(b,a){return e2(pF(b),a)}function
 DE(d,c,a){var
-b=Dn(a);if(b)return iC(eo(c,b[1]));var
+b=Dn(a);if(b)return iC(en(c,b[1]));var
 e=[0,pG(a),a];try{var
 g=s(l$[27],e,d[1]);return g}catch(b){b=aI(b);if(b===aU){var
 f=Do(a,jJ,function(a,b){var
-d=a[1],e=eo(c,a[2]);return e2(hG(eo(c,d),e),b)});d[1]=aP(l$[4],e,f,d[1]);return f}throw b}}function
+d=a[1],e=en(c,a[2]);return e2(hH(en(c,d),e),b)});d[1]=aP(l$[4],e,f,d[1]);return f}throw b}}function
 gL(e){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 a=e;for(;;){if(typeof
@@ -6451,6 +6802,7 @@ a=d;continue}return 0}}var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Dw=hE(cS,cK),Dx=eZ(hE(eN,cX),Dw),mh=eZ(hE(65,90),Dx),pW=jI(32,mh),Dz=lB(pV,Dy,eZ(pW,mh)),DA=pV(95,eZ(Dz,hE(48,57)));function
 jN(e,d){var
 =======
@@ -6462,6 +6814,9 @@ jM(e,d){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 DF=hG(cQ,cK),DG=e2(hG(eQ,cW),DF),mg=e2(hG(65,90),DG),p0=jI(32,mg),DI=lz(pZ,DH,e2(p0,mg)),DJ=pZ(95,e2(DI,hG(48,57)));function
+=======
+DF=hH(cQ,cK),DG=e2(hH(eQ,cW),DF),mg=e2(hH(65,90),DG),p0=jI(32,mg),DI=lz(pZ,DH,e2(p0,mg)),DJ=pZ(95,e2(DI,hH(48,57)));function
+>>>>>>> (fix) Directly use time constants in generated JS code
 jN(e,d){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=e,a=d;for(;;){if(b){if(a){var
@@ -6629,7 +6984,7 @@ h=0}return[0,[1,[0,e,i]],c]}break;case
 2:var
 a=fd(b[1],a[2]);continue}return[0,b,mi(a[2])]}return 0}}function
 iI(c,d,b,a){return eP===d?eP===b?a:e3(c,b,a,iE(c)):a}function
-fJ(a,b,H,j,G,d,h,g,F){var
+fK(a,b,H,j,G,d,h,g,F){var
 f=H,e=G,c=F;for(;;)if(typeof
 c==="number")switch(c){case
 0:return[0,hg(a,9),b];case
@@ -6670,18 +7025,23 @@ K=gJ(a,iA),L=[0,e3(a,eP,hg(a,iA),K),0],M=gJ(a,iA);return[0,jK(a,[0,e3(a,eP,hg(a,
 switch(c[0]){case
 0:var
 <<<<<<< HEAD
+<<<<<<< HEAD
 o=DC(h,g,c[1]),E=o?0:1,N=E?pM(a):eB(a,[0,o]);return[0,N,b];case
 1:return[0,p1(a,b,f,j,e,d,h,g,c[1]),b];case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 o=DE(h,g,c[1]),E=o?0:1,N=E?pN(a):eB(a,[0,o]);return[0,N,b];case
+=======
+o=DE(h,g,c[1]),E=o?0:1,N=E?pN(a):eA(a,[0,o]);return[0,N,b];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 1:return[0,p2(a,b,f,j,e,d,h,g,c[1]),b];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 2:var
 k=mi(c[1]);if(k)if(!k[2]){var
-p=fJ(a,b,f,j,e,d,h,g,k[1]);return[0,iI(a,b,p[2],p[1]),b]}return[0,jK(a,co(function(i){var
-c=fJ(a,b,f,j,e,d,h,g,i);return iI(a,b,c[2],c[1])},k)),b];case
+p=fK(a,b,f,j,e,d,h,g,k[1]);return[0,iI(a,b,p[2],p[1]),b]}return[0,jK(a,co(function(i){var
+c=fK(a,b,f,j,e,d,h,g,i);return iI(a,b,c[2],c[1])},k)),b];case
 3:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 q=c[3],r=c[2],s=fH(a,b,f,j,e,d,i,g,c[1]),l=s[2],m=s[1];if(q)var
 O=q[1],P=wt<=e?function(b){var
@@ -6691,10 +7051,14 @@ var
 t=eA(a,[3,e,l,m]);return[0,pQ(r,function(b){return e0(a,l,hf(a,m),b)},t),b];case
 =======
 q=c[3],r=c[2],s=fJ(a,b,f,j,e,d,h,g,c[1]),l=s[2],m=s[1];if(q)var
+=======
+q=c[3],r=c[2],s=fK(a,b,f,j,e,d,h,g,c[1]),l=s[2],m=s[1];if(q)var
+>>>>>>> (fix) Directly use time constants in generated JS code
 O=q[1],P=wC<=e?function(b){var
 c=[0,e3(a,l,hh(a,m),b),0];return jK(a,[0,iE(a),c])}:function(b){var
 c=[0,iE(a),0];return jK(a,[0,e3(a,l,hh(a,m),b),c])},t=pU(O-r|0,P,iE(a));else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 t=eB(a,[3,e,l,m]);return[0,pT(r,function(b){return e2(a,l,hh(a,m),b)},t),b];case
@@ -6705,14 +7069,18 @@ t=eB(a,[3,e,l,m]);return[0,pT(r,function(b){return e3(a,l,hh(a,m),b)},t),b];case
 =======
 t=eB(a,[3,e,l,m]);return[0,pU(r,function(b){return e3(a,l,hh(a,m),b)},t),b];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+t=eA(a,[3,e,l,m]);return[0,pU(r,function(b){return e3(a,l,hh(a,m),b)},t),b];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 4:var
-n=c[1],u=fJ(a,n,f,j,e,d,h,g,c[2]);return[0,iI(a,n,u[2],u[1]),n];case
+n=c[1],u=fK(a,n,f,j,e,d,h,g,c[2]);return[0,iI(a,n,u[2],u[1]),n];case
 5:var
 e=c[1],c=c[2];continue;case
 6:var
 v=c[1];if(f){var
 c=v;continue}var
 w=d[1];d[1]=d[1]+2|0;var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6726,11 +7094,15 @@ x=fJ(a,b,f,j,e,d,h,g,v),Q=x[2],R=x[1],S=e3(a,eP,R,pO(a,w+1|0));return[0,e3(a,eP,
 =======
 x=fJ(a,b,f,j,e,d,h,g,v),Q=x[2],R=x[1],S=e3(a,eP,R,pP(a,w+1|0));return[0,e3(a,eP,pP(a,w),S),Q];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+x=fK(a,b,f,j,e,d,h,g,v),Q=x[2],R=x[1],S=e3(a,eP,R,pP(a,w+1|0));return[0,e3(a,eP,pP(a,w),S),Q];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 7:var
 f=1,c=c[1];continue;case
 8:var
-y=d[1],z=fJ(a,b,f,j,e,d,h,g,c[1]),A=z[2],B=z[1],C=d[1]-1|0;return C<y?[0,B,A]:[0,e3(a,eP,eB(a,[5,y,C]),B),A];case
+y=d[1],z=fK(a,b,f,j,e,d,h,g,c[1]),A=z[2],B=z[1],C=d[1]-1|0;return C<y?[0,B,A]:[0,e3(a,eP,eA(a,[5,y,C]),B),A];case
 14:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6750,11 +7122,14 @@ T=c[1],D=fJ(a,b,f,j,e,d,h,g,c[2]),U=D[2],V=D[1];return[0,e3(a,eP,eB(a,[8,T]),V),
 p1(a,b,i,h,g,f,e,d,c){if(c){var
 =======
 T=c[1],D=fJ(a,b,f,j,e,d,h,g,c[2]),U=D[2],V=D[1];return[0,e3(a,eP,eB(a,[8,T]),V),U];default:throw[0,i,DL]}}function
+=======
+T=c[1],D=fK(a,b,f,j,e,d,h,g,c[2]),U=D[2],V=D[1];return[0,e3(a,eP,eA(a,[8,T]),V),U];default:throw[0,i,DL]}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 p2(a,b,i,h,g,f,e,d,c){if(c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 l=c[2],m=c[1];if(l){var
-n=fJ(a,b,i,h,g,f,e,d,m),j=n[1],p=n[2],k=p2(a,b,i,h,g,f,e,d,l);return pO(k)?j:pO(j)?k:e3(a,p,j,k)}var
-o=fJ(a,b,i,h,g,f,e,d,m);return iI(a,b,o[2],o[1])}return iE(a)}function
+n=fK(a,b,i,h,g,f,e,d,m),j=n[1],p=n[2],k=p2(a,b,i,h,g,f,e,d,l);return pO(k)?j:pO(j)?k:e3(a,p,j,k)}var
+o=fK(a,b,i,h,g,f,e,d,m);return iI(a,b,o[2],o[1])}return iE(a)}function
 iJ(a){if(typeof
 a!=="number"&&0===a[0])return a[1];throw[0,i,DM]}function
 eH(l,k){var
@@ -6764,6 +7139,7 @@ a==="number")return a;else
 switch(a[0]){case
 0:var
 c=a[1];if(b)var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6777,12 +7153,15 @@ j=jH(nL,hF(c,pZ)),i=e2(c,e2(jH(32,hF(c,mf)),j));else
 =======
 j=jI(nM,hF(c,p0)),i=e2(c,e2(jI(32,hF(c,mg)),j));else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+j=jI(nM,hG(c,p0)),i=e2(c,e2(jI(32,hG(c,mg)),j));else
+>>>>>>> (fix) Directly use time constants in generated JS code
 var
 i=c;return[0,i];case
 1:var
 m=a[1];return[1,co(function(a){return eH(b,a)},m)];case
 2:var
-n=a[1],d=co(function(a){return eH(b,a)},n);return gL([2,d])?[0,gc(function(b,a){return e2(b,iJ(a))},jJ,d)]:[2,d];case
+n=a[1],d=co(function(a){return eH(b,a)},n);return gL([2,d])?[0,gd(function(b,a){return e2(b,iJ(a))},jJ,d)]:[2,d];case
 3:var
 o=a[3],p=a[2];return[3,eH(b,a[1]),p,o];case
 4:var
@@ -6799,11 +7178,11 @@ b=0,a=a[1];continue;case
 10:var
 b=1,a=a[1];continue;case
 11:var
-s=a[1],t=co(function(a){return eH(b,a)},s);return[0,gc(function(b,a){return hF(b,iJ(a))},iD,t)];case
+s=a[1],t=co(function(a){return eH(b,a)},s);return[0,gd(function(b,a){return hG(b,iJ(a))},iD,t)];case
 12:var
-u=a[1],v=co(function(a){return eH(b,a)},u);return[0,iB(iD,gc(function(b,a){return e2(b,iJ(a))},jJ,v))];case
+u=a[1],v=co(function(a){return eH(b,a)},u);return[0,iB(iD,gd(function(b,a){return e2(b,iJ(a))},jJ,v))];case
 13:var
-w=a[1],x=iB(iD,iJ(eH(b,a[2])));return[0,hF(iJ(eH(b,w)),x)];default:var
+w=a[1],x=iB(iD,iJ(eH(b,a[2])));return[0,hG(iJ(eH(b,w)),x)];default:var
 y=a[1];return[14,y,eH(b,a[2])]}}function
 mj(e){var
 a=e;for(;;){if(typeof
@@ -6893,6 +7272,7 @@ f=b[1];b[1]=e2(iC(aS(c,a)),f);var
 g=a+1|0;if(d!==a){var
 a=g;continue}break}}return[0,b[1]]}function
 <<<<<<< HEAD
+<<<<<<< HEAD
 gK(b,a){return[0,hE(b,a)]}function
 p3(b){var
 a=[12,b];return gI(a)?a:aM(DN)}var
@@ -6915,9 +7295,12 @@ x=mj(h)?[6,h]:mk([0,[4,-1034406550,p2(DV)],[0,[6,h],0]]),n=eH(0,x),c=gD(k7,0),l=
 x=mi(h)?[6,h]:mj([0,[4,-1034406550,p2(DV)],[0,[6,h],0]]),n=eH(0,x),c=gD(k6,0),l=[0,0];function
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
+=======
+gN(b,a){return[0,hH(b,a)]}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 p7(b){var
 a=[12,b];return gL(a)?a:aM(DW)}var
-DY=[0,iB(iD,iC(10))],DZ=[0,gN(bW,c4),0],D0=[0,gN(c8,b7),DZ],D1=[0,eI(cS),D0],D2=gM([0,gN(97,gv),D1]),D3=[0,gN(cQ,cK),0],D4=[0,gN(eQ,cW),D3],D5=gM([0,gN(65,90),D4]),D6=[0,eI(cX),0],D7=gM([0,D2,[0,D5,[0,eI(eq),D6]]]),p8=gM([0,D7,[0,gN(48,57),0]]);eI(95);DV(D8);eI(247);eI(kU);eI(32);var
+DY=[0,iB(iD,iC(10))],DZ=[0,gN(bW,c4),0],D0=[0,gN(c8,b7),DZ],D1=[0,eI(cS),D0],D2=gM([0,gN(97,gv),D1]),D3=[0,gN(cQ,cK),0],D4=[0,gN(eQ,cW),D3],D5=gM([0,gN(65,90),D4]),D6=[0,eI(cX),0],D7=gM([0,D2,[0,D5,[0,eI(ep),D6]]]),p8=gM([0,D7,[0,gN(48,57),0]]);eI(95);DV(D8);eI(247);eI(kU);eI(32);var
 DX=[0,iD];function
 p9(h){var
 x=mj(h)?[6,h]:mk([0,[4,-1034406550,p3(DX)],[0,[6,h],0]]),n=eH(0,x),c=gD(k7,0),l=[0,0];function
@@ -6967,10 +7350,11 @@ b=a[1];break;default:throw[0,i,DK]}var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=b;continue}}e(n);var
 m=l[1],d=c$(gx),f=c$(gx),b=[0,0];eX(d,0,0);eX(f,0,0);var
-a=1;for(;;){if(0!==eo(c,a))b[1]++;eX(d,a,dh(b[1]));var
+a=1;for(;;){if(0!==en(c,a))b[1]++;eX(d,a,dh(b[1]));var
 r=dh(a);eX(f,b[1],r);var
 s=a+1|0;if(c4!==a){var
 a=s;continue}var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -7004,13 +7388,16 @@ g=b[1]+1|0,q=lD(f,0,b[1]+1|0),t=m?g:-1,u=m?g+1|0:g,k=[0,0],o=[0,0],p=fJ(k,eP,0,0
 D7(p,o,a,c){var
 =======
 g=b[1]+1|0,q=lE(f,0,b[1]+1|0),t=m?g:-1,u=m?g+1|0:g,k=[0,0],o=[0,0],p=fJ(k,eP,0,0,-904640576,o,[0,l$[1]],d,n),v=iI(k,eP,p[2],p[1]),w=o[1]/2|0;return[0,v,0,d,q,u,t,[0,[0,0]],j(ma[1],97),w]}}function
+=======
+g=b[1]+1|0,q=lE(f,0,b[1]+1|0),t=m?g:-1,u=m?g+1|0:g,k=[0,0],o=[0,0],p=fK(k,eP,0,0,-904640576,o,[0,l$[1]],d,n),v=iI(k,eP,p[2],p[1]),w=o[1]/2|0;return[0,v,0,d,q,u,t,[0,[0,0]],j(ma[1],97),w]}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 D9(p,o,a,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 w=1,b=p?p[1]:0,g=o?o[1]:-1,m=b<0?1:0;if(m)var
 n=m;else
 var
 v=g<-1?1:0,n=v||(ai(c)<(b+g|0)?1:0);if(n)aM(D_);var
-i=ai(c),e=-1===g?i:b+g|0,j=a[7][1].length-1+1|0,r=10<j?fm(j,0):DD.slice(),f=[0,a,a[3],r,b,e],s=0===b?33:32|jM(a,pX(a,c,b-1|0)),h=pY(f,c,DC(a,s),w);if(h[1]===-3)var
+i=ai(c),e=-1===g?i:b+g|0,j=a[7][1].length-1+1|0,r=10<j?fn(j,0):DD.slice(),f=[0,a,a[3],r,b,e],s=0===b?33:32|jM(a,pX(a,c,b-1|0)),h=pY(f,c,DC(a,s),w);if(h[1]===-3)var
 d=mc(h[5]);else{var
 t=e===i?33:32|jM(a,pX(a,c,e)),k=DB(f,h,t),l=k[1],u=k[2];aO(f[3],l)[l+1]=e+1|0;var
 d=u}var
@@ -7037,7 +7424,7 @@ b=[0,0],f=ah(c);function
 =======
 hi=[bW,D$,b1(0)],mm=[0,0],Eb=[bW,Ea,b1(0)];function
 p$(f,e,d){try{var
-a=f[3],b=eZ(a),g=fa===b?a[1]:b7===b?fG(a):a,c=D9([0,d],0,g,e);mm[1]=[0,c];var
+a=f[3],b=eZ(a),g=fa===b?a[1]:b7===b?fH(a):a,c=D9([0,d],0,g,e);mm[1]=[0,c];var
 h=p_(c,0)[1];return h}catch(a){a=aI(a);if(a===aU){mm[1]=0;throw aU}throw a}}function
 jO(c){[0,1];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -7341,7 +7728,7 @@ e=0;if(!e)throw hi;var
 b=eI(c)}else{if(d(0))throw hi;var
 f=h(0),o=44<=f?63===f?1:0:42<=f?1:0;if(o)throw hi;var
 b=eI(f)}var
-m=a(42)?p3(b):a(43)?ml(b,1,0):a(63)?ml(b,0,DP):b,i=[0,m,i];continue}return mk(gb(i))}}function
+m=a(42)?p3(b):a(43)?ml(b,1,0):a(63)?ml(b,0,DP):b,i=[0,m,i];continue}return mk(gc(i))}}function
 l(d){var
 b=d;for(;;){if(0!==b)if(a(93))return b;var
 c=m(0);if(a(45)){if(a(93)){var
@@ -7354,30 +7741,30 @@ n=[b7,function(a){return p9(e)}];return[0,e,[b7,function(a){return p9(mk([0,p6,[
 qa(d){var
 a=mm[1],e=0;if(a){var
 b=p_(a[1],e),c=b[1];return cp(d,c,b[2]-c|0)}throw aU}var
-mn=ea,mo=f9;function
+mn=ea,mo=f_;function
 jP(b,a){return Math.abs(b-a)<1e-08?1:0}function
 mp(b,a){return jP(b,a)?0:b<a?-1:1}function
 qb(b){var
-a=hA(b),c=a[1]<ha?0:1;return(a[2]|0)+c|0}var
-qc=[0,0],qd=or(0),Ec=iu(qd)[3],qe=aeG(qd)[3]-Ec|0;function
-fK(a){return qc[1]}function
+a=hB(b),c=a[1]<ha?0:1;return(a[2]|0)+c|0}var
+qc=[0,0],qd=or(0),Ec=iu(qd)[3],qe=aeA(qd)[3]-Ec|0;function
+fL(a){return qc[1]}function
 mq(a){qc[1]=a;return 0}function
 iK(c,b){function
-d(b,a){if(fE(b,a)){if(typeof
+d(b,a){if(fF(b,a)){if(typeof
 b==="number"){if(0===b){if(typeof
 a!=="number")return a[1];if(0!==a)return qe}else
 if(typeof
 a!=="number")return a[1]-qe|0}else
 if(typeof
 a!=="number")return a[1]-b[1]|0;throw[0,i,Ed]}throw[0,i,Ee]}var
-e=ea(c,b)?0:fE(c,b)?d(c,b):-d(b,c)|0,a=e%24|0;return v2<=a?11<a?a-24|0:a:a+24|0}function
-qf(a){return iK(0,fK(0))}function
+e=ea(c,b)?0:fF(c,b)?d(c,b):-d(b,c)|0,a=e%24|0;return v2<=a?11<a?a-24|0:a:a+24|0}function
+qf(a){return iK(0,fL(0))}function
 Ef(d,c,a){var
-b=fK(0);mq(c);try{var
+b=fL(0);mq(c);try{var
 e=j(d,a);mq(b);return e}catch(a){a=aI(a);mq(b);throw a}}function
 mr(c,b,a){return c+(dY*iK(b,a)|0)|0}function
-gO(a){return mr(a,0,fK(0))}function
-gP(a){return mr(a,fK(0),0)}function
+gO(a){return mr(a,0,fL(0))}function
+gP(a){return mr(a,fL(0),0)}function
 iL(d){var
 a=gO(d),b=a/cr|0,c=gP(a%cr|0);return 0<=a?[0,c,b]:[0,c+cr|0,b-1|0]}function
 qg(c,b,a){return gP(((c*dY|0)+(b*60|0)|0)+a|0)}function
@@ -7413,7 +7800,7 @@ EB(a){return a}var
 EC=0;function
 ED(b,a){return b+a|0}function
 EE(b,a){return b-a|0}function
-EF(b,a){return f$(b,a)}var
+EF(b,a){return ga(b,a)}var
 EG=wS;function
 EH(a){return-a|0}function
 EI(a){return a}function
@@ -7423,10 +7810,10 @@ EL(b,a){return b+a|0}function
 EM(b,a){return b-a|0}function
 EN(b,a){return b-a|0}function
 EO(a,b){return lc===b?a+1|0:g6<=b?a+dY|0:a+60|0}var
-qi=[0,[0,Eu,qb,Ev,Ew],qg,Eg,Ei,Eh,ms,mr,gO,gP,iL,Ej,Ek,El,Eo,En,Em,mn,mo,fr,Ep,Eq,Et,Es,Er,[0,EC,ED,EE,EH,mn,mo,fr,Ey,EF,EG,qh,Ex,Ez,EA,EB,EI,EJ,EK],EL,EM,EN,EO,function(a,b){return lc===b?a-1|0:g6<=b?a-3600|0:a+uL|0}];function
+qi=[0,[0,Eu,qb,Ev,Ew],qg,Eg,Ei,Eh,ms,mr,gO,gP,iL,Ej,Ek,El,Eo,En,Em,mn,mo,fs,Ep,Eq,Et,Es,Er,[0,EC,ED,EE,EH,mn,mo,fs,Ey,EF,EG,qh,Ex,Ez,EA,EB,EI,EJ,EK],EL,EM,EN,EO,function(a,b){return lc===b?a-1|0:g6<=b?a-3600|0:a+uL|0}];function
 mt(c,b,a){return c+(dY*iK(b,a)|0)}function
-gQ(a){return mt(a,0,fK(0))}function
-gR(a){return mt(a,fK(0),0)}function
+gQ(a){return mt(a,0,fL(0))}function
+gR(a){return mt(a,fL(0),0)}function
 iM(d){var
 a=gQ(d),b=(a|0)/cr|0,c=gR(a%cr);return a<0?[0,c+cr,b-1|0]:[0,c,b]}function
 qj(c,b,a){return gR(((c*dY|0)+(b*60|0)|0)+a)}function
@@ -7435,7 +7822,7 @@ d=c?c[1]:0,e=b?b[1]:0,f=a?a[1]:0;return qj(d,e,f)}function
 EQ(a){return gR(0)}function
 mu(a){return gR(nK)}function
 ER(c){var
-b=lv(0),a=iu(b);return(((dY*a[3]|0)+(60*a[2]|0)|0)+a[1]|0)+hA(b)[1]}function
+b=lv(0),a=iu(b);return(((dY*a[3]|0)+(60*a[2]|0)|0)+a[1]|0)+hB(b)[1]}function
 ES(a){return(gQ(a)|0)/dY|0}function
 ET(a){return((gQ(a)|0)%dY|0)/60|0}function
 EU(a){return gQ(a)%60}function
@@ -7473,8 +7860,8 @@ Fj(b,a){return b+a}function
 Fk(b,a){return b-a}function
 Fl(b,a){return b-a}function
 Fm(a,b){return lc===b?a+1:g6<=b?a+dY:a+60}var
-ql=[0,[0,E3,E5,E4,E6],qj,EP,ER,EQ,mu,mt,gQ,gR,iM,ES,ET,EU,EX,EW,EV,jP,mp,fr,EY,EZ,E2,E1,E0,[0,Fa,Fb,Fc,Ff,jP,mp,fr,E8,Fd,Fe,qk,E7,E9,E_,E$,Fg,Fh,Fi],Fj,Fk,Fl,Fm,function(a,b){return lc===b?a-1:g6<=b?a-dY:a-60}],jQ=[bW,Fn,b1(0)],jR=[bW,Fo,b1(0)];function
-jS(b,a){return f9(b,a)<0?1:0}function
+ql=[0,[0,E3,E5,E4,E6],qj,EP,ER,EQ,mu,mt,gQ,gR,iM,ES,ET,EU,EX,EW,EV,jP,mp,fs,EY,EZ,E2,E1,E0,[0,Fa,Fb,Fc,Ff,jP,mp,fs,E8,Fd,Fe,qk,E7,E9,E_,E$,Fg,Fh,Fi],Fj,Fk,Fl,Fm,function(a,b){return lc===b?a-1:g6<=b?a-dY:a-60}],jQ=[bW,Fn,b1(0)],jR=[bW,Fo,b1(0)];function
+jS(b,a){return f_(b,a)<0?1:0}function
 eJ(i,e,a){if(0<=e)var
 h=e-1|0,f=[0,i+(h/12|0)|0,(h%12|0)+1|0];else
 var
@@ -7494,7 +7881,7 @@ FA(a){return a}function
 FB(a){return a}function
 FC(a){return a+2400001|0}function
 FD(a){return a-2400001|0}function
-gi(a){if(jc<a){var
+gj(a){if(jc<a){var
 b=0===(a%4|0)?1:0;if(b)var
 e=0!==(a%p|0)?1:0,c=e||(0===(a%vy|0)?1:0);else
 var
@@ -7543,9 +7930,13 @@ qp(a){return a-eJ(gS(a)-1|0,12,31)|0}function
 qq(a){var
 b=((((a+31741|0)-(a%7|0)|0)%jn|0)%36524|0)%jm|0,c=b/1460|0;return((((b-c|0)%k9|0)+c|0)/7|0)+1|0}function
 mx(a){switch(mv(a)){case
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 1:return gi(gS(a))?29:28;case
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+1:return gj(gS(a))?29:28;case
+>>>>>>> (fix) Directly use time constants in generated JS code
 3:case
 5:case
 8:case
@@ -7587,8 +7978,12 @@ FI(d,b){var
 FE(a){var
 =======
 FG(a){var
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=gi(gS(a));if(b)var
+=======
+b=gj(gS(a));if(b)var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=1===mv(a)?1:0,d=c?24===iN(a)?1:0:c;else
 var
 d=b;return d}function
@@ -7600,10 +7995,10 @@ g=e;return g}catch(a){a=aI(a);if(a!==jQ)if(a!==jR)throw a;return 0}}function
 qr(c,b,a){return[0,(12*c|0)+b|0,a]}function
 FI(c,b,a,g){var
 d=c?c[1]:0,e=b?b[1]:0,f=a?a[1]:0;return qr(d,e,f)}function
-iP(a){return[0,hH[1],a]}function
-FJ(a){return[0,hH[1],7*a|0]}function
-iQ(a){return[0,a,hH[2]]}function
-my(a){return[0,12*a|0,hH[2]]}function
+iP(a){return[0,hI[1],a]}function
+FJ(a){return[0,hI[1],7*a|0]}function
+iQ(a){return[0,a,hI[2]]}function
+my(a){return[0,12*a|0,hI[2]]}function
 FK(b,a){return[0,b[1]+a[1]|0,b[2]+a[2]|0]}function
 FL(b,a){return[0,b[1]-a[1]|0,b[2]-a[2]|0]}function
 qs(a){return[0,-a[1]|0,-a[2]|0]}function
@@ -7622,7 +8017,7 @@ FP(d,b){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 b=qv(c),d=b[3],e=iN(a)+d|0,f=b[2],g=iO(a)+f|0,h=b[1];return eJ(gS(a)+h|0,g,e)}function
-FQ(b,a){return[0,hH[1],b-a|0]}function
+FQ(b,a){return[0,hI[1],b-a|0]}function
 FR(d,b){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=(d-b|0)/31|0;for(;;){if((b+(31*a|0)|0)<d){var
@@ -7660,16 +8055,20 @@ FS(b,a){return ff(b,qs(a))}function
 FT(a,b){return uY<=b?v0<=b?ff(a,my(1)):ff(a,iP(7)):ik<=b?ff(a,iQ(1)):ff(a,iP(1))}function
 FU(a,b){return uY<=b?v0<=b?ff(a,my(-1)):ff(a,iP(-7)):ik<=b?ff(a,iQ(-1)):ff(a,iP(-1))}function
 FV(b,e){var
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=b-e|0;if(gi(b))var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+a=b-e|0;if(gj(b))var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=1;else
-if(gi(b-1|0))var
+if(gj(b-1|0))var
 h=0===(a%6|0)?1:0,c=h||(0===(a%17|0)?1:0);else
-if(gi(b-2|0))var
+if(gj(b-2|0))var
 i=0===(a%11|0)?1:0,c=i||(0===(a%17|0)?1:0);else
 var
-d=gi(b-3|0),c=d?0===(a%11|0)?1:0:d;var
+d=gj(b-3|0),c=d?0===(a%11|0)?1:0:d;var
 f=0===(a%28|0)?1:0,g=f||c;return g}var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -7737,16 +8136,16 @@ FX(d,c){var
 =======
 FX=FW.slice();function
 FY(b,d){var
-a=b?b[1]:11,c=aO(FX,a)[a+1];if(gi(d))if(0<a)return c+1|0;return c}function
+a=b?b[1]:11,c=aO(FX,a)[a+1];if(gj(d))if(0<a)return c+1|0;return c}function
 mz(a){var
-b=mw(eJ(a,1,1));return 3===b?gi(a)?53:52:4===b?53:52}function
+b=mw(eJ(a,1,1));return 3===b?gj(a)?53:52:4===b?53:52}function
 FZ(d,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=eJ(c,1,4),b=(a-(a%7|0)|0)+(7*(d-1|0)|0)|0;return[0,b,6+b|0]}function
 F0(f,e,d,c){var
 b=eJ(f,e+1|0,1),a=d-jT(b)|0,g=0<=a?a-7|0:a;return(b+(7*c|0)|0)+g|0}function
 F1(a){return 0===(a%p|0)?a/p|0:(a/p|0)+1|0}function
-F2(a){return 0===(a%f5|0)?a/f5|0:(a/f5|0)+1|0}function
+F2(a){return 0===(a%f6|0)?a/f6|0:(a/f6|0)+1|0}function
 F3(a){return((a+8|0)%28|0)+1|0}function
 F4(a){return((a+2|0)%15|0)+1|0}function
 qw(a){return(a%19|0)+1|0}function
@@ -7755,7 +8154,7 @@ b=(11*(qw(a)-1|0)|0)%30|0;if(jc<a){var
 c=(a/p|0)+1|0;return gB((((b-((3*c|0)/4|0)|0)+(((8*c|0)+5|0)/25|0)|0)+8|0)%30|0)}return b}function
 fg(a){var
 d=a%19|0;if(jc<a)var
-b=a/p|0,c=((((b-(b/4|0)|0)-(((8*b|0)+13|0)/25|0)|0)+(19*d|0)|0)+15|0)%30|0,e=c-f$(c/28|0,1-f$(f$(c/28|0,wS(29,c+1|0)),(21-d|0)/11|0)|0)|0,g=e,f=(((((a+(a/4|0)|0)+e|0)+2|0)-b|0)+(b/4|0)|0)%7|0;else
+b=a/p|0,c=((((b-(b/4|0)|0)-(((8*b|0)+13|0)/25|0)|0)+(19*d|0)|0)+15|0)%30|0,e=c-ga(c/28|0,1-ga(ga(c/28|0,wS(29,c+1|0)),(21-d|0)/11|0)|0)|0,g=e,f=(((((a+(a/4|0)|0)+e|0)+2|0)-b|0)+(b/4|0)|0)%7|0;else
 var
 j=((19*d|0)+15|0)%30|0,g=j,f=((a+(a/4|0)|0)+j|0)%7|0;var
 h=g-f|0,i=3+((h+40|0)/44|0)|0;return eJ(a,i,(h+28|0)-(31*(i/4|0)|0)|0)}function
@@ -7822,7 +8221,7 @@ b=aM(Gl)}var
 d=jT(b),h=4<d?a:a-1|0;return((b+(h*7|0)|0)+qx(e)|0)-d|0}function
 Gm(a){if(0<a)if(!(7<=a))return a;return 7===a?0:aM(Gn)}function
 Go(a){return a+1|0}var
-d0=[0,jQ,jR,eJ,Ft,Fu,Fv,Fz,FA,FC,Fy,mx,mw,iN,qp,qq,mv,gS,FB,FD,mn,mo,fr,FH,FG,FF,FE,Gg,Gf,Gh,qn,Gi,Gj,qx,Gm,Go,function(a){if(0<a)if(!(13<=a))return a-1|0;return aM(Gp)},[0,hH,FK,FL,qs,FM,qt,fr,qr,FI,my,iQ,FJ,iP,qu,FO,FP,qv],ff,FQ,FR,FS,FT,FU,gi,FV,FY,mz,FZ,F0,F1,F2,F3,F4,qw,F5,fg,F6,F7,F8,F9,F_,F$,Ga,Gb,Gc,Gd,Ge];function
+d0=[0,jQ,jR,eJ,Ft,Fu,Fv,Fz,FA,FC,Fy,mx,mw,iN,qp,qq,mv,gS,FB,FD,mn,mo,fs,FH,FG,FF,FE,Gg,Gf,Gh,qn,Gi,Gj,qx,Gm,Go,function(a){if(0<a)if(!(13<=a))return a-1|0;return aM(Gp)},[0,hI,FK,FL,qs,FM,qt,fs,qr,FI,my,iQ,FJ,iP,qu,FO,FP,qv],ff,FQ,FR,FS,FT,FU,gj,FV,FY,mz,FZ,F0,F1,F2,F3,F4,qw,F5,fg,F6,F7,F8,F9,F_,F$,Ga,Gb,Gc,Gd,Ge];function
 qy(b,a){function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 x(d,c){var
@@ -7833,8 +8232,8 @@ g(e,d){var
 c=j(a[10],d),f=c[1],g=j(b[37][13],c[2]);return[0,s(b[38],e,g),f]}function
 o(b,d,c){var
 e=iK(d,c),f=j(a[25][13],e),h=s(a[26],b[2],f);return g(b[1],h)}function
-k(a){return o(a,fK(0),0)}function
-h(a){return o(a,0,fK(0))}function
+k(a){return o(a,fL(0),0)}function
+h(a){return o(a,0,fL(0))}function
 y(b){var
 c=j(a[1][1],0);return k([0,b,aP(a[2],0,0,c)])}function
 c(a){return h(a)[1]}function
@@ -7857,9 +8256,9 @@ m=aP(a[2],h,g,f),c=l(aP(b[3],k,j,i),m),d=0<=n(c,A)?1:0,e=d?n(c,z)<=0?1:0:d;if(e)
 B(g,f,e,d,c,b,o){var
 h=f?f[1]:1,i=e?e[1]:1,k=d?d[1]:0,l=c?c[1]:0,n=b?b[1]:j(a[1][1],0);return m(g,h,i,k,l,n)}function
 C(e){var
-c=lv(0),b=iu(c),d=j(a[1][2],b[1]+hA(c)[1]);return h(m(b[6]+g7|0,b[5]+1|0,b[4],b[3],b[2],d))}function
+c=lv(0),b=iu(c),d=j(a[1][2],b[1]+hB(c)[1]);return h(m(b[6]+g7|0,b[5]+1|0,b[4],b[3],b[2],d))}function
 p(d){var
-c=hA(d),e=j(a[1][2],c[1]*cr+nK),f=j(a[22],e);return k([0,j(b[8],c[2]|0),f])}function
+c=hB(d),e=j(a[1][2],c[1]*cr+nK),f=j(a[22],e);return k([0,j(b[8],c[2]|0),f])}function
 D(a){return p(a+k1)}function
 q(d){var
 c=h(d),e=j(a[14],c[2]),f=j(a[1][4],e)/cr;return j(b[18],c[1])+f-ha}function
@@ -7996,23 +8395,27 @@ h=ij<=c?g6===c?1:0:k_<=c?1:0;if(h){var
 h=ik<=c?g6===c?1:0:k$<=c?1:0;if(h){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 e=s(a[29],d[2],c);return g(d[1],e)}var
-f=d[2];return g(s(b[42],d[1],c),f)}return[0,b,a,m,B,l,C,p,D,o,k,h,F,G,H,I,J,K,L,q,E,M,N,O,x,n,fr,T,U,V,W,X,Q,P,S,R,y,c,f,[0,d,ae,af,u,ah,ag,fr,t,Y,Z,_,$,aa,ab,ac,ad,aj,ak,ai,al,am,an,ao],w,aq,ar,ap,as,function(d,c){var
+f=d[2];return g(s(b[42],d[1],c),f)}return[0,b,a,m,B,l,C,p,D,o,k,h,F,G,H,I,J,K,L,q,E,M,N,O,x,n,fs,T,U,V,W,X,Q,P,S,R,y,c,f,[0,d,ae,af,u,ah,ag,fs,t,Y,Z,_,$,aa,ab,ac,ad,aj,ak,ai,al,am,an,ao],w,aq,ar,ap,as,function(d,c){var
 h=ik<=c?g6===c?1:0:k$<=c?1:0;if(h){var
 e=s(a[30],d[2],c);return g(d[1],e)}var
 f=d[2];return g(s(b[43],d[1],c),f)}]}function
 qz(b,a){function
 n(c,b,a){return c+iK(b,a)/24}function
-g(a){return n(a,fK(0),0)}function
-f(a){return n(a,0,fK(0))}function
+g(a){return n(a,fL(0),0)}function
+f(a){return n(a,0,fL(0))}function
 u(a){return g(j(b[18],a))-ha}function
 c(a){var
 c=f(a)+ha|0;return j(b[8],c)}function
 h(c){var
+<<<<<<< HEAD
 b=hA(f(c)+ha)[1]*cr;if(b<cr){var
 <<<<<<< HEAD
 d=j(a[1][2],b);return j(a[22],d)}throw[0,i,Go]}function
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
+=======
+b=hB(f(c)+ha)[1]*cr;if(b<cr){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=j(a[1][2],b);return j(a[22],d)}throw[0,i,Gq]}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 o(d,c){var
@@ -8022,7 +8425,7 @@ l=aP(a[2],h,g,f),c=o(aP(b[3],k,j,i),l),d=0<=c?1:0,e=d?c<2914695?1:0:d;if(e)retur
 v(g,f,e,d,c,b,o){var
 h=f?f[1]:1,i=e?e[1]:1,k=d?d[1]:0,l=c?c[1]:0,n=b?b[1]:j(a[1][1],0);return m(g,h,i,k,l,n)}function
 w(e){var
-c=lv(0),b=iu(c),d=j(a[1][2],b[1]+hA(c)[1]);return f(m(b[6]+g7|0,b[5]+1|0,b[4],b[3],b[2],d))}function
+c=lv(0),b=iu(c),d=j(a[1][2],b[1]+hB(c)[1]);return f(m(b[6]+g7|0,b[5]+1|0,b[4],b[3],b[2],d))}function
 x(a){return g(a)}function
 y(a){return g(a)+k1}function
 z(a){return f(a)}function
@@ -8124,7 +8527,7 @@ aj(a){return r(b[37][16],a)}function
 ak(d){var
 c=j(b[37][17],d[1]),e=j(a[25][16],d[2]);return[0,c[1],c[2],c[3],e]}function
 k(k){var
-e=hA(f(k+ha)),g=e[2]|0,d=e[1]*cr;if(d<0)var
+e=hB(f(k+ha)),g=e[2]|0,d=e[1]*cr;if(d<0)var
 c=d+cr,h=g-1|0;else
 var
 <<<<<<< HEAD
@@ -8148,6 +8551,7 @@ c=k(g),d=k(f),h=s(a[27],c[2],d[2]);return e([0,s(b[39],c[1],d[1]),h])}function
 an(g,f){var
 c=k(g),d=k(f),h=s(a[27],c[2],d[2]);return e([0,s(b[40],c[1],d[1]),h])}function
 ao(g,c){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -8230,9 +8634,12 @@ qD(a){var
 b=qC(a);try{var
 =======
 d=k(g),e=d[2],f=d[1],h=ik<=c?g6===c?1:0:k$<=c?1:0;return h?l(f,s(a[29],e,c)):l(s(b[42],f,c),e)}return[0,b,a,m,v,o,w,x,y,n,g,f,B,C,D,E,F,G,H,z,A,I,J,K,jP,mp,fr,P,Q,R,S,T,M,L,O,N,u,c,h,[0,d,aa,ab,q,ad,ac,fr,p,U,V,W,X,Y,Z,_,$,af,ag,ae,ah,ai,aj,ak],t,am,an,al,ao,function(g,c){var
+=======
+d=k(g),e=d[2],f=d[1],h=ik<=c?g6===c?1:0:k$<=c?1:0;return h?l(f,s(a[29],e,c)):l(s(b[42],f,c),e)}return[0,b,a,m,v,o,w,x,y,n,g,f,B,C,D,E,F,G,H,z,A,I,J,K,jP,mp,fs,P,Q,R,S,T,M,L,O,N,u,c,h,[0,d,aa,ab,q,ad,ac,fs,p,U,V,W,X,Y,Z,_,$,af,ag,ae,ah,ai,aj,ak],t,am,an,al,ao,function(g,c){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=k(g),e=d[2],f=d[1],h=ik<=c?g6===c?1:0:k$<=c?1:0;return h?l(f,s(a[30],e,c)):l(s(b[43],f,c),e)}]}var
-d1=function(a){return qz(d0,a)}(qi),mA=d1[1],hI=d1[2];(function(a){return qy(mA,a)}(hI));var
-qA=d1[41],gj=d1[39],mB=d1[38],mC=d1[25],mD=d1[18],qB=d1[17],qC=d1[16],qD=d1[14],Gu=d1[43],Gv=d1[40],Gw=d1[36],Gx=d1[23],Gy=d1[22],Gz=d1[21],GA=d1[15],GB=d1[13],GC=d1[6],GD=d1[5],GE=d1[4],GF=d1[3],GG=function(a){return qz(d0,a)}(ql)[1];(function(a){return qy(GG,a)}(ql));function
+d1=function(a){return qz(d0,a)}(qi),mA=d1[1],hj=d1[2];(function(a){return qy(mA,a)}(hj));var
+qA=d1[41],eB=d1[39],mB=d1[38],mC=d1[25],mD=d1[18],qB=d1[17],qC=d1[16],qD=d1[14],Gu=d1[43],Gv=d1[40],Gw=d1[36],Gx=d1[23],Gy=d1[22],Gz=d1[21],GA=d1[15],GB=d1[13],GC=d1[6],GD=d1[5],GE=d1[4],GF=d1[3],GG=function(a){return qz(d0,a)}(ql)[1];(function(a){return qy(GG,a)}(ql));function
 qE(a){switch(a){case
 0:return GH;case
 1:return GI;case
@@ -8242,8 +8649,12 @@ qE(a){switch(a){case
 5:return GM;default:return GN}}function
 qF(a){var
 b=qE(a);try{var
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=cp(b,0,3);return c}catch(a){a=aI(a);if(a[1]===fF)return b;throw a}}function
+=======
+c=cp(b,0,3);return c}catch(a){a=aI(a);if(a[1]===fG)return b;throw a}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 mE(a){switch(a){case
 0:return GO;case
 1:return GP;case
@@ -8258,27 +8669,28 @@ mE(a){switch(a){case
 10:return GY;default:return GZ}}function
 qG(a){var
 b=mE(a);try{var
-c=cp(b,0,3);return c}catch(a){a=aI(a);if(a[1]===fF)return b;throw a}}function
+c=cp(b,0,3);return c}catch(a){a=aI(a);if(a[1]===fG)return b;throw a}}function
 iR(a,e,d,c){if(0<d){if(c<0)jH(a,45);var
 f=gB(c),b=d;for(;;){if(1===b)return pg(a,f);if(f<b)if(1===e)jH(a,32);else
 if(0===e)pg(a,0);var
 b=b/10|0;continue}}throw[0,i,G0]}function
-eC(a){throw[0,fF,as(G1,a)]}function
-eK(b,a){throw[0,fF,as(a,as(G2,b))]}function
+eC(a){throw[0,fG,as(G1,a)]}function
+eK(b,a){throw[0,fG,as(a,as(G2,b))]}function
 qH(d,c,b){var
-a=12;for(;;){if(0===a)return eK(c,b);if(ez(j(d,j(d0[36],a)),b))return a;var
+a=12;for(;;){if(0===a)return eK(c,b);if(ey(j(d,j(d0[36],a)),b))return a;var
 a=a-1|0;continue}}function
 qI(b){var
-a=7;for(;;){if(0===a)return eK(G5,b);if(ez(qF(j(d0[34],a)),b))return a;var
+a=7;for(;;){if(0===a)return eK(G5,b);if(ey(qF(j(d0[34],a)),b))return a;var
 a=a-1|0;continue}}var
 G7=jO(G6);function
 qJ(f){function
 t(a){var
-b=eZ(a),d=fa===b?a[1]:b7===b?fG(a):a,c=d%12|0;return 0===c?12:c}function
+b=eZ(a),d=fa===b?a[1]:b7===b?fH(a):a,c=d%12|0;return 0===c?12:c}function
 a(m,k,a){var
 c=ai(m),H=[b7,function(b){return qE(j(f[7],a))}],y=[b7,function(b){return qF(j(f[7],a))}],I=[b7,function(c){var
 b=j(f[7],a);return j(d0[33],b)}],J=[b7,function(b){return mE(j(f[11],a))}],z=[b7,function(b){return qG(j(f[11],a))}],s=[b7,function(c){var
 b=j(f[11],a);return j(d0[35],b)}],r=[b7,function(b){return j(f[8],a)}],K=[b7,function(b){return j(f[9],a)}],L=[b7,function(b){return j(f[10],a)}],o=[b7,function(b){return j(f[12],a)}],A=[b7,function(c){var
+<<<<<<< HEAD
 a=eZ(o),b=fa===a?o[1]:b7===a?fG(o):o;return b%p|0}],M=[b7,function(b){return j(f[13],a)}],h=[b7,function(b){return j(f[4],a)}],N=[b7,function(a){return t(h)}],u=[b7,function(b){return j(f[5],a)}],B=[b7,function(b){return j(f[6],a)}],q=[b7,function(c){var
 <<<<<<< HEAD
 a=eZ(h),b=fa===a?h[1]:b7===a?fG(h):h;return 12<=(b%24|0)?G7:G8}],l=[b7,function(a){return qe(0)}],O=[b7,function(b){return j(f[14],a)}];function
@@ -8304,12 +8716,20 @@ b=eZ(a),c=fa===b?a[1]:b7===b?fG(a):a,e=3<=d?iw(xD,c):c;return l3(k,e)}function
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 a=eZ(h),b=fa===a?h[1]:b7===a?fG(h):h;return 12<=(b%24|0)?G8:G9}],l=[b7,function(a){return qf(0)}],O=[b7,function(b){return j(f[14],a)}];function
+=======
+a=eZ(o),b=fa===a?o[1]:b7===a?fH(o):o;return b%p|0}],M=[b7,function(b){return j(f[13],a)}],h=[b7,function(b){return j(f[4],a)}],N=[b7,function(a){return t(h)}],u=[b7,function(b){return j(f[5],a)}],B=[b7,function(b){return j(f[6],a)}],q=[b7,function(c){var
+a=eZ(h),b=fa===a?h[1]:b7===a?fH(h):h;return 12<=(b%24|0)?G8:G9}],l=[b7,function(a){return qf(0)}],O=[b7,function(b){return j(f[14],a)}];function
+>>>>>>> (fix) Directly use time constants in generated JS code
 g(a){return jH(k,a)}function
 e(d,c,a){var
-b=eZ(a),e=fa===b?a[1]:b7===b?fG(a):a;return iR(k,d,c,e)}function
+b=eZ(a),e=fa===b?a[1]:b7===b?fH(a):a;return iR(k,d,c,e)}function
 n(d,a){var
+<<<<<<< HEAD
 b=eZ(a),c=fa===b?a[1]:b7===b?fG(a):a,e=3<=d?ix(xF,c):c;return l4(k,e)}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+b=eZ(a),c=fa===b?a[1]:b7===b?fH(a):a,e=3<=d?ix(xF,c):c;return l4(k,e)}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 v(a,b){e(a,10,b);g(58);e(a,10,u);g(58);return e(a,10,B)}function
 w(f,a){function
 j(w){var
@@ -8350,7 +8770,7 @@ x=function(a){g(58);return iQ(k,0,10,0)},Q=ai(j);if(aV(j,G_))if(aV(j,G$)){if(aV(
 R=p$(jO(Hd),m,f+1|0),D=R}catch(a){a=aI(a);if(a!==aU)throw a;var
 D=eC(m)}var
 j=qa(m);if(D!==(f+1|0))eC(m);var
-E=eZ(l),P=fa===E?l[1]:b7===E?fG(l):l;if(0<=P)g(43);e(a,10,l);var
+E=eZ(l),P=fa===E?l[1]:b7===E?fH(l):l;if(0<=P)g(43);e(a,10,l);var
 x=function(a){g(58);return iR(k,0,10,0)},Q=ai(j);if(aV(j,G$))if(aV(j,Ha)){if(aV(j,Hb))throw[0,i,Hc];x(0)}else{x(0);x(0)}var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=Q,b=1;break;case
@@ -8372,6 +8792,7 @@ c=d,b=1;break;case
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 F=eW(q),S=e_===F?q[1]:b7===F?fE(q):q;l5(k,xJ(S));var
 =======
 F=eY(q),S=e$===F?q[1]:b7===F?fG(q):q;l4(k,xQ(S));var
@@ -8382,6 +8803,9 @@ F=eZ(q),S=fa===F?q[1]:b7===F?fG(q):q;l3(k,xQ(S));var
 =======
 F=eZ(q),S=fa===F?q[1]:b7===F?fG(q):q;l4(k,xS(S));var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+F=eZ(q),S=fa===F?q[1]:b7===F?fH(q):q;l4(k,xS(S));var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=d,b=1;break;case
 82:e(a,10,h);g(58);e(a,10,u);var
 c=d,b=1;break;case
@@ -8389,11 +8813,11 @@ c=d,b=1;break;case
 c=d,b=1;break;case
 84:v(a,h);var
 c=d,b=1;break;case
-89:e(a,f5,o);var
+89:e(a,f6,o);var
 c=d,b=1;break;case
 97:n(a,y);var
 c=d,b=1;break;case
-99:n(a,y);g(32);n(a,z);g(32);e(a,10,r);g(32);v(a,h);g(32);e(a,f5,o);var
+99:n(a,y);g(32);n(a,z);g(32);e(a,10,r);g(32);v(a,h);g(32);e(a,f6,o);var
 c=d,b=1;break;case
 100:e(a,10,r);var
 c=d,b=1;break;case
@@ -8422,17 +8846,18 @@ c=d,b=1;break;case
 121:e(a,10,A);var
 c=d,b=1;break;case
 122:var
-G=eZ(l),T=fa===G?l[1]:b7===G?fG(l):l;if(0<=T)g(43);e(a,10,l);iR(k,0,10,0);var
+G=eZ(l),T=fa===G?l[1]:b7===G?fH(l):l;if(0<=T)g(43);e(a,10,l);iR(k,0,10,0);var
 c=d,b=1;break;case
 98:case
 104:n(a,z);var
 c=d,b=1;break;case
 70:case
-105:e(a,f5,o);g(45);e(a,10,s);g(45);e(a,10,r);var
+105:e(a,f6,o);g(45);e(a,10,s);g(45);e(a,10,r);var
 c=d,b=1;break;case
 86:case
 87:e(a,10,L);var
 c=d,b=1;break;default:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -8463,6 +8888,9 @@ b=0}if(!b){eC(as(G9,gd(1,w)));var
 =======
 b=0}if(!b){eC(as(G_,gd(1,w)));var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+b=0}if(!b){eC(as(G_,ge(1,w)));var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=d}return C((f+1|0)+c|0)}if(f<=c){if(f===c)eC(m);var
 d=function(b){if(0!==a)eC(m);return w(f+1|0,b)},b=aS(m,f);if(49<=b){if(94===b)return d(3);if(95===b)return d(1)}else{if(45===b)return d(2);if(48<=b)return d(0)}return j(b)}throw[0,i,He]}function
 C(d){var
@@ -8486,7 +8914,7 @@ e(a){var
 b=G<=l[1]?1:0,c=b||(aS(k,l[1])!==a?1:0);if(c)eK(h,k);l[1]++;return 0}function
 g(a){var
 b=l[1]+a|0;if(G<b)eK(h,k);try{var
-d=lr(cp(k,l[1],a)),c=d}catch(a){a=aI(a);if(a[1]!==ga)throw a;var
+d=lr(cp(k,l[1],a)),c=d}catch(a){a=aI(a);if(a[1]!==gb)throw a;var
 c=eK(h,k)}l[1]=b;return c}function
 n(a,f){var
 <<<<<<< HEAD
@@ -8512,12 +8940,16 @@ c=qa(k);l[1]=b+ai(c)|0;return c}var
 ac=jO(Hh);function
 ad(b){try{var
 <<<<<<< HEAD
+<<<<<<< HEAD
 a=ln(n([0,ac],0));return a}catch(a){a=aI(a);if(a[1]===ga)return eK(h,k);throw a}}function
 U(a){qG(n(0,0));return 0}function
 V(a){p[1]=qF(qE,G3,n(0,0));return 0}function
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 a=lo(n([0,ac],0));return a}catch(a){a=aI(a);if(a[1]===ga)return eK(h,k);throw a}}function
+=======
+a=lo(n([0,ac],0));return a}catch(a){a=aI(a);if(a[1]===gb)return eK(h,k);throw a}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 U(a){qI(n(0,0));return 0}function
 V(a){p[1]=qH(qG,G4,n(0,0));return 0}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -8559,7 +8991,7 @@ a=n([0,jO(Hn)],0);if(aV(a,Ho)){if(aV(a,Hp))throw[0,i,Hq];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=1}else
 var
-b=-1;T[1]=f$(b,g(2));return 0}var
+b=-1;T[1]=ga(b,g(2));return 0}var
 o=0;for(;;){if(o<=x){if(o===x){if(l[1]!==G)eK(h,k);var
 ak=q[1];e0(function(a){return j(a,0)},ak);var
 <<<<<<< HEAD
@@ -8599,8 +9031,8 @@ M=eC(Hr)}else
 M=eC(Hs)}else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 var
-M=gv===L?B:eC(as(Ht,gd(1,L)));var
-N=as(gd(M,58),Hu);_(0);var
+M=gv===L?B:eC(as(Ht,ge(1,L)));var
+N=as(ge(M,58),Hu);_(0);var
 O=function(a){e(58);g(2);return 0};if(aV(N,Hv))if(aV(N,Hw)){if(aV(N,Hx))throw[0,i,Hy];O(0)}else{O(0);O(0)}var
 b=M,a=1;break}break;case
 65:qI(n(0,0));var
@@ -8730,6 +9162,7 @@ b=c,a=1;break;default:var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 a=0}if(!a){eB(aC(Hj,ga(1,J)));var
 b=c}var
 o=(u+1|0)+b|0;continue}throw[0,h,HB]}e($);var
@@ -8787,12 +9220,15 @@ a=0}if(!a){eC(as(Hq,gd(1,J)));var
 =======
 a=0}if(!a){eC(as(Hr,gd(1,J)));var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+a=0}if(!a){eC(as(Hr,ge(1,J)));var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=c}var
 o=(u+1|0)+b|0;continue}throw[0,i,HJ]}e($);var
 o=o+1|0;continue}throw[0,i,HK]}}var
 l=f[3];return[0,t,a,b,g,c,k,e,function(a){return e(l,a)}]}function
 qK(c,b){var
-a=oA(function(a){return uF===a?1:0},b);if(a)throw[0,fF,as(HL,c)];return a}var
+a=oA(function(a){return uF===a?1:0},b);if(a)throw[0,fG,as(HL,c)];return a}var
 qL=d0[17],HM=d0[3],HN=d0[50],HP=[0,function(c,b,a,f,e,d){qK(HO,[0,c,[0,b,[0,a,0]]]);return aP(HM,c,b,a)}];function
 HR(a){return eC(HS)}function
 HT(a){return eC(HU)}function
@@ -8800,38 +9236,38 @@ HV(a){return eC(HW)}function
 HX(a){return j(HN,j(qL,a))}function
 HY(a){return eC(HZ)}var
 H0=qJ([0,HP,d0[32],HQ,HR,HT,HV,d0[12],d0[13],d0[14],d0[15],d0[16],qL,HX,HY]);function
-qM(f,e,d,c,b,a){qK(H1,[0,f,[0,e,[0,d,[0,c,[0,b,[0,a,0]]]]]]);return adC(GF,f,e,d,c,b,a)}function
+qM(f,e,d,c,b,a){qK(H1,[0,f,[0,e,[0,d,[0,c,[0,b,[0,a,0]]]]]]);return adw(GF,f,e,d,c,b,a)}function
 H2(c,b,a){return j(Gw,aP(mA[32],c,b,a))}function
 H4(a){var
 b=j(mD,a);return j(mA[50],b)}var
 qN=qJ([0,[0,qM],H2,H3,Gz,Gy,Gx,GB,qD,GA,qC,qB,mD,H4,function(a){var
-b=s(qA,a,qM(1970,1,1,0,0,0)),c=j(gj[21],b),d=j(hI[25][16],c);return j(hI[1][3],d)}]),H5=qN[7],H6=qN[5],H7=H0[7];b1(0);var
+b=s(qA,a,qM(1970,1,1,0,0,0)),c=j(eB[21],b),d=j(hj[25][16],c);return j(hj[1][3],d)}]),H5=qN[7],H6=qN[5],H7=H0[7];b1(0);var
 mF=[0,-1],H8=[0,0];for(;;){if(0===mF[1]){var
 mG=o7([0,function(b,a){var
-c=b[1]===a[1]?1:0,d=a[2],e=b[2],f=c?e===d?1:0:c;return f},fr]),H9=mG[1],H_=function(a,f){var
-b=a[3]+f|0,c=ed(b,2*a[2]|0),d=c<=ge?c:ge<b?aM(H$):ge,e=c$(d);jy(a[1],0,e,0,a[3]);a[1]=e;a[2]=d;return 0},qO=function(a,b){var
+c=b[1]===a[1]?1:0,d=a[2],e=b[2],f=c?e===d?1:0:c;return f},fs]),H9=mG[1],H_=function(a,f){var
+b=a[3]+f|0,c=ed(b,2*a[2]|0),d=c<=gf?c:gf<b?aM(H$):gf,e=c$(d);jy(a[1],0,e,0,a[3]);a[1]=e;a[2]=d;return 0},qO=function(a,b){var
 c=a[2]<(a[3]+b|0)?1:0;return c?s(a[6],a,b):c},qP=function(a,c,d,b){qO(a,b);jy(c,d,a[1],a[3],b);a[3]=a[3]+b|0;return 0},b8=function(a,c){qO(a,1);var
 b=a[3];a[3]=b+1|0;return eX(a[1],b,c)},iS=function(a){a[4]=0;a[3]=0;var
-c=a[7],b=0<j(mG[15],c)?1:0;return b?j(mG[2],c):b},qQ=function(a){return iw(a[1],0,a[3])},Ib=[bW,Ia,b1(0)],qR=function(a){throw[0,Ib,a]},hj=[bW,Ic,b1(0)],eh=[bW,Id,b1(0)],mH=[bW,Ie,b1(0)];b1(0);var
+c=a[7],b=0<j(mG[15],c)?1:0;return b?j(mG[2],c):b},qQ=function(a){return iw(a[1],0,a[3])},Ib=[bW,Ia,b1(0)],qR=function(a){throw[0,Ib,a]},hk=[bW,Ic,b1(0)],eh=[bW,Id,b1(0)],mH=[bW,Ie,b1(0)];b1(0);var
 mI=function(b,a){function
-c(b,a){return 0===(a>>>b|0)?1:0}if(c(7,a))return b8(b,dh(a));if(c(11,a)){b8(b,dh(eQ|(a>>>6|0)&31));return b8(b,dh(aQ|a&63))}if(c(16,a)){b8(b,dh(cL|(a>>>12|0)&15));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}if(c(21,a)){b8(b,dh(f3|(a>>>18|0)&7));b8(b,dh(aQ|(a>>>12|0)&63));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}if(c(26,a)){b8(b,dh(bW|(a>>>24|0)&3));b8(b,dh(aQ|(a>>>18|0)&63));b8(b,dh(aQ|(a>>>12|0)&63));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}if(c(31,a)){b8(b,dh(n1|(a>>>30|0)&1));b8(b,dh(aQ|(a>>>24|0)&63));b8(b,dh(aQ|(a>>>18|0)&63));b8(b,dh(aQ|(a>>>12|0)&63));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}throw[0,i,If]},qS=function(c,b,a){return mI(c,u4+((b-55296|0)<<10|a-56320|0)|0)},gT=function(a){if(65<=a){if(97<=a){if(!(v<=a))return(a-97|0)+10|0}else
+c(b,a){return 0===(a>>>b|0)?1:0}if(c(7,a))return b8(b,dh(a));if(c(11,a)){b8(b,dh(eQ|(a>>>6|0)&31));return b8(b,dh(aQ|a&63))}if(c(16,a)){b8(b,dh(cL|(a>>>12|0)&15));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}if(c(21,a)){b8(b,dh(f4|(a>>>18|0)&7));b8(b,dh(aQ|(a>>>12|0)&63));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}if(c(26,a)){b8(b,dh(bW|(a>>>24|0)&3));b8(b,dh(aQ|(a>>>18|0)&63));b8(b,dh(aQ|(a>>>12|0)&63));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}if(c(31,a)){b8(b,dh(n1|(a>>>30|0)&1));b8(b,dh(aQ|(a>>>24|0)&63));b8(b,dh(aQ|(a>>>18|0)&63));b8(b,dh(aQ|(a>>>12|0)&63));b8(b,dh(aQ|(a>>>6|0)&63));return b8(b,dh(aQ|a&63))}throw[0,i,If]},qS=function(c,b,a){return mI(c,u4+((b-55296|0)<<10|a-56320|0)|0)},gT=function(a){if(65<=a){if(97<=a){if(!(v<=a))return(a-97|0)+10|0}else
 if(!(71<=a))return(a-65|0)+10|0}else
-if(!(9<(a+g$|0)>>>0))return a-48|0;throw[0,i,Ig]},fL=function(i,c,b){var
+if(!(9<(a+g$|0)>>>0))return a-48|0;throw[0,i,Ig]},fM=function(i,c,b){var
 d=b[4]-1|0,e=c[3],a=((d+b[5]|0)-e|0)-1|0,f=ed(a,(d+b[6]|0)-e|0),g=c[4];if(g)var
 k=g[1],h=j(c0(Ih),k);else
 var
 h=Il;var
 l=a===f?j(c0(Ii),a+1|0):s(c0(Ik),a+1|0,f+1|0),m=c[2];return qR(g3(c0(Ij),h,m,l,i))},qT=function(c,b,a){var
-d=gf(a);return fL(s(c0(Im),c,d),b,a)},qU=[0,function(a){throw[0,i,In]}],fs=function(c,b,a){var
-d=gf(a),e=j(qU[1],a);return fL(aP(c0(Io),c,d,e),b,a)},hJ=[bW,Ip,b1(0)],Iq=function(c){var
+d=gg(a);return fM(s(c0(Im),c,d),b,a)},qU=[0,function(a){throw[0,i,In]}],ft=function(c,b,a){var
+d=gg(a),e=j(qU[1],a);return fM(aP(c0(Io),c,d,e),b,a)},hJ=[bW,Ip,b1(0)],Iq=function(c){var
 d=c[5],a=[0,0],e=c[6]-1|0,f=c[2];if(!(e<d)){var
 b=d;for(;;){if(vW<=a[1])throw hJ;var
-g=eo(f,b)+g$|0;a[1]=(10*a[1]|0)+g|0;var
+g=en(f,b)+g$|0;a[1]=(10*a[1]|0)+g|0;var
 h=b+1|0;if(e!==b){var
 b=h;continue}break}}if(0<=a[1])return a[1];throw hJ},Is=function(c){var
 d=c[5]+1|0,a=[0,0],e=c[6]-1|0,f=c[2];if(!(e<d)){var
 b=d;for(;;){if(a[1]<=vo)throw hJ;var
-g=eo(f,b)+g$|0;a[1]=(10*a[1]|0)-g|0;var
+g=en(f,b)+g$|0;a[1]=(10*a[1]|0)-g|0;var
 h=b+1|0;if(e!==b){var
 <<<<<<< HEAD
 b=h;continue}break}}if(0<a[1])throw hI;return a[1]},jT=function(a,b){a[2]=a[2]+1|0;a[3]=b[4]+b[6]|0;return 0},gq=function(e,c,b){var
@@ -8891,23 +9327,24 @@ h=g;continue}switch(g){case
 i=[0,vj,Iq(b)];return i}catch(a){a=aI(a);if(a===hJ)return qT(Ir,c,b);throw a}case
 8:try{var
 k=[0,vj,Is(b)];return k}catch(a){a=aI(a);if(a===hJ)return qT(It,c,b);throw a}case
-9:return[0,ld,lo(gf(b))];case
+9:return[0,ld,lo(gg(b))];case
 10:var
-e=[0,0];try{fM(c,b);Iw(b);var
-m=qX(c,b);fM(c,b);qY(c,b);fM(c,b);var
-n=e[1];e[1]=[0,[0,m,hk(c,b)],n];for(;;){fM(c,b);Ix(c,b);fM(c,b);var
-o=qX(c,b);fM(c,b);qY(c,b);fM(c,b);var
-p=e[1];e[1]=[0,[0,o,hk(c,b)],p];continue}}catch(a){a=aI(a);if(a===eh)return[0,963043957,gb(e[1])];throw a}case
+e=[0,0];try{fN(c,b);Iw(b);var
+m=qX(c,b);fN(c,b);qY(c,b);fN(c,b);var
+n=e[1];e[1]=[0,[0,m,hl(c,b)],n];for(;;){fN(c,b);Ix(c,b);fN(c,b);var
+o=qX(c,b);fN(c,b);qY(c,b);fN(c,b);var
+p=e[1];e[1]=[0,[0,o,hl(c,b)],p];continue}}catch(a){a=aI(a);if(a===eh)return[0,963043957,gc(e[1])];throw a}case
 11:var
-f=[0,0];try{fM(c,b);Iu(b);var
-q=f[1];f[1]=[0,hk(c,b),q];for(;;){fM(c,b);Iv(c,b);fM(c,b);var
-r=f[1];f[1]=[0,hk(c,b),r];continue}}catch(a){a=aI(a);if(a===hj)return[0,848054398,gb(f[1])];throw a}case
-12:return fs(IA,c,b);case
-13:return fs(IB,c,b);case
+f=[0,0];try{fN(c,b);Iu(b);var
+q=f[1];f[1]=[0,hl(c,b),q];for(;;){fN(c,b);Iv(c,b);fN(c,b);var
+r=f[1];f[1]=[0,hl(c,b),r];continue}}catch(a){a=aI(a);if(a===hk)return[0,848054398,gc(f[1])];throw a}case
+12:return ft(IA,c,b);case
+13:return ft(IB,c,b);case
 14:return d<50?gq(d+1|0,c,b):a(gq,[0,c,b]);case
 15:qW(c,b);return d<50?gq(d+1|0,c,b):a(gq,[0,c,b]);case
 16:jU(c,b);return d<50?gq(d+1|0,c,b):a(gq,[0,c,b]);case
 17:return d<50?gq(d+1|0,c,b):a(gq,[0,c,b]);case
+<<<<<<< HEAD
 <<<<<<< HEAD
 18:return fL(IB,c,b);default:return fs(IC,c,b)}}},hk=function(a,b){return aL(gq(0,a,b))},qT=function(b,a){a:for(;;){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
@@ -8921,6 +9358,9 @@ i=d;continue}switch(d){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 18:return fL(IC,c,b);default:return fs(ID,c,b)}}},hk=function(a,b){return aL(gq(0,a,b))},qV=function(b,a){a:for(;;){var
+=======
+18:return fM(IC,c,b);default:return ft(ID,c,b)}}},hl=function(a,b){return aL(gq(0,a,b))},qV=function(b,a){a:for(;;){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 i=58;for(;;){var
 d=bX(e4,i,a);if(3<d>>>0){j(a[1],a);var
 i=d;continue}switch(d){case
@@ -8944,6 +9384,7 @@ l=82;for(;;){var
 f=bX(e4,l,a);if(2<f>>>0){j(a[1],a);var
 l=f;continue}switch(f){case
 0:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -8975,10 +9416,20 @@ h=0;if(!h)mI(b[1],c);break;case
 7:fs(IF,b,a);break;default:fL(IG,b,a)}continue a}case
 2:qP(b[1],a[2],a[5],a[6]-a[5]|0);continue a;default:return fL(IE,b,a)}}}},qW=function(c,a){a:for(;;){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+t=ee(a,a[5]+2|0),u=ee(a,a[5]+3|0),v=ee(a,a[5]+4|0),w=gT(ee(a,a[5]+5|0)),x=gT(v)<<4,y=gT(u)<<8,g=gT(t)<<12|y|x|w,z=k6<=g?k2<g?0:(qS(b[1],c,g),1):0;if(!z)ft(IH,b,a);break;case
+1:ft(II,b,a);break;default:fM(IJ,b,a)}var
+h=1;break}}else
+var
+h=0;if(!h)mI(b[1],c);break;case
+7:ft(IF,b,a);break;default:fM(IG,b,a)}continue a}case
+2:qP(b[1],a[2],a[5],a[6]-a[5]|0);continue a;default:return fM(IE,b,a)}}}},qW=function(c,a){a:for(;;){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=b5;for(;;){var
 b=bX(e4,d,a);if(3<b>>>0){j(a[1],a);var
 d=b;continue}switch(b){case
 0:return 0;case
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 1:return fr(IC,c,a);case
@@ -9035,6 +9486,10 @@ d=jd;for(;;){var
 =======
 1:return fs(IK,c,a);case
 2:jU(c,a);continue a;default:continue a}}}},fM=function(b,a){a:for(;;){var
+=======
+1:return ft(IK,c,a);case
+2:jU(c,a);continue a;default:continue a}}}},fN=function(b,a){a:for(;;){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=cN;for(;;){var
 c=bX(e4,d,a);if(4<c>>>0){j(a[1],a);var
 d=c;continue}switch(c){case
@@ -9048,16 +9503,16 @@ c=bX(e4,d,a);if(3<c>>>0){j(a[1],a);var
 d=c;continue}switch(c){case
 0:iS(b[1]);return qV(b,a);case
 1:return lJ(a,a[5],a[6]);case
-2:return fs(IL,b,a);default:return fL(IM,b,a)}}},Iu=function(a){var
+2:return ft(IL,b,a);default:return fM(IM,b,a)}}},Iu=function(a){var
 c=c4;for(;;){var
-b=bX(e4,c,a);if(0===b)throw hj;if(1===b)return 0;j(a[1],a);var
+b=bX(e4,c,a);if(0===b)throw hk;if(1===b)return 0;j(a[1],a);var
 c=b;continue}},Iv=function(c,a){var
 d=k7;for(;;){var
 b=bX(e4,d,a);if(3<b>>>0){j(a[1],a);var
 d=b;continue}switch(b){case
 0:return 0;case
-1:throw hj;case
-2:return fs(IN,c,a);default:return fL(IO,c,a)}}},Iw=function(a){var
+1:throw hk;case
+2:return ft(IN,c,a);default:return fM(IO,c,a)}}},Iw=function(a){var
 c=u2;for(;;){var
 b=bX(e4,c,a);if(0===b)throw eh;if(1===b)return 0;j(a[1],a);var
 c=b;continue}},Ix=function(c,a){var
@@ -9066,11 +9521,12 @@ b=bX(e4,d,a);if(3<b>>>0){j(a[1],a);var
 d=b;continue}switch(b){case
 0:return 0;case
 1:throw eh;case
-2:return fs(IP,c,a);default:return fL(IQ,c,a)}}},qY=function(c,a){var
+2:return ft(IP,c,a);default:return fM(IQ,c,a)}}},qY=function(c,a){var
 d=nX;for(;;){var
 b=bX(e4,d,a);if(2<b>>>0){j(a[1],a);var
 d=b;continue}switch(b){case
 0:return 0;case
+<<<<<<< HEAD
 <<<<<<< HEAD
 1:return fs(IQ,c,a);default:return fL(IR,c,a)}}};qS[1]=function(a){var
 <<<<<<< HEAD
@@ -9085,6 +9541,11 @@ b=lm;for(;;){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=bX(e4,b,a);if(0===c)return gf(a);j(a[1],a);var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+1:return ft(IR,c,a);default:return fM(IS,c,a)}}};qU[1]=function(a){var
+b=lm;for(;;){var
+c=bX(e4,b,a);if(0===c)return gg(a);j(a[1],a);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=c;continue}};b1(0);b1(0);var
 gU=function(a){if(65<=a){if(97<=a){if(!(v<=a))return(a-97|0)+10|0}else
 if(!(71<=a))return(a-65|0)+10|0}else
@@ -9130,17 +9591,22 @@ k=g[1],h=j(c0(IU),k);else
 var
 h=IY;var
 l=a===f?j(c0(IV),a+1|0):s(c0(IX),a+1|0,f+1|0),m=c[2];return qR(g3(c0(IW),h,m,l,i))},qZ=function(c,b,a){var
+<<<<<<< HEAD
 d=gf(a);return d6(s(c0(IZ),c,d),b,a)},q0=[0,function(a){throw[0,i,I0]}],ei=function(c,b,a){var
 d=gf(a),e=j(q0[1],a);return d6(aP(c0(I1),c,d,e),b,a)},hK=[bW,I2,b1(0)],I3=function(c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=gg(a);return d6(s(c0(IZ),c,d),b,a)},q0=[0,function(a){throw[0,i,I0]}],ei=function(c,b,a){var
+d=gg(a),e=j(q0[1],a);return d6(aP(c0(I1),c,d,e),b,a)},hK=[bW,I2,b1(0)],I3=function(c){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=c[5],a=[0,0],e=c[6]-1|0,f=c[2];if(!(e<d)){var
 b=d;for(;;){if(vW<=a[1])throw hK;var
-g=eo(f,b)+g$|0;a[1]=(10*a[1]|0)+g|0;var
+g=en(f,b)+g$|0;a[1]=(10*a[1]|0)+g|0;var
 h=b+1|0;if(e!==b){var
 b=h;continue}break}}if(0<=a[1])return a[1];throw hK},I4=function(c){var
 d=c[5]+1|0,a=[0,0],e=c[6]-1|0,f=c[2];if(!(e<d)){var
 b=d;for(;;){if(a[1]<=vo)throw hK;var
-g=eo(f,b)+g$|0;a[1]=(10*a[1]|0)-g|0;var
+g=en(f,b)+g$|0;a[1]=(10*a[1]|0)-g|0;var
 h=b+1|0;if(e!==b){var
 b=h;continue}break}}if(0<a[1])throw hK;return a[1]},jV=function(a,b){a[2]=a[2]+1|0;a[3]=b[4]+b[6]|0;return 0},q1=function(b,a){return qP(b,a[2],a[5],a[6]-a[5]|0)},q2=function(b,a){a:for(;;){var
 d=58;for(;;){var
@@ -9223,7 +9689,7 @@ d=c;continue}switch(c){case
 0:jV(b,a);continue a;case
 1:q4(b,a);continue a;case
 2:jV(b,a);continue a;case
-3:continue a;default:return 0}}}},ft=function(d,a){var
+3:continue a;default:return 0}}}},fu=function(d,a){var
 c=cY;for(;;){var
 b=bX(db,c,a);if(0===b)return 1;if(1===b)return 0;j(a[1],a);var
 <<<<<<< HEAD
@@ -9322,17 +9788,21 @@ h=c[1];c[1]=[0,s(e,b,a),h];for(;;){at(b,a);q4(b,a);at(b,a);var
 =======
 c=[0,0];try{at(b,a);q5(a);var
 h=c[1];c[1]=[0,s(e,b,a),h];for(;;){at(b,a);q6(b,a);at(b,a);var
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 i=c[1];c[1]=[0,s(e,b,a),i];continue}}catch(a){a=aI(a);if(a===hj)return c[1];throw a}case
+=======
+i=c[1];c[1]=[0,s(e,b,a),i];continue}}catch(a){a=aI(a);if(a===hk)return c[1];throw a}case
+>>>>>>> (fix) Directly use time constants in generated JS code
 1:return ei(Jr,b,a);default:return d6(Js,b,a)}}},q5=function(a){var
 c=c4;for(;;){var
-b=bX(db,c,a);if(0===b)throw hj;if(1===b)return 0;j(a[1],a);var
+b=bX(db,c,a);if(0===b)throw hk;if(1===b)return 0;j(a[1],a);var
 c=b;continue}},q6=function(c,a){var
 d=k7;for(;;){var
 b=bX(db,d,a);if(3<b>>>0){j(a[1],a);var
 d=b;continue}switch(b){case
 0:return 0;case
-1:throw hj;case
+1:throw hk;case
 2:return ei(Jt,c,a);default:return d6(Ju,c,a)}}},I7=function(a){var
 c=266;for(;;){var
 <<<<<<< HEAD
@@ -9503,7 +9973,7 @@ d=c;continue}switch(c){case
 7:return 0;case
 8:return 0;case
 9:try{at(c,b);e5(b);mK(c,b);at(c,b);mJ(c,b);at(c,b);cb(c,b);for(;;){at(c,b);e6(c,b);at(c,b);mK(c,b);at(c,b);mJ(c,b);at(c,b);cb(c,b);continue}}catch(a){a=aI(a);if(a===eh)return 0;throw a}case
-10:try{at(c,b);q5(b);cb(c,b);for(;;){at(c,b);q6(c,b);at(c,b);cb(c,b);continue}}catch(a){a=aI(a);if(a===hj)return 0;throw a}case
+10:try{at(c,b);q5(b);cb(c,b);for(;;){at(c,b);q6(c,b);at(c,b);cb(c,b);continue}}catch(a){a=aI(a);if(a===hk)return 0;throw a}case
 11:try{at(c,b);I7(b);cb(c,b);for(;;){at(c,b);I8(c,b);at(c,b);cb(c,b);continue}}catch(a){a=aI(a);if(a===mH)return 0;throw a}case
 12:at(c,b);mK(c,b);at(c,b);return I9(c,b);case
 13:return d<50?gr(d+1|0,c,b):a(gr,[0,c,b]);case
@@ -9518,11 +9988,11 @@ d=c;continue}switch(c){case
 1:return 0;case
 2:return ei(JJ,b,a);default:return d6(JK,b,a)}}};q0[1]=function(a){var
 b=lm;for(;;){var
-c=bX(db,b,a);if(0===c)return gf(a);j(a[1],a);var
+c=bX(db,b,a);if(0===c)return gg(a);j(a[1],a);var
 b=c;continue}};b1(0);b1(0);var
 JM=[0,function(a){throw[0,i,JL]}];b1(0);JM[1]=function(a){var
 b=lm;for(;;){var
-c=bX(JN,b,a);if(0===c)return gf(a);j(a[1],a);var
+c=bX(JN,b,a);if(0===c)return gg(a);j(a[1],a);var
 b=c;continue}};var
 JP=[bW,JO,b1(0)],hL=function(b,a){at(b,a);return I5(b,a,eE)},cu=function(b,a){at(b,a);var
 d=a3;for(;;){var
@@ -9539,8 +10009,12 @@ d=c;continue}switch(c){case
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 0:iS(b[1]);return q2(b,a);case
+<<<<<<< HEAD
 1:return ei(Jn,b,a);default:return d6(Jo,b,a)}}},jW=function(c,b,a){at(b,a);return gb(I6(c,b,a,251))},dj=function(b,a){at(b,a);mJ(b,a);return at(b,a)},fi=function(c,m,f){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+1:return ei(Jn,b,a);default:return d6(Jo,b,a)}}},jW=function(c,b,a){at(b,a);return gc(I6(c,b,a,251))},dj=function(b,a){at(b,a);mJ(b,a);return at(b,a)},fi=function(c,m,f){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=[0,0],g=f.length-1-1|0;if(!(g<0)){var
 a=g;for(;;){var
 i=a/31|0;if(0===(aO(m,i)[i+1]&1<<(a%31|0))){var
@@ -9600,27 +10074,28 @@ j=d[1],k=c[2],e=aP(c0(JQ),j,k,h);else
 var
 l=c[2],e=s(c0(JR),l,h);throw[0,JP,e]};(function(b){var
 a=[0,0,lH.length-1];a[1]=q8;if(ea(a[1],q8))return 0;throw[0,i,JW]}(0));var
-ej=function(a){throw[0,ga,as(JY,as(a,JX))]},JZ=function(c,b,a){try{var
+fj=function(a){throw[0,gb,as(JY,as(a,JX))]},JZ=function(c,b,a){try{var
 d=j(b,a);return d}catch(b){return j(c,a)}},q9=function(a,b){if(a){var
 c=a[1],d=q9(a[2],b);return function(a){return JZ(d,c,a)}}return b},J0=function(a){if(0===a[0]){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=a[1];return function(a){var
 c=s(H7,b,a);return s(GD,c,g3(qi[3],0,0,0,0))}}var
-c=a[1];return function(a){return s(H5,c,a)}},q_=function(a){return J3},q$=function(a){return J5},J7=function(a){return j(GC,0)},J8=function(a){return adD(GE,0,0,0,0,0,0,0)},ra=function(a){return s(H6,J9,a)},rb=function(a){var
+c=a[1];return function(a){return s(H5,c,a)}},q_=function(a){return J2},q$=function(a){return J4},J6=function(a){return j(GC,0)},J7=function(a){return adx(GE,0,0,0,0,0,0,0)},ra=function(a){return s(H6,J8,a)},rb=function(a){var
 b=j(qB,a);return j(d0[35],b)},rc=function(b,a){return 0===s(mC,b,a)?1:0},d8=function(a){var
 b=c$(jx(a)),c=[0,0];e0(function(a){eX(b,c[1],a);c[1]++;return 0},a);return lD(b)},aX=function(c){var
 a=ai(c)-1|0,b=0;for(;;){if(0<=a){var
 d=[0,aS(c,a),b],a=a-1|0,b=d;continue}return b}},rd=function(b){try{var
-a=xp(b),d=ad_(a),e=gE(d);yi(e,a,d);ad$(a);var
+a=xp(b),d=ad4(a),e=gE(d);yi(e,a,d);ad5(a);var
 f=gF(e);return f}catch(a){a=aI(a);if(a[1]===jv){var
-c=a[2];s(lQ(Kn),b,c);throw[0,jv,c]}throw a}},mL=function(b){var
-a=ow(b);return 46===aS(a,ai(a)-1|0)?as(a,Ko):a},re=function(b,a){return co(function(a){return s(b,a[1],a[2])},a)},rf=[bW,Kr,b1(0)],rg=function(b,m,f){var
-a=0;return gb(gc(function(c,a){var
+c=a[2];s(lQ(Kh),b,c);throw[0,jv,c]}throw a}},mL=function(b){var
+a=ow(b);return 46===aS(a,ai(a)-1|0)?as(a,Ki):a},re=function(b,a){return co(function(a){return s(b,a[1],a[2])},a)},rf=[bW,Kl,b1(0)],rg=function(b,m,f){var
+a=0;return gc(gd(function(c,a){var
 d=a[1];function
 e(d,c,a){var
 g=co(b,d);if(lA(j(b,a),g))throw[0,rf,co(m,[0,a,d])];var
 h=co(b,c);if(lA(j(b,a),h))return c;var
 i=[0,a,d],k=co(function(a){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 c=a[2];return[0,j(b,a[1]),c]},f),l=lB(j(b,a),k);return[0,a,gb(function(a,b){return e(i,a,b)},c,l)]}return e(0,c,d)},a,f))},rf=function(a){try{var
@@ -9637,11 +10112,16 @@ c=a[2];return[0,j(b,a[1]),c]},f),l=lB(j(b,a),k);return[0,a,gc(function(a,b){retu
 b=B5(pw(a));return b}catch(a){a=aI(a);if(a[1]===fF)return Ks;throw a}},ek=function(a){return ek},mM=function(a){return 0===a?1:0},d9=function(a){return a[1]},iT=function(a){return a[2]},jX=function(a){return a?jX(a[2])+1|0:0},bZ=function(a,b){if(a){var
 c=bZ(a[2],b);return[0,a[1],c]}return b},Kt=function(b,a){return b+a|0},mN=function(b,a){return ed(0,b-a|0)},ri=function(c,b,a){return j(c,j(b,a))},rj=function(h,g,f,e){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+c=a[2];return[0,j(b,a[1]),c]},f),l=lB(j(b,a),k);return[0,a,gd(function(a,b){return e(i,a,b)},c,l)]}return e(0,c,d)},a,f))},rh=function(a){try{var
+b=B5(pw(a));return b}catch(a){a=aI(a);if(a[1]===fG)return Km;throw a}},ej=function(a){return ej},mM=function(a){return 0===a?1:0},d9=function(a){return a[1]},iT=function(a){return a[2]},jX=function(a){return a?jX(a[2])+1|0:0},bZ=function(a,b){if(a){var
+c=bZ(a[2],b);return[0,a[1],c]}return b},Kn=function(b,a){return b+a|0},mN=function(b,a){return ed(0,b-a|0)},ri=function(c,b,a){return j(c,j(b,a))},rj=function(h,g,f,e){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=h,c=f,a=e;for(;;){if(0===b)return[0,c,a];var
 d=b-1|0;if(0===a){var
 b=d,c=c+1|0,a=g;continue}var
 b=d,a=a-1|0;continue}},jY=function(a){return 1<a?0===(a%2|0)?1+(2*jY(a/2|0)|0)|0:1+(2*(2*(a/2|0)|0)|0)|0:1},jZ=function(a){return typeof
-a==="number"?0===a?Ku:1:[0,1+(2*a[1]|0)|0]},j0=function(a){return typeof
+a==="number"?0===a?Ko:1:[0,1+(2*a[1]|0)|0]},j0=function(a){return typeof
 a==="number"?a:[0,2*a[1]|0]},hM=function(b,a){if(1<b){if(0===(b%2|0)){var
 c=b/2|0;return 1<a?0===(a%2|0)?j0(hM(c,a/2|0)):jZ(j1(c,a/2|0)):[0,jY(c)]}var
 d=b/2|0;return 1<a?0===(a%2|0)?jZ(hM(d,a/2|0)):j0(hM(d,a/2|0)):[0,2*d|0]}return 1<a?0===(a%2|0)?1:1:0},j1=function(c,a){if(1<c){if(0===(c%2|0)){var
@@ -9649,10 +10129,10 @@ b=c/2|0;return 1<a?0===(a%2|0)?jZ(j1(b,a/2|0)):j0(j1(b,a/2|0)):1<b?0===(b%2|0)?[
 d=c/2|0;return 1<a?0===(a%2|0)?j0(hM(d,a/2|0)):jZ(j1(d,a/2|0)):[0,jY(d)]}return 1},j2=function(a){return 1<a?0===(a%2|0)?j2(a/2|0)+1|0:j2(a/2|0)+1|0:1},j3=function(f,e,d){var
 g=d[2],a=d[1];if(typeof
 g==="number")return[0,2*a|0,hM(j(e,j(f,1)),4)];var
-c=1+(2*(2*a|0)|0)|0,b=j(e,j(f,g[1])),h=ea(c,b)?0:fE(c,b)?1:2,i=2<=h?0:1;return i?[0,1+(2*a|0)|0,hM(b,c)]:[0,2*a|0,[0,b]]},iU=function(a){if(1<a){if(0===(a%2|0)){var
+c=1+(2*(2*a|0)|0)|0,b=j(e,j(f,g[1])),h=ea(c,b)?0:fF(c,b)?1:2,i=2<=h?0:1;return i?[0,1+(2*a|0)|0,hM(b,c)]:[0,2*a|0,[0,b]]},iU=function(a){if(1<a){if(0===(a%2|0)){var
 b=a/2|0;if(1<b){if(0===(b%2|0)){var
 d=iU(b/2|0),e=function(a){return 2*a|0};return j3(function(a){return 2*a|0},e,d)}var
-f=iU(b/2|0),g=function(a){return 2*a|0};return j3(function(a){return 1+(2*a|0)|0},g,f)}return Kw}var
+f=iU(b/2|0),g=function(a){return 2*a|0};return j3(function(a){return 1+(2*a|0)|0},g,f)}return Kq}var
 c=a/2|0;if(1<c){if(0===(c%2|0)){var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -9679,10 +10159,14 @@ b=b/2|0,a=s(c,a,a);continue}return s(c,a,ri(c,b/2|0,s(c,a,a)))}return a}},hM=fun
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 h=iU(c/2|0),i=function(a){return 1+(2*a|0)|0};return j3(function(a){return 2*a|0},i,h)}var
-j=iU(c/2|0),k=function(a){return 1+(2*a|0)|0};return j3(function(a){return 1+(2*a|0)|0},k,j)}return[0,1,[0,2]]}return Kv},rk=function(c,e,d){var
+j=iU(c/2|0),k=function(a){return 1+(2*a|0)|0};return j3(function(a){return 1+(2*a|0)|0},k,j)}return[0,1,[0,2]]}return Kp},rk=function(c,e,d){var
 b=e,a=d;for(;;){if(1<b){if(0===(b%2|0)){var
+<<<<<<< HEAD
 b=b/2|0,a=s(c,a,a);continue}return s(c,a,rk(c,b/2|0,s(c,a,a)))}return a}},hN=function(a){return rk(Kt,a,1)},mO=function(a){return 0===a?1:mO(a-1|0)+1|0},rl=function(d,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+b=b/2|0,a=s(c,a,a);continue}return s(c,a,rk(c,b/2|0,s(c,a,a)))}return a}},hN=function(a){return rk(Kn,a,1)},mO=function(a){return 0===a?1:mO(a-1|0)+1|0},rl=function(d,c){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=d,a=c;for(;;){if(1<b){if(0===(b%2|0)){var
 e=b/2|0;if(1<a){if(0===(a%2|0)){var
 b=e,a=a/2|0;continue}return 0}return 0}var
@@ -9726,13 +10210,13 @@ b=0===a?0:mN(a-1|0);return ro(b)},rq=function(a){if(a){var
 b=2*rq(a[2])|0,c=a[1]?1:0;return c+b|0}return 0},rr=function(j){function
 =======
 b=f,a=a/2|0;continue}return 0}return 1<a?0===(a%2|0)?0:0:1}},mP=function(a){return 0===a?1:1+(2*a|0)|0},mQ=function(a){return 0===a?0:2*a|0},rm=function(b,a){return ed(0,b-a|0)},rn=function(b,a){var
-c=ea(b,a)?0:fE(b,a)?1:2;return 2<=c?0:1},hO=function(b,a){if(1<b){if(0===(b%2|0)){var
+c=ea(b,a)?0:fF(b,a)?1:2;return 2<=c?0:1},hO=function(b,a){if(1<b){if(0===(b%2|0)){var
 e=hO(b/2|0,a),f=e[1],c=mQ(e[2]);if(rn(a,c)){var
 i=rm(c,a);return[0,mP(f),i]}return[0,mQ(f),c]}var
 g=hO(b/2|0,a),h=g[1],d=mP(g[2]);if(rn(a,d)){var
-j=rm(d,a);return[0,mP(h),j]}return[0,mQ(h),d]}return 0===a?KA:1<a?0===(a%2|0)?Ky:Kz:Kx},ro=0,KB=1,rp=function(b,a){var
+j=rm(d,a);return[0,mP(h),j]}return[0,mQ(h),d]}return 0===a?Ku:1<a?0===(a%2|0)?Ks:Kt:Kr},ro=0,Kv=1,rp=function(b,a){var
 c=b?1:0;return dh((a<<1&c4)+c|0)},mR=function(b,a){if(0===b)return ro;var
-c=b-1|0;return 1<a?0===(a%2|0)?rp(0,mR(c,a/2|0)):rp(1,mR(c,a/2|0)):KB},KC=8,rq=function(a){return 0===a?ro:mR(KC,a)},rr=function(a){var
+c=b-1|0;return 1<a?0===(a%2|0)?rp(0,mR(c,a/2|0)):rp(1,mR(c,a/2|0)):Kv},Kw=8,rq=function(a){return 0===a?ro:mR(Kw,a)},rr=function(a){var
 b=0===a?0:mO(a-1|0);return rq(b)},rs=function(a){if(a){var
 b=2*rs(a[2])|0,c=a[1]?1:0;return c+b|0}return 0},rt=function(j){function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -9759,7 +10243,7 @@ c=mS(b,a[2]);return bZ(j(b,a[1]),c)}return a},dk=function(e,d,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=d,b=c;for(;;){if(a){var
 f=s(e,b,a[1]),a=a[2],b=f;continue}return b}},dl=function(c,b,a){if(a){var
-d=dl(c,b,a[2]);return s(c,a[1],d)}return b},hl=function(d,c){var
+d=dl(c,b,a[2]);return s(c,a[1],d)}return b},hm=function(d,c){var
 a=c;for(;;){if(a){var
 b=j(d,a[1]);if(b){var
 a=a[2];continue}return b}return 1}},hP=function(b,e){var
@@ -9784,7 +10268,7 @@ c=hN(g,-a|0);return[0,c[1],-c[2]|0]},ru=function(b,a){return rt(b,a)[1]},aq=func
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 c=a[2],d=a[1];if(j(b,d))return[0,d,hP(b,c)];var
-a=c;continue}return a}},mT=function(b,a){return ea(b,a)?0:fE(b,a)?1:2},mU=function(a){return 0===a?0:mO(a-1|0)},rv=function(b,a){if(0===b)return KD;if(0<b){if(0===a)return[0,0,b];if(0<a){var
+a=c;continue}return a}},mT=function(b,a){return ea(b,a)?0:fF(b,a)?1:2},mU=function(a){return 0===a?0:mO(a-1|0)},rv=function(b,a){if(0===b)return Kx;if(0<b){if(0===a)return[0,0,b];if(0<a){var
 f=hO(b,a);return[0,f[1],f[2]]}var
 e=hO(b,-a|0);return[0,-e[1]|0,e[2]]}var
 g=-b|0;if(0===a)return[0,0,b];if(0<a){var
@@ -9802,8 +10286,8 @@ b=e,a=d;for(;;){if(0===b){if(0===c)return 0;var
 g=c-1|0;if(a){var
 f=mV(0,g,a[2]);return[0,a[1],f]}return a}var
 h=b-1|0;if(a){var
-b=h,a=a[2];continue}return a}},fu=function(b,a){if(a){var
-c=a[2],d=a[1];if(c)return r(d,r(b,fu(b,c)));var
+b=h,a=a[2];continue}return a}},fv=function(b,a){if(a){var
+c=a[2],d=a[1];if(c)return r(d,r(b,fv(b,c)));var
 e=d}else
 var
 e=a;return e},gV=function(d,c,b){var
@@ -9813,6 +10297,7 @@ c=s(g,b[1],a[1]);if(c){var
 b=b[2],a=a[2];continue}var
 d=c}else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 d=a;return d}return a?0:1}},Kc=function(a){return dl(function(b,a){return gx(b,a)},oq,a)},Kd=function(a){return dl(function(b,a){return ed(b,a)},or,a)},rp=function(a){var
@@ -9840,6 +10325,10 @@ c=mT(b);return rv(a)/c},rw=function(a,e){if(eb(e,0))return 0;if(0===a)var
 =======
 d=a;return d}return a?0:1}},KE=function(a){return dl(function(b,a){return gA(b,a)},ou,a)},KF=function(a){return dl(function(b,a){return ed(b,a)},ov,a)},rx=function(a){var
 b=0;return dl(function(b,a){return b+a},b,a)},KG=function(a){var
+=======
+d=a;return d}return a?0:1}},Ky=function(a){return dl(function(b,a){return gA(b,a)},ou,a)},Kz=function(a){return dl(function(b,a){return ed(b,a)},ov,a)},rx=function(a){var
+b=0;return dl(function(b,a){return b+a},b,a)},KA=function(a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=jX(a);if(0===b)return 0;var
 c=mU(b);return rx(a)/c},ry=function(a,e){if(ea(e,0))return 0;if(0===a)var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -9898,6 +10387,7 @@ b=c-1|0;if(0===b)return 88;var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 a=b-1|0;return 0===a?89:0===(a-1|0)?90:63},b));return a?[0,a[1],a[2]]:Kf},rt=10,j7=function(a){return 0===a?Kg:0<a?rs(rt,hL(a)):[0,45,rs(rt,hL(-a|0))]},hP=function(b,a){return bY(b,[0,a,0])},mX=function(d,c,b){var
 a=b;for(;;){if(a){if(r(d,c,a[1]))return 1;var
 a=a[2];continue}return a}},ru=function(c,f,b){var
@@ -9936,6 +10426,9 @@ a=b-1|0;return 0===a?89:0===(a-1|0)?90:63},b));return a?[0,a[1],a[2]]:KK},rz=10,
 =======
 a=b-1|0;return 0===a?89:0===(a-1|0)?90:63},b));return a?[0,a[1],a[2]]:KH},rB=10,j6=function(a){return 0===a?KI:0<a?rA(rB,hN(a)):[0,45,rA(rB,hN(-a|0))]},hR=function(b,a){return bZ(b,[0,a,0])},mW=function(d,c,b){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+a=b-1|0;return 0===a?89:0===(a-1|0)?90:63},b));return a?[0,a[1],a[2]]:KB},rB=10,j6=function(a){return 0===a?KC:0<a?rA(rB,hN(a)):[0,45,rA(rB,hN(-a|0))]},hR=function(b,a){return bZ(b,[0,a,0])},mW=function(d,c,b){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=b;for(;;){if(a){if(s(d,c,a[1]))return 1;var
 a=a[2];continue}return a}},rC=function(c,f,b){var
 a=f;for(;;){if(a){var
@@ -9943,8 +10436,8 @@ d=a[2],e=a[1];if(mW(c,e,b))return[0,e,rC(c,d,b)];var
 a=d;continue}return a}},mX=function(g,f,e){var
 c=g,a=f,b=e;for(;;){if(c){if(a){if(b){var
 d=j(b[3],a[1]);if(d){var
-c=c[2],a=a[2],b=b[4];continue}return d}throw[0,i,KK]}return a}return a?0:1}},mY=function(a,c,b){if(a){if(c){if(b){var
-d=a[2],e=mY(d,c[4],b[4]),f=j(b[3],c[3]);return[0,a[1],d,f,e]}throw[0,i,KL]}throw[0,i,KM]}return a},mZ=function(b,a){if(a)var
+c=c[2],a=a[2],b=b[4];continue}return d}throw[0,i,KE]}return a}return a?0:1}},mY=function(a,c,b){if(a){if(c){if(b){var
+d=a[2],e=mY(d,c[4],b[4]),f=j(b[3],c[3]);return[0,a[1],d,f,e]}throw[0,i,KF]}throw[0,i,KG]}return a},mZ=function(b,a){if(a)var
 c=a[2],d=a[1],f=mZ(b,c),e=[0,d,c,j(b,d),f];else
 var
 e=a;return e},m0=function(g,f,e,d,a,b){var
@@ -9953,15 +10446,15 @@ c=a[2],d=a[1],e=b[2],f=b[1],i=s(g,e,c);return m0(f,e,d,c,s(h,f,d),i)},b=function
 a=0!==b?1:0,c=a?1:a;return c},aK=function(b,a){var
 c=a?[0,j(b,a[1])]:a;return c},rE=function(b,a){if(a){var
 c=rE(b,a[2]);return c?j(b,a[1]):c}return 1},m1=function(d,c,b){var
-a=hl(function(c){var
+a=hm(function(c){var
 a=eL(d,c,b),e=a?1:a;return e},c),e=a?1:a;return e},m2=function(b,a){if(b){if(a)var
 c=m2(b[2],a[2]),e=c?[0,[0,[0,b[1],a[1]],c[1]]]:c,d=e;else
 var
-d=a;return d}return a?0:KP},j7=function(g,f){var
+d=a;return d}return a?0:KJ},j7=function(g,f){var
 b=g,a=f;for(;;){if(b){if(a){var
-h=b[1],c=rt(a[1]),d=rt(h),e=ea(d,c)?0:fE(d,c)?1:2;if(0===e){var
+h=b[1],c=rt(a[1]),d=rt(h),e=ea(d,c)?0:fF(d,c)?1:2;if(0===e){var
 b=b[2],a=a[2];continue}return e}return 2}var
-i=a?1:a;return i}},rF=function(b,a){return 1===j7(b,a)?1:0},KQ=function(b,a){return 2<=j7(b,a)?0:1},Q=function(d){var
+i=a?1:a;return i}},rF=function(b,a){return 1===j7(b,a)?1:0},KK=function(b,a){return 2<=j7(b,a)?0:1},Q=function(d){var
 a=d,b=0;for(;;){if(a){var
 <<<<<<< HEAD
 c=[0,a[1],b],a=a[2],b=c;continue}return b}},rE=function(b,a){if(a){var
@@ -15178,6 +15671,7 @@ b=j(c,a[1]);if(b){var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 d=b[1],e=iU(c,a[2]);return aL(function(a){return[0,d,a]},e)}return b}return Kp},rB=function(c,a){if(a){var
 b=j(c,a[1]);if(b){var
 d=b[1],e=rB(c,a[2]);return aL(function(a){return bY(d,a)},e)}return b}return Kq},iV=function(a){function
@@ -15205,13 +15699,16 @@ d=b[1],e=iW(c,a[2]);return aK(function(a){return[0,d,a]},e)}return b}return KU},
 =======
 d=b[1],e=iX(c,a[2]);return aK(function(a){return[0,d,a]},e)}return b}return KR},rJ=function(c,a){if(a){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=b[1],e=iX(c,a[2]);return aK(function(a){return[0,d,a]},e)}return b}return KL},rJ=function(c,a){if(a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=j(c,a[1]);if(b){var
-d=b[1],e=rJ(c,a[2]);return aK(function(a){return bZ(d,a)},e)}return b}return KS},iY=function(a){function
+d=b[1],e=rJ(c,a[2]);return aK(function(a){return bZ(d,a)},e)}return b}return KM},iY=function(a){function
 b(b,c){return s(a[2],b[1],c[1])}return function(a){return iW(b,a)}},j9=function(c,b,a){var
-d=bZ(b,a);return j(iY(c),d)},fN=[0,aq,rF,j7],j_=function(b,a){return m3(fN[1],b,a)},rK=function(g,b,d){var
-a=hl(function(c){var
+d=bZ(b,a);return j(iY(c),d)},fO=[0,aq,rF,j7],j_=function(b,a){return m3(fO[1],b,a)},rK=function(g,b,d){var
+a=hm(function(c){var
 f=c[2],a=m3(aq,d,c[1]);if(a){var
-b=s(g,f,a[1]),e=b?1:b;return e}return 1},b),c=a?[0,j9(fN,b,d)]:a;return c},rL=function(c,b,a){if(a){var
+b=s(g,f,a[1]),e=b?1:b;return e}return 1},b),c=a?[0,j9(fO,b,d)]:a;return c},rL=function(c,b,a){if(a){var
 d=a[2],e=a[1];if(s(c,b,e))return d;var
 f=[0,e,rL(c,b,d)]}else
 var
@@ -15233,16 +15730,22 @@ d=j(b,c);return aR(function(b,a){return[0,b,a]},d,a)},KY,a)},e7=function(a,b){re
 =======
 d=a[2];if(s(c,b,a[1]))return rM(c,d,b)+1|0;var
 a=d;continue}return 0}},rN=function(c,a){if(a){var
+<<<<<<< HEAD
 d=a[1],b=rN(c,a[2]);return 0===rM(c,b,d)?[0,d,b]:b}return a},KT=function(a){return a?dl(gA,a[1],a[2]):0},KU=function(a){return a?dl(ed,a[1],a[2]):0},aT=function(b,a){return 0===a[0]?j(b,a[1]):[1,a[1]]},y=function(b,a){return aT(function(a){return[0,j(b,a)]},a)},aR=function(c,b,a){return 0===b[0]?0===a[0]?[0,s(c,b[1],a[1])]:[1,a[1]]:[1,b[1]]},el=function(d,c,b,a){return 0===c[0]?0===b[0]?0===a[0]?[0,aP(d,c[1],b[1],a[1])]:[1,a[1]]:[1,b[1]]:[1,c[1]]},gk=function(b,a){return dl(function(c,a){var
 d=j(b,c);return aR(function(b,a){return[0,b,a]},d,a)},KV,a)},e7=function(a,b){return a?[0,a[1]]:[1,b]},KW=function(a){function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=a[1],b=rN(c,a[2]);return 0===rM(c,b,d)?[0,d,b]:b}return a},KN=function(a){return a?dl(gA,a[1],a[2]):0},KO=function(a){return a?dl(ed,a[1],a[2]):0},aT=function(b,a){return 0===a[0]?j(b,a[1]):[1,a[1]]},y=function(b,a){return aT(function(a){return[0,j(b,a)]},a)},aR=function(c,b,a){return 0===b[0]?0===a[0]?[0,s(c,b[1],a[1])]:[1,a[1]]:[1,b[1]]},ek=function(d,c,b,a){return 0===c[0]?0===b[0]?0===a[0]?[0,aP(d,c[1],b[1],a[1])]:[1,a[1]]:[1,b[1]]:[1,c[1]]},gk=function(b,a){return dl(function(c,a){var
+d=j(b,c);return aR(function(b,a){return[0,b,a]},d,a)},KP,a)},e7=function(a,b){return a?[0,a[1]]:[1,b]},KQ=function(a){function
+>>>>>>> (fix) Directly use time constants in generated JS code
 b(b){return 0!==(a&1<<b)?1:0}var
-c=b(7),d=b(6),e=b(5),f=b(4),g=b(3),h=b(2),i=b(1);return b(0)?[0,a,0]:i?h?[0,a,0]:g?[0,a,0]:f?[0,a,0]:e?d?[0,a,0]:c?[0,a,0]:KX:[0,a,0]:[0,a,0]},ka=function(b,a){if(typeof
-a==="number")return KY;else
+c=b(7),d=b(6),e=b(5),f=b(4),g=b(3),h=b(2),i=b(1);return b(0)?[0,a,0]:i?h?[0,a,0]:g?[0,a,0]:f?[0,a,0]:e?d?[0,a,0]:c?[0,a,0]:KR:[0,a,0]:[0,a,0]},ka=function(b,a){if(typeof
+a==="number")return KS;else
 switch(a[0]){case
 0:return aX(mL(a[1]));case
-1:return a[1]?KZ:K0;case
+1:return a[1]?KT:KU;case
 2:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -15256,14 +15759,18 @@ d=a[1],c=r(0,r(b,0));return r(0,r(b,r(0,r(rE(KZ,d),c))));case
 =======
 d=a[1],c=r(0,r(b,0));return r(0,r(b,r(0,r(rG(KW,d),c))));case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=a[1],c=r(0,r(b,0));return r(0,r(b,r(0,r(rG(KQ,d),c))));case
+>>>>>>> (fix) Directly use time constants in generated JS code
 3:var
-e=a[1];return r(K3,r(fu(K2,aW(function(a){return ka(b,a)},e)),K1));default:var
-f=a[1];return r(K7,r(fu(K6,aW(function(a){var
-c=r(0,r(b,r(K4,ka(b,a[2]))));return r(0,r(b,r(0,r(a[1],c))))},f)),K5))}},kb=function(g,f,e){var
+e=a[1];return r(KX,r(fv(KW,aW(function(a){return ka(b,a)},e)),KV));default:var
+f=a[1];return r(K1,r(fv(K0,aW(function(a){var
+c=r(0,r(b,r(KY,ka(b,a[2]))));return r(0,r(b,r(0,r(a[1],c))))},f)),KZ))}},kb=function(g,f,e){var
 a=e;function
 b(c,e){var
 a=f;function
 b(a,d){if(aq(a,c))return 1;var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -15291,6 +15798,12 @@ b=[0,a,c];return eL(function(a,b){return iV(aq,aq,a,b)},b,g)}for(;;){if(a){if(b(
 d=function(b){return function(a,c){return b(a,ek)}}(b),a=a[2],b=d;continue}return a}}for(;;){if(a){var
 c=b(a[1],ek);if(c){var
 d=function(b){return function(a,c){return b(a,ek)}}(b),a=a[2],b=d;continue}return c}return 1}},rO=function(c,a){return mS(function(b){return[0,b,aW(iT,hP(function(c){var
+=======
+b=[0,a,c];return eL(function(a,b){return iV(aq,aq,a,b)},b,g)}for(;;){if(a){if(b(a[1],ej))return 1;var
+d=function(b){return function(a,c){return b(a,ej)}}(b),a=a[2],b=d;continue}return a}}for(;;){if(a){var
+c=b(a[1],ej);if(c){var
+d=function(b){return function(a,c){return b(a,ej)}}(b),a=a[2],b=d;continue}return c}return 1}},rO=function(c,a){return mS(function(b){return[0,b,aW(iT,hP(function(c){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=aq(b,c[1]),d=a?1:a;return d},c))]},a)},iZ=function(h,e){return iW(rF,hP(function(g){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=e;for(;;){if(a){var
@@ -15318,8 +15831,12 @@ d=rM(a,b);return iY(a,rA(aq,rM(a,c),d))},rO=function(c,b,a){return iY(c,bZ(b,a))
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 b=a;return mM(b)}},e))},rP=function(a,c,b){var
+<<<<<<< HEAD
 d=rO(a,b);return iZ(a,rC(aq,rO(a,c),d))},rQ=function(c,b,a){return iZ(c,bZ(b,a))},fv=function(f,t,r){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=rO(a,b);return iZ(a,rC(aq,rO(a,c),d))},rQ=function(c,b,a){return iZ(c,bZ(b,a))},fw=function(f,t,r){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=t,a=r;for(;;)if(typeof
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 b==="number"){var
@@ -15353,7 +15870,7 @@ a!=="number"&&3===a[0])return aq(b[1],a[1]);return 0;case
 k=b[1];if(typeof
 a!=="number"&&4===a[0]){var
 l=function(a){if(a)var
-b=a[2],c=a[1],e=l(b),d=[0,c,b,function(a){return fv(f,c,a)},e];else
+b=a[2],c=a[1],e=l(b),d=[0,c,b,function(a){return fw(f,c,a)},e];else
 var
 d=a;return d},v=l(k);return mX(k,a[1],v)}return 0;case
 5:var
@@ -15361,7 +15878,7 @@ e=b[1];if(typeof
 a!=="number"&&5===a[0]){var
 w=mZ(function(b,f,a){var
 c=a[2],d=a[1],e=b[1],g=j(f,c),h=aq(e,d);return m0(e,b[2],d,c,h,g)},e),m=function(a){if(a)var
-b=a[2],c=a[1],e=m(b),g=c[2],d=[0,c,b,function(a){return fv(f,g,a)},e];else
+b=a[2],c=a[1],e=m(b),g=c[2],d=[0,c,b,function(a){return fw(f,g,a)},e];else
 var
 d=a;return d},x=mY(e,m(e),w);return mX(e,a[1],x)}return 0;case
 6:if(typeof
@@ -15374,6 +15891,7 @@ b=b[1],a=a[1];continue}return 0;case
 a!=="number"&&8===a[0]){var
 n=j5(aq,b[1],a[1]);if(n){var
 b=b[2],a=a[2];continue}return n}return 0;default:if(typeof
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -15396,6 +15914,9 @@ a!=="number"&&2===a[0])return[0,[2,s(c,b[1],a[1])]];return 0}return 0},rQ=functi
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 =======
 a!=="number"&&9===a[0])return s(f[1],b[1],a[1]);return 0}},i0=function(a){return K9},rR=function(d,c,b,a){if(typeof
+=======
+a!=="number"&&9===a[0])return s(f[1],b[1],a[1]);return 0}},i0=function(a){return K3},rR=function(d,c,b,a){if(typeof
+>>>>>>> (fix) Directly use time constants in generated JS code
 b!=="number"&&2===b[0]){if(typeof
 a!=="number"&&2===a[0])return[0,[2,s(c,b[1],a[1])]];return 0}return 0},rS=function(d,c,b,a){if(typeof
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -15414,11 +15935,11 @@ d=0,a=1}else
 var
 a=0;if(!a)var
 d=0;return aK(function(a){return[4,a]},d)},m5=function(c,b,a){if(typeof
-a!=="number"&&4===a[0])return[0,j(b,a[1])];return 0},hm=function(c,b,a){if(typeof
+a!=="number"&&4===a[0])return[0,j(b,a[1])];return 0},hn=function(c,b,a){if(typeof
 a!=="number"&&4===a[0])return j(b,a[1]);return 0},hT=function(d,b,c,a){if(typeof
 a==="number")return 0;else
 switch(a[0]){case
-0:return[4,[0,[0,K_,[0,a[1]]],0]];case
+0:return[4,[0,[0,K4,[0,a[1]]],0]];case
 1:return[0,a[1]];case
 2:return[1,a[1]];case
 3:return[2,a[1]];case
@@ -15427,10 +15948,10 @@ e=a[1];return[3,aW(function(a){return hT(d,b,c,a)},e)];case
 5:var
 f=a[1];return[4,aW(function(a){var
 e=hT(d,b,c,a[2]);return[0,a[1],e]},f)];case
-6:return[4,[0,[0,K$,hT(d,b,c,a[1])],0]];case
-7:return[4,[0,[0,La,hT(d,b,c,a[1])],0]];case
+6:return[4,[0,[0,K5,hT(d,b,c,a[1])],0]];case
+7:return[4,[0,[0,K6,hT(d,b,c,a[1])],0]];case
 8:var
-g=[0,[0,Lb,hT(d,b,c,a[2])],0],h=a[1];return[4,[0,[0,Lc,[3,aW(function(a){return[2,a]},h)]],g]];default:return j(b[2],a[1])}},Ld=function(i,h){var
+g=[0,[0,K7,hT(d,b,c,a[2])],0],h=a[1];return[4,[0,[0,K8,[3,aW(function(a){return[2,a]},h)]],g]];default:return j(b[2],a[1])}},K9=function(i,h){var
 b=i[1],a=h[1];for(;;){if(b)if(a){var
 c=a[1],d=b[1],f=0===d[0]?0===c[0]?mT(d[1],c[1]):1:0===c[0]?2:j7(d[1],c[1]);if(0===f){var
 b=b[2],a=a[2];continue}var
@@ -15438,6 +15959,7 @@ e=f}else
 var
 e=2;else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -15458,22 +15980,28 @@ g=a?1:a,e=g;return 2<=e?0:1}},Le=function(a){return iW(Ld,a)},rT=function(a,b){r
 a=eL(aq,c[1],b),d=a?1:a;return d},a)},m6=function(b,a){return hP(function(b){return aq(a,b[1])?0:1},b)},i1=function(c,b,a){return r(c,r(b,a))},hU=function(b,a){if(typeof
 a==="number")return Li;else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+g=a?1:a,e=g;return 2<=e?0:1}},K_=function(a){return iW(K9,a)},rT=function(a,b){return hP(function(c){var
+a=eL(aq,c[1],b),d=a?1:a;return d},a)},m6=function(b,a){return hP(function(b){return aq(a,b[1])?0:1},b)},i1=function(c,b,a){return r(c,r(b,a))},hU=function(b,a){if(typeof
+a==="number")return Lc;else
+>>>>>>> (fix) Directly use time constants in generated JS code
 switch(a[0]){case
 0:return j6(a[1]);case
 1:return aX(mL(a[1]));case
-2:return 0===a[1]?Lf:Lg;case
+2:return 0===a[1]?K$:La;case
 3:return a[1];case
 4:var
-c=a[1];return i1(Ll,fu(Lk,iW(KQ,aW(function(a){return hU(b,a)},c))),Lj);case
+c=a[1];return i1(Lf,fv(Le,iW(KK,aW(function(a){return hU(b,a)},c))),Ld);case
 5:var
-d=a[1];return i1(Lp,fu(Lo,aW(function(a){var
-c=r(Ln,hU(b,a[2]));return r(a[1],c)},d)),Lm);case
-6:return i1(Lr,hU(b,a[1]),Lq);case
-7:return i1(Lt,hU(b,a[1]),Ls);case
+d=a[1];return i1(Lj,fv(Li,aW(function(a){var
+c=r(Lh,hU(b,a[2]));return r(a[1],c)},d)),Lg);case
+6:return i1(Ll,hU(b,a[1]),Lk);case
+7:return i1(Ln,hU(b,a[1]),Lm);case
 8:var
-e=r(Lv,hU(b,a[2]));return i1(Lw,r(fu(Lh,a[1]),e),Lu);default:return j(b[3],a[1])}},m7=function(c,a){if(a){var
+e=r(Lp,hU(b,a[2]));return i1(Lq,r(fv(Lb,a[1]),e),Lo);default:return j(b[3],a[1])}},m7=function(c,a){if(a){var
 b=a[1];if(typeof
 b!=="number"&&0===b[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -15492,6 +16020,9 @@ a!=="number"&&1===a[0])return[0,a[1]];return 0},a)},i1=function(c,n,m){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 d=m7(c,a[2]),e=b[1];return aK(function(a){return e+a|0},d)}return 0}return Lx},rU=function(b,a){return iX(function(a){if(typeof
+=======
+d=m7(c,a[2]),e=b[1];return aK(function(a){return e+a|0},d)}return 0}return Lr},rU=function(b,a){return iX(function(a){if(typeof
+>>>>>>> (fix) Directly use time constants in generated JS code
 a!=="number"&&0===a[0])return[0,a[1]];return 0},a)},kd=function(b,a){return iX(function(a){if(typeof
 a!=="number"&&1===a[0])return[0,a[1]];return 0},a)},i2=function(c,n,m){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -15540,7 +16071,7 @@ a!=="number"&&5===a[0])return s(c[1],b[1],a[1]);return 0}},e8=function(c,d,b,a){
 b=a[1],g=hW(f,e,d,a[2]),c=[0,[0,b[1],b[2]],g];else
 var
 c=a;return c},hX=function(h,g,f,e){var
-i=ec(e),a=i,j=fN[2];for(;;){if(a){var
+i=ec(e),a=i,j=fO[2];for(;;){if(a){var
 c=a[2];if(c){var
 d=s(j,a[1],c[1]);if(d){var
 a=c;continue}var
@@ -15696,6 +16227,7 @@ j=[0,[0,c,f],g(h,b)]}else
 var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 j=a;return j},p=j_(fL,g(e,f),o),n=[1,rP(k,l),p];else
 =======
 j=a;return j},p=j8(fN,g(e,f),o),n=[1,rV(k,l),p];else
@@ -15703,6 +16235,9 @@ j=a;return j},p=j8(fN,g(e,f),o),n=[1,rV(k,l),p];else
 =======
 j=a;return j},p=j9(fN,g(e,f),o),n=[1,rX(k,l),p];else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+j=a;return j},p=j9(fO,g(e,f),o),n=[1,rX(k,l),p];else
+>>>>>>> (fix) Directly use time constants in generated JS code
 var
 n=m;return n}return 0;case
 2:if(typeof
@@ -15841,6 +16376,7 @@ j=[0,[0,d,f],g(h,b)]}else
 var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 j=a;return j},p=j_(fL,g(e,f),o),n=[1,rP(k,l),p];else
 =======
 j=a;return j},p=j8(fN,g(e,f),o),n=[1,rV(k,l),p];else
@@ -15848,6 +16384,9 @@ j=a;return j},p=j8(fN,g(e,f),o),n=[1,rV(k,l),p];else
 =======
 j=a;return j},p=j9(fN,g(e,f),o),n=[1,rX(k,l),p];else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+j=a;return j},p=j9(fO,g(e,f),o),n=[1,rX(k,l),p];else
+>>>>>>> (fix) Directly use time constants in generated JS code
 var
 n=m;return n}return 0;case
 2:if(typeof
@@ -15874,53 +16413,53 @@ if(5===a[0])return[5,s(i[2][1],b[1],a[1])];return 0}}return c},bY=function(o,m,c
 b(a){if(typeof
 a==="number")switch(a){case
 0:return function(b,a){if(typeof
-a==="number")if(0===a)return LC;return LD};case
+a==="number")if(0===a)return Lw;return Lx};case
 1:return function(b,a){if(typeof
-a==="number")if(1===a)return LE;return LF};case
+a==="number")if(1===a)return Ly;return Lz};case
 2:return function(b,a){if(typeof
 a==="number")switch(a){case
-0:return LG;case
-1:return LH;case
-2:return LI}return LJ};case
+0:return LA;case
+1:return LB;case
+2:return LC}return LD};case
 3:return function(b,a){if(typeof
 a==="number")switch(a){case
-0:return LK;case
-1:return LL;case
-3:return LN}return LM};case
+0:return LE;case
+1:return LF;case
+3:return LH}return LG};case
 4:return function(b,a){if(typeof
 a==="number")switch(a){case
-0:return LO;case
-1:return LP;case
-4:return LR}return LQ};case
+0:return LI;case
+1:return LJ;case
+4:return LL}return LK};case
 5:return function(b,a){if(typeof
 a==="number")switch(a){case
-0:return LS;case
-1:return LT;case
-5:return LV}return LU};default:return function(b,a){if(typeof
+0:return LM;case
+1:return LN;case
+5:return LP}return LO};default:return function(b,a){if(typeof
 a==="number")switch(a){case
-0:return LW;case
-1:return LX;case
-6:return LZ}return LY}}else
+0:return LQ;case
+1:return LR;case
+6:return LT}return LS}}else
 switch(a[0]){case
 0:var
 d=b(a[1]);return function(e,a){if(typeof
 a==="number")switch(a){case
-0:return L0;case
-1:return L1}else
+0:return LU;case
+1:return LV}else
 if(0===a[0]){var
-b=a[1],c=s(d,ek,b)[2];return[0,s(d,ek,b)[1],c]}return L2};case
+b=a[1],c=s(d,ej,b)[2];return[0,s(d,ej,b)[1],c]}return LW};case
 1:var
 c=a[2],p=a[1],e=function(a){if(a)var
 c=a[2],d=a[1],g=e(c),f=[0,d,c,b(d[2]),g];else
 var
 f=a;return f},q=e(c);return function(H,b){if(typeof
 b==="number")switch(b){case
-0:return L3;case
-1:return L4}else
+0:return LX;case
+1:return LY}else
 if(1===b[0]){var
 d=b[2],r=b[1],f=c,e=q;for(;;){if(f){var
-l=b_(aq,d,f[1][1]);if(l){if(!e)throw[0,i,L6];var
-t=s(e[3],ek,l[1])[2];if(t){var
+l=b_(aq,d,f[1][1]);if(l){if(!e)throw[0,i,L0];var
+t=s(e[3],ej,l[1])[2];if(t){var
 f=f[2],e=e[4];continue}var
 g=t}else
 var
@@ -15936,10 +16475,10 @@ var
 h=g;var
 j=d;b:for(;;){if(j){var
 u=j[1],v=u[1],m=b_(aq,c,v);if(m){var
-w=[0,v,m[1]],D=u[2],E=function(a,b){return i2(o,a,b)},x=function(c){return function(a,b){return iV(aq,c,a,b)}}(E),a=q;for(;;){if(!a)throw[0,i,KO];var
+w=[0,v,m[1]],D=u[2],E=function(a,b){return i2(o,a,b)},x=function(c){return function(a,b){return iV(aq,c,a,b)}}(E),a=q;for(;;){if(!a)throw[0,i,KI];var
 C=a[2];if(!x(a[1],w)){if(eL(x,w,C)){var
-a=a[4];continue}throw[0,i,KN]}var
-y=s(a[3],ek,D)[1];if(y){var
+a=a[4];continue}throw[0,i,KH]}var
+y=s(a[3],ej,D)[1];if(y){var
 j=j[2];continue b}var
 z=y;break}}else
 var
@@ -15953,33 +16492,34 @@ F=ec(d),k=m1(aq,ec(c),F);else
 var
 k=A}else
 var
-k=n;return[0,k,h]}}}return L5};case
+k=n;return[0,k,h]}}}return LZ};case
 2:var
 f=b(a[1]),g=b(a[2]);return function(j,a){if(typeof
 a==="number")switch(a){case
-0:return L7;case
-1:return L8}else
+0:return L1;case
+1:return L2}else
 if(2===a[0]){var
-b=a[2],c=a[1],d=s(f,ek,c)[2],h=d?s(g,ek,b)[2]:d,e=s(f,ek,c)[1],i=e?s(g,ek,b)[1]:e;return[0,i,h]}return L9};case
+b=a[2],c=a[1],d=s(f,ej,c)[2],h=d?s(g,ej,b)[2]:d,e=s(f,ej,c)[1],i=e?s(g,ej,b)[1]:e;return[0,i,h]}return L3};case
 3:var
 h=b(a[1]),j=b(a[2]);return function(i,a){if(typeof
 a==="number")switch(a){case
-0:return L_;case
-1:return L$}else
+0:return L4;case
+1:return L5}else
 if(3===a[0]){var
-b=a[2],c=a[1],d=s(h,ek,c)[1],f=d?s(j,ek,b)[2]:d,e=s(h,ek,c)[2],g=e?s(j,ek,b)[1]:e;return[0,g,f]}return Ma};case
+b=a[2],c=a[1],d=s(h,ej,c)[1],f=d?s(j,ej,b)[2]:d,e=s(h,ej,c)[2],g=e?s(j,ej,b)[1]:e;return[0,g,f]}return L6};case
 4:var
 k=a[1];return function(d,a){if(typeof
 a==="number")switch(a){case
-0:return Mb;case
-1:return Mc}else
+0:return L7;case
+1:return L8}else
 if(4===a[0]){var
-b=a[1],c=kb(m,b,k);return[0,kb(m,k,b),c]}return Md};default:var
+b=a[1],c=kb(m,b,k);return[0,kb(m,k,b),c]}return L9};default:var
 l=a[1];return function(d,a){if(typeof
 a==="number")switch(a){case
-0:return Me;case
-1:return Mf}else
+0:return L_;case
+1:return L$}else
 if(5===a[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -16002,10 +16542,16 @@ c=ec(a);return m1(aq,ec(b),c)},r1=function(h,c,b){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=hl(function(d){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+b=a[1],c=s(o[3],b,l);return[0,s(o[3],l,b),c]}return Ma}}}return s(b(c),ej,a)[1]},r0=function(d,b,a){var
+c=ec(a);return m1(aq,ec(b),c)},r1=function(h,c,b){var
+a=hm(function(d){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 e=b_(aq,b,d[1]);if(e){var
 a=b_(aq,b,d[2]);if(a)var
 f=bY(h,c,e[1],a[1]),g=f?1:f;else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -16027,6 +16573,12 @@ e=1,a=mS(function(c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 a=b_(aq,b[2],c),d=a?[0,a[1],0]:a;return d},c);return dk(fO(d,b[1])[1],a,e)},hn=function(e,b,d,a,c){if(typeof
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+g=a;return g}return 1},c),d=a?1:a;return d},m9=function(c,b,a){if(r0(c,b,a)){if(r1(c,b,a))return[0,b,a];throw[0,i,Mb]}throw[0,i,Mc]},fP=function(b,a){var
+c=rY(b,a);return[0,rZ(b,a),c]},hY=function(d,b,c){var
+e=1,a=mS(function(c){var
+a=b_(aq,b[2],c),d=a?[0,a[1],0]:a;return d},c);return dk(fP(d,b[1])[1],a,e)},ho=function(e,b,d,a,c){if(typeof
+>>>>>>> (fix) Directly use time constants in generated JS code
 c==="number")return[0,2];else
 switch(c[0]){case
 0:return[0,3];case
@@ -16035,20 +16587,20 @@ switch(c[0]){case
 3:return[0,6];case
 4:var
 k=function(c){if(c){var
-f=k(c[2]),g=hn(e,b,d,a,c[1]),i=fO(b,a[1])[2],h=g?f?[0,s(i,g[1],f[1])]:f:g;return h}return[0,0]},o=k(c[1]);return aK(function(a){return[0,a]},o);case
+f=k(c[2]),g=ho(e,b,d,a,c[1]),i=fP(b,a[1])[2],h=g?f?[0,s(i,g[1],f[1])]:f:g;return h}return[0,0]},o=k(c[1]);return aK(function(a){return[0,a]},o);case
 5:var
 l=function(c){if(c){var
-h=c[1],f=hn(e,b,d,a,h[2]);if(f)var
+h=c[1],f=ho(e,b,d,a,h[2]);if(f)var
 g=l(c[2]),j=g?[0,[0,[0,h[1],f[1]],g[1]]]:g,i=j;else
 var
-i=f;return i}return Mj},g=l(c[1]);return g?hX(b,a[1],1,g[1]):g;case
+i=f;return i}return Md},g=l(c[1]);return g?hX(b,a[1],1,g[1]):g;case
 6:var
-p=hn(e,b,d,a,c[1]);return aK(function(a){return[2,a,0]},p);case
+p=ho(e,b,d,a,c[1]);return aK(function(a){return[2,a,0]},p);case
 7:var
-q=hn(e,b,d,a,c[1]);return aK(function(a){return[2,0,a]},q);case
+q=ho(e,b,d,a,c[1]);return aK(function(a){return[2,0,a]},q);case
 8:var
 f=c[1],i=j5(aq,iZ(a[1],f),f);if(i){var
-h=hn(e,b,d,a,c[2]);if(h){var
+h=ho(e,b,d,a,c[2]);if(h){var
 r=hY(b,a,f);if(bY(b,a[1],h[1],r))return[0,hV(b,a[1],f)];var
 m=[0,1]}else
 var
@@ -16056,9 +16608,10 @@ m=h;var
 n=m}else
 var
 n=i;return n;default:var
-t=j(d[1],c[1]);return aK(function(a){return[5,a]},t)}},ho=function(c,b,a){if(typeof
+t=j(d[1],c[1]);return aK(function(a){return[5,a]},t)}},hp=function(c,b,a){if(typeof
 a!=="number"&&0===a[0])return[0,a[1]];return 0},e9=function(d,c,a){if(typeof
 a!=="number"&&1===a[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -16101,20 +16654,24 @@ e=ra(b[1],a[1]),i=e?1:e;return i}return 0;case
 =======
 b=a[1];return[0,[0,b,hW(d,c[1],b,a[2])]]}return 0},r2=function(c,b,a){return j(iY(fN),a)};rr(10);var
 r3=function(a){return aX(q_(a))},r4=function(a){return aX(q$(a))},r5=function(a){return aX(ra(a))},r6=function(d,c,a){return hl(function(a){var
+=======
+b=a[1];return[0,[0,b,hW(d,c[1],b,a[2])]]}return 0},r2=function(c,b,a){return j(iY(fO),a)};rr(10);var
+r3=function(a){return aX(q_(a))},r4=function(a){return aX(q$(a))},r5=function(a){return aX(ra(a))},r6=function(d,c,a){return hm(function(a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=bY(c,d,a[1],a[2]),e=b?1:b;return e},a)},gl=function(e,d,a,c){var
 b=r6(e,d,[0,a,0]),f=b?[0,[0,c,a[2]]]:b;return f},ke=function(f,e,b,a,d){var
-c=r6(f,e,[0,b,[0,a,0]]),g=c?[0,[0,[0,d,b[2]],a[2]]]:c;return g},Mo=J7(0),Mp=function(b,a){switch(b[0]){case
+c=r6(f,e,[0,b,[0,a,0]]),g=c?[0,[0,[0,d,b[2]],a[2]]]:c;return g},Mi=J6(0),Mj=function(b,a){switch(b[0]){case
 0:if(0===a[0]){var
-f=ez(b[1],a[1]),j=f?1:f;return j}return 0;case
+f=ey(b[1],a[1]),j=f?1:f;return j}return 0;case
 1:if(1===a[0]){var
 e=rc(b[1],a[1]),i=e?1:e;return i}return 0;case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 2:if(2===a[0]){var
-c=s(gj[5],b[1],a[1]),g=c?1:c;return g}return 0;default:if(3===a[0]){var
-d=s(gj[5],b[1],a[1]),h=d?1:d;return h}return 0}},Mq=function(a){switch(a[0]){case
+c=s(eB[5],b[1],a[1]),g=c?1:c;return g}return 0;default:if(3===a[0]){var
+d=s(eB[5],b[1],a[1]),h=d?1:d;return h}return 0}},Mk=function(a){switch(a[0]){case
 0:return aX(a[1]);case
 1:return r5(a[1]);case
-2:return r3(a[1]);default:return r4(a[1])}},aY=[0,Mp,function(a){return a},Mq],i4=function(a){return[9,[1,a]]},m_=function(a){return[9,[2,a]]},r7=function(a){return[9,[3,a]]},m$=function(c,a){if(typeof
+2:return r3(a[1]);default:return r4(a[1])}},aY=[0,Mj,function(a){return a},Mk],i4=function(a){return[9,[1,a]]},m_=function(a){return[9,[2,a]]},r7=function(a){return[9,[3,a]]},m$=function(c,a){if(typeof
 a!=="number"&&9===a[0]){var
 b=a[1];return 1===b[0]?[0,j(c,b[1])]:0}return 0},na=function(b,a){if(typeof
 a!=="number"&&3===a[0])return[0,j(b,a[1])];return 0},gm=function(b,a){if(typeof
@@ -16131,11 +16688,15 @@ d=r6(c,b,a);return aK(function(a){return[2,a]},d)},Mu=0,Mv=function(a){switch(a[
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 d=a[1];return 1===d[0]?[0,s(e,c[1],d[1])]:0}return 0}return 0}return 0},nb=function(c,b,a){var
-d=r8(c,b,a);return aK(function(a){return[2,a]},d)},Mr=0,Ms=function(a){switch(a[0]){case
-0:return[2,aX(as(Kq,as(a[1],Kp)))];case
+d=r8(c,b,a);return aK(function(a){return[2,a]},d)},Ml=0,Mm=function(a){switch(a[0]){case
+0:return[2,aX(as(Kk,as(a[1],Kj)))];case
 1:return[2,r5(a[1])];case
+<<<<<<< HEAD
 2:return[2,r3(a[1])];default:return[2,r4(a[1])]}},Mt=[0,function(a){return Mr},Ms],Mu=function(b,a){switch(b){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+2:return[2,r3(a[1])];default:return[2,r4(a[1])]}},Mn=[0,function(a){return Ml},Mm],Mo=function(b,a){switch(b){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 0:return 1===a?b:0;case
 1:return a;case
 2:if(!(3<=a))switch(a){case
@@ -16146,20 +16707,20 @@ c=a-1|0;if(!(2<c>>>0))switch(c){case
 0:return b;case
 1:break;default:return 3}return 0;case
 4:return 1===a?b:4===a?4:0;default:if(1===a)return b;var
-d=5<=a?1:0,e=d?5:d;return e}},Mv=[0,function(b,a){switch(b){case
+d=5<=a?1:0,e=d?5:d;return e}},Mp=[0,function(b,a){switch(b){case
 0:return a;case
 1:return 0===a?b:1;case
 2:if(!(3<=a))switch(a){case
 0:return b;case
 2:return 2}return 1;case
 3:return 3===a?3:0===a?b:1;case
-4:return 4===a?4:0===a?b:1;default:return 0===a?b:5<=a?5:1}},Mu],Mw=function(c,a){switch(c){case
+4:return 4===a?4:0===a?b:1;default:return 0===a?b:5<=a?5:1}},Mo],Mq=function(c,a){switch(c){case
 0:return 0===a?1:0;case
 1:return 1===a?1:0;case
 2:return 2===a?1:0;case
 3:return 3===a?1:0;case
 4:return 4===a?1:0;default:var
-b=5<=a?1:0,d=b?1:b;return d}},Y=[0,Mw,Mv,function(d,a){switch(d){case
+b=5<=a?1:0,d=b?1:b;return d}},Y=[0,Mq,Mp,function(d,a){switch(d){case
 0:return 0===a?1:0;case
 1:return 1;case
 2:if(1!==a)if(!(3<=a))return 1;return 0;case
@@ -16172,6 +16733,7 @@ b=2>>>0<(a-1|0)>>>0?1:0,c=b?1:b;return c}}],L7=function(a){switch(a[0]){case
 3:if(3!==a)if(0!==a)return 0;return 1;case
 4:if(4!==a)if(0!==a)return 0;return 1;default:var
 <<<<<<< HEAD
+<<<<<<< HEAD
 b=3>>>0<(a-1|0)>>>0?1:0,c=b?1:b;return c}}],MA=function(a){switch(a[0]){case
 0:return MB;case
 1:return MC;case
@@ -16183,10 +16745,16 @@ b=3>>>0<(a-1|0)>>>0?1:0,c=b?1:b;return c}}],Mx=function(a){switch(a[0]){case
 1:return Mz;case
 2:return MA;default:return MB}},r9=[0,Mx,function(a,b){switch(a[0]){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+b=3>>>0<(a-1|0)>>>0?1:0,c=b?1:b;return c}}],Mr=function(a){switch(a[0]){case
+0:return Ms;case
+1:return Mt;case
+2:return Mu;default:return Mv}},r9=[0,Mr,function(a,b){switch(a[0]){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 0:return 2;case
 1:return 3;case
-2:return 4;default:return 5}}],fw=function(a){return[5,3]},hZ=function(a){return[5,4]},nc=function(a){return[5,5]},MC=function(b,a){if(typeof
-a!=="number"&&0===a[0])return[0,a[1]];return 0},ME=[3,MD],MG=[3,MF],MI=[3,MH],MK=[3,MJ],MM=[3,ML],MN=function(M){function
+2:return 4;default:return 5}}],fx=function(a){return[5,3]},hZ=function(a){return[5,4]},nc=function(a){return[5,5]},Mw=function(b,a){if(typeof
+a!=="number"&&0===a[0])return[0,a[1]];return 0},My=[3,Mx],MA=[3,Mz],MC=[3,MB],ME=[3,MD],MG=[3,MF],MH=function(M){function
 f(a){return m9(Y,0,0)}var
 g=0,h=1;function
 i(a){return 0}function
@@ -16227,15 +16795,19 @@ A(a){return function(a){if(typeof
 a!=="number"&&2===a[0])return[0,[0,a[1],a[2]]];return 0}}function
 a(a){return function(b){return e9(Y,a,b)}}function
 <<<<<<< HEAD
+<<<<<<< HEAD
 B(a){return function(b){return hn(aY,Y,r7,a,b)}}function
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 B(a){return function(b){return hn(aY,Y,r9,a,b)}}function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+B(a){return function(b){return ho(aY,Y,r9,a,b)}}function
+>>>>>>> (fix) Directly use time constants in generated JS code
 C(a){return function(j,c,b){if(typeof
 j==="number")switch(j){case
 0:var
-x=s(fO(Y,a[1])[2],c,b);return[0,[0,[0,5,x],x]];case
+x=s(fP(Y,a[1])[2],c,b);return[0,[0,[0,5,x],x]];case
 1:var
 ae=0,af=a[1];if(gV(function(a,b){return e8(Y,af,a,b)},c,ae)){var
 ag=0,ah=a[1];if(gV(function(a,b){return e8(Y,ah,a,b)},b,ag))return[0,[0,[0,0,0],0]];var
@@ -16251,7 +16823,7 @@ k=1;else
 if(1===b[0]){var
 p=b[1],_=hW(Y,a[1],o,c[2]),q=0!==o?1:0,$=hW(Y,a[1],p,b[2]);if(q){var
 r=0!==p?1:0;if(r)var
-aa=j9(fN,_,$),h=hX(Y,a[1],1,aa),g=1,k=0,n=0;else
+aa=j9(fO,_,$),h=hX(Y,a[1],1,aa),g=1,k=0,n=0;else
 var
 t=r,n=1}else
 var
@@ -16327,14 +16899,14 @@ var
 J=H;return J;case
 11:var
 av=0,aw=a[1];if(gV(function(a,b){return e8(Y,aw,a,b)},b,av))return[0,[0,[0,5,c],b]];var
-ax=ho(Y,a,b);return aK(function(d){var
-b=s(fO(Y,a[1])[2],c,d);return[0,[0,5,b],[0,b]]},ax);case
+ax=hp(Y,a,b);return aK(function(d){var
+b=s(fP(Y,a[1])[2],c,d);return[0,[0,5,b],[0,b]]},ax);case
 12:var
 L=bY(Y,a[1],c,6);if(L)var
 M=bY(Y,a[1],b,6),N=M?[0,[0,[0,6,6],6]]:M;else
 var
 N=L;return N;default:var
-i=s(fO(Y,a[1])[2],c,b),K=ho(Y,a,i),au=K?[0,[0,[0,i,i],i]]:K;return au}else
+i=s(fP(Y,a[1])[2],c,b),K=hp(Y,a,i),au=K?[0,[0,[0,i,i],i]]:K;return au}else
 switch(j[0]){case
 0:var
 O=bY(Y,a[1],c,3);if(O)var
@@ -16353,9 +16925,9 @@ var
 W=U;return W;default:var
 X=j[1];if(X){var
 Z=X[1];if(2<=Z){if(5<=Z){var
-ay=hZ(a[1]),az=[0,b,fw(a[1])],aA=[0,c,fw(a[1])];return ke(a[1],Y,aA,az,ay)}var
-aB=[0,b,fw(a[1])],aC=[0,c,fw(a[1])];return ke(a[1],Y,aC,aB,5)}var
-aD=fw(a[1]),aE=[0,b,hZ(a[1])],aF=[0,c,fw(a[1])];return ke(a[1],Y,aF,aE,aD)}return ke(a[1],Y,[0,c,4],[0,b,4],4)}}}function
+ay=hZ(a[1]),az=[0,b,fx(a[1])],aA=[0,c,fx(a[1])];return ke(a[1],Y,aA,az,ay)}var
+aB=[0,b,fx(a[1])],aC=[0,c,fx(a[1])];return ke(a[1],Y,aC,aB,5)}var
+aD=fx(a[1]),aE=[0,b,hZ(a[1])],aF=[0,c,fx(a[1])];return ke(a[1],Y,aF,aE,aD)}return ke(a[1],Y,[0,c,4],[0,b,4],4)}}}function
 D(a){return function(c,b){if(typeof
 c==="number")switch(c){case
 0:return[0,[0,b,b]];case
@@ -16363,7 +16935,7 @@ c==="number")switch(c){case
 z=bY(Y,a[1],b,5),aa=z?[0,[0,5,5]]:z;return aa;case
 2:return[0,[0,[0,b],b]];case
 3:var
-d=s(fO(Y,a[1])[2],b,[0,0]);if(typeof
+d=s(fP(Y,a[1])[2],b,[0,0]);if(typeof
 d==="number")var
 n=0;else
 if(0===d[0])var
@@ -16372,12 +16944,12 @@ var
 n=0;if(!n)var
 A=0;return aK(function(a){return[0,a,d]},A);case
 4:var
-B=s(fO(Y,a[1])[2],b,[0,[0,0]]),j=ho(Y,a,B);if(j){var
-p=j[1],ab=ho(Y,a,p);return aK(function(a){return[0,p,B]},ab)}return j;case
+B=s(fP(Y,a[1])[2],b,[0,[0,0]]),j=hp(Y,a,B);if(j){var
+p=j[1],ab=hp(Y,a,p);return aK(function(a){return[0,p,B]},ab)}return j;case
 5:var
-C=s(fO(Y,a[1])[2],b,[0,0]),ac=ho(Y,a,C);return aK(function(a){return[0,[0,a],C]},ac);case
+C=s(fP(Y,a[1])[2],b,[0,0]),ac=hp(Y,a,C);return aK(function(a){return[0,[0,a],C]},ac);case
 6:var
-D=s(fO(Y,a[1])[2],b,[0,0]),ad=ho(Y,a,D);return aK(function(a){return[0,3,D]},ad);case
+D=s(fP(Y,a[1])[2],b,[0,0]),ad=hp(Y,a,D);return aK(function(a){return[0,3,D]},ad);case
 7:return[0,[0,6,b]];case
 8:return[0,[0,[2,b,0],b]];case
 9:return[0,[0,[2,0,b],b]];case
@@ -16430,6 +17002,7 @@ N=u;return aK(function(a){return[0,a,b]},N);case
 4:var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 k=r(fM(_,b[1])[2],a,[0,0]),l=hm(_,b,k);if(l){var
 O=l[1],P=aU(d8,c[1]),h=e6(_,b,O);if(h){var
 w=h[1][2],x=hQ(aq,P,ec(w));if(x)var
@@ -16451,6 +17024,9 @@ v=rC(function(c){var
 b=j9(w,c);if(b){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
+=======
+k=s(fP(Y,a[1])[2],b,[0,0]),l=hp(Y,a,k);if(l){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 O=l[1],P=aW(d9,c[1]),h=e9(Y,a,O);if(h){var
 w=h[1][2],x=hS(aq,P,ec(w));if(x)var
 v=rE(function(c){var
@@ -16484,7 +17060,7 @@ X=c[1];if(0===X[0])return gl(a[1],Y,[0,b,4],4);var
 m=X[1];if(typeof
 m==="number")switch(m){case
 0:var
-ax=fw(a[1]);return gl(a[1],Y,[0,b,6],ax);case
+ax=fx(a[1]);return gl(a[1],Y,[0,b,6],ax);case
 1:var
 ay=[0,b,hZ(a[1])];return gl(a[1],Y,ay,3);case
 2:var
@@ -16492,15 +17068,16 @@ az=hZ(a[1]);return gl(a[1],Y,[0,b,6],az);default:var
 aA=nc(a[1]);return gl(a[1],Y,[0,b,6],aA)}else
 switch(m[0]){case
 0:var
-aB=[0,b,fw(a[1])];return gl(a[1],Y,aB,3);case
+aB=[0,b,fx(a[1])];return gl(a[1],Y,aB,3);case
 3:var
 aE=hZ(a[1]);return gl(a[1],Y,[0,b,3],aE);case
 4:var
 aF=nc(a[1]);return gl(a[1],Y,[0,b,3],aF);default:var
-aC=fw(a[1]),aD=[0,b,fw(a[1])];return gl(a[1],Y,aD,aC)}}}}function
+aC=fx(a[1]),aD=[0,b,fx(a[1])];return gl(a[1],Y,aD,aC)}}}}function
 E(b,a){return a}var
 e=0;function
 F(a){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 b=hj(function(b){return hj(function(c){if(aq(b[2],c[1])){var
 d=[0,b[1],c[2]];return mX(function(a,b){return iS(aq,aq,a,b)},d,a)}return 1},a)},a),d=b?1:b;if(d){var
@@ -16512,11 +17089,15 @@ b=rU(_,a,c);return rv(rS(_,a,b))?rv(rT(_,a,b))?[0,m_(_,a,b)]:[1,LW]:[1,LX]}}var
 I=m_(_,e,0);function
 =======
 b=hl(function(b){return hl(function(c){if(aq(b[2],c[1])){var
+=======
+b=hm(function(b){return hm(function(c){if(aq(b[2],c[1])){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=[0,b[1],c[2]];return mW(function(a,b){return iV(aq,aq,a,b)},d,a)}return 1},a)},a),d=b?1:b;if(d){var
-c=hl(function(b){var
-c=[0,b[2],b[1]];return mM(mW(function(a,b){return iV(aq,aq,a,b)},c,a))},a),e=c?1:c;return e?[0,a]:[1,Mk]}return[1,Ml]}function
+c=hm(function(b){var
+c=[0,b[2],b[1]];return mM(mW(function(a,b){return iV(aq,aq,a,b)},c,a))},a),e=c?1:c;return e?[0,a]:[1,Me]}return[1,Mf]}function
 G(a){return function(b){return r2(Y,a,b)}}function
 H(a){return function(c){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 b=r0(Y,a,c);return rB(rY(Y,a,b))?rB(rZ(Y,a,b))?[0,m9(Y,a,b)]:[1,Mp]:[1,Mq]}}var
@@ -16528,6 +17109,9 @@ I=m8(Y,e,0);function
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 b=r2(Y,a,c);return rD(r0(Y,a,b))?rD(r1(Y,a,b))?[0,m9(Y,a,b)]:[1,Mm]:[1,Mn]}}var
+=======
+b=r2(Y,a,c);return rD(r0(Y,a,b))?rD(r1(Y,a,b))?[0,m9(Y,a,b)]:[1,Mg]:[1,Mh]}}var
+>>>>>>> (fix) Directly use time constants in generated JS code
 I=m9(Y,e,0);function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 J(b,a){return a}function
@@ -16552,7 +17136,7 @@ b=e,a=c;continue}return[0,[0,[0,k,j],h],d(f,e,c)]}var
 b=e,a=c;continue}var
 l=a}else
 var
-l=b;return l}}return[0,f,g,h,i,k,l,m,n,o,p,fw,hZ,nc,q,r,t,u,v,w,x,y,z,MC,A,a,B,C,D,E,e,F,G,H,I,J,b,K,c,L,d,function(a,h,g){var
+l=b;return l}}return[0,f,g,h,i,k,l,m,n,o,p,fx,hZ,nc,q,r,t,u,v,w,x,y,z,Mw,A,a,B,C,D,E,e,F,G,H,I,J,b,K,c,L,d,function(a,h,g){var
 c=e9(Y,a,g);if(c){var
 e=e9(Y,a,b(a,hY(Y,a,h)));if(e)return d(a,e[1][2],c[1][2]);var
 f=e}else
@@ -16587,6 +17171,7 @@ s=i0(aY);function
 t(a){return[6,a]}function
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 u(a){return[7,a]}return[0,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,a[2],kb]},Mt=function(a){var
 b=r0(a),c=[0,Mu,Mv,Mw,Mx,17,19,20,18],d=0,e=1;function
 =======
@@ -16597,6 +17182,10 @@ b=r8(a),c=[0,MS,MT,MU,MV,17,19,20,18],d=0,e=1;function
 u(a){return[7,a]}return[0,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,a[2],ka]},MO=function(a){var
 b=r_(a),c=[0,MP,MQ,MR,MS,17,19,20,18],d=0,e=1;function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+u(a){return[7,a]}return[0,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,a[2],ka]},MI=function(a){var
+b=r_(a),c=[0,MJ,MK,ML,MM,17,19,20,18],d=0,e=1;function
+>>>>>>> (fix) Directly use time constants in generated JS code
 f(a){return[0,a]}function
 g(a){return[1,a]}function
 h(a){return[2,a]}function
@@ -16608,7 +17197,7 @@ u=8,v=9;function
 w(a){return[7,a]}var
 x=10;function
 y(a){return[8,a]}var
-z=[0,c,d,e,f,g,h,i,k,l,m,n,o,p,q,t,u,v,w,x,y,function(A,b,a){if(typeof
+z=[0,c,d,e,f,g,h,i,k,l,m,n,o,p,q,t,u,v,w,x,y,function(B,b,a){if(typeof
 b==="number")switch(b){case
 0:return[0,a];case
 1:if(typeof
@@ -16616,6 +17205,7 @@ a!=="number"&&2===a[0])return[0,[2,mM(a[1])]];return 0;case
 2:return[0,[4,[0,a,0]]];case
 3:if(typeof
 a!=="number"&&4===a[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -16647,17 +17237,26 @@ H=function(a,b){return fv(aY,a,b)},B=m4(aY,function(a){return rL(H,a)},a);return
 =======
 H=function(a,b){return fv(aY,a,b)},B=m5(aY,function(a){return rN(H,a)},a);return aK(function(a){return[4,a]},B);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+o=a[1];return o?o[2]?[0,i0(aY)]:[0,[6,o[1]]]:[0,i0(aY)]}return 0;case
+4:return hn(aY,function(b){var
+a=rJ(function(a){if(typeof
+a!=="number"&&4===a[0])return[0,a[1]];return 0},b);return aK(function(a){return[4,a]},a)},a);case
+5:var
+J=function(a,b){return fw(aY,a,b)},D=m5(aY,function(a){return rN(J,a)},a);return aK(function(a){return[4,a]},D);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 6:var
-I=m5(aY,function(a){return mU(jX(a))},a);return aK(function(a){return[0,a]},I);case
+K=m5(aY,function(a){return mU(jX(a))},a);return aK(function(a){return[0,a]},K);case
 7:return[0,[3,hU(aY,a)]];case
 8:return[0,[6,a]];case
 9:return[0,[7,a]];case
 10:if(typeof
 a!=="number"&&8===a[0])return[0,a[2]];return 0;case
 11:var
-J=hm(aY,function(a){return m7(aY,a)},a);return aK(function(a){return[0,a]},J);case
+L=hn(aY,function(a){return m7(aY,a)},a);return aK(function(a){return[0,a]},L);case
 12:if(typeof
 a!=="number"&&4===a[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 z=aL(Kr,rM(aW,a[1]));return aL(function(a){return[0,a]},z)}return 0;case
@@ -16672,10 +17271,14 @@ F=aK(KW,rS(aY,a[1]));return aK(function(a){return[0,a]},F)}return 0;case
 =======
 F=aK(KT,rU(aY,a[1]));return aK(function(a){return[0,a]},F)}return 0;case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+H=aK(KN,rU(aY,a[1]));return aK(function(a){return[0,a]},H)}return 0;case
+>>>>>>> (fix) Directly use time constants in generated JS code
 13:if(typeof
 a!=="number"&&4===a[0]){var
-G=aK(KU,rU(aY,a[1]));return aK(function(a){return[0,a]},G)}return 0;case
+I=aK(KO,rU(aY,a[1]));return aK(function(a){return[0,a]},I)}return 0;case
 14:var
+<<<<<<< HEAD
 K=hm(aY,function(a){if(a){var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -16687,10 +17290,15 @@ b=m6(aY,a);return aK(function(b){return ru(b,mT(jW(a)))},b)}return LB},a);return
 =======
 b=m7(aY,a);return aK(function(b){return rw(b,mU(jX(a)))},b)}return Ly},a);return aK(function(a){return[0,a]},K);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+M=hn(aY,function(a){if(a){var
+b=m7(aY,a);return aK(function(b){return rw(b,mU(jX(a)))},b)}return Ls},a);return aK(function(a){return[0,a]},M);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 15:if(typeof
 a!=="number"&&0===a[0])return[0,[1,a[1]]];return 0;case
 16:if(typeof
 a!=="number"&&1===a[0])return[0,[0,a[1]|0]];return 0;case
+<<<<<<< HEAD
 <<<<<<< HEAD
 17:return hk(aW,function(b){var
 a=aL(rp,ke(aW,b));return aL(function(a){return[1,a]},a)},a);case
@@ -16713,6 +17321,15 @@ a=aK(KI,kc(aY,b));return aK(function(a){return[1,a]},a)},a)}else
 a=aK(KE,kd(aY,b));return aK(function(a){return[1,a]},a)},a);default:return hm(aY,function(b){var
 a=aK(KF,kd(aY,b));return aK(function(a){return[1,a]},a)},a)}else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+17:return hn(aY,function(b){var
+a=aK(rx,kd(aY,b));return aK(function(a){return[1,a]},a)},a);case
+18:return hn(aY,function(b){var
+a=aK(KA,kd(aY,b));return aK(function(a){return[1,a]},a)},a);case
+19:return hn(aY,function(b){var
+a=aK(Ky,kd(aY,b));return aK(function(a){return[1,a]},a)},a);default:return hn(aY,function(b){var
+a=aK(Kz,kd(aY,b));return aK(function(a){return[1,a]},a)},a)}else
+>>>>>>> (fix) Directly use time constants in generated JS code
 switch(b[0]){case
 0:return[0,[5,[0,[0,b[1],a],0]]];case
 1:if(typeof
@@ -16730,9 +17347,9 @@ a!=="number"&&5===a[0])return[0,[5,rR(a[1],b[1])]];return 0;case
 a!=="number"&&5===a[0])return[0,[5,rT(a[1],b[1])]];return 0;case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 4:var
-L=b[1];if(typeof
+N=b[1];if(typeof
 a!=="number"&&4===a[0]){var
-C=a[1],D=aK(Le,iX(function(c){var
+E=a[1],F=aK(K_,iX(function(c){var
 a=iX(function(g){var
 f=g[1];if(typeof
 c==="number")var
@@ -16748,21 +17365,22 @@ b!=="number")switch(b[0]){case
 3:return[0,[1,b[1]]]}var
 e=0}else
 var
-e=a;return e},L);return aK(function(a){return[0,a,c]},a)},C)),E=aK(function(a){return aW(iT,a)},D);return aK(function(a){return[4,a]},E)}return 0;case
+e=a;return e},N);return aK(function(a){return[0,a,c]},a)},E)),G=aK(function(a){return aW(iT,a)},F);return aK(function(a){return[4,a]},G)}return 0;case
 5:var
-v=b[2],i=b[1];if(typeof
+w=b[2],l=b[1];if(typeof
 a!=="number"&&3===a[0]){var
-o=a[1];if(0===i)var
-k=0;else
-if(0<i)var
-k=hN(i);else
+p=a[1];if(0===l)var
+m=0;else
+if(0<l)var
+m=hN(l);else
 var
-M=hN(-i|0),k=mN(hQ(o),M);if(v)var
-p=v[1],N=0===p?0:0<p?hN(p):0,w=N;else
+O=hN(-l|0),m=mN(hQ(p),O);if(w)var
+q=w[1],P=0===q?0:0<q?hN(q):0,x=P;else
 var
-w=mN(hQ(o),k);return[0,[3,mV(k,w,o)]]}return 0;case
+x=mN(hQ(p),m);return[0,[3,mV(m,x,p)]]}return 0;case
 6:if(typeof
 a!=="number"&&3===a[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 I=a[1];return[0,[2,rz(cR(b[1],b[2]),I)]]}return 0;case
@@ -16779,16 +17397,20 @@ O=a[1];return[0,[2,rF(cR(b[1],b[2]),O)]]}return 0;case
 O=a[1];return[0,[2,rH(cR(b[1],b[2]),O)]]}return 0;case
 7:return[0,[8,iZ(A,b[1]),a]];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+Q=a[1];return[0,[2,rH(cR(b[1],b[2]),Q)]]}return 0;case
+7:return[0,[8,iZ(B,b[1]),a]];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 8:if(typeof
-a!=="number"&&8===a[0])return kb(A,a[1],b[1])?[0,[6,a]]:[0,i0(aY)];return 0;case
+a!=="number"&&8===a[0])return kb(B,a[1],b[1])?[0,[6,a]]:[0,i0(aY)];return 0;case
 9:if(typeof
 a!=="number"&&0===a[0]){var
 c=a[1];switch(b[1]){case
 0:var
-q=gB(c);break;case
+r=gB(c);break;case
 1:var
-q=0===c?0:0<c?1<c?0===(c%2|0)?j2(c/2|0):j2(c/2|0):0:0;break;default:var
-q=0===c?0:0<c?iU(c)[1]:0}return[0,[0,q]]}return 0;case
+r=0===c?0:0<c?1<c?0===(c%2|0)?j2(c/2|0):j2(c/2|0):0:0;break;default:var
+r=0===c?0:0<c?iU(c)[1]:0}return[0,[0,r]]}return 0;case
 10:if(typeof
 a!=="number"&&1===a[0]){var
 d=a[1];switch(b[1]){case
@@ -16801,28 +17423,29 @@ e=Math.exp(d);break;case
 3:var
 e=Math.log(d);break;case
 4:var
-e=ad7(d);break;case
+e=ad1(d);break;case
 5:var
 e=Math.ceil(d);break;case
 6:var
 e=Math.floor(d);break;default:var
 e=Math.abs(d)}return[0,[1,e]]}return 0;default:var
-r=b[1];if(0===r[0])switch(r[1]){case
+s=b[1];if(0===s[0])switch(s[1]){case
 0:var
-P=gm(function(a){return Math.acos(a)},a);return aK(function(a){return[1,a]},P);case
+R=gm(function(a){return Math.acos(a)},a);return aK(function(a){return[1,a]},R);case
 1:var
-Q=gm(function(a){return Math.asin(a)},a);return aK(function(a){return[1,a]},Q);case
+S=gm(function(a){return Math.asin(a)},a);return aK(function(a){return[1,a]},S);case
 2:var
-R=gm(function(a){return Math.atan(a)},a);return aK(function(a){return[1,a]},R);case
+T=gm(function(a){return Math.atan(a)},a);return aK(function(a){return[1,a]},T);case
 3:var
-S=gm(function(a){return Math.cos(a)},a);return aK(function(a){return[1,a]},S);case
+U=gm(function(a){return Math.cos(a)},a);return aK(function(a){return[1,a]},U);case
 4:var
-T=gm(adJ,a);return aK(function(a){return[1,a]},T);case
+V=gm(adD,a);return aK(function(a){return[1,a]},V);case
 5:var
-U=gm(function(a){return Math.sin(a)},a);return aK(function(a){return[1,a]},U);case
+W=gm(function(a){return Math.sin(a)},a);return aK(function(a){return[1,a]},W);case
 6:var
-V=gm(aem,a);return aK(function(a){return[1,a]},V);case
+X=gm(aeg,a);return aK(function(a){return[1,a]},X);case
 7:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 Q=gh(function(a){return Math.tan(a)},a);return aL(function(a){return[1,a]},Q);default:var
@@ -16848,22 +17471,29 @@ X=gm(aex,a);return aK(function(a){return[1,a]},X)}var
 X=gm(aeu,a);return aK(function(a){return[1,a]},X)}var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 f=r[1];if(typeof
+=======
+Y=gm(function(a){return Math.tan(a)},a);return aK(function(a){return[1,a]},Y);default:var
+Z=gm(aeo,a);return aK(function(a){return[1,a]},Z)}var
+f=s[1];if(typeof
+>>>>>>> (fix) Directly use time constants in generated JS code
 f==="number")switch(f){case
 0:return aK(i4,na(function(a){var
-b=d8(a);return j(q9(co(J0,J1),J8),b)},a));case
+b=d8(a);return j(q9(co(J0,J1),J7),b)},a));case
 1:if(typeof
 a==="number")var
-m=0;else
-if(9===a[0])if(2===a[1][0])var
-s=[0,ej(J2)],m=1;else
+n=0;else
+if(9===a[0]){var
+y=a[1];if(2===y[0])var
+C=j(eB[21],y[1]),t=[0,j(hj[25][16],C)],n=1;else
 var
-s=0,m=1;else
+t=0,n=1}else
 var
-m=0;if(!m)var
-s=0;return aK(function(a){return[0,a]},s);case
-2:return aK(m_,na(function(a){d8(a);return ej(J4)},a));default:return aK(r7,na(function(a){d8(a);return ej(J6)},a))}else
+n=0;if(!n)var
+t=0;return aK(function(a){return[0,a]},t);case
+2:return aK(m_,na(function(a){d8(a);return fj(J3)},a));default:return aK(r7,na(function(a){d8(a);return fj(J5)},a))}else
 switch(f[0]){case
 0:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 Y=f[1],Z=m_(function(a){switch(Y){case
 0:return d1(J9);case
@@ -16880,78 +17510,86 @@ Y=f[1],Z=m_(function(a){switch(Y){case
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 Y=f[1],Z=m$(function(a){switch(Y){case
+=======
+_=f[1],$=m$(function(a){switch(_){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 0:var
-b=j(mB,a);return j(hI[13],b);case
+b=j(mB,a);return j(hj[13],b);case
 1:var
-c=j(mB,a);return j(hI[12],c);case
+c=j(mB,a);return j(hj[12],c);case
 2:var
-d=j(mB,a);return j(hI[11],d);case
+d=j(mB,a);return j(hj[11],d);case
 3:return j(qD,a);case
 4:return j(qC,a);case
 5:return rb(a);case
+<<<<<<< HEAD
 6:return(rb(a)%3|0)+1|0;default:return j(mD,a)}},a);return aK(function(a){return[0,a]},Z);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+6:return(rb(a)/3|0)+1|0;default:return j(mD,a)}},a);return aK(function(a){return[0,a]},$);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 1:var
-_=f[1];return aK(i4,m$(function(a){switch(_){case
-0:return ej(J_);case
-1:return ej(J$);case
-2:return ej(Ka);case
-3:return ej(Kb);default:return ej(Kc)}},a));case
+aa=f[1];return aK(i4,m$(function(a){switch(aa){case
+0:return fj(J9);case
+1:return fj(J_);case
+2:return fj(J$);case
+3:return fj(Ka);default:return fj(Kb)}},a));case
 2:var
-$=f[1];return aK(i4,m$(function(a){switch($){case
-0:return ej(Kd);case
-1:return ej(Ke);case
-2:return ej(Kf);case
-3:return ej(Kg);default:return ej(Kh)}},a));case
+ab=f[1];return aK(i4,m$(function(a){switch(ab){case
+0:return fj(Kc);case
+1:return fj(Kd);case
+2:return fj(Ke);case
+3:return fj(Kf);default:return fj(Kg)}},a));case
 3:var
-aa=f[1];if(typeof
-a==="number")var
-t=0;else
-if(0===a[0]){var
-x=a[1];switch(aa){case
-0:var
-g=ej(Ki);break;case
-1:var
-g=ej(Kj);break;case
-2:var
-g=ej(Kk);break;case
-3:var
-g=j(gj[13],x);break;case
-4:var
-g=ej(Kl);break;default:var
-g=j(gj[10],x)}var
-y=[0,g],t=1}else
-var
-t=0;if(!t)var
-y=0;return aK(m_,y);default:var
-ab=f[1];if(typeof
+ac=f[1];if(typeof
 a==="number")var
 u=0;else
 if(0===a[0]){var
-l=a[1];switch(ab){case
+g=a[1];switch(ac){case
 0:var
-h=j(gj[13],l);break;case
+h=j(eB[16],g);break;case
 1:var
-h=ej(Km);break;case
+h=j(eB[15],g);break;case
 2:var
-h=j(gj[11],l);break;case
+h=j(eB[14],g);break;case
 3:var
-h=j(gj[11],l*3|0);break;default:var
-h=j(gj[10],l)}var
+h=j(eB[13],g);break;case
+4:var
+h=j(eB[12],g);break;default:var
+h=j(eB[10],g)}var
 z=[0,h],u=1}else
 var
 u=0;if(!u)var
-z=0;return aK(r7,z)}}}],A=[0,MT,MU,MV,MW,MX,MY,MZ,M0,M1,M2,M3],B=[0,M4,M5,M6,M7,5,6],C=[0,ME,MG,MI,MK,MM],D=0,E=1,F=2,G=3,H=4,I=7,J=8,K=9,L=10,M=11,N=12;return[0,b,z,[0,A,B,C,D,E,F,G,H,I,J,K,L,M,N,function(G,i,b,a){if(typeof
+z=0;return aK(m_,z);default:var
+ad=f[1];if(typeof
+a==="number")var
+v=0;else
+if(0===a[0]){var
+i=a[1];switch(ad){case
+0:var
+k=j(eB[13],i);break;case
+1:var
+k=j(eB[12],i);break;case
+2:var
+k=j(eB[11],i);break;case
+3:var
+k=j(eB[11],i*3|0);break;default:var
+k=j(eB[10],i)}var
+A=[0,k],v=1}else
+var
+v=0;if(!v)var
+A=0;return aK(r7,A)}}}],A=[0,MN,MO,MP,MQ,MR,MS,MT,MU,MV,MW,MX],B=[0,MY,MZ,M0,M1,5,6],C=[0,My,MA,MC,ME,MG],D=0,E=1,F=2,G=3,H=4,I=7,J=8,K=9,L=10,M=11,N=12;return[0,b,z,[0,A,B,C,D,E,F,G,H,I,J,K,L,M,N,function(G,i,b,a){if(typeof
 i==="number")switch(i){case
 0:var
-q=fv(aY,b,a),A=q?1:q;return[0,[2,A]];case
+q=fw(aY,b,a),A=q?1:q;return[0,[2,A]];case
 1:if(typeof
 b!=="number"&&5===b[0]){if(typeof
 a!=="number"&&5===a[0]){var
-B=bZ(b[1],a[1]);return[0,[5,j(iY(fN),B)]]}return 0}return 0;case
+B=bZ(b[1],a[1]);return[0,[5,j(iY(fO),B)]]}return 0}return 0;case
 2:if(typeof
 b!=="number"&&5===b[0]){if(typeof
 a!=="number"&&5===a[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -16973,6 +17611,9 @@ C=a[1],D=b[1],t=rI(function(a,b){return fv(aY,a,b)},D,C);return t?[0,[4,[0,[5,t[
 3:return rP(aY,function(a,b){var
 =======
 C=a[1],D=b[1],t=rK(function(a,b){return fv(aY,a,b)},D,C);return t?[0,[4,[0,[5,t[1]],0]]]:Lz}return 0}return 0;case
+=======
+C=a[1],D=b[1],t=rK(function(a,b){return fw(aY,a,b)},D,C);return t?[0,[4,[0,[5,t[1]],0]]]:Lt}return 0}return 0;case
+>>>>>>> (fix) Directly use time constants in generated JS code
 3:return rR(aY,function(a,b){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=a?b:a;return c},b,a);case
@@ -16993,12 +17634,12 @@ a=2<=mT(c,b)?0:1,d=a?1:a;return d},b,a);case
 7:return kc(aY,bZ,b,a);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 8:var
-E=function(a,b){return fv(aY,a,b)};return kc(aY,function(a,b){return j$(E,a,b)},b,a);case
+E=function(a,b){return fw(aY,a,b)};return kc(aY,function(a,b){return j$(E,a,b)},b,a);case
 9:var
-u=function(a,b){return fv(aY,a,b)};return kc(aY,function(a,b){return j$(u,j$(u,b,a),a)},b,a);case
+u=function(a,b){return fw(aY,a,b)};return kc(aY,function(a,b){return j$(u,j$(u,b,a),a)},b,a);case
 10:var
-F=function(a,b){return fv(aY,a,b)};return kc(aY,function(a,b){return bZ(a,j$(F,a,b))},b,a);case
-11:return m5(aY,function(a){return eL(function(a,b){return fv(aY,a,b)},b,a)?LA:LB},a);default:if(typeof
+F=function(a,b){return fw(aY,a,b)};return kc(aY,function(a,b){return bZ(a,j$(F,a,b))},b,a);case
+11:return m5(aY,function(a){return eL(function(a,b){return fw(aY,a,b)},b,a)?Lu:Lv},a);default:if(typeof
 b!=="number"&&3===b[0]){if(typeof
 a!=="number"&&3===a[0])return[0,[3,r(b[1],a[1])]];return 0}return 0}else
 switch(i[0]){case
@@ -17011,7 +17652,7 @@ e=d+c|0;break;case
 1:var
 e=d-c|0;break;case
 2:var
-e=f$(d,c);break;case
+e=ga(d,c);break;case
 3:var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17053,11 +17694,11 @@ b!=="number"&&1===b[0]){if(typeof
 a!=="number"&&1===a[0]){var
 k=a[1],l=b[1];switch(i[1]){case
 0:var
-m=fE(l,k);break;case
+m=fF(l,k);break;case
 1:var
 m=ol(l,k);break;case
 2:var
-m=adL(l,k);break;default:var
+m=adF(l,k);break;default:var
 m=oi(l,k)}return[0,[2,m]]}return 0}return 0;default:var
 v=i[1];if(v)switch(v[1]){case
 0:if(typeof
@@ -17157,9 +17798,9 @@ c=b[2];return[0,bZ(a[1],[0,b[1],0]),c]},d)},b,d)},se=function(b,a){if(0===a[0])r
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 o=0;return aK(function(a){return[1,a]},o)}}]]};rr(10);var
-nd=function(a,b){return ka(a,hT(aY,Mt,a,b))},ep=r_([0,aY,nd,Y]),b$=MO([0,aY,nd,Y]),ao=MN([0,aY,nd,Y]),r$=[0,-1,-1,-1],b9=[5,[0,0,r$,r$]],sa=function(a){var
-b=r(M8,j6(a[3]));return r(j6(a[2]),b)},et=function(b,a){return r(b,r(M_,a))},h4=et(fP,Nc),kf=et(fP,Nd),kg=et(fP,Ne),kh=et(fP,Nf),sc=et(M$,Ng),sd=et(Na,Nh),nf=et(h3,Ni),se=0,sf=function(d,c,b){var
-a=aR(d,c,b);return 0===a[0]?a[1]:[1,a[1]]},ng=function(c,b,a){return dk(function(b,a){return aT(function(b){return s(c,b,a)},b)},b,[0,a])},fQ=function(c,b,a){var
+nd=function(a,b){return ka(a,hT(aY,Mn,a,b))},eo=r_([0,aY,nd,Y]),b$=MI([0,aY,nd,Y]),ao=MH([0,aY,nd,Y]),r$=[0,-1,-1,-1],b9=[5,[0,0,r$,r$]],sa=function(a){var
+b=r(M2,j6(a[3]));return r(j6(a[2]),b)},es=function(b,a){return r(b,r(M4,a))},h4=es(fQ,M8),kf=es(fQ,M9),kg=es(fQ,M_),kh=es(fQ,M$),sc=es(M5,Na),sd=es(M6,Nb),nf=es(h3,Nc),se=0,sf=function(d,c,b){var
+a=aR(d,c,b);return 0===a[0]?a[1]:[1,a[1]]},ng=function(c,b,a){return dk(function(b,a){return aT(function(b){return s(c,b,a)},b)},b,[0,a])},fR=function(c,b,a){var
 d=[0,0,a];return ng(function(a,b){var
 d=s(c,a[2],b);return y(function(b){var
 c=b[2];return[0,bZ(a[1],[0,b[1],0]),c]},d)},b,d)},sg=function(b,a){if(0===a[0])return[0,a[1]];var
@@ -17169,6 +17810,7 @@ c=a[1];switch(c[0]){case
 d=[2,b,c[1]];break;case
 1:var
 d=[3,b,c[1]];break;default:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17211,6 +17853,10 @@ b=a[1],d=sq(a[2]),c=[0,[0,b[2],b[3]],d];else
 =======
 d=[0,b,Nj]}return[1,d]},sh=function(e,d,c){var
 a=d[1],f=r(Nl,r(c,Nk)),b=r(M9,sa(a[3]));return r(e,r(Nm,r(r(0,r(sa(a[2]),b)),f)))},si=function(a){return[1,[2,a,Nn]]},sj=function(b,a){return[1,[2,b,r(Nq,r(a,Np))]]},sk=function(b,a){return[1,[2,b,r(Ns,a)]]},sl=function(a){return[1,[2,a,NG]]},nh=function(b,a){return[1,[2,b,r(NI,r(a,NH))]]},h5=function(a){return[1,[0,a,N0]]},sm=function(c,b,a){return[1,[0,c,r(N4,r(b,r(N3,r(N2,r(a,N1)))))]]},sn=function(c,b,a){return[1,[0,c,r(N7,r(a,r(N6,r(b,N5))))]]},so=function(a){return a[2]},sp=function(a){return 0===a[0]?1:0},sq=function(a){return 0},N8=function(a){return aq(a,kf)?0:[0,[0,a,kf],0]},N9=function(a){return aq(a,h4)?0:[0,[0,a,h4],0]},N_=function(a){return aq(a,kg)?0:[0,[0,a,kg],0]},N$=function(a){return aq(a,kh)?0:[0,[0,a,kh],0]},h6=function(c,b,a){return a?[0,[0,b,a[1]],0]:j(c,b)},sr=function(a){return a[2]},ss=function(a){if(a)var
+=======
+d=[0,b,Nd]}return[1,d]},sh=function(e,d,c){var
+a=d[1],f=r(Nf,r(c,Ne)),b=r(M3,sa(a[3]));return r(e,r(Ng,r(r(0,r(sa(a[2]),b)),f)))},si=function(a){return[1,[2,a,Nh]]},sj=function(b,a){return[1,[2,b,r(Nk,r(a,Nj))]]},sk=function(b,a){return[1,[2,b,r(Nm,a)]]},sl=function(a){return[1,[2,a,NA]]},nh=function(b,a){return[1,[2,b,r(NC,r(a,NB))]]},h5=function(a){return[1,[0,a,NU]]},sm=function(c,b,a){return[1,[0,c,r(NY,r(b,r(NX,r(NW,r(a,NV)))))]]},sn=function(c,b,a){return[1,[0,c,r(N1,r(a,r(N0,r(b,NZ))))]]},so=function(a){return a[2]},sp=function(a){return 0===a[0]?1:0},sq=function(a){return 0},N2=function(a){return aq(a,kf)?0:[0,[0,a,kf],0]},N3=function(a){return aq(a,h4)?0:[0,[0,a,h4],0]},N4=function(a){return aq(a,kg)?0:[0,[0,a,kg],0]},N5=function(a){return aq(a,kh)?0:[0,[0,a,kh],0]},h6=function(c,b,a){return a?[0,[0,b,a[1]],0]:j(c,b)},sr=function(a){return a[2]},ss=function(a){if(a)var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=a[1],d=ss(a[2]),c=[0,[0,b[2],b[3]],d];else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 var
@@ -17218,25 +17864,26 @@ c=a;return c},st=function(d){var
 a=d;for(;;){if(a){var
 b=a[2],c=a[1];if(2===c[0]){var
 e=st(b);return[0,c[2],e]}var
-a=b;continue}return a}},Oa=function(a){return st(a[5])},Ob=function(a){return j4(aW(Oa,a))},su=function(a,c,b){var
+a=b;continue}return a}},N6=function(a){return st(a[5])},N7=function(a){return j4(aW(N6,a))},su=function(a,c,b){var
 d=[8,a,b$[2][19],b];return[8,a,j(b$[2][5],c),d]},sv=function(b,a){var
 c=bZ(b[4],a[4]),d=bZ(b[3],a[3]),e=bZ(b[2],a[2]);return[0,bZ(b[1],a[1]),e,d,c]},sw=function(d,c,a){var
-b=b_(aq,c[1],a);return b?[0,b[1]]:[1,[2,d,r(Nu,r(a,Nt))]]},sx=function(d,c,a){var
-b=b_(aq,c[3],a);return b?[0,b[1]]:[1,[2,d,r(NA,r(a,Nz))]]},sy=function(d,c,a){var
-b=b_(aq,c[4],a);return b?[0,b[1]]:[1,[2,d,r(NC,r(a,NB))]]},sz=function(c,b,a){return[0,[0,[0,c,b],a[1]],a[2],a[3],a[4]]},sA=function(c,b,a){return[0,a[1],[0,[0,c,b],a[2]],a[3],a[4]]},sB=function(c,b,a){return[0,a[1],a[2],[0,[0,c,b],a[3]],a[4]]},sC=function(c,b,a){return[0,a[1],a[2],a[3],[0,[0,c,b],a[4]]]},Oe=function(a){return[0,0,a,fR,fR,0,0]},ki=function(a,b,c){var
+b=b_(aq,c[1],a);return b?[0,b[1]]:[1,[2,d,r(No,r(a,Nn))]]},sx=function(d,c,a){var
+b=b_(aq,c[3],a);return b?[0,b[1]]:[1,[2,d,r(Nu,r(a,Nt))]]},sy=function(d,c,a){var
+b=b_(aq,c[4],a);return b?[0,b[1]]:[1,[2,d,r(Nw,r(a,Nv))]]},sz=function(c,b,a){return[0,[0,[0,c,b],a[1]],a[2],a[3],a[4]]},sA=function(c,b,a){return[0,a[1],[0,[0,c,b],a[2]],a[3],a[4]]},sB=function(c,b,a){return[0,a[1],a[2],[0,[0,c,b],a[3]],a[4]]},sC=function(c,b,a){return[0,a[1],a[2],a[3],[0,[0,c,b],a[4]]]},N_=function(a){return[0,0,a,fS,fS,0,0]},ki=function(a,b,c){var
 d=b_(aq,a[1],b);if(d){var
 e=a[6],f=a[5],g=a[4],h=a[3],i=a[2],k=j(c,d[1]);return[0,j8(aq,a[1],b,k),i,h,g,f,e]}var
-l=a[6],m=a[5],n=a[4],o=a[3],p=a[2],q=a[1];return[0,[0,[0,b,j(c,fR)],q],p,o,n,m,l]},kj=function(a,b){var
+l=a[6],m=a[5],n=a[4],o=a[3],p=a[2],q=a[1];return[0,[0,[0,b,j(c,fS)],q],p,o,n,m,l]},kj=function(a,b){var
 c=a[6],d=a[5],e=j(b,a[4]),f=j(b,a[3]);return[0,a[1],a[2],f,e,d,c]},sD=function(a,b){return[0,a[1],a[2],a[3],a[4],b,a[6]]},ni=function(a,d){var
-b=a[2],g=a[3],c=a[1],e=a[5],f=a[6];if(aq(b,se))return[0,c,d,fR,fR,e,f];var
-h=b_(aq,c,b);return h?[0,j8(aq,c,b,sv(g,h[1])),d,fR,fR,e,f]:[0,[0,[0,b,g],c],d,fR,fR,e,f]},nj=function(f,c,a,b,e){var
-d=b_(aq,[0,[0,a[2],a[4]],a[1]],b);return d?aP(f,c,d[1],e):[1,[2,c,r(Nw,r(b,Nv))]]},kk=function(c,b,a){var
+b=a[2],g=a[3],c=a[1],e=a[5],f=a[6];if(aq(b,se))return[0,c,d,fS,fS,e,f];var
+h=b_(aq,c,b);return h?[0,j8(aq,c,b,sv(g,h[1])),d,fS,fS,e,f]:[0,[0,[0,b,g],c],d,fS,fS,e,f]},nj=function(f,c,a,b,e){var
+d=b_(aq,[0,[0,a[2],a[4]],a[1]],b);return d?aP(f,c,d[1],e):[1,[2,c,r(Nq,r(b,Np))]]},kk=function(c,b,a){var
 d=a[1],e=b[4];return d?nj(sw,c,b,d[1],a[2]):sw(c,e,a[2])},sE=function(c,b,a){var
 d=a[1],e=b[4];return d?nj(sy,c,b,d[1],a[2]):sy(c,e,a[2])},sF=function(h,a){var
 b=d8(a),c=oH(b,46);if(c)var
 e=c[1],d=[0,aX(cp(b,e+1|0,ai(b)-(e+1|0)|0))];else
 var
 d=c;if(d){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17251,6 +17898,9 @@ f=d[1],g=kj(b9,h,[0,0,f]);return 0===g[0]?aq(g[1],a)?f:r(Oi,a):r(Oj,a)}return r(
 =======
 f=d[1],g=kk(b9,h,[0,0,f]);return 0===g[0]?aq(g[1],a)?f:r(Of,a):r(Og,a)}return r(Oh,a)},sG=function(aa){if(typeof
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+f=d[1],g=kk(b9,h,[0,0,f]);return 0===g[0]?aq(g[1],a)?f:r(N$,a):r(Oa,a)}return r(Ob,a)},sG=function(aa){if(typeof
+>>>>>>> (fix) Directly use time constants in generated JS code
 aa!=="number"&&6===aa[0]){var
 ab=aa[1];if(typeof
 ab!=="number"&&5===ab[0]){var
@@ -17448,6 +18098,7 @@ var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 bp=G;return bp}return 0}return 0},i6=[0,ri(10),0],fP=function(b,a){var
 e=j(eo[21],NW);if(typeof
 a==="number")return N1;else
@@ -17466,19 +18117,25 @@ bp=G;return bp}return 0}return 0},i5=[0,rq(10),0],fS=function(b,a){var
 e=j(ep[21],Oi);if(typeof
 a==="number")return On;else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+bp=G;return bp}return 0}return 0},i5=[0,rq(10),0],fT=function(b,a){var
+e=j(eo[21],Oc);if(typeof
+a==="number")return Oh;else
+>>>>>>> (fix) Directly use time constants in generated JS code
 switch(a[0]){case
 0:return j6(a[1]);case
 1:return aX(mL(a[1]));case
-2:return a[1]?Oo:Op;case
+2:return a[1]?Oi:Oj;case
 3:return j(e,[3,a[1]]);case
 4:var
-f=a[1];return r(Os,r(fu(Or,aW(function(a){return fS(b,a)},f)),Oq));case
+f=a[1];return r(Om,r(fv(Ol,aW(function(a){return fT(b,a)},f)),Ok));case
 5:var
-g=a[1];return r(Om,r(fu(Ol,aW(function(a){var
-c=r(Ok,fS(b,a[2]));return r(a[1],c)},g)),Oj));case
-6:return r(Ou,r(fS(b,a[1]),Ot));case
-7:return Ov;case
+g=a[1];return r(Og,r(fv(Of,aW(function(a){var
+c=r(Oe,fT(b,a[2]));return r(a[1],c)},g)),Od));case
+6:return r(Oo,r(fT(b,a[1]),On));case
+7:return Op;case
 8:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17516,22 +18173,31 @@ c=a[1];switch(c[0]){case
 1:return r(OA,r(aX(ra(c[1])),Oz));case
 2:return r(OC,r(aX(q_(c[1])),OB));default:return r(OE,r(aX(q$(c[1])),OD))}}},h7=function(b,a){if(typeof
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=a[1];if(d){if(d[2])return Oq;var
+h=fT(b,a[2]);return r(sF(b,d[1]),h)}return Or;default:var
+c=a[1];switch(c[0]){case
+0:return Os;case
+1:return r(Ou,r(aX(ra(c[1])),Ot));case
+2:return r(Ow,r(aX(q_(c[1])),Ov));default:return r(Oy,r(aX(q$(c[1])),Ox))}}},h7=function(b,a){if(typeof
+>>>>>>> (fix) Directly use time constants in generated JS code
 a==="number")switch(a){case
-0:return OF;case
-1:return OG;case
-2:return OH;case
-3:return OI;case
-4:return OJ;case
-5:return OK;default:return OL}else
+0:return Oz;case
+1:return OA;case
+2:return OB;case
+3:return OC;case
+4:return OD;case
+5:return OE;default:return OF}else
 switch(a[0]){case
-0:return r(h7(b,a[1]),OM);case
+0:return r(h7(b,a[1]),OG);case
 1:var
-d=0===a[1]?ON:0,e=r(d,OO),f=a[2];return r(OR,r(fu(OQ,aW(function(a){var
-c=r(OP,h7(b,a[2]));return r(a[1],c)},f)),e));case
-2:return r(h7(b,a[1]),OS);case
+d=0===a[1]?OH:0,e=r(d,OI),f=a[2];return r(OL,r(fv(OK,aW(function(a){var
+c=r(OJ,h7(b,a[2]));return r(a[1],c)},f)),e));case
+2:return r(h7(b,a[1]),OM);case
 3:var
-g=r(OT,h7(b,a[2]));return r(h7(b,a[1]),g);case
+g=r(ON,h7(b,a[2]));return r(h7(b,a[1]),g);case
 4:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17609,19 +18275,32 @@ e=s(ao[24],a,b),f=i6(a,c,O7,b),d=e7(aK(d9,e),f),g=y(d9,aT(function(d){var
 e=i6(a,c,O8,b);return e7(aP(ao[28],a,O9,d),e)},d)),h=y(d9,aT(function(d){var
 e=i6(a,c,O_,b);return e7(aP(ao[28],a,O$,d),e)},d)),i=y(d9,aT(function(d){var
 e=i6(a,c,Pa,b);return e7(aP(ao[28],a,Pb,d),e)},d));return el(function(c,b,a){return[0,[0,c,b],a]},g,h,i)},sI=function(c,b,a){var
+=======
+c=a[1];return c?c[2]?r(OP,OO):sF(b,c[1]):r(OR,OQ);default:switch(a[1]){case
+3:return OT;case
+4:return OU;case
+5:return OV;default:return OS}}},cl=function(c,b,a){return h7(b,s(ao[35],c[1],a))},h8=function(c,b,a){return a?r(OW,cl(c,b,a[1])):a},i6=function(d,c,b,a){var
+e=r(OY,r(b,OX));return[0,b9,r(OZ,r(h8(d,c,[0,a]),e))]},sH=function(b,c,a){var
+d=s(ao[24],b,a),e=i6(b,c,O0,a);return e7(aK(iT,d),e)},nk=function(a,c,b){var
+e=s(ao[24],a,b),f=i6(a,c,O1,b),d=e7(aK(d9,e),f),g=y(d9,aT(function(d){var
+e=i6(a,c,O2,b);return e7(aP(ao[28],a,O3,d),e)},d)),h=y(d9,aT(function(d){var
+e=i6(a,c,O4,b);return e7(aP(ao[28],a,O5,d),e)},d)),i=y(d9,aT(function(d){var
+e=i6(a,c,O6,b);return e7(aP(ao[28],a,O7,d),e)},d));return ek(function(c,b,a){return[0,[0,c,b],a]},g,h,i)},sI=function(c,b,a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=sH(c,b,a),e=nk(c,b,a);return aR(function(b,a){return[0,b,a]},e,d)},nl=function(d,a,c,b){var
-e=h8(d,a,b);return r(Pc,r(fS(a,c),e))},nm=function(d,b,a,c){if(a){var
-e=r(h8(d,b,c),i5),f=a[2],g=aW(function(a){return fS(b,a)},f),h=r(Pd,fS(b,a[1]));return r(dl(function(b,a){return r(a,r(i5,r(Pe,b)))},h,g),e)}return a},nn=function(e,b,d,a,c){function
-f(a){return fS(b,a)}if(d){if(fv(aY,a,d[1]))return 0;var
-g=h8(e,b,c);return r(i5,r(Pf,r(f(a),g)))}var
-h=h8(e,b,c);return r(i5,r(Pg,r(f(a),h)))},sL=function(e){if(6===e[0]){var
+e=h8(d,a,b);return r(O8,r(fT(a,c),e))},nm=function(d,b,a,c){if(a){var
+e=r(h8(d,b,c),i5),f=a[2],g=aW(function(a){return fT(b,a)},f),h=r(O9,fT(b,a[1]));return r(dl(function(b,a){return r(a,r(i5,r(O_,b)))},h,g),e)}return a},nn=function(e,b,d,a,c){function
+f(a){return fT(b,a)}if(d){if(fw(aY,a,d[1]))return 0;var
+g=h8(e,b,c);return r(i5,r(O$,r(f(a),g)))}var
+h=h8(e,b,c);return r(i5,r(Pa,r(f(a),h)))},sL=function(e){if(6===e[0]){var
 d=e[3],b=d[1],t=e[2];if(eL(aq,h1,aW(sr,d[4])))var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=d;else
 var
-q=bZ(d[4],[0,[0,b,h1,[0,b,[0,[0,Pm,[11,b,sc]],0],[0,[2,b]],[0,[11,b,h4]]],[0,[5,b,[8,b,[7,[0,sd,0]],[4,b,Pl]],[0,b,[4,b,0]]]]],0]),c=[0,b,d[2],d[3],q];var
+q=bZ(d[4],[0,[0,b,h1,[0,b,[0,[0,Pg,[11,b,sc]],0],[0,[2,b]],[0,[11,b,h4]]],[0,[5,b,[8,b,[7,[0,sd,0]],[4,b,Pf]],[0,b,[4,b,0]]]]],0]),c=[0,b,d[2],d[3],q];var
 a=c[1];if(eL(aq,h0,aW(sr,c[4])))var
 k=[0,c];else{var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 n=sq(c[4]),f=[3,a,Pj],o=hO(function(a){return aq(a[1],h0)?0:1},n),h=0;if([0,f,0])var
@@ -17639,9 +18318,13 @@ g=r(Pl,hZ),l=0,m=nf(function(i,d){var
 n=ss(c[4]),f=[3,a,Pj],o=hP(function(a){return aq(a[1],h1)?0:1},n),h=0;if([0,f,0])var
 g=r(Pi,h0),l=0,m=ng(function(i,d){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+n=ss(c[4]),f=[3,a,Pd],o=hP(function(a){return aq(a[1],h1)?0:1},n),h=0;if([0,f,0])var
+g=r(Pc,h0),l=0,m=ng(function(i,d){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=d[2][2],j=d[1];if(c){var
 e=c[1][2];if(11===e[0])var
-k=e[2],l=m2(c,[0,f,h])?[0,[3,a,[0,a],j,[0,[3,a,g],h]]]:[1,[2,a,NF]],b=y(function(b){return[0,[0,[2,a,g,[0,k]],b],0]},l);else
+k=e[2],l=m2(c,[0,f,h])?[0,[3,a,[0,a],j,[0,[3,a,g],h]]]:[1,[2,a,Nz]],b=y(function(b){return[0,[0,[2,a,g,[0,k]],b],0]},l);else
 var
 b=[0,0]}else
 var
@@ -17672,14 +18355,19 @@ d=bZ(c[4],[0,b,0]);return[0,a,c[2],c[3],d]},p)}return y(function(a){return[6,e[1
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 b=sl(a);return y(function(a){return bZ(i,a)},b)},o,l),i=y(function(e){var
-b=sh(NV,a,0),c=[0,[0,NW,j(ep[11],b)],0],d=j(ep[13],c);return[10,a,f,e,[2,a,[4,a,s(ep[16],[0,nf,0],d)]]]},m);else
+b=sh(NP,a,0),c=[0,[0,NQ,j(eo[11],b)],0],d=j(eo[13],c);return[10,a,f,e,[2,a,[4,a,s(eo[16],[0,nf,0],d)]]]},m);else
 var
 i=sl(a);var
+<<<<<<< HEAD
 p=y(function(b){return[0,a,h0,[0,a,[0,[0,Pk,[11,a,sc]],0],0,0],[0,b]]},i),k=y(function(b){var
 d=bZ(c[4],[0,b,0]);return[0,a,c[2],c[3],d]},p)}return y(function(a){return[6,e[1],t,a]},k)}return[0,e]},no=function(d,a,c,b){return[0,[0,[0,c,b],a[1]],a[2]]},hr=function(d,a,c,b){return[0,a[1],[0,[0,c,b],a[2]]]},gn=function(a,f,b,e){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+p=y(function(b){return[0,a,h0,[0,a,[0,[0,Pe,[11,a,sc]],0],0,0],[0,b]]},i),k=y(function(b){var
+d=bZ(c[4],[0,b,0]);return[0,a,c[2],c[3],d]},p)}return y(function(a){return[6,e[1],t,a]},k)}return[0,e]},no=function(d,a,c,b){return[0,[0,[0,c,b],a[1]],a[2]]},hs=function(d,a,c,b){return[0,a[1],[0,[0,c,b],a[2]]]},gn=function(a,f,b,e){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=b_(aq,a,b);if(c){var
-d=c[1],g=bZ(d[2],e);return[0,[0,f,[0,[0,b,d[1]],g]],a]}return a},fT=function(a,b){switch(b[0]){case
+d=c[1],g=bZ(d[2],e);return[0,[0,f,[0,[0,b,d[1]],g]],a]}return a},fU=function(a,b){switch(b[0]){case
 0:return j(ao[5],a);case
 1:return j(ao[4],a);case
 2:return j(ao[6],a);case
@@ -17691,11 +18379,12 @@ d=c[1],g=bZ(d[2],e);return[0,[0,f,[0,[0,b,d[1]],g]],a]}return a},fT=function(a,b
 10:return j(ao[13],a);case
 11:return s(ao[18],a,[0,b[2],0]);case
 12:var
-c=j(ao[6],a),d=fT(a,b[2]);return aP(ao[16],a,d,c);case
+c=j(ao[6],a),d=fU(a,b[2]);return aP(ao[16],a,d,c);case
 13:var
 e=b[2],f=aW(function(b){var
-c=fT(a,b[2]);return[0,b[1],c]},e),g=j(iY(fN),f);return aP(ao[15],a,ao[2],g);case
+c=fU(a,b[2]);return[0,b[1],c]},e),g=j(iY(fO),f);return aP(ao[15],a,ao[2],g);case
 14:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17709,13 +18398,16 @@ h=fS(a,b[2]);return s(ao[14],a,h);case
 =======
 h=fT(a,b[2]);return s(ao[14],a,h);case
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+h=fU(a,b[2]);return s(ao[14],a,h);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 15:var
-i=fT(a,b[3]),k=fT(a,b[2]);return aP(ao[16],a,k,i);default:return j(ao[8],a)}},sM=function(a){var
+i=fU(a,b[3]),k=fU(a,b[2]);return aP(ao[16],a,k,i);default:return j(ao[8],a)}},sM=function(a){var
 g=aW(function(a){return[0,a[2],a]},a),h=aW(function(d){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 b=d[3],c=d[2];switch(b[0]){case
 1:var
-a=h6(N8,c,b[2]);break;case
+a=h6(N2,c,b[2]);break;case
 2:var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17731,11 +18423,11 @@ a=h5(so,c,b[2]);break;case
 a=h6(sq,c,b[2]);break;case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 3:var
-a=h6(N9,c,b[2]);break;case
+a=h6(N3,c,b[2]);break;case
 4:var
-a=h6(N_,c,b[2]);break;case
+a=h6(N4,c,b[2]);break;case
 5:var
-a=h6(N$,c,b[2]);break;case
+a=h6(N5,c,b[2]);break;case
 0:case
 8:var
 <<<<<<< HEAD
@@ -17794,6 +18486,7 @@ g=c[3],m=c[2];return m?gn(b,a,m[1],g):aq(a,kh)?[0,[0,a,[0,0,g]],b]:gn(b,a,kh,g);
 b=a[2][1];return aW(function(b){return[0,a[1],b]},b)},b)),f=sg(b9,j(ao[31],e));return aT(function(a){var
 c=aW(function(b){var
 c=b[2][2],d=aW(function(b){var
+<<<<<<< HEAD
 c=fT(a,b[2]);return[0,b[1],c]},c),e=j(iY(fN),d),f=aP(ao[15],a,ao[2],e);return[0,b[1],f]},b);return sg(b9,s(ao[33],a,c))},f)},sN=function(a){return i3(Y,a[1],1,0)},sO=function(b,a,e,d,c){var
 f=cl(b,a,d),g=cl(b,a,c);return r(Qr,r(e,r(Qq,r(g,r(Qp,r(f,Qo))))))},kl=function(b,a,g,f,e,d,c){var
 h=cl(b,a,d),i=cl(b,a,c);return r(Qx,r(g,r(Qw,r(f,r(Qv,r(i,r(Qu,r(e,r(Qt,r(h,Qs))))))))))},sP=function(b,a,e,d,c){var
@@ -17815,9 +18508,19 @@ f=cl(b,a,d),g=cl(b,a,c);return r(QM,r(e,r(QL,r(g,r(QK,r(f,QJ))))))},cv=function(
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+c=fU(a,b[2]);return[0,b[1],c]},c),e=j(iY(fO),d),f=aP(ao[15],a,ao[2],e);return[0,b[1],f]},b);return sg(b9,s(ao[33],a,c))},f)},sN=function(a){return i3(Y,a[1],1,0)},sO=function(b,a,e,d,c){var
+f=cl(b,a,d),g=cl(b,a,c);return r(Ql,r(e,r(Qk,r(g,r(Qj,r(f,Qi))))))},kl=function(b,a,g,f,e,d,c){var
+h=cl(b,a,d),i=cl(b,a,c);return r(Qr,r(g,r(Qq,r(f,r(Qp,r(i,r(Qo,r(e,r(Qn,r(h,Qm))))))))))},sP=function(b,a,e,d,c){var
+f=cl(b,a,d),g=cl(b,a,c);return r(QD,r(e,r(QC,r(g,r(QB,r(f,QA))))))},cv=function(a,b,d,c){switch(c[0]){case
+0:return[1,[0,c[1],QE]];case
+1:return[1,[0,c[1],QF]];case
+2:return[1,[0,c[1],QG]];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 3:var
-D=c[2],af=b_(aq,bZ(d[2],d[1]),D),ag=r(QO,r(D,QN));return e7(af,[3,c[1],ag]);case
+D=c[2],af=b_(aq,bZ(d[2],d[1]),D),ag=r(QI,r(D,QH));return e7(af,[3,c[1],ag]);case
 4:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17831,6 +18534,9 @@ ah=[3,c[1],QS];return e7(hn(aY,Y,r7,a,c[2]),ah);case
 =======
 ah=[3,c[1],QP];return e7(hn(aY,Y,r9,a,c[2]),ah);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+ah=[3,c[1],QJ];return e7(ho(aY,Y,r9,a,c[2]),ah);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 5:var
 ai=j(ao[4],a[1]);return[0,s(ao[19],a[1],ai)];case
 6:var
@@ -17842,77 +18548,77 @@ f=cv(a,b,d,c);return y(function(b){return aP(ao[21],a[1],e,b)},f)},e)},al,ak);re
 i=c[2],v=cv(a,b,d,c[3]);if(0===v[0]){var
 k=v[1],E=aP(ao[28],a,i,k);if(E)return[0,E[1][1]];var
 C=function(e,d,c){var
-f=r(Po,r(cl(a,b,c),Pn));return r(Pq,r(e,r(Pp,r(cl(a,b,d),f))))};if(typeof
+f=r(Pi,r(cl(a,b,c),Ph));return r(Pk,r(e,r(Pj,r(cl(a,b,d),f))))};if(typeof
 i==="number")if(1===i)var
-n=C(Pt,j(ao[9],a[1]),k),m=1;else
+n=C(Pn,j(ao[9],a[1]),k),m=1;else
 var
 m=0;else
 switch(i[0]){case
 1:var
-N=r(Pv,r(cl(a,b,k),Pu)),n=r(Pw,r(i[1],N)),m=1;break;case
+N=r(Pp,r(cl(a,b,k),Po)),n=r(Pq,r(i[1],N)),m=1;break;case
 10:if(0===i[1])var
-n=C(Px,j(ao[7],a[1]),k),m=1;else
+n=C(Pr,j(ao[7],a[1]),k),m=1;else
 var
-n=r(Pz,r(cl(a,b,k),Py)),m=1;break;default:var
+n=r(Pt,r(cl(a,b,k),Ps)),m=1;break;default:var
 m=0}if(!m)var
-n=r(Ps,r(cl(a,b,k),Pr));return[1,[3,c[1],n]]}return[1,v[1]];case
+n=r(Pm,r(cl(a,b,k),Pl));return[1,[3,c[1],n]]}return[1,v[1]];case
 9:var
 h=c[2],w=cv(a,b,d,c[3]);if(0===w[0]){var
 o=w[1],x=cv(a,b,d,c[4]);if(0===x[0]){var
 p=x[1],F=g3(ao[27],a,h,o,p);if(F)return[0,F[1][1][1]];var
 g=function(e,d,c){var
-f=r(PB,r(cl(a,b,p),PA)),g=r(PC,r(cl(a,b,o),f)),h=r(PD,r(cl(a,b,c),g));return r(PF,r(e,r(PE,r(cl(a,b,d),h))))};if(typeof
+f=r(Pv,r(cl(a,b,p),Pu)),g=r(Pw,r(cl(a,b,o),f)),h=r(Px,r(cl(a,b,c),g));return r(Pz,r(e,r(Py,r(cl(a,b,d),h))))};if(typeof
 h==="number")switch(h){case
 3:var
-P=j(ao[9],a[1]),f=g(PK,j(ao[9],a[1]),P),e=1;break;case
+P=j(ao[9],a[1]),f=g(PE,j(ao[9],a[1]),P),e=1;break;case
 4:var
-Q=j(ao[9],a[1]),f=g(PL,j(ao[9],a[1]),Q),e=1;break;default:var
+Q=j(ao[9],a[1]),f=g(PF,j(ao[9],a[1]),Q),e=1;break;default:var
 e=0}else
 switch(h[0]){case
 0:switch(h[1]){case
 0:var
-R=j(ao[8],a[1]),f=g(PM,j(ao[8],a[1]),R),e=1;break;case
+R=j(ao[8],a[1]),f=g(PG,j(ao[8],a[1]),R),e=1;break;case
 1:var
-S=j(ao[8],a[1]),f=g(PN,j(ao[8],a[1]),S),e=1;break;case
+S=j(ao[8],a[1]),f=g(PH,j(ao[8],a[1]),S),e=1;break;case
 2:var
-T=j(ao[8],a[1]),f=g(PO,j(ao[8],a[1]),T),e=1;break;case
+T=j(ao[8],a[1]),f=g(PI,j(ao[8],a[1]),T),e=1;break;case
 3:var
-U=j(ao[8],a[1]),f=g(PP,j(ao[8],a[1]),U),e=1;break;default:var
-V=j(ao[8],a[1]),f=g(PQ,j(ao[8],a[1]),V),e=1}break;case
+U=j(ao[8],a[1]),f=g(PJ,j(ao[8],a[1]),U),e=1;break;default:var
+V=j(ao[8],a[1]),f=g(PK,j(ao[8],a[1]),V),e=1}break;case
 1:switch(h[1]){case
 0:var
-W=j(ao[7],a[1]),f=g(PR,j(ao[7],a[1]),W),e=1;break;case
+W=j(ao[7],a[1]),f=g(PL,j(ao[7],a[1]),W),e=1;break;case
 1:var
-X=j(ao[7],a[1]),f=g(PS,j(ao[7],a[1]),X),e=1;break;case
+X=j(ao[7],a[1]),f=g(PM,j(ao[7],a[1]),X),e=1;break;case
 2:var
-Z=j(ao[7],a[1]),f=g(PT,j(ao[7],a[1]),Z),e=1;break;case
+Z=j(ao[7],a[1]),f=g(PN,j(ao[7],a[1]),Z),e=1;break;case
 3:var
-_=j(ao[7],a[1]),f=g(PU,j(ao[7],a[1]),_),e=1;break;case
+_=j(ao[7],a[1]),f=g(PO,j(ao[7],a[1]),_),e=1;break;case
 4:var
-$=j(ao[7],a[1]),f=g(PV,j(ao[7],a[1]),$),e=1;break;default:var
-aa=r(PY,r(PX,r(cl(a,b,p),PW))),f=r(PZ,r(cl(a,b,o),aa)),e=1}break;case
+$=j(ao[7],a[1]),f=g(PP,j(ao[7],a[1]),$),e=1;break;default:var
+aa=r(PS,r(PR,r(cl(a,b,p),PQ))),f=r(PT,r(cl(a,b,o),aa)),e=1}break;case
 2:switch(h[1]){case
 0:var
-ab=j(ao[7],a[1]),f=g(P0,j(ao[7],a[1]),ab),e=1;break;case
+ab=j(ao[7],a[1]),f=g(PU,j(ao[7],a[1]),ab),e=1;break;case
 1:var
-ac=j(ao[7],a[1]),f=g(P1,j(ao[7],a[1]),ac),e=1;break;case
+ac=j(ao[7],a[1]),f=g(PV,j(ao[7],a[1]),ac),e=1;break;case
 2:var
-ad=j(ao[7],a[1]),f=g(P2,j(ao[7],a[1]),ad),e=1;break;default:var
-ae=j(ao[7],a[1]),f=g(P3,j(ao[7],a[1]),ae),e=1}break;default:var
+ad=j(ao[7],a[1]),f=g(PW,j(ao[7],a[1]),ad),e=1;break;default:var
+ae=j(ao[7],a[1]),f=g(PX,j(ao[7],a[1]),ae),e=1}break;default:var
 e=0}if(!e)var
-O=r(PI,r(PH,r(cl(a,b,p),PG))),f=r(PJ,r(cl(a,b,o),O));return[1,[3,c[1],f]]}return[1,x[1]]}return[1,w[1]];case
+O=r(PC,r(PB,r(cl(a,b,p),PA))),f=r(PD,r(cl(a,b,o),O));return[1,[3,c[1],f]]}return[1,x[1]]}return[1,w[1]];case
 10:var
 G=c[2],an=c[4],ap=c[3],ar=cv(a,b,d,G);return aT(function(c){var
 e=j(ao[9],a[1]);if(aP(ao[22],a,c,e)){var
-f=cv(a,b,d,an),g=cv(a,b,d,ap);return aR(j(ao[21],a[1]),g,f)}return[1,[3,G[1],QQ]]},ar);case
+f=cv(a,b,d,an),g=cv(a,b,d,ap);return aR(j(ao[21],a[1]),g,f)}return[1,[3,G[1],QK]]},ar);case
 11:var
 H=c[5],I=c[4],J=c[3],q=c[2],t=c[1];if(J){var
 as=J[1],at=cv(a,b,d,I);return aT(function(e){var
-c=fT(a[1],as);if(bY(Y,a[1],e,c))return cv(a,b,hr(a[1],d,q,c),H);if(0===t[0])var
-g=r(QS,r(cl(a,b,e),QR)),h=r(QU,r(q,r(QT,r(cl(a,b,c),g)))),f=[3,t,r(QV,r(t[2],h))];else
+c=fU(a[1],as);if(bY(Y,a[1],e,c))return cv(a,b,hs(a[1],d,q,c),H);if(0===t[0])var
+g=r(QM,r(cl(a,b,e),QL)),h=r(QO,r(q,r(QN,r(cl(a,b,c),g)))),f=[3,t,r(QP,r(t[2],h))];else
 var
-i=r(QY,r(q,r(QX,r(cl(a,b,e),QW)))),f=[3,t,r(QZ,r(cl(a,b,c),i))];return[1,f]},at)}var
-au=cv(a,b,d,I);return aT(function(c){return cv(a,b,hr(a[1],d,q,c),H)},au);case
+i=r(QS,r(q,r(QR,r(cl(a,b,e),QQ)))),f=[3,t,r(QT,r(cl(a,b,c),i))];return[1,f]},at)}var
+au=cv(a,b,d,I);return aT(function(c){return cv(a,b,hs(a[1],d,q,c),H)},au);case
 12:var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17936,27 +18642,28 @@ d=cl(a,b,hU(Y,a[1],[0,l,0])),h=aP(ao[39],a,[0,l,0],g);if(h){var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 K=c[1],av=[0,sN(a)],aw=c[2];return dk(function(e,c){var
-f=cv(a,b,d,c[2]),g=aT(function(b){return y(d9,e7(aP(ao[28],a,[0,c[1]],b),[3,K,Q0]))},f);return sf(function(c,b){var
-d=e7(g3(ao[27],a,1,c,b),[3,K,Q1]);return y(function(a){return ri(d9,d9,a)},d)},e,g)},aw,av);case
+f=cv(a,b,d,c[2]),g=aT(function(b){return y(d9,e7(aP(ao[28],a,[0,c[1]],b),[3,K,QU]))},f);return sf(function(c,b){var
+d=e7(g3(ao[27],a,1,c,b),[3,K,QV]);return y(function(a){return ri(d9,d9,a)},d)},e,g)},aw,av);case
 13:var
 l=c[2],z=c[1],ax=[0,sN(a)],ay=c[3],az=dk(function(e,c){var
-f=cv(a,b,d,c[2]),g=aT(function(b){return y(d9,e7(aP(ao[28],a,[0,c[1]],b),[3,z,Q2]))},f);return sf(function(c,b){var
-d=e7(g3(ao[27],a,1,c,b),[3,z,Q3]);return y(function(a){return ri(d9,d9,a)},d)},e,g)},ay,ax);return aT(function(g){var
+f=cv(a,b,d,c[2]),g=aT(function(b){return y(d9,e7(aP(ao[28],a,[0,c[1]],b),[3,z,QW]))},f);return sf(function(c,b){var
+d=e7(g3(ao[27],a,1,c,b),[3,z,QX]);return y(function(a){return ri(d9,d9,a)},d)},e,g)},ay,ax);return aT(function(g){var
 d=cl(a,b,hV(Y,a[1],[0,l,0])),h=aP(ao[39],a,[0,l,0],g);if(h){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 i=h[1],e=i[2],f=i[1];if(f)if(f[2])var
-n=r(P5,r(d,P4)),c=r(P7,r(fu(P6,f),n));else
+n=r(PZ,r(d,PY)),c=r(P1,r(fv(P0,f),n));else
 var
-o=r(P9,r(d,P8)),c=r(P_,r(f[1],o));else
+o=r(P3,r(d,P2)),c=r(P4,r(f[1],o));else
 if(e)if(e[2])var
-p=r(Qa,r(d,P$)),c=r(Qc,r(fu(Qb,e),p));else
+p=r(P6,r(d,P5)),c=r(P8,r(fv(P7,e),p));else
 var
-q=r(Qe,r(d,Qd)),c=r(Qf,r(e[1],q));else{var
+q=r(P_,r(d,P9)),c=r(P$,r(e[1],q));else{var
 j=aP(ao[41],a,[0,l,0],g);if(j)var
-k=j[1],m=k[1],s=r(Qh,r(cl(a,b,m[2]),Qg)),t=r(Qi,r(cl(a,b,k[2]),s)),c=r(Qj,r(m[1],t));else
+k=j[1],m=k[1],s=r(Qb,r(cl(a,b,m[2]),Qa)),t=r(Qc,r(cl(a,b,k[2]),s)),c=r(Qd,r(m[1],t));else
 var
-c=r(Ql,r(l,Qk))}}else
+c=r(Qf,r(l,Qe))}}else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -17979,6 +18686,10 @@ c=r(Qq,r(l,Qp));return y(d_,e7(aP(ao[37],a,[0,l,0],g),[3,z,c]))},az);case
 =======
 c=r(Qn,r(l,Qm));return y(d9,e7(aP(ao[37],a,[0,l,0],g),[3,z,c]))},az);case
 14:return sm(c[1],Q4,c[2]);case
+=======
+c=r(Qh,r(l,Qg));return y(d9,e7(aP(ao[37],a,[0,l,0],g),[3,z,c]))},az);case
+14:return sm(c[1],QY,c[2]);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 15:return sn(c[1],c[2],c[3]);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 16:var
@@ -17986,20 +18697,21 @@ A=cv(a,b,d,c[2]);if(0===A[0]){var
 L=A[1],aA=cv(a,b,d,c[4]),aB=c[3];return dk(function(c,g){var
 f=g[2],e=g[1];switch(e[0]){case
 0:if(s(ao[26],a,e[2])){var
-n=cv(a,b,d,f);return aR(j(ao[21],a[1]),c,n)}return[1,[3,e[1],Q5]];case
+n=cv(a,b,d,f);return aR(j(ao[21],a[1]),c,n)}return[1,[3,e[1],QZ]];case
 1:var
 o=cv(a,b,d,f);return aR(j(ao[21],a[1]),c,o);case
 2:var
 h=e[3],i=e[2];if(h){var
-p=s(ao[18],a[1],[0,h[1],0]),q=cv(a,b,hr(a[1],d,i,p),f);return aR(j(ao[21],a[1]),c,q)}var
-r=cv(a,b,hr(a[1],d,i,L),f);return aR(j(ao[21],a[1]),c,r);default:var
+p=s(ao[18],a[1],[0,h[1],0]),q=cv(a,b,hs(a[1],d,i,p),f);return aR(j(ao[21],a[1]),c,q)}var
+r=cv(a,b,hs(a[1],d,i,L),f);return aR(j(ao[21],a[1]),c,r);default:var
 k=e[3],l=e[2];if(k){var
-t=s(ao[18],a[1],[0,k[1],0]),u=cv(a,b,hr(a[1],d,l,t),f);return aR(j(ao[21],a[1]),c,u)}var
+t=s(ao[18],a[1],[0,k[1],0]),u=cv(a,b,hs(a[1],d,l,t),f);return aR(j(ao[21],a[1]),c,u)}var
 m=s(ao[24],a,L);if(m){var
-v=cv(a,b,hr(a[1],d,l,m[1][1]),f);return aR(j(ao[21],a[1]),c,v)}return c}},aB,aA)}return[1,A[1]];default:var
+v=cv(a,b,hs(a[1],d,l,m[1][1]),f);return aR(j(ao[21],a[1]),c,v)}return c}},aB,aA)}return[1,A[1]];default:var
 B=c[2],u=c[1],aC=c[4];if(B){var
 M=B[1],aD=M[1];if(B[2])return h5(u);if(c[3])return h5(u);var
 aE=cv(a,b,d,M[2]);return aT(function(c){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18021,11 +18733,15 @@ e=cv(a,b,hr(a[1],d,aD,c),aC);return y(j(ao[14],a[1]),e)},f)},aE)}return h4(u)}},
 e=[3,u,r(Q7,r(cl(a,b,c),Q6))],f=e7(s(ao[23],a,c),e);return aT(function(c){var
 e=cv(a,b,hr(a[1],d,aD,c),aC);return y(j(ao[14],a[1]),e)},f)},aE)}return h5(u)}},sQ=function(a,b,E,g,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+e=[3,u,r(Q1,r(cl(a,b,c),Q0))],f=e7(s(ao[23],a,c),e);return aT(function(c){var
+e=cv(a,b,hs(a[1],d,aD,c),aC);return y(j(ao[14],a[1]),e)},f)},aE)}return h5(u)}},sQ=function(a,b,E,g,c){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=c[3];if(d){var
 e=c[2][1],f=aW(function(b){var
-c=fT(a[1],b[2]);return[0,b[1],c]},e),h=cv(a,b,[0,g[1],f],d[1]);return aT(function(d){var
+c=fU(a[1],b[2]);return[0,b[1],c]},e),h=cv(a,b,[0,g[1],f],d[1]);return aT(function(d){var
 C=c[2][2];if(C){var
-e=fT(a[1],C[1]);if(bY(Y,a[1],d,e))return[0,g];var
+e=fU(a[1],C[1]);if(bY(Y,a[1],d,e))return[0,g];var
 o=c[3],k=o?o[1][1]:c[1],l=c[1];switch(l[0]){case
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18044,7 +18760,7 @@ j=B(h[1]);return[1,[3,k,j]];default:return[1,[3,k,sF(a,b,E,d,e)]]}}return[0,g]},
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 1:var
 f=l[2],h=sI(a,b,d),i=sI(a,b,e),B=function(c){return sO(a,b,f,d,e)};if(0===h[0])if(0===i[0])var
-m=i[1],n=h[1],p=m[1],q=p[1],r=q[2],s=q[1],t=p[2],u=m[2],v=n[1],w=v[1],x=w[2],y=w[1],z=v[2],A=n[2],D=aP(ao[22],a,y,s)?aP(ao[22],a,x,r)?aP(ao[22],a,z,t)?aP(ao[22],a,A,u)?sO(a,b,f,d,e):kl(a,b,f,Qz,Qy,A,u):kl(a,b,f,QB,QA,z,t):kl(a,b,f,QD,QC,x,r):kl(a,b,f,QF,QE,y,s),j=D;else
+m=i[1],n=h[1],p=m[1],q=p[1],r=q[2],s=q[1],t=p[2],u=m[2],v=n[1],w=v[1],x=w[2],y=w[1],z=v[2],A=n[2],D=aP(ao[22],a,y,s)?aP(ao[22],a,x,r)?aP(ao[22],a,z,t)?aP(ao[22],a,A,u)?sO(a,b,f,d,e):kl(a,b,f,Qt,Qs,A,u):kl(a,b,f,Qv,Qu,z,t):kl(a,b,f,Qx,Qw,x,r):kl(a,b,f,Qz,Qy,y,s),j=D;else
 var
 j=B(i[1]);else
 var
@@ -18059,8 +18775,8 @@ j=cv(a,d,c,b[2]);return y(function(a){return[0,[0,a],c]},j);case
 1:var
 f=b[4],g=b[3],e=b[2],k=b[1];if(g){var
 l=g[1],m=cv(a,d,c,f);return aT(function(f){var
-b=fT(a[1],l);if(bY(Y,a[1],f,b))return[0,[0,0,no(a[1],c,e,b)]];var
-g=r(Q_,r(e,r(Q9,r(cl(a,d,f),Q8))));return[1,[3,k,r(Q$,r(cl(a,d,b),g))]]},m)}var
+b=fU(a[1],l);if(bY(Y,a[1],f,b))return[0,[0,0,no(a[1],c,e,b)]];var
+g=r(Q4,r(e,r(Q3,r(cl(a,d,f),Q2))));return[1,[3,k,r(Q5,r(cl(a,d,b),g))]]},m)}var
 n=cv(a,d,c,f);return aT(function(b){return[0,[0,0,no(a[1],c,e,b)]]},n);case
 2:var
 <<<<<<< HEAD
@@ -18077,15 +18793,19 @@ h=b[3][2],i=nf(function(c,b){return sO(a,d,b[1],c,b[2])},h,c);return y(function(
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 o=sQ(a,d,b[2],c,b[3]);return y(function(a){return[0,0,a]},o);default:var
+<<<<<<< HEAD
 h=b[3][2],i=ng(function(c,b){return sQ(a,d,b[1],c,b[2])},h,c);return y(function(a){return[0,0,a]},i)}},np=function(a,c,b){return[0,[0,[0,c,b],a[1]],a[2]]},h9=function(a,c,b){return[0,a[1],[0,[0,c,b],a[2]]]},Rb=[0,[0,[0,gX,[9,[1,Mo]]],[0,[0,hp,0],[0,[0,fj,0],[0,[0,hq,Ra],0]]]],0],Rc=b$[2][21],Rd=b$[3][15],d2=function(c,A,z){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+h=b[3][2],i=ng(function(c,b){return sQ(a,d,b[1],c,b[2])},h,c);return y(function(a){return[0,0,a]},i)}},np=function(a,c,b){return[0,[0,[0,c,b],a[1]],a[2]]},h9=function(a,c,b){return[0,a[1],[0,[0,c,b],a[2]]]},Q7=[0,[0,[0,gX,[9,[1,Mi]]],[0,[0,hq,0],[0,[0,fk,0],[0,[0,hr,Q6],0]]]],0],Q8=b$[2][21],Q9=b$[3][15],d2=function(c,A,z){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=A,a=z;for(;;)switch(a[0]){case
-0:return[1,[0,a[1],NX]];case
-1:return[1,[0,a[1],NY]];case
-2:return[1,[0,a[1],NZ]];case
+0:return[1,[0,a[1],NR]];case
+1:return[1,[0,a[1],NS]];case
+2:return[1,[0,a[1],NT]];case
 3:var
 t=a[2],u=b_(aq,bZ(b[2],b[1]),t);if(u)return[0,u[1]];var
-B=a[1];return[1,[2,B,r(Ny,r(t,Nx))]];case
+B=a[1];return[1,[2,B,r(Ns,r(t,Nr))]];case
 4:return[0,a[2]];case
 5:return[0,i0(aY)];case
 6:var
@@ -18095,17 +18815,17 @@ D=[0,0],E=a[2],F=dk(function(a,e){if(0===a[0]){var
 d=d2(c,b,e);return 0===d[0]?[0,bZ(a[1],[0,d[1],0])]:[1,d[1]]}return[1,a[1]]},E,D);return y(function(a){return[4,a]},F);case
 8:var
 G=a[2],f=d2(c,b,a[3]);if(0===f[0]){var
-v=aP(Rc,0,G,f[1]);return v?[0,v[1]]:[1,[4,a[1],NL]]}return[1,f[1]];case
+v=aP(Q8,0,G,f[1]);return v?[0,v[1]]:[1,[4,a[1],NF]]}return[1,f[1]];case
 9:var
 H=a[2],g=d2(c,b,a[3]);if(0===g[0]){var
 h=d2(c,b,a[4]);if(0===h[0]){var
-w=g3(Rd,0,H,g[1],h[1]);return w?[0,w[1]]:[1,[4,a[1],NM]]}return[1,h[1]]}return[1,g[1]];case
+w=g3(Q9,0,H,g[1],h[1]);return w?[0,w[1]]:[1,[4,a[1],NG]]}return[1,h[1]]}return[1,g[1]];case
 10:var
 i=d2(c,b,a[2]);if(0===i[0]){var
 k=i[1];if(typeof
 k!=="number"&&2===k[0]){if(k[1]){var
 a=a[3];continue}var
-a=a[4];continue}return[1,[4,a[1],NN]]}return[1,i[1]];case
+a=a[4];continue}return[1,[4,a[1],NH]]}return[1,i[1]];case
 11:var
 l=d2(c,b,a[4]);if(0===l[0]){var
 I=h9(b,a[2],l[1]),b=I,a=a[5];continue}return[1,l[1]];case
@@ -18123,11 +18843,15 @@ d=d1(c,b,g);return 0===d[0]?[0,bY(a[1],[0,[0,f,d[1]],0])]:[1,d[1]]}return[1,a[1]
 =======
 d=d2(c,b,g);return 0===d[0]?[0,bZ(a[1],[0,[0,f,d[1]],0])]:[1,d[1]]}return[1,a[1]]},N,M);return 0===m[0]?[0,[8,[0,a[2],0],[5,m[1]]]]:[1,m[1]];case
 <<<<<<< HEAD
+<<<<<<< HEAD
 14:return sk(a[1],Rh,a[2]);case
 15:return sl(a[1],a[2],a[3]);case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 14:return sm(a[1],Re,a[2]);case
+=======
+14:return sm(a[1],Q_,a[2]);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 15:return sn(a[1],a[2],a[3]);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 16:var
@@ -18136,7 +18860,7 @@ b!=="number"&&8===b[0]){var
 d=b[1];return d?d[2]?a:kb(c,[0,d[1],0],[0,f,0])?j(e,b):a:a}return a},o=d2(c,b,a[2]);if(0===o[0]){var
 d=o[1],O=d2(c,b,a[4]),P=a[3];return dk(function(f,g){var
 a=g[2],e=g[1];switch(e[0]){case
-0:return fv(aY,e[2],d)?d2(c,b,a):f;case
+0:return fw(aY,e[2],d)?d2(c,b,a):f;case
 1:var
 h=e[2];if(h){var
 m=function(d){return d2(c,b,a)};return n(d,h[1],m,f)}return d2(c,b,a);case
@@ -18152,7 +18876,7 @@ x=p[1],R=x[1];if(p[2])return h5(e);if(a[3])return h5(e);var
 q=d2(c,b,x[2]);if(0===q[0]){var
 s=q[1];if(typeof
 s!=="number"&&4===s[0]){var
-S=s[1],T=gk(function(a){return d2(c,h9(b,R,a),Q)},S);return y(function(a){return[4,a]},T)}return[1,[4,e,NO]]}return[1,q[1]]}return h5(e)}},hs=function(a){switch(a[0]){case
+S=s[1],T=gk(function(a){return d2(c,h9(b,R,a),Q)},S);return y(function(a){return[4,a]},T)}return[1,[4,e,NI]]}return[1,q[1]]}return h5(e)}},ht=function(a){switch(a[0]){case
 0:return[3,a[1]];case
 1:return[4,a[1]];case
 2:return[5,a[1]];case
@@ -18161,20 +18885,20 @@ S=s[1],T=gk(function(a){return d2(c,h9(b,R,a),Q)},S);return y(function(a){return
 5:return[8,a[1]];case
 6:return[11,a[1],a[2]];case
 7:var
-b=hs(a[2]);return[12,a[1],b];default:var
-c=hs(a[2]);return[14,a[1],c]}},Rf=function(c){var
+b=ht(a[2]);return[12,a[1],b];default:var
+c=ht(a[2]);return[14,a[1],c]}},Q$=function(c){var
 a=c[3];switch(a[0]){case
 0:var
 b=[0,a[1]];break;case
 1:var
 d=a[3],e=aW(function(a){var
-b=hs(a[2]);return[0,a[1],b]},d),b=[1,a[1],a[2],e];break;case
+b=ht(a[2]);return[0,a[1],b]},d),b=[1,a[1],a[2],e];break;case
 2:var
 f=a[3],g=aW(function(a){var
-b=hs(a[2]);return[0,a[1],b]},f),b=[2,a[1],a[2],g];break;case
+b=ht(a[2]);return[0,a[1],b]},f),b=[2,a[1],a[2],g];break;case
 3:var
 h=a[3],i=aW(function(a){var
-b=hs(a[2]);return[0,a[1],b]},h),b=[3,a[1],a[2],i];break;case
+b=ht(a[2]);return[0,a[1],b]},h),b=[3,a[1],a[2],i];break;case
 4:var
 <<<<<<< HEAD
 j=a[3],k=aU(function(a){var
@@ -18184,8 +18908,9 @@ b=hq(a[2]);return[0,a[1],b]},l),b=[5,a[1],a[2],m]}return[2,c[1],[0,c[1],c[2],b]]
 b=aU(QO,a[6]),c=bY(aU(QP,a[5]),b);return[0,a[1],a[2],a[3],a[4],c]},i8=function(b,a,t){var
 =======
 j=a[3],k=aW(function(a){var
-b=hs(a[2]);return[0,a[1],b]},j),b=[4,a[1],a[2],k];break;default:var
+b=ht(a[2]);return[0,a[1],b]},j),b=[4,a[1],a[2],k];break;default:var
 l=a[3],m=aW(function(a){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 b=hs(a[2]);return[0,a[1],b]},l),b=[5,a[1],a[2],m]}return[2,c[1],[0,c[1],c[2],b]]},Re=function(a){return[1,a[1],a]},sQ=function(a){var
@@ -18199,10 +18924,15 @@ b=aW(Ri,a[6]),c=bZ(aW(Rj,a[5]),b);return[0,a[1],a[2],a[3],a[4],c]},i6=function(b
 b=hs(a[2]);return[0,a[1],b]},l),b=[5,a[1],a[2],m]}return[2,c[1],[0,c[1],c[2],b]]},Rg=function(a){return[1,a[1],a]},sS=function(a){var
 b=aW(Rf,a[6]),c=bZ(aW(Rg,a[5]),b);return[0,a[1],a[2],a[3],a[4],c]},i7=function(b,a,t){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+b=ht(a[2]);return[0,a[1],b]},l),b=[5,a[1],a[2],m]}return[2,c[1],[0,c[1],c[2],b]]},Ra=function(a){return[1,a[1],a]},sS=function(a){var
+b=aW(Q$,a[6]),c=bZ(aW(Ra,a[5]),b);return[0,a[1],a[2],a[3],a[4],c]},i7=function(b,a,t){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 e=t;for(;;){if(e){var
 d=e[2],c=e[1];switch(c[0]){case
 0:return[0,c[2],b];case
 2:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 f=c[2],g=f[2],h=es(a,g),u=b[5],v=sf(f[3])?st(b,[0,h,u]):b,i=i8(v,a,d),j=i[1],w=i[2];return[0,j,kj(w,j,function(a){return sp(g,h,a)})];case
@@ -18219,11 +18949,15 @@ f=c[2],g=f[2],h=et(a,g),u=b[5],v=sn(f[3])?sB(b,[0,h,u]):b,i=i6(v,a,d),j=i[1],w=i
 =======
 f=c[2],g=f[2],h=et(a,g),u=b[5],v=sp(f[3])?sD(b,[0,h,u]):b,i=i7(v,a,d),j=i[1],w=i[2];return[0,j,ki(w,j,function(a){return sz(g,h,a)})];case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+f=c[2],g=f[2],h=es(a,g),u=b[5],v=sp(f[3])?sD(b,[0,h,u]):b,i=i7(v,a,d),j=i[1],w=i[2];return[0,j,ki(w,j,function(a){return sz(g,h,a)})];case
+>>>>>>> (fix) Directly use time constants in generated JS code
 4:var
-k=c[2],x=et(a,k),l=i7(b,a,d),m=l[1],y=l[2];return[0,m,ki(y,m,function(a){return sA(k,x,a)})];case
+k=c[2],x=es(a,k),l=i7(b,a,d),m=l[1],y=l[2];return[0,m,ki(y,m,function(a){return sA(k,x,a)})];case
 5:var
-n=c[2],z=et(a,n),o=i7(b,a,d),p=o[1],A=o[2];return[0,p,ki(A,p,function(a){return sB(n,z,a)})];case
+n=c[2],z=es(a,n),o=i7(b,a,d),p=o[1],A=o[2];return[0,p,ki(A,p,function(a){return sB(n,z,a)})];case
 6:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 q=c[2],B=et(a,q),r=i6(b,a,d),s=r[1],C=r[2];return[0,s,kh(C,s,function(a){return sA(q,B,a)})];default:var
 <<<<<<< HEAD
@@ -18239,6 +18973,11 @@ q=c[2],B=et(a,q),r=i7(b,a,d),s=r[1],C=r[2];return[0,s,ki(C,s,function(a){return 
 e=d;continue}}return[0,a,b]}},sT=function(b,a){return i7(b,a[4],a[5])[2]},Rh=[0,fP,[0,h3,0]],nq=function(b){var
 a=eL(aq,b,Rh),c=a?1:a;return c},Ri=[0,fP,[0,h3,[0,Nb,0]]],eu=function(c,b,a){switch(a[0]){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+q=c[2],B=es(a,q),r=i7(b,a,d),s=r[1],C=r[2];return[0,s,ki(C,s,function(a){return sC(q,B,a)})];default:var
+e=d;continue}}return[0,a,b]}},sT=function(b,a){return i7(b,a[4],a[5])[2]},Rb=[0,fQ,[0,h3,0]],nq=function(b){var
+a=eL(aq,b,Rb),c=a?1:a;return c},Rc=[0,fQ,[0,h3,[0,M7,0]]],et=function(c,b,a){switch(a[0]){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 0:return[0,[0,a[1]]];case
 1:return[0,[1,a[1]]];case
 2:return[0,[2,a[1]]];case
@@ -18253,23 +18992,24 @@ a=eL(aq,b,Rh),c=a?1:a;return c},Ri=[0,fP,[0,h3,[0,Nb,0]]],eu=function(c,b,a){swi
 11:var
 d=a[1],e=kk(d,b,a[2]);return y(function(a){return eL(aq,a,c)?[4,d]:[11,d,a]},e);case
 12:var
-f=a[1],g=eu(c,b,a[2]);return y(function(a){return[12,f,a]},g);case
+f=a[1],g=et(c,b,a[2]);return y(function(a){return[12,f,a]},g);case
 13:var
 h=a[1],i=a[2],j=aW(function(a){var
-d=eu(c,b,a[2]);return[0,a[1],d]},i),k=gk(function(a){var
+d=et(c,b,a[2]);return[0,a[1],d]},i),k=gk(function(a){var
 b=a[2];return y(function(b){return[0,a[1],b]},b)},j);return y(function(a){return[13,h,a]},k);case
 14:var
-l=a[1],m=eu(c,b,a[2]);return y(function(a){return[14,l,a]},m);default:var
-n=a[1],o=eu(c,b,a[3]),p=eu(c,b,a[2]);return aR(function(b,a){return[15,n,b,a]},p,o)}},h_=function(c,b,a){return gk(function(a){var
-d=eu(c,b,a[2]);return y(function(b){return[0,a[1],b]},d)},a)},gY=function(c,b,a){if(a){var
+l=a[1],m=et(c,b,a[2]);return y(function(a){return[14,l,a]},m);default:var
+n=a[1],o=et(c,b,a[3]),p=et(c,b,a[2]);return aR(function(b,a){return[15,n,b,a]},p,o)}},h_=function(c,b,a){return gk(function(a){var
+d=et(c,b,a[2]);return y(function(b){return[0,a[1],b]},d)},a)},gY=function(c,b,a){if(a){var
 d=kk(c,b,a[1]);return y(function(a){return[0,a]},d)}return[0,0]},km=function(c,b,a){var
 h=h_(c,b,a[2]),d=a[3];if(d)var
-i=eu(c,b,d[1]),e=y(function(a){return[0,a]},i);else
+i=et(c,b,d[1]),e=y(function(a){return[0,a]},i);else
 var
 e=[0,0];var
 f=a[4];if(f)var
-j=eu(c,b,f[1]),g=y(function(a){return[0,a]},j);else
+j=et(c,b,f[1]),g=y(function(a){return[0,a]},j);else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 g=[0,0];return ek(function(d,c,b){return[0,a[1],d,c,b]},h,e,g)},sK=function(b,a){switch(a[0]){case
@@ -18279,6 +19019,9 @@ g=[0,0];return el(function(d,c,b){return[0,a[1],d,c,b]},h,e,g)},sS=function(b,a)
 =======
 g=[0,0];return el(function(d,c,b){return[0,a[1],d,c,b]},h,e,g)},sU=function(b,a){switch(a[0]){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+g=[0,0];return ek(function(d,c,b){return[0,a[1],d,c,b]},h,e,g)},sU=function(b,a){switch(a[0]){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 0:return[0,[0,a[1],a[2]]];case
 1:var
 c=a[1],f=gY(c,b,a[2]);return y(function(a){return[1,c,a]},f);case
@@ -18301,13 +19044,13 @@ t=a[2],u=a[1],v=b0(c,b,a[3]);return y(function(a){return[8,u,t,a]},v);case
 9:var
 w=a[2],x=a[1],z=b0(c,b,a[4]),A=b0(c,b,a[3]);return aR(function(b,a){return[9,x,w,b,a]},A,z);case
 10:var
-B=a[1],C=b0(c,b,a[4]),D=b0(c,b,a[3]),E=b0(c,b,a[2]);return el(function(c,b,a){return[10,B,c,b,a]},E,D,C);case
+B=a[1],C=b0(c,b,a[4]),D=b0(c,b,a[3]),E=b0(c,b,a[2]);return ek(function(c,b,a){return[10,B,c,b,a]},E,D,C);case
 11:var
 g=a[3],F=a[2],G=a[1];if(g)var
-H=eu(c,b,g[1]),h=y(function(a){return[0,a]},H);else
+H=et(c,b,g[1]),h=y(function(a){return[0,a]},H);else
 var
 h=[0,0];var
-I=b0(c,b,a[5]),J=b0(c,b,a[4]);return el(function(c,b,a){return[11,G,F,c,b,a]},h,J,I);case
+I=b0(c,b,a[5]),J=b0(c,b,a[4]);return ek(function(c,b,a){return[11,G,F,c,b,a]},h,J,I);case
 12:var
 K=a[1],L=[0,0],M=function(a,d){var
 e=a[1],f=b0(c,b,a[2]);return aR(function(b,a){return[0,[0,e,b],a]},f,d)},N=dl(M,L,a[2]);return y(function(a){return[12,K,a]},N);case
@@ -18337,7 +19080,7 @@ d=a[1],e=a[2],f=e[1],m=b[4],S=f?nj(sx,d,b,f[1],e[2]):sx(d,m,e[2]),T=[0,0],U=func
 e=b0(c,b,d);return aR(function(b,a){return[0,b,a]},e,a)},V=dl(U,T,a[3]);return aR(function(b,a){return[14,d,b,a]},S,V);case
 15:var
 j=a[1],W=sE(j,b,a[2]),X=[0,0],Y=function(d,a){var
-e=b0(c,b,d);return aR(function(b,a){return[0,b,a]},e,a)},Z=dl(Y,X,a[4]),_=[0,a[3]];return el(function(c,b,a){return[15,j,c,b,a]},W,_,Z);case
+e=b0(c,b,d);return aR(function(b,a){return[0,b,a]},e,a)},Z=dl(Y,X,a[4]),_=[0,a[3]];return ek(function(c,b,a){return[15,j,c,b,a]},W,_,Z);case
 16:var
 $=a[1],aa=b0(c,b,a[2]),ab=function(d,a){var
 <<<<<<< HEAD
@@ -18352,7 +19095,7 @@ ag=b0(c,b,k[1]),l=y(function(a){return[0,a]},ag);else
 var
 l=[0,0];var
 ah=[0,0],ai=function(a,d){var
-e=a[1],f=b0(c,b,a[2]);return aR(function(b,a){return[0,[0,e,b],a]},f,d)},aj=dl(ai,ah,a[2]);return el(function(c,b,a){return[17,ae,c,b,a]},aj,l,af)}},fx=function(c,b,a){switch(a[0]){case
+e=a[1],f=b0(c,b,a[2]);return aR(function(b,a){return[0,[0,e,b],a]},f,d)},aj=dl(ai,ah,a[2]);return ek(function(c,b,a){return[17,ae,c,b,a]},aj,l,af)}},fy=function(c,b,a){switch(a[0]){case
 0:var
 h=a[1],i=b0(c,b,a[2]);return y(function(a){return[0,h,a]},i);case
 1:var
@@ -18361,28 +19104,28 @@ j=a[1],k=b0(c,b,a[2]);return y(function(a){return[1,j,a]},k);case
 l=a[1],m=b0(c,b,a[2]);return y(function(a){return[2,l,a]},m);case
 3:var
 n=a[1],o=[0,0],p=function(d,a){var
-e=b0(c,b,d);return aR(function(b,a){return[0,b,a]},e,a)},q=dl(p,o,a[4]),r=[0,a[3]],s=b0(c,b,a[2]);return el(function(c,b,a){return[3,n,c,b,a]},s,r,q);case
+e=b0(c,b,d);return aR(function(b,a){return[0,b,a]},e,a)},q=dl(p,o,a[4]),r=[0,a[3]],s=b0(c,b,a[2]);return ek(function(c,b,a){return[3,n,c,b,a]},s,r,q);case
 4:var
 t=a[1],u=[0,0],v=function(d,a){var
 e=b0(c,b,d);return aR(function(b,a){return[0,b,a]},e,a)},w=dl(v,u,a[3]),x=b0(c,b,a[2]);return aR(function(b,a){return[4,t,b,a]},x,w);case
 5:var
-z=a[1],A=fx(c,b,a[3]),B=b0(c,b,a[2]);return aR(function(b,a){return[5,z,b,a]},B,A);case
+z=a[1],A=fy(c,b,a[3]),B=b0(c,b,a[2]);return aR(function(b,a){return[5,z,b,a]},B,A);case
 6:var
-C=a[1],D=fx(c,b,a[3]),E=b0(c,b,a[2]);return aR(function(b,a){return[6,C,b,a]},E,D);case
+C=a[1],D=fy(c,b,a[3]),E=b0(c,b,a[2]);return aR(function(b,a){return[6,C,b,a]},E,D);case
 7:var
 d=a[3],F=a[2],G=a[1];if(d)var
-H=eu(c,b,d[1]),e=y(function(a){return[0,a]},H);else
+H=et(c,b,d[1]),e=y(function(a){return[0,a]},H);else
 var
 e=[0,0];var
-I=fx(c,b,a[5]),J=b0(c,b,a[4]);return el(function(c,b,a){return[7,G,F,c,b,a]},e,J,I);case
+I=fy(c,b,a[5]),J=b0(c,b,a[4]);return ek(function(c,b,a){return[7,G,F,c,b,a]},e,J,I);case
 8:var
-K=a[1],L=fx(c,b,a[4]),M=fx(c,b,a[3]),N=b0(c,b,a[2]);return el(function(c,b,a){return[8,K,c,b,a]},N,M,L);case
+K=a[1],L=fy(c,b,a[4]),M=fy(c,b,a[3]),N=b0(c,b,a[2]);return ek(function(c,b,a){return[8,K,c,b,a]},N,M,L);case
 9:var
 f=a[3],O=a[1];if(f)var
-P=fx(c,b,f[1]),g=y(function(a){return[0,a]},P);else
+P=fy(c,b,f[1]),g=y(function(a){return[0,a]},P);else
 var
 g=[0,0];var
-Q=fx(c,b,a[4]),R=b0(c,b,a[2]);return el(function(c,b,a){return[9,O,c,b,a]},R,g,Q);default:var
+Q=fy(c,b,a[4]),R=b0(c,b,a[2]);return ek(function(c,b,a){return[9,O,c,b,a]},R,g,Q);default:var
 S=a[1],T=b0(c,b,a[2]),U=function(d,a){var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18394,8 +19137,12 @@ f=fx(c,b,e);return y(function(b){return[0,[0,a,b],d]},f)},d)},f)},V=dk(U,a[3],[0
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 e=a[2],f=sU(b,a[1]);return aT(function(a){return aT(function(d){var
+<<<<<<< HEAD
 f=fx(c,b,e);return y(function(b){return[0,[0,a,b],d]},f)},d)},f)},V=dk(U,a[3],[0,0]),W=fx(c,b,a[4]);return aT(function(a){return aT(function(b){return y(function(c){return[10,S,a,b,c]},W)},V)},T)}},sV=function(a,c){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+f=fy(c,b,e);return y(function(b){return[0,[0,a,b],d]},f)},d)},f)},V=dk(U,a[3],[0,0]),W=fy(c,b,a[4]);return aT(function(a){return aT(function(b){return y(function(c){return[10,S,a,b,c]},W)},V)},T)}},sV=function(a,c){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 l=a[2],e=a[5],J=a[6];switch(c[0]){case
 0:var
 K=c[2];return[0,[0,[0,c[1],K],[0,a[1],K,a[3],a[4],a[5],a[6]]]];case
@@ -18412,9 +19159,9 @@ w=h[2],x=b_(aq,a[1],w),m=x?[0,x[1]]:si(h[1],w);break;case
 w=h[2],x=b_(aq,a[1],w),m=x?[0,x[1]]:sk(h[1],w);break;case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 1:var
-z=b_(aq,a[1],h[2]),m=z?[0,z[1]]:[0,fR];break;default:var
+z=b_(aq,a[1],h[2]),m=z?[0,z[1]]:[0,fS];break;default:var
 p=h[3],q=h[2],A=h[1],B=b_(aq,a[1],q);if(B)var
-C=b_(aq,B[1][1],p),m=C?[0,[0,[0,[0,p,C[1]],0],0,0,0]]:[1,[2,A,r(NE,r(p,r(ND,q)))]];else
+C=b_(aq,B[1][1],p),m=C?[0,[0,[0,[0,p,C[1]],0],0,0,0]]:[1,[2,A,r(Ny,r(p,r(Nx,q)))]];else
 var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18433,6 +19180,7 @@ c=a[6],d=a[5],e=sv(a[4],b);return[0,a[1],a[2],a[3],e,d,c]},m);return y(function(
 2:var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 i=c[2],L=i[2],aB=c[1],aC=et(l,L),d=ki(a,function(a){return sx(L,aC,a)}),r=et(l,i[2]),f=sn(i[3])?[0,r,e]:e,D=i[3];switch(D[0]){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
@@ -18441,6 +19189,9 @@ i=c[2],L=i[2],aB=c[1],aC=et(l,L),d=ki(a,function(a){return sx(L,aC,a)}),s=et(l,i
 =======
 i=c[2],L=i[2],aB=c[1],aC=et(l,L),d=kj(a,function(a){return sz(L,aC,a)}),s=et(l,i[2]),f=sp(i[3])?[0,s,e]:e,D=i[3];switch(D[0]){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+i=c[2],L=i[2],aB=c[1],aC=es(l,L),d=kj(a,function(a){return sz(L,aC,a)}),s=es(l,i[2]),f=sp(i[3])?[0,s,e]:e,D=i[3];switch(D[0]){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 0:case
 6:case
 7:case
@@ -18461,7 +19212,7 @@ ac=b[1],ad=h_(f,d,b[3]),ae=gY(k,d,b[2]),g=aR(function(b,a){return[4,ac,b,a]},ae,
 5:var
 af=b[1],ag=h_(f,d,b[3]),ah=gY(k,d,b[2]),g=aR(function(b,a){return[5,af,b,a]},ah,ag);break;case
 6:var
-ai=eu(f,d,b[1]),g=y(function(a){return[6,a]},ai);break;case
+ai=et(f,d,b[1]),g=y(function(a){return[6,a]},ai);break;case
 7:var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18486,15 +19237,15 @@ c=b[1],a=sB(d,c[1]);return[0,[2,aB,b[2]],[0,a[1],a[2],a[3],a[4],a[5],c[2]]]},ao)
 =======
 aj=km(f,d,b[1]),g=y(function(a){return[7,a]},aj);break;default:var
 ak=b[3],U=gk(function(a){var
-b=km(f,d,a[2]);return y(function(b){return[0,a[1],b]},b)},ak),al=eu(f,d,b[2]),am=eu(f,d,b[1]),g=el(function(c,b,a){return[8,c,b,a]},am,al,U)}var
+b=km(f,d,a[2]);return y(function(b){return[0,a[1],b]},b)},ak),al=et(f,d,b[2]),am=et(f,d,b[1]),g=ek(function(c,b,a){return[8,c,b,a]},am,al,U)}var
 ao=y(function(a){return[0,[0,f,an],[0,i[1],s,a]]},g);return y(function(b){var
 c=b[1],a=sD(d,c[1]);return[0,[2,aB,b[2]],[0,a[1],a[2],a[3],a[4],a[5],c[2]]]},ao);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 3:var
-aD=c[1],aE=fx(e,a,c[2]);return y(function(b){return[0,[3,aD,b],a]},aE);case
+aD=c[1],aE=fy(e,a,c[2]);return y(function(b){return[0,[3,aD,b],a]},aE);case
 4:var
-M=c[3],t=c[2],aF=c[1],aG=et(l,t);if(M)var
-aH=eu(e,a,M[1]),N=y(function(a){return[0,a]},aH);else
+M=c[3],t=c[2],aF=c[1],aG=es(l,t);if(M)var
+aH=et(e,a,M[1]),N=y(function(a){return[0,a]},aH);else
 var
 N=[0,0];var
 <<<<<<< HEAD
@@ -18510,13 +19261,18 @@ O=c[2],aJ=c[1],P=et(l,O),o=ki(a,function(a){return sz(O,P,a)}),u=c[3],F=u[3],ap=
 =======
 v=kj(a,function(a){return sA(t,aG,a)}),aI=b0(e,v,c[4]);return aR(function(b,a){return[0,[4,aF,t,b,a],v]},N,aI);case
 5:var
+<<<<<<< HEAD
 O=c[2],aJ=c[1],P=et(l,O),o=kj(a,function(a){return sB(O,P,a)}),u=c[3],F=u[3],ap=u[1];if(F)var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+O=c[2],aJ=c[1],P=es(l,O),o=kj(a,function(a){return sB(O,P,a)}),u=c[3],F=u[3],ap=u[1];if(F)var
+>>>>>>> (fix) Directly use time constants in generated JS code
 ar=b0(e,o,F[1]),G=y(function(a){return[0,a]},ar);else
 var
 G=[0,0];var
 as=km(e,o,u[2]),at=aR(function(b,a){return[0,ap,b,a]},as,G);return y(function(a){return[0,[5,aJ,P,a],o]},at);case
 6:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 Q=c[2],aK=c[1],R=es(l,Q),j=kk(a,function(a){return ss(Q,R,a)}),n=c[3],av=n[1],aw=et(e,j,n[2]),H=n[3];if(H)var
@@ -18528,13 +19284,18 @@ Q=c[2],aK=c[1],R=et(l,Q),j=kj(a,function(a){return sC(Q,R,a)}),n=c[3],av=n[1],aw
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 ax=eu(e,j,H[1]),I=y(function(a){return[0,a]},ax);else
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+Q=c[2],aK=c[1],R=es(l,Q),j=kj(a,function(a){return sC(Q,R,a)}),n=c[3],av=n[1],aw=et(e,j,n[2]),H=n[3];if(H)var
+ax=et(e,j,H[1]),I=y(function(a){return[0,a]},ax);else
+>>>>>>> (fix) Directly use time constants in generated JS code
 var
 I=[0,0];var
 ay=n[4],au=gk(function(a){var
 b=a[4],d=a[1],f=a[2];if(b)var
-g=fx(e,j,b[1]),c=y(function(a){return[0,a]},g);else
+g=fy(e,j,b[1]),c=y(function(a){return[0,a]},g);else
 var
 c=[0,0];var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18581,12 +19342,16 @@ b=[0,[0,Tv,eM(a,11)],0],c=[0,[0,Tw,sW(a,[9,a,8,[3,a,Rv],[3,a,Ru]])],b],d=[0,[0,T
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 h=km(e,j,a[3]);return aR(function(b,a){return[0,d,f,b,a]},h,c)},ay),az=el(function(c,b,a){return[0,av,c,b,a]},aw,I,au);return y(function(a){return[0,[6,aK,R,a],j]},az);default:var
+=======
+h=km(e,j,a[3]);return aR(function(b,a){return[0,d,f,b,a]},h,c)},ay),az=ek(function(c,b,a){return[0,av,c,b,a]},aw,I,au);return y(function(a){return[0,[6,aK,R,a],j]},az);default:var
+>>>>>>> (fix) Directly use time constants in generated JS code
 S=c[1],aL=c[3],aM=sE(S,a,c[2]);return aT(function(b){var
-c=b0(e,a,aL);return y(function(c){return[0,[7,S,b,c],a]},c)},aM)}},nr=function(b,a){return fQ(sV,a,b)},Rj=Oe(se),Rk=function(e,d){var
-a=sS(d),b=a[4],f=sT(ni(e,b),a),c=a[5],g=nq(b)?[0,[1,b9,[1,b9,b]],c]:[0,[1,b9,[0,b9,fP]],[0,[1,b9,[1,b9,b]],c]],h=nr(f,g);return y(function(c){return[0,[0,a[1],a[2],a[3],b,c[1]],c[2]]},h)},sW=function(d,a){var
-b=a[4],e=ni(d,b),c=a[5],f=nq(b)?bZ(c,[0,[1,b9,[1,b9,b]],0]):[0,[1,b9,[0,b9,fP]],[0,[1,b9,[0,b9,h3]],[0,[1,b9,[1,b9,b]],c]]],g=nr(e,f);return y(function(c){return[0,[0,a[1],a[2],a[3],b,c[1]],c[2]]},g)},ns=function(b){if(b){var
+c=b0(e,a,aL);return y(function(c){return[0,[7,S,b,c],a]},c)},aM)}},nr=function(b,a){return fR(sV,a,b)},Rd=N_(se),Re=function(e,d){var
+a=sS(d),b=a[4],f=sT(ni(e,b),a),c=a[5],g=nq(b)?[0,[1,b9,[1,b9,b]],c]:[0,[1,b9,[0,b9,fQ]],[0,[1,b9,[1,b9,b]],c]],h=nr(f,g);return y(function(c){return[0,[0,a[1],a[2],a[3],b,c[1]],c[2]]},h)},sW=function(d,a){var
+b=a[4],e=ni(d,b),c=a[5],f=nq(b)?bZ(c,[0,[1,b9,[1,b9,b]],0]):[0,[1,b9,[0,b9,fQ]],[0,[1,b9,[0,b9,h3]],[0,[1,b9,[1,b9,b]],c]]],g=nr(e,f);return y(function(c){return[0,[0,a[1],a[2],a[3],b,c[1]],c[2]]},g)},ns=function(b){if(b){var
 g=b[2],c=b[1];if(0===c[0]){var
 a=c[1],h=ns(g),i=h[1],d=i[2],e=i[1],j=h[2];if(j)return[0,[0,e,[0,a,d]],j];var
+<<<<<<< HEAD
 f=eL(aq,a[4],Ri),m=f?1:f;return m?[0,[0,e,[0,a,d]],0]:[0,[0,e,d],[0,a]]}var
 k=ns(g),l=k[1];return[0,[0,[0,c[1],l[1]],l[2]],k[2]]}return Rl},i8=function(a){return[3,[2,a[1]],hp]},sX=function(b,a){return[8,b,9,a]},nt=function(a,d,c){var
 e=[0,c],b=[0,[2,a]];return[0,a,[0,aW(function(b){return[0,b,[0,a]]},d),b],e]},aN=function(a,b){return nt(a,Rn,[8,a,b,[3,a,Rm]])},sY=function(b,a){return nt(b,Ro,a)},eM=function(a,b){return sY(a,[9,a,b,[3,a,Rq],[3,a,Rp]])},SW=function(a){var
@@ -18594,11 +19359,19 @@ O=[0,[0,SK,eM(a,[3,SJ])],0],P=[0,[0,SM,eM(a,[3,SL])],O],Q=[0,[0,SO,eM(a,[3,SN])]
 b=[0,[0,SY,aN(a,4)],0],c=[0,[0,SZ,aN(a,6)],b],d=[0,[0,S0,aN(a,5)],c],e=[0,[0,S1,aN(a,16)],d],f=[0,[0,S2,aN(a,16)],e],g=[0,[0,S3,aN(a,17)],f],h=[0,[0,S4,aN(a,18)],g],i=[0,[0,S5,aN(a,19)],h],j=[0,[0,S6,aN(a,20)],i],k=[0,[0,S8,aN(a,S7)],j],l=[0,[0,S_,aN(a,S9)],k],m=[0,[0,Ta,aN(a,S$)],l],n=[0,[0,Tc,aN(a,Tb)],m],o=[0,[0,Te,aN(a,Td)],n],p=[0,[0,Tg,aN(a,Tf)],o],q=[0,[0,Ti,aN(a,Th)],p],r=[0,[0,Tj,aN(a,15)],q],s=[0,[0,Tl,aN(a,Tk)],r],t=[0,[0,Tn,aN(a,Tm)],s],u=[0,[0,Tp,aN(a,To)],t];return[0,[0,Tq,aN(a,7)],u]},Tr=function(a){var
 b=[0,[0,Ts,eM(a,11)],0],c=[0,[0,Tt,sY(a,[9,a,8,[3,a,Rs],[3,a,Rr]])],b],d=[0,[0,Tu,eM(a,7)],c],e=[0,[0,Tw,eM(a,Tv)],d],f=[0,[0,Ty,eM(a,Tx)],e],g=[0,[0,TA,eM(a,Tz)],f],h=[0,[0,TC,eM(a,TB)],g];return[0,[0,TE,eM(a,TD)],h]},TF=function(a){return[0,[0,TH,nt(a,0,[3,a,TG])],0]},TI=Tr(b9),TJ=bZ(SX(b9),TI),TK=bZ(TF(b9),TJ),TL=bZ(SW(b9),TK),sZ=function(c,a,b){return[0,b,a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11]]},s0=function(c,a,b){return[0,a[1],a[2],a[3],a[4],a[5],a[6],[0,b],a[8],a[9],a[10],a[11]]},nu=function(c,a,b){return[0,a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],b,a[10],a[11]]},b3=function(c,b,a){switch(a[0]){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+f=eL(aq,a[4],Rc),m=f?1:f;return m?[0,[0,e,[0,a,d]],0]:[0,[0,e,d],[0,a]]}var
+k=ns(g),l=k[1];return[0,[0,[0,c[1],l[1]],l[2]],k[2]]}return Rf},i8=function(a){return[3,[2,a[1]],hq]},sX=function(b,a){return[8,b,9,a]},nt=function(a,d,c){var
+e=[0,c],b=[0,[2,a]];return[0,a,[0,aW(function(b){return[0,b,[0,a]]},d),b],e]},aN=function(a,b){return nt(a,Rh,[8,a,b,[3,a,Rg]])},sY=function(b,a){return nt(b,Ri,a)},eM=function(a,b){return sY(a,[9,a,b,[3,a,Rk],[3,a,Rj]])},SQ=function(a){var
+O=[0,[0,SE,eM(a,[3,SD])],0],P=[0,[0,SG,eM(a,[3,SF])],O],Q=[0,[0,SI,eM(a,[3,SH])],P],R=[0,[0,SK,eM(a,[3,SJ])],Q],S=[0,[0,SM,eM(a,[3,SL])],R],T=[0,[0,SO,eM(a,[3,SN])],S],U=[0,[0,SP,eM(a,[3,0])],T],b=[0,[0,Ro,aN(a,[11,Rn])],0],c=[0,[0,Rq,aN(a,[11,Rp])],b],d=[0,[0,Rs,aN(a,[11,Rr])],c],e=[0,[0,Ru,aN(a,[11,Rt])],d],f=[0,[0,Rw,aN(a,[11,Rv])],e],g=[0,[0,Ry,aN(a,[11,Rx])],f],h=[0,[0,RA,aN(a,[11,Rz])],g],i=[0,[0,RC,aN(a,[11,RB])],h],j=[0,[0,RE,aN(a,[11,RD])],i],k=[0,[0,RG,aN(a,[11,RF])],j],l=[0,[0,RI,aN(a,[11,RH])],k],m=[0,[0,RK,aN(a,[11,RJ])],l],n=[0,[0,RM,aN(a,[11,RL])],m],o=[0,[0,RO,aN(a,[11,RN])],n],p=[0,[0,RQ,aN(a,[11,RP])],o],q=[0,[0,RS,aN(a,[11,RR])],p],r=[0,[0,RU,aN(a,[11,RT])],q],s=[0,[0,RW,aN(a,[11,RV])],r],t=[0,[0,RY,aN(a,[11,RX])],s],u=[0,[0,R0,aN(a,[11,RZ])],t],v=[0,[0,R2,aN(a,[11,R1])],u],w=[0,[0,R4,aN(a,[11,R3])],v],x=[0,[0,R6,aN(a,[11,R5])],w],y=[0,[0,R8,aN(a,[11,R7])],x],z=[0,[0,R_,aN(a,[11,R9])],y],A=[0,[0,Sa,aN(a,[11,R$])],z],B=[0,[0,Sc,aN(a,[11,Sb])],A],C=[0,[0,Se,aN(a,[11,Sd])],B],D=[0,[0,Sg,aN(a,[11,Sf])],C],E=[0,[0,Si,aN(a,[11,Sh])],D],F=[0,[0,Sk,aN(a,[11,Sj])],E],G=[0,[0,Sm,aN(a,[11,Sl])],F],H=[0,[0,So,aN(a,[11,Sn])],G],I=[0,[0,Sq,aN(a,[11,Sp])],H],J=[0,[0,Ss,aN(a,[11,Sr])],I],K=[0,[0,Su,aN(a,[11,St])],J],L=[0,[0,Sw,aN(a,[11,Sv])],K],M=[0,[0,Sy,aN(a,[11,Sx])],L],N=[0,[0,SA,aN(a,[11,Sz])],M];return bZ([0,[0,SC,aN(a,[11,SB])],N],U)},SR=function(a){var
+b=[0,[0,SS,aN(a,4)],0],c=[0,[0,ST,aN(a,6)],b],d=[0,[0,SU,aN(a,5)],c],e=[0,[0,SV,aN(a,16)],d],f=[0,[0,SW,aN(a,16)],e],g=[0,[0,SX,aN(a,17)],f],h=[0,[0,SY,aN(a,18)],g],i=[0,[0,SZ,aN(a,19)],h],j=[0,[0,S0,aN(a,20)],i],k=[0,[0,S2,aN(a,S1)],j],l=[0,[0,S4,aN(a,S3)],k],m=[0,[0,S6,aN(a,S5)],l],n=[0,[0,S8,aN(a,S7)],m],o=[0,[0,S_,aN(a,S9)],n],p=[0,[0,Ta,aN(a,S$)],o],q=[0,[0,Tc,aN(a,Tb)],p],r=[0,[0,Td,aN(a,15)],q],s=[0,[0,Tf,aN(a,Te)],r],t=[0,[0,Th,aN(a,Tg)],s],u=[0,[0,Tj,aN(a,Ti)],t];return[0,[0,Tk,aN(a,7)],u]},Tl=function(a){var
+b=[0,[0,Tm,eM(a,11)],0],c=[0,[0,Tn,sY(a,[9,a,8,[3,a,Rm],[3,a,Rl]])],b],d=[0,[0,To,eM(a,7)],c],e=[0,[0,Tq,eM(a,Tp)],d],f=[0,[0,Ts,eM(a,Tr)],e],g=[0,[0,Tu,eM(a,Tt)],f],h=[0,[0,Tw,eM(a,Tv)],g];return[0,[0,Ty,eM(a,Tx)],h]},Tz=function(a){return[0,[0,TB,nt(a,0,[3,a,TA])],0]},TC=Tl(b9),TD=bZ(SR(b9),TC),TE=bZ(Tz(b9),TD),TF=bZ(SQ(b9),TE),sZ=function(c,a,b){return[0,b,a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11]]},s0=function(c,a,b){return[0,a[1],a[2],a[3],a[4],a[5],a[6],[0,b],a[8],a[9],a[10],a[11]]},nu=function(c,a,b){return[0,a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],b,a[10],a[11]]},b3=function(c,b,a){switch(a[0]){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 0:var
-h=a[1];return b[7]?[0,i8(h)]:[1,[2,h,No]];case
+h=a[1];return b[7]?[0,i8(h)]:[1,[2,h,Ni]];case
 1:var
 i=a[1],j=b[8];if(j){var
-e=[3,i[1]];return[0,[8,e,[1,j[1]],[8,e,10,[3,e,hp]]]]}return[1,[2,i,Nr]];case
+e=[3,i[1]];return[0,[8,e,[1,j[1]],[8,e,10,[3,e,hq]]]]}return[1,[2,i,Nl]];case
 2:return[0,[3,[4,a[1][1]],h2]];case
 6:var
 p=a[1],q=b3(c,b,a[2]);return y(function(a){return[6,p,a]},q);case
@@ -18610,14 +19383,14 @@ w=a[2],x=a[1],z=b3(c,b,a[3]);return y(function(a){return[8,x,w,a]},z);case
 9:var
 A=a[2],B=a[1],C=b3(c,b,a[4]),D=b3(c,b,a[3]);return aR(function(b,a){return[9,B,A,b,a]},D,C);case
 10:var
-E=a[1],F=b3(c,b,a[4]),G=b3(c,b,a[3]),H=b3(c,b,a[2]);return el(function(c,b,a){return[10,E,c,b,a]},H,G,F);case
+E=a[1],F=b3(c,b,a[4]),G=b3(c,b,a[3]),H=b3(c,b,a[2]);return ek(function(c,b,a){return[10,E,c,b,a]},H,G,F);case
 11:var
 I=a[3],J=a[2],K=a[1],L=b3(c,b,a[5]),M=b3(c,b,a[4]);return aR(function(b,a){return[11,K,J,I,b,a]},M,L);case
 12:var
 N=a[1],O=[0,0],P=function(a,d){var
 e=a[1],f=b3(c,b,a[2]);return aR(function(b,a){return[0,[0,e,b],a]},f,d)},Q=dl(P,O,a[2]);return y(function(a){return[12,N,a]},Q);case
 13:var
-f=a[2],k=a[1],g=eL(aq,f,b[1][6]),o=g?1:g;if(o)return[1,[2,k,r(TN,r(f,TM))]];var
+f=a[2],k=a[1],g=eL(aq,f,b[1][6]),o=g?1:g;if(o)return[1,[2,k,r(TH,r(f,TG))]];var
 R=[0,0],S=function(a,d){var
 e=a[1],f=b3(c,b,a[2]);return aR(function(b,a){return[0,[0,e,b],a]},f,d)},T=dl(S,R,a[3]);return y(function(a){return[13,k,f,a]},T);case
 14:var
@@ -18631,12 +19404,13 @@ ad=a[1],ae=b3(c,b,a[2]),af=function(d,a){return aT(function(d){var
 e=b3(c,b,a[2]);return y(function(b){return[0,[0,a[1],b],d]},e)},d)},ag=dk(af,a[3],[0,0]),ah=b3(c,b,a[4]);return aT(function(a){return aT(function(b){return y(function(c){return[16,ad,a,b,c]},ah)},ag)},ae);case
 17:var
 l=a[3],d=a[1],ai=b3(c,b,a[4]),m=y(function(a){return[8,d,2,a]},ai);if(l)var
-aj=b3(c,b,l[1]),n=aR(function(b,a){return[10,d,b,a,[4,d,TO]]},aj,m);else
+aj=b3(c,b,l[1]),n=aR(function(b,a){return[10,d,b,a,[4,d,TI]]},aj,m);else
 var
 n=m;var
 ak=function(a,e){var
-f=a[1],g=b3(c,b,a[2]),h=aT(function(a){return y(function(b){return[17,d,[0,[0,f,a],0],0,b]},e)},g);return y(function(a){return[8,d,4,a]},h)};return dl(ak,n,a[2]);default:return[0,a]}},fy=function(c,b,a){switch(a[0]){case
+f=a[1],g=b3(c,b,a[2]),h=aT(function(a){return y(function(b){return[17,d,[0,[0,f,a],0],0,b]},e)},g);return y(function(a){return[8,d,4,a]},h)};return dl(ak,n,a[2]);default:return[0,a]}},fz=function(c,b,a){switch(a[0]){case
 0:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 g=a[1],x=b3(c,b,a[2]);return y(function(a){return[8,g,8,[12,g,[0,[0,r3,a],[0,[0,fi,[3,g,h0]],[0,[0,ho,[3,g,gU]],0]]]]]},x);case
@@ -18656,6 +19430,9 @@ g=a[1],x=b3(c,b,a[2]);return y(function(a){return[8,g,8,[12,g,[0,[0,r$,a],[0,[0,
 =======
 g=a[1],x=b3(c,b,a[2]);return y(function(a){return[8,g,8,[12,g,[0,[0,sb,a],[0,[0,fj,[3,g,h2]],[0,[0,hq,[3,g,gW]],0]]]]]},x);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+g=a[1],x=b3(c,b,a[2]);return y(function(a){return[8,g,8,[12,g,[0,[0,sb,a],[0,[0,fk,[3,g,h2]],[0,[0,hr,[3,g,gW]],0]]]]]},x);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 1:return b3(c,b,a[2]);case
 2:var
 z=b3(c,b,a[2]),A=a[1];return y(function(a){return sX(A,a)},z);case
@@ -18677,13 +19454,13 @@ E=p[1],F=aq(hZ,h0)?[0,[3,e,gX],[0,i7(e),[0,[4,e,0],[0,[3,e,gW],l]]]]:[0,[3,e,gX]
 E=p[1],F=aq(h0,h1)?[0,[3,e,gX],[0,i8(e),[0,[4,e,0],[0,[3,e,gW],l]]]]:[0,[3,e,gX],[0,i8(e),[0,[3,e,h2],[0,[3,e,gW],l]]]],G=gk(function(a){return b3(c,b,a)},l);return y(function(a){return[15,e,E,h0,F]},G)}return sj(e,h0)}return si(o[1]);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 5:var
-H=fy(c,b,a[3]),I=b3(c,b,a[2]),J=a[1];return aR(function(a,b){return[11,J,h2,0,a,b]},I,H);case
+H=fz(c,b,a[3]),I=b3(c,b,a[2]),J=a[1];return aR(function(a,b){return[11,J,h2,0,a,b]},I,H);case
 6:var
-K=fy(c,b,a[3]),L=b3(c,b,a[2]),h=a[1];return aR(function(a,b){return[11,h,gW,0,[9,h,7,[8,h,2,a],[3,h,gW]],b]},L,K);case
+K=fz(c,b,a[3]),L=b3(c,b,a[2]),h=a[1];return aR(function(a,b){return[11,h,gW,0,[9,h,7,[8,h,2,a],[3,h,gW]],b]},L,K);case
 7:var
-M=a[3],N=a[2],O=a[1],P=fy(c,b,a[5]),Q=b3(c,b,a[4]);return aR(function(b,a){return[11,O,N,M,b,a]},Q,P);case
+M=a[3],N=a[2],O=a[1],P=fz(c,b,a[5]),Q=b3(c,b,a[4]);return aR(function(b,a){return[11,O,N,M,b,a]},Q,P);case
 8:var
-R=a[1],S=fy(c,b,a[4]),T=fy(c,b,a[3]),U=b3(c,b,a[2]);return el(function(c,b,a){return[10,R,c,b,a]},U,T,S);case
+R=a[1],S=fz(c,b,a[4]),T=fz(c,b,a[3]),U=b3(c,b,a[2]);return ek(function(c,b,a){return[10,R,c,b,a]},U,T,S);case
 9:var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18705,6 +19482,7 @@ V=fy(c,b,q),W=fy(c,b,r[1]),X=b3(c,b,s),Y=y(function(a){return[8,f,1,a]},X);retur
 Z=fy(c,b,q),u=sf(NV,f,0),v=[0,[0,NW,j(ep[11],u)],0],w=j(ep[13],v),_=[0,sV(f,[4,f,t(ep[16],[0,nf,0],w)])],$=b3(c,b,s),aa=y(function(a){return[8,f,1,a]},$);return el(function(c,b,a){return[10,f,c,b,a]},aa,_,Z);default:var
 =======
 q=a[4],r=a[3],t=a[2],f=a[1];if(r){var
+<<<<<<< HEAD
 V=fy(c,b,q),W=fy(c,b,r[1]),X=b3(c,b,t),Y=y(function(a){return[8,f,1,a]},X);return el(function(c,b,a){return[10,f,c,b,a]},Y,W,V)}var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18716,12 +19494,16 @@ Z=fy(c,b,q),u=sf(NW,f,0),v=[0,[0,NX,j(ep[11],u)],0],w=j(ep[13],v),_=[0,sV(f,[4,f
 =======
 Z=fy(c,b,q),u=sh(NT,f,0),v=[0,[0,NU,j(ep[11],u)],0],w=j(ep[13],v),_=[0,sX(f,[4,f,s(ep[16],[0,nf,0],w)])],$=b3(c,b,t),aa=y(function(a){return[8,f,1,a]},$);return el(function(c,b,a){return[10,f,c,b,a]},aa,_,Z);default:var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+V=fz(c,b,q),W=fz(c,b,r[1]),X=b3(c,b,t),Y=y(function(a){return[8,f,1,a]},X);return ek(function(c,b,a){return[10,f,c,b,a]},Y,W,V)}var
+Z=fz(c,b,q),u=sh(NN,f,0),v=[0,[0,NO,j(eo[11],u)],0],w=j(eo[13],v),_=[0,sX(f,[4,f,s(eo[16],[0,nf,0],w)])],$=b3(c,b,t),aa=y(function(a){return[8,f,1,a]},$);return ek(function(c,b,a){return[10,f,c,b,a]},aa,_,Z);default:var
+>>>>>>> (fix) Directly use time constants in generated JS code
 ab=a[1],ac=b3(c,b,a[2]),ad=function(d,a){return aT(function(d){var
-e=fy(c,b,a[2]);return y(function(b){return[0,[0,a[1],b],d]},e)},d)},ae=dk(ad,a[3],[0,0]),af=fy(c,b,a[4]);return aT(function(a){return aT(function(b){return y(function(c){return[16,ab,a,b,c]},af)},ae)},ac)}},s1=function(d,c,a,b){var
-e=fy(d,c,b);return y(function(b){return[11,a,h2,0,[3,a,fj],[11,a,gW,0,[3,a,hq],b]]},e)},s2=function(d,a,b){switch(b[0]){case
+e=fz(c,b,a[2]);return y(function(b){return[0,[0,a[1],b],d]},e)},d)},ae=dk(ad,a[3],[0,0]),af=fz(c,b,a[4]);return aT(function(a){return aT(function(b){return y(function(c){return[16,ab,a,b,c]},af)},ae)},ac)}},s1=function(d,c,a,b){var
+e=fz(d,c,b);return y(function(b){return[11,a,h2,0,[3,a,fk],[11,a,gW,0,[3,a,hr],b]]},e)},s2=function(d,a,b){switch(b[0]){case
 2:var
 j=b[2],m=j[2];if(eL(aq,m,aW(so,bZ(a[11],a[10])))){var
-x=r(TQ,r(m,TP));return[1,[2,b[1],x]]}var
+x=r(TK,r(m,TJ));return[1,[2,b[1],x]]}var
 q=bZ(a[11],[0,j,0]);return[0,[0,0,[0,a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],q]]];case
 3:var
 <<<<<<< HEAD
@@ -18756,13 +19538,14 @@ q=sZ(d,n,a,h[1]),i=y(function(a){return[0,a]},q);else
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 o=b[2],J=b[1],c=s0(d,a,o),f=b[3],k=f[3],l=f[2],u=f[4],v=gk(function(b){var
-a=[1,b[1][1],b[2]],f=b[3][4],n=[0,c[1],c[2],c[3],c[4],c[5],c[6],c[7],[0,b[2]],c[9],c[10],c[11]],o=f?f[1]:[11,a,h4],g=k?k[1]:[11,a,sd],e=b[3][3],m=[11,a,nf],p=e?[0,[15,a,[13,a,[0,[0,sb,e[1]],[0,[0,fj,g],[0,[0,hq,[14,a,o]],0]]]],m]]:e,h=b[4];if(h)var
+a=[1,b[1][1],b[2]],f=b[3][4],n=[0,c[1],c[2],c[3],c[4],c[5],c[6],c[7],[0,b[2]],c[9],c[10],c[11]],o=f?f[1]:[11,a,h4],g=k?k[1]:[11,a,sd],e=b[3][3],m=[11,a,nf],p=e?[0,[15,a,[13,a,[0,[0,sb,e[1]],[0,[0,fk,g],[0,[0,hr,[14,a,o]],0]]]],m]]:e,h=b[4];if(h)var
 q=s1(d,n,a,h[1]),i=y(function(a){return[0,a]},q);else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 var
 i=[0,0];var
-j=b[2],r=aq(j,h1)?[0,[0,gX,[8,a]],[0,[0,hp,l],[0,[0,fj,[2,a]],[0,[0,hq,[14,a,[1,a]]],b[3][2]]]]]:[0,[0,gX,[8,a]],[0,[0,hp,l],[0,[0,fj,g],[0,[0,hq,[14,a,[1,a]]],b[3][2]]]]];return y(function(b){return[0,j,[0,a,[0,r,p],b]]},i)},u),w=y(function(a){return[0,f[1],a]},v),K=y(function(a){return[3,J,o,a]},w);return y(function(b){return[0,[0,b,0],a]},K);case
+j=b[2],r=aq(j,h1)?[0,[0,gX,[8,a]],[0,[0,hq,l],[0,[0,fk,[2,a]],[0,[0,hr,[14,a,[1,a]]],b[3][2]]]]]:[0,[0,gX,[8,a]],[0,[0,hq,l],[0,[0,fk,g],[0,[0,hr,[14,a,[1,a]]],b[3][2]]]]];return y(function(b){return[0,j,[0,a,[0,r,p],b]]},i)},u),w=y(function(a){return[0,f[1],a]},v),K=y(function(a){return[3,J,o,a]},w);return y(function(b){return[0,[0,b,0],a]},K);case
 7:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 g=b[1],p=sP(d,a,b[2]),L=b3(d,p,b[3]),M=y(function(a){return[1,g,hn,0,a]},L);return y(function(a){return[0,[0,a,[0,[1,g,fi,0,[4,g,0]],0]],p]},M);default:return[0,[0,0,a]]}},dY=function(d,b,c,a){switch(a[0]){case
@@ -18772,6 +19555,9 @@ g=b[1],p=sY(d,a,b[2]),L=b3(d,p,b[3]),M=y(function(a){return[1,g,hp,0,a]},L);retu
 =======
 g=b[1],p=s0(d,a,b[2]),L=b3(d,p,b[3]),M=y(function(a){return[1,g,hp,0,a]},L);return y(function(a){return[0,[0,a,[0,[1,g,fj,0,[4,g,0]],0]],p]},M);default:return[0,[0,0,a]]}},dX=function(d,b,c,a){switch(a[0]){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+g=b[1],p=s0(d,a,b[2]),L=b3(d,p,b[3]),M=y(function(a){return[1,g,hq,0,a]},L);return y(function(a){return[0,[0,a,[0,[1,g,fk,0,[4,g,0]],0]],p]},M);default:return[0,[0,0,a]]}},dX=function(d,b,c,a){switch(a[0]){case
+>>>>>>> (fix) Directly use time constants in generated JS code
 6:var
 m=a[1],n=dX(d,b,c,a[2]),e=y(function(a){return[6,m,a]},n);break;case
 7:var
@@ -18781,7 +19567,7 @@ s=a[2],t=a[1],u=dX(d,b,c,a[3]),e=y(function(a){return[8,t,s,a]},u);break;case
 9:var
 v=a[2],w=a[1],x=dX(d,b,c,a[4]),z=dX(d,b,c,a[3]),e=aR(function(b,a){return[9,w,v,b,a]},z,x);break;case
 10:var
-A=a[1],B=dX(d,b,c,a[4]),C=dX(d,b,c,a[3]),D=dX(d,b,c,a[2]),e=el(function(c,b,a){return[10,A,c,b,a]},D,C,B);break;case
+A=a[1],B=dX(d,b,c,a[4]),C=dX(d,b,c,a[3]),D=dX(d,b,c,a[2]),e=ek(function(c,b,a){return[10,A,c,b,a]},D,C,B);break;case
 11:var
 h=a[4],i=a[2],E=a[3],F=a[1],G=a[5],H=dX(aP(b,d,i,h),b,c,G),I=dX(d,b,c,h),e=aR(function(b,a){return[11,F,i,E,b,a]},I,H);break;case
 12:var
@@ -18810,7 +19596,7 @@ ah=dX(d,b,c,k[1]),l=y(function(a){return[0,a]},ah);else
 var
 l=[0,0];var
 ai=[0,0],aj=a[2],ak=dk(function(e,a){var
-f=dX(d,b,c,a[2]);return aR(hR,e,y(function(b){return[0,a[1],b]},f))},aj,ai),e=el(function(c,b,a){return[17,af,c,b,a]},ak,l,ag);break;default:var
+f=dX(d,b,c,a[2]);return aR(hR,e,y(function(b){return[0,a[1],b]},f))},aj,ai),e=ek(function(c,b,a){return[17,af,c,b,a]},ak,l,ag);break;default:var
 e=[0,a]}var
 f=y(j(c,d),e);if(0===f[0]){var
 <<<<<<< HEAD
@@ -18828,7 +19614,7 @@ g=f[1];return g?g[1]:e}return[1,f[1]]},s3=function(d,c,b,a){return dX(c,function
 d=a[1],e=d[1],f=s4(c,b,a[2]);return[11,c,e[1],e[2],d[2],f]}return b},s5=function(b,a,c,j){if(c[3])var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 k=c[2][1],h=aW(function(a){return[0,a[1],[0,a[2]]]},k),d=[0,[0,c[3],h]];else{var
-e=b_(aq,TL,a);if(e)var
+e=b_(aq,TF,a);if(e)var
 f=e[1],l=f[2][1],i=aW(function(a){return[0,a[1],0]},l),g=[0,[0,f[3],i]];else
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 var
@@ -18847,6 +19633,7 @@ c=a[2],e=a[1],f=b_(aq,j[2],c),k=f?sU(e,c,f[1],a[3]):nf(e,c);return[0,k];case
 b=a[3],d=a[1],g=b_(aq,j[3],a[2]);if(g)var
 h=b_(aq,g[1],b),l=h?sU(d,b,h[1],a[4]):nf(d,b),i=l;else
 var
+<<<<<<< HEAD
 i=nf(d,b);return[0,i];default:return 0}}return function(d){return sS(b,a,c,d)}},sV=function(e,a,b){var
 g=aU(d8,b[2][1]),d=[0,a[1],a[2],a[3],a[4],a[5],g,a[7],a[8],a[9],a[10],a[11]],f=b[3];if(f){var
 h=f[1],i=sS(e,d,function(d,a){if(3===a[0]){var
@@ -18861,6 +19648,12 @@ e=m1(c[2],j);return e?[0,s2([0,b[1],a],d[1],e[1])]:[1,[2,b,r(NN,r(a,NM))]]}retur
 =======
 e=m2(c[2],j);return e?[0,s4([0,b[1],a],d[1],e[1])]:[1,[2,b,r(NK,r(a,NJ))]]}return[1,[0,b,r(NS,r(a,NR))]]},d)},nv=function(b,a){function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+g=[1,[0,b,r(NK,r(a,NJ))]];var
+d=g}return aT(function(c){var
+d=c[1];if(d){var
+e=m2(c[2],j);return e?[0,s4([0,b[1],a],d[1],e[1])]:[1,[2,b,r(NE,r(a,ND))]]}return[1,[0,b,r(NM,r(a,NL))]]},d)},nv=function(b,a){function
+>>>>>>> (fix) Directly use time constants in generated JS code
 c(j,a){switch(a[0]){case
 14:var
 c=a[2],e=a[1],f=b_(aq,j[2],c),k=f?s5(e,c,f[1],a[3]):nh(e,c);return[0,k];case
@@ -18919,17 +19712,22 @@ a=i[1],b=eb(a[1]);if(-1===a[2][2])var
 f=b[2],s=b[1],t=s4(c,a,b[3]);return y(function(b){return[0,[2,s,f,b],[0,a[1],[0,[0,f,b],a[2]],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11]]]},t);default:var
 =======
 f=b[2],s=b[1],t=s6(c,a,b[3]);return y(function(b){return[0,[2,s,f,b],[0,a[1],[0,[0,f,b],a[2]],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11]]]},t);default:var
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 d=b[2],g=b[3],u=b[1],h=g[2],i=fQ(function(a,b){var
+=======
+d=b[2],g=b[3],u=b[1],h=g[2],i=fR(function(a,b){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 e=b[1],f=s6(c,a,b[2]);return y(function(c){var
 b=a[3],g=a[11],h=a[10],i=a[9],j=a[8],k=a[7],l=a[6],m=a[5],n=a[4],f=b_(aq,b,d),o=f?j8(aq,b,d,[0,[0,e,c],f[1]]):[0,[0,d,[0,[0,e,c],0]],b];return[0,[0,e,c],[0,a[1],a[2],o,n,m,l,k,j,i,h,g]]},f)},h,a),k=y(function(a){return[0,[0,g[1],a[1]],a[2]]},i);return y(function(a){return[0,[3,u,d,a[1]],a[2]]},k)}},s8=function(j){var
-a=ns(j),b=a[1],c=a[2],d=b[1],h=b[2],g=fQ(Rk,d,dk(sT,aW(sS,d),Rj)),e=aT(function(a){var
-b=fQ(sW,h,a[2]);return y(function(b){var
+a=ns(j),b=a[1],c=a[2],d=b[1],h=b[2],g=fR(Re,d,dk(sT,aW(sS,d),Rd)),e=aT(function(a){var
+b=fR(sW,h,a[2]);return y(function(b){var
 c=b[2];return[0,bZ(a[1],b[1]),c]},b)},g);if(c)var
 i=c[1],f=aT(function(a){var
 b=sW(a[2],i);return y(function(b){return[0,[0,a[1],[0,b[1]]],b[2]]},b)},e);else
 var
 f=y(function(a){return[0,[0,a[1],0],a[2]]},e);return y(function(a){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 b=a[1],c=b[2],d=b[1],e=a[2];return c?[0,bZ(d,[0,c[1],0]),e]:[0,d,e]},f)},nv=function(c,b,a){return[0,b[1],a]},km=function(c,b,a){return[0,a,b[2]]},s7=[0,[0,T6,TW],[0,[0,T5,TV],[0,[0,T4,TX],[0,[0,T3,TY],[0,[0,T2,TZ],0]]]]],s8=[0,[0,T8,T0],[0,[0,T7,T1],0]],TU=ao[34],kn=[bW,T9,b1(0)],s9=function(a){return[0,a[4],a[2],a[4]-a[3]|0]},s_=function(e,d,c){var
 a=s9(c),b=s9(d);return[5,[0,aX(e),b,a]]},ht=function(a){return[0,b9,aX(a)]},i8=function(d,c,b,a){var
@@ -18940,14 +19738,19 @@ a=i[1],b=d9(a[1]);if(-1===a[2][2])var
 =======
 b=a[1],c=b[2],d=b[1],e=a[2];return c?[0,bZ(d,[0,c[1],0]),e]:[0,d,e]},f)},nw=function(c,b,a){return[0,b[1],a]},kn=function(c,b,a){return[0,a,b[2]]},s9=[0,[0,T3,TT],[0,[0,T2,TS],[0,[0,T1,TU],[0,[0,T0,TV],[0,[0,TZ,TW],0]]]]],s_=[0,[0,T5,TX],[0,[0,T4,TY],0]],TR=ao[34],ko=[bW,T6,b1(0)],s$=function(a){return[0,a[4],a[2],a[4]-a[3]|0]},ta=function(e,d,c){var
 a=s$(c),b=s$(d);return[5,[0,aX(e),b,a]]},ht=function(a){return[0,b9,aX(a)]},i9=function(d,c,b,a){var
+=======
+b=a[1],c=b[2],d=b[1],e=a[2];return c?[0,bZ(d,[0,c[1],0]),e]:[0,d,e]},f)},nw=function(c,b,a){return[0,b[1],a]},kn=function(c,b,a){return[0,a,b[2]]},s9=[0,[0,TX,TN],[0,[0,TW,TM],[0,[0,TV,TO],[0,[0,TU,TP],[0,[0,TT,TQ],0]]]]],s_=[0,[0,TZ,TR],[0,[0,TY,TS],0]],TL=ao[34],ko=[bW,T0,b1(0)],s$=function(a){return[0,a[4],a[2],a[4]-a[3]|0]},ta=function(e,d,c){var
+a=s$(c),b=s$(d);return[5,[0,aX(e),b,a]]},hu=function(a){return[0,b9,aX(a)]},i9=function(d,c,b,a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 e=aX(d);return[1,ta(c,b,a),e]},eN=function(a){throw[0,ko,a]},kp=function(a){return d8(a[2])},tb=function(d,c){try{var
-a=c[1],e=xR(10,d),b=xt(e,a[2][2]-1|0),f=as(T9,as(b,as(T8,xL(ai(b),function(b){if(a[2][3]<=b)if(b<a[3][3])return 94;return 32}))));return f}catch(a){return T7}},kq=function(i){var
+a=c[1],e=xR(10,d),b=xt(e,a[2][2]-1|0),f=as(T3,as(b,as(T2,xL(ai(b),function(b){if(a[2][3]<=b)if(b<a[3][3])return 94;return 32}))));return f}catch(a){return T1}},kq=function(i){var
 a=i[1],b=d8(a[1]);if(-1===a[2][2])var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=0;else
 if(-1===a[2][3])var
 c=0;else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18990,11 +19793,20 @@ c=[0,lB(a,b)];return c}catch(a){return 0}},Ul=function(c,a){var
 b=Uk(c,d8(a[1][1]));return b?tb(b[1],a):Um},tc=function(c,b,a){switch(a[0]){case
 0:return as(Un,kp(a));case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+k=as(Uc,d(ar+a[2][3])),e=as(Ud,as(d(ar+a[2][2]),k)),c=1;if(!c)var
+e=T6;var
+g=ey(b,T4),h=g||ey(b,T5),j=h?T7:as(Ub,as(b,Ua)),f=as(j,e);return ey(f,T8)?T9:as(T$,as(f,T_))},Ue=function(b,a){try{var
+c=[0,lB(a,b)];return c}catch(a){return 0}},Uf=function(c,a){var
+b=Ue(c,d8(a[1][1]));return b?tb(b[1],a):Ug},tc=function(c,b,a){switch(a[0]){case
+0:return as(Uh,kp(a));case
+>>>>>>> (fix) Directly use time constants in generated JS code
 1:var
-d=a[1],h=as(Uo,s(c,b,d));return as(Up,as(kq(d),h));case
+d=a[1],h=as(Ui,s(c,b,d));return as(Uj,as(kq(d),h));case
 2:var
-e=a[1],i=s(c,b,e),j=as(Uq,as(kp(a),i));return as(Ur,as(kq(e),j));case
+e=a[1],i=s(c,b,e),j=as(Uk,as(kp(a),i));return as(Ul,as(kq(e),j));case
 3:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -19028,11 +19840,17 @@ f=a[1],k=s(c,b,f),l=as(Us,as(kp(a),k));return as(Ut,as(kq(f),l));default:var
 g=a[1],m=s(c,b,g),n=as(Uu,as(kp(a),m));return as(Uv,as(kq(g),n))}},Uw=function(b,a){return tc(tb,b,a)},nx=function(b,a){return tc(Ul,b,a)},ny=d8(K8),td=function(a,b){hC(hB,as(a,as(Ux,ny)));w0(hB,10);iq(hB);return jw(0)},te=function(b,a){return 0===a[0]?j(b,a[1]):eN(a[1])},tf=function(a,b,c){try{var
 d=ez(py(a),b)?as(B2(a,b),c):a;return d}catch(b){return a}},UB=function(a){return tf(a,UD,UC)},UG=function(a){return oL(UB,a)},tg=function(a){return d8(a[4])},th=function(a){return d8(a[4])},ti=function(a){return 0===a[0]?[0,tg(a[1])]:[1,th(a[1])]},UM=function(a){return d8(a[1][2])},tj=function(a){return 1===a[0]?0:[0,[1,d8(a[2])],0]},tk=function(b){if(1===b[0]){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+f=a[1],k=s(c,b,f),l=as(Um,as(kp(a),k));return as(Un,as(kq(f),l));default:var
+g=a[1],m=s(c,b,g),n=as(Uo,as(kp(a),m));return as(Up,as(kq(g),n))}},Uq=function(b,a){return tc(tb,b,a)},nx=function(b,a){return tc(Uf,b,a)},ny=d8(K2),td=function(a,b){hD(hC,as(a,as(Ur,ny)));w0(hC,10);iq(hC);return jw(0)},te=function(b,a){return 0===a[0]?j(b,a[1]):eN(a[1])},tf=function(a,b,c){try{var
+d=ey(py(a),b)?as(B2(a,b),c):a;return d}catch(b){return a}},Uv=function(a){return tf(a,Ux,Uw)},UA=function(a){return oL(Uv,a)},tg=function(a){return d8(a[4])},th=function(a){return d8(a[4])},ti=function(a){return 0===a[0]?[0,tg(a[1])]:[1,th(a[1])]},UG=function(a){return d8(a[1][2])},tj=function(a){return 1===a[0]?0:[0,[1,d8(a[2])],0]},tk=function(b){if(1===b[0]){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=b[2];if(1===c[0])return 0;var
-a=c[2],d=[0,[0,d8(a)],0];return[0,[1,d8(a)],d]}return 0},tl=d8(h3),kr=d8(fP),tm=function(b,a){try{var
-c=0,d=[0,lB(a,co(function(a){return[0,ti(a),a]},b)),c];return d}catch(a){return 0}},UN=function(b){return co(function(a){if(0===a[0])var
-c=a[1],d=c[5],e=tg(c),i=ez(e,tl)?[0,[1,kr],hc(co(tk,d))]:[0,[1,kr],[0,[1,e],[0,[0,tl],hc(co(tk,d))]]],h=hc(co(function(a){return tm(b,a)},i));else
+a=c[2],d=[0,[0,d8(a)],0];return[0,[1,d8(a)],d]}return 0},tl=d8(h3),kr=d8(fQ),tm=function(b,a){try{var
+c=0,d=[0,lB(a,co(function(a){return[0,ti(a),a]},b)),c];return d}catch(a){return 0}},UH=function(b){return co(function(a){if(0===a[0])var
+c=a[1],d=c[5],e=tg(c),i=ey(e,tl)?[0,[1,kr],hc(co(tk,d))]:[0,[1,kr],[0,[1,e],[0,[0,tl],hc(co(tk,d))]]],h=hc(co(function(a){return tm(b,a)},i));else
 var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -19051,47 +19869,51 @@ b=re(tg,UP,UQ(a));return b}catch(a){a=aI(a);if(a[1]===rd)return eN(ht(as(UU,UR(a
 f=a[1],g=f[5],j=ez(th(f),kr)?hc(co(tj,g)):[0,[1,kr],hc(co(tj,g))],h=hc(co(function(a){return tm(b,a)},j));return[0,a,h]},b)},UO=function(a){return lF(UP,a)},UQ=function(a){try{var
 b=rg(ti,UM,UN(a));return b}catch(a){a=aI(a);if(a[1]===rf)return eN(ht(as(UR,UO(a[2]))));throw a}},tn=function(b,a){at(b,a);fh(b,a);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+f=a[1],g=f[5],j=ey(th(f),kr)?hc(co(tj,g)):[0,[1,kr],hc(co(tj,g))],h=hc(co(function(a){return tm(b,a)},j));return[0,a,h]},b)},UI=function(a){return lF(UJ,a)},UK=function(a){try{var
+b=rg(ti,UG,UH(a));return b}catch(a){a=aI(a);if(a[1]===rf)return eN(hu(as(UL,UI(a[2]))));throw a}},tn=function(b,a){at(b,a);fh(b,a);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 i=0,j=0;try{var
 e=i,c=j;at(b,a);e5(a);at(b,a);var
 p=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(UT);if(4===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===p)var
+g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(UN);if(4===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===p)var
 k=cu(b,a),e=k,c=1,d=1,g=k;else{cb(b,a);var
 d=j,g=i}for(;;){at(b,a);e6(b,a);at(b,a);var
 q=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(UU);if(4===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===q)var
+g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(UO);if(4===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===q)var
 n=cu(b,a),e=n,h=d|1,o=n,c=h;else{cb(b,a);var
 h=d,o=g}var
-d=h,g=o;continue}}catch(a){a=aI(a);if(a===eh){if(1!==c)fi(b,[0,c],[0,US]);return[0,e]}throw a}},UV=function(b,a){at(b,a);fh(b,a);var
+d=h,g=o;continue}}catch(a){a=aI(a);if(a===eh){if(1!==c)fi(b,[0,c],[0,UM]);return[0,e]}throw a}},UP=function(b,a){at(b,a);fh(b,a);var
 j=0,k=0;try{var
 e=j,c=k;at(b,a);e5(a);at(b,a);var
 p=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(UX);if(4===c)if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===p)var
+h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(UR);if(4===c)if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===p)var
 m=cu(b,a),e=m,c=1,d=1,h=m;else{cb(b,a);var
 d=k,h=j}for(;;){at(b,a);e6(b,a);at(b,a);var
 q=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(UY);if(4===c)if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===q)var
+h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(US);if(4===c)if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1},a);dj(b,a);if(0===q)var
 n=cu(b,a),e=n,i=d|1,o=n,c=i;else{cb(b,a);var
 i=d,o=h}var
-d=i,h=o;continue}}catch(a){a=aI(a);if(a===eh){if(1!==c)fi(b,[0,c],[0,UW]);return[0,e]}throw a}},ks=function(b,a){at(b,a);fh(b,a);var
+d=i,h=o;continue}}catch(a){a=aI(a);if(a===eh){if(1!==c)fi(b,[0,c],[0,UQ]);return[0,e]}throw a}},ks=function(b,a){at(b,a);fh(b,a);var
 k=0,o=0,p=0,A=0;try{var
 v=k,w=o,y=p,c=A;at(b,a);e5(a);at(b,a);var
 B=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 h=d;else
 var
-k=c<0?1:0,h=k||(ai(b)<(a+c|0)?1:0);if(h)aM(U2);var
+k=c<0?1:0,h=k||(ai(b)<(a+c|0)?1:0);if(h)aM(UW);var
 i=c-4|0;if(!(2<i>>>0))switch(i){case
 0:if(x===l(b,a))if(n===l(b,a+1|0))if(m===l(b,a+2|0))if(f===l(b,a+3|0))return 1;return-1;case
 1:break;default:var
@@ -19107,7 +19929,7 @@ C=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 h=d;else
 var
-k=c<0?1:0,h=k||(ai(b)<(a+c|0)?1:0);if(h)aM(U3);var
+k=c<0?1:0,h=k||(ai(b)<(a+c|0)?1:0);if(h)aM(UX);var
 i=c-4|0;if(!(2<i>>>0))switch(i){case
 0:if(x===l(b,a))if(n===l(b,a+1|0))if(m===l(b,a+2|0))if(f===l(b,a+3|0))return 1;return-1;case
 1:break;default:var
@@ -19119,14 +19941,14 @@ D=hL(b,a),v=D,E=d|1,c=E,t=E,s=j,r=i,q=D;break;case
 1:var
 F=hL(b,a),w=F,G=d|2,c=G,t=G,s=j,r=F,q=h;break;default:var
 H=hL(b,a),y=H,I=d|4,c=I,t=I,s=H,r=i,q=h}var
-d=t,j=s,i=r,h=q;continue}}catch(a){a=aI(a);if(a===eh){if(7!==c)fi(b,[0,c],[0,U1,U0,UZ]);return[0,v,w,y]}throw a}},kt=function(b,a){at(b,a);fh(b,a);var
+d=t,j=s,i=r,h=q;continue}}catch(a){a=aI(a);if(a===eh){if(7!==c)fi(b,[0,c],[0,UV,UU,UT]);return[0,v,w,y]}throw a}},kt=function(b,a){at(b,a);fh(b,a);var
 k=0,n=0,t=0;try{var
 o=k,q=n,c=t;at(b,a);e5(a);at(b,a);var
 v=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-j=c<0?1:0,e=j||(ai(b)<(a+c|0)?1:0);if(e)aM(U6);var
+j=c<0?1:0,e=j||(ai(b)<(a+c|0)?1:0);if(e)aM(U0);var
 i=c-3|0;if(!(2<i>>>0))switch(i){case
 0:if(f===l(b,a))if(m===l(b,a+1|0))if(p===l(b,a+2|0))return 1;return-1;case
 1:break;default:if(u===l(b,a))if(g===l(b,a+1|0))if(97===l(b,a+2|0))if(h===l(b,a+3|0))if(g===l(b,a+4|0))return 0;return-1}return-1},a);dj(b,a);if(0===v)var
@@ -19138,7 +19960,7 @@ x=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-j=c<0?1:0,e=j||(ai(b)<(a+c|0)?1:0);if(e)aM(U7);var
+j=c<0?1:0,e=j||(ai(b)<(a+c|0)?1:0);if(e)aM(U1);var
 i=c-3|0;if(!(2<i>>>0))switch(i){case
 0:if(f===l(b,a))if(m===l(b,a+1|0))if(p===l(b,a+2|0))return 1;return-1;case
 1:break;default:if(u===l(b,a))if(g===l(b,a+1|0))if(97===l(b,a+2|0))if(h===l(b,a+3|0))if(g===l(b,a+4|0))return 0;return-1}return-1},a);dj(b,a);if(0===x)var
@@ -19146,31 +19968,31 @@ y=ks(b,a),o=y,j=d|1,s=i,r=y,c=j;else
 if(1===x)var
 z=ks(b,a),q=z,A=d|2,c=A,j=A,s=z,r=e;else{cb(b,a);var
 j=d,s=i,r=e}var
-d=j,i=s,e=r;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,U5,U4]);return[0,o,q]}throw a}},U8=function(b,a){at(b,a);fh(b,a);var
+d=j,i=s,e=r;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,UZ,UY]);return[0,o,q]}throw a}},U2=function(b,a){at(b,a);fh(b,a);var
 i=0,j=0;try{var
 e=i,c=j;at(b,a);e5(a);at(b,a);var
 p=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(U_);if(9===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))if(u===l(b,a+4|0))if(t===l(b,a+5|0))if(97===l(b,a+6|0))if(99===l(b,a+7|0))if(f===l(b,a+8|0))return 0;return-1},a);dj(b,a);if(0===p)var
+g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(U4);if(9===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))if(u===l(b,a+4|0))if(t===l(b,a+5|0))if(97===l(b,a+6|0))if(99===l(b,a+7|0))if(f===l(b,a+8|0))return 0;return-1},a);dj(b,a);if(0===p)var
 k=cu(b,a),e=k,c=1,d=1,g=k;else{cb(b,a);var
 d=j,g=i}for(;;){at(b,a);e6(b,a);at(b,a);var
 q=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(U$);if(9===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))if(u===l(b,a+4|0))if(t===l(b,a+5|0))if(97===l(b,a+6|0))if(99===l(b,a+7|0))if(f===l(b,a+8|0))return 0;return-1},a);dj(b,a);if(0===q)var
+g=c<0?1:0,e=g||(ai(b)<(a+c|0)?1:0);if(e)aM(U5);if(9===c)if(m===l(b,a))if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))if(u===l(b,a+4|0))if(t===l(b,a+5|0))if(97===l(b,a+6|0))if(99===l(b,a+7|0))if(f===l(b,a+8|0))return 0;return-1},a);dj(b,a);if(0===q)var
 n=cu(b,a),e=n,h=d|1,o=n,c=h;else{cb(b,a);var
 h=d,o=g}var
-d=h,g=o;continue}}catch(a){a=aI(a);if(a===eh){if(1!==c)fi(b,[0,c],[0,U9]);return[0,e]}throw a}},ku=function(b,a){at(b,a);fh(b,a);var
+d=h,g=o;continue}}catch(a){a=aI(a);if(a===eh){if(1!==c)fi(b,[0,c],[0,U3]);return[0,e]}throw a}},ku=function(b,a){at(b,a);fh(b,a);var
 j=0,k=0,r=0;try{var
 n=j,o=k,c=r;at(b,a);e5(a);at(b,a);var
 s=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(Vc);if(4===c){var
+i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(U8);if(4===c){var
 h=l(b,a);if(m===h){if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 1;return-1}if(g===h){if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}return-1}return-1},a);dj(b,a);if(0===s)var
 u=cu(b,a),n=u,c=1,d=1,h=k,e=u;else
 if(1===s)var
@@ -19180,12 +20002,13 @@ v=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(Vd);if(4===c){var
+i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(U9);if(4===c){var
 h=l(b,a);if(m===h){if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 1;return-1}if(g===h){if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}return-1}return-1},a);dj(b,a);if(0===v)var
 w=cu(b,a),n=w,i=d|1,q=h,p=w,c=i;else
 if(1===v)var
 x=cu(b,a),o=x,y=d|2,c=y,i=y,q=x,p=e;else{cb(b,a);var
 i=d,q=h,p=e}var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -19208,6 +20031,9 @@ d=i,h=q,e=p;continue}}catch(a){a=aI(a);if(a===ei){if(3!==c)fi(b,[0,c],[0,Ve,Vd])
 =======
 d=i,h=q,e=p;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,Vb,Va]);return[0,n,o]}throw a}},to=function(a,b){return jW(hk,a,b)},tp=function(b,a){at(b,a);return ft(b,a)?0:[0,UV(b,a)]},Ve=function(b,a){at(b,a);fh(b,a);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=i,h=q,e=p;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,U7,U6]);return[0,n,o]}throw a}},to=function(a,b){return jW(hl,a,b)},tp=function(b,a){at(b,a);return fu(b,a)?0:[0,UP(b,a)]},U_=function(b,a){at(b,a);fh(b,a);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 v=0,w=0,y=0,z=0,A=0,B=0,C=0,L=0;try{var
 M=v,N=w,O=y,P=z,Q=A,R=B,S=C,s=L;at(b,a);e5(a);at(b,a);var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
@@ -19215,7 +20041,7 @@ T=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(Vj);var
+o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(Va);var
 j=c-2|0;if(!(10<j>>>0))switch(j){case
 0:if(n===l(b,a))if(p===l(b,a+1|0))return 1;return-1;case
 2:if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1;case
@@ -19253,12 +20079,12 @@ ah=[0,tl(b,a)],O=ah,c=L,r=C,q=B,o=A,k=z,j=ah,i=w,d=v;else
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 ag=ku(b,a),N=ag,s=2,c=2,r=C,q=B,o=A,k=z,j=y,i=ag,d=v;break;case
-2:if(1-ft(b,a))var
+2:if(1-fu(b,a))var
 ah=[0,tn(b,a)],O=ah,c=L,r=C,q=B,o=A,k=z,j=ah,i=w,d=v;else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 var
 c=L,r=C,q=B,o=A,k=z,j=y,i=w,d=v;break;case
-3:if(1-ft(b,a))var
+3:if(1-fu(b,a))var
 aj=[0,cu(b,a)],P=aj,c=L,r=C,q=B,o=A,k=aj,j=y,i=w,d=v;else
 var
 c=L,r=C,q=B,o=A,k=z,j=y,i=w,d=v;break;case
@@ -19296,7 +20122,7 @@ U=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(Vk);var
+o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(Vb);var
 j=c-2|0;if(!(10<j>>>0))switch(j){case
 0:if(n===l(b,a))if(p===l(b,a+1|0))return 1;return-1;case
 2:if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1;case
@@ -19332,12 +20158,12 @@ Z=[0,tl(b,a)],O=Z,K=c,J=r,I=q,H=o,G=k,F=Z,E=i,D=d;else
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 =======
 X=ku(b,a),N=X,Y=c|2,s=Y,K=Y,J=r,I=q,H=o,G=k,F=j,E=X,D=d;break;case
-2:if(1-ft(b,a))var
+2:if(1-fu(b,a))var
 Z=[0,tn(b,a)],O=Z,K=c,J=r,I=q,H=o,G=k,F=Z,E=i,D=d;else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 var
 K=c,J=r,I=q,H=o,G=k,F=j,E=i,D=d;break;case
-3:if(1-ft(b,a))var
+3:if(1-fu(b,a))var
 _=[0,cu(b,a)],P=_,K=c,J=r,I=q,H=o,G=_,F=j,E=i,D=d;else
 var
 K=c,J=r,I=q,H=o,G=k,F=j,E=i,D=d;break;case
@@ -19369,7 +20195,7 @@ $=tp(b,a),Q=$,aa=c|4,s=aa,K=aa,J=r,I=q,H=$,G=k,F=j,E=i,D=d;break;case
 5:var
 ab=to(b,a),R=ab,ac=c|8,s=ac,K=ac,J=r,I=ab,H=o,G=k,F=j,E=i,D=d;break;default:var
 ad=kt(b,a),S=ad,ae=c|16,s=ae,K=ae,J=ad,I=q,H=o,G=k,F=j,E=i,D=d}var
-c=K,r=J,q=I,o=H,k=G,j=F,i=E,d=D;continue}}catch(a){a=aI(a);if(a===eh){if(31!==s)fi(b,[0,s],Vi.slice());return[0,M,N,O,P,Q,R,S]}throw a}},tq=function(a,b){return jW(Ve,a,b)},tr=function(b,a){at(b,a);fh(b,a);var
+c=K,r=J,q=I,o=H,k=G,j=F,i=E,d=D;continue}}catch(a){a=aI(a);if(a===eh){if(31!==s)fi(b,[0,s],U$.slice());return[0,M,N,O,P,Q,R,S]}throw a}},tq=function(a,b){return jW(U_,a,b)},tr=function(b,a){at(b,a);fh(b,a);var
 o=0,q=0,y=0;try{var
 <<<<<<< HEAD
 r=o,s=q,c=y;at(b,a);e4(a);at(b,a);var
@@ -19381,7 +20207,7 @@ z=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-j=c<0?1:0,i=j||(ai(b)<(a+c|0)?1:0);if(i)aM(Vn);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(12===c){if(p===l(b,a))if(f===l(b,a+1|0))if(99===l(b,a+2|0))if(x===l(b,a+3|0))if(97===l(b,a+4|0))if(h===l(b,a+5|0))if(97===l(b,a+6|0))if(g===l(b,a+7|0))if(n===l(b,a+8|0))if(e===l(b,a+9|0))if(m===l(b,a+10|0))if(u===l(b,a+11|0))return 1;return-1}return-1},a);dj(b,a);if(0===z)var
+j=c<0?1:0,i=j||(ai(b)<(a+c|0)?1:0);if(i)aM(Ve);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(12===c){if(p===l(b,a))if(f===l(b,a+1|0))if(99===l(b,a+2|0))if(x===l(b,a+3|0))if(97===l(b,a+4|0))if(h===l(b,a+5|0))if(97===l(b,a+6|0))if(g===l(b,a+7|0))if(n===l(b,a+8|0))if(e===l(b,a+9|0))if(m===l(b,a+10|0))if(u===l(b,a+11|0))return 1;return-1}return-1},a);dj(b,a);if(0===z)var
 A=cu(b,a),r=A,c=1,d=1,j=q,i=A;else
 if(1===z)var
 <<<<<<< HEAD
@@ -19408,7 +20234,7 @@ B=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-j=c<0?1:0,i=j||(ai(b)<(a+c|0)?1:0);if(i)aM(Vo);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(12===c){if(p===l(b,a))if(f===l(b,a+1|0))if(99===l(b,a+2|0))if(x===l(b,a+3|0))if(97===l(b,a+4|0))if(h===l(b,a+5|0))if(97===l(b,a+6|0))if(g===l(b,a+7|0))if(n===l(b,a+8|0))if(e===l(b,a+9|0))if(m===l(b,a+10|0))if(u===l(b,a+11|0))return 1;return-1}return-1},a);dj(b,a);if(0===B)var
+j=c<0?1:0,i=j||(ai(b)<(a+c|0)?1:0);if(i)aM(Vi);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(12===c){if(p===l(b,a))if(f===l(b,a+1|0))if(99===l(b,a+2|0))if(x===l(b,a+3|0))if(97===l(b,a+4|0))if(h===l(b,a+5|0))if(97===l(b,a+6|0))if(g===l(b,a+7|0))if(n===l(b,a+8|0))if(e===l(b,a+9|0))if(m===l(b,a+10|0))if(u===l(b,a+11|0))return 1;return-1}return-1},a);dj(b,a);if(0===B)var
 C=cu(b,a),r=C,k=d|1,w=j,v=C,c=k;else
 if(1===B)var
 <<<<<<< HEAD
@@ -19434,15 +20260,19 @@ d=k,j=w,i=v;continue}}catch(a){a=aI(a);if(a===ei){if(3!==c)fi(b,[0,c],[0,Vp,Vo])
 =======
 D=tq(b,a),s=D,E=d|2,c=E,k=E,w=D,v=i;else{cb(b,a);var
 k=d,w=j,v=i}var
+<<<<<<< HEAD
 d=k,j=w,i=v;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,Vm,Vl]);return[0,r,s]}throw a}},ts=function(b,a){at(b,a);fh(b,a);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=k,j=w,i=v;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,Vd,Vc]);return[0,r,s]}throw a}},ts=function(b,a){at(b,a);fh(b,a);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 j=0,k=0,r=0;try{var
 n=j,o=k,c=r;at(b,a);e5(a);at(b,a);var
 s=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(Vr);if(4===c){var
+i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(Vl);if(4===c){var
 h=l(b,a);if(m===h){if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 1;return-1}if(g===h){if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}return-1}return-1},a);dj(b,a);if(0===s)var
 u=cu(b,a),n=u,c=1,d=1,h=k,e=u;else
 if(1===s)var
@@ -19452,12 +20282,13 @@ v=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(Vs);if(4===c){var
+i=c<0?1:0,e=i||(ai(b)<(a+c|0)?1:0);if(e)aM(Vm);if(4===c){var
 h=l(b,a);if(m===h){if(97===l(b,a+1|0))if(ac===l(b,a+2|0))if(f===l(b,a+3|0))return 1;return-1}if(g===h){if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}return-1}return-1},a);dj(b,a);if(0===v)var
 w=cu(b,a),n=w,i=d|1,q=h,p=w,c=i;else
 if(1===v)var
 x=cu(b,a),o=x,y=d|2,c=y,i=y,q=x,p=e;else{cb(b,a);var
 i=d,q=h,p=e}var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -19488,6 +20319,9 @@ d=i,h=q,e=p;continue}}catch(a){a=aI(a);if(a===ei){if(3!==c)fi(b,[0,c],[0,Vt,Vs])
 =======
 d=i,h=q,e=p;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,Vq,Vp]);return[0,n,o]}throw a}},tt=function(b,a){at(b,a);fh(b,a);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=i,h=q,e=p;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,Vk,Vj]);return[0,n,o]}throw a}},tt=function(b,a){at(b,a);fh(b,a);var
+>>>>>>> (fix) Directly use time constants in generated JS code
 j=0,k=0,q=0;try{var
 m=j,n=k,c=q;at(b,a);e5(a);at(b,a);var
 r=di(b,function(b,a,c){var
@@ -19495,7 +20329,7 @@ r=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(Vv);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(5===c){if(99===l(b,a))if(x===l(b,a+1|0))if(97===l(b,a+2|0))if(u===l(b,a+3|0))if(u===l(b,a+4|0))return 1;return-1}return-1},a);dj(b,a);if(0===r)var
+h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(Vp);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(5===c){if(99===l(b,a))if(x===l(b,a+1|0))if(97===l(b,a+2|0))if(u===l(b,a+3|0))if(u===l(b,a+4|0))return 1;return-1}return-1},a);dj(b,a);if(0===r)var
 s=cu(b,a),m=s,c=1,d=1,h=k,e=s;else
 if(1===r)var
 <<<<<<< HEAD
@@ -19527,7 +20361,7 @@ v=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 e=d;else
 var
-h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(Vw);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(5===c){if(99===l(b,a))if(x===l(b,a+1|0))if(97===l(b,a+2|0))if(u===l(b,a+3|0))if(u===l(b,a+4|0))return 1;return-1}return-1},a);dj(b,a);if(0===v)var
+h=c<0?1:0,e=h||(ai(b)<(a+c|0)?1:0);if(e)aM(Vq);if(4===c){if(g===l(b,a))if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}if(5===c){if(99===l(b,a))if(x===l(b,a+1|0))if(97===l(b,a+2|0))if(u===l(b,a+3|0))if(u===l(b,a+4|0))return 1;return-1}return-1},a);dj(b,a);if(0===v)var
 w=cu(b,a),m=w,i=d|1,p=h,o=w,c=i;else
 if(1===v)var
 <<<<<<< HEAD
@@ -19538,14 +20372,14 @@ y=tq(b,a),n=y,z=d|2,c=z,i=z,p=y,o=e;else{cb(b,a);var
 y=ts(b,a),n=y,z=d|2,c=z,i=z,p=y,o=e;else{cb(b,a);var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 i=d,p=h,o=e}var
-d=i,h=p,e=o;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,Vu,Vt]);return[0,m,n]}throw a}},Vx=function(b,a){at(b,a);fh(b,a);var
+d=i,h=p,e=o;continue}}catch(a){a=aI(a);if(a===eh){if(3!==c)fi(b,[0,c],[0,Vo,Vn]);return[0,m,n]}throw a}},Vr=function(b,a){at(b,a);fh(b,a);var
 r=0,s=0,v=0,w=0,y=0,z=0,H=0;try{var
 J=r,K=s,L=v,M=w,N=y,O=z,I=H;at(b,a);e5(a);at(b,a);var
 P=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-q=c<0?1:0,i=q||(ai(b)<(a+c|0)?1:0);if(i)aM(VB);var
+q=c<0?1:0,i=q||(ai(b)<(a+c|0)?1:0);if(i)aM(Vv);var
 j=c-2|0;if(!(12<j>>>0))switch(j){case
 0:if(n===l(b,a))if(p===l(b,a+1|0))return 1;return-1;case
 2:var
@@ -19595,18 +20429,23 @@ ac=[0,hk(b,a)],N=ac,c=H,r=z,p=ac,k=x,j=u,i=t,d=s;else
 ab=tp(b,a),M=ab,I=4,c=4,q=z,o=y,k=ab,j=v,i=s,d=r;break;case
 =======
 $=ku(b,a),K=$,I=2,c=2,q=z,o=y,k=w,j=v,i=$,d=r;break;case
-2:if(1-ft(b,a))var
+2:if(1-fu(b,a))var
 aa=[0,tt(b,a)],L=aa,c=H,q=z,o=y,k=w,j=aa,i=s,d=r;else
 var
 c=H,q=z,o=y,k=w,j=v,i=s,d=r;break;case
 3:var
 ab=tr(b,a),M=ab,I=4,c=4,q=z,o=y,k=ab,j=v,i=s,d=r;break;case
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 4:if(1-ft(b,a))var
 ac=[0,hk(b,a)],N=ac,c=H,q=z,o=ac,k=w,j=v,i=s,d=r;else
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
+=======
+4:if(1-fu(b,a))var
+ac=[0,hl(b,a)],N=ac,c=H,q=z,o=ac,k=w,j=v,i=s,d=r;else
+>>>>>>> (fix) Directly use time constants in generated JS code
 var
-c=H,q=z,o=y,k=w,j=v,i=s,d=r;break;default:if(1-ft(b,a))var
+c=H,q=z,o=y,k=w,j=v,i=s,d=r;break;default:if(1-fu(b,a))var
 ad=[0,kt(b,a)],O=ad,c=H,q=ad,o=y,k=w,j=v,i=s,d=r;else
 var
 c=H,q=z,o=y,k=w,j=v,i=s,d=r}for(;;){at(b,a);e6(b,a);at(b,a);var
@@ -19614,7 +20453,7 @@ Q=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-q=c<0?1:0,i=q||(ai(b)<(a+c|0)?1:0);if(i)aM(VC);var
+q=c<0?1:0,i=q||(ai(b)<(a+c|0)?1:0);if(i)aM(Vw);var
 j=c-2|0;if(!(12<j>>>0))switch(j){case
 0:if(n===l(b,a))if(p===l(b,a+1|0))return 1;return-1;case
 2:var
@@ -19664,18 +20503,23 @@ Y=[0,hk(b,a)],N=Y,G=c,F=r,E=Y,D=k,C=j,B=i,A=d;else
 W=tp(b,a),M=W,X=c|4,I=X,G=X,F=q,E=o,D=W,C=j,B=i,A=d;break;case
 =======
 T=ku(b,a),K=T,U=c|2,I=U,G=U,F=q,E=o,D=k,C=j,B=T,A=d;break;case
-2:if(1-ft(b,a))var
+2:if(1-fu(b,a))var
 V=[0,tt(b,a)],L=V,G=c,F=q,E=o,D=k,C=V,B=i,A=d;else
 var
 G=c,F=q,E=o,D=k,C=j,B=i,A=d;break;case
 3:var
 W=tr(b,a),M=W,X=c|4,I=X,G=X,F=q,E=o,D=W,C=j,B=i,A=d;break;case
+<<<<<<< HEAD
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 4:if(1-ft(b,a))var
 Y=[0,hk(b,a)],N=Y,G=c,F=q,E=Y,D=k,C=j,B=i,A=d;else
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
+=======
+4:if(1-fu(b,a))var
+Y=[0,hl(b,a)],N=Y,G=c,F=q,E=Y,D=k,C=j,B=i,A=d;else
+>>>>>>> (fix) Directly use time constants in generated JS code
 var
-G=c,F=q,E=o,D=k,C=j,B=i,A=d;break;default:if(1-ft(b,a))var
+G=c,F=q,E=o,D=k,C=j,B=i,A=d;break;default:if(1-fu(b,a))var
 Z=[0,kt(b,a)],O=Z,G=c,F=Z,E=o,D=k,C=j,B=i,A=d;else
 var
 <<<<<<< HEAD
@@ -19692,7 +20536,7 @@ B=r,C=s,D=t,E=u,c=F;at(b,a);e4(a);at(b,a);var
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 G=c,F=q,E=o,D=k,C=j,B=i,A=d}var
-c=G,q=F,o=E,k=D,j=C,i=B,d=A;continue}}catch(a){a=aI(a);if(a===eh){if(7!==I)fi(b,[0,I],[0,VA,Vz,Vy]);return[0,J,K,L,M,N,O]}throw a}},tu=function(a,b){return jW(U8,a,b)},tv=function(a,b){return jW(Vx,a,b)},kv=[0,VK],VD=function(b,a){at(b,a);fh(b,a);var
+c=G,q=F,o=E,k=D,j=C,i=B,d=A;continue}}catch(a){a=aI(a);if(a===eh){if(7!==I)fi(b,[0,I],[0,Vu,Vt,Vs]);return[0,J,K,L,M,N,O]}throw a}},tu=function(a,b){return jW(U2,a,b)},tv=function(a,b){return jW(Vr,a,b)},kv=[0,VE],Vx=function(b,a){at(b,a);fh(b,a);var
 q=0,r=0,s=0,v=0,F=0;try{var
 <<<<<<< HEAD
 B=q,C=r,D=s,E=v,c=F;at(b,a);e4(a);at(b,a);var
@@ -19704,7 +20548,7 @@ G=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(VI);var
+o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(VC);var
 j=c-4|0;if(!(5<j>>>0))switch(j){case
 0:var
 k=l(b,a);if(98===k){if(e===l(b,a+1|0))if(p===l(b,a+2|0))if(aD===l(b,a+3|0))return 3;return-1}if(g===k){if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}return-1;case
@@ -19742,7 +20586,7 @@ H=di(b,function(b,a,c){var
 d=a<0?1:0;if(d)var
 i=d;else
 var
-o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(VJ);var
+o=c<0?1:0,i=o||(ai(b)<(a+c|0)?1:0);if(i)aM(VD);var
 j=c-4|0;if(!(5<j>>>0))switch(j){case
 0:var
 k=l(b,a);if(98===k){if(e===l(b,a+1|0))if(p===l(b,a+2|0))if(aD===l(b,a+3|0))return 3;return-1}if(g===k){if(aD===l(b,a+1|0))if(t===l(b,a+2|0))if(f===l(b,a+3|0))return 0;return-1}return-1;case
@@ -19790,17 +20634,22 @@ d=eN(ht(VV));var
 =======
 M=tu(b,a),D=M,N=d|4,c=N,A=N,z=o,y=M,x=j,w=i;break;default:var
 O=tv(b,a),E=O,P=d|8,c=P,A=P,z=O,y=k,x=j,w=i}var
-d=A,o=z,k=y,j=x,i=w;continue}}catch(a){a=aI(a);if(a===eh){if(15!==c)fi(b,[0,c],[0,VH,VG,VF,VE]);return[0,B,C,D,E]}throw a}},VL=function(a){return aX(a[2][2])},tw=function(b){if(b){var
-a=b[1],c=[0,a[2][1],a[2][2],a[2][3]],d=[0,a[1][1],a[1][2],a[1][3]];return[5,[0,aX(kv[1]),d,c]]}return b9},VT=function(c){var
+d=A,o=z,k=y,j=x,i=w;continue}}catch(a){a=aI(a);if(a===eh){if(15!==c)fi(b,[0,c],[0,VB,VA,Vz,Vy]);return[0,B,C,D,E]}throw a}},VF=function(a){return aX(a[2][2])},tw=function(b){if(b){var
+a=b[1],c=[0,a[2][1],a[2][2],a[2][3]],d=[0,a[1][1],a[1][2],a[1][3]];return[5,[0,aX(kv[1]),d,c]]}return b9},VN=function(c){var
 a=tw([0,c[7]]),h=aX(c[2][2]),f=c[3];if(f)var
-b=f[1][1],d=aV(b,VM)?aV(b,VN)?aV(b,VO)?aV(b,VP)?aV(b,VQ)?aV(b,VR)?[6,a,[0,0,aX(b)]]:[1,a]:[3,a]:[4,a]:[2,a]:[5,a]:[0,a];else
+b=f[1][1],d=aV(b,VG)?aV(b,VH)?aV(b,VI)?aV(b,VJ)?aV(b,VK)?aV(b,VL)?[6,a,[0,0,aX(b)]]:[1,a]:[3,a]:[4,a]:[2,a]:[5,a]:[0,a];else
 var
+<<<<<<< HEAD
 d=eN(ht(VS));var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d=eN(hu(VM));var
+>>>>>>> (fix) Directly use time constants in generated JS code
 g=c[4];if(g)var
-i=aV(g[1],VU)?eN(ht(VV)):[8,a,d],e=i;else
+i=aV(g[1],VO)?eN(hu(VP)):[8,a,d],e=i;else
 var
 e=d;var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -19838,11 +20687,19 @@ c=aX(a[2]);return[0,[0,aX(b[1])],c]}return[0,0,aX(a[2])]},$=function(b,a){return
 =======
 j=c[5]?[7,a,e]:e;return[0,h,j]},i_=function(a){return co(VT,a)},VW=function(a){var
 g=a[2][2],h=tw(a[6]),f=a[5],c=f?1:f,e=a[3],d=e?[0,[0,0,aX(e[1][2][2])]]:e,b=a[1],i=aV(b,VX)?aV(b,VY)?aV(b,VZ)?aV(b,V0)?aV(b,V1)?aV(b,V2)?eN(ht(as(V3,b))):[1,c,d,i_(a[4][2])]:[5,c,d,i_(a[4][2])]:[3,c,d,i_(a[4][2])]:[0,co(VL,a[4][2])]:[2,c,d,i_(a[4][2])]:[4,c,d,i_(a[4][2])];return[0,h,aX(g),i]},V4=function(f){var
+=======
+j=c[5]?[7,a,e]:e;return[0,h,j]},i_=function(a){return co(VN,a)},VQ=function(a){var
+g=a[2][2],h=tw(a[6]),f=a[5],c=f?1:f,e=a[3],d=e?[0,[0,0,aX(e[1][2][2])]]:e,b=a[1],i=aV(b,VR)?aV(b,VS)?aV(b,VT)?aV(b,VU)?aV(b,VV)?aV(b,VW)?eN(hu(as(VX,b))):[1,c,d,i_(a[4][2])]:[5,c,d,i_(a[4][2])]:[3,c,d,i_(a[4][2])]:[0,co(VF,a[4][2])]:[2,c,d,i_(a[4][2])]:[4,c,d,i_(a[4][2])];return[0,h,aX(g),i]},VY=function(f){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=f[1],c=oH(a,46);if(c){var
-b=c[1],d=aX(cp(a,0,b)),e=cp(a,b+1|0,ai(a)-(b+1|0)|0);return aV(e,Uy)?[2,b9,d,aX(e)]:[0,b9,d]}return eN(ht(as(UA,as(a,Uz))))},go=[bW,V5,b1(0)],tx=function(a){return gE(gx)},V6=function(a){a[2]=0;return 0},nz=function(b,a){return fe(b,a)},fk=[0,V8],V7=function(a){return gF(a)},nA=[bW,V9,b1(0)],kw=function(a){var
+b=c[1],d=aX(cp(a,0,b)),e=cp(a,b+1|0,ai(a)-(b+1|0)|0);return aV(e,Us)?[2,b9,d,aX(e)]:[0,b9,d]}return eN(hu(as(Uu,as(a,Ut))))},go=[bW,VZ,b1(0)],tx=function(a){return gE(gx)},V0=function(a){a[2]=0;return 0},nz=function(b,a){return fe(b,a)},fl=[0,V2],V1=function(a){return gF(a)},nA=[bW,V3,b1(0)],kw=function(a){var
 b=a[1];if(b){var
+<<<<<<< HEAD
 c=aX(a[2]);return[0,[0,aX(b[1])],c]}return[0,0,aX(a[2])]},$=function(b,a){return ta(fk[1],b,a)},cP=function(a){lP(lx,ZW);throw[0,i,ZX]},o=function(m,j,i){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+c=aX(a[2]);return[0,[0,aX(b[1])],c]}return[0,0,aX(a[2])]},$=function(b,a){return ta(fl[1],b,a)},cP=function(a){lP(lx,ZQ);throw[0,i,ZR]},o=function(m,j,i){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 a=j,c=i;for(;;){var
 d=c;if(a0<=d)switch(d){case
 227:case
@@ -19999,15 +20856,19 @@ f=a[1],a=f[1],c=f[3];continue;default:throw nA}}},tz=function(h,g,f){var
 a=g,c=f,b=0;for(;;){if(5===c)return b;if(0===c){var
 d=[0,a[3],b],e=a[2],a=a[1],c=e,b=d;continue}return cP(0)}},ty=function(b,f,o){var
 a=f,d=o,c=0,p=f[2];for(;;){if(6===d){var
-g=[0,a[4],c],h=a[3],a=a[1],d=h,c=g;continue}if(f3===d){var
-j=a[1],k=a[4],l=aX(rh(fk[1])),m=aX(fk[1]),n=[0,$(j[3],p),m,l,k,c];if(b[4])throw[0,i,Xs];var
+g=[0,a[4],c],h=a[3],a=a[1],d=h,c=g;continue}if(f4===d){var
+j=a[1],k=a[4],l=aX(rh(fl[1])),m=aX(fl[1]),n=[0,$(j[3],p),m,l,k,c];if(b[4])throw[0,i,Xm];var
 e=b[3];if(typeof
+<<<<<<< HEAD
 <<<<<<< HEAD
 e==="number")if(59===e)return n;if(b[4])throw[0,i,Xw];b[4]=1;throw nz}return cP(0)}},kR=function(f,e,d,b,L,c){var
 l=L+uJ|0;if(!(11<l>>>0))switch(l){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 =======
 e==="number")if(59===e)return n;if(b[4])throw[0,i,Xt];b[4]=1;throw nA}return cP(0)}},kS=function(f,e,d,b,L,c){var
+=======
+e==="number")if(59===e)return n;if(b[4])throw[0,i,Xn];b[4]=1;throw nA}return cP(0)}},kS=function(f,e,d,b,L,c){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 l=L+uL|0;if(!(11<l>>>0))switch(l){case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 0:var
@@ -20036,8 +20897,12 @@ g=[0,S,R];if(e[4])throw[0,i,W8];var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 G=d[1][1],k=G[1],H=k[4],Y=[1,G[2],c[1],c[2]],Z=d[3],_=[0,$(H,b),Z,Y],I=[2,$(H,b),_],J=k[3],K=k[1];return f<50?d_(f+1|0,e,K,b,J,I):a(d_,[0,e,K,b,J,I])}return cP(0)},kR=function(d,e,S,R){var
+<<<<<<< HEAD
 g=[0,S,R];if(e[4])throw[0,i,W5];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+g=[0,S,R];if(e[4])throw[0,i,WZ];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 h=e[3];if(typeof
 h==="number")if(44===h){var
 <<<<<<< HEAD
@@ -20066,21 +20931,21 @@ H=b[2][11],J=b[2][12],I=51;return d<50?cw(d+1|0,b,c,J,I,H):a(cw,[0,b,c,J,I,H]);c
 9:var
 K=b[2][11],M=b[2][12],L=51;return d<50?cj(d+1|0,b,c,M,L,K):a(cj,[0,b,c,M,L,K]);case
 12:var
-N=b[2][11],P=b[2][12],O=51;return d<50?ci(d+1|0,b,c,P,O,N):a(ci,[0,b,c,P,O,N])}}if(b[4])throw[0,i,W6];b[4]=1;return o(b,c,51)}if(e[4])throw[0,i,W7];e[4]=1;var
+N=b[2][11],P=b[2][12],O=51;return d<50?ci(d+1|0,b,c,P,O,N):a(ci,[0,b,c,P,O,N])}}if(b[4])throw[0,i,W0];b[4]=1;return o(b,c,51)}if(e[4])throw[0,i,W1];e[4]=1;var
 Q=g[1];return o(e,Q[1],Q[3])},kQ=function(e,c,r,p){var
-g=[0,r,p];if(c[4])throw[0,i,W8];var
+g=[0,r,p];if(c[4])throw[0,i,W2];var
 h=c[3];if(typeof
 h==="number")if(44===h){var
 d=[0,g,c[2][11]],b=q(c),f=b[3];if(typeof
 f==="number"){if(20===f){var
 j=56;return e<50?kF(e+1|0,b,d,j):a(kF,[0,b,d,j])}if(72===f){var
-k=b[2][11],m=b[2][12],l=56;return e<50?kE(e+1|0,b,d,m,l,k):a(kE,[0,b,d,m,l,k])}}if(b[4])throw[0,i,W9];b[4]=1;return o(b,d,56)}if(c[4])throw[0,i,W_];c[4]=1;var
-n=g[1];return o(c,n[1],n[3])},ey=function(i,j,b,c){var
-e=q(j),d=b[5],k=b[4],f=[12,$(d,c),k],g=b[3],h=b[1];return i<50?g2(i+1|0,e,h,c,g,f,d):a(g2,[0,e,h,c,g,f,d])},ex=function(l,m,b,p){var
+k=b[2][11],m=b[2][12],l=56;return e<50?kE(e+1|0,b,d,m,l,k):a(kE,[0,b,d,m,l,k])}}if(b[4])throw[0,i,W3];b[4]=1;return o(b,d,56)}if(c[4])throw[0,i,W4];c[4]=1;var
+n=g[1];return o(c,n[1],n[3])},ex=function(i,j,b,c){var
+e=q(j),d=b[5],k=b[4],f=[12,$(d,c),k],g=b[3],h=b[1];return i<50?g2(i+1|0,e,h,c,g,f,d):a(g2,[0,e,h,c,g,f,d])},ew=function(l,m,b,p){var
 c=q(m),f=c[3];if(typeof
 f==="number")if(21===f){var
-d=c[2][12],g=q(c),e=b[5],n=b[4],h=[14,$(e,d),n],j=b[3],k=b[1];return l<50?g2(l+1|0,g,k,d,j,h,e):a(g2,[0,g,k,d,j,h,e])}if(c[4])throw[0,i,W$];c[4]=1;return o(c,b[1],b[3])},ih=function(c,g,bW,r,bV){var
-k=[0,bW,r,bV];if(39===r){if(g[4])throw[0,i,Xa];var
+d=c[2][12],g=q(c),e=b[5],n=b[4],h=[14,$(e,d),n],j=b[3],k=b[1];return l<50?g2(l+1|0,g,k,d,j,h,e):a(g2,[0,g,k,d,j,h,e])}if(c[4])throw[0,i,W5];c[4]=1;return o(c,b[1],b[3])},ih=function(c,g,bW,r,bV){var
+k=[0,bW,r,bV];if(39===r){if(g[4])throw[0,i,W6];var
 s=g[3];if(typeof
 s==="number")if(8===s){var
 h=[0,k,g[2][12],g[2][11]],e=q(g),p=e[3];if(typeof
@@ -20104,7 +20969,7 @@ ak=e[2][11],am=e[2][12],al=9;return c<50?cw(c+1|0,e,h,am,al,ak):a(cw,[0,e,h,am,a
 9:var
 an=e[2][11],ap=e[2][12],ao=9;return c<50?cj(c+1|0,e,h,ap,ao,an):a(cj,[0,e,h,ap,ao,an]);case
 12:var
-aq=e[2][11],as=e[2][12],ar=9;return c<50?ci(c+1|0,e,h,as,ar,aq):a(ci,[0,e,h,as,ar,aq])}}if(e[4])throw[0,i,Xb];e[4]=1;return o(e,h,9)}if(g[4])throw[0,i,Xc];g[4]=1;return o(g,k[1],k[2])}if(m===r){if(g[4])throw[0,i,Xd];var
+aq=e[2][11],as=e[2][12],ar=9;return c<50?ci(c+1|0,e,h,as,ar,aq):a(ci,[0,e,h,as,ar,aq])}}if(e[4])throw[0,i,W7];e[4]=1;return o(e,h,9)}if(g[4])throw[0,i,W8];g[4]=1;return o(g,k[1],k[2])}if(m===r){if(g[4])throw[0,i,W9];var
 at=g[3];if(typeof
 at==="number")if(8===at){var
 j=[0,k,g[2][12],g[2][11]],f=q(g),l=f[3];if(typeof
@@ -20122,7 +20987,7 @@ aG=f[2][11],aI=f[2][12],aH=81;return c<50?cx(c+1|0,f,j,aI,aH,aG):a(cx,[0,f,j,aI,
 if(19===l){var
 aJ=f[2][11],aL=f[2][12],aK=81;return c<50?cC(c+1|0,f,j,aL,aK,aJ):a(cC,[0,f,j,aL,aK,aJ])}}else{if(7===l){var
 aM=f[2][11],aO=f[2][12],aN=81;return c<50?cE(c+1|0,f,j,aO,aN,aM):a(cE,[0,f,j,aO,aN,aM])}if(15<=l){var
-aP=f[2][11],aR=f[2][12],aQ=81;return c<50?cD(c+1|0,f,j,aR,aQ,aP):a(cD,[0,f,j,aR,aQ,aP])}}if(f[4])throw[0,i,Xe];f[4]=1;return o(f,j,81)}if(g[4])throw[0,i,Xf];g[4]=1;return o(g,k[1],k[2])}if(g_===r){if(g[4])throw[0,i,Xg];var
+aP=f[2][11],aR=f[2][12],aQ=81;return c<50?cD(c+1|0,f,j,aR,aQ,aP):a(cD,[0,f,j,aR,aQ,aP])}}if(f[4])throw[0,i,W_];f[4]=1;return o(f,j,81)}if(g[4])throw[0,i,W$];g[4]=1;return o(g,k[1],k[2])}if(g_===r){if(g[4])throw[0,i,Xa];var
 aS=g[3];if(typeof
 aS==="number")if(8===aS){var
 d=[0,k,g[2][12],g[2][11]],b=q(g),n=b[3];if(typeof
@@ -20164,7 +21029,7 @@ bw=b[2][11],by=b[2][12],bx=c7;return c<50?D(c+1|0,b,d,by,bx,bw):a(D,[0,b,d,by,bx
 67:var
 bz=b[2][11],bB=b[2][12],bA=c7;return c<50?C(c+1|0,b,d,bB,bA,bz):a(C,[0,b,d,bB,bA,bz]);case
 72:var
-bC=b[2][11],bE=b[2][12],bD=c7;return c<50?B(c+1|0,b,d,bE,bD,bC):a(B,[0,b,d,bE,bD,bC]);default:if(b[4])throw[0,i,Xh];b[4]=1;return o(b,d,c7)}else
+bC=b[2][11],bE=b[2][12],bD=c7;return c<50?B(c+1|0,b,d,bE,bD,bC):a(B,[0,b,d,bE,bD,bC]);default:if(b[4])throw[0,i,Xb];b[4]=1;return o(b,d,c7)}else
 switch(n[0]){case
 0:var
 bF=b[2][11],bG=n[1],bI=b[2][12],bH=c7;return c<50?M(c+1|0,b,d,bI,bH,bG,bF):a(M,[0,b,d,bI,bH,bG,bF]);case
@@ -20183,6 +21048,7 @@ bR=b[2][11],bS=m[1],bU=b[2][12],bT=c7;return c<50?E(c+1|0,b,d,bU,bT,bS,bR):a(E,[
 bN=b[2][11],bO=n[1],bQ=b[2][12],bP=c7;return c<50?G(c+1|0,b,d,bQ,bP,bO,bN):a(G,[0,b,d,bQ,bP,bO,bN]);default:var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 bR=b[2][11],bS=n[1],bU=b[2][12],bT=c7;return c<50?E(c+1|0,b,d,bU,bT,bS,bR):a(E,[0,b,d,bU,bT,bS,bR])}}if(g[4])throw[0,i,Xe];g[4]=1;return o(g,k[1],k[2])}return cP(0)},kP=function(e,b,H,G,F){var
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 =======
@@ -20191,22 +21057,26 @@ bR=b[2][11],bS=n[1],bU=b[2][12],bT=c7;return c<50?E(c+1|0,b,d,bU,bT,bS,bR):a(E,[
 =======
 bR=b[2][11],bS=n[1],bU=b[2][12],bT=c7;return c<50?E(c+1|0,b,d,bU,bT,bS,bR):a(E,[0,b,d,bU,bT,bS,bR])}}if(g[4])throw[0,i,Xi];g[4]=1;return o(g,k[1],k[2])}return cP(0)},kP=function(e,b,H,G,F){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+bR=b[2][11],bS=n[1],bU=b[2][12],bT=c7;return c<50?E(c+1|0,b,d,bU,bT,bS,bR):a(E,[0,b,d,bU,bT,bS,bR])}}if(g[4])throw[0,i,Xc];g[4]=1;return o(g,k[1],k[2])}return cP(0)},kP=function(e,b,H,G,F){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=H,d=G,f=F;for(;;){if(71<=d){var
 j=d-232|0;if(!(2<j>>>0))switch(j){case
 0:var
 I=[0,c[3],f],J=c[2],c=c[1],d=J,f=I;continue;case
-1:break;default:if(b[4])throw[0,i,Xj];var
+1:break;default:if(b[4])throw[0,i,Xd];var
 k=b[3];if(typeof
 k==="number")if(20===k){var
-g=b[2][12],l=q(b),h=c[3],m=[13,$(h,g),f],n=c[2],p=c[1];return e<50?g2(e+1|0,l,p,g,n,m,h):a(g2,[0,l,p,g,n,m,h])}if(b[4])throw[0,i,Xk];b[4]=1;return o(b,c,d)}}else
+g=b[2][12],l=q(b),h=c[3],m=[13,$(h,g),f],n=c[2],p=c[1];return e<50?g2(e+1|0,l,p,g,n,m,h):a(g2,[0,l,p,g,n,m,h])}if(b[4])throw[0,i,Xe];b[4]=1;return o(b,c,d)}}else
 if(68<=d)switch(d-68|0){case
-0:if(b[4])throw[0,i,Xl];var
+0:if(b[4])throw[0,i,Xf];var
 r=b[3];if(typeof
 r==="number")if(20===r){var
-s=b[2][12],t=q(b),u=c[1],v=u[1],w=[0,[0,u[3]],f],x=v[3],y=v[1];return e<50?kS(e+1|0,t,y,s,x,w):a(kS,[0,t,y,s,x,w])}if(b[4])throw[0,i,Xm];b[4]=1;return o(b,c,d);case
-2:if(b[4])throw[0,i,Xn];var
+s=b[2][12],t=q(b),u=c[1],v=u[1],w=[0,[0,u[3]],f],x=v[3],y=v[1];return e<50?kS(e+1|0,t,y,s,x,w):a(kS,[0,t,y,s,x,w])}if(b[4])throw[0,i,Xg];b[4]=1;return o(b,c,d);case
+2:if(b[4])throw[0,i,Xh];var
 z=b[3];if(typeof
 z==="number")if(20===z){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -20230,6 +21100,10 @@ g=[0,O,N,M];if(e[4])throw[0,i,Xs];var
 A=b[2][12],B=q(b),C=[0,0,f],D=c[2],E=c[1];return e<50?kS(e+1|0,B,E,A,D,C):a(kS,[0,B,E,A,D,C])}if(b[4])throw[0,i,Xo];b[4]=1;return o(b,c,d)}return cP(0)}},kO=function(c,e,O,N,M){var
 g=[0,O,N,M];if(e[4])throw[0,i,Xp];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+A=b[2][12],B=q(b),C=[0,0,f],D=c[2],E=c[1];return e<50?kS(e+1|0,B,E,A,D,C):a(kS,[0,B,E,A,D,C])}if(b[4])throw[0,i,Xi];b[4]=1;return o(b,c,d)}return cP(0)}},kO=function(c,e,O,N,M){var
+g=[0,O,N,M];if(e[4])throw[0,i,Xj];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 h=e[3];if(typeof
 h==="number")switch(h){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
@@ -20237,19 +21111,19 @@ h==="number")switch(h){case
 d=[0,g,e[2][11]],b=q(e),f=b[3];if(typeof
 f==="number")if(16<=f){if(37<=f){if(!(64<=f))switch(f+cH|0){case
 0:var
-m=b[2][11],p=b[2][12],n=fB;return c<50?cB(c+1|0,b,d,p,n,m):a(cB,[0,b,d,p,n,m]);case
+m=b[2][11],p=b[2][12],n=fC;return c<50?cB(c+1|0,b,d,p,n,m):a(cB,[0,b,d,p,n,m]);case
 6:var
-r=b[2][11],t=b[2][12],s=fB;return c<50?cA(c+1|0,b,d,t,s,r):a(cA,[0,b,d,t,s,r]);case
+r=b[2][11],t=b[2][12],s=fC;return c<50?cA(c+1|0,b,d,t,s,r):a(cA,[0,b,d,t,s,r]);case
 11:var
-u=b[2][11],w=b[2][12],v=fB;return c<50?cz(c+1|0,b,d,w,v,u):a(cz,[0,b,d,w,v,u]);case
+u=b[2][11],w=b[2][12],v=fC;return c<50?cz(c+1|0,b,d,w,v,u):a(cz,[0,b,d,w,v,u]);case
 24:var
-x=b[2][11],z=b[2][12],y=fB;return c<50?cy(c+1|0,b,d,z,y,x):a(cy,[0,b,d,z,y,x]);case
+x=b[2][11],z=b[2][12],y=fC;return c<50?cy(c+1|0,b,d,z,y,x):a(cy,[0,b,d,z,y,x]);case
 26:var
-A=b[2][11],C=b[2][12],B=fB;return c<50?cx(c+1|0,b,d,C,B,A):a(cx,[0,b,d,C,B,A])}}else
+A=b[2][11],C=b[2][12],B=fC;return c<50?cx(c+1|0,b,d,C,B,A):a(cx,[0,b,d,C,B,A])}}else
 if(19===f){var
-D=b[2][11],F=b[2][12],E=fB;return c<50?cC(c+1|0,b,d,F,E,D):a(cC,[0,b,d,F,E,D])}}else{if(7===f){var
-G=b[2][11],I=b[2][12],H=fB;return c<50?cE(c+1|0,b,d,I,H,G):a(cE,[0,b,d,I,H,G])}if(15<=f){var
-J=b[2][11],L=b[2][12],K=fB;return c<50?cD(c+1|0,b,d,L,K,J):a(cD,[0,b,d,L,K,J])}}if(b[4])throw[0,i,Xr];b[4]=1;return o(b,d,fB);case
+D=b[2][11],F=b[2][12],E=fC;return c<50?cC(c+1|0,b,d,F,E,D):a(cC,[0,b,d,F,E,D])}}else{if(7===f){var
+G=b[2][11],I=b[2][12],H=fC;return c<50?cE(c+1|0,b,d,I,H,G):a(cE,[0,b,d,I,H,G])}if(15<=f){var
+J=b[2][11],L=b[2][12],K=fC;return c<50?cD(c+1|0,b,d,L,K,J):a(cD,[0,b,d,L,K,J])}}if(b[4])throw[0,i,Xl];b[4]=1;return o(b,d,fC);case
 7:case
 15:case
 16:case
@@ -20265,22 +21139,22 @@ J=b[2][11],L=b[2][12],K=fB;return c<50?cD(c+1|0,b,d,L,K,J):a(cD,[0,b,d,L,K,J])}}
 66:case
 67:case
 74:var
-l=g[2],k=0;return c<50?kN(c+1|0,e,g,l,k):a(kN,[0,e,g,l,k])}if(e[4])throw[0,i,Xq];e[4]=1;var
+l=g[2],k=0;return c<50?kN(c+1|0,e,g,l,k):a(kN,[0,e,g,l,k])}if(e[4])throw[0,i,Xk];e[4]=1;var
 j=g[1][1];return o(e,j[1],j[2])},kN=function(l,f,e,b,m){var
 g=e[1][1],h=g[1][1],c=h[1][1],d=c[4],n=e[3],o=g[3],p=[0,$(d,b),o,n,0],q=[0,$(d,b),p,m],r=h[3],i=[5,$(d,b),r,q],j=c[3],k=c[1];return l<50?d_(l+1|0,f,k,b,j,i):a(d_,[0,f,k,b,j,i])},g2=function(b,f,hl,hk,l,hj,hi){var
-k=[0,hl,hk,l,hj,hi];if(aZ===l){if(f[4])throw[0,i,Xu];var
+k=[0,hl,hk,l,hj,hi];if(aZ===l){if(f[4])throw[0,i,Xo];var
 s=f[3];if(typeof
 s==="number"){if(24===s){var
-E=f[2][12];return b<50?ey(b+1|0,f,k,E):a(ey,[0,f,k,E])}if(45===s){var
-F=f[2][11];return b<50?ex(b+1|0,f,k,F):a(ex,[0,f,k,F])}if(58===s){var
-w=k[1],G=[0,w[3],[0,k[4]]],H=w[2],I=w[1];return b<50?kD(b+1|0,f,I,H,G):a(kD,[0,f,I,H,G])}}if(f[4])throw[0,i,Xv];f[4]=1;return o(f,k[1],k[3])}if(59<=l){if(a1<=l)switch(l-231|0){case
-0:if(f[4])throw[0,i,Xw];var
+E=f[2][12];return b<50?ex(b+1|0,f,k,E):a(ex,[0,f,k,E])}if(45===s){var
+F=f[2][11];return b<50?ew(b+1|0,f,k,F):a(ew,[0,f,k,F])}if(58===s){var
+w=k[1],G=[0,w[3],[0,k[4]]],H=w[2],I=w[1];return b<50?kD(b+1|0,f,I,H,G):a(kD,[0,f,I,H,G])}}if(f[4])throw[0,i,Xp];f[4]=1;return o(f,k[1],k[3])}if(59<=l){if(a1<=l)switch(l-231|0){case
+0:if(f[4])throw[0,i,Xq];var
 J=f[3];if(typeof
 J==="number")switch(J){case
 24:var
-N=f[2][12];return b<50?ey(b+1|0,f,k,N):a(ey,[0,f,k,N]);case
+N=f[2][12];return b<50?ex(b+1|0,f,k,N):a(ex,[0,f,k,N]);case
 45:var
-O=f[2][11];return b<50?ex(b+1|0,f,k,O):a(ex,[0,f,k,O]);case
+O=f[2][11];return b<50?ew(b+1|0,f,k,O):a(ew,[0,f,k,O]);case
 7:case
 15:case
 16:case
@@ -20297,17 +21171,17 @@ O=f[2][11];return b<50?ex(b+1|0,f,k,O):a(ex,[0,f,k,O]);case
 66:case
 67:case
 74:var
-K=[0,k[4]],L=k[2],M=k[1];return b<50?kO(b+1|0,f,M,L,K):a(kO,[0,f,M,L,K])}if(f[4])throw[0,i,Xx];f[4]=1;return o(f,k[1],k[3]);case
-2:if(f[4])throw[0,i,Xy];var
+K=[0,k[4]],L=k[2],M=k[1];return b<50?kO(b+1|0,f,M,L,K):a(kO,[0,f,M,L,K])}if(f[4])throw[0,i,Xr];f[4]=1;return o(f,k[1],k[3]);case
+2:if(f[4])throw[0,i,Xs];var
 m=f[3];if(typeof
 m==="number"){if(25<=m){if(45===m){var
-P=f[2][11];return b<50?ex(b+1|0,f,k,P):a(ex,[0,f,k,P])}var
+P=f[2][11];return b<50?ew(b+1|0,f,k,P):a(ew,[0,f,k,P])}var
 C=70===m?1:0}else
 if(20===m)var
 C=1;else{if(24<=m){var
-cL=f[2][12];return b<50?ey(b+1|0,f,k,cL):a(ey,[0,f,k,cL])}var
+cL=f[2][12];return b<50?ex(b+1|0,f,k,cL):a(ex,[0,f,k,cL])}var
 C=0}if(C){var
-x=k[1],g=[0,x[1],x[3],[0,x[4],k[4]]];if(f[4])throw[0,i,Xz];var
+x=k[1],g=[0,x[1],x[3],[0,x[4],k[4]]];if(f[4])throw[0,i,Xt];var
 y=f[3];if(typeof
 y==="number"){if(20===y){var
 Q=[0,g[3],0],R=g[2],S=g[1];return b<50?kP(b+1|0,f,S,R,Q):a(kP,[0,f,S,R,Q])}if(70===y){var
@@ -20398,16 +21272,17 @@ cB=e[2][11],cD=e[2][12],cC=bM;return b<50?a7(b+1|0,e,g,cD,cC,cB):a(a7,[0,e,g,cD,
 77:var
 cE=e[2][11],cG=e[2][12],cF=bM;return b<50?a6(b+1|0,e,g,cG,cF,cE):a(a6,[0,e,g,cG,cF,cE])}else
 if(2===t[0]){var
-cH=e[2][11],cI=t[1],cK=e[2][12],cJ=bM;return b<50?bn(b+1|0,e,g,cK,cJ,cI,cH):a(bn,[0,e,g,cK,cJ,cI,cH])}if(e[4])throw[0,i,XA];e[4]=1;return o(e,g,bM)}}if(f[4])throw[0,i,XB];f[4]=1;return o(f,g[1],g[2])}}if(f[4])throw[0,i,XC];f[4]=1;return o(f,k[1],k[3]);case
-5:if(f[4])throw[0,i,XD];var
+cH=e[2][11],cI=t[1],cK=e[2][12],cJ=bM;return b<50?bn(b+1|0,e,g,cK,cJ,cI,cH):a(bn,[0,e,g,cK,cJ,cI,cH])}if(e[4])throw[0,i,Xu];e[4]=1;return o(e,g,bM)}}if(f[4])throw[0,i,Xv];f[4]=1;return o(f,g[1],g[2])}}if(f[4])throw[0,i,Xw];f[4]=1;return o(f,k[1],k[3]);case
+5:if(f[4])throw[0,i,Xx];var
 n=f[3];if(typeof
 n==="number"){if(25<=n){if(45===n){var
-cM=f[2][11];return b<50?ex(b+1|0,f,k,cM):a(ex,[0,f,k,cM])}var
+cM=f[2][11];return b<50?ew(b+1|0,f,k,cM):a(ew,[0,f,k,cM])}var
 D=70===n?1:0}else
 if(18===n)var
 D=1;else{if(24<=n){var
-cR=f[2][12];return b<50?ey(b+1|0,f,k,cR):a(ey,[0,f,k,cR])}var
+cR=f[2][12];return b<50?ex(b+1|0,f,k,cR):a(ex,[0,f,k,cR])}var
 D=0}if(D){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -20454,16 +21329,25 @@ cT=f[2][12];return b<50?ey(b+1|0,f,k,cT):a(ey,[0,f,k,cT])}}if(f[4])throw[0,i,XJ]
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 z=k[1],hm=k[4],cN=[0,aX(z[4]),hm],cO=z[3],cQ=z[1];return b<50?kK(b+1|0,f,cQ,cO,cN):a(kK,[0,f,cQ,cO,cN])}}if(f[4])throw[0,i,XE];f[4]=1;return o(f,k[1],k[3])}}else
+=======
+z=k[1],hm=k[4],cN=[0,aX(z[4]),hm],cO=z[3],cQ=z[1];return b<50?kK(b+1|0,f,cQ,cO,cN):a(kK,[0,f,cQ,cO,cN])}}if(f[4])throw[0,i,Xy];f[4]=1;return o(f,k[1],k[3])}}else
+>>>>>>> (fix) Directly use time constants in generated JS code
 if(52<=l)switch(l+wk|0){case
-0:if(f[4])throw[0,i,XF];var
+0:if(f[4])throw[0,i,Xz];var
 cS=f[3];if(typeof
 cS==="number"){var
 A=cS+wA|0;if(!(1<A>>>0)){if(0===A){var
 cU=[0,k[4]],cV=k[1][1];return b<50?kR(b+1|0,f,cV,cU):a(kR,[0,f,cV,cU])}var
+<<<<<<< HEAD
 cW=f[2][11];return b<50?ex(b+1|0,f,k,cW):a(ex,[0,f,k,cW])}if(vL===A){var
 cT=f[2][12];return b<50?ey(b+1|0,f,k,cT):a(ey,[0,f,k,cT])}}if(f[4])throw[0,i,XG];f[4]=1;return o(f,k[1],k[3]);case
 1:if(f[4])throw[0,i,XH];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+cW=f[2][11];return b<50?ew(b+1|0,f,k,cW):a(ew,[0,f,k,cW])}if(vL===A){var
+cT=f[2][12];return b<50?ex(b+1|0,f,k,cT):a(ex,[0,f,k,cT])}}if(f[4])throw[0,i,XA];f[4]=1;return o(f,k[1],k[3]);case
+1:if(f[4])throw[0,i,XB];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 p=f[3];if(typeof
 p==="number")if(45<=p){if(62===p){var
 h=[0,k,f[2][12],f[2][11]],c=q(f),u=c[3];if(typeof
@@ -20480,7 +21364,7 @@ c6=c[2][11],c8=c[2][12],c7=52;return b<50?bG(b+1|0,c,h,c8,c7,c6):a(bG,[0,c,h,c8,
 5:var
 c9=c[2][11],c$=c[2][12],c_=52;return b<50?bF(b+1|0,c,h,c$,c_,c9):a(bF,[0,c,h,c$,c_,c9]);case
 6:var
-da=c[2][11],db=52;return b<50?ew(b+1|0,c,h,db,da):a(ew,[0,c,h,db,da]);case
+da=c[2][11],db=52;return b<50?ev(b+1|0,c,h,db,da):a(ev,[0,c,h,db,da]);case
 7:var
 dc=c[2][11],de=c[2][12],dd=52;return b<50?bE(b+1|0,c,h,de,dd,dc):a(bE,[0,c,h,de,dd,dc]);case
 8:var
@@ -20510,7 +21394,7 @@ dN=c[2][11],dP=c[2][12],dO=52;return b<50?bs(b+1|0,c,h,dP,dO,dN):a(bs,[0,c,h,dP,
 43:var
 dQ=c[2][11],dS=c[2][12],dR=52;return b<50?br(b+1|0,c,h,dS,dR,dQ):a(br,[0,c,h,dS,dR,dQ]);case
 44:var
-dT=c[2][11],dU=52;return b<50?ev(b+1|0,c,h,dU,dT):a(ev,[0,c,h,dU,dT]);case
+dT=c[2][11],dU=52;return b<50?eu(b+1|0,c,h,dU,dT):a(eu,[0,c,h,dU,dT]);case
 46:var
 dV=c[2][11],dX=c[2][12],dW=52;return b<50?bq(b+1|0,c,h,dX,dW,dV):a(bq,[0,c,h,dX,dW,dV]);case
 47:var
@@ -20536,7 +21420,7 @@ en=c[2][11],ep=c[2][12],eo=52;return b<50?bf(b+1|0,c,h,ep,eo,en):a(bf,[0,c,h,ep,
 63:var
 eq=c[2][11],es=c[2][12],er=52;return b<50?be(b+1|0,c,h,es,er,eq):a(be,[0,c,h,es,er,eq]);case
 64:var
-et=c[2][11],ez=c[2][12],eu=52;return b<50?bd(b+1|0,c,h,ez,eu,et):a(bd,[0,c,h,ez,eu,et]);case
+et=c[2][11],ez=c[2][12],ey=52;return b<50?bd(b+1|0,c,h,ez,ey,et):a(bd,[0,c,h,ez,ey,et]);case
 66:var
 eA=c[2][11],eC=c[2][12],eB=52;return b<50?bc(b+1|0,c,h,eC,eB,eA):a(bc,[0,c,h,eC,eB,eA]);case
 67:var
@@ -20556,11 +21440,11 @@ eV=c[2][11],eX=c[2][12],eW=52;return b<50?a7(b+1|0,c,h,eX,eW,eV):a(a7,[0,c,h,eX,
 77:var
 eY=c[2][11],e0=c[2][12],eZ=52;return b<50?a6(b+1|0,c,h,e0,eZ,eY):a(a6,[0,c,h,e0,eZ,eY])}else
 if(2===u[0]){var
-e1=c[2][11],e2=u[1],e4=c[2][12],e3=52;return b<50?bn(b+1|0,c,h,e4,e3,e2,e1):a(bn,[0,c,h,e4,e3,e2,e1])}if(c[4])throw[0,i,XI];c[4]=1;return o(c,h,52)}if(!(46<=p)){var
-e5=f[2][11];return b<50?ex(b+1|0,f,k,e5):a(ex,[0,f,k,e5])}}else{if(24===p){var
-e6=f[2][12];return b<50?ey(b+1|0,f,k,e6):a(ey,[0,f,k,e6])}if(44<=p){var
-e7=0;return b<50?kR(b+1|0,f,k,e7):a(kR,[0,f,k,e7])}}if(f[4])throw[0,i,XJ];f[4]=1;return o(f,k[1],k[3]);case
-5:if(f[4])throw[0,i,XK];var
+e1=c[2][11],e2=u[1],e4=c[2][12],e3=52;return b<50?bn(b+1|0,c,h,e4,e3,e2,e1):a(bn,[0,c,h,e4,e3,e2,e1])}if(c[4])throw[0,i,XC];c[4]=1;return o(c,h,52)}if(!(46<=p)){var
+e5=f[2][11];return b<50?ew(b+1|0,f,k,e5):a(ew,[0,f,k,e5])}}else{if(24===p){var
+e6=f[2][12];return b<50?ex(b+1|0,f,k,e6):a(ex,[0,f,k,e6])}if(44<=p){var
+e7=0;return b<50?kR(b+1|0,f,k,e7):a(kR,[0,f,k,e7])}}if(f[4])throw[0,i,XD];f[4]=1;return o(f,k[1],k[3]);case
+5:if(f[4])throw[0,i,XE];var
 e8=f[3];if(typeof
 e8==="number"){var
 <<<<<<< HEAD
@@ -20599,14 +21483,20 @@ e9=f[2][12];return b<50?ey(b+1|0,f,k,e9):a(ey,[0,f,k,e9])}}if(f[4])throw[0,i,XO]
 =======
 B=e8+wA|0;if(!(1<B>>>0)){if(0===B){var
 e_=[0,k[4]],e$=k[1][1];return b<50?kQ(b+1|0,f,e$,e_):a(kQ,[0,f,e$,e_])}var
+<<<<<<< HEAD
 fa=f[2][11];return b<50?ex(b+1|0,f,k,fa):a(ex,[0,f,k,fa])}if(vL===B){var
 e9=f[2][12];return b<50?ey(b+1|0,f,k,e9):a(ey,[0,f,k,e9])}}if(f[4])throw[0,i,XL];f[4]=1;return o(f,k[1],k[3]);case
 6:if(f[4])throw[0,i,XM];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+fa=f[2][11];return b<50?ew(b+1|0,f,k,fa):a(ew,[0,f,k,fa])}if(vL===B){var
+e9=f[2][12];return b<50?ex(b+1|0,f,k,e9):a(ex,[0,f,k,e9])}}if(f[4])throw[0,i,XF];f[4]=1;return o(f,k[1],k[3]);case
+6:if(f[4])throw[0,i,XG];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 r=f[3];if(typeof
 r==="number")if(25<=r){if(44===r){var
 fb=0;return b<50?kQ(b+1|0,f,k,fb):a(kQ,[0,f,k,fb])}if(45===r){var
-fc=f[2][11];return b<50?ex(b+1|0,f,k,fc):a(ex,[0,f,k,fc])}}else{if(9===r){var
+fc=f[2][11];return b<50?ew(b+1|0,f,k,fc):a(ew,[0,f,k,fc])}}else{if(9===r){var
 j=[0,k,f[2][12],f[2][11]],d=q(f),v=d[3];if(typeof
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 v==="number")switch(v){case
@@ -20621,7 +21511,7 @@ fm=d[2][11],fo=d[2][12],fn=57;return b<50?bG(b+1|0,d,j,fo,fn,fm):a(bG,[0,d,j,fo,
 5:var
 fp=d[2][11],fr=d[2][12],fq=57;return b<50?bF(b+1|0,d,j,fr,fq,fp):a(bF,[0,d,j,fr,fq,fp]);case
 6:var
-fs=d[2][11],ft=57;return b<50?ew(b+1|0,d,j,ft,fs):a(ew,[0,d,j,ft,fs]);case
+fs=d[2][11],ft=57;return b<50?ev(b+1|0,d,j,ft,fs):a(ev,[0,d,j,ft,fs]);case
 7:var
 fu=d[2][11],fw=d[2][12],fv=57;return b<50?bE(b+1|0,d,j,fw,fv,fu):a(bE,[0,d,j,fw,fv,fu]);case
 8:var
@@ -20651,7 +21541,7 @@ f4=d[2][11],f6=d[2][12],f5=57;return b<50?bs(b+1|0,d,j,f6,f5,f4):a(bs,[0,d,j,f6,
 43:var
 f7=d[2][11],f9=d[2][12],f8=57;return b<50?br(b+1|0,d,j,f9,f8,f7):a(br,[0,d,j,f9,f8,f7]);case
 44:var
-f_=d[2][11],f$=57;return b<50?ev(b+1|0,d,j,f$,f_):a(ev,[0,d,j,f$,f_]);case
+f_=d[2][11],f$=57;return b<50?eu(b+1|0,d,j,f$,f_):a(eu,[0,d,j,f$,f_]);case
 46:var
 ga=d[2][11],gc=d[2][12],gb=57;return b<50?bq(b+1|0,d,j,gc,gb,ga):a(bq,[0,d,j,gc,gb,ga]);case
 47:var
@@ -20701,6 +21591,7 @@ if(2===v[0]){var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 hd=d[2][11],he=v[1],hg=d[2][12],hf=57;return b<50?bn(b+1|0,d,j,hg,hf,he,hd):a(bn,[0,d,j,hg,hf,he,hd])}if(d[4])throw[0,h,WV];d[4]=1;return p(d,j,57)}if(24<=r){var
 hh=f[2][12];return b<50?ex(b+1|0,f,k,hh):a(ex,[0,f,k,hh])}}if(f[4])throw[0,h,WU];f[4]=1;return p(f,k[1],k[3])}return cQ(0)},ic=function(f,h,c,l,b,g,k){var
 d=q(h),i=a5(g),e=j(eo[11],i);return f<50?id(f+1|0,d,c,b,e):a(id,[0,d,c,b,e])},ib=function(f,h,c,k,b,g,i){var
@@ -20742,6 +21633,15 @@ d=q(h),e=j(ep[9],g);return f<50?ih(f+1|0,d,c,b,e):a(ih,[0,d,c,b,e])},kM=function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 t=[0,gu,Y,gt];if(84<=Y)if(ac<=Y){if(hx<=Y){if(!(g_<=Y))switch(Y-127|0){case
 0:if(f[4])throw[0,i,XT];var
+=======
+hd=d[2][11],he=v[1],hg=d[2][12],hf=57;return b<50?bn(b+1|0,d,j,hg,hf,he,hd):a(bn,[0,d,j,hg,hf,he,hd])}if(d[4])throw[0,i,XI];d[4]=1;return o(d,j,57)}if(24<=r){var
+hh=f[2][12];return b<50?ex(b+1|0,f,k,hh):a(ex,[0,f,k,hh])}}if(f[4])throw[0,i,XH];f[4]=1;return o(f,k[1],k[3])}return cP(0)},ig=function(f,h,c,l,b,g,k){var
+d=q(h),i=aX(g),e=j(eo[11],i);return f<50?ih(f+1|0,d,c,b,e):a(ih,[0,d,c,b,e])},ie=function(f,h,c,k,b,g,i){var
+d=q(h),e=j(eo[8],g);return f<50?ih(f+1|0,d,c,b,e):a(ih,[0,d,c,b,e])},id=function(f,h,c,k,b,g,i){var
+d=q(h),e=j(eo[9],g);return f<50?ih(f+1|0,d,c,b,e):a(ih,[0,d,c,b,e])},kM=function(b,f,gu,Y,gt){var
+t=[0,gu,Y,gt];if(84<=Y)if(ac<=Y){if(hy<=Y){if(!(g_<=Y))switch(Y-127|0){case
+0:if(f[4])throw[0,i,XN];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 ah=f[3];if(typeof
 ah==="number")if(8===ah){var
 g=[0,t,f[2][12],f[2][11]],c=q(f),aa=c[3];if(typeof
@@ -20784,7 +21684,7 @@ aX=c[2][11],aZ=c[2][12],aY=cs;return b<50?D(b+1|0,c,g,aZ,aY,aX):a(D,[0,c,g,aZ,aY
 67:var
 a0=c[2][11],a2=c[2][12],a1=cs;return b<50?C(b+1|0,c,g,a2,a1,a0):a(C,[0,c,g,a2,a1,a0]);case
 72:var
-a3=c[2][11],a5=c[2][12],a4=cs;return b<50?B(b+1|0,c,g,a5,a4,a3):a(B,[0,c,g,a5,a4,a3]);default:if(c[4])throw[0,i,XU];c[4]=1;return o(c,g,cs)}else
+a3=c[2][11],a5=c[2][12],a4=cs;return b<50?B(b+1|0,c,g,a5,a4,a3):a(B,[0,c,g,a5,a4,a3]);default:if(c[4])throw[0,i,XO];c[4]=1;return o(c,g,cs)}else
 switch(aa[0]){case
 0:var
 a6=c[2][11],a7=aa[1],a9=c[2][12],a8=cs;return b<50?M(b+1|0,c,g,a9,a8,a7,a6):a(M,[0,c,g,a9,a8,a7,a6]);case
@@ -20792,8 +21692,8 @@ a6=c[2][11],a7=aa[1],a9=c[2][12],a8=cs;return b<50?M(b+1|0,c,g,a9,a8,a7,a6):a(M,
 a_=c[2][11],a$=aa[1],bb=c[2][12],ba=cs;return b<50?H(b+1|0,c,g,bb,ba,a$,a_):a(H,[0,c,g,bb,ba,a$,a_]);case
 2:var
 bc=c[2][11],bd=aa[1],bf=c[2][12],be=cs;return b<50?G(b+1|0,c,g,bf,be,bd,bc):a(G,[0,c,g,bf,be,bd,bc]);default:var
-bg=c[2][11],bh=aa[1],bj=c[2][12],bi=cs;return b<50?E(b+1|0,c,g,bj,bi,bh,bg):a(E,[0,c,g,bj,bi,bh,bg])}}if(f[4])throw[0,i,XV];f[4]=1;return o(f,t[1],t[2]);case
-3:if(f[4])throw[0,i,XW];var
+bg=c[2][11],bh=aa[1],bj=c[2][12],bi=cs;return b<50?E(b+1|0,c,g,bj,bi,bh,bg):a(E,[0,c,g,bj,bi,bh,bg])}}if(f[4])throw[0,i,XP];f[4]=1;return o(f,t[1],t[2]);case
+3:if(f[4])throw[0,i,XQ];var
 bk=f[3];if(typeof
 bk==="number")if(8===bk){var
 h=[0,t,f[2][12],f[2][11]],d=q(f),ab=d[3];if(typeof
@@ -20835,7 +21735,7 @@ b0=d[2][11],b2=d[2][12],b1=dO;return b<50?D(b+1|0,d,h,b2,b1,b0):a(D,[0,d,h,b2,b1
 67:var
 b3=d[2][11],b5=d[2][12],b4=dO;return b<50?C(b+1|0,d,h,b5,b4,b3):a(C,[0,d,h,b5,b4,b3]);case
 72:var
-b6=d[2][11],b8=d[2][12],b7=dO;return b<50?B(b+1|0,d,h,b8,b7,b6):a(B,[0,d,h,b8,b7,b6]);default:if(d[4])throw[0,i,XX];d[4]=1;return o(d,h,dO)}else
+b6=d[2][11],b8=d[2][12],b7=dO;return b<50?B(b+1|0,d,h,b8,b7,b6):a(B,[0,d,h,b8,b7,b6]);default:if(d[4])throw[0,i,XR];d[4]=1;return o(d,h,dO)}else
 switch(ab[0]){case
 0:var
 b9=d[2][11],b_=ab[1],ca=d[2][12],b$=dO;return b<50?M(b+1|0,d,h,ca,b$,b_,b9):a(M,[0,d,h,ca,b$,b_,b9]);case
@@ -20843,8 +21743,8 @@ b9=d[2][11],b_=ab[1],ca=d[2][12],b$=dO;return b<50?M(b+1|0,d,h,ca,b$,b_,b9):a(M,
 cb=d[2][11],cl=ab[1],cn=d[2][12],cm=dO;return b<50?H(b+1|0,d,h,cn,cm,cl,cb):a(H,[0,d,h,cn,cm,cl,cb]);case
 2:var
 co=d[2][11],cp=ab[1],cr=d[2][12],cq=dO;return b<50?G(b+1|0,d,h,cr,cq,cp,co):a(G,[0,d,h,cr,cq,cp,co]);default:var
-ct=d[2][11],cu=ab[1],cF=d[2][12],cv=dO;return b<50?E(b+1|0,d,h,cF,cv,cu,ct):a(E,[0,d,h,cF,cv,cu,ct])}}if(f[4])throw[0,i,XY];f[4]=1;return o(f,t[1],t[2]);case
-11:if(f[4])throw[0,i,XZ];var
+ct=d[2][11],cu=ab[1],cF=d[2][12],cv=dO;return b<50?E(b+1|0,d,h,cF,cv,cu,ct):a(E,[0,d,h,cF,cv,cu,ct])}}if(f[4])throw[0,i,XS];f[4]=1;return o(f,t[1],t[2]);case
+11:if(f[4])throw[0,i,XT];var
 cG=f[3];if(typeof
 cG==="number")if(8===cG){var
 j=[0,t,f[2][12],f[2][11]],e=q(f),ad=e[3];if(typeof
@@ -20890,7 +21790,7 @@ dm=e[2][11],dp=e[2][12],dn=dJ;return b<50?D(b+1|0,e,j,dp,dn,dm):a(D,[0,e,j,dp,dn
 67:var
 dq=e[2][11],ds=e[2][12],dr=dJ;return b<50?C(b+1|0,e,j,ds,dr,dq):a(C,[0,e,j,ds,dr,dq]);case
 72:var
-dt=e[2][11],dv=e[2][12],du=dJ;return b<50?B(b+1|0,e,j,dv,du,dt):a(B,[0,e,j,dv,du,dt]);default:if(e[4])throw[0,i,X0];e[4]=1;return o(e,j,dJ)}else
+dt=e[2][11],dv=e[2][12],du=dJ;return b<50?B(b+1|0,e,j,dv,du,dt):a(B,[0,e,j,dv,du,dt]);default:if(e[4])throw[0,i,XU];e[4]=1;return o(e,j,dJ)}else
 switch(ad[0]){case
 0:var
 dw=e[2][11],dx=ad[1],dz=e[2][12],dy=dJ;return b<50?M(b+1|0,e,j,dz,dy,dx,dw):a(M,[0,e,j,dz,dy,dx,dw]);case
@@ -20898,8 +21798,8 @@ dw=e[2][11],dx=ad[1],dz=e[2][12],dy=dJ;return b<50?M(b+1|0,e,j,dz,dy,dx,dw):a(M,
 dA=e[2][11],dB=ad[1],dD=e[2][12],dC=dJ;return b<50?H(b+1|0,e,j,dD,dC,dB,dA):a(H,[0,e,j,dD,dC,dB,dA]);case
 2:var
 dE=e[2][11],dF=ad[1],dH=e[2][12],dG=dJ;return b<50?G(b+1|0,e,j,dH,dG,dF,dE):a(G,[0,e,j,dH,dG,dF,dE]);default:var
-dI=e[2][11],dK=ad[1],dM=e[2][12],dL=dJ;return b<50?E(b+1|0,e,j,dM,dL,dK,dI):a(E,[0,e,j,dM,dL,dK,dI])}}if(f[4])throw[0,i,X1];f[4]=1;return o(f,t[1],t[2])}}else
-if(!(m<=Y)){if(f[4])throw[0,i,X2];var
+dI=e[2][11],dK=ad[1],dM=e[2][12],dL=dJ;return b<50?E(b+1|0,e,j,dM,dL,dK,dI):a(E,[0,e,j,dM,dL,dK,dI])}}if(f[4])throw[0,i,XV];f[4]=1;return o(f,t[1],t[2])}}else
+if(!(m<=Y)){if(f[4])throw[0,i,XW];var
 dN=f[3];if(typeof
 dN==="number")if(8===dN){var
 y=[0,t,f[2][12],f[2][11]],p=q(f),Z=p[3];if(typeof
@@ -20917,7 +21817,7 @@ d1=p[2][11],d3=p[2][12],d2=x;return b<50?cx(b+1|0,p,y,d3,d2,d1):a(cx,[0,p,y,d3,d
 if(19===Z){var
 d4=p[2][11],d6=p[2][12],d5=x;return b<50?cC(b+1|0,p,y,d6,d5,d4):a(cC,[0,p,y,d6,d5,d4])}}else{if(7===Z){var
 d7=p[2][11],d9=p[2][12],d8=x;return b<50?cE(b+1|0,p,y,d9,d8,d7):a(cE,[0,p,y,d9,d8,d7])}if(15<=Z){var
-d_=p[2][11],ea=p[2][12],d$=x;return b<50?cD(b+1|0,p,y,ea,d$,d_):a(cD,[0,p,y,ea,d$,d_])}}if(p[4])throw[0,i,X3];p[4]=1;return o(p,y,x)}if(f[4])throw[0,i,X4];f[4]=1;return o(f,t[1],t[2])}}else{if(87===Y){if(f[4])throw[0,i,X5];var
+d_=p[2][11],ea=p[2][12],d$=x;return b<50?cD(b+1|0,p,y,ea,d$,d_):a(cD,[0,p,y,ea,d$,d_])}}if(p[4])throw[0,i,XX];p[4]=1;return o(p,y,x)}if(f[4])throw[0,i,XY];f[4]=1;return o(f,t[1],t[2])}}else{if(87===Y){if(f[4])throw[0,i,XZ];var
 eb=f[3];if(typeof
 eb==="number")if(8===eb){var
 z=[0,t,f[2][12],f[2][11]],r=q(f),_=r[3];if(typeof
@@ -20935,7 +21835,7 @@ eo=r[2][11],eq=r[2][12],ep=86;return b<50?cx(b+1|0,r,z,eq,ep,eo):a(cx,[0,r,z,eq,
 if(19===_){var
 er=r[2][11],et=r[2][12],es=86;return b<50?cC(b+1|0,r,z,et,es,er):a(cC,[0,r,z,et,es,er])}}else{if(7===_){var
 eu=r[2][11],ew=r[2][12],ev=86;return b<50?cE(b+1|0,r,z,ew,ev,eu):a(cE,[0,r,z,ew,ev,eu])}if(15<=_){var
-ex=r[2][11],ez=r[2][12],ey=86;return b<50?cD(b+1|0,r,z,ez,ey,ex):a(cD,[0,r,z,ez,ey,ex])}}if(r[4])throw[0,i,X6];r[4]=1;return o(r,z,86)}if(f[4])throw[0,i,X7];f[4]=1;return o(f,t[1],t[2])}if(!(85<=Y)){if(f[4])throw[0,i,X8];var
+ex=r[2][11],ez=r[2][12],ey=86;return b<50?cD(b+1|0,r,z,ez,ey,ex):a(cD,[0,r,z,ez,ey,ex])}}if(r[4])throw[0,i,X0];r[4]=1;return o(r,z,86)}if(f[4])throw[0,i,X1];f[4]=1;return o(f,t[1],t[2])}if(!(85<=Y)){if(f[4])throw[0,i,X2];var
 eA=f[3];if(typeof
 eA==="number")if(8===eA){var
 Q=[0,t,f[2][12],f[2][11]],s=q(f),$=s[3];if(typeof
@@ -20953,7 +21853,7 @@ eN=s[2][11],eP=s[2][12],eO=83;return b<50?cx(b+1|0,s,Q,eP,eO,eN):a(cx,[0,s,Q,eP,
 if(19===$){var
 eQ=s[2][11],eS=s[2][12],eR=83;return b<50?cC(b+1|0,s,Q,eS,eR,eQ):a(cC,[0,s,Q,eS,eR,eQ])}}else{if(7===$){var
 eT=s[2][11],eV=s[2][12],eU=83;return b<50?cE(b+1|0,s,Q,eV,eU,eT):a(cE,[0,s,Q,eV,eU,eT])}if(15<=$){var
-eW=s[2][11],eY=s[2][12],eX=83;return b<50?cD(b+1|0,s,Q,eY,eX,eW):a(cD,[0,s,Q,eY,eX,eW])}}if(s[4])throw[0,i,X9];s[4]=1;return o(s,Q,83)}if(f[4])throw[0,i,X_];f[4]=1;return o(f,t[1],t[2])}}else{if(12===Y){if(f[4])throw[0,i,X$];var
+eW=s[2][11],eY=s[2][12],eX=83;return b<50?cD(b+1|0,s,Q,eY,eX,eW):a(cD,[0,s,Q,eY,eX,eW])}}if(s[4])throw[0,i,X3];s[4]=1;return o(s,Q,83)}if(f[4])throw[0,i,X4];f[4]=1;return o(f,t[1],t[2])}}else{if(12===Y){if(f[4])throw[0,i,X5];var
 eZ=f[3];if(typeof
 eZ==="number")if(8===eZ){var
 u=[0,t,f[2][12],f[2][11]],k=q(f),ae=k[3];if(typeof
@@ -20977,7 +21877,7 @@ fk=k[2][11],fm=k[2][12],fl=11;return b<50?cw(b+1|0,k,u,fm,fl,fk):a(cw,[0,k,u,fm,
 9:var
 fn=k[2][11],fp=k[2][12],fo=11;return b<50?cj(b+1|0,k,u,fp,fo,fn):a(cj,[0,k,u,fp,fo,fn]);case
 12:var
-fq=k[2][11],fs=k[2][12],fr=11;return b<50?ci(b+1|0,k,u,fs,fr,fq):a(ci,[0,k,u,fs,fr,fq])}}if(k[4])throw[0,i,Ya];k[4]=1;return o(k,u,11)}if(f[4])throw[0,i,Yb];f[4]=1;return o(f,t[1],t[2])}if(15===Y){if(f[4])throw[0,i,Yc];var
+fq=k[2][11],fs=k[2][12],fr=11;return b<50?ci(b+1|0,k,u,fs,fr,fq):a(ci,[0,k,u,fs,fr,fq])}}if(k[4])throw[0,i,X6];k[4]=1;return o(k,u,11)}if(f[4])throw[0,i,X7];f[4]=1;return o(f,t[1],t[2])}if(15===Y){if(f[4])throw[0,i,X8];var
 ft=f[3];if(typeof
 ft==="number")if(8===ft){var
 v=[0,t,f[2][12],f[2][11]],l=q(f),af=l[3];if(typeof
@@ -21001,7 +21901,7 @@ fQ=l[2][11],fS=l[2][12],fR=14;return b<50?cw(b+1|0,l,v,fS,fR,fQ):a(cw,[0,l,v,fS,
 9:var
 fT=l[2][11],fV=l[2][12],fU=14;return b<50?cj(b+1|0,l,v,fV,fU,fT):a(cj,[0,l,v,fV,fU,fT]);case
 12:var
-fW=l[2][11],fY=l[2][12],fX=14;return b<50?ci(b+1|0,l,v,fY,fX,fW):a(ci,[0,l,v,fY,fX,fW])}}if(l[4])throw[0,i,Yd];l[4]=1;return o(l,v,14)}if(f[4])throw[0,i,Ye];f[4]=1;return o(f,t[1],t[2])}if(38===Y){if(f[4])throw[0,i,Yf];var
+fW=l[2][11],fY=l[2][12],fX=14;return b<50?ci(b+1|0,l,v,fY,fX,fW):a(ci,[0,l,v,fY,fX,fW])}}if(l[4])throw[0,i,X9];l[4]=1;return o(l,v,14)}if(f[4])throw[0,i,X_];f[4]=1;return o(f,t[1],t[2])}if(38===Y){if(f[4])throw[0,i,X$];var
 fZ=f[3];if(typeof
 fZ==="number")if(8===fZ){var
 w=[0,t,f[2][12],f[2][11]],n=q(f),ag=n[3];if(typeof
@@ -21025,6 +21925,7 @@ gk=n[2][11],gm=n[2][12],gl=37;return b<50?cw(b+1|0,n,w,gm,gl,gk):a(cw,[0,n,w,gm,
 9:var
 gn=n[2][11],gp=n[2][12],go=37;return b<50?cj(b+1|0,n,w,gp,go,gn):a(cj,[0,n,w,gp,go,gn]);case
 12:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -21057,6 +21958,12 @@ e=0;return f<50?kP(f+1|0,d,c,b,e):a(kP,[0,d,c,b,e])},kL=function(d,g,eC,eB,eA){v
 s=eC,k=eB,r=eA;for(;;){var
 h=[0,s,k,r];if(54===k){if(g[4])throw[0,i,Yi];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+gq=n[2][11],gs=n[2][12],gr=37;return b<50?ci(b+1|0,n,w,gs,gr,gq):a(ci,[0,n,w,gs,gr,gq])}}if(n[4])throw[0,i,Ya];n[4]=1;return o(n,w,37)}if(f[4])throw[0,i,Yb];f[4]=1;return o(f,t[1],t[2])}}return cP(0)},g1=function(f,d,c,b){var
+e=0;return f<50?kP(f+1|0,d,c,b,e):a(kP,[0,d,c,b,e])},kL=function(d,g,eC,eB,eA){var
+s=eC,k=eB,r=eA;for(;;){var
+h=[0,s,k,r];if(54===k){if(g[4])throw[0,i,Yc];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 t=g[3];if(typeof
 t==="number")if(18===t){var
 f=[0,h,g[2][12]],l=q(g),u=l[3];if(typeof
@@ -21074,7 +21981,7 @@ E=b[2][11],G=b[2][12],F=53;return d<50?bG(d+1|0,b,f,G,F,E):a(bG,[0,b,f,G,F,E]);c
 5:var
 H=b[2][11],J=b[2][12],I=53;return d<50?bF(d+1|0,b,f,J,I,H):a(bF,[0,b,f,J,I,H]);case
 6:var
-K=b[2][11],L=53;return d<50?ew(d+1|0,b,f,L,K):a(ew,[0,b,f,L,K]);case
+K=b[2][11],L=53;return d<50?ev(d+1|0,b,f,L,K):a(ev,[0,b,f,L,K]);case
 7:var
 M=b[2][11],O=b[2][12],N=53;return d<50?bE(d+1|0,b,f,O,N,M):a(bE,[0,b,f,O,N,M]);case
 8:var
@@ -21104,7 +22011,7 @@ au=b[2][11],aw=b[2][12],av=53;return d<50?bs(d+1|0,b,f,aw,av,au):a(bs,[0,b,f,aw,
 43:var
 ax=b[2][11],az=b[2][12],ay=53;return d<50?br(d+1|0,b,f,az,ay,ax):a(br,[0,b,f,az,ay,ax]);case
 44:var
-aA=b[2][11],aB=53;return d<50?ev(d+1|0,b,f,aB,aA):a(ev,[0,b,f,aB,aA]);case
+aA=b[2][11],aB=53;return d<50?eu(d+1|0,b,f,aB,aA):a(eu,[0,b,f,aB,aA]);case
 46:var
 aC=b[2][11],aE=b[2][12],aD=53;return d<50?bq(d+1|0,b,f,aE,aD,aC):a(bq,[0,b,f,aE,aD,aC]);case
 47:var
@@ -21150,9 +22057,9 @@ cd=b[2][11],cf=b[2][12],ce=53;return d<50?a7(d+1|0,b,f,cf,ce,cd):a(a7,[0,b,f,cf,
 77:var
 cg=b[2][11],ci=b[2][12],ch=53;return d<50?a6(d+1|0,b,f,ci,ch,cg):a(a6,[0,b,f,ci,ch,cg])}else
 if(2===m[0]){var
-cj=b[2][11],ck=m[1],cm=b[2][12],cl=53;return d<50?bn(d+1|0,b,f,cm,cl,ck,cj):a(bn,[0,b,f,cm,cl,ck,cj])}if(b[4])throw[0,i,Yj];b[4]=1;return o(b,f,53)}if(l[4])throw[0,i,Yk];l[4]=1;var
-cn=f[1];return o(l,cn[1],cn[2])}if(g[4])throw[0,i,Yl];g[4]=1;return o(g,h[1],h[2])}if(79===k){var
-p=h[1],s=p[1],k=p[2],r=[0,p[3],h[3]];continue}if(je===k){if(g[4])throw[0,i,Ym];var
+cj=b[2][11],ck=m[1],cm=b[2][12],cl=53;return d<50?bn(d+1|0,b,f,cm,cl,ck,cj):a(bn,[0,b,f,cm,cl,ck,cj])}if(b[4])throw[0,i,Yd];b[4]=1;return o(b,f,53)}if(l[4])throw[0,i,Ye];l[4]=1;var
+cn=f[1];return o(l,cn[1],cn[2])}if(g[4])throw[0,i,Yf];g[4]=1;return o(g,h[1],h[2])}if(79===k){var
+p=h[1],s=p[1],k=p[2],r=[0,p[3],h[3]];continue}if(je===k){if(g[4])throw[0,i,Yg];var
 co=g[3];if(typeof
 co==="number")if(18===co){var
 e=[0,h,g[2][12]],j=q(g),cp=j[3];if(typeof
@@ -21171,7 +22078,7 @@ cC=c[2][11],cE=c[2][12],cD=a1;return d<50?bG(d+1|0,c,e,cE,cD,cC):a(bG,[0,c,e,cE,
 5:var
 cF=c[2][11],cH=c[2][12],cG=a1;return d<50?bF(d+1|0,c,e,cH,cG,cF):a(bF,[0,c,e,cH,cG,cF]);case
 6:var
-cI=c[2][11],cJ=a1;return d<50?ew(d+1|0,c,e,cJ,cI):a(ew,[0,c,e,cJ,cI]);case
+cI=c[2][11],cJ=a1;return d<50?ev(d+1|0,c,e,cJ,cI):a(ev,[0,c,e,cJ,cI]);case
 7:var
 cK=c[2][11],cM=c[2][12],cL=a1;return d<50?bE(d+1|0,c,e,cM,cL,cK):a(bE,[0,c,e,cM,cL,cK]);case
 8:var
@@ -21205,7 +22112,7 @@ dj=c[2][11],dl=c[2][12],dk=a1;return d<50?bs(d+1|0,c,e,dl,dk,dj):a(bs,[0,c,e,dl,
 43:var
 dm=c[2][11],dp=c[2][12],dn=a1;return d<50?br(d+1|0,c,e,dp,dn,dm):a(br,[0,c,e,dp,dn,dm]);case
 44:var
-dq=c[2][11],dr=a1;return d<50?ev(d+1|0,c,e,dr,dq):a(ev,[0,c,e,dr,dq]);case
+dq=c[2][11],dr=a1;return d<50?eu(d+1|0,c,e,dr,dq):a(eu,[0,c,e,dr,dq]);case
 46:var
 ds=c[2][11],du=c[2][12],dt=a1;return d<50?bq(d+1|0,c,e,du,dt,ds):a(bq,[0,c,e,du,dt,ds]);case
 47:var
@@ -21251,7 +22158,7 @@ eo=c[2][11],eq=c[2][12],ep=a1;return d<50?a7(d+1|0,c,e,eq,ep,eo):a(a7,[0,c,e,eq,
 77:var
 er=c[2][11],et=c[2][12],es=a1;return d<50?a6(d+1|0,c,e,et,es,er):a(a6,[0,c,e,et,es,er])}else
 if(2===n[0]){var
-eu=c[2][11],ex=n[1],ez=c[2][12],ey=a1;return d<50?bn(d+1|0,c,e,ez,ey,ex,eu):a(bn,[0,c,e,ez,ey,ex,eu])}if(c[4])throw[0,i,Yo];c[4]=1;return o(c,e,a1);case
+ew=c[2][11],ex=n[1],ez=c[2][12],ey=a1;return d<50?bn(d+1|0,c,e,ez,ey,ex,ew):a(bn,[0,c,e,ez,ey,ex,ew])}if(c[4])throw[0,i,Yi];c[4]=1;return o(c,e,a1);case
 7:case
 15:case
 16:case
@@ -21268,6 +22175,7 @@ eu=c[2][11],ex=n[1],ez=c[2][12],ey=a1;return d<50?bn(d+1|0,c,e,ez,ey,ex,eu):a(bn
 66:case
 67:case
 74:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -21295,6 +22203,11 @@ cs=e[2],cr=0;return d<50?kO(d+1|0,j,e,cs,cr):a(kO,[0,j,e,cs,cr])}if(j[4])throw[0
 cq=e[1];return o(j,cq[1],cq[2])}if(g[4])throw[0,i,Yp];g[4]=1;return o(g,h[1],h[2])}return cP(0)}},kK=function(e,d,u,t,s){var
 b=[0,u,t,s];if(d[4])throw[0,i,Yq];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+cs=e[2],cr=0;return d<50?kO(d+1|0,j,e,cs,cr):a(kO,[0,j,e,cs,cr])}if(j[4])throw[0,i,Yh];j[4]=1;var
+cq=e[1];return o(j,cq[1],cq[2])}if(g[4])throw[0,i,Yj];g[4]=1;return o(g,h[1],h[2])}return cP(0)}},kK=function(e,d,u,t,s){var
+b=[0,u,t,s];if(d[4])throw[0,i,Yk];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 g=d[3];if(typeof
 g==="number"){if(18===g){var
 h=[0,b[3],0],j=b[2],k=b[1];return e<50?kL(e+1|0,d,k,j,h):a(kL,[0,d,k,j,h])}if(70===g){var
@@ -21302,29 +22215,29 @@ c=q(d),f=c[3];if(typeof
 f==="number"){if(18===f){var
 l=79;return e<50?ic(e+1|0,c,b,l):a(ic,[0,c,b,l])}}else
 if(2===f[0]){var
-m=c[2][11],n=f[1],r=c[2][12],p=79;return e<50?ib(e+1|0,c,b,r,p,n,m):a(ib,[0,c,b,r,p,n,m])}if(c[4])throw[0,i,Yr];c[4]=1;return o(c,b,79)}}if(d[4])throw[0,i,Ys];d[4]=1;return o(d,b[1],b[2])},f2=function(c,S,R,Q,P,O){var
+m=c[2][11],n=f[1],r=c[2][12],p=79;return e<50?ib(e+1|0,c,b,r,p,n,m):a(ib,[0,c,b,r,p,n,m])}if(c[4])throw[0,i,Yl];c[4]=1;return o(c,b,79)}}if(d[4])throw[0,i,Ym];d[4]=1;return o(d,b[1],b[2])},f3=function(c,S,R,Q,P,O){var
 e=[0,R,Q,P,O],b=q(S),h=b[3];if(typeof
 h==="number")switch(h){case
 3:var
 j=[0,e,m],f=q(b),n=f[3];if(typeof
 n==="number"){if(8===n){var
-s=ac;return c<50?en(c+1|0,f,j,s):a(en,[0,f,j,s])}if(71===n){var
-t=ac;return c<50?em(c+1|0,f,j,t):a(em,[0,f,j,t])}}if(f[4])throw[0,i,Yu];f[4]=1;return o(f,j,ac);case
+s=ac;return c<50?em(c+1|0,f,j,s):a(em,[0,f,j,s])}if(71===n){var
+t=ac;return c<50?el(c+1|0,f,j,t):a(el,[0,f,j,t])}}if(f[4])throw[0,i,Yo];f[4]=1;return o(f,j,ac);case
 43:var
 k=[0,e,b[2][12],m,b[2][11]],d=q(b),l=d[3];if(typeof
 l==="number"){if(24===l){var
 p=[0,k,d[2][12],89],g=q(d),r=g[3];if(typeof
 r!=="number"&&2===r[0]){var
-u=g[2][11],v=r[1],x=g[2][12],w=88;return c<50?bQ(c+1|0,g,p,x,w,v,u):a(bQ,[0,g,p,x,w,v,u])}if(g[4])throw[0,i,Yw];g[4]=1;return o(g,p,88)}}else
+u=g[2][11],v=r[1],x=g[2][12],w=88;return c<50?bQ(c+1|0,g,p,x,w,v,u):a(bQ,[0,g,p,x,w,v,u])}if(g[4])throw[0,i,Yq];g[4]=1;return o(g,p,88)}}else
 if(2===l[0]){var
-y=d[2][11],z=l[1],B=d[2][12],A=89;return c<50?bQ(c+1|0,d,k,B,A,z,y):a(bQ,[0,d,k,B,A,z,y])}if(d[4])throw[0,i,Yv];d[4]=1;return o(d,k,89)}else
+y=d[2][11],z=l[1],B=d[2][12],A=89;return c<50?bQ(c+1|0,d,k,B,A,z,y):a(bQ,[0,d,k,B,A,z,y])}if(d[4])throw[0,i,Yp];d[4]=1;return o(d,k,89)}else
 switch(h[0]){case
 0:var
 C=b[2][11],D=h[1],F=b[2][12],E=m;return c<50?ig(c+1|0,b,e,F,E,D,C):a(ig,[0,b,e,F,E,D,C]);case
 1:var
 G=b[2][11],H=h[1],J=b[2][12],I=m;return c<50?ie(c+1|0,b,e,J,I,H,G):a(ie,[0,b,e,J,I,H,G]);case
 3:var
-K=b[2][11],L=h[1],N=b[2][12],M=m;return c<50?id(c+1|0,b,e,N,M,L,K):a(id,[0,b,e,N,M,L,K])}if(b[4])throw[0,i,Yt];b[4]=1;return o(b,e,m)},f1=function(d,K,J,I,H,G){var
+K=b[2][11],L=h[1],N=b[2][12],M=m;return c<50?id(c+1|0,b,e,N,M,L,K):a(id,[0,b,e,N,M,L,K])}if(b[4])throw[0,i,Yn];b[4]=1;return o(b,e,m)},f2=function(d,K,J,I,H,G){var
 c=[0,J,I,H,G],b=q(K),e=b[3];if(typeof
 e==="number")if(16<=e){if(37<=e){if(!(64<=e))switch(e+cH|0){case
 0:var
@@ -21340,7 +22253,7 @@ u=b[2][11],w=b[2][12],v=90;return d<50?cx(d+1|0,b,c,w,v,u):a(cx,[0,b,c,w,v,u])}}
 if(19===e){var
 x=b[2][11],z=b[2][12],y=90;return d<50?cC(d+1|0,b,c,z,y,x):a(cC,[0,b,c,z,y,x])}}else{if(7===e){var
 A=b[2][11],C=b[2][12],B=90;return d<50?cE(d+1|0,b,c,C,B,A):a(cE,[0,b,c,C,B,A])}if(15<=e){var
-D=b[2][11],F=b[2][12],E=90;return d<50?cD(d+1|0,b,c,F,E,D):a(cD,[0,b,c,F,E,D])}}if(b[4])throw[0,i,Yx];b[4]=1;return o(b,c,90)},cE=function(d,aV,aU,aT,aS,aR){var
+D=b[2][11],F=b[2][12],E=90;return d<50?cD(d+1|0,b,c,F,E,D):a(cD,[0,b,c,F,E,D])}}if(b[4])throw[0,i,Yr];b[4]=1;return o(b,c,90)},cE=function(d,aV,aU,aT,aS,aR){var
 c=[0,aU,aT,aS,aR],b=q(aV),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -21380,7 +22293,7 @@ as=b[2][11],au=b[2][12],at=dH;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dH;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dH;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Yy];b[4]=1;return o(b,c,dH)}else
+ay=b[2][11],aA=b[2][12],az=dH;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Ys];b[4]=1;return o(b,c,dH)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dH;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -21430,7 +22343,7 @@ aw=b[2][11],ay=b[2][12],ax=z;return d<50?D(d+1|0,b,c,ay,ax,aw):a(D,[0,b,c,ay,ax,
 67:var
 az=b[2][11],aB=b[2][12],aA=z;return d<50?C(d+1|0,b,c,aB,aA,az):a(C,[0,b,c,aB,aA,az]);case
 72:var
-aC=b[2][11],aE=b[2][12],aD=z;return d<50?B(d+1|0,b,c,aE,aD,aC):a(B,[0,b,c,aE,aD,aC]);default:if(b[4])throw[0,i,Yz];b[4]=1;return o(b,c,z)}else
+aC=b[2][11],aE=b[2][12],aD=z;return d<50?B(d+1|0,b,c,aE,aD,aC):a(B,[0,b,c,aE,aD,aC]);default:if(b[4])throw[0,i,Yt];b[4]=1;return o(b,c,z)}else
 switch(f[0]){case
 0:var
 aF=b[2][11],aG=f[1],aI=b[2][12],aH=z;return d<50?M(d+1|0,b,c,aI,aH,aG,aF):a(M,[0,b,c,aI,aH,aG,aF]);case
@@ -21438,7 +22351,7 @@ aF=b[2][11],aG=f[1],aI=b[2][12],aH=z;return d<50?M(d+1|0,b,c,aI,aH,aG,aF):a(M,[0
 aJ=b[2][11],aK=f[1],aM=b[2][12],aL=z;return d<50?H(d+1|0,b,c,aM,aL,aK,aJ):a(H,[0,b,c,aM,aL,aK,aJ]);case
 2:var
 aN=b[2][11],aO=f[1],aQ=b[2][12],aP=z;return d<50?G(d+1|0,b,c,aQ,aP,aO,aN):a(G,[0,b,c,aQ,aP,aO,aN]);default:var
-aR=b[2][11],aS=f[1],aU=b[2][12],aT=z;return d<50?E(d+1|0,b,c,aU,aT,aS,aR):a(E,[0,b,c,aU,aT,aS,aR])}}if(e[4])throw[0,i,YA];e[4]=1;return o(e,g[1],g[3])},cC=function(d,a1,a0,aZ,aY,aX){var
+aR=b[2][11],aS=f[1],aU=b[2][12],aT=z;return d<50?E(d+1|0,b,c,aU,aT,aS,aR):a(E,[0,b,c,aU,aT,aS,aR])}}if(e[4])throw[0,i,Yu];e[4]=1;return o(e,g[1],g[3])},cC=function(d,a1,a0,aZ,aY,aX){var
 c=[0,a0,aZ,aY,aX],b=q(a1),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -21483,7 +22396,7 @@ aE=b[2][11],aG=b[2][12],aF=h;return d<50?B(d+1|0,b,c,aG,aF,aE):a(B,[0,b,c,aG,aF,
 17:case
 20:case
 64:var
-f=c[2],g=[4,$(c[4],f),0],j=c[3],k=c[1];return d<50?kJ(d+1|0,b,k,f,j,g):a(kJ,[0,b,k,f,j,g]);default:if(b[4])throw[0,i,YB];b[4]=1;return o(b,c,h)}else
+f=c[2],g=[4,$(c[4],f),0],j=c[3],k=c[1];return d<50?kJ(d+1|0,b,k,f,j,g):a(kJ,[0,b,k,f,j,g]);default:if(b[4])throw[0,i,Yv];b[4]=1;return o(b,c,h)}else
 switch(e[0]){case
 0:var
 aH=b[2][11],aI=e[1],aK=b[2][12],aJ=h;return d<50?M(d+1|0,b,c,aK,aJ,aI,aH):a(M,[0,b,c,aK,aJ,aI,aH]);case
@@ -21531,7 +22444,7 @@ at=b[2][11],av=b[2][12],au=t;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au,
 67:var
 aw=b[2][11],ay=b[2][12],ax=t;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=t;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,YC];b[4]=1;return o(b,c,t)}else
+az=b[2][11],aB=b[2][12],aA=t;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,Yw];b[4]=1;return o(b,c,t)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=t;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -21542,7 +22455,7 @@ aK=b[2][11],aL=e[1],aN=b[2][12],aM=t;return d<50?G(d+1|0,b,c,aN,aM,aL,aK):a(G,[0
 aO=b[2][11],aP=e[1],aR=b[2][12],aQ=t;return d<50?E(d+1|0,b,c,aR,aQ,aP,aO):a(E,[0,b,c,aR,aQ,aP,aO])}},cA=function(j,p,n,m,l,k){var
 c=[0,n,m,l,k],b=q(p),d=b[3];if(typeof
 d!=="number"&&2===d[0]){var
-e=b[2][11],f=d[1],h=b[2][12],g=eD;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,YD];b[4]=1;return o(b,c,eD)},cz=function(d,aW,aV,aU,aT,aS){var
+e=b[2][11],f=d[1],h=b[2][12],g=eD;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,Yx];b[4]=1;return o(b,c,eD)},cz=function(d,aW,aV,aU,aT,aS){var
 c=[0,aV,aU,aT,aS],b=q(aW),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -21582,7 +22495,7 @@ at=b[2][11],av=b[2][12],au=v;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au,
 67:var
 aw=b[2][11],ay=b[2][12],ax=v;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=v;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,YE];b[4]=1;return o(b,c,v)}else
+az=b[2][11],aB=b[2][12],aA=v;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,Yy];b[4]=1;return o(b,c,v)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=v;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -21630,7 +22543,7 @@ at=b[2][11],av=b[2][12],au=p;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au,
 67:var
 aw=b[2][11],ay=b[2][12],ax=p;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=p;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,YF];b[4]=1;return o(b,c,p)}else
+az=b[2][11],aB=b[2][12],aA=p;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,Yz];b[4]=1;return o(b,c,p)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=p;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -21678,7 +22591,7 @@ as=b[2][11],au=b[2][12],at=97;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=97;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=97;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,YG];b[4]=1;return o(b,c,97)}else
+ay=b[2][11],aA=b[2][12],az=97;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,YA];b[4]=1;return o(b,c,97)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=97;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -21688,26 +22601,26 @@ aF=b[2][11],aG=e[1],aI=b[2][12],aH=97;return d<50?H(d+1|0,b,c,aI,aH,aG,aF):a(H,[
 aJ=b[2][11],aK=e[1],aM=b[2][12],aL=97;return d<50?G(d+1|0,b,c,aM,aL,aK,aJ):a(G,[0,b,c,aM,aL,aK,aJ]);default:var
 aN=b[2][11],aO=e[1],aQ=b[2][12],aP=97;return d<50?E(d+1|0,b,c,aQ,aP,aO,aN):a(E,[0,b,c,aQ,aP,aO,aN])}},kJ=function(d,b,bM,bL,bK,bJ){var
 v=bM,u=bL,n=bK,t=bJ;a:for(;;){var
-c=[0,v,u,n,t];if(g<=n){if(fB===n){if(b[4])throw[0,i,YH];var
+c=[0,v,u,n,t];if(g<=n){if(fC===n){if(b[4])throw[0,i,YB];var
 N=b[3];if(typeof
 N==="number")if(20===N){var
-O=b[2][12],P=q(b),Q=[0,c[4]],R=c[1][1];return d<50?kN(d+1|0,P,R,O,Q):a(kN,[0,P,R,O,Q])}if(b[4])throw[0,i,YI];b[4]=1;return o(b,c[1],c[3])}}else
+O=b[2][12],P=q(b),Q=[0,c[4]],R=c[1][1];return d<50?kN(d+1|0,P,R,O,Q):a(kN,[0,P,R,O,Q])}if(b[4])throw[0,i,YC];b[4]=1;return o(b,c[1],c[3])}}else
 if(81<=n)switch(n-81|0){case
-0:if(b[4])throw[0,i,YJ];var
+0:if(b[4])throw[0,i,YD];var
 B=b[3];if(typeof
 B==="number"){if(64===B){var
-S=b[2][11],U=b[2][12],T=80;return d<50?f1(d+1|0,b,c,U,T,S):a(f1,[0,b,c,U,T,S])}if(0===B){var
-V=b[2][11],X=b[2][12],W=80;return d<50?f2(d+1|0,b,c,X,W,V):a(f2,[0,b,c,X,W,V])}}if(b[4])throw[0,i,YK];b[4]=1;return o(b,c,80);case
-2:if(b[4])throw[0,i,YL];var
+S=b[2][11],U=b[2][12],T=80;return d<50?f2(d+1|0,b,c,U,T,S):a(f2,[0,b,c,U,T,S])}if(0===B){var
+V=b[2][11],X=b[2][12],W=80;return d<50?f3(d+1|0,b,c,X,W,V):a(f3,[0,b,c,X,W,V])}}if(b[4])throw[0,i,YE];b[4]=1;return o(b,c,80);case
+2:if(b[4])throw[0,i,YF];var
 C=b[3];if(typeof
 C==="number"){if(64===C){var
-Y=b[2][11],_=b[2][12],Z=82;return d<50?f1(d+1|0,b,c,_,Z,Y):a(f1,[0,b,c,_,Z,Y])}if(0===C){var
-aa=b[2][11],ac=b[2][12],ab=82;return d<50?f2(d+1|0,b,c,ac,ab,aa):a(f2,[0,b,c,ac,ab,aa])}}if(b[4])throw[0,i,YM];b[4]=1;return o(b,c,82);case
-5:if(b[4])throw[0,i,YN];var
+Y=b[2][11],_=b[2][12],Z=82;return d<50?f2(d+1|0,b,c,_,Z,Y):a(f2,[0,b,c,_,Z,Y])}if(0===C){var
+aa=b[2][11],ac=b[2][12],ab=82;return d<50?f3(d+1|0,b,c,ac,ab,aa):a(f3,[0,b,c,ac,ab,aa])}}if(b[4])throw[0,i,YG];b[4]=1;return o(b,c,82);case
+5:if(b[4])throw[0,i,YH];var
 D=b[3];if(typeof
 D==="number"){if(64===D){var
-ad=b[2][11],af=b[2][12],ae=85;return d<50?f1(d+1|0,b,c,af,ae,ad):a(f1,[0,b,c,af,ae,ad])}if(0===D){var
-ag=b[2][11],ai=b[2][12],ah=85;return d<50?f2(d+1|0,b,c,ai,ah,ag):a(f2,[0,b,c,ai,ah,ag])}}if(b[4])throw[0,i,YO];b[4]=1;return o(b,c,85);case
+ad=b[2][11],af=b[2][12],ae=85;return d<50?f2(d+1|0,b,c,af,ae,ad):a(f2,[0,b,c,af,ae,ad])}if(0===D){var
+ag=b[2][11],ai=b[2][12],ah=85;return d<50?f3(d+1|0,b,c,ai,ah,ag):a(f3,[0,b,c,ai,ah,ag])}}if(b[4])throw[0,i,YI];b[4]=1;return o(b,c,85);case
 9:var
 aj=c[1],s=c[2],l=aj[1],m=aj[3],k=[0,0,c[4]];for(;;){if(92<=m){if(e===m){var
 w=l[1],bj=k[2],bk=k[1],bl=l[4],bm=[16,$(w[4],s),bl,bk,bj],v=w[1],u=s,n=w[3],t=bm;continue a}}else
@@ -21730,8 +22643,8 @@ K=l[1][1],L=K[1],z=L[1][1][1],by=k[2],bz=k[1],bA=l[4],bB=K[3],bC=L[3],bD=[0,[0,[
 M=l[1][1],A=M[1][1],bE=k[2],bF=k[1],bG=l[4],bH=M[3],bI=[0,[0,[0,[1,$(A[4],s),bH],bG],bF],bE],l=A[1],m=A[3],k=bI;continue}return cQ(0)}case
 11:var
 ak=c[2],al=c[1][1],am=al[1][1],E=am[1],bN=c[4],bO=al[4],bP=am[4],bQ=[10,$(E[4],ak),bP,bO,bN],v=E[1],u=ak,n=E[3],t=bQ;continue;case
-12:throw[0,go,YP];case
-13:if(b[4])throw[0,i,YQ];var
+12:throw[0,go,YJ];case
+13:if(b[4])throw[0,i,YK];var
 an=b[3];if(typeof
 an==="number")if(17===an){var
 f=q(b),p=f[3];if(typeof
@@ -21749,10 +22662,10 @@ aA=f[2][11],aC=f[2][12],aB=93;return d<50?cx(d+1|0,f,c,aC,aB,aA):a(cx,[0,f,c,aC,
 if(19===p){var
 aD=f[2][11],aF=f[2][12],aE=93;return d<50?cC(d+1|0,f,c,aF,aE,aD):a(cC,[0,f,c,aF,aE,aD])}}else{if(7===p){var
 aG=f[2][11],aI=f[2][12],aH=93;return d<50?cE(d+1|0,f,c,aI,aH,aG):a(cE,[0,f,c,aI,aH,aG])}if(15<=p){var
-aJ=f[2][11],aL=f[2][12],aK=93;return d<50?cD(d+1|0,f,c,aL,aK,aJ):a(cD,[0,f,c,aL,aK,aJ])}}if(f[4])throw[0,i,YR];f[4]=1;return o(f,c,93)}if(b[4])throw[0,i,YS];b[4]=1;return o(b,c[1],c[3]);case
-14:throw[0,go,YT];case
-17:throw[0,go,YU];case
-20:if(b[4])throw[0,i,YV];var
+aJ=f[2][11],aL=f[2][12],aK=93;return d<50?cD(d+1|0,f,c,aL,aK,aJ):a(cD,[0,f,c,aL,aK,aJ])}}if(f[4])throw[0,i,YL];f[4]=1;return o(f,c,93)}if(b[4])throw[0,i,YM];b[4]=1;return o(b,c[1],c[3]);case
+14:throw[0,go,YN];case
+17:throw[0,go,YO];case
+20:if(b[4])throw[0,i,YP];var
 aM=b[3];if(typeof
 aM==="number")if(64===aM){var
 j=[0,c,b[2][12],b[2][11]],h=q(b),r=h[3];if(typeof
@@ -21770,12 +22683,13 @@ aZ=h[2][11],a1=h[2][12],a0=92;return d<50?cx(d+1|0,h,j,a1,a0,aZ):a(cx,[0,h,j,a1,
 if(19===r){var
 a2=h[2][11],a4=h[2][12],a3=92;return d<50?cC(d+1|0,h,j,a4,a3,a2):a(cC,[0,h,j,a4,a3,a2])}}else{if(7===r){var
 a5=h[2][11],a7=h[2][12],a6=92;return d<50?cE(d+1|0,h,j,a7,a6,a5):a(cE,[0,h,j,a7,a6,a5])}if(15<=r){var
-a8=h[2][11],a_=h[2][12],a9=92;return d<50?cD(d+1|0,h,j,a_,a9,a8):a(cD,[0,h,j,a_,a9,a8])}}if(h[4])throw[0,i,YW];h[4]=1;return o(h,j,92)}if(b[4])throw[0,i,YX];b[4]=1;return o(b,c[1],c[3]);case
+a8=h[2][11],a_=h[2][12],a9=92;return d<50?cD(d+1|0,h,j,a_,a9,a8):a(cD,[0,h,j,a_,a9,a8])}}if(h[4])throw[0,i,YQ];h[4]=1;return o(h,j,92)}if(b[4])throw[0,i,YR];b[4]=1;return o(b,c[1],c[3]);case
 23:var
 a$=c[2],ba=c[1][1],bb=ba[1],bc=bb[3],F=bb[1],bR=c[4],bS=ba[4],bT=bc[2],bU=bc[1],bV=[11,$(F[4],a$),bU,bT,bS,bR],v=F[1],u=a$,n=F[3],t=bV;continue;case
-27:if(b[4])throw[0,i,YY];var
+27:if(b[4])throw[0,i,YS];var
 G=b[3];if(typeof
 G==="number"){if(64===G){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 bd=b[2][11],bf=b[2][12],be=91;return d<50?fY(d+1|0,b,c,bf,be,bd):a(fY,[0,b,c,bf,be,bd])}if(0===G){var
@@ -21797,29 +22711,34 @@ bg=b[2][11],bi=b[2][12],bh=91;return d<50?f2(d+1|0,b,c,bi,bh,bg):a(f2,[0,b,c,bi,
 bg=b[2][11],bi=b[2][12],bh=91;return d<50?f2(d+1|0,b,c,bi,bh,bg):a(f2,[0,b,c,bi,bh,bg])}}if(b[4])throw[0,i,YZ];b[4]=1;return o(b,c,91);case
 34:throw[0,go,Y0]}return cP(0)}},f0=function(c,R,Q,P,O,N){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+bd=b[2][11],bf=b[2][12],be=91;return d<50?f2(d+1|0,b,c,bf,be,bd):a(f2,[0,b,c,bf,be,bd])}if(0===G){var
+bg=b[2][11],bi=b[2][12],bh=91;return d<50?f3(d+1|0,b,c,bi,bh,bg):a(f3,[0,b,c,bi,bh,bg])}}if(b[4])throw[0,i,YT];b[4]=1;return o(b,c,91);case
+34:throw[0,go,YU]}return cP(0)}},f1=function(c,R,Q,P,O,N){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 e=[0,Q,P,O,N],b=q(R),h=b[3];if(typeof
 h==="number")switch(h){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 3:var
 j=[0,e,g_],f=q(b),m=f[3];if(typeof
 m==="number"){if(8===m){var
-r=n5;return c<50?en(c+1|0,f,j,r):a(en,[0,f,j,r])}if(71===m){var
-s=n5;return c<50?em(c+1|0,f,j,s):a(em,[0,f,j,s])}}if(f[4])throw[0,i,Y2];f[4]=1;return o(f,j,n5);case
+r=n5;return c<50?em(c+1|0,f,j,r):a(em,[0,f,j,r])}if(71===m){var
+s=n5;return c<50?el(c+1|0,f,j,s):a(el,[0,f,j,s])}}if(f[4])throw[0,i,YW];f[4]=1;return o(f,j,n5);case
 43:var
 k=[0,e,b[2][12],g_,b[2][11]],d=q(b),l=d[3];if(typeof
 l==="number"){if(24===l){var
 n=[0,k,d[2][12],la],g=q(d),p=g[3];if(typeof
 p!=="number"&&2===p[0]){var
-t=g[2][11],u=p[1],w=g[2][12],v=n7;return c<50?bQ(c+1|0,g,n,w,v,u,t):a(bQ,[0,g,n,w,v,u,t])}if(g[4])throw[0,i,Y4];g[4]=1;return o(g,n,n7)}}else
+t=g[2][11],u=p[1],w=g[2][12],v=n7;return c<50?bQ(c+1|0,g,n,w,v,u,t):a(bQ,[0,g,n,w,v,u,t])}if(g[4])throw[0,i,YY];g[4]=1;return o(g,n,n7)}}else
 if(2===l[0]){var
-x=d[2][11],y=l[1],A=d[2][12],z=la;return c<50?bQ(c+1|0,d,k,A,z,y,x):a(bQ,[0,d,k,A,z,y,x])}if(d[4])throw[0,i,Y3];d[4]=1;return o(d,k,la)}else
+x=d[2][11],y=l[1],A=d[2][12],z=la;return c<50?bQ(c+1|0,d,k,A,z,y,x):a(bQ,[0,d,k,A,z,y,x])}if(d[4])throw[0,i,YX];d[4]=1;return o(d,k,la)}else
 switch(h[0]){case
 0:var
 B=b[2][11],C=h[1],E=b[2][12],D=g_;return c<50?ig(c+1|0,b,e,E,D,C,B):a(ig,[0,b,e,E,D,C,B]);case
 1:var
 F=b[2][11],G=h[1],I=b[2][12],H=g_;return c<50?ie(c+1|0,b,e,I,H,G,F):a(ie,[0,b,e,I,H,G,F]);case
 3:var
-J=b[2][11],K=h[1],M=b[2][12],L=g_;return c<50?id(c+1|0,b,e,M,L,K,J):a(id,[0,b,e,M,L,K,J])}if(b[4])throw[0,i,Y1];b[4]=1;return o(b,e,g_)},fZ=function(d,aV,aU,aT,aS,aR){var
+J=b[2][11],K=h[1],M=b[2][12],L=g_;return c<50?id(c+1|0,b,e,M,L,K,J):a(id,[0,b,e,M,L,K,J])}if(b[4])throw[0,i,YV];b[4]=1;return o(b,e,g_)},f0=function(d,aV,aU,aT,aS,aR){var
 c=[0,aU,aT,aS,aR],b=q(aV),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -21859,7 +22778,7 @@ as=b[2][11],au=b[2][12],at=dm;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dm;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dm;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Y5];b[4]=1;return o(b,c,dm)}else
+ay=b[2][11],aA=b[2][12],az=dm;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,YZ];b[4]=1;return o(b,c,dm)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dm;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -21869,9 +22788,10 @@ aF=b[2][11],aG=e[1],aI=b[2][12],aH=dm;return d<50?H(d+1|0,b,c,aI,aH,aG,aF):a(H,[
 aJ=b[2][11],aK=e[1],aM=b[2][12],aL=dm;return d<50?G(d+1|0,b,c,aM,aL,aK,aJ):a(G,[0,b,c,aM,aL,aK,aJ]);default:var
 aN=b[2][11],aO=e[1],aQ=b[2][12],aP=dm;return d<50?E(d+1|0,b,c,aQ,aP,aO,aN):a(E,[0,b,c,aQ,aP,aO,aN])}},kI=function(g,b,B,A,z){var
 c=B,e=A,d=z;for(;;){var
-h=e-161|0;if(1<h>>>0){if(58===h){if(b[4])throw[0,i,Y6];var
+h=e-161|0;if(1<h>>>0){if(58===h){if(b[4])throw[0,i,Y0];var
 n=b[3];if(typeof
 n==="number")if(20===n){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -21894,9 +22814,13 @@ C=[0,c[3],d],D=c[2],c=c[1],e=D,d=C;continue}if(b[4])throw[0,i,Y$];var
 j=b[2][12],p=q(b),k=c[3],r=[12,$(k,j),d],s=c[2],t=c[1];return g<50?b4(g+1|0,p,t,j,s,r,k):a(b4,[0,p,t,j,s,r,k])}if(b[4])throw[0,i,Y7];b[4]=1;return o(b,c,e)}return cP(0)}if(0===h){var
 C=[0,c[3],d],D=c[2],c=c[1],e=D,d=C;continue}if(b[4])throw[0,i,Y8];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+j=b[2][12],p=q(b),k=c[3],r=[12,$(k,j),d],s=c[2],t=c[1];return g<50?b4(g+1|0,p,t,j,s,r,k):a(b4,[0,p,t,j,s,r,k])}if(b[4])throw[0,i,Y1];b[4]=1;return o(b,c,e)}return cP(0)}if(0===h){var
+C=[0,c[3],d],D=c[2],c=c[1],e=D,d=C;continue}if(b[4])throw[0,i,Y2];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 u=b[3];if(typeof
 u==="number")if(20===u){var
-l=b[2][12],v=q(b),f=c[1],m=f[4],E=f[3],w=[13,$(m,l),E,d],x=f[2],y=f[1];return g<50?b4(g+1|0,v,y,l,x,w,m):a(b4,[0,v,y,l,x,w,m])}if(b[4])throw[0,i,Y9];b[4]=1;return o(b,c,e)}},ag=function(d,aT,aS,aR){var
+l=b[2][12],v=q(b),f=c[1],m=f[4],E=f[3],w=[13,$(m,l),E,d],x=f[2],y=f[1];return g<50?b4(g+1|0,v,y,l,x,w,m):a(b4,[0,v,y,l,x,w,m])}if(b[4])throw[0,i,Y3];b[4]=1;return o(b,c,e)}},ag=function(d,aT,aS,aR){var
 c=[0,aS,aR],b=q(aT),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -21936,7 +22860,7 @@ as=b[2][11],au=b[2][12],at=dG;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dG;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dG;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zc];b[4]=1;return o(b,c,dG)}else
+ay=b[2][11],aA=b[2][12],az=dG;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Y8];b[4]=1;return o(b,c,dG)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dG;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -21984,7 +22908,7 @@ as=b[2][11],au=b[2][12],at=dw;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dw;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dw;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zd];b[4]=1;return o(b,c,dw)}else
+ay=b[2][11],aA=b[2][12],az=dw;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Y9];b[4]=1;return o(b,c,dw)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dw;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22032,7 +22956,7 @@ as=b[2][11],au=b[2][12],at=dS;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dS;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dS;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Ze];b[4]=1;return o(b,c,dS)}else
+ay=b[2][11],aA=b[2][12],az=dS;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Y_];b[4]=1;return o(b,c,dS)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dS;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22080,7 +23004,7 @@ as=b[2][11],au=b[2][12],at=dp;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dp;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dp;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zf];b[4]=1;return o(b,c,dp)}else
+ay=b[2][11],aA=b[2][12],az=dp;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Y$];b[4]=1;return o(b,c,dp)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dp;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22128,7 +23052,7 @@ as=b[2][11],au=b[2][12],at=dU;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dU;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dU;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zg];b[4]=1;return o(b,c,dU)}else
+ay=b[2][11],aA=b[2][12],az=dU;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Za];b[4]=1;return o(b,c,dU)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dU;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22222,7 +23146,7 @@ bY=b[2][11],b0=b[2][12],bZ=bS;return d<50?a7(d+1|0,b,c,b0,bZ,bY):a(a7,[0,b,c,b0,
 77:var
 b1=b[2][11],b3=b[2][12],b2=bS;return d<50?a6(d+1|0,b,c,b3,b2,b1):a(a6,[0,b,c,b3,b2,b1])}else
 if(2===e[0]){var
-b4=b[2][11],b5=e[1],b7=b[2][12],b6=bS;return d<50?bn(d+1|0,b,c,b7,b6,b5,b4):a(bn,[0,b,c,b7,b6,b5,b4])}if(b[4])throw[0,i,Zh];b[4]=1;return o(b,c,bS)},aa=function(d,aT,aS,aR){var
+b4=b[2][11],b5=e[1],b7=b[2][12],b6=bS;return d<50?bn(d+1|0,b,c,b7,b6,b5,b4):a(bn,[0,b,c,b7,b6,b5,b4])}if(b[4])throw[0,i,Zb];b[4]=1;return o(b,c,bS)},aa=function(d,aT,aS,aR){var
 c=[0,aS,aR],b=q(aT),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -22262,7 +23186,7 @@ as=b[2][11],au=b[2][12],at=dt;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dt;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dt;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zi];b[4]=1;return o(b,c,dt)}else
+ay=b[2][11],aA=b[2][12],az=dt;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zc];b[4]=1;return o(b,c,dt)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dt;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22310,7 +23234,7 @@ as=b[2][11],au=b[2][12],at=dT;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dT;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dT;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zj];b[4]=1;return o(b,c,dT)}else
+ay=b[2][11],aA=b[2][12],az=dT;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zd];b[4]=1;return o(b,c,dT)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dT;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22358,7 +23282,7 @@ as=b[2][11],au=b[2][12],at=dr;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dr;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dr;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zk];b[4]=1;return o(b,c,dr)}else
+ay=b[2][11],aA=b[2][12],az=dr;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Ze];b[4]=1;return o(b,c,dr)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dr;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22406,7 +23330,7 @@ as=b[2][11],au=b[2][12],at=de;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=de;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=de;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zl];b[4]=1;return o(b,c,de)}else
+ay=b[2][11],aA=b[2][12],az=de;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zf];b[4]=1;return o(b,c,de)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=de;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22454,7 +23378,7 @@ as=b[2][11],au=b[2][12],at=dP;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dP;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dP;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zm];b[4]=1;return o(b,c,dP)}else
+ay=b[2][11],aA=b[2][12],az=dP;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zg];b[4]=1;return o(b,c,dP)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dP;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22502,7 +23426,7 @@ as=b[2][11],au=b[2][12],at=dQ;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dQ;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dQ;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zn];b[4]=1;return o(b,c,dQ)}else
+ay=b[2][11],aA=b[2][12],az=dQ;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zh];b[4]=1;return o(b,c,dQ)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dQ;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22550,7 +23474,7 @@ as=b[2][11],au=b[2][12],at=dB;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dB;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dB;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zo];b[4]=1;return o(b,c,dB)}else
+ay=b[2][11],aA=b[2][12],az=dB;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zi];b[4]=1;return o(b,c,dB)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dB;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22598,7 +23522,7 @@ as=b[2][11],au=b[2][12],at=du;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=du;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=du;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zp];b[4]=1;return o(b,c,du)}else
+ay=b[2][11],aA=b[2][12],az=du;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zj];b[4]=1;return o(b,c,du)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=du;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22668,6 +23592,7 @@ av=b[2][11],ax=b[2][12],aw=cT;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ay=b[2][11],aA=b[2][12],az=cT;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,h,Yx];b[4]=1;return p(b,c,cT)}else
 =======
 ay=b[2][11],aA=b[2][12],az=cS;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zk];b[4]=1;return p(b,c,cS)}else
@@ -22681,6 +23606,9 @@ ay=b[2][11],aA=b[2][12],az=cS;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az
 =======
 ay=b[2][11],aA=b[2][12],az=cS;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zq];b[4]=1;return o(b,c,cS)}else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+ay=b[2][11],aA=b[2][12],az=cS;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zk];b[4]=1;return o(b,c,cS)}else
+>>>>>>> (fix) Directly use time constants in generated JS code
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=cT;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22738,7 +23666,7 @@ as=b[2][11],au=b[2][12],at=dK;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dK;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dK;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zr];b[4]=1;return o(b,c,dK)}else
+ay=b[2][11],aA=b[2][12],az=dK;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zl];b[4]=1;return o(b,c,dK)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dK;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22786,7 +23714,7 @@ as=b[2][11],au=b[2][12],at=dE;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dE;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dE;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zs];b[4]=1;return o(b,c,dE)}else
+ay=b[2][11],aA=b[2][12],az=dE;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zm];b[4]=1;return o(b,c,dE)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dE;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22834,7 +23762,7 @@ as=b[2][11],au=b[2][12],at=dq;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dq;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dq;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zt];b[4]=1;return o(b,c,dq)}else
+ay=b[2][11],aA=b[2][12],az=dq;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zn];b[4]=1;return o(b,c,dq)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dq;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22882,7 +23810,7 @@ as=b[2][11],au=b[2][12],at=dF;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dF;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dF;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zu];b[4]=1;return o(b,c,dF)}else
+ay=b[2][11],aA=b[2][12],az=dF;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zo];b[4]=1;return o(b,c,dF)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dF;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22930,7 +23858,7 @@ as=b[2][11],au=b[2][12],at=dR;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dR;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dR;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zv];b[4]=1;return o(b,c,dR)}else
+ay=b[2][11],aA=b[2][12],az=dR;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zp];b[4]=1;return o(b,c,dR)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dR;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -22978,7 +23906,7 @@ as=b[2][11],au=b[2][12],at=ds;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=ds;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=ds;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zw];b[4]=1;return o(b,c,ds)}else
+ay=b[2][11],aA=b[2][12],az=ds;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zq];b[4]=1;return o(b,c,ds)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=ds;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -23026,7 +23954,7 @@ as=b[2][11],au=b[2][12],at=df;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=df;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=df;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zx];b[4]=1;return o(b,c,df)}else
+ay=b[2][11],aA=b[2][12],az=df;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zr];b[4]=1;return o(b,c,df)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=df;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -23120,7 +24048,7 @@ bY=b[2][11],b0=b[2][12],bZ=bO;return d<50?a7(d+1|0,b,c,b0,bZ,bY):a(a7,[0,b,c,b0,
 77:var
 b1=b[2][11],b3=b[2][12],b2=bO;return d<50?a6(d+1|0,b,c,b3,b2,b1):a(a6,[0,b,c,b3,b2,b1])}else
 if(2===e[0]){var
-b4=b[2][11],b5=e[1],b7=b[2][12],b6=bO;return d<50?bn(d+1|0,b,c,b7,b6,b5,b4):a(bn,[0,b,c,b7,b6,b5,b4])}if(b[4])throw[0,i,Zy];b[4]=1;return o(b,c,bO)},ab=function(d,aT,aS,aR){var
+b4=b[2][11],b5=e[1],b7=b[2][12],b6=bO;return d<50?bn(d+1|0,b,c,b7,b6,b5,b4):a(bn,[0,b,c,b7,b6,b5,b4])}if(b[4])throw[0,i,Zs];b[4]=1;return o(b,c,bO)},ab=function(d,aT,aS,aR){var
 c=[0,aS,aR],b=q(aT),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -23160,7 +24088,7 @@ as=b[2][11],au=b[2][12],at=dz;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dz;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dz;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zz];b[4]=1;return o(b,c,dz)}else
+ay=b[2][11],aA=b[2][12],az=dz;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zt];b[4]=1;return o(b,c,dz)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dz;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -23208,7 +24136,7 @@ as=b[2][11],au=b[2][12],at=dn;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=dn;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=dn;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,ZA];b[4]=1;return o(b,c,dn)}else
+ay=b[2][11],aA=b[2][12],az=dn;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,Zu];b[4]=1;return o(b,c,dn)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=dn;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -23259,7 +24187,7 @@ m=[0,g3,v,g2,g0],u=v;if(cG<=u)switch(u){case
 t=1;break;default:var
 t=0}else
 switch(u){case
-4:if(l[4])throw[0,i,ZF];var
+4:if(l[4])throw[0,i,Zz];var
 dR=l[3];if(typeof
 dR==="number")if(29===dR){var
 k=[0,m,l[2][12],l[2][11]],f=q(l),p=f[3];if(typeof
@@ -23301,7 +24229,7 @@ ev=f[2][11],ex=f[2][12],ew=3;return b<50?D(b+1|0,f,k,ex,ew,ev):a(D,[0,f,k,ex,ew,
 67:var
 ey=f[2][11],eA=f[2][12],ez=3;return b<50?C(b+1|0,f,k,eA,ez,ey):a(C,[0,f,k,eA,ez,ey]);case
 72:var
-eB=f[2][11],eD=f[2][12],eC=3;return b<50?B(b+1|0,f,k,eD,eC,eB):a(B,[0,f,k,eD,eC,eB]);default:if(f[4])throw[0,i,ZG];f[4]=1;return o(f,k,3)}else
+eB=f[2][11],eD=f[2][12],eC=3;return b<50?B(b+1|0,f,k,eD,eC,eB):a(B,[0,f,k,eD,eC,eB]);default:if(f[4])throw[0,i,ZA];f[4]=1;return o(f,k,3)}else
 switch(p[0]){case
 0:var
 eE=f[2][11],eF=p[1],eH=f[2][12],eG=3;return b<50?M(b+1|0,f,k,eH,eG,eF,eE):a(M,[0,f,k,eH,eG,eF,eE]);case
@@ -23309,8 +24237,8 @@ eE=f[2][11],eF=p[1],eH=f[2][12],eG=3;return b<50?M(b+1|0,f,k,eH,eG,eF,eE):a(M,[0
 eI=f[2][11],eJ=p[1],eL=f[2][12],eK=3;return b<50?H(b+1|0,f,k,eL,eK,eJ,eI):a(H,[0,f,k,eL,eK,eJ,eI]);case
 2:var
 eM=f[2][11],eN=p[1],eP=f[2][12],eO=3;return b<50?G(b+1|0,f,k,eP,eO,eN,eM):a(G,[0,f,k,eP,eO,eN,eM]);default:var
-eQ=f[2][11],eR=p[1],eT=f[2][12],eS=3;return b<50?E(b+1|0,f,k,eT,eS,eR,eQ):a(E,[0,f,k,eT,eS,eR,eQ])}}if(l[4])throw[0,i,ZH];l[4]=1;return o(l,m[1],m[2]);case
-69:if(l[4])throw[0,i,ZI];var
+eQ=f[2][11],eR=p[1],eT=f[2][12],eS=3;return b<50?E(b+1|0,f,k,eT,eS,eR,eQ):a(E,[0,f,k,eT,eS,eR,eQ])}}if(l[4])throw[0,i,ZB];l[4]=1;return o(l,m[1],m[2]);case
+69:if(l[4])throw[0,i,ZC];var
 eU=l[3];if(typeof
 eU==="number")if(44===eU){var
 h=[0,m,l[2][11]],d=q(l),s=d[3];if(typeof
@@ -23400,7 +24328,7 @@ gL=d[2][11],gN=d[2][12],gM=68;return b<50?a7(b+1|0,d,h,gN,gM,gL):a(a7,[0,d,h,gN,
 77:var
 gO=d[2][11],gQ=d[2][12],gP=68;return b<50?a6(b+1|0,d,h,gQ,gP,gO):a(a6,[0,d,h,gQ,gP,gO])}else
 if(2===s[0]){var
-gR=d[2][11],gS=s[1],gU=d[2][12],gT=68;return b<50?bn(b+1|0,d,h,gU,gT,gS,gR):a(bn,[0,d,h,gU,gT,gS,gR])}if(d[4])throw[0,i,ZJ];d[4]=1;return o(d,h,68)}if(l[4])throw[0,i,ZK];l[4]=1;return o(l,m[1],m[2]);case
+gR=d[2][11],gS=s[1],gU=d[2][12],gT=68;return b<50?bn(b+1|0,d,h,gU,gT,gS,gR):a(bn,[0,d,h,gU,gT,gS,gR])}if(d[4])throw[0,i,ZD];d[4]=1;return o(d,h,68)}if(l[4])throw[0,i,ZE];l[4]=1;return o(l,m[1],m[2]);case
 137:var
 gV=m[1],gW=[0,m[3]],gX=gV[2],gY=gV[1];return b<50?kM(b+1|0,l,gY,gX,gW):a(kM,[0,l,gY,gX,gW]);case
 3:case
@@ -23433,7 +24361,7 @@ gV=m[1],gW=[0,m[3]],gX=gV[2],gY=gV[1];return b<50?kM(b+1|0,l,gY,gX,gW):a(kM,[0,l
 153:case
 155:var
 t=1;break;default:var
-t=0}if(t){if(l[4])throw[0,i,ZB];var
+t=0}if(t){if(l[4])throw[0,i,Zv];var
 w=l[3];if(typeof
 w==="number"){var
 x=w-42|0;if(!(2<x>>>0))switch(x){case
@@ -23479,7 +24407,7 @@ aJ=e[2][11],aL=e[2][12],aK=c3;return b<50?D(b+1|0,e,j,aL,aK,aJ):a(D,[0,e,j,aL,aK
 67:var
 aM=e[2][11],aO=e[2][12],aN=c3;return b<50?C(b+1|0,e,j,aO,aN,aM):a(C,[0,e,j,aO,aN,aM]);case
 72:var
-aP=e[2][11],aR=e[2][12],aQ=c3;return b<50?B(b+1|0,e,j,aR,aQ,aP):a(B,[0,e,j,aR,aQ,aP]);default:if(e[4])throw[0,i,ZD];e[4]=1;return o(e,j,c3)}else
+aP=e[2][11],aR=e[2][12],aQ=c3;return b<50?B(b+1|0,e,j,aR,aQ,aP):a(B,[0,e,j,aR,aQ,aP]);default:if(e[4])throw[0,i,Zx];e[4]=1;return o(e,j,c3)}else
 switch(n[0]){case
 0:var
 aS=e[2][11],aT=n[1],aV=e[2][12],aU=c3;return b<50?M(b+1|0,e,j,aV,aU,aT,aS):a(M,[0,e,j,aV,aU,aT,aS]);case
@@ -23578,6 +24506,7 @@ dK=c[2][11],dM=c[2][12],dL=bR;return b<50?a6(b+1|0,c,g,dM,dL,dK):a(a6,[0,c,g,dM,
 <<<<<<< HEAD
 <<<<<<< HEAD
 if(2===r[0]){var
+<<<<<<< HEAD
 dN=c[2][11],dO=r[1],dQ=c[2][12],dP=bR;return b<50?bn(b+1|0,c,g,dQ,dP,dO,dN):a(bn,[0,c,g,dQ,dP,dO,dN])}if(c[4])throw[0,h,YL];c[4]=1;return p(c,g,bR)}}if(l[4])throw[0,h,YJ];l[4]=1;return p(l,m[1],m[2])}return cQ(0)},d9=function(d,b,x,w,f,v){var
 c=[0,x,w,f,v];if(f0!==f){if(7<=f)var
 =======
@@ -23598,6 +24527,10 @@ dN=c[2][11],dO=r[1],dQ=c[2][12],dP=bR;return b<50?bn(b+1|0,c,g,dQ,dP,dO,dN):a(bn
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 c=[0,x,w,f,v];if(f3!==f){if(7<=f)var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
+=======
+dN=c[2][11],dO=r[1],dQ=c[2][12],dP=bR;return b<50?bn(b+1|0,c,g,dQ,dP,dO,dN):a(bn,[0,c,g,dQ,dP,dO,dN])}if(c[4])throw[0,i,Zy];c[4]=1;return o(c,g,bR)}}if(l[4])throw[0,i,Zw];l[4]=1;return o(l,m[1],m[2])}return cP(0)},d_=function(d,b,x,w,f,v){var
+c=[0,x,w,f,v];if(f4!==f){if(7<=f)var
+>>>>>>> (fix) Directly use time constants in generated JS code
 g=0;else
 switch(f){case
 6:var
@@ -23612,7 +24545,7 @@ e==="number")if(59<=e){if(!(68<=e))switch(e+uM|0){case
 0:return to(b,c,6);case
 =======
 s=c[4],t=c[3],u=c[1];return d<50?g0(d+1|0,b,u,t,s):a(g0,[0,b,u,t,s]);default:var
-g=0}if(!g)return cP(0)}if(b[4])throw[0,i,ZL];var
+g=0}if(!g)return cP(0)}if(b[4])throw[0,i,ZF];var
 e=b[3];if(typeof
 <<<<<<< HEAD
 e==="number")if(59<=e){if(!(68<=e))switch(e+uU|0){case
@@ -23623,12 +24556,12 @@ e==="number")if(59<=e){if(!(68<=e))switch(e+uW|0){case
 0:return ty(b,c,6);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 7:var
-h=b[2][11],k=b[2][12],j=6;return d<50?hv(d+1|0,b,c,k,j,h):a(hv,[0,b,c,k,j,h]);case
+h=b[2][11],k=b[2][12],j=6;return d<50?hw(d+1|0,b,c,k,j,h):a(hw,[0,b,c,k,j,h]);case
 8:var
-l=b[2][11],n=b[2][12],m=6;return d<50?hu(d+1|0,b,c,n,m,l):a(hu,[0,b,c,n,m,l])}}else
+l=b[2][11],n=b[2][12],m=6;return d<50?hv(d+1|0,b,c,n,m,l):a(hv,[0,b,c,n,m,l])}}else
 if(47===e){var
-p=b[2][11],r=b[2][12],q=6;return d<50?hw(d+1|0,b,c,r,q,p):a(hw,[0,b,c,r,q,p])}if(b[4])throw[0,i,ZM];b[4]=1;return o(b,c,6)},kG=function(h,g,f,e,d,c,b){return h<50?g2(h+1|0,g,f,e,d,c,b):a(g2,[0,g,f,e,d,c,b])},g0=function(d,b,Z,Y,X){var
-c=[0,Z,Y,X];if(b[4])throw[0,i,ZN];var
+p=b[2][11],r=b[2][12],q=6;return d<50?hx(d+1|0,b,c,r,q,p):a(hx,[0,b,c,r,q,p])}if(b[4])throw[0,i,ZG];b[4]=1;return o(b,c,6)},kG=function(h,g,f,e,d,c,b){return h<50?g2(h+1|0,g,f,e,d,c,b):a(g2,[0,g,f,e,d,c,b])},g0=function(d,b,Z,Y,X){var
+c=[0,Z,Y,X];if(b[4])throw[0,i,ZH];var
 e=b[3];if(typeof
 e==="number")switch(e){case
 7:var
@@ -23646,7 +24579,7 @@ w=b[2][11],y=b[2][12],x=0;return d<50?ch(d+1|0,b,c,y,x,w):a(ch,[0,b,c,y,x,w]);ca
 43:var
 z=b[2][11],B=b[2][12],A=0;return d<50?cg(d+1|0,b,c,B,A,z):a(cg,[0,b,c,B,A,z]);case
 47:var
-C=b[2][11],E=b[2][12],D=0;return d<50?hw(d+1|0,b,c,E,D,C):a(hw,[0,b,c,E,D,C]);case
+C=b[2][11],E=b[2][12],D=0;return d<50?hx(d+1|0,b,c,E,D,C):a(hx,[0,b,c,E,D,C]);case
 48:var
 F=b[2][11],H=b[2][12],G=0;return d<50?cf(d+1|0,b,c,H,G,F):a(cf,[0,b,c,H,G,F]);case
 <<<<<<< HEAD
@@ -23663,12 +24596,13 @@ I=b[2][11],K=b[2][12],J=0;return d<50?ce(d+1|0,b,c,K,J,I):a(ce,[0,b,c,K,J,I]);ca
 63:var
 L=b[2][11],N=b[2][12],M=0;return d<50?cd(d+1|0,b,c,N,M,L):a(cd,[0,b,c,N,M,L]);case
 66:var
-O=b[2][11],Q=b[2][12],P=0;return d<50?hv(d+1|0,b,c,Q,P,O):a(hv,[0,b,c,Q,P,O]);case
+O=b[2][11],Q=b[2][12],P=0;return d<50?hw(d+1|0,b,c,Q,P,O):a(hw,[0,b,c,Q,P,O]);case
 67:var
-R=b[2][11],T=b[2][12],S=0;return d<50?hu(d+1|0,b,c,T,S,R):a(hu,[0,b,c,T,S,R]);case
+R=b[2][11],T=b[2][12],S=0;return d<50?hv(d+1|0,b,c,T,S,R):a(hv,[0,b,c,T,S,R]);case
 74:var
-U=b[2][11],W=b[2][12],V=0;return d<50?cc(d+1|0,b,c,W,V,U):a(cc,[0,b,c,W,V,U])}if(b[4])throw[0,i,ZO];b[4]=1;return o(b,c,0)},kF=function(t,b,B,A){var
+U=b[2][11],W=b[2][12],V=0;return d<50?cc(d+1|0,b,c,W,V,U):a(cc,[0,b,c,W,V,U])}if(b[4])throw[0,i,ZI];b[4]=1;return o(b,c,0)},kF=function(t,b,B,A){var
 c=B,d=A,f=0;for(;;){if(7===d){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -23693,35 +24627,38 @@ u=[0,c[3],f],v=c[2],c=c[1],d=v,f=u;continue}if(56===d){if(b[4])throw[0,i,XS];var
 =======
 u=[0,c[3],f],v=c[2],c=c[1],d=v,f=u;continue}if(56===d){if(b[4])throw[0,i,XP];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+u=[0,c[3],f],v=c[2],c=c[1],d=v,f=u;continue}if(56===d){if(b[4])throw[0,i,XJ];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 h=b[3];if(typeof
 h==="number")if(20===h){var
-e=b[2][12],j=q(b),k=c[1],l=k[1],m=l[1][1],g=m[1],n=g[4],w=k[2],x=l[4],y=[0,$(n,e),x,w,f],z=m[3],p=[6,$(n,e),z,y],r=g[3],s=g[1];return t<50?d_(t+1|0,j,s,e,r,p):a(d_,[0,j,s,e,r,p])}if(b[4])throw[0,i,XQ];b[4]=1;return o(b,c,d)}return cP(0)}},kE=function(j,p,n,m,l,k){var
+e=b[2][12],j=q(b),k=c[1],l=k[1],m=l[1][1],g=m[1],n=g[4],w=k[2],x=l[4],y=[0,$(n,e),x,w,f],z=m[3],p=[6,$(n,e),z,y],r=g[3],s=g[1];return t<50?d_(t+1|0,j,s,e,r,p):a(d_,[0,j,s,e,r,p])}if(b[4])throw[0,i,XK];b[4]=1;return o(b,c,d)}return cP(0)}},kE=function(j,p,n,m,l,k){var
 c=[0,n,m,l,k],b=q(p),d=b[3];if(typeof
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 d!=="number"&&2===d[0]){var
-e=b[2][11],f=d[1],h=b[2][12],g=55;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,ZP];b[4]=1;return o(b,c,55)},fY=function(c,R,Q,P,O,N){var
+e=b[2][11],f=d[1],h=b[2][12],g=55;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,ZJ];b[4]=1;return o(b,c,55)},fZ=function(c,R,Q,P,O,N){var
 e=[0,Q,P,O,N],b=q(R),h=b[3];if(typeof
 h==="number")switch(h){case
 3:var
 j=[0,e,39],f=q(b),m=f[3];if(typeof
 m==="number"){if(8===m){var
-r=38;return c<50?en(c+1|0,f,j,r):a(en,[0,f,j,r])}if(71===m){var
-s=38;return c<50?em(c+1|0,f,j,s):a(em,[0,f,j,s])}}if(f[4])throw[0,i,ZR];f[4]=1;return o(f,j,38);case
+r=38;return c<50?em(c+1|0,f,j,r):a(em,[0,f,j,r])}if(71===m){var
+s=38;return c<50?el(c+1|0,f,j,s):a(el,[0,f,j,s])}}if(f[4])throw[0,i,ZL];f[4]=1;return o(f,j,38);case
 43:var
 k=[0,e,b[2][12],39,b[2][11]],d=q(b),l=d[3];if(typeof
 l==="number"){if(24===l){var
 n=[0,k,d[2][12],17],g=q(d),p=g[3];if(typeof
 p!=="number"&&2===p[0]){var
-t=g[2][11],u=p[1],w=g[2][12],v=16;return c<50?bQ(c+1|0,g,n,w,v,u,t):a(bQ,[0,g,n,w,v,u,t])}if(g[4])throw[0,i,ZT];g[4]=1;return o(g,n,16)}}else
+t=g[2][11],u=p[1],w=g[2][12],v=16;return c<50?bQ(c+1|0,g,n,w,v,u,t):a(bQ,[0,g,n,w,v,u,t])}if(g[4])throw[0,i,ZN];g[4]=1;return o(g,n,16)}}else
 if(2===l[0]){var
-x=d[2][11],y=l[1],A=d[2][12],z=17;return c<50?bQ(c+1|0,d,k,A,z,y,x):a(bQ,[0,d,k,A,z,y,x])}if(d[4])throw[0,i,ZS];d[4]=1;return o(d,k,17)}else
+x=d[2][11],y=l[1],A=d[2][12],z=17;return c<50?bQ(c+1|0,d,k,A,z,y,x):a(bQ,[0,d,k,A,z,y,x])}if(d[4])throw[0,i,ZM];d[4]=1;return o(d,k,17)}else
 switch(h[0]){case
 0:var
 B=b[2][11],C=h[1],E=b[2][12],D=39;return c<50?ig(c+1|0,b,e,E,D,C,B):a(ig,[0,b,e,E,D,C,B]);case
 1:var
 F=b[2][11],G=h[1],I=b[2][12],H=39;return c<50?ie(c+1|0,b,e,I,H,G,F):a(ie,[0,b,e,I,H,G,F]);case
 3:var
-J=b[2][11],K=h[1],M=b[2][12],L=39;return c<50?id(c+1|0,b,e,M,L,K,J):a(id,[0,b,e,M,L,K,J])}if(b[4])throw[0,i,ZQ];b[4]=1;return o(b,e,39)},fX=function(d,R,Q,P,O,N){var
+J=b[2][11],K=h[1],M=b[2][12],L=39;return c<50?id(c+1|0,b,e,M,L,K,J):a(id,[0,b,e,M,L,K,J])}if(b[4])throw[0,i,ZK];b[4]=1;return o(b,e,39)},fY=function(d,R,Q,P,O,N){var
 c=[0,Q,P,O,N],b=q(R),e=b[3];if(typeof
 e==="number")if(37<=e){if(74===e){var
 f=b[2][11],h=b[2][12],g=18;return d<50?cc(d+1|0,b,c,h,g,f):a(cc,[0,b,c,h,g,f])}if(!(64<=e))switch(e+cH|0){case
@@ -23743,10 +24680,10 @@ E=b[2][11],G=b[2][12],F=18;return d<50?cw(d+1|0,b,c,G,F,E):a(cw,[0,b,c,G,F,E]);c
 9:var
 H=b[2][11],J=b[2][12],I=18;return d<50?cj(d+1|0,b,c,J,I,H):a(cj,[0,b,c,J,I,H]);case
 12:var
-K=b[2][11],M=b[2][12],L=18;return d<50?ci(d+1|0,b,c,M,L,K):a(ci,[0,b,c,M,L,K])}}if(b[4])throw[0,i,ZU];b[4]=1;return o(b,c,18)},cw=function(g,m,l,k,j,h){var
+K=b[2][11],M=b[2][12],L=18;return d<50?ci(d+1|0,b,c,M,L,K):a(ci,[0,b,c,M,L,K])}}if(b[4])throw[0,i,ZO];b[4]=1;return o(b,c,18)},cw=function(g,m,l,k,j,h){var
 c=[0,l,k,j,h],b=q(m),d=b[3];if(typeof
 d==="number")if(9===d){var
-e=b[2][11],f=b[2][12];return g<50?kz(g+1|0,b,c,f,e):a(kz,[0,b,c,f,e])}if(b[4])throw[0,i,ZV];b[4]=1;return o(b,c[1],c[3])},fW=function(d,b$,b_,b9,b8){var
+e=b[2][11],f=b[2][12];return g<50?kz(g+1|0,b,c,f,e):a(kz,[0,b,c,f,e])}if(b[4])throw[0,i,ZP];b[4]=1;return o(b,c[1],c[3])},fX=function(d,b$,b_,b9,b8){var
 c=[0,b_,b9,b8],b=q(b$),e=b[3];if(typeof
 e==="number")switch(e){case
 0:var
@@ -23834,19 +24771,19 @@ bY=b[2][11],b0=b[2][12],bZ=70;return d<50?a7(d+1|0,b,c,b0,bZ,bY):a(a7,[0,b,c,b0,
 77:var
 b1=b[2][11],b3=b[2][12],b2=70;return d<50?a6(d+1|0,b,c,b3,b2,b1):a(a6,[0,b,c,b3,b2,b1])}else
 if(2===e[0]){var
-b4=b[2][11],b5=e[1],b7=b[2][12],b6=70;return d<50?bn(d+1|0,b,c,b7,b6,b5,b4):a(bn,[0,b,c,b7,b6,b5,b4])}if(b[4])throw[0,i,ZY];b[4]=1;return o(b,c,70)},fV=function(e,s,r,p,n,m){var
+b4=b[2][11],b5=e[1],b7=b[2][12],b6=70;return d<50?bn(d+1|0,b,c,b7,b6,b5,b4):a(bn,[0,b,c,b7,b6,b5,b4])}if(b[4])throw[0,i,ZS];b[4]=1;return o(b,c,70)},fW=function(e,s,r,p,n,m){var
 c=[0,r,p,n,m],b=q(s),d=b[3];if(typeof
 d==="number"){if(6===d){var
 f=b[2][11],g=69;return e<50?A(e+1|0,b,c,g,f):a(A,[0,b,c,g,f])}}else
 if(2===d[0]){var
-h=b[2][11],j=d[1],l=b[2][12],k=69;return e<50?h$(e+1|0,b,c,l,k,j,h):a(h$,[0,b,c,l,k,j,h])}if(b[4])throw[0,i,ZZ];b[4]=1;return o(b,c,69)},en=function(f,d,c,b){var
-e=0;return f<50?kM(f+1|0,d,c,b,e):a(kM,[0,d,c,b,e])},em=function(e,p,n,m){var
+h=b[2][11],j=d[1],l=b[2][12],k=69;return e<50?h$(e+1|0,b,c,l,k,j,h):a(h$,[0,b,c,l,k,j,h])}if(b[4])throw[0,i,ZT];b[4]=1;return o(b,c,69)},em=function(f,d,c,b){var
+e=0;return f<50?kM(f+1|0,d,c,b,e):a(kM,[0,d,c,b,e])},el=function(e,p,n,m){var
 c=[0,n,m],b=q(p),d=b[3];if(typeof
 d==="number"){if(6===d){var
 f=b[2][11],g=n0;return e<50?A(e+1|0,b,c,g,f):a(A,[0,b,c,g,f])}}else
 if(2===d[0]){var
-h=b[2][11],j=d[1],l=b[2][12],k=n0;return e<50?h$(e+1|0,b,c,l,k,j,h):a(h$,[0,b,c,l,k,j,h])}if(b[4])throw[0,i,Z2];b[4]=1;return o(b,c,n0)},kD=function(c,h,ec,n,eb){var
-b=[0,ec,n,eb];if(76<=n){if(eD===n){if(h[4])throw[0,i,Z3];var
+h=b[2][11],j=d[1],l=b[2][12],k=n0;return e<50?h$(e+1|0,b,c,l,k,j,h):a(h$,[0,b,c,l,k,j,h])}if(b[4])throw[0,i,ZW];b[4]=1;return o(b,c,n0)},kD=function(c,h,ec,n,eb){var
+b=[0,ec,n,eb];if(76<=n){if(eD===n){if(h[4])throw[0,i,ZX];var
 p=h[3];if(typeof
 p==="number")if(58===p){var
 d=q(h),j=d[3];if(typeof
@@ -23888,7 +24825,7 @@ aC=d[2][11],aE=d[2][12],aD=ah;return c<50?D(c+1|0,d,b,aE,aD,aC):a(D,[0,d,b,aE,aD
 67:var
 aF=d[2][11],aH=d[2][12],aG=ah;return c<50?C(c+1|0,d,b,aH,aG,aF):a(C,[0,d,b,aH,aG,aF]);case
 72:var
-aI=d[2][11],aK=d[2][12],aJ=ah;return c<50?B(c+1|0,d,b,aK,aJ,aI):a(B,[0,d,b,aK,aJ,aI]);default:if(d[4])throw[0,i,Z4];d[4]=1;return o(d,b,ah)}else
+aI=d[2][11],aK=d[2][12],aJ=ah;return c<50?B(c+1|0,d,b,aK,aJ,aI):a(B,[0,d,b,aK,aJ,aI]);default:if(d[4])throw[0,i,ZY];d[4]=1;return o(d,b,ah)}else
 switch(j[0]){case
 0:var
 aL=d[2][11],aM=j[1],aO=d[2][12],aN=ah;return c<50?M(c+1|0,d,b,aO,aN,aM,aL):a(M,[0,d,b,aO,aN,aM,aL]);case
@@ -23896,7 +24833,7 @@ aL=d[2][11],aM=j[1],aO=d[2][12],aN=ah;return c<50?M(c+1|0,d,b,aO,aN,aM,aL):a(M,[
 aP=d[2][11],aQ=j[1],aS=d[2][12],aR=ah;return c<50?H(c+1|0,d,b,aS,aR,aQ,aP):a(H,[0,d,b,aS,aR,aQ,aP]);case
 2:var
 aT=d[2][11],aU=j[1],aW=d[2][12],aV=ah;return c<50?G(c+1|0,d,b,aW,aV,aU,aT):a(G,[0,d,b,aW,aV,aU,aT]);default:var
-aX=d[2][11],aY=j[1],a0=d[2][12],aZ=ah;return c<50?E(c+1|0,d,b,a0,aZ,aY,aX):a(E,[0,d,b,a0,aZ,aY,aX])}}if(h[4])throw[0,i,Z5];h[4]=1;return o(h,b[1],b[2])}if(lk===n){if(h[4])throw[0,i,Z6];var
+aX=d[2][11],aY=j[1],a0=d[2][12],aZ=ah;return c<50?E(c+1|0,d,b,a0,aZ,aY,aX):a(E,[0,d,b,a0,aZ,aY,aX])}}if(h[4])throw[0,i,ZZ];h[4]=1;return o(h,b[1],b[2])}if(lk===n){if(h[4])throw[0,i,Z0];var
 a1=h[3];if(typeof
 a1==="number")if(58===a1){var
 e=q(h),k=e[3];if(typeof
@@ -23938,7 +24875,7 @@ bF=e[2][11],bH=e[2][12],bG=dc;return c<50?D(c+1|0,e,b,bH,bG,bF):a(D,[0,e,b,bH,bG
 67:var
 bI=e[2][11],bK=e[2][12],bJ=dc;return c<50?C(c+1|0,e,b,bK,bJ,bI):a(C,[0,e,b,bK,bJ,bI]);case
 72:var
-bL=e[2][11],bN=e[2][12],bM=dc;return c<50?B(c+1|0,e,b,bN,bM,bL):a(B,[0,e,b,bN,bM,bL]);default:if(e[4])throw[0,i,Z7];e[4]=1;return o(e,b,dc)}else
+bL=e[2][11],bN=e[2][12],bM=dc;return c<50?B(c+1|0,e,b,bN,bM,bL):a(B,[0,e,b,bN,bM,bL]);default:if(e[4])throw[0,i,Z1];e[4]=1;return o(e,b,dc)}else
 switch(k[0]){case
 0:var
 bO=e[2][11],bP=k[1],bR=e[2][12],bQ=dc;return c<50?M(c+1|0,e,b,bR,bQ,bP,bO):a(M,[0,e,b,bR,bQ,bP,bO]);case
@@ -23946,7 +24883,7 @@ bO=e[2][11],bP=k[1],bR=e[2][12],bQ=dc;return c<50?M(c+1|0,e,b,bR,bQ,bP,bO):a(M,[
 bS=e[2][11],bT=k[1],bV=e[2][12],bU=dc;return c<50?H(c+1|0,e,b,bV,bU,bT,bS):a(H,[0,e,b,bV,bU,bT,bS]);case
 2:var
 bW=e[2][11],bX=k[1],bZ=e[2][12],bY=dc;return c<50?G(c+1|0,e,b,bZ,bY,bX,bW):a(G,[0,e,b,bZ,bY,bX,bW]);default:var
-b0=e[2][11],b1=k[1],b3=e[2][12],b2=dc;return c<50?E(c+1|0,e,b,b3,b2,b1,b0):a(E,[0,e,b,b3,b2,b1,b0])}}if(h[4])throw[0,i,Z8];h[4]=1;return o(h,b[1],b[2])}}else{if(36===n){if(h[4])throw[0,i,Z9];var
+b0=e[2][11],b1=k[1],b3=e[2][12],b2=dc;return c<50?E(c+1|0,e,b,b3,b2,b1,b0):a(E,[0,e,b,b3,b2,b1,b0])}}if(h[4])throw[0,i,Z2];h[4]=1;return o(h,b[1],b[2])}}else{if(36===n){if(h[4])throw[0,i,Z3];var
 b4=h[3];if(typeof
 b4==="number")if(58===b4){var
 f=q(h),l=f[3];if(typeof
@@ -23992,6 +24929,7 @@ cL=f[2][11],cN=f[2][12],cM=35;return c<50?C(c+1|0,f,b,cN,cM,cL):a(C,[0,f,b,cN,cM
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 cO=f[2][11],cR=f[2][12],cP=35;return c<50?B(c+1|0,f,b,cR,cP,cO):a(B,[0,f,b,cR,cP,cO]);default:if(f[4])throw[0,h,Zf];f[4]=1;return p(f,b,35)}else
 =======
 cO=f[2][11],cR=f[2][12],cQ=35;return c<50?B(c+1|0,f,b,cR,cQ,cO):a(B,[0,f,b,cR,cQ,cO]);default:if(f[4])throw[0,i,Z4];f[4]=1;return p(f,b,35)}else
@@ -24005,6 +24943,9 @@ cO=f[2][11],cR=f[2][12],cQ=35;return c<50?B(c+1|0,f,b,cR,cQ,cO):a(B,[0,f,b,cR,cQ
 =======
 cO=f[2][11],cR=f[2][12],cQ=35;return c<50?B(c+1|0,f,b,cR,cQ,cO):a(B,[0,f,b,cR,cQ,cO]);default:if(f[4])throw[0,i,Z_];f[4]=1;return o(f,b,35)}else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+cO=f[2][11],cR=f[2][12],cQ=35;return c<50?B(c+1|0,f,b,cR,cQ,cO):a(B,[0,f,b,cR,cQ,cO]);default:if(f[4])throw[0,i,Z4];f[4]=1;return o(f,b,35)}else
+>>>>>>> (fix) Directly use time constants in generated JS code
 switch(l[0]){case
 0:var
 cS=f[2][11],cT=l[1],cV=f[2][12],cU=35;return c<50?M(c+1|0,f,b,cV,cU,cT,cS):a(M,[0,f,b,cV,cU,cT,cS]);case
@@ -24012,7 +24953,7 @@ cS=f[2][11],cT=l[1],cV=f[2][12],cU=35;return c<50?M(c+1|0,f,b,cV,cU,cT,cS):a(M,[
 cW=f[2][11],cX=l[1],cZ=f[2][12],cY=35;return c<50?H(c+1|0,f,b,cZ,cY,cX,cW):a(H,[0,f,b,cZ,cY,cX,cW]);case
 2:var
 c0=f[2][11],c1=l[1],c3=f[2][12],c2=35;return c<50?G(c+1|0,f,b,c3,c2,c1,c0):a(G,[0,f,b,c3,c2,c1,c0]);default:var
-c4=f[2][11],c5=l[1],c7=f[2][12],c6=35;return c<50?E(c+1|0,f,b,c7,c6,c5,c4):a(E,[0,f,b,c7,c6,c5,c4])}}if(h[4])throw[0,i,Z$];h[4]=1;return o(h,b[1],b[2])}if(75<=n){if(h[4])throw[0,i,_a];var
+c4=f[2][11],c5=l[1],c7=f[2][12],c6=35;return c<50?E(c+1|0,f,b,c7,c6,c5,c4):a(E,[0,f,b,c7,c6,c5,c4])}}if(h[4])throw[0,i,Z5];h[4]=1;return o(h,b[1],b[2])}if(75<=n){if(h[4])throw[0,i,Z6];var
 c8=h[3];if(typeof
 c8==="number")if(58===c8){var
 g=q(h),m=g[3];if(typeof
@@ -24054,7 +24995,7 @@ dO=g[2][11],dQ=g[2][12],dP=74;return c<50?D(c+1|0,g,b,dQ,dP,dO):a(D,[0,g,b,dQ,dP
 67:var
 dR=g[2][11],dT=g[2][12],dS=74;return c<50?C(c+1|0,g,b,dT,dS,dR):a(C,[0,g,b,dT,dS,dR]);case
 72:var
-dU=g[2][11],dW=g[2][12],dV=74;return c<50?B(c+1|0,g,b,dW,dV,dU):a(B,[0,g,b,dW,dV,dU]);default:if(g[4])throw[0,i,_b];g[4]=1;return o(g,b,74)}else
+dU=g[2][11],dW=g[2][12],dV=74;return c<50?B(c+1|0,g,b,dW,dV,dU):a(B,[0,g,b,dW,dV,dU]);default:if(g[4])throw[0,i,Z7];g[4]=1;return o(g,b,74)}else
 switch(m[0]){case
 0:var
 dX=g[2][11],dY=m[1],d0=g[2][12],dZ=74;return c<50?M(c+1|0,g,b,d0,dZ,dY,dX):a(M,[0,g,b,d0,dZ,dY,dX]);case
@@ -24062,6 +25003,7 @@ dX=g[2][11],dY=m[1],d0=g[2][12],dZ=74;return c<50?M(c+1|0,g,b,d0,dZ,dY,dX):a(M,[
 d1=g[2][11],d2=m[1],d4=g[2][12],d3=74;return c<50?H(c+1|0,g,b,d4,d3,d2,d1):a(H,[0,g,b,d4,d3,d2,d1]);case
 2:var
 d5=g[2][11],d6=m[1],d8=g[2][12],d7=74;return c<50?G(c+1|0,g,b,d8,d7,d6,d5):a(G,[0,g,b,d8,d7,d6,d5]);default:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -24080,6 +25022,9 @@ d9=g[2][11],d_=m[1],ea=g[2][12],d$=74;return c<50?E(c+1|0,g,b,ea,d$,d_,d9):a(E,[
 =======
 d9=g[2][11],d_=m[1],ea=g[2][12],d$=74;return c<50?E(c+1|0,g,b,ea,d$,d_,d9):a(E,[0,g,b,ea,d$,d_,d9])}}if(h[4])throw[0,i,_c];h[4]=1;return o(h,b[1],b[2])}}return cP(0)},ew=function(d,cc,cb,ca,b$){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+d9=g[2][11],d_=m[1],ea=g[2][12],d$=74;return c<50?E(c+1|0,g,b,ea,d$,d_,d9):a(E,[0,g,b,ea,d$,d_,d9])}}if(h[4])throw[0,i,Z8];h[4]=1;return o(h,b[1],b[2])}}return cP(0)},ev=function(d,cc,cb,ca,b$){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=[0,cb,ca,b$],b=q(cc),e=b[3];if(typeof
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 e==="number")switch(e){case
@@ -24100,7 +25045,7 @@ A=b[2][11],C=b[2][12],B=bV;return d<50?bD(d+1|0,b,c,C,B,A):a(bD,[0,b,c,C,B,A]);c
 9:var
 D=b[2][11],F=b[2][12],E=bV;return d<50?bC(d+1|0,b,c,F,E,D):a(bC,[0,b,c,F,E,D]);case
 11:var
-G=b[2][11],I=b[2][12],H=bV;return d<50?fz(d+1|0,b,c,I,H,G):a(fz,[0,b,c,I,H,G]);case
+G=b[2][11],I=b[2][12],H=bV;return d<50?fA(d+1|0,b,c,I,H,G):a(fA,[0,b,c,I,H,G]);case
 12:var
 J=b[2][11],L=b[2][12],K=bV;return d<50?bB(d+1|0,b,c,L,K,J):a(bB,[0,b,c,L,K,J]);case
 15:var
@@ -24168,7 +25113,7 @@ b1=b[2][11],b3=b[2][12],b2=bV;return d<50?a7(d+1|0,b,c,b3,b2,b1):a(a7,[0,b,c,b3,
 77:var
 b4=b[2][11],b6=b[2][12],b5=bV;return d<50?a6(d+1|0,b,c,b6,b5,b4):a(a6,[0,b,c,b6,b5,b4])}else
 if(2===e[0]){var
-b7=b[2][11],b8=e[1],b_=b[2][12],b9=bV;return d<50?bn(d+1|0,b,c,b_,b9,b8,b7):a(bn,[0,b,c,b_,b9,b8,b7])}if(b[4])throw[0,i,_d];b[4]=1;return o(b,c,bV)},ev=function(d,ca,b$,b_,b9){var
+b7=b[2][11],b8=e[1],b_=b[2][12],b9=bV;return d<50?bn(d+1|0,b,c,b_,b9,b8,b7):a(bn,[0,b,c,b_,b9,b8,b7])}if(b[4])throw[0,i,Z9];b[4]=1;return o(b,c,bV)},eu=function(d,ca,b$,b_,b9){var
 c=[0,b$,b_,b9],b=q(ca),e=b[3];if(typeof
 e==="number")switch(e){case
 0:var
@@ -24260,6 +25205,7 @@ if(2===e[0]){var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 b5=b[2][11],b6=e[1],b8=b[2][12],b7=bP;return d<50?bn(d+1|0,b,c,b8,b7,b6,b5):a(bn,[0,b,c,b8,b7,b6,b5])}if(b[4])throw[0,h,Zl];b[4]=1;return p(b,c,bP)},h$=function(f,d,c,b){var
 e=0;return f<50?kM(f+1|0,d,c,b,e):a(kM,[0,d,c,b,e])},h_=function(d,co,cn,cm,cl,ck,cj){var
 c=[0,cn,cm,cl,ck,cj],e=q(co),i=e[3];if(typeof
@@ -24287,6 +25233,9 @@ b=r(e),f=b[3];if(typeof
 =======
 =======
 b5=b[2][11],b6=e[1],b8=b[2][12],b7=bP;return d<50?bn(d+1|0,b,c,b8,b7,b6,b5):a(bn,[0,b,c,b8,b7,b6,b5])}if(b[4])throw[0,i,_e];b[4]=1;return o(b,c,bP)},ic=function(f,d,c,b){var
+=======
+b5=b[2][11],b6=e[1],b8=b[2][12],b7=bP;return d<50?bn(d+1|0,b,c,b8,b7,b6,b5):a(bn,[0,b,c,b8,b7,b6,b5])}if(b[4])throw[0,i,Z_];b[4]=1;return o(b,c,bP)},ic=function(f,d,c,b){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 e=0;return f<50?kL(f+1|0,d,c,b,e):a(kL,[0,d,c,b,e])},ib=function(d,co,cn,cm,cl,ck,cj){var
 c=[0,cn,cm,cl,ck,cj],e=q(co),h=e[3];if(typeof
 h==="number"){var
@@ -24307,7 +25256,7 @@ x=b[2][11],z=b[2][12],y=bN;return d<50?bG(d+1|0,b,c,z,y,x):a(bG,[0,b,c,z,y,x]);c
 5:var
 A=b[2][11],C=b[2][12],B=bN;return d<50?bF(d+1|0,b,c,C,B,A):a(bF,[0,b,c,C,B,A]);case
 6:var
-D=b[2][11],E=bN;return d<50?ew(d+1|0,b,c,E,D):a(ew,[0,b,c,E,D]);case
+D=b[2][11],E=bN;return d<50?ev(d+1|0,b,c,E,D):a(ev,[0,b,c,E,D]);case
 7:var
 F=b[2][11],H=b[2][12],G=bN;return d<50?bE(d+1|0,b,c,H,G,F):a(bE,[0,b,c,H,G,F]);case
 8:var
@@ -24337,7 +25286,7 @@ ao=b[2][11],aq=b[2][12],ap=bN;return d<50?bs(d+1|0,b,c,aq,ap,ao):a(bs,[0,b,c,aq,
 43:var
 ar=b[2][11],at=b[2][12],as=bN;return d<50?br(d+1|0,b,c,at,as,ar):a(br,[0,b,c,at,as,ar]);case
 44:var
-au=b[2][11],av=bN;return d<50?ev(d+1|0,b,c,av,au):a(ev,[0,b,c,av,au]);case
+au=b[2][11],av=bN;return d<50?eu(d+1|0,b,c,av,au):a(eu,[0,b,c,av,au]);case
 46:var
 aw=b[2][11],ay=b[2][12],ax=bN;return d<50?bq(d+1|0,b,c,ay,ax,aw):a(bq,[0,b,c,ay,ax,aw]);case
 47:var
@@ -24383,18 +25332,19 @@ b_=b[2][11],ca=b[2][12],b$=bN;return d<50?a7(d+1|0,b,c,ca,b$,b_):a(a7,[0,b,c,ca,
 77:var
 cb=b[2][11],cd=b[2][12],cc=bN;return d<50?a6(d+1|0,b,c,cd,cc,cb):a(a6,[0,b,c,cd,cc,cb])}else
 if(2===f[0]){var
-ce=b[2][11],cf=f[1],ch=b[2][12],cg=bN;return d<50?bn(d+1|0,b,c,ch,cg,cf,ce):a(bn,[0,b,c,ch,cg,cf,ce])}if(b[4])throw[0,i,_g];b[4]=1;return o(b,c,bN)}var
+ce=b[2][11],cf=f[1],ch=b[2][12],cg=bN;return d<50?bn(d+1|0,b,c,ch,cg,cf,ce):a(bn,[0,b,c,ch,cg,cf,ce])}if(b[4])throw[0,i,_a];b[4]=1;return o(b,c,bN)}var
 ci=1}if(ci){var
-cp=[0,$(c[5],c[2])],j=[0,aX(c[4]),cp],k=c[3],l=c[1];return d<50?kK(d+1|0,e,l,k,j):a(kK,[0,e,l,k,j])}}if(e[4])throw[0,i,_f];e[4]=1;return o(e,c[1],c[3])},kC=function(e,b,K,J,I){var
-c=K,d=J,f=I;for(;;){if(dd<=d){if(c3===d){if(b[4])throw[0,i,_h];var
+cp=[0,$(c[5],c[2])],j=[0,aX(c[4]),cp],k=c[3],l=c[1];return d<50?kK(d+1|0,e,l,k,j):a(kK,[0,e,l,k,j])}}if(e[4])throw[0,i,Z$];e[4]=1;return o(e,c[1],c[3])},kC=function(e,b,K,J,I){var
+c=K,d=J,f=I;for(;;){if(dd<=d){if(c3===d){if(b[4])throw[0,i,_b];var
 s=b[3];if(typeof
 s==="number")if(18===s){var
-k=b[2][12],t=q(b),g=c[1],l=g[4],L=g[3],u=[14,$(l,k),L,f],v=g[2],w=g[1];return e<50?b4(e+1|0,t,w,k,v,u,l):a(b4,[0,t,w,k,v,u,l])}if(b[4])throw[0,i,_i];b[4]=1;return o(b,c,d)}if(c6===d){if(b[4])throw[0,i,_j];var
+k=b[2][12],t=q(b),g=c[1],l=g[4],L=g[3],u=[14,$(l,k),L,f],v=g[2],w=g[1];return e<50?b4(e+1|0,t,w,k,v,u,l):a(b4,[0,t,w,k,v,u,l])}if(b[4])throw[0,i,_c];b[4]=1;return o(b,c,d)}if(c6===d){if(b[4])throw[0,i,_d];var
 x=b[3];if(typeof
 x==="number")if(21===x){var
-m=b[2][12],y=q(b),n=c[3],z=[7,$(n,m),f],A=c[2],B=c[1];return e<50?b4(e+1|0,y,B,m,A,z,n):a(b4,[0,y,B,m,A,z,n])}if(b[4])throw[0,i,_k];b[4]=1;return o(b,c,d)}}else{if(23===d){if(b[4])throw[0,i,_l];var
+m=b[2][12],y=q(b),n=c[3],z=[7,$(n,m),f],A=c[2],B=c[1];return e<50?b4(e+1|0,y,B,m,A,z,n):a(b4,[0,y,B,m,A,z,n])}if(b[4])throw[0,i,_e];b[4]=1;return o(b,c,d)}}else{if(23===d){if(b[4])throw[0,i,_f];var
 C=b[3];if(typeof
 C==="number")if(18===C){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -24421,13 +25371,16 @@ d=kv([0,0,b[4]]),e=b[5],f=b[3],g=b[1];return h<50?kG(h+1|0,c,g,f,d,e):a(kG,[0,c,
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 h=b[2][12],D=q(b),E=c[1],p=E[1],j=p[4],M=[0,$(j,h)],N=aX(E[3]),F=[3,$(j,h),M,N,f],G=p[3],H=p[1];return e<50?fU(e+1|0,D,H,h,G,F,j):a(fU,[0,D,H,h,G,F,j])}if(b[4])throw[0,i,_m];b[4]=1;return o(b,c,d)}if(cI<=d){var
+=======
+h=b[2][12],D=q(b),E=c[1],p=E[1],j=p[4],M=[0,$(j,h)],N=aX(E[3]),F=[3,$(j,h),M,N,f],G=p[3],H=p[1];return e<50?fV(e+1|0,D,H,h,G,F,j):a(fV,[0,D,H,h,G,F,j])}if(b[4])throw[0,i,_g];b[4]=1;return o(b,c,d)}if(cI<=d){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 r=c[1],c=r[1],d=r[3],f=[0,r[4],f];continue}}return cP(0)}},ia=function(f,d,c,b){var
 e=0;return f<50?kI(f+1|0,d,c,b,e):a(kI,[0,d,c,b,e])},kB=function(h,c,b){var
 d=kw([0,0,b[4]]),e=b[5],f=b[3],g=b[1];return h<50?kH(h+1|0,c,g,f,d,e):a(kH,[0,c,g,f,d,e])},b4=function(c,VO,VN,VM,VL,VK,VJ){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 b=VO,aS=VN,aR=VM,aN=VL,aP=VK,aO=VJ;a:for(;;){var
 d=[0,aS,aR,aN,aP,aO],ea=aN;if(dZ<=ea)switch(ea){case
-167:if(b[4])throw[0,i,$A];var
+167:if(b[4])throw[0,i,$u];var
 GT=b[3];if(typeof
 GT==="number")switch(GT){case
 10:var
@@ -24500,8 +25453,8 @@ Hi=dZ;return c<50?ab(c+1|0,b,d,Hi):a(ab,[0,b,d,Hi]);case
 72:case
 75:case
 77:break;default:var
-GU=d[2],cu=d[1][1],GV=cu[5],Wg=d[4],Wh=cu[4],Wi=b$[3][4],Wj=[9,$(GV,GU),Wi,Wh,Wg],aS=cu[1],aR=GU,aN=cu[3],aP=Wj,aO=GV;continue}if(b[4])throw[0,i,$B];b[4]=1;return o(b,d,dZ);case
-169:if(b[4])throw[0,i,$C];var
+GU=d[2],cu=d[1][1],GV=cu[5],Wg=d[4],Wh=cu[4],Wi=b$[3][4],Wj=[9,$(GV,GU),Wi,Wh,Wg],aS=cu[1],aR=GU,aN=cu[3],aP=Wj,aO=GV;continue}if(b[4])throw[0,i,$v];b[4]=1;return o(b,d,dZ);case
+169:if(b[4])throw[0,i,$w];var
 Hj=b[3];if(typeof
 Hj==="number")switch(Hj){case
 10:var
@@ -24558,36 +25511,36 @@ HC=eT;return c<50?ab(c+1|0,b,d,HC):a(ab,[0,b,d,HC]);case
 72:case
 75:case
 77:break;default:var
-Hk=d[2],cv=d[1][1],Hl=cv[5],Wk=d[4],Wl=cv[4],Wm=b$[3][1][10],Wn=[9,$(Hl,Hk),Wm,Wl,Wk],aS=cv[1],aR=Hk,aN=cv[3],aP=Wn,aO=Hl;continue}if(b[4])throw[0,i,$D];b[4]=1;return o(b,d,eT);case
-171:if(b[4])throw[0,i,$E];var
+Hk=d[2],cv=d[1][1],Hl=cv[5],Wk=d[4],Wl=cv[4],Wm=b$[3][1][10],Wn=[9,$(Hl,Hk),Wm,Wl,Wk],aS=cv[1],aR=Hk,aN=cv[3],aP=Wn,aO=Hl;continue}if(b[4])throw[0,i,$x];b[4]=1;return o(b,d,eT);case
+171:if(b[4])throw[0,i,$y];var
 HD=b[3];if(typeof
 HD==="number")switch(HD){case
 10:var
-HG=eq;return c<50?ag(c+1|0,b,d,HG):a(ag,[0,b,d,HG]);case
+HG=ep;return c<50?ag(c+1|0,b,d,HG):a(ag,[0,b,d,HG]);case
 11:var
-HH=b[2][11],HJ=b[2][12],HI=eq;return c<50?af(c+1|0,b,d,HJ,HI,HH):a(af,[0,b,d,HJ,HI,HH]);case
+HH=b[2][11],HJ=b[2][12],HI=ep;return c<50?af(c+1|0,b,d,HJ,HI,HH):a(af,[0,b,d,HJ,HI,HH]);case
 13:var
-HK=eq;return c<50?ae(c+1|0,b,d,HK):a(ae,[0,b,d,HK]);case
+HK=ep;return c<50?ae(c+1|0,b,d,HK):a(ae,[0,b,d,HK]);case
 14:var
-HL=eq;return c<50?ad(c+1|0,b,d,HL):a(ad,[0,b,d,HL]);case
+HL=ep;return c<50?ad(c+1|0,b,d,HL):a(ad,[0,b,d,HL]);case
 22:var
-HM=eq;return c<50?ap(c+1|0,b,d,HM):a(ap,[0,b,d,HM]);case
+HM=ep;return c<50?ap(c+1|0,b,d,HM):a(ap,[0,b,d,HM]);case
 23:var
-HN=eq;return c<50?_(c+1|0,b,d,HN):a(_,[0,b,d,HN]);case
+HN=ep;return c<50?_(c+1|0,b,d,HN):a(_,[0,b,d,HN]);case
 25:var
-HO=eq;return c<50?aa(c+1|0,b,d,HO):a(aa,[0,b,d,HO]);case
+HO=ep;return c<50?aa(c+1|0,b,d,HO):a(aa,[0,b,d,HO]);case
 26:var
-HP=eq;return c<50?an(c+1|0,b,d,HP):a(an,[0,b,d,HP]);case
+HP=ep;return c<50?an(c+1|0,b,d,HP):a(an,[0,b,d,HP]);case
 27:var
-HQ=eq;return c<50?am(c+1|0,b,d,HQ):a(am,[0,b,d,HQ]);case
+HQ=ep;return c<50?am(c+1|0,b,d,HQ):a(am,[0,b,d,HQ]);case
 35:var
-HR=b[2][11],HS=eq;return c<50?al(c+1|0,b,d,HS,HR):a(al,[0,b,d,HS,HR]);case
+HR=b[2][11],HS=ep;return c<50?al(c+1|0,b,d,HS,HR):a(al,[0,b,d,HS,HR]);case
 36:var
-HT=b[2][11],HU=eq;return c<50?ak(c+1|0,b,d,HU,HT):a(ak,[0,b,d,HU,HT]);case
+HT=b[2][11],HU=ep;return c<50?ak(c+1|0,b,d,HU,HT):a(ak,[0,b,d,HU,HT]);case
 65:var
-HV=eq;return c<50?Z(c+1|0,b,d,HV):a(Z,[0,b,d,HV]);case
+HV=ep;return c<50?Z(c+1|0,b,d,HV):a(Z,[0,b,d,HV]);case
 73:var
-HW=eq;return c<50?ab(c+1|0,b,d,HW):a(ab,[0,b,d,HW]);case
+HW=ep;return c<50?ab(c+1|0,b,d,HW):a(ab,[0,b,d,HW]);case
 2:case
 3:case
 4:case
@@ -24616,8 +25569,8 @@ HW=eq;return c<50?ab(c+1|0,b,d,HW):a(ab,[0,b,d,HW]);case
 72:case
 75:case
 77:break;default:var
-HE=d[2],cK=d[1][1],HF=cK[5],Wo=d[4],Wp=cK[4],Wq=b$[3][1][11],Wr=[9,$(HF,HE),Wq,Wp,Wo],aS=cK[1],aR=HE,aN=cK[3],aP=Wr,aO=HF;continue}if(b[4])throw[0,i,$F];b[4]=1;return o(b,d,eq);case
-173:if(b[4])throw[0,i,$G];var
+HE=d[2],cK=d[1][1],HF=cK[5],Wo=d[4],Wp=cK[4],Wq=b$[3][1][11],Wr=[9,$(HF,HE),Wq,Wp,Wo],aS=cK[1],aR=HE,aN=cK[3],aP=Wr,aO=HF;continue}if(b[4])throw[0,i,$z];b[4]=1;return o(b,d,ep);case
+173:if(b[4])throw[0,i,$A];var
 HX=b[3];if(typeof
 HX==="number")switch(HX){case
 10:var
@@ -24674,8 +25627,8 @@ Ic=eU;return c<50?ab(c+1|0,b,d,Ic):a(ab,[0,b,d,Ic]);case
 72:case
 75:case
 77:break;default:var
-dP=d[2],cL=d[1][1],dQ=cL[5],Ws=d[4],Wt=cL[4],Wu=b$[3][2][5],Wv=[9,$(dQ,dP),Wu,Wt,Ws],Ww=b$[2][3],Wx=[8,$(dQ,dP),Ww,Wv],aS=cL[1],aR=dP,aN=cL[3],aP=Wx,aO=dQ;continue}if(b[4])throw[0,i,$H];b[4]=1;return o(b,d,eU);case
-175:if(b[4])throw[0,i,$I];var
+dP=d[2],cL=d[1][1],dQ=cL[5],Ws=d[4],Wt=cL[4],Wu=b$[3][2][5],Wv=[9,$(dQ,dP),Wu,Wt,Ws],Ww=b$[2][3],Wx=[8,$(dQ,dP),Ww,Wv],aS=cL[1],aR=dP,aN=cL[3],aP=Wx,aO=dQ;continue}if(b[4])throw[0,i,$B];b[4]=1;return o(b,d,eU);case
+175:if(b[4])throw[0,i,$C];var
 Id=b[3];if(typeof
 Id==="number")switch(Id){case
 10:var
@@ -24736,6 +25689,7 @@ Iu=eV;return c<50?ab(c+1|0,b,d,Iu):a(ab,[0,b,d,Iu]);case
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 dR=d[2],cP=d[1][1],dS=cP[5],Wy=d[4],Wz=cP[4],WA=b$[3][2][6],WB=[9,$(dS,dR),WA,Wz,Wy],WC=b$[2][3],WD=[8,$(dS,dR),WC,WB],aS=cP[1],aR=dR,aN=cP[3],aP=WD,aO=dS;continue}if(b[4])throw[0,h,_Q];b[4]=1;return p(b,d,eS);case
 177:if(b[4])throw[0,h,_R];var
 =======
@@ -24754,6 +25708,10 @@ dR=d[2],cQ=d[1][1],dS=cQ[5],Wy=d[4],Wz=cQ[4],WA=b$[3][2][6],WB=[9,$(dS,dR),WA,Wz
 dR=d[2],cQ=d[1][1],dS=cQ[5],Wy=d[4],Wz=cQ[4],WA=b$[3][2][6],WB=[9,$(dS,dR),WA,Wz,Wy],WC=b$[2][3],WD=[8,$(dS,dR),WC,WB],aS=cQ[1],aR=dR,aN=cQ[3],aP=WD,aO=dS;continue}if(b[4])throw[0,i,$J];b[4]=1;return o(b,d,eV);case
 177:if(b[4])throw[0,i,$K];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+dR=d[2],cQ=d[1][1],dS=cQ[5],Wy=d[4],Wz=cQ[4],WA=b$[3][2][6],WB=[9,$(dS,dR),WA,Wz,Wy],WC=b$[2][3],WD=[8,$(dS,dR),WC,WB],aS=cQ[1],aR=dR,aN=cQ[3],aP=WD,aO=dS;continue}if(b[4])throw[0,i,$D];b[4]=1;return o(b,d,eV);case
+177:if(b[4])throw[0,i,$E];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 Iv=b[3];if(typeof
 Iv==="number")switch(Iv){case
 10:var
@@ -24810,8 +25768,8 @@ IO=eE;return c<50?ab(c+1|0,b,d,IO):a(ab,[0,b,d,IO]);case
 72:case
 75:case
 77:break;default:var
-Iw=d[2],cR=d[1][1],Ix=cR[5],WE=d[4],WF=cR[4],WG=b$[3][1][8],WH=[9,$(Ix,Iw),WG,WF,WE],aS=cR[1],aR=Iw,aN=cR[3],aP=WH,aO=Ix;continue}if(b[4])throw[0,i,$L];b[4]=1;return o(b,d,eE);case
-179:if(b[4])throw[0,i,$M];var
+Iw=d[2],cR=d[1][1],Ix=cR[5],WE=d[4],WF=cR[4],WG=b$[3][1][8],WH=[9,$(Ix,Iw),WG,WF,WE],aS=cR[1],aR=Iw,aN=cR[3],aP=WH,aO=Ix;continue}if(b[4])throw[0,i,$F];b[4]=1;return o(b,d,eE);case
+179:if(b[4])throw[0,i,$G];var
 IP=b[3];if(typeof
 IP==="number")switch(IP){case
 10:var
@@ -24868,8 +25826,8 @@ I8=eO;return c<50?ab(c+1|0,b,d,I8):a(ab,[0,b,d,I8]);case
 72:case
 75:case
 77:break;default:var
-IQ=d[2],cS=d[1][1],IR=cS[5],WI=d[4],WJ=cS[4],WK=b$[3][1][9],WL=[9,$(IR,IQ),WK,WJ,WI],aS=cS[1],aR=IQ,aN=cS[3],aP=WL,aO=IR;continue}if(b[4])throw[0,i,$N];b[4]=1;return o(b,d,eO);case
-181:if(b[4])throw[0,i,$O];var
+IQ=d[2],cS=d[1][1],IR=cS[5],WI=d[4],WJ=cS[4],WK=b$[3][1][9],WL=[9,$(IR,IQ),WK,WJ,WI],aS=cS[1],aR=IQ,aN=cS[3],aP=WL,aO=IR;continue}if(b[4])throw[0,i,$H];b[4]=1;return o(b,d,eO);case
+181:if(b[4])throw[0,i,$I];var
 I9=b[3];if(typeof
 I9==="number")switch(I9){case
 10:var
@@ -24930,6 +25888,7 @@ Jq=eS;return c<50?ab(c+1|0,b,d,Jq):a(ab,[0,b,d,Jq]);case
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 I_=d[2],cT=d[1][1],I$=cT[5],WM=d[4],WN=cT[4],WO=b$[3][2][6],WP=[9,$(I$,I_),WO,WN,WM],aS=cT[1],aR=I_,aN=cT[3],aP=WP,aO=I$;continue}if(b[4])throw[0,h,_W];b[4]=1;return p(b,d,eP);case
 183:if(b[4])throw[0,h,_X];var
 =======
@@ -24948,6 +25907,10 @@ I_=d[2],cW=d[1][1],I$=cW[5],WM=d[4],WN=cW[4],WO=b$[3][2][6],WP=[9,$(I$,I_),WO,WN
 I_=d[2],cW=d[1][1],I$=cW[5],WM=d[4],WN=cW[4],WO=b$[3][2][6],WP=[9,$(I$,I_),WO,WN,WM],aS=cW[1],aR=I_,aN=cW[3],aP=WP,aO=I$;continue}if(b[4])throw[0,i,$P];b[4]=1;return o(b,d,eS);case
 183:if(b[4])throw[0,i,$Q];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+I_=d[2],cW=d[1][1],I$=cW[5],WM=d[4],WN=cW[4],WO=b$[3][2][6],WP=[9,$(I$,I_),WO,WN,WM],aS=cW[1],aR=I_,aN=cW[3],aP=WP,aO=I$;continue}if(b[4])throw[0,i,$J];b[4]=1;return o(b,d,eS);case
+183:if(b[4])throw[0,i,$K];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 Jr=b[3];if(typeof
 Jr==="number")switch(Jr){case
 10:var
@@ -25008,6 +25971,7 @@ JK=eR;return c<50?ab(c+1|0,b,d,JK):a(ab,[0,b,d,JK]);case
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Js=d[2],cX=d[1][1],Jt=cX[5],WQ=d[4],WR=cX[4],WS=b$[3][2][5],WT=[9,$(Jt,Js),WS,WR,WQ],aS=cX[1],aR=Js,aN=cX[3],aP=WT,aO=Jt;continue}if(b[4])throw[0,h,_Y];b[4]=1;return p(b,d,eO);case
 185:if(b[4])throw[0,h,_Z];var
 =======
@@ -25026,6 +25990,10 @@ Js=d[2],cZ=d[1][1],Jt=cZ[5],WQ=d[4],WR=cZ[4],WS=b$[3][2][5],WT=[9,$(Jt,Js),WS,WR
 Js=d[2],cZ=d[1][1],Jt=cZ[5],WQ=d[4],WR=cZ[4],WS=b$[3][2][5],WT=[9,$(Jt,Js),WS,WR,WQ],aS=cZ[1],aR=Js,aN=cZ[3],aP=WT,aO=Jt;continue}if(b[4])throw[0,i,$R];b[4]=1;return o(b,d,eR);case
 185:if(b[4])throw[0,i,$S];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+Js=d[2],cZ=d[1][1],Jt=cZ[5],WQ=d[4],WR=cZ[4],WS=b$[3][2][5],WT=[9,$(Jt,Js),WS,WR,WQ],aS=cZ[1],aR=Js,aN=cZ[3],aP=WT,aO=Jt;continue}if(b[4])throw[0,i,$L];b[4]=1;return o(b,d,eR);case
+185:if(b[4])throw[0,i,$M];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 JL=b[3];if(typeof
 JL==="number")switch(JL){case
 10:var
@@ -25098,8 +26066,8 @@ J_=d4;return c<50?ab(c+1|0,b,d,J_):a(ab,[0,b,d,J_]);case
 72:case
 75:case
 77:break;default:var
-dT=d[2],c0=d[1][1],dU=c0[5],WU=d[4],WV=c0[4],WW=b$[3][4],WX=[9,$(dU,dT),WW,WV,WU],WY=b$[2][3],WZ=[8,$(dU,dT),WY,WX],aS=c0[1],aR=dT,aN=c0[3],aP=WZ,aO=dU;continue}if(b[4])throw[0,i,$T];b[4]=1;return o(b,d,d4);case
-187:if(b[4])throw[0,i,$U];var
+dT=d[2],c0=d[1][1],dU=c0[5],WU=d[4],WV=c0[4],WW=b$[3][4],WX=[9,$(dU,dT),WW,WV,WU],WY=b$[2][3],WZ=[8,$(dU,dT),WY,WX],aS=c0[1],aR=dT,aN=c0[3],aP=WZ,aO=dU;continue}if(b[4])throw[0,i,$N];b[4]=1;return o(b,d,d4);case
+187:if(b[4])throw[0,i,$O];var
 J$=b[3];if(typeof
 J$==="number")switch(J$){case
 10:var
@@ -25236,6 +26204,7 @@ KD=b[2][11],KF=b[2][12],KE=cY;return c<50?aG(c+1|0,b,d,KF,KE,KD):a(aG,[0,b,d,KF,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ka=d[2],c1=d[1][1],Kb=c1[5],W0=d[4],W1=c1[4],W2=b$[3][8],W3=[9,$(Kb,Ka),W2,W1,W0],aS=c1[1],aR=Ka,aN=c1[3],aP=W3,aO=Kb;continue}if(b[4])throw[0,h,_2];b[4]=1;return p(b,d,cY);case
 189:if(b[4])throw[0,h,_3];var
 =======
@@ -25254,6 +26223,10 @@ Ka=d[2],c1=d[1][1],Kb=c1[5],W0=d[4],W1=c1[4],W2=b$[3][8],W3=[9,$(Kb,Ka),W2,W1,W0
 Ka=d[2],c1=d[1][1],Kb=c1[5],W0=d[4],W1=c1[4],W2=b$[3][8],W3=[9,$(Kb,Ka),W2,W1,W0],aS=c1[1],aR=Ka,aN=c1[3],aP=W3,aO=Kb;continue}if(b[4])throw[0,i,$V];b[4]=1;return o(b,d,cX);case
 189:if(b[4])throw[0,i,$W];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+Ka=d[2],c1=d[1][1],Kb=c1[5],W0=d[4],W1=c1[4],W2=b$[3][8],W3=[9,$(Kb,Ka),W2,W1,W0],aS=c1[1],aR=Ka,aN=c1[3],aP=W3,aO=Kb;continue}if(b[4])throw[0,i,$P];b[4]=1;return o(b,d,cX);case
+189:if(b[4])throw[0,i,$Q];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 KG=b[3];if(typeof
 KG==="number")switch(KG){case
 10:var
@@ -25300,8 +26273,8 @@ KS=gt;return c<50?ab(c+1|0,b,d,KS):a(ab,[0,b,d,KS]);case
 72:case
 75:case
 77:break;default:var
-KH=d[2],c3=d[1][1],KI=c3[5],W4=d[4],W5=c3[4],W6=b$[3][1][2],W7=[9,$(KI,KH),W6,W5,W4],aS=c3[1],aR=KH,aN=c3[3],aP=W7,aO=KI;continue}if(b[4])throw[0,i,$X];b[4]=1;return o(b,d,gt);case
-191:if(b[4])throw[0,i,$Y];var
+KH=d[2],c3=d[1][1],KI=c3[5],W4=d[4],W5=c3[4],W6=b$[3][1][2],W7=[9,$(KI,KH),W6,W5,W4],aS=c3[1],aR=KH,aN=c3[3],aP=W7,aO=KI;continue}if(b[4])throw[0,i,$R];b[4]=1;return o(b,d,gt);case
+191:if(b[4])throw[0,i,$S];var
 KT=b[3];if(typeof
 KT==="number")switch(KT){case
 10:var
@@ -25348,8 +26321,8 @@ K5=gw;return c<50?ab(c+1|0,b,d,K5):a(ab,[0,b,d,K5]);case
 72:case
 75:case
 77:break;default:var
-KU=d[2],c4=d[1][1],KV=c4[5],W8=d[4],W9=c4[4],W_=b$[3][2][2],W$=[9,$(KV,KU),W_,W9,W8],aS=c4[1],aR=KU,aN=c4[3],aP=W$,aO=KV;continue}if(b[4])throw[0,i,$Z];b[4]=1;return o(b,d,gw);case
-193:if(b[4])throw[0,i,$0];var
+KU=d[2],c4=d[1][1],KV=c4[5],W8=d[4],W9=c4[4],W_=b$[3][2][2],W$=[9,$(KV,KU),W_,W9,W8],aS=c4[1],aR=KU,aN=c4[3],aP=W$,aO=KV;continue}if(b[4])throw[0,i,$T];b[4]=1;return o(b,d,gw);case
+193:if(b[4])throw[0,i,$U];var
 K6=b[3];if(typeof
 K6==="number")switch(K6){case
 10:var
@@ -25396,8 +26369,8 @@ Lg=eQ;return c<50?ab(c+1|0,b,d,Lg):a(ab,[0,b,d,Lg]);case
 72:case
 75:case
 77:break;default:var
-K7=d[2],c6=d[1][1],K8=c6[5],Xa=d[4],Xb=c6[4],Xc=b$[3][1][1],Xd=[9,$(K8,K7),Xc,Xb,Xa],aS=c6[1],aR=K7,aN=c6[3],aP=Xd,aO=K8;continue}if(b[4])throw[0,i,$1];b[4]=1;return o(b,d,eQ);case
-195:if(b[4])throw[0,i,$2];var
+K7=d[2],c6=d[1][1],K8=c6[5],Xa=d[4],Xb=c6[4],Xc=b$[3][1][1],Xd=[9,$(K8,K7),Xc,Xb,Xa],aS=c6[1],aR=K7,aN=c6[3],aP=Xd,aO=K8;continue}if(b[4])throw[0,i,$V];b[4]=1;return o(b,d,eQ);case
+195:if(b[4])throw[0,i,$W];var
 Lh=b[3];if(typeof
 Lh==="number")switch(Lh){case
 10:var
@@ -25444,8 +26417,8 @@ Lt=gu;return c<50?ab(c+1|0,b,d,Lt):a(ab,[0,b,d,Lt]);case
 72:case
 75:case
 77:break;default:var
-Li=d[2],c7=d[1][1],Lj=c7[5],Xe=d[4],Xf=c7[4],Xg=b$[3][2][1],Xh=[9,$(Lj,Li),Xg,Xf,Xe],aS=c7[1],aR=Li,aN=c7[3],aP=Xh,aO=Lj;continue}if(b[4])throw[0,i,$3];b[4]=1;return o(b,d,gu);case
-197:if(b[4])throw[0,i,$4];var
+Li=d[2],c7=d[1][1],Lj=c7[5],Xe=d[4],Xf=c7[4],Xg=b$[3][2][1],Xh=[9,$(Lj,Li),Xg,Xf,Xe],aS=c7[1],aR=Li,aN=c7[3],aP=Xh,aO=Lj;continue}if(b[4])throw[0,i,$X];b[4]=1;return o(b,d,gu);case
+197:if(b[4])throw[0,i,$Y];var
 Lu=b[3];if(typeof
 Lu==="number")switch(Lu){case
 10:var
@@ -25500,8 +26473,8 @@ LM=e_;return c<50?ab(c+1|0,b,d,LM):a(ab,[0,b,d,LM]);case
 72:case
 75:case
 77:break;default:var
-Lv=d[2],c8=d[1][1],Lw=c8[5],Xi=d[4],Xj=c8[4],dV=$(Lw,Lv),aS=c8[1],aR=Lv,aN=c8[3],aP=[16,dV,Xj,[0,[0,[3,dV,Vh,0],[3,dV,Vg]],0],Xi],aO=Lw;continue}if(b[4])throw[0,i,$5];b[4]=1;return o(b,d,e_);case
-199:if(b[4])throw[0,i,$6];var
+Lv=d[2],c8=d[1][1],Lw=c8[5],Xi=d[4],Xj=c8[4],dV=$(Lw,Lv),aS=c8[1],aR=Lv,aN=c8[3],aP=[16,dV,Xj,[0,[0,[3,dV,Vh,0],[3,dV,Vg]],0],Xi],aO=Lw;continue}if(b[4])throw[0,i,$Z];b[4]=1;return o(b,d,e_);case
+199:if(b[4])throw[0,i,$0];var
 LN=b[3];if(typeof
 LN==="number")switch(LN){case
 23:var
@@ -25540,8 +26513,8 @@ LT=jl;return c<50?ab(c+1|0,b,d,LT):a(ab,[0,b,d,LT]);case
 72:case
 75:case
 77:break;default:var
-LO=d[2],c$=d[1][1],LP=c$[5],Xk=d[4],Xl=c$[4],Xm=b$[3][1][6],Xn=[9,$(LP,LO),Xm,Xl,Xk],aS=c$[1],aR=LO,aN=c$[3],aP=Xn,aO=LP;continue}if(b[4])throw[0,i,$7];b[4]=1;return o(b,d,jl);case
-201:if(b[4])throw[0,i,$8];var
+LO=d[2],c$=d[1][1],LP=c$[5],Xk=d[4],Xl=c$[4],Xm=b$[3][1][6],Xn=[9,$(LP,LO),Xm,Xl,Xk],aS=c$[1],aR=LO,aN=c$[3],aP=Xn,aO=LP;continue}if(b[4])throw[0,i,$1];b[4]=1;return o(b,d,jl);case
+201:if(b[4])throw[0,i,$2];var
 LU=b[3];if(typeof
 LU==="number")switch(LU){case
 23:var
@@ -25580,8 +26553,8 @@ L0=im;return c<50?ab(c+1|0,b,d,L0):a(ab,[0,b,d,L0]);case
 72:case
 75:case
 77:break;default:var
-LV=d[2],da=d[1][1],LW=da[5],Xo=d[4],Xp=da[4],Xq=b$[3][2][4],Xr=[9,$(LW,LV),Xq,Xp,Xo],aS=da[1],aR=LV,aN=da[3],aP=Xr,aO=LW;continue}if(b[4])throw[0,i,$9];b[4]=1;return o(b,d,im);case
-203:if(b[4])throw[0,i,$_];var
+LV=d[2],da=d[1][1],LW=da[5],Xo=d[4],Xp=da[4],Xq=b$[3][2][4],Xr=[9,$(LW,LV),Xq,Xp,Xo],aS=da[1],aR=LV,aN=da[3],aP=Xr,aO=LW;continue}if(b[4])throw[0,i,$3];b[4]=1;return o(b,d,im);case
+203:if(b[4])throw[0,i,$4];var
 L1=b[3];if(typeof
 L1==="number")switch(L1){case
 23:var
@@ -25620,8 +26593,8 @@ L7=jo;return c<50?ab(c+1|0,b,d,L7):a(ab,[0,b,d,L7]);case
 72:case
 75:case
 77:break;default:var
-L2=d[2],db=d[1][1],L3=db[5],Xs=d[4],Xt=db[4],Xu=b$[3][1][3],Xv=[9,$(L3,L2),Xu,Xt,Xs],aS=db[1],aR=L2,aN=db[3],aP=Xv,aO=L3;continue}if(b[4])throw[0,i,$$];b[4]=1;return o(b,d,jo);case
-205:if(b[4])throw[0,i,aaa];var
+L2=d[2],db=d[1][1],L3=db[5],Xs=d[4],Xt=db[4],Xu=b$[3][1][3],Xv=[9,$(L3,L2),Xu,Xt,Xs],aS=db[1],aR=L2,aN=db[3],aP=Xv,aO=L3;continue}if(b[4])throw[0,i,$5];b[4]=1;return o(b,d,jo);case
+205:if(b[4])throw[0,i,$6];var
 L8=b[3];if(typeof
 L8==="number")switch(L8){case
 23:var
@@ -25658,8 +26631,8 @@ Mb=li;return c<50?Z(c+1|0,b,d,Mb):a(Z,[0,b,d,Mb]);case
 72:case
 75:case
 77:break;default:var
-L9=d[2],dc=d[1][1],L_=dc[5],Xw=d[4],Xx=dc[4],Xy=b$[3][1][7],Xz=[9,$(L_,L9),Xy,Xx,Xw],aS=dc[1],aR=L9,aN=dc[3],aP=Xz,aO=L_;continue}if(b[4])throw[0,i,aab];b[4]=1;return o(b,d,li);case
-208:if(b[4])throw[0,i,aac];var
+L9=d[2],dc=d[1][1],L_=dc[5],Xw=d[4],Xx=dc[4],Xy=b$[3][1][7],Xz=[9,$(L_,L9),Xy,Xx,Xw],aS=dc[1],aR=L9,aN=dc[3],aP=Xz,aO=L_;continue}if(b[4])throw[0,i,$7];b[4]=1;return o(b,d,li);case
+208:if(b[4])throw[0,i,$8];var
 Mc=b[3];if(typeof
 Mc==="number")switch(Mc){case
 23:var
@@ -25694,8 +26667,8 @@ Mg=lj;return c<50?Z(c+1|0,b,d,Mg):a(Z,[0,b,d,Mg]);case
 72:case
 75:case
 77:break;default:var
-Md=d[2],de=d[1][1],Me=de[5],XA=d[4],XB=de[4],XC=b$[3][14],XD=[9,$(Me,Md),XC,XB,XA],aS=de[1],aR=Md,aN=de[3],aP=XD,aO=Me;continue}if(b[4])throw[0,i,aad];b[4]=1;return o(b,d,lj);case
-211:if(b[4])throw[0,i,aae];var
+Md=d[2],de=d[1][1],Me=de[5],XA=d[4],XB=de[4],XC=b$[3][14],XD=[9,$(Me,Md),XC,XB,XA],aS=de[1],aR=Md,aN=de[3],aP=XD,aO=Me;continue}if(b[4])throw[0,i,$9];b[4]=1;return o(b,d,lj);case
+211:if(b[4])throw[0,i,$_];var
 Mh=b[3];if(typeof
 Mh==="number")switch(Mh){case
 23:var
@@ -25734,8 +26707,8 @@ Mn=jj;return c<50?ab(c+1|0,b,d,Mn):a(ab,[0,b,d,Mn]);case
 72:case
 75:case
 77:break;default:var
-Mi=d[2],df=d[1][1],Mj=df[5],XE=d[4],XF=df[4],XG=b$[3][2][3],XH=[9,$(Mj,Mi),XG,XF,XE],aS=df[1],aR=Mi,aN=df[3],aP=XH,aO=Mj;continue}if(b[4])throw[0,i,aaf];b[4]=1;return o(b,d,jj);case
-214:if(b[4])throw[0,i,aag];var
+Mi=d[2],df=d[1][1],Mj=df[5],XE=d[4],XF=df[4],XG=b$[3][2][3],XH=[9,$(Mj,Mi),XG,XF,XE],aS=df[1],aR=Mi,aN=df[3],aP=XH,aO=Mj;continue}if(b[4])throw[0,i,$$];b[4]=1;return o(b,d,jj);case
+214:if(b[4])throw[0,i,aaa];var
 Mo=b[3];if(typeof
 Mo==="number")switch(Mo){case
 10:var
@@ -25783,7 +26756,7 @@ MP=ct;return c<50?av(c+1|0,b,d,MP):a(av,[0,b,d,MP]);case
 54:var
 dX=[0,d,b[2][12],ct,b[2][11]],bW=q(b),dY=bW[3];if(typeof
 dY!=="number"&&2===dY[0]){var
-MQ=bW[2][11],MR=dY[1],MT=bW[2][12],MS=Vf;return c<50?bQ(c+1|0,bW,dX,MT,MS,MR,MQ):a(bQ,[0,bW,dX,MT,MS,MR,MQ])}if(bW[4])throw[0,i,aai];bW[4]=1;return o(bW,dX,Vf);case
+MQ=bW[2][11],MR=dY[1],MT=bW[2][12],MS=Vf;return c<50?bQ(c+1|0,bW,dX,MT,MS,MR,MQ):a(bQ,[0,bW,dX,MT,MS,MR,MQ])}if(bW[4])throw[0,i,aac];bW[4]=1;return o(bW,dX,Vf);case
 58:var
 MU=ct;return c<50?aE(c+1|0,b,d,MU):a(aE,[0,b,d,MU]);case
 65:var
@@ -25791,7 +26764,7 @@ MV=ct;return c<50?Z(c+1|0,b,d,MV):a(Z,[0,b,d,MV]);case
 70:var
 d0=[0,d,ct],bX=q(b),d1=bX[3];if(typeof
 d1!=="number"&&2===d1[0]){var
-MW=bX[2][11],MX=d1[1],MZ=bX[2][12],MY=nJ;return c<50?bQ(c+1|0,bX,d0,MZ,MY,MX,MW):a(bQ,[0,bX,d0,MZ,MY,MX,MW])}if(bX[4])throw[0,i,aaj];bX[4]=1;return o(bX,d0,nJ);case
+MW=bX[2][11],MX=d1[1],MZ=bX[2][12],MY=nJ;return c<50?bQ(c+1|0,bX,d0,MZ,MY,MX,MW):a(bQ,[0,bX,d0,MZ,MY,MX,MW])}if(bX[4])throw[0,i,aad];bX[4]=1;return o(bX,d0,nJ);case
 73:var
 M0=ct;return c<50?ab(c+1|0,b,d,M0):a(ab,[0,b,d,M0]);case
 76:var
@@ -25799,7 +26772,7 @@ M1=b[2][11],M3=b[2][12],M2=ct;return c<50?aG(c+1|0,b,d,M3,M2,M1):a(aG,[0,b,d,M3,
 1:case
 19:var
 dW=d[1][1],dp=dW[1],cp=dW[2],dn=[0,[0,dW[3],d[4]],0];for(;;){var
-bO=[0,dp,cp,dn],dq=cp-158|0;if(1<dq>>>0){if(57===dq){if(b[4])throw[0,i,Y_];var
+bO=[0,dp,cp,dn],dq=cp-158|0;if(1<dq>>>0){if(57===dq){if(b[4])throw[0,i,Y4];var
 dr=b[3];if(typeof
 dr==="number"){if(1===dr){var
 x=[0,bO,b[2][12],b[2][11]],m=q(b),bY=m[3];if(typeof
@@ -25807,7 +26780,7 @@ bY==="number")switch(bY){case
 2:var
 ek=m[2][11],em=m[2][12],el=dx;return c<50?O(c+1|0,m,x,em,el,ek):a(O,[0,m,x,em,el,ek]);case
 4:var
-en=m[2][11],er=m[2][12],eo=dx;return c<50?N(c+1|0,m,x,er,eo,en):a(N,[0,m,x,er,eo,en]);case
+en=m[2][11],er=m[2][12],eq=dx;return c<50?N(c+1|0,m,x,er,eq,en):a(N,[0,m,x,er,eq,en]);case
 6:var
 es=m[2][11],et=dx;return c<50?A(c+1|0,m,x,et,es):a(A,[0,m,x,et,es]);case
 9:var
@@ -25841,7 +26814,7 @@ e9=m[2][11],fa=m[2][12],e$=dx;return c<50?D(c+1|0,m,x,fa,e$,e9):a(D,[0,m,x,fa,e$
 67:var
 fb=m[2][11],fd=m[2][12],fc=dx;return c<50?C(c+1|0,m,x,fd,fc,fb):a(C,[0,m,x,fd,fc,fb]);case
 72:var
-fe=m[2][11],fg=m[2][12],ff=dx;return c<50?B(c+1|0,m,x,fg,ff,fe):a(B,[0,m,x,fg,ff,fe]);default:if(m[4])throw[0,i,Y$];m[4]=1;return o(m,x,dx)}else
+fe=m[2][11],fg=m[2][12],ff=dx;return c<50?B(c+1|0,m,x,fg,ff,fe):a(B,[0,m,x,fg,ff,fe]);default:if(m[4])throw[0,i,Y5];m[4]=1;return o(m,x,dx)}else
 switch(bY[0]){case
 0:var
 fh=m[2][11],fi=bY[1],fk=m[2][12],fj=dx;return c<50?M(c+1|0,m,x,fk,fj,fi,fh):a(M,[0,m,x,fk,fj,fi,fh]);case
@@ -25871,7 +26844,7 @@ fQ=p[2][11],fR=cn;return c<50?V(c+1|0,p,y,fR,fQ):a(V,[0,p,y,fR,fQ]);case
 36:var
 fS=p[2][11],fT=cn;return c<50?U(c+1|0,p,y,fT,fS):a(U,[0,p,y,fT,fS]);case
 37:var
-fV=p[2][11],f3=p[2][12],fW=cn;return c<50?T(c+1|0,p,y,f3,fW,fV):a(T,[0,p,y,f3,fW,fV]);case
+fU=p[2][11],fX=p[2][12],fW=cn;return c<50?T(c+1|0,p,y,fX,fW,fU):a(T,[0,p,y,fX,fW,fU]);case
 42:var
 f4=p[2][11],f5=cn;return c<50?S(c+1|0,p,y,f5,f4):a(S,[0,p,y,f5,f4]);case
 43:var
@@ -25889,7 +26862,7 @@ gh=p[2][11],gj=p[2][12],gi=cn;return c<50?D(c+1|0,p,y,gj,gi,gh):a(D,[0,p,y,gj,gi
 67:var
 gk=p[2][11],gm=p[2][12],gl=cn;return c<50?C(c+1|0,p,y,gm,gl,gk):a(C,[0,p,y,gm,gl,gk]);case
 72:var
-gn=p[2][11],gq=p[2][12],gp=cn;return c<50?B(c+1|0,p,y,gq,gp,gn):a(B,[0,p,y,gq,gp,gn]);default:if(p[4])throw[0,i,Za];p[4]=1;return o(p,y,cn)}else
+gn=p[2][11],gq=p[2][12],gp=cn;return c<50?B(c+1|0,p,y,gq,gp,gn):a(B,[0,p,y,gq,gp,gn]);default:if(p[4])throw[0,i,Y6];p[4]=1;return o(p,y,cn)}else
 switch(bZ[0]){case
 0:var
 gr=p[2][11],gs=bZ[1],gy=p[2][12],gx=cn;return c<50?M(c+1|0,p,y,gy,gx,gs,gr):a(M,[0,p,y,gy,gx,gs,gr]);case
@@ -25908,6 +26881,7 @@ gH=o[2][11],gI=bZ[1],gK=o[2][12],gJ=cn;return c<50?E(c+1|0,o,y,gK,gJ,gI,gH):a(E,
 gD=p[2][11],gE=bZ[1],gG=p[2][12],gF=cn;return c<50?G(c+1|0,p,y,gG,gF,gE,gD):a(G,[0,p,y,gG,gF,gE,gD]);default:var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 gH=p[2][11],gI=bZ[1],gK=p[2][12],gJ=cn;return c<50?E(c+1|0,p,y,gK,gJ,gI,gH):a(E,[0,p,y,gK,gJ,gI,gH])}}}if(b[4])throw[0,i,Y9];b[4]=1;return o(b,bO[1],bO[2])}return cP(0)}if(0===dq){var
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 =======
@@ -25916,9 +26890,12 @@ gH=p[2][11],gI=bZ[1],gK=p[2][12],gJ=cn;return c<50?E(c+1|0,p,y,gK,gJ,gI,gH):a(E,
 =======
 gH=p[2][11],gI=bZ[1],gK=p[2][12],gJ=cn;return c<50?E(c+1|0,p,y,gK,gJ,gI,gH):a(E,[0,p,y,gK,gJ,gI,gH])}}}if(b[4])throw[0,i,Zb];b[4]=1;return o(b,bO[1],bO[2])}return cP(0)}if(0===dq){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+gH=p[2][11],gI=bZ[1],gK=p[2][12],gJ=cn;return c<50?E(c+1|0,p,y,gK,gJ,gI,gH):a(E,[0,p,y,gK,gJ,gI,gH])}}}if(b[4])throw[0,i,Y7];b[4]=1;return o(b,bO[1],bO[2])}return cP(0)}if(0===dq){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 gL=bO[1][1],ds=gL[1][1],dp=ds[1],cp=ds[2],dn=[0,[0,ds[3],gL[4]],bO[3]];continue}var
-gM=bO[1][1],dt=gM[1][1],dp=dt[1],cp=dt[2],dn=[0,[0,dt[3],gM[4]],bO[3]];continue}}if(b[4])throw[0,i,aah];b[4]=1;return o(b,d,ct);case
-216:if(b[4])throw[0,i,aak];var
+gM=bO[1][1],dt=gM[1][1],dp=dt[1],cp=dt[2],dn=[0,[0,dt[3],gM[4]],bO[3]];continue}}if(b[4])throw[0,i,aab];b[4]=1;return o(b,d,ct);case
+216:if(b[4])throw[0,i,aae];var
 M4=b[3];if(typeof
 M4==="number")switch(M4){case
 8:var
@@ -25961,7 +26938,7 @@ NI=t[2][11],NK=t[2][12],NJ=dM;return c<50?D(c+1|0,t,Y,NK,NJ,NI):a(D,[0,t,Y,NK,NJ
 67:var
 NL=t[2][11],NN=t[2][12],NM=dM;return c<50?C(c+1|0,t,Y,NN,NM,NL):a(C,[0,t,Y,NN,NM,NL]);case
 72:var
-NO=t[2][11],NQ=t[2][12],NP=dM;return c<50?B(c+1|0,t,Y,NQ,NP,NO):a(B,[0,t,Y,NQ,NP,NO]);default:if(t[4])throw[0,i,aam];t[4]=1;return o(t,Y,dM)}else
+NO=t[2][11],NQ=t[2][12],NP=dM;return c<50?B(c+1|0,t,Y,NQ,NP,NO):a(B,[0,t,Y,NQ,NP,NO]);default:if(t[4])throw[0,i,aag];t[4]=1;return o(t,Y,dM)}else
 switch(b3[0]){case
 0:var
 NR=t[2][11],NS=b3[1],NU=t[2][12],NT=dM;return c<50?M(c+1|0,t,Y,NU,NT,NS,NR):a(M,[0,t,Y,NU,NT,NS,NR]);case
@@ -26019,8 +26996,8 @@ Ox=cJ;return c<50?Z(c+1|0,b,d,Ox):a(Z,[0,b,d,Ox]);case
 73:var
 Oy=cJ;return c<50?ab(c+1|0,b,d,Oy):a(ab,[0,b,d,Oy]);case
 76:var
-Oz=b[2][11],OB=b[2][12],OA=cJ;return c<50?aG(c+1|0,b,d,OB,OA,Oz):a(aG,[0,b,d,OB,OA,Oz])}if(b[4])throw[0,i,aal];b[4]=1;return o(b,d,cJ);case
-218:if(b[4])throw[0,i,aan];var
+Oz=b[2][11],OB=b[2][12],OA=cJ;return c<50?aG(c+1|0,b,d,OB,OA,Oz):a(aG,[0,b,d,OB,OA,Oz])}if(b[4])throw[0,i,aaf];b[4]=1;return o(b,d,cJ);case
+218:if(b[4])throw[0,i,aah];var
 OC=b[3];if(typeof
 OC==="number")switch(OC){case
 10:var
@@ -26075,7 +27052,7 @@ Q9=c5;return c<50?ab(c+1|0,b,d,Q9):a(ab,[0,b,d,Q9]);case
 Q_=b[2][11],Ra=b[2][12],Q$=c5;return c<50?aG(c+1|0,b,d,Ra,Q$,Q_):a(aG,[0,b,d,Ra,Q$,Q_]);case
 20:case
 70:var
-d2=d[1],k=[0,d2[1],d2[3],[0,d2[4],d[4]]];if(b[4])throw[0,i,aap];var
+d2=d[1],k=[0,d2[1],d2[3],[0,d2[4],d[4]]];if(b[4])throw[0,i,aaj];var
 d5=b[3];if(typeof
 d5==="number"){if(20===d5){var
 OJ=[0,k[3],0],OK=k[2],OL=k[1];return c<50?kI(c+1|0,b,OL,OK,OJ):a(kI,[0,b,OL,OK,OJ])}if(70===d5){var
@@ -26166,8 +27143,8 @@ QC=h[2][11],QE=h[2][12],QD=a5;return c<50?a7(c+1|0,h,k,QE,QD,QC):a(a7,[0,h,k,QE,
 77:var
 QF=h[2][11],QH=h[2][12],QG=a5;return c<50?a6(c+1|0,h,k,QH,QG,QF):a(a6,[0,h,k,QH,QG,QF])}else
 if(2===dg[0]){var
-QI=h[2][11],QJ=dg[1],QL=h[2][12],QK=a5;return c<50?bn(c+1|0,h,k,QL,QK,QJ,QI):a(bn,[0,h,k,QL,QK,QJ,QI])}if(h[4])throw[0,i,aaq];h[4]=1;return o(h,k,a5)}}if(b[4])throw[0,i,aar];b[4]=1;return o(b,k[1],k[2])}if(b[4])throw[0,i,aao];b[4]=1;return o(b,d,c5);case
-220:if(b[4])throw[0,i,aas];var
+QI=h[2][11],QJ=dg[1],QL=h[2][12],QK=a5;return c<50?bn(c+1|0,h,k,QL,QK,QJ,QI):a(bn,[0,h,k,QL,QK,QJ,QI])}if(h[4])throw[0,i,aak];h[4]=1;return o(h,k,a5)}}if(b[4])throw[0,i,aal];b[4]=1;return o(b,k[1],k[2])}if(b[4])throw[0,i,aai];b[4]=1;return o(b,d,c5);case
+220:if(b[4])throw[0,i,aam];var
 Rb=b[3];if(typeof
 Rb==="number")switch(Rb){case
 10:var
@@ -26234,7 +27211,7 @@ RX=v[2][11],RZ=v[2][12],RY=dD;return c<50?D(c+1|0,v,ac,RZ,RY,RX):a(D,[0,v,ac,RZ,
 67:var
 R0=v[2][11],R2=v[2][12],R1=dD;return c<50?C(c+1|0,v,ac,R2,R1,R0):a(C,[0,v,ac,R2,R1,R0]);case
 72:var
-R3=v[2][11],R5=v[2][12],R4=dD;return c<50?B(c+1|0,v,ac,R5,R4,R3):a(B,[0,v,ac,R5,R4,R3]);default:if(v[4])throw[0,i,aau];v[4]=1;return o(v,ac,dD)}else
+R3=v[2][11],R5=v[2][12],R4=dD;return c<50?B(c+1|0,v,ac,R5,R4,R3):a(B,[0,v,ac,R5,R4,R3]);default:if(v[4])throw[0,i,aao];v[4]=1;return o(v,ac,dD)}else
 switch(b4[0]){case
 0:var
 R6=v[2][11],R7=b4[1],R9=v[2][12],R8=dD;return c<50?M(c+1|0,v,ac,R9,R8,R7,R6):a(M,[0,v,ac,R9,R8,R7,R6]);case
@@ -26334,6 +27311,7 @@ SH=cV;return c<50?ab(c+1|0,b,d,SH):a(ab,[0,b,d,SH]);case
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 SI=b[2][11],SK=b[2][12],SJ=cV;return c<50?aG(c+1|0,b,d,SK,SJ,SI):a(aG,[0,b,d,SK,SJ,SI])}if(b[4])throw[0,h,$A];b[4]=1;return p(b,d,cV);case
 222:if(b[4])throw[0,h,$C];var
 =======
@@ -26352,6 +27330,10 @@ SI=b[2][11],SK=b[2][12],SJ=cU;return c<50?aG(c+1|0,b,d,SK,SJ,SI):a(aG,[0,b,d,SK,
 SI=b[2][11],SK=b[2][12],SJ=cU;return c<50?aG(c+1|0,b,d,SK,SJ,SI):a(aG,[0,b,d,SK,SJ,SI])}if(b[4])throw[0,i,aat];b[4]=1;return o(b,d,cU);case
 222:if(b[4])throw[0,i,aav];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+SI=b[2][11],SK=b[2][12],SJ=cU;return c<50?aG(c+1|0,b,d,SK,SJ,SI):a(aG,[0,b,d,SK,SJ,SI])}if(b[4])throw[0,i,aan];b[4]=1;return o(b,d,cU);case
+222:if(b[4])throw[0,i,aap];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 SL=b[3];if(typeof
 SL==="number")switch(SL){case
 10:var
@@ -26405,12 +27387,12 @@ Tc=c_;return c<50?Z(c+1|0,b,d,Tc):a(Z,[0,b,d,Tc]);case
 73:var
 Td=c_;return c<50?ab(c+1|0,b,d,Td):a(ab,[0,b,d,Td]);case
 76:var
-Te=b[2][11],Tg=b[2][12],Tf=c_;return c<50?aG(c+1|0,b,d,Tg,Tf,Te):a(aG,[0,b,d,Tg,Tf,Te])}if(b[4])throw[0,i,aaw];b[4]=1;return o(b,d,c_);case
-223:if(b[4])throw[0,i,aax];var
+Te=b[2][11],Tg=b[2][12],Tf=c_;return c<50?aG(c+1|0,b,d,Tg,Tf,Te):a(aG,[0,b,d,Tg,Tf,Te])}if(b[4])throw[0,i,aaq];b[4]=1;return o(b,d,c_);case
+223:if(b[4])throw[0,i,aar];var
 Th=b[3];if(typeof
 Th==="number")switch(Th){case
 0:var
-Ti=b[2][11],Tk=b[2][12],Tj=cO;return c<50?f0(c+1|0,b,d,Tk,Tj,Ti):a(f0,[0,b,d,Tk,Tj,Ti]);case
+Ti=b[2][11],Tk=b[2][12],Tj=cO;return c<50?f1(c+1|0,b,d,Tk,Tj,Ti):a(f1,[0,b,d,Tk,Tj,Ti]);case
 10:var
 Tl=cO;return c<50?ag(c+1|0,b,d,Tl):a(ag,[0,b,d,Tl]);case
 11:var
@@ -26456,14 +27438,14 @@ TL=cO;return c<50?av(c+1|0,b,d,TL):a(av,[0,b,d,TL]);case
 58:var
 TM=cO;return c<50?aE(c+1|0,b,d,TM):a(aE,[0,b,d,TM]);case
 64:var
-TN=b[2][11],TP=b[2][12],TO=cO;return c<50?fZ(c+1|0,b,d,TP,TO,TN):a(fZ,[0,b,d,TP,TO,TN]);case
+TN=b[2][11],TP=b[2][12],TO=cO;return c<50?f0(c+1|0,b,d,TP,TO,TN):a(f0,[0,b,d,TP,TO,TN]);case
 65:var
 TQ=cO;return c<50?Z(c+1|0,b,d,TQ):a(Z,[0,b,d,TQ]);case
 73:var
 TR=cO;return c<50?ab(c+1|0,b,d,TR):a(ab,[0,b,d,TR]);case
 76:var
-TS=b[2][11],TU=b[2][12],TT=cO;return c<50?aG(c+1|0,b,d,TU,TT,TS):a(aG,[0,b,d,TU,TT,TS])}if(b[4])throw[0,i,aay];b[4]=1;return o(b,d,cO);case
-224:if(b[4])throw[0,i,aaz];var
+TS=b[2][11],TU=b[2][12],TT=cO;return c<50?aG(c+1|0,b,d,TU,TT,TS):a(aG,[0,b,d,TU,TT,TS])}if(b[4])throw[0,i,aas];b[4]=1;return o(b,d,cO);case
+224:if(b[4])throw[0,i,aat];var
 TV=b[3];if(typeof
 TV==="number")switch(TV){case
 23:var
@@ -26498,8 +27480,8 @@ TZ=gv;return c<50?Z(c+1|0,b,d,TZ):a(Z,[0,b,d,TZ]);case
 72:case
 75:case
 77:break;default:var
-TW=d[2],d7=d[1],TX=d7[3],XK=d[4],XL=b$[2][1][1],XM=[8,$(TX,TW),XL,XK],aS=d7[1],aR=TW,aN=d7[2],aP=XM,aO=TX;continue}if(b[4])throw[0,i,aaA];b[4]=1;return o(b,d,gv);case
-225:if(b[4])throw[0,i,aaB];var
+TW=d[2],d7=d[1],TX=d7[3],XK=d[4],XL=b$[2][1][1],XM=[8,$(TX,TW),XL,XK],aS=d7[1],aR=TW,aN=d7[2],aP=XM,aO=TX;continue}if(b[4])throw[0,i,aau];b[4]=1;return o(b,d,gv);case
+225:if(b[4])throw[0,i,aav];var
 T0=b[3];if(typeof
 T0==="number")switch(T0){case
 23:var
@@ -26534,8 +27516,8 @@ T5=aD;return c<50?Z(c+1|0,b,d,T5):a(Z,[0,b,d,T5]);case
 72:case
 75:case
 77:break;default:var
-T1=d[2],d8=d[1],T2=d8[3],XN=d[4],T3=$(T2,T1),Vi=[4,T3,j(ep[8],0)],aS=d8[1],aR=T1,aN=d8[2],aP=[9,T3,b$[3][2][2],Vi,XN],aO=T2;continue}if(b[4])throw[0,i,aaC];b[4]=1;return o(b,d,aD);case
-226:if(b[4])throw[0,i,aaD];var
+T1=d[2],d8=d[1],T2=d8[3],XN=d[4],T3=$(T2,T1),Vi=[4,T3,j(eo[8],0)],aS=d8[1],aR=T1,aN=d8[2],aP=[9,T3,b$[3][2][2],Vi,XN],aO=T2;continue}if(b[4])throw[0,i,aaw];b[4]=1;return o(b,d,aD);case
+226:if(b[4])throw[0,i,aax];var
 T6=b[3];if(typeof
 T6==="number")switch(T6){case
 23:var
@@ -26570,8 +27552,8 @@ T_=d3;return c<50?Z(c+1|0,b,d,T_):a(Z,[0,b,d,T_]);case
 72:case
 75:case
 77:break;default:var
-T7=d[2],d9=d[1],T8=d9[3],XO=d[4],XP=b$[2][3],XQ=[8,$(T8,T7),XP,XO],aS=d9[1],aR=T7,aN=d9[2],aP=XQ,aO=T8;continue}if(b[4])throw[0,i,aaE];b[4]=1;return o(b,d,d3);case
-227:if(b[4])throw[0,i,aaF];var
+T7=d[2],d9=d[1],T8=d9[3],XO=d[4],XP=b$[2][3],XQ=[8,$(T8,T7),XP,XO],aS=d9[1],aR=T7,aN=d9[2],aP=XQ,aO=T8;continue}if(b[4])throw[0,i,aay];b[4]=1;return o(b,d,d3);case
+227:if(b[4])throw[0,i,aaz];var
 T$=b[3];if(typeof
 T$==="number")switch(T$){case
 10:var
@@ -26625,8 +27607,8 @@ UE=a4;return c<50?Z(c+1|0,b,d,UE):a(Z,[0,b,d,UE]);case
 73:var
 UF=a4;return c<50?ab(c+1|0,b,d,UF):a(ab,[0,b,d,UF]);case
 76:var
-UG=b[2][11],UI=b[2][12],UH=a4;return c<50?aG(c+1|0,b,d,UI,UH,UG):a(aG,[0,b,d,UI,UH,UG])}if(b[4])throw[0,i,aaG];b[4]=1;return o(b,d,a4);case
-229:if(b[4])throw[0,i,aaH];var
+UG=b[2][11],UI=b[2][12],UH=a4;return c<50?aG(c+1|0,b,d,UI,UH,UG):a(aG,[0,b,d,UI,UH,UG])}if(b[4])throw[0,i,aaA];b[4]=1;return o(b,d,a4);case
+229:if(b[4])throw[0,i,aaB];var
 UJ=b[3];if(typeof
 UJ==="number")switch(UJ){case
 10:var
@@ -26682,13 +27664,13 @@ Vc=b[2][11],Ve=b[2][12],Vd=a0;return c<50?aG(c+1|0,b,d,Ve,Vd,Vc):a(aG,[0,b,d,Ve,
 0:case
 17:case
 20:case
-64:throw[0,go,aaI]}if(b[4])throw[0,i,aaJ];b[4]=1;return o(b,d,a0);case
+64:throw[0,go,aaC]}if(b[4])throw[0,i,aaD];b[4]=1;return o(b,d,a0);case
 213:case
 217:var
 dh=1;break;default:var
 dh=0}else
 switch(ea){case
-3:if(b[4])throw[0,i,_n];var
+3:if(b[4])throw[0,i,_h];var
 gN=b[3];if(typeof
 gN==="number")switch(gN){case
 10:var
@@ -26756,8 +27738,8 @@ hm=b[2][11],ho=b[2][12],hn=2;return c<50?aG(c+1|0,b,d,ho,hn,hm):a(aG,[0,b,d,ho,h
 66:case
 67:case
 74:var
-gO=d[1][1],du=gO[1][1],VP=d[4],VQ=gO[3],gP=[7,$(du[4],d[2]),VQ,VP],gQ=du[3],gR=du[1];return c<50?g0(c+1|0,b,gR,gQ,gP):a(g0,[0,b,gR,gQ,gP])}if(b[4])throw[0,i,_o];b[4]=1;return o(b,d,2);case
-26:if(b[4])throw[0,i,_s];var
+gO=d[1][1],du=gO[1][1],VP=d[4],VQ=gO[3],gP=[7,$(du[4],d[2]),VQ,VP],gQ=du[3],gR=du[1];return c<50?g0(c+1|0,b,gR,gQ,gP):a(g0,[0,b,gR,gQ,gP])}if(b[4])throw[0,i,_i];b[4]=1;return o(b,d,2);case
+26:if(b[4])throw[0,i,_m];var
 i7=b[3];if(typeof
 i7==="number")switch(i7){case
 10:var
@@ -26790,7 +27772,7 @@ jB=ah[2][11],jD=ah[2][12],jC=24;return c<50?cw(c+1|0,ah,aT,jD,jC,jB):a(cw,[0,ah,
 9:var
 jE=ah[2][11],jG=ah[2][12],jF=24;return c<50?cj(c+1|0,ah,aT,jG,jF,jE):a(cj,[0,ah,aT,jG,jF,jE]);case
 12:var
-jH=ah[2][11],jJ=ah[2][12],jI=24;return c<50?ci(c+1|0,ah,aT,jJ,jI,jH):a(ci,[0,ah,aT,jJ,jI,jH])}}if(ah[4])throw[0,i,_u];ah[4]=1;return o(ah,aT,24);case
+jH=ah[2][11],jJ=ah[2][12],jI=24;return c<50?ci(c+1|0,ah,aT,jJ,jI,jH):a(ci,[0,ah,aT,jJ,jI,jH])}}if(ah[4])throw[0,i,_o];ah[4]=1;return o(ah,aT,24);case
 22:var
 jK=25;return c<50?ap(c+1|0,b,d,jK):a(ap,[0,b,d,jK]);case
 23:var
@@ -26832,8 +27814,8 @@ j6=25;return c<50?Z(c+1|0,b,d,j6):a(Z,[0,b,d,j6]);case
 73:var
 j7=25;return c<50?ab(c+1|0,b,d,j7):a(ab,[0,b,d,j7]);case
 76:var
-j8=b[2][11],j_=b[2][12],j9=25;return c<50?aG(c+1|0,b,d,j_,j9,j8):a(aG,[0,b,d,j_,j9,j8])}if(b[4])throw[0,i,_t];b[4]=1;return o(b,d,25);case
-29:if(b[4])throw[0,i,_v];var
+j8=b[2][11],j_=b[2][12],j9=25;return c<50?aG(c+1|0,b,d,j_,j9,j8):a(aG,[0,b,d,j_,j9,j8])}if(b[4])throw[0,i,_n];b[4]=1;return o(b,d,25);case
+29:if(b[4])throw[0,i,_p];var
 j$=b[3];if(typeof
 j$==="number")switch(j$){case
 10:var
@@ -26866,7 +27848,7 @@ kD=ai[2][11],kF=ai[2][12],kE=27;return c<50?cw(c+1|0,ai,aU,kF,kE,kD):a(cw,[0,ai,
 9:var
 kG=ai[2][11],kK=ai[2][12],kH=27;return c<50?cj(c+1|0,ai,aU,kK,kH,kG):a(cj,[0,ai,aU,kK,kH,kG]);case
 12:var
-kL=ai[2][11],kN=ai[2][12],kM=27;return c<50?ci(c+1|0,ai,aU,kN,kM,kL):a(ci,[0,ai,aU,kN,kM,kL])}}if(ai[4])throw[0,i,_x];ai[4]=1;return o(ai,aU,27);case
+kL=ai[2][11],kN=ai[2][12],kM=27;return c<50?ci(c+1|0,ai,aU,kN,kM,kL):a(ci,[0,ai,aU,kN,kM,kL])}}if(ai[4])throw[0,i,_r];ai[4]=1;return o(ai,aU,27);case
 22:var
 kO=28;return c<50?ap(c+1|0,b,d,kO):a(ap,[0,b,d,kO]);case
 23:var
@@ -26925,14 +27907,14 @@ lw=ao[2][11],ly=ao[2][12],lx=22;return c<50?cw(c+1|0,ao,aV,ly,lx,lw):a(cw,[0,ao,
 9:var
 lz=ao[2][11],lB=ao[2][12],lA=22;return c<50?cj(c+1|0,ao,aV,lB,lA,lz):a(cj,[0,ao,aV,lB,lA,lz]);case
 12:var
-lC=ao[2][11],lE=ao[2][12],lD=22;return c<50?ci(c+1|0,ao,aV,lE,lD,lC):a(ci,[0,ao,aV,lE,lD,lC])}}if(ao[4])throw[0,i,_y];ao[4]=1;return o(ao,aV,22);case
+lC=ao[2][11],lE=ao[2][12],lD=22;return c<50?ci(c+1|0,ao,aV,lE,lD,lC):a(ci,[0,ao,aV,lE,lD,lC])}}if(ao[4])throw[0,i,_s];ao[4]=1;return o(ao,aV,22);case
 65:var
 lF=28;return c<50?Z(c+1|0,b,d,lF):a(Z,[0,b,d,lF]);case
 73:var
 lG=28;return c<50?ab(c+1|0,b,d,lG):a(ab,[0,b,d,lG]);case
 76:var
-lH=b[2][11],lJ=b[2][12],lI=28;return c<50?aG(c+1|0,b,d,lJ,lI,lH):a(aG,[0,b,d,lJ,lI,lH])}if(b[4])throw[0,i,_w];b[4]=1;return o(b,d,28);case
-32:if(b[4])throw[0,i,_z];var
+lH=b[2][11],lJ=b[2][12],lI=28;return c<50?aG(c+1|0,b,d,lJ,lI,lH):a(aG,[0,b,d,lJ,lI,lH])}if(b[4])throw[0,i,_q];b[4]=1;return o(b,d,28);case
+32:if(b[4])throw[0,i,_t];var
 lK=b[3];if(typeof
 lK==="number")switch(lK){case
 8:var
@@ -26957,7 +27939,7 @@ l7=aq[2][11],l9=aq[2][12],l8=30;return c<50?cw(c+1|0,aq,aW,l9,l8,l7):a(cw,[0,aq,
 9:var
 l_=aq[2][11],ma=aq[2][12],l$=30;return c<50?cj(c+1|0,aq,aW,ma,l$,l_):a(cj,[0,aq,aW,ma,l$,l_]);case
 12:var
-mb=aq[2][11],md=aq[2][12],mc=30;return c<50?ci(c+1|0,aq,aW,md,mc,mb):a(ci,[0,aq,aW,md,mc,mb])}}if(aq[4])throw[0,i,_B];aq[4]=1;return o(aq,aW,30);case
+mb=aq[2][11],md=aq[2][12],mc=30;return c<50?ci(c+1|0,aq,aW,md,mc,mb):a(ci,[0,aq,aW,md,mc,mb])}}if(aq[4])throw[0,i,_v];aq[4]=1;return o(aq,aW,30);case
 10:var
 me=31;return c<50?ag(c+1|0,b,d,me):a(ag,[0,b,d,me]);case
 11:var
@@ -27007,8 +27989,8 @@ mG=31;return c<50?Z(c+1|0,b,d,mG):a(Z,[0,b,d,mG]);case
 73:var
 mH=31;return c<50?ab(c+1|0,b,d,mH):a(ab,[0,b,d,mH]);case
 76:var
-mI=b[2][11],mK=b[2][12],mJ=31;return c<50?aG(c+1|0,b,d,mK,mJ,mI):a(aG,[0,b,d,mK,mJ,mI])}if(b[4])throw[0,i,_A];b[4]=1;return o(b,d,31);case
-35:if(b[4])throw[0,i,_C];var
+mI=b[2][11],mK=b[2][12],mJ=31;return c<50?aG(c+1|0,b,d,mK,mJ,mI):a(aG,[0,b,d,mK,mJ,mI])}if(b[4])throw[0,i,_u];b[4]=1;return o(b,d,31);case
+35:if(b[4])throw[0,i,_w];var
 mL=b[3];if(typeof
 mL==="number")switch(mL){case
 10:var
@@ -27041,7 +28023,7 @@ nc=ar[2][11],ne=ar[2][12],nd=33;return c<50?cw(c+1|0,ar,aX,ne,nd,nc):a(cw,[0,ar,
 9:var
 nf=ar[2][11],nh=ar[2][12],ng=33;return c<50?cj(c+1|0,ar,aX,nh,ng,nf):a(cj,[0,ar,aX,nh,ng,nf]);case
 12:var
-ni=ar[2][11],nk=ar[2][12],nj=33;return c<50?ci(c+1|0,ar,aX,nk,nj,ni):a(ci,[0,ar,aX,nk,nj,ni])}}if(ar[4])throw[0,i,_E];ar[4]=1;return o(ar,aX,33);case
+ni=ar[2][11],nk=ar[2][12],nj=33;return c<50?ci(c+1|0,ar,aX,nk,nj,ni):a(ci,[0,ar,aX,nk,nj,ni])}}if(ar[4])throw[0,i,_y];ar[4]=1;return o(ar,aX,33);case
 22:var
 nl=34;return c<50?ap(c+1|0,b,d,nl):a(ap,[0,b,d,nl]);case
 23:var
@@ -27083,12 +28065,12 @@ nH=34;return c<50?Z(c+1|0,b,d,nH):a(Z,[0,b,d,nH]);case
 73:var
 nI=34;return c<50?ab(c+1|0,b,d,nI):a(ab,[0,b,d,nI]);case
 76:var
-nK=b[2][11],nM=b[2][12],nL=34;return c<50?aG(c+1|0,b,d,nM,nL,nK):a(aG,[0,b,d,nM,nL,nK])}if(b[4])throw[0,i,_D];b[4]=1;return o(b,d,34);case
-41:if(b[4])throw[0,i,_F];var
+nK=b[2][11],nM=b[2][12],nL=34;return c<50?aG(c+1|0,b,d,nM,nL,nK):a(aG,[0,b,d,nM,nL,nK])}if(b[4])throw[0,i,_x];b[4]=1;return o(b,d,34);case
+41:if(b[4])throw[0,i,_z];var
 nN=b[3];if(typeof
 nN==="number")switch(nN){case
 0:var
-nO=b[2][11],nQ=b[2][12],nP=40;return c<50?fY(c+1|0,b,d,nQ,nP,nO):a(fY,[0,b,d,nQ,nP,nO]);case
+nO=b[2][11],nQ=b[2][12],nP=40;return c<50?fZ(c+1|0,b,d,nQ,nP,nO):a(fZ,[0,b,d,nQ,nP,nO]);case
 10:var
 nR=40;return c<50?ag(c+1|0,b,d,nR):a(ag,[0,b,d,nR]);case
 11:var
@@ -27134,14 +28116,14 @@ of=40;return c<50?av(c+1|0,b,d,of):a(av,[0,b,d,of]);case
 58:var
 og=40;return c<50?aE(c+1|0,b,d,og):a(aE,[0,b,d,og]);case
 64:var
-oh=b[2][11],oj=b[2][12],oi=40;return c<50?fX(c+1|0,b,d,oj,oi,oh):a(fX,[0,b,d,oj,oi,oh]);case
+oh=b[2][11],oj=b[2][12],oi=40;return c<50?fY(c+1|0,b,d,oj,oi,oh):a(fY,[0,b,d,oj,oi,oh]);case
 65:var
 ok=40;return c<50?Z(c+1|0,b,d,ok):a(Z,[0,b,d,ok]);case
 73:var
 ol=40;return c<50?ab(c+1|0,b,d,ol):a(ab,[0,b,d,ol]);case
 76:var
-om=b[2][11],oo=b[2][12],on=40;return c<50?aG(c+1|0,b,d,oo,on,om):a(aG,[0,b,d,oo,on,om])}if(b[4])throw[0,i,_G];b[4]=1;return o(b,d,40);case
-43:if(b[4])throw[0,i,_H];var
+om=b[2][11],oo=b[2][12],on=40;return c<50?aG(c+1|0,b,d,oo,on,om):a(aG,[0,b,d,oo,on,om])}if(b[4])throw[0,i,_A];b[4]=1;return o(b,d,40);case
+43:if(b[4])throw[0,i,_B];var
 op=b[3];if(typeof
 op==="number")switch(op){case
 10:var
@@ -27213,8 +28195,8 @@ oX=b[2][11],oZ=b[2][12],oY=42;return c<50?aG(c+1|0,b,d,oZ,oY,oX):a(aG,[0,b,d,oZ,
 66:case
 67:case
 74:var
-dw=d[2],dy=d[1],dz=dy[4],VR=d[4],oq=[0,$(dz,dw),VR],or=dy[3],os=dy[1];return c<50?fU(c+1|0,b,os,dw,or,oq,dz):a(fU,[0,b,os,dw,or,oq,dz])}if(b[4])throw[0,i,_I];b[4]=1;return o(b,d,42);case
-45:if(b[4])throw[0,i,_J];var
+dw=d[2],dy=d[1],dz=dy[4],VR=d[4],oq=[0,$(dz,dw),VR],or=dy[3],os=dy[1];return c<50?fV(c+1|0,b,os,dw,or,oq,dz):a(fV,[0,b,os,dw,or,oq,dz])}if(b[4])throw[0,i,_C];b[4]=1;return o(b,d,42);case
+45:if(b[4])throw[0,i,_D];var
 o0=b[3];if(typeof
 o0==="number")switch(o0){case
 10:var
@@ -27286,8 +28268,8 @@ pv=b[2][11],px=b[2][12],pw=44;return c<50?aG(c+1|0,b,d,px,pw,pv):a(aG,[0,b,d,px,
 66:case
 67:case
 74:var
-cq=d[2],dB=d[1],cr=dB[4],VS=[0,$(cr,cq)],VT=d[4],eb=[4,$(cr,cq),VS,[0,VT,0]],o1=dB[3],o2=dB[1];return c<50?fU(c+1|0,b,o2,cq,o1,eb,cr):a(fU,[0,b,o2,cq,o1,eb,cr])}if(b[4])throw[0,i,_K];b[4]=1;return o(b,d,44);case
-48:if(b[4])throw[0,i,_L];var
+cq=d[2],dB=d[1],cr=dB[4],VS=[0,$(cr,cq)],VT=d[4],eb=[4,$(cr,cq),VS,[0,VT,0]],o1=dB[3],o2=dB[1];return c<50?fV(c+1|0,b,o2,cq,o1,eb,cr):a(fV,[0,b,o2,cq,o1,eb,cr])}if(b[4])throw[0,i,_E];b[4]=1;return o(b,d,44);case
+48:if(b[4])throw[0,i,_F];var
 py=b[3];if(typeof
 py==="number")switch(py){case
 10:var
@@ -27320,7 +28302,7 @@ p1=as[2][11],p3=as[2][12],p2=46;return c<50?cw(c+1|0,as,aY,p3,p2,p1):a(cw,[0,as,
 9:var
 p4=as[2][11],p6=as[2][12],p5=46;return c<50?cj(c+1|0,as,aY,p6,p5,p4):a(cj,[0,as,aY,p6,p5,p4]);case
 12:var
-p7=as[2][11],p9=as[2][12],p8=46;return c<50?ci(c+1|0,as,aY,p9,p8,p7):a(ci,[0,as,aY,p9,p8,p7])}}if(as[4])throw[0,i,_N];as[4]=1;return o(as,aY,46);case
+p7=as[2][11],p9=as[2][12],p8=46;return c<50?ci(c+1|0,as,aY,p9,p8,p7):a(ci,[0,as,aY,p9,p8,p7])}}if(as[4])throw[0,i,_H];as[4]=1;return o(as,aY,46);case
 22:var
 p_=47;return c<50?ap(c+1|0,b,d,p_):a(ap,[0,b,d,p_]);case
 23:var
@@ -27362,8 +28344,8 @@ qu=47;return c<50?Z(c+1|0,b,d,qu):a(Z,[0,b,d,qu]);case
 73:var
 qv=47;return c<50?ab(c+1|0,b,d,qv):a(ab,[0,b,d,qv]);case
 76:var
-qw=b[2][11],qy=b[2][12],qx=47;return c<50?aG(c+1|0,b,d,qy,qx,qw):a(aG,[0,b,d,qy,qx,qw])}if(b[4])throw[0,i,_M];b[4]=1;return o(b,d,47);case
-50:if(b[4])throw[0,i,_O];var
+qw=b[2][11],qy=b[2][12],qx=47;return c<50?aG(c+1|0,b,d,qy,qx,qw):a(aG,[0,b,d,qy,qx,qw])}if(b[4])throw[0,i,_G];b[4]=1;return o(b,d,47);case
+50:if(b[4])throw[0,i,_I];var
 qz=b[3];if(typeof
 qz==="number")switch(qz){case
 10:var
@@ -27435,8 +28417,8 @@ q7=b[2][11],q9=b[2][12],q8=49;return c<50?aG(c+1|0,b,d,q9,q8,q7):a(aG,[0,b,d,q9,
 66:case
 67:case
 74:var
-dC=d[2],dE=d[1],dF=dE[4],VU=d[4],qA=[2,$(dF,dC),VU],qB=dE[3],qC=dE[1];return c<50?fU(c+1|0,b,qC,dC,qB,qA,dF):a(fU,[0,b,qC,dC,qB,qA,dF])}if(b[4])throw[0,i,_P];b[4]=1;return o(b,d,49);case
-74:if(b[4])throw[0,i,_Q];var
+dC=d[2],dE=d[1],dF=dE[4],VU=d[4],qA=[2,$(dF,dC),VU],qB=dE[3],qC=dE[1];return c<50?fV(c+1|0,b,qC,dC,qB,qA,dF):a(fV,[0,b,qC,dC,qB,qA,dF])}if(b[4])throw[0,i,_J];b[4]=1;return o(b,d,49);case
+74:if(b[4])throw[0,i,_K];var
 q_=b[3];if(typeof
 q_==="number")switch(q_){case
 10:var
@@ -27504,8 +28486,8 @@ rI=b[2][11],rK=b[2][12],rJ=73;return c<50?aG(c+1|0,b,d,rK,rJ,rI):a(aG,[0,b,d,rK,
 66:case
 67:case
 74:var
-dG=d[2],q$=d[1],ra=q$[3],dH=q$[1][1],VV=d[4],VW=ra[2],VX=ra[1],rb=[4,$(dH[4],dG),VX,VW,VV],rc=dH[3],rd=dH[1];return c<50?d_(c+1|0,b,rd,dG,rc,rb):a(d_,[0,b,rd,dG,rc,rb])}if(b[4])throw[0,i,_R];b[4]=1;return o(b,d,73);case
-97:if(b[4])throw[0,i,_S];var
+dG=d[2],q$=d[1],ra=q$[3],dH=q$[1][1],VV=d[4],VW=ra[2],VX=ra[1],rb=[4,$(dH[4],dG),VX,VW,VV],rc=dH[3],rd=dH[1];return c<50?d_(c+1|0,b,rd,dG,rc,rb):a(d_,[0,b,rd,dG,rc,rb])}if(b[4])throw[0,i,_L];b[4]=1;return o(b,d,73);case
+97:if(b[4])throw[0,i,_M];var
 rL=b[3];if(typeof
 rL==="number")switch(rL){case
 10:var
@@ -27532,7 +28514,7 @@ r4=at[2][11],r6=at[2][12],r5=95;return c<50?cx(c+1|0,at,aZ,r6,r5,r4):a(cx,[0,at,
 if(19===bP){var
 r7=at[2][11],r9=at[2][12],r8=95;return c<50?cC(c+1|0,at,aZ,r9,r8,r7):a(cC,[0,at,aZ,r9,r8,r7])}}else{if(7===bP){var
 r_=at[2][11],sa=at[2][12],r$=95;return c<50?cE(c+1|0,at,aZ,sa,r$,r_):a(cE,[0,at,aZ,sa,r$,r_])}if(15<=bP){var
-sb=at[2][11],sd=at[2][12],sc=95;return c<50?cD(c+1|0,at,aZ,sd,sc,sb):a(cD,[0,at,aZ,sd,sc,sb])}}if(at[4])throw[0,i,_U];at[4]=1;return o(at,aZ,95);case
+sb=at[2][11],sd=at[2][12],sc=95;return c<50?cD(c+1|0,at,aZ,sd,sc,sb):a(cD,[0,at,aZ,sd,sc,sb])}}if(at[4])throw[0,i,_O];at[4]=1;return o(at,aZ,95);case
 22:var
 se=96;return c<50?ap(c+1|0,b,d,se):a(ap,[0,b,d,se]);case
 23:var
@@ -27574,8 +28556,8 @@ sA=96;return c<50?Z(c+1|0,b,d,sA):a(Z,[0,b,d,sA]);case
 73:var
 sB=96;return c<50?ab(c+1|0,b,d,sB):a(ab,[0,b,d,sB]);case
 76:var
-sC=b[2][11],sE=b[2][12],sD=96;return c<50?aG(c+1|0,b,d,sE,sD,sC):a(aG,[0,b,d,sE,sD,sC])}if(b[4])throw[0,i,_T];b[4]=1;return o(b,d,96);case
-100:if(b[4])throw[0,i,_V];var
+sC=b[2][11],sE=b[2][12],sD=96;return c<50?aG(c+1|0,b,d,sE,sD,sC):a(aG,[0,b,d,sE,sD,sC])}if(b[4])throw[0,i,_N];b[4]=1;return o(b,d,96);case
+100:if(b[4])throw[0,i,_P];var
 sF=b[3];if(typeof
 sF==="number")switch(sF){case
 10:var
@@ -27602,7 +28584,7 @@ sY=au[2][11],s0=au[2][12],sZ=98;return c<50?cx(c+1|0,au,a1,s0,sZ,sY):a(cx,[0,au,
 if(19===bR){var
 s1=au[2][11],s3=au[2][12],s2=98;return c<50?cC(c+1|0,au,a1,s3,s2,s1):a(cC,[0,au,a1,s3,s2,s1])}}else{if(7===bR){var
 s4=au[2][11],s6=au[2][12],s5=98;return c<50?cE(c+1|0,au,a1,s6,s5,s4):a(cE,[0,au,a1,s6,s5,s4])}if(15<=bR){var
-s7=au[2][11],s9=au[2][12],s8=98;return c<50?cD(c+1|0,au,a1,s9,s8,s7):a(cD,[0,au,a1,s9,s8,s7])}}if(au[4])throw[0,i,_X];au[4]=1;return o(au,a1,98);case
+s7=au[2][11],s9=au[2][12],s8=98;return c<50?cD(c+1|0,au,a1,s9,s8,s7):a(cD,[0,au,a1,s9,s8,s7])}}if(au[4])throw[0,i,_R];au[4]=1;return o(au,a1,98);case
 22:var
 s_=99;return c<50?ap(c+1|0,b,d,s_):a(ap,[0,b,d,s_]);case
 23:var
@@ -27655,14 +28637,14 @@ tG=aI[2][11],tI=aI[2][12],tH=94;return c<50?cx(c+1|0,aI,a2,tI,tH,tG):a(cx,[0,aI,
 if(19===bS){var
 tJ=aI[2][11],tL=aI[2][12],tK=94;return c<50?cC(c+1|0,aI,a2,tL,tK,tJ):a(cC,[0,aI,a2,tL,tK,tJ])}}else{if(7===bS){var
 tM=aI[2][11],tO=aI[2][12],tN=94;return c<50?cE(c+1|0,aI,a2,tO,tN,tM):a(cE,[0,aI,a2,tO,tN,tM])}if(15<=bS){var
-tP=aI[2][11],tR=aI[2][12],tQ=94;return c<50?cD(c+1|0,aI,a2,tR,tQ,tP):a(cD,[0,aI,a2,tR,tQ,tP])}}if(aI[4])throw[0,i,_Y];aI[4]=1;return o(aI,a2,94);case
+tP=aI[2][11],tR=aI[2][12],tQ=94;return c<50?cD(c+1|0,aI,a2,tR,tQ,tP):a(cD,[0,aI,a2,tR,tQ,tP])}}if(aI[4])throw[0,i,_S];aI[4]=1;return o(aI,a2,94);case
 65:var
 tS=99;return c<50?Z(c+1|0,b,d,tS):a(Z,[0,b,d,tS]);case
 73:var
 tT=99;return c<50?ab(c+1|0,b,d,tT):a(ab,[0,b,d,tT]);case
 76:var
-tU=b[2][11],tW=b[2][12],tV=99;return c<50?aG(c+1|0,b,d,tW,tV,tU):a(aG,[0,b,d,tW,tV,tU])}if(b[4])throw[0,i,_W];b[4]=1;return o(b,d,99);case
-103:if(b[4])throw[0,i,_Z];var
+tU=b[2][11],tW=b[2][12],tV=99;return c<50?aG(c+1|0,b,d,tW,tV,tU):a(aG,[0,b,d,tW,tV,tU])}if(b[4])throw[0,i,_Q];b[4]=1;return o(b,d,99);case
+103:if(b[4])throw[0,i,_T];var
 tX=b[3];if(typeof
 tX==="number")switch(tX){case
 8:var
@@ -27681,7 +28663,7 @@ t_=aK[2][11],ua=aK[2][12],t$=f;return c<50?cx(c+1|0,aK,a3,ua,t$,t_):a(cx,[0,aK,a
 if(19===bT){var
 ub=aK[2][11],ud=aK[2][12],uc=f;return c<50?cC(c+1|0,aK,a3,ud,uc,ub):a(cC,[0,aK,a3,ud,uc,ub])}}else{if(7===bT){var
 ue=aK[2][11],ug=aK[2][12],uf=f;return c<50?cE(c+1|0,aK,a3,ug,uf,ue):a(cE,[0,aK,a3,ug,uf,ue])}if(15<=bT){var
-uh=aK[2][11],uj=aK[2][12],ui=f;return c<50?cD(c+1|0,aK,a3,uj,ui,uh):a(cD,[0,aK,a3,uj,ui,uh])}}if(aK[4])throw[0,i,_1];aK[4]=1;return o(aK,a3,f);case
+uh=aK[2][11],uj=aK[2][12],ui=f;return c<50?cD(c+1|0,aK,a3,uj,ui,uh):a(cD,[0,aK,a3,uj,ui,uh])}}if(aK[4])throw[0,i,_V];aK[4]=1;return o(aK,a3,f);case
 10:var
 uk=aj;return c<50?ag(c+1|0,b,d,uk):a(ag,[0,b,d,uk]);case
 11:var
@@ -27731,8 +28713,8 @@ uM=aj;return c<50?Z(c+1|0,b,d,uM):a(Z,[0,b,d,uM]);case
 73:var
 uN=aj;return c<50?ab(c+1|0,b,d,uN):a(ab,[0,b,d,uN]);case
 76:var
-uO=b[2][11],uQ=b[2][12],uP=aj;return c<50?aG(c+1|0,b,d,uQ,uP,uO):a(aG,[0,b,d,uQ,uP,uO])}if(b[4])throw[0,i,_0];b[4]=1;return o(b,d,aj);case
-106:if(b[4])throw[0,i,_2];var
+uO=b[2][11],uQ=b[2][12],uP=aj;return c<50?aG(c+1|0,b,d,uQ,uP,uO):a(aG,[0,b,d,uQ,uP,uO])}if(b[4])throw[0,i,_U];b[4]=1;return o(b,d,aj);case
+106:if(b[4])throw[0,i,_W];var
 uR=b[3];if(typeof
 uR==="number")switch(uR){case
 10:var
@@ -27759,7 +28741,7 @@ u_=aL[2][11],va=aL[2][12],u$=aJ;return c<50?cx(c+1|0,aL,bK,va,u$,u_):a(cx,[0,aL,
 if(19===bU){var
 vb=aL[2][11],vd=aL[2][12],vc=aJ;return c<50?cC(c+1|0,aL,bK,vd,vc,vb):a(cC,[0,aL,bK,vd,vc,vb])}}else{if(7===bU){var
 ve=aL[2][11],vg=aL[2][12],vf=aJ;return c<50?cE(c+1|0,aL,bK,vg,vf,ve):a(cE,[0,aL,bK,vg,vf,ve])}if(15<=bU){var
-vh=aL[2][11],vj=aL[2][12],vi=aJ;return c<50?cD(c+1|0,aL,bK,vj,vi,vh):a(cD,[0,aL,bK,vj,vi,vh])}}if(aL[4])throw[0,i,_4];aL[4]=1;return o(aL,bK,aJ);case
+vh=aL[2][11],vj=aL[2][12],vi=aJ;return c<50?cD(c+1|0,aL,bK,vj,vi,vh):a(cD,[0,aL,bK,vj,vi,vh])}}if(aL[4])throw[0,i,_Y];aL[4]=1;return o(aL,bK,aJ);case
 22:var
 vk=n;return c<50?ap(c+1|0,b,d,vk):a(ap,[0,b,d,vk]);case
 23:var
@@ -27801,12 +28783,12 @@ vG=n;return c<50?Z(c+1|0,b,d,vG):a(Z,[0,b,d,vG]);case
 73:var
 vH=n;return c<50?ab(c+1|0,b,d,vH):a(ab,[0,b,d,vH]);case
 76:var
-vI=b[2][11],vK=b[2][12],vJ=n;return c<50?aG(c+1|0,b,d,vK,vJ,vI):a(aG,[0,b,d,vK,vJ,vI])}if(b[4])throw[0,i,_3];b[4]=1;return o(b,d,n);case
-112:if(b[4])throw[0,i,_5];var
+vI=b[2][11],vK=b[2][12],vJ=n;return c<50?aG(c+1|0,b,d,vK,vJ,vI):a(aG,[0,b,d,vK,vJ,vI])}if(b[4])throw[0,i,_X];b[4]=1;return o(b,d,n);case
+112:if(b[4])throw[0,i,_Z];var
 vL=b[3];if(typeof
 vL==="number")switch(vL){case
 0:var
-vM=b[2][11],vO=b[2][12],vN=e;return c<50?f2(c+1|0,b,d,vO,vN,vM):a(f2,[0,b,d,vO,vN,vM]);case
+vM=b[2][11],vO=b[2][12],vN=e;return c<50?f3(c+1|0,b,d,vO,vN,vM):a(f3,[0,b,d,vO,vN,vM]);case
 10:var
 vP=e;return c<50?ag(c+1|0,b,d,vP):a(ag,[0,b,d,vP]);case
 11:var
@@ -27852,14 +28834,14 @@ wd=e;return c<50?av(c+1|0,b,d,wd):a(av,[0,b,d,wd]);case
 58:var
 we=e;return c<50?aE(c+1|0,b,d,we):a(aE,[0,b,d,we]);case
 64:var
-wf=b[2][11],wh=b[2][12],wg=e;return c<50?f1(c+1|0,b,d,wh,wg,wf):a(f1,[0,b,d,wh,wg,wf]);case
+wf=b[2][11],wh=b[2][12],wg=e;return c<50?f2(c+1|0,b,d,wh,wg,wf):a(f2,[0,b,d,wh,wg,wf]);case
 65:var
 wi=e;return c<50?Z(c+1|0,b,d,wi):a(Z,[0,b,d,wi]);case
 73:var
 wj=e;return c<50?ab(c+1|0,b,d,wj):a(ab,[0,b,d,wj]);case
 76:var
-wk=b[2][11],wm=b[2][12],wl=e;return c<50?aG(c+1|0,b,d,wm,wl,wk):a(aG,[0,b,d,wm,wl,wk])}if(b[4])throw[0,i,_6];b[4]=1;return o(b,d,e);case
-114:if(b[4])throw[0,i,_7];var
+wk=b[2][11],wm=b[2][12],wl=e;return c<50?aG(c+1|0,b,d,wm,wl,wk):a(aG,[0,b,d,wm,wl,wk])}if(b[4])throw[0,i,_0];b[4]=1;return o(b,d,e);case
+114:if(b[4])throw[0,i,_1];var
 wn=b[3];if(typeof
 wn==="number")switch(wn){case
 10:var
@@ -27917,8 +28899,8 @@ wV=b[2][11],wX=b[2][12],wW=ca;return c<50?aG(c+1|0,b,d,wX,wW,wV):a(aG,[0,b,d,wX,
 20:case
 64:var
 dI=d[2],dJ=d[1],wo=d[4];$(dJ[4],dI);var
-wp=dJ[3],wq=dJ[1];return c<50?kJ(c+1|0,b,wq,dI,wp,wo):a(kJ,[0,b,wq,dI,wp,wo])}if(b[4])throw[0,i,_8];b[4]=1;return o(b,d,ca);case
-117:if(b[4])throw[0,i,_9];var
+wp=dJ[3],wq=dJ[1];return c<50?kJ(c+1|0,b,wq,dI,wp,wo):a(kJ,[0,b,wq,dI,wp,wo])}if(b[4])throw[0,i,_2];b[4]=1;return o(b,d,ca);case
+117:if(b[4])throw[0,i,_3];var
 wY=b[3];if(typeof
 wY==="number")switch(wY){case
 10:var
@@ -27945,7 +28927,7 @@ xf=aM[2][11],xh=aM[2][12],xg=u;return c<50?cx(c+1|0,aM,bL,xh,xg,xf):a(cx,[0,aM,b
 if(19===bV){var
 xi=aM[2][11],xk=aM[2][12],xj=u;return c<50?cC(c+1|0,aM,bL,xk,xj,xi):a(cC,[0,aM,bL,xk,xj,xi])}}else{if(7===bV){var
 xl=aM[2][11],xn=aM[2][12],xm=u;return c<50?cE(c+1|0,aM,bL,xn,xm,xl):a(cE,[0,aM,bL,xn,xm,xl])}if(15<=bV){var
-xo=aM[2][11],xq=aM[2][12],xp=u;return c<50?cD(c+1|0,aM,bL,xq,xp,xo):a(cD,[0,aM,bL,xq,xp,xo])}}if(aM[4])throw[0,i,_$];aM[4]=1;return o(aM,bL,u);case
+xo=aM[2][11],xq=aM[2][12],xp=u;return c<50?cD(c+1|0,aM,bL,xq,xp,xo):a(cD,[0,aM,bL,xq,xp,xo])}}if(aM[4])throw[0,i,_5];aM[4]=1;return o(aM,bL,u);case
 22:var
 xr=g;return c<50?ap(c+1|0,b,d,xr):a(ap,[0,b,d,xr]);case
 23:var
@@ -27987,12 +28969,12 @@ xN=g;return c<50?Z(c+1|0,b,d,xN):a(Z,[0,b,d,xN]);case
 73:var
 xO=g;return c<50?ab(c+1|0,b,d,xO):a(ab,[0,b,d,xO]);case
 76:var
-xP=b[2][11],xR=b[2][12],xQ=g;return c<50?aG(c+1|0,b,d,xR,xQ,xP):a(aG,[0,b,d,xR,xQ,xP])}if(b[4])throw[0,i,__];b[4]=1;return o(b,d,g);case
-124:if(b[4])throw[0,i,$a];var
+xP=b[2][11],xR=b[2][12],xQ=g;return c<50?aG(c+1|0,b,d,xR,xQ,xP):a(aG,[0,b,d,xR,xQ,xP])}if(b[4])throw[0,i,_4];b[4]=1;return o(b,d,g);case
+124:if(b[4])throw[0,i,_6];var
 xS=b[3];if(typeof
 xS==="number")switch(xS){case
 0:var
-xT=b[2][11],xV=b[2][12],xU=b6;return c<50?f0(c+1|0,b,d,xV,xU,xT):a(f0,[0,b,d,xV,xU,xT]);case
+xT=b[2][11],xV=b[2][12],xU=b6;return c<50?f1(c+1|0,b,d,xV,xU,xT):a(f1,[0,b,d,xV,xU,xT]);case
 10:var
 xW=b6;return c<50?ag(c+1|0,b,d,xW):a(ag,[0,b,d,xW]);case
 11:var
@@ -28038,18 +29020,18 @@ yk=b6;return c<50?av(c+1|0,b,d,yk):a(av,[0,b,d,yk]);case
 58:var
 yl=b6;return c<50?aE(c+1|0,b,d,yl):a(aE,[0,b,d,yl]);case
 64:var
-ym=b[2][11],yo=b[2][12],yn=b6;return c<50?fZ(c+1|0,b,d,yo,yn,ym):a(fZ,[0,b,d,yo,yn,ym]);case
+ym=b[2][11],yo=b[2][12],yn=b6;return c<50?f0(c+1|0,b,d,yo,yn,ym):a(f0,[0,b,d,yo,yn,ym]);case
 65:var
 yp=b6;return c<50?Z(c+1|0,b,d,yp):a(Z,[0,b,d,yp]);case
 73:var
 yq=b6;return c<50?ab(c+1|0,b,d,yq):a(ab,[0,b,d,yq]);case
 76:var
-yr=b[2][11],yt=b[2][12],ys=b6;return c<50?aG(c+1|0,b,d,yt,ys,yr):a(aG,[0,b,d,yt,ys,yr])}if(b[4])throw[0,i,$b];b[4]=1;return o(b,d,b6);case
-126:if(b[4])throw[0,i,$c];var
+yr=b[2][11],yt=b[2][12],ys=b6;return c<50?aG(c+1|0,b,d,yt,ys,yr):a(aG,[0,b,d,yt,ys,yr])}if(b[4])throw[0,i,_7];b[4]=1;return o(b,d,b6);case
+126:if(b[4])throw[0,i,_8];var
 yu=b[3];if(typeof
 yu==="number")switch(yu){case
 0:var
-yv=b[2][11],yx=b[2][12],yw=b5;return c<50?f0(c+1|0,b,d,yx,yw,yv):a(f0,[0,b,d,yx,yw,yv]);case
+yv=b[2][11],yx=b[2][12],yw=b5;return c<50?f1(c+1|0,b,d,yx,yw,yv):a(f1,[0,b,d,yx,yw,yv]);case
 10:var
 yy=b5;return c<50?ag(c+1|0,b,d,yy):a(ag,[0,b,d,yy]);case
 11:var
@@ -28095,18 +29077,18 @@ yY=b5;return c<50?av(c+1|0,b,d,yY):a(av,[0,b,d,yY]);case
 58:var
 yZ=b5;return c<50?aE(c+1|0,b,d,yZ):a(aE,[0,b,d,yZ]);case
 64:var
-y0=b[2][11],y2=b[2][12],y1=b5;return c<50?fZ(c+1|0,b,d,y2,y1,y0):a(fZ,[0,b,d,y2,y1,y0]);case
+y0=b[2][11],y2=b[2][12],y1=b5;return c<50?f0(c+1|0,b,d,y2,y1,y0):a(f0,[0,b,d,y2,y1,y0]);case
 65:var
 y3=b5;return c<50?Z(c+1|0,b,d,y3):a(Z,[0,b,d,y3]);case
 73:var
 y4=b5;return c<50?ab(c+1|0,b,d,y4):a(ab,[0,b,d,y4]);case
 76:var
-y5=b[2][11],y7=b[2][12],y6=b5;return c<50?aG(c+1|0,b,d,y7,y6,y5):a(aG,[0,b,d,y7,y6,y5])}if(b[4])throw[0,i,$d];b[4]=1;return o(b,d,b5);case
-129:if(b[4])throw[0,i,$e];var
+y5=b[2][11],y7=b[2][12],y6=b5;return c<50?aG(c+1|0,b,d,y7,y6,y5):a(aG,[0,b,d,y7,y6,y5])}if(b[4])throw[0,i,_9];b[4]=1;return o(b,d,b5);case
+129:if(b[4])throw[0,i,__];var
 y8=b[3];if(typeof
 y8==="number")switch(y8){case
 0:var
-y9=b[2][11],y$=b[2][12],y_=aQ;return c<50?f0(c+1|0,b,d,y$,y_,y9):a(f0,[0,b,d,y$,y_,y9]);case
+y9=b[2][11],y$=b[2][12],y_=aQ;return c<50?f1(c+1|0,b,d,y$,y_,y9):a(f1,[0,b,d,y$,y_,y9]);case
 10:var
 za=aQ;return c<50?ag(c+1|0,b,d,za):a(ag,[0,b,d,za]);case
 11:var
@@ -28152,14 +29134,14 @@ zA=aQ;return c<50?av(c+1|0,b,d,zA):a(av,[0,b,d,zA]);case
 58:var
 zB=aQ;return c<50?aE(c+1|0,b,d,zB):a(aE,[0,b,d,zB]);case
 64:var
-zC=b[2][11],zE=b[2][12],zD=aQ;return c<50?fZ(c+1|0,b,d,zE,zD,zC):a(fZ,[0,b,d,zE,zD,zC]);case
+zC=b[2][11],zE=b[2][12],zD=aQ;return c<50?f0(c+1|0,b,d,zE,zD,zC):a(f0,[0,b,d,zE,zD,zC]);case
 65:var
 zF=aQ;return c<50?Z(c+1|0,b,d,zF):a(Z,[0,b,d,zF]);case
 73:var
 zG=aQ;return c<50?ab(c+1|0,b,d,zG):a(ab,[0,b,d,zG]);case
 76:var
-zH=b[2][11],zJ=b[2][12],zI=aQ;return c<50?aG(c+1|0,b,d,zJ,zI,zH):a(aG,[0,b,d,zJ,zI,zH])}if(b[4])throw[0,i,$f];b[4]=1;return o(b,d,aQ);case
-134:if(b[4])throw[0,i,$g];var
+zH=b[2][11],zJ=b[2][12],zI=aQ;return c<50?aG(c+1|0,b,d,zJ,zI,zH):a(aG,[0,b,d,zJ,zI,zH])}if(b[4])throw[0,i,_$];b[4]=1;return o(b,d,aQ);case
+134:if(b[4])throw[0,i,$a];var
 zK=b[3];if(typeof
 zK==="number")switch(zK){case
 10:var
@@ -28252,6 +29234,7 @@ ei=bN[1][1],dl=ei[1][1],VA=bM[2],VB=bM[1],VC=bN[4],VD=ei[3],VE=[0,[0,[0,[1,$(dl[
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 dm=bN[1],ej=dm[4],VF=bM[2],VG=bM[1],VH=bN[4],VI=[16,$(ej,cm),VH,VG,VF],aS=dm[1],aR=cm,aN=dm[3],aP=VI,aO=ej;continue a}return cQ(0)}}if(b[4])throw[0,h,_o];b[4]=1;return p(b,d,cN);case
 136:if(b[4])throw[0,h,_p];var
 =======
@@ -28270,10 +29253,14 @@ dm=bN[1],ej=dm[4],VF=bM[2],VG=bM[1],VH=bN[4],VI=[16,$(ej,cm),VH,VG,VF],aS=dm[1],
 dm=bN[1],ej=dm[4],VF=bM[2],VG=bM[1],VH=bN[4],VI=[16,$(ej,cm),VH,VG,VF],aS=dm[1],aR=cm,aN=dm[3],aP=VI,aO=ej;continue a}return cP(0)}}if(b[4])throw[0,i,$h];b[4]=1;return o(b,d,cN);case
 136:if(b[4])throw[0,i,$i];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+dm=bN[1],ej=dm[4],VF=bM[2],VG=bM[1],VH=bN[4],VI=[16,$(ej,cm),VH,VG,VF],aS=dm[1],aR=cm,aN=dm[3],aP=VI,aO=ej;continue a}return cP(0)}}if(b[4])throw[0,i,$b];b[4]=1;return o(b,d,cN);case
+136:if(b[4])throw[0,i,$c];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 Ah=b[3];if(typeof
 Ah==="number")switch(Ah){case
 0:var
-Ai=b[2][11],Ak=b[2][12],Aj=cM;return c<50?f0(c+1|0,b,d,Ak,Aj,Ai):a(f0,[0,b,d,Ak,Aj,Ai]);case
+Ai=b[2][11],Ak=b[2][12],Aj=cM;return c<50?f1(c+1|0,b,d,Ak,Aj,Ai):a(f1,[0,b,d,Ak,Aj,Ai]);case
 10:var
 Al=cM;return c<50?ag(c+1|0,b,d,Al):a(ag,[0,b,d,Al]);case
 11:var
@@ -28319,14 +29306,14 @@ AL=cM;return c<50?av(c+1|0,b,d,AL):a(av,[0,b,d,AL]);case
 58:var
 AM=cM;return c<50?aE(c+1|0,b,d,AM):a(aE,[0,b,d,AM]);case
 64:var
-AN=b[2][11],AP=b[2][12],AO=cM;return c<50?fZ(c+1|0,b,d,AP,AO,AN):a(fZ,[0,b,d,AP,AO,AN]);case
+AN=b[2][11],AP=b[2][12],AO=cM;return c<50?f0(c+1|0,b,d,AP,AO,AN):a(f0,[0,b,d,AP,AO,AN]);case
 65:var
 AQ=cM;return c<50?Z(c+1|0,b,d,AQ):a(Z,[0,b,d,AQ]);case
 73:var
 AR=cM;return c<50?ab(c+1|0,b,d,AR):a(ab,[0,b,d,AR]);case
 76:var
-AS=b[2][11],AU=b[2][12],AT=cM;return c<50?aG(c+1|0,b,d,AU,AT,AS):a(aG,[0,b,d,AU,AT,AS])}if(b[4])throw[0,i,$j];b[4]=1;return o(b,d,cM);case
-144:if(b[4])throw[0,i,$k];var
+AS=b[2][11],AU=b[2][12],AT=cM;return c<50?aG(c+1|0,b,d,AU,AT,AS):a(aG,[0,b,d,AU,AT,AS])}if(b[4])throw[0,i,$d];b[4]=1;return o(b,d,cM);case
+144:if(b[4])throw[0,i,$e];var
 AV=b[3];if(typeof
 AV==="number")switch(AV){case
 10:var
@@ -28464,6 +29451,7 @@ Bt=b[2][11],Bv=b[2][12],Bu=cW;return c<50?aG(c+1|0,b,d,Bv,Bu,Bt):a(aG,[0,b,d,Bv,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 AW=d[2],AX=d[1][1],AY=AX[1],AZ=AY[3],dK=AY[1],A0=dK[4],VY=d[4],VZ=AX[4],V0=AZ[2],V1=AZ[1],V2=[11,$(A0,AW),V1,V0,VZ,VY],aS=dK[1],aR=AW,aN=dK[3],aP=V2,aO=A0;continue}if(b[4])throw[0,h,_s];b[4]=1;return p(b,d,cW);case
 148:if(b[4])throw[0,h,_t];var
 =======
@@ -28491,6 +29479,10 @@ AW=d[2],AX=d[1][1],AY=AX[1],AZ=AY[3],dK=AY[1],A0=dK[4],VY=d[4],VZ=AX[4],V0=AZ[2]
 AW=d[2],AX=d[1][1],AY=AX[1],AZ=AY[3],dK=AY[1],A0=dK[4],VY=d[4],VZ=AX[4],V0=AZ[2],V1=AZ[1],V2=[11,$(A0,AW),V1,V0,VZ,VY],aS=dK[1],aR=AW,aN=dK[3],aP=V2,aO=A0;continue}if(b[4])throw[0,i,$l];b[4]=1;return o(b,d,cV);case
 148:if(b[4])throw[0,i,$m];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+AW=d[2],AX=d[1][1],AY=AX[1],AZ=AY[3],dK=AY[1],A0=dK[4],VY=d[4],VZ=AX[4],V0=AZ[2],V1=AZ[1],V2=[11,$(A0,AW),V1,V0,VZ,VY],aS=dK[1],aR=AW,aN=dK[3],aP=V2,aO=A0;continue}if(b[4])throw[0,i,$f];b[4]=1;return o(b,d,cV);case
+148:if(b[4])throw[0,i,$g];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 Bw=b[3];if(typeof
 Bw==="number")switch(Bw){case
 10:var
@@ -28619,6 +29611,7 @@ B5=b[2][11],B7=b[2][12],B6=cZ;return c<50?aG(c+1|0,b,d,B7,B6,B5):a(aG,[0,b,d,B7,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Bx=d[2],By=d[1][1],Bz=By[1][1],dL=Bz[1],BA=dL[4],V3=d[4],V4=By[4],V5=Bz[4],V6=[10,$(BA,Bx),V5,V4,V3],aS=dL[1],aR=Bx,aN=dL[3],aP=V6,aO=BA;continue}if(b[4])throw[0,h,_u];b[4]=1;return p(b,d,cZ);case
 150:if(b[4])throw[0,h,_v];var
 =======
@@ -28646,6 +29639,10 @@ Bx=d[2],By=d[1][1],Bz=By[1][1],dL=Bz[1],BA=dL[4],V3=d[4],V4=By[4],V5=Bz[4],V6=[1
 Bx=d[2],By=d[1][1],Bz=By[1][1],dL=Bz[1],BA=dL[4],V3=d[4],V4=By[4],V5=Bz[4],V6=[10,$(BA,Bx),V5,V4,V3],aS=dL[1],aR=Bx,aN=dL[3],aP=V6,aO=BA;continue}if(b[4])throw[0,i,$n];b[4]=1;return o(b,d,cY);case
 150:if(b[4])throw[0,i,$o];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+Bx=d[2],By=d[1][1],Bz=By[1][1],dL=Bz[1],BA=dL[4],V3=d[4],V4=By[4],V5=Bz[4],V6=[10,$(BA,Bx),V5,V4,V3],aS=dL[1],aR=Bx,aN=dL[3],aP=V6,aO=BA;continue}if(b[4])throw[0,i,$h];b[4]=1;return o(b,d,cY);case
+150:if(b[4])throw[0,i,$i];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 B8=b[3];if(typeof
 B8==="number")switch(B8){case
 10:var
@@ -28783,7 +29780,7 @@ Dc=r[2][11],De=r[2][12],Dd=dA;return c<50?D(c+1|0,r,z,De,Dd,Dc):a(D,[0,r,z,De,Dd
 67:var
 Df=r[2][11],Dh=r[2][12],Dg=dA;return c<50?C(c+1|0,r,z,Dh,Dg,Df):a(C,[0,r,z,Dh,Dg,Df]);case
 72:var
-Di=r[2][11],Dk=r[2][12],Dj=dA;return c<50?B(c+1|0,r,z,Dk,Dj,Di):a(B,[0,r,z,Dk,Dj,Di]);default:if(r[4])throw[0,i,$q];r[4]=1;return o(r,z,dA)}else
+Di=r[2][11],Dk=r[2][12],Dj=dA;return c<50?B(c+1|0,r,z,Dk,Dj,Di):a(B,[0,r,z,Dk,Dj,Di]);default:if(r[4])throw[0,i,$k];r[4]=1;return o(r,z,dA)}else
 switch(b1[0]){case
 0:var
 Dl=r[2][11],Dm=b1[1],Do=r[2][12],Dn=dA;return c<50?M(c+1|0,r,z,Do,Dn,Dm,Dl):a(M,[0,r,z,Do,Dn,Dm,Dl]);case
@@ -28801,6 +29798,7 @@ DB=cT;return c<50?Z(c+1|0,b,d,DB):a(Z,[0,b,d,DB]);case
 73:var
 DC=cU;return c<50?ab(c+1|0,b,d,DC):a(ab,[0,b,d,DC]);case
 76:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -28823,6 +29821,10 @@ DD=b[2][11],DF=b[2][12],DE=cT;return c<50?aG(c+1|0,b,d,DF,DE,DD):a(aG,[0,b,d,DF,
 DD=b[2][11],DF=b[2][12],DE=cT;return c<50?aG(c+1|0,b,d,DF,DE,DD):a(aG,[0,b,d,DF,DE,DD])}if(b[4])throw[0,i,$p];b[4]=1;return o(b,d,cT);case
 153:if(b[4])throw[0,i,$r];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+DD=b[2][11],DF=b[2][12],DE=cT;return c<50?aG(c+1|0,b,d,DF,DE,DD):a(aG,[0,b,d,DF,DE,DD])}if(b[4])throw[0,i,$j];b[4]=1;return o(b,d,cT);case
+153:if(b[4])throw[0,i,$l];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 DG=b[3];if(typeof
 DG==="number")switch(DG){case
 10:var
@@ -28900,8 +29902,8 @@ Ec=b[2][11],Ee=b[2][12],Ed=c9;return c<50?aG(c+1|0,b,d,Ee,Ed,Ec):a(aG,[0,b,d,Ee,
 67:case
 70:case
 74:var
-DH=d[2],DI=d[1][1],dN=DI[1],DJ=dN[4],V7=d[4],V8=DI[3],V9=[17,$(DJ,DH),V8,0,V7],aS=dN[1],aR=DH,aN=dN[3],aP=V9,aO=DJ;continue}if(b[4])throw[0,i,$s];b[4]=1;return o(b,d,c9);case
-155:if(b[4])throw[0,i,$t];var
+DH=d[2],DI=d[1][1],dN=DI[1],DJ=dN[4],V7=d[4],V8=DI[3],V9=[17,$(DJ,DH),V8,0,V7],aS=dN[1],aR=DH,aN=dN[3],aP=V9,aO=DJ;continue}if(b[4])throw[0,i,$m];b[4]=1;return o(b,d,c9);case
+155:if(b[4])throw[0,i,$n];var
 Ef=b[3];if(typeof
 Ef==="number")switch(Ef){case
 10:var
@@ -28979,8 +29981,8 @@ EO=b[2][11],EQ=b[2][12],EP=c2;return c<50?aG(c+1|0,b,d,EQ,EP,EO):a(aG,[0,b,d,EQ,
 67:case
 70:case
 74:var
-Eg=d[2],Eh=d[1][1],Ei=Eh[1][1],dO=Ei[1],Ej=dO[4],V_=d[4],V$=[0,Eh[4]],Wa=Ei[3],Wb=[17,$(Ej,Eg),Wa,V$,V_],aS=dO[1],aR=Eg,aN=dO[3],aP=Wb,aO=Ej;continue}if(b[4])throw[0,i,$u];b[4]=1;return o(b,d,c2);case
-157:if(b[4])throw[0,i,$v];var
+Eg=d[2],Eh=d[1][1],Ei=Eh[1][1],dO=Ei[1],Ej=dO[4],V_=d[4],V$=[0,Eh[4]],Wa=Ei[3],Wb=[17,$(Ej,Eg),Wa,V$,V_],aS=dO[1],aR=Eg,aN=dO[3],aP=Wb,aO=Ej;continue}if(b[4])throw[0,i,$o];b[4]=1;return o(b,d,c2);case
+157:if(b[4])throw[0,i,$p];var
 ER=b[3];if(typeof
 ER==="number")switch(ER){case
 10:var
@@ -29031,7 +30033,7 @@ FB=s[2][11],FD=s[2][12],FC=dv;return c<50?D(c+1|0,s,Q,FD,FC,FB):a(D,[0,s,Q,FD,FC
 67:var
 FE=s[2][11],FG=s[2][12],FF=dv;return c<50?C(c+1|0,s,Q,FG,FF,FE):a(C,[0,s,Q,FG,FF,FE]);case
 72:var
-FH=s[2][11],FJ=s[2][12],FI=dv;return c<50?B(c+1|0,s,Q,FJ,FI,FH):a(B,[0,s,Q,FJ,FI,FH]);default:if(s[4])throw[0,i,$x];s[4]=1;return o(s,Q,dv)}else
+FH=s[2][11],FJ=s[2][12],FI=dv;return c<50?B(c+1|0,s,Q,FJ,FI,FH):a(B,[0,s,Q,FJ,FI,FH]);default:if(s[4])throw[0,i,$r];s[4]=1;return o(s,Q,dv)}else
 switch(b2[0]){case
 0:var
 FK=s[2][11],FL=b2[1],FN=s[2][12],FM=dv;return c<50?M(c+1|0,s,Q,FN,FM,FL,FK):a(M,[0,s,Q,FN,FM,FL,FK]);case
@@ -29081,8 +30083,8 @@ Gk=cG;return c<50?Z(c+1|0,b,d,Gk):a(Z,[0,b,d,Gk]);case
 73:var
 Gl=cG;return c<50?ab(c+1|0,b,d,Gl):a(ab,[0,b,d,Gl]);case
 76:var
-Gm=b[2][11],Go=b[2][12],Gn=cG;return c<50?aG(c+1|0,b,d,Go,Gn,Gm):a(aG,[0,b,d,Go,Gn,Gm])}if(b[4])throw[0,i,$w];b[4]=1;return o(b,d,cG);case
-165:if(b[4])throw[0,i,$y];var
+Gm=b[2][11],Go=b[2][12],Gn=cG;return c<50?aG(c+1|0,b,d,Go,Gn,Gm):a(aG,[0,b,d,Go,Gn,Gm])}if(b[4])throw[0,i,$q];b[4]=1;return o(b,d,cG);case
+165:if(b[4])throw[0,i,$s];var
 Gp=b[3];if(typeof
 Gp==="number")switch(Gp){case
 10:var
@@ -29158,11 +30160,11 @@ GS=dd;return c<50?ab(c+1|0,b,d,GS):a(ab,[0,b,d,GS]);case
 70:case
 74:case
 76:var
-Gq=d[2],cs=d[1][1],Gr=cs[5],Wc=d[4],Wd=cs[4],We=b$[3][7],Wf=[9,$(Gr,Gq),We,Wd,Wc],aS=cs[1],aR=Gq,aN=cs[3],aP=Wf,aO=Gr;continue}if(b[4])throw[0,i,$z];b[4]=1;return o(b,d,dd);case
+Gq=d[2],cs=d[1][1],Gr=cs[5],Wc=d[4],Wd=cs[4],We=b$[3][7],Wf=[9,$(Gr,Gq),We,Wd,Wc],aS=cs[1],aR=Gq,aN=cs[3],aP=Wf,aO=Gr;continue}if(b[4])throw[0,i,$t];b[4]=1;return o(b,d,dd);case
 23:case
 163:var
 dh=1;break;default:var
-dh=0}if(dh){if(b[4])throw[0,i,_p];var
+dh=0}if(dh){if(b[4])throw[0,i,_j];var
 hp=b[3];if(typeof
 hp==="number")switch(hp){case
 10:var
@@ -29254,7 +30256,7 @@ iH=l[2][11],iJ=l[2][12],iI=cI;return c<50?C(c+1|0,l,w,iJ,iI,iH):a(C,[0,l,w,iJ,iI
 iK=l[2][11],iM=l[2][12],iL=cI;return c<50?B(c+1|0,l,w,iM,iL,iK):a(B,[0,l,w,iM,iL,iK]);case
 18:case
 21:var
-h_=cI;return c<50?gZ(c+1|0,l,w,h_):a(gZ,[0,l,w,h_]);default:if(l[4])throw[0,i,_r];l[4]=1;return o(l,w,cI)}else
+h_=cI;return c<50?gZ(c+1|0,l,w,h_):a(gZ,[0,l,w,h_]);default:if(l[4])throw[0,i,_l];l[4]=1;return o(l,w,cI)}else
 switch(b0[0]){case
 0:var
 iN=l[2][11],iO=b0[1],iQ=l[2][12],iP=cI;return c<50?M(c+1|0,l,w,iQ,iP,iO,iN):a(M,[0,l,w,iQ,iP,iO,iN]);case
@@ -29273,6 +30275,7 @@ i4=b[2][11],i6=b[2][12],i5=cF;return c<50?aG(c+1|0,b,d,i6,i5,i4):a(aG,[0,b,d,i6,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 hw=[0,d[4],0],hx=d[3],hy=d[1];return c<50?kD(c+1|0,b,hy,hx,hw):a(kD,[0,b,hy,hx,hw])}if(b[4])throw[0,h,Zx];b[4]=1;return p(b,d,cF)}return cQ(0)}},kB=function(d,b,_,e,Z,Y,X){var
 c=_,i=Z,f=Y,j=X;for(;;){if(1!==i){if(bK<=i)switch(i-228|0){case
 =======
@@ -29286,6 +30289,9 @@ hw=[0,d[4],0],hx=d[3],hy=d[1];return c<50?kB(c+1|0,b,hy,hx,hw):a(kB,[0,b,hy,hx,h
 =======
 hw=[0,d[4],0],hx=d[3],hy=d[1];return c<50?kC(c+1|0,b,hy,hx,hw):a(kC,[0,b,hy,hx,hw])}if(b[4])throw[0,i,_q];b[4]=1;return o(b,d,cF)}return cP(0)}},kA=function(d,b,_,e,Z,Y,X){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+hw=[0,d[4],0],hx=d[3],hy=d[1];return c<50?kC(c+1|0,b,hy,hx,hw):a(kC,[0,b,hy,hx,hw])}if(b[4])throw[0,i,_k];b[4]=1;return o(b,d,cF)}return cP(0)}},kA=function(d,b,_,e,Z,Y,X){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=_,h=Z,f=Y,j=X;for(;;){if(1!==h){if(bK<=h)switch(h-228|0){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 0:var
@@ -29294,19 +30300,19 @@ E=kw(f),F=c[3],G=c[2],H=c[1];return d<50?kH(d+1|0,b,H,G,E,F):a(kH,[0,b,H,G,E,F])
 n=c[3],ac=kw(f),I=[11,$(n,e),ac],J=c[2],K=c[1];return d<50?kG(d+1|0,b,K,e,J,I,n):a(kG,[0,b,K,e,J,I,n]);case
 11:var
 L=f[1];if(L){var
-M=f[2],N=L[1];if(aV(M,aaP))var
+M=f[2],N=L[1];if(aV(M,aaJ))var
 ad=aX(M),ae=aX(N),O=[2,$(j,e),ae,ad];else
 var
 af=aX(N),O=[0,$(j,e),af];var
 P=O}else
 var
-P=eN(i9(aaQ,fk[1],j,e));var
+P=eN(i9(aaK,fl[1],j,e));var
 Q=[1,$(c[4],e),P],R=c[3],S=c[1];return d<50?d_(d+1|0,b,S,e,R,Q):a(d_,[0,b,S,e,R,Q]);case
 13:var
-T=c[5],p=c[4];if(ez(p,aaR))var
-U=eN(i9(aaS,fk[1],T,e));else{var
+T=c[5],p=c[4];if(ey(p,aaL))var
+U=eN(i9(aaM,fl[1],T,e));else{var
 V=f[1];if(V)var
-ah=f[2],W=[0,[0,as(p,as(aaT,V[1]))],ah];else
+ah=f[2],W=[0,[0,as(p,as(aaN,V[1]))],ah];else
 var
 W=[0,[0,p],f[2]];var
 U=W}var
@@ -29321,6 +30327,7 @@ r=f[1];if(aV(f[2],$R))if(r)var
 aa=aC($S,f[2]),l=a5(aC(r[1],aa));else
 =======
 q=0;if(!q)return cP(0)}var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -29339,12 +30346,16 @@ aa=as(aaO,f[2]),l=aX(as(r[1],aa));else
 r=f[1];if(aV(f[2],aaK))if(r)var
 aa=as(aaL,f[2]),l=aX(as(r[1],aa));else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+r=f[1];if(aV(f[2],aaE))if(r)var
+aa=as(aaF,f[2]),l=aX(as(r[1],aa));else
+>>>>>>> (fix) Directly use time constants in generated JS code
 var
 l=aX(f[2]);else
 var
-l=eN(i9(aaO,fk[1],j,e));var
+l=eN(i9(aaI,fl[1],j,e));var
 g=[0,c,e,h,l];if(1===h){var
-m=g[1],ab=g[4],s=[0,$(m[4],g[2]),ab],t=m[3],u=m[1];return d<50?g0(d+1|0,b,u,t,s):a(g0,[0,b,u,t,s])}if(a2<=h){if(b[4])throw[0,i,aaM];var
+m=g[1],ab=g[4],s=[0,$(m[4],g[2]),ab],t=m[3],u=m[1];return d<50?g0(d+1|0,b,u,t,s):a(g0,[0,b,u,t,s])}if(a2<=h){if(b[4])throw[0,i,aaG];var
 k=b[3];if(typeof
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -29360,13 +30371,18 @@ k==="number")if(59<=k){if(!(68<=k))switch(k+uU|0){case
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 k==="number")if(59<=k){if(!(68<=k))switch(k+uW|0){case
+<<<<<<< HEAD
 0:return ty(b,g,f3);case
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+0:return ty(b,g,f4);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 7:var
-v=b[2][11],x=b[2][12],w=f3;return d<50?hv(d+1|0,b,g,x,w,v):a(hv,[0,b,g,x,w,v]);case
+v=b[2][11],x=b[2][12],w=f4;return d<50?hw(d+1|0,b,g,x,w,v):a(hw,[0,b,g,x,w,v]);case
 8:var
-y=b[2][11],A=b[2][12],z=f3;return d<50?hu(d+1|0,b,g,A,z,y):a(hu,[0,b,g,A,z,y])}}else
+y=b[2][11],A=b[2][12],z=f4;return d<50?hv(d+1|0,b,g,A,z,y):a(hv,[0,b,g,A,z,y])}}else
 if(47===k){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -29384,6 +30400,9 @@ B=b[2][11],D=b[2][12],C=f3;return d<50?hw(d+1|0,b,g,D,C,B):a(hw,[0,b,g,D,C,B])}i
 =======
 B=b[2][11],D=b[2][12],C=f3;return d<50?hw(d+1|0,b,g,D,C,B):a(hw,[0,b,g,D,C,B])}if(b[4])throw[0,i,aaN];b[4]=1;return o(b,g,f3)}return cP(0)}},au=function(b,h,gB,gA,j,gz,gy){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+B=b[2][11],D=b[2][12],C=f4;return d<50?hx(d+1|0,b,g,D,C,B):a(hx,[0,b,g,D,C,B])}if(b[4])throw[0,i,aaH];b[4]=1;return o(b,g,f4)}return cP(0)}},au=function(b,h,gB,gA,j,gz,gy){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 f=[0,gB,gA,j,gz,gy];if(69<=j)if(cV<=j)if(cI<=j)if(bO<=j)switch(j-206|0){case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 25:case
@@ -29417,7 +30436,7 @@ s=54<=j?59<=j?68<=j?2:0:57<=j?3:0:1===j?1:52<=j?3:0;switch(s){case
 ek=i[3];if(typeof
 =======
 0:return cP(0);case
-1:if(h[4])throw[0,i,aa0];var
+1:if(h[4])throw[0,i,aaU];var
 ek=h[3];if(typeof
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 ek==="number")switch(ek){case
@@ -29427,7 +30446,7 @@ z==="number")switch(z){case
 0:var
 eq=d[2][11],es=d[2][12],er=bT;return b<50?bJ(b+1|0,d,f,es,er,eq):a(bJ,[0,d,f,es,er,eq]);case
 1:var
-et=d[2][11],ex=d[2][12],eu=bT;return b<50?bI(b+1|0,d,f,ex,eu,et):a(bI,[0,d,f,ex,eu,et]);case
+et=d[2][11],ex=d[2][12],ew=bT;return b<50?bI(b+1|0,d,f,ex,ew,et):a(bI,[0,d,f,ex,ew,et]);case
 2:var
 ey=d[2][11],eA=d[2][12],ez=bT;return b<50?bH(b+1|0,d,f,eA,ez,ey):a(bH,[0,d,f,eA,ez,ey]);case
 4:var
@@ -29441,7 +30460,7 @@ eK=d[2][11],eM=d[2][12],eL=bT;return b<50?bD(b+1|0,d,f,eM,eL,eK):a(bD,[0,d,f,eM,
 9:var
 eN=d[2][11],eP=d[2][12],eO=bT;return b<50?bC(b+1|0,d,f,eP,eO,eN):a(bC,[0,d,f,eP,eO,eN]);case
 11:var
-eQ=d[2][11],eS=d[2][12],eR=bT;return b<50?fz(b+1|0,d,f,eS,eR,eQ):a(fz,[0,d,f,eS,eR,eQ]);case
+eQ=d[2][11],eS=d[2][12],eR=bT;return b<50?fA(b+1|0,d,f,eS,eR,eQ):a(fA,[0,d,f,eS,eR,eQ]);case
 12:var
 eT=d[2][11],eV=d[2][12],eU=bT;return b<50?bB(b+1|0,d,f,eV,eU,eT):a(bB,[0,d,f,eV,eU,eT]);case
 15:var
@@ -29471,7 +30490,7 @@ fr=d[2][11],ft=d[2][12],fs=bT;return b<50?bp(b+1|0,d,f,ft,fs,fr):a(bp,[0,d,f,ft,
 48:var
 fu=d[2][11],fw=d[2][12],fv=bT;return b<50?bo(b+1|0,d,f,fw,fv,fu):a(bo,[0,d,f,fw,fv,fu]);case
 53:var
-fx=d[2][11],fA=d[2][12],fy=bT;return b<50?bm(b+1|0,d,f,fA,fy,fx):a(bm,[0,d,f,fA,fy,fx]);case
+fx=d[2][11],fz=d[2][12],fy=bT;return b<50?bm(b+1|0,d,f,fz,fy,fx):a(bm,[0,d,f,fz,fy,fx]);case
 54:var
 fB=d[2][11],fD=d[2][12],fC=bT;return b<50?bl(b+1|0,d,f,fD,fC,fB):a(bl,[0,d,f,fD,fC,fB]);case
 55:var
@@ -29509,7 +30528,7 @@ gl=d[2][11],gn=d[2][12],gm=bT;return b<50?a7(b+1|0,d,f,gn,gm,gl):a(a7,[0,d,f,gn,
 77:var
 go=d[2][11],gq=d[2][12],gp=bT;return b<50?a6(b+1|0,d,f,gq,gp,go):a(a6,[0,d,f,gq,gp,go])}else
 if(2===z[0]){var
-gr=d[2][11],gs=z[1],gu=d[2][12],gt=bT;return b<50?bn(b+1|0,d,f,gu,gt,gs,gr):a(bn,[0,d,f,gu,gt,gs,gr])}if(d[4])throw[0,i,aa2];d[4]=1;return o(d,f,bT);case
+gr=d[2][11],gs=z[1],gu=d[2][12],gt=bT;return b<50?bn(b+1|0,d,f,gu,gt,gs,gr):a(bn,[0,d,f,gu,gt,gs,gr])}if(d[4])throw[0,i,aaW];d[4]=1;return o(d,f,bT);case
 7:case
 8:case
 9:case
@@ -29537,7 +30556,7 @@ gr=d[2][11],gs=z[1],gu=d[2][12],gt=bT;return b<50?bn(b+1|0,d,f,gu,gt,gs,gr):a(bn
 67:case
 70:case
 74:var
-el=[0,0,f[4]],em=f[5],en=f[3],eo=f[2],ep=f[1];return b<50?kA(b+1|0,h,ep,eo,en,el,em):a(kA,[0,h,ep,eo,en,el,em])}if(h[4])throw[0,i,aa1];h[4]=1;return o(h,f[1],f[3]);case
+el=[0,0,f[4]],em=f[5],en=f[3],eo=f[2],ep=f[1];return b<50?kA(b+1|0,h,ep,eo,en,el,em):a(kA,[0,h,ep,eo,en,el,em])}if(h[4])throw[0,i,aaV];h[4]=1;return o(h,f[1],f[3]);case
 2:var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -29557,7 +30576,7 @@ m=f[3],gC=aX(f[4]),e=[0,f[1],f[2],m,gC];if(li<=m)if(dc<=m)var
 m=f[3],gC=aX(f[4]),e=[0,f[1],f[2],m,gC];if(lj<=m)if(dc<=m)var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 v=bM===m?1:bP===m?1:0;else{if(bS===m){var
-Q=e[2],x=e[1][1],Y=x[5],gD=x[4],gE=e[4],u=$(Y,Q),ab=[16,u,gD,[0,[0,[3,u,Od,0],[6,u,su(u,gE,[3,u,Oc])]],0],[5,u]],c$=x[3],da=x[1];return b<50?b4(b+1|0,h,da,Q,c$,ab,Y):a(b4,[0,h,da,Q,c$,ab,Y])}var
+Q=e[2],x=e[1][1],Y=x[5],gD=x[4],gE=e[4],u=$(Y,Q),ab=[16,u,gD,[0,[0,[3,u,N9,0],[6,u,su(u,gE,[3,u,N8])]],0],[5,u]],c$=x[3],da=x[1];return b<50?b4(b+1|0,h,da,Q,c$,ab,Y):a(b4,[0,h,da,Q,c$,ab,Y])}var
 v=bL<=m?2:0}else
 if(71<=m)if(cI<=m){if(bO<=m){var
 <<<<<<< HEAD
@@ -29578,7 +30597,7 @@ ac=i[3];if(typeof
 =======
 v=68===m?1:70<=m?1:0;switch(v){case
 0:return cP(0);case
-1:if(h[4])throw[0,i,aaU];var
+1:if(h[4])throw[0,i,aaO];var
 ac=h[3];if(typeof
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
 ac==="number")if(71===ac){var
@@ -29595,7 +30614,7 @@ am=c[2][11],ao=c[2][12],an=a3;return b<50?bG(b+1|0,c,e,ao,an,am):a(bG,[0,c,e,ao,
 5:var
 ap=c[2][11],ar=c[2][12],aq=a3;return b<50?bF(b+1|0,c,e,ar,aq,ap):a(bF,[0,c,e,ar,aq,ap]);case
 6:var
-as=c[2][11],at=a3;return b<50?ew(b+1|0,c,e,at,as):a(ew,[0,c,e,at,as]);case
+as=c[2][11],at=a3;return b<50?ev(b+1|0,c,e,at,as):a(ev,[0,c,e,at,as]);case
 7:var
 au=c[2][11],aw=c[2][12],av=a3;return b<50?bE(b+1|0,c,e,aw,av,au):a(bE,[0,c,e,aw,av,au]);case
 8:var
@@ -29625,7 +30644,7 @@ bR=c[2][11],bV=c[2][12],bU=a3;return b<50?bs(b+1|0,c,e,bV,bU,bR):a(bs,[0,c,e,bV,
 43:var
 bW=c[2][11],bY=c[2][12],bX=a3;return b<50?br(b+1|0,c,e,bY,bX,bW):a(br,[0,c,e,bY,bX,bW]);case
 44:var
-bZ=c[2][11],b0=a3;return b<50?ev(b+1|0,c,e,b0,bZ):a(ev,[0,c,e,b0,bZ]);case
+bZ=c[2][11],b0=a3;return b<50?eu(b+1|0,c,e,b0,bZ):a(eu,[0,c,e,b0,bZ]);case
 46:var
 b1=c[2][11],b3=c[2][12],b2=a3;return b<50?bq(b+1|0,c,e,b3,b2,b1):a(bq,[0,c,e,b3,b2,b1]);case
 47:var
@@ -29679,7 +30698,7 @@ c1=c[2][11],c3=c[2][12],c2=a3;return b<50?a7(b+1|0,c,e,c3,c2,c1):a(a7,[0,c,e,c3,
 77:var
 c4=c[2][11],c6=c[2][12],c5=a3;return b<50?a6(b+1|0,c,e,c6,c5,c4):a(a6,[0,c,e,c6,c5,c4])}else
 if(2===w[0]){var
-c7=c[2][11],c8=w[1],c_=c[2][12],c9=a3;return b<50?bn(b+1|0,c,e,c_,c9,c8,c7):a(bn,[0,c,e,c_,c9,c8,c7])}if(c[4])throw[0,i,aaV];c[4]=1;return o(c,e,a3)}if(h[4])throw[0,i,aaW];h[4]=1;return o(h,e[1],e[3]);default:if(h[4])throw[0,i,aaX];var
+c7=c[2][11],c8=w[1],c_=c[2][12],c9=a3;return b<50?bn(b+1|0,c,e,c_,c9,c8,c7):a(bn,[0,c,e,c_,c9,c8,c7])}if(c[4])throw[0,i,aaP];c[4]=1;return o(c,e,a3)}if(h[4])throw[0,i,aaQ];h[4]=1;return o(h,e[1],e[3]);default:if(h[4])throw[0,i,aaR];var
 db=h[3];if(typeof
 db==="number")if(71===db){var
 g=q(h),t=g[3];if(typeof
@@ -29721,7 +30740,7 @@ dU=g[2][11],dW=g[2][12],dV=dC;return b<50?D(b+1|0,g,e,dW,dV,dU):a(D,[0,g,e,dW,dV
 67:var
 dX=g[2][11],dZ=g[2][12],dY=dC;return b<50?C(b+1|0,g,e,dZ,dY,dX):a(C,[0,g,e,dZ,dY,dX]);case
 72:var
-d0=g[2][11],d2=g[2][12],d1=dC;return b<50?B(b+1|0,g,e,d2,d1,d0):a(B,[0,g,e,d2,d1,d0]);default:if(g[4])throw[0,i,aaY];g[4]=1;return o(g,e,dC)}else
+d0=g[2][11],d2=g[2][12],d1=dC;return b<50?B(b+1|0,g,e,d2,d1,d0):a(B,[0,g,e,d2,d1,d0]);default:if(g[4])throw[0,i,aaS];g[4]=1;return o(g,e,dC)}else
 switch(t[0]){case
 0:var
 d3=g[2][11],d4=t[1],d6=g[2][12],d5=dC;return b<50?M(b+1|0,g,e,d6,d5,d4,d3):a(M,[0,g,e,d6,d5,d4,d3]);case
@@ -29729,6 +30748,7 @@ d3=g[2][11],d4=t[1],d6=g[2][12],d5=dC;return b<50?M(b+1|0,g,e,d6,d5,d4,d3):a(M,[
 d7=g[2][11],d8=t[1],d_=g[2][12],d9=dC;return b<50?H(b+1|0,g,e,d_,d9,d8,d7):a(H,[0,g,e,d_,d9,d8,d7]);case
 2:var
 d$=g[2][11],ea=t[1],ec=g[2][12],eb=dC;return b<50?G(b+1|0,g,e,ec,eb,ea,d$):a(G,[0,g,e,ec,eb,ea,d$]);default:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -29751,6 +30771,10 @@ k=f[5],p=f[4],l=f[2],gv=w8(p,aa6);if(0<=gv)if(0<gv)if(aV(p,aa7))if(aV(p,aa8))if(
 ed=g[2][11],ee=t[1],eg=g[2][12],ef=dC;return b<50?E(b+1|0,g,e,eg,ef,ee,ed):a(E,[0,g,e,eg,ef,ee,ed])}}if(h[4])throw[0,i,aaZ];h[4]=1;return o(h,e[1],e[3])}default:var
 k=f[5],p=f[4],l=f[2],gv=w_(p,aa3);if(0<=gv)if(0<gv)if(aV(p,aa4))if(aV(p,aa5))if(aV(p,aa6))if(aV(p,aa7))if(aV(p,aa8))var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+ed=g[2][11],ee=t[1],eg=g[2][12],ef=dC;return b<50?E(b+1|0,g,e,eg,ef,ee,ed):a(E,[0,g,e,eg,ef,ee,ed])}}if(h[4])throw[0,i,aaT];h[4]=1;return o(h,e[1],e[3])}default:var
+k=f[5],p=f[4],l=f[2],gv=w_(p,aaX);if(0<=gv)if(0<gv)if(aV(p,aaY))if(aV(p,aaZ))if(aV(p,aa0))if(aV(p,aa1))if(aV(p,aa2))var
+>>>>>>> (fix) Directly use time constants in generated JS code
 n=1;else
 var
 r=[2,$(k,l)],n=0;else
@@ -29764,7 +30788,7 @@ var
 r=[10,$(k,l)],n=0;else
 var
 r=[9,$(k,l)],n=0;else
-if(aV(p,aa9))if(aV(p,aa_))if(aV(p,aa$))if(aV(p,aba))if(aV(p,abb))var
+if(aV(p,aa3))if(aV(p,aa4))if(aV(p,aa5))if(aV(p,aa6))if(aV(p,aa7))var
 n=1;else
 var
 r=[7,$(k,l)],n=0;else
@@ -29819,7 +30843,7 @@ as=b[2][11],au=b[2][12],at=48;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=48;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=48;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,abc];b[4]=1;return o(b,c,48)}else
+ay=b[2][11],aA=b[2][12],az=48;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,aa8];b[4]=1;return o(b,c,48)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=48;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -29828,24 +30852,24 @@ aF=b[2][11],aG=e[1],aI=b[2][12],aH=48;return d<50?H(d+1|0,b,c,aI,aH,aG,aF):a(H,[
 2:var
 aJ=b[2][11],aK=e[1],aM=b[2][12],aL=48;return d<50?G(d+1|0,b,c,aM,aL,aK,aJ):a(G,[0,b,c,aM,aL,aK,aJ]);default:var
 aN=b[2][11],aO=e[1],aQ=b[2][12],aP=48;return d<50?E(d+1|0,b,c,aQ,aP,aO,aN):a(E,[0,b,c,aQ,aP,aO,aN])}},h$=function(d,j,i,h,g,f,e){var
-b=[0,i,h,g,f,e],c=q(j);return d<50?kB(d+1|0,c,b):a(kB,[0,c,b])},fU=function(d,c,cF,cE,cD,cC,cB){var
+b=[0,i,h,g,f,e],c=q(j);return d<50?kB(d+1|0,c,b):a(kB,[0,c,b])},fV=function(d,c,cF,cE,cD,cC,cB){var
 r=cF,p=cE,l=cD,n=cC,m=cB;a:for(;;){var
 b=[0,r,p,l,n,m];if(!(52<=l))switch(l){case
-9:if(c[4])throw[0,i,abd];var
+9:if(c[4])throw[0,i,aa9];var
 C=c[3];if(typeof
 C==="number"){if(64===C){var
-Y=c[2][11],_=c[2][12],Z=8;return d<50?fX(d+1|0,c,b,_,Z,Y):a(fX,[0,c,b,_,Z,Y])}if(0===C){var
-aa=c[2][11],ac=c[2][12],ab=8;return d<50?fY(d+1|0,c,b,ac,ab,aa):a(fY,[0,c,b,ac,ab,aa])}}if(c[4])throw[0,i,abe];c[4]=1;return o(c,b,8);case
-11:if(c[4])throw[0,i,abf];var
+Y=c[2][11],_=c[2][12],Z=8;return d<50?fY(d+1|0,c,b,_,Z,Y):a(fY,[0,c,b,_,Z,Y])}if(0===C){var
+aa=c[2][11],ac=c[2][12],ab=8;return d<50?fZ(d+1|0,c,b,ac,ab,aa):a(fZ,[0,c,b,ac,ab,aa])}}if(c[4])throw[0,i,aa_];c[4]=1;return o(c,b,8);case
+11:if(c[4])throw[0,i,aa$];var
 D=c[3];if(typeof
 D==="number"){if(64===D){var
-ad=c[2][11],af=c[2][12],ae=10;return d<50?fX(d+1|0,c,b,af,ae,ad):a(fX,[0,c,b,af,ae,ad])}if(0===D){var
-ag=c[2][11],ai=c[2][12],ah=10;return d<50?fY(d+1|0,c,b,ai,ah,ag):a(fY,[0,c,b,ai,ah,ag])}}if(c[4])throw[0,i,abg];c[4]=1;return o(c,b,10);case
-14:if(c[4])throw[0,i,abh];var
+ad=c[2][11],af=c[2][12],ae=10;return d<50?fY(d+1|0,c,b,af,ae,ad):a(fY,[0,c,b,af,ae,ad])}if(0===D){var
+ag=c[2][11],ai=c[2][12],ah=10;return d<50?fZ(d+1|0,c,b,ai,ah,ag):a(fZ,[0,c,b,ai,ah,ag])}}if(c[4])throw[0,i,aba];c[4]=1;return o(c,b,10);case
+14:if(c[4])throw[0,i,abb];var
 E=c[3];if(typeof
 E==="number"){if(64===E){var
-aj=c[2][11],al=c[2][12],ak=13;return d<50?fX(d+1|0,c,b,al,ak,aj):a(fX,[0,c,b,al,ak,aj])}if(0===E){var
-am=c[2][11],ao=c[2][12],an=13;return d<50?fY(d+1|0,c,b,ao,an,am):a(fY,[0,c,b,ao,an,am])}}if(c[4])throw[0,i,abi];c[4]=1;return o(c,b,13);case
+aj=c[2][11],al=c[2][12],ak=13;return d<50?fY(d+1|0,c,b,al,ak,aj):a(fY,[0,c,b,al,ak,aj])}if(0===E){var
+am=c[2][11],ao=c[2][12],an=13;return d<50?fZ(d+1|0,c,b,ao,an,am):a(fZ,[0,c,b,ao,an,am])}}if(c[4])throw[0,i,abc];c[4]=1;return o(c,b,13);case
 18:var
 ap=b[1],t=b[2],j=ap[1],s=ap[3],h=[0,0,b[4]];for(;;){if(40===s){var
 x=j[1],O=x[4],b3=h[2],b4=h[1],b5=j[4],b6=[10,$(O,t),b5,b4,b3],r=x[1],p=t,l=x[3],n=b6,m=O;continue a}if(!(20<=s))switch(s){case
@@ -29876,6 +30900,7 @@ au=b[2],av=b[1],aw=av[1][1],G=aw[1],ax=G[4],cM=b[4],cN=[0,av[4]],cO=aw[4],cQ=[9,
 au=b[2],av=b[1],aw=av[1][1],G=aw[1],ax=G[4],cM=b[4],cN=[0,av[4]],cO=aw[4],cQ=[9,$(ax,au),cO,cN,cM],r=G[1],p=au,l=G[3],n=cQ,m=ax;continue;case
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 22:if(c[4])throw[0,i,abf];var
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 =======
@@ -29884,6 +30909,9 @@ au=b[2],av=b[1],aw=av[1][1],G=aw[1],ax=G[4],cM=b[4],cN=[0,av[4]],cO=aw[4],cQ=[9,
 =======
 22:if(c[4])throw[0,i,abj];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+22:if(c[4])throw[0,i,abd];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 ay=c[3];if(typeof
 ay==="number")if(17===ay){var
 e=q(c),u=e[3];if(typeof
@@ -29907,12 +30935,12 @@ aV=e[2][11],aX=e[2][12],aW=21;return d<50?cw(d+1|0,e,b,aX,aW,aV):a(cw,[0,e,b,aX,
 9:var
 aY=e[2][11],a0=e[2][12],aZ=21;return d<50?cj(d+1|0,e,b,a0,aZ,aY):a(cj,[0,e,b,a0,aZ,aY]);case
 12:var
-a1=e[2][11],a3=e[2][12],a2=21;return d<50?ci(d+1|0,e,b,a3,a2,a1):a(ci,[0,e,b,a3,a2,a1])}}if(e[4])throw[0,i,abk];e[4]=1;return o(e,b,21)}if(c[4])throw[0,i,abl];c[4]=1;return o(c,b[1],b[3]);case
+a1=e[2][11],a3=e[2][12],a2=21;return d<50?ci(d+1|0,e,b,a3,a2,a1):a(ci,[0,e,b,a3,a2,a1])}}if(e[4])throw[0,i,abe];e[4]=1;return o(e,b,21)}if(c[4])throw[0,i,abf];c[4]=1;return o(c,b[1],b[3]);case
 24:var
 a4=b[2],a5=b[1][1],H=a5[1],a6=H[4],cR=b[4],cS=a5[4],cT=[6,$(a6,a4),cS,cR],r=H[1],p=a4,l=H[3],n=cT,m=a6;continue;case
 27:var
 a7=b[2],a8=b[1][1],I=a8[1],a9=I[4],cU=b[4],cV=a8[4],cW=[9,$(a9,a7),cV,0,cU],r=I[1],p=a7,l=I[3],n=cW,m=a9;continue;case
-30:if(c[4])throw[0,i,abm];var
+30:if(c[4])throw[0,i,abg];var
 a_=c[3];if(typeof
 a_==="number")if(64===a_){var
 g=[0,b,c[2][12],c[2][11]],f=q(c),v=f[3];if(typeof
@@ -29936,24 +30964,24 @@ bv=f[2][11],bx=f[2][12],bw=20;return d<50?cw(d+1|0,f,g,bx,bw,bv):a(cw,[0,f,g,bx,
 9:var
 by=f[2][11],bA=f[2][12],bz=20;return d<50?cj(d+1|0,f,g,bA,bz,by):a(cj,[0,f,g,bA,bz,by]);case
 12:var
-bB=f[2][11],bD=f[2][12],bC=20;return d<50?ci(d+1|0,f,g,bD,bC,bB):a(ci,[0,f,g,bD,bC,bB])}}if(f[4])throw[0,i,abn];f[4]=1;return o(f,g,20)}if(c[4])throw[0,i,abo];c[4]=1;return o(c,b[1],b[3]);case
+bB=f[2][11],bD=f[2][12],bC=20;return d<50?ci(d+1|0,f,g,bD,bC,bB):a(ci,[0,f,g,bD,bC,bB])}}if(f[4])throw[0,i,abh];f[4]=1;return o(f,g,20)}if(c[4])throw[0,i,abi];c[4]=1;return o(c,b[1],b[3]);case
 33:var
 bE=b[2],bF=b[1][1],bG=bF[1],bH=bG[3],J=bG[1],bI=J[4],cX=b[4],cY=bF[4],cZ=bH[2],c0=bH[1],c1=[7,$(bI,bE),c0,cZ,cY,cX],r=J[1],p=bE,l=J[3],n=c1,m=bI;continue;case
-37:if(c[4])throw[0,i,abp];var
+37:if(c[4])throw[0,i,abj];var
 K=c[3];if(typeof
 K==="number"){if(64===K){var
-bJ=c[2][11],bL=c[2][12],bK=19;return d<50?fX(d+1|0,c,b,bL,bK,bJ):a(fX,[0,c,b,bL,bK,bJ])}if(0===K){var
-bM=c[2][11],bO=c[2][12],bN=19;return d<50?fY(d+1|0,c,b,bO,bN,bM):a(fY,[0,c,b,bO,bN,bM])}}if(c[4])throw[0,i,abq];c[4]=1;return o(c,b,19);case
+bJ=c[2][11],bL=c[2][12],bK=19;return d<50?fY(d+1|0,c,b,bL,bK,bJ):a(fY,[0,c,b,bL,bK,bJ])}if(0===K){var
+bM=c[2][11],bO=c[2][12],bN=19;return d<50?fZ(d+1|0,c,b,bO,bN,bM):a(fZ,[0,c,b,bO,bN,bM])}}if(c[4])throw[0,i,abk];c[4]=1;return o(c,b,19);case
 46:var
 bP=b[2],bQ=b[1][1],L=bQ[1][1],bR=L[4],c2=b[4],c3=bQ[4],c4=[5,$(bR,bP),c3,c2],r=L[1],p=bP,l=L[3],n=c4,m=bR;continue;case
-51:if(c[4])throw[0,i,abr];var
+51:if(c[4])throw[0,i,abl];var
 bS=c[3];if(typeof
 bS==="number")if(20===bS){var
-bT=c[2][12],k=q(c),bU=b[1][1],bV=bU[1],bW=bV[1][1],bX=bW[1][1],M=bX[1],bY=M[4],c5=[0,b[4]],c6=bU[2],c7=[0,bV[4]],c8=bW[3],c9=[0,$(bY,bT),c8,c7,c6],c_=bX[3],c$=[0,$(bY,bT),c_,c9,c5],w=[0,M[1],M[3],c$];if(k[4])throw[0,i,abs];var
+bT=c[2][12],k=q(c),bU=b[1][1],bV=bU[1],bW=bV[1][1],bX=bW[1][1],M=bX[1],bY=M[4],c5=[0,b[4]],c6=bU[2],c7=[0,bV[4]],c8=bW[3],c9=[0,$(bY,bT),c8,c7,c6],c_=bX[3],c$=[0,$(bY,bT),c_,c9,c5],w=[0,M[1],M[3],c$];if(k[4])throw[0,i,abm];var
 N=k[3];if(typeof
 N==="number"){if(20===N){var
 bZ=7;return d<50?kF(d+1|0,k,w,bZ):a(kF,[0,k,w,bZ])}if(72===N){var
-b0=k[2][11],b2=k[2][12],b1=7;return d<50?kE(d+1|0,k,w,b2,b1,b0):a(kE,[0,k,w,b2,b1,b0])}}if(k[4])throw[0,i,abt];k[4]=1;return o(k,w,7)}if(c[4])throw[0,i,abu];c[4]=1;return o(c,b[1],b[3]);case
+b0=k[2][11],b2=k[2][12],b1=7;return d<50?kE(d+1|0,k,w,b2,b1,b0):a(kE,[0,k,w,b2,b1,b0])}}if(k[4])throw[0,i,abn];k[4]=1;return o(k,w,7)}if(c[4])throw[0,i,abo];c[4]=1;return o(c,b[1],b[3]);case
 0:case
 5:var
 <<<<<<< HEAD
@@ -29975,40 +31003,44 @@ k=[0,T,S];if(b[4])throw[0,i,aby];var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 cG=b[4],V=[3,$(b[5],b[2]),cG],W=b[3],X=b[1];return d<50?g0(d+1|0,c,X,W,V):a(g0,[0,c,X,W,V])}return cP(0)}},ky=function(c,b,T,S){var
+<<<<<<< HEAD
 k=[0,T,S];if(b[4])throw[0,i,abv];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+k=[0,T,S];if(b[4])throw[0,i,abp];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 j=b[3];if(typeof
 j==="number")if(57<=j){if(69===j){var
 l=[0,k,b[2][12],b[2][11]],d=q(b),m=d[3];if(typeof
 m!=="number"&&2===m[0]){var
-x=d[2][11],y=m[1],A=d[2][12],z=63;return c<50?bQ(c+1|0,d,l,A,z,y,x):a(bQ,[0,d,l,A,z,y,x])}if(d[4])throw[0,i,abw];d[4]=1;return o(d,l,63)}if(75===j){var
+x=d[2][11],y=m[1],A=d[2][12],z=63;return c<50?bQ(c+1|0,d,l,A,z,y,x):a(bQ,[0,d,l,A,z,y,x])}if(d[4])throw[0,i,abq];d[4]=1;return o(d,l,63)}if(75===j){var
 n=[0,k,b[2][12],b[2][11]],e=q(b),p=e[3];if(typeof
 p!=="number"&&2===p[0]){var
-B=e[2][11],C=p[1],E=e[2][12],D=61;return c<50?bQ(c+1|0,e,n,E,D,C,B):a(bQ,[0,e,n,E,D,C,B])}if(e[4])throw[0,i,abx];e[4]=1;return o(e,n,61)}if(!(58<=j)){var
+B=e[2][11],C=p[1],E=e[2][12],D=61;return c<50?bQ(c+1|0,e,n,E,D,C,B):a(bQ,[0,e,n,E,D,C,B])}if(e[4])throw[0,i,abr];e[4]=1;return o(e,n,61)}if(!(58<=j)){var
 r=[0,k,b[2][12],b[2][11]],f=q(b),s=f[3];if(typeof
 s!=="number"&&2===s[0]){var
-G=f[2][11],H=s[1],J=f[2][12],I=65;return c<50?bQ(c+1|0,f,r,J,I,H,G):a(bQ,[0,f,r,J,I,H,G])}if(f[4])throw[0,i,abz];f[4]=1;return o(f,r,65)}}else{if(5===j){var
+G=f[2][11],H=s[1],J=f[2][12],I=65;return c<50?bQ(c+1|0,f,r,J,I,H,G):a(bQ,[0,f,r,J,I,H,G])}if(f[4])throw[0,i,abt];f[4]=1;return o(f,r,65)}}else{if(5===j){var
 t=[0,k,b[2][12],b[2][11]],g=q(b),u=g[3];if(typeof
 u!=="number"&&2===u[0]){var
-K=g[2][11],L=u[1],N=g[2][12],M=72;return c<50?bQ(c+1|0,g,t,N,M,L,K):a(bQ,[0,g,t,N,M,L,K])}if(g[4])throw[0,i,abA];g[4]=1;return o(g,t,72)}if(28===j){var
+K=g[2][11],L=u[1],N=g[2][12],M=72;return c<50?bQ(c+1|0,g,t,N,M,L,K):a(bQ,[0,g,t,N,M,L,K])}if(g[4])throw[0,i,abu];g[4]=1;return o(g,t,72)}if(28===j){var
 v=[0,k,b[2][12],b[2][11]],h=q(b),w=h[3];if(typeof
 w!=="number"&&2===w[0]){var
-O=h[2][11],P=w[1],R=h[2][12],Q=67;return c<50?bQ(c+1|0,h,v,R,Q,P,O):a(bQ,[0,h,v,R,Q,P,O])}if(h[4])throw[0,i,abB];h[4]=1;return o(h,v,67)}}if(b[4])throw[0,i,aby];b[4]=1;var
+O=h[2][11],P=w[1],R=h[2][12],Q=67;return c<50?bQ(c+1|0,h,v,R,Q,P,O):a(bQ,[0,h,v,R,Q,P,O])}if(h[4])throw[0,i,abv];h[4]=1;return o(h,v,67)}}if(b[4])throw[0,i,abs];b[4]=1;var
 F=k[1];return o(b,F[1],F[3])},bQ=function(b,hH,hG,hJ,k,hF,hI){var
-f=q(hH),e=[0,hG,k,aX(hF)];if(nJ<=k)if(lk<=k){if(n6===k){if(f[4])throw[0,i,abC];var
+f=q(hH),e=[0,hG,k,aX(hF)];if(nJ<=k)if(lk<=k){if(n6===k){if(f[4])throw[0,i,abw];var
 aG=f[3];if(typeof
 aG==="number")if(42===aG){var
 w=[0,e,f[2][11]],m=q(f),Y=m[3];if(typeof
 Y==="number"){if(18===Y){var
 aH=je;return b<50?ic(b+1|0,m,w,aH):a(ic,[0,m,w,aH])}}else
 if(2===Y[0]){var
-aI=m[2][11],aJ=Y[1],aL=m[2][12],aK=je;return b<50?ib(b+1|0,m,w,aL,aK,aJ,aI):a(ib,[0,m,w,aL,aK,aJ,aI])}if(m[4])throw[0,i,abD];m[4]=1;return o(m,w,je)}if(f[4])throw[0,i,abE];f[4]=1;return o(f,e[1],e[2])}var
+aI=m[2][11],aJ=Y[1],aL=m[2][12],aK=je;return b<50?ib(b+1|0,m,w,aL,aK,aJ,aI):a(ib,[0,m,w,aL,aK,aJ,aI])}if(m[4])throw[0,i,abx];m[4]=1;return o(m,w,je)}if(f[4])throw[0,i,aby];f[4]=1;return o(f,e[1],e[2])}var
 u=cK<=k?0:1}else{if(kU===k)var
 as=1;else
 if(ct<=k)var
 u=0,as=0;else
 var
-as=1;if(as){if(f[4])throw[0,i,abI];var
+as=1;if(as){if(f[4])throw[0,i,abC];var
 dD=f[3];if(typeof
 dD==="number")if(46===dD){var
 j=[0,e,f[2][12],f[2][11]],g=q(f),s=g[3];if(typeof
@@ -30061,6 +31093,7 @@ ef=g[2][11],eh=g[2][12],eg=cX;return b<50?F(b+1|0,g,j,eh,eg,ef):a(F,[0,g,j,eh,eg
 ei=g[2][11],ek=g[2][12],ej=cX;return b<50?D(b+1|0,g,j,ek,ej,ei):a(D,[0,g,j,ek,ej,ei]);case
 67:var
 <<<<<<< HEAD
+<<<<<<< HEAD
 en=g[2][11],ep=g[2][12],eo=cX;return b<50?C(b+1|0,g,j,ep,eo,en):a(C,[0,g,j,ep,eo,en]);case
 72:var
 eq=g[2][11],es=g[2][12],er=cX;return b<50?B(b+1|0,g,j,es,er,eq):a(B,[0,g,j,es,er,eq]);default:if(g[4])throw[0,h,aaP];g[4]=1;return p(g,j,cX)}else
@@ -30069,12 +31102,19 @@ switch(s[0]){case
 et=g[2][11],ew=s[1],ey=g[2][12],ex=cX;return b<50?M(b+1|0,g,j,ey,ex,ew,et):a(M,[0,g,j,ey,ex,ew,et]);case
 =======
 el=g[2][11],ep=g[2][12],eo=cW;return b<50?C(b+1|0,g,j,ep,eo,el):a(C,[0,g,j,ep,eo,el]);case
+=======
+en=g[2][11],ep=g[2][12],eo=cW;return b<50?C(b+1|0,g,j,ep,eo,en):a(C,[0,g,j,ep,eo,en]);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 72:var
-eq=g[2][11],es=g[2][12],er=cW;return b<50?B(b+1|0,g,j,es,er,eq):a(B,[0,g,j,es,er,eq]);default:if(g[4])throw[0,i,abJ];g[4]=1;return o(g,j,cW)}else
+eq=g[2][11],es=g[2][12],er=cW;return b<50?B(b+1|0,g,j,es,er,eq):a(B,[0,g,j,es,er,eq]);default:if(g[4])throw[0,i,abD];g[4]=1;return o(g,j,cW)}else
 switch(s[0]){case
 0:var
+<<<<<<< HEAD
 et=g[2][11],eu=s[1],ey=g[2][12],ex=cW;return b<50?M(b+1|0,g,j,ey,ex,eu,et):a(M,[0,g,j,ey,ex,eu,et]);case
 >>>>>>> (WIP) version 2 for DateTime support in Ergo
+=======
+et=g[2][11],ew=s[1],ey=g[2][12],ex=cW;return b<50?M(b+1|0,g,j,ey,ex,ew,et):a(M,[0,g,j,ey,ex,ew,et]);case
+>>>>>>> (fix) Directly use time constants in generated JS code
 1:var
 ez=g[2][11],eA=s[1],eC=g[2][12],eB=cX;return b<50?H(b+1|0,g,j,eC,eB,eA,ez):a(H,[0,g,j,eC,eB,eA,ez]);case
 2:var
@@ -30084,6 +31124,7 @@ eH=g[2][11],eI=s[1],eK=g[2][12],eJ=cX;return b<50?E(b+1|0,g,j,eK,eJ,eI,eH):a(E,[
 if(w<=k){if(n4===k){if(f[4])throw[0,h,aaR];var
 =======
 eE=g[2][11],eF=s[1],eH=g[2][12],eG=cW;return b<50?G(b+1|0,g,j,eH,eG,eF,eE):a(G,[0,g,j,eH,eG,eF,eE]);default:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -30102,37 +31143,41 @@ if(x<=k){if(n6===k){if(f[4])throw[0,i,abO];var
 eI=g[2][11],eJ=s[1],eL=g[2][12],eK=cW;return b<50?E(b+1|0,g,j,eL,eK,eJ,eI):a(E,[0,g,j,eL,eK,eJ,eI])}}if(f[4])throw[0,i,abK];f[4]=1;return o(f,e[1],e[2])}}else
 if(x<=k){if(n7===k){if(f[4])throw[0,i,abL];var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+eI=g[2][11],eJ=s[1],eL=g[2][12],eK=cW;return b<50?E(b+1|0,g,j,eL,eK,eJ,eI):a(E,[0,g,j,eL,eK,eJ,eI])}}if(f[4])throw[0,i,abE];f[4]=1;return o(f,e[1],e[2])}}else
+if(x<=k){if(n7===k){if(f[4])throw[0,i,abF];var
+>>>>>>> (fix) Directly use time constants in generated JS code
 ag=f[3];if(typeof
 ag==="number"){if(8===ag){var
-eM=nR;return b<50?en(b+1|0,f,e,eM):a(en,[0,f,e,eM])}if(71===ag){var
-eN=nR;return b<50?em(b+1|0,f,e,eN):a(em,[0,f,e,eN])}}if(f[4])throw[0,i,abM];f[4]=1;return o(f,e,nR)}if(la===k){if(f[4])throw[0,i,abN];var
+eM=nR;return b<50?em(b+1|0,f,e,eM):a(em,[0,f,e,eM])}if(71===ag){var
+eN=nR;return b<50?el(b+1|0,f,e,eN):a(el,[0,f,e,eN])}}if(f[4])throw[0,i,abG];f[4]=1;return o(f,e,nR)}if(la===k){if(f[4])throw[0,i,abH];var
 ah=f[3];if(typeof
 ah==="number"){if(8===ah){var
-eO=hx;return b<50?en(b+1|0,f,e,eO):a(en,[0,f,e,eO])}if(71===ah){var
-eP=hx;return b<50?em(b+1|0,f,e,eP):a(em,[0,f,e,eP])}}if(f[4])throw[0,i,abO];f[4]=1;return o(f,e,hx)}var
+eO=hy;return b<50?em(b+1|0,f,e,eO):a(em,[0,f,e,eO])}if(71===ah){var
+eP=hy;return b<50?el(b+1|0,f,e,eP):a(el,[0,f,e,eP])}}if(f[4])throw[0,i,abI];f[4]=1;return o(f,e,hy)}var
 u=0}else
 if(90<=k)var
 u=eD<=k?1:0;else
 if(16<=k)switch(k-16|0){case
-0:if(f[4])throw[0,i,abP];var
+0:if(f[4])throw[0,i,abJ];var
 ai=f[3];if(typeof
 ai==="number"){if(8===ai){var
-eQ=15;return b<50?en(b+1|0,f,e,eQ):a(en,[0,f,e,eQ])}if(71===ai){var
-eR=15;return b<50?em(b+1|0,f,e,eR):a(em,[0,f,e,eR])}}if(f[4])throw[0,i,abQ];f[4]=1;return o(f,e,15);case
-1:if(f[4])throw[0,i,abR];var
+eQ=15;return b<50?em(b+1|0,f,e,eQ):a(em,[0,f,e,eQ])}if(71===ai){var
+eR=15;return b<50?el(b+1|0,f,e,eR):a(el,[0,f,e,eR])}}if(f[4])throw[0,i,abK];f[4]=1;return o(f,e,15);case
+1:if(f[4])throw[0,i,abL];var
 aj=f[3];if(typeof
 aj==="number"){if(8===aj){var
-eS=12;return b<50?en(b+1|0,f,e,eS):a(en,[0,f,e,eS])}if(71===aj){var
-eT=12;return b<50?em(b+1|0,f,e,eT):a(em,[0,f,e,eT])}}if(f[4])throw[0,i,abS];f[4]=1;return o(f,e,12);case
-39:if(f[4])throw[0,i,abT];var
+eS=12;return b<50?em(b+1|0,f,e,eS):a(em,[0,f,e,eS])}if(71===aj){var
+eT=12;return b<50?el(b+1|0,f,e,eT):a(el,[0,f,e,eT])}}if(f[4])throw[0,i,abM];f[4]=1;return o(f,e,12);case
+39:if(f[4])throw[0,i,abN];var
 eU=f[3];if(typeof
 eU==="number")if(42===eU){var
 y=[0,e,f[2][11]],n=q(f),_=n[3];if(typeof
 _==="number"){if(18===_){var
 eV=54;return b<50?ic(b+1|0,n,y,eV):a(ic,[0,n,y,eV])}}else
 if(2===_[0]){var
-eW=n[2][11],eX=_[1],eZ=n[2][12],eY=54;return b<50?ib(b+1|0,n,y,eZ,eY,eX,eW):a(ib,[0,n,y,eZ,eY,eX,eW])}if(n[4])throw[0,i,abU];n[4]=1;return o(n,y,54)}if(f[4])throw[0,i,abV];f[4]=1;return o(f,e[1],e[2]);case
-43:if(f[4])throw[0,i,abW];var
+eW=n[2][11],eX=_[1],eZ=n[2][12],eY=54;return b<50?ib(b+1|0,n,y,eZ,eY,eX,eW):a(ib,[0,n,y,eZ,eY,eX,eW])}if(n[4])throw[0,i,abO];n[4]=1;return o(n,y,54)}if(f[4])throw[0,i,abP];f[4]=1;return o(f,e[1],e[2]);case
+43:if(f[4])throw[0,i,abQ];var
 e0=f[3];if(typeof
 e0==="number")if(29===e0){var
 h=[0,e,f[2][12],f[2][11]],d=q(f),aa=d[3];if(typeof
@@ -30148,7 +31193,7 @@ e_=d[2][11],fa=d[2][12],e$=58;return b<50?bG(b+1|0,d,h,fa,e$,e_):a(bG,[0,d,h,fa,
 5:var
 fb=d[2][11],fd=d[2][12],fc=58;return b<50?bF(b+1|0,d,h,fd,fc,fb):a(bF,[0,d,h,fd,fc,fb]);case
 6:var
-fe=d[2][11],ff=58;return b<50?ew(b+1|0,d,h,ff,fe):a(ew,[0,d,h,ff,fe]);case
+fe=d[2][11],ff=58;return b<50?ev(b+1|0,d,h,ff,fe):a(ev,[0,d,h,ff,fe]);case
 7:var
 fg=d[2][11],fi=d[2][12],fh=58;return b<50?bE(b+1|0,d,h,fi,fh,fg):a(bE,[0,d,h,fi,fh,fg]);case
 8:var
@@ -30176,9 +31221,9 @@ fN=d[2][11],fP=d[2][12],fO=58;return b<50?bt(b+1|0,d,h,fP,fO,fN):a(bt,[0,d,h,fP,
 37:var
 fQ=d[2][11],fS=d[2][12],fR=58;return b<50?bs(b+1|0,d,h,fS,fR,fQ):a(bs,[0,d,h,fS,fR,fQ]);case
 43:var
-fT=d[2][11],fX=d[2][12],fU=58;return b<50?br(b+1|0,d,h,fX,fU,fT):a(br,[0,d,h,fX,fU,fT]);case
+fT=d[2][11],fV=d[2][12],fU=58;return b<50?br(b+1|0,d,h,fV,fU,fT):a(br,[0,d,h,fV,fU,fT]);case
 44:var
-fY=d[2][11],fZ=58;return b<50?ev(b+1|0,d,h,fZ,fY):a(ev,[0,d,h,fZ,fY]);case
+fY=d[2][11],fZ=58;return b<50?eu(b+1|0,d,h,fZ,fY):a(eu,[0,d,h,fZ,fY]);case
 46:var
 f0=d[2][11],f2=d[2][12],f1=58;return b<50?bq(b+1|0,d,h,f2,f1,f0):a(bq,[0,d,h,f2,f1,f0]);case
 47:var
@@ -30224,33 +31269,33 @@ gW=d[2][11],gY=d[2][12],gX=58;return b<50?a7(b+1|0,d,h,gY,gX,gW):a(a7,[0,d,h,gY,
 77:var
 gZ=d[2][11],g1=d[2][12],g0=58;return b<50?a6(b+1|0,d,h,g1,g0,gZ):a(a6,[0,d,h,g1,g0,gZ])}else
 if(2===aa[0]){var
-g2=d[2][11],g3=aa[1],g5=d[2][12],g4=58;return b<50?bn(b+1|0,d,h,g5,g4,g3,g2):a(bn,[0,d,h,g5,g4,g3,g2])}if(d[4])throw[0,i,abX];d[4]=1;return o(d,h,58)}if(f[4])throw[0,i,abY];f[4]=1;return o(f,e[1],e[2]);case
-45:if(f[4])throw[0,i,abZ];var
+g2=d[2][11],g3=aa[1],g5=d[2][12],g4=58;return b<50?bn(b+1|0,d,h,g5,g4,g3,g2):a(bn,[0,d,h,g5,g4,g3,g2])}if(d[4])throw[0,i,abR];d[4]=1;return o(d,h,58)}if(f[4])throw[0,i,abS];f[4]=1;return o(f,e[1],e[2]);case
+45:if(f[4])throw[0,i,abT];var
 ak=f[3];if(typeof
 ak==="number"){if(44===ak){var
-g6=f[2][11],g7=60;return b<50?fW(b+1|0,f,e,g7,g6):a(fW,[0,f,e,g7,g6])}if(56===ak){var
-g8=f[2][11],g_=f[2][12],g9=60;return b<50?fV(b+1|0,f,e,g_,g9,g8):a(fV,[0,f,e,g_,g9,g8])}}if(f[4])throw[0,i,ab0];f[4]=1;return o(f,e,60);case
-47:if(f[4])throw[0,i,ab1];var
+g6=f[2][11],g7=60;return b<50?fX(b+1|0,f,e,g7,g6):a(fX,[0,f,e,g7,g6])}if(56===ak){var
+g8=f[2][11],g_=f[2][12],g9=60;return b<50?fW(b+1|0,f,e,g_,g9,g8):a(fW,[0,f,e,g_,g9,g8])}}if(f[4])throw[0,i,abU];f[4]=1;return o(f,e,60);case
+47:if(f[4])throw[0,i,abV];var
 al=f[3];if(typeof
 al==="number"){if(44===al){var
-g$=f[2][11],ha=62;return b<50?fW(b+1|0,f,e,ha,g$):a(fW,[0,f,e,ha,g$])}if(56===al){var
-hb=f[2][11],hd=f[2][12],hc=62;return b<50?fV(b+1|0,f,e,hd,hc,hb):a(fV,[0,f,e,hd,hc,hb])}}if(f[4])throw[0,i,ab2];f[4]=1;return o(f,e,62);case
-49:if(f[4])throw[0,i,ab3];var
+g$=f[2][11],ha=62;return b<50?fX(b+1|0,f,e,ha,g$):a(fX,[0,f,e,ha,g$])}if(56===al){var
+hb=f[2][11],hd=f[2][12],hc=62;return b<50?fW(b+1|0,f,e,hd,hc,hb):a(fW,[0,f,e,hd,hc,hb])}}if(f[4])throw[0,i,abW];f[4]=1;return o(f,e,62);case
+49:if(f[4])throw[0,i,abX];var
 am=f[3];if(typeof
 am==="number"){if(44===am){var
-he=f[2][11],hf=64;return b<50?fW(b+1|0,f,e,hf,he):a(fW,[0,f,e,hf,he])}if(56===am){var
-hg=f[2][11],hi=f[2][12],hh=64;return b<50?fV(b+1|0,f,e,hi,hh,hg):a(fV,[0,f,e,hi,hh,hg])}}if(f[4])throw[0,i,ab4];f[4]=1;return o(f,e,64);case
-51:if(f[4])throw[0,i,ab5];var
+he=f[2][11],hf=64;return b<50?fX(b+1|0,f,e,hf,he):a(fX,[0,f,e,hf,he])}if(56===am){var
+hg=f[2][11],hi=f[2][12],hh=64;return b<50?fW(b+1|0,f,e,hi,hh,hg):a(fW,[0,f,e,hi,hh,hg])}}if(f[4])throw[0,i,abY];f[4]=1;return o(f,e,64);case
+51:if(f[4])throw[0,i,abZ];var
 an=f[3];if(typeof
 an==="number"){if(44===an){var
-hj=f[2][11],hk=66;return b<50?fW(b+1|0,f,e,hk,hj):a(fW,[0,f,e,hk,hj])}if(56===an){var
-hl=f[2][11],hn=f[2][12],hm=66;return b<50?fV(b+1|0,f,e,hn,hm,hl):a(fV,[0,f,e,hn,hm,hl])}}if(f[4])throw[0,i,ab6];f[4]=1;return o(f,e,66);case
-56:if(f[4])throw[0,i,ab7];var
+hj=f[2][11],hk=66;return b<50?fX(b+1|0,f,e,hk,hj):a(fX,[0,f,e,hk,hj])}if(56===an){var
+hl=f[2][11],hn=f[2][12],hm=66;return b<50?fW(b+1|0,f,e,hn,hm,hl):a(fW,[0,f,e,hn,hm,hl])}}if(f[4])throw[0,i,ab0];f[4]=1;return o(f,e,66);case
+56:if(f[4])throw[0,i,ab1];var
 ao=f[3];if(typeof
 ao==="number"){if(44===ao){var
-ho=f[2][11],hp=71;return b<50?fW(b+1|0,f,e,hp,ho):a(fW,[0,f,e,hp,ho])}if(56===ao){var
-hq=f[2][11],hs=f[2][12],hr=71;return b<50?fV(b+1|0,f,e,hs,hr,hq):a(fV,[0,f,e,hs,hr,hq])}}if(f[4])throw[0,i,ab8];f[4]=1;return o(f,e,71);case
-62:if(f[4])throw[0,i,ab9];var
+ho=f[2][11],hp=71;return b<50?fX(b+1|0,f,e,hp,ho):a(fX,[0,f,e,hp,ho])}if(56===ao){var
+hq=f[2][11],hs=f[2][12],hr=71;return b<50?fW(b+1|0,f,e,hs,hr,hq):a(fW,[0,f,e,hs,hr,hq])}}if(f[4])throw[0,i,ab2];f[4]=1;return o(f,e,71);case
+62:if(f[4])throw[0,i,ab3];var
 ht=f[3];if(typeof
 ht==="number")if(44===ht){var
 hu=[0,e,f[2][11]],t=q(f),ap=t[3];if(typeof
@@ -30259,9 +31304,10 @@ aF=t,aE=hu,aD=t[2][12],aC=77,aB=ap[1],aA=t[2][11];for(;;){var
 p=[0,aE,aD,aC,aB,aA],l=q(aF),ad=l[3];if(typeof
 ad==="number"){if(20===ad){var
 hE=[0,aX(p[4]),0],v=p[1],z=p[3],ab=hE;for(;;){if(76===z){var
-hA=[0,aX(v[4]),ab],hB=v[3],v=v[1],z=hB,ab=hA;continue}if(77===z){if(l[4])throw[0,i,XR];var
+hA=[0,aX(v[4]),ab],hB=v[3],v=v[1],z=hB,ab=hA;continue}if(77===z){if(l[4])throw[0,i,XL];var
 at=l[3];if(typeof
 at==="number")if(20===at){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -30280,26 +31326,29 @@ Q=l[2][12],au=q(l),av=v[1],ac=av[1][1],aw=ac[4],hC=av[3],hD=[0,$(aw,Q),hC,[0,ab]
 =======
 Q=l[2][12],au=q(l),av=v[1],ac=av[1][1],aw=ac[4],hC=av[3],hD=[0,$(aw,Q),hC,[0,ab]],ax=[2,$(aw,Q),hD],ay=ac[3],az=ac[1];return b<50?d_(b+1|0,au,az,Q,ay,ax):a(d_,[0,au,az,Q,ay,ax])}if(l[4])throw[0,i,XS];l[4]=1;return o(l,v,z)}return cP(0)}}if(70===ad){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+Q=l[2][12],au=q(l),av=v[1],ac=av[1][1],aw=ac[4],hC=av[3],hD=[0,$(aw,Q),hC,[0,ab]],ax=[2,$(aw,Q),hD],ay=ac[3],az=ac[1];return b<50?d_(b+1|0,au,az,Q,ay,ax):a(d_,[0,au,az,Q,ay,ax])}if(l[4])throw[0,i,XM];l[4]=1;return o(l,v,z)}return cP(0)}}if(70===ad){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 r=q(l),ae=r[3];if(typeof
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 ae!=="number"&&2===ae[0]){var
-aF=r,aE=p,aD=r[2][12],aC=76,aB=ae[1],aA=r[2][11];continue}if(r[4])throw[0,i,Z0];r[4]=1;return o(r,p,76)}}if(l[4])throw[0,i,Z1];l[4]=1;return o(l,p[1],p[3])}}if(t[4])throw[0,i,ab_];t[4]=1;return o(t,hu,77)}if(f[4])throw[0,i,ab$];f[4]=1;return o(f,e[1],e[2]);case
-72:if(f[4])throw[0,i,aca];var
+aF=r,aE=p,aD=r[2][12],aC=76,aB=ae[1],aA=r[2][11];continue}if(r[4])throw[0,i,ZU];r[4]=1;return o(r,p,76)}}if(l[4])throw[0,i,ZV];l[4]=1;return o(l,p[1],p[3])}}if(t[4])throw[0,i,ab4];t[4]=1;return o(t,hu,77)}if(f[4])throw[0,i,ab5];f[4]=1;return o(f,e[1],e[2]);case
+72:if(f[4])throw[0,i,ab6];var
 aq=f[3];if(typeof
 aq==="number"){if(8===aq){var
-hv=87;return b<50?en(b+1|0,f,e,hv):a(en,[0,f,e,hv])}if(71===aq){var
-hw=87;return b<50?em(b+1|0,f,e,hw):a(em,[0,f,e,hw])}}if(f[4])throw[0,i,acb];f[4]=1;return o(f,e,87);case
-73:if(f[4])throw[0,i,acc];var
+hv=87;return b<50?em(b+1|0,f,e,hv):a(em,[0,f,e,hv])}if(71===aq){var
+hw=87;return b<50?el(b+1|0,f,e,hw):a(el,[0,f,e,hw])}}if(f[4])throw[0,i,ab7];f[4]=1;return o(f,e,87);case
+73:if(f[4])throw[0,i,ab8];var
 ar=f[3];if(typeof
 ar==="number"){if(8===ar){var
-hy=84;return b<50?en(b+1|0,f,e,hy):a(en,[0,f,e,hy])}if(71===ar){var
-hz=84;return b<50?em(b+1|0,f,e,hz):a(em,[0,f,e,hz])}}if(f[4])throw[0,i,acd];f[4]=1;return o(f,e,84);case
+hx=84;return b<50?em(b+1|0,f,e,hx):a(em,[0,f,e,hx])}if(71===ar){var
+hz=84;return b<50?el(b+1|0,f,e,hz):a(el,[0,f,e,hz])}}if(f[4])throw[0,i,ab9];f[4]=1;return o(f,e,84);case
 20:case
 59:var
 u=1;break;default:var
 u=0}else
 var
-u=0;if(u){if(f[4])throw[0,i,abF];var
+u=0;if(u){if(f[4])throw[0,i,abz];var
 af=f[3];if(typeof
 af==="number"){if(58===af){var
 aM=[0,e[3],0],aN=e[2],aO=e[1];return b<50?kD(b+1|0,f,aO,aN,aM):a(kD,[0,f,aO,aN,aM])}if(71===af){var
@@ -30316,7 +31365,7 @@ a0=c[2][11],a2=c[2][12],a1=aZ;return b<50?bG(b+1|0,c,e,a2,a1,a0):a(bG,[0,c,e,a2,
 5:var
 a3=c[2][11],a5=c[2][12],a4=aZ;return b<50?bF(b+1|0,c,e,a5,a4,a3):a(bF,[0,c,e,a5,a4,a3]);case
 6:var
-bK=c[2][11],bL=aZ;return b<50?ew(b+1|0,c,e,bL,bK):a(ew,[0,c,e,bL,bK]);case
+bK=c[2][11],bL=aZ;return b<50?ev(b+1|0,c,e,bL,bK):a(ev,[0,c,e,bL,bK]);case
 7:var
 bM=c[2][11],bO=c[2][12],bN=aZ;return b<50?bE(b+1|0,c,e,bO,bN,bM):a(bE,[0,c,e,bO,bN,bM]);case
 8:var
@@ -30346,7 +31395,7 @@ ck=c[2][11],cm=c[2][12],cl=aZ;return b<50?bs(b+1|0,c,e,cm,cl,ck):a(bs,[0,c,e,cm,
 43:var
 cn=c[2][11],cp=c[2][12],co=aZ;return b<50?br(b+1|0,c,e,cp,co,cn):a(br,[0,c,e,cp,co,cn]);case
 44:var
-cq=c[2][11],cr=aZ;return b<50?ev(b+1|0,c,e,cr,cq):a(ev,[0,c,e,cr,cq]);case
+cq=c[2][11],cr=aZ;return b<50?eu(b+1|0,c,e,cr,cq):a(eu,[0,c,e,cr,cq]);case
 46:var
 cs=c[2][11],cv=c[2][12],cu=aZ;return b<50?bq(b+1|0,c,e,cv,cu,cs):a(bq,[0,c,e,cv,cu,cs]);case
 47:var
@@ -30404,6 +31453,7 @@ if(2===Z[0]){var
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 dz=c[2][11],dA=Z[1],dC=c[2][12],dB=aY;return b<50?bn(b+1|0,c,e,dC,dB,dA,dz):a(bn,[0,c,e,dC,dB,dA,dz])}if(c[4])throw[0,h,aaM];c[4]=1;return p(c,e,aY)}}if(f[4])throw[0,h,aaN];f[4]=1;return p(f,e[1],e[2])}return cQ(0)},gX=function(f,d,c,b){var
 e=0;return f<50?kD(f+1|0,d,c,b,e):a(kD,[0,d,c,b,e])},O=function(h,i,e,c,d,b){var
 f=q(i),j=eo[7],g=[4,$(b,c),j];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},N=function(h,i,e,c,d,b){var
@@ -30429,6 +31479,12 @@ e=0;return f<50?kC(f+1|0,d,c,b,e):a(kC,[0,d,c,b,e])},O=function(h,i,e,c,d,b){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 f=q(i),j=ep[7],g=[4,$(b,c),j];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},N=function(h,i,e,c,d,b){var
 f=q(i),k=j(ep[10],1),g=[4,$(b,c),k];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},A=function(d,cc,cb,ca,b$){var
+=======
+dz=c[2][11],dA=Z[1],dC=c[2][12],dB=aZ;return b<50?bn(b+1|0,c,e,dC,dB,dA,dz):a(bn,[0,c,e,dC,dB,dA,dz])}if(c[4])throw[0,i,abA];c[4]=1;return o(c,e,aZ)}}if(f[4])throw[0,i,abB];f[4]=1;return o(f,e[1],e[2])}return cP(0)},gZ=function(f,d,c,b){var
+e=0;return f<50?kC(f+1|0,d,c,b,e):a(kC,[0,d,c,b,e])},O=function(h,i,e,c,d,b){var
+f=q(i),j=eo[7],g=[4,$(b,c),j];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},N=function(h,i,e,c,d,b){var
+f=q(i),k=j(eo[10],1),g=[4,$(b,c),k];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},A=function(d,cc,cb,ca,b$){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=[0,cb,ca,b$],b=q(cc),e=b[3];if(typeof
 >>>>>>> (feature) Place date time functions in the org.accordproject.time namespace, rename
 e==="number")switch(e){case
@@ -30449,7 +31505,7 @@ A=b[2][11],C=b[2][12],B=bK;return d<50?bD(d+1|0,b,c,C,B,A):a(bD,[0,b,c,C,B,A]);c
 9:var
 D=b[2][11],F=b[2][12],E=bK;return d<50?bC(d+1|0,b,c,F,E,D):a(bC,[0,b,c,F,E,D]);case
 11:var
-G=b[2][11],I=b[2][12],H=bK;return d<50?fz(d+1|0,b,c,I,H,G):a(fz,[0,b,c,I,H,G]);case
+G=b[2][11],I=b[2][12],H=bK;return d<50?fA(d+1|0,b,c,I,H,G):a(fA,[0,b,c,I,H,G]);case
 12:var
 J=b[2][11],L=b[2][12],K=bK;return d<50?bB(d+1|0,b,c,L,K,J):a(bB,[0,b,c,L,K,J]);case
 15:var
@@ -30517,8 +31573,8 @@ b1=b[2][11],b3=b[2][12],b2=bK;return d<50?a7(d+1|0,b,c,b3,b2,b1):a(a7,[0,b,c,b3,
 77:var
 b4=b[2][11],b6=b[2][12],b5=bK;return d<50?a6(d+1|0,b,c,b6,b5,b4):a(a6,[0,b,c,b6,b5,b4])}else
 if(2===e[0]){var
-b7=b[2][11],b8=e[1],b_=b[2][12],b9=bK;return d<50?bn(d+1|0,b,c,b_,b9,b8,b7):a(bn,[0,b,c,b_,b9,b8,b7])}if(b[4])throw[0,i,ace];b[4]=1;return o(b,c,bK)},M=function(h,k,e,c,d,i,b){var
-f=q(k),l=aX(i),m=j(ep[11],l),g=[4,$(b,c),m];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},L=function(h,i,e,c,d,b){var
+b7=b[2][11],b8=e[1],b_=b[2][12],b9=bK;return d<50?bn(d+1|0,b,c,b_,b9,b8,b7):a(bn,[0,b,c,b_,b9,b8,b7])}if(b[4])throw[0,i,ab_];b[4]=1;return o(b,c,bK)},M=function(h,k,e,c,d,i,b){var
+f=q(k),l=aX(i),m=j(eo[11],l),g=[4,$(b,c),m];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},L=function(h,i,e,c,d,b){var
 f=q(i),g=[2,$(b,c)];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},X=function(d,aZ,aY,aX,aW,aV){var
 m=aZ,l=aY,k=aX,j=aW,h=aV;for(;;){var
 g=[0,l,k,j,h],f=q(m),n=f[3];if(typeof
@@ -30562,7 +31618,7 @@ aw=b[2][11],ay=b[2][12],ax=dL;return d<50?D(d+1|0,b,c,ay,ax,aw):a(D,[0,b,c,ay,ax
 67:var
 az=b[2][11],aB=b[2][12],aA=dL;return d<50?C(d+1|0,b,c,aB,aA,az):a(C,[0,b,c,aB,aA,az]);case
 72:var
-aC=b[2][11],aE=b[2][12],aD=dL;return d<50?B(d+1|0,b,c,aE,aD,aC):a(B,[0,b,c,aE,aD,aC]);default:if(b[4])throw[0,i,acf];b[4]=1;return o(b,c,dL)}else
+aC=b[2][11],aE=b[2][12],aD=dL;return d<50?B(d+1|0,b,c,aE,aD,aC):a(B,[0,b,c,aE,aD,aC]);default:if(b[4])throw[0,i,ab$];b[4]=1;return o(b,c,dL)}else
 switch(e[0]){case
 0:var
 aF=b[2][11],aG=e[1],aI=b[2][12],aH=dL;return d<50?M(d+1|0,b,c,aI,aH,aG,aF):a(M,[0,b,c,aI,aH,aG,aF]);case
@@ -30570,7 +31626,7 @@ aF=b[2][11],aG=e[1],aI=b[2][12],aH=dL;return d<50?M(d+1|0,b,c,aI,aH,aG,aF):a(M,[
 aJ=b[2][11],aK=e[1],aM=b[2][12],aL=dL;return d<50?H(d+1|0,b,c,aM,aL,aK,aJ):a(H,[0,b,c,aM,aL,aK,aJ]);case
 2:var
 aN=b[2][11],aO=e[1],aQ=b[2][12],aP=dL;return d<50?G(d+1|0,b,c,aQ,aP,aO,aN):a(G,[0,b,c,aQ,aP,aO,aN]);default:var
-aR=b[2][11],aS=e[1],aU=b[2][12],aT=dL;return d<50?E(d+1|0,b,c,aU,aT,aS,aR):a(E,[0,b,c,aU,aT,aS,aR])}}if(f[4])throw[0,i,acg];f[4]=1;return o(f,g[1],g[3])}},W=function(d,aV,aU,aT,aS){var
+aR=b[2][11],aS=e[1],aU=b[2][12],aT=dL;return d<50?E(d+1|0,b,c,aU,aT,aS,aR):a(E,[0,b,c,aU,aT,aS,aR])}}if(f[4])throw[0,i,aca];f[4]=1;return o(f,g[1],g[3])}},W=function(d,aV,aU,aT,aS){var
 j=aV,h=aU,g=aT,f=aS;for(;;){var
 c=[0,h,g,f],b=q(j),e=b[3];if(typeof
 e==="number")switch(e){case
@@ -30611,7 +31667,7 @@ at=b[2][11],av=b[2][12],au=dy;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au
 67:var
 aw=b[2][11],ay=b[2][12],ax=dy;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=dy;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,ach];b[4]=1;return o(b,c,dy)}else
+az=b[2][11],aB=b[2][12],aA=dy;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acb];b[4]=1;return o(b,c,dy)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=dy;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -30661,7 +31717,7 @@ at=b[2][11],av=b[2][12],au=dN;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au
 67:var
 aw=b[2][11],ay=b[2][12],ax=dN;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=dN;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,aci];b[4]=1;return o(b,c,dN)}else
+az=b[2][11],aB=b[2][12],aA=dN;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acc];b[4]=1;return o(b,c,dN)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=dN;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -30710,7 +31766,7 @@ at=b[2][11],av=b[2][12],au=cL;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au
 67:var
 aw=b[2][11],ay=b[2][12],ax=cL;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=cL;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acj];b[4]=1;return o(b,c,cL)}else
+az=b[2][11],aB=b[2][12],aA=cL;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acd];b[4]=1;return o(b,c,cL)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=cL;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -30759,7 +31815,7 @@ at=b[2][11],av=b[2][12],au=c8;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au
 67:var
 aw=b[2][11],ay=b[2][12],ax=c8;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=c8;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,ack];b[4]=1;return o(b,c,c8)}else
+az=b[2][11],aB=b[2][12],aA=c8;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,ace];b[4]=1;return o(b,c,c8)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=c8;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -30808,7 +31864,7 @@ at=b[2][11],av=b[2][12],au=cK;return d<50?D(d+1|0,b,c,av,au,at):a(D,[0,b,c,av,au
 67:var
 aw=b[2][11],ay=b[2][12],ax=cK;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax,aw]);case
 72:var
-az=b[2][11],aB=b[2][12],aA=cK;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acl];b[4]=1;return o(b,c,cK)}else
+az=b[2][11],aB=b[2][12],aA=cK;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acf];b[4]=1;return o(b,c,cK)}else
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=cK;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -30819,7 +31875,7 @@ aK=b[2][11],aL=e[1],aN=b[2][12],aM=cK;return d<50?G(d+1|0,b,c,aN,aM,aL,aK):a(G,[
 aO=b[2][11],aP=e[1],aR=b[2][12],aQ=cK;return d<50?E(d+1|0,b,c,aR,aQ,aP,aO):a(E,[0,b,c,aR,aQ,aP,aO])}}},J=function(j,p,n,m,l,k){var
 c=[0,n,m,l,k],b=q(p),d=b[3];if(typeof
 d!=="number"&&2===d[0]){var
-e=b[2][11],f=d[1],h=b[2][12],g=lk;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,acm];b[4]=1;return o(b,c,lk)},I=function(d,ca,b$,b_,b9){var
+e=b[2][11],f=d[1],h=b[2][12],g=lk;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,acg];b[4]=1;return o(b,c,lk)},I=function(d,ca,b$,b_,b9){var
 c=[0,b$,b_,b9],b=q(ca),e=b[3];if(typeof
 e==="number")switch(e){case
 0:var
@@ -30907,7 +31963,7 @@ bZ=b[2][11],b1=b[2][12],b0=bL;return d<50?a7(d+1|0,b,c,b1,b0,bZ):a(a7,[0,b,c,b1,
 77:var
 b2=b[2][11],b4=b[2][12],b3=bL;return d<50?a6(d+1|0,b,c,b4,b3,b2):a(a6,[0,b,c,b4,b3,b2])}else
 if(2===e[0]){var
-b5=b[2][11],b6=e[1],b8=b[2][12],b7=bL;return d<50?bn(d+1|0,b,c,b8,b7,b6,b5):a(bn,[0,b,c,b8,b7,b6,b5])}if(b[4])throw[0,i,acn];b[4]=1;return o(b,c,bL)},R=function(d,aW,aV,aU,aT){var
+b5=b[2][11],b6=e[1],b8=b[2][12],b7=bL;return d<50?bn(d+1|0,b,c,b8,b7,b6,b5):a(bn,[0,b,c,b8,b7,b6,b5])}if(b[4])throw[0,i,ach];b[4]=1;return o(b,c,bL)},R=function(d,aW,aV,aU,aT){var
 j=aW,h=aV,g=aU,f=aT;for(;;){var
 c=[0,h,g,f],b=q(j),e=b[3];if(typeof
 e==="number")switch(e){case
@@ -30950,7 +32006,7 @@ au=b[2][11],aw=b[2][12],av=c6;return d<50?D(d+1|0,b,c,aw,av,au):a(D,[0,b,c,aw,av
 67:var
 ax=b[2][11],az=b[2][12],ay=c6;return d<50?C(d+1|0,b,c,az,ay,ax):a(C,[0,b,c,az,ay,ax]);case
 72:var
-aA=b[2][11],aC=b[2][12],aB=c6;return d<50?B(d+1|0,b,c,aC,aB,aA):a(B,[0,b,c,aC,aB,aA]);default:if(b[4])throw[0,i,aco];b[4]=1;return o(b,c,c6)}else
+aA=b[2][11],aC=b[2][12],aB=c6;return d<50?B(d+1|0,b,c,aC,aB,aA):a(B,[0,b,c,aC,aB,aA]);default:if(b[4])throw[0,i,aci];b[4]=1;return o(b,c,c6)}else
 switch(e[0]){case
 0:var
 aD=b[2][11],aE=e[1],aG=b[2][12],aF=c6;return d<50?M(d+1|0,b,c,aG,aF,aE,aD):a(M,[0,b,c,aG,aF,aE,aD]);case
@@ -30959,7 +32015,7 @@ aH=b[2][11],aI=e[1],aK=b[2][12],aJ=c6;return d<50?H(d+1|0,b,c,aK,aJ,aI,aH):a(H,[
 2:var
 aL=b[2][11],aM=e[1],aO=b[2][12],aN=c6;return d<50?G(d+1|0,b,c,aO,aN,aM,aL):a(G,[0,b,c,aO,aN,aM,aL]);default:var
 aP=b[2][11],aQ=e[1],aS=b[2][12],aR=c6;return d<50?E(d+1|0,b,c,aS,aR,aQ,aP):a(E,[0,b,c,aS,aR,aQ,aP])}}},H=function(h,k,e,c,d,i,b){var
-f=q(k),l=j(ep[8],i),g=[4,$(b,c),l];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},P=function(d,aW,aV,aU,aT,aS){var
+f=q(k),l=j(eo[8],i),g=[4,$(b,c),l];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},P=function(d,aW,aV,aU,aT,aS){var
 k=aW,j=aV,h=aU,g=aT,f=aS;for(;;){var
 c=[0,j,h,g,f],b=q(k),e=b[3];if(typeof
 e==="number")switch(e){case
@@ -31022,6 +32078,7 @@ aw=b[2][11],ay=b[2][12],ax=cS;return d<50?C(d+1|0,b,c,ay,ax,aw):a(C,[0,b,c,ay,ax
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 az=b[2][11],aB=b[2][12],aA=cS;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,h,abv];b[4]=1;return p(b,c,cS)}else
 =======
 az=b[2][11],aB=b[2][12],aA=cQ;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acj];b[4]=1;return p(b,c,cQ)}else
@@ -31035,6 +32092,9 @@ az=b[2][11],aB=b[2][12],aA=cQ;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA
 =======
 az=b[2][11],aB=b[2][12],aA=cQ;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acp];b[4]=1;return o(b,c,cQ)}else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+az=b[2][11],aB=b[2][12],aA=cQ;return d<50?B(d+1|0,b,c,aB,aA,az):a(B,[0,b,c,aB,aA,az]);default:if(b[4])throw[0,i,acj];b[4]=1;return o(b,c,cQ)}else
+>>>>>>> (fix) Directly use time constants in generated JS code
 switch(e[0]){case
 0:var
 aC=b[2][11],aD=e[1],aF=b[2][12],aE=cS;return d<50?M(d+1|0,b,c,aF,aE,aD,aC):a(M,[0,b,c,aF,aE,aD,aC]);case
@@ -31084,9 +32144,10 @@ g==="number")switch(g){case
 72:case
 75:case
 77:break;default:var
-e=b[5],f=b[2],t=aX(b[4]),h=[3,$(e,f),t],j=b[3],k=b[1];return d<50?b4(d+1|0,c,k,f,j,h,e):a(b4,[0,c,k,f,j,h,e])}if(c[4])throw[0,i,acq];c[4]=1;return o(c,b[1],b[3])},F=function(j,p,n,m,l,k){var
+e=b[5],f=b[2],t=aX(b[4]),h=[3,$(e,f),t],j=b[3],k=b[1];return d<50?b4(d+1|0,c,k,f,j,h,e):a(b4,[0,c,k,f,j,h,e])}if(c[4])throw[0,i,ack];c[4]=1;return o(c,b[1],b[3])},F=function(j,p,n,m,l,k){var
 c=[0,n,m,l,k],b=q(p),d=b[3];if(typeof
 d!=="number"&&2===d[0]){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -31201,6 +32262,11 @@ e=b[2][11],f=d[1],h=b[2][12],g=kU;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 f=q(k),l=j(ep[9],i),g=[4,$(b,c),l];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},D=function(h,i,e,c,d,b){var
 f=q(i),k=j(ep[10],0),g=[4,$(b,c),k];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},C=function(h,i,e,c,d,b){var
+=======
+e=b[2][11],f=d[1],h=b[2][12],g=kU;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,acl];b[4]=1;return o(b,c,kU)},E=function(h,k,e,c,d,i,b){var
+f=q(k),l=j(eo[9],i),g=[4,$(b,c),l];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},D=function(h,i,e,c,d,b){var
+f=q(i),k=j(eo[10],0),g=[4,$(b,c),k];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},C=function(h,i,e,c,d,b){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 f=q(i),g=[0,$(b,c)];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},B=function(h,i,e,c,d,b){var
 f=q(i),g=[1,$(b,c)];return h<50?b4(h+1|0,f,e,c,d,g,b):a(b4,[0,f,e,c,d,g,b])},bJ=function(g,h,e,d,c,b){var
 f=q(h);return g<50?au(g+1|0,f,e,d,c,tB,b):a(au,[0,f,e,d,c,tB,b])},bI=function(g,h,e,d,c,b){var
@@ -31210,7 +32276,7 @@ f=q(h);return g<50?au(g+1|0,f,e,d,c,tE,b):a(au,[0,f,e,d,c,tE,b])},bF=function(g,
 f=q(h);return g<50?au(g+1|0,f,e,d,c,tF,b):a(au,[0,f,e,d,c,tF,b])},bE=function(g,h,e,d,c,b){var
 f=q(h);return g<50?au(g+1|0,f,e,d,c,tG,b):a(au,[0,f,e,d,c,tG,b])},bD=function(g,h,e,d,c,b){var
 f=q(h);return g<50?au(g+1|0,f,e,d,c,tH,b):a(au,[0,f,e,d,c,tH,b])},bC=function(g,h,e,d,c,b){var
-f=q(h);return g<50?au(g+1|0,f,e,d,c,tI,b):a(au,[0,f,e,d,c,tI,b])},fz=function(g,h,e,d,c,b){var
+f=q(h);return g<50?au(g+1|0,f,e,d,c,tI,b):a(au,[0,f,e,d,c,tI,b])},fA=function(g,h,e,d,c,b){var
 f=q(h);return g<50?kA(g+1|0,f,e,d,c,tJ,b):a(kA,[0,f,e,d,c,tJ,b])},bB=function(g,h,e,d,c,b){var
 f=q(h);return g<50?au(g+1|0,f,e,d,c,tK,b):a(au,[0,f,e,d,c,tK,b])},bA=function(g,h,e,d,c,b){var
 f=q(h);return g<50?au(g+1|0,f,e,d,c,tL,b):a(au,[0,f,e,d,c,tL,b])},bz=function(g,h,e,d,c,b){var
@@ -31286,7 +32352,7 @@ as=b[2][11],au=b[2][12],at=50;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=50;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=50;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acs];b[4]=1;return o(b,c,50)}else
+ay=b[2][11],aA=b[2][12],az=50;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acm];b[4]=1;return o(b,c,50)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=50;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -31302,7 +32368,7 @@ f=[0,e,b[2][12],b[2][11]],c=q(b),g=c[3];if(typeof
 g==="number"){if(6===g){var
 l=c[2][11],m=4;return d<50?A(d+1|0,c,f,m,l):a(A,[0,c,f,m,l])}}else
 if(2===g[0]){var
-n=c[2][11],p=g[1],s=c[2][12],r=4;return d<50?h$(d+1|0,c,f,s,r,p,n):a(h$,[0,c,f,s,r,p,n])}if(c[4])throw[0,i,act];c[4]=1;return o(c,f,4)}}if(b[4])throw[0,i,acu];b[4]=1;return o(b,e[1],e[3])},cj=function(d,aV,aU,aT,aS,aR){var
+n=c[2][11],p=g[1],s=c[2][12],r=4;return d<50?h$(d+1|0,c,f,s,r,p,n):a(h$,[0,c,f,s,r,p,n])}if(c[4])throw[0,i,acn];c[4]=1;return o(c,f,4)}}if(b[4])throw[0,i,aco];b[4]=1;return o(b,e[1],e[3])},cj=function(d,aV,aU,aT,aS,aR){var
 c=[0,aU,aT,aS,aR],b=q(aV),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -31342,7 +32408,7 @@ as=b[2][11],au=b[2][12],at=45;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=45;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=45;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acv];b[4]=1;return o(b,c,45)}else
+ay=b[2][11],aA=b[2][12],az=45;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acp];b[4]=1;return o(b,c,45)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=45;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -31406,7 +32472,7 @@ aF=b[2][11],aH=b[2][12],aG=43;return d<50?B(d+1|0,b,c,aH,aG,aF):a(B,[0,b,c,aH,aG
 64:case
 66:case
 74:var
-f=c[4],g=c[2],j=$(f,g),h=[0,j,[4,j,0]],k=c[3],l=c[1];return d<50?fU(d+1|0,b,l,g,k,h,f):a(fU,[0,b,l,g,k,h,f]);default:if(b[4])throw[0,i,acw];b[4]=1;return o(b,c,43)}else
+f=c[4],g=c[2],j=$(f,g),h=[0,j,[4,j,0]],k=c[3],l=c[1];return d<50?fV(d+1|0,b,l,g,k,h,f):a(fV,[0,b,l,g,k,h,f]);default:if(b[4])throw[0,i,acq];b[4]=1;return o(b,c,43)}else
 switch(e[0]){case
 0:var
 aI=b[2][11],aJ=e[1],aL=b[2][12],aK=43;return d<50?M(d+1|0,b,c,aL,aK,aJ,aI):a(M,[0,b,c,aL,aK,aJ,aI]);case
@@ -31434,7 +32500,7 @@ A=b[2][11],C=b[2][12],B=1;return d<50?bD(d+1|0,b,c,C,B,A):a(bD,[0,b,c,C,B,A]);ca
 9:var
 D=b[2][11],F=b[2][12],E=1;return d<50?bC(d+1|0,b,c,F,E,D):a(bC,[0,b,c,F,E,D]);case
 11:var
-G=b[2][11],I=b[2][12],H=1;return d<50?fz(d+1|0,b,c,I,H,G):a(fz,[0,b,c,I,H,G]);case
+G=b[2][11],I=b[2][12],H=1;return d<50?fA(d+1|0,b,c,I,H,G):a(fA,[0,b,c,I,H,G]);case
 12:var
 J=b[2][11],L=b[2][12],K=1;return d<50?bB(d+1|0,b,c,L,K,J):a(bB,[0,b,c,L,K,J]);case
 15:var
@@ -31502,7 +32568,7 @@ b0=b[2][11],b2=b[2][12],b1=1;return d<50?a7(d+1|0,b,c,b2,b1,b0):a(a7,[0,b,c,b2,b
 77:var
 b3=b[2][11],b5=b[2][12],b4=1;return d<50?a6(d+1|0,b,c,b5,b4,b3):a(a6,[0,b,c,b5,b4,b3])}else
 if(2===e[0]){var
-b6=b[2][11],b7=e[1],b9=b[2][12],b8=1;return d<50?bn(d+1|0,b,c,b9,b8,b7,b6):a(bn,[0,b,c,b9,b8,b7,b6])}if(b[4])throw[0,i,acx];b[4]=1;return o(b,c,1)},ch=function(d,aV,aU,aT,aS,aR){var
+b6=b[2][11],b7=e[1],b9=b[2][12],b8=1;return d<50?bn(d+1|0,b,c,b9,b8,b7,b6):a(bn,[0,b,c,b9,b8,b7,b6])}if(b[4])throw[0,i,acr];b[4]=1;return o(b,c,1)},ch=function(d,aV,aU,aT,aS,aR){var
 c=[0,aU,aT,aS,aR],b=q(aV),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -31542,7 +32608,7 @@ as=b[2][11],au=b[2][12],at=41;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=41;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=41;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acy];b[4]=1;return o(b,c,41)}else
+ay=b[2][11],aA=b[2][12],az=41;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acs];b[4]=1;return o(b,c,41)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=41;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -31553,7 +32619,7 @@ aJ=b[2][11],aK=e[1],aM=b[2][12],aL=41;return d<50?G(d+1|0,b,c,aM,aL,aK,aJ):a(G,[
 aN=b[2][11],aO=e[1],aQ=b[2][12],aP=41;return d<50?E(d+1|0,b,c,aQ,aP,aO,aN):a(E,[0,b,c,aQ,aP,aO,aN])}},cg=function(j,p,n,m,l,k){var
 c=[0,n,m,l,k],b=q(p),d=b[3];if(typeof
 d!=="number"&&2===d[0]){var
-e=b[2][11],f=d[1],h=b[2][12],g=36;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,acz];b[4]=1;return o(b,c,36)},hw=function(d,cd,cc,cb,ca,b$){var
+e=b[2][11],f=d[1],h=b[2][12],g=36;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,act];b[4]=1;return o(b,c,36)},hx=function(d,cd,cc,cb,ca,b$){var
 c=[0,cc,cb,ca,b$],b=q(cd),e=b[3];if(typeof
 e==="number")switch(e){case
 0:var
@@ -31573,7 +32639,7 @@ A=b[2][11],C=b[2][12],B=bU;return d<50?bD(d+1|0,b,c,C,B,A):a(bD,[0,b,c,C,B,A]);c
 9:var
 D=b[2][11],F=b[2][12],E=bU;return d<50?bC(d+1|0,b,c,F,E,D):a(bC,[0,b,c,F,E,D]);case
 11:var
-G=b[2][11],I=b[2][12],H=bU;return d<50?fz(d+1|0,b,c,I,H,G):a(fz,[0,b,c,I,H,G]);case
+G=b[2][11],I=b[2][12],H=bU;return d<50?fA(d+1|0,b,c,I,H,G):a(fA,[0,b,c,I,H,G]);case
 12:var
 J=b[2][11],L=b[2][12],K=bU;return d<50?bB(d+1|0,b,c,L,K,J):a(bB,[0,b,c,L,K,J]);case
 15:var
@@ -31641,7 +32707,7 @@ b1=b[2][11],b3=b[2][12],b2=bU;return d<50?a7(d+1|0,b,c,b3,b2,b1):a(a7,[0,b,c,b3,
 77:var
 b4=b[2][11],b6=b[2][12],b5=bU;return d<50?a6(d+1|0,b,c,b6,b5,b4):a(a6,[0,b,c,b6,b5,b4])}else
 if(2===e[0]){var
-b7=b[2][11],b8=e[1],b_=b[2][12],b9=bU;return d<50?bn(d+1|0,b,c,b_,b9,b8,b7):a(bn,[0,b,c,b_,b9,b8,b7])}if(b[4])throw[0,i,acA];b[4]=1;return o(b,c,bU)},cf=function(d,aV,aU,aT,aS,aR){var
+b7=b[2][11],b8=e[1],b_=b[2][12],b9=bU;return d<50?bn(d+1|0,b,c,b_,b9,b8,b7):a(bn,[0,b,c,b_,b9,b8,b7])}if(b[4])throw[0,i,acu];b[4]=1;return o(b,c,bU)},cf=function(d,aV,aU,aT,aS,aR){var
 c=[0,aU,aT,aS,aR],b=q(aV),e=b[3];if(typeof
 e==="number")switch(e){case
 2:var
@@ -31681,7 +32747,7 @@ as=b[2][11],au=b[2][12],at=32;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=32;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=32;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acB];b[4]=1;return o(b,c,32)}else
+ay=b[2][11],aA=b[2][12],az=32;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acv];b[4]=1;return o(b,c,32)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=32;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -31729,7 +32795,7 @@ as=b[2][11],au=b[2][12],at=29;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=29;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=29;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acC];b[4]=1;return o(b,c,29)}else
+ay=b[2][11],aA=b[2][12],az=29;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acw];b[4]=1;return o(b,c,29)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=29;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -31777,7 +32843,7 @@ as=b[2][11],au=b[2][12],at=26;return d<50?D(d+1|0,b,c,au,at,as):a(D,[0,b,c,au,at
 67:var
 av=b[2][11],ax=b[2][12],aw=26;return d<50?C(d+1|0,b,c,ax,aw,av):a(C,[0,b,c,ax,aw,av]);case
 72:var
-ay=b[2][11],aA=b[2][12],az=26;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acD];b[4]=1;return o(b,c,26)}else
+ay=b[2][11],aA=b[2][12],az=26;return d<50?B(d+1|0,b,c,aA,az,ay):a(B,[0,b,c,aA,az,ay]);default:if(b[4])throw[0,i,acx];b[4]=1;return o(b,c,26)}else
 switch(e[0]){case
 0:var
 aB=b[2][11],aC=e[1],aE=b[2][12],aD=26;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[0,b,c,aE,aD,aC,aB]);case
@@ -31785,22 +32851,22 @@ aB=b[2][11],aC=e[1],aE=b[2][12],aD=26;return d<50?M(d+1|0,b,c,aE,aD,aC,aB):a(M,[
 aF=b[2][11],aG=e[1],aI=b[2][12],aH=26;return d<50?H(d+1|0,b,c,aI,aH,aG,aF):a(H,[0,b,c,aI,aH,aG,aF]);case
 2:var
 aJ=b[2][11],aK=e[1],aM=b[2][12],aL=26;return d<50?G(d+1|0,b,c,aM,aL,aK,aJ):a(G,[0,b,c,aM,aL,aK,aJ]);default:var
-aN=b[2][11],aO=e[1],aQ=b[2][12],aP=26;return d<50?E(d+1|0,b,c,aQ,aP,aO,aN):a(E,[0,b,c,aQ,aP,aO,aN])}},hv=function(c,M,L,K,J,I){var
+aN=b[2][11],aO=e[1],aQ=b[2][12],aP=26;return d<50?E(d+1|0,b,c,aQ,aP,aO,aN):a(E,[0,b,c,aQ,aP,aO,aN])}},hw=function(c,M,L,K,J,I){var
 d=[0,L,K,J,I],b=q(M),s=b[3];if(typeof
 s==="number"){var
 h=s-5|0;if(23<h>>>0)if(48<=h)switch(h+g$|0){case
 0:var
 k=[0,d,b[2][12],b[2][11]],e=q(b),l=e[3];if(typeof
 l!=="number"&&2===l[0]){var
-t=e[2][11],u=l[1],w=e[2][12],v=n6;return c<50?bQ(c+1|0,e,k,w,v,u,t):a(bQ,[0,e,k,w,v,u,t])}if(e[4])throw[0,i,acE];e[4]=1;return o(e,k,n6);case
+t=e[2][11],u=l[1],w=e[2][12],v=n6;return c<50?bQ(c+1|0,e,k,w,v,u,t):a(bQ,[0,e,k,w,v,u,t])}if(e[4])throw[0,i,acy];e[4]=1;return o(e,k,n6);case
 7:var
 m=[0,d,b[2][12],b[2][11]],f=q(b),n=f[3];if(typeof
 n!=="number"&&2===n[0]){var
-y=f[2][11],z=n[1],B=f[2][12],A=78;return c<50?bQ(c+1|0,f,m,B,A,z,y):a(bQ,[0,f,m,B,A,z,y])}if(f[4])throw[0,i,acG];f[4]=1;return o(f,m,78);case
+y=f[2][11],z=n[1],B=f[2][12],A=78;return c<50?bQ(c+1|0,f,m,B,A,z,y):a(bQ,[0,f,m,B,A,z,y])}if(f[4])throw[0,i,acA];f[4]=1;return o(f,m,78);case
 15:var
 p=[0,d,b[2][12],b[2][11]],g=q(b),r=g[3];if(typeof
 r!=="number"&&2===r[0]){var
-C=g[2][11],D=r[1],F=g[2][12],E=75;return c<50?bQ(c+1|0,g,p,F,E,D,C):a(bQ,[0,g,p,F,E,D,C])}if(g[4])throw[0,i,acH];g[4]=1;return o(g,p,75);case
+C=g[2][11],D=r[1],F=g[2][12],E=75;return c<50?bQ(c+1|0,g,p,F,E,D,C):a(bQ,[0,g,p,F,E,D,C])}if(g[4])throw[0,i,acB];g[4]=1;return o(g,p,75);case
 24:var
 G=q(b),H=1;return c<50?ky(c+1|0,G,d,H):a(ky,[0,G,d,H]);case
 4:case
@@ -31812,10 +32878,10 @@ var
 j=0;else
 var
 j=21<(h-1|0)>>>0?1:0;if(j){var
-x=0;return c<50?ky(c+1|0,b,d,x):a(ky,[0,b,d,x])}}if(b[4])throw[0,i,acF];b[4]=1;return o(b,d[1],d[3])},hu=function(j,p,n,m,l,k){var
+x=0;return c<50?ky(c+1|0,b,d,x):a(ky,[0,b,d,x])}}if(b[4])throw[0,i,acz];b[4]=1;return o(b,d[1],d[3])},hv=function(j,p,n,m,l,k){var
 c=[0,n,m,l,k],b=q(p),d=b[3];if(typeof
 d!=="number"&&2===d[0]){var
-e=b[2][11],f=d[1],h=b[2][12],g=59;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,acI];b[4]=1;return o(b,c,59)},cc=function(d,a3,a2,a1,a0,aZ){var
+e=b[2][11],f=d[1],h=b[2][12],g=59;return j<50?bQ(j+1|0,b,c,h,g,f,e):a(bQ,[0,b,c,h,g,f,e])}if(b[4])throw[0,i,acC];b[4]=1;return o(b,c,59)},cc=function(d,a3,a2,a1,a0,aZ){var
 h=[0,a2,a1,a0,aZ],e=q(a3),j=e[3];if(typeof
 j!=="number"&&2===j[0]){var
 k=[0,h,e[2][12],j[1],e[2][11]],g=q(e),l=g[3];if(typeof
@@ -31861,7 +32927,7 @@ az=b[2][11],aB=b[2][12],aA=23;return d<50?D(d+1|0,b,c,aB,aA,az):a(D,[0,b,c,aB,aA
 67:var
 aC=b[2][11],aE=b[2][12],aD=23;return d<50?C(d+1|0,b,c,aE,aD,aC):a(C,[0,b,c,aE,aD,aC]);case
 72:var
-aF=b[2][11],aH=b[2][12],aG=23;return d<50?B(d+1|0,b,c,aH,aG,aF):a(B,[0,b,c,aH,aG,aF]);default:if(b[4])throw[0,i,acK];b[4]=1;return o(b,c,23)}else
+aF=b[2][11],aH=b[2][12],aG=23;return d<50?B(d+1|0,b,c,aH,aG,aF):a(B,[0,b,c,aH,aG,aF]);default:if(b[4])throw[0,i,acE];b[4]=1;return o(b,c,23)}else
 switch(f[0]){case
 0:var
 aI=b[2][11],aJ=f[1],aL=b[2][12],aK=23;return d<50?M(d+1|0,b,c,aL,aK,aJ,aI):a(M,[0,b,c,aL,aK,aJ,aI]);case
@@ -31869,6 +32935,7 @@ aI=b[2][11],aJ=f[1],aL=b[2][12],aK=23;return d<50?M(d+1|0,b,c,aL,aK,aJ,aI):a(M,[
 aM=b[2][11],aN=f[1],aP=b[2][12],aO=23;return d<50?H(d+1|0,b,c,aP,aO,aN,aM):a(H,[0,b,c,aP,aO,aN,aM]);case
 2:var
 aQ=b[2][11],aR=f[1],aT=b[2][12],aS=23;return d<50?G(d+1|0,b,c,aT,aS,aR,aQ):a(G,[0,b,c,aT,aS,aR,aQ]);default:var
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -32104,73 +33171,78 @@ c=ty(f,e),b=[0,0,c[2][12]],a=q(c),d=a[3];if(typeof
 aU=b[2][11],aV=f[1],aX=b[2][12],aW=23;return d<50?E(d+1|0,b,c,aX,aW,aV,aU):a(E,[0,b,c,aX,aW,aV,aU])}}if(g[4])throw[0,i,acL];g[4]=1;var
 aY=k[1];return o(g,aY[1],aY[3])}if(e[4])throw[0,i,acJ];e[4]=1;return o(e,h[1],h[3])},V_=function(a,b,c,d,e){return aL(bJ(0,a,b,c,d,e))},V$=function(a,b,c,d,e){return aL(bI(0,a,b,c,d,e))},Wa=function(a,b,c,d,e){return aL(bH(0,a,b,c,d,e))},Wb=function(a,b,c,d,e){return aL(bG(0,a,b,c,d,e))},Wc=function(a,b,c,d,e){return aL(bF(0,a,b,c,d,e))},Wd=function(a,b,c,d,e){return aL(bE(0,a,b,c,d,e))},We=function(a,b,c,d,e){return aL(bD(0,a,b,c,d,e))},Wf=function(a,b,c,d,e){return aL(bC(0,a,b,c,d,e))},Wg=function(a,b,c,d,e){return aL(fz(0,a,b,c,d,e))},Wh=function(a,b,c,d,e){return aL(bB(0,a,b,c,d,e))},Wi=function(a,b,c,d,e){return aL(bA(0,a,b,c,d,e))},Wj=function(a,b,c,d,e){return aL(bz(0,a,b,c,d,e))},Wk=function(a,b,c,d,e){return aL(by(0,a,b,c,d,e))},Wl=function(a,b,c,d,e){return aL(bx(0,a,b,c,d,e))},Wm=function(a,b,c,d,e){return aL(bw(0,a,b,c,d,e))},Wn=function(a,b,c,d,e){return aL(bv(0,a,b,c,d,e))},Wo=function(a,b,c,d,e){return aL(bu(0,a,b,c,d,e))},Wp=function(a,b,c,d,e){return aL(bt(0,a,b,c,d,e))},Wq=function(a,b,c,d,e){return aL(bs(0,a,b,c,d,e))},Wr=function(a,b,c,d,e){return aL(br(0,a,b,c,d,e))},Ws=function(a,b,c,d,e){return aL(bq(0,a,b,c,d,e))},Wt=function(a,b,c,d,e){return aL(bp(0,a,b,c,d,e))},Wu=function(a,b,c,d,e){return aL(bo(0,a,b,c,d,e))},Wv=function(a,b,c,d,e,f){return aL(bn(0,a,b,c,d,e,f))},Ww=function(a,b,c,d,e){return aL(bm(0,a,b,c,d,e))},Wx=function(a,b,c,d,e){return aL(bl(0,a,b,c,d,e))},Wy=function(a,b,c,d,e){return aL(bk(0,a,b,c,d,e))},Wz=function(a,b,c,d,e){return aL(bj(0,a,b,c,d,e))},WA=function(a,b,c,d,e){return aL(bi(0,a,b,c,d,e))},WB=function(a,b,c,d,e){return aL(bh(0,a,b,c,d,e))},WC=function(a,b,c,d,e){return aL(bg(0,a,b,c,d,e))},WD=function(a,b,c,d,e){return aL(bf(0,a,b,c,d,e))},WE=function(a,b,c,d,e){return aL(be(0,a,b,c,d,e))},WF=function(a,b,c,d,e){return aL(bd(0,a,b,c,d,e))},WG=function(a,b,c,d,e){return aL(bc(0,a,b,c,d,e))},WH=function(a,b,c,d,e){return aL(bb(0,a,b,c,d,e))},WI=function(a,b,c,d,e){return aL(ba(0,a,b,c,d,e))},WJ=function(a,b,c,d,e){return aL(a$(0,a,b,c,d,e))},WK=function(a,b,c,d,e){return aL(a_(0,a,b,c,d,e))},WL=function(a,b,c,d,e){return aL(a9(0,a,b,c,d,e))},WM=function(a,b,c,d,e){return aL(a8(0,a,b,c,d,e))},WN=function(a,b,c,d,e){return aL(a7(0,a,b,c,d,e))},WO=function(a,b,c,d,e){return aL(a6(0,a,b,c,d,e))},WP=function(a,b,c,d,e){return aL(ck(0,a,b,c,d,e))},WQ=function(a,b,c,d,e){return aL(nH(0,a,b,c,d,e))},WR=function(a,b,c,d,e){return aL(cj(0,a,b,c,d,e))},WS=function(a,b,c,d,e){return aL(ci(0,a,b,c,d,e))},WT=function(a,b,c,d,e){return aL(nG(0,a,b,c,d,e))},WU=function(a,b,c,d,e){return aL(ch(0,a,b,c,d,e))},WV=function(a,b,c,d,e){return aL(cg(0,a,b,c,d,e))},WW=function(a,b,c,d,e){return aL(hw(0,a,b,c,d,e))},WX=function(a,b,c,d,e){return aL(cf(0,a,b,c,d,e))},WY=function(a,b,c,d,e){return aL(ce(0,a,b,c,d,e))},WZ=function(a,b,c,d,e){return aL(cd(0,a,b,c,d,e))},W0=function(a,b,c,d,e){return aL(hv(0,a,b,c,d,e))},W1=function(a,b,c,d,e){return aL(hu(0,a,b,c,d,e))},W2=function(a,b,c,d,e){return aL(cc(0,a,b,c,d,e))},q=function(a){var
 b=a[1],c=a[2];return[0,b,c,j(b,c),0]},tA=function(b,a){return[0,b,a,0,0]},W3=function(h,g){var
+=======
+aU=b[2][11],aV=f[1],aX=b[2][12],aW=23;return d<50?E(d+1|0,b,c,aX,aW,aV,aU):a(E,[0,b,c,aX,aW,aV,aU])}}if(g[4])throw[0,i,acF];g[4]=1;var
+aY=k[1];return o(g,aY[1],aY[3])}if(e[4])throw[0,i,acD];e[4]=1;return o(e,h[1],h[3])},V4=function(a,b,c,d,e){return aL(bJ(0,a,b,c,d,e))},V5=function(a,b,c,d,e){return aL(bI(0,a,b,c,d,e))},V6=function(a,b,c,d,e){return aL(bH(0,a,b,c,d,e))},V7=function(a,b,c,d,e){return aL(bG(0,a,b,c,d,e))},V8=function(a,b,c,d,e){return aL(bF(0,a,b,c,d,e))},V9=function(a,b,c,d,e){return aL(bE(0,a,b,c,d,e))},V_=function(a,b,c,d,e){return aL(bD(0,a,b,c,d,e))},V$=function(a,b,c,d,e){return aL(bC(0,a,b,c,d,e))},Wa=function(a,b,c,d,e){return aL(fA(0,a,b,c,d,e))},Wb=function(a,b,c,d,e){return aL(bB(0,a,b,c,d,e))},Wc=function(a,b,c,d,e){return aL(bA(0,a,b,c,d,e))},Wd=function(a,b,c,d,e){return aL(bz(0,a,b,c,d,e))},We=function(a,b,c,d,e){return aL(by(0,a,b,c,d,e))},Wf=function(a,b,c,d,e){return aL(bx(0,a,b,c,d,e))},Wg=function(a,b,c,d,e){return aL(bw(0,a,b,c,d,e))},Wh=function(a,b,c,d,e){return aL(bv(0,a,b,c,d,e))},Wi=function(a,b,c,d,e){return aL(bu(0,a,b,c,d,e))},Wj=function(a,b,c,d,e){return aL(bt(0,a,b,c,d,e))},Wk=function(a,b,c,d,e){return aL(bs(0,a,b,c,d,e))},Wl=function(a,b,c,d,e){return aL(br(0,a,b,c,d,e))},Wm=function(a,b,c,d,e){return aL(bq(0,a,b,c,d,e))},Wn=function(a,b,c,d,e){return aL(bp(0,a,b,c,d,e))},Wo=function(a,b,c,d,e){return aL(bo(0,a,b,c,d,e))},Wp=function(a,b,c,d,e,f){return aL(bn(0,a,b,c,d,e,f))},Wq=function(a,b,c,d,e){return aL(bm(0,a,b,c,d,e))},Wr=function(a,b,c,d,e){return aL(bl(0,a,b,c,d,e))},Ws=function(a,b,c,d,e){return aL(bk(0,a,b,c,d,e))},Wt=function(a,b,c,d,e){return aL(bj(0,a,b,c,d,e))},Wu=function(a,b,c,d,e){return aL(bi(0,a,b,c,d,e))},Wv=function(a,b,c,d,e){return aL(bh(0,a,b,c,d,e))},Ww=function(a,b,c,d,e){return aL(bg(0,a,b,c,d,e))},Wx=function(a,b,c,d,e){return aL(bf(0,a,b,c,d,e))},Wy=function(a,b,c,d,e){return aL(be(0,a,b,c,d,e))},Wz=function(a,b,c,d,e){return aL(bd(0,a,b,c,d,e))},WA=function(a,b,c,d,e){return aL(bc(0,a,b,c,d,e))},WB=function(a,b,c,d,e){return aL(bb(0,a,b,c,d,e))},WC=function(a,b,c,d,e){return aL(ba(0,a,b,c,d,e))},WD=function(a,b,c,d,e){return aL(a$(0,a,b,c,d,e))},WE=function(a,b,c,d,e){return aL(a_(0,a,b,c,d,e))},WF=function(a,b,c,d,e){return aL(a9(0,a,b,c,d,e))},WG=function(a,b,c,d,e){return aL(a8(0,a,b,c,d,e))},WH=function(a,b,c,d,e){return aL(a7(0,a,b,c,d,e))},WI=function(a,b,c,d,e){return aL(a6(0,a,b,c,d,e))},WJ=function(a,b,c,d,e){return aL(ck(0,a,b,c,d,e))},WK=function(a,b,c,d,e){return aL(nH(0,a,b,c,d,e))},WL=function(a,b,c,d,e){return aL(cj(0,a,b,c,d,e))},WM=function(a,b,c,d,e){return aL(ci(0,a,b,c,d,e))},WN=function(a,b,c,d,e){return aL(nG(0,a,b,c,d,e))},WO=function(a,b,c,d,e){return aL(ch(0,a,b,c,d,e))},WP=function(a,b,c,d,e){return aL(cg(0,a,b,c,d,e))},WQ=function(a,b,c,d,e){return aL(hx(0,a,b,c,d,e))},WR=function(a,b,c,d,e){return aL(cf(0,a,b,c,d,e))},WS=function(a,b,c,d,e){return aL(ce(0,a,b,c,d,e))},WT=function(a,b,c,d,e){return aL(cd(0,a,b,c,d,e))},WU=function(a,b,c,d,e){return aL(hw(0,a,b,c,d,e))},WV=function(a,b,c,d,e){return aL(hv(0,a,b,c,d,e))},WW=function(a,b,c,d,e){return aL(cc(0,a,b,c,d,e))},q=function(a){var
+b=a[1],c=a[2];return[0,b,c,j(b,c),0]},tA=function(b,a){return[0,b,a,0,0]},WX=function(h,g){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 e=tA(h,g),j=[0,0,e[2][12]],c=q(e),f=c[3];if(typeof
 f==="number")if(34===f){var
 b=[0,j,c[2][12],c[2][11]],a=q(c),d=a[3];if(typeof
 d==="number")switch(d){case
-0:return V_(a,b,a[2][12],a2,a[2][11]);case
-1:return V$(a,b,a[2][12],a2,a[2][11]);case
-2:return Wa(a,b,a[2][12],a2,a[2][11]);case
-4:return Wb(a,b,a[2][12],a2,a[2][11]);case
-5:return Wc(a,b,a[2][12],a2,a[2][11]);case
-7:return Wd(a,b,a[2][12],a2,a[2][11]);case
-8:return We(a,b,a[2][12],a2,a[2][11]);case
-9:return Wf(a,b,a[2][12],a2,a[2][11]);case
-11:return Wg(a,b,a[2][12],a2,a[2][11]);case
-12:return Wh(a,b,a[2][12],a2,a[2][11]);case
-15:return Wi(a,b,a[2][12],a2,a[2][11]);case
-16:return Wj(a,b,a[2][12],a2,a[2][11]);case
-19:return Wk(a,b,a[2][12],a2,a[2][11]);case
-28:return Wl(a,b,a[2][12],a2,a[2][11]);case
-29:return Wm(a,b,a[2][12],a2,a[2][11]);case
-30:return Wn(a,b,a[2][12],a2,a[2][11]);case
-32:return Wo(a,b,a[2][12],a2,a[2][11]);case
-34:return Wp(a,b,a[2][12],a2,a[2][11]);case
-37:return Wq(a,b,a[2][12],a2,a[2][11]);case
-43:return Wr(a,b,a[2][12],a2,a[2][11]);case
-46:return Ws(a,b,a[2][12],a2,a[2][11]);case
-47:return Wt(a,b,a[2][12],a2,a[2][11]);case
-48:return Wu(a,b,a[2][12],a2,a[2][11]);case
-53:return Ww(a,b,a[2][12],a2,a[2][11]);case
-54:return Wx(a,b,a[2][12],a2,a[2][11]);case
-55:return Wy(a,b,a[2][12],a2,a[2][11]);case
-56:return Wz(a,b,a[2][12],a2,a[2][11]);case
-57:return WA(a,b,a[2][12],a2,a[2][11]);case
-60:return WB(a,b,a[2][12],a2,a[2][11]);case
-61:return WC(a,b,a[2][12],a2,a[2][11]);case
-62:return WD(a,b,a[2][12],a2,a[2][11]);case
-63:return WE(a,b,a[2][12],a2,a[2][11]);case
-64:return WF(a,b,a[2][12],a2,a[2][11]);case
-66:return WG(a,b,a[2][12],a2,a[2][11]);case
-67:return WH(a,b,a[2][12],a2,a[2][11]);case
-68:return WI(a,b,a[2][12],a2,a[2][11]);case
-69:return WJ(a,b,a[2][12],a2,a[2][11]);case
-72:return WK(a,b,a[2][12],a2,a[2][11]);case
-74:return WL(a,b,a[2][12],a2,a[2][11]);case
-75:return WM(a,b,a[2][12],a2,a[2][11]);case
-76:return WN(a,b,a[2][12],a2,a[2][11]);case
-77:return WO(a,b,a[2][12],a2,a[2][11])}else
-if(2===d[0])return Wv(a,b,a[2][12],a2,d[1],a[2][11]);if(a[4])throw[0,i,acM];a[4]=1;return o(a,b,a2)}if(c[4])throw[0,i,acN];c[4]=1;throw nA},W4=function(f,e){var
+0:return V4(a,b,a[2][12],a2,a[2][11]);case
+1:return V5(a,b,a[2][12],a2,a[2][11]);case
+2:return V6(a,b,a[2][12],a2,a[2][11]);case
+4:return V7(a,b,a[2][12],a2,a[2][11]);case
+5:return V8(a,b,a[2][12],a2,a[2][11]);case
+7:return V9(a,b,a[2][12],a2,a[2][11]);case
+8:return V_(a,b,a[2][12],a2,a[2][11]);case
+9:return V$(a,b,a[2][12],a2,a[2][11]);case
+11:return Wa(a,b,a[2][12],a2,a[2][11]);case
+12:return Wb(a,b,a[2][12],a2,a[2][11]);case
+15:return Wc(a,b,a[2][12],a2,a[2][11]);case
+16:return Wd(a,b,a[2][12],a2,a[2][11]);case
+19:return We(a,b,a[2][12],a2,a[2][11]);case
+28:return Wf(a,b,a[2][12],a2,a[2][11]);case
+29:return Wg(a,b,a[2][12],a2,a[2][11]);case
+30:return Wh(a,b,a[2][12],a2,a[2][11]);case
+32:return Wi(a,b,a[2][12],a2,a[2][11]);case
+34:return Wj(a,b,a[2][12],a2,a[2][11]);case
+37:return Wk(a,b,a[2][12],a2,a[2][11]);case
+43:return Wl(a,b,a[2][12],a2,a[2][11]);case
+46:return Wm(a,b,a[2][12],a2,a[2][11]);case
+47:return Wn(a,b,a[2][12],a2,a[2][11]);case
+48:return Wo(a,b,a[2][12],a2,a[2][11]);case
+53:return Wq(a,b,a[2][12],a2,a[2][11]);case
+54:return Wr(a,b,a[2][12],a2,a[2][11]);case
+55:return Ws(a,b,a[2][12],a2,a[2][11]);case
+56:return Wt(a,b,a[2][12],a2,a[2][11]);case
+57:return Wu(a,b,a[2][12],a2,a[2][11]);case
+60:return Wv(a,b,a[2][12],a2,a[2][11]);case
+61:return Ww(a,b,a[2][12],a2,a[2][11]);case
+62:return Wx(a,b,a[2][12],a2,a[2][11]);case
+63:return Wy(a,b,a[2][12],a2,a[2][11]);case
+64:return Wz(a,b,a[2][12],a2,a[2][11]);case
+66:return WA(a,b,a[2][12],a2,a[2][11]);case
+67:return WB(a,b,a[2][12],a2,a[2][11]);case
+68:return WC(a,b,a[2][12],a2,a[2][11]);case
+69:return WD(a,b,a[2][12],a2,a[2][11]);case
+72:return WE(a,b,a[2][12],a2,a[2][11]);case
+74:return WF(a,b,a[2][12],a2,a[2][11]);case
+75:return WG(a,b,a[2][12],a2,a[2][11]);case
+76:return WH(a,b,a[2][12],a2,a[2][11]);case
+77:return WI(a,b,a[2][12],a2,a[2][11])}else
+if(2===d[0])return Wp(a,b,a[2][12],a2,d[1],a[2][11]);if(a[4])throw[0,i,acG];a[4]=1;return o(a,b,a2)}if(c[4])throw[0,i,acH];c[4]=1;throw nA},WY=function(f,e){var
 c=tA(f,e),b=[0,0,c[2][12]],a=q(c),d=a[3];if(typeof
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 d==="number")switch(d){case
-7:return WP(a,b,a[2][12],5,a[2][11]);case
-15:return WQ(a,b,a[2][12],5,a[2][11]);case
-16:return WR(a,b,a[2][12],5,a[2][11]);case
-19:return WS(a,b,a[2][12],5,a[2][11]);case
-34:return WT(a,b,a[2][12],5,a[2][11]);case
-37:return WU(a,b,a[2][12],5,a[2][11]);case
-43:return WV(a,b,a[2][12],5,a[2][11]);case
-47:return WW(a,b,a[2][12],5,a[2][11]);case
-48:return WX(a,b,a[2][12],5,a[2][11]);case
+7:return WJ(a,b,a[2][12],5,a[2][11]);case
+15:return WK(a,b,a[2][12],5,a[2][11]);case
+16:return WL(a,b,a[2][12],5,a[2][11]);case
+19:return WM(a,b,a[2][12],5,a[2][11]);case
+34:return WN(a,b,a[2][12],5,a[2][11]);case
+37:return WO(a,b,a[2][12],5,a[2][11]);case
+43:return WP(a,b,a[2][12],5,a[2][11]);case
+47:return WQ(a,b,a[2][12],5,a[2][11]);case
+48:return WR(a,b,a[2][12],5,a[2][11]);case
 59:return tz(a,b,5);case
-61:return WY(a,b,a[2][12],5,a[2][11]);case
-63:return WZ(a,b,a[2][12],5,a[2][11]);case
-66:return W0(a,b,a[2][12],5,a[2][11]);case
-67:return W1(a,b,a[2][12],5,a[2][11]);case
-74:return W2(a,b,a[2][12],5,a[2][11])}if(a[4])throw[0,i,acO];a[4]=1;return o(a,b,5)},gp=lY(0,39);e0(function(c){var
+61:return WS(a,b,a[2][12],5,a[2][11]);case
+63:return WT(a,b,a[2][12],5,a[2][11]);case
+66:return WU(a,b,a[2][12],5,a[2][11]);case
+67:return WV(a,b,a[2][12],5,a[2][11]);case
+74:return WW(a,b,a[2][12],5,a[2][11])}if(a[4])throw[0,i,acI];a[4]=1;return o(a,b,5)},gp=lY(0,39);e0(function(c){var
 d=c[1],f=c[2],a=l0(gp,d),e=[0,d,f,aO(gp[2],a)[a+1]];aO(gp[2],a)[a+1]=e;gp[1]=gp[1]+1|0;var
-b=gp[2].length-1<<1<gp[1]?1:0;return b?lZ(l0,gp):b},acP);var
+b=gp[2].length-1<<1<gp[1]?1:0;return b?lZ(l0,gp):b},acJ);var
 gs=function(e,c,b){var
 <<<<<<< HEAD
 d=0;return e<50?un(e+1|0,c,b,d):a(un,[0,c,b,d])},un=function(d,c,b,h){var
@@ -32223,6 +33295,7 @@ f=e;continue}switch(e){case
 39:var
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 g=gc(b);try{var
 i=A7(gl,g);return i}catch(a){a=aJ(a);if(a===aO)return[2,g];throw a}case
 40:return[3,lp(lL(b,b[5],b[6]))];case
@@ -32262,22 +33335,32 @@ k=b[11];V9(c);acT(c,b);b[11]=k;return[0,V_(c)];case
 l=xU(b);throw[0,go,j(c0(acW),l)]}}},ud=function(a,b){return aL(gs(0,a,b))},acT=function(b,a){a:for(;;){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
+=======
+g=gg(b);try{var
+>>>>>>> (fix) Directly use time constants in generated JS code
 i=Be(gp,g);return i}catch(a){a=aI(a);if(a===aU)return[2,g];throw a}case
 40:return[3,lo(lJ(b,b[5],b[6]))];case
 41:return[1,lr(lJ(b,b[5],b[6]))];case
 42:var
+<<<<<<< HEAD
 k=b[11];V6(c);acQ(c,b);b[11]=k;return[0,V7(c)];case
 43:acR(1,b);return d<50?gs(d+1|0,c,b):a(gs,[0,c,b]);case
 44:acS(b);return d<50?gs(d+1|0,c,b):a(gs,[0,c,b]);default:var
 l=xW(b);throw[0,go,j(c0(acT),l)]}}},uf=function(a,b){return aL(gs(0,a,b))},acQ=function(b,a){a:for(;;){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+k=b[11];V0(c);acK(c,b);b[11]=k;return[0,V1(c)];case
+43:acL(1,b);return d<50?gs(d+1|0,c,b):a(gs,[0,c,b]);case
+44:acM(b);return d<50?gs(d+1|0,c,b):a(gs,[0,c,b]);default:var
+l=xW(b);throw[0,go,j(c0(acN),l)]}}},uf=function(a,b){return aL(gs(0,a,b))},acK=function(b,a){a:for(;;){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=54;for(;;){var
 c=jz(kx,d,a);if(5<c>>>0){j(a[1],a);var
 d=c;continue}switch(c){case
 0:nz(b,34);continue a;case
 3:return 0;case
-4:throw[0,go,acU];case
-5:nz(b,eo(a[2],a[5]|0));continue a;default:nz(b,10);continue a}}}},acR=function(f,b){var
+4:throw[0,go,acO];case
+5:nz(b,en(a[2],a[5]|0));continue a;default:nz(b,10);continue a}}}},acL=function(f,b){var
 a=f;a:for(;;){var
 d=61;for(;;){var
 c=jz(kx,d,b);if(4<c>>>0){j(b[1],b);var
@@ -32287,8 +33370,8 @@ a=a+1|0;continue a;case
 1:var
 e=1<a?1:0;if(e){var
 a=a-1|0;continue a}return e;case
-2:throw[0,go,acV];case
-3:lK(b);continue a;default:continue a}}}},acS=function(a){a:for(;;){var
+2:throw[0,go,acP];case
+3:lK(b);continue a;default:continue a}}}},acM=function(a){a:for(;;){var
 c=70;for(;;){var
 b=jz(kx,c,a);if(2<b>>>0){j(a[1],a);var
 c=b;continue}switch(b){case
@@ -32356,18 +33439,18 @@ q=p[2],n=i_[1],c=q[2];if(c[11])var
 l=bZ(c[10],c[11]),C=sK(l),m=y(function(a){return[0,a,[0,c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],l,0]]},C);else
 =======
 1:lK(a);return 0;default:continue a}}}},ug=function(c,b,a){try{var
-d=s(c,b,a);return d}catch(b){b=aI(b);return b[1]===go?eN(i9(b[2],fk[1],a[11],a[12])):eN(i9(acW,fk[1],a[11],a[12]))}},acX=function(a){var
-b=tx(0);return ug(W3,function(a){return uf(b,a)},a)},acY=function(a){var
-b=tx(0);return ug(W4,function(a){return uf(b,a)},a)},uh=function(b,a){return j(b,oN(a))},ui=function(b,a){fk[1]=b;return uh(acX,a)},acZ=function(b,a){fk[1]=b;return uh(acY,a)},uj=function(h,g){fk[1]=tf(h,UF,UE);var
-b=oN(g),a=VD([0,[0,c$(gx),gx,0,0,gx,H_,j(H9,16),16],1,0,0],b);kv[1]=fk[1];var
-d=aX(a[2]),e=co(V4,a[3]),c=co(VW,a[4]),f=aX(rh(kv[1]));return[0,b9,aX(kv[1]),f,d,e,c]};as(ac8,as(lF(ac7,co(function(a){switch(a){case
-0:return ac0;case
-1:return ac1;case
-2:return ac2;case
-3:return ac3;default:return ac4}},ac5)),ac6));var
-ac9=function(a){return[0,0,2,0,0,0,0]},uk=function(a,c,b){a[3]=[0,[0,c,b],a[3]];return 0},i$=[0,TR],ac_=function(a){var
-b=re(ui,s_),c=re(uj,s9),d=fd(s9,s_);a[3]=fd(d,a[3]);a[4]=fd(c,a[4]);a[5]=fd(b,a[5]);return 0},add=function(c,b){try{var
-a=acZ(adf,b),d=[0,adg,c],e=gc(function(p,D){var
+d=s(c,b,a);return d}catch(b){b=aI(b);return b[1]===go?eN(i9(b[2],fl[1],a[11],a[12])):eN(i9(acQ,fl[1],a[11],a[12]))}},acR=function(a){var
+b=tx(0);return ug(WX,function(a){return uf(b,a)},a)},acS=function(a){var
+b=tx(0);return ug(WY,function(a){return uf(b,a)},a)},uh=function(b,a){return j(b,oN(a))},ui=function(b,a){fl[1]=b;return uh(acR,a)},acT=function(b,a){fl[1]=b;return uh(acS,a)},uj=function(h,g){fl[1]=tf(h,Uz,Uy);var
+b=oN(g),a=Vx([0,[0,c$(gx),gx,0,0,gx,H_,j(H9,16),16],1,0,0],b);kv[1]=fl[1];var
+d=aX(a[2]),e=co(VY,a[3]),c=co(VQ,a[4]),f=aX(rh(kv[1]));return[0,b9,aX(kv[1]),f,d,e,c]};as(ac2,as(lF(ac1,co(function(a){switch(a){case
+0:return acU;case
+1:return acV;case
+2:return acW;case
+3:return acX;default:return acY}},acZ)),ac0));var
+ac3=function(a){return[0,0,2,0,0,0,0]},uk=function(a,c,b){a[3]=[0,[0,c,b],a[3]];return 0},i$=[0,TL],ac4=function(a){var
+b=re(ui,s_),c=re(uj,s9),d=fd(s9,s_);a[3]=fd(d,a[3]);a[4]=fd(c,a[4]);a[5]=fd(b,a[5]);return 0},ac9=function(c,b){try{var
+a=acT(ac$,b),d=[0,ada,c],e=gd(function(p,D){var
 q=p[2],n=i$[1],c=q[2];if(c[11])var
 l=bZ(c[10],c[11]),C=sM(l),m=y(function(a){return[0,a,[0,c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],l,0]]},C);else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -32378,6 +33461,7 @@ b=nw(n,q,a[2]);return[0,a[1],b]},m);if(0===g[0]){var
 o=g[1];i$[1]=o[1];var
 d=o[2],a=i$[1],i=d[2],s=sV(i[1],D),t=aT(function(b){var
 c=sZ(a,i,b[2]),d=sL(b[1]);return aT(function(b){return s2(a,c,b)},d)},s),u=aT(function(b){var
+<<<<<<< HEAD
 c=b[2],d=b[1];return fQ(function(b,c){return s7(a,b,c)},d,c)},t),f=aT(function(b){var
 c=b[2],d=b[1];return fQ(function(b,d){var
 <<<<<<< HEAD
@@ -32394,6 +33478,13 @@ c=sR(a,b[1],b[9],d);if(0===c[0]){var
 e=c[1],f=nu(a,b,e[2]);return[0,[0,[0,e[1],d],f]]}return[1,c[1]]},d,c)},u);if(0===f[0])var
 k=f[1],w=nw(a,d,k[2]),x=k[1],v=fQ(function(b,o){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+c=b[2],d=b[1];return fR(function(b,c){return s7(a,b,c)},d,c)},t),f=aT(function(b){var
+c=b[2],d=b[1];return fR(function(b,d){var
+c=sR(a,b[1],b[9],d);if(0===c[0]){var
+e=c[1],f=nu(a,b,e[2]);return[0,[0,[0,e[1],d],f]]}return[1,c[1]]},d,c)},u);if(0===f[0])var
+k=f[1],w=nw(a,d,k[2]),x=k[1],v=fR(function(b,o){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 c=o[1],f=o[2],d=b[1],i=a[1],s=b[2][1];switch(f[0]){case
 0:var
 p=d2(i,d,f[2]),e=y(function(a){return[0,d,[0,a]]},p);break;case
@@ -32412,13 +33503,13 @@ h=k[1],l=sG(h);if(l){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 m=l[1][2];if(c)var
 t=nk(a,s,c[1]),n=y(function(d){var
-c=kn(a,b,np(g,fj,m)),e=no(a[1],c[2][9],fj,d[2]);return nw(a,c,nu(a,c[2],e))},t);else
+c=kn(a,b,np(g,fk,m)),e=no(a[1],c[2][9],fk,d[2]);return nw(a,c,nu(a,c[2],e))},t);else
 var
-n=[0,kn(a,b,np(g,fj,m))];return y(function(a){return[0,[0,c,[0,h]],a]},n)}return[0,[0,[0,c,[0,h]],kn(a,b,g)]]}return[0,[0,[0,c,0],kn(a,b,g)]]}return[1,e[1]]},x,w),e=y(function(a){var
-b=a[2],c=a[1];return[0,dl(function(b,a){return a[1]?a[2]?a:b:b},KJ,c),b]},v);else
+n=[0,kn(a,b,np(g,fk,m))];return y(function(a){return[0,[0,c,[0,h]],a]},n)}return[0,[0,[0,c,[0,h]],kn(a,b,g)]]}return[0,[0,[0,c,0],kn(a,b,g)]]}return[1,e[1]]},x,w),e=y(function(a){var
+b=a[2],c=a[1];return[0,dl(function(b,a){return a[1]?a[2]?a:b:b},KD,c),b]},v);else
 var
 e=[1,f[1]];var
-b=d[2][1],j=b_(aq,d[1][1],fj),z=y(d9,e),A=y(function(u){var
+b=d[2][1],j=b_(aq,d[1][1],fk),z=y(d9,e),A=y(function(u){var
 i=u[2];if(i){var
 c=u[1],d=i[1];if(typeof
 d==="number")var
@@ -32439,7 +33530,7 @@ s=sH(a,b,c[1]),D=0===s[0]?[0,s[1]]:0,t=D;else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 var
 t=c;var
-E=h8(a,b,t),e=r(Ph,r(fS(b,d[1]),E)),k=1}else
+E=h8(a,b,t),e=r(Pb,r(fT(b,d[1]),E)),k=1}else
 var
 k=0;if(!k){var
 <<<<<<< HEAD
@@ -32483,7 +33574,7 @@ var
 B=nn(a,b,j,h,0),C=r(nl(a,b,g,sK[1]),B),e=r(nm(a,b,f,sK[2]),C)}else
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
 var
-e=fS(b,d)}return r(e,i5)}return i},z),B=0===e[0]?e[1][2]:d,h=[0,A,B]}else
+e=fT(b,d)}return r(e,i5)}return i},z),B=0===e[0]?e[1][2]:d,h=[0,A,B]}else
 var
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -32529,42 +33620,46 @@ E=h[2],F=tc(d9,h[1]);return[0,as(p[1],F),E]},d,a);return e}catch(a){a=aI(a);if(a
 =======
 h=eN(g[1]);var
 <<<<<<< HEAD
+<<<<<<< HEAD
 E=h[2],F=tc(d9,h[1]);return[0,as(p[1],F),E]},d,a);return e}catch(a){a=aI(a);if(a[1]===kn)return[0,as(Uz(b,a[2]),adh),c];throw a}},ads=as(adr,as(aO(lG,0)[1],adq)),adt=function(a,A){var
 >>>>>>> (fix) Compiler now handles stdlib modules which are not automatically imported
 =======
 E=h[2],F=te(d8,h[1]);return[0,as(p[1],F),E]},d,a);return e}catch(a){a=aI(a);if(a[1]===ko)return[0,as(Uw(b,a[2]),ade),c];throw a}},adp=as(ado,as(aO(lH,0)[1],adn)),adq=function(a,A){var
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+E=h[2],F=te(d8,h[1]);return[0,as(p[1],F),E]},d,a);return e}catch(a){a=aI(a);if(a[1]===ko)return[0,as(Uq(b,a[2]),ac_),c];throw a}},adj=as(adi,as(aO(lH,0)[1],adh)),adk=function(a,A){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 d=[0,0],e=[0,0];function
 o(d,c,b,a){try{var
 g=AP(0,d,c,b,a);return g}catch(a){a=aI(a);if(a[1]===lR){var
-e=a[2];j(lQ(UK),e);return jw(2)}if(a[1]===oR){var
-f=a[2];j(Aa(UL),f);return jw(0)}throw a}}function
+e=a[2];j(lQ(UE),e);return jw(2)}if(a[1]===oR){var
+f=a[2];j(Aa(UF),f);return jw(0)}throw a}}function
 p(a){var
-b=py(a);if(ez(b,UH)){var
-c=e[1];e[1]=[0,[0,a,rd(a)],c];return 0}if(ez(b,UI)){var
-f=d[1];d[1]=[0,[0,a,rd(a)],f];return 0}return eN(ht(as(a,UJ)))}var
-w=0,x=[0,[0,adj,[0,function(a){return td(adi,a)}],adh],w],f=oU([0,[0,adm,[0,function(a){return td(adl,a)}],adk],x]),h=gA(gc(AQ,0,f),ot);o(A,co(function(a){var
+b=py(a);if(ey(b,UB)){var
+c=e[1];e[1]=[0,[0,a,rd(a)],c];return 0}if(ey(b,UC)){var
+f=d[1];d[1]=[0,[0,a,rd(a)],f];return 0}return eN(hu(as(a,UD)))}var
+w=0,x=[0,[0,add,[0,function(a){return td(adc,a)}],adb],w],f=oU([0,[0,adg,[0,function(a){return td(adf,a)}],ade],x]),h=gA(gd(AQ,0,f),ot);o(A,co(function(a){var
 c=a[2],d=a[1];if(aV(a[3],AR)){if(11===c[0]){var
-g=a[3],k=gd(ed(0,h-lS(g)|0)+3|0,32);return[0,d,c,as(AS,as(k,lT(g)))]}var
+g=a[3],k=ge(ed(0,h-lS(g)|0)+3|0,32);return[0,d,c,as(AS,as(k,lT(g)))]}var
 b=a[3],e=lS(b),f=(h-ai(d)|0)-e|0;if(0<f){var
-i=gd(f,32),j=cp(lT(b),0,e);return[0,d,c,as(j,as(i,cp(b,e,ai(b)-e|0)))]}return[0,d,c,lT(b)]}return a},f),p,adp);var
-q=gb(d[1]),r=gb(e[1]);e0(function(d){var
+i=ge(f,32),j=cp(lT(b),0,e);return[0,d,c,as(j,as(i,cp(b,e,ai(b)-e|0)))]}return[0,d,c,lT(b)]}return a},f),p,adj);var
+q=gc(d[1]),r=gc(e[1]);e0(function(d){var
 b=d[2],c=d[1];uk(a,c,b);var
 e=[0,uj(c,b),0];a[4]=fd(a[4],e);return 0},r);e0(function(d){var
 b=d[2],c=d[1];uk(a,c,b);var
 e=[0,ui(c,b),0];a[5]=fd(a[5],e);return 0},q);var
-t=a[5],u=co(function(a){return[0,a]},t),v=a[4],g=UQ(fd(co(function(a){return[1,a]},v),u)),c=aT(sM,y(Ob,y(d9,s8(g))));if(0===c[0]){i$[1]=c[1];var
+t=a[5],u=co(function(a){return[0,a]},t),v=a[4],g=UK(fd(co(function(a){return[1,a]},v),u)),c=aT(sM,y(N7,y(d9,s8(g))));if(0===c[0]){i$[1]=c[1];var
 b=i$[1],k=s8(g),l=y(function(c){var
-a=b[1],i=c[2],d=j(ao[4],a),e=[0,[0,hq,s(ao[14],a,d)],0],f=[0,[0,fj,j(ao[6],a)],e],g=[0,[0,hp,j(ao[6],a)],f],h=[0,i,0,0,0,0,0,0,0,[0,[0,[0,gX,j(ao[11],a)],g],0],0,0];return[0,c[1],h]},k),m=aT(function(a){var
-c=a[1],d=a[2];return y(iT,fQ(function(g,a){var
+a=b[1],i=c[2],d=j(ao[4],a),e=[0,[0,hr,s(ao[14],a,d)],0],f=[0,[0,fk,j(ao[6],a)],e],g=[0,[0,hq,j(ao[6],a)],f],h=[0,i,0,0,0,0,0,0,0,[0,[0,[0,gX,j(ao[11],a)],g],0],0,0];return[0,c[1],h]},k),m=aT(function(a){var
+c=a[1],d=a[2];return y(iT,fR(function(g,a){var
 c=gk(sL,a[5]),d=y(function(b){return[0,a[1],a[2],a[3],a[4],b]},c),e=aT(function(a){var
 d=a[5],c=dk(function(a,c){return aT(function(a){var
 d=a[1],e=s2(b,a[2],c);return y(function(a){var
 b=a[2];return[0,bZ(d,a[1]),b]},e)},a)},d,[0,[0,0,g]]);return y(function(b){return[0,[0,a[1],a[4],b[1]],b[2]]},c)},d),f=aT(function(c){var
-a=c[1],f=c[2],e=a[3],d=fQ(function(a,c){return s7(b,a,c)},e,f);return y(function(b){return[0,[0,a[1],a[2],b[1]],b[2]]},d)},e);return aT(function(c){var
-a=c[2],d=c[1],h=a[1],i=a[9],e=d[3],f=fQ(function(a,c){return sR(b,h,a,c)},e,i),g=y(function(a){return[0,d,a[2]]},f);return y(function(c){var
+a=c[1],f=c[2],e=a[3],d=fR(function(a,c){return s7(b,a,c)},e,f);return y(function(b){return[0,[0,a[1],a[2],b[1]],b[2]]},d)},e);return aT(function(c){var
+a=c[2],d=c[1],h=a[1],i=a[9],e=d[3],f=fR(function(a,c){return sR(b,h,a,c)},e,i),g=y(function(a){return[0,d,a[2]]},f);return y(function(c){var
 d=nu(b,a,c[2]);return[0,c[1],d]},g)},f)},c,d))},l),n=aT(function(c){var
-a=c[1],d=nq(ne)?[0,a]:y(iT,nr(ni(a,ne),[0,[1,b9,[0,b9,fP]],[0,[1,b9,[0,b9,h3]],[0,[1,b9,[1,b9,ne]],0]]]));return y(function(a){return sZ(b,c,a)},d)},m),i=y(function(a){return[0,Rb,a]},n)}else
+a=c[1],d=nq(ne)?[0,a]:y(iT,nr(ni(a,ne),[0,[1,b9,[0,b9,fQ]],[0,[1,b9,[0,b9,h3]],[0,[1,b9,[1,b9,ne]],0]]]));return y(function(a){return sZ(b,c,a)},d)},m),i=y(function(a){return[0,Q7,a]},n)}else
 var
 <<<<<<< HEAD
 i=eM(c[1]);var
@@ -32596,8 +33691,9 @@ C={"initRCtxt":z,"version":nx.toString(),"buildate":"Dec 21, 2018","runLine":ad2
 b=d[3];if(a[1]===ko)return new
 =======
 i=eN(c[1]);var
-z=te(function(a){return a},i);hC(hB,as(adc,as(ny,adb)));function
+z=te(function(a){return a},i);hD(hC,as(ac8,as(ny,ac7)));function
 B(d,c,b){var
+<<<<<<< HEAD
 <<<<<<< HEAD
 a=adg(c,f_(b));return{"out":a[1].toString(),"ctx":a[2]}}var
 C={"initRCtxt":z,"version":nx.toString(),"buildate":"Dec 22, 2018","runLine":ad9(B)};return ad8(0).ergotop=C},adu=function(d,a){var
@@ -32612,6 +33708,10 @@ pA(nw(b,a[2]).toString());function
 =======
 a=add(c,f_(b));return{"out":a[1].toString(),"ctx":a[2]}}var
 C={"initRCtxt":z,"version":ny.toString(),"buildate":"Dec 23, 2018","runLine":ad6(B)};return ad5(0).ergotop=C},adr=function(d,a){var
+=======
+a=ac9(c,f$(b));return{"out":a[1].toString(),"ctx":a[2]}}var
+C={"initRCtxt":z,"version":ny.toString(),"buildate":"Dec 26, 2018","runLine":ad0(B)};return adZ(0).ergotop=C},adl=function(d,a){var
+>>>>>>> (fix) Directly use time constants in generated JS code
 b=d[3];if(a[1]===ko)return new
 pB(nx(b,a[2]).toString());function
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
@@ -32659,9 +33759,14 @@ d=a[2],g=d[3],p=d[2],q=d[1];return kT(c0(lV),q,p,g,g+5|0,A5)}if(a[1]===i){var
 e=a[2],h=e[3],r=e[2],s=e[1];return kT(c0(lV),s,r,h,h+6|0,A6)}if(a[1]===o2){var
 f=a[2],k=f[3],t=f[2],u=f[1];return kT(c0(lV),u,t,k,k+6|0,A7)}if(0===eZ(a)){var
 v=a[1][1];return as(v,AY(a))}return a[1]}}return new
-pB(nx(b,ht(c(lU[1]))).toString())};try{var
-ul=ac9(0);ac_(ul);var
+pB(nx(b,hu(c(lU[1]))).toString())};try{var
+ul=ac3(0);ac4(ul);var
 nB=ul}catch(a){a=aI(a);if(a[1]!==ko)throw a;var
+<<<<<<< HEAD
 ac$=nx(0,a[2]);j(lQ(ada),ac$);var
 nB=jw(2)}try{adq(nB,UG(lH))}catch(a){a=aI(a);j(B_,adr(nB,a))}oy(0);return}mF[1]=mF[1]>>>1|0;H8[1]++;continue}}(function(){return this}()));
 >>>>>>> (fix) to DateTime function names and OCaml support for REPL
+=======
+ac5=nx(0,a[2]);j(lQ(ac6),ac5);var
+nB=jw(2)}try{adk(nB,UA(lH))}catch(a){a=aI(a);j(B_,adl(nB,a))}oy(0);return}mF[1]=mF[1]>>>1|0;H8[1]++;continue}}(function(){return this}()));
+>>>>>>> (fix) Directly use time constants in generated JS code
