@@ -25,7 +25,7 @@ Feature: Late delivery contract
 }
 """
 
-  Scenario: The contract does not get initialized
+  Scenario: The contract should fail initializing when an import is missing
     Then it should fail to initialize with the error
 """
 {
@@ -43,7 +43,7 @@ Feature: Late delivery contract
 }
 """
 
-  Scenario: The contract says hello to Fred Blogs from Accord Project
+  Scenario: The contract should fail executing when an import is missing
     When it receives the request
 """
 {

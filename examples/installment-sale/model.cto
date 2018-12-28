@@ -13,11 +13,6 @@
  */
 namespace org.accordproject.installmentsale
 
-transaction InitializeRequest {
-  o Double firstMonth
-}
-transaction InitializeResponse {
-}
 transaction Installment {
   o Double amount
 }
@@ -56,4 +51,5 @@ concept TemplateModel {
   o Double TOTAL_DUE_BEFORE_CLOSING
   o Double MIN_PAYMENT
   o Double DUE_AT_CLOSING
+  o Integer FIRST_MONTH
 }
