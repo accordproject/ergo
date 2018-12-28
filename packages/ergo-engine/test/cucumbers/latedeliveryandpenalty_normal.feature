@@ -29,7 +29,7 @@ Feature: Late delivery contract
   Scenario: The contract gets initialized
     Then the initial state should be the default state
 
-  Scenario: The contract says hello to Fred Blogs from Accord Project
+  Scenario: The contract should return the penalty amount but not allow the buyer to terminate
     When it receives the request
 """
 {
@@ -49,7 +49,7 @@ Feature: Late delivery contract
 }
 """
 
-  Scenario: The contract says hello to Fred Blogs from Accord Project
+  Scenario: The contract should return an error if called before the expected delivery date
     When it receives the request
 """
 {

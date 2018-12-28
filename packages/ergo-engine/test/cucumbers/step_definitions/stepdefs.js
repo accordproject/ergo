@@ -132,6 +132,10 @@ Given('the contract data', function (actualContract) {
     this.contract = JSON.parse(actualContract);
 });
 
+Given('the state', function (actualState) {
+    this.state = JSON.parse(actualState);
+});
+
 When('it is in the state', function (actualState) {
     this.state = JSON.parse(actualState);
 });

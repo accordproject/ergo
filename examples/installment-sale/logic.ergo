@@ -14,15 +14,17 @@
 
 namespace org.accordproject.installmentsale
 
-contract InstallmentSale over TemplateModel state InstallmentSaleState {
-  clause init(request : InitializeRequest) : InitializeResponse {
+import org.accordproject.cicero.runtime.*
+
+	contract InstallmentSale over TemplateModel state InstallmentSaleState {
+  clause init(request : Request) : Response {
     set state InstallmentSaleState{
       status: "WaitingForFirstDayOfNextMonth",
       balance_remaining: contract.INITIAL_DUE,
       total_paid: 0.0,
-      next_payment_month: doubleToInteger(request.firstMonth)
+      next_payment_month: contract.FIRST_MONTH
     };
-    return InitializeResponse{}
+    return Response{}
   }
 
   clause PayInstallment(request : Installment) : Balance emits PaymentObligation {
