@@ -3,6 +3,22 @@ namespace org.accordproject.smoke
 define concept A{ a : Integer }
 define concept C{ contract : String }
 
+define transaction MyRequest {
+  input: String,
+  someint: Integer
+}
+
+define transaction MyResponse {
+  output: String
+}
+
+define concept Test {
+  contract: String
+}
+
+define concept TemplateModel {
+}
+
 contract Duration over TemplateModel {
   clause test(request : MyRequest) : MyResponse {
     enforce(dateTimeIsSame(dateTimeAdd(dateTime("2018-01-02"), dateTimeDuration(1.0, "DAY")),
