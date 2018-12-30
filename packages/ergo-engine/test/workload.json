@@ -3,9 +3,7 @@
     "name": "smoketest",
     "dir": "data/smoke",
     "ergo": ["logic.ergo"],
-    "models": [
-      "model.cto"
-    ],
+    "models": [],
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
@@ -20,9 +18,7 @@
     "name": "durationtest",
     "dir": "data/smoke",
     "ergo": ["duration.ergo"],
-    "models": [
-      "model.cto"
-    ],
+    "models": [],
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
@@ -33,4 +29,19 @@
       }
     }
   },
+  {
+    "name": "mathtest",
+    "dir": "data/smoke",
+    "ergo": ["math.ergo"],
+    "models": [],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractname": "org.accordproject.smoke.Math",
+    "expected": {
+      "response": {
+        "output": "Math.test successful"
+      }
+    }
+  }
 ]

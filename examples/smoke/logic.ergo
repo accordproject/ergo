@@ -3,6 +3,22 @@ namespace org.accordproject.smoke
 define concept A{ a : Integer }
 define concept C{ contract : String }
 
+define transaction MyRequest {
+  input: String,
+  someint: Integer
+}
+
+define transaction MyResponse {
+  output: String
+}
+
+define concept Test {
+  contract: String
+}
+
+define concept TemplateModel {
+}
+
 contract Smoke over TemplateModel {
   clause test(request : MyRequest) : MyResponse {
     enforce(1.0 + 1.0 = 2.0);

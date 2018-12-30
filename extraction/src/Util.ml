@@ -108,7 +108,7 @@ let float_listmax l =
   end
 
 let qcert_string_of_float f =
-  let ocaml_string = string_of_float f in
+  let ocaml_string1 = Printf.sprintf "%.17g" f in (* XXX TO BE REVIEWED *)
   let last_char = ocaml_string.[(String.length ocaml_string)-1] in
   begin match last_char with
   | '.' -> ocaml_string ^ "0"

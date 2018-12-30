@@ -12,7 +12,9 @@
     "postlint": "npm run licchk",
     "licchk": "license-check",
     "test:cucumber": "cucumber-js test/cucumbers",
-    "test": "npm run test:cucumber && mocha --timeout 20000 && nyc mocha --timeout 20000"
+    "test:mocha": "mocha --timeout 20000",
+    "test:cov": "nyc mocha --timeout 20000",
+    "test": "npm run test:cucumber && npm run test:mocha && npm run test:cov"
   },
   "contributors": [
     {
