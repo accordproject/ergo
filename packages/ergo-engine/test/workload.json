@@ -33,31 +33,4 @@
       }
     }
   },
-  {
-    "name": "test14compileerror",
-    "dir": "data/installment-sale",
-    "ergo": ["logic.ergo"],
-    "models": [
-      "model2.cto"
-    ],
-    "contract": "contract.json",
-    "request": "request-init.json",
-    "state": null,
-    "contractname": "org.accordproject.installmentsale.InstallmentSale",
-    "expected": {
-       "error": {
-        "kind": "CompilationError",
-        "message": "Import not found: org.accordproject.test",
-        "verbose": "Compilation error. Import not found: org.accordproject.test",
-        "locstart": {
-          "line": -1,
-          "character": -1
-        },
-        "locend": {
-          "line": -1,
-          "character": -1
-        }
-      }
-    }
-  }
 ]

@@ -245,12 +245,30 @@ Section Ergo.
     Definition lookup_single_contract (p:laergo_module) : eresult (absolute_name * laergo_contract) :=
       lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations).
 
-    Definition lookup_single_contract_with_state (p:laergo_module)
-      : eresult ((absolute_name * laergo_contract) * string) :=
-      eolift (fun ec =>
-                elift (fun ecstate =>
-                         (ec, ecstate)) (lift_default_state_name (snd ec).(contract_state)))
-             (lookup_single_contract_in_declarations p.(module_annot) p.(module_declarations)).
+    Definition contract_name_of_decl (d:laergo_declaration) : option string :=
+      match d with
+      | DNamespace _ _
+      | DImport _ _
+      | DType _ _
+      | DStmt _ _
+      | DConstant _ _ _ _
+      | DFunc _ _ _
+      | DSetContract _ _ _ => None
+      | DContract _ an _ => Some an
+      end.
+
+    Definition lift_contract_name_of_decl (d:laergo_declaration) (acc:option string) : option string :=
+      match acc with
+      | None => contract_name_of_decl d
+      | Some _ => acc
+      end.
+
+    Definition default_contract_name_from_decls (dl:list ergo_declaration) : option string :=
+      fold_right lift_contract_name_of_decl None dl.
+
+    Definition default_contract_name (m:ergo_module) : option string :=
+      default_contract_name_from_decls m.(module_declarations).
+    
   End Lookup.
 
   Section TypeDeclarations.
