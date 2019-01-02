@@ -25,6 +25,7 @@ const ErgoEngine = require('../../../lib/ergo-engine');
 const { Given, When, Then } = require('cucumber');
 
 const defaultState = {'stateId':'1','$class':'org.accordproject.cicero.contract.AccordContractState'};
+const defaultTarget = 'es6';
 
 /**
  * Compare actual result and expected result
@@ -46,13 +47,14 @@ function compare(expected,actual) {
 /**
  * Calls Ergo contract initialization
  *
+ * @param {string} target the target platform (es5, es6, etc)
  * @param {Array<string>} ergo the list of ergo files
  * @param {Array<string>} models the list of model files
  * @param {string} contractname the fully qualified name of the contract
  * @param {object} contractJson contract data in JSON
  * @returns {object} Promise to the initial state of the contract
  */
-async function init(ergo,models,contractname,contractJson) {
+async function init(target,ergo,models,contractname,contractJson) {
     const ergoSources = [];
     for (let i = 0; i < ergo.length; i++) {
         const ergoFile = Path.resolve(__dirname, '..', '..', ergo[i]);
@@ -65,13 +67,20 @@ async function init(ergo,models,contractname,contractJson) {
         const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
         ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
     }
+    let actualTarget;
+    if (target) {
+        actualTarget = target;
+    } else {
+        actualTarget = defaultTarget;
+    }
     const requestJson = { '$class' : 'org.accordproject.cicero.runtime.Request' };
-    return ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, requestJson, contractname);
+    return ErgoEngine.init(ergoSources, ctoSources, actualTarget, contractJson, requestJson, contractname);
 }
 
 /**
  * Sends a request to the Ergo contract
  *
+ * @param {string} target the target platform (es5, es6, etc)
  * @param {Array<string>} ergo the list of ergo files
  * @param {Array<string>} models the list of model files
  * @param {string} contractname the fully qualified name of the contract
@@ -80,7 +89,7 @@ async function init(ergo,models,contractname,contractJson) {
  * @param {object} requestJson state data in JSON
  * @returns {object} Promise to the response
  */
-async function send(ergo,models,contractname,contractJson,stateJson,requestJson) {
+async function send(target,ergo,models,contractname,contractJson,stateJson,requestJson) {
     const ergoSources = [];
     for (let i = 0; i < ergo.length; i++) {
         const ergoFile = Path.resolve(__dirname, '..', '..', ergo[i]);
@@ -93,14 +102,24 @@ async function send(ergo,models,contractname,contractJson,stateJson,requestJson)
         const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
         ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
     }
+    let actualTarget;
+    if (target) {
+        actualTarget = target;
+    } else {
+        actualTarget = defaultTarget;
+    }
     let actualStateJson;
     if (stateJson) {
         actualStateJson = stateJson;
     } else {
         actualStateJson = defaultState;
     }
-    return ErgoEngine.execute(ergoSources, ctoSources, 'es6', contractJson, requestJson, actualStateJson, contractname);
+    return ErgoEngine.execute(ergoSources, ctoSources, actualTarget, contractJson, requestJson, actualStateJson, contractname);
 }
+
+Given('the target platform {string}', function (target) {
+    this.target = target;
+});
 
 Given('the Ergo contract {string} in file {string}', function(paramName,paramFile) {
     if (this.ergos) {
@@ -151,7 +170,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return compare(response,this.answer.response);
     } else {
-        return send(this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
+        return send(this.target, this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -163,7 +182,7 @@ Then('it should respond with', function (expectedResponse) {
 
 Then('the initial state( of the contract) should be', function (expectedState) {
     const state = JSON.parse(expectedState);
-    return init(this.ergos,this.models,this.contractname,this.contract)
+    return init(this.target, this.ergos,this.models,this.contractname,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -173,7 +192,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(this.ergos,this.models,this.contractname,this.contract)
+    return init(this.target, this.ergos,this.models,this.contractname,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -188,7 +207,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return compare(state,this.answer.state);
     } else {
-        return send(this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
+        return send(this.target, this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -206,7 +225,7 @@ Then('it should fail with the error', function (expectedError) {
         expect(this.answer).to.not.have.property('response');
         return compare(error,this.answer.error);
     } else {
-        return send(this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
+        return send(this.target, this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('error');
@@ -219,7 +238,7 @@ Then('it should fail with the error', function (expectedError) {
 
 Then('it should fail to initialize with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
-    return init(this.ergos,this.models,this.contractname,this.contract)
+    return init(this.target, this.ergos,this.models,this.contractname,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('error');
             expect(actualAnswer).to.not.have.property('state');

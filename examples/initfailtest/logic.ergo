@@ -11,22 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+namespace org.accordproject.initfailtest
 
-namespace org.accordproject.inlinetest
 
-transaction Request1 {
-}
-transaction Request2 {
-}
 
-transaction Response {
- o Double x
- o Double y
-}
-
-/**
- * The template model
- */
-@AccordTemplateModel("inlinetest")
-concept TemplateModel {
+contract InitFailTest over TemplateModel state State {
+	clause init(request : Request) : Response {
+		enforce false;
+		set state State {};
+		return Response{
+		}
+	}
 }
