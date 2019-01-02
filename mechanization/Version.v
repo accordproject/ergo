@@ -17,11 +17,7 @@
 Require Import String.
 
 Section Version.
-<<<<<<< HEAD
-    Definition ergo_version := "0.5.8"%string.
-=======
   Definition ergo_version := "0.6.0-alpha"%string.
->>>>>>> (WIP) version 2 for DateTime support in Ergo
 
 End Version.
 
