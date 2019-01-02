@@ -11,10 +11,10 @@
     "lint": "eslint .",
     "postlint": "npm run licchk",
     "licchk": "license-check",
-    "test:cucumber": "cucumber-js test/cucumbers",
     "test:mocha": "mocha --timeout 20000",
-    "test:cov": "nyc mocha --timeout 20000",
-    "test": "npm run test:cucumber && npm run test:mocha && npm run test:cov"
+    "test:cucumber": "cucumber-js test/cucumbers",
+    "test:cov": "nyc cucumber-js test/cucumbers",
+    "test": "npm run test:mocha && npm run test:cucumber && npm run test:cov"
   },
   "contributors": [
     {

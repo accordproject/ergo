@@ -16,6 +16,8 @@ define constant PI = 4.0 * atan(1.0)
 contract Math over TemplateModel {
 
   clause test(request : MyRequest) : MyResponse {
+		enforce(PI = 3.141592653589793);
+
     enforce(sin(0.0) = 0.0);
     enforce(cos(0.0) = 1.0);
     enforce(tan(0.0) = 0.0);
@@ -25,8 +27,7 @@ contract Math over TemplateModel {
     enforce(tan(PI/4.0) = 0.9999999999999999);
 
     enforce(asin(sin(1.0)) = 1.0);
-    // TODO why does this one fail?
-    //enforce(acos(cos(1.0)) = 1.0);
+    enforce(acos(cos(1.0)) = 1.0);
     enforce(atan(tan(1.0)) = 1.0);
 
     enforce(sinh(0.0) = 0.0);

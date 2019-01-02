@@ -11,28 +11,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.accordproject.inlinetest
 
-define constant pi = 3.14
+namespace org.accordproject.shadowingtest
 
-define function f(p1:Double,p2:Double) : Double {
-	return p1 + p2
+transaction Request1 {
+}
+transaction Request2 {
 }
 
-define function g(p1:Double) : Double {
-	return p1
+transaction Response {
+ o Double x
+ o Double y
 }
 
-define function h() : Response{
-	return Response{
-		x: g(0.0),
-		y: f(10.0,12.0)
-	}
-}
-
-contract InlineTest over TemplateModel {
-  // Simple Clause
-  clause test1(request : Request1) : Response {
-		return h()
-  }
+/**
+ * The template model
+ */
+@AccordTemplateModel("shadowingtest")
+concept TemplateModel {
 }
