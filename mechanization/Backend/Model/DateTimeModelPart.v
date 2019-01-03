@@ -84,8 +84,7 @@ Inductive date_time_duration_unit :=
 | date_time_duration_MINUTES
 | date_time_duration_HOURS
 | date_time_duration_DAYS
-| date_time_duration_WEEKS
-| date_time_duration_YEARS.
+| date_time_duration_WEEKS.
 
 Definition date_time_duration_unit_tostring (part:date_time_duration_unit) : String.string :=
   match part with
@@ -94,7 +93,6 @@ Definition date_time_duration_unit_tostring (part:date_time_duration_unit) : Str
   | date_time_duration_HOURS => "HOURS"
   | date_time_duration_DAYS => "DAYS"
   | date_time_duration_WEEKS => "WEEKS"
-  | date_time_duration_YEARS => "YEARS"
   end.
 
 Global Instance date_time_duration_unit_to_string : ToString date_time_duration_unit
@@ -258,6 +256,13 @@ Extract Inlined Constant DATE_TIME_get_quarter => "(fun x -> DateTime.get_quarte
 Axiom DATE_TIME_get_year : DATE_TIME -> Z.
 Extract Inlined Constant DATE_TIME_get_year => "(fun x -> DateTime.get_year x)".
 
+(* Max/Min for date and time *)
+Axiom DATE_TIME_max : list DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_max => "(fun x -> DateTime.max x)".
+
+Axiom DATE_TIME_min : list DATE_TIME -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_min => "(fun x -> DateTime.min x)".
+
 (* Construct a duration *)
 Axiom DATE_TIME_DURATION_seconds : Z -> DATE_TIME_DURATION.
 Extract Inlined Constant DATE_TIME_DURATION_seconds => "(fun x -> DateTime.duration_seconds x)".
@@ -274,9 +279,6 @@ Extract Inlined Constant DATE_TIME_DURATION_days => "(fun x -> DateTime.duration
 Axiom DATE_TIME_DURATION_weeks : Z -> DATE_TIME_DURATION.
 Extract Inlined Constant DATE_TIME_DURATION_weeks => "(fun x -> DateTime.duration_weeks x)".
   
-Axiom DATE_TIME_DURATION_years : Z -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_years => "(fun x -> DateTime.duration_years x)".
-
 (* Construct a period *)
 Axiom DATE_TIME_PERIOD_days : Z -> DATE_TIME_PERIOD.
 Extract Inlined Constant DATE_TIME_PERIOD_days => "(fun x -> DateTime.period_days x)".
@@ -346,7 +348,6 @@ Definition DATE_TIME_DURATION_from_nat (part:date_time_duration_unit) (z:Z) : DA
   | date_time_duration_HOURS => DATE_TIME_DURATION_hours z
   | date_time_duration_DAYS => DATE_TIME_DURATION_days z
   | date_time_duration_WEEKS => DATE_TIME_DURATION_weeks z
-  | date_time_duration_YEARS => DATE_TIME_DURATION_years z
   end.
 
 (* Period from Z *)
@@ -382,6 +383,8 @@ Inductive date_time_unary_op :=
 | uop_date_time_start_of : date_time_period_unit -> date_time_unary_op
 | uop_date_time_end_of : date_time_period_unit -> date_time_unary_op
 | uop_date_time_from_string
+| uop_date_time_max
+| uop_date_time_min
 | uop_date_time_duration_amount
 | uop_date_time_duration_from_string
 | uop_date_time_duration_from_nat : date_time_duration_unit -> date_time_unary_op
@@ -398,6 +401,8 @@ Definition date_time_unary_op_tostring (f:date_time_unary_op) : String.string :=
   | uop_date_time_end_of part =>
     "(dateTimeEndOf" ++ (date_time_period_unit_tostring part) ++ ")"
   | uop_date_time_from_string => "DateTimeFromString"
+  | uop_date_time_max => "DateTimeMax"
+  | uop_date_time_min => "DateTimeMin"
   | uop_date_time_duration_amount => "DateTimeDurationAmount"
   | uop_date_time_duration_from_string => "DateTimeDurationFromString"
   | uop_date_time_duration_from_nat part =>
@@ -426,7 +431,6 @@ Definition date_time_duration_unit_to_java_string (part:date_time_duration_unit)
   | date_time_duration_HOURS => "UnaryOperators.hours"
   | date_time_duration_DAYS => "UnaryOperators.days"
   | date_time_duration_WEEKS => "UnaryOperators.weeks"
-  | date_time_duration_YEARS => "UnaryOperators.years"
   end.
 
 Definition date_time_period_unit_to_java_string (part:date_time_period_unit): string :=
@@ -450,6 +454,8 @@ Definition date_time_to_java_unary_op
   | uop_date_time_end_of part =>
     mk_java_unary_op1 "date_time_end_of" (date_time_period_unit_to_java_string part) d
   | uop_date_time_from_string => mk_java_unary_op0 "date_time_from_string" d
+  | uop_date_time_max => mk_java_unary_op0 "date_time_max" d
+  | uop_date_time_min => mk_java_unary_op0 "date_time_min" d
   | uop_date_time_duration_amount => mk_java_unary_op0 "date_time_duration_amount" d
   | uop_date_time_duration_from_string => mk_java_unary_op0 "date_time_duration_from_string" d
   | uop_date_time_duration_from_nat part =>
@@ -468,6 +474,8 @@ Definition date_time_to_javascript_unary_op
   | uop_date_time_start_of part => "dateTimeStartOf(" ++ (toString part) ++ ", " ++ d ++ ")"
   | uop_date_time_end_of part => "dateTimeEndOf(" ++ (toString part) ++ ", " ++ d ++ ")"
   | uop_date_time_from_string => "dateTimeFromString(" ++ d ++ ")"
+  | uop_date_time_max => "dateTimeMax(" ++ d ++ ")"
+  | uop_date_time_min => "dateTimeMin(" ++ d ++ ")"
   | uop_date_time_duration_amount => "dateTimeDurationAmount(" ++ d ++ ")"
   | uop_date_time_duration_from_string => "dateTimeDurationFromString(" ++ d ++ ")"
   | uop_date_time_duration_from_nat part => "dateTimeDurationFromNat(" ++ (toString part) ++ ", " ++ d ++ ")"
@@ -486,6 +494,8 @@ Definition date_time_to_ajavascript_unary_op
      | uop_date_time_end_of part =>
        call_runtime "dateTimeEndOf" [ expr_literal (literal_string (toString part)); e ]
      | uop_date_time_from_string => call_runtime "dateTimeFromString" [ e ]
+     | uop_date_time_max => call_runtime "dateTimeMax" [ e ]
+     | uop_date_time_min => call_runtime "dateTimeMin" [ e ]
      | uop_date_time_duration_amount => call_runtime "dateTimeDurationAmount" [ e ]
      | uop_date_time_duration_from_string => call_runtime "dateTimeDurationFromString" [ e ]
      | uop_date_time_duration_from_nat part =>

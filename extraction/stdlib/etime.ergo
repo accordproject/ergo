@@ -24,11 +24,11 @@ define function parse(x:String) : DateTime
 define function getSecond(x:DateTime) : Long
 define function getMinute(x:DateTime) : Long
 define function getHour(x:DateTime) : Long
-define function getDay(x:DateTime) : Integer
-define function getWeek(x:DateTime) : Integer
-define function getMonth(x:DateTime) : Integer
-define function getQuarter(x:DateTime) : Integer
-define function getYear(x:DateTime) : Integer
+define function getDay(x:DateTime) : Long
+define function getWeek(x:DateTime) : Long
+define function getMonth(x:DateTime) : Long
+define function getQuarter(x:DateTime) : Long
+define function getYear(x:DateTime) : Long
 
 // Durations
 define function durationSeconds(x:Long) : InternalDuration
@@ -36,7 +36,6 @@ define function durationMinutes(x:Long) : InternalDuration
 define function durationHours(x:Long) : InternalDuration
 define function durationDays(x:Long) : InternalDuration
 define function durationWeeks(x:Long) : InternalDuration
-define function durationYears(x:Integer) : InternalDuration
 
 define function durationToInternalDuration(du:Duration) : InternalDuration {
 	match du.unit
@@ -45,7 +44,6 @@ define function durationToInternalDuration(du:Duration) : InternalDuration {
 	with "hours" then return durationHours(du.amount)
 	with "days" then return durationDays(du.amount)
 	with "weeks" then return durationWeeks(du.amount)
-	with "years" then return durationYears(du.amount)
 	else return durationSeconds(du.amount) // Defaults to seconds
 }
 
@@ -67,7 +65,6 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	      with "hours" then du.amount *i 60 *i 60
 	      with "days" then du.amount *i 60 *i 60 *i 24
 	      with "weeks" then du.amount *i 60 *i 60 *i 24 *i 7
-	      with "years" then du.amount *i 60 *i 60 *i 24 *i 365
 	      else du.amount // Default to seconds
 	    with "minutes" then
 	      match du.unit
@@ -75,7 +72,6 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	      with "hours" then du.amount *i 60
 	      with "days" then du.amount *i 60 *i 24
 	      with "weeks" then du.amount *i 60 *i 24 *i 7
-	      with "years" then du.amount *i 60 *i 24 *i 365
 	      else du.amount *i 60 // Default to seconds
 	    with "hours" then
 	      match du.unit
@@ -83,7 +79,6 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	      with "minutes" then du.amount *i 60
 	      with "days" then du.amount *i 24
 	      with "weeks" then du.amount *i 24 *i 7
-	      with "years" then du.amount *i 24 *i 365
 	      else du.amount *i 60 *i 60 // Default to seconds
 	    with "days" then
 	      match du.unit
@@ -91,7 +86,6 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	      with "minutes" then du.amount *i 60 /i 24
 	      with "hours" then du.amount /i 24
 	      with "weeks" then du.amount *i 7
-	      with "years" then du.amount *i 365
 	      else du.amount /i 60 /i 60 /i 24 // Default to seconds
 	    with "weeks" then
 	      match du.unit
@@ -99,15 +93,6 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	      with "minutes" then du.amount *i 60 /i 24 /i 7
 	      with "hours" then du.amount /i 24 /i 7
 	      with "days" then du.amount /i 7
-	      with "years" then doubleToInteger(integerToDouble(du.amount) * 52.143) // XXX
-	      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds
-	    with "years" then
-	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 365
-	      with "minutes" then du.amount *i 60 /i 24 /i 365
-	      with "hours" then du.amount /i 24 /i 365
-	      with "days" then du.amount /i 365
-	      with "weeks" then doubleToInteger(integerToDouble(du.amount) / 52.143) // XXX
 	      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds
 	    else // Default to seconds
 	      match du.unit
@@ -115,7 +100,6 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	      with "hours" then du.amount *i 60 *i 60
 	      with "days" then du.amount *i 60 *i 60 *i 24
 	      with "week" then du.amount *i 60 *i 60 *i 24 *i 7
-	      with "years" then du.amount *i 60 *i 60 *i 24 *i 365
 	      else du.amount // Default to seconds
 		;
 		return Duration{ unit: u, amount: amount }
@@ -141,6 +125,15 @@ define function diffWithUnit(x:DateTime, y:DateTime, z:TemporalUnit) : Duration 
 }
 define function diff(x:DateTime, y:DateTime) : Duration {
 	return diffWithUnit(x, y, "seconds") // Defaults to seconds
+}
+
+define function dateTimeMin(x:DateTime[]) : DateTime
+define function dateTimeMax(x:DateTime[]) : DateTime
+
+define function divide(x:Duration, y:Duration) : Double {
+	let du1 = durationToInternalDuration(x);
+	let du2 = durationToInternalDuration(y);
+	return longToDouble(durationAmount(du1)) / longToDouble(durationAmount(du2))
 }
 
 define function periodDays(x:Long) : InternalPeriod

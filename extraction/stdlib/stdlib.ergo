@@ -26,6 +26,16 @@ define function integerMod(x:Integer, y:Integer) : Integer
 define function integerMin(x:Integer, y:Integer) : Integer
 define function integerMax(x:Integer, y:Integer) : Integer
 
+// Long operations
+define function longAbs(x:Long) : Long
+define function longLog2(x:Long) : Long
+define function longSqrt(x:Long) : Long
+define function longToDouble(x:Long) : Double
+
+define function longMod(x:Long, y:Long) : Long
+define function longMin(x:Long, y:Long) : Long
+define function longMax(x:Long, y:Long) : Long
+
 // Double operations
 define function sqrt(x:Double) : Double
 define function exp(x:Double) : Double
@@ -39,6 +49,7 @@ define function min(x:Double[]) : Double
 define function average(x:Double[]) : Double
 define function sum(x:Double[]) : Double
 define function doubleToInteger(x:Double) : Integer
+define function doubleToLong(x:Double) : Long
 define function truncate(x:Double) : Integer
 
 define function maxPair(x:Double, y:Double) : Double

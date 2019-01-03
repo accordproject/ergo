@@ -94,7 +94,19 @@ type dateTime = Calendar.t
 let now () : dateTime = Calendar.now()
 
 (** Serialize/deserialize *)
-let error_dt (x:string) : dateTime = Calendar.lmake 0 ()
+let lower_bound, upper_bound =
+  let compute () =
+    let midnight = Calendar.Time.midnight () in
+    let low, up =
+	    Calendar.create (Calendar.Date.make 1 1 1) midnight,
+      Calendar.create (Calendar.Date.make 3268 1 21) midnight
+    in
+    low, up
+  in
+  Time_Zone.on compute Time_Zone.UTC ()
+let maximum_dateTime : dateTime = upper_bound
+let minimum_dateTime : dateTime = lower_bound
+let error_dt (x:string) : dateTime = minimum_dateTime
 let from_string (x:string) : dateTime =
   multi_parse iso8610 error_dt x
 let to_string (x:dateTime) : string =
@@ -114,6 +126,12 @@ let get_year (x:dateTime) : int = Calendar.year x
 let eq (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 = 0
 let is_before (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 < 0
 let is_after (x1:dateTime) (x2:dateTime) : bool = Calendar.compare x1 x2 > 0
+
+(** Min/Max *)
+let max (xl:dateTime list) : dateTime =
+  List.fold_left (fun a x -> if is_after a x then a else x) minimum_dateTime xl
+let min (xl:dateTime list) : dateTime =
+  List.fold_left (fun a x -> if is_before a x then a else x) maximum_dateTime xl
 
 (** Arithmetics *)
 let diff (x1:dateTime) (x2:dateTime) : duration = Calendar.sub x1 x2
@@ -145,10 +163,10 @@ let duration_minutes (x:int) = Calendar.Period.minute x
 let duration_hours (x:int) = Calendar.Period.hour x
 let duration_days (x:int) = Calendar.Period.day x
 let duration_weeks (x:int) = Calendar.Period.week x
-let duration_years (x:int) = Calendar.Period.year x
 
 let period_days (x:int) = Calendar.Period.day x
 let period_weeks (x:int) = Calendar.Period.week x
 let period_months (x:int) = Calendar.Period.month x
 let period_quarters (x:int) = Calendar.Period.month (x * 3)
 let period_years (x:int) = Calendar.Period.year x
+

@@ -25,8 +25,12 @@ contract Duration over TemplateModel {
   clause test(request : MyRequest) : MyResponse {
     enforce(isSame(add(parse("2018-01-02"), Duration{amount:1, unit: "days"}),
 			             add(parse("2018-01-01"), Duration{amount:2, unit: "days"})));
-    enforce(isSame(add(parse("2019-01-01"), Duration{amount:1, unit: "years"}),
-			             add(parse("2018-01-01"), Duration{amount:2, unit: "years"})));
+    enforce(isSame(add(parse("2019-01-08"), Duration{amount:1, unit: "weeks"}),
+			             add(parse("2019-01-01"), Duration{amount:2, unit: "weeks"})));
+    enforce(isSame(dateTimeMax([parse("2018-01-08"), parse("2019-01-08"), parse("2011-01-08")]),
+			parse("2019-01-08")));
+    enforce(isSame(dateTimeMin([parse("2018-01-08"), parse("2019-01-08"), parse("2011-01-08")]),
+			parse("2011-01-08")));
     return MyResponse{
       output: "Duration.test successful"
     }

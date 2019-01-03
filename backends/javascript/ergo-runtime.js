@@ -577,6 +577,25 @@ function dateTimeFromString(stringDate) {
     return moment(stringDate);
 }
 
+const minDateTime = moment("0001-01-01 00:00:00");
+const maxDateTime = moment("3268-01-21 23:59:59");
+
+function dateTimeMax(v) {
+    if (v.length === 0) {
+        return minDateTime;
+    } else {
+        return moment.max(v);
+    }
+}
+
+function dateTimeMin(v) {
+    if (v.length === 0) {
+        return maxDateTime;
+    } else {
+        return moment.min(v);
+    }
+}
+
 function dateTimeDurationAmount(v) {
     v = mustBeDuration(v);
     return v.asSeconds();

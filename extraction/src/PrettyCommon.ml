@@ -400,7 +400,6 @@ let date_time_duration_unit_to_string part =
   | Date_time_duration_HOURS -> "HOURS"
   | Date_time_duration_DAYS -> "DAYS"
   | Date_time_duration_WEEKS -> "WEEKS"
-  | Date_time_duration_YEARS -> "YEARS"
   end
 
 let date_time_period_to_string part =
@@ -427,6 +426,8 @@ let string_of_foreign_unary_op fu : string =
   | Enhanced_unary_date_time_op (Uop_date_time_start_of _) -> "DateTimeStartOf"
   | Enhanced_unary_date_time_op (Uop_date_time_end_of _) -> "DateTimeEndOf"
   | Enhanced_unary_date_time_op Uop_date_time_from_string -> "DateTimeFromString"
+  | Enhanced_unary_date_time_op Uop_date_time_max -> "DateTimeMax"
+  | Enhanced_unary_date_time_op Uop_date_time_min -> "DateTimeMin"
   | Enhanced_unary_date_time_op Uop_date_time_duration_amount -> "DateTimeDurationAmount"
   | Enhanced_unary_date_time_op Uop_date_time_duration_from_string -> "DateTimeDurationFromString"
   | Enhanced_unary_date_time_op (Uop_date_time_duration_from_nat _) -> "DateTimeDurationFromString"
