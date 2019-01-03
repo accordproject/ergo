@@ -194,6 +194,23 @@ Definition onddateTime {A} (f : DATE_TIME -> A) (d : data) : option A
      | _ => None
      end.
 
+Definition lift_dateTimeList (l:list data) : option (list DATE_TIME) :=
+  lift_map
+    (fun d =>
+       match d with
+       | dforeign (enhanceddateTime fd) => Some fd
+       | _ => None
+       end) l.
+
+Definition onddateTimeList (f : list DATE_TIME -> DATE_TIME) (d : data) : option DATE_TIME
+  := let odates :=
+         match d with
+         | dcoll c => lift_dateTimeList c
+         | _ => None
+         end
+     in
+     lift f odates.
+
 Definition onddateTimeduration {A} (f : DATE_TIME_DURATION -> A) (d : data) : option A
   := match d with
      | dforeign (enhanceddateTimeduration fd) => Some (f fd)
@@ -247,6 +264,10 @@ Definition date_time_unary_op_interp (op:date_time_unary_op) (d:data) : option d
        lift denhanceddateTime (onddateTime (DATE_TIME_end_of part) d)
      | uop_date_time_from_string =>
        lift denhanceddateTime (ondstring DATE_TIME_from_string d)
+     | uop_date_time_max =>
+       lift denhanceddateTime (onddateTimeList DATE_TIME_max d)
+     | uop_date_time_min =>
+       lift denhanceddateTime (onddateTimeList DATE_TIME_min d)
      | uop_date_time_duration_amount =>
        lift dnat (onddateTimeduration DATE_TIME_DURATION_amount d)
      | uop_date_time_duration_from_string =>
@@ -296,7 +317,7 @@ Next Obligation.
   - destruct m; simpl in H; unfold ondfloat, lift in H; simpl in H;
       destruct d; simpl in H; try discriminate; invcs H; repeat constructor.
   - destruct d0; simpl in H;
-      unfold onddateTime, onddateTimeduration,
+      unfold onddateTime, onddateTimeList, onddateTimeduration,
       denhanceddateTime, denhanceddateTimeduration,
       denhanceddateTimeperiod, lift in H;
       simpl in H;
@@ -305,6 +326,22 @@ Next Obligation.
     + destruct f; invcs H; repeat constructor.
     + destruct f; invcs H; repeat constructor.
     + invcs H; repeat constructor.
+    + case_eq (match lift_dateTimeList l with
+            | Some a' => Some (DATE_TIME_max a')
+            | None => None
+            end); intros;
+        rewrite H1 in H.
+      inversion H.
+      invcs H3; repeat constructor.
+      congruence.
+    + case_eq (match lift_dateTimeList l with
+            | Some a' => Some (DATE_TIME_min a')
+            | None => None
+            end); intros;
+        rewrite H1 in H.
+      inversion H.
+      invcs H3; repeat constructor.
+      congruence.
     + destruct f; invcs H; repeat constructor.
     + invcs H; repeat constructor.
     + invcs H; repeat constructor.
@@ -1553,6 +1590,8 @@ Inductive date_time_unary_op_has_type {model:brand_model} :
   | tuop_date_time_start_of part : date_time_unary_op_has_type (uop_date_time_start_of part) DateTime DateTime
   | tuop_date_time_end_of part : date_time_unary_op_has_type (uop_date_time_end_of part) DateTime DateTime
   | tuop_date_time_from_string : date_time_unary_op_has_type uop_date_time_from_string RType.String DateTime
+  | tuop_date_time_max : date_time_unary_op_has_type uop_date_time_max (RType.Coll DateTime) DateTime
+  | tuop_date_time_min : date_time_unary_op_has_type uop_date_time_min (RType.Coll DateTime) DateTime
   | tuop_date_time_duration_amount : date_time_unary_op_has_type uop_date_time_duration_amount DateTimeDuration Nat
   | tuop_date_time_duration_from_string : date_time_unary_op_has_type uop_date_time_duration_from_string RType.String DateTimeDuration
   | tuop_date_time_duration_from_nat part : date_time_unary_op_has_type (uop_date_time_duration_from_nat part) RType.Nat DateTimeDuration
@@ -1573,6 +1612,16 @@ Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_una
     if isDateTime τ₁ then Some DateTime else None
   | uop_date_time_from_string =>
     if isString τ₁ then Some DateTime else None
+  | uop_date_time_max =>
+    match tuncoll τ₁ with
+    | Some τ₂ => if isDateTime τ₂ then Some DateTime else None
+    | None => None
+    end
+  | uop_date_time_min =>
+    match tuncoll τ₁ with
+    | Some τ₂ => if isDateTime τ₂ then Some DateTime else None
+    | None => None
+    end
   | uop_date_time_duration_amount =>
     if isDateTimeDuration τ₁ then Some Nat else None
   | uop_date_time_duration_from_string =>
@@ -1598,6 +1647,10 @@ Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time
     enforce_unary_op_schema (τ₁,DateTime) DateTime
   | uop_date_time_from_string =>
     enforce_unary_op_schema (τ₁,RType.String) DateTime
+  | uop_date_time_max =>
+    enforce_unary_op_schema (τ₁,RType.Coll DateTime) DateTime
+  | uop_date_time_min =>
+    enforce_unary_op_schema (τ₁,RType.Coll DateTime) DateTime
   | uop_date_time_duration_amount =>
     enforce_unary_op_schema (τ₁,DateTimeDuration) Nat
   | uop_date_time_duration_from_string =>
@@ -1627,6 +1680,65 @@ Proof.
               repeat constructor].
 Qed.
 
+Lemma lift_dateTimeList_sound {model : brand_model} (dl:list data) (e:true = true) :
+  Forall (fun d : data => d ▹ exist (fun τ₀ : rtype₀ => wf_rtype₀ τ₀ = true) (Foreign₀ enhancedDateTime) e) dl
+  -> exists (dout : list DATE_TIME), lift_dateTimeList dl = Some dout.
+Proof.
+  revert dl.
+  induction dl; intros; simpl in *.
+  - eexists; reflexivity.
+  - inversion H; clear H; subst.
+    inversion H2; clear H2; subst.
+    inversion H1; clear H1; subst.
+    unfold lift_dateTimeList in *; simpl in *.
+    specialize (IHdl H3); clear H3.
+    elim IHdl; clear IHdl; intros.
+    rewrite H.
+    simpl.
+    exists (tp :: x).
+    reflexivity.
+Qed.
+
+Lemma date_time_max_sound {model : brand_model} :
+  date_time_unary_op_has_type uop_date_time_max (Coll DateTime) DateTime ->
+  forall din : data,
+    din ▹ Coll DateTime ->
+    exists dout : data, date_time_unary_op_interp uop_date_time_max din = Some dout /\ dout ▹ DateTime.
+Proof.
+  intro H.
+  invcs H; intros;
+    inversion H; clear H; subst.
+  destruct r; simpl in *; try congruence.
+  destruct x; simpl in *; try congruence.
+  destruct ft; simpl in *; try congruence.
+  clear H0.
+  unfold onddateTimeList.
+  elim (lift_dateTimeList_sound dl e H2); clear H2 e; intros.
+  rewrite H.
+  simpl.
+  eexists; split; [reflexivity|repeat constructor].
+Qed.
+
+Lemma date_time_min_sound {model : brand_model} :
+  date_time_unary_op_has_type uop_date_time_min (Coll DateTime) DateTime ->
+  forall din : data,
+    din ▹ Coll DateTime ->
+    exists dout : data, date_time_unary_op_interp uop_date_time_min din = Some dout /\ dout ▹ DateTime.
+Proof.
+  intro H.
+  invcs H; intros;
+    inversion H; clear H; subst.
+  destruct r; simpl in *; try congruence.
+  destruct x; simpl in *; try congruence.
+  destruct ft; simpl in *; try congruence.
+  clear H0.
+  unfold onddateTimeList.
+  elim (lift_dateTimeList_sound dl e H2); clear H2 e; intros.
+  rewrite H.
+  simpl.
+  eexists; split; [reflexivity|repeat constructor].
+Qed.
+
 Lemma date_time_unary_op_typing_sound {model : brand_model}
       (fu : date_time_unary_op) (τin τout : rtype) :
   date_time_unary_op_has_type fu τin τout ->
@@ -1642,6 +1754,8 @@ Proof.
               simpl; unfold denhanceddateTime, denhanceddateTimeduration; simpl;
               eexists; split; try reflexivity;
               repeat constructor].
+  apply date_time_max_sound; assumption.
+  apply date_time_min_sound; assumption.
 Qed.
 
 Inductive enhanced_unary_op_has_type {model:brand_model} : enhanced_unary_op -> rtype -> rtype -> Prop
@@ -1693,6 +1807,26 @@ Proof.
         destruct x; simpl in *; try congruence;
           inversion H; subst; clear H; constructor;
             rewrite String_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence.
+      case_eq (isDateTime (exist (fun τ₀ : rtype₀ => wf_rtype₀ τ₀ = true) x e)); intros; rewrite H0 in H; try congruence.
+      inversion H; clear H; subst.
+      unfold isDateTime in H0.
+      destruct x; simpl in *; try congruence.
+      destruct ft; simpl in *; try congruence.
+      rewrite Coll_canon.
+      rewrite Foreign_canon.
+      repeat constructor.
+    + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence.
+      case_eq (isDateTime (exist (fun τ₀ : rtype₀ => wf_rtype₀ τ₀ = true) x e)); intros; rewrite H0 in H; try congruence.
+      inversion H; clear H; subst.
+      unfold isDateTime in H0.
+      destruct x; simpl in *; try congruence.
+      destruct ft; simpl in *; try congruence.
+      rewrite Coll_canon.
+      rewrite Foreign_canon.
+      repeat constructor.
     + destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
           destruct ft; simpl in *; try congruence;
@@ -1760,6 +1894,28 @@ Proof.
         inversion H0; subst; clear H0;
           inversion H1; subst; clear H1;
             reflexivity.
+    + case_eq (isDateTime (exist (fun τ₀ : rtype₀ => wf_rtype₀ τ₀ = true) x e)); intros; rewrite H1 in H; try congruence.
+      inversion H; subst; clear H.
+      unfold isDateTime in H1.
+      destruct x; simpl in *; try congruence.
+      destruct ft; simpl in *; try congruence.
+      rewrite Coll_canon in H0.
+      rewrite Foreign_canon in H0.
+      clear H1.
+      inversion H0; subst; clear H0;
+        inversion H1; subst; clear H1;
+          reflexivity.
+    + case_eq (isDateTime (exist (fun τ₀ : rtype₀ => wf_rtype₀ τ₀ = true) x e)); intros; rewrite H1 in H; try congruence.
+      inversion H; subst; clear H.
+      unfold isDateTime in H1.
+      destruct x; simpl in *; try congruence.
+      destruct ft; simpl in *; try congruence.
+      rewrite Coll_canon in H0.
+      rewrite Foreign_canon in H0.
+      clear H1.
+      inversion H0; subst; clear H0;
+        inversion H1; subst; clear H1;
+          reflexivity.
     + destruct ft; simpl in *; try congruence;
         inversion H; subst; clear H;
           rewrite Foreign_canon in H0;
@@ -1809,6 +1965,8 @@ Proof.
           unfold not; intros;
             inversion H0; subst; clear H0;
               inversion H2; subst; clear H2.
+    + simpl in H; congruence.
+    + simpl in H; congruence.
     + simpl in H; congruence.
     + simpl in H; congruence.
     + simpl in H; congruence.
@@ -2218,6 +2376,10 @@ Module CompEnhanced.
           := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of unit)).
         Definition date_time_from_string
           := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string).
+        Definition date_time_min
+          := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_min).
+        Definition date_time_max
+          := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_max).
         Definition date_time_duration_amount
           := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_duration_amount).
         Definition date_time_duration_from_string
@@ -2234,6 +2396,8 @@ Module CompEnhanced.
         Definition OpDateTimeStartOf := date_time_start_of.
         Definition OpDateTimeEndOf := date_time_end_of.
         Definition OpDateTimeFromString := date_time_from_string.
+        Definition OpDateTimeMax := date_time_max.
+        Definition OpDateTimeMin := date_time_min.
         Definition OpDateTimeDurationFromString := date_time_duration_from_string.
         Definition OpDateTimeDurationFromNat := date_time_duration_from_nat.
         Definition OpDateTimePeriodFromString := date_time_period_from_string.
