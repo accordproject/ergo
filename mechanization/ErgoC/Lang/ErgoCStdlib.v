@@ -117,8 +117,6 @@ Section ErgoCStdlib.
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_DAYS))))
       :: ("org.accordproject.time.durationWeeks",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_WEEKS))))
-      :: ("org.accordproject.time.durationYears",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_duration_from_nat date_time_duration_YEARS))))
 
       :: ("org.accordproject.time.durationAmount",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_duration_amount)))
@@ -182,11 +180,16 @@ Section ErgoCStdlib.
 
   Definition unary_operator_table prov : ergo_stdlib_table :=
     ("org.accordproject.ergo.stdlib.toString", mk_unary prov OpToString)
-      (* Natural numbers // Integer or Long *)
+      (* Natural numbers // Integer *)
       :: ("org.accordproject.ergo.stdlib.integerAbs", mk_unary prov (OpNatUnary NatAbs))
       :: ("org.accordproject.ergo.stdlib.integerLog2", mk_unary prov (OpNatUnary NatLog2))
       :: ("org.accordproject.ergo.stdlib.integerSqrt", mk_unary prov (OpNatUnary NatSqrt))
       :: ("org.accordproject.ergo.stdlib.integerToDouble", mk_unary prov OpFloatOfNat)
+      (* Natural numbers // Long *)
+      :: ("org.accordproject.ergo.stdlib.longAbs", mk_unary prov (OpNatUnary NatAbs))
+      :: ("org.accordproject.ergo.stdlib.longLog2", mk_unary prov (OpNatUnary NatLog2))
+      :: ("org.accordproject.ergo.stdlib.longSqrt", mk_unary prov (OpNatUnary NatSqrt))
+      :: ("org.accordproject.ergo.stdlib.longToDouble", mk_unary prov OpFloatOfNat)
       (* Floating point numbers // Double *)
       :: ("org.accordproject.ergo.stdlib.sqrt", mk_unary prov (OpFloatUnary FloatSqrt))
       :: ("org.accordproject.ergo.stdlib.exp", mk_unary prov (OpFloatUnary FloatExp))
@@ -200,18 +203,25 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.average", mk_unary prov OpFloatMean)
       :: ("org.accordproject.ergo.stdlib.sum", mk_unary prov OpFloatSum)
       :: ("org.accordproject.ergo.stdlib.doubleToInteger", mk_unary prov OpFloatTruncate)
+      :: ("org.accordproject.ergo.stdlib.doubleToLong", mk_unary prov OpFloatTruncate)
       :: ("org.accordproject.ergo.stdlib.truncate", mk_unary prov OpFloatTruncate)
       (* Arrays *)
       :: ("org.accordproject.ergo.stdlib.distinct", mk_unary prov OpDistinct)
       :: ("org.accordproject.ergo.stdlib.count", mk_unary prov OpCount)
       :: ("org.accordproject.ergo.stdlib.flatten", mk_unary prov OpFlatten)
+      :: ("org.accordproject.time.dateTimeMax", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_max)))
+      :: ("org.accordproject.time.dateTimeMin", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_min)))
       :: nil.
 
     Definition binary_operator_table prov : ergo_stdlib_table :=
-      (* Natural numbers // Integer or Long *)
+      (* Natural numbers // Integer *)
       ("org.accordproject.ergo.stdlib.integerMod", mk_binary prov (OpNatBinary NatRem))
         :: ("org.accordproject.ergo.stdlib.integerMin", mk_binary prov (OpNatBinary NatMin))
         :: ("org.accordproject.ergo.stdlib.integerMax", mk_binary prov (OpNatBinary NatMax))
+      (* Natural numbers // Long *)
+        :: ("org.accordproject.ergo.stdlib.longMod", mk_binary prov (OpNatBinary NatRem))
+        :: ("org.accordproject.ergo.stdlib.longMin", mk_binary prov (OpNatBinary NatMin))
+        :: ("org.accordproject.ergo.stdlib.longMax", mk_binary prov (OpNatBinary NatMax))
         (* Floating point numbers // Double *)
         :: ("org.accordproject.ergo.stdlib.minPair", mk_binary prov (OpFloatBinary FloatMin))
         :: ("org.accordproject.ergo.stdlib.maxPair", mk_binary prov (OpFloatBinary FloatMax))
