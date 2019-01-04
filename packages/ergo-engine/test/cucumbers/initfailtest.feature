@@ -19,7 +19,7 @@ Feature: Init test fail
   "message": {
     "type": ["org.accordproject.ergo.stdlib.ErgoErrorResponse"],
     "data": {
-      "message": "Enforce Error at 20:2-23:3 ''"
+      "message": "Enforce Error at 18:2-21:3 ''"
     }
   }
 }

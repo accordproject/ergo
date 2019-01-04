@@ -24,6 +24,6 @@ define function f(x:Integer?) : Response {
 contract OptFieldTest over TemplateModel {
   // Simple Clause
   clause test(request : Request) : Response {
-		return f(some(0 +i 0))
+		return f(some(0 + 0))
   }
 }

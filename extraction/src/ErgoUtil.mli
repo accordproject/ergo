@@ -56,8 +56,8 @@ val cto_import_decl_of_import_namespace : string -> provenance import_decl
 val unpatch_cto_extension : string -> string
 
 (** Topological sort *)
-val labels_of_graph : ('a,'b) ergo_input list -> (string * string list) list
-val topo_sort_inputs : ('a,'b) ergo_input list -> ('a,'b) ergo_input list
+val labels_of_graph : ('a,'ap,'b) ergo_input list -> (string * string list) list
+val topo_sort_inputs : ('a,'ap,'b) ergo_input list -> ('a,'ap,'b) ergo_input list
 
 (** Backend *)
 val ergo_call : string -> string

@@ -31,8 +31,9 @@ Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCType.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCT.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheck.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCEval.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
@@ -41,7 +42,7 @@ Require Import ErgoSpec.Translation.ErgoNameResolve.
 Require Import ErgoSpec.Translation.ErgotoErgoC.
 Require Import ErgoSpec.Translation.ErgoCompContext.
 Require Import ErgoSpec.Translation.ErgoCInline.
-Require Import ErgoSpec.Translation.ErgoCtoErgoNNRC.
+Require Import ErgoSpec.Translation.ErgoCTtoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 Require Import ErgoSpec.Translation.ErgoNNRCtoCicero.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
@@ -98,7 +99,7 @@ Section ErgoDriver.
       let resolved := resolve_inputs_no_main inputs in
       elift (fun x => (fst x)) resolved.
 
-    Definition brand_model_from_inputs (inputs : list lrergo_input) : eresult ErgoCTypes.tbrand_model :=
+    Definition brand_model_from_inputs (inputs : list lrergo_input) : eresult ErgoCType.tbrand_model :=
       let resolved := just_resolved_inputs inputs in
       let type_decls := elift modules_get_type_decls resolved in
       eolift ErgoTypetoErgoCType.brand_model_of_declarations type_decls.
@@ -130,9 +131,9 @@ Section ErgoDriver.
         rinputs.
 
     (* Ergo -> ErgoC *)
-    Definition ergo_module_to_ergoc
+    Definition ergo_module_to_ergoct
                (ctxt:compilation_context)
-               (lm:laergo_module) : eresult (ergoc_module * compilation_context) :=
+               (lm:laergo_module) : eresult (ergoct_module * compilation_context) :=
       let p := ergo_expand_module lm in
       let pc := eolift (ergo_module_to_calculus ctxt) p in
       let pc := eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc in
@@ -140,17 +141,17 @@ Section ErgoDriver.
                 let (mod,ctxt) := xy in
                 let nsctxt := ctxt.(compilation_context_namespace) in
                 let sctxt := ctxt.(compilation_context_type_ctxt) in
-                let pctypes := ergoc_type_module nsctxt sctxt mod in
-                elift (fun xy : ergoc_module * type_context =>
+                let pctypes := ergoc_typecheck_module nsctxt sctxt mod in
+                elift (fun xy : ergoct_module * type_context =>
                          let (mod, sctxt') := xy in
                          (mod, compilation_context_update_type_ctxt ctxt sctxt')) pctypes
              ) pc.
 
-    Definition ergo_modules_to_ergoc
+    Definition ergo_modules_to_ergoct
                (ctxt:compilation_context)
-               (lm:list laergo_module) : eresult (list ergoc_module * compilation_context) :=
+               (lm:list laergo_module) : eresult (list ergoct_module * compilation_context) :=
       elift_context_fold_left
-        ergo_module_to_ergoc
+        ergo_module_to_ergoct
         lm
         ctxt.
 
@@ -166,10 +167,10 @@ Section ErgoDriver.
                 eolift (declaration_to_calculus ctxt) p)
              am.
 
-    Definition ergo_declaration_to_ergoc_inlined
+    Definition ergo_declaration_to_ergoct_inlined
                (sctxt : compilation_context)
                (decl : lrergo_declaration)
-      : eresult (list (option ergoc_type * ergoc_declaration) * compilation_context) :=
+      : eresult (list ergoct_declaration * compilation_context) :=
       (* Translation *)
       let ec := ergo_declaration_to_ergoc sctxt decl in
       (* Inlining *)
@@ -188,10 +189,10 @@ Section ErgoDriver.
                 elift_context_fold_left
                   (fun (sctxt : compilation_context) (decl : ergoc_declaration) =>
                      let nsctxt := sctxt.(compilation_context_namespace)  in
-                     match ergoc_type_decl nsctxt sctxt.(compilation_context_type_ctxt) decl with
+                     match ergoc_typecheck_decl nsctxt sctxt.(compilation_context_type_ctxt) decl with
                      | Failure _ _ f => efailure f
-                     | Success _ _ (typ, tctxt') =>
-                       esuccess ((typ,decl), compilation_context_update_type_ctxt sctxt tctxt')
+                     | Success _ _ (declt, tctxt') =>
+                       esuccess (declt, compilation_context_update_type_ctxt sctxt tctxt')
                      end)
                   (fst xy)
                   (snd xy)
@@ -201,8 +202,8 @@ Section ErgoDriver.
                (version:jsversion)
                (ctxt:compilation_context)
                (p:laergo_module) : eresult (nnrc_module * ErgoCodeGen.javascript) :=
-      let pc := ergo_module_to_ergoc ctxt p in
-      let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
+      let pc := ergo_module_to_ergoct ctxt p in
+      let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
       elift (fun x => (x,nnrc_module_to_javascript_top version x)) pn.
 
     Definition compilation_context_from_inputs
@@ -211,7 +212,7 @@ Section ErgoDriver.
       eolift (fun init =>
                 let '(mls, p, ctxt) := init in
                 elift (fun r => (p, snd r))
-                      (ergo_modules_to_ergoc ctxt mls))
+                      (ergo_modules_to_ergoct ctxt mls))
              cinit.
     
     Definition compilation_context_from_inputs_no_main
@@ -220,15 +221,15 @@ Section ErgoDriver.
       eolift (fun init =>
                 let '(mls, ctxt) := init in
                 elift snd
-                      (ergo_modules_to_ergoc ctxt mls))
+                      (ergo_modules_to_ergoct ctxt mls))
              cinit.
     
     Definition ergo_module_to_java
                (ctxt:compilation_context)
                (p:laergo_module) : eresult (nnrc_module * ErgoCodeGen.java) :=
       let filename := p.(module_prefix) in
-      let pc := ergo_module_to_ergoc ctxt p in
-      let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
+      let pc := ergo_module_to_ergoct ctxt p in
+      let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
       elift (fun x => (x, nnrc_module_to_java_top filename x)) pn.
 
   End CompilerCore.
@@ -273,8 +274,8 @@ Section ErgoDriver.
                       (fun c : local_name * ergo_contract =>
                          let contract_name := (fst c) in 
                          let sigs := lookup_contract_signatures (snd c) in
-                         let pc := ergo_module_to_ergoc ctxt p in
-                         let pn := eolift (fun xy => ergoc_module_to_nnrc (fst xy)) pc in
+                         let pc := ergo_module_to_ergoct ctxt p in
+                         let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
                          elift (fun x => (x,ergoc_module_to_cicero contract_name (snd c).(contract_state) sigs x)) pn)
                       ec
                 in
@@ -330,11 +331,11 @@ Section ErgoDriver.
           result.
 
     Definition ergoc_repl_eval_declaration
-               (ctxt:repl_context) (typed_decl:option ergoc_type * ergoc_declaration)
+               (ctxt:repl_context) (decl:ergoct_declaration)
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
       let nsctxt := ctxt.(repl_context_comp_ctxt).(compilation_context_namespace)  in
-      let (typ, decl) := typed_decl in
-      match ergoc_eval_decl ctxt.(repl_context_eval_ctxt) decl with
+      let typ := ergoct_declaration_type decl in
+      match ergoct_eval_decl ctxt.(repl_context_eval_ctxt) decl with
       | Failure _ _ f => efailure f
       | Success _ _ (dctxt', None) => esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt')
       | Success _ _ (dctxt', Some out) =>
@@ -361,8 +362,8 @@ Section ErgoDriver.
         end
       end.
 
-    Definition ergoc_repl_eval_declarations
-               (ctxt:repl_context) (decls:list (option ergoc_type * ergoc_declaration))
+    Definition ergoct_repl_eval_declarations
+               (ctxt:repl_context) (decls:list ergoct_declaration)
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
       elift
         (fun xy =>
@@ -372,15 +373,15 @@ Section ErgoDriver.
            decls
            ctxt).
 
-    Definition ergo_eval_decl_via_calculus
+    Definition ergoct_eval_decl_via_calculus
                (ctxt : repl_context)
                (decl : lrergo_declaration)
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
-      match ergo_declaration_to_ergoc_inlined ctxt.(repl_context_comp_ctxt) decl with
+      match ergo_declaration_to_ergoct_inlined ctxt.(repl_context_comp_ctxt) decl with
       | Failure _ _ f => efailure f
       | Success _ _ (decls, sctxt') =>
         let rctxt' := update_repl_ctxt_comp_ctxt ctxt sctxt' in
-        ergoc_repl_eval_declarations rctxt' decls
+        ergoct_repl_eval_declarations rctxt' decls
       end.
 
     Definition ergo_string_of_result
@@ -394,11 +395,11 @@ Section ErgoDriver.
         (string_of_typed_result nsctxt old_state)
         (elift fst result).
 
-    Definition ergo_repl_eval_decl
+    Definition ergoct_repl_eval_decl
                (rctxt : repl_context)
                (decl : lrergo_declaration)
       : eresult string * repl_context :=
-      let result := ergo_eval_decl_via_calculus rctxt decl in
+      let result := ergoct_eval_decl_via_calculus rctxt decl in
       let out := ergo_string_of_result rctxt result in
       (out, lift_repl_ctxt rctxt result).
 
@@ -406,7 +407,7 @@ Section ErgoDriver.
 
   Section InterpreterHack.
     Definition refresh_brand_model_in_comp_ctxt {bm:brand_model} (ctxt:@compilation_context bm) :
-      eresult (ErgoCTypes.tbrand_model * @compilation_context bm) :=
+      eresult (ErgoCType.tbrand_model * @compilation_context bm) :=
       match ctxt.(compilation_context_new_type_decls) with
       | nil => esuccess (bm, ctxt)
       | _ =>
@@ -418,8 +419,8 @@ Section ErgoDriver.
       end.
 
     Definition refresh_brand_model {bm:brand_model} (ctxt:@repl_context bm) :
-      eresult (ErgoCTypes.tbrand_model * @repl_context bm) :=
-      elift (fun xy : ErgoCTypes.tbrand_model * @compilation_context bm =>
+      eresult (ErgoCType.tbrand_model * @repl_context bm) :=
+      elift (fun xy : ErgoCType.tbrand_model * @compilation_context bm =>
                let (bm, sctxt) := xy in
                (bm, update_repl_ctxt_comp_ctxt ctxt sctxt))
             (@refresh_brand_model_in_comp_ctxt bm ctxt.(repl_context_comp_ctxt)).

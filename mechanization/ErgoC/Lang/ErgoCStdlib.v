@@ -44,7 +44,7 @@ Section ErgoCStdlib.
     mk_naked_closure
       prov
       ("p0"::nil)
-      (EUnaryOp prov op (EVar prov "p0")).
+      (EUnaryBuiltin prov op (EVar prov "p0")).
 
   Definition mk_binary_expr prov e : ergoc_function :=
     mk_naked_closure
@@ -55,12 +55,12 @@ Section ErgoCStdlib.
   Definition mk_binary prov op : ergoc_function :=
     mk_binary_expr
       prov
-      (EBinaryOp prov op (EVar prov "p1") (EVar prov "p2")).
+      (EBinaryBuiltin prov op (EVar prov "p1") (EVar prov "p2")).
 
   Definition mk_binary_rev prov op : ergoc_function :=
     mk_binary_expr
       prov
-      (EBinaryOp prov op (EVar prov "p2") (EVar prov "p1")).
+      (EBinaryBuiltin prov op (EVar prov "p2") (EVar prov "p1")).
 
   Definition ergo_stdlib_table : Set := list (string * ergoc_function).
   

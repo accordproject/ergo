@@ -41,7 +41,7 @@ Section ErgoCInline.
   Context {bm:brand_model}.
 
   Definition ergo_map_expr_sane ctxt fn expr :=
-    @ergo_map_expr provenance absolute_name compilation_context ctxt
+    @ergo_map_expr provenance provenance absolute_name compilation_context ctxt
                    (fun ctxt name expr => compilation_context_update_local_env ctxt name expr)
                    fn expr.
 
@@ -50,7 +50,7 @@ Section ErgoCInline.
     | EForeach prov rs whr fn =>
       (compose Some esuccess)
         (fold_right
-           (fun rcd ker => (EUnaryOp prov OpFlatten) (EForeach prov (rcd::nil) whr ker))
+           (fun rcd ker => (EUnaryBuiltin prov OpFlatten) (EForeach prov (rcd::nil) whr ker))
            (match whr with
             | Some whr' => (EIf prov whr' (EArray prov (fn::nil)) (EArray prov nil))
             | None => (EArray prov (fn::nil))

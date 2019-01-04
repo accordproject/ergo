@@ -35,7 +35,7 @@ Module ErgoCompiler.
   
   Module ErgoData := ErgoBackend.ErgoData.
   Module ErgoOps := ErgoBackend.ErgoOps.
-  Module ErgoCTypes := ErgoBackend.ErgoCTypes.
+  Module ErgoCType := ErgoBackend.ErgoCType.
 
   (** Utils *)
   (* XXX Exposed so it can be called from JavaScript - Should be removed once we switch to the REPL *)
@@ -217,10 +217,12 @@ Module ErgoCompiler.
     := Ergo.ESome prov.
   Definition earray prov arr : ergo_expr
     := Ergo.EArray prov arr.
-  Definition eunaryop prov u e : ergo_expr
-    := Ergo.EUnaryOp prov u e.
-  Definition ebinaryop prov b e1 e2 : ergo_expr 
-    := Ergo.EBinaryOp prov b e1 e2.
+  Definition ebinaryoperator prov b e1 e2 : ergo_expr 
+    := Ergo.EBinaryOperator prov b e1 e2.
+  Definition eunarybuiltin prov u e : ergo_expr
+    := Ergo.EUnaryBuiltin prov u e.
+  Definition ebinarybuiltin prov b e1 e2 : ergo_expr 
+    := Ergo.EBinaryBuiltin prov b e1 e2.
   Definition eif prov e1 e2 e3 : ergo_expr 
     := Ergo.EIf prov e1 e2 e3.
   Definition elet prov (v:String.string) (t:option ErgoType.ergo_type) (e1 e2:ergo_expr) : ergo_expr
@@ -240,7 +242,7 @@ Module ErgoCompiler.
     Local Open Scope Z_scope.
     (* XXX missing unary operator in Q*cert *)
     Definition opuminusi prov e :=
-      ebinaryop prov ErgoOps.Binary.Integer.opminusi (econst prov (ErgoData.dnat 0)) e.
+      ebinarybuiltin prov ErgoOps.Binary.Integer.opminusi (econst prov (ErgoData.dnat 0)) e.
   End Integer.
   
   (** Statements *)
@@ -314,9 +316,9 @@ Module ErgoCompiler.
     := ErgoDriver.ergo_module_to_java_top.
 
   (** Brand model *)
-  Definition ergo_brand_model := ErgoCTypes.tbrand_model.
+  Definition ergo_brand_model := ErgoCType.tbrand_model.
 
-  Definition ergo_empty_brand_model := ErgoCTypes.tempty_brand_model.
+  Definition ergo_empty_brand_model := ErgoCType.tempty_brand_model.
 
   Definition ergo_brand_model_from_inputs (inputs : list ergo_input) : eresult ergo_brand_model
     := ErgoDriver.brand_model_from_inputs inputs.
@@ -333,7 +335,7 @@ Module ErgoCompiler.
     @ErgoDriver.repl_context bm
     -> ergo_declaration
     -> Result.eresult String.string * (@ErgoDriver.repl_context bm)
-    := (@ErgoDriver.ergo_repl_eval_decl bm).
+    := (@ErgoDriver.ergoct_repl_eval_decl bm).
 
 End ErgoCompiler.
 

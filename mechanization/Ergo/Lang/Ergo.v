@@ -32,11 +32,11 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section Ergo.
   Section Ast.
-    Context {A:Set}. (* Type for annotations *)
-    Context {N:Set}. (* Type for names *)
-  
-    (** Expression *)
+    Context {A:Set}. (* For expression annotations *)
+    Context {A':Set}. (* For type annotations *)
+    Context {N:Set}. (* For names *)
 
+    (** Expression *)
     Inductive ergo_expr :=
     | EThisContract : A -> ergo_expr (**r this contract *)
     | EThisClause : A -> ergo_expr (**r this clause *)
@@ -45,11 +45,12 @@ Section Ergo.
     | EConst : A -> ErgoData.data -> ergo_expr (**r constant *)
     | ENone : A -> ergo_expr (**r none *)
     | ESome : A -> ergo_expr -> ergo_expr (**r some(e) *)
-    | EArray : A -> list ergo_expr -> ergo_expr (**r array constructor *) 
-    | EUnaryOp : A -> ErgoOps.Unary.op -> ergo_expr -> ergo_expr (**r unary operator *)
-    | EBinaryOp : A -> ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr (**r binary operator *)
+    | EArray : A -> list ergo_expr -> ergo_expr (**r array constructor *)
+    | EBinaryOperator : A -> ergo_binary_operator -> ergo_expr -> ergo_expr -> ergo_expr (**r operator *)
+    | EUnaryBuiltin : A -> ErgoOps.Unary.op -> ergo_expr -> ergo_expr (**r unary builtin *)
+    | EBinaryBuiltin : A -> ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr (**r binary builtin *)
     | EIf : A -> ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr (**r conditional *)
-    | ELet : A -> string -> option (@ergo_type A N) -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
+    | ELet : A -> string -> option (@ergo_type A' N) -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
     | ERecord : A -> list (string * ergo_expr) -> ergo_expr (**r create a new record *)
     | ENew : A -> N -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
     | ECallFun : A -> N -> list ergo_expr -> ergo_expr (**r function call *)
@@ -69,8 +70,9 @@ Section Ergo.
       | ENone a => a
       | ESome a _ => a
       | EArray a _ => a
-      | EUnaryOp a _ _ => a
-      | EBinaryOp a _ _ _ => a
+      | EBinaryOperator a _ _ _ => a
+      | EUnaryBuiltin a _ _ => a
+      | EBinaryBuiltin a _ _ _ => a
       | EIf a _ _ _ => a
       | ELet a _ _ _ _ => a
       | ERecord a _ => a
@@ -179,39 +181,41 @@ Section Ergo.
 
   End Ast.
 
-  Definition rergo_expr {A} := @ergo_expr A relative_name.
-  Definition rergo_stmt {A} := @ergo_stmt A relative_name.
-  Definition rergo_function {A} := @ergo_function A relative_name.
-  Definition rergo_clause {A} := @ergo_clause A relative_name.
-  Definition rergo_contract {A} := @ergo_contract A relative_name.
-  Definition rergo_declaration {A} := @ergo_declaration A relative_name.
-  Definition rergo_module {A} := @ergo_module A relative_name.
-  Definition rergo_input {A} := @ergo_input A relative_name.
+  Definition rergo_expr {A} {A'} := @ergo_expr A A' relative_name.
+  Definition rergo_stmt {A} {A'} := @ergo_stmt A A' relative_name.
+  Definition rergo_function {A} {A'} := @ergo_function A A' relative_name.
+  Definition rergo_clause {A} {A'} := @ergo_clause A A' relative_name.
+  Definition rergo_contract {A} {A'} := @ergo_contract A A' relative_name.
+  Definition rergo_declaration {A} {A'} := @ergo_declaration A A' relative_name.
+  Definition rergo_module {A} {A'} := @ergo_module A A' relative_name.
+  Definition rergo_input {A} {A'} := @ergo_input A A' relative_name.
 
-  Definition aergo_expr {A} := @ergo_expr A absolute_name.
-  Definition aergo_stmt {A} := @ergo_stmt A absolute_name.
-  Definition arergo_function {A} := @ergo_function A absolute_name.
-  Definition arergo_clause {A} := @ergo_clause A absolute_name.
-  Definition arergo_contract {A} := @ergo_contract A absolute_name.
-  Definition arergo_declaration {A} := @ergo_declaration A absolute_name.
-  Definition arergo_module {A} := @ergo_module A absolute_name.
+  Definition aergo_expr {A} {A'} := @ergo_expr A A' absolute_name.
+  Definition aergo_stmt {A} {A'} := @ergo_stmt A A' absolute_name.
+  Definition arergo_function {A} {A'} := @ergo_function A A' absolute_name.
+  Definition arergo_clause {A} {A'} := @ergo_clause A A' absolute_name.
+  Definition arergo_contract {A} {A'} := @ergo_contract A A' absolute_name.
+  Definition arergo_declaration {A} {A'} := @ergo_declaration A A' absolute_name.
+  Definition arergo_module {A} {A'} := @ergo_module A A' absolute_name.
+  Definition arergo_input {A} {A'} := @ergo_input A A' absolute_name.
 
-  Definition lrergo_expr := @ergo_expr provenance relative_name.
-  Definition lrergo_stmt := @ergo_stmt provenance relative_name.
-  Definition lrergo_function := @ergo_function provenance relative_name.
-  Definition lrergo_clause := @ergo_clause provenance relative_name.
-  Definition lrergo_contract := @ergo_contract provenance relative_name.
-  Definition lrergo_declaration := @ergo_declaration provenance relative_name.
-  Definition lrergo_module := @ergo_module provenance relative_name.
-  Definition lrergo_input := @ergo_input provenance relative_name.
+  Definition lrergo_expr := @ergo_expr provenance provenance relative_name.
+  Definition lrergo_stmt := @ergo_stmt provenance provenance relative_name.
+  Definition lrergo_function := @ergo_function provenance provenance relative_name.
+  Definition lrergo_clause := @ergo_clause provenance provenance relative_name.
+  Definition lrergo_contract := @ergo_contract provenance provenance relative_name.
+  Definition lrergo_declaration := @ergo_declaration provenance provenance relative_name.
+  Definition lrergo_module := @ergo_module provenance provenance relative_name.
+  Definition lrergo_input := @ergo_input provenance provenance relative_name.
 
-  Definition laergo_expr := @ergo_expr provenance absolute_name.
-  Definition laergo_stmt := @ergo_stmt provenance absolute_name.
-  Definition laergo_function := @ergo_function provenance absolute_name.
-  Definition laergo_clause := @ergo_clause provenance absolute_name.
-  Definition laergo_contract := @ergo_contract provenance absolute_name.
-  Definition laergo_declaration := @ergo_declaration provenance absolute_name.
-  Definition laergo_module := @ergo_module provenance absolute_name.
+  Definition laergo_expr := @ergo_expr provenance provenance absolute_name.
+  Definition laergo_stmt := @ergo_stmt provenance provenance absolute_name.
+  Definition laergo_function := @ergo_function provenance provenance absolute_name.
+  Definition laergo_clause := @ergo_clause provenance provenance absolute_name.
+  Definition laergo_contract := @ergo_contract provenance provenance absolute_name.
+  Definition laergo_declaration := @ergo_declaration provenance provenance absolute_name.
+  Definition laergo_module := @ergo_module provenance provenance absolute_name.
+  Definition laergo_input := @ergo_input provenance provenance absolute_name.
 
   Section Lookup.
     Fixpoint lookup_clauses_signatures (dl:list laergo_clause) : list (local_name * ergo_type_signature) :=

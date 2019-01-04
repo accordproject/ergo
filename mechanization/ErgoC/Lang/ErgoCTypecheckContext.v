@@ -17,11 +17,10 @@ Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 
-Section ErgoCTypeContext.
+Section ErgoCTypecheckContext.
   Context {br : brand_relation}.
-  Import ErgoCTypes.
+  Import ErgoCType.
 
   Record type_context :=
     mkEvalContext
@@ -57,5 +56,5 @@ Section ErgoCTypeContext.
                       ::nil)
                    (nil).
   
-End ErgoCTypeContext.
+End ErgoCTypecheckContext.
 
