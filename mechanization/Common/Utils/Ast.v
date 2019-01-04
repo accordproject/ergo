@@ -74,7 +74,24 @@ Section Ast.
   End Patterns.
 
   Section Operators.
-    (** Operators -- Those can be overloaded *)
+    Local Open Scope string.
+
+    (** Unary operators -- Those can be overloaded *)
+    Inductive ergo_unary_operator :=
+    | EOpUMinus : ergo_unary_operator
+    | EOpDot : string -> ergo_unary_operator
+    .
+
+    Global Instance ToString_ergo_unary_operator : ToString ergo_unary_operator
+      := {toString :=
+            fun (op:ergo_unary_operator) =>
+              match op with
+              | EOpUMinus => "-"
+              | EOpDot a => "." ++ a
+              end
+         }.
+
+    (** Binary operators -- Those can be overloaded *)
     Inductive ergo_binary_operator :=
     | EOpPlus : ergo_binary_operator
     | EOpMinus : ergo_binary_operator
@@ -85,8 +102,6 @@ Section Ast.
     | EOpLe : ergo_binary_operator
     | EOpLt : ergo_binary_operator
     .
-
-    Local Open Scope string.
 
     Global Instance ToString_ergo_binary_operator : ToString ergo_binary_operator
       := {toString :=

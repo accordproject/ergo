@@ -49,14 +49,17 @@ Section ErgoMap.
                  (fun ls na =>
                     elift2 postpend ls (ergo_map_expr ctx ctxt_new_variable_scope fn na))
                  a (esuccess nil))
+      | EUnaryOperator loc o e =>
+        elift (EUnaryOperator loc o)
+              (ergo_map_expr ctx ctxt_new_variable_scope fn e)
+      | EBinaryOperator loc o e1 e2 =>
+        elift2 (EBinaryOperator loc o)
+               (ergo_map_expr ctx ctxt_new_variable_scope fn e1)
+               (ergo_map_expr ctx ctxt_new_variable_scope fn e2)
       | EUnaryBuiltin loc o e =>
         elift (EUnaryBuiltin loc o) (ergo_map_expr ctx ctxt_new_variable_scope fn e)
       | EBinaryBuiltin loc o e1 e2 =>
         elift2 (EBinaryBuiltin loc o)
-               (ergo_map_expr ctx ctxt_new_variable_scope fn e1)
-               (ergo_map_expr ctx ctxt_new_variable_scope fn e2)
-      | EBinaryOperator loc o e1 e2 =>
-        elift2 (EBinaryOperator loc o)
                (ergo_map_expr ctx ctxt_new_variable_scope fn e1)
                (ergo_map_expr ctx ctxt_new_variable_scope fn e2)
       | EIf loc c t f =>
