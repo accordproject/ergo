@@ -27,16 +27,16 @@ consult the [for developers](#for-developers) section.
 
 ## Try it out
 
-If you simply want to take a peek at Ergo without installing anything,
-check out the examples on the [Ergo
-Playground](https://accordproject.github.io/ergo-playground/).
-
-You can also try the interactive [REPL](https://ergorepl.netlify.com)
-(read-eval-print-loop) for Ergo.
+If you want to take a peek at Ergo without installing anything, check
+out the interactive [REPL](https://ergorepl.netlify.com)
+(read-eval-print-loop) for Ergo stand-alone, or the [Accord Project
+Template Studio](https://studio.accordproject.org) showing how Ergo
+can express the logic of legal templates.
 
 ## Documentation
 
-The most recent documentation for Ergo is available at
+The most recent documentation for the Ergo language and compiler is
+available at
 [https://docs.accordproject.org/docs/ergo.html](https://docs.accordproject.org/docs/ergo)
 
 ## Getting started
@@ -76,8 +76,8 @@ $ ergoc ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo
 Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples/volumediscount/logic.js
 ```
 
-By default, Ergo compiles to JavaScript for execution. You can inspect the
-compiled code for the result in `./examples/volumediscount/logic.js`
+By default, Ergo compiles to JavaScript for execution. You can inspect
+the compiled JavaScript code in `./examples/volumediscount/logic.js`
 
 ### Invoke a contract
 
@@ -104,4 +104,5 @@ Project documentation files are made available under the Creative Commons
 Attribution 4.0 International License (CC-BY-4.0), available at
 http://creativecommons.org/licenses/by/4.0/.
 
-Copyright 2018 Clause, Inc.
+Copyright 2018-2019 Clause, Inc.
+
