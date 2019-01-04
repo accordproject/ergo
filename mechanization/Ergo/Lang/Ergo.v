@@ -46,7 +46,8 @@ Section Ergo.
     | ENone : A -> ergo_expr (**r none *)
     | ESome : A -> ergo_expr -> ergo_expr (**r some(e) *)
     | EArray : A -> list ergo_expr -> ergo_expr (**r array constructor *)
-    | EBinaryOperator : A -> ergo_binary_operator -> ergo_expr -> ergo_expr -> ergo_expr (**r operator *)
+    | EUnaryOperator : A -> ergo_unary_operator -> ergo_expr -> ergo_expr (**r unary operator *)
+    | EBinaryOperator : A -> ergo_binary_operator -> ergo_expr -> ergo_expr -> ergo_expr (**r binary operator *)
     | EUnaryBuiltin : A -> ErgoOps.Unary.op -> ergo_expr -> ergo_expr (**r unary builtin *)
     | EBinaryBuiltin : A -> ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr (**r binary builtin *)
     | EIf : A -> ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr (**r conditional *)
@@ -70,6 +71,7 @@ Section Ergo.
       | ENone a => a
       | ESome a _ => a
       | EArray a _ => a
+      | EUnaryOperator a _ _ => a
       | EBinaryOperator a _ _ _ => a
       | EUnaryBuiltin a _ _ => a
       | EBinaryBuiltin a _ _ _ => a

@@ -24,7 +24,7 @@ contract Smoke over TemplateModel {
     enforce(1.0 + 1.0 = 2.0);
     enforce(-1.0 = 0.0 - 1.0);
     enforce(-(1.0 + 2.0) = -3.0);
-    enforce(-i1 = 0 - 1);
+    enforce(-1 = 0 - 1);
     enforce(0.0 < 1.0);
     enforce(0 < 1);
     enforce(0 < request.someint);

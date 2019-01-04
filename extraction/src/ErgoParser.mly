@@ -57,7 +57,6 @@ let mk_provenance
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
 %token PLUS MINUS STAR SLASH CARROT
-%token MINUSI
 %token PLUSPLUS
 %token DOT QUESTIONDOT COMMA COLON SEMI
 %token QUESTION QUESTIONQUESTION UNDERSCORE
@@ -407,9 +406,7 @@ expr:
     { ErgoCompiler.eforeach (mk_provenance $startpos $endpos) fl (Some econd) e2 }
 (* Unary operators *)
 | MINUS e = expr %prec uminus
-    { ErgoCompiler.eunarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.Double.opuminus e }
-| MINUSI e = expr %prec uminus
-    { ErgoCompiler.opuminusi (mk_provenance $startpos $endpos) e }
+    { ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos) EOpUMinus e }
 | NOT e = expr
     { ErgoCompiler.eunarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg e }
 (* Binary operators *)

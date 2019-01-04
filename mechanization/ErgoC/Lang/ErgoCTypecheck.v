@@ -29,6 +29,7 @@ Require Import ErgoSpec.Common.Types.ErgoCTypeUtil.
 Require Import ErgoSpec.Common.Types.ErgoTypetoErgoCType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCOverloaded.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCT.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 
@@ -36,74 +37,6 @@ Section ErgoCTypecheck.
   Context {m : brand_model}.
 
   Import ErgoCType.
-
-  Definition make_binary_operator_fun op a e1 e2 : ergoct_expr :=
-    EBinaryBuiltin a op e1 e2.
-
-  Definition make_binary_operator op : ErgoOps.Binary.op * ((provenance * ergoc_type) -> ergoct_expr -> ergoct_expr -> ergoct_expr) :=
-    (op, make_binary_operator_fun op).
-  
-  Definition make_neg_binary_operator_fun op a e1 e2 : ergoct_expr :=
-    EUnaryBuiltin a OpNeg (EBinaryBuiltin a op e1 e2).
-
-  Definition make_neg_binary_operator op : ErgoOps.Binary.op * ((provenance * ergoc_type) -> ergoct_expr -> ergoct_expr -> ergoct_expr) :=
-    (op, make_neg_binary_operator_fun op).
-
-  Definition binary_operator_dispatch_table (op:ergo_binary_operator) :
-    list (ErgoOps.Binary.op * ((provenance * ergoc_type) -> ergoct_expr -> ergoct_expr -> ergoct_expr)) :=
-    match op with
-    | EOpPlus =>
-      (make_binary_operator (OpFloatBinary FloatPlus))
-        :: (make_binary_operator (OpNatBinary NatPlus))
-        :: nil
-    | EOpMinus =>
-      (make_binary_operator (OpFloatBinary FloatMinus))
-        :: (make_binary_operator (OpNatBinary NatMinus))
-        :: nil
-    | EOpMultiply =>
-      (make_binary_operator (OpFloatBinary FloatMult))
-        :: (make_binary_operator (OpNatBinary NatMult))
-        :: nil
-    | EOpDivide =>
-      (make_binary_operator (OpFloatBinary FloatDiv))
-        :: (make_binary_operator (OpNatBinary NatDiv))
-        :: nil
-    | EOpGe =>
-      (make_binary_operator (OpFloatCompare FloatGe))
-        :: (make_neg_binary_operator OpLt)
-        :: nil
-    | EOpGt =>
-      (make_binary_operator (OpFloatCompare FloatGt))
-        :: (make_neg_binary_operator OpLe) :: nil
-    | EOpLe =>
-      (make_binary_operator (OpFloatCompare FloatLe))
-        :: (make_binary_operator OpLe)
-        :: nil
-    | EOpLt =>
-      (make_binary_operator (OpFloatCompare FloatLt))
-        :: (make_binary_operator OpLt)
-        :: nil
-    end.
-
-  Fixpoint try_binary_dispatch nsctxt prov
-           (eop:ergo_binary_operator)
-           bltops
-           (eT1 eT2:ergoct_expr) : eresult ergoct_expr :=
-    let t1 := exprct_type_annot eT1 in
-    let t2 := exprct_type_annot eT2 in
-    match bltops with
-    | nil => efailure (ETypeError prov (ergo_format_binary_operator_dispatch_error nsctxt eop t1 t2))
-    | (op, op_fun) :: bltops' =>
-      match ergoc_type_infer_binary_op op t1 t2 with
-      | Some (r, _, _) => esuccess (op_fun (prov,r) eT1 eT2) (* Found a successful dispatch *)
-      | None => try_binary_dispatch nsctxt prov eop bltops' eT1 eT2 (* try next operator *)
-      end
-    end.
-
-  Definition binary_dispatch nsctxt prov
-           (eop:ergo_binary_operator)
-           (eT1 eT2:ergoct_expr) : eresult ergoct_expr :=
-    try_binary_dispatch nsctxt prov eop (binary_operator_dispatch_table eop) eT1 eT2.
 
   Fixpoint ergoc_typecheck_expr nsctxt (ctxt : type_context) (expr : ergoc_expr) : eresult ergoct_expr :=
     match expr with
@@ -132,7 +65,12 @@ Section ErgoCTypecheck.
                          (ergoc_typecheck_expr nsctxt ctxt new))
                     eT)
                (esuccess (nil,tbottom)) es)
-    (*** XXX - DISPATCH HERE *)
+    | EUnaryOperator prov eop e =>
+      match ergoc_typecheck_expr nsctxt ctxt e with
+      | Success _ _ t =>
+        unary_dispatch nsctxt prov eop t
+      | Failure _ _ f => efailure f
+      end
     | EBinaryOperator prov eop e1 e2 =>
       match ergoc_typecheck_expr nsctxt ctxt e1 with
       | Success _ _ t1 =>
@@ -143,7 +81,6 @@ Section ErgoCTypecheck.
         end
       | Failure _ _ f => efailure f
       end
-    (*** XXX - DISPATCH HERE *)
     | EUnaryBuiltin prov op e =>
       match ergoc_typecheck_expr nsctxt ctxt e with
       | Success _ _ eT =>

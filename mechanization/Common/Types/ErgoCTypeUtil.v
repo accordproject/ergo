@@ -89,6 +89,10 @@ Section ErgoCTypeUtil.
     | _ => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string nsctxt arg2) ++ "'."
     end.
 
+  Definition ergo_format_unary_operator_dispatch_error nsctxt (op : ergo_unary_operator)
+     (arg : ergoc_type) : string :=
+    "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'.".
+
   Definition ergo_format_binary_operator_dispatch_error nsctxt (op : ergo_binary_operator)
      (arg1 : ergoc_type) (arg2 : ergoc_type) : string :=
     "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string nsctxt arg2) ++ "'.".

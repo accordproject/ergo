@@ -181,15 +181,18 @@ Section Result.
       efailure (ECompilationError prov ("Parameter mismatch when calling function '" ++ fname ++ "'")).
 
     (** Other runtime errors *)
+    Definition eval_unary_operator_error {A} prov (op:ergo_unary_operator) : eresult A :=
+      let op_name := toString op in
+      efailure (ESystemError prov ("Unexpected operator [" ++ op_name ++ "] during eval (should have been resolved).")).
+    Definition eval_binary_operator_error {A} prov (op:ergo_binary_operator) : eresult A :=
+      let op_name := toString op in
+      efailure (ESystemError prov ("Unexpected operator [" ++ op_name ++ "] during eval (should have been resolved).")).
     Definition eval_unary_builtin_error {A} prov (op:ErgoOps.Unary.op) : eresult A :=
       let op_name := toString op in
       efailure (ERuntimeError prov ("Evaluation for builtin unary operator [" ++ op_name ++ "] failed.")).
     Definition eval_binary_builtin_error {A} prov (op:ErgoOps.Binary.op) : eresult A :=
       let op_name := toString op in
       efailure (ERuntimeError prov ("Evaluation for builtin binary operator [" ++ op_name ++ "] failed.")).
-    Definition eval_binary_operator_error {A} prov (op:ergo_binary_operator) : eresult A :=
-      let op_name := toString op in
-      efailure (ESystemError prov ("Unexpected operator [" ++ op_name ++ "] during eval (should have been resolved).")).
     Definition eval_if_not_boolean_error {A} prov : eresult A :=
       efailure (ERuntimeError prov "'If' condition not boolean.").
     Definition eval_match_let_optional_not_on_option_error {A} prov : eresult A :=

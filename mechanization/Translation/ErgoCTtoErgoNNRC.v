@@ -122,6 +122,8 @@ Section ErgoCTtoErgoNNRC.
             acc
       in
       elift new_array (fold_right proc_one init_el el)
+    | EUnaryOperator (prov,_) u e =>
+      operator_in_calculus_error prov (* XXX We should prove it never happens *)
     | EBinaryOperator (prov,_) b e1 e2 =>
       operator_in_calculus_error prov (* XXX We should prove it never happens *)
     | EUnaryBuiltin (prov,_) u e =>
