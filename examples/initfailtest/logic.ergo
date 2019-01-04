@@ -13,8 +13,6 @@
  */
 namespace org.accordproject.initfailtest
 
-
-
 contract InitFailTest over TemplateModel state State {
 	clause init(request : Request) : Response {
 		enforce false;

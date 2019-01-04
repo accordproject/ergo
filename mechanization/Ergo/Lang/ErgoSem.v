@@ -69,15 +69,15 @@ Section ErgoSem.
       ergo_expr_sem mc env e1 d1 ->
       ergo_expr_sem mc env (EArray a1 el) (ErgoData.dcoll dl) ->
       ergo_expr_sem mc env (EArray a2 (e1::el)) (ErgoData.dcoll (d1::dl))
-  | sem_EUnaryOp : forall a uop mc env e1 h d1 d2,
+  | sem_EUnaryBuiltin : forall a uop mc env e1 h d1 d2,
       ergo_expr_sem mc env e1 d1 ->
       ErgoOps.Unary.eval h uop d1 = Some d2 ->             (**r ∧ [⊞ d₁ = d₂] *)
-      ergo_expr_sem mc env (EUnaryOp a uop e1) d2
-  | sem_EBinnaryOp : forall a bop mc env e1 e2 h d1 d2 d3,
+      ergo_expr_sem mc env (EUnaryBuiltin a uop e1) d2
+  | sem_EBinaryBuiltin : forall a bop mc env e1 e2 h d1 d2 d3,
       ergo_expr_sem mc env e1 d1 ->
       ergo_expr_sem mc env e2 d2 ->
       ErgoOps.Binary.eval h bop d1 d2 = Some d3 ->
-      ergo_expr_sem mc env (EBinaryOp a bop e1 e2) d2
+      ergo_expr_sem mc env (EBinaryBuiltin a bop e1 e2) d2
   | sem_EIf_true : forall a mc env e1 e2 e3 d,
       ergo_expr_sem mc env e1 (ErgoData.dbool true) ->
       ergo_expr_sem mc env e2 d ->

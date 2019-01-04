@@ -20,9 +20,9 @@ Require Import ErgoSpec.Common.Utils.Provenance.
 Section Ast.
   Section Imports.
     Section Defn.
-      Context {A:Set}. (* Type for annotations *)
-      Context {N:Set}. (* Type for names *)
-  
+      Context {A:Set}. (* For expression annotations *)
+      Context {N:Set}. (* For names *)
+
       Inductive import_decl : Set :=
       | ImportAll : A -> namespace_name -> import_decl
       | ImportSelf : A -> namespace_name -> import_decl
@@ -72,5 +72,36 @@ Section Ast.
     Definition lrergo_pattern := @ergo_pattern provenance relative_name.
     Definition laergo_pattern := @ergo_pattern provenance absolute_name.
   End Patterns.
-  
+
+  Section Operators.
+    (** Operators -- Those can be overloaded *)
+    Inductive ergo_binary_operator :=
+    | EOpPlus : ergo_binary_operator
+    | EOpMinus : ergo_binary_operator
+    | EOpMultiply : ergo_binary_operator
+    | EOpDivide : ergo_binary_operator
+    | EOpGe : ergo_binary_operator
+    | EOpGt : ergo_binary_operator
+    | EOpLe : ergo_binary_operator
+    | EOpLt : ergo_binary_operator
+    .
+
+    Local Open Scope string.
+
+    Global Instance ToString_ergo_binary_operator : ToString ergo_binary_operator
+      := {toString :=
+            fun (op:ergo_binary_operator) =>
+              match op with
+              | EOpPlus => "+"
+              | EOpMinus => "-"
+              | EOpMultiply => "*"
+              | EOpDivide => "/"
+              | EOpGe => ">="
+              | EOpGt => ">"
+              | EOpLe => "<="
+              | EOpLt => "<"
+              end
+         }.
+
+  End Operators.
 End Ast.

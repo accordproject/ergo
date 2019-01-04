@@ -30,10 +30,11 @@ MODULES = \
   Common/Utils/Provenance \
   Common/Utils/Names \
   Common/Utils/NamespaceContext \
-  Common/Utils/Result \
   Common/Utils/Ast \
+  Common/Utils/Result \
   Common/Utils/PrintTypedData \
   Common/CTO/CTO \
+  Common/Types/ErgoCTypeUtil \
   Common/Types/ErgoType \
   Common/Types/ErgoTypetoErgoCType \
   Ergo/Lang/Ergo \
@@ -44,10 +45,11 @@ MODULES = \
   ErgoC/Lang/ErgoC \
   ErgoC/Lang/ErgoCSugar \
   ErgoC/Lang/ErgoCStdlib \
+  ErgoC/Lang/ErgoCT \
   ErgoC/Lang/ErgoCEvalContext \
   ErgoC/Lang/ErgoCEval \
-  ErgoC/Lang/ErgoCTypeContext \
-  ErgoC/Lang/ErgoCType \
+  ErgoC/Lang/ErgoCTypecheckContext \
+  ErgoC/Lang/ErgoCTypecheck \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
   Translation/CTOtoErgo \
@@ -55,7 +57,7 @@ MODULES = \
   Translation/ErgoCompContext \
   Translation/ErgoCInline \
   Translation/ErgotoErgoC \
-  Translation/ErgoCtoErgoNNRC \
+  Translation/ErgoCTtoErgoNNRC \
   Translation/ErgoNNRCtoJavaScript \
   Translation/ErgoNNRCtoCicero \
   Translation/ErgoNNRCtoJava \

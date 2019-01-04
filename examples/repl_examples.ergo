@@ -32,7 +32,7 @@ emit "Two for the show";\
 emit "Three to get ready";\
 return "Now go, cat, go"
 
-enforce 2 +i 2 = 5;\
+enforce 2 + 2 = 5;\
 return "Big Brother is watching you."
 
 set state "New York"; enforce state = "New York"; return state
@@ -100,18 +100,18 @@ enforce !(1.0 > 2.0); \
 enforce 2.0 > 1.0; \
 return "(comparisons on Double) work"
 
-enforce 1 <i 2; \
-enforce !(2 <i 1); \
-enforce !(1 <i 1); \
-enforce 1 <=i 1; \
-enforce 1 <=i 2; \
-enforce !(2 <=i 1); \
-enforce !(1 >=i 2); \
-enforce 2 >=i 1; \
-enforce 1 >=i 1; \
-enforce !(1 >i 1); \
-enforce !(1 >i 2); \
-enforce 2 >i 1; \
+enforce 1 < 2; \
+enforce !(2 < 1); \
+enforce !(1 < 1); \
+enforce 1 <= 1; \
+enforce 1 <= 2; \
+enforce !(2 <= 1); \
+enforce !(1 >= 2); \
+enforce 2 >= 1; \
+enforce 1 >= 1; \
+enforce !(1 > 1); \
+enforce !(1 > 2); \
+enforce 2 > 1; \
 return "(comparisons on Integer) work"
 
 define concept A{ a : Integer }

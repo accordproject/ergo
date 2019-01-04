@@ -66,12 +66,16 @@ Section ErgotoErgoC.
             acc
       in
       elift (EArray prov) (fold_right proc_one init_el el)
-    | EUnaryOp prov u e =>
+    | EBinaryOperator prov b e1 e2 =>
+      elift2 (EBinaryOperator prov b)
+             (ergo_expr_to_ergoc_expr ctxt e1)
+             (ergo_expr_to_ergoc_expr ctxt e2)
+    | EUnaryBuiltin prov u e =>
       elift
-        (EUnaryOp prov u)
+        (EUnaryBuiltin prov u)
         (ergo_expr_to_ergoc_expr ctxt e)
-    | EBinaryOp prov b e1 e2 =>
-      elift2 (EBinaryOp prov b)
+    | EBinaryBuiltin prov b e1 e2 =>
+      elift2 (EBinaryBuiltin prov b)
              (ergo_expr_to_ergoc_expr ctxt e1)
              (ergo_expr_to_ergoc_expr ctxt e2)
     | EIf prov e1 e2 e3 =>
@@ -142,7 +146,7 @@ Section ErgotoErgoC.
                        EMatch prov ec0 eccases ecdefault)
                     ecdefault) eccases) ec0
     | EForeach prov foreachs econd e2 =>
-      let init_e2 := elift (EUnaryOp prov OpBag) (ergo_expr_to_ergoc_expr ctxt e2) in
+      let init_e2 := elift (EUnaryBuiltin prov OpBag) (ergo_expr_to_ergoc_expr ctxt e2) in
       let init_e :=
           match econd with
           | Some econd =>
@@ -160,7 +164,7 @@ Section ErgotoErgoC.
       let proc_one (foreach:string * laergo_expr) (acc:eresult ergoc_expr) : eresult ergoc_expr :=
           let v := fst foreach in
           let e := ergo_expr_to_ergoc_expr ctxt (snd foreach) in
-          elift (EUnaryOp prov OpFlatten)
+          elift (EUnaryBuiltin prov OpFlatten)
                 (eolift (fun single =>
                            elift
                              (EForeach prov
@@ -268,13 +272,13 @@ Section ErgotoErgoC.
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 None s3 =>
       elift3 (EIf prov)
-             (elift (EUnaryOp prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
+             (elift (EUnaryBuiltin prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
              (esuccess (EError prov
                                (EConst prov (enforce_error_content prov ""))))
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 (Some s2) s3 =>
       elift3 (EIf prov)
-             (elift (EUnaryOp prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
+             (elift (EUnaryBuiltin prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
              (ergo_stmt_to_expr ctxt s2)
              (ergo_stmt_to_expr ctxt s3)
     | SMatch prov e0 scases sdefault =>

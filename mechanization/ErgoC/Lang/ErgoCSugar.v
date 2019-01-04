@@ -18,12 +18,13 @@
 
 Require Import String.
 Require Import List.
+
+Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.Provenance.
 Require Import ErgoSpec.Common.Utils.Names.
 Require Import ErgoSpec.Common.Utils.Result.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
-Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoCSugar.
   Definition mkResult (prov:provenance) e1 e2 e3 : ergoc_expr :=
@@ -42,9 +43,9 @@ Section ErgoCSugar.
 
   Definition thisClause (prov:provenance) clause_name : ergoc_expr :=
     let prov := ProvThisClause (loc_of_provenance prov) in
-    EUnaryOp prov
-             (OpDot clause_name)
-             (EUnaryOp prov OpUnbrand (EVar prov this_contract)).
+    EUnaryBuiltin prov
+                  (OpDot clause_name)
+                  (EUnaryBuiltin prov OpUnbrand (EVar prov this_contract)).
 
   Definition thisState (prov:provenance) : ergoc_expr :=
     let prov := ProvThisState (loc_of_provenance prov) in
@@ -52,16 +53,16 @@ Section ErgoCSugar.
 
   Definition pushEmit (prov:provenance) e1 e2 : ergoc_expr :=
     ELet prov local_emit None
-         (EBinaryOp prov
-                    OpBagUnion
-                    (EUnaryOp prov OpBag e1)
-                    (EVar prov local_emit))
+         (EBinaryBuiltin prov
+                         OpBagUnion
+                         (EUnaryBuiltin prov OpBag e1)
+                         (EVar prov local_emit))
          e2.
 
   Definition ESuccess (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
-    EUnaryOp prov OpLeft e.
+    EUnaryBuiltin prov OpLeft e.
 
   Definition EError (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
-    EUnaryOp prov OpRight e.
+    EUnaryBuiltin prov OpRight e.
 
 End ErgoCSugar.

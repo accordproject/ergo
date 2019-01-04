@@ -22,15 +22,16 @@ Require Import ErgoSpec.Common.Utils.Ast.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoMap.
-  Context {A:Set}. (* Type for annotations *)
-  Context {N:Set}. (* Type for names *)
+  Context {A:Set}. (* For expression annotations *)
+  Context {A':Set}. (* For type annotations *)
+  Context {N:Set}. (* For names *)
 
   Fixpoint ergo_map_expr {C : Set}
            (ctx : C)
-           (ctxt_new_variable_scope : C -> string -> @ergo_expr A N -> C)
-           (fn : C -> @ergo_expr A N -> option (eresult (@ergo_expr A N)))
-           (expr : @ergo_expr A N)
-    : eresult (@ergo_expr A N) :=
+           (ctxt_new_variable_scope : C -> string -> @ergo_expr A A' N -> C)
+           (fn : C -> @ergo_expr A A' N -> option (eresult (@ergo_expr A A' N)))
+           (expr : @ergo_expr A A' N)
+    : eresult (@ergo_expr A A' N) :=
     let maybe_fn := elift_maybe (fn ctx) in
     maybe_fn
       match expr with
@@ -48,10 +49,14 @@ Section ErgoMap.
                  (fun ls na =>
                     elift2 postpend ls (ergo_map_expr ctx ctxt_new_variable_scope fn na))
                  a (esuccess nil))
-      | EUnaryOp loc o e =>
-        elift (EUnaryOp loc o) (ergo_map_expr ctx ctxt_new_variable_scope fn e)
-      | EBinaryOp loc o e1 e2 =>
-        elift2 (EBinaryOp loc o)
+      | EUnaryBuiltin loc o e =>
+        elift (EUnaryBuiltin loc o) (ergo_map_expr ctx ctxt_new_variable_scope fn e)
+      | EBinaryBuiltin loc o e1 e2 =>
+        elift2 (EBinaryBuiltin loc o)
+               (ergo_map_expr ctx ctxt_new_variable_scope fn e1)
+               (ergo_map_expr ctx ctxt_new_variable_scope fn e2)
+      | EBinaryOperator loc o e1 e2 =>
+        elift2 (EBinaryOperator loc o)
                (ergo_map_expr ctx ctxt_new_variable_scope fn e1)
                (ergo_map_expr ctx ctxt_new_variable_scope fn e2)
       | EIf loc c t f =>
