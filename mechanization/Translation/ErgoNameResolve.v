@@ -334,6 +334,9 @@ Section ErgoNameResolution.
               acc
         in
         elift (EArray prov) (fold_right proc_one init_el el)
+      | EUnaryOperator prov u e =>
+        elift (EUnaryOperator prov u)
+              (resolve_ergo_expr ectxt nsctxt e)
       | EBinaryOperator prov b e1 e2 =>
         elift2 (EBinaryOperator prov b)
                (resolve_ergo_expr ectxt nsctxt e1)

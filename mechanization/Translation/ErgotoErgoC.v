@@ -66,6 +66,10 @@ Section ErgotoErgoC.
             acc
       in
       elift (EArray prov) (fold_right proc_one init_el el)
+    | EUnaryOperator prov u e =>
+      elift
+        (EUnaryOperator prov u)
+        (ergo_expr_to_ergoc_expr ctxt e)
     | EBinaryOperator prov b e1 e2 =>
       elift2 (EBinaryOperator prov b)
              (ergo_expr_to_ergoc_expr ctxt e1)

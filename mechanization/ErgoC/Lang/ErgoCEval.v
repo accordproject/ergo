@@ -69,10 +69,10 @@ Section ErgoCTEval.
             es (esuccess nil)
       in
       elift dcoll rcoll
-    (*** XXX - DISPATCH HERE *)
+    | EUnaryOperator (prov,_) o e =>
+      eval_unary_operator_error prov o
     | EBinaryOperator (prov,_) o e1 e2 =>
       eval_binary_operator_error prov o
-    (*** XXX - DISPATCH HERE *)
     | EUnaryBuiltin (prov,_) o e  =>
       match ergoct_eval_expr ctxt e with
       | Success _ _ e' =>

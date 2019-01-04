@@ -97,7 +97,6 @@ rule token sbuff = parse
 | "^" { CARROT }
 | "/" { SLASH }
 | "-" { MINUS }
-| "-i" { MINUSI }
 | "," { COMMA }
 | ":" { COLON }
 | "?." { QUESTIONDOT }

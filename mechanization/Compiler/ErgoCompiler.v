@@ -217,6 +217,8 @@ Module ErgoCompiler.
     := Ergo.ESome prov.
   Definition earray prov arr : ergo_expr
     := Ergo.EArray prov arr.
+  Definition eunaryoperator prov b e : ergo_expr 
+    := Ergo.EUnaryOperator prov b e.
   Definition ebinaryoperator prov b e1 e2 : ergo_expr 
     := Ergo.EBinaryOperator prov b e1 e2.
   Definition eunarybuiltin prov u e : ergo_expr
