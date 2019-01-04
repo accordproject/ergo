@@ -155,7 +155,8 @@ contract HelloWorld over TemplateModel {
       accordproject_base_namespace
       nil
       (cto_typed_top::nil).
-  Definition ctos : list ergo_input := InputCTO cto_hl::nil.
+
+  Definition ctos : list lrergo_input := InputCTO cto_hl::nil.
   
   Definition ergo_stdlib : lrergo_module :=
     mkModule

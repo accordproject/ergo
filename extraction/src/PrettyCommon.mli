@@ -97,7 +97,7 @@ val pretty_data : Format.formatter -> data -> unit
 
 (* Pretty qcert_type *)
 
-val pretty_rtype_aux : symbols -> Format.formatter -> ErgoCTypes.ectype_struct -> unit
+val pretty_rtype_aux : symbols -> Format.formatter -> ErgoCType.ectype_struct -> unit
 
 (* Pretty operators *)
 

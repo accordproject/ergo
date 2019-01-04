@@ -113,7 +113,7 @@ Section ErgoExpand.
 
   (* XXX Has to be fixed to use brands -- needs fixes in code-generation *)
   Definition default_state (prov:provenance) : laergo_expr :=
-    EUnaryOp prov
+    EUnaryBuiltin prov
              (OpBrand (default_state_absolute_name::nil))
              (EConst prov (drec (("stateId",dstring "1") :: nil)))%string.
 

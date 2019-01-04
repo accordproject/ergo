@@ -25,19 +25,20 @@ Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoSugar.
-  Context {A:Set}. (* Type for annotations *)
+  Context {A:Set}. (* For expression annotations *)
+  Context {A':Set}. (* For type annotations *)
   
   (** [expr.field] is a macro for unbranding followed by field access in a record *)
-  Definition EDot (a:A) (s:string) (e:rergo_expr) : rergo_expr :=
-    EUnaryOp a
+  Definition EDot (a:A) (s:string) (e:rergo_expr) : @rergo_expr A A' :=
+    EUnaryBuiltin a
              (ErgoOps.Unary.opdot s)
-             (EUnaryOp a ErgoOps.Unary.opunbrand e).
+             (EUnaryBuiltin a ErgoOps.Unary.opunbrand e).
 
-  Definition SReturnEmpty (a:A) : rergo_stmt := SReturn a (EConst a dunit).
+  Definition SReturnEmpty (a:A) : @rergo_stmt A A' := SReturn a (EConst a dunit).
 
-  Definition EFunReturnEmpty (a:A) : rergo_expr := EConst a dunit.
+  Definition EFunReturnEmpty (a:A) : @rergo_expr A A' := EConst a dunit.
 
-  Definition EOptionalDot (a:A) (pname:string) (e:rergo_expr) :=
+  Definition EOptionalDot (a:A) (pname:string) (e:@rergo_expr A A') :=
     EMatch a
            e
            ((CaseLetOption a "$option" None,
@@ -45,7 +46,7 @@ Section ErgoSugar.
                     (EDot a pname (EVar a "$option")))) :: nil)
            (ENone a).
 
-  Definition EOptionalDefault (a:A) (e1 e2:rergo_expr) :=
+  Definition EOptionalDefault (a:A) (e1 e2:@rergo_expr A A') :=
     EMatch a e1
            ((CaseLetOption a "$option" None, EVar a "$option") :: nil)
            e2.

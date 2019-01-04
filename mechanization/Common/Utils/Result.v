@@ -21,6 +21,7 @@ Require Import ZArith.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Utils.Provenance.
 Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Common.Utils.Ast.
 
 Section Result.
   Inductive eerror : Set :=
@@ -91,15 +92,6 @@ Section Result.
           eolift (fun acc => f acc x) acc
       in
       fold_left proc_one l (esuccess a).
-
-    (* Variant of Fold-left for functions passing eresults with a context *)
-    Definition elift_context_fold_left_alt {A:Set} {B:Set} {C:Set}
-               (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
-      elift_fold_left
-        (fun acc c =>
-           elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
-        l
-        (nil, c).
 
     (* Variant of Fold-left for functions passing eresults with a context *)
     Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
@@ -189,10 +181,15 @@ Section Result.
       efailure (ECompilationError prov ("Parameter mismatch when calling function '" ++ fname ++ "'")).
 
     (** Other runtime errors *)
-    Definition eval_unary_op_error {A} prov (op:ErgoOps.Unary.op) : eresult A :=
-      efailure (ERuntimeError prov "Unary operation failed.").
-    Definition eval_binary_op_error {A} prov (op:ErgoOps.Binary.op) : eresult A :=
-      efailure (ERuntimeError prov "Binary operation failed.").
+    Definition eval_unary_builtin_error {A} prov (op:ErgoOps.Unary.op) : eresult A :=
+      let op_name := toString op in
+      efailure (ERuntimeError prov ("Evaluation for builtin unary operator [" ++ op_name ++ "] failed.")).
+    Definition eval_binary_builtin_error {A} prov (op:ErgoOps.Binary.op) : eresult A :=
+      let op_name := toString op in
+      efailure (ERuntimeError prov ("Evaluation for builtin binary operator [" ++ op_name ++ "] failed.")).
+    Definition eval_binary_operator_error {A} prov (op:ergo_binary_operator) : eresult A :=
+      let op_name := toString op in
+      efailure (ESystemError prov ("Unexpected operator [" ++ op_name ++ "] during eval (should have been resolved).")).
     Definition eval_if_not_boolean_error {A} prov : eresult A :=
       efailure (ERuntimeError prov "'If' condition not boolean.").
     Definition eval_match_let_optional_not_on_option_error {A} prov : eresult A :=
@@ -228,6 +225,8 @@ Section Result.
       efailure (ESystemError prov "Should not find 'contract' in Ergo Calculus").
     Definition clause_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should not find 'clause' in Ergo Calculus").
+    Definition operator_in_calculus_error {A} prov : eresult A :=
+      efailure (ESystemError prov "Should not find an overloaded operator in Ergo Calculus").
     Definition state_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should not find 'state' in Ergo Calculus").
     Definition complex_foreach_in_calculus_error {A} prov : eresult A :=

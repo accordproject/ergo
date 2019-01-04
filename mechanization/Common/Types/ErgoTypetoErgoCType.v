@@ -100,7 +100,9 @@ Section ErgoTypetoErgoCType.
 
   Section ErgoTypetoErgoCType.
     Context {m:brand_relation}.
-    Import ErgoCTypes.
+
+    Import ErgoCType.
+
     Definition enums_ctxt : Set := list string.
 
     Fixpoint ergo_type_to_ergoc_type (t:laergo_type) : ergoc_type :=
@@ -147,7 +149,8 @@ Section ErgoTypetoErgoCType.
 
   Section Translate.
     Local Open Scope string.
-    Import ErgoCTypes.
+    
+    Import ErgoCType.
 
     Definition brand_relation_maybe hierarchy : eresult tbrand_relation
       := eresult_of_qresult dummy_provenance (mk_tbrand_relation hierarchy).
@@ -177,7 +180,7 @@ Section ErgoTypetoErgoCType.
 
     Definition brand_model_of_declarations
                (decls:list laergo_type_declaration)
-      : eresult ErgoCTypes.tbrand_model :=
+      : eresult ErgoCType.tbrand_model :=
       let decls := sort_decls decls in
       let ctxt := ergo_expand_extends_in_declarations decls in
       let hierarchy := ergo_hierarchy_from_expand ctxt in
@@ -188,7 +191,7 @@ Section ErgoTypetoErgoCType.
 
     Definition force_brand_model_of_declarations
                (decls:list laergo_type_declaration)
-      : ErgoCTypes.tbrand_model :=
+      : ErgoCType.tbrand_model :=
       match brand_model_of_declarations decls with
       | Success _ _ s => s
       | Failure _ _ e => tempty_brand_model (* Not used *)

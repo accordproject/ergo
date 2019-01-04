@@ -56,9 +56,8 @@ let mk_provenance
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
-%token LTI GTI LTEQI GTEQI
 %token PLUS MINUS STAR SLASH CARROT
-%token PLUSI MINUSI STARI SLASHI
+%token MINUSI
 %token PLUSPLUS
 %token DOT QUESTIONDOT COMMA COLON SEMI
 %token QUESTION QUESTIONQUESTION UNDERSCORE
@@ -75,10 +74,10 @@ let mk_provenance
 %left OR
 %left AND
 %left EQUAL NEQUAL
-%left LT GT LTEQ GTEQ LTI GTI LTEQI GTEQI
+%left LT GT LTEQ GTEQ
 %left QUESTIONQUESTION
-%left PLUS MINUS PLUSI MINUSI
-%left STAR SLASH STARI SLASHI
+%left PLUS MINUS
+%left STAR SLASH
 %left CARROT
 %left PLUSPLUS
 %nonassoc uminus
@@ -408,56 +407,40 @@ expr:
     { ErgoCompiler.eforeach (mk_provenance $startpos $endpos) fl (Some econd) e2 }
 (* Unary operators *)
 | MINUS e = expr %prec uminus
-    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.Double.opuminus e }
+    { ErgoCompiler.eunarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.Double.opuminus e }
 | MINUSI e = expr %prec uminus
     { ErgoCompiler.opuminusi (mk_provenance $startpos $endpos) e }
 | NOT e = expr
-    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg e }
+    { ErgoCompiler.eunarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg e }
 (* Binary operators *)
 | e1 = expr EQUAL e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opequal e1 e2 }
+    { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opequal e1 e2 }
 | e1 = expr NEQUAL e2 = expr
-    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opequal e1 e2) }
+    { ErgoCompiler.eunarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opequal e1 e2) }
 | e1 = expr LT e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.oplt e1 e2 }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpLt e1 e2 }
 | e1 = expr LTEQ e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.ople e1 e2 }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpLe e1 e2 }
 | e1 = expr GT e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opgt e1 e2 }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpGt e1 e2 }
 | e1 = expr GTEQ e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opge e1 e2 }
-| e1 = expr LTI e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplti e1 e2 }
-| e1 = expr LTEQI e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplei e1 e2 }
-| e1 = expr GTI e2 = expr
-    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplei e1 e2) }
-| e1 = expr GTEQI e2 = expr
-    { ErgoCompiler.eunaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Unary.opneg (ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.oplti e1 e2) }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpGe e1 e2 }
 | e1 = expr MINUS e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opminus e1 e2 }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpMinus e1 e2 }
 | e1 = expr PLUS e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opplus e1 e2 }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpPlus e1 e2 }
 | e1 = expr STAR e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opmult e1 e2 }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpMultiply e1 e2 }
 | e1 = expr SLASH e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.opdiv e1 e2 }
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpDivide e1 e2 }
 | e1 = expr CARROT e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.oppow e1 e2 }
-| e1 = expr MINUSI e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opminusi e1 e2 }
-| e1 = expr PLUSI e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opplusi e1 e2 }
-| e1 = expr STARI e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opmulti e1 e2 }
-| e1 = expr SLASHI e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Integer.opdivi e1 e2 }
+    { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.oppow e1 e2 }
 | e1 = expr AND e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opand e1 e2 }
+    { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opand e1 e2 }
 | e1 = expr OR e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opor e1 e2 }
+    { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opor e1 e2 }
 | e1 = expr PLUSPLUS e2 = expr
-    { ErgoCompiler.ebinaryop (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opstringconcat e1 e2 }
+    { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opstringconcat e1 e2 }
 
 (* foreach list *)
 foreachlist:

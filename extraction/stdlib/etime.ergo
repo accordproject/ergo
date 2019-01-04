@@ -61,45 +61,45 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
   	  match u
 	    with "seconds" then
 	      match du.unit
-	      with "minutes" then du.amount *i 60
-	      with "hours" then du.amount *i 60 *i 60
-	      with "days" then du.amount *i 60 *i 60 *i 24
-	      with "weeks" then du.amount *i 60 *i 60 *i 24 *i 7
+	      with "minutes" then du.amount * 60
+	      with "hours" then du.amount * 60 * 60
+	      with "days" then du.amount * 60 * 60 * 24
+	      with "weeks" then du.amount * 60 * 60 * 24 * 7
 	      else du.amount // Default to seconds
 	    with "minutes" then
 	      match du.unit
-	      with "seconds" then du.amount /i 60
-	      with "hours" then du.amount *i 60
-	      with "days" then du.amount *i 60 *i 24
-	      with "weeks" then du.amount *i 60 *i 24 *i 7
-	      else du.amount *i 60 // Default to seconds
+	      with "seconds" then du.amount / 60
+	      with "hours" then du.amount * 60
+	      with "days" then du.amount * 60 * 24
+	      with "weeks" then du.amount * 60 * 24 * 7
+	      else du.amount * 60 // Default to seconds
 	    with "hours" then
 	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60
-	      with "minutes" then du.amount *i 60
-	      with "days" then du.amount *i 24
-	      with "weeks" then du.amount *i 24 *i 7
-	      else du.amount *i 60 *i 60 // Default to seconds
+	      with "seconds" then du.amount / 60 / 60
+	      with "minutes" then du.amount * 60
+	      with "days" then du.amount * 24
+	      with "weeks" then du.amount * 24 * 7
+	      else du.amount * 60 * 60 // Default to seconds
 	    with "days" then
 	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60 /i 24
-	      with "minutes" then du.amount *i 60 /i 24
-	      with "hours" then du.amount /i 24
-	      with "weeks" then du.amount *i 7
-	      else du.amount /i 60 /i 60 /i 24 // Default to seconds
+	      with "seconds" then du.amount / 60 / 60 / 24
+	      with "minutes" then du.amount * 60 / 24
+	      with "hours" then du.amount / 24
+	      with "weeks" then du.amount * 7
+	      else du.amount / 60 / 60 / 24 // Default to seconds
 	    with "weeks" then
 	      match du.unit
-	      with "seconds" then du.amount /i 60 /i 60 /i 24 /i 7
-	      with "minutes" then du.amount *i 60 /i 24 /i 7
-	      with "hours" then du.amount /i 24 /i 7
-	      with "days" then du.amount /i 7
-	      else du.amount /i 60 /i 60 /i 24 /i 7 // Default to seconds
+	      with "seconds" then du.amount / 60 / 60 / 24 / 7
+	      with "minutes" then du.amount * 60 / 24 / 7
+	      with "hours" then du.amount / 24 / 7
+	      with "days" then du.amount / 7
+	      else du.amount / 60 / 60 / 24 / 7 // Default to seconds
 	    else // Default to seconds
 	      match du.unit
-	      with "minutes" then du.amount *i 60
-	      with "hours" then du.amount *i 60 *i 60
-	      with "days" then du.amount *i 60 *i 60 *i 24
-	      with "week" then du.amount *i 60 *i 60 *i 24 *i 7
+	      with "minutes" then du.amount * 60
+	      with "hours" then du.amount * 60 * 60
+	      with "days" then du.amount * 60 * 60 * 24
+	      with "week" then du.amount * 60 * 60 * 24 * 7
 	      else du.amount // Default to seconds
 		;
 		return Duration{ unit: u, amount: amount }

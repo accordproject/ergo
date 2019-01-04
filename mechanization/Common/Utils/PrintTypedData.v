@@ -103,7 +103,7 @@ Section PrintTypedData.
   End Data.
 
   Section Types.
-    Import ErgoCTypes.
+    Import ErgoCType.
     
     Context {br:brand_model}.
 

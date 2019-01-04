@@ -26,12 +26,12 @@ Module ErgoEnhancedBackend := ErgoBackendRuntime.ErgoBackendRuntime <+ ErgoEnhan
 Module ErgoData := EData.EData(ErgoEnhancedBackend).
 Module ErgoOps := EOperators.EOperators(ErgoEnhancedBackend).
 Module ErgoCodeGen := ECodeGen.ECodeGen(ErgoEnhancedBackend).
-Module ErgoCTypes := ECType.ECType(ErgoEnhancedBackend).
+Module ErgoCType := ECType.ECType(ErgoEnhancedBackend).
 
 (* Useful definitions *)
 Section Defs.
   Definition zip {A} {B} : list A -> list B -> option (list (A * B)) := zip.
   Definition ergo_data := ErgoData.data.
-  Definition ergoc_type {br} := @ErgoCTypes.ectype br.
+  Definition ergoc_type {br} := @ErgoCType.ectype br.
 End Defs.
 

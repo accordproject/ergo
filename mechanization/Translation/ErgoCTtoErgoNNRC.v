@@ -26,41 +26,44 @@ Require Import ErgoSpec.Common.Utils.Result.
 Require Import ErgoSpec.Common.Utils.Ast.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCT.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRCSugar.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
-Section ErgoCtoErgoNNRC.
-  Definition ergo_pattern_to_nnrc (input_expr:nnrc_expr) (p:laergo_pattern) : (list string * nnrc_expr) :=
+Section ErgoCTtoErgoNNRC.
+  Context {m : brand_model}.
+
+  Definition ergo_pattern_to_nnrc (input_expr:nnrc_expr) (p:tlaergo_pattern) : (list string * nnrc_expr) :=
     match p with
-    | CaseData prov d =>
+    | CaseData _ d =>
       (nil, NNRCIf (NNRCBinop OpEqual input_expr (NNRCConst d))
                    (NNRCUnop OpLeft (NNRCConst (drec nil)))
                    (NNRCUnop OpRight (NNRCConst dunit)))
-    | CaseWildcard prov None =>
+    | CaseWildcard _ None =>
       (nil, NNRCUnop OpLeft (NNRCConst (drec nil)))
-    | CaseWildcard prov (Some type_name) =>
+    | CaseWildcard _ (Some type_name) =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
       (nil, NNRCEither
               (NNRCUnop (OpCast (type_name::nil)) input_expr)
               v1 (NNRCUnop OpLeft (NNRCConst (drec nil)))
               v2 (NNRCUnop OpRight (NNRCConst dunit)))
-    | CaseLet prov v None =>
+    | CaseLet _ v None =>
       (v::nil, NNRCUnop OpLeft (NNRCUnop (OpRec v) input_expr))
-    | CaseLet prov v (Some type_name) =>
+    | CaseLet _ v (Some type_name) =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
       (v::nil, NNRCEither
                  (NNRCUnop (OpCast (type_name::nil)) input_expr)
                  v1 (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1)))
                  v2 (NNRCUnop OpRight (NNRCConst dunit)))
-    | CaseLetOption prov v None =>
+    | CaseLetOption _ v None =>
       let v1 := fresh_var "$case" nil in
       (v::nil, (NNRCLet v1 input_expr
                         (NNRCIf
                            (NNRCBinop OpEqual (NNRCVar v1) (NNRCConst dunit))
                            (NNRCUnop OpRight (NNRCConst dunit))
                            (NNRCUnop OpLeft (NNRCUnop (OpRec v) (NNRCVar v1))))))
-    | CaseLetOption prov v (Some type_name) =>
+    | CaseLetOption _ v (Some type_name) =>
       let (v1,v2) := fresh_var2 "$case" "$case" nil in
       (v::nil, (NNRCLet v1 input_expr
                         (NNRCIf
@@ -96,89 +99,91 @@ Section ErgoCtoErgoNNRC.
   .
 
   (** Translate calculus expressions to NNRC *)
-  Fixpoint ergoc_expr_to_nnrc
-           (env:list string) (e:ergoc_expr) : eresult nnrc_expr :=
+  Fixpoint ergoct_expr_to_nnrc
+           (env:list string) (e:ergoct_expr) : eresult nnrc_expr :=
     match e with
-    | EThisContract prov => contract_in_calculus_error prov (* XXX We should prove it never happens *)
-    | EThisClause prov => clause_in_calculus_error prov (* XXX We should prove it never happens *)
-    | EThisState prov => state_in_calculus_error prov (* XXX We should prove it never happens *)
-    | EVar prov v =>
+    | EThisContract (prov,_) => contract_in_calculus_error prov (* XXX We should prove it never happens *)
+    | EThisClause (prov,_) => clause_in_calculus_error prov (* XXX We should prove it never happens *)
+    | EThisState (prov,_) => state_in_calculus_error prov (* XXX We should prove it never happens *)
+    | EVar (prov,_) v =>
       if in_dec string_dec v env
       then esuccess (NNRCGetConstant v)
       else esuccess (NNRCVar v)
-    | EConst prov d =>
+    | EConst (prov,_) d =>
       esuccess (NNRCConst d)
-    | ENone prov => esuccess (NNRCConst dunit) (* XXX Not safe ! *)
-    | ESome prov e => ergoc_expr_to_nnrc env e (* XXX Not safe ! *)
-    | EArray prov el =>
+    | ENone (prov,_) => esuccess (NNRCConst dunit) (* XXX Not safe ! *)
+    | ESome (prov,_) e => ergoct_expr_to_nnrc env e (* XXX Not safe ! *)
+    | EArray (prov,_) el =>
       let init_el := esuccess nil in
       let proc_one (e:ergo_expr) (acc:eresult (list nnrc_expr)) : eresult (list nnrc_expr) :=
           elift2
             cons
-            (ergoc_expr_to_nnrc env e)
+            (ergoct_expr_to_nnrc env e)
             acc
       in
       elift new_array (fold_right proc_one init_el el)
-    | EUnaryOp prov u e =>
+    | EBinaryOperator (prov,_) b e1 e2 =>
+      operator_in_calculus_error prov (* XXX We should prove it never happens *)
+    | EUnaryBuiltin (prov,_) u e =>
       elift (NNRCUnop u)
-            (ergoc_expr_to_nnrc env e)
-    | EBinaryOp prov b e1 e2 =>
+            (ergoct_expr_to_nnrc env e)
+    | EBinaryBuiltin (prov,_) b e1 e2 =>
       elift2 (NNRCBinop b)
-             (ergoc_expr_to_nnrc env e1)
-             (ergoc_expr_to_nnrc env e2)
-    | EIf prov e1 e2 e3 =>
+             (ergoct_expr_to_nnrc env e1)
+             (ergoct_expr_to_nnrc env e2)
+    | EIf (prov,_) e1 e2 e3 =>
       elift3 NNRCIf
-        (ergoc_expr_to_nnrc env e1)
-        (ergoc_expr_to_nnrc env e2)
-        (ergoc_expr_to_nnrc env e3)
-    | ELet prov v None e1 e2 =>
+        (ergoct_expr_to_nnrc env e1)
+        (ergoct_expr_to_nnrc env e2)
+        (ergoct_expr_to_nnrc env e3)
+    | ELet (prov,_) v None e1 e2 =>
       elift2 (NNRCLet v)
-              (ergoc_expr_to_nnrc env e1)
-              (ergoc_expr_to_nnrc env e2)
-    | ELet prov v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
+              (ergoct_expr_to_nnrc env e1)
+              (ergoct_expr_to_nnrc env e2)
+    | ELet (prov,_) v (Some t1) e1 e2 => (** XXX TYPE IS IGNORED AT THE MOMENT *)
       elift2 (NNRCLet v)
-              (ergoc_expr_to_nnrc env e1)
-              (ergoc_expr_to_nnrc env e2)
-    | ENew prov cr nil =>
+              (ergoct_expr_to_nnrc env e1)
+              (ergoct_expr_to_nnrc env e2)
+    | ENew (prov,_) cr nil =>
       esuccess (new_expr cr (NNRCConst (drec nil)))
-    | ENew prov cr ((s0,init)::rest) =>
+    | ENew (prov,_) cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
-          elift (NNRCUnop (OpRec s0)) (ergoc_expr_to_nnrc env init)
+          elift (NNRCUnop (OpRec s0)) (ergoct_expr_to_nnrc env init)
       in
       let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
-          let e := ergoc_expr_to_nnrc env (snd att) in
+          let e := ergoct_expr_to_nnrc env (snd att) in
           elift2 (NNRCBinop OpRecConcat)
                  acc (elift (NNRCUnop (OpRec attname)) e)
       in
       elift (new_expr cr) (fold_left proc_one rest init_rec)
-    | ERecord prov nil =>
+    | ERecord (prov,_) nil =>
       esuccess (NNRCConst (drec nil))
-    | ERecord prov ((s0,init)::rest) =>
+    | ERecord (prov,_) ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
-          elift (NNRCUnop (OpRec s0)) (ergoc_expr_to_nnrc env init)
+          elift (NNRCUnop (OpRec s0)) (ergoct_expr_to_nnrc env init)
       in
       let proc_one (acc:eresult nnrc) (att:string * ergo_expr) : eresult nnrc :=
           let attname := fst att in
-          let e := ergoc_expr_to_nnrc env (snd att) in
+          let e := ergoct_expr_to_nnrc env (snd att) in
           elift2 (NNRCBinop OpRecConcat)
                  acc (elift (NNRCUnop (OpRec attname)) e)
       in
       fold_left proc_one rest init_rec
-    | ECallFun prov fname _ => function_not_inlined_error prov "ec2en/expr" fname
-    | ECallFunInGroup prov gname fname _ => function_in_group_not_inlined_error prov gname fname
-    | EMatch prov e0 ecases edefault =>
-      let ec0 := ergoc_expr_to_nnrc env e0 in
+    | ECallFun (prov,_) fname _ => function_not_inlined_error prov "ec2en/expr" fname
+    | ECallFunInGroup (prov,_) gname fname _ => function_in_group_not_inlined_error prov gname fname
+    | EMatch (prov,_) e0 ecases edefault =>
+      let ec0 := ergoct_expr_to_nnrc env e0 in
       let eccases :=
           let proc_one acc ecase :=
               eolift
                 (fun acc =>
                    elift (fun x => (fst ecase, x)::acc)
-                         (ergoc_expr_to_nnrc env (snd ecase))) acc
+                         (ergoct_expr_to_nnrc env (snd ecase))) acc
           in
           fold_left proc_one ecases (esuccess nil)
       in
-      let ecdefault := ergoc_expr_to_nnrc env edefault in
+      let ecdefault := ergoct_expr_to_nnrc env edefault in
       eolift
         (fun ec0 : nnrc_expr =>
            eolift
@@ -208,86 +213,86 @@ Section ErgoCtoErgoNNRC.
     | EForeach loc ((v,e1)::nil) None e2 =>
       elift2
         (NNRCFor v)
-        (ergoc_expr_to_nnrc env e1)
-        (ergoc_expr_to_nnrc env e2)
-    | EForeach prov _ _ _ =>
+        (ergoct_expr_to_nnrc env e1)
+        (ergoct_expr_to_nnrc env e2)
+    | EForeach (prov,_) _ _ _ =>
       complex_foreach_in_calculus_error prov (* XXX We should prove it never happens *)
     end.
 
   (** Translate a function to function+calculus *)
-  Definition functionc_to_nnrc
+  Definition functionct_to_nnrc
              (fn:absolute_name)
-             (f:ergoc_function) : eresult nnrc_function :=
-    let env := List.map fst f.(functionc_sig).(sigc_params) in
-    match f.(functionc_body) with
+             (f:ergoct_function) : eresult nnrc_function :=
+    let env := List.map fst f.(functionct_sig).(sigc_params) in
+    match f.(functionct_body) with
     | Some body =>
       elift
         (mkFuncN fn)
         (elift
            (mkLambdaN
-              f.(functionc_sig).(sigc_params)
-              f.(functionc_sig).(sigc_output))
-           (ergoc_expr_to_nnrc env body))
-    | None => function_not_inlined_error f.(functionc_annot) "ec2en/function" fn
+              f.(functionct_sig).(sigc_params)
+              f.(functionct_sig).(sigc_output))
+           (ergoct_expr_to_nnrc env body))
+    | None => function_not_inlined_error f.(functionct_annot) "ec2en/function" fn
     end.
 
   (** Translate a declaration to a declaration+calculus *)
-  Definition clausec_declaration_to_nnrc
+  Definition clausect_declaration_to_nnrc
              (fn:absolute_name)
-             (f:ergoc_function) : eresult nnrc_function :=
-    functionc_to_nnrc fn f.
+             (f:ergoct_function) : eresult nnrc_function :=
+    functionct_to_nnrc fn f.
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the translation_context *)
-  Definition contractc_to_nnrc
+  Definition contractct_to_nnrc
              (cn:local_name)
-             (c:ergoc_contract) : eresult nnrc_function_table :=
+             (c:ergoct_contract) : eresult nnrc_function_table :=
     let init := esuccess nil in
     let proc_one
           (acc:eresult (list nnrc_function))
-          (s:absolute_name * ergoc_function)
+          (s:absolute_name * ergoct_function)
         : eresult (list nnrc_function) :=
         eolift
           (fun acc : list nnrc_function =>
              elift (fun news : nnrc_function => news::acc)
-                   (clausec_declaration_to_nnrc (fst s) (snd s)))
+                   (clausect_declaration_to_nnrc (fst s) (snd s)))
           acc
     in
     elift
       (mkFuncTableN cn)
-      (List.fold_left proc_one c.(contractc_clauses) init).
+      (List.fold_left proc_one c.(contractct_clauses) init).
 
   (** Translate a statement to a statement+calculus *)
-  Definition declaration_to_nnrc (s:ergoc_declaration) : eresult nnrc_declaration :=
+  Definition declarationct_to_nnrc (s:ergoct_declaration) : eresult nnrc_declaration :=
     match s with
-    | DCExpr prov e =>
+    | DCTExpr prov e =>
       elift
         DNExpr
-        (ergoc_expr_to_nnrc nil e)
-    | DCConstant prov v _ e => (* Ignores the type annotation *)
+        (ergoct_expr_to_nnrc nil e)
+    | DCTConstant prov v _ e => (* Ignores the type annotation *)
       elift
         (DNConstant v) (* Add new variable to translation_context *)
-        (ergoc_expr_to_nnrc nil e)
-    | DCFunc prov fn f =>
+        (ergoct_expr_to_nnrc nil e)
+    | DCTFunc prov fn f =>
       elift
         DNFunc (* Add new function to translation_context *)
-        (functionc_to_nnrc fn f)
-    | DCContract prov cn c =>
+        (functionct_to_nnrc fn f)
+    | DCTContract prov cn c =>
       elift DNFuncTable
-            (contractc_to_nnrc cn c)
+            (contractct_to_nnrc cn c)
     end.
 
   (** Translate a module to a module+calculus *)
-  Definition declarations_calculus_with_table (dl:list ergoc_declaration)
+  Definition declarationsct_calculus_with_table (dl:list ergoct_declaration)
     : eresult (list nnrc_declaration) :=
     let init := esuccess nil in
     let proc_one
           (acc:eresult (list nnrc_declaration))
-          (s:ergoc_declaration)
+          (s:ergoct_declaration)
         : eresult (list nnrc_declaration) :=
         eolift
           (fun acc : list nnrc_declaration =>
-             let edecl := declaration_to_nnrc s in
+             let edecl := declarationct_to_nnrc s in
              elift (fun news : nnrc_declaration => news::acc)
                    edecl)
           acc
@@ -295,40 +300,42 @@ Section ErgoCtoErgoNNRC.
     List.fold_left proc_one dl init.
 
   (** Translate a module to a module+calculus *)
-  Definition module_to_nnrc_with_table (p:ergoc_module) : eresult nnrc_module :=
+  Definition modulect_to_nnrc_with_table (p:ergoct_module) : eresult nnrc_module :=
     elift
-      (mkModuleN p.(modulec_namespace))
-      (declarations_calculus_with_table p.(modulec_declarations)).
+      (mkModuleN p.(modulect_namespace))
+      (declarationsct_calculus_with_table p.(modulect_declarations)).
 
-  Definition ergoc_module_to_nnrc (m:ergoc_module) : eresult nnrc_module :=
-    module_to_nnrc_with_table m.
+  Definition ergoct_module_to_nnrc (m:ergoct_module) : eresult nnrc_module :=
+    modulect_to_nnrc_with_table m.
 
   Section Examples.
     Open Scope string.
     Definition env0 : list string := nil.
 
+    Definition typed_dummy_provenance : provenance * ergoc_type := (dummy_provenance, Unit).
+    
     (**r Test pattern matching on values *)
     Definition input1 := dnat 2.
-    
-    Example j1 : ergoc_expr :=
-      EMatch dummy_provenance
-             (EConst dummy_provenance input1)
-             ((CaseData dummy_provenance (dnat 1), EConst dummy_provenance (dstring "1"))
-                :: (CaseData dummy_provenance (dnat 2), EConst dummy_provenance (dstring "2"))
+
+    Example j1 : ergoct_expr :=
+      EMatch typed_dummy_provenance
+             (EConst typed_dummy_provenance input1)
+             ((CaseData typed_dummy_provenance (dnat 1), EConst typed_dummy_provenance (dstring "1"))
+                :: (CaseData typed_dummy_provenance (dnat 2), EConst typed_dummy_provenance (dstring "2"))
                 :: nil)
-             (EConst dummy_provenance (dstring "lots")).
-    Definition jc1 := ergoc_expr_to_nnrc env0 j1.
+             (EConst typed_dummy_provenance (dstring "lots")).
+    Definition jc1 := ergoct_expr_to_nnrc env0 j1.
     (* Compute jc1. *)
     (* Compute elift (fun x => nnrc_eval_top nil x nil) jc1. *)
 
-    Example j1' : laergo_expr :=
-      EMatch dummy_provenance
-             (EConst dummy_provenance input1)
-             ((CaseData dummy_provenance (dnat 1), EConst dummy_provenance (dstring "1"))
-                :: (CaseLet dummy_provenance "v2" None, EVar dummy_provenance "v2")
+    Example j1' : ergoct_expr :=
+      EMatch typed_dummy_provenance
+             (EConst typed_dummy_provenance input1)
+             ((CaseData typed_dummy_provenance (dnat 1), EConst typed_dummy_provenance (dstring "1"))
+                :: (CaseLet typed_dummy_provenance "v2" None, EVar typed_dummy_provenance "v2")
                 :: nil)
-             (EConst dummy_provenance (dstring "lots")).
-    Definition jc1' := ergoc_expr_to_nnrc env0 j1'.
+             (EConst typed_dummy_provenance (dstring "lots")).
+    Definition jc1' := ergoct_expr_to_nnrc env0 j1'.
     (* Compute jc1'. *)
     (* Compute elift (fun x => nnrc_eval_top nil x nil) jc1'. *)
 
@@ -336,15 +343,15 @@ Section ErgoCtoErgoNNRC.
     Definition input2 :=
       dbrand ("C2"::nil) (dnat 1).
     
-    Example j2 : laergo_expr :=
-      EMatch dummy_provenance
-             (EConst dummy_provenance input2)
-             ((CaseLet dummy_provenance "v1" (Some "C1"), EConst dummy_provenance (dstring "1"))
-                :: (CaseLet dummy_provenance "v2" (Some "C2"), EConst dummy_provenance (dstring "2"))
+    Example j2 : ergoct_expr :=
+      EMatch typed_dummy_provenance
+             (EConst typed_dummy_provenance input2)
+             ((CaseLet typed_dummy_provenance "v1" (Some "C1"), EConst typed_dummy_provenance (dstring "1"))
+                :: (CaseLet typed_dummy_provenance "v2" (Some "C2"), EConst typed_dummy_provenance (dstring "2"))
                 :: nil)
-             (EConst dummy_provenance (dstring "lots")).
+             (EConst typed_dummy_provenance (dstring "lots")).
 
-    Definition jc2 := ergoc_expr_to_nnrc env0 j2.
+    Definition jc2 := ergoct_expr_to_nnrc env0 j2.
     (* Compute jc2. *)
     (* Compute elift (fun x => nnrc_eval_top nil x nil) jc2. *)
 
@@ -355,48 +362,48 @@ Section ErgoCtoErgoNNRC.
     Definition input3none :=
       dnone.
     
-    Example j3 input : laergo_expr :=
-      EMatch dummy_provenance
-             (EConst dummy_provenance input)
-             ((CaseLetOption dummy_provenance "v1" None, EConst dummy_provenance (dstring "1"))
+    Example j3 input : ergoct_expr :=
+      EMatch typed_dummy_provenance
+             (EConst typed_dummy_provenance input)
+             ((CaseLetOption typed_dummy_provenance "v1" None, EConst typed_dummy_provenance (dstring "1"))
                 :: nil)
-             (EConst dummy_provenance (dstring "nothing")).
+             (EConst typed_dummy_provenance (dstring "nothing")).
 
-    Definition jc3 := ergoc_expr_to_nnrc env0 (j3 input3).
-    Definition jc3none := ergoc_expr_to_nnrc env0 (j3 input3none).
+    Definition jc3 := ergoct_expr_to_nnrc env0 (j3 input3).
+    Definition jc3none := ergoct_expr_to_nnrc env0 (j3 input3none).
     (* Compute jc3. *)
     (* Compute elift (fun x => nnrc_eval_top nil x nil) jc3. *)
     (* Compute jc3none. *)
     (* Compute elift (fun x => nnrc_eval_top nil x nil) jc3none. *)
 
-    Example j4 : laergo_expr :=
-      EForeach dummy_provenance
-               (("x", EConst dummy_provenance (dcoll (dnat 1::dnat 2::dnat 3::nil)))
-                  :: ("y", EConst dummy_provenance (dcoll (dnat 4::dnat 5::dnat 6::nil)))
+    Example j4 : ergoct_expr :=
+      EForeach typed_dummy_provenance
+               (("x", EConst typed_dummy_provenance (dcoll (dnat 1::dnat 2::dnat 3::nil)))
+                  :: ("y", EConst typed_dummy_provenance (dcoll (dnat 4::dnat 5::dnat 6::nil)))
                   :: nil)
                None
-               (ERecord dummy_provenance
-                        (("a",EVar dummy_provenance "x")
-                           ::("b",EVar dummy_provenance "y")
+               (ERecord typed_dummy_provenance
+                        (("a",EVar typed_dummy_provenance "x")
+                           ::("b",EVar typed_dummy_provenance "y")
                            ::nil)).
-    Definition jc4 := ergoc_expr_to_nnrc env0 j4.
+    Definition jc4 := ergoct_expr_to_nnrc env0 j4.
     (* Compute jc4. *)
 
-    Example j5 : laergo_expr :=
-      EForeach dummy_provenance
-               (("x", EConst dummy_provenance (dcoll (dnat 1::dnat 2::dnat 3::nil)))
-                  :: ("y", EConst dummy_provenance (dcoll (dnat 4::dnat 5::dnat 6::nil)))
+    Example j5 : ergoct_expr :=
+      EForeach typed_dummy_provenance
+               (("x", EConst typed_dummy_provenance (dcoll (dnat 1::dnat 2::dnat 3::nil)))
+                  :: ("y", EConst typed_dummy_provenance (dcoll (dnat 4::dnat 5::dnat 6::nil)))
                   :: nil)
                None
-               (ENew dummy_provenance
+               (ENew typed_dummy_provenance
                      "person"
-                     (("a",EVar dummy_provenance "x")
-                        ::("b",EVar dummy_provenance "y")
+                     (("a",EVar typed_dummy_provenance "x")
+                        ::("b",EVar typed_dummy_provenance "y")
                         ::nil)).
-    Definition jc5 := ergoc_expr_to_nnrc env0 j5.
+    Definition jc5 := ergoct_expr_to_nnrc env0 j5.
     (* Compute jc5. *)
 
   End Examples.
 
-End ErgoCtoErgoNNRC.
+End ErgoCTtoErgoNNRC.
 

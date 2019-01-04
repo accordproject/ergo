@@ -21,7 +21,7 @@ Require Import ErgoSpec.Common.Utils.Names.
 Require Import ErgoSpec.Common.Utils.NamespaceContext.
 Require Import ErgoSpec.Common.Types.ErgoType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCTypeContext.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
 
@@ -266,7 +266,7 @@ Section ErgoCompContext.
                (ctxt.(compilation_context_new_type_decls) ++ (decl::nil)).
   
   Definition init_compilation_context nsctxt : compilation_context :=
-    mkCompCtxt nsctxt nil nil nil nil nil None None ErgoCTypeContext.empty_type_context nil nil.
+    mkCompCtxt nsctxt nil nil nil nil nil None None empty_type_context nil nil.
 
   Definition is_abstract_class
              (ctxt: compilation_context)

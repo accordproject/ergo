@@ -18,7 +18,7 @@ contract IntegerTest over TemplateModel {
   clause test(request : Request) : Response {
     return Response{
 			test1: 0,
-			test2: 0 +i 0,
+			test2: 0 + 0,
 			test3: doubleToInteger(0.0)
 		}
   }
