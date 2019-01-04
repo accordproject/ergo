@@ -379,7 +379,7 @@ expr:
 | v = IDENT
     { ErgoCompiler.evar (mk_provenance $startpos $endpos) (Util.char_list_of_string v) }
 | e = expr DOT a = safeident
-    { ErgoCompiler.edot (mk_provenance $startpos $endpos) a e }
+    { ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos) (EOpDot a) e }
 | e = expr QUESTIONDOT a = safeident
     { ErgoCompiler.eoptionaldot (mk_provenance $startpos $endpos) a e }
 | e1 = expr QUESTIONQUESTION e2 = expr

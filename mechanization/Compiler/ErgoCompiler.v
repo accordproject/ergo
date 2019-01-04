@@ -271,8 +271,6 @@ Module ErgoCompiler.
     Ergo.SMatch prov e slp sd.
 
   (** Syntactic sugar *)
-  Definition edot : Provenance.provenance -> String.string -> ergo_expr -> ergo_expr 
-    := ErgoSugar.EDot.
   Definition eoptionaldot : Provenance.provenance -> String.string -> ergo_expr -> ergo_expr
     := ErgoSugar.EOptionalDot.
   Definition eoptionaldefault : Provenance.provenance -> ergo_expr -> ergo_expr -> ergo_expr
