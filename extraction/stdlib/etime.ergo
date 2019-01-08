@@ -152,6 +152,16 @@ define function periodToInternalPeriod(du:Period) : InternalPeriod {
 	else return periodDays(du.amount) // Defaults to days
 }
 
+define function addInternalPeriod(x:DateTime, y:InternalPeriod) : DateTime
+define function addPeriod(x:DateTime, y:Period) : DateTime {
+	return addInternalPeriod(x,periodToInternalPeriod(y))
+}
+
+define function subtractInternalPeriod(x:DateTime, y:InternalPeriod) : DateTime
+define function subtractPeriod(x:DateTime, y:Period) : DateTime {
+	return subtractInternalPeriod(x,periodToInternalPeriod(y))
+}
+
 define function startOfDay(x:DateTime) : DateTime
 define function startOfWeek(x:DateTime) : DateTime
 define function startOfMonth(x:DateTime) : DateTime

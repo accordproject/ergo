@@ -164,6 +164,10 @@ Section ErgoCStdlib.
           mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add)))
       :: ("org.accordproject.time.subtractInternal",
           mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_subtract)))
+      :: ("org.accordproject.time.addInternalPeriod",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add_period)))
+      :: ("org.accordproject.time.subtractInternalPeriod",
+          mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_subtract_period)))
       :: ("org.accordproject.time.isSame",
           mk_binary prov (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_same)))
       :: ("org.accordproject.time.isBefore",

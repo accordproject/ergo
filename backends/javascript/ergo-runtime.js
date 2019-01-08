@@ -646,6 +646,18 @@ function dateTimeSubtract(date, d) {
     return date.subtract(d);
 }
 
+function dateTimeAddPeriod(date, period) {
+    date = mustBeDate(date);
+    period = mustBeDuration(period);
+    return date.add(period);
+}
+
+function dateTimeSubtractPeriod(date, period) {
+    date = mustBeDate(date);
+    period = mustBeDuration(period);
+    return date.subtract(period);
+}
+
 function compareDates(date1, date2) {
     date1 = mustBeDate(date1);
     date2 = mustBeDate(date2);

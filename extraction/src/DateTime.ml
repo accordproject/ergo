@@ -146,6 +146,9 @@ let diff_seconds (x1:dateTime) (x2:dateTime) : float =
 let add (x1:dateTime) (d1:duration) : dateTime = Calendar.add x1 d1
 let subtract (x1:dateTime) (d1:duration) : dateTime = Calendar.rem x1 d1
 
+let add_period (x1:dateTime) (d1:period) : dateTime = Calendar.add x1 d1
+let subtract_period (x1:dateTime) (d1:period) : dateTime = Calendar.rem x1 d1
+
 let start_of_day (x1:dateTime) = undefined_error "start_of_day"
 let start_of_week (x1:dateTime) = undefined_error "start_of_week"
 let start_of_month (x1:dateTime) = undefined_error "start_of_month"

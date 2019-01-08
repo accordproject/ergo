@@ -520,9 +520,17 @@ Extract Inlined Constant DATE_TIME_is_after => "(fun x y -> DateTime.is_after x 
 Axiom DATE_TIME_diff : DATE_TIME -> DATE_TIME -> DATE_TIME_DURATION.
 Extract Inlined Constant DATE_TIME_diff => "(fun x y -> DateTime.diff x y)".
 
+Axiom DATE_TIME_add_period : DATE_TIME -> DATE_TIME_PERIOD -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_add_period => "(fun x y -> DateTime.add_period x y)".
+
+Axiom DATE_TIME_subtract_period : DATE_TIME -> DATE_TIME_PERIOD -> DATE_TIME.
+Extract Inlined Constant DATE_TIME_subtract_period => "(fun x y ->  DateTime.subtract_period x y)".
+
 Inductive date_time_binary_op :=
   | bop_date_time_add
   | bop_date_time_subtract
+  | bop_date_time_add_period
+  | bop_date_time_subtract_period
   | bop_date_time_is_same
   | bop_date_time_is_before
   | bop_date_time_is_after
@@ -533,6 +541,8 @@ Definition date_time_binary_op_tostring (f:date_time_binary_op) : String.string
   := match f with
      | bop_date_time_add => "dateTimeAdd"
      | bop_date_time_subtract => "dateTimeSubtract"
+     | bop_date_time_add_period => "dateTimeAddPeriod"
+     | bop_date_time_subtract_period => "dateTimeSubtractPeriod"
      | bop_date_time_is_same => "dateTimeIsSame"
      | bop_date_time_is_before => "dateTimeIsBefore"
      | bop_date_time_is_after => "dateTimeIsAfter"
@@ -550,6 +560,8 @@ Definition date_time_to_java_binary_op
   := match fb with
      | bop_date_time_add => mk_java_binary_op0 "date_time_add" d1 d2
      | bop_date_time_subtract => mk_java_binary_op0 "date_time_subtract" d1 d2
+     | bop_date_time_add_period => mk_java_binary_op0 "date_time_add_period" d1 d2
+     | bop_date_time_subtract_period => mk_java_binary_op0 "date_time_subtract_perid" d1 d2
      | bop_date_time_is_same =>  mk_java_binary_op0 "date_time_is_same" d1 d2
      | bop_date_time_is_before =>  mk_java_binary_op0 "date_time_is_before" d1 d2
      | bop_date_time_is_after =>  mk_java_binary_op0 "date_time_is_after" d1 d2
@@ -563,6 +575,8 @@ Definition date_time_to_javascript_binary_op
   := match fb with
      | bop_date_time_add => jsFunc "dateTimeAdd" d1 d2
      | bop_date_time_subtract => jsFunc "dateTimeSubtract" d1 d2
+     | bop_date_time_add_period => jsFunc "dateTimeAddPeriod" d1 d2
+     | bop_date_time_subtract_period => jsFunc "dateTimeSubtractPeriod" d1 d2
      | bop_date_time_is_same =>  jsFunc "dateTimeIsSame" d1 d2
      | bop_date_time_is_before =>  jsFunc "dateTimeIsBefore" d1 d2
      | bop_date_time_is_after =>  jsFunc "dateTimeIsAfter" d1 d2
@@ -575,6 +589,8 @@ Definition date_time_to_ajavascript_binary_op
   := match fb with
      | bop_date_time_add => call_runtime "dateTimeAdd" [ e1; e2 ]
      | bop_date_time_subtract => call_runtime "dateTimeSubtract" [ e1; e2 ]
+     | bop_date_time_add_period => call_runtime "dateTimeAddPeriod" [ e1; e2 ]
+     | bop_date_time_subtract_period => call_runtime "dateTimeSubtractPeriod" [ e1; e2 ]
      | bop_date_time_is_same =>  call_runtime "dateTimeIsSame" [ e1; e2 ]
      | bop_date_time_is_before =>  call_runtime "dateTimeIsBefore" [ e1; e2 ]
      | bop_date_time_is_after =>  call_runtime "dateTimeIsAfter" [ e1; e2 ]
