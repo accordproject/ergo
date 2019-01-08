@@ -607,6 +607,8 @@ let string_of_foreign_binary_op fb =
   | Enhanced_binary_math_op -> "atan2"
   | Enhanced_binary_date_time_op Bop_date_time_add -> "DateTimeAdd"
   | Enhanced_binary_date_time_op Bop_date_time_subtract -> "DateTimeSubtract"
+  | Enhanced_binary_date_time_op Bop_date_time_add_period -> "DateTimeAddPeriod"
+  | Enhanced_binary_date_time_op Bop_date_time_subtract_period -> "DateTimeSubtractPeriod"
   | Enhanced_binary_date_time_op Bop_date_time_is_same -> "DateTimeIsSame"
   | Enhanced_binary_date_time_op Bop_date_time_is_before -> "DateTimeIsBefore"
   | Enhanced_binary_date_time_op Bop_date_time_is_after -> "DateTimeIsAfter"
@@ -621,6 +623,10 @@ let pretty_foreign_binary_op p sym callb ff fb a1 a2 =
      pretty_infix_exp p 18 sym callb ("T+",1) ff a1 a2
   | Enhanced_binary_date_time_op Bop_date_time_subtract ->
      pretty_infix_exp p 18 sym callb ("T-",1) ff a1 a2
+  | Enhanced_binary_date_time_op Bop_date_time_add_period ->
+     pretty_infix_exp p 18 sym callb ("Tp+",1) ff a1 a2
+  | Enhanced_binary_date_time_op Bop_date_time_subtract_period ->
+     pretty_infix_exp p 18 sym callb ("Tp-",1) ff a1 a2
   | Enhanced_binary_date_time_op Bop_date_time_is_same ->
      pretty_infix_exp p 18 sym callb ("T=",1) ff a1 a2
   | Enhanced_binary_date_time_op Bop_date_time_is_before ->
