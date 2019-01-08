@@ -170,7 +170,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return compare(response,this.answer.response);
     } else {
-        return send(this.target, this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
+        return send(this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractname,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -182,7 +182,7 @@ Then('it should respond with', function (expectedResponse) {
 
 Then('the initial state( of the contract) should be', function (expectedState) {
     const state = JSON.parse(expectedState);
-    return init(this.target, this.ergos,this.models,this.contractname,this.contract)
+    return init(this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractname,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -192,7 +192,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(this.target, this.ergos,this.models,this.contractname,this.contract)
+    return init(this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractname,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -207,7 +207,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return compare(state,this.answer.state);
     } else {
-        return send(this.target, this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
+        return send(this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractname,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -225,7 +225,7 @@ Then('it should fail with the error', function (expectedError) {
         expect(this.answer).to.not.have.property('response');
         return compare(error,this.answer.error);
     } else {
-        return send(this.target, this.ergos,this.models,this.contractname,this.contract,this.state,this.request)
+        return send(this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractname,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('error');
@@ -238,7 +238,7 @@ Then('it should fail with the error', function (expectedError) {
 
 Then('it should fail to initialize with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
-    return init(this.target, this.ergos,this.models,this.contractname,this.contract)
+    return init(this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractname,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('error');
             expect(actualAnswer).to.not.have.property('state');

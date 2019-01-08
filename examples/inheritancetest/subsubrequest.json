@@ -1,0 +1,5 @@
+{
+    "$class": "org.accordproject.inheritancetest.SubSubRequest",
+    "test1": 0,
+    "test2": 0.5
+}
