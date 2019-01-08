@@ -204,7 +204,7 @@ Section ErgoDriver.
                (p:laergo_module) : eresult (nnrc_module * ErgoCodeGen.javascript) :=
       let pc := ergo_module_to_ergoct ctxt p in
       let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
-      elift (fun x => (x,nnrc_module_to_javascript_top version x)) pn.
+      elift (fun x => (x,nnrc_module_to_javascript_top version (@brand_relation_brands (@brand_model_relation _ bm)) x)) pn.
 
     Definition compilation_context_from_inputs
                (inputs:list lrergo_input) : eresult (laergo_module * compilation_context) :=
