@@ -184,19 +184,31 @@ Section ErgoNNRCtoJavaScript.
        let '(sn, tn) := fold_right proc_one ("",t) sl in
        sn.
 
+  Definition javascript_of_inheritance
+             (inheritance:list (string * string))
+             (eol:string)
+             (quotel:string) : ErgoCodeGen.javascript :=
+    "" ++ "var inheritance = " ++ eol
+       ++ (ENNRCtoJavaScript.inheritanceToJS quotel inheritance)
+       ++ ";" ++ eol
+       ++ eol.
+  
   Definition nnrc_module_to_javascript
              (version:jsversion)
+             (inheritance: list (string*string))
              (p:nnrc_module)
              (eol:string)
              (quotel:string) : ErgoCodeGen.javascript :=
     (preamble eol) ++ eol
+                   ++ (javascript_of_inheritance inheritance eol quotel)
                    ++ (javascript_of_declarations version p.(modulen_declarations) 0 0 eol quotel)
                    ++ (postamble eol).
 
   Definition nnrc_module_to_javascript_top
              (version:jsversion)
+             (inheritance: list (string*string))
              (p:nnrc_module) : ErgoCodeGen.javascript :=
-    nnrc_module_to_javascript version p ErgoCodeGen.javascript_eol_newline ErgoCodeGen.javascript_quotel_double.
+    nnrc_module_to_javascript version inheritance p ErgoCodeGen.javascript_eol_newline ErgoCodeGen.javascript_quotel_double.
 
 End ErgoNNRCtoJavaScript.
 

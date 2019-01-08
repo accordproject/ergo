@@ -13,7 +13,8 @@
  */
 
 /* Initialize inheritance */
-var inheritance = null;
+var inheritance;
+
 /* "standard library" (implementation of unary and binary operators) */
 function unwrap(doc) {
     // Unwrap for Enhanced TxStore format
