@@ -391,6 +391,18 @@ Definition date_time_binary_op_interp
             => Some (denhanceddateTime (DATE_TIME_subtract tp td))
           | _,_ => None
           end
+     | bop_date_time_add_period
+       => match d1, d2 with
+          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeperiod td)
+            => Some (denhanceddateTime (DATE_TIME_add_period tp td))
+          | _,_ => None
+          end
+     | bop_date_time_subtract_period
+       => match d1, d2 with
+          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeperiod td)
+            => Some (denhanceddateTime (DATE_TIME_subtract_period tp td))
+          | _,_ => None
+          end
      | bop_date_time_is_same => rondbooldateTime2 DATE_TIME_eq d1 d2
      | bop_date_time_is_before => rondbooldateTime2 DATE_TIME_is_before d1 d2
      | bop_date_time_is_after => rondbooldateTime2 DATE_TIME_is_after d1 d2
@@ -2023,6 +2035,10 @@ Inductive date_time_binary_op_has_type {model:brand_model} :
       date_time_binary_op_has_type bop_date_time_add DateTime DateTimeDuration DateTime 
   | tbop_date_time_subtract :
       date_time_binary_op_has_type bop_date_time_subtract DateTime DateTimeDuration DateTime 
+  | tbop_date_time_add_period :
+      date_time_binary_op_has_type bop_date_time_add_period DateTime DateTimePeriod DateTime 
+  | tbop_date_time_subtract_period :
+      date_time_binary_op_has_type bop_date_time_subtract_period DateTime DateTimePeriod DateTime 
   | tbop_date_time_is_same :
       date_time_binary_op_has_type bop_date_time_is_same DateTime DateTime Bool 
   | tbop_date_time_is_before :
@@ -2045,6 +2061,10 @@ Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_bi
     if isDateTime τ₁ && isDateTimeDuration τ₂ then Some DateTime else None
   | bop_date_time_subtract =>
     if isDateTime τ₁ && isDateTimeDuration τ₂ then Some DateTime else None
+  | bop_date_time_add_period =>
+    if isDateTime τ₁ && isDateTimePeriod τ₂ then Some DateTime else None
+  | bop_date_time_subtract_period =>
+    if isDateTime τ₁ && isDateTimePeriod τ₂ then Some DateTime else None
   | bop_date_time_is_same =>
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
   | bop_date_time_is_before =>
@@ -2107,6 +2127,10 @@ Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_tim
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeDuration) DateTime
   | bop_date_time_subtract =>
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeDuration) DateTime
+  | bop_date_time_add_period =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimePeriod) DateTime
+  | bop_date_time_subtract_period =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimePeriod) DateTime
   | bop_date_time_is_same =>
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) Bool
   | bop_date_time_is_before =>
@@ -2411,6 +2435,10 @@ Module CompEnhanced.
           := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add).
         Definition date_time_subtract
           := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_subtract).
+        Definition date_time_add_period
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add_period).
+        Definition date_time_subtract_period
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_subtract_period).
         Definition date_time_is_same
           := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_same).
         Definition date_time_is_before
