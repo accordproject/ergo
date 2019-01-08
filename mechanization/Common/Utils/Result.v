@@ -145,6 +145,8 @@ Section Result.
       efailure (ECompilationError prov ("Cannot call clause " ++ clname ++ " outside of a contract")).
     Definition not_in_clause_error {A} prov : eresult A :=
       efailure (ECompilationError prov "Cannot use 'clause' variable outside of a clause").
+    Definition case_option_not_on_either_error {A} prov : eresult A :=
+      efailure (ECompilationError prov "Cannot match unless against an option type").
 
     (* CTO errors *)
     Definition import_not_found_error {A} prov (import:string) : eresult A :=
