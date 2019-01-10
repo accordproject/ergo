@@ -217,6 +217,23 @@ Then('the new state( of the contract) should be', function (expectedState) {
     }
 });
 
+Then('the following obligations have( also) been emitted', function (expectedEmit) {
+    const emit = JSON.parse(expectedEmit);
+    if (this.answer) {
+        expect(this.answer).to.have.property('emit');
+        expect(this.answer).to.not.have.property('error');
+        return compare(emit,this.answer.emit);
+    } else {
+        return send(this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractname,this.contract,this.state,this.request)
+            .then((actualAnswer) => {
+                this.answer = actualAnswer;
+                expect(actualAnswer).to.have.property('emit');
+                expect(actualAnswer).to.not.have.property('error');
+                return compare(emit,actualAnswer.emit);
+            });
+    }
+});
+
 Then('it should fail with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
     if (this.answer) {
