@@ -57,6 +57,17 @@ Feature: Installment sale Contract
   "$class": "org.accordproject.installmentsale.Balance"
 }
 """
+    And the following obligations have been emitted
+"""
+[
+  {
+    "$class": "org.accordproject.installmentsale.PaymentObligation",
+    "amount": 2500,
+    "from": "Dan",
+    "to": "Ned"
+  }
+]
+"""
     And the new state of the contract should be
 """
 {
