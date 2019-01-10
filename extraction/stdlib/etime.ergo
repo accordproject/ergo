@@ -18,7 +18,7 @@ namespace org.accordproject.time
 // Current DateTime
 define function now() : DateTime
 // Parse a DateTime
-define function parse(x:String) : DateTime
+define function dateTime(x:String) : DateTime
 
 // DateTime components
 define function getSecond(x:DateTime) : Long
@@ -29,6 +29,15 @@ define function getWeek(x:DateTime) : Long
 define function getMonth(x:DateTime) : Long
 define function getQuarter(x:DateTime) : Long
 define function getYear(x:DateTime) : Long
+
+// Comparisons between dates
+define function isAfter(x:DateTime, y:DateTime) : Boolean
+define function isBefore(x:DateTime, y:DateTime) : Boolean
+define function isSame(x:DateTime, y:DateTime) : Boolean
+
+// Aggregate functions on dates
+define function dateTimeMin(x:DateTime[]) : DateTime
+define function dateTimeMax(x:DateTime[]) : DateTime
 
 // Durations
 define function durationSeconds(x:Long) : InternalDuration
@@ -53,6 +62,7 @@ define function internalDurationToDuration(du:InternalDuration) : Duration {
 	return Duration{ unit: "seconds", amount: durationAmount(du) }
 }
 
+// Cast a duration to a given temporal unit
 define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	if u = du.unit
 	then return du
@@ -105,37 +115,33 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 		return Duration{ unit: u, amount: amount }
 }
 
+// Duration difference between two dates
+define function diffInternal(x:DateTime, y:DateTime) : InternalDuration
+define function diffDurationAs(x:DateTime, y:DateTime, z:TemporalUnit) : Duration {
+	return durationAs(internalDurationToDuration(diffInternal(x,y)),z)
+}
+define function diffDuration(x:DateTime, y:DateTime) : Duration {
+	return diffDurationAs(x, y, "seconds") // Defaults to seconds
+}
+
+// Add and subtract durations
 define function addInternal(x:DateTime, y:InternalDuration) : DateTime
-define function add(x:DateTime, y:Duration) : DateTime {
+define function addDuration(x:DateTime, y:Duration) : DateTime {
 	return addInternal(x,durationToInternalDuration(y))
 }
 
 define function subtractInternal(x:DateTime, y:InternalDuration) : DateTime
-define function subtract(x:DateTime, y:Duration) : DateTime {
+define function subtractDuration(x:DateTime, y:Duration) : DateTime {
 	return subtractInternal(x,durationToInternalDuration(y))
 }
 
-define function isAfter(x:DateTime, y:DateTime) : Boolean
-define function isBefore(x:DateTime, y:DateTime) : Boolean
-define function isSame(x:DateTime, y:DateTime) : Boolean
-
-define function diffInternal(x:DateTime, y:DateTime) : InternalDuration
-define function diffWithUnit(x:DateTime, y:DateTime, z:TemporalUnit) : Duration {
-	return durationAs(internalDurationToDuration(diffInternal(x,y)),z)
-}
-define function diff(x:DateTime, y:DateTime) : Duration {
-	return diffWithUnit(x, y, "seconds") // Defaults to seconds
-}
-
-define function dateTimeMin(x:DateTime[]) : DateTime
-define function dateTimeMax(x:DateTime[]) : DateTime
-
-define function divide(x:Duration, y:Duration) : Double {
+define function divideDuration(x:Duration, y:Duration) : Double {
 	let du1 = durationToInternalDuration(x);
 	let du2 = durationToInternalDuration(y);
 	return longToDouble(durationAmount(du1)) / longToDouble(durationAmount(du2))
 }
 
+// Periods
 define function periodDays(x:Long) : InternalPeriod
 define function periodWeeks(x:Long) : InternalPeriod
 define function periodMonths(x:Long) : InternalPeriod
@@ -152,6 +158,23 @@ define function periodToInternalPeriod(du:Period) : InternalPeriod {
 	else return periodDays(du.amount) // Defaults to days
 }
 
+// Period difference between two dates
+define function diffAsMonths(x:DateTime, y:DateTime) : Long {
+	let year = getYear(x) - getYear(y);
+	let month = getMonth(x) - getMonth(y);
+	return year * 12 + month
+}
+define function diffPeriodAs(x:DateTime, y:DateTime, z:PeriodUnit) : Period {
+	match z
+	with "days" then let d = diffDurationAs(x,y,"days"); return Period{ amount: d.amount, unit: "days" }
+	with "weeks" then let w = diffDurationAs(x,y,"weeks"); return Period{ amount: w.amount, unit: "weeks" }
+	with "months" then let m = diffAsMonths(x,y); return Period{ amount: m, unit: "months" }
+	with "quarters" then let m = diffAsMonths(x,y);  return Period{ amount: m / 3, unit: "quarters" }
+	with "years" then let m = diffAsMonths(x,y); return Period{ amount: m / 12, unit: "years" }
+	else let d = diffDurationAs(x,y,"days"); return Period{ amount: d.amount, unit: "days" }
+}
+
+// Add and subtract periods
 define function addInternalPeriod(x:DateTime, y:InternalPeriod) : DateTime
 define function addPeriod(x:DateTime, y:Period) : DateTime {
 	return addInternalPeriod(x,periodToInternalPeriod(y))
@@ -162,6 +185,7 @@ define function subtractPeriod(x:DateTime, y:Period) : DateTime {
 	return subtractInternalPeriod(x,periodToInternalPeriod(y))
 }
 
+// Move the date to the closest start or end of a period
 define function startOfDay(x:DateTime) : DateTime
 define function startOfWeek(x:DateTime) : DateTime
 define function startOfMonth(x:DateTime) : DateTime
