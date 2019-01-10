@@ -24,10 +24,11 @@ Require Import ErgoSpec.Backend.Lib.ENNRCtoJavaScript.
 
 Module ECodeGen(ergomodel:ErgoBackendModel).
   (* NNRC *)
-  Definition nnrc_optim := CompDriver.nnrc_optim_default.
-  
   Definition nnrc_expr := NNRC.nnrc.
 
+  (* Definition nnrc_optim := CompDriver.nnrc_optim_default. *)
+  Definition nnrc_optim (x:nnrc_expr) : nnrc_expr := x.
+  
   Definition nnrc_expr_let := cNNRC.NNRCLet.
 
   Definition nnrc_expr_java_unshadow := NNRCtoJava.nnrcToJavaunshadow.
