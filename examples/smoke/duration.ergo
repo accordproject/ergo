@@ -23,22 +23,22 @@ define concept TemplateModel {
 
 contract Duration over TemplateModel {
   clause test(request : MyRequest) : MyResponse {
-    enforce(isSame(add(parse("2018-01-02"), Duration{amount:1, unit: "days"}),
-			             add(parse("2018-01-01"), Duration{amount:2, unit: "days"})));
-    enforce(isSame(add(parse("2019-01-08"), Duration{amount:1, unit: "weeks"}),
-			             add(parse("2019-01-01"), Duration{amount:2, unit: "weeks"})));
-    enforce(isSame(subtract(parse("2018-01-01"), Duration{amount:1, unit: "days"}),
-			             subtract(parse("2018-01-02"), Duration{amount:2, unit: "days"})));
-    enforce(isSame(subtract(parse("2019-01-01"), Duration{amount:1, unit: "weeks"}),
-			             subtract(parse("2019-01-08"), Duration{amount:2, unit: "weeks"})));
-    enforce(isSame(addPeriod(parse("2018-02-01"), Period{amount:1, unit: "months"}),
-			             addPeriod(parse("2018-01-01"), Period{amount:2, unit: "months"})));
-    enforce(isSame(addPeriod(parse("2020-01-01"), Period{amount:1, unit: "years"}),
-			             addPeriod(parse("2019-01-01"), Period{amount:2, unit: "years"})));
-    enforce(isSame(dateTimeMax([parse("2018-01-08"), parse("2019-01-08"), parse("2011-01-08")]),
-			parse("2019-01-08")));
-    enforce(isSame(dateTimeMin([parse("2018-01-08"), parse("2019-01-08"), parse("2011-01-08")]),
-			parse("2011-01-08")));
+    enforce(isSame(addDuration(dateTime("2018-01-02"), Duration{amount:1, unit: "days"}),
+			             addDuration(dateTime("2018-01-01"), Duration{amount:2, unit: "days"})));
+    enforce(isSame(addDuration(dateTime("2019-01-08"), Duration{amount:1, unit: "weeks"}),
+			             addDuration(dateTime("2019-01-01"), Duration{amount:2, unit: "weeks"})));
+    enforce(isSame(subtractDuration(dateTime("2018-01-01"), Duration{amount:1, unit: "days"}),
+			             subtractDuration(dateTime("2018-01-02"), Duration{amount:2, unit: "days"})));
+    enforce(isSame(subtractDuration(dateTime("2019-01-01"), Duration{amount:1, unit: "weeks"}),
+			             subtractDuration(dateTime("2019-01-08"), Duration{amount:2, unit: "weeks"})));
+    enforce(isSame(addPeriod(dateTime("2018-02-01"), Period{amount:1, unit: "months"}),
+			             addPeriod(dateTime("2018-01-01"), Period{amount:2, unit: "months"})));
+    enforce(isSame(addPeriod(dateTime("2020-01-01"), Period{amount:1, unit: "years"}),
+			             addPeriod(dateTime("2019-01-01"), Period{amount:2, unit: "years"})));
+    enforce(isSame(dateTimeMax([dateTime("2018-01-08"), dateTime("2019-01-08"), dateTime("2011-01-08")]),
+			dateTime("2019-01-08")));
+    enforce(isSame(dateTimeMin([dateTime("2018-01-08"), dateTime("2019-01-08"), dateTime("2011-01-08")]),
+			dateTime("2011-01-08")));
     return MyResponse{
       output: "Duration.test successful"
     }

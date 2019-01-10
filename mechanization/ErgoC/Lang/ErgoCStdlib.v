@@ -88,7 +88,7 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.tanh",
           mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_tanh)))
     (* Date/Time *)
-      :: ("org.accordproject.time.parse"%string,
+      :: ("org.accordproject.time.dateTime"%string,
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string)))
       :: ("org.accordproject.time.getSecond",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_component date_time_component_SECONDS))))
