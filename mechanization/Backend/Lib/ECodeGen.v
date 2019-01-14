@@ -17,6 +17,7 @@ Require String.
 Require Qcert.Compiler.Driver.CompLang.
 Require Import Qcert.Compiler.Driver.CompDriver.
 
+Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 Require Import ErgoSpec.Backend.Model.ErgoBackendRuntime.
 
@@ -40,9 +41,8 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
 
   Definition javascript_identifier_sanitizer := ENNRCtoJavaScript.jsIdentifierSanitize.
   
-  Definition javascript := CompLang.javascript.
+  Definition ejavascript := Misc.ejavascript.
   
-
   Definition nnrc_expr_javascript_unshadow n t1 t2 s1 s2 v h :=
     ENNRCtoJavaScript.nnrcToJSunshadow (nnrc_optim n) t1 t2 s1 s2 v h.
   
@@ -57,8 +57,8 @@ Module ECodeGen(ergomodel:ErgoBackendModel).
              (fname:String.string)
              (input_v:String.string)
              (init_indent:nat)
-             (eol:String.string)
-             (quotel:String.string) : javascript :=
+             (eol:estring)
+             (quotel:estring) : ejavascript :=
     cNNRC.lift_nnrc_core
         (fun e => ENNRCtoJavaScript.nnrcToJSFun input_v e init_indent eol quotel (input_v::nil) fname)
         (NNRC.nnrc_to_nnrc_core e).

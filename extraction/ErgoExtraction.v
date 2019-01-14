@@ -36,6 +36,11 @@ Extract Constant Misc.coq_toposort => "(fun label file l -> Util.coq_toposort la
 Extract Constant Misc.coq_time => "(fun msg f x -> Util.coq_time msg f x)".
 Extract Constant Misc.get_local_part => "(fun name -> Util.get_local_part name)".
 
+Extract Constant estring => "string".
+Extract Constant string_to_estring => "(fun s1 -> Util.string_of_char_list s1)".
+Extract Constant estring_to_string => "(fun s1 -> Util.char_list_of_string s1)".
+Extract Constant estring_concat => "(fun s1 s2 -> s1 ^ s2)".
+
 (* Ergo modules *)
 Require ErgoCompiler.
 Extraction "ErgoComp" ErgoCompiler.ErgoCompiler.
