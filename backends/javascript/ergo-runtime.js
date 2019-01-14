@@ -582,18 +582,20 @@ const minDateTime = moment("0001-01-01 00:00:00");
 const maxDateTime = moment("3268-01-21 23:59:59");
 
 function dateTimeMax(v) {
-    if (v.length === 0) {
+    var v1 = mustBeDateArray(v);
+    if (v1.length === 0) {
         return minDateTime;
     } else {
-        return moment.max(v);
+        return moment.max(v1);
     }
 }
 
 function dateTimeMin(v) {
-    if (v.length === 0) {
+    var v1 = mustBeDateArray(v);
+    if (v1.length === 0) {
         return maxDateTime;
     } else {
-        return moment.min(v);
+        return moment.min(v1);
     }
 }
 
@@ -696,6 +698,14 @@ function mustBeDate(date) {
     } else {
         return date.clone();
     }
+}
+
+function mustBeDateArray(dateArray) {
+    var newDateArray = [];
+    for (var i=0; i<dateArray.length; i++) {
+        newDateArray.push(mustBeDate(dateArray[i]));
+    }
+    return newDateArray;
 }
 
 function mustBeDuration(d) {
