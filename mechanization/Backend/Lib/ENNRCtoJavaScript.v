@@ -26,6 +26,8 @@ Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.JavaScript.JavaScriptRuntime.
 Require Import Qcert.Translation.ForeignToJavaScript.
 
+Require Import ErgoSpec.Utils.Misc.
+
 Local Open Scope string_scope.
 
 Section ENNRCtoJavaScript.
@@ -93,7 +95,7 @@ Section ENNRCtoJavaScript.
       end.
 
     Definition rename_top (e:nnrc) : nnrc :=
-      fst (rename nil e).
+      fst (coq_time "nnrc(rename)" (rename nil) e).
   End global_rename.
 
 Section sanitizer.

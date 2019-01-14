@@ -16,9 +16,9 @@ Require Import String.
 Require Import List.
 Require Import Basics.
 
-Require Import ErgoSpec.Common.Utils.Misc.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Ast.
+Require Import ErgoSpec.Utils.Misc.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoMap.

@@ -17,10 +17,10 @@ Require Import List.
 Require Import Basics.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.Common.Utils.Provenance.
-Require Import ErgoSpec.Common.Types.ErgoType.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.Provenance.
+Require Import ErgoSpec.Types.ErgoType.
 
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoMap.

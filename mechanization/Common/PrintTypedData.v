@@ -16,11 +16,11 @@ Require Import Ascii.
 Require Import String.
 Require Import List.
 
+Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.Misc.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Provenance.
-Require Import ErgoSpec.Common.Utils.NamespaceContext.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Provenance.
+Require Import ErgoSpec.Common.NamespaceContext.
 
 Require Import JsAst.JsNumber. (* XXX To be fixed on Q*cert side - JS *)
 

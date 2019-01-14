@@ -88,3 +88,9 @@ val get_local_part : char list -> (char list) option
 val class_prefix_of_filename : string -> string
 
 type nrc_logger_token_type = string
+
+(** Monitoring *)
+val coq_time : char list -> ('a -> 'b) -> 'a -> 'b
+val monitoring : bool ref
+val get_monitor_output : unit -> string
+

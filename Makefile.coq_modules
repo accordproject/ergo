@@ -14,6 +14,7 @@
 
 MODULES = \
   Version \
+  Utils/Misc \
   Backend/ForeignErgo \
   Backend/Model/DateTimeModelPart \
   Backend/Model/MathModelPart \
@@ -26,17 +27,16 @@ MODULES = \
   Backend/Lib/EOperators \
   Backend/Lib/ECodeGen \
   Backend/ErgoBackend \
-  Common/Utils/Misc \
-  Common/Utils/Provenance \
-  Common/Utils/Names \
-  Common/Utils/NamespaceContext \
-  Common/Utils/Ast \
-  Common/Utils/Result \
-  Common/Utils/PrintTypedData \
-  Common/CTO/CTO \
-  Common/Types/ErgoCTypeUtil \
-  Common/Types/ErgoType \
-  Common/Types/ErgoTypetoErgoCType \
+  Common/Provenance \
+  Common/Names \
+  Common/NamespaceContext \
+  Common/Ast \
+  Common/Result \
+  Common/PrintTypedData \
+  Types/CTO \
+  Types/ErgoCTypeUtil \
+  Types/ErgoType \
+  Types/ErgoTypetoErgoCType \
   Ergo/Lang/Ergo \
   Ergo/Lang/ErgoMap \
   Ergo/Lang/ErgoSem \

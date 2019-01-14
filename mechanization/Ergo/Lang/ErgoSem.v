@@ -20,9 +20,9 @@ Require Import String.
 Require Import List.
 Require Import EquivDec.
 
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.Common.CTO.CTO.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Types.CTO.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 

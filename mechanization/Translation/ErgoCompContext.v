@@ -16,10 +16,10 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.Common.Utils.NamespaceContext.
-Require Import ErgoSpec.Common.Types.ErgoType.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.NamespaceContext.
+Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.

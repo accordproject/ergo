@@ -58,14 +58,25 @@ let ergo_link gconf result =
   else
     result
 
+let print_generate source_file ext result =
+  let fpref = Filename.chop_extension source_file in
+  let fout = outname (target_f None fpref) ext in
+  Printf.printf " '%s'\n" fout;
+  make_file fout result
+
+let print_monitor source_file =
+  if !Util.monitoring
+  then
+    let result = Util.get_monitor_output () in
+    Printf.printf "Monitoring for '%s' -->" source_file;
+    print_generate source_file ".monitor.json" result
+  else ()
+
 let ergo_proc gconf inputs =
   let target_lang = ErgoConfig.get_target_lang gconf in
   let ext = extension_of_lang target_lang in
   let (source_file,result) = ergo_compile target_lang inputs in
   Printf.printf "Compiling Ergo '%s' -- " source_file;
-  let fpref = Filename.chop_extension source_file in
-  let fout = outname (target_f None fpref) ext in
   let result = ergo_link gconf result in
-  Printf.printf "creating '%s'\n" fout;
-  make_file fout result
-
+  print_generate source_file ext result;
+  print_monitor source_file
