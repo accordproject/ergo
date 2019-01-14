@@ -245,6 +245,7 @@ let class_prefix_of_filename filename =
 (* monitor contains a mapping from compilation phase to (f1,f2) where f1 is the new time entering the phase and f2 is the total time in that phase *)
 let monitor : (string, float * float) Hashtbl.t = Hashtbl.create 37
 let monitoring = ref false
+let monitoring_start = Sys.time ()
 let monitor_output : (Monitor_j.phase list) Stack.t =
   let s = Stack.create () in
   Stack.push [] s;
@@ -264,23 +265,32 @@ let exit_monitor monitor output phase =
   begin try
     let (f1,f2) = Hashtbl.find monitor phase in
     let picktime : float = Sys.time () in
-    let cputime : float = picktime -. f1 in
-    let cummtime : float = picktime -. f1 +. f2 in
-    Hashtbl.replace monitor phase (0.0, cummtime);
+    let single : float = picktime -. f1 in
+    let cummul : float = picktime -. f1 +. f2 in
+    let total : float = picktime -. monitoring_start in
+    Hashtbl.replace monitor phase (0.0, cummul);
     Stack.push (prevprev @ [{
-      ergo_monitor_name = phase;
-      ergo_monitor_cputime = cputime;
-      ergo_monitor_cummulative = cummtime;
-      ergo_monitor_subphases =prev
+      monitor_phase_class = "org.accordproject.ergo.monitor.Phase";
+      monitor_phase_name = phase;
+      monitor_phase_single = single;
+      monitor_phase_cummulative = cummul;
+      monitor_phase_total = total;
+      monitor_phase_subphases =prev
     }]) output
   with _ ->
     begin
+      let picktime : float = Sys.time () in
+      let single : float = 0.0 in
+      let cummul : float = 0.0 in
+      let total : float = picktime -. monitoring_start in
       Hashtbl.add monitor phase (0.0, 0.0); (* Should never happen *)
       Stack.push (prevprev @ [{
-        ergo_monitor_name = phase;
-        ergo_monitor_cputime = 0.0;
-        ergo_monitor_cummulative = 0.0;
-        ergo_monitor_subphases = prev
+        monitor_phase_class = "org.accordproject.ergo.monitor.Phase";
+        monitor_phase_name = phase;
+        monitor_phase_single = single;
+        monitor_phase_cummulative = cummul;
+        monitor_phase_total = total;
+        monitor_phase_subphases = prev
       }]) output
     end
   end
@@ -299,5 +309,8 @@ let coq_time phase f x =
     f x
 
 let get_monitor_output () =
-  string_of_monitor { ergo_monitor_phases = Stack.top monitor_output }
+  string_of_monitor {
+    monitor_class = "org.accordproject.ergo.monitor.Monitor";
+    monitor_phases = Stack.top monitor_output
+  }
 

@@ -1,4 +1,4 @@
-(*
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -10,25 +10,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *)
+ */
 
-<doc text="Ergo monitor data structure.
+namespace org.accordproject.ergo.monitor
 
-   Provdes processing time information for various compilation phases
+/**
+ * Describes a phase
+ */
+concept Phase {
+  o String name
+  o Double single
+  o Double cummulative
+  o Double total
+  o Phase[] subphases
+}
 
-">
-
-type phase = {
-    class <json name="$class"> : string;
-    name : string;
-    single : float;
-    cummulative : float;
-    total : float;
-    subphases : phase list;
-  } <ocaml field_prefix="monitor_phase_">
-
-type monitor = {
-    class <json name="$class"> : string;
-    phases : phase list;
-} <ocaml field_prefix="monitor_">
+/**
+ * Monitor
+ */
+concept Monitor {
+  o Phase[] phases
+}
 
