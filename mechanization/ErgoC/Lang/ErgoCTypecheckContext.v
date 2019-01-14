@@ -16,7 +16,7 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Common.Names.
 
 Section ErgoCTypecheckContext.
   Context {br : brand_relation}.

@@ -13,6 +13,7 @@
  *)
 
 (* This module contains a few basic utilities *)
+open Monitor_j (* For the monitor JSON output *)
 
 (* this can't go in Logger, since that creates a circular dependency *)
 type nrc_logger_token_type = string
@@ -238,4 +239,65 @@ let class_prefix_of_filename filename =
   with
   | Invalid_argument _ -> "logic"
   end
+
+(** Monitoring *)
+
+(* monitor contains a mapping from compilation phase to (f1,f2) where f1 is the new time entering the phase and f2 is the total time in that phase *)
+let monitor : (string, float * float) Hashtbl.t = Hashtbl.create 37
+let monitoring = ref false
+let monitor_output : (Monitor_j.phase list) Stack.t =
+  let s = Stack.create () in
+  Stack.push [] s;
+  s
+
+let enter_monitor monitor output phase =
+  Stack.push [] output;
+  begin try
+    let (f1,f2) = Hashtbl.find monitor phase in (* f1 should always be 0.0 *)
+    Hashtbl.replace monitor phase (Sys.time(), f2)
+  with _ ->
+    Hashtbl.add monitor phase (Sys.time(), 0.0)
+  end
+let exit_monitor monitor output phase =
+  let prev = Stack.pop output in
+  let prevprev = Stack.pop output in
+  begin try
+    let (f1,f2) = Hashtbl.find monitor phase in
+    let picktime : float = Sys.time () in
+    let cputime : float = picktime -. f1 in
+    let cummtime : float = picktime -. f1 +. f2 in
+    Hashtbl.replace monitor phase (0.0, cummtime);
+    Stack.push (prevprev @ [{
+      ergo_monitor_name = phase;
+      ergo_monitor_cputime = cputime;
+      ergo_monitor_cummulative = cummtime;
+      ergo_monitor_subphases =prev
+    }]) output
+  with _ ->
+    begin
+      Hashtbl.add monitor phase (0.0, 0.0); (* Should never happen *)
+      Stack.push (prevprev @ [{
+        ergo_monitor_name = phase;
+        ergo_monitor_cputime = 0.0;
+        ergo_monitor_cummulative = 0.0;
+        ergo_monitor_subphases = prev
+      }]) output
+    end
+  end
+
+let coq_time phase f x =
+  if !monitoring
+  then
+    let phase = string_of_char_list phase in
+    begin
+      enter_monitor monitor monitor_output phase;
+      let y = f x in
+      exit_monitor monitor monitor_output phase;
+      y
+    end
+  else
+    f x
+
+let get_monitor_output () =
+  string_of_monitor { ergo_monitor_phases = Stack.top monitor_output }
 

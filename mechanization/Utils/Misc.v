@@ -67,6 +67,11 @@ Section Misc.
     Parameter coq_toposort : (A -> B) -> (A -> string) -> list (A * list A) -> list A.
   End TopoSort.
 
+  Section TimeInstrumentation.
+    Context {A B:Set}.
+    Parameter coq_time : string -> (A -> B) -> A -> B.
+  End TimeInstrumentation.
+
   Section StringStuff.
     (** Turns "foo.bar.baz" into "baz" if there is at least on '.' character *)
     Parameter get_local_part : string -> option string.
@@ -78,4 +83,11 @@ Section Misc.
     | ES6 : jsversion.
   End Config.
 
+  Section EString.
+    Parameter estring : Set.
+    Parameter string_to_estring : string -> estring.
+    Parameter estring_to_string : estring -> string.
+    Parameter estring_concat : estring -> estring -> estring.
+  End EString.
+  
 End Misc.

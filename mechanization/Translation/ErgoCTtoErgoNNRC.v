@@ -20,10 +20,10 @@ Require Import List.
 Require Import Qcert.NNRC.NNRCRuntime.
 
 Require Import ErgoSpec.Backend.ForeignErgo.
-Require Import ErgoSpec.Common.Utils.Provenance.
-Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Ast.
+Require Import ErgoSpec.Common.Provenance.
+Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCT.

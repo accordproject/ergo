@@ -17,10 +17,10 @@
 Require Import String.
 Require Import List.
 
-Require Import ErgoSpec.Common.Utils.Provenance.
-Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Ast.
+Require Import ErgoSpec.Common.Provenance.
+Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Ast.
 
 Section ErgoType.
   Section Ast.

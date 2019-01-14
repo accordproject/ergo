@@ -19,7 +19,7 @@
 Require Import String.
 Require Import List.
 Require Import Qcert.NNRC.NNRCRuntime.
-Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
 

@@ -17,7 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import ErgoSpec.Common.Types.ErgoType.
+Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
 Section ErgoNNRC.

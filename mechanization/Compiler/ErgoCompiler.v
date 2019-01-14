@@ -16,14 +16,14 @@ Require String.
 Require Qcert.Common.Brands.BrandRelation.
 
 Require ErgoSpec.Version.
+Require ErgoSpec.Utils.Misc.
 Require ErgoSpec.Backend.ErgoBackend.
-Require ErgoSpec.Common.Utils.Misc.
-Require ErgoSpec.Common.Utils.Provenance.
-Require ErgoSpec.Common.Utils.Names.
-Require ErgoSpec.Common.Utils.Result.
-Require ErgoSpec.Common.Utils.Ast.
-Require ErgoSpec.Common.CTO.CTO.
-Require ErgoSpec.Common.Types.ErgoType.
+Require ErgoSpec.Common.Provenance.
+Require ErgoSpec.Common.Names.
+Require ErgoSpec.Common.Result.
+Require ErgoSpec.Common.Ast.
+Require ErgoSpec.Types.CTO.
+Require ErgoSpec.Types.ErgoType.
 Require ErgoSpec.Ergo.Lang.Ergo.
 Require ErgoSpec.Ergo.Lang.ErgoSugar.
 Require ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.

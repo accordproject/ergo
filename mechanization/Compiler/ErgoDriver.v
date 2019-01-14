@@ -17,17 +17,17 @@
 Require Import String.
 Require Import List.
 
+Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.Misc.
-Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.Common.Utils.NamespaceContext.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Provenance.
-Require Import ErgoSpec.Common.Utils.Ast.
-Require Import ErgoSpec.Common.Utils.PrintTypedData.
-Require Import ErgoSpec.Common.CTO.CTO.
-Require Import ErgoSpec.Common.Types.ErgoType.
+Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.NamespaceContext.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Provenance.
+Require Import ErgoSpec.Common.Ast.
+Require Import ErgoSpec.Common.PrintTypedData.
+Require Import ErgoSpec.Types.CTO.
+Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
@@ -150,10 +150,11 @@ Section ErgoDriver.
     Definition ergo_modules_to_ergoct
                (ctxt:compilation_context)
                (lm:list laergo_module) : eresult (list ergoct_module * compilation_context) :=
-      elift_context_fold_left
-        ergo_module_to_ergoct
-        lm
-        ctxt.
+      coq_time "ergo->ergoc(typed)"
+               (elift_context_fold_left
+                  ergo_module_to_ergoct
+                  lm)
+               ctxt.
 
     (* ErgoDecl -> ErgoCDecl *)
     Definition ergo_declaration_to_ergoc
@@ -203,8 +204,12 @@ Section ErgoDriver.
                (ctxt:compilation_context)
                (p:laergo_module) : eresult (nnrc_module * ErgoCodeGen.javascript) :=
       let pc := ergo_module_to_ergoct ctxt p in
-      let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
-      elift (fun x => (x,nnrc_module_to_javascript_top version (@brand_relation_brands (@brand_model_relation _ bm)) x)) pn.
+      let pn :=
+          coq_time "ergoc(typed)->nnrc"
+                   (eolift (fun xy => ergoct_module_to_nnrc (fst xy))) pc in
+      coq_time "nnrc->js"
+               (elift (fun x => (x,nnrc_module_to_javascript_top version (@brand_relation_brands (@brand_model_relation _ bm)) x)))
+               pn.
 
     Definition compilation_context_from_inputs
                (inputs:list lrergo_input) : eresult (laergo_module * compilation_context) :=
@@ -218,11 +223,12 @@ Section ErgoDriver.
     Definition compilation_context_from_inputs_no_main
                (inputs:list lrergo_input) : eresult compilation_context :=
       let cinit := init_compilation_context_from_inputs_no_main inputs in
-      eolift (fun init =>
-                let '(mls, ctxt) := init in
-                elift snd
-                      (ergo_modules_to_ergoct ctxt mls))
-             cinit.
+      coq_time "init(load modules)"
+               (eolift (fun init =>
+                          let '(mls, ctxt) := init in
+                          elift snd
+                                (ergo_modules_to_ergoct ctxt mls)))
+               cinit.
     
     Definition ergo_module_to_java
                (ctxt:compilation_context)
@@ -239,7 +245,9 @@ Section ErgoDriver.
     Definition ergo_module_to_javascript_top
                (version:jsversion)
                (inputs:list lrergo_input) : eresult result_file :=
-      let bm : eresult brand_model := brand_model_from_inputs inputs in
+      let bm : eresult brand_model :=
+          coq_time "init(load types)"
+                   brand_model_from_inputs inputs in
       eolift (fun bm :brand_model=>
                 let cinit := compilation_context_from_inputs inputs in
                 eolift (fun init : laergo_module * compilation_context =>

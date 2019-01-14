@@ -14,8 +14,8 @@
 
 Require Import String.
 Require Import ErgoSpec.Backend.ErgoBackend.
-Require Import ErgoSpec.Common.Utils.Names.
-Require Import ErgoSpec.Common.Utils.Provenance.
+Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.Provenance.
 
 Section Ast.
   Section Imports.

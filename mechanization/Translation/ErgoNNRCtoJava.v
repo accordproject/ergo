@@ -18,9 +18,9 @@ Require Import String.
 Require Import List.
 
 Require Import ErgoSpec.Version.
-Require Import ErgoSpec.Common.Utils.Misc.
-Require Import ErgoSpec.Common.Utils.Result.
-Require Import ErgoSpec.Common.Utils.Names.
+Require Import ErgoSpec.Utils.Misc.
+Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.ErgoBackend.
 

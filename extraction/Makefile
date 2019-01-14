@@ -98,7 +98,13 @@ src/Cto_t.ml src/Cto_t.mli: src/Cto.atd
 src/Cto_j.ml src/Cto_j.mli: src/Cto.atd
 	atdgen -j -j-std $<
 
-ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli
+src/Monitor_t.ml src/Monitor_t.mli: src/Monitor.atd
+	atdgen -t $<
+
+src/Monitor_j.ml src/Monitor_j.mli: src/Monitor.atd
+	atdgen -j -j-std $<
+
+ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli src/Monitor_t.ml src/Monitor_t.mli src/Monitor_j.ml src/Monitor_j.mli
 
 ## Stdlib
 
