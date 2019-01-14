@@ -193,61 +193,70 @@ Section sanitizer.
     := rename_top (unshadow jsSafeSeparator jsIdentifierSanitize (avoid++jsAvoidList) e).
 
 End sanitizer.
+
   Definition varvalue := 100.
   Definition varenv := 1.
 
   Section JSUtil.
-    Definition eol_newline := String (Ascii.ascii_of_nat 10) EmptyString.
-    Definition eol_backn := "\n".
+    Local Open Scope estring_scope.
 
-    Definition quotel_double := """".
-    Definition quotel_backdouble := "\""".
+    Definition eol_newline : estring  := ` (String (Ascii.ascii_of_nat 10) EmptyString).
+    Definition eol_backn : estring := `"\n".
+
+    Definition quotel_double : estring := `"""".
+    Definition quotel_backdouble  : estring := `"\""".
     
     (* Java equivalent: JavaScriptBackend.indent *)
-    Fixpoint indent (i : nat) : string
+    Fixpoint indent (i : nat) : estring
       := match i with
-         | 0 => ""
-         | S j => "  " ++ (indent j)
+         | 0 => `""
+         | S j => `"  " +++ (indent j)
          end.
 
   End JSUtil.
 
   Section DataJS.
+    Local Open Scope estring_scope.
+
+    Definition bracketString (open s close:string) : string
+      := append open (append s close).
 
     (* Java equivalent: JavaScriptBackend.brandsToJS *)
-    Definition brandsToJs (quotel:string) (b:brands)
-      := bracketString "[" (map_concat "," (fun x => bracketString quotel x quotel) b) "]".
+    Definition brandsToJs (quotel:estring) (b:brands) : estring
+      := ` (bracketString "[" (map_concat "," (fun x => bracketString (^quotel) x (^quotel)) b) "]").
 
-    Fixpoint data_to_js (quotel:string) (d:data) : json :=
+    Fixpoint data_to_js (d:data) : json :=
       match d with
       | dunit => jnil
       | dnat n => jnumber (float_of_int n)
       | dfloat n => jnumber n
       | dbool b => jbool b
       | dstring s => jstring s
-      | dcoll c => jarray (map (data_to_js quotel) c)
-      | drec r => jobject (map (fun x => (fst x, data_to_js quotel (snd x))) r)
-      | dleft d' => jobject (("left"%string, data_to_js quotel d')::nil)
-      | dright d' => jobject (("right"%string, data_to_js quotel d')::nil)
-      | dbrand b d' => jobject (("type"%string, jarray (map jstring b))::("data"%string, (data_to_js quotel d'))::nil)
+      | dcoll c => jarray (map data_to_js c)
+      | drec r => jobject (map (fun x => (fst x, data_to_js (snd x))) r)
+      | dleft d' => jobject (("left"%string, data_to_js d')::nil)
+      | dright d' => jobject (("right"%string, data_to_js d')::nil)
+      | dbrand b d' => jobject (("type"%string, jarray (map jstring b))::("data"%string, (data_to_js d'))::nil)
       | dforeign fd => foreign_to_JSON_from_data fd
       end.
 
-    Fixpoint data_to_json (d:data) : json := data_to_js "" d.
+    Fixpoint data_to_json (d:data) : json := data_to_js d.
     
     (* Java equivalent: JavaScriptBackend.dataToJS *)
-    Definition dataToJS (quotel:string) (d : data) : string :=
-      jsonToJS quotel (data_to_js quotel d).
+    Definition dataToJS (quotel:estring) (d : data) : estring :=
+      `jsonToJS (^quotel) (data_to_js d).
 
-    Definition dataEnhancedToJS (quotel:string) (d : data) : string :=
-      jsonToJS quotel (data_enhanced_to_js quotel d).
+    Definition dataEnhancedToJS (quotel:estring) (d : data) : estring :=
+      `jsonToJS (^quotel) (data_enhanced_to_js (^quotel) d).
 
-    Definition inheritanceToJS (quotel:string) (h:list (string*string)) :=
-      dataToJS quotel (dcoll (map (fun x => drec (("sub",dstring (fst x)) :: ("sup", (dstring (snd x))) :: nil)) h)).
+    Definition inheritanceToJS (quotel:estring) (h:list (string*string)) :estring :=
+      `(dataToJS quotel (dcoll (map (fun x => drec (("sub",dstring (fst x)) :: ("sup", (dstring (snd x))) :: nil)) h))).
 
   End DataJS.
 
   Section NNRCJS.
+    Local Open Scope estring_scope.
+
     (* Sort criteria *)
     Definition singleSortCriteriaToJson (sc: string * SortDesc) : json :=
       match snd sc with
@@ -258,65 +267,65 @@ End sanitizer.
     Definition sortCriteriaToJson (scl:SortCriterias) : json
       := jarray (map singleSortCriteriaToJson scl).
 
-    Definition sortCriteriaToJs (quotel:string) (scl:SortCriterias) : string
-      := jsonToJS quotel (sortCriteriaToJson scl).
+    Definition sortCriteriaToJs (quotel:estring) (scl:SortCriterias) : estring
+      := `  (jsonToJS (^ quotel) (sortCriteriaToJson scl)).
     
     (* Java equivalent: JavaScriptBackend.uarithToJS *)
-    Definition uarithToJs (u:nat_arith_unary_op) (e:string) :=
+    Definition uarithToJs (u:nat_arith_unary_op) (e:estring) : estring :=
       match u with
-      | NatAbs => "natAbs(" ++ e ++ ")"
-      | NatLog2 => "natLog2(" ++ e ++ ")"
-      | NatSqrt =>"natSqrt(" ++ e ++ ")"
+      | NatAbs => `"natAbs(" +++ e +++ `")"
+      | NatLog2 => `"natLog2(" +++ e +++ `")"
+      | NatSqrt => `"natSqrt(" +++ e +++ `")"
       end.
 
-    Definition float_uarithToJs (fu:float_arith_unary_op) (d:string) : string :=
+    Definition float_uarithToJs (fu:float_arith_unary_op) (d:estring) : estring :=
       match fu with
-      | FloatNeg => "-" ++ "(" ++ d ++ ")"
-      | FloatSqrt =>"Math.sqrt(" ++ "-" ++ d ++ ")"
-      | FloatExp => "Math.exp(" ++ d ++ ")" 
-      | FloatLog => "Math.log2(" ++ d ++ ")"
-      | FloatLog10 => "Math.log10(" ++ d ++ ")"
-      | FloatCeil => "Math.ceil(" ++ d ++ ")" 
-      | FloatFloor => "Math.floor(" ++ d ++ ")" 
-      | FloatAbs => "Math.abs(" ++ d ++ ")"
+      | FloatNeg => `"-" +++ `"(" +++ d +++ `")"
+      | FloatSqrt => `"Math.sqrt(" +++ `"-" +++ d +++ `")"
+      | FloatExp => `"Math.exp(" +++ d +++ `")" 
+      | FloatLog => `"Math.log2(" +++ d +++ `")"
+      | FloatLog10 => `"Math.log10(" +++ d +++ `")"
+      | FloatCeil => `"Math.ceil(" +++ d +++ `")" 
+      | FloatFloor => `"Math.floor(" +++ d +++ `")" 
+      | FloatAbs => `"Math.abs(" +++ d +++ `")"
       end.
 
     (* Java equivalent: JavaScriptBackend.barithToJs *)
-    Definition nat_barithToJs (b:nat_arith_binary_op) (e1 e2:string) :=
+    Definition nat_barithToJs (b:nat_arith_binary_op) (e1 e2:estring) : estring :=
       match b with
-      | NatPlus => "natPlus(" ++ e1 ++ ", " ++ e2 ++ ")"
-      | NatMinus => "natMinus(" ++ e1 ++ ", " ++ e2 ++ ")"
-      | NatMult => "natMult(" ++ e1 ++ ", " ++ e2 ++ ")"
-      | NatDiv => "natDiv(" ++ e1 ++ ", " ++ e2 ++ ")"
-      | NatRem => "natRem(" ++ e1 ++ ", " ++ e2 ++ ")"
-      | NatMin => "natMin(" ++ e1 ++ ", " ++ e2 ++ ")"
-      | NatMax => "natMax(" ++ e1 ++ ", " ++ e2 ++ ")"
+      | NatPlus => `"natPlus(" +++ e1 +++ `", " +++ e2 +++ `")"
+      | NatMinus => `"natMinus(" +++ e1 +++ `", " +++ e2 +++ `")"
+      | NatMult => `"natMult(" +++ e1 +++ `", " +++ e2 +++ `")"
+      | NatDiv => `"natDiv(" +++ e1 +++ `", " +++ e2 +++ `")"
+      | NatRem => `"natRem(" +++ e1 +++ `", " +++ e2 +++ `")"
+      | NatMin => `"natMin(" +++ e1 +++ `", " +++ e2 +++ `")"
+      | NatMax => `"natMax(" +++ e1 +++ `", " +++ e2 +++ `")"
       end.
     
-    Definition mumber_barithToJs (fb:float_arith_binary_op) (d1 d2:string) : string :=
+    Definition mumber_barithToJs (fb:float_arith_binary_op) (d1 d2:estring) : estring :=
       match fb with
-      | FloatPlus => "(" ++ d1 ++ " + " ++ d2 ++ ")"
-      | FloatMinus =>  "(" ++ d1 ++ " - " ++ d2 ++ ")"
-      | FloatMult =>  "(" ++ d1 ++ " * " ++ d2 ++ ")"
-      | FloatDiv =>  "(" ++ d1 ++ " / " ++ d2 ++ ")"
-      | FloatPow => "Math.pow(" ++ d1 ++ ", " ++ d2 ++ ")"
-      | FloatMin => "Math.min(" ++ d1 ++ ", " ++ d2 ++ ")"
-      | FloatMax => "Math.max(" ++ d1 ++ ", " ++ d2 ++ ")"
+      | FloatPlus => `"(" +++ d1 +++ `" + " +++ d2 +++ `")"
+      | FloatMinus =>  `"(" +++ d1 +++ `" - " +++ d2 +++ `")"
+      | FloatMult =>  `"(" +++ d1 +++ `" * " +++ d2 +++ `")"
+      | FloatDiv =>  `"(" +++ d1 +++ `" / " +++ d2 +++ `")"
+      | FloatPow => `"Math.pow(" +++ d1 +++ `", " +++ d2 +++ `")"
+      | FloatMin => `"Math.min(" +++ d1 +++ `", " +++ d2 +++ `")"
+      | FloatMax => `"Math.max(" +++ d1 +++ `", " +++ d2 +++ `")"
       end.
 
-    Definition mumber_bcompareToJs (fb:float_compare_binary_op) (d1 d2:string) : string :=
+    Definition mumber_bcompareToJs (fb:float_compare_binary_op) (d1 d2:estring) : estring :=
       match fb with
-      | FloatLt => "(" ++ d1 ++ " < " ++ d2 ++ ")"
-      | FloatLe => "(" ++ d1 ++ " <= " ++ d2 ++ ")"
-      | FloatGt => "(" ++ d1 ++ " > " ++ d2 ++ ")"
-      | FloatGe => "(" ++ d1 ++ " >= " ++ d2 ++ ")"
+      | FloatLt => `"(" +++ d1 +++ `" < " +++ d2 +++ `")"
+      | FloatLe => `"(" +++ d1 +++ `" <= " +++ d2 +++ `")"
+      | FloatGt => `"(" +++ d1 +++ `" > " +++ d2 +++ `")"
+      | FloatGe => `"(" +++ d1 +++ `" >= " +++ d2 +++ `")"
       end.
 
-    Definition like_clause_to_javascript (lc:like_clause)
+    Definition like_clause_to_javascript (lc:like_clause) : string
       := match lc with
-         | like_literal literal => "escapeRegExp(" ++ quotel_double ++ literal ++ quotel_double ++ ")"
-         | like_any_char => quotel_double ++ "." ++ quotel_double 
-         | like_any_string => quotel_double ++ ".*" ++ quotel_double 
+         | like_literal literal => "escapeRegExp(" ++ ^quotel_double ++ literal ++ ^quotel_double ++ ")"
+         | like_any_char => ^quotel_double ++ "." ++ ^quotel_double 
+         | like_any_string => ^quotel_double ++ ".*" ++ ^quotel_double 
          end.
 
     (* Java equivalent: JavaScript.Backend.nrcToJS *)
@@ -324,157 +333,157 @@ End sanitizer.
              (n : nnrc)                      (* NNRC expression to translate *)
              (t : nat)                       (* next available unused temporary *)
              (i : nat)                       (* indentation level *)
-             (eol : string)                  (* Choice of end of line character *)
-             (quotel : string)               (* Choice of quote character *)
+             (eol : estring)                  (* Choice of end of line character *)
+             (quotel : estring)               (* Choice of quote character *)
              (ivs : list (string * string))  (* Input variables and their corresponding string representation *)
-      : javascript                           (* JavaScript statements for computing result *)
-        * javascript                         (* JavaScript expression holding result *)
+      : ejavascript                           (* JavaScript statements for computing result *)
+        * ejavascript                         (* JavaScript expression holding result *)
         * nat                                (* next available unused temporary *)
       := match n with
-         | NNRCGetConstant v => ("", "vc$" ++ v, t)
+         | NNRCGetConstant v => (`"", `"vc$" +++ `v, t)
          | NNRCVar v =>
            match assoc_lookupr equiv_dec ivs v with
-           | Some v_string => ("", v_string, t)
-           | None => ("", "v" ++ v, t)
+           | Some v_string => (`"", `v_string, t)
+           | None => (`"", `"v" +++ `v, t)
            end
-         | NNRCConst d => ("", (dataToJS quotel d), t)
+         | NNRCConst d => (`"", dataToJS quotel d, t)
          | NNRCUnop op n1 =>
            let '(s1, e1, t0) := nnrcToJS n1 t i eol quotel ivs in
            let e0 := match op with
                      | OpIdentity => e1
-                     | OpNeg => "!(" ++ e1 ++ ")"
-                     | OpRec s => "{" ++ quotel ++ s ++ quotel ++ ": " ++ e1 ++ "}"
-                     | OpDot s => "deref(" ++ e1 ++ ", " ++ quotel ++ s  ++ quotel ++ ")"
-                     | OpRecRemove s => "remove(" ++ e1 ++ ", " ++ quotel ++ "" ++ s ++ "" ++ quotel ++ ")"
-                     | OpRecProject sl => "project(" ++ e1 ++ ", " ++ (brandsToJs quotel sl) ++ ")"
-                     | OpBag => "[" ++ e1 ++ "]"
-                     | OpSingleton => "singleton(" ++ e1 ++ ")"
-                     | OpFlatten => "flatten(" ++ e1 ++ ")"
-                     | OpDistinct => "distinct(" ++ e1 ++ ")"
-                     | OpOrderBy scl => "sort(" ++ e1 ++ ", " ++ (sortCriteriaToJs quotel scl) ++ ")"
-                     | OpCount => "count(" ++ e1 ++ ")"
-                     | OpToString => "toString(" ++ e1 ++ ")"
+                     | OpNeg => `"!(" +++ e1 +++ `")"
+                     | OpRec s => `"{" +++ quotel +++ `s +++ quotel +++ `": " +++ e1 +++ `"}"
+                     | OpDot s => `"deref(" +++ e1 +++ `", " +++ quotel +++ `s  +++ quotel +++ `")"
+                     | OpRecRemove s => `"remove(" +++ e1 +++ `", " +++ quotel +++ `"" +++ `s +++ `"" +++ quotel +++ `")"
+                     | OpRecProject sl => `"project(" +++ e1 +++ `", " +++ (brandsToJs quotel sl) +++ `")"
+                     | OpBag => `"[" +++ e1 +++ `"]"
+                     | OpSingleton => `"singleton(" +++ e1 +++ `")"
+                     | OpFlatten => `"flatten(" +++ e1 +++ `")"
+                     | OpDistinct => `"distinct(" +++ e1 +++ `")"
+                     | OpOrderBy scl => `"sort(" +++ e1 +++ `", " +++ (sortCriteriaToJs quotel scl) +++ `")"
+                     | OpCount => `"count(" +++ e1 +++ `")"
+                     | OpToString => `"toString(" +++ e1 +++ `")"
                      | OpSubstring start olen =>
                        match olen with
                        | None =>
-                         "substringNoLength(" ++ e1 ++ "," ++ toString start ++ ")"
+                         `"substringNoLength(" +++ e1 +++ `"," +++ `toString start +++ `")"
                        | Some len =>
-                         "substring(" ++ e1 ++ "," ++ toString start ++ "," ++ toString len ++ ")"
+                         `"substring(" +++ e1 +++ `"," +++ `toString start +++ `"," +++ `toString len +++ `")"
                        end
                      | OpLike pat oescape =>
                        let lc := make_like_clause pat oescape in
-                       let regex := "new RegExp([" ++ (map_concat "," like_clause_to_javascript lc) ++ "].join(" ++ quotel ++ quotel ++ "))" in
-                       regex ++ ".test(" ++ e1 ++ ")"
-                     | OpLeft => "{" ++ quotel ++ "left" ++ quotel ++ " : " ++ e1 ++ "}"
-                     | OpRight => "{" ++ quotel ++ "right" ++ quotel ++ " : " ++ e1 ++ "}"
-                     | OpBrand b => "brand(" ++ brandsToJs quotel b ++ "," ++ e1 ++ ")"
-                     | OpUnbrand => "unbrand(" ++ e1 ++ ")"
-                     | OpCast b => "cast(" ++ brandsToJs quotel b ++ "," ++ e1 ++ ")"
+                       let regex := `"new RegExp([" +++ ` (map_concat "," like_clause_to_javascript lc) +++ `"].join(" +++ quotel +++ quotel +++ `"))" in
+                       regex +++ `".test(" +++ e1 +++ `")"
+                     | OpLeft => `"{" +++ quotel +++ `"left" +++ quotel +++ `" : " +++ e1 +++ `"}"
+                     | OpRight => `"{" +++ quotel +++ `"right" +++ quotel +++ `" : " +++ e1 +++ `"}"
+                     | OpBrand b => `"brand(" +++ brandsToJs quotel b +++ `"," +++ e1 +++ `")"
+                     | OpUnbrand => `"unbrand(" +++ e1 +++ `")"
+                     | OpCast b => `"cast(" +++ brandsToJs quotel b +++ `"," +++ e1 +++ `")"
                      | OpNatUnary u => uarithToJs u e1
-                     | OpNatSum => "natSum(" ++ e1 ++ ")"
-                     | OpNatMin => "natMinApply(" ++ e1 ++ ")"
-                     | OpNatMax => "natMaxApply(" ++ e1 ++ ")"
-                     | OpNatMean => "natArithMean(" ++ e1 ++ ")"
-                     | OpFloatOfNat => "floatOfNat(" ++ e1 ++ ")"
+                     | OpNatSum => `"natSum(" +++ e1 +++ `")"
+                     | OpNatMin => `"natMinApply(" +++ e1 +++ `")"
+                     | OpNatMax => `"natMaxApply(" +++ e1 +++ `")"
+                     | OpNatMean => `"natArithMean(" +++ e1 +++ `")"
+                     | OpFloatOfNat => `"floatOfNat(" +++ e1 +++ `")"
                      | OpFloatUnary u => float_uarithToJs u e1
-                     | OpFloatTruncate => "Math.trunc(" ++ e1 ++ ")" 
-                     | OpFloatSum => "sum(" ++ e1 ++ ")"
-                     | OpFloatMean => "arithMean(" ++ e1 ++ ")"
-                     | OpFloatBagMin => "Math.min.apply(Math," ++ e1 ++ ")"
-                     | OpFloatBagMax => "Math.max.apply(Math," ++ e1 ++ ")"
+                     | OpFloatTruncate => `"Math.trunc(" +++ e1 +++ `")" 
+                     | OpFloatSum => `"sum(" +++ e1 +++ `")"
+                     | OpFloatMean => `"arithMean(" +++ e1 +++ `")"
+                     | OpFloatBagMin => `"Math.min.apply(Math," +++ e1 +++ `")"
+                     | OpFloatBagMax => `"Math.max.apply(Math," +++ e1 +++ `")"
                      | OpForeignUnary fu
-                       => foreign_to_javascript_unary_op i eol quotel fu e1
+                       => ` (foreign_to_javascript_unary_op i (^eol) (^quotel) fu (^e1))
                      end in
            (s1, e0, t0)
          | NNRCBinop op n1 n2 =>
            let '(s1, e1, t2) := nnrcToJS n1 t i eol quotel ivs in
            let '(s2, e2, t0) := nnrcToJS n2 t2 i eol quotel ivs in
            let e0 := match op with
-                     | OpEqual => "equal(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpRecConcat => "concat(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpRecMerge => "mergeConcat(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpAnd => "(" ++ e1 ++ " && " ++ e2 ++ ")"
-                     | OpOr => "(" ++ e1 ++ " || " ++ e2 ++ ")"
-                     | OpLt => "(compare(" ++ e1 ++ "," ++ e2 ++ ") < 0)" (* XXX Use compare! *)
-                     | OpLe => "(compare(" ++ e1 ++ "," ++ e2 ++ ") <= 0)" (* XXX Use compare! *)
-                     | OpBagUnion => "bunion(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpBagDiff => "bminus(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpBagMin => "bmin(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpBagMax => "bmax(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpContains => "contains(" ++ e1 ++ ", " ++ e2 ++ ")"
-                     | OpStringConcat => "(" ++ e1 ++ " + " ++ e2 ++ ")"
+                     | OpEqual => `"equal(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpRecConcat => `"concat(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpRecMerge => `"mergeConcat(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpAnd => `"(" +++ e1 +++ `" && " +++ e2 +++ `")"
+                     | OpOr => `"(" +++ e1 +++ `" || " +++ e2 +++ `")"
+                     | OpLt => `"(compare(" +++ e1 +++ `"," +++ e2 +++ `") < 0)" (* XXX Use compare! *)
+                     | OpLe => `"(compare(" +++ e1 +++ `"," +++ e2 +++ `") <= 0)" (* XXX Use compare! *)
+                     | OpBagUnion => `"bunion(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpBagDiff => `"bminus(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpBagMin => `"bmin(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpBagMax => `"bmax(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpContains => `"contains(" +++ e1 +++ `", " +++ e2 +++ `")"
+                     | OpStringConcat => `"(" +++ e1 +++ `" + " +++ e2 +++ `")"
                      | OpNatBinary b => nat_barithToJs b e1 e2
                      | OpFloatBinary b => mumber_barithToJs b e1 e2
                      | OpFloatCompare b => mumber_bcompareToJs b e1 e2
                      | OpForeignBinary fb
-                       => foreign_to_javascript_binary_op i eol quotel fb e1 e2
+                       => ` (foreign_to_javascript_binary_op i (^eol) (^quotel) fb (^e1) (^e2))
                      end in
-           (s1 ++ s2, e0, t0)
+           (s1 +++ s2, e0, t0)
          | NNRCLet v bind body =>
            let '(s1, e1, t2) := nnrcToJS bind t i eol quotel ivs in
            let '(s2, e2, t0) := nnrcToJS body t2 i eol quotel ivs in
-           let v0 := "v" ++ v in
-           (s1 ++ (indent i) ++ "var " ++ v0 ++ " = " ++ e1 ++ ";" ++ eol
-               ++ s2,
+           let v0 := `"v" +++ `v in
+           (s1 +++ (indent i) +++ `"var " +++ v0 +++ `" = " +++ e1 +++ `";" +++ eol
+               +++ s2,
             e2, t0)
          | NNRCFor v iter body =>
            let '(s1, e1, t2) := nnrcToJS iter t i eol quotel ivs in
            let '(s2, e2, t0) := nnrcToJS body t2 (i+1) eol quotel ivs in
-           let elm := "v" ++ v in
-           let src := "src" ++ (nat_to_string10 t0) in
-           let idx := "i" ++ (nat_to_string10 t0) in
-           let dst := "dst" ++ (nat_to_string10 t0) in
-           (s1 ++ (indent i) ++ "var " ++ dst ++ " = [];" ++ eol
-               ++ (indent i) ++ ("for (var "
-                                   ++ src ++ "=" ++ e1 ++ ", "
-                                   ++ idx ++ "=0; "
-                                   ++ idx ++ "<" ++ src ++ ".length; "
-                                   ++ idx ++ "++) {" ++ eol)
-               ++ (indent (i+1)) ++ ("var " ++ elm ++ " = " ++ src
-                                            ++ "[" ++ idx ++ "];" ++ eol)
-               ++ s2
-               ++ (indent (i+1)) ++ dst ++ ".push(" ++ e2 ++ ");" ++ eol
-               ++ (indent i) ++ "}" ++ eol,
+           let elm := `"v" +++ `v in
+           let src := `"src" +++ ` (nat_to_string10 t0) in
+           let idx := `"i" +++ `  (nat_to_string10 t0) in
+           let dst := `"dst" +++ ` (nat_to_string10 t0) in
+           (s1 +++ (indent i) +++ `"var " +++ dst +++ `" = [];" +++ eol
+               +++ (indent i) +++ (`"for (var "
+                                   +++ src +++ `"=" +++ e1 +++ `", "
+                                   +++ idx +++ `"=0; "
+                                   +++ idx +++ `"<" +++ src +++ `".length; "
+                                   +++ idx +++ `"++) {" +++ eol)
+               +++ (indent (i+1)) +++ (`"var " +++ elm +++ `" = " +++ src
+                                               +++ `"[" +++ idx +++ `"];" +++ eol)
+               +++ s2
+               +++ (indent (i+1)) +++ dst +++ `".push(" +++ e2 +++ `");" +++ eol
+               +++ (indent i) +++ `"}" +++ eol,
             dst, t0 + 1)
          | NNRCIf c n1 n2 =>
            let '(s1, e1, t2) := nnrcToJS c t i eol quotel ivs in
            let '(s2, e2, t3) := nnrcToJS n1 t2 (i+1) eol quotel ivs in
            let '(s3, e3, t0) := nnrcToJS n2 t3 (i+1) eol quotel ivs in
-           let v0 := "t" ++ (nat_to_string10 t0) in
-           (s1 ++ (indent i) ++ "var " ++ v0 ++ ";" ++ eol
-               ++ (indent i) ++ "if (" ++ e1 ++ ") {" ++ eol
-               ++ s2
-               ++ (indent (i+1)) ++ v0 ++ " = " ++ e2 ++ ";" ++ eol
-               ++ (indent i) ++ "} else {" ++ eol
-               ++ s3
-               ++ (indent (i+1)) ++ v0 ++ " = " ++ e3 ++ ";" ++ eol
-               ++ (indent i) ++ "}" ++ eol,
+           let v0 := `"t" +++ ` (nat_to_string10 t0) in
+           (s1 +++ (indent i) +++ `"var " +++ v0 +++ `";" +++ eol
+               +++ (indent i) +++ `"if (" +++ e1 +++ `") {" +++ eol
+               +++ s2
+               +++ (indent (i+1)) +++ v0 +++ `" = " +++ e2 +++ `";" +++ eol
+               +++ (indent i) +++ `"} else {" +++ eol
+               +++ s3
+               +++ (indent (i+1)) +++ v0 +++ `" = " +++ e3 +++ `";" +++ eol
+               +++ (indent i) +++ `"}" +++ eol,
             v0, t0 + 1)
          | NNRCEither nd xl nl xr nr =>
            let '(s1, e1, t2) := nnrcToJS nd t i eol quotel ivs in
            let '(s2, e2, t0) := nnrcToJS nl t2 (i+1) eol quotel ivs in
            let '(s3, e3, t1) := nnrcToJS nr t0 (i+1) eol quotel ivs in
-           let vl := "v" ++ xl in
-           let vr := "v" ++ xr in
-           let res := "res" ++ (nat_to_string10 t1) in  (* Stores the result from either left or right evaluation so it can be returned *)
-           (s1 ++ (indent i) ++ "var " ++ res ++ " = null;" ++ eol
-               ++ (indent i) ++ "if (either(" ++ e1 ++ ")) {" ++ eol
-               ++ (indent (i+1)) ++ "var " ++ vl ++ " = null;" ++ eol
-               ++ (indent (i+1)) ++ vl ++ " = toLeft(" ++ e1 ++ ");" ++ eol
-               ++ s2
-               ++ (indent (i+1)) ++ res ++ " = " ++ e2 ++ ";" ++ eol
-               ++ (indent i) ++ "} else {" ++ eol
-               ++ (indent (i+1)) ++ "var " ++ vr ++ " = null;" ++ eol
-               ++ (indent (i+1)) ++ vr ++ " = toRight(" ++ e1 ++ ");" ++ eol
-               ++ s3
-               ++ (indent (i+1)) ++ res ++ " = " ++ e3 ++ ";" ++ eol
-               ++ (indent i) ++ "}" ++ eol,
+           let vl := `"v" +++ `xl in
+           let vr := `"v" +++ `xr in
+           let res := `"res" +++ ` (nat_to_string10 t1) in  (* Stores the result from either left or right evaluation so it can be returned *)
+           (s1 +++ (indent i) +++ `"var " +++ res +++ `" = null;" +++ eol
+               +++ (indent i) +++ `"if (either(" +++ e1 +++ `")) {" +++ eol
+               +++ (indent (i+1)) +++ `"var " +++ vl +++ `" = null;" +++ eol
+               +++ (indent (i+1)) +++ vl +++ `" = toLeft(" +++ e1 +++ `");" +++ eol
+               +++ s2
+               +++ (indent (i+1)) +++ res +++ `" = " +++ e2 +++ `";" +++ eol
+               +++ (indent i) +++ `"} else {" +++ eol
+               +++ (indent (i+1)) +++ `"var " +++ vr +++ `" = null;" +++ eol
+               +++ (indent (i+1)) +++ vr +++ `" = toRight(" +++ e1 +++ `");" +++ eol
+               +++ s3
+               +++ (indent (i+1)) +++ res +++ `" = " +++ e3 +++ `";" +++ eol
+               +++ (indent i) +++ `"}" +++ eol,
             res, t1 + 1)
          | NNRCGroupBy g sl n1 =>
            let '(s1, e1, t0) := nnrcToJS n1 t i eol quotel ivs in
-           let e0 := "groupby(" ++ e1 ++ ", "
-                                ++ quotel ++ g ++ quotel ++ ", "
-                                ++ (brandsToJs quotel sl) ++ ")" in
+           let e0 := `"groupby(" +++ e1 +++ `", "
+                                +++ quotel +++ `g +++ quotel +++ `", "
+                                +++ (brandsToJs quotel sl) +++ `")" in
            (s1, e0, t0)
        end.
 
@@ -483,16 +492,16 @@ End sanitizer.
                (n : nnrc)
                (t : nat)
                (i : nat)
-               (eol : string)
-               (quotel : string)
+               (eol : estring)
+               (quotel : estring)
                (avoid: list var)
                (ivs : list (string * string))
       := let n := unshadow_js avoid n in
          nnrcToJS n t i eol quotel ivs.
 
     (* Java equivalent: JavaScriptBackend.makeJSParams *)
-    Definition makeJSParams (ivs: list string) :=
-      concat ", " ivs.
+    Definition makeJSParams (ivs: list string)  : estring :=
+      ` (concat ", " ivs).
 
     (* Java equivalent: JavaScriptBackend.paramsToStringedParams *)
     Definition paramsToStringedParams (params : list string) :=
@@ -503,37 +512,37 @@ End sanitizer.
                (e:nnrc)
                (harness:bool)
                (i:nat)
-               (eol:string)
-               (quotel:string)
+               (eol:estring)
+               (quotel:estring)
                (params : list string)
                (fname:string)
       := let '(j0, v0, t0) := nnrcToJSunshadow e 1 (i+1) eol quotel params (paramsToStringedParams params) in
-         "" ++ (indent i) ++ "function " ++ fname ++ "("++ (makeJSParams params) ++ ") {" ++ eol
-            ++ j0
-            ++ (indent i) ++ "  return " ++ v0 ++ ";" ++ eol
-            ++ (indent i) ++ "}" ++ eol
-            ++ (if harness then "%HARNESS%" else "").
+         `"" +++ (indent i) +++ `"function " +++ `fname +++ `"(" +++ (makeJSParams params) +++ `") {" +++ eol
+             +++ j0
+             +++ (indent i) +++ `"  return " +++ v0 +++ `";" +++ eol
+             +++ (indent i) +++ `"}" +++ eol
+             +++ (if harness then `"%HARNESS%" else `"").
 
     Definition nnrcToJSFunStubConstants
                (e:nnrc)
                (i:nat)
-               (eol:string)
-               (quotel:string)
+               (eol:estring)
+               (quotel:estring)
                (params : list string)
                (fname:string)
                (fprefix:string)
       := let '(j0, v0, t0) := nnrcToJSunshadow e 1 (i+1) eol quotel params (paramsToStringedParams params) in
-         "" ++ (indent i) ++ fprefix ++ fname ++ "("++ (makeJSParams params) ++ ") {" ++ eol
-            ++ j0
-            ++ (indent i) ++ "  return " ++ v0 ++ ";" ++ eol
-            ++ (indent i) ++ "}".
+         `"" +++ (indent i) +++ `fprefix +++ `fname +++ `"(" +++ (makeJSParams params) +++ `") {" +++ eol
+             +++ j0
+             +++ (indent i) +++ `"  return " +++ v0 +++ `";" +++ eol
+             +++ (indent i) +++ `"}".
 
     (* Java equivalent: JavaScriptBackend.nrcToJSFunStubConstants *)
     Definition nnrcToJSFunStubConstantsAsFunction
                (e:nnrc)
                (i:nat)
-               (eol:string)
-               (quotel:string)
+               (eol:estring)
+               (quotel:estring)
                (params : list string)
                (fname:string)
       := let fprefix := "function " in
@@ -542,8 +551,8 @@ End sanitizer.
     Definition nnrcToJSFunStubConstantsAsMethod
                (e:nnrc)
                (i:nat)
-               (eol:string)
-               (quotel:string)
+               (eol:estring)
+               (quotel:estring)
                (params : list string)
                (fname:string)
       := let fprefix := "" in
@@ -554,8 +563,8 @@ End sanitizer.
                (input_v:string)
                (e:nnrc)
                (i:nat)
-               (eol:string)
-               (quotel:string)
+               (eol:estring)
+               (quotel:estring)
                (ivs : list string)
                (fname:string)
       := let e' := closeFreeVars jsSafeSeparator jsIdentifierSanitize (NNRCVar input_v) e ivs in
@@ -565,21 +574,21 @@ End sanitizer.
                (input_v:string)
                (e:nnrc)
                (i:nat)
-               (eol:string)
-               (quotel:string)
+               (eol:estring)
+               (quotel:estring)
                (ivs : list string)
                (fname:string)
       := let e' := closeFreeVars jsSafeSeparator jsIdentifierSanitize (NNRCVar input_v) e ivs in
          nnrcToJSFunStubConstantsAsMethod e' i eol quotel ivs fname.
 
     (* Java equivalent: JavaScriptBackend.generateJavaScript *)
-    Definition nnrc_to_js_top (e:nnrc) : javascript :=
+    Definition nnrc_to_js_top (e:nnrc) : ejavascript :=
       let input_f := "query" in
       let input_v := "constants" in
       let init_indent := 0 in
       nnrcToJSFun input_v e init_indent eol_newline quotel_double (input_v::nil) input_f.
 
-    Definition nnrc_to_js_top_with_name (e:nnrc) (fname:string) : javascript :=
+    Definition nnrc_to_js_top_with_name (e:nnrc) (fname:string) : ejavascript :=
       let input_v := "constants" in
       let init_indent := 0 in
       nnrcToJSFun input_v e init_indent eol_newline quotel_double (input_v::nil) fname.
@@ -602,7 +611,7 @@ End sanitizer.
     Definition test_gen (e:nnrc) :=
       nnrc_to_js_top e_in.
 
-    Definition test_gen_rename (e:nnrc) :=
+    Definition test_gen_rename (e:nnrc) : ejavascript :=
       nnrc_to_js_top (rename_top e_in).
 
 (*    

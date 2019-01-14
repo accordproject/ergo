@@ -17,6 +17,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Backend.ErgoBackend.
 
@@ -65,7 +66,7 @@ Section ErgoNNRC.
     mkResultFile {
         res_file : string;
         res_nnrc : nnrc_module;
-        res_content : string;
+        res_content : estring;
       }.
   
   Section Semantics.

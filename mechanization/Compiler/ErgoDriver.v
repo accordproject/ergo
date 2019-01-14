@@ -202,7 +202,7 @@ Section ErgoDriver.
     Definition ergo_module_to_javascript
                (version:jsversion)
                (ctxt:compilation_context)
-               (p:laergo_module) : eresult (nnrc_module * ErgoCodeGen.javascript) :=
+               (p:laergo_module) : eresult (nnrc_module * ErgoCodeGen.ejavascript) :=
       let pc := ergo_module_to_ergoct ctxt p in
       let pn :=
           coq_time "ergoc(typed)->nnrc"
@@ -242,6 +242,8 @@ Section ErgoDriver.
 
   Section CompilerTop.
 
+    Local Open Scope estring_scope.
+
     Definition ergo_module_to_javascript_top
                (version:jsversion)
                (inputs:list lrergo_input) : eresult result_file :=
@@ -264,7 +266,7 @@ Section ErgoDriver.
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
                           let res := ergo_module_to_java ctxt p in
-                          elift (fun xy => mkResultFile p.(module_file) (fst xy) (snd xy)) res)
+                          elift (fun xy => mkResultFile p.(module_file) (fst xy) (string_to_estring (snd xy))) res)
                        cinit) bm.
 
     Definition ergo_module_to_cicero_top

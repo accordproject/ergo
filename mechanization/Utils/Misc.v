@@ -88,6 +88,31 @@ Section Misc.
     Parameter string_to_estring : string -> estring.
     Parameter estring_to_string : estring -> string.
     Parameter estring_concat : estring -> estring -> estring.
+
+    Notation "` e" := (string_to_estring e) (left associativity, at level 40) : estring_scope.
+    Notation "^ e" := (estring_to_string e) (left associativity, at level 40) : estring_scope.
+    Notation "e1 +++ e2" := (estring_concat e1 e2) (right associativity, at level 70): estring_scope.
+
+    Local Open Scope estring_scope.
+    Definition emulti_append {A} separator (f:A -> estring) (elems:list A) : estring :=
+      match elems with
+      | nil => ` (""%string)
+      | e :: elems' => fold_left (fun acc e => acc +++ separator +++ (f e)) elems' (f e)
+      end.
+
+    Fixpoint econcat (sep : estring) (ls : list estring) : estring :=
+      match ls with
+      | nil => `""%string
+      | x :: nil => x
+      | x :: (_ :: _) as xs => (x +++ sep +++ econcat sep xs)%string
+      end.
+    
+    Definition ejavascript : Set := estring.
+
   End EString.
   
 End Misc.
+
+Notation "` e" := (string_to_estring e) (left associativity, at level 40) : estring_scope.
+Notation "^ e" := (estring_to_string e) (left associativity, at level 40) : estring_scope.
+Notation "e1 +++ e2" := (estring_concat e1 e2) (right associativity, at level 70): estring_scope.

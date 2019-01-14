@@ -27,6 +27,7 @@ Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
 
 Section ErgoNNRCtoCicero.
   Local Open Scope string_scope.
+  Local Open Scope estring_scope.
 
   Definition accord_annotation
              (clause_name:string)
@@ -34,18 +35,18 @@ Section ErgoNNRCtoCicero.
              (response_type:string)
              (emit_type:string)
              (state_type:string)
-             (eol:string)
-             (quotel:string) :=
-    "/**" ++ eol
-          ++ " * Execute the smart clause" ++ eol
-          ++ " * @param {Context} context - the Accord context" ++ eol
-          ++ " * @param {" ++ request_type ++ "} context.request - the incoming request" ++ eol
-          ++ " * @param {" ++ response_type ++ "} context.response - the response" ++ eol
-          ++ " * @param {" ++ emit_type ++ "} context.emit - the emitted events" ++ eol
-          ++ " * @param {" ++ state_type ++ "} context.state - the state" ++ eol
-          ++ (if string_dec clause_name clause_init_name then " * @AccordClauseLogicInit" ++ eol else "")
-          ++ " * @AccordClauseLogic" ++ eol
-          ++ " */" ++ eol.
+             (eol:estring)
+             (quotel:estring) : estring :=
+    `"/**" +++ eol
+           +++ `" * Execute the smart clause" +++ eol
+           +++ `" * @param {Context} context - the Accord context" +++ eol
+           +++ `" * @param {" +++ `request_type +++ `"} context.request - the incoming request" +++ eol
+           +++ `" * @param {" +++ `response_type +++ `"} context.response - the response" +++ eol
+           +++ `" * @param {" +++ `emit_type +++ `"} context.emit - the emitted events" +++ eol
+           +++ `" * @param {" +++ `state_type +++ `"} context.state - the state" +++ eol
+           +++ (if string_dec clause_name clause_init_name then `" * @AccordClauseLogicInit" +++ eol else `"")
+           +++ `" * @AccordClauseLogic" +++ eol
+           +++ `" */" +++ eol.
 
   (** Note: this adjusts the external interface to that currently expected in Cicero. Namely:
 - This serialized/deserialized ErgoType objects to/from JSON
@@ -61,14 +62,14 @@ Section ErgoNNRCtoCicero.
              (state_type:string)
              (contract_name:string)
              (clause_name:string)
-             (eol:string)
-             (quotel:string) : string :=
+             (eol:estring)
+             (quotel:estring) : estring :=
     let state_init :=
         if string_dec clause_name clause_init_name
         then
-          "{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }"
+          `"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }"
         else
-          "serializer.toJSON(context.state,{permitResourcesForRelationships:true})"
+          `"serializer.toJSON(context.state,{permitResourcesForRelationships:true})"
     in
     (accord_annotation
        clause_name
@@ -78,71 +79,73 @@ Section ErgoNNRCtoCicero.
        state_type
        eol
        quotel)
-      ++ "function " ++ fun_name ++ "(context) {" ++ eol
-      ++ "  let pcontext = { '" ++ request_param ++ "' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': " ++ state_init ++ ", 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" ++ eol
-      ++ "  //logger.info('ergo context: '+JSON.stringify(pcontext))" ++ eol
-      ++ "  let result = new " ++ ErgoCodeGen.javascript_identifier_sanitizer contract_name ++ "()." ++ ErgoCodeGen.javascript_identifier_sanitizer clause_name ++ "(pcontext);" ++ eol
-      ++ "  if (result.hasOwnProperty('left')) {" ++ eol
-      ++ "    //logger.info('ergo result: '+JSON.stringify(result))" ++ eol
-      ++ "    context.response = serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true});" ++ eol
-      ++ "    context.state = serializer.fromJSON(result.left.state, {validate: false, acceptResourcesForRelationships: true});" ++ eol
-      ++ "    let emitResult = [];" ++ eol
-      ++ "    for (let i = 0; i < result.left.emit.length; i++) {" ++ eol
-      ++ "      emitResult.push(serializer.fromJSON(result.left.emit[i], {validate: false, acceptResourcesForRelationships: true}));" ++ eol
-      ++ "    }" ++ eol
-      ++ "    context.emit = emitResult;" ++ eol
-      ++ "    return context;" ++ eol
-      ++ "  } else {" ++ eol
-      ++ "    throw new Error(result.right.message);" ++ eol
-      ++ "  }" ++ eol
-      ++ "}" ++ eol.
+      +++ `"function " +++ `fun_name +++ `"(context) {" +++ eol
+      +++ `"  let pcontext = { '" +++ `request_param +++ `"' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': " +++ state_init +++ `", 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" +++ eol
+      +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
+      +++ `"  let result = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
+      +++ `"  if (result.hasOwnProperty('left')) {" +++ eol
+      +++ `"    //logger.info('ergo result: '+JSON.stringify(result))" +++ eol
+      +++ `"    context.response = serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true});" +++ eol
+      +++ `"    context.state = serializer.fromJSON(result.left.state, {validate: false, acceptResourcesForRelationships: true});" +++ eol
+      +++ `"    let emitResult = [];" +++ eol
+      +++ `"    for (let i = 0; i < result.left.emit.length; i++) {" +++ eol
+      +++ `"      emitResult.push(serializer.fromJSON(result.left.emit[i], {validate: false, acceptResourcesForRelationships: true}));" +++ eol
+      +++ `"    }" +++ eol
+      +++ `"    context.emit = emitResult;" +++ eol
+      +++ `"    return context;" +++ eol
+      +++ `"  } else {" +++ eol
+      +++ `"    throw new Error(result.right.message);" +++ eol
+      +++ `"  }" +++ eol
+      +++ `"}" +++ eol.
 
   Definition apply_wrapper_function
              (contract_name:string)
              (contract_state_type:string)
              (signature: string * string * string * string * string)
-             (eol:string)
-             (quotel:string) : ErgoCodeGen.javascript :=
+             (eol:estring)
+             (quotel:estring) : ErgoCodeGen.ejavascript :=
     let '(clause_name, request_name, request_type, response_type, emit_type) := signature in
-    let fun_name := ErgoCodeGen.javascript_identifier_sanitizer contract_name ++ "_" ++ ErgoCodeGen.javascript_identifier_sanitizer clause_name in
+    let fun_name : string :=
+        ErgoCodeGen.javascript_identifier_sanitizer contract_name ++ "_"%string ++ ErgoCodeGen.javascript_identifier_sanitizer clause_name
+    in
     wrapper_function
       fun_name request_name request_type response_type emit_type contract_state_type contract_name clause_name eol quotel.
   
   Definition wrapper_functions
              (contract_name:string)
              (signatures:list (string * string * string * string * string) * string)
-             (eol:string)
-             (quotel:string) : ErgoCodeGen.javascript :=
-    String.concat eol
-                  (List.map (fun sig => apply_wrapper_function
-                                          contract_name
-                                          (snd signatures)
-                                          sig
-                                          eol
-                                          quotel) (fst signatures)).
+             (eol:estring)
+             (quotel:estring) : ErgoCodeGen.ejavascript :=
+    econcat eol
+            (List.map (fun sig => apply_wrapper_function
+                                    contract_name
+                                    (snd signatures)
+                                    sig
+                                    eol
+                                    quotel) (fst signatures)).
   Definition javascript_main_dispatch_and_init
              (contract_name:string)
-             (eol:string)
-             (quotel:string) : ErgoCodeGen.javascript :=
-    "" ++ "const contract = new " ++ ErgoCodeGen.javascript_identifier_sanitizer contract_name ++ "();" ++ eol
-       ++ "function dispatch(context) {" ++ eol
-       ++ "  return contract.main(context);" ++ eol
-       ++ "}" ++ eol
-       ++ "function init(context) {" ++ eol
-       ++ "  return contract.init(context);" ++ eol
-       ++ "}" ++ eol.
+             (eol:estring)
+             (quotel:estring) : ErgoCodeGen.ejavascript :=
+    `"" +++ `"const contract = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"();" +++ eol
+        +++ `"function dispatch(context) {" +++ eol
+        +++ `"  return contract.main(context);" +++ eol
+        +++ `"}" +++ eol
+        +++ `"function init(context) {" +++ eol
+        +++ `"  return contract.init(context);" +++ eol
+        +++ `"}" +++ eol.
 
   Definition javascript_of_module_with_dispatch
              (contract_name:string)
              (signatures:list (string * string * string * string * string) * string)
              (p:nnrc_module)
-             (eol:string)
-             (quotel:string) : ErgoCodeGen.javascript :=
-    (preamble eol) ++ eol
-                   ++ (wrapper_functions contract_name signatures eol quotel)
-                   ++ (javascript_of_declarations ES6 p.(modulen_declarations) 0 0 eol quotel)
-                   ++ (javascript_main_dispatch_and_init contract_name eol quotel)
-                   ++ (postamble eol).
+             (eol:estring)
+             (quotel:estring) : ErgoCodeGen.ejavascript :=
+    (preamble eol) +++ eol
+                   +++ (wrapper_functions contract_name signatures eol quotel)
+                   +++ (javascript_of_declarations ES6 p.(modulen_declarations) 0 0 eol quotel)
+                   +++ (javascript_main_dispatch_and_init contract_name eol quotel)
+                   +++ (postamble eol).
 
   Fixpoint filter_signatures
            (namespace:string)
@@ -191,7 +194,7 @@ Section ErgoNNRCtoCicero.
              (contract_name:string)
              (contract_state_type:option ergo_type)
              (sigs: list (string * ergo_type_signature))
-             (p:nnrc_module) : ErgoCodeGen.javascript :=
+             (p:nnrc_module) : ErgoCodeGen.ejavascript :=
     javascript_of_module_with_dispatch
       contract_name
       (filter_signatures_with_state p.(modulen_namespace) contract_state_type sigs)
