@@ -418,6 +418,8 @@ stmt:
     { ErgoCompiler.senforce (mk_provenance $startpos $endpos) e1 None s3 }
 | SET STATE e1 = expr SEMI s2 = stmt
     { ErgoCompiler.ssetstate (mk_provenance $startpos $endpos) e1 s2 }
+| SET STATE DOT a = safeident EQUAL e2 = expr SEMI s2 = stmt
+    { ErgoCompiler.ssetstatedot (mk_provenance $startpos $endpos) a e2 s2 }
 | EMIT e1 = expr SEMI s2 = stmt
     { ErgoCompiler.semit (mk_provenance $startpos $endpos) e1 s2 }
 | MATCH e0 = expr csd = cases_stmt

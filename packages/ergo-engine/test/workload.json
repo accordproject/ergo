@@ -66,12 +66,11 @@
     }
   },
   {
-    "name": "helloworldstate",
+    "name": "helloworldstate (old style)",
     "dir": "examples/helloworldstate",
-    "ergo": ["logic.ergo"],
+    "ergo": ["logicOld.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
-    "request": "request.json",
     "state": null,
     "contractName": "org.accordproject.helloworldstate.HelloWorldState",
     "currentTime": null,
@@ -79,6 +78,113 @@
       "response": null,
       "state": {
         "counter": 0,
+        "lastInput": "",
+        "$class": "org.accordproject.helloworldstate.State"
+      }
+    }
+  },
+  {
+    "name": "helloworldstate 1 (old style)",
+    "dir": "examples/helloworldstate",
+    "ergo": ["logicOld.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "state": "state1.json",
+    "request": "request1.json",
+    "contractName": "org.accordproject.helloworldstate.HelloWorldState",
+    "currentTime": null,
+    "expected": {
+      "response": {
+          "$class": "org.accordproject.helloworldstate.MyResponse",
+          "output": "Hello Fred Blogs (Accord Project) (1.0)"
+      },
+      "state": {
+        "counter": 1,
+        "lastInput": "Accord Project",
+        "$class": "org.accordproject.helloworldstate.State"
+      }
+    }
+  },
+  {
+    "name": "helloworldstate 2 (old style)",
+    "dir": "examples/helloworldstate",
+    "ergo": ["logicOld.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "state": "state2.json",
+    "request": "request2.json",
+    "contractName": "org.accordproject.helloworldstate.HelloWorldState",
+    "currentTime": null,
+    "expected": {
+      "response": {
+          "$class": "org.accordproject.helloworldstate.MyResponse",
+          "output": "Hello Fred Blogs (Linux Foundation) (2.0)"
+      },
+      "state": {
+        "counter": 2,
+        "lastInput": "Linux Foundation",
+        "$class": "org.accordproject.helloworldstate.State"
+      }
+    }
+  },
+  {
+    "name": "helloworldstate init (new style)",
+    "dir": "examples/helloworldstate",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "state": null,
+    "contractName": "org.accordproject.helloworldstate.HelloWorldState",
+    "currentTime": null,
+    "expected": {
+      "response": null,
+      "state": {
+        "counter": 0,
+        "lastInput": "",
+        "$class": "org.accordproject.helloworldstate.State"
+      }
+    }
+  },
+  {
+    "name": "helloworldstate 1 (new style)",
+    "dir": "examples/helloworldstate",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "state": "state1.json",
+    "request": "request1.json",
+    "contractName": "org.accordproject.helloworldstate.HelloWorldState",
+    "currentTime": null,
+    "expected": {
+      "response": {
+          "$class": "org.accordproject.helloworldstate.MyResponse",
+          "output": "Hello Fred Blogs (Accord Project) (1.0)"
+      },
+      "state": {
+        "counter": 1,
+        "lastInput": "Accord Project",
+        "$class": "org.accordproject.helloworldstate.State"
+      }
+    }
+  },
+  {
+    "name": "helloworldstate 2 (new style)",
+    "dir": "examples/helloworldstate",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "state": "state2.json",
+    "request": "request2.json",
+    "contractName": "org.accordproject.helloworldstate.HelloWorldState",
+    "currentTime": null,
+    "expected": {
+      "response": {
+          "$class": "org.accordproject.helloworldstate.MyResponse",
+          "output": "Hello Fred Blogs (Linux Foundation) (2.0)"
+      },
+      "state": {
+        "counter": 2,
+        "lastInput": "Linux Foundation",
         "$class": "org.accordproject.helloworldstate.State"
       }
     }
@@ -89,7 +195,6 @@
     "ergo": ["logic.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
-    "request": "request.json",
     "state": null,
     "contractName": "org.accordproject.helloworldstate.HelloWorldState",
     "currentTime": "2019-01-01T16:34:00-05:00",
@@ -97,6 +202,7 @@
       "response": null,
       "state": {
         "counter": 0,
+        "lastInput": "",
         "$class": "org.accordproject.helloworldstate.State"
       }
     }

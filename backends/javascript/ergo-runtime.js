@@ -30,11 +30,11 @@ function unwrap(doc) {
 }
 function concat(r1, r2) {
     var result = { };
-    for (var key1 in r1)
-        result[key1] = r1[key1];
     for (var key2 in r2)
-        if (!(key2 in r1))
-            result[key2] = r2[key2];
+        result[key2] = r2[key2];
+    for (var key1 in r1)
+        if (!(key1 in r2))
+            result[key1] = r1[key1];
     return result;
 }
 function contains(v, b) {

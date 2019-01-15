@@ -269,6 +269,8 @@ Module ErgoCompiler.
     Ergo.SCallContract prov e0 (e1::nil).
   Definition ssetstate prov e s : ergo_stmt :=
     Ergo.SSetState prov e s.
+  Definition ssetstatedot prov a e s : ergo_stmt :=
+    Ergo.SSetStateDot prov a e s.
   Definition semit prov e s : ergo_stmt :=
     Ergo.SEmit prov e s.
   Definition slet prov (v:String.string) (t:option ErgoType.ergo_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
