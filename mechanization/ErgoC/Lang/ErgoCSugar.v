@@ -41,6 +41,18 @@ Section ErgoCSugar.
   Definition thisThis (prov:provenance) : ergoc_expr :=
     EVar prov this_this.
 
+  (* [[ set state.name = e1; s2 ]]
+     ==
+     brand tname (([name : e1] ⊕ !state))
+   *)
+  Definition setStateDot (prov:provenance) name tname e1 e2 : ergoc_expr :=
+    setState prov
+             (EUnaryBuiltin prov (OpBrand (tname::nil))
+                            (EBinaryBuiltin prov OpRecConcat
+                                            (EUnaryBuiltin prov OpUnbrand (EVar prov local_state))
+                                            (EUnaryBuiltin prov (OpRec name) e1)))
+             e2.
+
   Definition thisContract (prov:provenance) : ergoc_expr :=
     let prov := ProvThisContract (loc_of_provenance prov) in
     EVar prov this_contract.
