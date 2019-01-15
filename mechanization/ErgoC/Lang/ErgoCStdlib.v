@@ -135,15 +135,15 @@ Section ErgoCStdlib.
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_period_from_nat date_time_period_YEARS))))
 
       :: ("org.accordproject.time.startOfDay",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_DAYS))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_period_DAYS))))
       :: ("org.accordproject.time.startOfWeek",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_WEEKS))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_period_WEEKS))))
       :: ("org.accordproject.time.startOfMonth",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_MONTHS))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_period_MONTHS))))
       :: ("org.accordproject.time.startOfQuarter",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_QUARTERS))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_period_QUARTERS))))
       :: ("org.accordproject.time.startOfYear",
-          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_YEARS))))
+          mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of date_time_period_YEARS))))
 
       :: ("org.accordproject.time.endOfDay",
           mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of date_time_period_DAYS))))
