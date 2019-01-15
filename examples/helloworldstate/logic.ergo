@@ -17,18 +17,18 @@ namespace org.accordproject.helloworldstate
 contract HelloWorldState over TemplateModel state State {
   // Simple Clause
   clause helloworldstate(request : MyRequest) : MyResponse {
-    set state State{
-      counter: state.counter + 1.0
-    };
+    set state.counter = state.counter + 1.0;
+    set state.lastInput = request.input;
     return MyResponse{
       output: "Hello " ++ contract.name ++
-			" (" ++ request.input ++ ")" ++ " (" ++ toString(state.counter) ++ ")"
+      " (" ++ request.input ++ ")" ++ " (" ++ toString(state.counter) ++ ")"
     }
   }
 
   clause init() : Unit {
     set state State{
-      counter: 0.0
+      counter: 0.0,
+      lastInput: ""
     };
     return
   }

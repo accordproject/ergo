@@ -64,8 +64,8 @@ describe('ergo', () => {
             const ergoPath = Path.join('test/examples/helloworldstate', 'logic.ergo');
             const ctoPath = Path.join('test/examples/helloworldstate', 'model.cto');
             const contractPath = { file: Path.join('test/examples/helloworldstate', 'contract.json') };
-            const requestPath = { file: Path.join('test/examples/helloworldstate', 'request.json') };
-            const statePath = { file: Path.join('test/examples/helloworldstate', 'state.json') };
+            const requestPath = { file: Path.join('test/examples/helloworldstate', 'request1.json') };
+            const statePath = { file: Path.join('test/examples/helloworldstate', 'state1.json') };
             const result = await Commands.execute([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1.0)');
         });
@@ -73,10 +73,11 @@ describe('ergo', () => {
             const ergoPath = Path.join('test/examples/helloworldstate', 'logic.ergo');
             const ctoPath = Path.join('test/examples/helloworldstate', 'model.cto');
             const contractPath = { file: Path.join('test/examples/helloworldstate', 'contract.json') };
-            const requestPath = { file: Path.join('test/examples/helloworldstate', 'request.json') };
-            const statePath = { file: Path.join('test/examples/helloworldstate', 'state.json') };
-            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath,requestPath,requestPath]);
-            result.response.output.should.equal('Hello Fred Blogs (Accord Project) (3.0)');
+            const requestPath = { file: Path.join('test/examples/helloworldstate', 'request1.json') };
+            const requestPath2 = { file: Path.join('test/examples/helloworldstate', 'request2.json') };
+            const statePath = { file: Path.join('test/examples/helloworldstate', 'state1.json') };
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath,requestPath2,requestPath2]);
+            result.response.output.should.equal('Hello Fred Blogs (Linux Foundation) (3.0)');
         });
     });
     describe('#executeinstallmentsale', function () {

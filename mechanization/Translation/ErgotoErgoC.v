@@ -238,6 +238,15 @@ Section ErgotoErgoC.
       elift2 (setState prov)
              (ergo_expr_to_ergoc_expr ctxt e1)
              (ergo_stmt_to_expr ctxt s2)
+    | SSetStateDot prov a e1 s2 =>
+      match is_state_type_branded ctxt with
+      | None =>
+        set_state_on_non_brand_error (expr_annot e1) a
+      | Some tname =>
+        elift2 (setStateDot prov a tname)
+               (ergo_expr_to_ergoc_expr ctxt e1)
+               (ergo_stmt_to_expr ctxt s2)
+      end
     | SEmit prov e1 s2 =>
       elift2 (pushEmit prov)
              (ergo_expr_to_ergoc_expr ctxt e1)
@@ -389,10 +398,11 @@ Section ErgotoErgoC.
       elift
         (fun x => (x::nil, ctxt))
         (elift (DCContract prov cn)
-               (let ctxt := set_current_contract ctxt cn in
+               (let statet := c.(contract_state) in
+                let ctxt := set_current_contract ctxt cn statet in
                 contract_to_calculus ctxt c))
     | DSetContract prov cn e1 =>
-      let ctxt := set_current_contract ctxt cn in
+      let ctxt := set_current_contract ctxt cn None in
       elift
         (fun x => (x :: (DCConstant prov this_state None (EConst prov dunit)) :: nil,ctxt))
         (elift (DCConstant prov this_contract None)

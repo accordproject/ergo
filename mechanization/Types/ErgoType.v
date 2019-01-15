@@ -234,4 +234,10 @@ Section ErgoType.
       List.concat (List.map type_declaration_extend_rel decls).
   End Extends.
   
+  Definition type_name_of_type (t:laergo_type) : option string :=
+    match t with
+    | ErgoTypeClassRef _ tname => Some tname
+    | _ => None
+    end.
+  
 End ErgoType.
