@@ -51,7 +51,6 @@ function compare(expected,actual) {
         }
     }
     if (expected.hasOwnProperty('response')) {
-        //console.info(JSON.stringify(actual.response));
         //actual.response.should.not.be.null;
         for (const key in expected.response) {
             if (expected.response.hasOwnProperty(key)) {
@@ -77,7 +76,8 @@ describe('Execute ES6', () => {
         const contract = test.contract;
         const request = test.request;
         const state = test.state;
-        const contractname = test.contractname;
+        const contractName = test.contractName;
+        const currentTime = test.currentTime;
         const expected = test.expected;
         let resultKind;
         if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
@@ -87,7 +87,7 @@ describe('Execute ES6', () => {
         }
 
         describe('#'+name, function () {
-            it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
+            it('should ' + resultKind + ' executing Ergo contract ' + contractName, async function () {
                 const ergoSources = [];
                 for (let i = 0; i < ergo.length; i++) {
                     const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
@@ -103,11 +103,11 @@ describe('Execute ES6', () => {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, requestJson, contractname);
+                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, requestJson, contractName, currentTime);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es6', contractJson, requestJson, stateJson, contractname);
+                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es6', contractJson, requestJson, stateJson, contractName, currentTime);
                     return compare(expected,actual);
                 }
             });
@@ -127,7 +127,8 @@ describe('Execute ES5', () => {
         const contract = test.contract;
         const request = test.request;
         const state = test.state;
-        const contractname = test.contractname;
+        const contractName = test.contractName;
+        const currentTime = test.currentTime;
         const expected = test.expected;
         let resultKind;
         if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
@@ -137,7 +138,7 @@ describe('Execute ES5', () => {
         }
 
         describe('#'+name, function () {
-            it('should ' + resultKind + ' executing Ergo contract ' + contractname, async function () {
+            it('should ' + resultKind + ' executing Ergo contract ' + contractName, async function () {
                 const ergoSources = [];
                 for (let i = 0; i < ergo.length; i++) {
                     const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
@@ -153,11 +154,11 @@ describe('Execute ES5', () => {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es5', contractJson, requestJson, contractname);
+                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es5', contractJson, requestJson, contractName, currentTime);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es5', contractJson, requestJson, stateJson, contractname);
+                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es5', contractJson, requestJson, stateJson, contractName, currentTime);
                     return compare(expected,actual);
                 }
             });
