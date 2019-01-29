@@ -2,6 +2,7 @@
 
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
+[![Coverage Status](https://coveralls.io/repos/github/accordproject/ergo/badge.svg?branch=master)](https://coveralls.io/github/accordproject/ergo?branch=master)
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 [![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
 
