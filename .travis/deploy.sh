@@ -61,7 +61,7 @@ else
     _exit "Unknown build focus" 1 
 fi
 
-## Stable releases only
+## Stable releases only; both latest and next then clean up git, and bump version number
 if [[ "${BUILD_RELEASE}" = "stable" ]]; then
 
     # Configure the Git repository and clean any untracked and unignored build files.
@@ -77,7 +77,7 @@ if [[ "${BUILD_RELEASE}" = "stable" ]]; then
 
     # Add the version number changes and push them to Git.
     git add .
-    git commit -m "Automatic version bump to ${NEW_VERSION}" -s
+    git commit -m "Automatic version bump to ${NEW_VERSION}"
     git push origin master
 
 fi
