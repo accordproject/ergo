@@ -10,7 +10,7 @@ before_install: |
 install: |
   set -e
   date
-  npm install -g lerna@2.11.0
+  npm install -g lerna@^2.11.0
   lerna bootstrap 2>&1
   date
 script: lerna run test 2>&1
@@ -20,12 +20,11 @@ deploy:
       - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./.travis/deploy.sh; fi'
     skip_cleanup: true
     on:
-      tags: true
       all_branches: true
+      repo: accordproject/cicero
 after_failure: tail -n +1 -- /home/travis/.npm/_logs/*-debug.log
 after_success: npm run coverage
 cache:
   directories:
   - node_modules
-sudo: required
 services: 
