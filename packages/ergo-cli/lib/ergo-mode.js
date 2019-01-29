@@ -15,10 +15,10 @@
 CodeMirror.defineSimpleMode("ergo", {
   start: [
     {regex: /"(?:[^\\]|\\.)*?(?:"|$)/, token: "string"},
-    {regex: /(?:define|function|constant|concept|transaction|participant|set|contract|clause|over|throws|emits|extends|namespace|import|enforce|emit|call|throw|state|foreach|in|where|return|match|with|then|if|else|let)\b/,
+    {regex: /(?:define|abstract|extends|function|constant|concept|transaction|participant|asset|event|enum|set|contract|clause|over|throws|emits|extends|namespace|import|enforce|emit|call|throw|state|foreach|in|where|return|match|with|then|if|else|let)\b/,
      token: "keyword"},
     {regex: /true|false|unit|some|none|now/, token: "atom"},
-    {regex: /Any|Nothing|Unit|Integer|Double|String|Request|Response/, token: "variable-2"},
+    {regex: /Any|Nothing|Unit|Integer|Long|DateTime|Double|String|Request|Response/, token: "variable-2"},
     {regex: /0x[a-f\d]+|[-+]?(?:\.\d+|\d+\.?\d*)(?:e[-+]?\d+)?/i,
      token: "number"},
     {regex: /\/\/.*/, token: "comment"},
