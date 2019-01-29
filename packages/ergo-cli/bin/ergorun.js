@@ -20,7 +20,7 @@ const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 const argv =
     require('yargs')
-        .demandOption(['contract', 'request', 'contractname'], 'Please provide at least contract, request and ergo arguments')
+        .demandOption(['contract', 'request', 'contractName'], 'Please provide at least contract, request and contractName')
         .usage('Usage: $0 --contract [file] --state [file] --request [file] [ctos] [ergos]')
         .option('contract', {
             describe: 'path to the contract data'
@@ -28,6 +28,19 @@ const argv =
         .option('request', {
             describe: 'path to the request data'
         }).array('request')
+        .option('state', {
+            describe: 'path to the state data',
+            type: 'string',
+            default: null
+        })
+        .option('contractName', {
+            describe: 'the name of the contract to run'
+        })
+        .option('currentTime', {
+            describe: 'the current time',
+            type: 'string',
+            default: null
+        })
         .option('state', {
             describe: 'path to the state data',
             type: 'string',
@@ -60,7 +73,7 @@ if (argv.verbose) {
 }
 
 // Run contract
-Commands.execute(ergoPaths, ctoPaths, argv.contract, argv.request, argv.state, argv.contractname)
+Commands.execute(ergoPaths, ctoPaths, argv.contract, argv.request, argv.state, argv.contractName, argv.currentTime)
     .then((result) => {
         Logger.info(JSON.stringify(result));
     })
