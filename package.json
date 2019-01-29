@@ -7,6 +7,7 @@
     "bootstrap": "lerna bootstrap",
     "pretest": "npm run depcheck && npm run licchk",
     "test": "lerna run test",
+    "coverage": "istanbul-combine -d coverage -r lcov packages/ergo-cli/coverage/*.json packages/ergo-compiler/coverage/*.json  packages/ergo-engine/coverage/*.json && cat ./coverage/lcov.info | coveralls",
     "publish": "./scripts/manualrelease.sh",
     "repoclean": "lerna clean",
     "licchk": "license-check-and-add",
@@ -33,6 +34,9 @@
   "license": "Apache-2.0",
   "dependencies": {},
   "devDependencies": {
+    "coveralls": "3.0.1",
+    "istanbul-combine": "0.3.0",
+    "istanbul-merge": "1.1.1",
     "jsdoc": "3.5.5",
     "jsdoc-sphinx": "0.0.6",
     "lerna": "2.11.0",
