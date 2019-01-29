@@ -7,7 +7,8 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "org.accordproject.smoke.Smoke",
+    "contractName": "org.accordproject.smoke.Smoke",
+    "currentTime": "01 Jan 2019 16:34:00 EST",
     "expected": {
       "response": {
         "output": "Smoke.test successful"
@@ -22,7 +23,7 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "org.accordproject.smoke.Duration",
+    "contractName": "org.accordproject.smoke.Duration",
     "expected": {
       "response": {
         "output": "Duration.test successful"
@@ -37,10 +38,47 @@
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
-    "contractname": "org.accordproject.smoke.Math",
+    "contractName": "org.accordproject.smoke.Math",
+    "currentTime": null,
     "expected": {
       "response": {
         "output": "Math.test successful"
+      }
+    }
+  },
+  {
+    "name": "helloworldstate",
+    "dir": "data/helloworldstate",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": null,
+    "contractName": "org.accordproject.helloworldstate.HelloWorldState",
+    "currentTime": null,
+    "expected": {
+      "response": null,
+      "state": {
+        "counter": 0,
+        "$class": "org.accordproject.helloworldstate.State"
+      }
+    }
+  },
+  {
+    "name": "helloworldstate (with current time)",
+    "dir": "data/helloworldstate",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": null,
+    "contractName": "org.accordproject.helloworldstate.HelloWorldState",
+    "currentTime": "01 Jan 2019 16:34:00 EST",
+    "expected": {
+      "response": null,
+      "state": {
+        "counter": 0,
+        "$class": "org.accordproject.helloworldstate.State"
       }
     }
   }

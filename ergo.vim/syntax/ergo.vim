@@ -4,7 +4,7 @@ endif
 
 
 syn keyword ergoKeyword define set
-syn keyword ergoKeyword contract clause over throws
+syn keyword ergoKeyword contract clause over
 
 
 syn region ergoNamespace start="namespace" end="\n"
@@ -12,7 +12,7 @@ syn region ergoNamespace start="import" end="\n"
 
 syn keyword ergoStatement enforce emit call
 syn match ergoStatement "set state"
-syn keyword ergoStatement foreach in where return match with then if else let
+syn keyword ergoStatement foreach in where return match with then if else let throw
 
 syn keyword ergoSpecialName some none nil now state
 
@@ -21,19 +21,11 @@ syn match ergoOperator "-"
 syn match ergoOperator "*"
 syn match ergoOperator "/"
 syn match ergoOperator "\^"
-syn match ergoOperator "+i"
-syn match ergoOperator "-i"
-syn match ergoOperator "*i"
-syn match ergoOperator "/i"
 
 syn match ergoOperator ">"
 syn match ergoOperator ">="
 syn match ergoOperator "<"
 syn match ergoOperator "<="
-syn match ergoOperator ">i"
-syn match ergoOperator ">=i"
-syn match ergoOperator "<i"
-syn match ergoOperator "<=i"
 
 syn match ergoOperator "?"
 syn match ergoOperator "??"
@@ -66,8 +58,8 @@ syn match ergoNumber "\(\<\d\+\.\d\+\>\)"
 syn keyword ergoBoolean true
 syn keyword ergoBoolean false
 
-syn keyword ergoPrimType constant function concept relation participant event
-syn keyword ergoPrimType Integer Double String
+syn keyword ergoPrimType constant function abstract concept transaction participant event asset enum extends
+syn keyword ergoPrimType Integer Long Double String DateTime
 syn match ergoPrimType " [A-Z][A-Za-z]*"
 
 let b:current_syntax = "ergo"

@@ -19,8 +19,13 @@ Feature: Acceptance of delivery Contract
   Scenario: The contract gets initialized
     Then the initial state should be the default state
 
+  Scenario: The contract gets initialized, with a current time
+    When the current time is "11 Jan 2019 16:34:00 EST"
+    Then the initial state should be the default state
+
   Scenario: The contract should accept inspection if received within delivery period
-    When it receives the request
+    When the current time is "11 Jan 2019 16:34:00 EST"
+    And it receives the request
 """
 {
     "$class":"org.accordproject.acceptanceofdelivery.InspectDeliverable",
