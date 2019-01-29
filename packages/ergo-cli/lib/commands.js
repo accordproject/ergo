@@ -32,9 +32,10 @@ class Commands {
      * @param {string[]} requestsPath path to the request transaction in JSON
      * @param {string} statePath path to the state in JSON
      * @param {string} contractName of the contract to execute
+     * @param {string} currentTime the definition of 'now'
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPaths,ctoPaths,contractPath,requestsPath,statePath,contractName) {
+    static execute(ergoPaths,ctoPaths,contractPath,requestsPath,statePath,contractName,currentTime) {
         if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
         const ergoSources = [];
         for (let i = 0; i < ergoPaths.length; i++) {
@@ -60,13 +61,13 @@ class Commands {
             initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,firstRequest,contractName);
         } else {
             const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-            initResponse = ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,firstRequest,stateJson,contractName);
+            initResponse = ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,firstRequest,stateJson,contractName,currentTime);
         }
         // Get all the other requests and chain execution through Promise.reduce()
         const otherRequests = requestsJson.slice(1, requestsJson.length);
         return otherRequests.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,requestJson,result.state,contractName);
+                return ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,requestJson,result.state,contractName,currentTime);
             });
         }, initResponse);
     }
