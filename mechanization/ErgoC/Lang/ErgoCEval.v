@@ -127,7 +127,7 @@ Section ErgoCTEval.
                end)
             rs (esuccess nil)
       in
-      elift drec rrec
+      elift drec (elift rec_sort rrec)
     (* RIP modularity *)
     | ENew (prov,_) nr rs =>
       match
@@ -147,7 +147,7 @@ Section ErgoCTEval.
           rs (esuccess nil)
       with
       | Failure _ _ f => efailure f
-      | Success _ _ r => esuccess (dbrand (nr::nil) (drec r))
+      | Success _ _ r => esuccess (dbrand (nr::nil) (drec (rec_sort r)))
       end
     (* EXPECTS: no function calls in expression *)
     | ECallFun (prov,_) fname args => function_not_inlined_error prov "eval" fname

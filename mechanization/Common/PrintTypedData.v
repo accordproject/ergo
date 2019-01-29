@@ -42,6 +42,9 @@ Section PrintTypedData.
         "~" ++ b
       end
     end.
+
+  Definition print_multiple_brands (nsctxt:namespace_ctxt) (bs:list string) : string :=
+    "<" ++ (map_concat "," (print_brand nsctxt) bs) ++ ">".
   
   Section Data.
     Context {br:brand_relation}.
@@ -50,9 +53,9 @@ Section PrintTypedData.
                (out : ergo_data)
       : option (ergo_data * list ergo_data * ergo_data) :=
       match out with
-      | (dleft (drec (("response", response)
+      | (dleft (drec (("emit", dcoll emits)
+                        ::("response", response)
                         ::("state", state)
-                        ::("emit", dcoll emits)
                         ::nil))) =>
         Some (response, emits, state)
       | _ => None
@@ -133,7 +136,7 @@ Section PrintTypedData.
       | Either₀ tl tr => (rtype_to_string nsctxt tl) ++ "?"
       | Arrow₀ tin tout => (rtype_to_string nsctxt tin) ++ " -> " ++ (rtype_to_string nsctxt tout)
       | Brand₀ (b::nil) => print_brand nsctxt b
-      | Brand₀ _ => "~" ++ "[multiple]"
+      | Brand₀ bs => print_multiple_brands nsctxt bs
       | Foreign₀ ErgoEnhancedModel.enhancedDateTime => "DateTime"
       | Foreign₀ ErgoEnhancedModel.enhancedDateTimeDuration => "InternalDuration"
       | Foreign₀ ErgoEnhancedModel.enhancedDateTimePeriod => "InternalPeriod"
