@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "composer-concerto": "0.60.0",
-    "winston": "3.1.0",
+    "winston": "^3.2.1",
     "yargs": "9.0.1"
   },
   "devDependencies": {
