@@ -27,7 +27,7 @@
     "@accordproject/ergo-compiler": "0.6.2",
     "@accordproject/ergo-engine": "0.6.2",
     "jsome": "2.5.0",
-    "winston": "3.1.0",
+    "winston": "^3.2.1",
     "yargs": "9.0.1",
     "chalk": "2.4.1"
   },
