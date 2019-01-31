@@ -225,7 +225,7 @@ function toStringQ(v, quote) {
         }
         return result + "]";
     }
-    if (v.hasOwnProperty('_isAMomentObject')) {
+    if (moment.isMoment(v)) {
         return v.format();
     }
     if(v.hasOwnProperty('nat')){
@@ -575,11 +575,11 @@ function dateTimeComponent(part, date) {
 }
 
 function dateTimeFromString(stringDate) {
-    return moment(stringDate);
+    return moment.parseZone(stringDate);
 }
 
-const minDateTime = moment("0001-01-01 00:00:00");
-const maxDateTime = moment("3268-01-21 23:59:59");
+const minDateTime = moment.parseZone("0001-01-01 00:00:00");
+const maxDateTime = moment.parseZone("3268-01-21 23:59:59");
 
 function dateTimeMax(v) {
     var v1 = mustBeDateArray(v);
@@ -694,7 +694,7 @@ function dateTimeDiff(date1, date2) {
 
 function mustBeDate(date) {
     if (typeof date == "string") {
-        return moment(date);
+        return moment.parseZone(date);
     } else {
         return date.clone();
     }

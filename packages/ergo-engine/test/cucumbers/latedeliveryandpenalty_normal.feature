@@ -29,28 +29,9 @@ Feature: Late delivery contract
   Scenario: The contract gets initialized
     Then the initial state should be the default state
 
-  Scenario: The contract should return the penalty amount but not allow the buyer to terminate
-    When it receives the request
-"""
-{
-    "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyRequest",
-    "forceMajeure": false,
-    "agreedDelivery": "2018-01-31 03:24:00Z",
-    "deliveredAt": null,
-    "goodsValue": 200.00
-}
-"""
-    Then it should respond with
-"""
-{
-  "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse",
-  "buyerMayTerminate": true,
-  "penalty": 110
-}
-"""
-
   Scenario: The contract should return an error if called before the expected delivery date
-    When it receives the request
+    When the current time is "11 Jan 2019 16:34:00 EST"
+    And it receives the request
 """
 {
     "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyRequest",
@@ -68,6 +49,48 @@ Feature: Late delivery contract
       "$class": "org.accordproject.ergo.stdlib.ErgoErrorResponse",
       "message": "Cannot exercise late delivery before delivery date"
   }
+}
+"""
+
+  Scenario: The contract should return the penalty amount but not allow the buyer to terminate
+    When the current time is "11 Jan 2019 16:34:00 EST"
+    When it receives the request
+"""
+{
+    "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyRequest",
+    "forceMajeure": false,
+    "agreedDelivery": "2018-12-31 03:24:00Z",
+    "deliveredAt": null,
+    "goodsValue": 200.00
+}
+"""
+    Then it should respond with
+"""
+{
+  "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse",
+  "buyerMayTerminate": false,
+  "penalty": 110
+}
+"""
+
+  Scenario: The contract should return the penalty amount and allow the buyer to terminate
+    When the current time is "11 Jan 2019 16:34:00 EST"
+    When it receives the request
+"""
+{
+    "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyRequest",
+    "forceMajeure": false,
+    "agreedDelivery": "2018-01-31 03:24:00Z",
+    "deliveredAt": null,
+    "goodsValue": 200.00
+}
+"""
+    Then it should respond with
+"""
+{
+  "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyResponse",
+  "buyerMayTerminate": true,
+  "penalty": 110
 }
 """
 

@@ -15,10 +15,22 @@ namespace org.accordproject.startendtest
 
 import org.accordproject.time.*
 
+define transaction Request {
+	date: DateTime
+}
+
+define transaction TestResponse {
+  startOfDay: DateTime,
+  endOfDay: DateTime
+}
+
+define concept TemplateModel {
+}
+
 contract StartEndTest over TemplateModel {
   // Simple Clause
 	clause test(request : Request) : TestResponse {
-    let date : DateTime = dateTime("2018-01-01T12:00:00.000Z");
+    let date : DateTime = request.date;
     return TestResponse{
       startOfDay: startOf(date, "days"),
       endOfDay: endOf(date, "days")

@@ -11,19 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.accordproject.startendtest
 
-transaction Request {
-}
+'use strict';
 
-transaction TestResponse {
-  o DateTime startOfDay
-  o DateTime endOfDay
-}
+// Moment serialization function to preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
+const momentToJson = function() { return this.format(); };
 
-/**
- * The template model
- */
-@AccordTemplateModel("integertest")
-concept TemplateModel {
-}
+module.exports = momentToJson;
