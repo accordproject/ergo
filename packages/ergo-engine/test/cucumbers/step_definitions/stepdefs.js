@@ -20,6 +20,8 @@ const Path = require('path');
 const Chai = require('chai');
 const expect = Chai.expect;
 
+const Moment = require('moment');
+
 const ErgoEngine = require('../../../lib/ergo-engine');
 
 const { Given, When, Then } = require('cucumber');
@@ -37,9 +39,10 @@ function compare(expected,actual) {
     for (const key in expected) {
         if (expected.hasOwnProperty(key)) {
             const field = key;
-            const value = expected[key];
+            const expectedValue = expected[key];
             expect(actual).to.have.property(field);
-            expect(actual[field]).to.deep.equal(value);
+            const actualValue = Moment.isMoment(actual[field]) ? actual[field].format() : actual[field];
+            expect(actualValue).to.deep.equal(expectedValue);
         }
     }
 }

@@ -16,6 +16,8 @@
 
 const Ergo=require('@accordproject/ergo-compiler/lib/ergo');
 const Moment = require('moment');
+// Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
+Moment.fn.toJSON = require('./momentToJson');
 const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 const {
@@ -42,7 +44,7 @@ class ErgoEngine {
     static executeErgoCode(ergoCode,codeKind,contractJson,requestJson,stateJson,contractName,currentTime) {
         let now = Moment();
         if (currentTime) {
-            now = Moment(currentTime);
+            now = Moment.parseZone(currentTime);
         }
         const vm = new VM({
             timeout: 1000,
@@ -87,7 +89,7 @@ class ErgoEngine {
     static initErgoCode(ergoCode,codeKind,contractJson,requestJson,contractName,currentTime) {
         let now = Moment();
         if (currentTime) {
-            now = Moment(currentTime);
+            now = Moment.parseZone(currentTime);
         }
         const vm = new VM({
             timeout: 1000,
