@@ -588,11 +588,11 @@ function dateTimeComponent(part, date) {
 }
 
 function dateTimeFromString(stringDate) {
-    return moment.parseZone(stringDate);
+    return moment.parseZone(stringDate).utcOffset(utcOffset, false);
 }
 
-const minDateTime = moment.parseZone("0001-01-01 00:00:00");
-const maxDateTime = moment.parseZone("3268-01-21 23:59:59");
+const minDateTime = moment.parseZone("0001-01-01 00:00:00").utcOffset(utcOffset, false);
+const maxDateTime = moment.parseZone("3268-01-21 23:59:59").utcOffset(utcOffset, false);
 
 function dateTimeMax(v) {
     var v1 = mustBeDateArray(v);
@@ -707,7 +707,7 @@ function dateTimeDiff(date1, date2) {
 
 function mustBeDate(date) {
     if (typeof date == "string") {
-        return moment.parseZone(date);
+        return moment.parseZone(date).utcOffset(utcOffset, false);
     } else {
         return date.clone();
     }
