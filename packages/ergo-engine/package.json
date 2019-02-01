@@ -12,8 +12,8 @@
     "postlint": "npm run licchk",
     "licchk": "license-check",
     "test:mocha": "mocha --timeout 20000",
-    "test:cucumber": "cucumber-js test/cucumbers",
-    "test:cov": "nyc cucumber-js test/cucumbers",
+    "test:cucumber": "cucumber-js test/cucumbers --require lib/stepdefs.js --world-parameters '{\"rootdir\":\"./test\"}'",
+    "test:cov": "nyc cucumber-js test/cucumbers --require lib/stepdefs.js --world-parameters '{\"rootdir\":\"./test\"}'",
     "test": "npm run test:mocha && npm run test:cucumber && npm run test:cov"
   },
   "contributors": [
