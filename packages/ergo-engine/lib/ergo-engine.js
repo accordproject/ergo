@@ -50,12 +50,13 @@ class ErgoEngine {
             timeout: 1000,
             sandbox: {
                 moment: Moment,
-                logger: Logger
+                logger: Logger,
+                utcOffset: now.utcOffset()
             }
         });
 
         // add immutables to the context
-        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': now };
+        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': now, 'utcOffset': now.utcOffset };
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
         let contract;
@@ -95,7 +96,8 @@ class ErgoEngine {
             timeout: 1000,
             sandbox: {
                 moment: Moment,
-                logger: Logger
+                logger: Logger,
+                utcOffset: now.utcOffset()
             }
         });
 
