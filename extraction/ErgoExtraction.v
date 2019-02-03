@@ -28,6 +28,7 @@ Extraction Blacklist String List.
 
 Require Import Qcert.Utils.Digits.
 Extract Constant Digits.nat_to_string10 => "(fun x -> Util.char_list_of_string (string_of_int x))".
+Extract Constant Digits.Z_to_string10 => "(fun x -> Util.char_list_of_string (string_of_int x))".
 
 Extract Constant String.append => "(fun s1 s2 -> Util.char_list_append s1 s2)".
 
