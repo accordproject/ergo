@@ -222,11 +222,9 @@ Section ErgoCStdlib.
 
     Definition binary_operator_table prov : ergo_stdlib_table :=
       (* Natural numbers // Integer *)
-      ("org.accordproject.ergo.stdlib.integerMod", mk_binary prov (OpNatBinary NatRem))
-        :: ("org.accordproject.ergo.stdlib.integerMin", mk_binary prov (OpNatBinary NatMin))
+      ("org.accordproject.ergo.stdlib.integerMin", mk_binary prov (OpNatBinary NatMin))
         :: ("org.accordproject.ergo.stdlib.integerMax", mk_binary prov (OpNatBinary NatMax))
       (* Natural numbers // Long *)
-        :: ("org.accordproject.ergo.stdlib.longMod", mk_binary prov (OpNatBinary NatRem))
         :: ("org.accordproject.ergo.stdlib.longMin", mk_binary prov (OpNatBinary NatMin))
         :: ("org.accordproject.ergo.stdlib.longMax", mk_binary prov (OpNatBinary NatMax))
         (* Floating point numbers // Double *)
