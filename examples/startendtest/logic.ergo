@@ -20,6 +20,8 @@ define transaction Request {
 }
 
 define transaction TestResponse {
+	now: DateTime,
+	date: DateTime,
   startOfDay: DateTime,
   endOfDay: DateTime
 }
@@ -32,6 +34,8 @@ contract StartEndTest over TemplateModel {
 	clause test(request : Request) : TestResponse {
     let date : DateTime = request.date;
     return TestResponse{
+			now: now(),
+			date: date,
       startOfDay: startOf(date, "days"),
       endOfDay: endOf(date, "days")
     }
