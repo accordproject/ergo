@@ -77,7 +77,7 @@ describe('Execute ES6', () => {
         const request = test.request;
         const state = test.state;
         const contractName = test.contractName;
-        const currentTime = test.currentTime;
+        const currentTime = test.currentTime ? test.currentTime : '1970-01-01T00:00:00Z';
         const expected = test.expected;
         let resultKind;
         if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
@@ -128,7 +128,7 @@ describe('Execute ES5', () => {
         const request = test.request;
         const state = test.state;
         const contractName = test.contractName;
-        const currentTime = test.currentTime;
+        const currentTime = test.currentTime ? test.currentTime : '1970-01-01T00:00:00Z';
         const expected = test.expected;
         let resultKind;
         if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
@@ -164,4 +164,19 @@ describe('Execute ES5', () => {
             });
         });
     }
+});
+describe('Initialize current time', () => {
+    it('Should succeed for a well-formed date/time', function () {
+        const currentTime = ErgoEngine.initCurrentTime('1970-01-01T00:00:00Z');
+        return currentTime.format().should.equal('1970-01-01T00:00:00Z');
+    });
+    it('Should fail for a non-well-formed date/time', function () {
+        return (() => ErgoEngine.initCurrentTime('1970-01-01').format()).should.throw('1970-01-01 is not a valid moment in format \'YYYY-MM-DDTHH:mm:ssZ\'');
+    });
+    it('Should fail when currentTime is null', function () {
+        return (() => ErgoEngine.initCurrentTime(null).format()).should.throw('Calls to Ergo engine should provide a current time');
+    });
+    it('Should fail when currentTime is undefined', function () {
+        return (() => ErgoEngine.initCurrentTime(undefined).format()).should.throw('Calls to Ergo engine should provide a current time');
+    });
 });

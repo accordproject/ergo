@@ -58,7 +58,7 @@ class Commands {
         const firstRequest = requestsJson[0];
         let initResponse;
         if (statePath === null) {
-            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,firstRequest,contractName);
+            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,firstRequest,contractName,currentTime);
         } else {
             const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
             initResponse = ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,firstRequest,stateJson,contractName,currentTime);

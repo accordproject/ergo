@@ -30,6 +30,24 @@ const {
  */
 class ErgoEngine {
     /**
+     * Ensures there is a proper current time
+     *
+     * @param {string} currentTime the definition of 'now'
+     * @returns {object} if valid, the moment object for the current time
+     */
+    static initCurrentTime(currentTime) {
+        if (!currentTime) {
+            throw new Error('Calls to Ergo engine should provide a current time');
+        }
+        const now = Moment.parseZone(currentTime, 'YYYY-MM-DDTHH:mm:ssZ', true);
+        if (now.isValid()) {
+            return now;
+        } else {
+            throw new Error(`${currentTime} is not a valid moment in format 'YYYY-MM-DDTHH:mm:ssZ'`);
+        }
+    }
+
+    /**
      * Execute Ergo code compiled to ES6
      *
      * @param {string} ergoCode JavaScript code for ergo logic
@@ -42,10 +60,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static executeErgoCode(ergoCode,codeKind,contractJson,requestJson,stateJson,contractName,currentTime) {
-        let now = Moment();
-        if (currentTime) {
-            now = Moment.parseZone(currentTime);
-        }
+        const now = this.initCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -88,10 +103,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of initialization
      */
     static initErgoCode(ergoCode,codeKind,contractJson,requestJson,contractName,currentTime) {
-        let now = Moment();
-        if (currentTime) {
-            now = Moment.parseZone(currentTime);
-        }
+        const now = this.initCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
