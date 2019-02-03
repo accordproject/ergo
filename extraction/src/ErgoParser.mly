@@ -56,7 +56,7 @@ let mk_provenance
 
 %token EQUAL NEQUAL
 %token LT GT LTEQ GTEQ
-%token PLUS MINUS STAR SLASH CARROT
+%token PLUS MINUS STAR SLASH PERCENT CARROT
 %token PLUSPLUS
 %token DOT QUESTIONDOT COMMA COLON SEMI
 %token QUESTION QUESTIONQUESTION UNDERSCORE
@@ -76,7 +76,7 @@ let mk_provenance
 %left LT GT LTEQ GTEQ
 %left QUESTIONQUESTION
 %left PLUS MINUS
-%left STAR SLASH
+%left STAR SLASH PERCENT
 %left CARROT
 %left PLUSPLUS
 %nonassoc uminus
@@ -430,6 +430,8 @@ expr:
     { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpMultiply e1 e2 }
 | e1 = expr SLASH e2 = expr
     { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpDivide e1 e2 }
+| e1 = expr PERCENT e2 = expr
+    { ErgoCompiler.ebinaryoperator (mk_provenance $startpos $endpos) EOpRemainder e1 e2 }
 | e1 = expr CARROT e2 = expr
     { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.Double.oppow e1 e2 }
 | e1 = expr AND e2 = expr

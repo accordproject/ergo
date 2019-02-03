@@ -170,6 +170,9 @@ Section ErgoCOverloaded.
         (make_binary_operator (OpFloatBinary FloatDiv))
           :: (make_binary_operator (OpNatBinary NatDiv))
           :: nil
+      | EOpRemainder =>
+        (make_binary_operator (OpNatBinary NatRem))
+          :: nil
       | EOpGe =>
         (make_binary_operator (OpFloatCompare FloatGe))
           :: (make_neg_binary_operator OpLt)

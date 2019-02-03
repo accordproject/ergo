@@ -96,6 +96,7 @@ rule token sbuff = parse
 | "*" { STAR }
 | "^" { CARROT }
 | "/" { SLASH }
+| "%" { PERCENT }
 | "-" { MINUS }
 | "," { COMMA }
 | ":" { COLON }

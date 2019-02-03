@@ -97,6 +97,7 @@ Section Ast.
     | EOpMinus : ergo_binary_operator
     | EOpMultiply : ergo_binary_operator
     | EOpDivide : ergo_binary_operator
+    | EOpRemainder : ergo_binary_operator
     | EOpGe : ergo_binary_operator
     | EOpGt : ergo_binary_operator
     | EOpLe : ergo_binary_operator
@@ -111,6 +112,7 @@ Section Ast.
               | EOpMinus => "-"
               | EOpMultiply => "*"
               | EOpDivide => "/"
+              | EOpRemainder => "%"
               | EOpGe => ">="
               | EOpGt => ">"
               | EOpLe => "<="

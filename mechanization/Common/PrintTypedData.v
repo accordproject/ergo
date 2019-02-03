@@ -78,8 +78,8 @@ Section PrintTypedData.
                 ++ "}") in
       match d with
       | dunit => "unit"
-      | dnat z => Z_to_string10 z
-      | dfloat f => to_string f
+      | dnat z => toString z
+      | dfloat f => toString f
       | dbool true => "true"
       | dbool false => "false"
       | dstring s => jsonify (dstring s)
