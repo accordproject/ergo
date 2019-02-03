@@ -30,7 +30,7 @@ Feature: Late delivery contract
     Then the initial state should be the default state
 
   Scenario: The contract should return an error if called before the expected delivery date
-    When the current time is "11 Jan 2019 16:34:00 EST"
+    When the current time is "2019-01-11T16:34:00-05:00"
     And it receives the request
 """
 {
@@ -53,7 +53,7 @@ Feature: Late delivery contract
 """
 
   Scenario: The contract should return the penalty amount but not allow the buyer to terminate
-    When the current time is "11 Jan 2019 16:34:00 EST"
+    When the current time is "2019-01-11T16:34:00-05:00"
     When it receives the request
 """
 {
@@ -74,7 +74,7 @@ Feature: Late delivery contract
 """
 
   Scenario: The contract should return the penalty amount and allow the buyer to terminate
-    When the current time is "11 Jan 2019 16:34:00 EST"
+    When the current time is "2019-01-11T16:34:00-05:00"
     When it receives the request
 """
 {
