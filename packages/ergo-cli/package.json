@@ -11,8 +11,11 @@
     "lint": "eslint .",
     "postlint": "npm run licchk",
     "licchk": "license-check",
+    "test:mocha": "mocha",
     "test:cucumber": "cucumber-js test/features --require .cucumber.js --world-parameters '{\"rootdir\":\"./test\"}'",
-    "test": "mocha && npm run test:cucumber && nyc mocha"
+    "test:all": "npm run test:mocha && npm run test:cucumber",
+    "test:cov": "nyc npm run test:all",
+    "test": "npm run test:all && npm run test:cov"
   },
   "contributors": [
     {
@@ -27,6 +30,7 @@
   "dependencies": {
     "@accordproject/ergo-compiler": "0.6.2",
     "@accordproject/ergo-engine": "0.6.2",
+    "moment": "2.20.1",
     "jsome": "2.5.0",
     "winston": "^3.2.1",
     "yargs": "9.0.1",

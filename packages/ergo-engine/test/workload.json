@@ -8,7 +8,7 @@
     "request": "request.json",
     "state": "state.json",
     "contractName": "org.accordproject.smoke.Smoke",
-    "currentTime": "01 Jan 2019 16:34:00 EST",
+    "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
       "response": {
         "output": "Smoke.test successful"
@@ -73,7 +73,7 @@
     "request": "request.json",
     "state": null,
     "contractName": "org.accordproject.helloworldstate.HelloWorldState",
-    "currentTime": "01 Jan 2019 16:34:00 EST",
+    "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
       "response": null,
       "state": {

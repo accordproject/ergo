@@ -14,7 +14,7 @@ Feature: starOf and endOf with time periods test
     Then the initial state should be the default state
 
   Scenario: The contract should return the correct response
-    When the current time is "2019-01-01T12:00:00.000+04:00"
+    When the current time is "2019-01-01T12:00:00+04:00"
     And it receives the request
 """
 {
@@ -32,7 +32,7 @@ Feature: starOf and endOf with time periods test
 """
 
   Scenario: The contract should return the correct response
-    When the current time is "2019-01-01T12:00:00.000-11:00"
+    When the current time is "2019-01-01T12:00:00-11:00"
     And it receives the request
 """
 {
@@ -50,7 +50,7 @@ Feature: starOf and endOf with time periods test
 """
 
   Scenario: The contract should return the correct response
-    When the current time is "2019-01-01T12:00:00.000-05:00"
+    When the current time is "2019-01-01T12:00:00-05:00"
     And it receives the request
 """
 {

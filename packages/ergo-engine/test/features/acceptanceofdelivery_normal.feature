@@ -20,11 +20,11 @@ Feature: Acceptance of delivery Contract
     Then the initial state should be the default state
 
   Scenario: The contract gets initialized, with a current time
-    When the current time is "11 Jan 2019 16:34:00 EST"
+    When the current time is "2019-01-11T16:34:00-05:00"
     Then the initial state should be the default state
 
   Scenario: The contract should accept inspection if received within delivery period
-    When the current time is "11 Jan 2019 16:34:00 EST"
+    When the current time is "2019-01-11T16:34:00-05:00"
     And it receives the request
 """
 {

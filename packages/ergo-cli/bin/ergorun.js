@@ -16,11 +16,12 @@
 'use strict';
 
 const Commands = require('../lib/commands');
+const Moment = require('moment');
 const Logger = require('@accordproject/ergo-compiler/lib/logger');
 
 const argv =
     require('yargs')
-        .demandOption(['contract', 'request', 'contractName'], 'Please provide at least contract, request and contractName')
+        .demandOption(['contract', 'request', 'contractName', 'currentTime'], 'Please provide at least contract, request and contractName')
         .usage('Usage: $0 --contract [file] --state [file] --request [file] [ctos] [ergos]')
         .option('contract', {
             describe: 'path to the contract data'
@@ -39,7 +40,7 @@ const argv =
         .option('currentTime', {
             describe: 'the current time',
             type: 'string',
-            default: null
+            default: Moment().format() // Defaults to now
         })
         .option('state', {
             describe: 'path to the state data',
