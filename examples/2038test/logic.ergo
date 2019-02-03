@@ -22,8 +22,9 @@ define transaction Request {
 define transaction TestResponse {
   zero: DateTime,
   date: DateTime,
-  seconds: Duration,
-  max32: Long
+  right_seconds: Long,
+  max32_seconds: Integer,
+  bug: Boolean
 }
 
 define concept TemplateModel {
@@ -33,12 +34,14 @@ contract UnixTimeStampTest over TemplateModel {
   clause test(request : Request) : TestResponse {
     let zero = dateTime("1970-01-01T00:00:00Z");
     let twothousandthirtyeight = request.date;
-    let diff = diffDuration(twothousandthirtyeight,zero);
+    let right = diffDuration(twothousandthirtyeight,zero).amount;
+    let max32 = longToInteger32(right);
     return TestResponse{
       zero: zero,
       date: twothousandthirtyeight,
-      seconds: diff,
-      max32: integerToInteger32(diff)
+      right_seconds: right,
+      max32_seconds: max32,
+      bug: max32 != right
     }
   }
 }
