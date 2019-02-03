@@ -92,8 +92,9 @@ async function init(rootdir, target,ergo,models,contractName,currentTime,contrac
     } else {
         actualTarget = defaultTarget;
     }
+    const now = currentTime ? currentTime : '1970-01-01T00:00:00Z';
     const requestJson = { '$class' : 'org.accordproject.cicero.runtime.Request' };
-    return ErgoEngine.init(ergoSources, ctoSources, actualTarget, contractJson, requestJson, contractName, currentTime);
+    return ErgoEngine.init(ergoSources, ctoSources, actualTarget, contractJson, requestJson, contractName, now);
 }
 
 /**
@@ -135,7 +136,8 @@ async function send(rootdir, target,ergo,models,contractName,currentTime,contrac
     } else {
         actualStateJson = defaultState;
     }
-    return ErgoEngine.execute(ergoSources, ctoSources, actualTarget, contractJson, requestJson, actualStateJson, contractName, currentTime);
+    const now = currentTime ? currentTime : '1970-01-01T00:00:00Z';
+    return ErgoEngine.execute(ergoSources, ctoSources, actualTarget, contractJson, requestJson, actualStateJson, contractName, now);
 }
 
 Given('the target platform {string}', function (target) {
