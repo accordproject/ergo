@@ -24,10 +24,7 @@ const Moment = require('moment');
 
 const ErgoEngine = require('./ergo-engine');
 
-const { Given, When, Then } = require('cucumber');
-
-const defaultState = {'stateId':'1','$class':'org.accordproject.cicero.contract.AccordContractState'};
-const defaultTarget = 'es6';
+const { Before, Given, When, Then } = require('cucumber');
 
 /**
  * Resolve the root directory
@@ -86,15 +83,8 @@ async function init(rootdir, target,ergo,models,contractName,currentTime,contrac
         const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
         ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
     }
-    let actualTarget;
-    if (target) {
-        actualTarget = target;
-    } else {
-        actualTarget = defaultTarget;
-    }
-    const now = currentTime ? currentTime : '1970-01-01T00:00:00Z';
     const requestJson = { '$class' : 'org.accordproject.cicero.runtime.Request' };
-    return ErgoEngine.init(ergoSources, ctoSources, actualTarget, contractJson, requestJson, contractName, now);
+    return ErgoEngine.init(ergoSources, ctoSources, target, contractJson, requestJson, contractName, currentTime);
 }
 
 /**
@@ -111,7 +101,7 @@ async function init(rootdir, target,ergo,models,contractName,currentTime,contrac
  * @param {object} requestJson state data in JSON
  * @returns {object} Promise to the response
  */
-async function send(rootdir, target,ergo,models,contractName,currentTime,contractJson,stateJson,requestJson) {
+async function send(rootdir,target,ergo,models,contractName,currentTime,contractJson,stateJson,requestJson) {
     const ergoSources = [];
     for (let i = 0; i < ergo.length; i++) {
         const ergoFile = Path.resolve(rootdir, ergo[i]);
@@ -124,34 +114,27 @@ async function send(rootdir, target,ergo,models,contractName,currentTime,contrac
         const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
         ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
     }
-    let actualTarget;
-    if (target) {
-        actualTarget = target;
-    } else {
-        actualTarget = defaultTarget;
-    }
-    let actualStateJson;
-    if (stateJson) {
-        actualStateJson = stateJson;
-    } else {
-        actualStateJson = defaultState;
-    }
-    const now = currentTime ? currentTime : '1970-01-01T00:00:00Z';
-    return ErgoEngine.execute(ergoSources, ctoSources, actualTarget, contractJson, requestJson, actualStateJson, contractName, now);
+    return ErgoEngine.execute(ergoSources, ctoSources, target, contractJson, requestJson, stateJson, contractName, currentTime);
 }
+
+// Defaults
+const defaultState = {'stateId':'1','$class':'org.accordproject.cicero.contract.AccordContractState'};
+
+Before(function () {
+    this.currentTime = '1970-01-01T00:00:00Z';
+    this.target = 'es6';
+    this.state = {'stateId':'1','$class':'org.accordproject.cicero.contract.AccordContractState'};
+    this.ergos = [];
+    this.models = [];
+});
 
 Given('the target platform {string}', function (target) {
     this.target = target;
 });
 
 Given('the Ergo contract {string} in file {string}', function(paramName,paramFile) {
-    if (this.ergos) {
-        this.ergos.push(paramFile);
-        this.contractName = paramName;
-    } else {
-        this.ergos = [paramFile];
-        this.contractName = paramName;
-    }
+    this.ergos.push(paramFile);
+    this.contractName = paramName;
 });
 
 Given('the current time is {string}', function(currentTime) {
@@ -159,19 +142,11 @@ Given('the current time is {string}', function(currentTime) {
 });
 
 Given('the Ergo logic in file {string}', function(paramFile) {
-    if (this.ergos) {
-        this.ergos.push(paramFile);
-    } else {
-        this.ergos = [paramFile];
-    }
+    this.ergos.push(paramFile);
 });
 
 Given('the model in file {string}', function(paramFile) {
-    if (this.models) {
-        this.models.push(paramFile);
-    } else {
-        this.models = [paramFile];
-    }
+    this.models.push(paramFile);
 });
 
 Given('the contract data', function (actualContract) {
@@ -197,7 +172,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return compare(response,this.answer.response);
     } else {
-        return send(resolveRootDir(this.parameters), this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractName,this.currentTime,this.contract,this.state,this.request)
+        return send(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -209,7 +184,7 @@ Then('it should respond with', function (expectedResponse) {
 
 Then('the initial state( of the contract) should be', function (expectedState) {
     const state = JSON.parse(expectedState);
-    return init(resolveRootDir(this.parameters), this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractName,this.currentTime,this.contract)
+    return init(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -219,7 +194,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(resolveRootDir(this.parameters), this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractName,this.currentTime,this.contract)
+    return init(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -234,7 +209,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return compare(state,this.answer.state);
     } else {
-        return send(resolveRootDir(this.parameters), this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractName,this.currentTime,this.contract,this.state,this.request)
+        return send(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -251,7 +226,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
         expect(this.answer).to.not.have.property('error');
         return compare(emit,this.answer.emit);
     } else {
-        return send(resolveRootDir(this.parameters), this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractName,this.currentTime,this.contract,this.state,this.request)
+        return send(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
@@ -269,7 +244,7 @@ Then('it should fail with the error', function (expectedError) {
         expect(this.answer).to.not.have.property('response');
         return compare(error,this.answer.error);
     } else {
-        return send(resolveRootDir(this.parameters), this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractName,this.currentTime,this.contract,this.state,this.request)
+        return send(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract,this.state,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('error');
@@ -282,7 +257,7 @@ Then('it should fail with the error', function (expectedError) {
 
 Then('it should fail to initialize with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
-    return init(resolveRootDir(this.parameters), this.target,this.ergos ? this.ergos : [],this.models ? this.models : [],this.contractName,this.currentTime,this.contract)
+    return init(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('error');
             expect(actualAnswer).to.not.have.property('state');
