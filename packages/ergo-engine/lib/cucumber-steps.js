@@ -70,7 +70,7 @@ function compare(expected,actual) {
  * @param {object} contractJson contract data in JSON
  * @returns {object} Promise to the initial state of the contract
  */
-async function init(rootdir, target,ergo,models,contractName,currentTime,contractJson) {
+function init(rootdir, target,ergo,models,contractName,currentTime,contractJson) {
     const ergoSources = [];
     for (let i = 0; i < ergo.length; i++) {
         const ergoFile = Path.resolve(rootdir, ergo[i]);
@@ -101,7 +101,7 @@ async function init(rootdir, target,ergo,models,contractName,currentTime,contrac
  * @param {object} requestJson state data in JSON
  * @returns {object} Promise to the response
  */
-async function send(rootdir,target,ergo,models,contractName,currentTime,contractJson,stateJson,requestJson) {
+function send(rootdir,target,ergo,models,contractName,currentTime,contractJson,stateJson,requestJson) {
     const ergoSources = [];
     for (let i = 0; i < ergo.length; i++) {
         const ergoFile = Path.resolve(rootdir, ergo[i]);
@@ -123,7 +123,7 @@ const defaultState = {'stateId':'1','$class':'org.accordproject.cicero.contract.
 Before(function () {
     this.currentTime = '1970-01-01T00:00:00Z';
     this.target = 'es6';
-    this.state = {'stateId':'1','$class':'org.accordproject.cicero.contract.AccordContractState'};
+    this.state = defaultState;
     this.ergos = [];
     this.models = [];
 });
