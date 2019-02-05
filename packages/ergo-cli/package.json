@@ -42,15 +42,15 @@
     "ergotop": "./bin/ergotop.js"
   },
   "devDependencies": {
-    "chai": "3.5.0",
-    "chai-as-promised": "6.0.0",
+    "chai": "4.2.0",
+    "chai-as-promised": "7.1.1",
     "chai-things": "0.2.0",
     "cucumber": "^5.1.0",
     "eslint": "4.19.1",
     "jsdoc": "3.5.5",
     "lerna": "2.11.0",
     "license-check": "1.1.5",
-    "mocha": "5.1.1",
+    "mocha": "5.2.0",
     "nyc": "11.8.0"
   },
   "license-check-config": {
