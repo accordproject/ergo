@@ -29,24 +29,24 @@ jobs:
         name: "Initialize opam"
         command: |
           sudo apt-get install -y m4
+          opam init --auto-setup --dot-profile=~/.bash_profile
+          opam remote add ocamlorg https://opam.ocaml.org || true
+          opam remote remove default || true
           export TERM=dumb && opam switch create 4.07.1 ocaml-base-compiler.4.07.1 
           eval `opam config env`
-    - run:
-        name: "Install ocaml deps"
-        command: |
-          export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson.1.4.1 atdgen re calendar
-        no_output_timeout: 3600s
-    - run:
-        name: "Install coq deps"
-        command: |
           export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
           export TERM=dumb && opam update || true
-          export TERM=dumb && opam install coq.8.8.1
-        no_output_timeout: 7200s
+    - run:
+        name: "Install ocaml deps"
+        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson.1.4.1 atdgen re calendar
+    - run:
+        name: "Install coq deps"
+        command: export TERM=dumb && opam install -y --jobs=2 coq.8.8.2
+        no_output_timeout: 30m
     - run:
         name: "Install qcert"
         command: export TERM=dumb && opam install -y --jobs=2 coq-qcert.1.2.0
-        no_output_timeout: 7200s
+        no_output_timeout: 30m
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
