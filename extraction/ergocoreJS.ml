@@ -19,6 +19,7 @@ open ErgoUtil
 open ErgoComp
 open ErgoCompile
 open ErgoConfig
+open Js_of_ocaml
 
 (**********************************)
 (* Configuration support          *)

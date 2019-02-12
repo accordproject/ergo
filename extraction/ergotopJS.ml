@@ -15,6 +15,7 @@
 open ErgoComp.ErgoCompiler
 open ParseUtil
 open ErgoUtil
+open Js_of_ocaml
 
 let welcome () =
   print_string ("Welcome to ERGOTOP version " ^ ergo_version ^ "\n")
