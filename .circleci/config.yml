@@ -29,9 +29,6 @@ jobs:
         name: "Initialize opam"
         command: |
           sudo apt-get install -y m4
-          opam init --auto-setup --dot-profile=~/.bash_profile
-          opam remote add ocamlorg https://opam.ocaml.org || true
-          opam remote remove default || true
           export TERM=dumb && opam switch create 4.07.1 ocaml-base-compiler.4.07.1 
           eval `opam config env`
     - run:
@@ -44,7 +41,7 @@ jobs:
         command: |
           export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
           export TERM=dumb && opam update || true
-          export TERM=dumb && opam install -y --jobs=2 coq.8.8.2
+          export TERM=dumb && opam install coq.8.8.1
         no_output_timeout: 7200s
     - run:
         name: "Install qcert"
