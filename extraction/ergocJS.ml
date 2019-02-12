@@ -13,6 +13,7 @@
  *)
 
 open ErgoUtil
+open Js_of_ocaml
 
 let wrap_error gconf e =
   let source_table = ErgoConfig.get_source_table gconf in

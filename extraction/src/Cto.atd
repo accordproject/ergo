@@ -19,7 +19,7 @@
 
 ">
 
-type json <ocaml module="Yojson.Basic"> = abstract
+type json <ocaml module="Yojson.Basic" t="json"> = abstract
 <doc text="Type of arbitrary JSON values.">
 
 type loc = {
