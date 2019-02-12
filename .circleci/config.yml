@@ -17,7 +17,7 @@ jobs:
         - v1-dep-master-
         - v1-dep-
     - run: sudo npm install -g lerna@2.11.0
-    - run: sudo sudo wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh | sh -s /usr/local/bin
+    - run: sudo sudo wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh -O - | sh -s /usr/local/bin
     - run: export TERM=dumb && opam switch create 4.07.1 ocaml-base-compiler.4.07.1 
     - run: eval `opam config env`
     - run: export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
