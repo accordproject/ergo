@@ -5,10 +5,9 @@ jobs:
     parallelism: 1
     shell: /bin/bash --login
     environment:
-      - CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-      - NPM_CONFIG_PREFIX: "~/.npm-global"
+      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     docker:
-    - image: ocaml/opam2
+    - image: circleci/node:8.14
     steps:
     - run: echo 'export PATH=~/ergo/bin/:$PATH' >> $BASH_ENV 
     - checkout
@@ -17,41 +16,22 @@ jobs:
         - v1-dep-{{ .Branch }}-
         - v1-dep-master-
         - v1-dep-
-    - run:
-        name: "Install npm"
-        command: |
-          curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-          mkdir -p ~/.npm-global
-          npm config set prefix $NPM_CONFIG_PREFIX
     - run: sudo npm install -g lerna@2.11.0
+    - run: curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > install.sh && echo | sh install.sh
+    - run: export TERM=dumb && opam switch create 4.07.1 ocaml-base-compiler.4.07.1 
+    - run: eval `opam config env`
+    - run: export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
+    - run: export TERM=dumb && opam update || true
     - run:
-        name: "Initialize opam"
-        command: |
-          sudo apt-get install -y m4
-          opam init --auto-setup --dot-profile=~/.bash_profile
-          opam remote add ocamlorg https://opam.ocaml.org || true
-          opam remote remove default || true
-          export TERM=dumb && opam switch create 4.07.1 ocaml-base-compiler.4.07.1 
-          eval `opam config env`
-          export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
-          export TERM=dumb && opam update || true
+        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson.1.4.1 atdgen re calendar coq.8.8.2
+        no_output_timeout: 3600s
     - run:
-        name: "Install ocaml deps"
-        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson.1.4.1 atdgen re calendar
-    - run:
-        name: "Install coq deps"
-        command: export TERM=dumb && opam install -y --jobs=2 coq.8.8.2
-        no_output_timeout: 30m
-    - run:
-        name: "Install qcert"
         command: export TERM=dumb && opam install -y --jobs=2 coq-qcert.1.2.0
-        no_output_timeout: 30m
+        no_output_timeout: 3600s
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
         - ~/.opam
-        - ~/.npm-global
     - run: eval `opam config env` && make cleanall && make ergo
     # Save test results
     - store_test_results:
