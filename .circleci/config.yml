@@ -44,13 +44,13 @@ common_steps: &common_steps
         command: |
           opam repo add coq-released https://coq.inria.fr/opam/released || true
           opam update || true
-          opam install -y coq.8.8.2
+          opam install -y -j 1 coq.8.8.2
     - run:
         name: "Install Q*cert"
         command: |
           opam repo add coq-released https://coq.inria.fr/opam/released || true
           opam update || true
-          opam install -y coq-qcert.1.2.0
+          opam install -y -j 1 coq-qcert.1.2.0
     - save_cache:
         <<: *common_cache_key
         paths:
