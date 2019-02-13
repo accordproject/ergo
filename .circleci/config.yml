@@ -20,7 +20,8 @@ common_steps: &common_steps
         name: "Initialize opam"
         command: |
           sudo apt-get install -y m4
-          echo 'jobs: 1' > ~/.opamrc
+          cat /etc/opamrc
+          cat ~/.opam/config
           opam init --auto-setup --dot-profile=~/.bash_profile
           opam repo add coq-released https://coq.inria.fr/opam/released || true
           opam update || true
