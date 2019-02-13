@@ -1,8 +1,5 @@
 common_cache_key: &common_cache_key
-  keys:
-        - v1-dep-{{ .Branch }}-
-        - v1-dep-master-
-        - v1-dep-
+  key: v1-dep-{{ .Branch }}-
 
 common_steps: &common_steps
   steps:
