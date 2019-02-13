@@ -38,13 +38,9 @@ common_steps: &common_steps
           opam install -y atdgen
           opam install -y re
           opam install -y calendar
-          opam install -y coq.8.8.2
     - run:
-        name: "Install Coq deps"
-        command: |
-          opam repo add coq-released https://coq.inria.fr/opam/released || true
-          opam update || true
-          opam install -y -j 1 coq.8.8.2
+        name: "Install Coq"
+        command: opam install -y -j 1 -v coq.8.8.2
     - run:
         name: "Install Q*cert"
         command: |
