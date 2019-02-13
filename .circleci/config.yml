@@ -1,39 +1,86 @@
-version: 2
-jobs:
-  build:
-    working_directory: ~/accordproject/ergo
-    parallelism: 1
-    shell: /bin/bash --login
-    environment:
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-    docker:
-    - image: circleci/node:8.14
-    steps:
-    - run: echo 'export PATH=~/ergo/bin/:$PATH' >> $BASH_ENV 
-    - checkout
-    - restore_cache:
-        keys:
+common_cache_key: &common_cache_key
+  keys:
         - v1-dep-{{ .Branch }}-
         - v1-dep-master-
         - v1-dep-
-    - run: sudo npm install -g lerna@2.11.0
-    - run: curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > install.sh && echo | sudo sh install.sh && opam init --disable-sandboxing -n -y
-    - run: export TERM=dumb && opam switch create 4.07.1 ocaml-base-compiler.4.07.1 
-    - run: eval `opam config env`
-    - run: export TERM=dumb && opam repo add coq-released https://coq.inria.fr/opam/released || true
-    - run: export TERM=dumb && opam update || true
+
+common_steps: &common_steps
+  steps:
     - run:
-        command: export TERM=dumb && opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson.1.4.1 atdgen re calendar coq.8.8.2
-        no_output_timeout: 3600s
+        name: "Install npm"
+        command: |
+          curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          mkdir -p ~/.npm-global
+          npm config set prefix $NPM_CONFIG_PREFIX
+    - checkout
     - run:
-        command: export TERM=dumb && opam install -y --jobs=2 coq-qcert.1.2.0
-        no_output_timeout: 3600s
+        name: "Note OCAML_VERSION for cache"
+        command: echo $OCAML_VERSION > ../ocaml-version
+    - restore_cache:
+        <<: *common_cache_key
+    - run:
+        name: "Initialize opam"
+        command: |
+          sudo apt-get install -y m4
+          opam init --auto-setup --dot-profile=~/.bash_profile
+          opam remote add ocamlorg https://opam.ocaml.org || true
+          opam remote remove default || true
+    - run:
+        name: "Install OCaml deps"
+        command: |
+          sudo apt-get install -y pkg-config libncurses5-dev
+          opam update
+          opam install -y ocamlbuild
+          opam install -y menhir
+          opam install -y camlp5
+          opam install -y base64
+          opam install -y js_of_ocaml
+          opam install -y js_of_ocaml-ppx
+          opam install -y yojson
+          opam install -y atdgen
+          opam install -y re
+          opam install -y calendar
+          opam install -y coq.8.8.2
+    - run:
+        name: "Install Coq deps"
+        command: |
+          opam repo add coq-released https://coq.inria.fr/opam/released || true
+          opam update || true
+          opam install -y coq.8.8.2
+    - run:
+        name: "Install Q*cert"
+        command: |
+          opam repo add coq-released https://coq.inria.fr/opam/released || true
+          opam update || true
+          opam install -y coq-qcert.1.2.0
     - save_cache:
-        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        <<: *common_cache_key
         paths:
-        - ~/.opam
-    - run: eval `opam config env` && make cleanall && make ergo
-    # Save test results
-    - store_test_results:
-        path: /tmp/circleci-test-results
-    # Save artifacts
+          - ~/.opam
+          - ~/.npm-global
+    - run:
+        name: "Compile Ergo"
+        command: |
+          make cleanall && make ergo
+
+version: 2
+jobs:
+  4.07.1:
+    working_directory: ~/accordproject/ergo
+    parallelism: 1
+    docker:
+      - image: ocaml/opam2:debian-9-ocaml-4.07
+    environment:
+      - TERM: dumb
+      - OCAML_VERSION: "4.07.x"
+      - NPM_CONFIG_PREFIX: "~/.npm-global"
+      - CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    <<: *common_steps
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - 4.07.1
+
