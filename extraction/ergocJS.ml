@@ -12,6 +12,8 @@
  * limitations under the License.
  *)
 
+open Js_of_ocaml
+
 open ErgoUtil
 
 let wrap_error gconf e =
