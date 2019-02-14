@@ -38,7 +38,7 @@ Feature: Acceptance of delivery Contract
 {
   "receiver": "Party B",
   "shipper": "Party A",
-  "status": "PASSED_TESTING",
+  "status": "BOO",
   "$class": "org.accordproject.acceptanceofdelivery.InspectionResponse"
 }
 """
