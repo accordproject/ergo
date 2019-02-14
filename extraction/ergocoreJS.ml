@@ -14,6 +14,8 @@
 
 (* builds the JS interface from ocaml *)
 
+open Js_of_ocaml
+
 open Util
 open ErgoUtil
 open ErgoComp

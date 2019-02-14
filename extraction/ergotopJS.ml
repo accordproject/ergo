@@ -12,7 +12,8 @@
  * limitations under the License.
  *)
 
-open ErgoComp.ErgoCompiler
+open Js_of_ocaml
+
 open ParseUtil
 open ErgoUtil
 
