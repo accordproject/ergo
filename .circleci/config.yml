@@ -23,7 +23,7 @@ common_steps: &common_steps
           sudo curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > install.sh
           echo | sudo sh install.sh
           opam init --disable-sandboxing -j 1 -n -y
-          sed -i "s/^jobs: [0-9]*/jobs: 1/g" ~/.opam/config 
+          sed -i "s/^jobs: [0-9]*/jobs: $NJOBS/g" ~/.opam/config
           eval $(opam env)
           opam repo add coq-released https://coq.inria.fr/opam/released || true
           opam update || true
@@ -41,30 +41,39 @@ common_steps: &common_steps
         command: |
           opam install -y -v coq-qcert.1.2.0
         no_output_timeout: 30m
-    - run:
-        name: 'Clean'
-        command: make cleanall
     - save_cache:
         <<: *common_cache_key
         paths:
           - ~/.opam
     - run:
-        name: 'Build Ergo'
-        command: make ergo
+        name: 'Clean'
+        command:  |
+          eval $(opam env)
+          make cleanall
+    - run:
+        name: 'Build the Ergo compiler'
+        command:  |
+          eval $(opam env)
+          make ergo
+    - run:
+        name: 'Testing'
+        command:  |
+          lerna run test
 
 version: 2
 jobs:
-  4.07.0:
+  4.07.1:
     docker:
     - image: circleci/node:8.14
     environment:
       - TERM: dumb
       - OCAML_VERSION: "4.07.x"
       - CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+      - NJOBS: 2
     <<: *common_steps
 
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - 4.07.0
+      - 4.07.1
