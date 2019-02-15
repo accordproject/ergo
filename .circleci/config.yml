@@ -37,11 +37,11 @@ common_steps: &common_steps
     - run:
         name: "Install OCaml deps"
         command: |
-          opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson.1.7.0 atdgen re calendar
+          opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar
     - run:
         name: "Install Coq"
         command: |
-          opam install -y -v coq.8.8.2
+          opam install -y -v coq.8.8.2 coq-flocq coq-jsast
         no_output_timeout: 30m
     - run:
         name: "Install Q*cert"
