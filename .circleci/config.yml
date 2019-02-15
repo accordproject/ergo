@@ -3,6 +3,13 @@ common_cache_key: &common_cache_key
 
 common_steps: &common_steps
   steps:
+    - run:
+        name: "Install npm"
+        command: |
+          curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          mkdir -p ~/.npm-global
+          npm config set prefix $NPM_CONFIG_PREFIX
     - checkout
     - run:
         name: "Note OCAML_VERSION for cache"
@@ -30,7 +37,7 @@ common_steps: &common_steps
     - run:
         name: "Install OCaml deps"
         command: |
-          opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen re calendar
+          opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson.1.7.0 atdgen re calendar
     - run:
         name: "Install Coq"
         command: |
@@ -45,6 +52,7 @@ common_steps: &common_steps
         <<: *common_cache_key
         paths:
           - ~/.opam
+          - ~/.npm-global
     - run:
         name: 'Clean'
         command:  |
@@ -64,12 +72,13 @@ version: 2
 jobs:
   4.07.1:
     docker:
-    - image: circleci/node:8.14
+    - image: circleci/openjdk:8-jdk
     environment:
       - TERM: dumb
       - OCAML_VERSION: "4.07.x"
       - CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       - NJOBS: 2
+      - NPM_CONFIG_PREFIX: "~/.npm-global"
     <<: *common_steps
 
 workflows:
