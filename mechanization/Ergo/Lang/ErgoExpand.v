@@ -115,7 +115,7 @@ Section ErgoExpand.
   Definition default_state (prov:provenance) : laergo_expr :=
     EUnaryBuiltin prov
              (OpBrand (default_state_absolute_name::nil))
-             (EConst prov (drec (("stateId",dstring "1") :: nil)))%string.
+             (EConst prov (drec (("stateId",dstring (default_state_absolute_name ++ "#1")) :: nil)))%string.
 
   Definition create_init_clause_for_contract
              (prov:provenance)
