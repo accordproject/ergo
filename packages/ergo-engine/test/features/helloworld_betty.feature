@@ -30,7 +30,7 @@ Feature: Betty Buyer's Hello World
     And the new state of the contract should be
 """
 {
-  "stateId":"1",
+  "stateId":"org.accordproject.cicero.contract.AccordContractState#1",
   "$class":"org.accordproject.cicero.contract.AccordContractState"
 }
 """

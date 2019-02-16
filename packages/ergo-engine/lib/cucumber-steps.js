@@ -118,7 +118,7 @@ function send(rootdir,target,ergo,models,contractName,currentTime,contractJson,s
 }
 
 // Defaults
-const defaultState = {'stateId':'1','$class':'org.accordproject.cicero.contract.AccordContractState'};
+const defaultState = {'stateId':'org.accordproject.cicero.contract.AccordContractState#1','$class':'org.accordproject.cicero.contract.AccordContractState'};
 
 Before(function () {
     this.currentTime = '1970-01-01T00:00:00Z';
