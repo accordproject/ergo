@@ -85,7 +85,9 @@ Section ErgoNNRCtoCicero.
       +++ `"  let result = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
       +++ `"  if (result.hasOwnProperty('left')) {" +++ eol
       +++ `"    //logger.info('ergo result: '+JSON.stringify(result))" +++ eol
-      +++ `"    context.response = serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true});" +++ eol
+      +++ `"    context.response = result.left.response ?" +++ eol
+      +++ `"         serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true})" +++ eol
+      +++ `"       : serializer.fromJSON({ '$class': 'org.accordproject.cicero.runtime.Response' });" +++ eol
       +++ `"    context.state = serializer.fromJSON(result.left.state, {validate: false, acceptResourcesForRelationships: true});" +++ eol
       +++ `"    let emitResult = [];" +++ eol
       +++ `"    for (let i = 0; i < result.left.emit.length; i++) {" +++ eol
@@ -123,17 +125,14 @@ Section ErgoNNRCtoCicero.
                                     sig
                                     eol
                                     quotel) (fst signatures)).
+
   Definition javascript_main_dispatch_and_init
              (contract_name:string)
              (eol:estring)
              (quotel:estring) : ErgoCodeGen.ejavascript :=
     `"" +++ `"const contract = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"();" +++ eol
-        +++ `"function dispatch(context) {" +++ eol
-        +++ `"  return contract.main(context);" +++ eol
-        +++ `"}" +++ eol
-        +++ `"function init(context) {" +++ eol
-        +++ `"  return contract.init(context);" +++ eol
-        +++ `"}" +++ eol.
+        +++ wrapper_function "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name "main" eol quotel
+        +++ wrapper_function "__init" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name clause_init_name eol quotel.
 
   Definition javascript_of_module_with_dispatch
              (contract_name:string)
