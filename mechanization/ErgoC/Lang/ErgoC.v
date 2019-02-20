@@ -21,6 +21,7 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Result.
@@ -57,6 +58,8 @@ Section ErgoC.
     Record ergoc_contract :=
       mkContractC
         { contractc_annot : provenance;
+          contractc_template : laergo_type;
+          contractc_state : option laergo_type;
           contractc_clauses : list (local_name * ergoc_function); }.
 
     (** Declaration *)
@@ -75,6 +78,19 @@ Section ErgoC.
 
   End Syntax.
 
+  Section Lookup.
+    Fixpoint lookup_clausec_signatures (dl:list (local_name * ergoc_function)) : list (local_name * sigc) :=
+      match dl with
+      | nil => nil
+      | (n,f) :: dl' =>
+        (n,f.(functionc_sig)) :: lookup_clausec_signatures dl'
+      end.
+      
+    Definition lookup_contractc_signatures (c:ergoc_contract) : list (local_name * sigc) :=
+      lookup_clausec_signatures c.(contractc_clauses).
+
+  End Lookup.
+  
   Section Semantics.
     (* XXX Nothing yet -- relational semantics should go here *)
 
