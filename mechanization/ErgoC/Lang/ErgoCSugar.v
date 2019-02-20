@@ -23,6 +23,7 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 
@@ -64,5 +65,90 @@ Section ErgoCSugar.
 
   Definition EError (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
     EUnaryBuiltin prov OpRight e.
+
+  Definition ECallClause (prov:provenance) (coname clname:string) (el:list ergoc_expr) : ergoc_expr :=
+    let params :=
+        if string_dec clname clause_init_name
+        then
+          ((EVar prov current_time)
+             ::(thisContract prov)
+             ::(EConst prov dunit)
+             ::(EVar prov local_emit)
+             ::el)
+        else
+          ((EVar prov current_time)
+             ::(thisContract prov)
+             ::(EVar prov local_state)
+             ::(EVar prov local_emit)
+             ::el)
+    in
+    ECallFunInGroup
+      prov
+      coname
+      clname
+      params.
+
+  Definition EReturn (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
+    ESuccess prov
+             (mkResult
+                prov
+                e
+                (EVar prov local_state)
+                (EVar prov local_emit)).
+
+  Definition EWrapTop (prov:provenance) (e:ergoc_expr) :=
+    ELet prov
+         local_state
+         None
+         (EVar prov this_state)
+         (ELet prov local_emit None
+               (EVar prov this_emit)
+               e).
+
+  Definition EClauseAsFunction
+             (prov:provenance)
+             (clname:string)
+             (template: laergo_type)
+             (emit:option laergo_type)
+             (state:option laergo_type)
+             (response:option laergo_type)
+             (params:list (string * ergo_type))
+             (body:option ergoc_expr) :=
+    let emit_type := lift_default_emits_type prov emit in
+    let state_type :=  lift_default_state_type prov state in
+    let throw_type := default_throws_type prov in
+    let output_type :=
+        match response with
+        | None => None
+        | Some response_type =>
+          let success_type := mk_success_type prov response_type state_type emit_type in
+          let error_type := mk_error_type prov throw_type in
+          Some (mk_output_type prov success_type error_type)
+        end
+    in
+    let params :=
+        if string_dec clname clause_init_name
+        then
+          ((current_time, (ErgoTypeDateTime prov))
+             ::(this_contract, template)
+             ::(this_state, ErgoTypeUnit prov)
+             ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
+             ::params)
+        else
+          ((current_time, (ErgoTypeDateTime prov))
+             ::(this_contract, template)
+             ::(this_state, state_type)
+             ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
+             ::params)
+    in
+    let wrapped_body := lift (EWrapTop prov) body
+    in
+    (clname,
+     mkFuncC
+       prov
+       (mkSigC
+          params
+          output_type)
+       wrapped_body).
 
 End ErgoCSugar.

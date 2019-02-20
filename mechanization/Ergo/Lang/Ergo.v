@@ -220,15 +220,15 @@ Section Ergo.
   Definition laergo_input := @ergo_input provenance provenance absolute_name.
 
   Section Lookup.
-    Fixpoint lookup_clauses_signatures (dl:list laergo_clause) : list (local_name * ergo_type_signature) :=
+    Fixpoint lookup_clause_signatures (dl:list laergo_clause) : list (local_name * ergo_type_signature) :=
       match dl with
       | nil => nil
       | cl :: dl' =>
-        (cl.(clause_name),cl.(clause_sig)) :: lookup_clauses_signatures dl'
+        (cl.(clause_name),cl.(clause_sig)) :: lookup_clause_signatures dl'
       end.
-      
+
     Definition lookup_contract_signatures (c:ergo_contract) : list (local_name * ergo_type_signature) :=
-      lookup_clauses_signatures c.(contract_clauses).
+      lookup_clause_signatures c.(contract_clauses).
 
     Definition contract_of_declaration (d:laergo_declaration) : option (absolute_name * laergo_contract) :=
       match d with
