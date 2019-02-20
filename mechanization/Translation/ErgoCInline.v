@@ -182,7 +182,11 @@ Section ErgoCInline.
     in
     elift
       (fun xy =>
-         (mkContractC contract.(contractc_annot) (fst xy), snd xy))
+         (mkContractC
+            contract.(contractc_annot)
+            contract.(contractc_template)
+            contract.(contractc_state)
+            (fst xy), snd xy))
       clauses.
       
   Definition ergoc_inline_declaration

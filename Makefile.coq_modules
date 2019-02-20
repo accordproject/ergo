@@ -41,16 +41,16 @@ MODULES = \
   Ergo/Lang/ErgoMap \
   Ergo/Lang/ErgoSem \
   Ergo/Lang/ErgoSugar \
-  Ergo/Lang/ErgoExpand \
   ErgoC/Lang/ErgoC \
   ErgoC/Lang/ErgoCSugar \
   ErgoC/Lang/ErgoCStdlib \
   ErgoC/Lang/ErgoCT \
   ErgoC/Lang/ErgoCEvalContext \
   ErgoC/Lang/ErgoCOverloaded \
+  ErgoC/Lang/ErgoCEval \
   ErgoC/Lang/ErgoCTypecheckContext \
   ErgoC/Lang/ErgoCTypecheck \
-  ErgoC/Lang/ErgoCEval \
+  ErgoC/Lang/ErgoCExpand \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
   Translation/CTOtoErgo \
