@@ -183,13 +183,7 @@ Section ErgotoErgoC.
   Fixpoint ergo_stmt_to_expr (ctxt:compilation_context) (s:laergo_stmt) : eresult ergoc_expr :=
     match s with
     | SReturn prov e =>
-      elift (fun e =>
-               ESuccess prov
-                        (mkResult
-                           prov
-                           e
-                           (EVar prov local_state)
-                           (EVar prov local_emit)))
+      elift (EReturn prov)
             (ergo_expr_to_ergoc_expr ctxt e)
     | SFunReturn prov e => (* Returning from a function does not have state or emit, just the result *)
       ergo_expr_to_ergoc_expr ctxt e
@@ -200,28 +194,8 @@ Section ErgotoErgoC.
       match ctxt.(compilation_context_current_contract) with
       | None => call_clause_not_in_contract_error prov clname
       | Some coname =>
-        let params :=
-            if string_dec clname clause_init_name
-            then
-              ((EVar prov current_time)
-                 ::(thisContract prov)
-                 ::(EConst prov dunit)
-                 ::(EVar prov local_emit)
-                 ::el)
-            else
-              ((EVar prov current_time)
-                 ::(thisContract prov)
-                 ::(EVar prov local_state)
-                 ::(EVar prov local_emit)
-                 ::el)
-        in
         let el := emaplift (ergo_expr_to_ergoc_expr ctxt) el in
-        elift (fun el =>
-                 ECallFunInGroup
-                   prov
-                   coname
-                   clname
-                   params) el
+        elift (ECallClause prov coname clname) el
       end
     | SCallClause _ e0 _ _ =>
       clause_call_not_on_contract_error (expr_annot e0)
@@ -230,28 +204,8 @@ Section ErgotoErgoC.
       match ctxt.(compilation_context_current_contract) with
       | None => call_clause_not_in_contract_error prov clname
       | Some coname =>
-        let params :=
-            if string_dec clname clause_init_name
-            then
-              ((EVar prov current_time)
-                 ::(thisContract prov)
-                 ::(EConst prov dunit)
-                 ::(EVar prov local_emit)
-                 ::el)
-            else
-              ((EVar prov current_time)
-                 ::(thisContract prov)
-                 ::(EVar prov local_state)
-                 ::(EVar prov local_emit)
-                 ::el)
-        in
         let el := emaplift (ergo_expr_to_ergoc_expr ctxt) el in
-        elift (fun el =>
-                 ECallFunInGroup
-                   prov
-                   coname
-                   clname
-                   params) el
+        elift (ECallClause prov coname clname) el
       end
     | SCallContract _ e0 _ =>
       clause_call_not_on_contract_error (expr_annot e0)
@@ -307,73 +261,27 @@ Section ErgotoErgoC.
                   scdefault) sccases) ec0
     end.
 
-  Definition ergo_stmt_to_expr_top (ctxt:compilation_context) (prov:provenance) (e:ergo_stmt) : eresult ergoc_expr :=
-    elift (fun e =>
-             ELet prov
-                  local_state
-                  None
-                  (EVar prov this_state)
-                  (ELet prov local_emit None
-                        (EVar prov this_emit)
-                        e))
-          (ergo_stmt_to_expr ctxt e).
-
   (** Translate a clause to clause+calculus *)
 
   Definition clause_to_calculus
              (ctxt:compilation_context)
-             (tem:laergo_type)
-             (sta:option laergo_type)
+             (template:laergo_type)
+             (state:option laergo_type)
              (c:laergo_clause) : eresult (local_name * ergoc_function) :=
     let ctxt : compilation_context := set_current_clause ctxt c.(clause_name) in
     (* XXX keep track of clause provenance *)
     let prov := ProvClause (loc_of_provenance c.(clause_annot)) c.(clause_name) in
-    let emit_type := lift_default_emits_type prov c.(clause_sig).(type_signature_emits) in
-    let state_type :=  lift_default_state_type prov sta in
-    let throw_type := default_throws_type prov in
-    let output_type :=
-        let response_type' := c.(clause_sig).(type_signature_output) in
-        match response_type' with
-        | None => None
-        | Some response_type =>
-          let success_type := mk_success_type prov response_type state_type emit_type in
-          let error_type := mk_error_type prov throw_type in
-          Some (mk_output_type prov success_type error_type)
-        end
-    in
+    let clname := c.(clause_name) in
+    let emit := c.(clause_sig).(type_signature_emits) in
+    let response := c.(clause_sig).(type_signature_output) in
     let body :=
         match c.(clause_body) with
         | None => esuccess None
-        | Some stmt =>
-          elift Some (ergo_stmt_to_expr_top ctxt prov stmt)
+        | Some stmt => elift Some (ergo_stmt_to_expr ctxt stmt)
         end
     in
-    let clname := c.(clause_name) in
-    let params :=
-        if string_dec clname clause_init_name
-        then
-          ((current_time, (ErgoTypeDateTime prov))
-             ::(this_contract, tem)
-             ::(this_state, ErgoTypeUnit prov)
-             ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
-             ::c.(clause_sig).(type_signature_params))
-        else
-          ((current_time, (ErgoTypeDateTime prov))
-             ::(this_contract, tem)
-             ::(this_state, state_type)
-             ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
-             ::c.(clause_sig).(type_signature_params))
-    in
-    elift
-      (fun body =>
-         (clname,
-          mkFuncC
-            prov
-            (mkSigC
-               params
-               output_type)
-            body))
-      body.
+    let params := c.(clause_sig).(type_signature_params) in
+    elift (EClauseAsFunction prov clname template emit state response params) body.
 
   (** Translate a function to function+calculus *)
   Definition function_to_calculus
@@ -406,10 +314,16 @@ Section ErgotoErgoC.
     in
     elift
       (mkContractC
-         c.(contract_annot))
+         c.(contract_annot)
+         c.(contract_template)
+         c.(contract_state))
       clauses.
 
   (** Translate a statement to a statement+calculus *)
+  Definition ergo_stmt_to_expr_top (ctxt:compilation_context) (prov:provenance) (s:ergo_stmt) : eresult ergoc_expr :=
+    elift (EWrapTop prov)
+          (ergo_stmt_to_expr ctxt s).
+
   Definition declaration_to_calculus
              (ctxt:compilation_context)
              (d:laergo_declaration) : eresult (list ergoc_declaration * compilation_context) :=

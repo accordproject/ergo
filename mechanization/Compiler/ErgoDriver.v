@@ -29,13 +29,13 @@ Require Import ErgoSpec.Common.PrintTypedData.
 Require Import ErgoSpec.Types.CTO.
 Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
-Require Import ErgoSpec.Ergo.Lang.ErgoExpand.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCEval.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCT.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheck.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
-Require Import ErgoSpec.ErgoC.Lang.ErgoCEval.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCExpand.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
@@ -134,8 +134,8 @@ Section ErgoDriver.
     Definition ergo_module_to_ergoct
                (ctxt:compilation_context)
                (lm:laergo_module) : eresult (ergoct_module * compilation_context) :=
-      let p := ergo_expand_module lm in
-      let pc := eolift (ergo_module_to_calculus ctxt) p in
+      let pc := ergo_module_to_calculus ctxt lm in
+      let pc := eolift (fun xy => elift (fun x => (x,snd xy)) (ergoc_expand_module (fst xy))) pc in
       let pc := eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc in
       eolift (fun xy : ergoc_module * compilation_context =>
                 let (mod,ctxt) := xy in
@@ -164,8 +164,7 @@ Section ErgoDriver.
       let am := resolve_ergo_declaration ns_ctxt ld in
       eolift (fun amc =>
                 let ctxt := compilation_context_update_namespace ctxt (snd amc) in
-                let p := ergo_expand_declaration (fst amc) in
-                eolift (declaration_to_calculus ctxt) p)
+                declaration_to_calculus ctxt (fst amc))
              am.
 
     Definition ergo_declaration_to_ergoct_inlined
@@ -174,6 +173,10 @@ Section ErgoDriver.
       : eresult (list ergoct_declaration * compilation_context) :=
       (* Translation *)
       let ec := ergo_declaration_to_ergoc sctxt decl in
+      let ec := eolift (fun xy =>
+                          elift (fun x => (x, snd xy))
+                                (ergoc_expand_declarations (fst xy)))
+                       ec in
       (* Inlining *)
       let inlined : eresult (list ergoc_declaration * compilation_context) :=
           eolift
