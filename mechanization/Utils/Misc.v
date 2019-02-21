@@ -62,7 +62,7 @@ Section Misc.
 
   Section TopoSort.
     Context {A B:Set}.
-    (* function from node to node identifier -> function from node to node name -> graph edges -> ordered nodes *)
+    (* function from node to node identifier -> function from node to label -> graph edges -> ordered nodes *)
     (* This assumes no two nodes have the same string *)
     Parameter coq_toposort : (A -> B) -> (A -> string) -> list (A * list A) -> list A.
   End TopoSort.
