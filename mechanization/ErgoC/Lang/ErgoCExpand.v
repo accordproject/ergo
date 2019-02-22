@@ -29,7 +29,7 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
 
 Section ErgoCExpand.
-  (* Context *)
+  Context {m : brand_model}.
 
   Definition create_call
              (prov:provenance)
@@ -80,7 +80,7 @@ Section ErgoCExpand.
              EMatch prov effparam0
                     s
                     (EError prov
-                            (EConst prov (default_match_error_content prov ""))))
+                            (EConst prov (default_match_error_content prov))))
           (eflatmaplift (case_of_sig prov coname v0 effparam0 effparamrest) ss).
 
   Definition match_of_sigs_top

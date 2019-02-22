@@ -753,3 +753,18 @@ function dateTimeEndOf(part, date) {
     mustBeUnit(part);
     return date.endOf(part);
 }
+
+/** Target-specific support */
+
+/* Cicero Error handling */
+function ciceroError(result) {
+    var failure = toRight(result);
+    var message = "Unknown Ergo Logic Error (Please file a GitHub issue)";
+    if (either(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure))) {
+        message = unbrand(toLeft(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure))).message;
+    } else {
+        message = JSON.stringify(toRight(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure)));
+    }
+    throw new Error("[Ergo] " + message);
+}
+
