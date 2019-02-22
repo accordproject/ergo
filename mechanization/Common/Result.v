@@ -216,8 +216,8 @@ Section Result.
       let message := format_error "Enforce Error" prov msg in
       ErgoData.dbrand (default_error_absolute_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring message)::nil)).
-    Definition default_match_error_content (prov:provenance) (msg:string) : ErgoData.data :=
-      let message := format_error "DefaultMatch Error" prov msg in
+    Definition default_match_error_content (prov:provenance) : ErgoData.data :=
+      let message := format_error "Dispatch Error" prov ("Found no clause in contract to match the request") in
       ErgoData.dbrand (default_error_absolute_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring message)::nil)).
 

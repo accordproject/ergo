@@ -100,7 +100,8 @@ Section ErgoNNRCtoCicero.
       +++ `"    context.emit = emitResult;" +++ eol
       +++ `"    return context;" +++ eol
       +++ `"  } else {" +++ eol
-      +++ `"    throw new Error(result.right.message);" +++ eol
+      +++ `"    //logger.error('ergo error: '+JSON.stringify(result.right))" +++ eol
+      +++ `"    ciceroError(result);" +++ eol
       +++ `"  }" +++ eol
       +++ `"}" +++ eol.
 
