@@ -24,6 +24,7 @@ Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Result.
 Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.Types.ErgoType.
+Require Import ErgoSpec.Types.ErgoTypetoErgoCType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
@@ -52,7 +53,7 @@ Section ErgoCExpand.
              (v0:string)
              (effparam0:ergoc_expr)
              (effparamrest:list ergoc_expr)
-             (s: (string * sigc)) : eresult (list (ergo_pattern * ergoc_expr)) :=
+             (s: (string * sigc)) : eresult (list (absolute_name * (ergo_pattern * ergoc_expr))) :=
     let clname := (fst s) in
     let callparams := (snd s).(sigc_params) in
     match callparams with
@@ -62,28 +63,37 @@ Section ErgoCExpand.
       | ErgoTypeClassRef _ type0 =>
         let prunedcallparams := (param0, et)::otherparams in
         elift (fun x =>
-                 ((CaseLet prov v0 (Some type0),x)::nil))
+                 ((type0,(CaseLet prov v0 (Some type0),x))::nil))
               (create_call prov coname clname v0 effparam0 effparamrest prunedcallparams)
-      | _ => esuccess  nil (* XXX May want to make this a warning *)
+      | _ => esuccess nil (* XXX May want to make this a warning *)
       end
-    | _ => esuccess  nil (* XXX May want to make this a warning *)
+    | _ => esuccess nil (* XXX May want to make this a warning *)
     end.
 
+  Definition make_cases
+             (order:list laergo_type_declaration)
+             (xy:list (absolute_name * (laergo_pattern * ergoc_expr))) :=
+    let oxy := sort_given_topo_order order fst xy in
+    map snd oxy.
+  
   Definition match_of_sigs
+             (order:list laergo_type_declaration)
              (prov:provenance)
              (coname:string)
              (v0:string)
              (effparam0:ergoc_expr)
              (effparamrest:list ergoc_expr)
              (ss:list (string * sigc)) : eresult ergoc_expr :=
-    elift (fun s =>
+    elift (fun (xy:list (absolute_name * (ergo_pattern * ergoc_expr))) =>
+             let cases := make_cases order xy in
              EMatch prov effparam0
-                    s
+                    cases
                     (EError prov
                             (EConst prov (default_match_error_content prov))))
           (eflatmaplift (case_of_sig prov coname v0 effparam0 effparamrest) ss).
 
   Definition match_of_sigs_top
+             (order:list laergo_type_declaration)
              (prov:provenance)
              (coname:string)
              (effparams:list ergoc_expr)
@@ -92,7 +102,7 @@ Section ErgoCExpand.
     | nil => main_at_least_one_parameter_error prov
     | effparam0 :: effparamrest =>
       let v0 := ("$"++clause_main_name)%string in (** XXX To be worked on *)
-      match_of_sigs prov coname v0 effparam0 effparamrest ss
+      match_of_sigs order prov coname v0 effparam0 effparamrest ss
     end.
 
   Definition filter_init (sigs:list (string * sigc)) :=
@@ -102,6 +112,7 @@ Section ErgoCExpand.
               else true) sigs.
 
   Definition create_main_clause_for_contract
+             (order:list laergo_type_declaration)
              (prov:provenance)
              (coname:string)
              (c:ergoc_contract) : eresult (local_name * ergoc_function) :=
@@ -120,7 +131,7 @@ Section ErgoCExpand.
          state
          None (* Response type *)
          params)
-      (elift Some (match_of_sigs_top prov coname effparams sigs)).
+      (elift Some (match_of_sigs_top order prov coname effparams sigs)).
 
   (* XXX Has to be fixed to use brands -- needs fixes in code-generation *)
   Definition default_state (prov:provenance) : ergoc_expr :=
@@ -162,6 +173,7 @@ Section ErgoCExpand.
         (c.(contractc_clauses) ++ (init_clause::nil)).
 
   Definition add_main_clause_to_contract
+             (order:list laergo_type_declaration)
              (coname:string)
              (c:ergoc_contract) : eresult ergoc_contract :=
     let prov := c.(contractc_annot) in
@@ -175,9 +187,10 @@ Section ErgoCExpand.
              c.(contractc_template)
              c.(contractc_state)
              (c.(contractc_clauses) ++ (main_clause::nil)))
-        (create_main_clause_for_contract prov coname c).
+        (create_main_clause_for_contract order prov coname c).
   
   Definition ergoc_expand_declaration
+             (order:list laergo_type_declaration)
              (d:ergoc_declaration) : eresult ergoc_declaration :=
     match d with
     | DCExpr _ _ => esuccess d
@@ -188,24 +201,24 @@ Section ErgoCExpand.
       elift
         (fun dd =>
            (DCContract prov cn dd))
-        (add_main_clause_to_contract cn cd)
+        (add_main_clause_to_contract order cn cd)
     end.
     
   Definition ergoc_expand_declarations
+             (order:list laergo_type_declaration)
              (dl:list ergoc_declaration) : eresult (list ergoc_declaration) :=
-    emaplift ergoc_expand_declaration dl.
+    emaplift (ergoc_expand_declaration order) dl.
     
   (** Pre-processing. At the moment only add main clauses when missing *)
-  Definition ergoc_expand_module (p:ergoc_module) : eresult ergoc_module :=
+  Definition ergoc_expand_module
+             (order:list laergo_type_declaration)
+             (p:ergoc_module) : eresult ergoc_module :=
     elift
       (fun ds => mkModuleC
                    p.(modulec_annot)
                    p.(modulec_namespace)
                    ds)
-      (ergoc_expand_declarations p.(modulec_declarations)).
-
-  Definition ergoc_expand_modules (pl:list ergoc_module) : eresult (list ergoc_module) :=
-    emaplift (ergoc_expand_module) pl.
+      (ergoc_expand_declarations order p.(modulec_declarations)).
 
 End ErgoCExpand.
 
