@@ -1,0 +1,38 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ namespace org.accordproject.ergo.math
+
+define constant PI = 4.0 * atan(1.0)
+define constant E = exp(1.0)
+
+/**
+ * Converts angle measured in degrees to radians
+ *
+ * @param {Double} the angle in degrees
+ * @returns {Double} the angle in radians
+ */
+define function degreesToRadians(degrees: Double) {
+    return (degrees * PI) / 180.0
+}
+
+/**
+ * Converts angle measured in radians to degrees
+ *
+ * @param {Double} the angle in radians
+ * @returns {Double} the angle in degrees
+ */
+define function radiansToDegrees(radians: Double) {
+    return (radians * 180.0) / PI
+}
+
