@@ -130,7 +130,7 @@ Section Result.
   End Lift.
 
   Section Fmt.
-    Definition format_error (name : string) (prov : provenance) (msg : string) :=
+    Definition format_error (name : string) (prov : provenance) (msg : string) : string :=
       let loc := loc_of_provenance prov in
       (name ++ " at " ++ (string_of_location_no_file loc) ++ " '" ++ msg ++ "'")%string.
   End Fmt.
@@ -217,7 +217,7 @@ Section Result.
       ErgoData.dbrand (default_error_absolute_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring message)::nil)).
     Definition default_match_error_content (prov:provenance) : ErgoData.data :=
-      let message := format_error "Dispatch Error" prov ("Found no clause in contract to match the request") in
+      let message := "Dispatch Error: no clause in the contract matches the request"%string in
       ErgoData.dbrand (default_error_absolute_name::nil)
                       (ErgoData.drec (("message"%string, ErgoData.dstring message)::nil)).
 
@@ -225,6 +225,8 @@ Section Result.
       efailure (ECompilationError prov "Unresolved name").
     Definition should_have_one_contract_error {A} prov : eresult A :=
       efailure (ECompilationError prov "Should have exactly one contract").
+    Definition duplicate_clause_for_request_error {A} prov : eresult A :=
+      efailure (ECompilationError prov "Duplicate clauses for the same request type").
 
     Definition contract_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should not find 'contract' in Ergo Calculus").

@@ -72,9 +72,13 @@ Section ErgoCExpand.
 
   Definition make_cases
              (order:list laergo_type_declaration)
-             (xy:list (absolute_name * (laergo_pattern * ergoc_expr))) :=
+             (prov:provenance)
+             (xy:list (absolute_name * (laergo_pattern * ergoc_expr)))
+    : eresult (list (laergo_pattern * ergoc_expr)) :=
     let oxy := sort_given_topo_order order fst xy in
-    map snd oxy.
+    if NoDup_dec (map fst oxy)
+    then esuccess (map snd oxy)
+    else duplicate_clause_for_request_error prov.
   
   Definition match_of_sigs
              (order:list laergo_type_declaration)
@@ -84,13 +88,15 @@ Section ErgoCExpand.
              (effparam0:ergoc_expr)
              (effparamrest:list ergoc_expr)
              (ss:list (string * sigc)) : eresult ergoc_expr :=
-    elift (fun (xy:list (absolute_name * (ergo_pattern * ergoc_expr))) =>
-             let cases := make_cases order xy in
-             EMatch prov effparam0
-                    cases
-                    (EError prov
-                            (EConst prov (default_match_error_content prov))))
-          (eflatmaplift (case_of_sig prov coname v0 effparam0 effparamrest) ss).
+    eolift (fun (xy:list (absolute_name * (ergo_pattern * ergoc_expr))) =>
+              let ecases := make_cases order prov xy in
+              elift (fun cases =>
+                       EMatch prov effparam0
+                              cases
+                              (EError prov
+                                      (EConst prov (default_match_error_content prov))))
+                    ecases)
+           (eflatmaplift (case_of_sig prov coname v0 effparam0 effparamrest) ss).
 
   Definition match_of_sigs_top
              (order:list laergo_type_declaration)
