@@ -333,8 +333,7 @@ Section ErgotoErgoC.
     | DType prov ergo_type =>
       let name := ergo_type.(type_declaration_name) in
       if in_dec string_dec name (map type_declaration_name
-                            (ctxt.(compilation_context_new_type_decls) ++
-                             ctxt.(compilation_context_type_decls))) then
+                                     ctxt.(compilation_context_new_type_decls)) then
         efailure (ECompilationError prov ("Cannot redefine type `" ++ name ++ "'"))
       else
         esuccess (nil, compilation_context_add_new_type_declaration ctxt ergo_type)

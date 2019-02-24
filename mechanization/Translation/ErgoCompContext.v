@@ -265,8 +265,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_type_decls)
                (ctxt.(compilation_context_new_type_decls) ++ (decl::nil)).
   
-  Definition init_compilation_context nsctxt : compilation_context :=
-    mkCompCtxt nsctxt nil nil nil nil nil None None empty_type_context nil nil.
+  Definition init_compilation_context nsctxt decls : compilation_context :=
+    mkCompCtxt nsctxt nil nil nil nil nil None None empty_type_context decls nil.
 
   Definition is_abstract_class
              (ctxt: compilation_context)

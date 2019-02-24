@@ -24,6 +24,8 @@ transaction Request4 extends Request1 {
 }
 transaction Request5 {
 }
+transaction Request6 extends Request2 {
+}
 
 transaction Response {
   o String message

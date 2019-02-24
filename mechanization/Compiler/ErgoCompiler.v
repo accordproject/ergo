@@ -320,7 +320,8 @@ Module ErgoCompiler.
 
   Definition ergo_empty_brand_model := ErgoCType.tempty_brand_model.
 
-  Definition ergo_brand_model_from_inputs (inputs : list ergo_input) : eresult ergo_brand_model
+  Definition ergo_brand_model_from_inputs
+             (inputs : list ergo_input) : eresult (ergo_brand_model * list laergo_type_declaration)
     := ErgoDriver.brand_model_from_inputs inputs.
 
   Definition ergo_refresh_brand_model {bm:ergo_brand_model} :
