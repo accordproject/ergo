@@ -1,0 +1,42 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ namespace org.accordproject.ergo.geo
+
+import org.accordproject.geo.*
+import org.accordproject.ergo.math.*
+
+/**
+ * Calculates the great-circle distance in kilometers between two points on a globe.
+ *
+ * @param {GeoCordinate} point1 - start latitude and longitude in degrees
+ * @param {GeoCordinate} point2 - end latitude and longitude in degrees
+ * @returns {Double} - The distance in kilometers between point1 and point2
+ *
+ * Accurate to approximately 0.5%
+ * 
+ * Definition taken from https://www.movable-type.co.uk/scripts/latlong.html
+ * Law of cosines:	d = acos( sin φ1 ⋅ sin φ2 + cos φ1 ⋅ cos φ2 ⋅ cos Δλ ) ⋅ R
+ */
+define function distanceBetweenPoints(point1: GeoCoordinates, point2: GeoCoordinates) : Double {
+    
+    let R = 6371e3;
+    let phi1 = degreesToRadians(point1.latitude ?? 0.0);
+    let phi2 = degreesToRadians(point2.latitude ?? 0.0);
+
+    let deltaLambda = degreesToRadians((point2.longitude ?? 0.0) - (point1.longitude ?? 0.0));
+
+    let d = acos(sin(phi1) * sin(phi2) + cos(phi1) * cos(phi2) * cos(deltaLambda)) * R;
+
+    return  d / 1000.0
+}
