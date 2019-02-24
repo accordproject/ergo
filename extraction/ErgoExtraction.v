@@ -33,7 +33,8 @@ Extract Constant Digits.Z_to_string10 => "(fun x -> Util.char_list_of_string (st
 Extract Constant String.append => "(fun s1 s2 -> Util.char_list_append s1 s2)".
 
 Require Import ErgoSpec.Utils.Misc.
-Extract Constant Misc.coq_toposort => "(fun label file l -> Util.coq_toposort label file l)".
+Extract Constant Misc.coq_toposort => "(fun label file g -> Util.coq_toposort label file g)".
+Extract Constant Misc.coq_sort_given_topo_order => "(fun labely labelx file order l -> Util.coq_sort_given_topo_order labely labelx file order l)".
 Extract Constant Misc.coq_time => "(fun msg f x -> Util.coq_time msg f x)".
 Extract Constant Misc.get_local_part => "(fun name -> Util.get_local_part name)".
 

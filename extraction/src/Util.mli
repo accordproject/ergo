@@ -83,6 +83,8 @@ val map_assoc : ('a -> 'b -> 'c) -> (('a * 'b) list) -> 'c list
 exception TopoCycle of string list
 val toposort : ('a -> 'b) -> ('a -> string) -> ('a * 'a list) list -> 'a list
 val coq_toposort : ('a -> 'b) -> ('a -> char list) -> ('a * 'a list) list -> 'a list
+val coq_sort_with_topo_order : ('a -> 'b) -> ('c -> 'b) -> ('a -> char list) -> ('a * 'a list) list -> 'c list -> 'c list
+val coq_sort_given_topo_order : ('a -> 'b) -> ('c -> 'b) -> ('a -> char list) -> 'a list -> 'c list -> 'c list
 
 val get_local_part : char list -> (char list) option
 
