@@ -17,7 +17,7 @@ open ErgoComp.ErgoCompiler
 let repl_bm = ref ergo_empty_brand_model
 let my_init_repl_context input =
   begin match ergo_brand_model_from_inputs input with
-  | Success bm -> repl_bm := bm; init_repl_context !repl_bm input
+  | Success (bm,_) -> repl_bm := bm; init_repl_context !repl_bm input
   | Failure e -> ErgoUtil.ergo_raise e
   end
 let my_ergo_repl_eval_decl rctxt decl =
