@@ -14,6 +14,10 @@
 namespace org.accordproject.dispatchtest
 
 contract DispatchTest over TemplateModel {
+  clause clause6(request : Request6) : Response {
+		return Response{ message: "I am a request6" }
+  }
+
   clause clause4(request : Request4) : Response {
 		return Response{ message: "I am a request4" }
   }

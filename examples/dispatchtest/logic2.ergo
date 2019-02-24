@@ -26,4 +26,7 @@ contract DispatchTest over TemplateModel {
 		return Response{ message: "I am a request4" }
   }
 
+  clause clause6(request : Request6) : Response {
+		return Response{ message: "I am a request6" }
+  }
 }
