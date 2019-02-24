@@ -162,8 +162,7 @@ Section ErgoTypetoErgoCType.
                (ctxt : expand_ctxt) : tbrand_context_decls :=
       @ergo_ctype_decl_from_expand br ctxt.
 
-    Definition label_of_decl (decl:laergo_type_declaration) : string :=
-      decl.(type_declaration_name).
+    Definition label_of_decl (decl:laergo_type_declaration) : string := decl.(type_declaration_name).
     Definition name_of_decl : laergo_type_declaration -> string := label_of_decl.
     Definition decls_table (decls:list laergo_type_declaration) : list (string * laergo_type_declaration) :=
       List.map (fun d => (d.(type_declaration_name), d)) decls.
@@ -180,23 +179,32 @@ Section ErgoTypetoErgoCType.
 
     Definition brand_model_of_declarations
                (decls:list laergo_type_declaration)
-      : eresult ErgoCType.tbrand_model :=
+      : eresult (ErgoCType.tbrand_model * list laergo_type_declaration) :=
       let decls := sort_decls decls in
       let ctxt := ergo_expand_extends_in_declarations decls in
       let hierarchy := ergo_hierarchy_from_expand ctxt in
-      eolift (fun br =>
-                eresult_of_qresult dummy_provenance
-                                   (mk_tbrand_model (@mk_model_type_decls br ctxt)))
-             (brand_relation_maybe hierarchy).
+      let res :=
+          eolift (fun br =>
+                    eresult_of_qresult dummy_provenance
+                                       (mk_tbrand_model (@mk_model_type_decls br ctxt)))
+                 (brand_relation_maybe hierarchy)
+      in
+      elift (fun x => (x, decls)) res. (* Preserve declaration order *)
 
     Definition force_brand_model_of_declarations
                (decls:list laergo_type_declaration)
-      : ErgoCType.tbrand_model :=
+      : ErgoCType.tbrand_model * list laergo_type_declaration :=
       match brand_model_of_declarations decls with
       | Success _ _ s => s
-      | Failure _ _ e => tempty_brand_model (* Not used *)
+      | Failure _ _ e => (tempty_brand_model, nil) (* Not used *)
       end.
 
   End Translate.
+
+  Section Expand.
+    Context {A:Set}.
+    Definition sort_given_topo_order (order:list laergo_type_declaration) (label:A -> string) (l:list A) : list A :=
+      coq_sort_given_topo_order label_of_decl label name_of_decl order l.
+  End Expand.
 
 End ErgoTypetoErgoCType.

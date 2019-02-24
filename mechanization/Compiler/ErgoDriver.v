@@ -99,7 +99,7 @@ Section ErgoDriver.
       let resolved := resolve_inputs_no_main inputs in
       elift (fun x => (fst x)) resolved.
 
-    Definition brand_model_from_inputs (inputs : list lrergo_input) : eresult ErgoCType.tbrand_model :=
+    Definition brand_model_from_inputs (inputs : list lrergo_input) : eresult (ErgoCType.tbrand_model * list laergo_type_declaration) :=
       let resolved := just_resolved_inputs inputs in
       let type_decls := elift modules_get_type_decls resolved in
       eolift ErgoTypetoErgoCType.brand_model_of_declarations type_decls.
@@ -111,31 +111,34 @@ Section ErgoDriver.
 
     (* Initialize compilation context *)
     Definition init_compilation_context_from_inputs
-               (inputs:list lrergo_input) :
+               (inputs:list lrergo_input)
+               (order:list laergo_type_declaration) :
       eresult ((list laergo_module * laergo_module) * compilation_context) :=
       let rinputs := resolve_inputs inputs in
       elift
         (fun rinputs =>
            let '(mls, p, ns_ctxt) := rinputs in
-           (mls, p, init_compilation_context ns_ctxt))
+           (mls, p, init_compilation_context ns_ctxt order))
         rinputs.
 
     Definition init_compilation_context_from_inputs_no_main
-               (inputs:list lrergo_input) :
+               (inputs:list lrergo_input)
+               (order:list laergo_type_declaration) :
       eresult (list laergo_module * compilation_context) :=
       let rinputs := resolve_inputs_no_main inputs in
       elift
         (fun rinputs =>
            let '(mls, ns_ctxt) := rinputs in
-           (mls, init_compilation_context ns_ctxt))
+           (mls, init_compilation_context ns_ctxt order))
         rinputs.
 
     (* Ergo -> ErgoC *)
     Definition ergo_module_to_ergoct
                (ctxt:compilation_context)
                (lm:laergo_module) : eresult (ergoct_module * compilation_context) :=
+      let order := ctxt.(compilation_context_type_decls) in
       let pc := ergo_module_to_calculus ctxt lm in
-      let pc := eolift (fun xy => elift (fun x => (x,snd xy)) (ergoc_expand_module (fst xy))) pc in
+      let pc := eolift (fun xy => elift (fun x => (x,snd xy)) (ergoc_expand_module order (fst xy))) pc in
       let pc := eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc in
       eolift (fun xy : ergoc_module * compilation_context =>
                 let (mod,ctxt) := xy in
@@ -172,10 +175,11 @@ Section ErgoDriver.
                (decl : lrergo_declaration)
       : eresult (list ergoct_declaration * compilation_context) :=
       (* Translation *)
+      let order := sctxt.(compilation_context_type_decls) in
       let ec := ergo_declaration_to_ergoc sctxt decl in
       let ec := eolift (fun xy =>
                           elift (fun x => (x, snd xy))
-                                (ergoc_expand_declarations (fst xy)))
+                                (ergoc_expand_declarations order (fst xy)))
                        ec in
       (* Inlining *)
       let inlined : eresult (list ergoc_declaration * compilation_context) :=
@@ -215,8 +219,9 @@ Section ErgoDriver.
                pn.
 
     Definition compilation_context_from_inputs
-               (inputs:list lrergo_input) : eresult (laergo_module * compilation_context) :=
-      let cinit := init_compilation_context_from_inputs inputs in
+               (inputs:list lrergo_input)
+               (order:list laergo_type_declaration) : eresult (laergo_module * compilation_context) :=
+      let cinit := init_compilation_context_from_inputs inputs order in
       eolift (fun init =>
                 let '(mls, p, ctxt) := init in
                 elift (fun r => (p, snd r))
@@ -224,8 +229,9 @@ Section ErgoDriver.
              cinit.
     
     Definition compilation_context_from_inputs_no_main
-               (inputs:list lrergo_input) : eresult compilation_context :=
-      let cinit := init_compilation_context_from_inputs_no_main inputs in
+               (inputs:list lrergo_input)
+               (order:list laergo_type_declaration) : eresult compilation_context :=
+      let cinit := init_compilation_context_from_inputs_no_main inputs order in
       coq_time "init(load modules)"
                (eolift (fun init =>
                           let '(mls, ctxt) := init in
@@ -250,11 +256,12 @@ Section ErgoDriver.
     Definition ergo_module_to_javascript_top
                (version:jsversion)
                (inputs:list lrergo_input) : eresult result_file :=
-      let bm : eresult brand_model :=
+      let bm : eresult (brand_model * list laergo_type_declaration) :=
           coq_time "init(load types)"
                    brand_model_from_inputs inputs in
-      eolift (fun bm :brand_model=>
-                let cinit := compilation_context_from_inputs inputs in
+      eolift (fun xy :brand_model * list laergo_type_declaration=>
+                let bm := fst xy in
+                let cinit := compilation_context_from_inputs inputs (snd xy) in
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
                           let res := ergo_module_to_javascript version ctxt p in
@@ -263,9 +270,10 @@ Section ErgoDriver.
 
     Definition ergo_module_to_java_top
                (inputs:list lrergo_input) : eresult result_file :=
-      let bm : eresult brand_model := brand_model_from_inputs inputs in
-      eolift (fun bm :brand_model=>
-                let cinit := compilation_context_from_inputs inputs in
+      let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
+      eolift (fun xy :brand_model * list laergo_type_declaration=>
+                let bm := fst xy in
+                let cinit := compilation_context_from_inputs inputs (snd xy) in
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
                           let res := ergo_module_to_java ctxt p in
@@ -274,10 +282,11 @@ Section ErgoDriver.
 
     Definition ergo_module_to_cicero_top
                (inputs:list lrergo_input) : eresult result_file :=
-      let bm : eresult brand_model := brand_model_from_inputs inputs in
+      let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
       eolift
-        (fun bm : brand_model=>
-           let ctxt := compilation_context_from_inputs inputs in
+        (fun xy :brand_model * list laergo_type_declaration=>
+           let bm := fst xy in
+           let ctxt := compilation_context_from_inputs inputs (snd xy) in
            eolift
              (fun init : laergo_module * compilation_context =>
                 let (p, ctxt) := init in
@@ -310,7 +319,7 @@ Section ErgoDriver.
                (inputs : list lrergo_input) : eresult repl_context :=
       elift (mkREPLCtxt ErgoCEvalContext.empty_eval_context)
             (eolift (set_namespace_in_compilation_context accordproject_ergotop_namespace)
-                    (compilation_context_from_inputs_no_main inputs)).
+                    (compilation_context_from_inputs_no_main inputs nil)).
 
     Definition update_repl_ctxt_comp_ctxt
                (rctxt: repl_context)
@@ -426,8 +435,9 @@ Section ErgoDriver.
       | _ =>
         let all_decls := ctxt.(compilation_context_type_decls) ++ ctxt.(compilation_context_new_type_decls) in
         let new_bm := ErgoTypetoErgoCType.brand_model_of_declarations all_decls in
-        elift (fun bm =>
-                 let new_ctxt := compilation_context_update_type_declarations ctxt all_decls nil in
+        elift (fun xy =>
+                 let bm := fst xy in
+                 let new_ctxt := compilation_context_update_type_declarations ctxt nil all_decls in
                  (bm, new_ctxt)) new_bm
       end.
 

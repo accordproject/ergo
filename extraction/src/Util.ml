@@ -211,9 +211,9 @@ let map_assoc f l =
 
 exception TopoCycle of string list
 
-let dfs label file graph visited start_node = 
+let dfs label name graph visited start_node = 
   let rec explore path visited node = 
-    if List.mem (label node) (List.map label path) then raise (TopoCycle (List.map file (node::path))) else
+    if List.mem (label node) (List.map label path) then raise (TopoCycle (List.map name (node::path))) else
     if List.mem (label node) (List.map label visited) then visited else     
       let new_path = node :: path in 
       let edges    = List.assoc (label node) (List.map (fun (x,y) -> (label x, y)) graph) in
@@ -221,13 +221,78 @@ let dfs label file graph visited start_node =
       node :: visited
   in explore [] visited start_node
 
-let toposort label file graph = 
-  List.rev (List.fold_left (fun visited (node,_) -> dfs label file graph visited node) [] graph)
+let toposort label name graph = 
+  List.rev (List.fold_left (fun visited (node,_) -> dfs label name graph visited node) [] graph)
 
-let coq_toposort label file graph =
-  let sorted = toposort label (fun x -> string_of_char_list (file x)) graph in
-  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (file x))) sorted; *)
+let compare_of_order o labely labelx name x1 x2 =
+  if labelx x1 = labelx x2 then 0
+  else
+    let fl = List.filter (fun x -> labely x = labelx x1 || labely x = labelx x2) o in
+    begin match fl with
+    | [] | _ :: [] -> raise Not_found
+    | y1 :: y2 :: [] ->
+        if labelx x1 = labely y1
+        then +1
+        else -1
+    | y1 :: y2 :: y3 :: _ ->
+        if (labely y1 = labely y2)
+        then raise (Failure ("Duplicates for " ^ (name y1)))
+        else raise (Failure ("Duplicates for " ^ (name y2)))
+    end
+
+let sort_with_topo_order labely labelx name graph l =
+  let order = toposort labely name graph in
+  let comp = compare_of_order order labely labelx name in
+  List.sort comp l
+
+let sort_given_topo_order labely labelx name order l =
+  let comp = compare_of_order order labely labelx name in
+  List.sort comp l
+
+let coq_toposort label name graph =
+  let sorted = toposort label (fun x -> string_of_char_list (name x)) graph in
+  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (name x))) sorted; *)
   sorted
+
+let coq_sort_with_topo_order labely labelx name graph l =
+  let sorted = sort_with_topo_order labely labelx (fun x -> string_of_char_list (name x)) graph l in
+  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (name x))) sorted; *)
+  sorted
+
+let coq_sort_given_topo_order labely labelx name order l =
+  let sorted = sort_given_topo_order labely labelx (fun x -> string_of_char_list (name x)) order l in
+  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (name x))) sorted; *)
+  sorted
+
+(* Tests
+
+let g = [("request1",["top"]);
+         ("request6",["request4"]);
+         ("request3",["request1"]);
+         ("top",[]);
+         ("request4",["request1"]);
+         ("request2",["request1"]);
+         ("request5",["top"])];;
+
+let label x = x;;
+let print x = x;;
+let test1 = toposort label label g;;
+
+let test2 =
+  assert (sort_with_topo_order label label print g
+  ["request6";"request1";"request3";"request4"]
+  = ["request3"; "request6"; "request4"; "request1"]);;
+
+let test3 =
+  assert (sort_given_topo_order label label print test1
+  ["request6";"request1";"request3";"request4"]
+  = ["request3"; "request6"; "request4"; "request1"]);;
+
+let test4 =
+  assert (sort_given_topo_order label label print test1
+  ["request6";"request1";"request3";"top";"request4"]
+  = ["request3"; "request6"; "request4"; "request1"; "top"]);;
+*)
 
 let get_local_part name =
   let name = string_of_char_list name in

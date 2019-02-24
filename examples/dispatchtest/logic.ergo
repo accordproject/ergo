@@ -23,11 +23,15 @@ contract DispatchTest over TemplateModel {
   }
 
   clause clause4(request : Request4) : Response {
-		return Response{ }
+		return Response{ message: "I am a request4" }
   }
 
   clause clause4b(request : Request4) : Response {
 		return Response{ message: "I am also a request4!" }
+  }
+
+  clause clause6(request : Request6) : Response {
+		return Response{ message: "I am a request6" }
   }
 
 }
