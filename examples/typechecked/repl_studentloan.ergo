@@ -32,15 +32,15 @@ contract StudentLoan over LoanModel state LoanState
           balance: add_monthly_interest(state.balance, contract.rate)
         };
         if req.amount <= 0.0 then
-            emit LoanDefaultEvent {};
-            return Response {}
+          emit LoanDefaultEvent {};
+          return Response {}
         else if req.amount >= state.balance then
-      		set state LoanState {balance: 0.0};
-      		emit LoanPaidOffEvent {};
-      		return Response {}
+          set state LoanState {balance: 0.0};
+          emit LoanPaidOffEvent {};
+          return Response {}
         else
-      		set state LoanState {balance: state.balance - req.amount};
-            return Response {}
+          set state LoanState {balance: state.balance - req.amount};
+          return Response {}
     }
 }
 

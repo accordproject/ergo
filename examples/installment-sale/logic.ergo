@@ -17,7 +17,7 @@ namespace org.accordproject.installmentsale
 import org.accordproject.cicero.runtime.*
 
 	contract InstallmentSale over TemplateModel state InstallmentSaleState {
-  clause init(request : Request) : Response {
+  clause init() : Response {
     set state InstallmentSaleState{
       status: "WaitingForFirstDayOfNextMonth",
       balance_remaining: contract.INITIAL_DUE,
@@ -27,7 +27,7 @@ import org.accordproject.cicero.runtime.*
     return Response{}
   }
 
-  clause PayInstallment(request : Installment) : Balance emits PaymentObligation {
+  clause PayInstallment(request : Installment) : Balance {
 //    enforce (state.status = "WaitingForFirstDayOfNextMonth"); // Make sure this is only called in the right state
 //    enforce (contract.MIN_PAYMENT <= state.balance_remaining) and (state.next_payment_month < 23);
 //    enforce (contract.MIN_PAYMENT <= request.amount); // Underpaying is forbidden

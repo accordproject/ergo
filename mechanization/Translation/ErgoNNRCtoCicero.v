@@ -50,12 +50,12 @@ Section ErgoNNRCtoCicero.
              +++ `" * @param {" +++ `state_type +++ `"} context.state - the state" +++ eol
              +++ `" */" +++ eol.
 
-  (** Note: this adjusts the external interface to that currently expected in Cicero. Namely:
+  (** Note: this adjusts the external interface to what is currently expected by Cicero. Namely:
 - This serialized/deserialized ErgoType objects to/from JSON
 - This applies the result from the functional call to the call as effects to the input context
 - This turns an error response into a JavaScript exception
 *)
-  Definition wrapper_function
+  Definition wrapper_function_for_clause
              (generated:bool)
              (fun_name:string)
              (request_param:string)
@@ -67,13 +67,7 @@ Section ErgoNNRCtoCicero.
              (clause_name:string)
              (eol:estring)
              (quotel:estring) : estring :=
-    let state_init :=
-        if string_dec clause_name clause_init_name
-        then
-          `"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }"
-        else
-          `"serializer.toJSON(context.state,{permitResourcesForRelationships:true})"
-    in
+    let state_init := `"serializer.toJSON(context.state,{permitResourcesForRelationships:true})" in
     (accord_annotation
        generated
        clause_name
@@ -105,6 +99,49 @@ Section ErgoNNRCtoCicero.
       +++ `"  }" +++ eol
       +++ `"}" +++ eol.
 
+  Definition wrapper_function_for_init
+             (generated:bool)
+             (fun_name:string)
+             (response_type:string)
+             (emit_type:string)
+             (state_type:string)
+             (contract_name:string)
+             (eol:estring)
+             (quotel:estring) : estring :=
+    let state_init := `"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }" in
+    let request_type := "org.accordproject.cicero.runtime.Request" in
+    let clause_name := "init" in
+    (accord_annotation
+       generated
+       clause_name
+       request_type
+       response_type
+       emit_type
+       state_type
+       eol
+       quotel)
+      +++ `"function " +++ `fun_name +++ `"(context) {" +++ eol
+      +++ `"  let pcontext = { 'state': " +++ state_init +++ `", 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" +++ eol
+      +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
+      +++ `"  let result = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
+      +++ `"  if (result.hasOwnProperty('left')) {" +++ eol
+      +++ `"    //logger.info('ergo result: '+JSON.stringify(result))" +++ eol
+      +++ `"    context.response = result.left.response ?" +++ eol
+      +++ `"         serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true})" +++ eol
+      +++ `"       : serializer.fromJSON({ '$class': 'org.accordproject.cicero.runtime.Response' });" +++ eol
+      +++ `"    context.state = serializer.fromJSON(result.left.state, {validate: false, acceptResourcesForRelationships: true});" +++ eol
+      +++ `"    let emitResult = [];" +++ eol
+      +++ `"    for (let i = 0; i < result.left.emit.length; i++) {" +++ eol
+      +++ `"      emitResult.push(serializer.fromJSON(result.left.emit[i], {validate: false, acceptResourcesForRelationships: true}));" +++ eol
+      +++ `"    }" +++ eol
+      +++ `"    context.emit = emitResult;" +++ eol
+      +++ `"    return context;" +++ eol
+      +++ `"  } else {" +++ eol
+      +++ `"    //logger.error('ergo error: '+JSON.stringify(result.right))" +++ eol
+      +++ `"    ciceroError(result);" +++ eol
+      +++ `"  }" +++ eol
+      +++ `"}" +++ eol.
+
   Definition apply_wrapper_function
              (contract_name:string)
              (contract_state_type:string)
@@ -115,8 +152,11 @@ Section ErgoNNRCtoCicero.
     let fun_name : string :=
         ErgoCodeGen.javascript_identifier_sanitizer contract_name ++ "_"%string ++ ErgoCodeGen.javascript_identifier_sanitizer clause_name
     in
-    wrapper_function false
-      fun_name request_name request_type response_type emit_type contract_state_type contract_name clause_name eol quotel.
+    if string_dec clause_name clause_init_name
+    then `""
+    else
+      wrapper_function_for_clause false
+                       fun_name request_name request_type response_type emit_type contract_state_type contract_name clause_name eol quotel.
   
   Definition wrapper_functions
              (contract_name:string)
@@ -136,8 +176,8 @@ Section ErgoNNRCtoCicero.
              (eol:estring)
              (quotel:estring) : ErgoCodeGen.ejavascript :=
     `"" +++ `"const contract = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"();" +++ eol
-        +++ wrapper_function true "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name clause_main_name eol quotel
-        +++ wrapper_function true "__init" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name clause_init_name eol quotel.
+        +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name clause_main_name eol quotel
+        +++ wrapper_function_for_init true "__init" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name eol quotel.
 
   Definition javascript_of_module_with_dispatch
              (contract_name:string)
