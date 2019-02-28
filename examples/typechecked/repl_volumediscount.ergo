@@ -39,6 +39,6 @@ set contract VolumeDiscount over VolumeDiscountContract{
   secondRate: 2.9,
   thirdRate: 2.8
 }
-call init(Request{})
+call init()
 call volumediscount(VolumeDiscountRequest{ netAnnualChargeVolume : 0.4 })
 

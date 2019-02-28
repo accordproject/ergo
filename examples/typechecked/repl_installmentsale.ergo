@@ -41,7 +41,7 @@ define asset InstallmentSaleContract extends AccordContract {
 }
 
 contract InstallmentSale over InstallmentSaleContract state InstallmentSaleState {
-  clause init(request:Request) : Unit {
+  clause init() : Unit {
     set state InstallmentSaleState{
       stateId: "org.accordproject.installmentsale.InstallmentSaleState#1",
       status: "WaitingForFirstDayOfNextMonth",
@@ -105,7 +105,7 @@ set contract InstallmentSale over InstallmentSaleContract{
   MIN_PAYMENT : 500.0,
   DUE_AT_CLOSING : 500.0
 }
-call init(Request{})
+call init()
 call payInstallment(Installment{ amount: 2000.00 })
 call payInstallment(Installment{ amount: 2000.00 })
 call payInstallment(Installment{ amount: 2000.00 })

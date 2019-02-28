@@ -70,7 +70,7 @@ function compare(expected,actual) {
  * @param {object} contractJson contract data in JSON
  * @returns {object} Promise to the initial state of the contract
  */
-function init(rootdir, target,ergo,models,contractName,currentTime,contractJson) {
+function init(rootdir,target,ergo,models,contractName,currentTime,contractJson) {
     const ergoSources = [];
     for (let i = 0; i < ergo.length; i++) {
         const ergoFile = Path.resolve(rootdir, ergo[i]);
@@ -83,8 +83,7 @@ function init(rootdir, target,ergo,models,contractName,currentTime,contractJson)
         const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
         ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
     }
-    const requestJson = { '$class' : 'org.accordproject.cicero.runtime.Request' };
-    return ErgoEngine.init(ergoSources, ctoSources, target, contractJson, requestJson, contractName, currentTime);
+    return ErgoEngine.init(ergoSources, ctoSources, target, contractJson, contractName, currentTime);
 }
 
 /**

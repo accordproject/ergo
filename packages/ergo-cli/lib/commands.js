@@ -55,17 +55,15 @@ class Commands {
         for (let i = 0; i < requestsPath.length; i++) {
             requestsJson.push(JSON.parse(Fs.readFileSync(requestsPath[i], 'utf8')));
         }
-        const firstRequest = requestsJson[0];
         let initResponse;
         if (statePath === null) {
-            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,firstRequest,contractName,currentTime);
+            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,contractName,currentTime);
         } else {
             const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-            initResponse = ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,firstRequest,stateJson,contractName,currentTime);
+            initResponse = Promise.resolve({ state: stateJson });
         }
         // Get all the other requests and chain execution through Promise.reduce()
-        const otherRequests = requestsJson.slice(1, requestsJson.length);
-        return otherRequests.reduce((promise,requestJson) => {
+        return requestsJson.reduce((promise,requestJson) => {
             return promise.then((result) => {
                 return ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,requestJson,result.state,contractName,currentTime);
             });

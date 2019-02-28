@@ -73,6 +73,6 @@ set contract PromissoryNote over PromissoryNoteContract{
   insolvencyDays: 90,
   jurisdiction: "New York, NY"
 }
-call init(Request{})
+call init()
 call check(Payment{ amountPaid : MonetaryAmount{ doubleValue : 100.0, currencyCode: "USD" } })
 
