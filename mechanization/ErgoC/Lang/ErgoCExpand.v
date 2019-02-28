@@ -150,7 +150,7 @@ Section ErgoCExpand.
              (c:ergoc_contract) : local_name * ergoc_function :=
     let template := c.(contractc_template) in
     let state := c.(contractc_state) in
-    let params := (("request"%string, ErgoTypeClassRef prov default_request_absolute_name)::nil) in
+    let params := nil in
     let init_body :=
         setState prov (default_state prov)
                  (EReturn prov (EConst prov dunit))

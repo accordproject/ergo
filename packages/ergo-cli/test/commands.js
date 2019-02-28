@@ -82,17 +82,15 @@ describe('ergo', () => {
             const ergoPath = Path.resolve(__dirname, 'data/installment-sale', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/installment-sale', 'model.cto');
             const contractPath = Path.resolve(__dirname, 'data/installment-sale', 'contract.json');
-            const requestInitPath = Path.resolve(__dirname, 'data/installment-sale', 'request-init.json');
-            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestInitPath], null, 'org.accordproject.installmentsale.InstallmentSale', '1970-01-01T00:00:00Z');
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [], null, 'org.accordproject.installmentsale.InstallmentSale', '1970-01-01T00:00:00Z');
             result.state.balance_remaining.should.equal(10000.00);
         });
         it('should initialize a smart Ergo contract and execute one request', async function () {
             const ergoPath = Path.resolve(__dirname, 'data/installment-sale', 'logic.ergo');
             const ctoPath = Path.resolve(__dirname, 'data/installment-sale', 'model.cto');
             const contractPath = Path.resolve(__dirname, 'data/installment-sale', 'contract.json');
-            const requestInitPath = Path.resolve(__dirname, 'data/installment-sale', 'request-init.json');
             const requestPath = Path.resolve(__dirname, 'data/installment-sale', 'request.json');
-            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestInitPath,requestPath], null, 'org.accordproject.installmentsale.InstallmentSale', '1970-01-01T00:00:00Z');
+            const result = await Commands.execute([ergoPath], [ctoPath], contractPath, [requestPath], null, 'org.accordproject.installmentsale.InstallmentSale', '1970-01-01T00:00:00Z');
             result.state.balance_remaining.should.equal(7612.499999999999);
         });
     });

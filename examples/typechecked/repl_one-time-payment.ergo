@@ -27,7 +27,7 @@ define asset OneTimePaymentContract extends AccordContract {
 }
 
 contract OneTimePayment over OneTimePaymentContract state OneTimePaymentState {
-  clause init(request : InitRequest) : InitResponse emits PaymentObligation {
+  clause init() : InitResponse emits PaymentObligation {
     emit PaymentObligation{
       contract: contract,
       promisor: some(contract.buyer),

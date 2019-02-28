@@ -15,7 +15,7 @@
 namespace org.accordproject.installmentsale
 
 contract InstallmentSale over TemplateModel state InstallmentSaleState {
-  clause init(request : InitializeRequest) : InitializeResponse {
+  clause init() : InitializeResponse {
 		enforce(request.firstMonth = 3.0)
 		else throw ErgoErrorResponse{ message: "Month should be initialized to 3.0" };
     set state InstallmentSaleState{
