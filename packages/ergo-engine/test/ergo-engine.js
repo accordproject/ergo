@@ -103,7 +103,7 @@ describe('Execute ES6', () => {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, requestJson, contractName, currentTime);
+                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, contractName, currentTime);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
@@ -154,7 +154,7 @@ describe('Execute ES5', () => {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es5', contractJson, requestJson, contractName, currentTime);
+                    const actual = await ErgoEngine.init(ergoSources,ctoSources,'es5',contractJson,contractName,currentTime);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));

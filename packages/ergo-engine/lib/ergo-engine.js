@@ -97,12 +97,11 @@ class ErgoEngine {
      * @param {string} ergoCode JavaScript code for ergo logic
      * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
-     * @param {object} requestJson the request transaction in JSON
      * @param {string} contractName of the contract to initialize
      * @param {string} currentTime the definition of 'now'
      * @returns {object} Promise to the result of initialization
      */
-    static initErgoCode(ergoCode,codeKind,contractJson,requestJson,contractName,currentTime) {
+    static initErgoCode(ergoCode,codeKind,contractJson,contractName,currentTime) {
         const now = this.initCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
@@ -114,7 +113,7 @@ class ErgoEngine {
         });
 
         // add immutables to the context
-        const params = { 'contract': contractJson, 'request': requestJson, 'state': {}, 'emit': [], 'now': now };
+        const params = { 'contract': contractJson, 'state': {}, 'emit': [], 'now': now };
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
         let contract;
@@ -164,17 +163,16 @@ class ErgoEngine {
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
-     * @param {object} requestJson the request transaction in JSON
      * @param {string} contractName of the contract to execute
      * @param {string} currentTime the definition of 'now'
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoSources,ctoSources,codeKind,contractJson,requestJson,contractName,currentTime) {
+    static init(ergoSources,ctoSources,codeKind,contractJson,contractName,currentTime) {
         return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
-                return this.initErgoCode(ergoCode.success,codeKind,contractJson,requestJson,contractName,currentTime);
+                return this.initErgoCode(ergoCode.success,codeKind,contractJson,contractName,currentTime);
             }
         });
     }
