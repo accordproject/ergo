@@ -22,7 +22,7 @@ Feature: Dispatch Tests
 """
 {
     "kind": "CompilationError",
-    "message": "Duplicate clauses for the same request type",
+    "message": "Multiple clauses can process the request 'org.accordproject.dispatchtest.Request4'",
     "locstart": {
       "line": 16,
       "character": 0
