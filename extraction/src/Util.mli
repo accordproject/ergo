@@ -99,3 +99,5 @@ val get_monitor_output : unit -> string
 
 val flat_map_string : (char -> string) -> string -> string
 
+val find_duplicate : char list list -> char list option
+

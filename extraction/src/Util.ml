@@ -390,3 +390,20 @@ let flat_map_string f s =
   let sl' = List.rev !sl in
   String.concat "" sl'
 
+exception Dup of char list
+let comp_for_fun s1 s2 =
+  let c = compare s1 s2 in
+  if c = 0
+  then raise (Dup s1)
+  else c
+
+let find_duplicate sl =
+  begin try
+    ignore(List.sort comp_for_fun sl);
+    None
+  with
+  | Dup s ->
+      Some s
+  end
+
+
