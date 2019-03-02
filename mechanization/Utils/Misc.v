@@ -110,6 +110,7 @@ Section Misc.
     
     Definition ejavascript : Set := estring.
 
+    Parameter flat_map_estring : (Ascii.ascii->estring) -> (estring) -> estring.
   End EString.
   
 End Misc.

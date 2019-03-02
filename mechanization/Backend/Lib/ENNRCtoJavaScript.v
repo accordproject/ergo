@@ -20,12 +20,12 @@ Require Import Ascii.
 Require Import Peano_dec.
 Require Import EquivDec.
 Require Import Qcert.Utils.Utils.
-Require Import Qcert.Utils.JSON.
 Require Import Qcert.Common.CommonRuntime.
 Require Import Qcert.NNRC.NNRCRuntime.
 Require Import Qcert.JavaScript.JavaScriptRuntime.
 Require Import Qcert.Translation.ForeignToJavaScript.
 
+Require Import ErgoSpec.Utils.EJSON.
 Require Import ErgoSpec.Utils.Misc.
 
 Local Open Scope string_scope.
@@ -225,29 +225,36 @@ End sanitizer.
     Definition brandsToJs (quotel:estring) (b:brands) : estring
       := ` (bracketString "[" (map_concat "," (fun x => bracketString (^quotel) x (^quotel)) b) "]").
 
-    Fixpoint data_to_js (d:data) : json :=
+    Fixpoint data_to_js (d:data) : ejson :=
       match d with
-      | dunit => jnil
-      | dnat n => jnumber (float_of_int n)
-      | dfloat n => jnumber n
-      | dbool b => jbool b
-      | dstring s => jstring s
-      | dcoll c => jarray (map data_to_js c)
-      | drec r => jobject (map (fun x => (fst x, data_to_js (snd x))) r)
-      | dleft d' => jobject (("left"%string, data_to_js d')::nil)
-      | dright d' => jobject (("right"%string, data_to_js d')::nil)
-      | dbrand b d' => jobject (("type"%string, jarray (map jstring b))::("data"%string, (data_to_js d'))::nil)
-      | dforeign fd => foreign_to_JSON_from_data fd
+      | dunit =>
+        ejnull
+      | dnat n =>
+        ejnumber (float_of_int n)
+      | dfloat n =>
+        ejnumber n
+      | dbool b =>
+        ejbool b
+      | dstring s =>
+        ejstring (`s)
+      | dcoll c =>
+        ejarray (map data_to_js c)
+      | drec r =>
+        ejobject (map (fun x => (`fst x, data_to_js (snd x))) r)
+      | dleft d' =>
+        ejobject ((`"left"%string, data_to_js d')::nil)
+      | dright d' =>
+        ejobject ((`"right"%string, data_to_js d')::nil)
+      | dbrand b d' =>
+        ejobject ((`"type"%string, ejarray (map (fun s => ejstring (`s)) b))::(`"data"%string, (data_to_js d'))::nil)
+      | dforeign fd => json_to_ejson (foreign_to_JSON_from_data fd)
       end.
 
-    Fixpoint data_to_json (d:data) : json := data_to_js d.
+    Fixpoint data_to_json (d:data) : ejson := data_to_js d.
     
     (* Java equivalent: JavaScriptBackend.dataToJS *)
     Definition dataToJS (quotel:estring) (d : data) : estring :=
-      `jsonToJS (^quotel) (data_to_js d).
-
-    Definition dataEnhancedToJS (quotel:estring) (d : data) : estring :=
-      `jsonToJS (^quotel) (data_enhanced_to_js (^quotel) d).
+      ejsonToJS (^quotel) (data_to_js d).
 
     Definition inheritanceToJS (quotel:estring) (h:list (string*string)) :estring :=
       `(dataToJS quotel (dcoll (map (fun x => drec (("sub",dstring (fst x)) :: ("sup", (dstring (snd x))) :: nil)) h))).
