@@ -112,7 +112,11 @@ Section Misc.
 
     Parameter flat_map_estring : (Ascii.ascii->estring) -> (estring) -> estring.
   End EString.
-  
+
+  Section Duplicates.
+    Parameter find_duplicate : list string -> option string.
+  End Duplicates.
+
 End Misc.
 
 Notation "` e" := (string_to_estring e) (left associativity, at level 40) : estring_scope.

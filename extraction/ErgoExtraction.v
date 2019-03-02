@@ -43,6 +43,7 @@ Extract Constant Misc.string_to_estring => "(fun s1 -> Util.string_of_char_list 
 Extract Constant Misc.estring_to_string => "(fun s1 -> Util.char_list_of_string s1)".
 Extract Constant Misc.estring_concat => "(fun s1 s2 -> s1 ^ s2)".
 Extract Constant Misc.flat_map_estring => "(fun f s -> Util.flat_map_string f s)".
+Extract Constant Misc.find_duplicate => "(fun l -> Util.find_duplicate l)".
 
 (* Ergo modules *)
 Require ErgoCompiler.

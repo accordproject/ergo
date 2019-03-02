@@ -18,6 +18,7 @@ Require Import Ascii.
 Require Import String.
 Require Import List.
 Require Import ZArith.
+Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Names.
@@ -225,8 +226,6 @@ Section Result.
       efailure (ECompilationError prov "Unresolved name").
     Definition should_have_one_contract_error {A} prov : eresult A :=
       efailure (ECompilationError prov "Should have exactly one contract").
-    Definition duplicate_clause_for_request_error {A} prov : eresult A :=
-      efailure (ECompilationError prov "Duplicate clauses for the same request type").
 
     Definition contract_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should not find 'contract' in Ergo Calculus").
@@ -244,4 +243,36 @@ Section Result.
       efailure (ESystemError prov ("Clause " ++ fname ++ " in contract " ++ gname ++ " did not get inlined")).
   End Builtin.
 
+  Section Duplicates.
+    Context {A:Set}.
+    Definition no_duplicates_with_err
+               (l:list string)
+               (succ:A)
+               (err:option string -> eerror) : eresult A :=
+      if (@NoDup_dec string string_dec l)
+      then esuccess succ
+      else
+        let s := find_duplicate l in
+        efailure (err s).
+
+    Definition duplicate_function_params_error prov (fname:string) (vname:option string) : eerror :=
+      match vname with
+      | None =>
+        ECompilationError prov ("Same variable bound multiple times in '" ++ fname ++ "'")
+      | Some vname =>
+        ECompilationError prov ("Variable '" ++ vname ++ "' is bound multiple times in '" ++ fname ++ "'")
+      end.
+    Definition duplicate_function_params_check prov (fname:string) (l:list string) (succ:A) : eresult A :=
+      no_duplicates_with_err l succ (duplicate_function_params_error prov fname).
+
+    Definition duplicate_clause_for_request_error prov (rname:option string) : eerror :=
+      match rname with
+      | None =>
+        ECompilationError prov ("Multiple clauses can process the same request")
+      | Some rname =>
+        ECompilationError prov ("Multiple clauses can process the request '" ++ rname ++ "'")
+      end.
+    Definition duplicate_clause_for_request_check prov (l:list string) (succ:A) : eresult A :=
+      no_duplicates_with_err l succ (duplicate_clause_for_request_error prov).
+  End Duplicates.
 End Result.
