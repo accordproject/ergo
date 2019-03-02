@@ -206,10 +206,15 @@ Section ErgoNameResolution.
       resolve_type_annotation prov nsctxt en.
 
     Definition resolve_ergo_type_signature
+               (prov:provenance)
                (ectxt: enum_ctxt)
                (nsctxt:namespace_ctxt)
+               (fname:string)
                (sig:lrergo_type_signature) : eresult laergo_type_signature :=
       let params_types := resolve_ergo_type_struct ectxt nsctxt (sig.(type_signature_params)) in
+      let params_types :=
+          eolift (fun ps => (duplicate_function_params_check prov fname (map fst ps) ps)) params_types
+      in
       let output_type : eresult (option laergo_type) :=
           match sig.(type_signature_output) with
           | None => esuccess None
@@ -231,16 +236,18 @@ Section ErgoNameResolution.
              emits_type.
 
     Definition resolve_ergo_type_clauses
+               (prov:provenance)
                (ectxt: enum_ctxt)
                (nsctxt:namespace_ctxt)
                (cls:list (string * lrergo_type_signature)) : eresult (list (string * laergo_type_signature)) :=
       emaplift (fun xy => elift (fun r => (fst xy, r))
-                                (resolve_ergo_type_signature ectxt nsctxt (snd xy))) cls.
+                                (resolve_ergo_type_signature prov ectxt nsctxt (fst xy) (snd xy))) cls.
 
     Definition resolve_ergo_type_declaration_desc
                (prov:provenance)
                (ectxt: enum_ctxt)
                (nsctxt:namespace_ctxt)
+               (name:string)
                (d:lrergo_type_declaration_desc)
       : eresult laergo_type_declaration_desc :=
       match d with
@@ -269,12 +276,12 @@ Section ErgoNameResolution.
         elift ErgoTypeGlobal (resolve_ergo_type ectxt nsctxt ergo_type)
       | ErgoTypeFunction ergo_type_signature =>
         elift ErgoTypeFunction
-              (resolve_ergo_type_signature ectxt nsctxt ergo_type_signature)
+              (resolve_ergo_type_signature prov ectxt nsctxt name ergo_type_signature)
       | ErgoTypeContract template_type state_type clauses_sigs =>
         elift3 ErgoTypeContract
                (resolve_ergo_type ectxt nsctxt template_type)
                (resolve_ergo_type ectxt nsctxt state_type)
-               (resolve_ergo_type_clauses ectxt nsctxt clauses_sigs)
+               (resolve_ergo_type_clauses prov ectxt nsctxt clauses_sigs)
       end.
  
     Definition resolve_ergo_type_declaration
@@ -296,7 +303,7 @@ Section ErgoNameResolution.
       in
       let edecl_desc :=
           resolve_ergo_type_declaration_desc
-            decl.(type_declaration_annot) ectxt nsctxt decl.(type_declaration_type)
+            decl.(type_declaration_annot) ectxt nsctxt decl.(type_declaration_name) decl.(type_declaration_type)
       in
       elift (fun k => (ectxt, actxt, mkErgoTypeDeclaration decl.(type_declaration_annot) name k)) edecl_desc.
 
@@ -549,6 +556,7 @@ Section ErgoNameResolution.
                (module_ns:namespace_name)
                (ectxt: enum_ctxt)
                (nsctxt:namespace_ctxt)
+               (name:string)
                (f:lrergo_function) : eresult laergo_function :=
       let prov := f.(function_annot) in
       let rbody :=
@@ -558,7 +566,7 @@ Section ErgoNameResolution.
           end
       in
       elift2 (mkFunc prov)
-             (resolve_ergo_type_signature ectxt nsctxt f.(function_sig))
+             (resolve_ergo_type_signature prov ectxt nsctxt name f.(function_sig))
              rbody.
     
     Definition resolve_ergo_clause
@@ -575,7 +583,7 @@ Section ErgoNameResolution.
           end
       in
       elift2 (mkClause prov rcname)
-             (resolve_ergo_type_signature ectxt nsctxt c.(clause_sig))
+             (resolve_ergo_type_signature prov ectxt nsctxt rcname c.(clause_sig))
              rbody.
 
     Definition resolve_ergo_clauses
@@ -642,7 +650,7 @@ Section ErgoNameResolution.
       | DFunc prov ln fd =>
         let an := absolute_name_of_local_name module_ns ln in
         let nsctxt := add_function_to_namespace_ctxt_current nsctxt ln an in
-        elift (fun x => (DFunc prov an x, nsctxt)) (resolve_ergo_function module_ns ectxt nsctxt fd)
+        elift (fun x => (DFunc prov an x, nsctxt)) (resolve_ergo_function module_ns ectxt nsctxt an fd)
       | DContract prov ln c  =>
         let an := absolute_name_of_local_name module_ns ln in
         let nsctxt := add_contract_to_namespace_ctxt_current nsctxt ln an in

@@ -76,10 +76,8 @@ Section ErgoCExpand.
              (xy:list (absolute_name * (laergo_pattern * ergoc_expr)))
     : eresult (list (laergo_pattern * ergoc_expr)) :=
     let oxy := sort_given_topo_order order fst xy in
-    if NoDup_dec (map fst oxy)
-    then esuccess (map snd oxy)
-    else duplicate_clause_for_request_error prov.
-  
+    duplicate_clause_for_request_check prov (map fst oxy) (map snd oxy).
+
   Definition match_of_sigs
              (order:list laergo_type_declaration)
              (prov:provenance)
