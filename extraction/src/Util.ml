@@ -384,3 +384,9 @@ let get_monitor_output () =
     monitor_phases = Stack.top monitor_output
   }
 
+let flat_map_string f s =
+  let sl = ref [] in
+  String.iter (fun c -> sl := (f c) :: !sl) s;
+  let sl' = List.rev !sl in
+  String.concat "" sl'
+

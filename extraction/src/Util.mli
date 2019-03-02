@@ -97,3 +97,5 @@ val coq_time : char list -> ('a -> 'b) -> 'a -> 'b
 val monitoring : bool ref
 val get_monitor_output : unit -> string
 
+val flat_map_string : (char -> string) -> string -> string
+
