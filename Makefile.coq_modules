@@ -15,6 +15,7 @@
 MODULES = \
   Version \
   Utils/Misc \
+  Utils/EJSON \
   Backend/ForeignErgo \
   Backend/Model/DateTimeModelPart \
   Backend/Model/MathModelPart \
