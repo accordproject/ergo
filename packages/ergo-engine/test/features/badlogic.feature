@@ -3,7 +3,7 @@ Feature: Bad logic
 
   Background:
     Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "data/bad-logic/logic.ergo"
-    And the model in file "data/helloworld/model.cto"
+    And the model in file "data/bad-logic/model.cto"
     And the contract data
 """
 {
