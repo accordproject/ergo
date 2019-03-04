@@ -128,8 +128,7 @@
           "character": 20,
           "line": 17
         },
-        "message": "Parse error",
-        "verbose": "Parse error (at file /Users/jeromesimeon/git/ergo/packages/ergo-engine/test/data/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
+        "message": "Parse error"
       }
     }
   }
