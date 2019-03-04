@@ -32,15 +32,21 @@ const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.js
  *
  * @param {string} expected the result as specified in the test workload
  * @param {string} actual the result as returned by the engine
- * @returns {object} Promise to the comparison
  */
 function compare(expected,actual) {
     if (expected.hasOwnProperty('error')) {
         actual.error.should.not.be.null;
-        return actual.error.should.deep.equal(expected.error);
+        for (const key in expected.error) {
+            if (expected.error.hasOwnProperty(key)) {
+                const field = key;
+                const value = expected.error[key];
+                actual.error[field].should.not.be.null;
+                actual.error[field].should.deep.equal(value);
+            }
+        }
     }
     if (expected.hasOwnProperty('state')) {
-        // actual.state.should.not.be.null;
+        //actual.state.should.not.be.null;
         for (const key in expected.state) {
             if (expected.state.hasOwnProperty(key)) {
                 const field = key;
