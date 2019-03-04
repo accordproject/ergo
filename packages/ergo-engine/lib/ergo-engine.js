@@ -24,6 +24,8 @@ const {
     VM
 } = require('vm2');
 
+const defaultState = {'stateId':'org.accordproject.cicero.contract.AccordContractState#1','$class':'org.accordproject.cicero.contract.AccordContractState'};
+
 /**
  * Utility class that implements the internals for Ergo.
  * @class
@@ -48,7 +50,7 @@ class ErgoEngine {
     }
 
     /**
-     * Execute Ergo code compiled to ES6
+     * Send request to Ergo contract
      *
      * @param {string} ergoCode JavaScript code for ergo logic
      * @param {string} codeKind either 'es6' or 'es5'
@@ -59,7 +61,7 @@ class ErgoEngine {
      * @param {string} currentTime the definition of 'now'
      * @returns {object} Promise to the result of execution
      */
-    static executeErgoCode(ergoCode,codeKind,contractJson,requestJson,stateJson,contractName,currentTime) {
+    static sendRequestToContract(ergoCode,codeKind,contractJson,requestJson,stateJson,contractName,currentTime) {
         const now = this.initCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
@@ -92,16 +94,19 @@ class ErgoEngine {
     }
 
     /**
-     * Initialize state
+     * Invoke a clause of the contract
      *
      * @param {string} ergoCode JavaScript code for ergo logic
      * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
-     * @param {string} contractName of the contract to initialize
+     * @param {object} clauseParams the clause parametters
+     * @param {object} stateJson the state in JSON
+     * @param {string} contractName of the contract to execute
+     * @param {string} clauseName of the contract to execute
      * @param {string} currentTime the definition of 'now'
-     * @returns {object} Promise to the result of initialization
+     * @returns {object} Promise to the result of execution
      */
-    static initErgoCode(ergoCode,codeKind,contractJson,contractName,currentTime) {
+    static invokeContractClause(ergoCode,codeKind,contractJson,clauseParams,stateJson,contractName,clauseName,currentTime) {
         const now = this.initCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
@@ -113,17 +118,17 @@ class ErgoEngine {
         });
 
         // add immutables to the context
-        const params = { 'contract': contractJson, 'state': {}, 'emit': [], 'now': now };
+        const params = Object.assign({}, { 'contract': contractJson, 'state': stateJson, 'emit': [], 'now': now, 'utcOffset': now.utcOffset }, clauseParams);
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
         let contract;
         let clauseCall;
         if (codeKind === 'es5') {
             contract = '';
-            clauseCall = 'init(params);'; // Create the clause call
+            clauseCall = clauseName+'(params);'; // Create the clause call
         } else {
             contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
-            clauseCall = 'contract.init(params);'; // Create the clause call
+            clauseCall = 'contract.' + clauseName+ '(params);'; // Create the clause call
         }
         const result = vm.run(contract + clauseCall); // Call the logic
         if (result.hasOwnProperty('left')) {
@@ -134,7 +139,22 @@ class ErgoEngine {
     }
 
     /**
-     * Execute Ergo (JavaScript)
+     * Invoke the init clause of the contract
+     *
+     * @param {string} ergoCode JavaScript code for ergo logic
+     * @param {string} codeKind either 'es6' or 'es5'
+     * @param {object} contractJson the contract data in JSON
+     * @param {object} clauseParams the clause parametters
+     * @param {string} contractName of the contract to execute
+     * @param {string} currentTime the definition of 'now'
+     * @returns {object} Promise to the result of execution
+     */
+    static invokeInit(ergoCode,codeKind,contractJson,clauseParams,contractName,currentTime) {
+        return this.invokeContractClause(ergoCode,codeKind,contractJson,clauseParams,defaultState,contractName,'init',currentTime);
+    }
+
+    /**
+     * Compile, then send Request to Contract
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
@@ -142,41 +162,65 @@ class ErgoEngine {
      * @param {object} contractJson the contract data in JSON
      * @param {object} requestJson the request transaction in JSON
      * @param {object} stateJson the state in JSON
-     * @param {string} contractName of the contract to execute
+     * @param {string} contractName of the contract to send
      * @param {string} currentTime the definition of 'now'
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoSources,ctoSources,codeKind,contractJson,requestJson,stateJson,contractName,currentTime) {
+    static send(ergoSources,ctoSources,codeKind,contractJson,requestJson,stateJson,contractName,currentTime) {
         return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
-                return this.executeErgoCode(ergoCode.success,codeKind,contractJson,requestJson,stateJson,contractName,currentTime);
+                return this.sendRequestToContract(ergoCode.success,codeKind,contractJson,requestJson,stateJson,contractName,currentTime);
             }
         });
     }
 
     /**
-     * Initialize Ergo contract state (JavaScript)
+     * Compile then invoke a clause of the contract
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} codeKind either 'es6' or 'es5'
      * @param {object} contractJson the contract data in JSON
+     * @param {object} clauseParams the clause parametters
+     * @param {object} stateJson the state in JSON
      * @param {string} contractName of the contract to execute
+     * @param {string} clauseName of the contract to execute
      * @param {string} currentTime the definition of 'now'
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoSources,ctoSources,codeKind,contractJson,contractName,currentTime) {
+    static invoke(ergoSources,ctoSources,codeKind,contractJson,clauseParams,stateJson,contractName,clauseName,currentTime) {
         return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
-                return this.initErgoCode(ergoCode.success,codeKind,contractJson,contractName,currentTime);
+                return this.invokeContractClause(ergoCode.success,codeKind,contractJson,clauseParams,stateJson,contractName,clauseName,currentTime);
             }
         });
     }
 
+    /**
+     * Compile then invoke the init clause of the contract
+     *
+     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
+     * @param {Array<{name:string, content:string}>} ctoSources CTO models
+     * @param {string} codeKind either 'es6' or 'es5'
+     * @param {object} contractJson the contract data in JSON
+     * @param {object} clauseParams the clause parametters
+     * @param {string} contractName of the contract to execute
+     * @param {string} currentTime the definition of 'now'
+     * @returns {object} Promise to the result of execution
+     */
+    static init(ergoSources,ctoSources,codeKind,contractJson,clauseParams,contractName,currentTime) {
+        return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
+            if (ergoCode.hasOwnProperty('error')) {
+                return ergoCode;
+            } else {
+                return this.invokeInit(ergoCode.success,codeKind,contractJson,clauseParams,contractName,currentTime);
+            }
+        });
+    }
 }
 
 module.exports = ErgoEngine;

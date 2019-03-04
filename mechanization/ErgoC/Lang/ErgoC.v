@@ -79,15 +79,20 @@ Section ErgoC.
   End Syntax.
 
   Section Lookup.
-    Fixpoint lookup_clausec_signatures (dl:list (local_name * ergoc_function)) : list (local_name * sigc) :=
+    Fixpoint lookup_clausec_request_signatures (dl:list (local_name * ergoc_function)) : list (local_name * sigc) :=
       match dl with
       | nil => nil
       | (n,f) :: dl' =>
-        (n,f.(functionc_sig)) :: lookup_clausec_signatures dl'
+        match f.(functionc_sig).(sigc_params) with
+        | current_time::this_contract::this_state::this_emit::((name,ErgoTypeClassRef _ _)::nil) =>
+          (n,f.(functionc_sig)) :: lookup_clausec_request_signatures dl'
+        | _ =>
+          lookup_clausec_request_signatures dl'
+        end
       end.
       
-    Definition lookup_contractc_signatures (c:ergoc_contract) : list (local_name * sigc) :=
-      lookup_clausec_signatures c.(contractc_clauses).
+    Definition lookup_contractc_request_signatures (c:ergoc_contract) : list (local_name * sigc) :=
+      lookup_clausec_request_signatures c.(contractc_clauses).
 
   End Lookup.
   

@@ -120,7 +120,7 @@ Section ErgoCExpand.
              (prov:provenance)
              (coname:string)
              (c:ergoc_contract) : eresult (local_name * ergoc_function) :=
-    let sigs := lookup_contractc_signatures c in
+    let sigs := lookup_contractc_request_signatures c in
     let sigs := filter_init sigs in
     let effparams := EVar prov "request"%string :: nil in
     let template := c.(contractc_template) in

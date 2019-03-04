@@ -24,7 +24,7 @@ const ErgoEngine = require('@accordproject/ergo-engine/lib/ergo-engine');
  */
 class Commands {
     /**
-     * Execute Ergo contract
+     * Send a request to an Ergo contract
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
@@ -35,7 +35,7 @@ class Commands {
      * @param {string} currentTime the definition of 'now'
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPaths,ctoPaths,contractPath,requestsPath,statePath,contractName,currentTime) {
+    static send(ergoPaths,ctoPaths,contractPath,requestsPath,statePath,contractName,currentTime) {
         if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
         const ergoSources = [];
         for (let i = 0; i < ergoPaths.length; i++) {
@@ -57,7 +57,7 @@ class Commands {
         }
         let initResponse;
         if (statePath === null) {
-            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,contractName,currentTime);
+            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,{},contractName,currentTime);
         } else {
             const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
             initResponse = Promise.resolve({ state: stateJson });
@@ -65,9 +65,74 @@ class Commands {
         // Get all the other requests and chain execution through Promise.reduce()
         return requestsJson.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.execute(ergoSources,ctoSources,'es6',contractJson,requestJson,result.state,contractName,currentTime);
+                return ErgoEngine.send(ergoSources,ctoSources,'es6',contractJson,requestJson,result.state,contractName,currentTime);
             });
         }, initResponse);
+    }
+
+    /**
+     * Invoke an Ergo contract's clause
+     *
+     * @param {string[]} ergoPaths paths to the Ergo modules
+     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} contractPath path to the contract data in JSON
+     * @param {object} paramsPath path to the parameters for the clause
+     * @param {string} statePath path to the state in JSON
+     * @param {string} contractName the contract to execute
+     * @param {string} clauseName the name of the clause to execute
+     * @param {string} currentTime the definition of 'now'
+     * @returns {object} Promise to the result of execution
+     */
+    static invoke(ergoPaths,ctoPaths,contractPath,paramsPath,statePath,contractName,clauseName,currentTime) {
+        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
+        const ergoSources = [];
+        for (let i = 0; i < ergoPaths.length; i++) {
+            const ergoFile = ergoPaths[i];
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
+        }
+        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
+        let ctoSources = [];
+        for (let i = 0; i < ctoPaths.length; i++) {
+            const ctoFile = ctoPaths[i];
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
+        }
+        const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
+        const clauseParams = JSON.parse(Fs.readFileSync(paramsPath, 'utf8'));
+        const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
+        return ErgoEngine.invoke(ergoSources,ctoSources,'es6',contractJson,clauseParams,stateJson,contractName,clauseName,currentTime);
+    }
+
+    /**
+     * Invoke init for an Ergo contract
+     *
+     * @param {string[]} ergoPaths paths to the Ergo modules
+     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} contractPath path to the contract data in JSON
+     * @param {object} paramsPath path to the parameters for the clause
+     * @param {string} contractName the contract to execute
+     * @param {string} currentTime the definition of 'now'
+     * @returns {object} Promise to the result of execution
+     */
+    static init(ergoPaths,ctoPaths,contractPath,paramsPath,contractName,currentTime) {
+        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
+        const ergoSources = [];
+        for (let i = 0; i < ergoPaths.length; i++) {
+            const ergoFile = ergoPaths[i];
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
+        }
+        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
+        let ctoSources = [];
+        for (let i = 0; i < ctoPaths.length; i++) {
+            const ctoFile = ctoPaths[i];
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
+        }
+        const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
+        const clauseParams = JSON.parse(Fs.readFileSync(paramsPath, 'utf8'));
+        return ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,clauseParams,contractName,currentTime);
     }
 
     /**
