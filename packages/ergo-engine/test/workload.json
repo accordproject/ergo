@@ -81,5 +81,56 @@
         "$class": "org.accordproject.helloworldstate.State"
       }
     }
+  },
+  {
+    "name": "helloworld (with call)",
+    "dir": "data/helloworld",
+    "ergo": ["logic4.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "params": {
+      "request": {
+        "$class": "org.accordproject.helloworld.Request",
+        "input": "Accord Project"
+      },
+      "hello": "Bonjour,"
+    },
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "clauseName": "helloworld",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.helloworld.Response",
+        "output" : "Bonjour, Fred Blogs (Accord Project)"
+      }
+    }
+  },
+  {
+    "name": "bad logic",
+    "dir": "data/bad-logic",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "params": {},
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "clauseName": "helloworld",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "error": {
+        "kind": "ParseError",
+        "locend": {
+          "character": 23,
+          "line": 17
+        },
+        "locstart": {
+          "character": 20,
+          "line": 17
+        },
+        "message": "Parse error",
+        "verbose": "Parse error (at file /Users/jeromesimeon/git/ergo/packages/ergo-engine/test/data/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
+      }
+    }
   }
 ]
