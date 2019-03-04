@@ -59,7 +59,7 @@ function compare(expected,actual) {
 }
 
 /**
- * Calls Ergo contract initialization
+ * Invoke Ergo contract initialization
  *
  * @param {string} rootdir the root directory used to resolve file names
  * @param {string} target the target platform (es5, es6, etc)
@@ -83,7 +83,7 @@ function init(rootdir,target,ergo,models,contractName,currentTime,contractJson) 
         const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
         ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
     }
-    return ErgoEngine.init(ergoSources, ctoSources, target, contractJson, contractName, currentTime);
+    return ErgoEngine.init(ergoSources, ctoSources, target, contractJson, {}, contractName, currentTime);
 }
 
 /**
@@ -113,7 +113,7 @@ function send(rootdir,target,ergo,models,contractName,currentTime,contractJson,s
         const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
         ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
     }
-    return ErgoEngine.execute(ergoSources, ctoSources, target, contractJson, requestJson, stateJson, contractName, currentTime);
+    return ErgoEngine.send(ergoSources, ctoSources, target, contractJson, requestJson, stateJson, contractName, currentTime);
 }
 
 // Defaults
@@ -193,7 +193,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract)
+    return init(resolveRootDir(this.parameters),this.target,this.ergos,this.models,this.contractName,this.currentTime,this.contract)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');

@@ -74,7 +74,6 @@ describe('Execute ES6', () => {
         const ergo = test.ergo;
         const models = test.models;
         const contract = test.contract;
-        const request = test.request;
         const state = test.state;
         const contractName = test.contractName;
         const currentTime = test.currentTime ? test.currentTime : '1970-01-01T00:00:00Z';
@@ -101,13 +100,21 @@ describe('Execute ES6', () => {
                     ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
                 }
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
-                const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, contractName, currentTime);
+                    const actual = await ErgoEngine.init(ergoSources, ctoSources, 'es6', contractJson, {}, contractName, currentTime);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es6', contractJson, requestJson, stateJson, contractName, currentTime);
+                    let actual;
+                    if (test.clauseName) {
+                        const params = test.params;
+                        const clauseName = test.clauseName;
+                        actual = await ErgoEngine.invoke(ergoSources, ctoSources, 'es6', contractJson, params, stateJson, contractName, clauseName, currentTime);
+                    } else {
+                        const request = test.request;
+                        const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
+                        actual = await ErgoEngine.send(ergoSources, ctoSources, 'es6', contractJson, requestJson, stateJson, contractName, currentTime);
+                    }
                     return compare(expected,actual);
                 }
             });
@@ -125,7 +132,6 @@ describe('Execute ES5', () => {
         const ergo = test.ergo;
         const models = test.models;
         const contract = test.contract;
-        const request = test.request;
         const state = test.state;
         const contractName = test.contractName;
         const currentTime = test.currentTime ? test.currentTime : '1970-01-01T00:00:00Z';
@@ -152,13 +158,21 @@ describe('Execute ES5', () => {
                     ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
                 }
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
-                const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                 if (state === null) {
-                    const actual = await ErgoEngine.init(ergoSources,ctoSources,'es5',contractJson,contractName,currentTime);
+                    const actual = await ErgoEngine.init(ergoSources,ctoSources,'es5',contractJson,{},contractName,currentTime);
                     return compare(expected,actual);
                 } else {
                     const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    const actual = await ErgoEngine.execute(ergoSources, ctoSources, 'es5', contractJson, requestJson, stateJson, contractName, currentTime);
+                    let actual;
+                    if (test.clauseName) {
+                        const params = test.params;
+                        const clauseName = test.clauseName;
+                        actual = await ErgoEngine.invoke(ergoSources, ctoSources, 'es5', contractJson, params, stateJson, contractName, clauseName, currentTime);
+                    } else {
+                        const request = test.request;
+                        const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
+                        actual = await ErgoEngine.send(ergoSources, ctoSources, 'es5', contractJson, requestJson, stateJson, contractName, currentTime);
+                    }
                     return compare(expected,actual);
                 }
             });
