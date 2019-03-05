@@ -82,12 +82,55 @@ the compiled JavaScript code in `./examples/volumediscount/logic.js`
 
 ### Invoke a contract
 
-To compile and invoke that contract:
+To compile and execute a contract by sending a request:
 
 ```text
-$ ergorun ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractName org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
-13:40:03 - info: Logging initialized. 2018-06-17T17:40:03.587Z
-13:40:03 - info: {"response":{"discountRate":2.8,"$class":"org.accordproject.volumediscount.VolumeDiscountResponse"},"state":{"$class":"org.accordproject.cicero.contract.AccordContractState","stateId":"1"},"emit":[]}
+$ ergorun execute ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractName org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+06:40:01 - info:
+{
+  "response": {
+    "discountRate": 2.8,
+    "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+  },
+  "state": {
+    "$class": "org.accordproject.cicero.contract.AccordContractState",
+    "stateId": "1"
+  },
+  "emit": []
+}
+```
+
+To compile and invoke a specific contract clause:
+
+```text
+$ ergorun invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractName org.accordproject.volumediscount.VolumeDiscount --clauseName volumediscount --contract ./examples/volumediscount/contract.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
+06:40:29 - info:
+{
+  "response": {
+    "discountRate": 2.8,
+    "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+  },
+  "state": {
+    "$class": "org.accordproject.cicero.contract.AccordContractState",
+    "stateId": "1"
+  },
+  "emit": []
+}
+```
+
+To compile and obtain the initial state for the contract:
+
+```text
+$ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractName org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json
+06:40:29 - info:
+{
+  "response": null,
+  "state": {
+    "stateId": "org.accordproject.cicero.contract.AccordContractState#1",
+    "$class": "org.accordproject.cicero.contract.AccordContractState"
+  },
+  "emit": []
+}
 ```
 
 ## For developers
