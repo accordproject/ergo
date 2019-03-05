@@ -19,23 +19,39 @@ const Ergo = require('@accordproject/ergo-compiler/lib/ergo');
 const ErgoEngine = require('@accordproject/ergo-engine/lib/ergo-engine');
 
 /**
+ * Load a file or JSON string
+ *
+ * @param {object} input either a file name or a json string
+ * @return {object} JSON object
+ */
+function getJson(input) {
+    let jsonString;
+    if (input.file) {
+        jsonString = Fs.readFileSync(input.file, 'utf8');
+    } else {
+        jsonString = input.content;
+    }
+    return JSON.parse(jsonString);
+}
+
+/**
  * Utility class that implements the commands exposed by the Ergo CLI.
  * @class
  */
 class Commands {
     /**
-     * Send a request to an Ergo contract
+     * Execute an Ergo contract with a request
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} contractPath path to the contract data in JSON
-     * @param {string[]} requestsPath path to the request transaction in JSON
-     * @param {string} statePath path to the state in JSON
-     * @param {string} contractName of the contract to execute
+     * @param {string} contractName of the contract
+     * @param {string} contractInput the contract data
+     * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
+     * @param {string[]} requestsInput the requests
      * @returns {object} Promise to the result of execution
      */
-    static send(ergoPaths,ctoPaths,contractPath,requestsPath,statePath,contractName,currentTime) {
+    static execute(ergoPaths,ctoPaths,contractName,contractInput,stateInput,currentTime,requestsInput) {
         if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
         const ergoSources = [];
         for (let i = 0; i < ergoPaths.length; i++) {
@@ -50,22 +66,22 @@ class Commands {
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
         }
-        const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
+        const contractJson = getJson(contractInput);
         let requestsJson = [];
-        for (let i = 0; i < requestsPath.length; i++) {
-            requestsJson.push(JSON.parse(Fs.readFileSync(requestsPath[i], 'utf8')));
+        for (let i = 0; i < requestsInput.length; i++) {
+            requestsJson.push(getJson(requestsInput[i]));
         }
         let initResponse;
-        if (statePath === null) {
-            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,{},contractName,currentTime);
+        if (stateInput === null) {
+            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,{});
         } else {
-            const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
+            const stateJson = getJson(stateInput);
             initResponse = Promise.resolve({ state: stateJson });
         }
         // Get all the other requests and chain execution through Promise.reduce()
         return requestsJson.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.send(ergoSources,ctoSources,'es6',contractJson,requestJson,result.state,contractName,currentTime);
+                return ErgoEngine.execute(ergoSources,ctoSources,'es6',contractName,contractJson,result.state,currentTime,requestJson);
             });
         }, initResponse);
     }
@@ -75,15 +91,15 @@ class Commands {
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} contractPath path to the contract data in JSON
-     * @param {object} paramsPath path to the parameters for the clause
-     * @param {string} statePath path to the state in JSON
-     * @param {string} contractName the contract to execute
-     * @param {string} clauseName the name of the clause to execute
+     * @param {string} contractName the contract
+     * @param {string} clauseName the name of the clause to invoke
+     * @param {string} contractInput the contract data
+     * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
-     * @returns {object} Promise to the result of execution
+     * @param {object} paramsInput the parameters for the clause
+     * @returns {object} Promise to the result of invocation
      */
-    static invoke(ergoPaths,ctoPaths,contractPath,paramsPath,statePath,contractName,clauseName,currentTime) {
+    static invoke(ergoPaths,ctoPaths,contractName,clauseName,contractInput,stateInput,currentTime,paramsInput) {
         if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
         const ergoSources = [];
         for (let i = 0; i < ergoPaths.length; i++) {
@@ -98,10 +114,10 @@ class Commands {
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
         }
-        const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
-        const clauseParams = JSON.parse(Fs.readFileSync(paramsPath, 'utf8'));
-        const stateJson = JSON.parse(Fs.readFileSync(statePath, 'utf8'));
-        return ErgoEngine.invoke(ergoSources,ctoSources,'es6',contractJson,clauseParams,stateJson,contractName,clauseName,currentTime);
+        const contractJson = getJson(contractInput);
+        const clauseParams = getJson(paramsInput);
+        const stateJson = getJson(stateInput);
+        return ErgoEngine.invoke(ergoSources,ctoSources,'es6',contractName,clauseName,contractJson,stateJson,currentTime,clauseParams);
     }
 
     /**
@@ -109,13 +125,13 @@ class Commands {
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} contractPath path to the contract data in JSON
-     * @param {object} paramsPath path to the parameters for the clause
-     * @param {string} contractName the contract to execute
+     * @param {string} contractName the contract name
+     * @param {string} contractInput the contract data
      * @param {string} currentTime the definition of 'now'
+     * @param {object} paramsInput the parameters for the clause
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoPaths,ctoPaths,contractPath,paramsPath,contractName,currentTime) {
+    static init(ergoPaths,ctoPaths,contractName,contractInput,currentTime,paramsInput) {
         if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
         const ergoSources = [];
         for (let i = 0; i < ergoPaths.length; i++) {
@@ -130,9 +146,9 @@ class Commands {
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
         }
-        const contractJson = JSON.parse(Fs.readFileSync(contractPath, 'utf8'));
-        const clauseParams = JSON.parse(Fs.readFileSync(paramsPath, 'utf8'));
-        return ErgoEngine.init(ergoSources,ctoSources,'es6',contractJson,clauseParams,contractName,currentTime);
+        const contractJson = getJson(contractInput);
+        const clauseParams = getJson(paramsInput);
+        return ErgoEngine.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,clauseParams);
     }
 
     /**
