@@ -695,8 +695,10 @@ function dateTimeDiff(date1, date2) {
 function mustBeDate(date) {
     if (typeof date == "string") {
         return moment.parseZone(date).utcOffset(utcOffset, false);
+    } else if (date instanceof Date) {
+        return moment(date).utcOffset(utcOffset, false);
     } else {
-        return date.clone();
+        return date.clone().utcOffset(utcOffset, false);;
     }
 }
 
