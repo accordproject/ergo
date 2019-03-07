@@ -175,6 +175,7 @@ Section ErgoTypetoErgoCType.
       map (edge_of_decl dt) decls.
     
     Definition sort_decls (decls:list laergo_type_declaration) : list laergo_type_declaration :=
+      let decls := coq_distinct name_of_decl decls in
       coq_toposort label_of_decl name_of_decl (graph_of_decls decls).
 
     Definition brand_model_of_declarations

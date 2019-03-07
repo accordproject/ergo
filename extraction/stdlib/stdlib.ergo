@@ -88,6 +88,7 @@ define function toString(x:Any) : String
 define function distinct(x:Any[]) : Any[]
 define function count(x:Any[]) : Integer
 define function flatten(x:Any[][]) : Any[]
+define function singleton(x:Any[]) : Any
 define function arrayAdd(x:Any[],y:Any[]) : Any[]
 define function arraySubtract(x:Any[],y:Any[]) : Any[]
 define function inArray(x:Any,y:Any[]) : Boolean

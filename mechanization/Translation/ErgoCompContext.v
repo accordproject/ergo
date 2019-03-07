@@ -20,6 +20,7 @@ Require Import ErgoSpec.Common.Result.
 Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Common.NamespaceContext.
 Require Import ErgoSpec.Types.ErgoType.
+Require Import ErgoSpec.Types.ErgoTypetoErgoCType.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.
@@ -247,8 +248,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_contract)
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
-               old_decls
-               new_decls.
+               (sort_decls old_decls)
+               (sort_decls new_decls).
   
   Definition compilation_context_add_new_type_declaration
              (ctxt: compilation_context)
@@ -263,8 +264,11 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               (ctxt.(compilation_context_new_type_decls) ++ (decl::nil)).
-  
+               (sort_decls (ctxt.(compilation_context_new_type_decls) ++ (decl::nil))).
+
+  Definition get_all_decls ctxt : list laergo_type_declaration :=
+    sort_decls (ctxt.(compilation_context_type_decls) ++ ctxt.(compilation_context_new_type_decls)).
+
   Definition init_compilation_context nsctxt decls : compilation_context :=
     mkCompCtxt nsctxt nil nil nil nil nil None None empty_type_context decls nil.
 
