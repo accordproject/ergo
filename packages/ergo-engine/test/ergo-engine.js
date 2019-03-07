@@ -191,7 +191,7 @@ describe('Initialize current time', () => {
         return currentTime.format().should.equal('1970-01-01T00:00:00Z');
     });
     it('Should fail for a non-well-formed date/time', function () {
-        return (() => ErgoEngine.initCurrentTime('1970-01-01').format()).should.throw('1970-01-01 is not a valid moment in format \'YYYY-MM-DDTHH:mm:ssZ\'');
+        return (() => ErgoEngine.initCurrentTime('1970-01-01').format()).should.throw('1970-01-01 is not a valid moment with the format \'YYYY-MM-DDTHH:mm:ssZ\'');
     });
     it('Should fail when currentTime is null', function () {
         return (() => ErgoEngine.initCurrentTime(null).format()).should.throw('Calls to Ergo engine should provide a current time');
