@@ -136,9 +136,12 @@ Section ErgoDriver.
     Definition ergo_module_to_ergoct
                (ctxt:compilation_context)
                (lm:laergo_module) : eresult (ergoct_module * compilation_context) :=
-      let order := ctxt.(compilation_context_type_decls) in
       let pc := ergo_module_to_calculus ctxt lm in
-      let pc := eolift (fun xy => elift (fun x => (x,snd xy)) (ergoc_expand_module order (fst xy))) pc in
+      let pc := eolift (fun xy =>
+                          let c := snd xy in
+                          let order := get_all_decls c in
+                          elift (fun x => (x,c))
+                                (ergoc_expand_module order (fst xy))) pc in
       let pc := eolift (fun xy => ergoc_inline_module (snd xy) (fst xy)) pc in
       eolift (fun xy : ergoc_module * compilation_context =>
                 let (mod,ctxt) := xy in
@@ -175,10 +178,11 @@ Section ErgoDriver.
                (decl : lrergo_declaration)
       : eresult (list ergoct_declaration * compilation_context) :=
       (* Translation *)
-      let order := sctxt.(compilation_context_type_decls) in
       let ec := ergo_declaration_to_ergoc sctxt decl in
       let ec := eolift (fun xy =>
-                          elift (fun x => (x, snd xy))
+                          let c := snd xy in
+                          let order := get_all_decls c in
+                          elift (fun x => (x, c))
                                 (ergoc_expand_declarations order (fst xy)))
                        ec in
       (* Inlining *)
@@ -437,7 +441,7 @@ Section ErgoDriver.
         let new_bm := ErgoTypetoErgoCType.brand_model_of_declarations all_decls in
         elift (fun xy =>
                  let bm := fst xy in
-                 let new_ctxt := compilation_context_update_type_declarations ctxt nil all_decls in
+                 let new_ctxt := compilation_context_update_type_declarations ctxt all_decls nil in
                  (bm, new_ctxt)) new_bm
       end.
 
