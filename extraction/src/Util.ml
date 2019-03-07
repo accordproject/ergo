@@ -219,12 +219,21 @@ let dfs label name graph visited start_node =
 let toposort label name graph = 
   List.rev (List.fold_left (fun visited (node,_) -> dfs label name graph visited node) [] graph)
 
+let print_order msg name o =
+  if (false)
+  then
+    begin
+      Printf.printf "\n=====\n%s\n=====\n" msg;
+      List.iter (fun x -> Printf.printf "ITEM: %s\n" (name x)) o;
+      flush stdout
+    end
+
 let compare_of_order o labely labelx name x1 x2 =
   if labelx x1 = labelx x2 then 0
   else
     let fl = List.filter (fun x -> labely x = labelx x1 || labely x = labelx x2) o in
     begin match fl with
-    | [] | _ :: [] -> raise Not_found
+    | [] | _ :: [] -> raise (Failure ("Could not find request types during dispatch creation"))
     | y1 :: y2 :: [] ->
         if labelx x1 = labely y1
         then +1
@@ -235,28 +244,23 @@ let compare_of_order o labely labelx name x1 x2 =
         else raise (Failure ("Duplicates for " ^ (name y2)))
     end
 
-let sort_with_topo_order labely labelx name graph l =
-  let order = toposort labely name graph in
-  let comp = compare_of_order order labely labelx name in
-  List.sort comp l
+let coq_distinct name l =
+  print_order "DISTINCT" (fun x -> string_of_char_list (name x)) l;
+  let l = List.sort_uniq compare l in
+  print_order "DISTINCT OUPUT" (fun x -> string_of_char_list (name x)) l;
+  l
 
 let sort_given_topo_order labely labelx name order l =
+  print_order "SORT GIVEN TOPO" name order;
   let comp = compare_of_order order labely labelx name in
   List.sort comp l
 
 let coq_toposort label name graph =
   let sorted = toposort label (fun x -> string_of_char_list (name x)) graph in
-  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (name x))) sorted; *)
-  sorted
-
-let coq_sort_with_topo_order labely labelx name graph l =
-  let sorted = sort_with_topo_order labely labelx (fun x -> string_of_char_list (name x)) graph l in
-  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (name x))) sorted; *)
   sorted
 
 let coq_sort_given_topo_order labely labelx name order l =
   let sorted = sort_given_topo_order labely labelx (fun x -> string_of_char_list (name x)) order l in
-  (* List.iter (fun x -> Printf.printf "[SORT] %s\n" (string_of_char_list (name x))) sorted; *)
   sorted
 
 (* Tests

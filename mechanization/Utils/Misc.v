@@ -64,6 +64,7 @@ Section Misc.
     Context {A B C:Set}.
     (* function from node to node identifier -> function from node to label -> graph edges -> ordered nodes *)
     (* This assumes no two nodes have the same string *)
+    Parameter coq_distinct : (A -> string) -> list A -> list A.
     Parameter coq_toposort : (A -> B) -> (A -> string) -> list (A * list A) -> list A.
     Parameter coq_sort_given_topo_order : (A -> B) -> (C-> B) -> (A -> string) -> list A -> list C -> list C.
   End TopoSort.
