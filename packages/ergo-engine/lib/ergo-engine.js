@@ -45,7 +45,7 @@ class ErgoEngine {
         if (now.isValid()) {
             return now;
         } else {
-            throw new Error(`${currentTime} is not a valid moment in format 'YYYY-MM-DDTHH:mm:ssZ'`);
+            throw new Error(`${currentTime} is not a valid moment with the format 'YYYY-MM-DDTHH:mm:ssZ'`);
         }
     }
 
@@ -73,7 +73,7 @@ class ErgoEngine {
         });
 
         // add immutables to the context
-        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': now, 'utcOffset': now.utcOffset };
+        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': now };
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
         let contract;
@@ -118,7 +118,7 @@ class ErgoEngine {
         });
 
         // add immutables to the context
-        const params = Object.assign({}, { 'contract': contractJson, 'state': stateJson, 'emit': [], 'now': now, 'utcOffset': now.utcOffset }, clauseParams);
+        const params = Object.assign({}, { 'contract': contractJson, 'state': stateJson, 'emit': [], 'now': now }, clauseParams);
         vm.freeze(params, 'params'); // Add the context
         vm.run(ergoCode); // Load the generated logic
         let contract;
