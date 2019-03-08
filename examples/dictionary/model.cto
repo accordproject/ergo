@@ -1,0 +1,14 @@
+namespace org.accordproject.testdict
+
+import org.accordproject.ergo.dictionary.Dictionary
+
+/* Contract model */
+concept Template {
+  o String customName
+}
+concept Request1 {
+  o Dictionary dict
+}
+concept Request2 {
+  o Dictionary dict
+}
