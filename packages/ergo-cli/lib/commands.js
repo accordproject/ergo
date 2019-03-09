@@ -15,8 +15,8 @@
 'use strict';
 
 const Fs = require('fs');
-const Ergo = require('@accordproject/ergo-compiler/lib/ergo');
-const ErgoEngine = require('@accordproject/ergo-engine/lib/ergo-engine');
+const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
+const ErgoEngine = require('@accordproject/ergo-engine').Engine;
 
 /**
  * Load a file or JSON string
@@ -159,7 +159,7 @@ class Commands {
      */
     static parseCTOtoFileSync(ctoPath) {
         const ctoSource = Fs.readFileSync(ctoPath, 'utf8');
-        const result = Ergo.parseCTOtoJSON(ctoSource);
+        const result = ErgoCompiler.parseCTOtoJSON(ctoSource);
         const outFile = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
         Fs.writeFileSync(outFile, JSON.stringify(result));
         return outFile;

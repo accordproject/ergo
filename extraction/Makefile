@@ -47,13 +47,13 @@ BYTE1=$(MAIN1).$(BYTE)
 BIN1=$(MAIN1).$(NATIVE)
 DIST1=../bin/$(TARGET1)
 
-TARGET2=ergo-core.$(JS)
-MAIN2=ergocoreJS
+TARGET2=compilercore.$(JS)
+MAIN2=compilerJS
 BYTE2=$(MAIN2).$(BYTE)
 BIN2=$(MAIN2).$(JS)
 DIST2=../packages/ergo-compiler/lib/$(TARGET2)
 
-TARGET3=ergoc-lib.$(JS)
+TARGET3=ergoccore.$(JS)
 MAIN3=ergocJS
 BYTE3=$(MAIN3).$(BYTE)
 BIN3=$(MAIN3).$(JS)
@@ -65,7 +65,7 @@ BYTE4=$(MAIN4).$(BYTE)
 BIN4=$(MAIN4).$(NATIVE)
 DIST4=../bin/$(TARGET4)
 
-TARGET5=ergotop-lib.$(JS)
+TARGET5=ergotopcore.$(JS)
 MAIN5=ergotopJS
 BYTE5=$(MAIN5).$(BYTE)
 BIN5=$(MAIN5).$(JS)

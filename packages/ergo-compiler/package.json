@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/accordproject/ergo"
   },
+  "main": "index.js",
   "scripts": {
     "pretest": "npm run lint",
     "lint": "eslint .",
@@ -47,7 +48,7 @@
       "!./node_modules/**/*",
       "!./out/**/*",
       "!bin/*",
-      "!lib/ergo-core.js"
+      "!lib/compilercore.js"
     ],
     "path": "header.txt",
     "blocking": true,
@@ -64,7 +65,7 @@
       "json"
     ],
     "include": [
-      "lib/**/ergo.js"
+      "lib/**/compiler.js"
     ],
     "exclude": [],
     "all": true,
