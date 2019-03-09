@@ -14,6 +14,9 @@
 
 'use strict';
 
+// Moment serialization function to preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
+const momentToJson = function() { return this.format(); };
+
 /**
  * Resolve the root directory
  *
@@ -28,4 +31,4 @@ function resolveRootDir(parameters) {
     }
 }
 
-module.exports = { resolveRootDir };
+module.exports = { momentToJson, resolveRootDir };
