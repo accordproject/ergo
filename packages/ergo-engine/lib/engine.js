@@ -16,10 +16,11 @@
 
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
 const Logger = require('@accordproject/ergo-compiler').Logger;
+const Util = require('./util');
 
 const Moment = require('moment');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
-Moment.fn.toJSON = require('./util').momentToJson;
+Moment.fn.toJSON = Util.momentToJson;
 
 const {
     VM
@@ -35,25 +36,6 @@ const {
  */
 class Engine {
     /**
-     * Ensures there is a proper current time
-     *
-     * @param {string} currentTime - the definition of 'now'
-     * @returns {object} if valid, the moment object for the current time
-     */
-    static setCurrentTime(currentTime) {
-        if (!currentTime) {
-            // Defaults to current local time
-            return Moment();
-        }
-        const now = Moment.parseZone(currentTime, 'YYYY-MM-DDTHH:mm:ssZ', true);
-        if (now.isValid()) {
-            return now;
-        } else {
-            throw new Error(`${currentTime} is not a valid moment with the format 'YYYY-MM-DDTHH:mm:ssZ'`);
-        }
-    }
-
-    /**
      * Execute Ergo contract with request
      *
      * @param {string} ergoCode JavaScript code for ergo logic
@@ -66,7 +48,7 @@ class Engine {
      * @returns {object} Promise to the result of execution
      */
     static executeRequestToContract(ergoCode,codeKind,contractName,contractJson,stateJson,currentTime,requestJson) {
-        const now = this.setCurrentTime(currentTime);
+        const now = Util.setCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -111,7 +93,7 @@ class Engine {
      * @returns {object} Promise to the result of invocation
      */
     static invokeContractClause(ergoCode,codeKind,contractName,clauseName,contractJson,stateJson,currentTime,clauseParams) {
-        const now = this.setCurrentTime(currentTime);
+        const now = Util.setCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
