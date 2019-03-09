@@ -10,5 +10,5 @@ npm install @accordproject/ergo-compiler --save
 
 ## More information
 
-[Ergo Language](https://ergo.accordproject.org)
+[Accord Project Documentation](https://docs.accordproject.org)
 

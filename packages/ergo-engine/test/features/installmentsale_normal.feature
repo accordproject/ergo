@@ -80,7 +80,7 @@ Feature: Installment sale Contract
 """
 
   Scenario: The contract accepts a second payment, and maintain the remaining balance
-    Given the state
+    When it is in the state
 """
 {
   "$class": "org.accordproject.installmentsale.InstallmentSaleState",
@@ -90,22 +90,14 @@ Feature: Installment sale Contract
   "next_payment_month" : 1
 }
 """
-    When it receives the request
+    And it receives the request
 """
 {
     "$class": "org.accordproject.installmentsale.Installment",
     "amount": 2500.00
 }
 """
-    Then it should respond with
-"""
-{
-  "total_paid": 5000,
-  "balance": 5189.187499999998,
-  "$class": "org.accordproject.installmentsale.Balance"
-}
-"""
-    And the new state of the contract should be
+    Then the new state of the contract should be
 """
 {
   "$class": "org.accordproject.installmentsale.InstallmentSaleState",
@@ -113,6 +105,73 @@ Feature: Installment sale Contract
   "balance_remaining" : 5189.187499999998,
 	"total_paid" : 5000,
   "next_payment_month" : 2
+}
+"""
+    And the following obligations have been emitted
+"""
+[
+  {
+    "$class": "org.accordproject.installmentsale.PaymentObligation",
+    "amount": 2500,
+    "from": "Dan",
+    "to": "Ned"
+  }
+]
+"""
+    And it should respond with
+"""
+{
+  "total_paid": 5000,
+  "balance": 5189.187499999998,
+  "$class": "org.accordproject.installmentsale.Balance"
+}
+"""
+
+  Scenario: The contract accepts a third payment, and maintain the remaining balance
+    When it is in the state
+"""
+{
+  "$class": "org.accordproject.installmentsale.InstallmentSaleState",
+  "status" : "WaitingForFirstDayOfNextMonth",
+  "balance_remaining" : 5189.187499999998,
+	"total_paid" : 2500,
+  "next_payment_month" : 2
+}
+"""
+    And it receives the request
+"""
+{
+    "$class": "org.accordproject.installmentsale.Installment",
+    "amount": 2500.00
+}
+"""
+    Then the following obligations have been emitted
+"""
+[
+  {
+    "$class": "org.accordproject.installmentsale.PaymentObligation",
+    "amount": 2500,
+    "from": "Dan",
+    "to": "Ned"
+  }
+]
+"""
+    And the new state of the contract should be
+"""
+{
+  "$class": "org.accordproject.installmentsale.InstallmentSaleState",
+  "status" : "WaitingForFirstDayOfNextMonth",
+  "balance_remaining" : 2729.525312499998,
+	"total_paid" : 5000,
+  "next_payment_month" : 3
+}
+"""
+    And it should respond with
+"""
+{
+  "total_paid": 5000,
+  "balance": 2729.525312499998,
+  "$class": "org.accordproject.installmentsale.Balance"
 }
 """
 

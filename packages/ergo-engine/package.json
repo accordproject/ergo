@@ -6,13 +6,14 @@
     "type": "git",
     "url": "https://github.com/accordproject/ergo"
   },
+  "main": "index.js",
   "scripts": {
     "pretest": "npm run lint",
     "lint": "eslint .",
     "postlint": "npm run licchk",
     "licchk": "license-check",
     "test:mocha": "mocha",
-    "test:cucumber": "cucumber-js test/features --require lib/cucumber-steps.js --world-parameters '{\"rootdir\":\"./test\"}'",
+    "test:cucumber": "cucumber-js test/features --require lib/steps.js --world-parameters '{\"rootdir\":\"./test\"}'",
     "test:all": "npm run test:mocha && npm run test:cucumber",
     "test:cov": "nyc npm run test:all",
     "test": "npm run test:all && npm run test:cov"
@@ -52,8 +53,7 @@
       "!./test/data/**/*",
       "!./coverage/**/*",
       "!./node_modules/**/*",
-      "!./out/**/*",
-      "!lib/ergoruntime.js"
+      "!./out/**/*"
     ],
     "path": "header.txt",
     "blocking": true,
@@ -70,7 +70,7 @@
       "json"
     ],
     "include": [
-      "lib/**/ergo-engine.js"
+      "lib/**/*.js"
     ],
     "exclude": [],
     "all": true,
