@@ -5,4 +5,4 @@ docs
 node_modules
 out
 test/data
-lib/momentToJson.js
+lib/momenttojson.js

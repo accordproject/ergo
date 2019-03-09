@@ -14,14 +14,18 @@
 
 'use strict';
 
-const Compiler=require('./ergo-core.js');
+const CompilerCore=require('./compilercore');
 const CTOParser = require('composer-concerto/lib/introspect/parser');
 
 /**
- * Utility class that implements the internals for Ergo.
+ * <p>
+ * Compiler class. Compilation for Ergo logic.
+ * </p>
  * @class
+ * @public
+ * @memberof module:ergo-compiler
  */
-class Ergo {
+class Compiler {
     /**
      * Parse CTO to JSON
      *
@@ -40,7 +44,7 @@ class Ergo {
      * @returns {string} name of the JavaScript class
      */
     static contractCallName(contractName) {
-        return Compiler.call({ 'name' : contractName });
+        return CompilerCore.call({ 'name' : contractName });
     }
 
     /**
@@ -80,7 +84,7 @@ class Ergo {
             config.cto.push({ 'name' : ctoFile, 'content' : JSON.stringify(this.parseCTOtoJSON(ctoContent)) });
         }
         // Call compiler
-        const compiled = Compiler.compile(config);
+        const compiled = CompilerCore.compile(config);
         if (compiled.code) {
             return { 'error' : compiled.error };
         } else {
@@ -124,4 +128,4 @@ class Ergo {
 
 }
 
-module.exports = Ergo;
+module.exports = Compiler;

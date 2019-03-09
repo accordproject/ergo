@@ -14,7 +14,7 @@
 
 'use strict';
 
-const Ergo = require('../lib/ergo');
+const ErgoCompiler = require('../lib/compiler');
 const Chai = require('chai');
 
 Chai.should();
@@ -30,7 +30,7 @@ describe('ergo-compiler', () => {
     describe('#callname', function () {
         it('should sanitize call names for contracts', async function () {
             const contractName = 'org.accordproject.volumediscount.VolumeDiscount';
-            const result = await Ergo.contractCallNamePromise(contractName);
+            const result = await ErgoCompiler.contractCallNamePromise(contractName);
             result.should.equal('orgXaccordprojectXvolumediscountXVolumeDiscount');
         });
     });
@@ -41,7 +41,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/bad-logic', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
             result.error.kind.should.equal('ParseError');
             result.error.message.should.equal('Parse error');
             result.error.locstart.should.deep.equal({ 'line' : 17, 'character' : 20 });
@@ -50,19 +50,19 @@ describe('ergo-compiler', () => {
     });
     describe('#parseerrormessage', function () {
         it('should format parse error', async function () {
-            const result = await Ergo.ergoErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'verbose' : 'Parse error (at file ./test/data/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } });
+            const result = await ErgoCompiler.ergoErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'verbose' : 'Parse error (at file ./test/data/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } });
             result.should.deep.equal('Parse error');
         });
     });
     describe('#verboseparseerrormessage', function () {
         it('should format verbose parse error', async function () {
-            const result = await Ergo.ergoVerboseErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'verbose' : 'Parse error (at file ./test/data/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } });
+            const result = await ErgoCompiler.ergoVerboseErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'verbose' : 'Parse error (at file ./test/data/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } });
             result.should.deep.equal('Parse error (at file ./test/data/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ');
         });
     });
     describe('#compilationerrormessage', function () {
         it('should format compilation error', async function () {
-            const result = await Ergo.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
+            const result = await ErgoCompiler.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
             result.should.deep.equal('Import not found: org.accordproject.test');
         });
     });
@@ -72,7 +72,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es5', false);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es5', false);
             result.success.should.not.be.null;
         });
         it('should compile a smart Ergo contract to JavaScript (ES6)', async function () {
@@ -80,7 +80,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
             result.success.should.not.be.null;
         });
         it('should compile and link a smart Ergo contract to JavaScript (ES5)', async function () {
@@ -88,7 +88,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es5', true);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es5', true);
             result.success.should.not.be.null;
         });
         it('should compile and link a smart Ergo contract to JavaScript (ES6)', async function () {
@@ -96,7 +96,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', true);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', true);
             result.success.should.not.be.null;
         });
     });
@@ -106,7 +106,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'cicero', false);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'cicero', false);
             result.success.should.not.be.null;
         });
     });
@@ -116,7 +116,7 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.test', 'verbose' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
@@ -126,14 +126,14 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'data/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await Ergo.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', true);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', true);
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.test', 'verbose' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
         });
     });
     describe('#parsecto', function () {
         it('should parse CTO', async function () {
             const ctoText = Fs.readFileSync(Path.resolve('test', 'data/helloworld', 'model.cto'), 'utf8');
-            const result = Ergo.parseCTOtoJSON(ctoText);
+            const result = ErgoCompiler.parseCTOtoJSON(ctoText);
             result.should.not.be.null;
         });
     });

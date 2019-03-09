@@ -22,23 +22,10 @@ const expect = Chai.expect;
 
 const Moment = require('moment');
 
-const ErgoEngine = require('./ergo-engine');
+const ErgoEngine = require('./engine');
+const Util = require('./util');
 
 const { Before, Given, When, Then } = require('cucumber');
-
-/**
- * Resolve the root directory
- *
- * @param {string} parameters Cucumber's World parameters
- * @return {string} root directory used to resolve file names
- */
-function resolveRootDir(parameters) {
-    if (parameters.rootdir) {
-        return parameters.rootdir;
-    } else {
-        return '.';
-    }
-}
 
 /**
  * Compare actual result and expected result
@@ -48,13 +35,11 @@ function resolveRootDir(parameters) {
  */
 function compare(expected,actual) {
     for (const key in expected) {
-        if (expected.hasOwnProperty(key)) {
-            const field = key;
-            const expectedValue = expected[key];
-            expect(actual).to.have.property(field);
-            const actualValue = Moment.isMoment(actual[field]) ? actual[field].format() : actual[field];
-            expect(actualValue).to.deep.equal(expectedValue);
-        }
+        const field = key;
+        const expectedValue = expected[key];
+        expect(actual).to.have.property(field);
+        const actualValue = Moment.isMoment(actual[field]) ? actual[field].format() : actual[field];
+        expect(actualValue).to.deep.equal(expectedValue);
     }
 }
 
@@ -171,7 +156,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return compare(response,this.answer.response);
     } else {
-        return execute(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+        return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -183,7 +168,7 @@ Then('it should respond with', function (expectedResponse) {
 
 Then('the initial state( of the contract) should be', function (expectedState) {
     const state = JSON.parse(expectedState);
-    return init(resolveRootDir(this.parameters),this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
+    return init(Util.resolveRootDir(this.parameters),this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -193,7 +178,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(resolveRootDir(this.parameters),this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
+    return init(Util.resolveRootDir(this.parameters),this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -208,7 +193,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return compare(state,this.answer.state);
     } else {
-        return execute(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+        return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -225,7 +210,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
         expect(this.answer).to.not.have.property('error');
         return compare(emit,this.answer.emit);
     } else {
-        return execute(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+        return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
@@ -237,26 +222,19 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
 
 Then('it should fail with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
-    if (this.answer) {
-        expect(this.answer).to.have.property('error');
-        expect(this.answer).to.not.have.property('state');
-        expect(this.answer).to.not.have.property('response');
-        return compare(error,this.answer.error);
-    } else {
-        return execute(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
-            .then((actualAnswer) => {
-                this.answer = actualAnswer;
-                expect(actualAnswer).to.have.property('error');
-                expect(actualAnswer).to.not.have.property('state');
-                expect(actualAnswer).to.not.have.property('response');
-                return compare(error,actualAnswer.error);
-            });
-    }
+    return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+        .then((actualAnswer) => {
+            this.answer = actualAnswer;
+            expect(actualAnswer).to.have.property('error');
+            expect(actualAnswer).to.not.have.property('state');
+            expect(actualAnswer).to.not.have.property('response');
+            return compare(error,actualAnswer.error);
+        });
 });
 
 Then('it should fail to initialize with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
-    return init(resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
+    return init(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('error');
             expect(actualAnswer).to.not.have.property('state');

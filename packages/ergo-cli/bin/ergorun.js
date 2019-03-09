@@ -17,7 +17,7 @@
 
 const Commands = require('../lib/commands');
 const Moment = require('moment');
-const Logger = require('@accordproject/ergo-compiler/lib/logger');
+const Logger = require('@accordproject/ergo-compiler').Logger;
 
 require('yargs')
     .command('execute', 'execute an Ergo contract with a request', (yargs) => {

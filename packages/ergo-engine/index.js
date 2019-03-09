@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +14,10 @@
 
 'use strict';
 
-const Commands = require('../lib/commands');
-const Logger = require('@accordproject/ergo-compiler/lib/logger');
+/**
+ * Ergo Engine - execution for JavaScript target
+ * @module ergo-engine
+ */
 
-try {
-    const args = process.argv;
-    for (let i = 0; i < args.length; i++) {
-        if (args[i].split('.').pop() === 'cto') {
-            const ctoPath = args[i];
-            Commands.parseCTOtoFile(ctoPath);
-            args[i] = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
-        }
-    }
-    require('../lib/ergoccore.js');
-} catch (err) {
-    Logger.error(err.message);
-}
+module.exports.Engine = require('./lib/engine.js');
+module.exports.Util = require('./lib/util.js');
