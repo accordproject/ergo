@@ -17,6 +17,9 @@
 // Moment serialization function to preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
 const momentToJson = function() { return this.format(); };
 
+const Moment = require('moment');
+Moment.fn.toJSON = momentToJson;
+
 /**
  * Resolve the root directory
  *
@@ -31,4 +34,23 @@ function resolveRootDir(parameters) {
     }
 }
 
-module.exports = { momentToJson, resolveRootDir };
+/**
+ * Ensures there is a proper current time
+ *
+ * @param {string} currentTime - the definition of 'now'
+ * @returns {object} if valid, the moment object for the current time
+ */
+function setCurrentTime(currentTime) {
+    if (!currentTime) {
+        // Defaults to current local time
+        return Moment();
+    }
+    const now = Moment.parseZone(currentTime, 'YYYY-MM-DDTHH:mm:ssZ', true);
+    if (now.isValid()) {
+        return now;
+    } else {
+        throw new Error(`${currentTime} is not a valid moment with the format 'YYYY-MM-DDTHH:mm:ssZ'`);
+    }
+}
+
+module.exports = { momentToJson, resolveRootDir, setCurrentTime };
