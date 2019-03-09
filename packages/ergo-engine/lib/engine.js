@@ -14,32 +14,36 @@
 
 'use strict';
 
-const Ergo=require('@accordproject/ergo-compiler/lib/ergo');
+const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
+const Logger = require('@accordproject/ergo-compiler').Logger;
+
 const Moment = require('moment');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
-Moment.fn.toJSON = require('./momentToJson');
-const Logger = require('@accordproject/ergo-compiler/lib/logger');
+Moment.fn.toJSON = require('./momenttojson');
 
 const {
     VM
 } = require('vm2');
 
-const defaultState = {'stateId':'org.accordproject.cicero.contract.AccordContractState#1','$class':'org.accordproject.cicero.contract.AccordContractState'};
-
 /**
- * Utility class that implements the internals for Ergo.
+ * <p>
+ * Engine class. Execution of Ergo logic (JavaScript target).
+ * </p>
  * @class
+ * @public
+ * @memberof module:ergo-engine
  */
-class ErgoEngine {
+class Engine {
     /**
      * Ensures there is a proper current time
      *
-     * @param {string} currentTime the definition of 'now'
+     * @param {string} currentTime - the definition of 'now'
      * @returns {object} if valid, the moment object for the current time
      */
-    static initCurrentTime(currentTime) {
+    static setCurrentTime(currentTime) {
         if (!currentTime) {
-            throw new Error('Calls to Ergo engine should provide a current time');
+            // Defaults to current local time
+            return Moment();
         }
         const now = Moment.parseZone(currentTime, 'YYYY-MM-DDTHH:mm:ssZ', true);
         if (now.isValid()) {
@@ -62,7 +66,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static executeRequestToContract(ergoCode,codeKind,contractName,contractJson,stateJson,currentTime,requestJson) {
-        const now = this.initCurrentTime(currentTime);
+        const now = this.setCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -82,7 +86,7 @@ class ErgoEngine {
             contract = '';
             clauseCall = 'main(params);'; // Create the clause call
         } else {
-            contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
+            contract = 'let contract = new ' + ErgoCompiler.contractCallName(contractName) + '();'; // Instantiate the contract
             clauseCall = 'contract.main(params);'; // Create the clause call
         }
         const result = vm.run(contract + clauseCall); // Call the logic
@@ -107,7 +111,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of invocation
      */
     static invokeContractClause(ergoCode,codeKind,contractName,clauseName,contractJson,stateJson,currentTime,clauseParams) {
-        const now = this.initCurrentTime(currentTime);
+        const now = this.setCurrentTime(currentTime);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -127,7 +131,7 @@ class ErgoEngine {
             contract = '';
             clauseCall = clauseName+'(params);'; // Create the clause call
         } else {
-            contract = 'let contract = new ' + Ergo.contractCallName(contractName) + '();'; // Instantiate the contract
+            contract = 'let contract = new ' + ErgoCompiler.contractCallName(contractName) + '();'; // Instantiate the contract
             clauseCall = 'contract.' + clauseName+ '(params);'; // Create the clause call
         }
         const result = vm.run(contract + clauseCall); // Call the logic
@@ -150,6 +154,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static invokeInit(ergoCode,codeKind,contractName,contractJson,currentTime,clauseParams) {
+        const defaultState = {'stateId':'org.accordproject.cicero.contract.AccordContractState#1','$class':'org.accordproject.cicero.contract.AccordContractState'};
         return this.invokeContractClause(ergoCode,codeKind,contractName,'init',contractJson,defaultState,currentTime,clauseParams);
     }
 
@@ -167,7 +172,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of execution
      */
     static execute(ergoSources,ctoSources,codeKind,contractName,contractJson,stateJson,currentTime,requestJson) {
-        return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
+        return (ErgoCompiler.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
@@ -191,7 +196,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of invocation
      */
     static invoke(ergoSources,ctoSources,codeKind,contractName,clauseName,contractJson,stateJson,currentTime,clauseParams) {
-        return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
+        return (ErgoCompiler.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
@@ -213,7 +218,7 @@ class ErgoEngine {
      * @returns {object} Promise to the result of invocation
      */
     static init(ergoSources,ctoSources,codeKind,contractName,contractJson,currentTime,clauseParams) {
-        return (Ergo.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
+        return (ErgoCompiler.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
             if (ergoCode.hasOwnProperty('error')) {
                 return ergoCode;
             } else {
@@ -223,4 +228,4 @@ class ErgoEngine {
     }
 }
 
-module.exports = ErgoEngine;
+module.exports = Engine;

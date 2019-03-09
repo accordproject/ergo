@@ -14,7 +14,7 @@
 
 'use strict';
 
-const ErgoEngine = require('../lib/ergo-engine');
+const ErgoEngine = require('../lib/engine');
 const Chai = require('chai');
 
 Chai.should();
@@ -187,16 +187,20 @@ describe('Execute ES5', () => {
 });
 describe('Initialize current time', () => {
     it('Should succeed for a well-formed date/time', function () {
-        const currentTime = ErgoEngine.initCurrentTime('1970-01-01T00:00:00Z');
+        const currentTime = ErgoEngine.setCurrentTime('1970-01-01T00:00:00Z');
         return currentTime.format().should.equal('1970-01-01T00:00:00Z');
     });
+    it('Should stringify a date time back with its timezone', function () {
+        const currentTime = ErgoEngine.setCurrentTime('1970-01-01T00:00:00+05:00');
+        return JSON.stringify(currentTime).should.equal('"1970-01-01T00:00:00+05:00"');
+    });
     it('Should fail for a non-well-formed date/time', function () {
-        return (() => ErgoEngine.initCurrentTime('1970-01-01').format()).should.throw('1970-01-01 is not a valid moment with the format \'YYYY-MM-DDTHH:mm:ssZ\'');
+        return (() => ErgoEngine.setCurrentTime('1970-01-01').format()).should.throw('1970-01-01 is not a valid moment with the format \'YYYY-MM-DDTHH:mm:ssZ\'');
     });
-    it('Should fail when currentTime is null', function () {
-        return (() => ErgoEngine.initCurrentTime(null).format()).should.throw('Calls to Ergo engine should provide a current time');
+    it('Should not fail when currentTime is null', function () {
+        return ErgoEngine.setCurrentTime(null).format().should.not.be.null;
     });
-    it('Should fail when currentTime is undefined', function () {
-        return (() => ErgoEngine.initCurrentTime(undefined).format()).should.throw('Calls to Ergo engine should provide a current time');
+    it('Should not fail when currentTime is undefined', function () {
+        return ErgoEngine.setCurrentTime(undefined).format().should.not.be.null;
     });
 });

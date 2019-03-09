@@ -14,6 +14,11 @@
 
 'use strict';
 
-module.exports = {
-    default: '--format-options \'{"snippetInterface": "synchronous"}\''
-};
+/**
+ * Ergo Compiler - the core compiler for the Ergo language
+ * @module ergo-compiler
+ */
+
+module.exports.Compiler = require('./lib/compiler.js');
+module.exports.Logger = require('./lib/logger.js');
+
