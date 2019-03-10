@@ -83,7 +83,7 @@ Inductive math_unary_op
 
 Definition math_unary_op_tostring (f:math_unary_op) : String.string
   := match f with
-     | uop_math_of_string => "float_of_string"
+     | uop_math_of_string => "floatOfString"
      | uop_math_acos => "acos"
      | uop_math_asin => "asin"
      | uop_math_atan => "atan"
@@ -101,7 +101,7 @@ Definition math_to_java_unary_op
              (quotel:String.string) (fu:math_unary_op)
              (d:java_json) : java_json
   := match fu with
-     | uop_math_of_string => mk_java_unary_op0 "float_of_string" d
+     | uop_math_of_string => mk_java_unary_op0 "floatOfString" d
      | uop_math_acos => mk_java_unary_op0 "acos" d
      | uop_math_asin => mk_java_unary_op0 "asin" d
      | uop_math_atan => mk_java_unary_op0 "atan" d
@@ -118,7 +118,7 @@ Definition math_to_javascript_unary_op
              (quotel:String.string) (fu:math_unary_op)
              (d:String.string) : String.string
   := match fu with
-     | uop_math_of_string => "float_of_string(" ++ d ++ ")"
+     | uop_math_of_string => "floatOfString(" ++ d ++ ")"
      | uop_math_acos => "acos(" ++ d ++ ")"
      | uop_math_asin => "asin(" ++ d ++ ")"
      | uop_math_atan => "atan(" ++ d ++ ")"
@@ -134,7 +134,7 @@ Definition math_to_ajavascript_unary_op
              (fu:math_unary_op)
              (e:JsSyntax.expr) : JsSyntax.expr
   := match fu with
-     | uop_math_of_string => call_runtime "float_of_string" [ e ]
+     | uop_math_of_string => call_runtime "floatOfString" [ e ]
      | uop_math_acos => call_runtime "acos" [ e ]
      | uop_math_asin => call_runtime "asin" [ e ]
      | uop_math_atan => call_runtime "atan" [ e ]

@@ -18,9 +18,9 @@ contract VolumeDiscount over VolumeDiscountContract {
    // Clause for volume discount
    clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
     if request.netAnnualChargeVolume < contract.firstVolume
- 	  then return VolumeDiscountResponse{ discountRate: double(toString(contract.firstRate)) }
+ 	  then return VolumeDiscountResponse{ discountRate: double("2000") }
     else if request.netAnnualChargeVolume < contract.secondVolume
-    then return VolumeDiscountResponse{ discountRate: contract.secondRate }
-    else return VolumeDiscountResponse{ discountRate: contract.thirdRate }
+ 	  then return VolumeDiscountResponse{ discountRate: double("2000") }
+		else return VolumeDiscountResponse{ discountRate: double("2000") }
   }
 }

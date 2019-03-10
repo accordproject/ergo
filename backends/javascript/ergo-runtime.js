@@ -361,9 +361,9 @@ function enhanced_cast(brands,v) {
 }
 function singleton(v) {
     if (v.length == 1) {
-        return left(v[0]);
+        return v[0];
     } else {
-        return right(null); /* Not a singleton */
+        return null; /* Not a singleton */
     }
 }
 function unbrand(v) {
@@ -526,7 +526,19 @@ function substringNoLength(v, start) {
 }
 
 // Math operations
-function float_of_string(s) { return parseFloat(s); }
+function floatOfString(s) {
+    // Check whether we're dealing with nan, since it's the error case for Number.parseFloat
+    if (s === 'nan') {
+        return nan;
+    } else {
+        let num = Number.parseFloat(s);
+        if (Number.isNaN(num)) {
+            return null;
+        } else {
+            return num
+        }
+    }
+}
 function acos(x) { return Math.acos(x); }
 function asin(x) { return Math.asin(x); }
 function atan(x) { return Math.atan(x); }
