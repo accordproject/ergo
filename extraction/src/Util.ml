@@ -121,8 +121,13 @@ let qcert_string_of_float f =
   | _ -> ocaml_string
   end
 
-let string_of_enhanced_float f = char_list_of_string (string_of_float f)
+let string_of_enhanced_float f = char_list_of_string (qcert_string_of_float f)
 let string_of_enhanced_string s = char_list_of_string ("S\"" ^ s ^ "\"")
+let ergo_float_of_string s =
+  begin try
+    Some (float_of_string (string_of_char_list s))
+  with _ -> None
+  end
 
 (**********************************)
 (* Timing function for CompStat   *)

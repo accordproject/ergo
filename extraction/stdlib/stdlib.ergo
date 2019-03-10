@@ -67,11 +67,36 @@ define function sinh(x:Double) : Double
 define function tan(x:Double) : Double
 define function tanh(x:Double) : Double
 
+// conversions from string
+define function doubleOpt(x:String) : Double?
+define function double(x:String) : Double {
+	match doubleOpt(x) with
+	let? v then return v
+	else return nan
+}
+define function integerOpt(x:String) : Integer? {
+	match doubleOpt(x) with
+	let? v then return some(doubleToInteger(v))
+	else return none
+}
+define function integer(x:String) : Integer {
+	match integerOpt(x) with
+	let? v then return v
+	else return 0
+}
+define function longOpt(x:String) : Long? {
+	return integerOpt(x)
+}
+define function long(x:String) : Long {
+	return integer(x)
+}
+
 // Polymorphic operations
 define function toString(x:Any) : String
 define function distinct(x:Any[]) : Any[]
 define function count(x:Any[]) : Integer
 define function flatten(x:Any[][]) : Any[]
+define function singleton(x:Any[]) : Any
 define function arrayAdd(x:Any[],y:Any[]) : Any[]
 define function arraySubtract(x:Any[],y:Any[]) : Any[]
 define function inArray(x:Any,y:Any[]) : Boolean

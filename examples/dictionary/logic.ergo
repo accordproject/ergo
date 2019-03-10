@@ -1,0 +1,37 @@
+/* A simple contract using a dictionary */
+
+namespace org.accordproject.testdict
+
+import org.accordproject.ergo.dictionary.*
+
+contract MyContract over Template {
+  clause testOptional(request:Request1) : Integer? {
+    return get(request.dict, contract.customName)
+  }
+  clause testCanFail(request:Request2) : Integer {
+    match get(request.dict, contract.customName)
+    with let? x then return x
+    else throw failure("Could not find custom field " ++ contract.customName)
+  } 
+}
+
+/* To test in REPL
+// to run: ergotop dict.cto dict.ergo model.cto logic.ergo 
+
+import org.accordproject.ergo.dictionary.*
+import org.accordproject.testdict.*
+
+define constant myDict : Dictionary = add(add(create(),"foo",1),"bar",2)
+
+set contract MyContract over Template{ customName: "foo" }
+call init()
+
+call testOptional(Request1{ dict : myDict })
+call testOptional(Request1{ dict : add(myDict,"foo",3) })
+call testOptional(Request1{ dict : remove(myDict,"foo") })
+
+call testCanFail(Request2{ dict : myDict })
+call testCanFail(Request2{ dict : add(myDict,"foo",3) })
+call testCanFail(Request2{ dict : remove(myDict,"foo") })
+
+*/

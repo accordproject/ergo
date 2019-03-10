@@ -1,0 +1,11 @@
+namespace org.accordproject.ergo.dictionary
+
+/* Model -- A dictionary is an  array of name/value pairs */
+concept Entry {
+  o String name
+  o Integer value // This can be replaced by any type
+}
+concept Dictionary {
+  o Entry[] entries
+}
+

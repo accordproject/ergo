@@ -66,7 +66,9 @@
 	      "false", FALSE;
 	      "unit", UNIT;
 	      "none", NONE;
-	      "some", SOME;
+        "some", SOME;
+        "nan", FLOAT nan;
+        "infinity", FLOAT infinity;
 	    ]; tbl
     end
 

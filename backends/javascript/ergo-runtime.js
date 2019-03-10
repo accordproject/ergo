@@ -526,6 +526,7 @@ function substringNoLength(v, start) {
 }
 
 // Math operations
+function float_of_string(s) { return parseFloat(s); }
 function acos(x) { return Math.acos(x); }
 function asin(x) { return Math.asin(x); }
 function atan(x) { return Math.atan(x); }

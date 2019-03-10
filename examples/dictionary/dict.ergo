@@ -1,0 +1,50 @@
+/* This is a small example of accessing a "Dictionary" in Ergo */
+
+namespace org.accordproject.ergo.dictionary
+
+/* Create an empty dictionary */
+define function create() : Dictionary {
+  return Dictionary{ entries: [] }
+}
+
+/* Returns the value for the given name in the dictionary */
+define function get(dict:Dictionary, name:String) : Integer? {
+  return
+    singleton(
+      foreach x in dict.entries
+      where x.name = name
+      return x.value
+    )
+}
+
+/* Remove an entry from the dictionary */
+define function remove(dict:Dictionary, name:String) : Dictionary {
+  return Dictionary{
+    entries: foreach x in dict.entries where x.name != name return x
+  }
+}
+
+/* Add an entry to the dictionary */
+define function add(dict:Dictionary, name:String, value:Integer) : Dictionary {
+  let dict = remove(dict, name);
+  return Dictionary{
+    entries: arrayAdd(dict.entries,[Entry{name:name,value:value}])
+  }
+}
+
+/* Example of use, in Ergo REPL: $ ergotop dict.cto dict.ergo  
+
+import org.accordproject.ergo.dictionary.*
+define constant d = create() // Create an empty dictionary
+define constant d1 = add(add(add(d,"foo",1),"bar",2),"baz",3) // Add entries
+return get(d1,"foo")
+return get(d1,"bar")
+return get(d1,"baz")
+return get(d1,"bang")
+define constant d2 = add(remove(d1,"foo"),"baz",4) // Remove and add more things
+return get(d2,"foo")
+return get(d2,"bar")
+return get(d2,"baz")
+return get(d2,"bang")
+
+*/
