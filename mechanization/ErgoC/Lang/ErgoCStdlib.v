@@ -69,8 +69,10 @@ Section ErgoCStdlib.
 
   Definition foreign_unary_operator_table prov : ergo_stdlib_table :=
     (* Math *)
-    ("org.accordproject.ergo.stdlib.acos"%string,
-     mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_acos)))
+    ("org.accordproject.ergo.stdlib.doubleOpt"%string,
+     mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_of_string)))
+      :: ("org.accordproject.ergo.stdlib.acos"%string,
+          mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_acos)))
       :: ("org.accordproject.ergo.stdlib.asin",
           mk_unary prov (OpForeignUnary (enhanced_unary_math_op uop_math_asin)))
       :: ("org.accordproject.ergo.stdlib.atan",
@@ -213,7 +215,8 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.distinct", mk_unary prov OpDistinct)
       :: ("org.accordproject.ergo.stdlib.count", mk_unary prov OpCount)
       :: ("org.accordproject.ergo.stdlib.flatten", mk_unary prov OpFlatten)
-      :: ("org.accordproject.time.dateTimeMax", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_max)))
+      :: ("org.accordproject.ergo.stdlib.singleton", mk_unary prov OpSingleton)
+	    :: ("org.accordproject.time.dateTimeMax", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_max)))
       :: ("org.accordproject.time.dateTimeMin", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_min)))
       :: nil.
 

@@ -235,6 +235,16 @@ Definition ondstring {A} (f : String.string -> A) (d : data) : option A
      | _ => None
      end.
 
+Definition ondstringfloatopt (f : String.string -> option float) (d : data) : option data
+  := match d with
+     | dstring s =>
+       match f s with
+       | None => Some dnone
+       | Some n => Some (dsome (dfloat n))
+       end
+     | _ => None
+     end.
+
 Definition ondfloat {A} (f : float -> A) (d : data) : option A
   := match d with
      | dfloat s => Some (f s)
@@ -243,6 +253,7 @@ Definition ondfloat {A} (f : float -> A) (d : data) : option A
 
 Definition math_unary_op_interp (op:math_unary_op) (d:data) : option data
   := match op with
+     | uop_math_of_string => ondstringfloatopt FLOAT_of_string d
      | uop_math_acos => lift dfloat (ondfloat FLOAT_acos d)
      | uop_math_asin => lift dfloat (ondfloat FLOAT_asin d)
      | uop_math_atan => lift dfloat (ondfloat FLOAT_atan d)
@@ -314,8 +325,9 @@ Next Obligation.
 Defined.
 Next Obligation.
   destruct op; simpl in H.
-  - destruct m; simpl in H; unfold ondfloat, lift in H; simpl in H;
+  - destruct m; simpl in H; unfold ondstring, ondfloat, lift in H; simpl in H;
       destruct d; simpl in H; try discriminate; invcs H; repeat constructor.
+    destruct (FLOAT_of_string s); try discriminate; invcs H2; repeat constructor.
   - destruct d0; simpl in H;
       unfold onddateTime, onddateTimeList, onddateTimeduration,
       denhanceddateTime, denhanceddateTimeduration,
@@ -1585,6 +1597,7 @@ Defined.
 Inductive math_unary_op_has_type {model:brand_model} :
   math_unary_op -> rtype -> rtype -> Prop
   :=
+  | tuop_math_of_string : math_unary_op_has_type uop_math_of_string RType.String (Option Float)
   | tuop_math_acos : math_unary_op_has_type uop_math_acos Float Float
   | tuop_math_asin : math_unary_op_has_type uop_math_asin Float Float
   | tuop_math_atan : math_unary_op_has_type uop_math_atan Float Float
@@ -1612,7 +1625,12 @@ Inductive date_time_unary_op_has_type {model:brand_model} :
 .
 
 Definition math_unary_op_type_infer {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option rtype :=
-  if isFloat τ₁ then Some Float else None.
+  match op with
+  | uop_math_of_string =>
+    if isString τ₁ then Some (Option Float) else None
+  | _ =>
+    if isFloat τ₁ then Some Float else None
+  end.
 
 Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_unary_op) (τ₁:rtype) : option rtype :=
   match op with
@@ -1647,7 +1665,12 @@ Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_una
   end.
 
 Definition math_unary_op_type_infer_sub {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
-  enforce_unary_op_schema (τ₁,Float) Float.
+  match op with
+  | uop_math_of_string =>
+    enforce_unary_op_schema (τ₁,RType.String) (Option Float)
+  | _ =>
+    enforce_unary_op_schema (τ₁,Float) Float
+  end.
 
 Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
   match op with
@@ -1690,6 +1713,13 @@ Proof.
               simpl; simpl;
               eexists; split; try reflexivity;
               repeat constructor].
+  - inversion 1; subst.
+    try invcs H0.
+    try invcs H.
+    simpl; simpl.
+    destruct (FLOAT_of_string s).
+    eexists; split; try reflexivity; repeat constructor.
+    eexists; split; try reflexivity; repeat constructor.
 Qed.
 
 Lemma lift_dateTimeList_sound {model : brand_model} (dl:list data) (e:true = true) :
@@ -1798,6 +1828,7 @@ Proof.
       destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
           inversion H; subst; clear H; constructor;
+            try (rewrite String_canon; constructor);
             rewrite Float_canon; constructor.
   - destruct d; simpl in *.
     + destruct τ₁; simpl in *; try congruence;
@@ -1876,7 +1907,8 @@ Proof.
       destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
           inversion H; subst; clear H;
-            rewrite Float_canon in H0;
+            try (rewrite String_canon in H0);
+            try (rewrite Float_canon in H0);
             inversion H0; subst; clear H0;
               inversion H1; subst; clear H1;
                 reflexivity.
