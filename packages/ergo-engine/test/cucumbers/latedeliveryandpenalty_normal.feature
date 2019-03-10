@@ -55,7 +55,7 @@ Feature: Late delivery contract
 {
     "$class": "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenaltyRequest",
     "forceMajeure": false,
-    "agreedDelivery": "2019-01-31 03:24:00Z",
+    "agreedDelivery": "2019-03-31 03:24:00Z",
     "deliveredAt": null,
     "goodsValue": 200.00
 }

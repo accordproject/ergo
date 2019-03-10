@@ -24,7 +24,7 @@ Feature: Acceptance of delivery Contract
 """
 {
     "$class":"org.accordproject.acceptanceofdelivery.InspectDeliverable",
-    "deliverableReceivedAt": "08 Jan 2019 16:34:00 EST",
+    "deliverableReceivedAt": "08 Mar 2019 16:34:00 EST",
     "inspectionPassed": true
 }
 """
