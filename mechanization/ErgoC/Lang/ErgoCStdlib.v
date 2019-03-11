@@ -216,11 +216,7 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.count", mk_unary prov OpCount)
       :: ("org.accordproject.ergo.stdlib.flatten", mk_unary prov OpFlatten)
       :: ("org.accordproject.ergo.stdlib.singleton", mk_unary prov OpSingleton)
-<<<<<<< HEAD
 	    :: ("org.accordproject.time.dateTimeMax", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_max)))
-=======
-      :: ("org.accordproject.time.dateTimeMax", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_max)))
->>>>>>> (fix) singleton added to stdlib ; REPL bug: not getting updated type declarations
       :: ("org.accordproject.time.dateTimeMin", mk_unary prov (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_min)))
       :: nil.
 
