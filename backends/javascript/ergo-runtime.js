@@ -529,7 +529,7 @@ function substringNoLength(v, start) {
 function floatOfString(s) {
     // Check whether we're dealing with nan, since it's the error case for Number.parseFloat
     if (s === 'nan') {
-        return nan;
+        return NaN;
     } else {
         let num = Number.parseFloat(s);
         if (Number.isNaN(num)) {
