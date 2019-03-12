@@ -28,7 +28,7 @@ try {
         }
     }
 
-    const ergotop = require('../lib/ergotopcore.js').ergotop;
+    const ergotop = require('../extracted/ergotopcore.js').ergotop;
     const readline = require('readline');
     const chalk = require('chalk');
 

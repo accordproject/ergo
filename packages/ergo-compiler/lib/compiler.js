@@ -14,7 +14,7 @@
 
 'use strict';
 
-const CompilerCore=require('./compilercore');
+const CompilerCore=require('../extracted/compilercore');
 const CTOParser = require('composer-concerto/lib/introspect/parser');
 
 /**

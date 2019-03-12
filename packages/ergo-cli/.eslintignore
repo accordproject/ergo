@@ -1,10 +1,8 @@
 coverage
-mechanization
-extraction
-lib/ergoccore.js
-cheatsheet.js
-lib/ergotopcore.js
+extracted/ergoccore.js
+extracted/ergotopcore.js
 lib/ergo-mode.js
+cheatsheet.js
 docs
 node_modules
 out

@@ -27,7 +27,7 @@ try {
             args[i] = ctoPath.substr(0, ctoPath.lastIndexOf('.')) + '.ctoj';
         }
     }
-    require('../lib/ergoccore.js');
+    require('../extracted/ergoccore.js');
 } catch (err) {
     Logger.error(err.message);
 }
