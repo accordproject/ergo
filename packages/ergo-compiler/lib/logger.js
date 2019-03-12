@@ -106,20 +106,24 @@ let logger = winston.createLogger({
 
 // Only write log files to disk if we're running in development
 // and not in a browser (webpack or browserify)
-if(env === 'development' && !process.browser){
-    const logDir = 'log';
-    // Create the log directory if it does not exist
-    if (!fs.existsSync(logDir)) {
-        fs.mkdirSync(logDir);
+const setupLogger = ((process,env,logDir) => {
+    if (env === 'development' && !process.browser) {
+        // Create the log directory if it does not exist
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir);
+        }
+
+        logger.add(new winston.transports.File({
+            name: 'logs-file',
+            filename: `${logDir}/trace.log`,
+            level: 'debug'
+        }));
     }
+});
 
-    logger.add(new winston.transports.File({
-        name: 'logs-file',
-        filename: `${logDir}/trace.log`,
-        level: env === 'development' ? 'debug' : 'info'
-    }));
-}
-
+const logDir = 'log';
+setupLogger(process,env,logDir);
+logger.setup = setupLogger;
 logger.entry = logger.debug;
 logger.exit = logger.debug;
 
