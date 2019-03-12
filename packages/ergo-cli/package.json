@@ -61,8 +61,8 @@
       "!./node_modules/**/*",
       "!./out/**/*",
       "!bin/*",
-      "!lib/ergoccore.js*",
-      "!lib/ergotopcore.js"
+      "!extracted/ergoccore.js",
+      "!extracted/ergotopcore.js"
     ],
     "path": "header.txt",
     "blocking": true,

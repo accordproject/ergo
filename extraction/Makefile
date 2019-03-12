@@ -51,13 +51,13 @@ TARGET2=compilercore.$(JS)
 MAIN2=compilerJS
 BYTE2=$(MAIN2).$(BYTE)
 BIN2=$(MAIN2).$(JS)
-DIST2=../packages/ergo-compiler/lib/$(TARGET2)
+DIST2=../packages/ergo-compiler/extracted/$(TARGET2)
 
 TARGET3=ergoccore.$(JS)
 MAIN3=ergocJS
 BYTE3=$(MAIN3).$(BYTE)
 BIN3=$(MAIN3).$(JS)
-DIST3=../packages/ergo-cli/lib/$(TARGET3)
+DIST3=../packages/ergo-cli/extracted/$(TARGET3)
 
 TARGET4=ergodep.$(NATIVE)
 MAIN4=ergodep
@@ -69,7 +69,7 @@ TARGET5=ergotopcore.$(JS)
 MAIN5=ergotopJS
 BYTE5=$(MAIN5).$(BYTE)
 BIN5=$(MAIN5).$(JS)
-DIST5=../packages/ergo-cli/lib/$(TARGET5)
+DIST5=../packages/ergo-cli/extracted/$(TARGET5)
 
 ## Toplevel
 all: $(DIST0) $(DIST1) $(DIST2) $(DIST3) $(DIST4) $(DIST5)

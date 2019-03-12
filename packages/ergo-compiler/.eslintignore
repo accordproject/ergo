@@ -1,7 +1,5 @@
 coverage
-mechanization
-extraction
-lib/compilercore.js
+extracted/compilercore.js
 docs
 node_modules
 out

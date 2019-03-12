@@ -48,7 +48,7 @@
       "!./node_modules/**/*",
       "!./out/**/*",
       "!bin/*",
-      "!lib/compilercore.js"
+      "!extracted/compilercore.js"
     ],
     "path": "header.txt",
     "blocking": true,
@@ -65,7 +65,7 @@
       "json"
     ],
     "include": [
-      "lib/**/compiler.js"
+      "lib/**/*.js"
     ],
     "exclude": [],
     "all": true,
