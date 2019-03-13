@@ -27,6 +27,7 @@ const ergoSample = fs.readFileSync('./test/data/test.ergo', 'utf8');
 const ergoSample2 = fs.readFileSync('./test/data/test2.ergo', 'utf8');
 
 chai.should();
+const expect = chai.expect;
 chai.use(require('chai-things'));
 chai.use(require('chai-as-promised'));
 
@@ -49,11 +50,16 @@ describe('ScriptManager', () => {
             scriptManager.getScripts().length.should.equal(2);
             scriptManager.getAllScripts().length.should.equal(2);
             scriptManager.getScriptsForLanguage('.ergo').length.should.equal(1);
+            (() => scriptManager.hasInit()).should.throw('Function __init was not found in logic');
+            (() => scriptManager.hasDispatch()).should.throw('Function __dispatch was not found in logic');
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(1);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause']);
             scriptManager.getCompiledScript().getContents().length.should.equal(28969);
             scriptManager.allFunctionDeclarations().length.should.equal(98);
+            scriptManager.allFunctionDeclarations().filter(x => x.name === '__init').length.should.equal(1);
+            expect(scriptManager.hasInit()).to.not.throw;
+            expect(scriptManager.hasDispatch()).to.not.throw;
         });
 
         it('should compile Ergo scripts', async function() {

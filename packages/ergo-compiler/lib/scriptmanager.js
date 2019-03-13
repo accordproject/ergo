@@ -239,6 +239,32 @@ class ScriptManager {
             },[]);
         return functionDeclarations;
     }
+
+    /**
+     * Looks for the presence of a function in the JavaScript logic
+     * @param {string} name  - the function name
+     */
+    hasFunctionDeclaration(name) {
+        // get the function declarations of either init or dispatch
+        const funDecls = this.allFunctionDeclarations();
+        if (!funDecls.some((ele) => { return ele.getName() === name; })) {
+            throw new Error(`Function ${name} was not found in logic`);
+        }
+    }
+    /**
+     * Checks that the logic has a dispatch function
+     */
+    hasDispatch() {
+        this.hasFunctionDeclaration('__dispatch');
+    }
+
+    /**
+     * Checks that the logic has an init function
+     */
+    hasInit() {
+        this.hasFunctionDeclaration('__init');
+    }
+
 }
 
 module.exports = ScriptManager;
