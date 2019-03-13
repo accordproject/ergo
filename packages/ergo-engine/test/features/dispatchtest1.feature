@@ -2,8 +2,8 @@ Feature: Dispatch Tests
   This describe the expected behavior when dispatching requests to a clause
 
   Background:
-    Given the Ergo contract "org.accordproject.dispatchtest.DispatchTest" in file "data/dispatchtest/logic.ergo"
-    And the model in file "data/dispatchtest/model.cto"
+    Given the Ergo contract "org.accordproject.dispatchtest.DispatchTest" in file "examples/dispatchtest/logic.ergo"
+    And the model in file "examples/dispatchtest/model.cto"
     And the contract data
 """
 {

@@ -2,8 +2,8 @@ Feature: Volume discount
   This describe the expected behavior for the Accord Project's volume discount contract
 
   Background:
-    Given the model in file "data/volumediscount/model.cto"
-    And the Ergo contract "org.accordproject.volumediscount.VolumeDiscount" in file "data/volumediscount/logic.ergo"
+    Given the model in file "examples/volumediscount/model.cto"
+    And the Ergo contract "org.accordproject.volumediscount.VolumeDiscount" in file "examples/volumediscount/logic.ergo"
     And the contract data
 """
 {

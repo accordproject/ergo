@@ -2,8 +2,8 @@ Feature: Acceptance of delivery Contract
   This describes the expected behavior for the Accord Project's Acceptance of delivery contract
 
   Background:
-    Given the Ergo contract "org.accordproject.acceptanceofdelivery.AcceptanceOfDelivery" in file "data/acceptance-of-delivery/logic.ergo"
-    And the model in file "data/acceptance-of-delivery/model.cto"
+    Given the Ergo contract "org.accordproject.acceptanceofdelivery.AcceptanceOfDelivery" in file "examples/acceptance-of-delivery/logic.ergo"
+    And the model in file "examples/acceptance-of-delivery/model.cto"
     And the contract data
 """
 {

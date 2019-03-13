@@ -1,7 +1,7 @@
 [
   {
     "name": "smoketest",
-    "dir": "data/smoke",
+    "dir": "examples/smoke",
     "ergo": ["logic.ergo"],
     "models": [],
     "contract": "contract.json",
@@ -17,7 +17,7 @@
   },
   {
     "name": "durationtest",
-    "dir": "data/smoke",
+    "dir": "examples/smoke",
     "ergo": ["duration.ergo"],
     "models": [],
     "contract": "contract.json",
@@ -32,7 +32,7 @@
   },
   {
     "name": "mathtest",
-    "dir": "data/smoke",
+    "dir": "examples/smoke",
     "ergo": ["math.ergo"],
     "models": [],
     "contract": "contract.json",
@@ -48,7 +48,7 @@
   },
   {
     "name": "helloworldstate",
-    "dir": "data/helloworldstate",
+    "dir": "examples/helloworldstate",
     "ergo": ["logic.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
@@ -66,7 +66,7 @@
   },
   {
     "name": "helloworldstate (with current time)",
-    "dir": "data/helloworldstate",
+    "dir": "examples/helloworldstate",
     "ergo": ["logic.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
@@ -84,7 +84,7 @@
   },
   {
     "name": "helloworld (with call)",
-    "dir": "data/helloworld",
+    "dir": "examples/helloworld",
     "ergo": ["logic4.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
@@ -108,7 +108,7 @@
   },
   {
     "name": "bad logic",
-    "dir": "data/bad-logic",
+    "dir": "examples/bad-logic",
     "ergo": ["logic.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
