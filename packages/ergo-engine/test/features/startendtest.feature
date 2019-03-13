@@ -2,7 +2,7 @@ Feature: starOf and endOf with time periods test
   This describe the expected behavior for Ergo compiler when using integer literals
 
   Background:
-    Given the Ergo contract "org.accordproject.startendtest.StartEndTest" in file "data/startendtest/logic.ergo"
+    Given the Ergo contract "org.accordproject.startendtest.StartEndTest" in file "examples/startendtest/logic.ergo"
     And the contract data
 """
 {

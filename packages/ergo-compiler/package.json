@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "composer-concerto": "0.60.0",
+    "debug": "^2.6.9",
     "winston": "^3.2.1",
     "yargs": "9.0.1"
   },
@@ -44,6 +45,7 @@
     "src": [
       "**/*.js",
       "!./test/data/**/*",
+      "!./test/examples/**/*",
       "!./coverage/**/*",
       "!./node_modules/**/*",
       "!./out/**/*",

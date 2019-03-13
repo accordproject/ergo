@@ -2,8 +2,8 @@ Feature: Bad logic
   This describe the expected behavior for Ergo compiler when a function has duplicate bindings.
 
   Background:
-    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "data/bad-function/logic.ergo"
-    And the model in file "data/helloworld/model.cto"
+    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "examples/bad-function/logic.ergo"
+    And the model in file "examples/helloworld/model.cto"
     And the contract data
 """
 {

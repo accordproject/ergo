@@ -19,6 +19,8 @@
  * @module ergo-compiler
  */
 
-module.exports.Compiler = require('./lib/compiler.js');
 module.exports.Logger = require('./lib/logger.js');
-
+module.exports.APModelManager = require('./lib/apmodelmanager.js');
+module.exports.ScriptManager = require('./lib/scriptmanager.js');
+module.exports.Compiler = require('./lib/compiler.js');
+module.exports.TemplateLogic = require('./lib/templatelogic.js');

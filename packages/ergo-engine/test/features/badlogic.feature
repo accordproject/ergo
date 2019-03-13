@@ -2,8 +2,8 @@ Feature: Bad logic
   This describe the expected behavior for Ergo compiler when there is a parse error.
 
   Background:
-    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "data/bad-logic/logic.ergo"
-    And the model in file "data/bad-logic/model.cto"
+    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "examples/bad-logic/logic.ergo"
+    And the model in file "examples/bad-logic/model.cto"
     And the contract data
 """
 {

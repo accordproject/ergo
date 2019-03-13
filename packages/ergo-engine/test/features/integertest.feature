@@ -2,8 +2,8 @@ Feature: Integer test
   This describe the expected behavior for Ergo compiler when using integer literals
 
   Background:
-    Given the Ergo contract "org.accordproject.integertest.IntegerTest" in file "data/integertest/logic.ergo"
-    And the model in file "data/integertest/model.cto"
+    Given the Ergo contract "org.accordproject.integertest.IntegerTest" in file "examples/integertest/logic.ergo"
+    And the model in file "examples/integertest/model.cto"
     And the contract data
 """
 {

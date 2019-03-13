@@ -2,9 +2,9 @@ Feature: Promissory note Contract
   This describes the expected behavior for the Accord Project's Promissory note contract, implemented with a slightly different CTO using a concept instead of an asset
 
   Background:
-    Given the Ergo contract "org.accordproject.promissorynote.PromissoryNote" in file "data/promissory-note/logic2.ergo"
-    And the model in file "data/promissory-note/business.cto"
-    And the model in file "data/promissory-note/model2.cto"
+    Given the Ergo contract "org.accordproject.promissorynote.PromissoryNote" in file "examples/promissory-note/logic2.ergo"
+    And the model in file "examples/promissory-note/business.cto"
+    And the model in file "examples/promissory-note/model2.cto"
     And the contract data
 """
 {
