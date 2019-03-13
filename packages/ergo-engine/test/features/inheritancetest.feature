@@ -2,7 +2,7 @@ Feature: Inheritance test
   This describe the expected behavior for Ergo compiler when handling requests which exploit inheritance.
 
   Background:
-    Given the Ergo contract "org.accordproject.inheritancetest.InheritanceTest" in file "data/inheritancetest/logic.ergo"
+    Given the Ergo contract "org.accordproject.inheritancetest.InheritanceTest" in file "examples/inheritancetest/logic.ergo"
     And the contract data
 """
 {
