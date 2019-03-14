@@ -36,11 +36,11 @@ describe('ScriptManager', () => {
     describe('#constructor', () => {
 
         it('should instantiate a script manager', async function() {
-            (() => new ScriptManager(modelManager)).should.not.be.null;
+            (() => new ScriptManager('cicero',modelManager)).should.not.be.null;
         });
 
         it('should support both JavaScript and Ergo scripts', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
@@ -63,7 +63,7 @@ describe('ScriptManager', () => {
         });
 
         it('should compile Ergo scripts', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
@@ -74,7 +74,7 @@ describe('ScriptManager', () => {
         });
 
         it('should fail to compile an Ergo script with a parse error', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test2.ergo','.ergo',ergoSample2);
             scriptManager.addScript(script1);
@@ -83,7 +83,7 @@ describe('ScriptManager', () => {
         });
 
         it('should delete both JavaScript and Ergo scripts if they exist', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
@@ -96,14 +96,14 @@ describe('ScriptManager', () => {
         });
 
         it('should fail deleting a script which does not exist', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             scriptManager.addScript(script1);
             return (() => scriptManager.deleteScript('test.ergo')).should.throw('Script file does not exist');
         });
 
         it('should clear scripts', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
@@ -114,7 +114,7 @@ describe('ScriptManager', () => {
         });
 
         it('should get scripts identifiers', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
@@ -123,7 +123,7 @@ describe('ScriptManager', () => {
         });
 
         it('should update script', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.js','.js',jsSample2);
             scriptManager.addScript(script1);
@@ -133,7 +133,7 @@ describe('ScriptManager', () => {
         });
 
         it('should fail updating a script which does not exist', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
@@ -141,7 +141,7 @@ describe('ScriptManager', () => {
         });
 
         it('should modify script', async function() {
-            const scriptManager = new ScriptManager(modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             scriptManager.addScript(script1);
             scriptManager.modifyScript('test.js','.js',jsSample2);

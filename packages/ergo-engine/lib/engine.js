@@ -14,199 +14,236 @@
 
 'use strict';
 
-const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
 const Logger = require('@accordproject/ergo-compiler').Logger;
 const Util = require('./util');
+const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
 
 const Moment = require('moment');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
 Moment.fn.toJSON = Util.momentToJson;
 
 const {
-    VM
+    VM,
+    VMScript
 } = require('vm2');
 
 /**
  * <p>
- * Engine class. Execution of Ergo logic (JavaScript target).
+ * Engine class. Execution of template logic against a request object, returning a response to the caller.
  * </p>
  * @class
  * @public
  * @memberof module:ergo-engine
  */
 class Engine {
+
     /**
-     * Execute Ergo contract with request
-     *
-     * @param {string} ergoCode JavaScript code for ergo logic
-     * @param {string} codeKind either 'es6' or 'es5'
-     * @param {string} contractName of the contract to execute
-     * @param {object} contractJson the contract data in JSON
-     * @param {object} stateJson the state in JSON
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} requestJson the request transaction in JSON
-     * @returns {object} Promise to the result of execution
+     * Create the Engine.
      */
-    static executeRequestToContract(ergoCode,codeKind,contractName,contractJson,stateJson,currentTime,requestJson) {
-        const now = Util.setCurrentTime(currentTime);
+    constructor() {
+        this.scripts = {};
+    }
+
+    /**
+     * Compile and cache JavaScript logic
+     * @param {ScriptManager} scriptManager  - the script manager
+     * @param {string} clauseId - the clause identifier
+     * @private
+     */
+    compileJsLogic(scriptManager, clauseId) {
+        let allJsScripts = '';
+
+        scriptManager.getAllScripts().forEach(function (element) {
+            if (element.getLanguage() === '.js') {
+                allJsScripts += element.getContents();
+            }
+        }, this);
+
+        if (allJsScripts === '') {
+            throw new Error('Did not find any JavaScript logic');
+        }
+
+        const script = new VMScript(allJsScripts);
+        this.scripts[clauseId] = script;
+    }
+
+    /**
+     * Execute a clause, passing in the request object
+     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {string} clauseId - the clause identifier
+     * @param {object} contract - the contract data
+     * @param {object} request - the request, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {object} state - the contract state, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {string} currentTime - the definition of 'now'
+     * @return {Promise} a promise that resolves to a result for the clause
+     * @private
+     */
+    async execute(logic, clauseId, contract, request, state, currentTime) {
+        const serializer = logic.getSerializer();
+        const scriptManager = logic.getScriptManager();
+
+        // ensure the contract is valid
+        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
+        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validContract.validate();
+
+        // ensure the request is valid
+        const validRequest = serializer.fromJSON(request, {validate: false, acceptResourcesForRelationships: true});
+        validRequest.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validRequest.validate();
+
+        // Set the current time and UTC Offset
+        const validNow = Util.setCurrentTime(currentTime);
+        const validUtcOffset = validNow.utcOffset();
+
+        // ensure the state is valid
+        const validState = serializer.fromJSON(state, {validate: false, acceptResourcesForRelationships: true});
+        validState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validState.validate();
+
+        Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
+
+        let script;
+
+        this.compileJsLogic(scriptManager, clauseId);
+        script = this.scripts[clauseId];
+
+        const callScript = logic.getDispatchCall(logic);
+
         const vm = new VM({
             timeout: 1000,
             sandbox: {
                 moment: Moment,
+                serializer: serializer,
                 logger: Logger,
-                utcOffset: now.utcOffset()
+                utcOffset: validUtcOffset
             }
         });
 
         // add immutables to the context
-        const params = { 'contract': contractJson, 'request': requestJson, 'state': stateJson, 'emit': [], 'now': now };
-        vm.freeze(params, 'params'); // Add the context
-        vm.run(ergoCode); // Load the generated logic
-        let contract;
-        let clauseCall;
-        if (codeKind === 'es5') {
-            contract = '';
-            clauseCall = 'main(params);'; // Create the clause call
-        } else {
-            contract = 'let contract = new ' + ErgoCompiler.contractCallName(contractName) + '();'; // Instantiate the contract
-            clauseCall = 'contract.main(params);'; // Create the clause call
+        vm.freeze(validContract, 'data'); // Second argument adds object to global.
+        vm.freeze(validRequest, 'request'); // Second argument adds object to global.
+        vm.freeze(validState, 'state'); // Second argument adds object to global.
+        vm.freeze(validNow, 'now'); // Second argument adds object to global.
+
+        // execute the logic
+        vm.run(script);
+        const result = vm.run(callScript);
+
+        // ensure the response is valid
+        result.response.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        result.response.validate();
+        const responseResult = serializer.toJSON(result.response, {convertResourcesToRelationships: true});
+
+        // ensure the new state is valid
+        result.state.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        result.state.validate();
+        const stateResult = serializer.toJSON(result.state, {convertResourcesToRelationships: true});
+
+        // ensure all the emits are valid
+        let emitResult = [];
+        for (let i = 0; i < result.emit.length; i++) {
+            result.emit[i].$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            result.emit[i].validate();
+            emitResult.push(serializer.toJSON(result.emit[i], {convertResourcesToRelationships: true}));
         }
-        const result = vm.run(contract + clauseCall); // Call the logic
-        if (result.hasOwnProperty('left')) {
-            return Promise.resolve(result.left);
-        } else {
-            return Promise.resolve({ 'error' : { 'kind' : 'ErgoError', 'message' : result.right } });
-        }
+
+        return {
+            'clause': clauseId,
+            'request': request,
+            'response': responseResult,
+            'state': stateResult,
+            'emit': emitResult,
+        };
     }
 
     /**
-     * Invoke a clause of the contract
-     *
-     * @param {string} ergoCode JavaScript code for ergo logic
-     * @param {string} codeKind either 'es6' or 'es5'
-     * @param {string} contractName of the contract
-     * @param {string} clauseName of the contract to invoke
-     * @param {object} contractJson the contract data in JSON
-     * @param {object} stateJson the state in JSON
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} clauseParams the clause parameters
-     * @returns {object} Promise to the result of invocation
+     * Initialize a clause
+     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {string} clauseId - the clause identifier
+     * @param {object} contract - the contract data
+     * @param {string} currentTime - the definition of 'now'
+     * @return {Promise} a promise that resolves to a result for the clause initialization
+     * @private
      */
-    static invokeContractClause(ergoCode,codeKind,contractName,clauseName,contractJson,stateJson,currentTime,clauseParams) {
-        const now = Util.setCurrentTime(currentTime);
+    async init(logic, clauseId, contract, currentTime) {
+        const serializer = logic.getSerializer();
+        const scriptManager = logic.getScriptManager();
+
+        // ensure the contract is valid
+        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
+        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validContract.validate();
+
+        // Set the current time and UTC Offset
+        const validNow = Util.setCurrentTime(currentTime);
+        const validUtcOffset = validNow.utcOffset();
+
+        let script;
+
+        this.compileJsLogic(scriptManager, clauseId);
+        script = this.scripts[clauseId];
+
+        const callScript = logic.getInitCall();
+
         const vm = new VM({
             timeout: 1000,
             sandbox: {
                 moment: Moment,
+                serializer: serializer,
                 logger: Logger,
-                utcOffset: now.utcOffset()
+                utcOffset: validUtcOffset
             }
         });
 
         // add immutables to the context
-        const params = Object.assign({}, { 'contract': contractJson, 'state': stateJson, 'emit': [], 'now': now }, clauseParams);
-        vm.freeze(params, 'params'); // Add the context
-        vm.run(ergoCode); // Load the generated logic
-        let contract;
-        let clauseCall;
-        if (codeKind === 'es5') {
-            contract = '';
-            clauseCall = clauseName+'(params);'; // Create the clause call
+        vm.freeze(validContract, 'data'); // Second argument adds object to global.
+        vm.freeze(validNow, 'now'); // Second argument adds object to global.
+
+        // execute the logic
+        vm.run(script);
+        const ergoResult = vm.run(callScript);
+        let result;
+
+        if (ergoResult.hasOwnProperty('left')) {
+            result = ergoResult.left;
+        } else if (ergoResult.hasOwnProperty('right')) {
+            throw new Error("[Ergo] " + JSON.stringify(ergoResult.right));
         } else {
-            contract = 'let contract = new ' + ErgoCompiler.contractCallName(contractName) + '();'; // Instantiate the contract
-            clauseCall = 'contract.' + clauseName+ '(params);'; // Create the clause call
+            result = ergoResult;
         }
-        const result = vm.run(contract + clauseCall); // Call the logic
-        if (result.hasOwnProperty('left')) {
-            return Promise.resolve(result.left);
-        } else {
-            return Promise.resolve({ 'error' : { 'kind' : 'ErgoError', 'message' : result.right } });
+
+        let responseResult = null;
+        if (result.response) {
+            result.response.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            result.response.validate();
+            responseResult = serializer.toJSON(result.response, {convertResourcesToRelationships: true});
         }
-    }
+        console.log('RESULT!!! ' + JSON.stringify(responseResult));
+        // ensure the response is valid
 
-    /**
-     * Invoke the init clause of the contract
-     *
-     * @param {string} ergoCode JavaScript code for ergo logic
-     * @param {string} codeKind either 'es6' or 'es5'
-     * @param {string} contractName of the contract
-     * @param {object} contractJson the contract data in JSON
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} clauseParams the clause parameters
-     * @returns {object} Promise to the result of execution
-     */
-    static invokeInit(ergoCode,codeKind,contractName,contractJson,currentTime,clauseParams) {
-        const defaultState = {'stateId':'org.accordproject.cicero.contract.AccordContractState#1','$class':'org.accordproject.cicero.contract.AccordContractState'};
-        return this.invokeContractClause(ergoCode,codeKind,contractName,'init',contractJson,defaultState,currentTime,clauseParams);
-    }
+        // ensure the new state is valid
+        result.state.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        result.state.validate();
+        const stateResult = serializer.toJSON(result.state, {convertResourcesToRelationships: true});
 
-    /**
-     * Compile, then execute the Contract with a request
-     *
-     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
-     * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} codeKind either 'es6' or 'es5'
-     * @param {string} contractName of the contract
-     * @param {object} contractJson the contract data in JSON
-     * @param {object} stateJson the state in JSON
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} requestJson the request transaction in JSON
-     * @returns {object} Promise to the result of execution
-     */
-    static execute(ergoSources,ctoSources,codeKind,contractName,contractJson,stateJson,currentTime,requestJson) {
-        return (ErgoCompiler.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
-            if (ergoCode.hasOwnProperty('error')) {
-                return ergoCode;
-            } else {
-                return this.executeRequestToContract(ergoCode.success,codeKind,contractName,contractJson,stateJson,currentTime,requestJson);
-            }
-        });
-    }
+        // ensure all the emits are valid
+        let emitResult = [];
+        for (let i = 0; i < result.emit.length; i++) {
+            result.emit[i].$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            result.emit[i].validate();
+            emitResult.push(serializer.toJSON(result.emit[i], {convertResourcesToRelationships: true}));
+        }
 
-    /**
-     * Compile then invoke a clause of the contract
-     *
-     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
-     * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} codeKind either 'es6' or 'es5'
-     * @param {string} contractName of the contract
-     * @param {string} clauseName of the contract to invoke
-     * @param {object} contractJson the contract data in JSON
-     * @param {object} stateJson the state in JSON
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} clauseParams the clause parameters
-     * @returns {object} Promise to the result of invocation
-     */
-    static invoke(ergoSources,ctoSources,codeKind,contractName,clauseName,contractJson,stateJson,currentTime,clauseParams) {
-        return (ErgoCompiler.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
-            if (ergoCode.hasOwnProperty('error')) {
-                return ergoCode;
-            } else {
-                return this.invokeContractClause(ergoCode.success,codeKind,contractName,clauseName,contractJson,stateJson,currentTime,clauseParams);
-            }
-        });
-    }
-
-    /**
-     * Compile then invoke the init clause of the contract
-     *
-     * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
-     * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} codeKind either 'es6' or 'es5'
-     * @param {string} contractName of the contract
-     * @param {object} contractJson the contract data in JSON
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} clauseParams the clause parameters
-     * @returns {object} Promise to the result of invocation
-     */
-    static init(ergoSources,ctoSources,codeKind,contractName,contractJson,currentTime,clauseParams) {
-        return (ErgoCompiler.compile(ergoSources,ctoSources,codeKind,true)).then((ergoCode) => {
-            if (ergoCode.hasOwnProperty('error')) {
-                return ergoCode;
-            } else {
-                return this.invokeInit(ergoCode.success,codeKind,contractName,contractJson,currentTime,clauseParams);
-            }
-        });
+        return {
+            'clause': clauseId,
+            'request': null,
+            'response': responseResult,
+            'state': stateResult,
+            'emit': emitResult,
+        };
     }
 }
 
