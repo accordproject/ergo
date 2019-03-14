@@ -23,7 +23,7 @@ const ErgoCompiler = require('./compiler');
  * </p>
  * @private
  * @class
- * @memberof module:cicero-core
+ * @memberof module:ergo-compiler
  */
 class ScriptManager {
 
@@ -33,13 +33,16 @@ class ScriptManager {
      * <strong>Note: Only to be called by framework code. Applications should
      * retrieve instances from {@link BusinessNetworkDefinition}</strong>
      * </p>
+     * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
      * @param {ModelManager} modelManager - The ModelManager to use for this ScriptManager
      */
-    constructor(modelManager) {
+    constructor(target, modelManager) {
+        this.target = target;
         this.modelManager = modelManager;
         this.scripts = {};
         this.compiledScript = null;
     }
+
     /**
      * Visitor design pattern
      * @param {Object} visitor - the visitor
@@ -49,6 +52,16 @@ class ScriptManager {
      */
     accept(visitor,parameters) {
         return visitor.visit(this, parameters);
+    }
+
+    /**
+     * Change the compilation target. Note: This might force recompilation if logic has already been compiled.
+     * @param {String} target - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @param {boolean} recompile - whether to force recompilation of the logic
+     */
+    changeTarget(target, recompile) {
+        this.target = target;
+        if (recompile) { this.compileLogic(true); }
     }
 
     /**
@@ -92,7 +105,7 @@ class ScriptManager {
         }
         this.addScript(script);
         // Re-compile Ergo
-        this.compileLogic();
+        this.compileLogic(true);
     }
 
     /**
@@ -193,10 +206,7 @@ class ScriptManager {
      * @private
      */
     getCompiledScript() {
-        if (!this.compiledScript) {
-            this.compileLogic();
-        }
-        return this.compiledScript;
+        return this.compileLogic(false);
     }
 
     /**
@@ -209,19 +219,25 @@ class ScriptManager {
 
     /**
      * Compile the Ergo logic
+     * @param {boolean} force - whether to force recompilation of the logic
      * @return {object} The script compiled to JavaScript
      */
-    compileLogic() {
+    compileLogic(force) {
+        if (this.compiledScript && !force) {
+            return this.compiledScript;
+        }
         let sourceErgo = this.getLogic();
         if (sourceErgo === undefined || sourceErgo.length === 0) {
             return null;
         }
-        const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),'cicero',true);
-        //console.log('compiling' + this.contents);
+        // Do not link to runtime for Java target, only for JavaScript
+        const link = this.target === 'java' ? false : true;
+        const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.target,link);
         if (compiledErgo.hasOwnProperty('error')) {
             throw new Error(ErgoCompiler.ergoVerboseErrorToString(compiledErgo.error));
         }
-        this.compiledScript = new Script(this.modelManager, 'main.js', '.js', compiledErgo.success);
+        const codeExt = this.target === 'java' ? '.java' : '.js';
+        this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success);
         return this.compiledScript;
     }
 

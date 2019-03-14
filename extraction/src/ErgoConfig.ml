@@ -23,7 +23,7 @@ type lang =
   | Cicero
   | Java
 
-let lang_of_name s =
+let lang_of_target s =
   begin match s with
   | "ergo" -> Ergo
   | "es5" -> ES5
@@ -50,6 +50,18 @@ let extension_of_lang lang =
   | Cicero -> "_cicero.js"
   | Java -> ".java"
   end
+
+let script_lang_of_lang lang =
+  begin match lang with
+  | Ergo -> ".ergo"
+  | ES5 -> ".js"
+  | ES6 -> ".js"
+  | Cicero -> ".js"
+  | Java -> ".java"
+  end
+
+let script_lang_of_target s =
+  script_lang_of_lang (lang_of_target s)
 
 let can_link_runtime lang =
   begin match lang with
@@ -93,8 +105,8 @@ let get_all gconf =
 let get_all_sorted gconf =
   topo_sort_inputs (get_all gconf)
 
-let set_source_lang gconf s = gconf.econf_source <- (lang_of_name s)
-let set_target_lang gconf s = gconf.econf_target <- (lang_of_name s)
+let set_source_lang gconf s = gconf.econf_source <- (lang_of_target s)
+let set_target_lang gconf s = gconf.econf_target <- (lang_of_target s)
 let add_source_text gconf f fcontent =
   gconf.econf_sources_text <-  (f,fcontent) :: gconf.econf_sources_text
 let add_cto gconf cto =

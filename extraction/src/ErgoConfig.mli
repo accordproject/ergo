@@ -21,9 +21,10 @@ type lang =
   | Cicero
   | Java
 
-val lang_of_name : string -> lang
+val lang_of_target : string -> lang
 val name_of_lang : lang -> string
 val extension_of_lang : lang -> string
+val script_lang_of_target : string -> string
 
 val available_targets : string
 

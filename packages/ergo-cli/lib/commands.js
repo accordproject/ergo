@@ -16,7 +16,7 @@
 
 const Fs = require('fs');
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
-const ErgoEngine = require('@accordproject/ergo-engine').Engine;
+const EngineOld = require('@accordproject/ergo-engine').EngineOld;
 
 /**
  * Load a file or JSON string
@@ -73,7 +73,7 @@ class Commands {
         }
         let initResponse;
         if (stateInput === null) {
-            initResponse = ErgoEngine.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,{});
+            initResponse = EngineOld.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,{});
         } else {
             const stateJson = getJson(stateInput);
             initResponse = Promise.resolve({ state: stateJson });
@@ -81,7 +81,7 @@ class Commands {
         // Get all the other requests and chain execution through Promise.reduce()
         return requestsJson.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return ErgoEngine.execute(ergoSources,ctoSources,'es6',contractName,contractJson,result.state,currentTime,requestJson);
+                return EngineOld.execute(ergoSources,ctoSources,'es6',contractName,contractJson,result.state,currentTime,requestJson);
             });
         }, initResponse);
     }
@@ -117,7 +117,7 @@ class Commands {
         const contractJson = getJson(contractInput);
         const clauseParams = getJson(paramsInput);
         const stateJson = getJson(stateInput);
-        return ErgoEngine.invoke(ergoSources,ctoSources,'es6',contractName,clauseName,contractJson,stateJson,currentTime,clauseParams);
+        return EngineOld.invoke(ergoSources,ctoSources,'es6',contractName,clauseName,contractJson,stateJson,currentTime,clauseParams);
     }
 
     /**
@@ -148,7 +148,7 @@ class Commands {
         }
         const contractJson = getJson(contractInput);
         const clauseParams = getJson(paramsInput);
-        return ErgoEngine.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,clauseParams);
+        return EngineOld.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,clauseParams);
     }
 
     /**

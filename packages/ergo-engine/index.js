@@ -20,4 +20,5 @@
  */
 
 module.exports.Engine = require('./lib/engine.js');
+module.exports.EngineOld = require('./lib/engineold.js');
 module.exports.Util = require('./lib/util.js');

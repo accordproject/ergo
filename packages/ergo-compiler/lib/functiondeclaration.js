@@ -21,7 +21,7 @@
  * declaration that the function processes.
  *
  * @class
- * @memberof module:cicero-core
+ * @memberof module:ergo-compiler
  */
 class FunctionDeclaration {
 

@@ -22,7 +22,8 @@ const expect = Chai.expect;
 
 const Moment = require('moment');
 
-const ErgoEngine = require('./engine');
+const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
+const Engine = require('./engine');
 const Util = require('./util');
 
 const { Before, Given, When, Then } = require('cucumber');
@@ -46,91 +47,69 @@ function compare(expected,actual) {
 /**
  * Invoke Ergo contract initialization
  *
- * @param {string} rootdir the root directory used to resolve file names
- * @param {string} target the target platform (es5, es6, etc)
- * @param {Array<string>} ergo the list of ergo files
- * @param {Array<string>} models the list of model files
- * @param {string} contractName the fully qualified name of the contract
+ * @param {object} engine - the execution engine
+ * @param {object} templateLogic - the Template Logic
  * @param {object} contractJson contract data in JSON
  * @param {string} currentTime the definition of 'now'
  * @returns {object} Promise to the initial state of the contract
  */
-function init(rootdir,target,ergo,models,contractName,contractJson,currentTime) {
-    const ergoSources = [];
-    for (let i = 0; i < ergo.length; i++) {
-        const ergoFile = Path.resolve(rootdir, ergo[i]);
-        const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-        ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
-    }
-    let ctoSources = [];
-    for (let i = 0; i < models.length; i++) {
-        const ctoFile = Path.resolve(rootdir, models[i]);
-        const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-        ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
-    }
-    return ErgoEngine.init(ergoSources, ctoSources, target, contractName, contractJson, currentTime, {});
+function init(engine,templateLogic,contractJson,currentTime) {
+    templateLogic.compileLogic();
+    return engine.init(templateLogic,templateLogic.getContractName(),contractJson,currentTime);
 }
 
 /**
  * Execute the Ergo contract with a request
  *
- * @param {string} rootdir the root directory used to resolve file names
- * @param {string} target the target platform (es5, es6, etc)
- * @param {Array<string>} ergo the list of ergo files
- * @param {Array<string>} models the list of model files
- * @param {string} contractName the fully qualified name of the contract
- * @param {object} contractJson contract data in JSON
- * @param {object} stateJson state data in JSON
- * @param {string} currentTime the definition of 'now'
- * @param {object} requestJson state data in JSON
+ * @param {object} engine - the execution engine
+ * @param {object} templateLogic - the Template Logic
+ * @param {object} contractJson - contract data in JSON
+ * @param {object} stateJson - state data in JSON
+ * @param {string} currentTime - the definition of 'now'
+ * @param {object} requestJson - state data in JSON
  * @returns {object} Promise to the response
  */
-function execute(rootdir,target,ergo,models,contractName,contractJson,stateJson,currentTime,requestJson) {
-    const ergoSources = [];
-    for (let i = 0; i < ergo.length; i++) {
-        const ergoFile = Path.resolve(rootdir, ergo[i]);
-        const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-        ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
-    }
-    let ctoSources = [];
-    for (let i = 0; i < models.length; i++) {
-        const ctoFile = Path.resolve(rootdir, models[i]);
-        const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-        ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
-    }
-    return ErgoEngine.execute(ergoSources, ctoSources, target, contractName, contractJson, stateJson, currentTime, requestJson);
+function execute(engine,templateLogic,contractJson,stateJson,currentTime,requestJson) {
+    templateLogic.compileLogic();
+    return engine.execute(templateLogic,templateLogic.getContractName(),contractJson,requestJson,stateJson,currentTime);
 }
 
 // Defaults
 const defaultState = {'stateId':'org.accordproject.cicero.contract.AccordContractState#1','$class':'org.accordproject.cicero.contract.AccordContractState'};
 
 Before(function () {
+    this.engine = new Engine();
+    this.rootdir = Util.resolveRootDir(this.parameters);
     this.currentTime = '1970-01-01T00:00:00Z';
-    this.target = 'es6';
+    this.templateLogic = new TemplateLogic('es6');
     this.state = defaultState;
-    this.ergos = [];
-    this.models = [];
 });
 
 Given('the target platform {string}', function (target) {
-    this.target = target;
-});
-
-Given('the Ergo contract {string} in file {string}', function(paramName,paramFile) {
-    this.ergos.push(paramFile);
-    this.contractName = paramName;
+    this.templateLogic.setTarget(target);
 });
 
 Given('the current time is {string}', function(currentTime) {
     this.currentTime = currentTime;
 });
 
+Given('the Ergo contract {string} in file {string}', function(paramName,paramFile) {
+    this.templateLogic.setContractName(paramName);
+    const fileName = Path.resolve(this.rootdir, paramFile);
+    const logicFile = Fs.readFileSync(fileName, 'utf8');
+    this.templateLogic.addLogicFile(logicFile,paramFile);
+});
+
 Given('the Ergo logic in file {string}', function(paramFile) {
-    this.ergos.push(paramFile);
+    const fileName = Path.resolve(this.rootdir, paramFile);
+    const logicFile = Fs.readFileSync(fileName, 'utf8');
+    this.templateLogic.addLogicFile(logicFile,paramFile);
 });
 
 Given('the model in file {string}', function(paramFile) {
-    this.models.push(paramFile);
+    const fileName = Path.resolve(this.rootdir, paramFile);
+    const modelFile = Fs.readFileSync(fileName, 'utf8');
+    this.templateLogic.addModelFile(modelFile,paramFile);
 });
 
 Given('the contract data', function (actualContract) {
@@ -156,7 +135,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return compare(response,this.answer.response);
     } else {
-        return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+        return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -168,7 +147,7 @@ Then('it should respond with', function (expectedResponse) {
 
 Then('the initial state( of the contract) should be', function (expectedState) {
     const state = JSON.parse(expectedState);
-    return init(Util.resolveRootDir(this.parameters),this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
+    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -178,7 +157,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(Util.resolveRootDir(this.parameters),this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
+    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -193,7 +172,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return compare(state,this.answer.state);
     } else {
-        return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+        return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -210,7 +189,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
         expect(this.answer).to.not.have.property('error');
         return compare(emit,this.answer.emit);
     } else {
-        return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+        return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
@@ -222,7 +201,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
 
 Then('it should fail with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
-    return execute(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.state,this.currentTime,this.request)
+    return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
         .then((actualAnswer) => {
             this.answer = actualAnswer;
             expect(actualAnswer).to.have.property('error');
@@ -234,7 +213,7 @@ Then('it should fail with the error', function (expectedError) {
 
 Then('it should fail to initialize with the error', function (expectedError) {
     const error = JSON.parse(expectedError);
-    return init(Util.resolveRootDir(this.parameters), this.target,this.ergos,this.models,this.contractName,this.contract,this.currentTime)
+    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('error');
             expect(actualAnswer).to.not.have.property('state');
