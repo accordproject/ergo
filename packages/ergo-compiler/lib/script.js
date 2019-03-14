@@ -24,7 +24,7 @@ const debug = require('debug')('cicero:Script');
  * </p>
  * @private
  * @class
- * @memberof module:cicero-core
+ * @memberof module:ergo-compiler
  */
 class Script {
 
@@ -47,7 +47,7 @@ class Script {
         if(!contents) {
             throw new Error('Empty script contents');
         }
-        if (this.language !== '.ergo') {
+        if (this.language === '.js') {
             let data = {errorStatement:''};
             let parser;
 
