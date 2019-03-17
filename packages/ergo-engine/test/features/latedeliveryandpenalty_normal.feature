@@ -3,22 +3,22 @@ Feature: Late delivery contract
 
   Background:
     Given the Ergo contract "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty" in file "examples/latedeliveryandpenalty/logic.ergo"
-    And the model in file "examples/latedeliveryandpenalty/model.cto"
     And the model in file "examples/latedeliveryandpenalty/test.cto"
+    And the model in file "examples/latedeliveryandpenalty/model.cto"
     And the contract data
 """
 {
   "$class": "org.accordproject.latedeliveryandpenalty.TemplateModel",
   "forceMajeure": true,
   "penaltyDuration": {
-    "$class": "org.accordproject.base.Duration",
+    "$class": "org.accordproject.test.Duration",
     "amount": 2,
     "unit": "DAY"
   },
   "penaltyPercentage": 10.5,
   "capPercentage": 55,
   "termination": {
-    "$class": "org.accordproject.base.Duration",
+    "$class": "org.accordproject.test.Duration",
     "amount": 15,
     "unit": "DAY"
   },
@@ -43,13 +43,7 @@ Feature: Late delivery contract
 """
     Then it should fail with the error
 """
-{
-  "kind": "ErgoError",
-  "message": {
-      "$class": "org.accordproject.ergo.stdlib.ErgoErrorResponse",
-      "message": "Cannot exercise late delivery before delivery date"
-  }
-}
+[Ergo] {"message":"Cannot exercise late delivery before delivery date","$class":"org.accordproject.ergo.stdlib.ErgoErrorResponse"}
 """
 
   Scenario: The contract should return the penalty amount but not allow the buyer to terminate

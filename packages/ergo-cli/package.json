@@ -30,7 +30,7 @@
   "dependencies": {
     "@accordproject/ergo-compiler": "0.6.3",
     "@accordproject/ergo-engine": "0.6.3",
-    "moment": "2.20.1",
+    "moment": "2.22.2",
     "jsome": "2.5.0",
     "winston": "^3.2.1",
     "yargs": "9.0.1",

@@ -22,17 +22,8 @@ Feature: Bad logic
 """
     Then it should fail with the error
 """
-{
-    "kind": "CompilationError",
-    "message": "Variable 'a' is bound multiple times in 'org.accordproject.helloworld.f'",
-    "locstart": {
-      "line": 17,
-      "character": 0
-    },
-    "locend": {
-      "line": 19,
-      "character": 1
-    }
-}
+Compilation error (at file examples/bad-function/logic.ergo line 17 col 0). Variable 'a' is bound multiple times in 'org.accordproject.helloworld.f'
+define function f(a:Integer, a:String) {
+^                                       
 """
 

@@ -62,16 +62,28 @@ describe('TemplateLogic', () => {
             templateLogic.compileLogic(false);
             templateLogic.getInitCall().length.should.equal(63);
             templateLogic.getDispatchCall().length.should.equal(82);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(28969);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
             templateLogic.compileLogic(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(28969);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+        });
+
+        it('should load a logic file to the model manager (with Ergo builtin)', () => {
+            const templateLogic = new TemplateLogic('cicero');
+            templateLogic.addErgoBuiltin();
+            templateLogic.addLogicFile(ergoSample,'test3.ergo');
+            templateLogic.compileLogic(false);
+            templateLogic.getInitCall().length.should.equal(63);
+            templateLogic.getDispatchCall().length.should.equal(82);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.compileLogic(false);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
         });
 
         it('should load a logic file (without extension) to the model manager', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test');
             templateLogic.compileLogic(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(28969);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
         });
 
         it('should set the contract name', () => {
@@ -87,7 +99,7 @@ describe('TemplateLogic', () => {
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.getTarget().should.equal('cicero');
             templateLogic.compileLogic(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(28969);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
             templateLogic.setTarget('es6', true);
             templateLogic.getTarget().should.equal('es6');
             const contractName = 'org.accordproject.helloemit.HelloWorld';
@@ -111,9 +123,9 @@ describe('TemplateLogic', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.compileLogic(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(28969);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
             templateLogic.setTarget('es6', false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(28969);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
         });
 
         it('should set the compilation target to ES5', () => {
@@ -121,7 +133,7 @@ describe('TemplateLogic', () => {
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.getTarget().should.equal('cicero');
             templateLogic.compileLogic(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(28969);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
             templateLogic.setTarget('es5', true);
             templateLogic.getTarget().should.equal('es5');
             templateLogic.getInitCall().length.should.equal(53);

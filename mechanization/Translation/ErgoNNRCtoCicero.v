@@ -67,7 +67,7 @@ Section ErgoNNRCtoCicero.
              (clause_name:string)
              (eol:estring)
              (quotel:estring) : estring :=
-    let state_init := `"serializer.toJSON(context.state,{permitResourcesForRelationships:true})" in
+    let state_init := `"context.state" in
     (accord_annotation
        generated
        clause_name
@@ -78,18 +78,18 @@ Section ErgoNNRCtoCicero.
        eol
        quotel)
       +++ `"function " +++ `fun_name +++ `"(context) {" +++ eol
-      +++ `"  let pcontext = { '" +++ `request_param +++ `"' : serializer.toJSON(context.request,{permitResourcesForRelationships:true}), 'state': " +++ state_init +++ `", 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" +++ eol
+      +++ `"  let pcontext = { '" +++ `request_param +++ `"' : context.request, 'state': " +++ state_init +++ `", 'contract': context.contract, 'emit': context.emit, 'now': context.now};" +++ eol
       +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
       +++ `"  let result = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
       +++ `"  if (result.hasOwnProperty('left')) {" +++ eol
       +++ `"    //logger.info('ergo result: '+JSON.stringify(result))" +++ eol
       +++ `"    context.response = result.left.response ?" +++ eol
-      +++ `"         serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true})" +++ eol
-      +++ `"       : serializer.fromJSON({ '$class': 'org.accordproject.cicero.runtime.Response' });" +++ eol
-      +++ `"    context.state = serializer.fromJSON(result.left.state, {validate: false, acceptResourcesForRelationships: true});" +++ eol
+      +++ `"         result.left.response" +++ eol
+      +++ `"       : { '$class': 'org.accordproject.cicero.runtime.Response' };" +++ eol
+      +++ `"    context.state = result.left.state;" +++ eol
       +++ `"    let emitResult = [];" +++ eol
       +++ `"    for (let i = 0; i < result.left.emit.length; i++) {" +++ eol
-      +++ `"      emitResult.push(serializer.fromJSON(result.left.emit[i], {validate: false, acceptResourcesForRelationships: true}));" +++ eol
+      +++ `"      emitResult.push(result.left.emit[i]);" +++ eol
       +++ `"    }" +++ eol
       +++ `"    context.emit = emitResult;" +++ eol
       +++ `"    return context;" +++ eol
@@ -121,18 +121,18 @@ Section ErgoNNRCtoCicero.
        eol
        quotel)
       +++ `"function " +++ `fun_name +++ `"(context) {" +++ eol
-      +++ `"  let pcontext = { 'state': " +++ state_init +++ `", 'contract': serializer.toJSON(context.contract,{permitResourcesForRelationships:true}), 'emit': context.emit, 'now': context.now};" +++ eol
+      +++ `"  let pcontext = { 'state': " +++ state_init +++ `", 'contract': context.contract, 'emit': context.emit, 'now': context.now};" +++ eol
       +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
       +++ `"  let result = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
       +++ `"  if (result.hasOwnProperty('left')) {" +++ eol
       +++ `"    //logger.info('ergo result: '+JSON.stringify(result))" +++ eol
       +++ `"    context.response = result.left.response ?" +++ eol
-      +++ `"         serializer.fromJSON(result.left.response, {validate: false, acceptResourcesForRelationships: true},{permitResourcesForRelationships:true})" +++ eol
-      +++ `"       : serializer.fromJSON({ '$class': 'org.accordproject.cicero.runtime.Response' });" +++ eol
-      +++ `"    context.state = serializer.fromJSON(result.left.state, {validate: false, acceptResourcesForRelationships: true});" +++ eol
+      +++ `"         result.left.response" +++ eol
+      +++ `"       : { '$class': 'org.accordproject.cicero.runtime.Response' };" +++ eol
+      +++ `"    context.state = result.left.state;" +++ eol
       +++ `"    let emitResult = [];" +++ eol
       +++ `"    for (let i = 0; i < result.left.emit.length; i++) {" +++ eol
-      +++ `"      emitResult.push(serializer.fromJSON(result.left.emit[i], {validate: false, acceptResourcesForRelationships: true}));" +++ eol
+      +++ `"      emitResult.push(result.left.emit[i]);" +++ eol
       +++ `"    }" +++ eol
       +++ `"    context.emit = emitResult;" +++ eol
       +++ `"    return context;" +++ eol

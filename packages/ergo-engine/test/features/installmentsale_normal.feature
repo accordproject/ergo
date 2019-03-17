@@ -64,7 +64,8 @@ Feature: Installment sale Contract
     "$class": "org.accordproject.installmentsale.PaymentObligation",
     "amount": 2500,
     "from": "Dan",
-    "to": "Ned"
+    "to": "Ned",
+    "eventId": "valid"
   }
 ]
 """
@@ -114,7 +115,8 @@ Feature: Installment sale Contract
     "$class": "org.accordproject.installmentsale.PaymentObligation",
     "amount": 2500,
     "from": "Dan",
-    "to": "Ned"
+    "to": "Ned",
+    "eventId": "valid"
   }
 ]
 """
@@ -152,7 +154,8 @@ Feature: Installment sale Contract
     "$class": "org.accordproject.installmentsale.PaymentObligation",
     "amount": 2500,
     "from": "Dan",
-    "to": "Ned"
+    "to": "Ned",
+    "eventId": "valid"
   }
 ]
 """

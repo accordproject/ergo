@@ -22,17 +22,8 @@ Feature: Bad logic
 """
     Then it should fail with the error
 """
-{
-  "kind": "ParseError",
-  "message": "Parse error",
-  "locstart": {
-    "line": 17,
-    "character": 20
-  },
-  "locend": {
-    "line": 17,
-    "character": 23
-  }
-}
+Parse error (at file examples/bad-logic/logic.ergo line 17 col 20). 
+contract HelloWorld ovr TemplateModel {
+                    ^^^                
 """
 

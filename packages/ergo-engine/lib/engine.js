@@ -95,8 +95,8 @@ class Engine {
         validRequest.validate();
 
         // Set the current time and UTC Offset
-        const validNow = Util.setCurrentTime(currentTime);
-        const validUtcOffset = validNow.utcOffset();
+        const now = Util.setCurrentTime(currentTime);
+        const utcOffset = now.utcOffset();
 
         // ensure the state is valid
         const validState = serializer.fromJSON(state, {validate: false, acceptResourcesForRelationships: true});
@@ -116,38 +116,52 @@ class Engine {
             timeout: 1000,
             sandbox: {
                 moment: Moment,
-                serializer: serializer,
                 logger: Logger,
-                utcOffset: validUtcOffset
+                utcOffset: utcOffset
             }
         });
 
         // add immutables to the context
-        vm.freeze(validContract, 'data'); // Second argument adds object to global.
-        vm.freeze(validRequest, 'request'); // Second argument adds object to global.
-        vm.freeze(validState, 'state'); // Second argument adds object to global.
-        vm.freeze(validNow, 'now'); // Second argument adds object to global.
+        vm.freeze(contract, 'data'); // Second argument adds object to global.
+        vm.freeze(request, 'request'); // Second argument adds object to global.
+        vm.freeze(state, 'state'); // Second argument adds object to global.
+        vm.freeze(now, 'now'); // Second argument adds object to global.
 
         // execute the logic
         vm.run(script);
-        const result = vm.run(callScript);
+        const ergoResult = vm.run(callScript);
+
+        let result;
+        if (ergoResult.hasOwnProperty('left')) {
+            result = ergoResult.left;
+        } else if (ergoResult.hasOwnProperty('right')) {
+            throw new Error('[Ergo] ' + JSON.stringify(ergoResult.right));
+        } else {
+            result = ergoResult;
+        }
 
         // ensure the response is valid
-        result.response.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        result.response.validate();
-        const responseResult = serializer.toJSON(result.response, {convertResourcesToRelationships: true});
+        let responseResult = null;
+        if (result.response) {
+            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
+            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validResponse.validate();
+            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
+        }
 
         // ensure the new state is valid
-        result.state.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        result.state.validate();
-        const stateResult = serializer.toJSON(result.state, {convertResourcesToRelationships: true});
+        const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
+        validNewState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validNewState.validate();
+        const stateResult = serializer.toJSON(validNewState, {convertResourcesToRelationships: true});
 
         // ensure all the emits are valid
         let emitResult = [];
         for (let i = 0; i < result.emit.length; i++) {
-            result.emit[i].$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            result.emit[i].validate();
-            emitResult.push(serializer.toJSON(result.emit[i], {convertResourcesToRelationships: true}));
+            const validEmit = serializer.fromJSON(result.emit[i], {validate: false, acceptResourcesForRelationships: true});
+            validEmit.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validEmit.validate();
+            emitResult.push(serializer.toJSON(validEmit, {convertResourcesToRelationships: true}));
         }
 
         return {
@@ -178,8 +192,8 @@ class Engine {
         validContract.validate();
 
         // Set the current time and UTC Offset
-        const validNow = Util.setCurrentTime(currentTime);
-        const validUtcOffset = validNow.utcOffset();
+        const now = Util.setCurrentTime(currentTime);
+        const utcOffset = now.utcOffset();
 
         let script;
 
@@ -192,49 +206,53 @@ class Engine {
             timeout: 1000,
             sandbox: {
                 moment: Moment,
-                serializer: serializer,
                 logger: Logger,
-                utcOffset: validUtcOffset
+                utcOffset: utcOffset
             }
         });
 
         // add immutables to the context
-        vm.freeze(validContract, 'data'); // Second argument adds object to global.
-        vm.freeze(validNow, 'now'); // Second argument adds object to global.
+        vm.freeze(contract, 'data'); // Second argument adds object to global.
+        vm.freeze(now, 'now'); // Second argument adds object to global.
 
         // execute the logic
+        //console.log(script);
         vm.run(script);
         const ergoResult = vm.run(callScript);
-        let result;
 
+        let result;
         if (ergoResult.hasOwnProperty('left')) {
             result = ergoResult.left;
         } else if (ergoResult.hasOwnProperty('right')) {
-            throw new Error("[Ergo] " + JSON.stringify(ergoResult.right));
+            throw new Error('[Ergo] ' + JSON.stringify(ergoResult.right));
         } else {
             result = ergoResult;
         }
 
+        // ensure the response is valid
         let responseResult = null;
         if (result.response) {
-            result.response.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            result.response.validate();
-            responseResult = serializer.toJSON(result.response, {convertResourcesToRelationships: true});
+            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
+            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validResponse.validate();
+            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
         }
-        console.log('RESULT!!! ' + JSON.stringify(responseResult));
+        //console.log('RESULT!!! ' + JSON.stringify(responseResult));
         // ensure the response is valid
 
         // ensure the new state is valid
-        result.state.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        result.state.validate();
-        const stateResult = serializer.toJSON(result.state, {convertResourcesToRelationships: true});
+        const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
+        validNewState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validNewState.validate();
+        const stateResult = serializer.toJSON(validNewState, {convertResourcesToRelationships: true});
 
         // ensure all the emits are valid
         let emitResult = [];
         for (let i = 0; i < result.emit.length; i++) {
-            result.emit[i].$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            result.emit[i].validate();
-            emitResult.push(serializer.toJSON(result.emit[i], {convertResourcesToRelationships: true}));
+            const validEmit = serializer.fromJSON(result.emit[i], {validate: false, acceptResourcesForRelationships: true});
+            validEmit.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validEmit.validate();
+            emitResult.push(serializer.toJSON(validEmit, {convertResourcesToRelationships: true}));
         }
 
         return {

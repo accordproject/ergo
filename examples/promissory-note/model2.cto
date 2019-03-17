@@ -30,7 +30,7 @@ transaction Result extends Response {
 /**
  * The template model
  */
-concept PromissoryNoteContract extends AccordContract {
+asset PromissoryNoteContract extends AccordContract {
   /**
    * The name for the clause
    */
