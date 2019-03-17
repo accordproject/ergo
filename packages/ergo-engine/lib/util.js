@@ -17,6 +17,9 @@
 // Moment serialization function to preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
 const momentToJson = function() { return this.format(); };
 
+const Chai = require('chai');
+const expect = Chai.expect;
+
 const Moment = require('moment');
 Moment.fn.toJSON = momentToJson;
 
@@ -53,4 +56,25 @@ function setCurrentTime(currentTime) {
     }
 }
 
-module.exports = { momentToJson, resolveRootDir, setCurrentTime };
+/**
+ * Compare actual result and expected result
+ *
+ * @param {string} expected the result as specified in the test workload
+ * @param {string} actual the result as returned by the engine
+ */
+function testCompare(expected,actual) {
+    delete expected.timestamp;
+    delete actual.timestamp;
+    // Some basic deep comparison for arrays, since Chai doesn't do the right thing
+    if (Array.isArray(actual)) {
+        for (let i = 0; i < expected.length; i++) {
+            delete expected[i].timestamp;
+            delete actual[i].timestamp;
+            expect(actual[i]).to.deep.include(expected[i]);
+        }
+    } else {
+        expect(actual).to.deep.include(expected);
+    }
+}
+
+module.exports = { momentToJson, resolveRootDir, setCurrentTime, testCompare };
