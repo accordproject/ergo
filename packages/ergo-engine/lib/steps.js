@@ -20,34 +20,11 @@ const Path = require('path');
 const Chai = require('chai');
 const expect = Chai.expect;
 
-const Moment = require('moment');
-
 const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
 const Engine = require('./engine');
 const Util = require('./util');
 
 const { Before, Given, When, Then } = require('cucumber');
-
-/**
- * Compare actual result and expected result
- *
- * @param {string} expected the result as specified in the test workload
- * @param {string} actual the result as returned by the engine
- */
-function compare(expected,actual) {
-    // Remove timestamps which are not stable
-    delete expected.timestamp;
-    delete actual.timestamp;
-    for (const key in expected) {
-        const field = key;
-        const expectedValue = expected[key];
-        delete expectedValue.timestamp;
-        expect(actual).to.have.property(field);
-        const actualValue = Moment.isMoment(actual[field]) ? actual[field].format() : actual[field];
-        delete actualValue.timestamp;
-        expect(actualValue).to.deep.equal(expectedValue);
-    }
-}
 
 /**
  * Invoke Ergo contract initialization
@@ -155,14 +132,14 @@ Then('it should respond with', function (expectedResponse) {
     if (this.answer) {
         expect(this.answer).to.have.property('response');
         expect(this.answer).to.not.have.property('error');
-        return compare(response,this.answer.response);
+        return Util.testCompare(response,this.answer.response);
     } else {
         return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
                 expect(actualAnswer).to.not.have.property('error');
-                return compare(response,actualAnswer.response);
+                return Util.testCompare(response,actualAnswer.response);
             });
     }
 });
@@ -173,7 +150,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
-            return compare(state,actualAnswer.state);
+            return Util.testCompare(state,actualAnswer.state);
         });
 });
 
@@ -183,7 +160,7 @@ Then('the initial state( of the contract) should be the default state', function
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
-            return compare(state,actualAnswer.state);
+            return Util.testCompare(state,actualAnswer.state);
         });
 });
 
@@ -192,14 +169,14 @@ Then('the new state( of the contract) should be', function (expectedState) {
     if (this.answer) {
         expect(this.answer).to.have.property('state');
         expect(this.answer).to.not.have.property('error');
-        return compare(state,this.answer.state);
+        return Util.testCompare(state,this.answer.state);
     } else {
         return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
                 expect(actualAnswer).to.not.have.property('error');
-                return compare(state,actualAnswer.state);
+                return Util.testCompare(state,actualAnswer.state);
             });
     }
 });
@@ -209,14 +186,14 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
     if (this.answer) {
         expect(this.answer).to.have.property('emit');
         expect(this.answer).to.not.have.property('error');
-        return compare(emit,this.answer.emit);
+        return Util.testCompare(emit,this.answer.emit);
     } else {
         return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
                 expect(actualAnswer).to.not.have.property('error');
-                return compare(emit,actualAnswer.emit);
+                return Util.testCompare(emit,actualAnswer.emit);
             });
     }
 });
