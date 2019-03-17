@@ -35,11 +35,16 @@ const { Before, Given, When, Then } = require('cucumber');
  * @param {string} actual the result as returned by the engine
  */
 function compare(expected,actual) {
+    // Remove timestamps which are not stable
+    delete expected.timestamp;
+    delete actual.timestamp;
     for (const key in expected) {
         const field = key;
         const expectedValue = expected[key];
+        delete expectedValue.timestamp;
         expect(actual).to.have.property(field);
         const actualValue = Moment.isMoment(actual[field]) ? actual[field].format() : actual[field];
+        delete actualValue.timestamp;
         expect(actualValue).to.deep.equal(expectedValue);
     }
 }
@@ -54,8 +59,16 @@ function compare(expected,actual) {
  * @returns {object} Promise to the initial state of the contract
  */
 function init(engine,templateLogic,contractJson,currentTime) {
-    templateLogic.compileLogic();
-    return engine.init(templateLogic,templateLogic.getContractName(),contractJson,currentTime);
+    let start = null;
+    try {
+        templateLogic.compileLogic(false);
+        start = Promise.resolve(undefined);
+    } catch (error) {
+        start = Promise.reject(error);
+    }
+    return start.then(() => {
+        return engine.init(templateLogic,templateLogic.getContractName(),contractJson,currentTime);
+    });
 }
 
 /**
@@ -70,8 +83,16 @@ function init(engine,templateLogic,contractJson,currentTime) {
  * @returns {object} Promise to the response
  */
 function execute(engine,templateLogic,contractJson,stateJson,currentTime,requestJson) {
-    templateLogic.compileLogic();
-    return engine.execute(templateLogic,templateLogic.getContractName(),contractJson,requestJson,stateJson,currentTime);
+    let start = null;
+    try {
+        templateLogic.compileLogic(false);
+        start = Promise.resolve(undefined);
+    } catch (error) {
+        start = Promise.reject(error);
+    }
+    return start.then(() => {
+        return engine.execute(templateLogic,templateLogic.getContractName(),contractJson,requestJson,stateJson,currentTime);
+    });
 }
 
 // Defaults
@@ -83,6 +104,7 @@ Before(function () {
     this.currentTime = '1970-01-01T00:00:00Z';
     this.templateLogic = new TemplateLogic('es6');
     this.state = defaultState;
+    this.templateLogic.addErgoBuiltin();
 });
 
 Given('the target platform {string}', function (target) {
@@ -200,25 +222,16 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
 });
 
 Then('it should fail with the error', function (expectedError) {
-    const error = JSON.parse(expectedError);
     return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
-        .then((actualAnswer) => {
-            this.answer = actualAnswer;
-            expect(actualAnswer).to.have.property('error');
-            expect(actualAnswer).to.not.have.property('state');
-            expect(actualAnswer).to.not.have.property('response');
-            return compare(error,actualAnswer.error);
+        .catch((actualError) => {
+            expect(actualError.message).to.equal(expectedError);
         });
 });
 
 Then('it should fail to initialize with the error', function (expectedError) {
-    const error = JSON.parse(expectedError);
     return init(this.engine,this.templateLogic,this.contract,this.currentTime)
-        .then((actualAnswer) => {
-            expect(actualAnswer).to.have.property('error');
-            expect(actualAnswer).to.not.have.property('state');
-            expect(actualAnswer).to.not.have.property('response');
-            return compare(error,actualAnswer.error);
+        .catch((actualError) => {
+            expect(actualError.message).to.equal(expectedError);
         });
 });
 

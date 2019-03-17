@@ -22,17 +22,8 @@ Feature: Bad logic
 """
     Then it should fail with the error
 """
-{
-    "kind": "CompilationError",
-    "message": "Variable 'request' is bound multiple times in 'helloworld'",
-    "locstart": {
-      "line": 19,
-      "character": 2
-    },
-    "locend": {
-      "line": 21,
-      "character": 3
-    }
-}
+Compilation error (at file examples/bad-function/logic2.ergo line 19 col 2). Variable 'request' is bound multiple times in 'helloworld'
+  clause helloworld(request : Request, request: Integer) : Response {
+  ^                                                                  
 """
 

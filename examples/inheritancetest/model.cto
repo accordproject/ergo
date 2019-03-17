@@ -13,12 +13,27 @@
  */
 namespace org.accordproject.inheritancetest
 
-contract InheritanceTest over TemplateModel {
-  // Simple Clause
-  clause test(request : Request) : Response {
-    return SubSubResponse{
-			test1: 0,
-			test2: 0.5
-		}
-  }
+transaction Request {
+}
+
+transaction SubRequest extends Request {
+  o Integer test1
+}
+
+transaction SubSubRequest extends SubRequest {
+  o Double test2
+}
+
+transaction Response {
+}
+
+transaction SubResponse extends Response {
+  o Integer test1
+}
+
+transaction SubSubResponse extends SubResponse {
+  o Double test2
+}
+
+concept TemplateModel {
 }

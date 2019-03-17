@@ -16,7 +16,7 @@ namespace org.accordproject.installmentsale
 
 import org.accordproject.cicero.runtime.*
 
-	contract InstallmentSale over TemplateModel state InstallmentSaleState {
+contract InstallmentSale over TemplateModel state InstallmentSaleState {
   clause init() : Response {
     set state InstallmentSaleState{
       status: "WaitingForFirstDayOfNextMonth",

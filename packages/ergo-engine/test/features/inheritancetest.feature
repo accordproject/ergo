@@ -3,6 +3,7 @@ Feature: Inheritance test
 
   Background:
     Given the Ergo contract "org.accordproject.inheritancetest.InheritanceTest" in file "examples/inheritancetest/logic.ergo"
+    And the model in file "examples/inheritancetest/model.cto"
     And the contract data
 """
 {

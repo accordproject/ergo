@@ -20,17 +20,8 @@ Feature: Dispatch Tests
 """
     Then it should fail with the error
 """
-{
-    "kind": "CompilationError",
-    "message": "Multiple clauses can process the request 'org.accordproject.dispatchtest.Request4'",
-    "locstart": {
-      "line": 16,
-      "character": 0
-    },
-    "locend": {
-      "line": 37,
-      "character": 1
-    }
-}
+Compilation error (at file examples/dispatchtest/logic.ergo line 16 col 0). Multiple clauses can process the request 'org.accordproject.dispatchtest.Request4'
+contract DispatchTest over TemplateModel {
+^                                         
 """
 
