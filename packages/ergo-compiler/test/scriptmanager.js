@@ -55,7 +55,7 @@ describe('ScriptManager', () => {
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(1);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause']);
-            scriptManager.getCompiledScript().getContents().length.should.equal(28969);
+            scriptManager.getCompiledScript().getContents().length.should.equal(27672);
             scriptManager.allFunctionDeclarations().length.should.equal(98);
             scriptManager.allFunctionDeclarations().filter(x => x.name === '__init').length.should.equal(1);
             expect(scriptManager.hasInit()).to.not.throw;
@@ -68,8 +68,8 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(28969);
-            scriptManager.getCompiledScript().getContents().length.should.equal(28969);
+            scriptManager.compileLogic().getContents().length.should.equal(27672);
+            scriptManager.getCompiledScript().getContents().length.should.equal(27672);
             scriptManager.getAllScripts().length.should.equal(3);
         });
 

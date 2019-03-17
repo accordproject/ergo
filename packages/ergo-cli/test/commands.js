@@ -201,8 +201,8 @@ describe('ergo', () => {
             const result = await Commands.init([ergoPath], undefined, 'org.accordproject.installmentsale.InstallmentSale', contractPath, '1970-01-01T00:00:00Z', paramsPath);
             result.error.kind.should.equal('CompilationError');
             result.error.message.should.equal('Cannot find type with name \'TemplateModel\'');
-            result.error.locstart.should.deep.equal({ 'line' : 19, 'character' : 31 });
-            result.error.locend.should.deep.equal({ 'line' : 19, 'character' : 44 });
+            result.error.locstart.should.deep.equal({ 'line' : 19, 'character' : 30 });
+            result.error.locend.should.deep.equal({ 'line' : 19, 'character' : 43 });
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.resolve(__dirname, 'examples/installment-sale', 'model.cto');

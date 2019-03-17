@@ -27,7 +27,7 @@ enum ContractStatus {
   o WaitingForFirstDayOfNextMonth
   o Fulfilled
 }
-asset InstallmentSaleState {
+concept InstallmentSaleState {
   o ContractStatus status
   o Double balance_remaining
   o Integer next_payment_month

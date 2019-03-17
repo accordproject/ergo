@@ -3,6 +3,7 @@ Feature: starOf and endOf with time periods test
 
   Background:
     Given the Ergo contract "org.accordproject.startendtest.StartEndTest" in file "examples/startendtest/logic.ergo"
+    And the model in file "examples/startendtest/model.cto"
     And the contract data
 """
 {

@@ -83,15 +83,7 @@ Feature: Dispatch Tests
 """
     Then it should fail with the error
 """
-{
-  "kind": "ErgoError",
-  "message": {
-    "type": ["org.accordproject.ergo.stdlib.ErgoErrorResponse"],
-    "data": {
-      "message": "Dispatch Error: no clause in the contract matches the request"
-    }
-  }
-}
+[Ergo] {"type":["org.accordproject.ergo.stdlib.ErgoErrorResponse"],"data":{"message":"Dispatch Error: no clause in the contract matches the request"}}
 """
 
   Scenario: The contract should return the correct response for a Request6

@@ -14,7 +14,7 @@
 
 namespace org.accordproject.initfailtest
 
-asset State {
+concept State {
 }
 
 transaction Request {

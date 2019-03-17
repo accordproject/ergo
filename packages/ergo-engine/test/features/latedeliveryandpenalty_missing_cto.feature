@@ -3,7 +3,7 @@ Feature: Late delivery contract
 
   Background:
     Given the Ergo contract "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty" in file "examples/latedeliveryandpenalty/logic.ergo"
-    And the model in file "examples/latedeliveryandpenalty/model.cto"
+    And the model in file "examples/latedeliveryandpenalty/model2.cto"
     And the contract data
 """
 {
@@ -28,19 +28,7 @@ Feature: Late delivery contract
   Scenario: The contract should fail initializing when an import is missing
     Then it should fail to initialize with the error
 """
-{
-  "kind": "CompilationError",
-  "message": "Import not found: org.accordproject.test",
-  "verbose": "Compilation error. Import not found: org.accordproject.test",
-  "locstart": {
-    "line": -1,
-    "character": -1
-  },
-  "locend": {
-    "line": -1,
-    "character": -1
-  }
-}
+Namespace is not defined for type org.accordproject.test.* File 'examples/latedeliveryandpenalty/model2.cto': 
 """
 
   Scenario: The contract should fail executing when an import is missing
@@ -56,18 +44,6 @@ Feature: Late delivery contract
 """
     Then it should fail with the error
 """
-{
-  "kind": "CompilationError",
-  "message": "Import not found: org.accordproject.test",
-  "verbose": "Compilation error. Import not found: org.accordproject.test",
-  "locstart": {
-    "line": -1,
-    "character": -1
-  },
-  "locend": {
-    "line": -1,
-    "character": -1
-  }
-}
+Namespace is not defined for type org.accordproject.test.* File 'examples/latedeliveryandpenalty/model2.cto': 
 """
 

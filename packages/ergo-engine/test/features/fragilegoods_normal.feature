@@ -29,8 +29,8 @@ Feature: Fragile goods Contract
 """
 {
     "$class": "io.clause.demo.fragileGoods.DeliveryUpdate",
-    "startTime":"January 1, 2018 16:34:00",
-    "finishTime":"January 1, 2018 16:34:11",
+    "startTime":"01 Jan 2018 16:34:00 Z",
+    "finishTime":"01 Jan 2018 16:34:11 Z",
     "status":"ARRIVED",
     "accelerometerReadings":[0.2,0.6,-0.3,-0.7,0.1]
 }
@@ -48,8 +48,8 @@ Feature: Fragile goods Contract
 """
 {
     "$class": "io.clause.demo.fragileGoods.DeliveryUpdate",
-    "startTime":"January 1, 2018 16:34:00",
-    "finishTime":"January 1, 2018 16:34:11",
+    "startTime":"01 Jan 2018 16:34:00 Z",
+    "finishTime":"01 Jan 2018 16:34:11 Z",
     "status":"ARRIVED",
     "accelerometerReadings":[0.2,-0.3,0.1]
 }

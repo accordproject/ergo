@@ -11,14 +11,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.accordproject.inheritancetest
+namespace org.accordproject.startendtest
 
-contract InheritanceTest over TemplateModel {
-  // Simple Clause
-  clause test(request : Request) : Response {
-    return SubSubResponse{
-			test1: 0,
-			test2: 0.5
-		}
-  }
+import org.accordproject.time.*
+
+transaction Request {
+	o DateTime date
 }
+
+transaction TestResponse {
+	o DateTime now
+	o DateTime date
+  o DateTime startOfDay
+  o DateTime endOfDay
+}
+
+concept TemplateModel {
+}
+
