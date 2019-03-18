@@ -47,10 +47,10 @@ class Engine {
     /**
      * Compile and cache JavaScript logic
      * @param {ScriptManager} scriptManager  - the script manager
-     * @param {string} clauseId - the clause identifier
+     * @param {string} contractId - the contract identifier
      * @private
      */
-    compileJsLogic(scriptManager, clauseId) {
+    compileJsLogic(scriptManager, contractId) {
         let allJsScripts = '';
 
         scriptManager.getAllScripts().forEach(function (element) {
@@ -63,14 +63,15 @@ class Engine {
             throw new Error('Did not find any JavaScript logic');
         }
 
+        //console.log('SCRIPT!!!!\n' + allJsScripts);
         const script = new VMScript(allJsScripts);
-        this.scripts[clauseId] = script;
+        this.scripts[contractId] = script;
     }
 
     /**
      * Execute a clause, passing in the request object
      * @param {TemplateLogic} logic  - the logic to execute
-     * @param {string} clauseId - the clause identifier
+     * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} request - the request, a JS object that can be deserialized
      * using the Composer serializer.
@@ -78,9 +79,8 @@ class Engine {
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
      * @return {Promise} a promise that resolves to a result for the clause
-     * @private
      */
-    async execute(logic, clauseId, contract, request, state, currentTime) {
+    async execute(logic, contractId, contract, request, state, currentTime) {
         const serializer = logic.getSerializer();
         const scriptManager = logic.getScriptManager();
 
@@ -107,10 +107,10 @@ class Engine {
 
         let script;
 
-        this.compileJsLogic(scriptManager, clauseId);
-        script = this.scripts[clauseId];
+        this.compileJsLogic(scriptManager, contractId);
+        script = this.scripts[contractId];
 
-        const callScript = logic.getDispatchCall(logic);
+        const callScript = logic.getDispatchCall();
 
         const vm = new VM({
             timeout: 1000,
@@ -123,9 +123,9 @@ class Engine {
 
         // add immutables to the context
         vm.freeze(contract, 'data'); // Second argument adds object to global.
-        vm.freeze(request, 'request'); // Second argument adds object to global.
         vm.freeze(state, 'state'); // Second argument adds object to global.
         vm.freeze(now, 'now'); // Second argument adds object to global.
+        vm.freeze(request, 'request'); // Second argument adds object to global.
 
         // execute the logic
         vm.run(script);
@@ -165,8 +165,117 @@ class Engine {
         }
 
         return {
-            'clause': clauseId,
+            'clause': contractId,
             'request': request,
+            'response': responseResult,
+            'state': stateResult,
+            'emit': emitResult,
+        };
+    }
+
+    /**
+     * Invoke a clause, passing in the parameters for that clause
+     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {string} contractId - the contract identifier
+     * @param {string} clauseName - the clause name
+     * @param {object} contract - the contract data
+     * @param {object} params - the clause parameters
+     * @param {object} state - the contract state, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {string} currentTime - the definition of 'now'
+     * @return {Promise} a promise that resolves to a result for the clause
+     */
+    async invoke(logic, contractId, clauseName, contract, params, state, currentTime) {
+        const serializer = logic.getSerializer();
+        const scriptManager = logic.getScriptManager();
+
+        // ensure the contract is valid
+        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
+        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validContract.validate();
+
+        // ensure the parameters are valid
+        for(const key in params) {
+            if (params[key] instanceof Object) {
+                const validParam = serializer.fromJSON(params[key], {validate: false, acceptResourcesForRelationships: true});
+                validParam.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+                validParam.validate();
+            }
+        }
+
+        // Set the current time and UTC Offset
+        const now = Util.setCurrentTime(currentTime);
+        const utcOffset = now.utcOffset();
+
+        // ensure the state is valid
+        const validState = serializer.fromJSON(state, {validate: false, acceptResourcesForRelationships: true});
+        validState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validState.validate();
+
+        Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
+
+        let script;
+
+        this.compileJsLogic(scriptManager, contractId);
+        script = this.scripts[contractId];
+
+        const callScript = logic.getInvokeCall(clauseName);
+
+        const vm = new VM({
+            timeout: 1000,
+            sandbox: {
+                moment: Moment,
+                logger: Logger,
+                utcOffset: utcOffset
+            }
+        });
+
+        // add immutables to the context
+        vm.freeze(contract, 'data'); // Second argument adds object to global.
+        vm.freeze(state, 'state'); // Second argument adds object to global.
+        vm.freeze(now, 'now'); // Second argument adds object to global.
+        vm.freeze(params, 'params'); // Second argument adds object to global.
+
+        // execute the logic
+        vm.run(script);
+        const ergoResult = vm.run(callScript);
+
+        let result;
+        if (ergoResult.hasOwnProperty('left')) {
+            result = ergoResult.left;
+        } else if (ergoResult.hasOwnProperty('right')) {
+            throw new Error('[Ergo] ' + JSON.stringify(ergoResult.right));
+        } else {
+            result = ergoResult;
+        }
+
+        // ensure the response is valid
+        let responseResult = null;
+        if (result.response) {
+            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
+            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validResponse.validate();
+            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
+        }
+
+        // ensure the new state is valid
+        const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
+        validNewState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validNewState.validate();
+        const stateResult = serializer.toJSON(validNewState, {convertResourcesToRelationships: true});
+
+        // ensure all the emits are valid
+        let emitResult = [];
+        for (let i = 0; i < result.emit.length; i++) {
+            const validEmit = serializer.fromJSON(result.emit[i], {validate: false, acceptResourcesForRelationships: true});
+            validEmit.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validEmit.validate();
+            emitResult.push(serializer.toJSON(validEmit, {convertResourcesToRelationships: true}));
+        }
+
+        return {
+            'clause': contractId,
+            'params': params,
             'response': responseResult,
             'state': stateResult,
             'emit': emitResult,
@@ -176,13 +285,12 @@ class Engine {
     /**
      * Initialize a clause
      * @param {TemplateLogic} logic  - the logic to execute
-     * @param {string} clauseId - the clause identifier
+     * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {string} currentTime - the definition of 'now'
      * @return {Promise} a promise that resolves to a result for the clause initialization
-     * @private
      */
-    async init(logic, clauseId, contract, currentTime) {
+    async init(logic, contractId, contract, currentTime) {
         const serializer = logic.getSerializer();
         const scriptManager = logic.getScriptManager();
 
@@ -197,8 +305,8 @@ class Engine {
 
         let script;
 
-        this.compileJsLogic(scriptManager, clauseId);
-        script = this.scripts[clauseId];
+        this.compileJsLogic(scriptManager, contractId);
+        script = this.scripts[contractId];
 
         const callScript = logic.getInitCall();
 
@@ -256,13 +364,67 @@ class Engine {
         }
 
         return {
-            'clause': clauseId,
+            'clause': contractId,
             'request': null,
             'response': responseResult,
             'state': stateResult,
             'emit': emitResult,
         };
     }
+
+    /**
+     * Compile then initialize a clause
+     *
+     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {string} contractId - the contract identifier
+     * @param {object} contract - the contract data
+     * @param {string} currentTime - the definition of 'now'
+     * @return {Promise} a promise that resolves to a result for the clause initialization
+     */
+    compileAndInit(logic, contractId, contract, currentTime) {
+        return logic.compileLogic(false).then(() => {
+            return this.init(logic, contractId, contract, currentTime);
+        });
+    }
+
+    /**
+     * Compile then invoke a clause
+     *
+     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {string} contractId - the contract identifier
+     * @param {string} clauseName - the clause name
+     * @param {object} contract contract data in JSON
+     * @param {object} params - the clause parameters
+     * @param {object} state - the contract state, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {string} currentTime - the definition of 'now'
+     * @return {Promise} a promise that resolves to a result for the clause initialization
+     */
+    compileAndInvoke(logic, contractId, clauseName, contract, params, state, currentTime) {
+        return logic.compileLogic(false).then(() => {
+            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime);
+        });
+    }
+
+    /**
+     * Compile then execute a clause, passing in the request object
+     *
+     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {string} contractId - the contract identifier
+     * @param {object} contract - the contract data
+     * @param {object} request - the request, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {object} state - the contract state, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {string} currentTime - the definition of 'now'
+     * @return {Promise} a promise that resolves to a result for the clause
+     */
+    compileAndExecute(logic, contractId, contract, request, state, currentTime) {
+        return logic.compileLogic(false).then(() => {
+            return this.execute(logic, contractId, contract, request, state, currentTime);
+        });
+    }
+
 }
 
 module.exports = Engine;

@@ -2,25 +2,6 @@ namespace org.accordproject.smoke
 
 import org.accordproject.time.*
 
-define concept A{ a : Integer }
-define concept C{ contract : String }
-
-define transaction MyRequest {
-  input: String,
-  someint: Integer
-}
-
-define transaction MyResponse {
-  output: String
-}
-
-define concept Test {
-  contract: String
-}
-
-define concept TemplateModel {
-}
-
 contract Duration over TemplateModel {
   clause test(request : MyRequest) : MyResponse {
     enforce(isSame(addDuration(dateTime("2018-01-02"), Duration{amount:1, unit: "days"}),
