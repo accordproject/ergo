@@ -3,7 +3,7 @@
     "name": "smoketest",
     "dir": "examples/smoke",
     "ergo": ["logic.ergo"],
-    "models": [],
+    "models": ["smoke.cto"],
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
@@ -19,7 +19,7 @@
     "name": "durationtest",
     "dir": "examples/smoke",
     "ergo": ["duration.ergo"],
-    "models": [],
+    "models": ["duration.cto"],
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
@@ -34,7 +34,7 @@
     "name": "mathtest",
     "dir": "examples/smoke",
     "ergo": ["math.ergo"],
-    "models": [],
+    "models": ["smoke.cto"],
     "contract": "contract.json",
     "request": "request.json",
     "state": "state.json",
@@ -118,18 +118,7 @@
     "clauseName": "helloworld",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "error": {
-        "kind": "ParseError",
-        "locend": {
-          "character": 23,
-          "line": 17
-        },
-        "locstart": {
-          "character": 20,
-          "line": 17
-        },
-        "message": "Parse error"
-      }
+      "error": "Parse error (at file /Users/jeromesimeon/git/ergo/packages/ergo-engine/test/examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
     }
   }
 ]
