@@ -2,15 +2,6 @@ namespace org.accordproject.smoke
 
 import org.accordproject.cicero.runtime.*
 
-define concept A{ a : Integer }
-define concept C{ contract : String }
-
-define concept TemplateModel {}
-define transaction MyRequest extends Request {}
-define transaction MyResponse extends Response {
-  output: String
-}
-
 define constant PI = 4.0 * atan(1.0)
 
 contract Math over TemplateModel {

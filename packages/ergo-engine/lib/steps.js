@@ -36,16 +36,7 @@ const { Before, Given, When, Then } = require('cucumber');
  * @returns {object} Promise to the initial state of the contract
  */
 function init(engine,templateLogic,contractJson,currentTime) {
-    let start = null;
-    try {
-        templateLogic.compileLogic(false);
-        start = Promise.resolve(undefined);
-    } catch (error) {
-        start = Promise.reject(error);
-    }
-    return start.then(() => {
-        return engine.init(templateLogic,templateLogic.getContractName(),contractJson,currentTime);
-    });
+    return engine.compileAndInit(templateLogic,templateLogic.getContractName(),contractJson,currentTime);
 }
 
 /**
@@ -60,16 +51,7 @@ function init(engine,templateLogic,contractJson,currentTime) {
  * @returns {object} Promise to the response
  */
 function execute(engine,templateLogic,contractJson,stateJson,currentTime,requestJson) {
-    let start = null;
-    try {
-        templateLogic.compileLogic(false);
-        start = Promise.resolve(undefined);
-    } catch (error) {
-        start = Promise.reject(error);
-    }
-    return start.then(() => {
-        return engine.execute(templateLogic,templateLogic.getContractName(),contractJson,requestJson,stateJson,currentTime);
-    });
+    return engine.compileAndExecute(templateLogic,templateLogic.getContractName(),contractJson,requestJson,stateJson,currentTime);
 }
 
 // Defaults
@@ -132,14 +114,14 @@ Then('it should respond with', function (expectedResponse) {
     if (this.answer) {
         expect(this.answer).to.have.property('response');
         expect(this.answer).to.not.have.property('error');
-        return Util.testCompare(response,this.answer.response);
+        return Util.compareSuccess({ response },this.answer);
     } else {
         return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
                 expect(actualAnswer).to.not.have.property('error');
-                return Util.testCompare(response,actualAnswer.response);
+                return Util.compareSuccess({ response },actualAnswer);
             });
     }
 });
@@ -150,7 +132,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
-            return Util.testCompare(state,actualAnswer.state);
+            return Util.compareSuccess({ state },actualAnswer);
         });
 });
 
@@ -160,7 +142,7 @@ Then('the initial state( of the contract) should be the default state', function
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
-            return Util.testCompare(state,actualAnswer.state);
+            return Util.compareSuccess({ state },actualAnswer);
         });
 });
 
@@ -169,14 +151,14 @@ Then('the new state( of the contract) should be', function (expectedState) {
     if (this.answer) {
         expect(this.answer).to.have.property('state');
         expect(this.answer).to.not.have.property('error');
-        return Util.testCompare(state,this.answer.state);
+        return Util.compareSuccess({ state },this.answer);
     } else {
         return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
                 expect(actualAnswer).to.not.have.property('error');
-                return Util.testCompare(state,actualAnswer.state);
+                return Util.compareSuccess({ state },actualAnswer);
             });
     }
 });
@@ -186,14 +168,14 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
     if (this.answer) {
         expect(this.answer).to.have.property('emit');
         expect(this.answer).to.not.have.property('error');
-        return Util.testCompare(emit,this.answer.emit);
+        return Util.compareSuccess({ emit },this.answer);
     } else {
         return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
                 expect(actualAnswer).to.not.have.property('error');
-                return Util.testCompare(emit,actualAnswer.emit);
+                return Util.compareSuccess({ emit },actualAnswer);
             });
     }
 });

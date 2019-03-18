@@ -1,0 +1,21 @@
+namespace org.accordproject.smoke
+
+concept A{ o Integer a }
+concept C{ o String contract }
+
+transaction MyRequest {
+  o String input
+  o Integer someint
+}
+
+transaction MyResponse {
+  o String output
+}
+
+concept Test {
+  o String contract
+}
+
+concept TemplateModel {
+}
+
