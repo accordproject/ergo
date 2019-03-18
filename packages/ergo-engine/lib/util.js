@@ -20,7 +20,7 @@ const momentToJson = function() { return this.format(); };
 const Chai = require('chai');
 const expect = Chai.expect;
 
-const Moment = require('moment');
+const Moment = require('moment-mini');
 Moment.fn.toJSON = momentToJson;
 
 /**

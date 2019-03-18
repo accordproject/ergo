@@ -18,7 +18,7 @@ const Logger = require('@accordproject/ergo-compiler').Logger;
 const Util = require('./util');
 const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
 
-const Moment = require('moment');
+const Moment = require('moment-mini');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
 Moment.fn.toJSON = Util.momentToJson;
 
