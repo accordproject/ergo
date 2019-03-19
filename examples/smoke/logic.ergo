@@ -22,6 +22,7 @@ contract Smoke over TemplateModel {
     enforce(some(A{ a : 1 })?.a ?? 2 = 1);
     enforce(C{ contract : "foo" }.contract = "foo");
     enforce(C{ contract : "foo" }.contract = "foo");
+    enforce(arraySubtract([1,2,3],[2,3,4]) = [1]);
     return MyResponse{
       output: "Smoke.test successful"
     }
