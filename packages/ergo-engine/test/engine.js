@@ -65,12 +65,12 @@ describe('Execute ES6', () => {
                 for (let i = 0; i < ergo.length; i++) {
                     const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
                     const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                    templateLogic.addLogicFile(ergoContent,ergoFile);
+                    templateLogic.addLogicFile(ergoContent, Path.join(dir, ergo[i]));
                 }
                 for (let i = 0; i < models.length; i++) {
                     const ctoFile = Path.resolve(__dirname, dir, models[i]);
                     const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                    templateLogic.addModelFile(ctoContent,ctoFile);
+                    templateLogic.addModelFile(ctoContent, Path.join(dir, models[i]));
                 }
                 templateLogic.setContractName(contractName);
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
@@ -157,12 +157,12 @@ describe('Execute ES5', () => {
                 for (let i = 0; i < ergo.length; i++) {
                     const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
                     const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                    templateLogic.addLogicFile(ergoContent,ergoFile);
+                    templateLogic.addLogicFile(ergoContent, Path.join(dir, ergo[i]));
                 }
                 for (let i = 0; i < models.length; i++) {
                     const ctoFile = Path.resolve(__dirname, dir, models[i]);
                     const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                    templateLogic.addModelFile(ctoContent,ctoFile);
+                    templateLogic.addModelFile(ctoContent, Path.join(dir, models[i]));
                 }
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 if (state === null) {
