@@ -115,6 +115,11 @@ let qcert_string_of_float f =
     if (float_of_string ocaml_string1 = float_of_string ocaml_string2)
     then ocaml_string2 else ocaml_string1
   in
+  let ocaml_string =
+    match String.index_opt ocaml_string '.', String.index_opt ocaml_string 'e' with
+    | None, None -> ocaml_string ^ "."
+    | _, _ -> ocaml_string
+  in
   let last_char = ocaml_string.[(String.length ocaml_string)-1] in
   begin match last_char with
   | '.' -> ocaml_string ^ "0"
