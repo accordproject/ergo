@@ -577,7 +577,7 @@ function dateTimeComponent(part, date) {
     case WEEKS:
         return date.week();
     case MONTHS:
-        return date.month();
+        return date.month() + 1; // Shift by one to get 1-12 range on months (Moment uses 0-11)
     case QUARTERS:
         return date.quarter();
     case YEARS:
