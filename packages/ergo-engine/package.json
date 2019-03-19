@@ -72,9 +72,7 @@
     "include": [
       "lib/**/*.js"
     ],
-    "exclude": [
-      "lib/**/engineold.js"
-    ],
+    "exclude": [],
     "all": true,
     "check-coverage": true,
     "statements": 93,

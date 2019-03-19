@@ -16,7 +16,8 @@
 
 const Fs = require('fs');
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
-const EngineOld = require('@accordproject/ergo-engine').EngineOld;
+const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
+const Engine = require('@accordproject/ergo-engine').Engine;
 
 /**
  * Load a file or JSON string
@@ -52,19 +53,21 @@ class Commands {
      * @returns {object} Promise to the result of execution
      */
     static execute(ergoPaths,ctoPaths,contractName,contractInput,stateInput,currentTime,requestsInput) {
-        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
-        const ergoSources = [];
+        const engine = new Engine();
+        const templateLogic = new TemplateLogic('es6');
+        templateLogic.addErgoBuiltin();
+        templateLogic.setContractName(contractName);
+        if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
             const ergoFile = ergoPaths[i];
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
+            templateLogic.addLogicFile(ergoContent, ergoFile);
         }
-        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
-        let ctoSources = [];
+        if (!ctoPaths) { ctoPaths = []; }
         for (let i = 0; i < ctoPaths.length; i++) {
             const ctoFile = ctoPaths[i];
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
+            templateLogic.addModelFile(ctoContent, ctoFile);
         }
         const contractJson = getJson(contractInput);
         let requestsJson = [];
@@ -73,7 +76,7 @@ class Commands {
         }
         let initResponse;
         if (stateInput === null) {
-            initResponse = EngineOld.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,{});
+            initResponse = engine.compileAndInit(templateLogic, contractName, contractJson, currentTime);
         } else {
             const stateJson = getJson(stateInput);
             initResponse = Promise.resolve({ state: stateJson });
@@ -81,7 +84,7 @@ class Commands {
         // Get all the other requests and chain execution through Promise.reduce()
         return requestsJson.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return EngineOld.execute(ergoSources,ctoSources,'es6',contractName,contractJson,result.state,currentTime,requestJson);
+                return engine.compileAndExecute(templateLogic,contractName,contractJson,requestJson,result.state,currentTime);
             });
         }, initResponse);
     }
@@ -100,24 +103,26 @@ class Commands {
      * @returns {object} Promise to the result of invocation
      */
     static invoke(ergoPaths,ctoPaths,contractName,clauseName,contractInput,stateInput,currentTime,paramsInput) {
-        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
-        const ergoSources = [];
+        const engine = new Engine();
+        const templateLogic = new TemplateLogic('es6');
+        templateLogic.addErgoBuiltin();
+        templateLogic.setContractName(contractName);
+        if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
             const ergoFile = ergoPaths[i];
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
+            templateLogic.addLogicFile(ergoContent, ergoFile);
         }
-        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
-        let ctoSources = [];
+        if (!ctoPaths) { ctoPaths = []; }
         for (let i = 0; i < ctoPaths.length; i++) {
             const ctoFile = ctoPaths[i];
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
+            templateLogic.addModelFile(ctoContent, ctoFile);
         }
         const contractJson = getJson(contractInput);
         const clauseParams = getJson(paramsInput);
         const stateJson = getJson(stateInput);
-        return EngineOld.invoke(ergoSources,ctoSources,'es6',contractName,clauseName,contractJson,stateJson,currentTime,clauseParams);
+        return engine.compileAndInvoke(templateLogic,contractName,clauseName,contractJson,clauseParams,stateJson,currentTime);
     }
 
     /**
@@ -132,23 +137,25 @@ class Commands {
      * @returns {object} Promise to the result of execution
      */
     static init(ergoPaths,ctoPaths,contractName,contractInput,currentTime,paramsInput) {
-        if (typeof ergoPaths === 'undefined') { ergoPaths = []; }
-        const ergoSources = [];
+        const engine = new Engine();
+        const templateLogic = new TemplateLogic('es6');
+        templateLogic.addErgoBuiltin();
+        templateLogic.setContractName(contractName);
+        if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
             const ergoFile = ergoPaths[i];
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            ergoSources.push({ 'name': ergoFile, 'content': ergoContent });
+            templateLogic.addLogicFile(ergoContent, ergoFile);
         }
-        if (typeof ctoPaths === 'undefined') { ctoPaths = []; }
-        let ctoSources = [];
+        if (!ctoPaths) { ctoPaths = []; }
         for (let i = 0; i < ctoPaths.length; i++) {
             const ctoFile = ctoPaths[i];
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            ctoSources.push({ 'name': ctoFile, 'content': ctoContent });
+            templateLogic.addModelFile(ctoContent, ctoFile);
         }
         const contractJson = getJson(contractInput);
         const clauseParams = getJson(paramsInput);
-        return EngineOld.init(ergoSources,ctoSources,'es6',contractName,contractJson,currentTime,clauseParams);
+        return engine.compileAndInit(templateLogic,contractName,contractJson,currentTime,clauseParams);
     }
 
     /**
