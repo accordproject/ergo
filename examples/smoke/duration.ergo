@@ -20,6 +20,12 @@ contract Duration over TemplateModel {
 			dateTime("2019-01-08")));
     enforce(isSame(dateTimeMin([dateTime("2018-01-08"), dateTime("2019-01-08"), dateTime("2011-01-08")]),
 			dateTime("2011-01-08")));
+		enforce(getMonth(dateTime("08 Jan 2018 00:00 UT")) = 1);
+		enforce(getMonth(dateTime("08 May 2018 00:00 UT")) = 5);
+		enforce(getMonth(dateTime("08 Dec 2018 00:00 UT")) = 12);
+		enforce(getMonth(dateTime("2018-01-08")) = 1);
+		enforce(getMonth(dateTime("2018-05-08")) = 5);
+		enforce(getMonth(dateTime("2018-12-08")) = 12);
     return MyResponse{
       output: "Duration.test successful"
     }
