@@ -64,9 +64,9 @@ describe('TemplateLogic', () => {
             templateLogic.getInitCall().length.should.equal(63);
             (() => templateLogic.getInvokeCall('helloworld')).should.throw('Cannot call invoke explicitely from Cicero');
             templateLogic.getDispatchCall().length.should.equal(82);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
             templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
         });
 
         it('should fail to load a bogus logic file to the model manager', () => {
@@ -82,9 +82,9 @@ describe('TemplateLogic', () => {
                 templateLogic.getInitCall().length.should.equal(63);
                 (() => templateLogic.getInvokeCall('helloworld')).should.throw('Cannot call invoke explicitely from Cicero');
                 templateLogic.getDispatchCall().length.should.equal(82);
-                templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+                templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
                 templateLogic.compileLogicSync(false);
-                templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+                templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
             });
         });
 
@@ -102,16 +102,16 @@ describe('TemplateLogic', () => {
             templateLogic.getInitCall().length.should.equal(63);
             (() => templateLogic.getInvokeCall('helloworld')).should.throw('Cannot call invoke explicitely from Cicero');
             templateLogic.getDispatchCall().length.should.equal(82);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
             templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
         });
 
         it('should load a logic file (without extension) to the model manager', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test');
             templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
         });
 
         it('should set the contract name', () => {
@@ -127,7 +127,7 @@ describe('TemplateLogic', () => {
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.getTarget().should.equal('cicero');
             templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
             templateLogic.setTarget('es6', true);
             templateLogic.getTarget().should.equal('es6');
             const contractName = 'org.accordproject.helloemit.HelloWorld';
@@ -135,7 +135,7 @@ describe('TemplateLogic', () => {
             templateLogic.getInitCall().length.should.equal(123);
             templateLogic.getInvokeCall('helloworld').length.should.equal(155);
             templateLogic.getDispatchCall().length.should.equal(138);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26797);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26864);
         });
 
         it('should fail to create init and dispatch for ES6 without a contract name', () => {
@@ -146,16 +146,16 @@ describe('TemplateLogic', () => {
             (() => templateLogic.getInitCall()).should.throw('Cannot create init call for target: es6 without a contract name');
             (() => templateLogic.getInvokeCall('helloworld')).should.throw('Cannot create invoke call for target: es6 without a contract name');
             (() => templateLogic.getDispatchCall()).should.throw('Cannot create dispatch call for target: es6 without a contract name');
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26797);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26864);
         });
 
         it('should set the compilation target to ES6 but not recompile the logic', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
             templateLogic.setTarget('es6', false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
         });
 
         it('should set the compilation target to ES5', () => {
@@ -163,13 +163,13 @@ describe('TemplateLogic', () => {
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.getTarget().should.equal('cicero');
             templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27672);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27739);
             templateLogic.setTarget('es5', true);
             templateLogic.getTarget().should.equal('es5');
             templateLogic.getInitCall().length.should.equal(53);
             templateLogic.getInvokeCall('helloworld').length.should.equal(112);
             templateLogic.getDispatchCall().length.should.equal(68);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26657);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26724);
         });
 
         it('should fail to create init code for Java', () => {
