@@ -16,7 +16,7 @@
 'use strict';
 
 const Commands = require('../lib/commands');
-const Moment = require('moment');
+const Moment = require('moment-mini');
 const Logger = require('@accordproject/ergo-compiler').Logger;
 
 require('yargs')
