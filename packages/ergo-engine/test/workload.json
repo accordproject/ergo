@@ -118,7 +118,7 @@
     "clauseName": "helloworld",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "error": "Parse error (at file /Users/jeromesimeon/git/ergo/packages/ergo-engine/test/examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
+      "error": "Parse error (at file examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
     }
   }
 ]
