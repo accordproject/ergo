@@ -25,7 +25,7 @@
     "access": "public"
   },
   "dependencies": {
-    "composer-concerto": "0.60.0",
+    "composer-concerto": "0.70.0",
     "debug": "^2.6.9",
     "winston": "^3.2.1",
     "yargs": "9.0.1"
