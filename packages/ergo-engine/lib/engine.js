@@ -122,10 +122,10 @@ class Engine {
         });
 
         // add immutables to the context
-        vm.freeze(serializer.toJSON(validContract, {convertResourcesToRelationships: true}), 'data');
-        vm.freeze(serializer.toJSON(validState, {convertResourcesToRelationships: true}), 'state');
+        vm.freeze(serializer.toJSON(validContract, {permitResourcesForRelationships:true}), 'data');
+        vm.freeze(serializer.toJSON(validState, {permitResourcesForRelationships:true}), 'state');
         vm.freeze(now, 'now');
-        vm.freeze(serializer.toJSON(validRequest, {convertResourcesToRelationships: true}), 'request');
+        vm.freeze(serializer.toJSON(validRequest, {permitResourcesForRelationships:true}), 'request');
 
         // execute the logic
         vm.run(script);
@@ -201,7 +201,7 @@ class Engine {
                 const validParam = serializer.fromJSON(params[key], {validate: false, acceptResourcesForRelationships: true});
                 validParam.$validator = new ResourceValidator({permitResourcesForRelationships: true});
                 validParam.validate();
-                validParams[key] = serializer.toJSON(validParam, {convertResourcesToRelationships: true});
+                validParams[key] = serializer.toJSON(validParam, {permitResourcesForRelationships:true});
             } else {
                 validParams[key] = params[key];
             }
@@ -235,8 +235,8 @@ class Engine {
         });
 
         // add immutables to the context
-        vm.freeze(serializer.toJSON(validContract, {convertResourcesToRelationships: true}), 'data');
-        vm.freeze(serializer.toJSON(validState, {convertResourcesToRelationships: true}), 'state');
+        vm.freeze(serializer.toJSON(validContract, {permitResourcesForRelationships:true}), 'data');
+        vm.freeze(serializer.toJSON(validState, {permitResourcesForRelationships:true}), 'state');
         vm.freeze(now, 'now');
         vm.freeze(validParams, 'params');
 
@@ -324,7 +324,7 @@ class Engine {
         });
 
         // add immutables to the context
-        vm.freeze(serializer.toJSON(validContract, {convertResourcesToRelationships: true}), 'data');
+        vm.freeze(serializer.toJSON(validContract, {permitResourcesForRelationships:true}), 'data');
         vm.freeze(now, 'now');
 
         // execute the logic
