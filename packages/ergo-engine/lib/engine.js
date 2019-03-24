@@ -63,7 +63,7 @@ class Engine {
             throw new Error('Did not find any JavaScript logic');
         }
 
-        //console.log('SCRIPT!!!!\n' + allJsScripts);
+        // console.log('SCRIPT!!!!\n' + allJsScripts);
         const script = new VMScript(allJsScripts);
         this.scripts[contractId] = script;
     }
@@ -129,25 +129,13 @@ class Engine {
 
         // execute the logic
         vm.run(script);
-        const ergoResult = vm.run(callScript);
-
-        let result;
-        if (ergoResult.hasOwnProperty('left')) {
-            result = ergoResult.left;
-        } else if (ergoResult.hasOwnProperty('right')) {
-            throw new Error('[Ergo] ' + JSON.stringify(ergoResult.right));
-        } else {
-            result = ergoResult;
-        }
+        const result = vm.run(callScript);
 
         // ensure the response is valid
-        let responseResult = null;
-        if (result.response) {
-            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
-            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validResponse.validate();
-            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
-        }
+        const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
+        validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validResponse.validate();
+        const responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
 
         // ensure the new state is valid
         const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
@@ -242,25 +230,13 @@ class Engine {
 
         // execute the logic
         vm.run(script);
-        const ergoResult = vm.run(callScript);
-
-        let result;
-        if (ergoResult.hasOwnProperty('left')) {
-            result = ergoResult.left;
-        } else if (ergoResult.hasOwnProperty('right')) {
-            throw new Error('[Ergo] ' + JSON.stringify(ergoResult.right));
-        } else {
-            result = ergoResult;
-        }
+        const result = vm.run(callScript);
 
         // ensure the response is valid
-        let responseResult = null;
-        if (result.response) {
-            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
-            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validResponse.validate();
-            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
-        }
+        const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
+        validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validResponse.validate();
+        const responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
 
         // ensure the new state is valid
         const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
@@ -330,16 +306,7 @@ class Engine {
         // execute the logic
         //console.log(script);
         vm.run(script);
-        const ergoResult = vm.run(callScript);
-
-        let result;
-        if (ergoResult.hasOwnProperty('left')) {
-            result = ergoResult.left;
-        } else if (ergoResult.hasOwnProperty('right')) {
-            throw new Error('[Ergo] ' + JSON.stringify(ergoResult.right));
-        } else {
-            result = ergoResult;
-        }
+        const result = vm.run(callScript);
 
         // ensure the response is valid
         let responseResult = null;

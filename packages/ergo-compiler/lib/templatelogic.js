@@ -91,21 +91,24 @@ class TemplateLogic {
         if (target === 'cicero') {
             this.getScriptManager().hasDispatch();
             code = `
-__dispatch({contract:data,state:state,emit:[],now:now,request:request});
+const __result = __dispatch({contract:data,state:state,emit:[],now:now,request:request});
+unwrapError(__result);
         `;
         } else if (target === 'es6') {
             if (this.getContractName()) {
                 const contractName = ErgoCompiler.contractCallName(this.getContractName());
                 code = `
 let contract = new ${contractName}();
-contract.main({contract:data,state:state,emit:[],now:now,request:request});
+const __result = contract.main({contract:data,state:state,emit:[],now:now,request:request});
+unwrapError(__result);
 `;
             } else {
                 throw new Error(`Cannot create dispatch call for target: ${target} without a contract name`);
             }
         } else if (target === 'es5') {
             code = `
-main({contract:data,state:state,emit:[],now:now,request:request});
+const __result = main({contract:data,state:state,emit:[],now:now,request:request});
+unwrapError(__result);
 `;
         } else {
             throw new Error(`Unsupported target: ${target}`);
@@ -124,21 +127,24 @@ main({contract:data,state:state,emit:[],now:now,request:request});
         if (target === 'cicero') {
             this.getScriptManager().hasDispatch();
             code = `
-__init({contract:data,emit:[],now:now,request:null});
+const __result = __init({contract:data,emit:[],now:now,request:null});
+unwrapError(__result);
         `;
         } else if (target === 'es6') {
             if (this.getContractName()) {
                 const contractName = ErgoCompiler.contractCallName(this.getContractName());
                 code = `
 let contract = new ${contractName}();
-contract.init({contract:data,emit:[],now:now,request:null});
+const __result = contract.init({contract:data,emit:[],now:now,request:null});
+unwrapError(__result);
 `;
             } else {
                 throw new Error(`Cannot create init call for target: ${target} without a contract name`);
             }
         } else if (target === 'es5') {
             code = `
-init({contract:data,emit:[],now:now,request:null});
+const __result = init({contract:data,emit:[],now:now,request:null});
+unwrapError(__result);
 `;
         } else {
             throw new Error(`Unsupported target: ${target}`);
@@ -162,14 +168,16 @@ init({contract:data,emit:[],now:now,request:null});
                 const contractName = ErgoCompiler.contractCallName(this.getContractName());
                 code = `
 let contract = new ${contractName}();
-contract.${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));
+const __result = contract.${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));
+unwrapError(__result);
 `;
             } else {
                 throw new Error(`Cannot create invoke call for target: ${target} without a contract name`);
             }
         } else if (target === 'es5') {
             code = `
-${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));; // Create the clause call
+const __result = ${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));
+unwrapError(__result);
 `;
         } else {
             throw new Error(`Unsupported target: ${target}`);
