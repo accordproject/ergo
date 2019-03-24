@@ -14,6 +14,6 @@ Feature: Init test fail
   Scenario: The contract should fail initializing
     Then it should fail to initialize with the error
 """
-[Ergo] {"type":["org.accordproject.ergo.stdlib.ErgoErrorResponse"],"data":{"message":"Enforce Error at 18:2-21:3 ''"}}
+[Ergo] Enforce Error at 18:2-21:3 ''
 """
 

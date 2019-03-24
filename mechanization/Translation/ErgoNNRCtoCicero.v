@@ -80,23 +80,7 @@ Section ErgoNNRCtoCicero.
       +++ `"function " +++ `fun_name +++ `"(context) {" +++ eol
       +++ `"  let pcontext = { '" +++ `request_param +++ `"' : context.request, 'state': " +++ state_init +++ `", 'contract': context.contract, 'emit': context.emit, 'now': context.now};" +++ eol
       +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
-      +++ `"  let result = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
-      +++ `"  if (result.hasOwnProperty('left')) {" +++ eol
-      +++ `"    //logger.info('ergo result: '+JSON.stringify(result))" +++ eol
-      +++ `"    context.response = result.left.response ?" +++ eol
-      +++ `"         result.left.response" +++ eol
-      +++ `"       : { '$class': 'org.accordproject.cicero.runtime.Response' };" +++ eol
-      +++ `"    context.state = result.left.state;" +++ eol
-      +++ `"    let emitResult = [];" +++ eol
-      +++ `"    for (let i = 0; i < result.left.emit.length; i++) {" +++ eol
-      +++ `"      emitResult.push(result.left.emit[i]);" +++ eol
-      +++ `"    }" +++ eol
-      +++ `"    context.emit = emitResult;" +++ eol
-      +++ `"    return context;" +++ eol
-      +++ `"  } else {" +++ eol
-      +++ `"    //logger.error('ergo error: '+JSON.stringify(result.right))" +++ eol
-      +++ `"    ciceroError(result);" +++ eol
-      +++ `"  }" +++ eol
+      +++ `"  return new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
       +++ `"}" +++ eol.
 
   Definition wrapper_function_for_init
@@ -123,23 +107,7 @@ Section ErgoNNRCtoCicero.
       +++ `"function " +++ `fun_name +++ `"(context) {" +++ eol
       +++ `"  let pcontext = { 'state': " +++ state_init +++ `", 'contract': context.contract, 'emit': context.emit, 'now': context.now};" +++ eol
       +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
-      +++ `"  let result = new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
-      +++ `"  if (result.hasOwnProperty('left')) {" +++ eol
-      +++ `"    //logger.info('ergo result: '+JSON.stringify(result))" +++ eol
-      +++ `"    context.response = result.left.response ?" +++ eol
-      +++ `"         result.left.response" +++ eol
-      +++ `"       : { '$class': 'org.accordproject.cicero.runtime.Response' };" +++ eol
-      +++ `"    context.state = result.left.state;" +++ eol
-      +++ `"    let emitResult = [];" +++ eol
-      +++ `"    for (let i = 0; i < result.left.emit.length; i++) {" +++ eol
-      +++ `"      emitResult.push(result.left.emit[i]);" +++ eol
-      +++ `"    }" +++ eol
-      +++ `"    context.emit = emitResult;" +++ eol
-      +++ `"    return context;" +++ eol
-      +++ `"  } else {" +++ eol
-      +++ `"    //logger.error('ergo error: '+JSON.stringify(result.right))" +++ eol
-      +++ `"    ciceroError(result);" +++ eol
-      +++ `"  }" +++ eol
+      +++ `"  return new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
       +++ `"}" +++ eol.
 
   Definition apply_wrapper_function

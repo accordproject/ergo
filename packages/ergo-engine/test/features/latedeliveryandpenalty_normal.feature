@@ -43,7 +43,7 @@ Feature: Late delivery contract
 """
     Then it should fail with the error
 """
-[Ergo] {"message":"Cannot exercise late delivery before delivery date","$class":"org.accordproject.ergo.stdlib.ErgoErrorResponse"}
+[Ergo] Cannot exercise late delivery before delivery date
 """
 
   Scenario: The contract should return the penalty amount but not allow the buyer to terminate

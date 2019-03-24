@@ -180,6 +180,17 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
     }
 });
 
+Then('the following initial obligations have( also) been emitted', function (expectedEmit) {
+    const emit = JSON.parse(expectedEmit);
+    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
+        .then((actualAnswer) => {
+            this.answer = actualAnswer;
+            expect(actualAnswer).to.have.property('emit');
+            expect(actualAnswer).to.not.have.property('error');
+            return Util.compareSuccess({ emit },actualAnswer);
+        });
+});
+
 Then('it should fail with the error', function (expectedError) {
     return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
         .catch((actualError) => {
