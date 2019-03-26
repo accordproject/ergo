@@ -12,19 +12,12 @@
  * limitations under the License.
  */
 
-namespace org.accordproject.initemittest
+'use strict';
 
-contract InitEmitTest over TemplateModel state State {
-	clause init() : Response {
-		set state State {};
-    emit Greeting{ message: "Voila!" };
-		return Response{
-		}
-	}
-	clause greet(request:Request) : Response {
-		set state State {};
-    emit Greeting{ message: "Voila!" };
-		return Response{
-		}
-	}
-}
+/**
+ * Ergo Engine - execution for JavaScript target
+ * @module ergo-engine
+ */
+
+module.exports.Steps = require('./lib/steps.js');
+module.exports.Util = require('./lib/util.js');

@@ -15,8 +15,8 @@
 'use strict';
 
 const Engine = require('../lib/engine');
-const Util = require('../lib/util');
 const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
+
 const Chai = require('chai');
 const expect = Chai.expect;
 
@@ -29,6 +29,52 @@ const Path = require('path');
 
 // Set of tests
 const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.json'), 'utf8'));
+
+/**
+ * Compare actual and expected result components
+ *
+ * @param {string} expected the expected component as specified in the test workload
+ * @param {string} actual the actual component as returned by the engine
+ */
+function compareComponent(expected,actual) {
+    if (!expected) {
+        expect(actual).to.equal(expected);
+    } else {
+        delete expected.timestamp;
+        delete actual.timestamp;
+        // Some basic deep comparison for arrays, since Chai doesn't do the right thing
+        if (Array.isArray(actual)) {
+            for (let i = 0; i < expected.length; i++) {
+                delete expected[i].timestamp;
+                delete actual[i].timestamp;
+                expect(actual[i]).to.deep.include(expected[i]);
+            }
+        } else {
+            expect(actual).to.deep.include(expected);
+        }
+    }
+}
+
+/**
+ * Compare actual result and expected result
+ *
+ * @param {string} expected the expected successful result as specified in the test workload
+ * @param {string} actual the successful result as returned by the engine
+ */
+function compareSuccess(expected,actual) {
+    if (expected.hasOwnProperty('state')) {
+        expect(actual).to.have.property('state');
+        compareComponent(expected.state, actual.state);
+    }
+    if (expected.hasOwnProperty('response')) {
+        expect(actual).to.have.property('response');
+        compareComponent(expected.response, actual.response);
+    }
+    if (expected.hasOwnProperty('emit')) {
+        expect(actual).to.have.property('emit');
+        compareComponent(expected.emit, actual.emit);
+    }
+}
 
 describe('Execute ES6', () => {
 
@@ -83,7 +129,7 @@ describe('Execute ES6', () => {
                     } else {
                         return engine.compileAndInit(templateLogic, contractName, contractJson, currentTime)
                             .then((actualAnswer) => {
-                                return Util.compareSuccess(expected, actualAnswer);
+                                return compareSuccess(expected, actualAnswer);
                             });
                     }
                 } else {
@@ -99,7 +145,7 @@ describe('Execute ES6', () => {
                         } else {
                             return engine.compileAndInvoke(templateLogic, contractName, clauseName, contractJson, params, stateJson, currentTime)
                                 .then((actualAnswer) => {
-                                    return Util.compareSuccess(expected, actualAnswer);
+                                    return compareSuccess(expected, actualAnswer);
                                 });
                         }
                     } else {
@@ -113,7 +159,7 @@ describe('Execute ES6', () => {
                         } else {
                             return engine.compileAndExecute(templateLogic, contractName, contractJson, requestJson, stateJson, currentTime)
                                 .then((actualAnswer) => {
-                                    return Util.compareSuccess(expected, actualAnswer);
+                                    return compareSuccess(expected, actualAnswer);
                                 });
                         }
                     }
@@ -174,7 +220,7 @@ describe('Execute ES5', () => {
                     } else {
                         return engine.compileAndInit(templateLogic, contractName, contractJson, currentTime)
                             .then((actualAnswer) => {
-                                return Util.compareSuccess(expected, actualAnswer);
+                                return compareSuccess(expected, actualAnswer);
                             });
                     }
                 } else {
@@ -190,7 +236,7 @@ describe('Execute ES5', () => {
                         } else {
                             return engine.compileAndInvoke(templateLogic, contractName, clauseName, contractJson, params, stateJson, currentTime)
                                 .then((actualAnswer) => {
-                                    return Util.compareSuccess(expected, actualAnswer);
+                                    return compareSuccess(expected, actualAnswer);
                                 });
                         }
                     } else {
@@ -204,7 +250,7 @@ describe('Execute ES5', () => {
                         } else {
                             return engine.compileAndExecute(templateLogic, contractName, contractJson, requestJson, stateJson, currentTime)
                                 .then((actualAnswer) => {
-                                    return Util.compareSuccess(expected, actualAnswer);
+                                    return compareSuccess(expected, actualAnswer);
                                 });
                         }
                     }

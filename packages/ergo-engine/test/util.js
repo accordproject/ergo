@@ -41,11 +41,3 @@ describe('Initialize current time', () => {
         return Util.setCurrentTime(undefined).format().should.not.be.null;
     });
 });
-describe('Resolve root directory for Cucumber', () => {
-    it('Should resolve to given root directory', function () {
-        return Util.resolveRootDir({rootdir:'foo/bar'}).should.equal('foo/bar');
-    });
-    it('Should resolve to \'.\'', function () {
-        return Util.resolveRootDir({}).should.equal('.');
-    });
-});

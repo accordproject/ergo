@@ -1,1 +1,1 @@
-require('@accordproject/ergo-engine/lib/steps');
+require('@accordproject/ergo-test').Steps;

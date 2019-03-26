@@ -1,7 +1,7 @@
 {
-  "name": "@accordproject/ergo-engine",
+  "name": "@accordproject/ergo-test",
   "version": "0.7.3",
-  "description": "Ergo Engine",
+  "description": "Ergo Test",
   "repository": {
     "type": "git",
     "url": "https://github.com/accordproject/ergo"
@@ -12,8 +12,9 @@
     "lint": "eslint .",
     "postlint": "npm run licchk",
     "licchk": "license-check",
+    "test:cucumber": "cucumber-js test/features --require lib/steps.js --world-parameters '{\"rootdir\":\"./test\"}'",
     "test:mocha": "mocha",
-    "test:all": "npm run test:mocha",
+    "test:all": "npm run test:mocha && npm run test:cucumber",
     "test:cov": "nyc npm run test:all",
     "test": "npm run test:all && npm run test:cov"
   },
@@ -29,15 +30,13 @@
   },
   "dependencies": {
     "@accordproject/ergo-compiler": "0.7.3",
-    "composer-concerto": "0.70.0",
-    "moment-mini": "2.22.1",
-    "vm2": "3.5.0",
-    "yargs": "9.0.1"
-  },
-  "devDependencies": {
+    "@accordproject/ergo-engine": "0.7.3",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-things": "0.2.0",
+    "cucumber": "^5.1.0"
+  },
+  "devDependencies": {
     "eslint": "4.19.1",
     "jsdoc": "3.5.5",
     "lerna": "2.11.0",
