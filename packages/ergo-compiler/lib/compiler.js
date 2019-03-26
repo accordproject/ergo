@@ -88,7 +88,7 @@ class Compiler {
         if (compiled.code) {
             return { 'error' : compiled.error };
         } else {
-            return { 'success' : compiled.result };
+            return { 'success' : compiled.result, 'contractName' : compiled.contractName };
         }
     }
 

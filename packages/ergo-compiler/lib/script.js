@@ -35,10 +35,12 @@ class Script {
      * @param {string} identifier - The identifier of the script
      * @param {string} language - The language type of the script
      * @param {string} contents - The contents of the script
+     * @param {string} contractName - The name of the contract if known or null
      */
-    constructor(modelManager, identifier, language, contents) {
+    constructor(modelManager, identifier, language, contents, contractName) {
         this.modelManager = modelManager;
         this.identifier = identifier;
+        this.contractName = contractName;
         this.language = language;
         this.contents = contents;
         this.functions = [];
@@ -74,6 +76,13 @@ class Script {
             }
 
             this.tokens = parser.getTokens();
+
+            if (!this.getContractName()) {
+                let classNames = parser.getClasses().map(x => x.name);
+                if (classNames.length !== 0) {
+                    this.contractName = classNames[0];
+                }
+            }
         }
     }
 
@@ -97,11 +106,11 @@ class Script {
     }
 
     /**
-     * Returns the identifier of the script
-     * @return {string} the identifier of the script
+     * Returns the name of the contract for this script
+     * @return {string} the name of the contract, if known
      */
-    getName() {
-        return this.identifier;
+    getContractName() {
+        return this.contractName;
     }
 
     /**

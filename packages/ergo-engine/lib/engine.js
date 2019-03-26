@@ -50,20 +50,8 @@ class Engine {
      * @param {string} contractId - the contract identifier
      * @private
      */
-    compileJsLogic(scriptManager, contractId) {
-        let allJsScripts = '';
-
-        scriptManager.getAllScripts().forEach(function (element) {
-            if (element.getLanguage() === '.js') {
-                allJsScripts += element.getContents();
-            }
-        }, this);
-
-        if (allJsScripts === '') {
-            throw new Error('Did not find any JavaScript logic');
-        }
-
-        // console.log('SCRIPT!!!!\n' + allJsScripts);
+    cacheJsScript(scriptManager, contractId) {
+        const allJsScripts = scriptManager.getCompiledJavaScript();
         const script = new VMScript(allJsScripts);
         this.scripts[contractId] = script;
     }
@@ -107,7 +95,7 @@ class Engine {
 
         let script;
 
-        this.compileJsLogic(scriptManager, contractId);
+        this.cacheJsScript(scriptManager, contractId);
         script = this.scripts[contractId];
 
         const callScript = logic.getDispatchCall();
@@ -208,7 +196,7 @@ class Engine {
 
         let script;
 
-        this.compileJsLogic(scriptManager, contractId);
+        this.cacheJsScript(scriptManager, contractId);
         script = this.scripts[contractId];
 
         const callScript = logic.getInvokeCall(clauseName);
@@ -233,10 +221,13 @@ class Engine {
         const result = vm.run(callScript);
 
         // ensure the response is valid
-        const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
-        validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validResponse.validate();
-        const responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
+        let responseResult = null;
+        if (result.response) {
+            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
+            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validResponse.validate();
+            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
+        }
 
         // ensure the new state is valid
         const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
@@ -267,80 +258,16 @@ class Engine {
      * @param {TemplateLogic} logic  - the logic to execute
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
+     * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    async init(logic, contractId, contract, currentTime) {
-        const serializer = logic.getSerializer();
-        const scriptManager = logic.getScriptManager();
-
-        // ensure the contract is valid
-        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
-        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validContract.validate();
-
-        // Set the current time and UTC Offset
-        const now = Util.setCurrentTime(currentTime);
-        const utcOffset = now.utcOffset();
-
-        let script;
-
-        this.compileJsLogic(scriptManager, contractId);
-        script = this.scripts[contractId];
-
-        const callScript = logic.getInitCall();
-
-        const vm = new VM({
-            timeout: 1000,
-            sandbox: {
-                moment: Moment,
-                logger: Logger,
-                utcOffset: utcOffset
-            }
-        });
-
-        // add immutables to the context
-        vm.freeze(serializer.toJSON(validContract, {permitResourcesForRelationships:true}), 'data');
-        vm.freeze(now, 'now');
-
-        // execute the logic
-        //console.log(script);
-        vm.run(script);
-        const result = vm.run(callScript);
-
-        // ensure the response is valid
-        let responseResult = null;
-        if (result.response) {
-            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
-            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validResponse.validate();
-            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
-        }
-        //console.log('RESULT!!! ' + JSON.stringify(responseResult));
-        // ensure the response is valid
-
-        // ensure the new state is valid
-        const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
-        validNewState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validNewState.validate();
-        const stateResult = serializer.toJSON(validNewState, {convertResourcesToRelationships: true});
-
-        // ensure all the emits are valid
-        let emitResult = [];
-        for (let i = 0; i < result.emit.length; i++) {
-            const validEmit = serializer.fromJSON(result.emit[i], {validate: false, acceptResourcesForRelationships: true});
-            validEmit.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validEmit.validate();
-            emitResult.push(serializer.toJSON(validEmit, {convertResourcesToRelationships: true}));
-        }
-
-        return {
-            'clause': contractId,
-            'request': null,
-            'response': responseResult,
-            'state': stateResult,
-            'emit': emitResult,
+    async init(logic, contractId, contract, params, currentTime) {
+        const defaultState = {
+            '$class':'org.accordproject.cicero.contract.AccordContractState',
+            'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
+        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime);
     }
 
     /**
@@ -349,12 +276,13 @@ class Engine {
      * @param {TemplateLogic} logic  - the logic to execute
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
+     * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInit(logic, contractId, contract, currentTime) {
+    compileAndInit(logic, contractId, contract, params, currentTime) {
         return logic.compileLogic(false).then(() => {
-            return this.init(logic, contractId, contract, currentTime);
+            return this.init(logic, contractId, contract, params, currentTime);
         });
     }
 

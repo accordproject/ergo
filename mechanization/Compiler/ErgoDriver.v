@@ -269,7 +269,7 @@ Section ErgoDriver.
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
                           let res := ergo_module_to_javascript version ctxt p in
-                          elift (fun xy => mkResultFile p.(module_file) (fst xy) (snd xy)) res)
+                          elift (fun xy => mkResultFile None p.(module_file) (fst xy) (snd xy)) res)
                        cinit) bm.
 
     Definition ergo_module_to_java_top
@@ -281,7 +281,7 @@ Section ErgoDriver.
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
                           let res := ergo_module_to_java ctxt p in
-                          elift (fun xy => mkResultFile p.(module_file) (fst xy) (string_to_estring (snd xy))) res)
+                          elift (fun xy => mkResultFile None p.(module_file) (fst xy) (string_to_estring (snd xy))) res)
                        cinit) bm.
 
     Definition ergo_module_to_cicero_top
@@ -302,10 +302,13 @@ Section ErgoDriver.
                          let sigs := lookup_contract_signatures (snd c) in
                          let pc := ergo_module_to_ergoct ctxt p in
                          let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
-                         elift (fun x => (x,ergoc_module_to_cicero contract_name (snd c).(contract_state) sigs x)) pn)
+                         elift (fun x => (contract_name, x,ergoc_module_to_cicero contract_name (snd c).(contract_state) sigs x)) pn)
                       ec
                 in
-                elift (fun xy => mkResultFile p.(module_file) (fst xy) (snd xy)) res)
+                elift (fun xyz =>
+                         let '(contract_name, nmod, ncontent) := xyz in
+                         mkResultFile (Some contract_name) p.(module_file) nmod ncontent)
+                      res)
              ctxt) bm.
     
   End CompilerTop.

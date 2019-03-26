@@ -64,11 +64,12 @@ Section ErgoNNRC.
 
   Record result_file :=
     mkResultFile {
+        res_contract_name : option string;
         res_file : string;
         res_nnrc : nnrc_module;
         res_content : estring;
       }.
-  
+
   Section Semantics.
     (* XXX Nothing yet -- relational semantics should go here *)
   End Semantics.

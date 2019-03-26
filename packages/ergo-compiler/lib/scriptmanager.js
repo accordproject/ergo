@@ -150,6 +150,23 @@ class ScriptManager {
     }
 
     /**
+     * Get a single combined Script
+     * @return {string} The source for all Scripts registered, including compiled ones
+     * @private
+     */
+    getCombinedScripts() {
+        let allJsScripts = '';
+
+        this.getAllScripts().forEach(function (element) {
+            if (element.getLanguage() === '.js') {
+                allJsScripts += element.getContents();
+            }
+        }, this);
+
+        return allJsScripts;
+    }
+
+    /**
      * Get the array of Script instances for the given language
      * @param {string} language - The scripts' language
      * @return {Script[]} The Scripts registered
@@ -176,13 +193,13 @@ class ScriptManager {
         let logic = [];
         const scripts = this.getScriptsForLanguage('.ergo');
         scripts.forEach(function (script) {
-            logic.push({ 'name' : script.getName(), 'content' : script.getContents() });
+            logic.push({ 'name' : script.getIdentifier(), 'content' : script.getContents() });
         });
         return logic;
     }
 
     /**
-     * Remove all registered Composer files
+     * Remove all registered scripts
      */
     clearScripts() {
         this.scripts = {};
@@ -200,13 +217,30 @@ class ScriptManager {
     }
 
     /**
-     * Get the Script associated with an identifier
-     * @param {string} identifier - the identifier of the Script
+     * Get the compiled Script
      * @return {Script} the Script
      * @private
      */
     getCompiledScript() {
         return this.compileLogic(false);
+    }
+
+    /**
+     * Get the compiled JavaScript
+     * @return {string} the Script
+     * @private
+     */
+    getCompiledJavaScript() {
+        const compiledScript = this.compiledScript;
+        let allJsScripts = '';
+
+        if (compiledScript) {
+            allJsScripts += compiledScript.getContents();
+        } else {
+            throw new Error('Did not find any compiled JavaScript logic');
+        }
+
+        return allJsScripts;
     }
 
     /**
@@ -226,18 +260,23 @@ class ScriptManager {
         if (this.compiledScript && !force) {
             return this.compiledScript;
         }
+        const codeExt = this.target === 'java' ? '.java' : '.js';
         let sourceErgo = this.getLogic();
         if (sourceErgo === undefined || sourceErgo.length === 0) {
-            return null;
+            const allJsScripts = this.getCombinedScripts();
+            if (allJsScripts === '') {
+                return null;
+            }
+            this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, allJsScripts, null);
+        } else {
+            // Do not link to runtime for Java target, only for JavaScript
+            const link = this.target === 'java' ? false : true;
+            const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.target,link);
+            if (compiledErgo.hasOwnProperty('error')) {
+                throw new Error(ErgoCompiler.ergoVerboseErrorToString(compiledErgo.error));
+            }
+            this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success, compiledErgo.contractName);
         }
-        // Do not link to runtime for Java target, only for JavaScript
-        const link = this.target === 'java' ? false : true;
-        const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.target,link);
-        if (compiledErgo.hasOwnProperty('error')) {
-            throw new Error(ErgoCompiler.ergoVerboseErrorToString(compiledErgo.error));
-        }
-        const codeExt = this.target === 'java' ? '.java' : '.js';
-        this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success);
         return this.compiledScript;
     }
 
