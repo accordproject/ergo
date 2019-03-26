@@ -11,20 +11,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-namespace org.accordproject.initemittest
-
-contract InitEmitTest over TemplateModel state State {
-	clause init() : Response {
-		set state State {};
-    emit Greeting{ message: "Voila!" };
-		return Response{
-		}
-	}
-	clause greet(request:Request) : Response {
-		set state State {};
-    emit Greeting{ message: "Voila!" };
-		return Response{
-		}
-	}
-}

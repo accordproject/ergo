@@ -1,0 +1,6 @@
+coverage
+docs
+node_modules
+out
+test/data
+lib/momenttojson.js

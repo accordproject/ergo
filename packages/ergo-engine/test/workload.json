@@ -107,6 +107,48 @@
     }
   },
   {
+    "name": "initemittest",
+    "dir": "examples/initemittest",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": null,
+    "contractName": "org.accordproject.initemittest.InitEmitTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.initemittest.Response"
+      },
+      "state": {
+        "$class": "org.accordproject.initemittest.State"
+      }
+    }
+  },
+  {
+    "name": "initemittest (greeting)",
+    "dir": "examples/initemittest",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.initemittest.InitEmitTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.initemittest.Response"
+      },
+      "state": {
+        "$class": "org.accordproject.initemittest.State"
+      },
+      "emit": [{
+        "$class": "org.accordproject.initemittest.Greeting",
+        "message": "Voila!"
+      }]
+    }
+  },
+  {
     "name": "bad logic",
     "dir": "examples/bad-logic",
     "ergo": ["logic.ergo"],
