@@ -34,7 +34,7 @@ describe('Compare components corner cases', () => {
     it('Should succeed comparing null against null', function () {
         return (() => Util.compareComponent(null, null)).should.not.throw;
     });
-    it('Should fail comparing null against null', function () {
+    it('Should fail comparing null against 1', function () {
         return (() => Util.compareComponent(null, 1)).should.throw('expected 1 to equal null');
     });
     it('Should succeed comparing undefined against undefined', function () {
