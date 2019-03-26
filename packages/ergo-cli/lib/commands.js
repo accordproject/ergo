@@ -76,7 +76,7 @@ class Commands {
         }
         let initResponse;
         if (stateInput === null) {
-            initResponse = engine.compileAndInit(templateLogic, contractName, contractJson, currentTime);
+            initResponse = engine.compileAndInit(templateLogic, contractName, contractJson, {}, currentTime);
         } else {
             const stateJson = getJson(stateInput);
             initResponse = Promise.resolve({ state: stateJson });
@@ -155,7 +155,7 @@ class Commands {
         }
         const contractJson = getJson(contractInput);
         const clauseParams = getJson(paramsInput);
-        return engine.compileAndInit(templateLogic,contractName,contractJson,currentTime,clauseParams);
+        return engine.compileAndInit(templateLogic,contractName,contractJson,clauseParams,currentTime);
     }
 
     /**

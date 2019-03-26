@@ -36,7 +36,8 @@ const { Before, Given, When, Then } = require('cucumber');
  * @returns {object} Promise to the initial state of the contract
  */
 function init(engine,templateLogic,contractJson,currentTime) {
-    return engine.compileAndInit(templateLogic,templateLogic.getContractName(),contractJson,currentTime);
+    const params = {};
+    return engine.compileAndInit(templateLogic,templateLogic.getContractName(),contractJson,params,currentTime);
 }
 
 /**
@@ -55,7 +56,10 @@ function execute(engine,templateLogic,contractJson,stateJson,currentTime,request
 }
 
 // Defaults
-const defaultState = {'stateId':'org.accordproject.cicero.contract.AccordContractState#1','$class':'org.accordproject.cicero.contract.AccordContractState'};
+const defaultState = {
+    '$class':'org.accordproject.cicero.contract.AccordContractState',
+    'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
+};
 
 Before(function () {
     this.engine = new Engine();

@@ -69,7 +69,7 @@ class TemplateLogic {
      * @param {String} contractName - the contract name
      */
     setContractName(contractName) {
-        this.contractName = contractName;
+        this.contractName = ErgoCompiler.contractCallName(contractName);
     }
 
     /**
@@ -96,10 +96,10 @@ unwrapError(__result);
         `;
         } else if (target === 'es6') {
             if (this.getContractName()) {
-                const contractName = ErgoCompiler.contractCallName(this.getContractName());
+                const contractName = this.getContractName();
                 code = `
-let contract = new ${contractName}();
-const __result = contract.main({contract:data,state:state,emit:[],now:now,request:request});
+let contractObj = new ${contractName}();
+const __result = contractObj.main({contract:data,state:state,emit:[],now:now,request:request});
 unwrapError(__result);
 `;
             } else {
@@ -117,42 +117,6 @@ unwrapError(__result);
     }
 
     /**
-     * Generate the initialization logic
-     * @return {String} the initialization code
-     * @private
-     */
-    getInitCall() {
-        const target = this.getTarget();
-        let code;
-        if (target === 'cicero') {
-            this.getScriptManager().hasDispatch();
-            code = `
-const __result = __init({contract:data,emit:[],now:now,request:null});
-unwrapError(__result);
-        `;
-        } else if (target === 'es6') {
-            if (this.getContractName()) {
-                const contractName = ErgoCompiler.contractCallName(this.getContractName());
-                code = `
-let contract = new ${contractName}();
-const __result = contract.init({contract:data,emit:[],now:now,request:null});
-unwrapError(__result);
-`;
-            } else {
-                throw new Error(`Cannot create init call for target: ${target} without a contract name`);
-            }
-        } else if (target === 'es5') {
-            code = `
-const __result = init({contract:data,emit:[],now:now,request:null});
-unwrapError(__result);
-`;
-        } else {
-            throw new Error(`Unsupported target: ${target}`);
-        }
-        return code;
-    }
-
-    /**
      * Generate the invocation logic
      * @param {String} clauseName - the clause name
      * @return {String} the invocation code
@@ -161,14 +125,12 @@ unwrapError(__result);
     getInvokeCall(clauseName) {
         const target = this.getTarget();
         let code;
-        if (target === 'cicero') {
-            throw new Error('Cannot call invoke explicitely from Cicero');
-        } else if (target === 'es6') {
+        if (target === 'cicero' || target === 'es6') {
             if (this.getContractName()) {
-                const contractName = ErgoCompiler.contractCallName(this.getContractName());
+                const contractName = this.getContractName();
                 code = `
-let contract = new ${contractName}();
-const __result = contract.${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));
+let contractObj = new ${contractName}();
+const __result = contractObj.${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));
 unwrapError(__result);
 `;
             } else {
@@ -286,7 +248,11 @@ unwrapError(__result);
      */
     compileLogicSync(force) {
         this.validateModelFiles();
-        return this.getScriptManager().compileLogic(force);
+        const script = this.getScriptManager().compileLogic(force);
+        if (script && script.getContractName()) {
+            this.setContractName(script.getContractName());
+        }
+        return script;
     }
 
     /**

@@ -20,8 +20,14 @@ open ErgoConfig
 open PrettyIL
 
 let res_convert code =
+  let contract_name =
+    begin match code.res_contract_name with
+    | None -> None
+    | Some cn -> Some (string_of_char_list cn)
+    end
+  in
   (* Printf.printf "NNRC Module: %s" (pretty_nnrc_module false 0 false (Jarray []) false code.res_nnrc); *)
-  (string_of_char_list code.res_file, code.res_content)
+  (contract_name, string_of_char_list code.res_file, code.res_content)
 
 let compile_module_to_javascript version inputs =
   let code = ErgoCompiler.ergo_module_to_javascript version inputs in
@@ -75,7 +81,7 @@ let print_monitor source_file =
 let ergo_proc gconf inputs =
   let target_lang = ErgoConfig.get_target_lang gconf in
   let ext = extension_of_lang target_lang in
-  let (source_file,result) = ergo_compile target_lang inputs in
+  let (contract_name,source_file,result) = ergo_compile target_lang inputs in
   Printf.printf "Compiling Ergo '%s' -- " source_file;
   let result = ergo_link gconf result in
   print_generate source_file ext result;
