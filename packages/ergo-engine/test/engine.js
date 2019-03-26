@@ -76,13 +76,18 @@ function compareSuccess(expected,actual) {
     }
 }
 
-describe('Execute ES6', () => {
-
+/**
+ * Run a test workload
+ *
+ * @param {string} target - the target JS kind
+ */
+function runWorkload(target) {
     let engine;
     let templateLogic;
+
     beforeEach(async function () {
         engine = new Engine();
-        templateLogic = new TemplateLogic('es6');
+        templateLogic = new TemplateLogic(target);
         templateLogic.addErgoBuiltin();
     });
 
@@ -167,95 +172,15 @@ describe('Execute ES6', () => {
             });
         });
     }
+}
+
+
+describe('Execute ES6', () => {
+    runWorkload('es6');
 });
 describe('Execute ES5', () => {
-
-    let engine;
-    let templateLogic;
-    beforeEach(async function () {
-        engine = new Engine();
-        templateLogic = new TemplateLogic('es5');
-        templateLogic.addErgoBuiltin();
-    });
-
-    afterEach(() => {});
-
-    for (const i in workload) {
-        const test = workload[i];
-        const name = test.name;
-        const dir = test.dir;
-        const ergo = test.ergo;
-        const models = test.models;
-        const contract = test.contract;
-        const state = test.state;
-        const contractName = test.contractName;
-        const currentTime = test.currentTime ? test.currentTime : '1970-01-01T00:00:00Z';
-        const expected = test.expected;
-        let resultKind;
-        if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
-            resultKind = 'fail';
-        } else {
-            resultKind = 'succeed';
-        }
-
-        describe('#'+name, function () {
-            it('should ' + resultKind + ' executing Ergo contract ' + contractName, async function () {
-                for (let i = 0; i < ergo.length; i++) {
-                    const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
-                    const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                    templateLogic.addLogicFile(ergoContent, Path.join(dir, ergo[i]));
-                }
-                for (let i = 0; i < models.length; i++) {
-                    const ctoFile = Path.resolve(__dirname, dir, models[i]);
-                    const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                    templateLogic.addModelFile(ctoContent, Path.join(dir, models[i]));
-                }
-                const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
-                if (state === null) {
-                    if (expected.hasOwnProperty('error')) {
-                        return engine.compileAndInit(templateLogic, contractName, contractJson, currentTime)
-                            .catch((actualError) => {
-                                expect(actualError.message).to.equal(expected.error);
-                            });
-                    } else {
-                        return engine.compileAndInit(templateLogic, contractName, contractJson, currentTime)
-                            .then((actualAnswer) => {
-                                return compareSuccess(expected, actualAnswer);
-                            });
-                    }
-                } else {
-                    const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                    if (test.clauseName) {
-                        const params = test.params;
-                        const clauseName = test.clauseName;
-                        if (expected.hasOwnProperty('error')) {
-                            return engine.compileAndInvoke(templateLogic, contractName, clauseName, contractJson, params, stateJson, currentTime)
-                                .catch((actualError) => {
-                                    expect(actualError.message).to.equal(expected.error);
-                                });
-                        } else {
-                            return engine.compileAndInvoke(templateLogic, contractName, clauseName, contractJson, params, stateJson, currentTime)
-                                .then((actualAnswer) => {
-                                    return compareSuccess(expected, actualAnswer);
-                                });
-                        }
-                    } else {
-                        const request = test.request;
-                        const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
-                        if (expected.hasOwnProperty('error')) {
-                            return engine.compileAndExecute(templateLogic, contractName, contractJson, requestJson, stateJson, currentTime)
-                                .catch((actualError) => {
-                                    expect(actualError.message).to.equal(expected.error);
-                                });
-                        } else {
-                            return engine.compileAndExecute(templateLogic, contractName, contractJson, requestJson, stateJson, currentTime)
-                                .then((actualAnswer) => {
-                                    return compareSuccess(expected, actualAnswer);
-                                });
-                        }
-                    }
-                }
-            });
-        });
-    }
+    runWorkload('es5');
+});
+describe('Execute Cicero', () => {
+    runWorkload('cicero');
 });
