@@ -126,6 +126,28 @@ class Compiler {
         return error.verbose;
     }
 
+
+    /**
+     * Available compiler targets
+     * @return {Array<string>} the available compilation targets for the logic
+     */
+    static availableTargets() {
+        return CompilerCore.availabletargets();
+    }
+
+    /**
+     * Is valid compiler target
+     * @param {string} target - the target
+     * @return {boolean} whether the target is valid
+     */
+    static isValidTarget(target) {
+        const available = this.availableTargets();
+        if (available.includes(target)) {
+            return true;
+        } else {
+            throw new Error(`Unknown target: ${target} (available: ${available})`);
+        }
+    }
 }
 
 module.exports = Compiler;

@@ -43,7 +43,7 @@ describe('Script', () => {
             script.getLanguage().should.equal('.js');
             script.getIdentifier().should.equal('test.js');
             script.getContents().should.equal(jsSample);
-            script.getTokens().length.should.equal(39);
+            script.getTokens().length.should.equal(51);
         });
 
         it('should instantiate an Ergo script', async function() {
@@ -69,7 +69,7 @@ describe('Script', () => {
         it('should instantiate a JavaScript script', async function() {
             const script = new Script(modelManager,'test.js','.js',jsSample);
             const decls = script.getFunctionDeclarations();
-            decls.map(fd => fd.getName()).should.deep.equal(['paymentClause']);
+            decls.map(fd => fd.getName()).should.deep.equal(['paymentClause','__dispatch']);
             const decl = decls[0];
             decl.getThrows().should.equal('');
             decl.getLanguage().should.equal('.js');

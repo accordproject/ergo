@@ -31,6 +31,9 @@ function paymentClause(context) {
     var contract = context.contract;
     res.amount = contract.amount;
 }
+function __dispatch(context) {
+    paymentClause(context);
+}
 
 /* eslint-enable no-unused-vars */
 /* eslint-enable no-undef */

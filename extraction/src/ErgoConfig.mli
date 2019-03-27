@@ -26,7 +26,8 @@ val name_of_lang : lang -> string
 val extension_of_lang : lang -> string
 val script_lang_of_target : string -> string
 
-val available_targets : string
+val available_targets : string list
+val available_targets_message : string
 
 type global_config = {
   mutable econf_source : lang;

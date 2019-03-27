@@ -51,13 +51,13 @@ describe('ScriptManager', () => {
             scriptManager.getAllScripts().length.should.equal(2);
             scriptManager.getScriptsForLanguage('.ergo').length.should.equal(1);
             (() => scriptManager.hasInit()).should.throw('Function __init was not found in logic');
-            (() => scriptManager.hasDispatch()).should.throw('Function __dispatch was not found in logic');
+            (() => scriptManager.hasDispatch()).should.not.throw;
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
-            scriptManager.allFunctionDeclarations().length.should.equal(1);
-            scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause']);
+            scriptManager.allFunctionDeclarations().length.should.equal(2);
+            scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
             scriptManager.getCompiledScript().getContents().length.should.equal(26120);
             scriptManager.getCompiledJavaScript().length.should.equal(26120);
-            scriptManager.allFunctionDeclarations().length.should.equal(98);
+            scriptManager.allFunctionDeclarations().length.should.equal(99);
             scriptManager.allFunctionDeclarations().filter(x => x.name === '__init').length.should.equal(1);
             expect(scriptManager.hasInit()).to.not.throw;
             expect(scriptManager.hasDispatch()).to.not.throw;
@@ -128,9 +128,9 @@ describe('ScriptManager', () => {
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.js','.js',jsSample2);
             scriptManager.addScript(script1);
-            scriptManager.getScript('test.js').getTokens().length.should.equal(39);
+            scriptManager.getScript('test.js').getTokens().length.should.equal(51);
             scriptManager.updateScript(script2);
-            scriptManager.getScript('test.js').getTokens().length.should.equal(32);
+            scriptManager.getScript('test.js').getTokens().length.should.equal(52);
         });
 
         it('should fail updating a script which does not exist', async function() {
@@ -146,7 +146,7 @@ describe('ScriptManager', () => {
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             scriptManager.addScript(script1);
             scriptManager.modifyScript('test.js','.js',jsSample2);
-            scriptManager.getScript('test.js').getTokens().length.should.equal(32);
+            scriptManager.getScript('test.js').getTokens().length.should.equal(52);
         });
 
         it('clear all scripts', async function() {
