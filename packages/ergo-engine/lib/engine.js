@@ -16,7 +16,6 @@
 
 const Logger = require('@accordproject/ergo-compiler').Logger;
 const Util = require('./util');
-const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
 
 const Moment = require('moment-mini');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
@@ -48,12 +47,16 @@ class Engine {
      * Compile and cache JavaScript logic
      * @param {ScriptManager} scriptManager  - the script manager
      * @param {string} contractId - the contract identifier
+     * @return {VMScript} the cached script
      * @private
      */
     cacheJsScript(scriptManager, contractId) {
-        const allJsScripts = scriptManager.getCompiledJavaScript();
-        const script = new VMScript(allJsScripts);
-        this.scripts[contractId] = script;
+        if (!this.scripts[contractId]) {
+            const allJsScripts = scriptManager.getCompiledJavaScript();
+            const script = new VMScript(allJsScripts);
+            this.scripts[contractId] = script;
+        }
+        return this.scripts[contractId];
     }
 
     /**
@@ -69,35 +72,17 @@ class Engine {
      * @return {Promise} a promise that resolves to a result for the clause
      */
     async execute(logic, contractId, contract, request, state, currentTime) {
-        const serializer = logic.getSerializer();
-        const scriptManager = logic.getScriptManager();
-
-        // ensure the contract is valid
-        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
-        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validContract.validate();
-
-        // ensure the request is valid
-        const validRequest = serializer.fromJSON(request, {validate: false, acceptResourcesForRelationships: true});
-        validRequest.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validRequest.validate();
-
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
 
-        // ensure the state is valid
-        const validState = serializer.fromJSON(state, {validate: false, acceptResourcesForRelationships: true});
-        validState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validState.validate();
+        const validContract = logic.validateInput(contract); // ensure the contract is valid
+        const validRequest = logic.validateInput(request); // ensure the request is valid
+        const validState = logic.validateInput(state); // ensure the state is valid
 
         Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
 
-        let script;
-
-        this.cacheJsScript(scriptManager, contractId);
-        script = this.scripts[contractId];
-
+        const script = this.cacheJsScript(logic.getScriptManager(), contractId);
         const callScript = logic.getDispatchCall();
 
         const vm = new VM({
@@ -110,42 +95,25 @@ class Engine {
         });
 
         // add immutables to the context
-        vm.freeze(serializer.toJSON(validContract, {permitResourcesForRelationships:true}), 'data');
-        vm.freeze(serializer.toJSON(validState, {permitResourcesForRelationships:true}), 'state');
+        vm.freeze(validContract, 'data');
+        vm.freeze(validState, 'state');
         vm.freeze(now, 'now');
-        vm.freeze(serializer.toJSON(validRequest, {permitResourcesForRelationships:true}), 'request');
+        vm.freeze(validRequest, 'request');
 
         // execute the logic
         vm.run(script);
         const result = vm.run(callScript);
 
-        // ensure the response is valid
-        const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
-        validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validResponse.validate();
-        const responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
-
-        // ensure the new state is valid
-        const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
-        validNewState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validNewState.validate();
-        const stateResult = serializer.toJSON(validNewState, {convertResourcesToRelationships: true});
-
-        // ensure all the emits are valid
-        let emitResult = [];
-        for (let i = 0; i < result.emit.length; i++) {
-            const validEmit = serializer.fromJSON(result.emit[i], {validate: false, acceptResourcesForRelationships: true});
-            validEmit.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validEmit.validate();
-            emitResult.push(serializer.toJSON(validEmit, {convertResourcesToRelationships: true}));
-        }
+        const validResponse = logic.validateOutput(result.response); // ensure the response is valid
+        const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
+        const validEmit = logic.validateOutputArray(result.emit); // ensure all the emits are valid
 
         return {
             'clause': contractId,
-            'request': request,
-            'response': responseResult,
-            'state': stateResult,
-            'emit': emitResult,
+            'request': validRequest,
+            'response': validResponse,
+            'state': validNewState,
+            'emit': validEmit,
         };
     }
 
@@ -162,43 +130,17 @@ class Engine {
      * @return {Promise} a promise that resolves to a result for the clause
      */
     async invoke(logic, contractId, clauseName, contract, params, state, currentTime) {
-        const serializer = logic.getSerializer();
-        const scriptManager = logic.getScriptManager();
-
-        // ensure the contract is valid
-        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
-        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validContract.validate();
-
-        // ensure the parameters are valid
-        let validParams = {};
-        for(const key in params) {
-            if (params[key] instanceof Object) {
-                const validParam = serializer.fromJSON(params[key], {validate: false, acceptResourcesForRelationships: true});
-                validParam.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-                validParam.validate();
-                validParams[key] = serializer.toJSON(validParam, {permitResourcesForRelationships:true});
-            } else {
-                validParams[key] = params[key];
-            }
-        }
-
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
 
-        // ensure the state is valid
-        const validState = serializer.fromJSON(state, {validate: false, acceptResourcesForRelationships: true});
-        validState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validState.validate();
+        const validContract = logic.validateInput(contract); // ensure the contract is valid
+        const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
+        const validState = logic.validateInput(state); // ensure the state is valid
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
-        let script;
-
-        this.cacheJsScript(scriptManager, contractId);
-        script = this.scripts[contractId];
-
+        const script = this.cacheJsScript(logic.getScriptManager(), contractId);
         const callScript = logic.getInvokeCall(clauseName);
 
         const vm = new VM({
@@ -211,8 +153,8 @@ class Engine {
         });
 
         // add immutables to the context
-        vm.freeze(serializer.toJSON(validContract, {permitResourcesForRelationships:true}), 'data');
-        vm.freeze(serializer.toJSON(validState, {permitResourcesForRelationships:true}), 'state');
+        vm.freeze(validContract, 'data');
+        vm.freeze(validState, 'state');
         vm.freeze(now, 'now');
         vm.freeze(validParams, 'params');
 
@@ -220,36 +162,16 @@ class Engine {
         vm.run(script);
         const result = vm.run(callScript);
 
-        // ensure the response is valid
-        let responseResult = null;
-        if (result.response) {
-            const validResponse = serializer.fromJSON(result.response, {validate: false, acceptResourcesForRelationships: true});
-            validResponse.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validResponse.validate();
-            responseResult = serializer.toJSON(validResponse, {convertResourcesToRelationships: true});
-        }
-
-        // ensure the new state is valid
-        const validNewState = serializer.fromJSON(result.state, {validate: false, acceptResourcesForRelationships: true});
-        validNewState.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validNewState.validate();
-        const stateResult = serializer.toJSON(validNewState, {convertResourcesToRelationships: true});
-
-        // ensure all the emits are valid
-        let emitResult = [];
-        for (let i = 0; i < result.emit.length; i++) {
-            const validEmit = serializer.fromJSON(result.emit[i], {validate: false, acceptResourcesForRelationships: true});
-            validEmit.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validEmit.validate();
-            emitResult.push(serializer.toJSON(validEmit, {convertResourcesToRelationships: true}));
-        }
+        const validResponse = logic.validateOutput(result.response); // ensure the response is valid
+        const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
+        const validEmit = logic.validateOutputArray(result.emit); // ensure all the emits are valid
 
         return {
             'clause': contractId,
-            'params': params,
-            'response': responseResult,
-            'state': stateResult,
-            'emit': emitResult,
+            'params': validParams,
+            'response': validResponse,
+            'state': validNewState,
+            'emit': validEmit,
         };
     }
 

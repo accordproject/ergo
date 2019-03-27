@@ -19,6 +19,7 @@ const Chai = require('chai');
 
 Chai.should();
 Chai.use(require('chai-things'));
+Chai.use(require('chai-as-promised'));
 
 const Fs = require('fs');
 const Path = require('path');
@@ -26,6 +27,27 @@ const Path = require('path');
 describe('ergo-compiler', () => {
 
     afterEach(() => {});
+
+    describe('#targets', () => {
+        it('should return all the compiler targets', () => {
+            ErgoCompiler.availableTargets().should.deep.equal(['es5','es6','cicero','java']);
+        });
+        it('es5 should be a valid target', () => {
+            ErgoCompiler.isValidTarget('es5').should.equal(true);
+        });
+        it('es6 should be a valid target', () => {
+            ErgoCompiler.isValidTarget('es6').should.equal(true);
+        });
+        it('cicero should be a valid target', () => {
+            ErgoCompiler.isValidTarget('cicero').should.equal(true);
+        });
+        it('java should be a valid target', () => {
+            ErgoCompiler.isValidTarget('java').should.equal(true);
+        });
+        it('should not be a valid target', () => {
+            (() => ErgoCompiler.isValidTarget('es7')).should.throw('Unknown target: es7 (available: es5,es6,cicero,java)');
+        });
+    });
 
     describe('#callname', function () {
         it('should sanitize call names for contracts', async function () {

@@ -17,8 +17,9 @@
 const ErgoCompiler = require('../lib/compiler');
 const TemplateLogic = require('../lib/templatelogic');
 
-const chai = require('chai');
 const fs = require('fs');
+const chai = require('chai');
+const expect = chai.expect;
 
 chai.should();
 chai.use(require('chai-things'));
@@ -27,9 +28,10 @@ chai.use(require('chai-as-promised'));
 const ctoSample = fs.readFileSync('./test/data/test.cto','utf8');
 const ergoSample = fs.readFileSync('./test/data/test.ergo', 'utf8');
 const ergoSample2 = fs.readFileSync('./test/data/test2.ergo', 'utf8');
+const jsSample = fs.readFileSync('./test/data/test.js', 'utf8');
+const jsSample2 = fs.readFileSync('./test/data/test2.js', 'utf8');
 
 describe('TemplateLogic', () => {
-
     describe('#constructors-accessors', () => {
 
         it('should create a template logic', () => {
@@ -67,6 +69,48 @@ describe('TemplateLogic', () => {
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
             templateLogic.compileLogicSync(false);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
+        });
+
+        it('should succeed creating a dispatch call for a JS logic file with a contract class (ES6)', () => {
+            const templateLogic = new TemplateLogic('es6');
+            templateLogic.addLogicFile(jsSample2,'test2.js');
+            templateLogic.compileLogicSync(false);
+            templateLogic.getDispatchCall().length.should.equal(156);
+        });
+
+        it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
+            const templateLogic = new TemplateLogic('es6');
+            templateLogic.addLogicFile(jsSample2,'test2.js');
+            templateLogic.compileLogicSync(false);
+            templateLogic.getInvokeCall().length.should.equal(172);
+        });
+
+        it('should succeed creating an invoke call for a JS logic file with a contract class (Cicero)', () => {
+            const templateLogic = new TemplateLogic('cicero');
+            templateLogic.addLogicFile(jsSample2,'test2.js');
+            templateLogic.compileLogicSync(false);
+            templateLogic.getInvokeCall().length.should.equal(172);
+        });
+
+        it('should fail creating a dispatch call for a JS logic file with no contract class (ES6)', () => {
+            const templateLogic = new TemplateLogic('es6');
+            templateLogic.addLogicFile(jsSample,'test.js');
+            templateLogic.compileLogicSync(false);
+            (() => templateLogic.getDispatchCall()).should.throw('Cannot create dispatch call for target: es6 without a contract name');
+        });
+
+        it('should fail creating an invoke call for a JS logic file with no contract class (ES6)', () => {
+            const templateLogic = new TemplateLogic('es6');
+            templateLogic.addLogicFile(jsSample,'test.js');
+            templateLogic.compileLogicSync(false);
+            (() => templateLogic.getInvokeCall()).should.throw('Cannot create invoke call for target: es6 without a contract name');
+        });
+
+        it('should fail creating an invoke call for a JS logic file with no contract class (Cicero)', () => {
+            const templateLogic = new TemplateLogic('cicero');
+            templateLogic.addLogicFile(jsSample,'test.js');
+            templateLogic.compileLogicSync(false);
+            (() => templateLogic.getInvokeCall()).should.throw('Cannot create invoke call for target: cicero without a contract name');
         });
 
         it('should fail to load a bogus logic file to the model manager', () => {
@@ -184,6 +228,111 @@ describe('TemplateLogic', () => {
             modelManager.addModelFile(ctoSample,null,true);
             modelManager.getModels().map(x => x.name).should.deep.equal(['org.accordproject.copyrightlicense.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
+        });
+    });
+
+    describe('#validation', () => {
+        let templateLogic;
+        beforeEach(async function () {
+            templateLogic = new TemplateLogic('cicero');
+            templateLogic.addModelFile(ctoSample,'test.cto');
+        });
+
+        it('should succeed validating an input', () => {
+            const input = {
+                '$class': 'org.accordproject.copyrightlicense.PaymentRequest',
+                'input': 'FOO'
+            };
+            const validInput = templateLogic.validateInput(input);
+            validInput.should.not.be.null;
+            validInput.should.have.property('timestamp');
+            validInput.should.have.property('transactionId');
+            validInput.should.deep.include(input);
+        });
+        it('should propagate null when validating an input', () => {
+            expect(templateLogic.validateInput(null)).to.equal(null);
+        });
+        it('should fail validating an input with an unknown class', () => {
+            const input = {
+                '$class': 'org.accordproject.promissorynote.Payment',
+                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
+            };
+            (() => templateLogic.validateInput(input)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+        });
+
+        it('should succeed validating an output', () => {
+            const output = {
+                '$class': 'org.accordproject.copyrightlicense.PayOut',
+                'amount': 200.00
+            };
+            const validOutput = templateLogic.validateOutput(output);
+            validOutput.should.not.be.null;
+            validOutput.should.have.property('timestamp');
+            validOutput.should.have.property('transactionId');
+            validOutput.should.deep.include(output);
+        });
+        it('should propagate null when validating an output', () => {
+            expect(templateLogic.validateOutput(null)).to.equal(null);
+        });
+        it('should fail validating an output with an unknown class', () => {
+            const output = {
+                '$class': 'org.accordproject.promissorynote.Payment',
+                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
+            };
+            (() => templateLogic.validateOutput(output)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+        });
+
+        it('should succeed validating an input record', () => {
+            const inputRecord = {
+                'request': {
+                    '$class': 'org.accordproject.copyrightlicense.PaymentRequest',
+                    'input': 'FOO'
+                },
+                'x': 100.00,
+                'y': 'foo'
+            };
+            const validInputRecord = templateLogic.validateInputRecord(inputRecord);
+            validInputRecord.should.not.be.null;
+            validInputRecord.should.have.property('request');
+            validInputRecord.request.should.have.property('timestamp');
+            validInputRecord.request.should.have.property('transactionId');
+            validInputRecord.request.should.deep.include(inputRecord.request);
+            validInputRecord.should.have.property('x');
+            validInputRecord.x.should.equal(100.00);
+            validInputRecord.should.have.property('y');
+            validInputRecord.y.should.equal('foo');
+        });
+        it('should fail validating an input array', () => {
+            const inputRecord = {
+                'request': {
+                    '$class': 'org.accordproject.promissorynote.Payment',
+                    'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
+                },
+                'x': 100.00,
+                'y': 'foo'
+            };
+            (() => templateLogic.validateInputRecord(inputRecord)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+        });
+
+        it('should succeed validating an output array', () => {
+            const output = {
+                '$class': 'org.accordproject.copyrightlicense.PayOut',
+                'amount': 200.00
+            };
+            const validOutputArray = templateLogic.validateOutputArray([output]);
+            validOutputArray.should.not.be.null;
+            validOutputArray.length.should.equal(1);
+            validOutputArray[0].should.have.property('timestamp');
+            validOutputArray[0].should.have.property('transactionId');
+            validOutputArray[0].should.deep.include(output);
+            validOutputArray[0].should.deep.include(output);
+        });
+        it('should fail validating an output array', () => {
+            const output = {
+                '$class': 'org.accordproject.promissorynote.Payment',
+                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
+            };
+            (() => templateLogic.validateOutputArray([output])).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
     });
 });

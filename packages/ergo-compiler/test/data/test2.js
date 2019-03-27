@@ -25,10 +25,15 @@
  * @param {org.accordproject.copyrightlicense.PayOut} context.response - the response
  * @param {Event} context.emit - the emitted events
  */
-function paymentClause(context) {
-    var res = context.response;
-    var contract = context.contract;
-    res.amount = contract.amount;
+class myContract {
+    paymentClause(context) {
+        var res = context.response;
+        var contract = context.contract;
+        res.amount = contract.amount;
+    }
+}
+function __dispatch(context) {
+    new myContract().paymentClause(context);
 }
 
 /* eslint-enable no-unused-vars */

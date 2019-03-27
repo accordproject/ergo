@@ -28,7 +28,7 @@ let args_list gconf =
       ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
        " Print version and exit");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
-       "<lang> Target platform (default: es6) " ^ available_targets);
+       "<lang> Target platform (default: es6) " ^ available_targets_message);
       ("--link", Arg.Unit (ErgoConfig.set_link gconf),
        " Adds the Ergo runtime to the target code (es5,es6,cicero only)");
       ("--monitor", Arg.Set Util.monitoring,

@@ -73,9 +73,10 @@ let can_link_runtime lang =
   end
 
 let targets = [ES5;ES6;Cicero;Java]
+let available_targets = List.map name_of_lang targets
 
-let available_targets =
-  "(available: " ^ (String.concat "," (List.map name_of_lang targets)) ^ ")"
+let available_targets_message =
+  "(available: " ^ (String.concat "," available_targets) ^ ")"
 
 type global_config = {
   mutable econf_source : lang;

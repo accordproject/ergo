@@ -17,6 +17,7 @@
 const Factory = require('composer-concerto').Factory;
 const Introspector = require('composer-concerto').Introspector;
 const Serializer = require('composer-concerto').Serializer;
+const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
 const APModelManager = require('../lib/apmodelmanager');
 const ScriptManager = require('../lib/scriptmanager');
 const ErgoCompiler = require('./compiler');
@@ -280,6 +281,68 @@ unwrapError(__result);
         this.validateModelFiles();
     }
 
+    /**
+     * Validate input JSON
+     * @param {object} input - the input JSON
+     * @return {object} the validated input
+     */
+    validateInput(input) {
+        const serializer = this.getSerializer();
+
+        if (input === null) { return null; }
+
+        // ensure the input is valid
+        const validInput = serializer.fromJSON(input, {validate: false, acceptResourcesForRelationships: true});
+        validInput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validInput.validate();
+        return serializer.toJSON(validInput, {permitResourcesForRelationships:true});
+    }
+
+    /**
+     * Validate input JSON record
+     * @param {object} input - the input JSON record
+     * @return {object} the validated input
+     */
+    validateInputRecord(input) {
+        let validRecord = {};
+        for(const key in input) {
+            if (input[key] instanceof Object) {
+                validRecord[key] = this.validateInput(input[key]);
+            } else {
+                validRecord[key] = input[key];
+            }
+        }
+        return validRecord;
+    }
+
+    /**
+     * Validate output JSON
+     * @param {object} output - the output JSON
+     * @return {object} the validated output
+     */
+    validateOutput(output) {
+        const serializer = this.getSerializer();
+
+        if (output === null) { return null; }
+
+        const validOutput = serializer.fromJSON(output, {validate: false, acceptResourcesForRelationships: true});
+        validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validOutput.validate();
+        return serializer.toJSON(validOutput, {convertResourcesToRelationships: true});
+    }
+
+    /**
+     * Validate output JSON array
+     * @param {Array<object>} outputArray - the output JSON array
+     * @return {Array<object>} the validated output array
+     */
+    validateOutputArray(outputArray) {
+        let resultArray = [];
+        for (let i = 0; i < outputArray.length; i++) {
+            resultArray.push(this.validateOutput(outputArray[i]));
+        }
+        return resultArray;
+    }
 }
 
 module.exports = TemplateLogic;

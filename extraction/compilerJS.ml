@@ -148,10 +148,16 @@ let ergo_call contract =
 let lang_of_target s =
   Js.string (ErgoConfig.script_lang_of_target (Js.to_string s))
 
+let available_targets () =
+  let a = Array.of_list ErgoConfig.available_targets in
+  let a_js = Array.map (fun x -> Js.string x) a in
+  Js.array a_js
+
 let _ =
   Js.export_all (object%js
     val call = Js.wrap_callback ergo_call
     val compile  = Js.wrap_callback ergo_compile
     val langoftarget = Js.wrap_callback lang_of_target
+    val availabletargets = Js.wrap_callback available_targets
     val version = Js.wrap_callback ergo_version
   end)
