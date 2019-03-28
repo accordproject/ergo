@@ -177,7 +177,6 @@ class Engine {
             'state': validNewState,
             'emit': validEmit,
         };
-        
         return Promise.resolve(answer);
     }
 
