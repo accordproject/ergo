@@ -25,6 +25,7 @@
     "access": "public"
   },
   "dependencies": {
+    "acorn": "^5.1.2",
     "composer-concerto": "0.70.1",
     "debug": "^2.6.9",
     "jsome": "2.5.0",
