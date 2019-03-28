@@ -21,7 +21,7 @@ const Chai = require('chai');
 const expect = Chai.expect;
 
 const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
-const Engine = require('@accordproject/ergo-engine').Engine;
+const Engine = require('@accordproject/ergo-engine').VMEngine;
 const Util = require('./util');
 
 const { Before, Given, When, Then } = require('cucumber');

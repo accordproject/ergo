@@ -14,17 +14,11 @@
 
 'use strict';
 
-const Logger = require('@accordproject/ergo-compiler').Logger;
 const Util = require('./util');
-
+const Logger = require('@accordproject/ergo-compiler').Logger;
 const Moment = require('moment-mini');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
 Moment.fn.toJSON = Util.momentToJson;
-
-const {
-    VM,
-    VMScript
-} = require('vm2');
 
 /**
  * <p>
@@ -35,12 +29,39 @@ const {
  * @memberof module:ergo-engine
  */
 class Engine {
-
     /**
      * Create the Engine.
      */
     constructor() {
         this.scripts = {};
+    }
+
+    /**
+     * Engine kind
+     * @return {string} which kind of engine
+     */
+    kind() {
+        return 'empty';
+    }
+
+    /**
+    /**
+     * Call to compile a script for a JavaScript machine
+     * @param {string} script - the script
+     */
+    compileVMScript(script) {
+        throw new Error('[compileVMScript] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
+    }
+
+    /**
+     * Call to execute a call in a JavaScript machine
+     * @param {number} utcOffset - UTC Offset for this execution
+     * @param {object} context - global variables to set in the VM
+     * @param {object} script - the initial script to load
+     * @param {object} call - the execution call
+     */
+    runVMScriptCall(utcOffset,context,script,call) {
+        throw new Error('[runVMScriptCall] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
     }
 
     /**
@@ -53,7 +74,7 @@ class Engine {
     cacheJsScript(scriptManager, contractId) {
         if (!this.scripts[contractId]) {
             const allJsScripts = scriptManager.getCompiledJavaScript();
-            const script = new VMScript(allJsScripts);
+            const script = this.compileVMScript(allJsScripts);
             this.scripts[contractId] = script;
         }
         return this.scripts[contractId];
@@ -85,24 +106,15 @@ class Engine {
         const script = this.cacheJsScript(logic.getScriptManager(), contractId);
         const callScript = logic.getDispatchCall();
 
-        const vm = new VM({
-            timeout: 1000,
-            sandbox: {
-                moment: Moment,
-                logger: Logger,
-                utcOffset: utcOffset
-            }
-        });
-
-        // add immutables to the context
-        vm.freeze(validContract, 'data');
-        vm.freeze(validState, 'state');
-        vm.freeze(now, 'now');
-        vm.freeze(validRequest, 'request');
+        const context = {
+            data: validContract,
+            state: validState,
+            now: now,
+            request: validRequest
+        };
 
         // execute the logic
-        vm.run(script);
-        const result = vm.run(callScript);
+        const result = this.runVMScriptCall(utcOffset,context,script,callScript);
 
         const validResponse = logic.validateOutput(result.response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
@@ -143,24 +155,15 @@ class Engine {
         const script = this.cacheJsScript(logic.getScriptManager(), contractId);
         const callScript = logic.getInvokeCall(clauseName);
 
-        const vm = new VM({
-            timeout: 1000,
-            sandbox: {
-                moment: Moment,
-                logger: Logger,
-                utcOffset: utcOffset
-            }
-        });
-
-        // add immutables to the context
-        vm.freeze(validContract, 'data');
-        vm.freeze(validState, 'state');
-        vm.freeze(now, 'now');
-        vm.freeze(validParams, 'params');
+        const context = {
+            data: validContract,
+            state: validState,
+            now: now,
+            params: validParams
+        };
 
         // execute the logic
-        vm.run(script);
-        const result = vm.run(callScript);
+        const result = this.runVMScriptCall(utcOffset,context,script,callScript);
 
         const validResponse = logic.validateOutput(result.response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
