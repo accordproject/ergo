@@ -31,7 +31,8 @@
   },
   "files": [
     "lib",
-    "umd"
+    "umd",
+    "index.browser.js"
   ],
   "dependencies": {
     "@accordproject/ergo-compiler": "0.7.3",
