@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@accordproject/ergo-compiler": "0.7.3",
-    "composer-concerto": "0.70.0",
+    "composer-concerto": "0.70.1",
     "moment-mini": "2.22.1",
     "vm2": "3.5.0",
     "yargs": "9.0.1"
