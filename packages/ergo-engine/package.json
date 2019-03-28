@@ -29,6 +29,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "lib",
+    "umd"
+  ],
   "dependencies": {
     "@accordproject/ergo-compiler": "0.7.3",
     "composer-concerto": "0.70.1",
@@ -63,7 +67,8 @@
       "!./test/data/**/*",
       "!./coverage/**/*",
       "!./node_modules/**/*",
-      "!./out/**/*"
+      "!./out/**/*",
+      "!./umd/ergo-engine.js"
     ],
     "path": "header.txt",
     "blocking": true,
