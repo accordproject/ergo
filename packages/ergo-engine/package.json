@@ -9,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "webpack": "webpack --config webpack.config.js --mode production",
+    "prepublishOnly": "npm run webpack",
     "pretest": "npm run lint",
     "lint": "eslint .",
     "postlint": "npm run licchk",

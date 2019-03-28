@@ -120,13 +120,14 @@ class Engine {
         const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.emit); // ensure all the emits are valid
 
-        return {
+        const answer = {
             'clause': contractId,
             'request': validRequest,
             'response': validResponse,
             'state': validNewState,
             'emit': validEmit,
         };
+        return Promise.resolve(answer);
     }
 
     /**
@@ -169,13 +170,15 @@ class Engine {
         const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.emit); // ensure all the emits are valid
 
-        return {
+        const answer = {
             'clause': contractId,
             'params': validParams,
             'response': validResponse,
             'state': validNewState,
             'emit': validEmit,
         };
+        
+        return Promise.resolve(answer);
     }
 
     /**

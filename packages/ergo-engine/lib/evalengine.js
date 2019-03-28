@@ -59,7 +59,8 @@ class EvalEngine extends Engine {
      */
     runVMScriptCall(utcOffset,context,script,call) {
         logger.debug(`Calling eval with context ${context}`);
-        return eval(script + call);
+        const response = eval(script + call);
+        return response;
     }
 
 }

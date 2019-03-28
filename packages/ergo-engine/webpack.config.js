@@ -21,13 +21,13 @@ const packageJson = require('./package.json');
 module.exports = {
     entry: {
         client: [
-            './index.js'
+            './index.browser.js'
         ]
     },
     output: {
         path: path.join(__dirname, 'umd'),
         filename: 'ergo-engine.js',
-        library: 'ergo',
+        library: 'ergo-engine',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
@@ -48,16 +48,13 @@ limitations under the License.`),
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
-        }),
-        new webpack.IgnorePlugin(/vmengine/),
-        new webpack.IgnorePlugin(/ergo-compiler/),
+        })
     ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 include: [path.join(__dirname, 'lib')],
-                exclude: /node_modules\/vm2/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -74,7 +71,6 @@ limitations under the License.`),
     node: {
         fs: 'empty',
         net: 'empty',
-        tls: 'empty',
-        vm2: 'empty'
+        tls: 'empty'
     }
 };
