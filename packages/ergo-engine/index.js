@@ -19,5 +19,7 @@
  * @module ergo-engine
  */
 
-module.exports.Engine = require('./lib/engine.js');
 module.exports.Util = require('./lib/util.js');
+module.exports.Engine = require('./lib/engine.js');
+module.exports.VMEngine = require('./lib/vmengine.js');
+module.exports.EvalEngine = require('./lib/evalengine.js');

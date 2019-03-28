@@ -64,8 +64,8 @@ describe('TemplateLogic', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall('helloworld').length.should.equal(201);
-            templateLogic.getDispatchCall().length.should.equal(122);
+            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
+            templateLogic.getDispatchCall().length.should.equal(154);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
             templateLogic.compileLogicSync(false);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
@@ -75,21 +75,21 @@ describe('TemplateLogic', () => {
             const templateLogic = new TemplateLogic('es6');
             templateLogic.addLogicFile(jsSample2,'test2.js');
             templateLogic.compileLogicSync(false);
-            templateLogic.getDispatchCall().length.should.equal(156);
+            templateLogic.getDispatchCall().length.should.equal(188);
         });
 
         it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
             const templateLogic = new TemplateLogic('es6');
             templateLogic.addLogicFile(jsSample2,'test2.js');
             templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall().length.should.equal(172);
+            templateLogic.getInvokeCall().length.should.equal(204);
         });
 
         it('should succeed creating an invoke call for a JS logic file with a contract class (Cicero)', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(jsSample2,'test2.js');
             templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall().length.should.equal(172);
+            templateLogic.getInvokeCall().length.should.equal(204);
         });
 
         it('should fail creating a dispatch call for a JS logic file with no contract class (ES6)', () => {
@@ -123,8 +123,8 @@ describe('TemplateLogic', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.compileLogic(false).then((logicCode) => {
-                templateLogic.getInvokeCall('helloworld').length.should.equal(201);
-                templateLogic.getDispatchCall().length.should.equal(122);
+                templateLogic.getInvokeCall('helloworld').length.should.equal(233);
+                templateLogic.getDispatchCall().length.should.equal(154);
                 templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
                 templateLogic.compileLogicSync(false);
                 templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
@@ -142,8 +142,8 @@ describe('TemplateLogic', () => {
             templateLogic.addErgoBuiltin();
             templateLogic.addLogicFile(ergoSample,'test3.ergo');
             templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall('helloworld').length.should.equal(201);
-            templateLogic.getDispatchCall().length.should.equal(122);
+            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
+            templateLogic.getDispatchCall().length.should.equal(154);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
             templateLogic.compileLogicSync(false);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
@@ -175,8 +175,8 @@ describe('TemplateLogic', () => {
             const contractName = 'org.accordproject.helloemit.HelloWorld';
             templateLogic.setContractName(contractName);
             templateLogic.getContractName().should.equal(ErgoCompiler.contractCallName(contractName));
-            templateLogic.getInvokeCall('helloworld').length.should.equal(201);
-            templateLogic.getDispatchCall().length.should.equal(184);
+            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
+            templateLogic.getDispatchCall().length.should.equal(216);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26961);
         });
 
@@ -185,8 +185,8 @@ describe('TemplateLogic', () => {
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.getTarget().should.equal('es6');
             templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall('helloworld').length.should.equal(201);
-            templateLogic.getDispatchCall().length.should.equal(184);
+            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
+            templateLogic.getDispatchCall().length.should.equal(216);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26961);
         });
 
@@ -207,8 +207,8 @@ describe('TemplateLogic', () => {
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
             templateLogic.setTarget('es5', true);
             templateLogic.getTarget().should.equal('es5');
-            templateLogic.getInvokeCall('helloworld').length.should.equal(125);
-            templateLogic.getDispatchCall().length.should.equal(108);
+            templateLogic.getInvokeCall('helloworld').length.should.equal(157);
+            templateLogic.getDispatchCall().length.should.equal(140);
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26821);
         });
 

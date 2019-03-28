@@ -17,7 +17,7 @@
 const Fs = require('fs');
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
 const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
-const Engine = require('@accordproject/ergo-engine').Engine;
+const Engine = require('@accordproject/ergo-engine').VMEngine;
 
 /**
  * Load a file or JSON string

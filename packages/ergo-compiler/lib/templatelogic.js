@@ -92,7 +92,7 @@ class TemplateLogic {
         if (target === 'cicero') {
             this.getScriptManager().hasDispatch();
             code = `
-const __result = __dispatch({contract:data,state:state,emit:[],now:now,request:request});
+const __result = __dispatch({contract:context.data,state:context.state,emit:[],now:context.now,request:context.request});
 unwrapError(__result);
         `;
         } else if (target === 'es6') {
@@ -100,7 +100,7 @@ unwrapError(__result);
                 const contractName = this.getContractName();
                 code = `
 let contractObj = new ${contractName}();
-const __result = contractObj.main({contract:data,state:state,emit:[],now:now,request:request});
+const __result = contractObj.main({contract:context.data,state:context.state,emit:[],now:context.now,request:context.request});
 unwrapError(__result);
 `;
             } else {
@@ -108,7 +108,7 @@ unwrapError(__result);
             }
         } else if (target === 'es5') {
             code = `
-const __result = main({contract:data,state:state,emit:[],now:now,request:request});
+const __result = main({contract:context.data,state:context.state,emit:[],now:context.now,request:context.request});
 unwrapError(__result);
 `;
         } else {
@@ -131,7 +131,7 @@ unwrapError(__result);
                 const contractName = this.getContractName();
                 code = `
 let contractObj = new ${contractName}();
-const __result = contractObj.${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));
+const __result = contractObj.${clauseName}(Object.assign({}, {contract:context.data,state:context.state,emit:[],now:context.now} ,context.params));
 unwrapError(__result);
 `;
             } else {
@@ -139,7 +139,7 @@ unwrapError(__result);
             }
         } else if (target === 'es5') {
             code = `
-const __result = ${clauseName}(Object.assign({}, {contract:data,state:state,emit:[],now:now} ,params));
+const __result = ${clauseName}(Object.assign({}, {contract:context.data,state:context.state,emit:[],now:context.now} ,context.params));
 unwrapError(__result);
 `;
         } else {
