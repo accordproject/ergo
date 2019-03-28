@@ -5,3 +5,7 @@ node_modules/
 log/
 .nyc_output
 coverage
+
+# output directory
+umd
+
