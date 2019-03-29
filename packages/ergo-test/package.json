@@ -42,7 +42,7 @@
     "lerna": "2.11.0",
     "license-check": "1.1.5",
     "mocha": "5.2.0",
-    "nyc": "11.8.0"
+    "nyc": "13.3.0"
   },
   "license-check-config": {
     "src": [

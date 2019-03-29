@@ -25,12 +25,10 @@
     "access": "public"
   },
   "dependencies": {
-    "acorn": "^5.1.2",
-    "composer-concerto": "0.70.1",
+    "composer-concerto": "0.70.2",
     "debug": "^2.6.9",
     "jsome": "2.5.0",
-    "winston": "^3.2.1",
-    "yargs": "9.0.1"
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "chai": "4.2.0",
@@ -41,7 +39,7 @@
     "lerna": "2.11.0",
     "license-check": "1.1.5",
     "mocha": "5.2.0",
-    "nyc": "11.8.0"
+    "nyc": "13.3.0"
   },
   "license-check-config": {
     "src": [
