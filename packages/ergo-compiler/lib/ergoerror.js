@@ -15,14 +15,23 @@
 'use strict';
 
 /**
- * Ergo Compiler - the core compiler for the Ergo language
- * @module ergo-compiler
+ * <p>
+ * Ergo Error class.
+ * </p>
+ * @class
+ * @public
+ * @memberof module:ergo-compiler
  */
+class ErgoError extends Error {
+    /**
+     * Parse CTO to JSON
+     *
+     * @param {object} descriptor - JSON Ergo error descriptor
+     */
+    constructor(descriptor) {
+        super(descriptor.verbose);
+        this.descriptor = descriptor;
+    }
+}
 
-module.exports.Logger = require('./lib/logger.js');
-module.exports.ErgoError = require('./lib/ergoerror.js');
-module.exports.APModelManager = require('./lib/apmodelmanager.js');
-module.exports.ScriptManager = require('./lib/scriptmanager.js');
-module.exports.Compiler = require('./lib/compiler.js');
-module.exports.TemplateLogic = require('./lib/templatelogic.js');
-module.exports.version = require('./package.json');
+module.exports = ErgoError;

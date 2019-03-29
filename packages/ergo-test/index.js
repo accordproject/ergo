@@ -15,9 +15,10 @@
 'use strict';
 
 /**
- * Ergo Engine - execution for JavaScript target
- * @module ergo-engine
+ * Ergo Test - Core classes for testing Ergo contract logic using Cucumber syntax
+ * @module ergo-test
  */
 
-module.exports.Steps = require('./lib/steps.js');
 module.exports.Util = require('./lib/util.js');
+module.exports.Steps = require('./lib/steps.js');
+module.exports.version = require('./package.json');
