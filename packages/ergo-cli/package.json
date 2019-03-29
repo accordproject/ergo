@@ -28,8 +28,8 @@
     "access": "public"
   },
   "dependencies": {
-    "composer-concerto": "0.70.1",
-    "composer-concerto-tools": "^0.60.1",
+    "composer-concerto": "0.70.2",
+    "composer-concerto-tools": "0.60.2",
     "@accordproject/ergo-compiler": "0.7.3",
     "@accordproject/ergo-engine": "0.7.3",
     "@accordproject/ergo-test": "0.7.3",
@@ -54,7 +54,7 @@
     "lerna": "2.11.0",
     "license-check": "1.1.5",
     "mocha": "5.2.0",
-    "nyc": "11.8.0"
+    "nyc": "13.3.0"
   },
   "license-check-config": {
     "src": [
