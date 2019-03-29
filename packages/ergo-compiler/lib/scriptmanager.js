@@ -14,8 +14,9 @@
 
 'use strict';
 
-const Script = require('./script');
+const ErgoError = require('./ergoerror');
 const ErgoCompiler = require('./compiler');
+const Script = require('./script');
 
 /**
  * <p>
@@ -273,7 +274,7 @@ class ScriptManager {
             const link = this.target === 'java' ? false : true;
             const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.target,link);
             if (compiledErgo.hasOwnProperty('error')) {
-                throw new Error(ErgoCompiler.ergoVerboseErrorToString(compiledErgo.error));
+                throw new ErgoError(compiledErgo.error);
             }
             this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success, compiledErgo.contractName);
         }

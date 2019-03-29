@@ -14,6 +14,7 @@
 
 'use strict';
 
+const ErgoError = require('../lib/ergoerror');
 const ErgoCompiler = require('../lib/compiler');
 const TemplateLogic = require('../lib/templatelogic');
 
@@ -116,7 +117,25 @@ describe('TemplateLogic', () => {
         it('should fail to load a bogus logic file to the model manager', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample2,'test2.ergo');
-            (() => templateLogic.compileLogicSync(false)).should.throw('Parse error (at file test2.ergo line 33 col 0). ');
+            try {
+                templateLogic.compileLogicSync(false);
+            } catch (error) {
+                expect(error instanceof ErgoError).to.equal(true);
+                expect(error.message).to.equal('Parse error (at file test2.ergo line 33 col 0). \n\n');
+                expect(error.descriptor).to.deep.equal({
+                    'kind': 'ParseError',
+                    'locend': {
+                        'character': 0,
+                        'line': 33
+                    },
+                    'locstart': {
+                        'character': 0,
+                        'line': 33
+                    },
+                    'message': 'Parse error',
+                    'verbose': 'Parse error (at file test2.ergo line 33 col 0). \n\n'
+                });
+            }
         });
 
         it('should load a logic file to the model manager (async)', () => {
@@ -134,7 +153,23 @@ describe('TemplateLogic', () => {
         it('should fail to load a bogus logic file to the model manager (async)', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample2,'test2.ergo');
-            return templateLogic.compileLogic(false).should.be.rejectedWith('Parse error (at file test2.ergo line 33 col 0). ');
+            templateLogic.compileLogic(false).catch((error) => {
+                expect(error instanceof ErgoError).to.equal(true);
+                expect(error.message).to.equal('Parse error (at file test2.ergo line 33 col 0). \n\n');
+                expect(error.descriptor).to.deep.equal({
+                    'kind': 'ParseError',
+                    'locend': {
+                        'character': 0,
+                        'line': 33
+                    },
+                    'locstart': {
+                        'character': 0,
+                        'line': 33
+                    },
+                    'message': 'Parse error',
+                    'verbose': 'Parse error (at file test2.ergo line 33 col 0). \n\n'
+                });
+            });
         });
 
         it('should load a logic file to the model manager (with Ergo builtin)', () => {

@@ -14,15 +14,23 @@
 
 'use strict';
 
-/**
- * Ergo Compiler - the core compiler for the Ergo language
- * @module ergo-compiler
- */
+const index = require('../index');
 
-module.exports.Logger = require('./lib/logger.js');
-module.exports.ErgoError = require('./lib/ergoerror.js');
-module.exports.APModelManager = require('./lib/apmodelmanager.js');
-module.exports.ScriptManager = require('./lib/scriptmanager.js');
-module.exports.Compiler = require('./lib/compiler.js');
-module.exports.TemplateLogic = require('./lib/templatelogic.js');
-module.exports.version = require('./package.json');
+const chai = require('chai');
+
+chai.should();
+chai.use(require('chai-things'));
+chai.use(require('chai-as-promised'));
+
+describe('Module', () => {
+
+    describe('#exports', () => {
+
+        it('should export classes', () => {
+            index.Util.should.not.be.null;
+            index.Engine.should.not.be.null;
+            index.VMEngine.should.not.be.null;
+            index.version.should.not.be.null;
+        });
+    });
+});
