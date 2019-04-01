@@ -27,8 +27,11 @@ chai.use(require('chai-things'));
 chai.use(require('chai-as-promised'));
 
 const ctoSample = fs.readFileSync('./test/data/test.cto','utf8');
+const ctoSample2 = fs.readFileSync('./test/data/test2.cto','utf8');
+const ctoSample3 = fs.readFileSync('./test/data/test3.cto','utf8');
 const ergoSample = fs.readFileSync('./test/data/test.ergo', 'utf8');
 const ergoSample2 = fs.readFileSync('./test/data/test2.ergo', 'utf8');
+const ergoSample3 = fs.readFileSync('./test/data/test3.ergo', 'utf8');
 const jsSample = fs.readFileSync('./test/data/test.js', 'utf8');
 const jsSample2 = fs.readFileSync('./test/data/test2.js', 'utf8');
 
@@ -61,7 +64,7 @@ describe('TemplateLogic', () => {
             modelManager.getModels()[0].content.length.should.equal(175);
         });
 
-        it('should load a logic file to the model manager', () => {
+        it('should load a logic file to the script manager', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.compileLogicSync(false);
@@ -114,7 +117,7 @@ describe('TemplateLogic', () => {
             (() => templateLogic.getInvokeCall()).should.throw('Cannot create invoke call for target: cicero without a contract name');
         });
 
-        it('should fail to load a bogus logic file to the model manager', () => {
+        it('should fail to load a bogus logic file to the script manager', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample2,'test2.ergo');
             try {
@@ -138,7 +141,7 @@ describe('TemplateLogic', () => {
             }
         });
 
-        it('should load a logic file to the model manager (async)', () => {
+        it('should load a logic file to the script manager (async)', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test.ergo');
             templateLogic.compileLogic(false).then((logicCode) => {
@@ -150,7 +153,7 @@ describe('TemplateLogic', () => {
             });
         });
 
-        it('should fail to load a bogus logic file to the model manager (async)', () => {
+        it('should fail to load a bogus logic file to the script manager (async)', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample2,'test2.ergo');
             templateLogic.compileLogic(false).catch((error) => {
@@ -172,7 +175,7 @@ describe('TemplateLogic', () => {
             });
         });
 
-        it('should load a logic file to the model manager (with Ergo builtin)', () => {
+        it('should load a logic file to the script manager (with Ergo builtin)', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addErgoBuiltin();
             templateLogic.addLogicFile(ergoSample,'test3.ergo');
@@ -184,7 +187,7 @@ describe('TemplateLogic', () => {
             templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
         });
 
-        it('should load a logic file (without extension) to the model manager', () => {
+        it('should load a logic file (without extension) to the script manager', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample,'test');
             templateLogic.compileLogicSync(false);
@@ -264,6 +267,53 @@ describe('TemplateLogic', () => {
             modelManager.getModels().map(x => x.name).should.deep.equal(['org.accordproject.copyrightlicense.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
         });
+    });
+
+    describe('#updates', () => {
+        let templateLogic;
+        beforeEach(async function () {
+            templateLogic = new TemplateLogic('cicero');
+            templateLogic.addModelFile(ctoSample,'test.cto');
+        });
+
+        it('should update a model to the model manager', () => {
+            const modelManager = templateLogic.getModelManager();
+            templateLogic.updateModel(ctoSample,'test.cto');
+            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
+            modelManager.getModels()[0].content.length.should.equal(175);
+            templateLogic.updateModel(ctoSample3,'test.cto');
+            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
+            modelManager.getModels()[0].content.length.should.equal(170);
+            templateLogic.updateModel(ctoSample2,'test.cto');
+            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
+            modelManager.getModels()[0].content.length.should.equal(173);
+        });
+
+        it('should add a model to the model manager', () => {
+            const modelManager = templateLogic.getModelManager();
+            templateLogic.updateModel(ctoSample2,'test2.cto');
+            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto','test2.cto']);
+            modelManager.getModels()[0].content.length.should.equal(175);
+            modelManager.getModels()[1].content.length.should.equal(173);
+        });
+
+        it('should update a logic file in the script manager', () => {
+            const templateLogic = new TemplateLogic('cicero');
+            templateLogic.addLogicFile(ergoSample,'test.ergo');
+            templateLogic.compileLogicSync(false);
+            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
+            templateLogic.getDispatchCall().length.should.equal(154);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
+            templateLogic.updateLogic(ergoSample,'test.ergo');
+            templateLogic.compileLogicSync(false);
+            templateLogic.updateLogic(ergoSample,'testNEW.ergo');
+            templateLogic.compileLogicSync(false);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
+            templateLogic.updateLogic(ergoSample3,'test.ergo');
+            templateLogic.compileLogicSync(false);
+            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26120);
+        });
+
     });
 
     describe('#validation', () => {

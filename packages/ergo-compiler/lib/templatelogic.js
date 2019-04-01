@@ -18,6 +18,7 @@ const Factory = require('composer-concerto').Factory;
 const Introspector = require('composer-concerto').Introspector;
 const Serializer = require('composer-concerto').Serializer;
 const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
+const ModelFile = require('composer-concerto').ModelFile;
 const APModelManager = require('../lib/apmodelmanager');
 const ScriptManager = require('../lib/scriptmanager');
 const ErgoCompiler = require('./compiler');
@@ -343,6 +344,52 @@ unwrapError(__result);
         }
         return resultArray;
     }
+
+    /**
+     * Update of a given model
+     * @param {string} content - the model content
+     * @param {string} name - the model name
+     */
+    updateModel(content, name) {
+        const modelManager = this.getModelManager();
+        const currentModels = modelManager.getModelFiles();
+        // Is this a new model?
+        if (!currentModels.some(x => x.getName() === name)) {
+            modelManager.addModelFile(content, name);
+        } else {
+            const previousModelFile =
+                  (currentModels.filter(x => x.getName() === name))[0];
+            const previousContent = previousModelFile.getDefinitions();
+            if (content !== previousContent) {
+                modelManager.validateModelFile(content, name);
+                const previousNamespace = previousModelFile.getNamespace();
+                const newNamespace = new ModelFile(modelManager, content, name).getNamespace();
+                if (previousNamespace === newNamespace) {
+                    modelManager.updateModelFile(content, name, true);
+                } else {
+                    modelManager.deleteModelFile(previousNamespace);
+                    modelManager.addModelFile(content, name, true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Update of a given logic file
+     * @param {string} content - the logic content
+     * @param {string} name - the logic name
+     */
+    updateLogic(content, name) {
+        const scriptManager = this.getScriptManager();
+        if (!scriptManager.getScript(name)) {
+            this.addLogicFile(content,name);
+        } else {
+            if (scriptManager.getScript(name).getContents() !== content) {
+                scriptManager.modifyScript(name, '.ergo', content);
+            }
+        }
+    }
+
 }
 
 module.exports = TemplateLogic;
