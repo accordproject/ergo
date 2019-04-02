@@ -38,6 +38,7 @@ class TemplateLogic {
      * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
      */
     constructor(target) {
+        ErgoCompiler.isValidTarget(target);
         this.target = target;
         this.contractName = null;
         this.modelManager = new APModelManager();

@@ -49,7 +49,9 @@ describe('ScriptManager', () => {
             scriptManager.getScript('test.ergo').should.not.be.null;
             scriptManager.getScripts().length.should.equal(2);
             scriptManager.getAllScripts().length.should.equal(2);
-            scriptManager.getScriptsForLanguage('.ergo').length.should.equal(1);
+            scriptManager.getScriptsForTarget('ergo').length.should.equal(1);
+            scriptManager.getScriptsForTarget('es5').length.should.equal(1);
+            scriptManager.getScriptsForTarget('java').length.should.equal(0);
             (() => scriptManager.hasInit()).should.throw('Function __init was not found in logic');
             (() => scriptManager.hasDispatch()).should.not.throw;
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);

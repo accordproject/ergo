@@ -168,21 +168,37 @@ class ScriptManager {
     }
 
     /**
+     * Target kind
+     * @param {string} target - the target language
+     * @return {string} the kind of language ('.js', '.ergo', '.java')
+     */
+    getTargetKind(target) {
+        if (target === 'ergo') {
+            return '.ergo';
+        } else if (target === 'java') {
+            return '.java';
+        } else {
+            return '.js';
+        }
+    }
+
+    /**
      * Get the array of Script instances for the given language
-     * @param {string} language - The scripts' language
+     * @param {string} target - the target language
      * @return {Script[]} The Scripts registered
      * @private
      */
-    getScriptsForLanguage(language) {
-        let keys = Object.keys(this.scripts);
+    getScriptsForTarget(target) {
+        const language = this.getTargetKind(target);
+        const scripts = this.getAllScripts();
+        let keys = Object.keys(scripts);
         let result = [];
 
         for(let n=0; n < keys.length;n++) {
-            if (this.scripts[keys[n]].getLanguage() === language)  {
-                result.push(this.scripts[keys[n]]);
+            if (scripts[keys[n]].getLanguage() === language)  {
+                result.push(scripts[keys[n]]);
             }
         }
-
         return result;
     }
 
@@ -192,7 +208,7 @@ class ScriptManager {
      */
     getLogic() {
         let logic = [];
-        const scripts = this.getScriptsForLanguage('.ergo');
+        const scripts = this.getScriptsForTarget('ergo');
         scripts.forEach(function (script) {
             logic.push({ 'name' : script.getIdentifier(), 'content' : script.getContents() });
         });
