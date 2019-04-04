@@ -19,6 +19,6 @@
  * @module ergo-engine
  */
 
-module.exports.Util = require('./lib/util.js');
 module.exports.Engine = require('./lib/engine.js');
 module.exports.EvalEngine = require('./lib/evalengine.js');
+module.exports.version = require('./package.json');
