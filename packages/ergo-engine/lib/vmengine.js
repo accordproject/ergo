@@ -14,11 +14,11 @@
 
 'use strict';
 
-const Util = require('./util');
 const Logger = require('@accordproject/ergo-compiler').Logger;
-const Moment = require('moment-mini');
+const Util = require('@accordproject/ergo-compiler').Util;
+const moment = require('moment-mini');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
-Moment.fn.toJSON = Util.momentToJson;
+moment.fn.toJSON = Util.momentToJson;
 
 const Engine = require('./engine');
 
@@ -66,7 +66,7 @@ class VMEngine extends Engine {
         const vm = new VM({
             timeout: 1000,
             sandbox: {
-                moment: Moment,
+                moment: moment,
                 logger: Logger,
                 utcOffset: utcOffset
             }

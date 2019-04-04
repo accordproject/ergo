@@ -28,6 +28,7 @@ describe('Module', () => {
 
         it('should export classes', () => {
             index.Logger.should.not.be.null;
+            index.Util.should.not.be.null;
             index.ErgoError.should.not.be.null;
             index.APModelManager.should.not.be.null;
             index.ScriptManager.should.not.be.null;
