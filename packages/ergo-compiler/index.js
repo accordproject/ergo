@@ -20,6 +20,7 @@
  */
 
 module.exports.Logger = require('./lib/logger.js');
+module.exports.Util = require('./lib/util.js');
 module.exports.ErgoError = require('./lib/ergoerror.js');
 module.exports.APModelManager = require('./lib/apmodelmanager.js');
 module.exports.ScriptManager = require('./lib/scriptmanager.js');

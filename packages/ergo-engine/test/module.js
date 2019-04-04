@@ -27,7 +27,6 @@ describe('Module', () => {
     describe('#exports', () => {
 
         it('should export classes', () => {
-            index.Util.should.not.be.null;
             index.Engine.should.not.be.null;
             index.VMEngine.should.not.be.null;
             index.version.should.not.be.null;
