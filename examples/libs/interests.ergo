@@ -1,0 +1,30 @@
+namespace org.accordproject.interests
+
+import org.accordproject.time.*
+
+define function round(x:Double) {
+    return floor(x + 0.5)
+}
+define function roundn(x:Double, n:Integer) {
+    let nd = integerToDouble(n);
+    let e = 10.0 ^ nd;
+    return round(x * e) / e
+}
+
+// Formula taken from https://en.wikipedia.org/wiki/Mortgage_calculator#Monthly_payment_formula
+define function monthlyPaymentFormula(loanAmount: Double, rate: Double, loanDuration: Duration) : Double {
+  let term = longToDouble(durationAs(loanDuration, "years").amount * 12);
+  if (rate = 0.0) then return (loanAmount / term)
+  else
+    let monthlyRate = (rate / 12.0) / 100.0;
+    let monthlyPayment =
+      (monthlyRate * loanAmount)
+      / (1.0 - ((1.0 + monthlyRate) ^ (-term)));
+    return roundn(monthlyPayment, 0)
+}
+
+// Try it also on NYT calculator: https://www.nytimes.com/real-estate/mortgage-calculator
+// test: return monthlyPaymentFormula(100000.00, 2.5, Duration{ amount: 15, unit: "years" })
+// result: 667.0
+// test (: return monthlyPaymentFormula(200000.00, 6.5, Duration{ amount: 30, unit: "years" })
+// result: 1264.0
