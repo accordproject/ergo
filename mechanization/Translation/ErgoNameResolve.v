@@ -160,6 +160,7 @@ Section ErgoNameResolution.
       | ErgoTypeLong prov => esuccess (ErgoTypeLong prov) nil
       | ErgoTypeInteger prov => esuccess (ErgoTypeInteger prov) nil
       | ErgoTypeDateTime prov => esuccess (ErgoTypeDateTime prov) nil
+      | ErgoTypeDateTimeFormat prov => esuccess (ErgoTypeDateTimeFormat prov) nil
       | ErgoTypeDuration prov => esuccess (ErgoTypeDuration prov) nil
       | ErgoTypePeriod prov => esuccess (ErgoTypePeriod prov) nil
       | ErgoTypeClassRef prov rn =>
@@ -329,6 +330,15 @@ Section ErgoNameResolution.
       | EVar prov v => esuccess (EVar prov v) nil
       | EConst prov d => esuccess (EConst prov d) nil
       | ENone prov => esuccess (ENone prov) nil
+      | EText prov el =>
+        let init_el := esuccess nil nil in
+        let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
+            elift2
+              cons
+              (resolve_ergo_expr ectxt nsctxt e)
+              acc
+        in
+        elift (EText prov) (fold_right proc_one init_el el)
       | ESome prov e =>
         elift (ESome prov)
               (resolve_ergo_expr ectxt nsctxt e)
@@ -825,6 +835,63 @@ Section ErgoNameResolution.
           else (ctos', rest', Some ml)
         | Some _ => (ctos', ml :: rest', p')
         end
+      end.
+
+    Definition generateTextClause (prov:provenance) (template:lrergo_expr) : lrergo_clause :=
+      mkClause
+        prov
+        "generateText"%string
+        (mkErgoTypeSignature
+           prov
+           (("options"%string,
+             ErgoTypeClassRef prov (Some "org.accordproject.markdown"%string, "MarkdownOptions"%string))::nil)
+           (Some (ErgoTypeString prov))
+           None)
+        (Some (SReturn prov template)).
+    
+    Fixpoint add_template_to_clauses (prov:provenance) (template:lrergo_expr) (cl:list lrergo_clause) :=
+      match cl with
+      | nil =>
+        (generateTextClause prov template) :: nil
+      | cl1 :: rest =>
+        if (string_dec cl1.(clause_name) "generateText")
+        then cl
+        else cl1 :: (add_template_to_clauses prov template rest)
+      end.
+
+    Definition add_template_to_contract (template:lrergo_expr) (c:lrergo_contract) :=
+      mkContract
+        c.(contract_annot)
+        c.(contract_template)
+        c.(contract_state)
+        (add_template_to_clauses c.(contract_annot) template c.(contract_clauses)).
+
+    Definition add_template_to_declaration (template:lrergo_expr) (decl:lrergo_declaration) :=
+      match decl with
+      | DContract a ln c => DContract a ln (add_template_to_contract template c)
+      | _ => decl
+      end.
+
+    Definition add_template_to_module (template:lrergo_expr) (main:option lrergo_module) :=
+      match main with
+      | None => None
+      | Some emod =>
+        Some (
+            mkModule
+              emod.(module_annot)
+              emod.(module_file)
+              emod.(module_prefix)              
+              emod.(module_namespace)
+              (List.map (add_template_to_declaration template) emod.(module_declarations))
+          )
+      end.
+    
+    Definition preprocess_ctos_and_ergos (inputs:list lrergo_input) (template:option lrergo_expr)
+      : (list lrcto_package * list lrergo_module * option lrergo_module) :=
+      let '(ctos, ergos, main) := split_ctos_and_ergos inputs in
+      match template with
+      | None => (ctos,ergos,main)
+      | Some template => (ctos,ergos, add_template_to_module template main)
       end.
 
   End Top.

@@ -29,3 +29,47 @@ let get_string buff = Buffer.contents buff
 (* Current file *)
 let filename = ref ""
 
+(* Lexer Handler *)
+
+type lex_state =
+  | ExprState
+  | TextState
+  | VarState
+
+type lex_handler =
+    { buffer: Buffer.t;
+      state: lex_state Stack.t;
+      in_template: bool }
+
+let lh_make s_init tem =
+  let st = Stack.create () in
+  begin
+    Stack.push s_init st;
+    { buffer = string_buff();
+      state = st;
+      in_template = tem }
+  end
+
+let lh_make_expr () =
+  lh_make ExprState false
+let lh_make_text () =
+  lh_make TextState true
+
+let lh_in_template lh =
+  lh.in_template
+
+let lh_reset_string lh =
+  reset_string lh.buffer
+
+let lh_add_char_to_string lh c =
+  add_char_to_string lh.buffer c
+
+let lh_get_string lh =
+  get_string lh.buffer
+
+let lh_top_state lh =
+  Stack.top lh.state
+let lh_pop_state lh =
+  Stack.pop lh.state
+let lh_push_state lh s =
+  Stack.push s lh.state

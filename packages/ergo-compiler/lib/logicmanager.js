@@ -36,18 +36,20 @@ class LogicManager {
     /**
      * Create the LogicManager.
      * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @param {string} sourceTemplate - an optional template source
      * @param {Object} options  - e.g., { warnings: true }
      */
-    constructor(target, options) {
+    constructor(target, sourceTemplate, options) {
         ErgoCompiler.isValidTarget(target);
         this.target = target;
         this.contractName = null;
         this.modelManager = new APModelManager();
-        this.scriptManager = new ScriptManager(this.target, this.modelManager, options);
+        this.scriptManager = new ScriptManager(this.target, this.modelManager, sourceTemplate, options);
         this.introspector = new Introspector(this.modelManager);
         this.factory = new Factory(this.modelManager);
         this.serializer = new Serializer(this.factory, this.modelManager);
         this.validated = false;
+        this.addModelFile(Builtin.markdownModel, 'org.accordproject.markdown');
     }
 
     /**
@@ -152,54 +154,54 @@ unwrapError(__result);
     }
 
     /**
-     * Provides access to the Introspector for this Template Logic. The Introspector
-     * is used to reflect on the types defined within this Template Logic.
-     * @return {Introspector} the Introspector for this Template Logic
+     * Provides access to the Introspector for this TemplateLogic. The Introspector
+     * is used to reflect on the types defined within this TemplateLogic.
+     * @return {Introspector} the Introspector for this TemplateLogic
      */
     getIntrospector() {
         return this.introspector;
     }
 
     /**
-     * Provides access to the Factory for this Template Logic. The Factory
-     * is used to create the types defined in this Template Logic.
-     * @return {Factory} the Factory for this Template Logic
+     * Provides access to the Factory for this TemplateLogic. The Factory
+     * is used to create the types defined in this TemplateLogic.
+     * @return {Factory} the Factory for this TemplateLogic
      */
     getFactory() {
         return this.factory;
     }
 
     /**
-     * Provides access to the Serializer for this Template Logic. The Serializer
-     * is used to serialize instances of the types defined within this Template Logic.
-     * @return {Serializer} the Serializer for this Template Logic
+     * Provides access to the Serializer for this TemplateLogic. The Serializer
+     * is used to serialize instances of the types defined within this TemplateLogic.
+     * @return {Serializer} the Serializer for this TemplateLogic
      */
     getSerializer() {
         return this.serializer;
     }
 
     /**
-     * Provides access to the ScriptManager for this Template Logic. The ScriptManager
-     * manage access to the scripts that have been defined within this Template Logic.
-     * @return {ScriptManager} the ScriptManager for this Template Logic
+     * Provides access to the ScriptManager for this TemplateLogic. The ScriptManager
+     * manage access to the scripts that have been defined within this TemplateLogic.
+     * @return {ScriptManager} the ScriptManager for this TemplateLogic
      */
     getScriptManager() {
         return this.scriptManager;
     }
 
     /**
-     * Provides access to the ModelManager for this Template Logic. The ModelManager
-     * manage access to the models that have been defined within this Template Logic.
-     * @return {ModelManager} the ModelManager for this Template Logic
+     * Provides access to the ModelManager for this TemplateLogic. The ModelManager
+     * manage access to the models that have been defined within this TemplateLogic.
+     * @return {ModelManager} the ModelManager for this TemplateLogic
      */
     getModelManager() {
         return this.modelManager;
     }
 
     /**
-     * Adds a logic file (as a string) to the Template Logic.
+     * Adds a logic file (as a string) to the TemplateLogic.
      * @param {string} logicFile - The logic file as a string
-     * @param {string} fileName - an optional file name to associate with the model file
+     * @param {string} fileName - an optional file name to associate with the logic file
      */
     addLogicFile(logicFile,fileName) {
         const logicFileName = fileName;
@@ -214,7 +216,16 @@ unwrapError(__result);
     }
 
     /**
-     * Adds a model file (as a string) to the Template Logic.
+     * Adds a template file (as a string) to the TemplateLogic.
+     * @param {string} templateFile - The template file as a string
+     * @param {string} fileName - an optional file name to associate with the template file
+     */
+    addTemplateFile(templateFile,fileName) {
+        this.getScriptManager().addTemplateFile(templateFile,fileName);
+    }
+
+    /**
+     * Adds a model file (as a string) to the TemplateLogic.
      * @param {string} modelFile - The model file as a string
      * @param {string} fileName - an optional file name to associate with the model file
      */
@@ -224,7 +235,7 @@ unwrapError(__result);
     }
 
     /**
-     * Add a set of model files to the Template Logic
+     * Add a set of model files to the TemplateLogic
      * @param {string[]} modelFiles - An array of Composer files as
      * strings.
      * @param {string[]} [modelFileNames] - An optional array of file names to

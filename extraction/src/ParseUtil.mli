@@ -21,6 +21,6 @@ val parse_ergo_declarations : Lexing.lexbuf -> ergo_declaration list
 
 val parse_ergo_module_from_string : string -> string -> ergo_module
 val parse_ergo_declarations_from_string : string -> string -> ergo_declaration list
+val parse_template_from_string : string -> string -> ergo_expr
 
 val parse_cto_package_from_string : string -> string -> cto_package
-

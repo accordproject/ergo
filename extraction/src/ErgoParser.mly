@@ -18,7 +18,7 @@ open LexUtil
 open ErgoUtil
 open ErgoComp
 
-let relative_name_of_qname qn =  
+let relative_name_of_qname qn =
   begin match qn with
   | (None,last) -> (None,Util.char_list_of_string last)
   | (Some prefix, last) ->
@@ -30,12 +30,42 @@ let mk_provenance
     (start_pos: Lexing.position)
     (end_pos: Lexing.position) : provenance =
     mk_provenance_of_loc_pair !filename start_pos end_pos
+
+let make_template_variable startpos endpos ve =
+  let prov = mk_provenance startpos endpos in
+  let varparam =
+    ErgoCompiler.econst prov
+      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string (fst ve)))
+  in
+  let textparam = snd ve in
+  let optionsparam = ErgoCompiler.evar prov (Util.char_list_of_string "options") in
+  ErgoCompiler.ecallfun
+    prov
+    (relative_name_of_qname (Some "org.accordproject.markdown","variableTag"))
+    [varparam;textparam;optionsparam]
+
+let make_template_computed startpos endpos e =
+  let prov = mk_provenance startpos endpos in
+  let textparam = e in
+  let optionsparam = ErgoCompiler.evar prov (Util.char_list_of_string "options") in
+  ErgoCompiler.ecallfun
+    prov
+    (relative_name_of_qname (Some "org.accordproject.markdown","computedTag"))
+    [textparam;optionsparam]
+
 %}
 
 %token <int> INT
 %token <float> FLOAT
 %token <string> STRING
 %token <string> IDENT
+
+%token OPENTEXT
+%token CLOSEEXPR
+%token CLOSEVAR
+%token <string> CLOSETEXT
+%token <string> OPENEXPR
+%token <string> OPENVAR
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
 %token ABSTRACT TRANSACTION CONCEPT EVENT ASSET PARTICIPANT ENUM EXTENDS
@@ -66,6 +96,8 @@ let mk_provenance
 %token LCURLY RCURLY
 %token EOF
 
+%token COLONQUESTION AS
+
 %left SEMI
 %left ELSE
 %left RETURN
@@ -86,6 +118,7 @@ let mk_provenance
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main_module
 %start <ErgoComp.ErgoCompiler.ergo_declaration list> top_decls
+%start <ErgoComp.ErgoCompiler.ergo_expr> template
 
 %%
 
@@ -378,6 +411,11 @@ expr:
     { ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s)) }
 | LBRACKET el = exprlist RBRACKET
     { ErgoCompiler.earray (mk_provenance $startpos $endpos) el }
+(* Text *)
+| OPENTEXT sl = textlist s0 = CLOSETEXT
+    { let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+      let sl' = sl @ [slast] in
+      ErgoCompiler.etext (mk_provenance $startpos $endpos) sl' }
 (* Expressions *)
 | v = IDENT
     { ErgoCompiler.evar (mk_provenance $startpos $endpos) (Util.char_list_of_string v) }
@@ -449,6 +487,40 @@ expr:
 | e1 = expr PLUSPLUS e2 = expr
     { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opstringconcat e1 e2 }
 
+(* text *)
+template:
+| sl = textlist s0 = CLOSETEXT
+    { let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+      let sl' = sl @ [slast] in
+      ErgoCompiler.etext (mk_provenance $startpos $endpos) sl' }
+
+textlist:
+|
+    { [] }
+| s0 = OPENEXPR e = expr CLOSEEXPR sl = textlist
+    { let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+      sfirst :: (make_template_computed $startpos $endpos e) :: sl }
+| s0 = OPENVAR ve = varexpr CLOSEVAR sl = textlist
+    { let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+      sfirst :: (make_template_variable $startpos $endpos ve) :: sl }
+
+varexpr:
+| v = IDENT AS s = STRING
+    { (v,ErgoCompiler.ecallfun
+         (mk_provenance $startpos $endpos)
+         (relative_name_of_qname (Some "org.accordproject.time","format"))
+         [ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos)
+            (EOpDot (Util.char_list_of_string v))
+            (ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos));
+          ErgoCompiler.econst (mk_provenance $startpos $endpos)
+            (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))]) }
+| s = STRING COLONQUESTION v = IDENT
+    { (v,ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))) }
+| v = IDENT
+    { (v,ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos)
+          (EOpDot (Util.char_list_of_string v))
+          (ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos))) }
+
 (* foreach list *)
 foreachlist:
 | v = ident IN e = expr
@@ -457,7 +529,6 @@ foreachlist:
     { (v,e) :: fl }
 | v = ident IN e = expr FOREACH fl = foreachlist
     { (v,e) :: fl }
-
 
 (* expression list *)
 exprlist:
@@ -524,6 +595,7 @@ tname:
       | "Long" -> ErgoCompiler.ergo_type_long (mk_provenance $startpos $endpos)
       | "Integer" -> ErgoCompiler.ergo_type_integer (mk_provenance $startpos $endpos)
       | "DateTime" -> ErgoCompiler.ergo_type_dateTime (mk_provenance $startpos $endpos)
+      | "InternalFormat" -> ErgoCompiler.ergo_type_dateTime_format (mk_provenance $startpos $endpos)
       | "InternalDuration" -> ErgoCompiler.ergo_type_duration (mk_provenance $startpos $endpos)
       | "InternalPeriod" -> ErgoCompiler.ergo_type_period (mk_provenance $startpos $endpos)
       | "Unit" -> ErgoCompiler.ergo_type_unit (mk_provenance $startpos $endpos)

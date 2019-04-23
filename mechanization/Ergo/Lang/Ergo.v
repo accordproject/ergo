@@ -43,6 +43,7 @@ Section Ergo.
     | EThisState : A -> ergo_expr (**r this state *)
     | EVar : A -> string -> ergo_expr (**r variable *)
     | EConst : A -> ErgoData.data -> ergo_expr (**r constant *)
+    | EText : A -> list ergo_expr -> ergo_expr (**r embedded text *)
     | ENone : A -> ergo_expr (**r none *)
     | ESome : A -> ergo_expr -> ergo_expr (**r some(e) *)
     | EArray : A -> list ergo_expr -> ergo_expr (**r array constructor *)
@@ -69,6 +70,7 @@ Section Ergo.
       | EThisState a => a
       | EVar a _ => a
       | EConst a _ => a
+      | EText a _ => a
       | ENone a => a
       | ESome a _ => a
       | EArray a _ => a

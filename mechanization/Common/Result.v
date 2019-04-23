@@ -260,6 +260,8 @@ Section Result.
       efailure (ESystemError prov "Should not find an overloaded operator in Ergo Calculus").
     Definition state_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should not find 'state' in Ergo Calculus").
+    Definition text_in_calculus_error {A} prov : eresult A :=
+      efailure (ESystemError prov "Should not find '{{ text }}' in Ergo Calculus").
     Definition complex_foreach_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should only have single loop foreach in Ergo Calculus").
     Definition print_in_calculus_error {A} prov : eresult A :=

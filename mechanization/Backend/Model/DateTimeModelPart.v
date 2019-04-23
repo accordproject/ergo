@@ -33,6 +33,52 @@ Local Open Scope string.
      defined in qcert/ocaml/...../Util.ml)
      *)
 
+(* First we define a DATE_TIME_FORMAT *)
+
+Axiom DATE_TIME_FORMAT : Set.
+Extract Constant DATE_TIME_FORMAT => "DateTime.date_time_format".
+
+Axiom DATE_TIME_FORMAT_eq : DATE_TIME_FORMAT -> DATE_TIME_FORMAT -> bool.
+Extract Inlined Constant DATE_TIME_FORMAT_eq => "(fun x y -> DateTime.format_eq x y)".
+
+Conjecture DATE_TIME_FORMAT_eq_correct :
+  forall f1 f2, (DATE_TIME_FORMAT_eq f1 f2 = true <-> f1 = f2).
+
+Axiom DATE_TIME_FORMAT_to_string : DATE_TIME_FORMAT -> String.string.
+Extract Inlined Constant DATE_TIME_FORMAT_to_string => "(fun x -> Util.char_list_of_string (DateTime.format_to_string x))".
+
+Axiom DATE_TIME_FORMAT_from_string : String.string -> DATE_TIME_FORMAT.
+Extract Inlined Constant DATE_TIME_FORMAT_from_string => "(fun x -> DateTime.format_from_string (Util.string_of_char_list x))".
+
+Program Instance date_time_format_foreign_data : foreign_data
+  := {foreign_data_type := DATE_TIME_FORMAT}.
+Next Obligation.
+  intros x y.
+  case_eq (DATE_TIME_FORMAT_eq x y); intros eqq.
+  + left.
+    f_equal.
+    apply DATE_TIME_FORMAT_eq_correct in eqq.
+    trivial.
+  + right; intros eqq2.
+    red in eqq2.
+    apply DATE_TIME_FORMAT_eq_correct in eqq2. 
+    congruence.
+Defined.
+Next Obligation.
+  exact True.
+Defined.
+Next Obligation.
+  reflexivity.
+Qed.
+Next Obligation.
+  constructor.
+  intros f.
+  exact (DATE_TIME_FORMAT_to_string f).
+Defined.
+
+Global Instance date_time_format_to_string : ToString DATE_TIME_FORMAT
+  := { toString := DATE_TIME_FORMAT_to_string }.
+
 (* First we define a DATE_TIME_DURATION *)
 
 Axiom DATE_TIME_DURATION : Set.
@@ -174,8 +220,8 @@ Extract Inlined Constant DATE_TIME_eq => "(fun x y -> DateTime.eq x y)".
 Conjecture DATE_TIME_eq_correct :
   forall f1 f2, (DATE_TIME_eq f1 f2 = true <-> f1 = f2).
 
-Axiom DATE_TIME_to_string : DATE_TIME -> String.string.
-Extract Inlined Constant DATE_TIME_to_string => "(fun x -> Util.char_list_of_string (DateTime.to_string x))".
+Axiom DATE_TIME_format : DATE_TIME -> DATE_TIME_FORMAT -> String.string.
+Extract Inlined Constant DATE_TIME_format => "(fun x f -> Util.char_list_of_string (DateTime.to_string_format x f))".
 
 Axiom DATE_TIME_from_string : String.string -> DATE_TIME.
 Extract Inlined Constant DATE_TIME_from_string => "(fun x -> DateTime.from_string (Util.string_of_char_list x))".
@@ -202,8 +248,8 @@ Next Obligation.
 Qed.
 Next Obligation.
   constructor.
-  intros f.
-  exact (DATE_TIME_to_string f).
+  intros d.
+  exact (DATE_TIME_format d (DATE_TIME_FORMAT_from_string "MM/DD/YYYY")).
 Defined.
 
 Inductive date_time_component :=
@@ -382,6 +428,7 @@ Inductive date_time_unary_op :=
 | uop_date_time_component : date_time_component -> date_time_unary_op
 | uop_date_time_start_of : date_time_period_unit -> date_time_unary_op
 | uop_date_time_end_of : date_time_period_unit -> date_time_unary_op
+| uop_date_time_format_from_string : date_time_unary_op
 | uop_date_time_from_string
 | uop_date_time_max
 | uop_date_time_min
@@ -400,6 +447,7 @@ Definition date_time_unary_op_tostring (f:date_time_unary_op) : String.string :=
     "(dateTimeStartOf" ++ (date_time_period_unit_tostring part) ++ ")"
   | uop_date_time_end_of part =>
     "(dateTimeEndOf" ++ (date_time_period_unit_tostring part) ++ ")"
+  | uop_date_time_format_from_string => "dateTimeFormatFromString"
   | uop_date_time_from_string => "DateTimeFromString"
   | uop_date_time_max => "DateTimeMax"
   | uop_date_time_min => "DateTimeMin"
@@ -424,7 +472,7 @@ Definition date_time_component_to_java_string (part:date_time_component): string
   | date_time_component_YEARS => "UnaryOperators.years"
   end.
 
-Definition date_time_duration_unit_to_java_string (part:date_time_duration_unit): string :=
+Definition date_time_duration_unit_to_java_string (part:date_time_duration_unit) : string :=
   match part with
   | date_time_duration_SECONDS => "UnaryOperators.seconds"
   | date_time_duration_MINUTES => "UnaryOperators.minutes"
@@ -433,7 +481,7 @@ Definition date_time_duration_unit_to_java_string (part:date_time_duration_unit)
   | date_time_duration_WEEKS => "UnaryOperators.weeks"
   end.
 
-Definition date_time_period_unit_to_java_string (part:date_time_period_unit): string :=
+Definition date_time_period_unit_to_java_string (part:date_time_period_unit) : string :=
   match part with
   | date_time_period_DAYS => "UnaryOperators.days"
   | date_time_period_WEEKS => "UnaryOperators.weeks"
@@ -441,6 +489,9 @@ Definition date_time_period_unit_to_java_string (part:date_time_period_unit): st
   | date_time_period_QUARTERS => "UnaryOperators.quarters"
   | date_time_period_YEARS => "UnaryOperators.years"
   end.
+
+Definition date_time_format_to_java_string (f:DATE_TIME_FORMAT) : string :=
+  "UnaryOperators.format(" ++ DATE_TIME_FORMAT_to_string f ++ ")".
 
 Definition date_time_to_java_unary_op
            (indent:nat) (eol:String.string)
@@ -453,6 +504,7 @@ Definition date_time_to_java_unary_op
     mk_java_unary_op1 "date_time_start_of" (date_time_period_unit_to_java_string part) d
   | uop_date_time_end_of part =>
     mk_java_unary_op1 "date_time_end_of" (date_time_period_unit_to_java_string part) d
+  | uop_date_time_format_from_string => mk_java_unary_op0 "date_time_format_from_string" d
   | uop_date_time_from_string => mk_java_unary_op0 "date_time_from_string" d
   | uop_date_time_max => mk_java_unary_op0 "date_time_max" d
   | uop_date_time_min => mk_java_unary_op0 "date_time_min" d
@@ -473,6 +525,7 @@ Definition date_time_to_javascript_unary_op
   | uop_date_time_component part => "dateTimeComponent(" ++ (toString part) ++ ", " ++ d ++ ")"
   | uop_date_time_start_of part => "dateTimeStartOf(" ++ (toString part) ++ ", " ++ d ++ ")"
   | uop_date_time_end_of part => "dateTimeEndOf(" ++ (toString part) ++ ", " ++ d ++ ")"
+  | uop_date_time_format_from_string => "dateTimeFormatFromString(" ++ d ++ ")"
   | uop_date_time_from_string => "dateTimeFromString(" ++ d ++ ")"
   | uop_date_time_max => "dateTimeMax(" ++ d ++ ")"
   | uop_date_time_min => "dateTimeMin(" ++ d ++ ")"
@@ -493,6 +546,7 @@ Definition date_time_to_ajavascript_unary_op
        call_runtime "dateTimeStartOf" [ expr_literal (literal_string (toString part)); e ]
      | uop_date_time_end_of part =>
        call_runtime "dateTimeEndOf" [ expr_literal (literal_string (toString part)); e ]
+     | uop_date_time_format_from_string => call_runtime "dateTimeFormatFromString" [ e ]
      | uop_date_time_from_string => call_runtime "dateTimeFromString" [ e ]
      | uop_date_time_max => call_runtime "dateTimeMax" [ e ]
      | uop_date_time_min => call_runtime "dateTimeMin" [ e ]
@@ -527,6 +581,7 @@ Axiom DATE_TIME_subtract_period : DATE_TIME -> DATE_TIME_PERIOD -> DATE_TIME.
 Extract Inlined Constant DATE_TIME_subtract_period => "(fun x y ->  DateTime.subtract_period x y)".
 
 Inductive date_time_binary_op :=
+  | bop_date_time_format
   | bop_date_time_add
   | bop_date_time_subtract
   | bop_date_time_add_period
@@ -539,6 +594,7 @@ Inductive date_time_binary_op :=
 
 Definition date_time_binary_op_tostring (f:date_time_binary_op) : String.string
   := match f with
+     | bop_date_time_format => "dateTimeFormat"
      | bop_date_time_add => "dateTimeAdd"
      | bop_date_time_subtract => "dateTimeSubtract"
      | bop_date_time_add_period => "dateTimeAddPeriod"
@@ -558,6 +614,7 @@ Definition date_time_to_java_binary_op
              (quotel:String.string) (fb:date_time_binary_op)
              (d1 d2:java_json) : java_json
   := match fb with
+     | bop_date_time_format => mk_java_binary_op0 "date_time_format" d1 d2
      | bop_date_time_add => mk_java_binary_op0 "date_time_add" d1 d2
      | bop_date_time_subtract => mk_java_binary_op0 "date_time_subtract" d1 d2
      | bop_date_time_add_period => mk_java_binary_op0 "date_time_add_period" d1 d2
@@ -573,6 +630,7 @@ Definition date_time_to_javascript_binary_op
              (quotel:String.string) (fb:date_time_binary_op)
              (d1 d2:String.string) : String.string
   := match fb with
+     | bop_date_time_format => jsFunc "dateTimeFormat" d1 d2
      | bop_date_time_add => jsFunc "dateTimeAdd" d1 d2
      | bop_date_time_subtract => jsFunc "dateTimeSubtract" d1 d2
      | bop_date_time_add_period => jsFunc "dateTimeAddPeriod" d1 d2
@@ -587,6 +645,7 @@ Definition date_time_to_ajavascript_binary_op
              (fb:date_time_binary_op)
              (e1 e2:JsSyntax.expr) : JsSyntax.expr
   := match fb with
+     | bop_date_time_format => call_runtime "dateTimeFormat" [ e1; e2 ]
      | bop_date_time_add => call_runtime "dateTimeAdd" [ e1; e2 ]
      | bop_date_time_subtract => call_runtime "dateTimeSubtract" [ e1; e2 ]
      | bop_date_time_add_period => call_runtime "dateTimeAddPeriod" [ e1; e2 ]

@@ -29,30 +29,30 @@ let res_convert code warnings =
   (* Printf.printf "NNRC Module: %s" (pretty_nnrc_module false 0 false (Jarray []) false code.res_nnrc); *)
   (contract_name, string_of_char_list code.res_file, code.res_content, warnings)
 
-let compile_module_to_javascript version inputs =
-  let code = ErgoCompiler.ergo_module_to_javascript version inputs in
+let compile_module_to_javascript version inputs template =
+  let code = ErgoCompiler.ergo_module_to_javascript version inputs template in
   wrap_jerrors res_convert code
 
-let compile_module_to_cicero inputs =
-  let code = ErgoCompiler.ergo_module_to_cicero inputs in
+let compile_module_to_cicero inputs template =
+  let code = ErgoCompiler.ergo_module_to_cicero inputs template in
   wrap_jerrors res_convert code
 
-let compile_module_to_java inputs =
-  let code = ErgoCompiler.ergo_module_to_java inputs in
+let compile_module_to_java inputs template =
+  let code = ErgoCompiler.ergo_module_to_java inputs template in
   wrap_jerrors res_convert code
 
-let ergo_compile target_lang inputs =
+let ergo_compile target_lang inputs template =
   let result =
     begin match target_lang with
     | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
     | ES5 ->
-        compile_module_to_javascript ES5 inputs
+        compile_module_to_javascript ES5 inputs template
     | ES6 ->
-        compile_module_to_javascript ES6 inputs
+        compile_module_to_javascript ES6 inputs template
     | Cicero ->
-        compile_module_to_cicero inputs
+        compile_module_to_cicero inputs template
     | Java ->
-        compile_module_to_java inputs
+        compile_module_to_java inputs template
     end
   in
   result
@@ -82,7 +82,8 @@ let ergo_proc gconf inputs =
   let target_lang = ErgoConfig.get_target_lang gconf in
   let source_table = ErgoConfig.get_source_table gconf in
   let ext = extension_of_lang target_lang in
-  let (contract_name,source_file,result,warnings) = ergo_compile target_lang inputs in
+  let template = ErgoConfig.get_template gconf in
+  let (contract_name,source_file,result,warnings) = ergo_compile target_lang inputs template in
   Printf.printf "Compiling Ergo '%s' -- " source_file;
   let result = ergo_link gconf result in
   if gconf.econf_warnings then print_warnings_with_table source_table warnings;

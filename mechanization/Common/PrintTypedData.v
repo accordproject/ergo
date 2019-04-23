@@ -107,8 +107,10 @@ Section PrintTypedData.
       | dbrand (b::nil) d' => print_brand nsctxt b ++ (string_of_data nsctxt d')
       | dbrand _ _ => "???more than one brand???"
       | drec r => string_of_rec r 
+      | dforeign (ErgoEnhancedModel.enhanceddateTimeformat f) =>
+        "dateTimeFormat(""" ++ DateTimeModelPart.DATE_TIME_FORMAT_to_string f ++ """)"
       | dforeign (ErgoEnhancedModel.enhanceddateTime dt) =>
-        "dateTime(""" ++ DateTimeModelPart.DATE_TIME_to_string dt ++ """)"
+        "dateTime(""" ++ DateTimeModelPart.DATE_TIME_format dt (DateTimeModelPart.DATE_TIME_FORMAT_from_string "MM/DD/YYYY") ++ """)"
       | dforeign (ErgoEnhancedModel.enhanceddateTimeduration dti) =>
         "duration(" ++ DateTimeModelPart.DATE_TIME_DURATION_to_string dti ++ ")"
       | dforeign (ErgoEnhancedModel.enhanceddateTimeperiod dti) =>

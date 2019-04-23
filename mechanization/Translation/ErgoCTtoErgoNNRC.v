@@ -112,6 +112,7 @@ Section ErgoCTtoErgoNNRC.
     | EConst (prov,_) d =>
       esuccess (NNRCConst d) nil
     | ENone (prov,_) => esuccess (NNRCConst dunit) nil (* XXX Not safe ! *)
+    | EText (prov,_) _ => text_in_calculus_error prov
     | ESome (prov,_) e => ergoct_expr_to_nnrc env e (* XXX Not safe ! *)
     | EArray (prov,_) el =>
       let init_el := esuccess nil nil in
