@@ -1,0 +1,35 @@
+namespace org.accordproject.loan.interests
+
+import org.accordproject.time.*
+
+define function round(x:Double) {
+    return floor(x + 0.5)
+}
+define function roundn(x:Double, n:Integer) {
+    let nd = integerToDouble(n);
+    let e = 10.0 ^ nd;
+    return round(x * e) / e
+}
+
+// Formula taken from https://en.wikipedia.org/wiki/Mortgage_calculator#Monthly_payment_formula
+define function monthlyPaymentFormula(loanAmount: Double, rate: Double, loanDuration: Integer) : Double {
+  let term = longToDouble(loanDuration * 12);
+  if (rate = 0.0) then return (loanAmount / term)
+  else
+    let monthlyRate = (rate / 12.0) / 100.0;
+    let monthlyPayment =
+      (monthlyRate * loanAmount)
+      / (1.0 - ((1.0 + monthlyRate) ^ (-term)));
+    return roundn(monthlyPayment, 0)
+}
+
+define function cummulativeInterests(loanAmount: Double, rate: Double, loanDuration: Integer) : Double {
+  let term = longToDouble(loanDuration * 12);
+	return term * monthlyPaymentFormula(loanAmount, rate, loanDuration) - loanAmount
+}
+
+// Try it also on NYT calculator: https://www.nytimes.com/real-estate/mortgage-calculator
+// test: return monthlyPaymentFormula(100000.00, 2.5, 15)
+// result: 667.0
+// test (: return monthlyPaymentFormula(200000.00, 6.5, 30)
+// result: 1264.0

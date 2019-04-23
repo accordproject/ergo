@@ -81,7 +81,9 @@ let available_targets_message =
 type global_config = {
   mutable econf_source : lang;
   mutable econf_target : lang;
+  mutable econf_source_template : (string * string) option;
   mutable econf_sources_text : (string * string) list;
+  mutable econf_template : ergo_expr option;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
   mutable econf_link : bool;
@@ -91,7 +93,9 @@ type global_config = {
 let empty_config () = {
   econf_source = Ergo;
   econf_target = ES6;
+  econf_source_template = None;
   econf_sources_text = [];
+  econf_template = None;
   econf_ctos = [];
   econf_modules = [];
   econf_link = false;
@@ -100,6 +104,7 @@ let empty_config () = {
 
 let get_source_lang gconf = gconf.econf_source
 let get_target_lang gconf = gconf.econf_target
+let get_template gconf = gconf.econf_template
 let get_ctos gconf = gconf.econf_ctos
 let get_modules gconf = gconf.econf_modules
 let get_all gconf =
@@ -110,10 +115,15 @@ let get_all_sorted gconf =
 
 let set_source_lang gconf s = gconf.econf_source <- (lang_of_target s)
 let set_target_lang gconf s = gconf.econf_target <- (lang_of_target s)
+let add_template gconf tem =
+  gconf.econf_template <- Some tem
+let add_template_file gconf (f,fcontent) =
+  gconf.econf_source_template <- Some (f,fcontent);
+  add_template gconf (ParseUtil.parse_template_from_string f fcontent)
 let add_source_text gconf f fcontent =
-  gconf.econf_sources_text <-  (f,fcontent) :: gconf.econf_sources_text
+  gconf.econf_sources_text <- (f,fcontent) :: gconf.econf_sources_text
 let add_cto gconf cto =
-  gconf.econf_ctos <-  gconf.econf_ctos @ [cto]
+  gconf.econf_ctos <- gconf.econf_ctos @ [cto]
 let add_cto_file gconf (f,fcontent) =
   add_source_text gconf f fcontent;
   add_cto gconf (ParseUtil.parse_cto_package_from_string f fcontent)
@@ -136,7 +146,11 @@ let add_stdlib gconf =
   gconf.econf_ctos <- ctos @ gconf.econf_ctos;
   gconf.econf_modules <- mls @ gconf.econf_modules
 
-let get_source_table gconf = gconf.econf_sources_text
+let get_source_table gconf =
+  begin match gconf.econf_source_template with
+  | None -> gconf.econf_sources_text
+  | Some x -> x :: gconf.econf_sources_text
+  end
 
 let set_link gconf () = gconf.econf_link <- true
 let should_link gconf =

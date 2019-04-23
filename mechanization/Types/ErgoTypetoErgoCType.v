@@ -115,6 +115,7 @@ Section ErgoTypetoErgoCType.
       | ErgoTypeDouble _ => tfloat
       | ErgoTypeLong _ => tnat
       | ErgoTypeInteger _ => tnat
+      | ErgoTypeDateTimeFormat _ => tdateTimeFormat
       | ErgoTypeDateTime _ => tdateTime
       | ErgoTypeDuration _ => tduration
       | ErgoTypePeriod _ => tperiod

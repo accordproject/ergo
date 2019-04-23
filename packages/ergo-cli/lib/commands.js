@@ -36,6 +36,25 @@ function getJson(input) {
 }
 
 /**
+ * Load a file or JSON string
+ *
+ * @param {object} input either a file name or a json string
+ * @return {string} content of file
+ */
+function getTemplate(input) {
+    if (!input) {
+        return null;
+    } else {
+        if (input.file) {
+            const content = Fs.readFileSync(input.file, 'utf8');
+            return { content: content, name: input.file };
+        } else {
+            return input;
+        }
+    }
+}
+
+/**
  * Utility class that implements the commands exposed by the Ergo CLI.
  * @class
  */
@@ -49,13 +68,16 @@ class Commands {
      * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
      * @param {string[]} requestsInput the requests
+     * @param {string} templateInput the template
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput,warnings) {
+    static execute(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput,templateInput,warnings) {
         try {
+            // Get the template if provided
+            const sourceTemplate = getTemplate(templateInput);
             const engine = new Engine();
-            const logicManager = new LogicManager('es6', { warnings });
+            const logicManager = new LogicManager('es6', sourceTemplate, { warnings });
             logicManager.addErgoBuiltin();
             if (!ergoPaths) { return Promise.reject('No input ergo found'); }
             for (let i = 0; i < ergoPaths.length; i++) {
@@ -102,13 +124,16 @@ class Commands {
      * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
      * @param {object} paramsInput the parameters for the clause
+     * @param {string} templateInput the template
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of invocation
      */
-    static invoke(ergoPaths,ctoPaths,clauseName,contractInput,stateInput,currentTime,paramsInput,warnings) {
+    static invoke(ergoPaths,ctoPaths,clauseName,contractInput,stateInput,currentTime,paramsInput,templateInput,warnings) {
         try {
+        // Get the template if provided
+            const sourceTemplate = getTemplate(templateInput);
             const engine = new Engine();
-            const logicManager = new LogicManager('es6', { warnings });
+            const logicManager = new LogicManager('es6', sourceTemplate, { warnings });
             logicManager.addErgoBuiltin();
             if (!ergoPaths) { return Promise.reject('No input ergo found'); }
             for (let i = 0; i < ergoPaths.length; i++) {
@@ -139,13 +164,16 @@ class Commands {
      * @param {string} contractInput the contract data
      * @param {string} currentTime the definition of 'now'
      * @param {object} paramsInput the parameters for the clause
+     * @param {string} templateInput the template
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput,warnings) {
+    static init(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput,templateInput,warnings) {
         try {
+            // Get the template if provided
+            const sourceTemplate = getTemplate(templateInput);
             const engine = new Engine();
-            const logicManager = new LogicManager('es6', { warnings });
+            const logicManager = new LogicManager('es6', sourceTemplate, { warnings });
             logicManager.addErgoBuiltin();
             if (!ergoPaths) { return Promise.reject('No input ergo found'); }
             for (let i = 0; i < ergoPaths.length; i++) {
@@ -165,6 +193,46 @@ class Commands {
         } catch (err) {
             return Promise.reject(err);
         }
+    }
+
+    /**
+     * Invoke generateText for an Ergo contract
+     *
+     * @param {string[]} ergoPaths paths to the Ergo modules
+     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} contractInput the contract data
+     * @param {string} currentTime the definition of 'now'
+     * @param {string} templateInput the template
+     * @param {object} options to the text generation
+     * @returns {object} Promise to the result of execution
+     */
+    static generateText(ergoPaths,ctoPaths,contractInput,currentTime,templateInput, options) {
+        // Get the template if provided
+        const sourceTemplate = getTemplate(templateInput);
+        const engine = new Engine();
+        const logicManager = new LogicManager('es6',sourceTemplate);
+        logicManager.addErgoBuiltin();
+        if (!ergoPaths) { return Promise.reject('No input ergo found'); }
+        for (let i = 0; i < ergoPaths.length; i++) {
+            const ergoFile = ergoPaths[i];
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            logicManager.addLogicFile(ergoContent, ergoFile);
+        }
+        if (!ctoPaths) { ctoPaths = []; }
+        for (let i = 0; i < ctoPaths.length; i++) {
+            const ctoFile = ctoPaths[i];
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            logicManager.addModelFile(ctoContent, ctoFile);
+        }
+        const contractJson = getJson(contractInput);
+        const params = {
+            options: {
+                '$class': 'org.accordproject.markdown.MarkdownOptions',
+                'markdown': options && options.markdown ? options.markdown : false,
+                'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
+            }
+        };
+        return engine.compileAndGenerateText(logicManager,contractJson,params,currentTime);
     }
 
     /**

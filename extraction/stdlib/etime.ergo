@@ -218,3 +218,9 @@ define function endOf(x:DateTime, y:PeriodUnit) : DateTime {
 	else return endOfDay(x) // Default to days
 }
 
+// Format
+define function dateTimeFormatInternal(x:String) : InternalFormat
+define function formatInternal(x:DateTime,y:InternalFormat) : String
+define function format(x:DateTime,y:String) : String {
+	return formatInternal(x,dateTimeFormatInternal(y))
+}

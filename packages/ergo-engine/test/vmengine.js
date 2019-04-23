@@ -28,7 +28,7 @@ describe('#vmengine', () => {
 
     it('should cache a script', () => {
         const engine = new VMEngine();
-        const logicManager = new LogicManager('es6');
+        const logicManager = new LogicManager('es6', null);
         const script = 'const a = 1';
         logicManager.addLogicFile(script,'test2.js');
         logicManager.compileLogicSync(false);

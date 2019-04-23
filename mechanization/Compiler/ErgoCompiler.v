@@ -145,6 +145,8 @@ Module ErgoCompiler.
     := ErgoType.ErgoTypeLong prov.
   Definition ergo_type_integer prov : ergo_type
     := ErgoType.ErgoTypeInteger prov.
+  Definition ergo_type_dateTime_format prov : ergo_type
+    := ErgoType.ErgoTypeDateTimeFormat prov.
   Definition ergo_type_dateTime prov : ergo_type
     := ErgoType.ErgoTypeDateTime prov.
   Definition ergo_type_duration prov : ergo_type
@@ -218,6 +220,8 @@ Module ErgoCompiler.
     := Ergo.ESome prov.
   Definition earray prov arr : ergo_expr
     := Ergo.EArray prov arr.
+  Definition etext prov el : ergo_expr
+    := Ergo.EText prov el.
   Definition eunaryoperator prov b e : ergo_expr 
     := Ergo.EUnaryOperator prov b e.
   Definition ebinaryoperator prov b e1 e2 : ergo_expr 
@@ -307,16 +311,19 @@ Module ErgoCompiler.
   Definition ergo_module_to_javascript :
     Misc.jsversion
     -> list ergo_input
+    -> option ergo_expr
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_javascript_top.
 
   Definition ergo_module_to_cicero :
     list ergo_input
+    -> option ergo_expr
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_cicero_top.
 
   Definition ergo_module_to_java :
     list ergo_input
+    -> option ergo_expr
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_java_top.
 

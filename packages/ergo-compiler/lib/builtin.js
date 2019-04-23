@@ -373,5 +373,13 @@ concept Period {
   o PeriodUnit unit
 }
 `;
+const markdownModel = `
+namespace org.accordproject.markdown
 
-module.exports = { contractModel, runtimeModel, moneyModel, timeModel };
+concept MarkdownOptions {
+  o Boolean markdown
+  o Boolean wrapVariables
+}
+`;
+
+module.exports = { contractModel, runtimeModel, moneyModel, timeModel, markdownModel };

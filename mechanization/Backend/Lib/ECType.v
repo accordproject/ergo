@@ -57,6 +57,8 @@ Module ECType(ergomodel:ErgoBackendModel).
     := RType.Bool.
   Definition tstring {br:brand_relation} : ectype
     := RType.String.
+  Definition tdateTimeFormat {br:brand_relation} : ectype
+    := DateTimeFormat.
   Definition tdateTime {br:brand_relation} : ectype
     := DateTime.
   Definition tduration {br:brand_relation} : ectype

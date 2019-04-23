@@ -66,3 +66,5 @@ define function subtractPeriod(x:DateTime, y:Period) : DateTime
 define function startOf(x:DateTime, y:PeriodUnit) : DateTime
 define function endOf(x:DateTime, y:PeriodUnit) : DateTime
 
+// Format
+define function format(x:DateTime,y:String) : String

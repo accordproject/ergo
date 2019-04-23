@@ -39,9 +39,9 @@ Section ErgoCTypecheck.
 
   Fixpoint ergoc_typecheck_expr nsctxt (ctxt : type_context) (expr : ergoc_expr) : eresult ergoct_expr :=
     match expr with
-    | EThisContract prov => efailure (ESystemError prov "No `this' in ergoc")
-    | EThisClause   prov => efailure (ESystemError prov "No `clause' in ergoc")
-    | EThisState    prov => efailure (ESystemError prov "No `state' in ergoc")
+    | EThisContract prov => contract_in_calculus_error prov
+    | EThisClause   prov => clause_in_calculus_error prov
+    | EThisState    prov => state_in_calculus_error prov
     | EVar prov name =>
       let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
       let topt := eresult_of_option opt (ETypeError prov ("Variable `" ++ name ++ "' not found.")%string) nil in
@@ -49,6 +49,7 @@ Section ErgoCTypecheck.
     | EConst prov d =>
       let topt := eresult_of_option (infer_data_type d) (ETypeError prov "Bad constant.") nil in
       elift (fun T => EConst (prov,T) d) topt
+    | EText prov _ => text_in_calculus_error prov
     | ENone prov => esuccess (ENone (prov, toption tbottom)) nil
     | ESome prov e =>
       elift (fun eT => ESome (prov,toption (exprct_type_annot eT)) eT) (ergoc_typecheck_expr nsctxt ctxt e)
