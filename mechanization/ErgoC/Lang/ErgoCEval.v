@@ -63,6 +63,7 @@ Section ErgoCTEval.
       end
     | EConst (prov,_) d => esuccess d nil
     | ENone (prov,_) => esuccess dnone nil
+    | EText (prov,_) _ => text_in_calculus_error prov
     | ESome (prov,_) e => elift dsome (ergoct_eval_expr ctxt e)
     | EArray (prov,_) es =>
       let rcoll := emaplift (ergoct_eval_expr ctxt) es in

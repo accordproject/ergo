@@ -57,22 +57,22 @@ describe('ScriptManager', () => {
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(2);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
-            scriptManager.getCompiledScript().getContents().length.should.equal(26445);
-            scriptManager.getCompiledJavaScript().length.should.equal(26445);
-            scriptManager.allFunctionDeclarations().length.should.equal(102);
+            scriptManager.getCompiledScript().getContents().length.should.equal(26875);
+            scriptManager.getCompiledJavaScript().length.should.equal(26875);
+            scriptManager.allFunctionDeclarations().length.should.equal(105);
             scriptManager.allFunctionDeclarations().filter(x => x.name === '__init').length.should.equal(1);
             expect(scriptManager.hasInit()).to.not.throw;
             expect(scriptManager.hasDispatch()).to.not.throw;
         });
 
         it('should compile Ergo scripts', async function() {
-            const scriptManager = new ScriptManager('cicero',modelManager, {});
+            const scriptManager = new ScriptManager('cicero',modelManager, null, {});
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(26445);
-            scriptManager.getCompiledScript().getContents().length.should.equal(26445);
+            scriptManager.compileLogic().getContents().length.should.equal(26875);
+            scriptManager.getCompiledScript().getContents().length.should.equal(26875);
             scriptManager.getAllScripts().length.should.equal(3);
         });
 
@@ -165,8 +165,8 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(26445);
-            scriptManager.getCompiledJavaScript().length.should.equal(26445);
+            scriptManager.compileLogic().getContents().length.should.equal(26875);
+            scriptManager.getCompiledJavaScript().length.should.equal(26875);
             scriptManager.clearScripts();
             return (() => scriptManager.getCompiledJavaScript()).should.throw('Did not find any compiled JavaScript logic');
         });

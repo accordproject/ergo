@@ -249,10 +249,17 @@ let unpatch_cto_extension f =
 let patch_argv argv =
   Array.map patch_cto_extension argv
 
-let anon_args cto_files input_files f =
+let anon_args cto_files input_files template_file f =
   let extension = Filename.extension f in
   if extension = ".ctoj"
   then cto_files := (f, Util.string_of_file f) :: !cto_files
+  else if extension = ".tem"
+  then
+    begin match !template_file with
+    | None -> template_file := Some (f, Util.string_of_file f)
+    | Some _ ->
+      ergo_raise (ergo_system_error ("Can only have one .tem file"))
+    end
   else if extension = ".ergo"
   then input_files := (f, Util.string_of_file f) :: !input_files
   else ergo_raise (ergo_system_error (f ^ " is not cto, ctoj or ergo file"))
@@ -267,8 +274,9 @@ let parse_args args_list usage args gconf =
   in
   let input_files = ref [] in
   let cto_files = ref [] in
-  parse args (args_list gconf) (anon_args cto_files input_files) usage;
-  (List.rev !cto_files, List.rev !input_files)
+  let template_file = ref None in
+  parse args (args_list gconf) (anon_args cto_files input_files template_file) usage;
+  (List.rev !cto_files, List.rev !input_files, !template_file)
 
 type label =
   | ErgoLabel of string

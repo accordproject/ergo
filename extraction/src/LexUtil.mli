@@ -17,14 +17,32 @@
 (* Errors *)
 exception LexError of string
 
-
-(* String buffer *)
-val string_buff : unit -> Buffer.t
-val reset_string : Buffer.t -> unit
-val add_char_to_string : Buffer.t -> char -> unit
-val get_string : Buffer.t -> string
-
-
 (* Current file *)
 val filename : string ref
+
+(* Lexer Handler *)
+
+type lex_state =
+  | ExprState
+  | TextState
+  | VarState
+
+type lex_handler
+
+val lh_make_expr : unit -> lex_handler
+val lh_make_text : unit -> lex_handler
+
+val lh_in_template : lex_handler -> bool
+
+val lh_reset_string : lex_handler -> unit
+
+val lh_add_char_to_string : lex_handler -> char -> unit
+
+val lh_get_string : lex_handler -> string
+
+val lh_top_state : lex_handler -> lex_state
+
+val lh_pop_state : lex_handler -> lex_state
+
+val lh_push_state : lex_handler -> lex_state -> unit
 

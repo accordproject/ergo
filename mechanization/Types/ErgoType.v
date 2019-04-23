@@ -36,6 +36,7 @@ Section ErgoType.
     | ErgoTypeDouble : A -> ergo_type                            (**r double atomic type *)
     | ErgoTypeLong : A -> ergo_type                              (**r long atomic type *)
     | ErgoTypeInteger : A -> ergo_type                           (**r integer atomic type *)
+    | ErgoTypeDateTimeFormat : A -> ergo_type                    (**r date and time atomic type *)
     | ErgoTypeDateTime : A -> ergo_type                          (**r date and time atomic type *)
     | ErgoTypeDuration : A -> ergo_type                          (**r duration atomic type *)
     | ErgoTypePeriod : A -> ergo_type                            (**r period atomic type *)
@@ -56,6 +57,7 @@ Section ErgoType.
       | ErgoTypeDouble a => a
       | ErgoTypeLong a => a
       | ErgoTypeInteger a => a
+      | ErgoTypeDateTimeFormat a => a
       | ErgoTypeDateTime a => a
       | ErgoTypeDuration a => a
       | ErgoTypePeriod a => a

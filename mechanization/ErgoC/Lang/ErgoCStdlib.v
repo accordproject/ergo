@@ -91,6 +91,8 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.tanh",
           mk_unary (OpForeignUnary (enhanced_unary_math_op uop_math_tanh)))
     (* Date/Time *)
+      :: ("org.accordproject.time.dateTimeFormatInternal"%string,
+          mk_unary (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_format_from_string)))
       :: ("org.accordproject.time.dateTime"%string,
           mk_unary (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string)))
       :: ("org.accordproject.time.getSecond",
@@ -163,6 +165,8 @@ Section ErgoCStdlib.
     ("org.accordproject.ergo.stdlib.atan2"%string,
      mk_binary (OpForeignBinary (enhanced_binary_math_op bop_math_atan2)))
     (* Date/Time *)
+      :: ("org.accordproject.time.formatInternal"%string,
+          mk_binary (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_format)))
       :: ("org.accordproject.time.addInternal",
           mk_binary (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add)))
       :: ("org.accordproject.time.subtractInternal",

@@ -29,6 +29,7 @@ Feature: starOf and endOf with time periods test
     "$class": "org.accordproject.startendtest.TestResponse",
     "now": "2019-01-01T12:00:00.000+04:00",
     "date": "2018-01-01T12:00:00.000+04:00",
+    "dateFormat": "2018/03/31",
     "startOfDay": "2018-01-01T00:00:00.000+04:00",
     "endOfDay": "2018-01-01T23:59:59.999+04:00"
 }
@@ -49,6 +50,7 @@ Feature: starOf and endOf with time periods test
     "$class": "org.accordproject.startendtest.TestResponse",
     "now": "2019-01-01T12:00:00.000-11:00",
     "date": "2018-01-01T12:00:00.000-11:00",
+    "dateFormat": "2018/03/31",
     "startOfDay": "2018-01-01T00:00:00.000-11:00",
     "endOfDay": "2018-01-01T23:59:59.999-11:00"
 }
@@ -69,6 +71,7 @@ Feature: starOf and endOf with time periods test
     "$class": "org.accordproject.startendtest.TestResponse",
     "now": "2019-01-01T12:00:00.000-05:00",
     "date": "2018-01-01T23:00:00.000-11:00",
+    "dateFormat": "2018/03/31",
     "startOfDay": "2018-01-02T00:00:00.000-05:00",
     "endOfDay": "2018-01-02T23:59:59.999-05:00"
 }

@@ -1,0 +1,6 @@
+{
+  "$class": "org.accordproject.interests.TemplateModel",
+  "loanAmount": 200000,
+  "rate": 6.5,
+  "loanDuration": 15
+}

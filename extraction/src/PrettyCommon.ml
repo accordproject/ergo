@@ -197,7 +197,8 @@ let rec pretty_sharp sym ff name =
 let string_of_foreign_data (fd:enhanced_data) : string =
   begin match fd with
   | Enhancedstring s -> "S\"" ^ s ^ "\""
-  | EnhanceddateTime ts -> DateTime.to_string ts
+  | EnhanceddateTimeformat ts -> DateTime.format_to_string ts
+  | EnhanceddateTime ts -> DateTime.to_string_format ts "MM/DD/YYYY"
   | EnhanceddateTimeduration ts -> DateTime.duration_to_string ts
   | EnhanceddateTimeperiod ts -> DateTime.period_to_string ts
   end
@@ -205,7 +206,8 @@ let string_of_foreign_data (fd:enhanced_data) : string =
 let pretty_foreign_data ff fd =
   begin match fd with
   | Enhancedstring s -> fprintf ff "S\"%s\"" s
-  | EnhanceddateTime ts -> fprintf ff "DateTime(\"%s\")" (DateTime.to_string ts)
+  | EnhanceddateTimeformat ts -> fprintf ff "DateTimeFormat(\"%s\")" (DateTime.format_to_string ts)
+  | EnhanceddateTime ts -> fprintf ff "DateTime(\"%s\")" (DateTime.to_string_format ts "MM/DD/YYYY")
   | EnhanceddateTimeduration ts -> fprintf ff "Duration(\"%s\")" (DateTime.duration_to_string ts)
   | EnhanceddateTimeperiod ts -> fprintf ff "Duration(\"%s\")" (DateTime.period_to_string ts)
   end
@@ -427,6 +429,7 @@ let string_of_foreign_unary_op fu : string =
   | Enhanced_unary_date_time_op (Uop_date_time_component _) -> "DateTimeComponent"
   | Enhanced_unary_date_time_op (Uop_date_time_start_of _) -> "DateTimeStartOf"
   | Enhanced_unary_date_time_op (Uop_date_time_end_of _) -> "DateTimeEndOf"
+  | Enhanced_unary_date_time_op Uop_date_time_format_from_string -> "DateTimeFormatFromString"
   | Enhanced_unary_date_time_op Uop_date_time_from_string -> "DateTimeFromString"
   | Enhanced_unary_date_time_op Uop_date_time_max -> "DateTimeMax"
   | Enhanced_unary_date_time_op Uop_date_time_min -> "DateTimeMin"
@@ -609,6 +612,7 @@ let pretty_float_compare_binary_op p sym callb ff ba a1 a2 =
 let string_of_foreign_binary_op fb =
   begin match fb with
   | Enhanced_binary_math_op -> "atan2"
+  | Enhanced_binary_date_time_op Bop_date_time_format -> "DateTimeFormat"
   | Enhanced_binary_date_time_op Bop_date_time_add -> "DateTimeAdd"
   | Enhanced_binary_date_time_op Bop_date_time_subtract -> "DateTimeSubtract"
   | Enhanced_binary_date_time_op Bop_date_time_add_period -> "DateTimeAddPeriod"
@@ -623,6 +627,8 @@ let pretty_foreign_binary_op p sym callb ff fb a1 a2 =
   begin match fb with
   | Enhanced_binary_math_op ->
      pretty_infix_exp p 18 sym callb ("atan2",1) ff a1 a2
+  | Enhanced_binary_date_time_op Bop_date_time_format ->
+     pretty_infix_exp p 18 sym callb ("Tf",1) ff a1 a2
   | Enhanced_binary_date_time_op Bop_date_time_add ->
      pretty_infix_exp p 18 sym callb ("T+",1) ff a1 a2
   | Enhanced_binary_date_time_op Bop_date_time_subtract ->

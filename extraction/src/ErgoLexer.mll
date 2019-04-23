@@ -99,7 +99,7 @@ let exp = ['e' 'E'] ['-' '+']? digit+
 let float = digit+ (frac exp? | exp)
 let int = ['0'-'9']+
 
-rule token sbuff = parse
+rule token lh = parse
 | eof { EOF }
 | "=" { EQUAL }
 | "!" { NOT }
@@ -131,9 +131,9 @@ rule token sbuff = parse
 | "~" { TILDE }
 | "_" { UNDERSCORE }
 | [' ' '\t']
-    { token sbuff lexbuf }
+    { token lh lexbuf }
 | newline
-    { Lexing.new_line lexbuf; token sbuff lexbuf }
+    { Lexing.new_line lexbuf; token lh lexbuf }
 | letter identchar*
     { let s = Lexing.lexeme lexbuf in
       try Hashtbl.find keyword_table s
@@ -144,26 +144,36 @@ rule token sbuff = parse
     { INT (int_of_string i) }
 | '"'
     { let string_start = lexbuf.lex_start_p in
-      reset_string sbuff; string sbuff lexbuf;
+      lh_reset_string lh; string lh lexbuf;
       lexbuf.lex_start_p <- string_start;
-      let s = get_string sbuff in STRING s }
+      let s = lh_get_string lh in STRING s }
+| "{{"
+    { lh_reset_string lh;
+      lh_push_state lh TextState;
+      OPENTEXT }
+| "}}"
+    { lh_reset_string lh;
+      ignore(lh_pop_state lh);
+      CLOSEEXPR }
 | "/*"
-    { comment 1 lexbuf; token sbuff lexbuf }
+    { comment 1 lexbuf; token lh lexbuf }
 | "//"
-    { linecomment lexbuf; token sbuff lexbuf }
+    { linecomment lexbuf; token lh lexbuf }
 | _
     { raise (LexError (Printf.sprintf "At offset %d: unexpected character" (Lexing.lexeme_start lexbuf))) }
 
-and string sbuff = parse
+and string lh = parse
   | '"'    { () }  (* End of string *)
   | '\\' (['0'-'9'] as c) (['0'-'9'] as d) (['0'-'9']  as u)
     { let v = decimal_code c d u in
       if v > 255 then
         raise (LexError (Printf.sprintf "illegal ascii code: '\\%c%c%c'" c d u))
-      else add_char_to_string sbuff (Char.chr v); string sbuff lexbuf }
-  | '\\' (backslash_escapes as c) { add_char_to_string sbuff (char_for_backslash c); string sbuff lexbuf }
+      else lh_add_char_to_string lh (Char.chr v); string lh lexbuf }
+  | '\\' (backslash_escapes as c) { lh_add_char_to_string lh (char_for_backslash c); string lh lexbuf }
   | eof    { raise (LexError "String not terminated.") }
-  | _      { add_char_to_string sbuff (Lexing.lexeme_char lexbuf 0); string sbuff lexbuf }
+  | newline
+      { Lexing.new_line lexbuf; lh_add_char_to_string lh (Lexing.lexeme_char lexbuf 0); string lh lexbuf }
+  | _      { lh_add_char_to_string lh (Lexing.lexeme_char lexbuf 0); string lh lexbuf }
 
 and comment cpt = parse
   | "/*"
@@ -185,3 +195,40 @@ and linecomment = parse
   | _
       { linecomment lexbuf }
 
+and text lh = parse
+| "{{" { lh_push_state lh ExprState; OPENEXPR (lh_get_string lh) }
+| "}}" { ignore(lh_pop_state lh); CLOSETEXT (lh_get_string lh) }
+| "[{" { lh_push_state lh VarState; OPENVAR (lh_get_string lh) }
+| '\\' (['0'-'9'] as c) (['0'-'9'] as d) (['0'-'9']  as u)
+    { let v = decimal_code c d u in
+    if v > 255 then
+      raise (LexError (Printf.sprintf "illegal ascii code: '\\%c%c%c'" c d u))
+    else lh_add_char_to_string lh(Char.chr v); text lh lexbuf }
+| '\\' (backslash_escapes as c) { lh_add_char_to_string lh (char_for_backslash c); text lh lexbuf }
+| eof    { if lh_in_template lh
+           then begin ignore(lh_pop_state lh); CLOSETEXT (lh_get_string lh) end
+           else raise (LexError "Text not terminated.\n") }
+| newline
+    { Lexing.new_line lexbuf; lh_add_char_to_string lh (Lexing.lexeme_char lexbuf 0); text lh lexbuf }
+| _      { lh_add_char_to_string lh (Lexing.lexeme_char lexbuf 0); text lh lexbuf }
+
+and var lh = parse
+| eof { EOF }
+| "as" { AS }
+| ":?" { COLONQUESTION }
+| [' ' '\t']
+    { var lh lexbuf }
+| newline
+    { Lexing.new_line lexbuf; token lh lexbuf }
+| letter identchar*
+    { let s = Lexing.lexeme lexbuf in
+      IDENT s }
+| '"'
+    { let string_start = lexbuf.lex_start_p in
+      lh_reset_string lh; string lh lexbuf;
+      lexbuf.lex_start_p <- string_start;
+      let s = lh_get_string lh in STRING s }
+| "}]"
+    { lh_reset_string lh;
+      ignore(lh_pop_state lh);
+      CLOSEVAR }

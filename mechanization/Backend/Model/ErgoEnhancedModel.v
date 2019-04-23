@@ -79,6 +79,7 @@ Definition enforce_binary_op_schema
 Inductive enhanced_data : Set
   :=
   | enhancedstring : STRING -> enhanced_data
+  | enhanceddateTimeformat : DATE_TIME_FORMAT -> enhanced_data
   | enhanceddateTime : DATE_TIME -> enhanced_data
   | enhanceddateTimeduration : DATE_TIME_DURATION -> enhanced_data
   | enhanceddateTimeperiod : DATE_TIME_PERIOD -> enhanced_data
@@ -91,6 +92,7 @@ Inductive enhanced_type : Set
   | enhancedTop : enhanced_type
   | enhancedBottom : enhanced_type
   | enhancedString : enhanced_type
+  | enhancedDateTimeFormat : enhanced_type
   | enhancedDateTime : enhanced_type
   | enhancedDateTimeDuration : enhanced_type
   | enhancedDateTimePeriod : enhanced_type
@@ -101,6 +103,7 @@ Definition enhanced_type_to_string (et:enhanced_type) : string :=
   | enhancedTop => "ETop"
   | enhancedBottom => "EBottom"
   | enhancedString => "EString"
+  | enhancedDateTimeFormat => "EDateTimeFormat"
   | enhancedDateTime => "EDateTime"
   | enhancedDateTimeDuration => "EDateTimeDuration"
   | enhancedDateTimePeriod => "EDateTimePeriod"
@@ -111,6 +114,7 @@ Definition string_to_enhanced_type (s:string) : option enhanced_type :=
   | "ETop"%string => Some enhancedTop
   | "EBottom"%string => Some enhancedBottom
   | "EString"%string => Some enhancedString
+  | "EDateTimeFormat"%string => Some enhancedDateTimeFormat
   | "EDateTime"%string => Some enhancedDateTime
   | "EDateTimeDuration"%string => Some enhancedDateTimeDuration
   | "EDateTimePeriod"%string => Some enhancedDateTimePeriod
@@ -120,6 +124,7 @@ Definition string_to_enhanced_type (s:string) : option enhanced_type :=
 Require Import RelationClasses.
 Require Import Equivalence.
 
+Existing Instance date_time_format_foreign_data.
 Existing Instance date_time_foreign_data.
 Existing Instance date_time_duration_foreign_data.
 Existing Instance date_time_period_foreign_data.
@@ -139,6 +144,9 @@ Next Obligation.
       inversion H0.
       apply StringModelPart.STRING_eq_correct in H2.
       congruence.
+  - destruct (@equiv_dec _ _ _ (@foreign_data_dec date_time_format_foreign_data) d d0).
+    + left; congruence.
+    + right; congruence.
   - destruct (@equiv_dec _ _ _ (@foreign_data_dec date_time_foreign_data) d d0).
     + left; congruence.
     + right; congruence.
@@ -153,6 +161,7 @@ Next Obligation.
   (* normalized? *)
   destruct a.
   - exact True.
+  - exact (@foreign_data_normalized date_time_format_foreign_data d).
   - exact (@foreign_data_normalized date_time_foreign_data d).
   - exact (@foreign_data_normalized date_time_duration_foreign_data d).
   - exact (@foreign_data_normalized date_time_period_foreign_data d).
@@ -160,6 +169,7 @@ Defined.
 Next Obligation.
   destruct a.
   - simpl; trivial.
+  - exact (@foreign_data_normalize_normalizes date_time_format_foreign_data d).
   - exact (@foreign_data_normalize_normalizes date_time_foreign_data d).
   - exact (@foreign_data_normalize_normalizes date_time_duration_foreign_data d).
   - exact (@foreign_data_normalize_normalizes date_time_period_foreign_data d).
@@ -168,11 +178,13 @@ Next Obligation.
   constructor.
   destruct 1.
   - exact (STRING_tostring s).
+  - exact (@toString _ (@foreign_data_tostring date_time_format_foreign_data) d).
   - exact (@toString _ (@foreign_data_tostring date_time_foreign_data) d).
   - exact (@toString _ (@foreign_data_tostring date_time_duration_foreign_data) d).
   - exact (@toString _ (@foreign_data_tostring date_time_period_foreign_data) d).
 Defined.
 
+Definition denhanceddateTimeformat td := dforeign (enhanceddateTimeformat td).
 Definition denhanceddateTime td := dforeign (enhanceddateTime td).
 Definition denhanceddateTimeduration td := dforeign (enhanceddateTimeduration td).
 Definition denhanceddateTimeperiod td := dforeign (enhanceddateTimeperiod td).
@@ -289,6 +301,8 @@ Definition date_time_unary_op_interp (op:date_time_unary_op) (d:data) : option d
        lift denhanceddateTime (onddateTime (DATE_TIME_start_of part) d)
      | uop_date_time_end_of part =>
        lift denhanceddateTime (onddateTime (DATE_TIME_end_of part) d)
+     | uop_date_time_format_from_string =>
+       lift denhanceddateTimeformat (ondstring DATE_TIME_FORMAT_from_string d)
      | uop_date_time_from_string =>
        lift denhanceddateTime (ondstring DATE_TIME_from_string d)
      | uop_date_time_max =>
@@ -359,6 +373,7 @@ Next Obligation.
     + destruct f; invcs H; repeat constructor.
     + destruct f; invcs H; repeat constructor.
     + invcs H; repeat constructor.
+    + invcs H; repeat constructor.
     + case_eq (match lift_dateTimeList l with
             | Some a' => Some (DATE_TIME_max a')
             | None => None
@@ -412,6 +427,12 @@ Definition math_binary_op_interp
 Definition date_time_binary_op_interp
            (op:date_time_binary_op) (d1 d2:data) : option data
   := match op with
+     | bop_date_time_format
+       => match d1, d2 with
+          | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeformat td)
+            => Some (dstring (DATE_TIME_format tp td))
+          | _,_ => None
+          end
      | bop_date_time_add
        => match d1, d2 with
           | dforeign (enhanceddateTime tp), dforeign (enhanceddateTimeduration td)
@@ -499,6 +520,7 @@ Definition enhanced_to_java_data
            (quotel:String.string) (fd:enhanced_data) : java_json
   := match fd with
      | enhancedstring s => mk_java_json (STRING_tostring s)
+     | enhanceddateTimeformat f => mk_java_json (DATE_TIME_FORMAT_to_string f)
      | enhanceddateTime tp => mk_java_json (@toString _ date_time_foreign_data.(@foreign_data_tostring ) tp)
      | enhanceddateTimeduration tp => mk_java_json (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) tp)
      | enhanceddateTimeperiod tp => mk_java_json (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) tp)
@@ -540,6 +562,7 @@ Definition enhanced_to_javascript_data
            (quotel:String.string) (fd:enhanced_data) : String.string
   := match fd with
      | enhancedstring s => STRING_tostring s
+     | enhanceddateTimeformat f => DATE_TIME_FORMAT_to_string f
      | enhanceddateTime tp => (@toString _ date_time_foreign_data.(@foreign_data_tostring ) tp)
      | enhanceddateTimeduration tp => (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) tp)
      | enhanceddateTimeperiod tp => (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) tp)
@@ -638,6 +661,7 @@ Defined.
 Next Obligation.
   destruct fd.
   - exact (jstring (jenhancedstring s)).
+  - exact (jstring (DATE_TIME_FORMAT_to_string d)).
   - exact (jstring (@toString _ date_time_foreign_data.(@foreign_data_tostring ) d)).
   - exact (jstring (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) d)).
   - exact (jstring (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) d)).
@@ -1328,6 +1352,7 @@ Definition enhanced_type_join (t1 t2:enhanced_type)
      | enhancedBottom, _ => t2
      | _, enhancedBottom => t1
      | enhancedString, enhancedString => enhancedString
+     | enhancedDateTimeFormat, enhancedDateTimeFormat => enhancedDateTimeFormat
      | enhancedDateTime, enhancedDateTime => enhancedDateTime
      | enhancedDateTimeDuration, enhancedDateTimeDuration => enhancedDateTimeDuration
      | enhancedDateTimePeriod, enhancedDateTimePeriod => enhancedDateTimePeriod
@@ -1339,6 +1364,7 @@ Definition enhanced_type_meet (t1 t2:enhanced_type)
      | enhancedTop, _ => t2
      | _, enhancedTop => t1
      | enhancedString, enhancedString => enhancedString
+     | enhancedDateTimeFormat, enhancedDateTimeFormat => enhancedDateTimeFormat
      | enhancedDateTime, enhancedDateTime => enhancedDateTime
      | enhancedDateTimeDuration, enhancedDateTimeDuration => enhancedDateTimeDuration
      | enhancedDateTimePeriod, enhancedDateTimePeriod => enhancedDateTimePeriod
@@ -1433,6 +1459,7 @@ Defined.
 Inductive enhanced_has_type : enhanced_data -> enhanced_type -> Prop :=
 | enhanced_has_type_top fd : enhanced_has_type fd enhancedTop
 | enhanced_has_type_string (s:STRING) : enhanced_has_type (enhancedstring s) enhancedString
+| enhanced_has_type_dateTimeFormat (tp:DATE_TIME_FORMAT) : enhanced_has_type (enhanceddateTimeformat tp) enhancedDateTimeFormat
 | enhanced_has_type_dateTime (tp:DATE_TIME) : enhanced_has_type (enhanceddateTime tp) enhancedDateTime
 | enhanced_has_type_dateTimeduration (tp:DATE_TIME_DURATION) : enhanced_has_type (enhanceddateTimeduration tp) enhancedDateTimeDuration
 | enhanced_has_type_dateTimeperiod (tp:DATE_TIME_PERIOD) : enhanced_has_type (enhanceddateTimeperiod tp) enhancedDateTimePeriod
@@ -1441,6 +1468,7 @@ Inductive enhanced_has_type : enhanced_data -> enhanced_type -> Prop :=
 Definition enhanced_infer_type (d:enhanced_data) : option enhanced_type
   := match d with
      | enhancedstring _ => Some enhancedString
+     | enhanceddateTimeformat _ => Some enhancedDateTimeFormat
      | enhanceddateTime _ => Some enhancedDateTime
      | enhanceddateTimeduration _ => Some enhancedDateTimeDuration
      | enhanceddateTimeperiod _ => Some enhancedDateTimePeriod
@@ -1458,6 +1486,7 @@ Next Obligation.
   inversion H; subst;
     simpl; trivial.
   - destruct d; simpl; constructor.
+  - constructor.
   - constructor.
   - constructor.
   - constructor.
@@ -1563,9 +1592,16 @@ Module EnhancedRuntime <: CompilerRuntime.
     := enhanced_foreign_data_typing.
 End EnhancedRuntime.
 
+Definition DateTimeFormat {br:brand_relation} : rtype := Foreign enhancedDateTimeFormat.
 Definition DateTime {br:brand_relation} : rtype := Foreign enhancedDateTime.
 Definition DateTimeDuration {br:brand_relation} : rtype := Foreign enhancedDateTimeDuration.
 Definition DateTimePeriod {br:brand_relation} : rtype := Foreign enhancedDateTimePeriod.
+
+Definition isDateTimeFormat {model : brand_model} (τ:rtype) :=
+  match proj1_sig τ with
+  | Foreign₀ enhancedDateTimeFormat => true
+  | _ => false
+  end.
 
 Definition isDateTime {model : brand_model} (τ:rtype) :=
   match proj1_sig τ with
@@ -1647,6 +1683,7 @@ Inductive date_time_unary_op_has_type {model:brand_model} :
   | tuop_date_time_component part : date_time_unary_op_has_type (uop_date_time_component part) DateTime Nat
   | tuop_date_time_start_of part : date_time_unary_op_has_type (uop_date_time_start_of part) DateTime DateTime
   | tuop_date_time_end_of part : date_time_unary_op_has_type (uop_date_time_end_of part) DateTime DateTime
+  | tuop_date_time_format_from_string : date_time_unary_op_has_type uop_date_time_format_from_string RType.String DateTimeFormat
   | tuop_date_time_from_string : date_time_unary_op_has_type uop_date_time_from_string RType.String DateTime
   | tuop_date_time_max : date_time_unary_op_has_type uop_date_time_max (RType.Coll DateTime) DateTime
   | tuop_date_time_min : date_time_unary_op_has_type uop_date_time_min (RType.Coll DateTime) DateTime
@@ -1679,6 +1716,8 @@ Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_una
     if isDateTime τ₁ then Some DateTime else None
   | uop_date_time_end_of part =>
     if isDateTime τ₁ then Some DateTime else None
+  | uop_date_time_format_from_string =>
+    if isString τ₁ then Some DateTimeFormat else None
   | uop_date_time_from_string =>
     if isString τ₁ then Some DateTime else None
   | uop_date_time_max =>
@@ -1725,6 +1764,8 @@ Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time
     enforce_unary_op_schema (τ₁,DateTime) DateTime
   | uop_date_time_end_of part =>
     enforce_unary_op_schema (τ₁,DateTime) DateTime
+  | uop_date_time_format_from_string =>
+    enforce_unary_op_schema (τ₁,RType.String) DateTimeFormat
   | uop_date_time_from_string =>
     enforce_unary_op_schema (τ₁,RType.String) DateTime
   | uop_date_time_max =>
@@ -1920,6 +1961,11 @@ Proof.
     + destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
           inversion H; subst; clear H; constructor;
+            try (rewrite String_canon; constructor);
+            rewrite Float_canon; constructor.
+    + destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          inversion H; subst; clear H; constructor;
             rewrite String_canon; constructor.
     + destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence.
@@ -2012,6 +2058,11 @@ Proof.
           inversion H0; subst; clear H0;
             inversion H1; subst; clear H1;
               reflexivity.
+    + inversion H; subst; clear H;
+        rewrite String_canon in H0;
+        inversion H0; subst; clear H0;
+          inversion H1; subst; clear H1;
+            reflexivity.
     + inversion H; subst; clear H;
         rewrite String_canon in H0;
         inversion H0; subst; clear H0;
@@ -2150,6 +2201,8 @@ Inductive math_binary_op_has_type {model:brand_model} :
 Inductive date_time_binary_op_has_type {model:brand_model} :
   date_time_binary_op -> rtype -> rtype -> rtype -> Prop
   :=
+  | tbop_date_time_format :
+      date_time_binary_op_has_type bop_date_time_format DateTime DateTimeFormat RType.String
   | tbop_date_time_add :
       date_time_binary_op_has_type bop_date_time_add DateTime DateTimeDuration DateTime 
   | tbop_date_time_subtract :
@@ -2176,6 +2229,8 @@ Definition math_binary_op_type_infer {model : brand_model} (op:math_binary_op) (
 
 Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) :=
   match op with
+  | bop_date_time_format =>
+    if isDateTime τ₁ && isDateTimeFormat τ₂ then Some RType.String else None
   | bop_date_time_add =>
     if isDateTime τ₁ && isDateTimeDuration τ₂ then Some DateTime else None
   | bop_date_time_subtract =>
@@ -2242,6 +2297,8 @@ Definition math_binary_op_type_infer_sub {model : brand_model} (op:math_binary_o
 
 Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_time_binary_op) (τ₁ τ₂:rtype) : option (rtype*rtype*rtype) :=
   match op with
+  | bop_date_time_format =>
+    enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeFormat) RType.String
   | bop_date_time_add =>
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTimeDuration) DateTime
   | bop_date_time_subtract =>
@@ -2293,10 +2350,11 @@ Proof.
       ; invcs H
       ; constructor
       ; repeat rewrite Float_canon
+      ; repeat rewrite String_canon
       ; try constructor.
   - destruct d; simpl in *;
       destruct τ₁; destruct τ₂; simpl in *; try discriminate;
-        unfold isDateTime, isDateTimeDuration, isNat in *
+        unfold isDateTime, isDateTimeDuration, isNat, isDateTimeFormat in *
         ; destruct x; simpl in H; try discriminate
         ; destruct ft; simpl in H; try discriminate
         ; destruct x0; simpl in H; try discriminate
@@ -2305,6 +2363,7 @@ Proof.
         ; constructor
         ; repeat rewrite Nat_canon
         ; repeat rewrite Foreign_canon
+        ; repeat rewrite String_canon
         ; try constructor.
 Qed.
 
@@ -2517,6 +2576,8 @@ Module CompEnhanced.
           := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_start_of unit)).
         Definition date_time_end_of (unit:date_time_period_unit)
           := OpForeignUnary (enhanced_unary_date_time_op (uop_date_time_end_of unit)).
+        Definition date_time_format_from_string
+          := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_format_from_string).
         Definition date_time_from_string
           := OpForeignUnary (enhanced_unary_date_time_op uop_date_time_from_string).
         Definition date_time_min
@@ -2538,6 +2599,7 @@ Module CompEnhanced.
         Definition OpDateTimeGetComponent := date_time_get_component.
         Definition OpDateTimeStartOf := date_time_start_of.
         Definition OpDateTimeEndOf := date_time_end_of.
+        Definition OpDateTimeFormatFromString := date_time_format_from_string.
         Definition OpDateTimeFromString := date_time_from_string.
         Definition OpDateTimeMax := date_time_max.
         Definition OpDateTimeMin := date_time_min.
@@ -2550,6 +2612,8 @@ Module CompEnhanced.
       
       Module Binary.
         (* for ocaml *)
+        Definition date_time_format
+          := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_format).
         Definition date_time_add
           := OpForeignBinary (enhanced_binary_date_time_op bop_date_time_add).
         Definition date_time_subtract
@@ -2568,6 +2632,7 @@ Module CompEnhanced.
           := OpForeignBinary (enhanced_binary_date_time_op (bop_date_time_diff)).
         
         (* for coq style syntax *)
+        Definition OpDateTimeFormat := date_time_format.
         Definition OpDateTimeAdd := date_time_add.
         Definition OpDateTimeSubtract := date_time_subtract.
         Definition OpDateTimeIsBefore := date_time_is_before.

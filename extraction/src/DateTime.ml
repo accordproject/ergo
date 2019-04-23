@@ -109,8 +109,6 @@ let minimum_dateTime : dateTime = lower_bound
 let error_dt (x:string) : dateTime = minimum_dateTime
 let from_string (x:string) : dateTime =
   multi_parse iso8610 error_dt x
-let to_string (x:dateTime) : string =
-  Printer.Calendar.sprint "%Y-%m-%d %H:%M:%S%:z" x
 
 (** Components *)
 let get_second (x:dateTime) : int = Calendar.Time.second (Calendar.to_time x)
@@ -173,3 +171,54 @@ let period_months (x:int) = Calendar.Period.month x
 let period_quarters (x:int) = Calendar.Period.month (x * 3)
 let period_years (x:int) = Calendar.Period.year x
 
+(* Formats *)
+
+type date_time_format = string
+
+(* From AP spec:
+YYYY         2014               4 or 2 digit year
+YY           14                 2 digit year
+MMMM         December           Long month name
+MMM          Feb.               Short month name
+MM           04                 2 digit month number
+M            12                 1 or 2 digit month number
+DD           04                 2 digit day of month
+D            3                  1 or 2 digit day of month
+HH           04                 2 digit hours
+H            3                  1 or 2 digit hours
+mm           59                 2 digit minutes
+ss           34                 2 digit seconds
+SSS          002                3 digit milliseconds
+Z            +01:00             UTC offset
+*)
+
+let conversion_table = [
+  ("YYYY", "%Y");
+  ("YY", "%y");
+  ("MMMM", "%B");
+  ("MMM", "%b.");
+  ("MM", "%m");
+  ("M", "%-m");
+  ("DD", "%d");
+  ("D", "%-d");
+  ("HH", "%H");
+  ("H", "%-H");
+  ("mm", "%M");
+  ("ss", "%S");
+  ("SSS", ".000");
+  ("Z", "%:z");
+]
+let apply_one_conv fout (f1,f2) =
+  fout := Re.Str.global_replace (Re.Str.regexp_string f1) f2 !fout
+
+let format_conversion f =
+  let fout = ref f in
+  List.iter (apply_one_conv fout) conversion_table;
+  !fout
+
+let format_eq (x:date_time_format) (y:date_time_format) : bool = x = y
+let format_to_string (x:date_time_format) : string = x
+let format_from_string (x:string) : date_time_format = x
+
+let to_string_format (x:dateTime) (f:date_time_format) : string =
+  Printer.Calendar.sprint (format_conversion f) x

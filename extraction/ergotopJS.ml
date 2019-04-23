@@ -62,9 +62,13 @@ let make_init_rctxt gconf =
   rctxt
 
 let main gconf args =
-  let (cto_files,input_files) = ErgoUtil.parse_args args_list usage args gconf in
+  let (cto_files,input_files,template_file) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;
+  begin match template_file with
+  | None -> ()
+  | Some t -> ErgoConfig.add_template_file gconf t
+  end;
   let rctxt = make_init_rctxt gconf in
   welcome ();
   Js.export "ergotop"

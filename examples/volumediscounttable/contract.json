@@ -1,0 +1,19 @@
+{
+  "$class": "org.accordproject.volumediscount.VolumeDiscountContract",
+  "parties": null,
+  "contractId": "cr1",
+  "rates": [{
+      "$class": "org.accordproject.volumediscount.RateRange",
+      "volumeUpTo": 1,
+      "rate": 3
+  },{
+      "$class": "org.accordproject.volumediscount.RateRange",
+      "volumeAbove": 1,
+      "volumeUpTo": 10,
+      "rate": 2.9
+  },{
+      "$class": "org.accordproject.volumediscount.RateRange",
+      "volumeAbove": 10,
+      "rate": 2.8
+  }]
+}

@@ -23,6 +23,7 @@ transaction Request {
 transaction TestResponse {
 	o DateTime now
 	o DateTime date
+	o String dateFormat
   o DateTime startOfDay
   o DateTime endOfDay
 }

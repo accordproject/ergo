@@ -42,6 +42,12 @@ Section ErgoMap.
       | EVar _ _ => esuccess expr nil
       | EConst _ _ => esuccess expr nil
       | ENone _ => esuccess expr nil
+      | EText loc a =>
+        elift (EText loc)
+              (fold_left
+                 (fun ls na =>
+                    elift2 postpend ls (apply_map ctx na))
+                 a (esuccess nil nil))
       | ESome loc e =>
         elift (ESome loc) (apply_map ctx e)
       | EArray loc a =>

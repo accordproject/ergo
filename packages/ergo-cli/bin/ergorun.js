@@ -100,6 +100,11 @@ require('yargs')
             type: 'string',
             default: {}
         });
+        yargs.option('template', {
+            describe: 'path to the template (.tem) file',
+            type: 'string',
+            default: null
+        });
         yargs.option('warnings', {
             describe: 'print warnings',
             type: 'boolean',
@@ -126,7 +131,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.invoke(ergoPaths, ctoPaths, argv.clauseName, { file: argv.contract }, { file: argv.state }, argv.currentTime, { file: argv.params }, argv.warnings)
+        Commands.invoke(ergoPaths, ctoPaths, argv.clauseName, { file: argv.contract }, { file: argv.state }, argv.currentTime, { file: argv.params }, argv.template ? { file: argv.template } : null, argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -182,6 +187,70 @@ require('yargs')
             })
             .catch((err) => {
                 Logger.error(err.message);
+            });
+    })
+    .command('generateText', 'invoke generateText for an Ergo contract', (yargs) => {
+        yargs.demandOption(['contract'], 'Please provide at least the contract data');
+        yargs.usage('Usage: $0 --contract [file] [ctos] [ergos]');
+        yargs.option('contract', {
+            describe: 'path to the contract data'
+        });
+        yargs.option('currentTime', {
+            describe: 'the current time',
+            type: 'string',
+            default: Moment().format() // Defaults to now
+        });
+        yargs.option('markdown', {
+            describe: 'generate with markdown notations',
+            type: 'boolean',
+            default: false
+        });
+        yargs.option('wrapVariables', {
+            describe: 'wrap variables in curly braces',
+            type: 'boolean',
+            default: false
+        });
+        yargs.option('template', {
+            describe: 'path to the template (.tem) file',
+            type: 'string',
+            default: null
+        });
+        yargs.option('warnings', {
+            describe: 'print warnings',
+            type: 'boolean',
+            default: false
+        });
+    }, (argv) => {
+        let ctoPaths = [];
+        let ergoPaths = [];
+
+        const files = argv._;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file.split('.').pop() === 'cto') {
+                //Logger.info('Found CTO: ' + file);
+                ctoPaths.push(file);
+            } else if (file.split('.').pop() === 'ergo') {
+                //Logger.info('Found Ergo: ' + file);
+                ergoPaths.push(file);
+            }
+        }
+
+        if (argv.verbose) {
+            Logger.info(`generateText for Ergo ${ergoPaths} over data ${argv.contract}`);
+        }
+
+        const options = {
+            markdown: argv.markdown,
+            wrapVariables: argv.wrapVariables,
+        };
+        // Generate text
+        Commands.generateText(ergoPaths, ctoPaths, { file: argv.contract }, argv.currentTime, argv.template ? { file: argv.template } : null, options)
+            .then((result) => {
+                Logger.info(result.response);
+            })
+            .catch((err) => {
+                Logger.error(err.message + '\n' + JSON.stringify(err));
             });
     })
     .option('verbose', {
