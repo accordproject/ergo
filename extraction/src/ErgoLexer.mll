@@ -72,11 +72,22 @@
 	    ]; tbl
     end
 
+  let char_for_backslash c =
+  begin match c with
+  | 'n' -> '\010'
+  | 'r' -> '\013'
+  | 'b' -> '\008'
+  | 't' -> '\009'
+  | c   -> c
+  end
 }
 
 let newline = ('\010' | '\013' | "\013\010")
 let letter = ['A'-'Z' 'a'-'z']
 let identchar = ['A'-'Z' 'a'-'z' '_' '\'' '0'-'9']
+
+let backslash_escapes =
+  ['\\' '"' 'n' 't' 'b' 'r']
 
 let digit = ['0'-'9']
 let frac = '.' digit*
@@ -143,6 +154,8 @@ and string sbuff = parse
   | "\"\"" { add_char_to_string sbuff '"'; string sbuff lexbuf }                         (* Escaped quote *)
   | "\013\n" { add_char_to_string sbuff '\n'; string sbuff lexbuf }
   | "\013" { add_char_to_string sbuff '\n'; string sbuff lexbuf }
+  | '\\' (backslash_escapes as c)
+    { add_char_to_string sbuff (char_for_backslash c); string sbuff lexbuf }
   | '"'    { () }  (* End of string *)
   | eof    { raise (LexError "String not terminated.\n") }
   | _      { add_char_to_string sbuff (Lexing.lexeme_char lexbuf 0); string sbuff lexbuf }

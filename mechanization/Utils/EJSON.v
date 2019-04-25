@@ -117,7 +117,12 @@ Section EJSON.
 
     Definition js_quote_char (a:ascii) : estring
       := match a with
+         | "008"%char => `"\b"
+         | "009"%char => `"\t"
+         | "010"%char => `"\n"
+         | "013"%char => `"\r"
          | """"%char => `"\"""
+         | "\"%char => `"\\"
          | _ => (`String a EmptyString)
          end.
 

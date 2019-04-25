@@ -64,6 +64,20 @@ Section PrintTypedData.
     Definition fmt_nl := String.String (ascii_of_N 10) EmptyString.
     Definition fmt_dq := """".
 
+    Definition js_quote_char (a:ascii) : string
+      := match a with
+         | "008"%char => "\b"
+         | "009"%char => "\t"
+         | "010"%char => "\n"
+         | "013"%char => "\r"
+         | """"%char => "\"""
+         | "\"%char => "\\"
+         | _ => (String.String a EmptyString)
+         end.
+
+    Definition js_quote_string (s:string) : string
+      := flat_map_string js_quote_char s.
+
     Fixpoint string_of_data (nsctxt:namespace_ctxt) (d : ergo_data) : string :=
       let jsonify := ErgoData.data_to_json_string fmt_dq in
       let string_of_rec : list (string * ergo_data) -> string :=
@@ -82,7 +96,7 @@ Section PrintTypedData.
       | dfloat f => toString f
       | dbool true => "true"
       | dbool false => "false"
-      | dstring s => jsonify (dstring s)
+      | dstring s => jsonify (dstring (js_quote_string s))
       | dcoll arr =>
         "["
            ++ (String.concat
