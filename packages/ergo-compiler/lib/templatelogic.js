@@ -327,10 +327,14 @@ unwrapError(__result);
 
         if (output === null) { return null; }
 
-        const validOutput = serializer.fromJSON(output, {validate: false, acceptResourcesForRelationships: true});
-        validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validOutput.validate();
-        return serializer.toJSON(validOutput, {convertResourcesToRelationships: true});
+        if (output instanceof Object) {
+            const validOutput = serializer.fromJSON(output, {validate: false, acceptResourcesForRelationships: true});
+            validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+            validOutput.validate();
+            return serializer.toJSON(validOutput, {convertResourcesToRelationships: true});
+        } else {
+            return output;
+        }
     }
 
     /**
