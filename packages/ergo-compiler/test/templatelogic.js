@@ -359,6 +359,10 @@ describe('TemplateLogic', () => {
         it('should propagate null when validating an output', () => {
             expect(templateLogic.validateOutput(null)).to.equal(null);
         });
+        it('should propagate strings or numbers when validating an output', () => {
+            expect(templateLogic.validateOutput('test string')).to.equal('test string');
+            expect(templateLogic.validateOutput(100.0)).to.equal(100.0);
+        });
         it('should fail validating an output with an unknown class', () => {
             const output = {
                 '$class': 'org.accordproject.promissorynote.Payment',
