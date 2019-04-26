@@ -80,6 +80,9 @@
   | 't' -> '\009'
   | c   -> c
   end
+
+  let decimal_code  c d u =
+    100 * (Char.code c - 48) + 10 * (Char.code d - 48) + (Char.code u - 48)
 }
 
 let newline = ('\010' | '\013' | "\013\010")
@@ -148,16 +151,17 @@ rule token sbuff = parse
 | "//"
     { linecomment lexbuf; token sbuff lexbuf }
 | _
-    { raise (LexError (Printf.sprintf "At offset %d: unexpected character.\n" (Lexing.lexeme_start lexbuf))) }
+    { raise (LexError (Printf.sprintf "At offset %d: unexpected character" (Lexing.lexeme_start lexbuf))) }
 
 and string sbuff = parse
-  | "\"\"" { add_char_to_string sbuff '"'; string sbuff lexbuf }                         (* Escaped quote *)
-  | "\013\n" { add_char_to_string sbuff '\n'; string sbuff lexbuf }
-  | "\013" { add_char_to_string sbuff '\n'; string sbuff lexbuf }
-  | '\\' (backslash_escapes as c)
-    { add_char_to_string sbuff (char_for_backslash c); string sbuff lexbuf }
   | '"'    { () }  (* End of string *)
-  | eof    { raise (LexError "String not terminated.\n") }
+  | '\\' (['0'-'9'] as c) (['0'-'9'] as d) (['0'-'9']  as u)
+    { let v = decimal_code c d u in
+      if v > 255 then
+        raise (LexError (Printf.sprintf "illegal ascii code: '\\%c%c%c'" c d u))
+      else add_char_to_string sbuff (Char.chr v); string sbuff lexbuf }
+  | '\\' (backslash_escapes as c) { add_char_to_string sbuff (char_for_backslash c); string sbuff lexbuf }
+  | eof    { raise (LexError "String not terminated.") }
   | _      { add_char_to_string sbuff (Lexing.lexeme_char lexbuf 0); string sbuff lexbuf }
 
 and comment cpt = parse
@@ -166,7 +170,7 @@ and comment cpt = parse
   | "*/"
       { if cpt > 1 then comment (cpt - 1) lexbuf }
   | eof
-      { raise (LexError "Unterminated comment\n") }
+      { raise (LexError "Unterminated comment") }
   | newline
       { Lexing.new_line lexbuf; comment cpt lexbuf }
   | _
