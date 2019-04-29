@@ -45,18 +45,16 @@ class Commands {
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} contractName of the contract
      * @param {string} contractInput the contract data
      * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
      * @param {string[]} requestsInput the requests
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPaths,ctoPaths,contractName,contractInput,stateInput,currentTime,requestsInput) {
+    static execute(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput) {
         const engine = new Engine();
         const templateLogic = new TemplateLogic('es6');
         templateLogic.addErgoBuiltin();
-        templateLogic.setContractName(contractName);
         if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
             const ergoFile = ergoPaths[i];
@@ -76,7 +74,7 @@ class Commands {
         }
         let initResponse;
         if (stateInput === null) {
-            initResponse = engine.compileAndInit(templateLogic, contractName, contractJson, {}, currentTime);
+            initResponse = engine.compileAndInit(templateLogic, contractJson, {}, currentTime);
         } else {
             const stateJson = getJson(stateInput);
             initResponse = Promise.resolve({ state: stateJson });
@@ -84,7 +82,7 @@ class Commands {
         // Get all the other requests and chain execution through Promise.reduce()
         return requestsJson.reduce((promise,requestJson) => {
             return promise.then((result) => {
-                return engine.compileAndExecute(templateLogic,contractName,contractJson,requestJson,result.state,currentTime);
+                return engine.compileAndExecute(templateLogic, contractJson, requestJson, result.state, currentTime);
             });
         }, initResponse);
     }
@@ -94,7 +92,6 @@ class Commands {
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} contractName the contract
      * @param {string} clauseName the name of the clause to invoke
      * @param {string} contractInput the contract data
      * @param {string} stateInput the contract state
@@ -102,11 +99,10 @@ class Commands {
      * @param {object} paramsInput the parameters for the clause
      * @returns {object} Promise to the result of invocation
      */
-    static invoke(ergoPaths,ctoPaths,contractName,clauseName,contractInput,stateInput,currentTime,paramsInput) {
+    static invoke(ergoPaths,ctoPaths,clauseName,contractInput,stateInput,currentTime,paramsInput) {
         const engine = new Engine();
         const templateLogic = new TemplateLogic('es6');
         templateLogic.addErgoBuiltin();
-        templateLogic.setContractName(contractName);
         if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
             const ergoFile = ergoPaths[i];
@@ -122,7 +118,7 @@ class Commands {
         const contractJson = getJson(contractInput);
         const clauseParams = getJson(paramsInput);
         const stateJson = getJson(stateInput);
-        return engine.compileAndInvoke(templateLogic,contractName,clauseName,contractJson,clauseParams,stateJson,currentTime);
+        return engine.compileAndInvoke(templateLogic, clauseName, contractJson, clauseParams, stateJson, currentTime);
     }
 
     /**
@@ -130,17 +126,15 @@ class Commands {
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} contractName the contract name
      * @param {string} contractInput the contract data
      * @param {string} currentTime the definition of 'now'
      * @param {object} paramsInput the parameters for the clause
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoPaths,ctoPaths,contractName,contractInput,currentTime,paramsInput) {
+    static init(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput) {
         const engine = new Engine();
         const templateLogic = new TemplateLogic('es6');
         templateLogic.addErgoBuiltin();
-        templateLogic.setContractName(contractName);
         if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
             const ergoFile = ergoPaths[i];
@@ -155,7 +149,7 @@ class Commands {
         }
         const contractJson = getJson(contractInput);
         const clauseParams = getJson(paramsInput);
-        return engine.compileAndInit(templateLogic,contractName,contractJson,clauseParams,currentTime);
+        return engine.compileAndInit(templateLogic, contractJson, clauseParams, currentTime);
     }
 
     /**

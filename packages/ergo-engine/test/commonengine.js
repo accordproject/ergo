@@ -127,12 +127,12 @@ function runWorkload(Engine, target) {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 if (state === null) {
                     if (expected.hasOwnProperty('error')) {
-                        return engine.compileAndInit(templateLogic, contractName, contractJson, currentTime)
+                        return engine.compileAndInit(templateLogic, contractJson, currentTime)
                             .catch((actualError) => {
                                 expect(actualError.message).to.equal(expected.error);
                             });
                     } else {
-                        return engine.compileAndInit(templateLogic, contractName, contractJson, currentTime)
+                        return engine.compileAndInit(templateLogic, contractJson, currentTime)
                             .then((actualAnswer) => {
                                 return compareSuccess(expected, actualAnswer);
                             });
@@ -143,12 +143,12 @@ function runWorkload(Engine, target) {
                         const params = test.params;
                         const clauseName = test.clauseName;
                         if (expected.hasOwnProperty('error')) {
-                            return engine.compileAndInvoke(templateLogic, contractName, clauseName, contractJson, params, stateJson, currentTime)
+                            return engine.compileAndInvoke(templateLogic, clauseName, contractJson, params, stateJson, currentTime)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndInvoke(templateLogic, contractName, clauseName, contractJson, params, stateJson, currentTime)
+                            return engine.compileAndInvoke(templateLogic, clauseName, contractJson, params, stateJson, currentTime)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });
@@ -157,12 +157,12 @@ function runWorkload(Engine, target) {
                         const request = test.request;
                         const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                         if (expected.hasOwnProperty('error')) {
-                            return engine.compileAndExecute(templateLogic, contractName, contractJson, requestJson, stateJson, currentTime)
+                            return engine.compileAndExecute(templateLogic, contractJson, requestJson, stateJson, currentTime)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndExecute(templateLogic, contractName, contractJson, requestJson, stateJson, currentTime)
+                            return engine.compileAndExecute(templateLogic, contractJson, requestJson, stateJson, currentTime)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });

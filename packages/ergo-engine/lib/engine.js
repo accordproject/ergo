@@ -198,14 +198,14 @@ class Engine {
      * Compile then initialize a clause
      *
      * @param {TemplateLogic} logic  - the logic to execute
-     * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInit(logic, contractId, contract, params, currentTime) {
+    compileAndInit(logic, contract, params, currentTime) {
         return logic.compileLogic(false).then(() => {
+            const contractId = logic.getContractName();
             return this.init(logic, contractId, contract, params, currentTime);
         });
     }
@@ -214,7 +214,6 @@ class Engine {
      * Compile then invoke a clause
      *
      * @param {TemplateLogic} logic  - the logic to execute
-     * @param {string} contractId - the contract identifier
      * @param {string} clauseName - the clause name
      * @param {object} contract contract data in JSON
      * @param {object} params - the clause parameters
@@ -223,8 +222,9 @@ class Engine {
      * @param {string} currentTime - the definition of 'now'
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInvoke(logic, contractId, clauseName, contract, params, state, currentTime) {
+    compileAndInvoke(logic, clauseName, contract, params, state, currentTime) {
         return logic.compileLogic(false).then(() => {
+            const contractId = logic.getContractName();
             return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime);
         });
     }
@@ -233,7 +233,6 @@ class Engine {
      * Compile then execute a clause, passing in the request object
      *
      * @param {TemplateLogic} logic  - the logic to execute
-     * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} request - the request, a JS object that can be deserialized
      * using the Composer serializer.
@@ -242,8 +241,9 @@ class Engine {
      * @param {string} currentTime - the definition of 'now'
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    compileAndExecute(logic, contractId, contract, request, state, currentTime) {
+    compileAndExecute(logic, contract, request, state, currentTime) {
         return logic.compileLogic(false).then(() => {
+            const contractId = logic.getContractName();
             return this.execute(logic, contractId, contract, request, state, currentTime);
         });
     }
