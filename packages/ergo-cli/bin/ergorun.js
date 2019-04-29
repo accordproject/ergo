@@ -21,11 +21,8 @@ const Logger = require('@accordproject/ergo-compiler').Logger;
 
 require('yargs')
     .command('execute', 'execute an Ergo contract with a request', (yargs) => {
-        yargs.demandOption(['contractName', 'contract', 'request'], 'Please provide at least the contractName, with contract data and request');
+        yargs.demandOption(['contract', 'request'], 'Please provide at least the contract data and request');
         yargs.usage('Usage: $0 --contract [file] --state [file] --request [file] [ctos] [ergos]');
-        yargs.option('contractName', {
-            describe: 'the name of the contract'
-        });
         yargs.option('contract', {
             describe: 'path to the contract data'
         });
@@ -63,7 +60,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.execute(ergoPaths, ctoPaths, argv.contractName, { file: argv.contract }, argv.state ? { file: argv.state } : null, argv.currentTime, argv.request.map(r => { return { file: r }; }))
+        Commands.execute(ergoPaths, ctoPaths, { file: argv.contract }, argv.state ? { file: argv.state } : null, argv.currentTime, argv.request.map(r => { return { file: r }; }))
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -72,11 +69,8 @@ require('yargs')
             });
     })
     .command('invoke', 'invoke a clause for an Ergo contract', (yargs) => {
-        yargs.demandOption(['contractName', 'clauseName', 'contract', 'state', 'params'], 'Please provide at least the contractName and clauseName, with contract data, state, and params');
+        yargs.demandOption(['clauseName', 'contract', 'state', 'params'], 'Please provide at least the clauseName, with contract data, state, and params');
         yargs.usage('Usage: $0 --contract [file] --state [file] --params [file] [ctos] [ergos]');
-        yargs.option('contractName', {
-            describe: 'the name of the contract'
-        });
         yargs.option('clauseName', {
             describe: 'the name of the clause to invoke'
         });
@@ -118,7 +112,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.invoke(ergoPaths, ctoPaths, argv.contractName, argv.clauseName, { file: argv.contract }, { file: argv.state }, argv.currentTime, { file: argv.params })
+        Commands.invoke(ergoPaths, ctoPaths, argv.clauseName, { file: argv.contract }, { file: argv.state }, argv.currentTime, { file: argv.params })
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -127,11 +121,8 @@ require('yargs')
             });
     })
     .command('init', 'invoke init for an Ergo contract', (yargs) => {
-        yargs.demandOption(['contractName', 'contract'], 'Please provide at least contract, params and contractName');
+        yargs.demandOption(['contract'], 'Please provide at least contract and params');
         yargs.usage('Usage: $0 --contract [file] --params [file] [ctos] [ergos]');
-        yargs.option('contractName', {
-            describe: 'the name of the contract'
-        });
         yargs.option('contract', {
             describe: 'path to the contract data'
         });
@@ -166,7 +157,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.init(ergoPaths, ctoPaths, argv.contractName, { file: argv.contract }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' })
+        Commands.init(ergoPaths, ctoPaths, { file: argv.contract }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' })
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })

@@ -37,7 +37,7 @@ const { Before, Given, When, Then } = require('cucumber');
  */
 function init(engine,templateLogic,contractJson,currentTime) {
     const params = {};
-    return engine.compileAndInit(templateLogic,templateLogic.getContractName(),contractJson,params,currentTime);
+    return engine.compileAndInit(templateLogic,contractJson,params,currentTime);
 }
 
 /**
@@ -52,7 +52,7 @@ function init(engine,templateLogic,contractJson,currentTime) {
  * @returns {object} Promise to the response
  */
 function execute(engine,templateLogic,contractJson,stateJson,currentTime,requestJson) {
-    return engine.compileAndExecute(templateLogic,templateLogic.getContractName(),contractJson,requestJson,stateJson,currentTime);
+    return engine.compileAndExecute(templateLogic,contractJson,requestJson,stateJson,currentTime);
 }
 
 // Defaults

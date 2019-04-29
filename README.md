@@ -85,7 +85,7 @@ the compiled JavaScript code in `./examples/volumediscount/logic.js`
 To compile and execute a contract by sending a request:
 
 ```text
-$ ergorun execute ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractName org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergorun execute ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 06:40:01 - info:
 {
   "response": {
@@ -103,7 +103,7 @@ $ ergorun execute ./examples/volumediscount/model.cto ./examples/volumediscount/
 To compile and invoke a specific contract clause:
 
 ```text
-$ ergorun invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractName org.accordproject.volumediscount.VolumeDiscount --clauseName volumediscount --contract ./examples/volumediscount/contract.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
+$ ergorun invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --clauseName volumediscount --contract ./examples/volumediscount/contract.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
 06:40:29 - info:
 {
   "response": {
@@ -121,7 +121,7 @@ $ ergorun invoke ./examples/volumediscount/model.cto ./examples/volumediscount/l
 To compile and obtain the initial state for the contract:
 
 ```text
-$ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contractName org.accordproject.volumediscount.VolumeDiscount --contract ./examples/volumediscount/contract.json
+$ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contract ./examples/volumediscount/contract.json
 06:40:29 - info:
 {
   "response": null,
