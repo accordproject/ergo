@@ -135,7 +135,11 @@ Section EJSON.
     Fixpoint ejsonToJS (quotel:string) (j : ejson) : estring
       := match j with
          | ejnull => `"null" (* to be discussed *)
-         | ejnumber n => `to_string n
+         | ejnumber n =>
+           if (float_eq n float_infinity) then `"Infinity"
+           else if (float_eq n float_neg_infinity) then `"-Infinity"
+           else if (float_eq n float_nan) then `"NaN"
+           else `to_string n
          | ejbool b => if b then `"true" else `"false"
          | ejstring s => stringToJS quotel s
          | ejarray ls =>
