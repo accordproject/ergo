@@ -22,6 +22,8 @@ contract Smoke over TemplateModel {
     enforce(some(A{ a : 1 })?.a ?? 2 = 1);
     enforce(C{ contract : "foo" }.contract = "foo");
     enforce(C{ contract : "foo" }.contract = "foo");
+		enforce(infinity = 1.0/0.0);
+		enforce(-infinity = -1.0/0.0);
 		enforce("\"\\
 	" = "\034\092\010\013\009");
 		enforce("\"\\
