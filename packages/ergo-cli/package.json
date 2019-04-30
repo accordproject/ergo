@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-cli",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Ergo CLI",
   "repository": {
     "type": "git",
@@ -30,9 +30,9 @@
   "dependencies": {
     "composer-concerto": "0.70.2",
     "composer-concerto-tools": "0.60.2",
-    "@accordproject/ergo-compiler": "0.8.0",
-    "@accordproject/ergo-engine": "0.8.0",
-    "@accordproject/ergo-test": "0.8.0",
+    "@accordproject/ergo-compiler": "0.8.1",
+    "@accordproject/ergo-engine": "0.8.1",
+    "@accordproject/ergo-test": "0.8.1",
     "moment-mini": "2.22.1",
     "jsome": "2.5.0",
     "winston": "^3.2.1",
