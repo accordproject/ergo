@@ -19,6 +19,8 @@
  * @module ergo-compiler
  */
 
+module.exports.ComposerConcerto = require('composer-concerto');
+
 module.exports.Logger = require('./lib/logger.js');
 module.exports.Util = require('./lib/util.js');
 module.exports.ErgoError = require('./lib/ergoerror.js');
