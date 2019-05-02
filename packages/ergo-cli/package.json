@@ -28,8 +28,6 @@
     "access": "public"
   },
   "dependencies": {
-    "composer-concerto": "0.70.2",
-    "composer-concerto-tools": "0.60.2",
     "@accordproject/ergo-compiler": "0.8.1",
     "@accordproject/ergo-engine": "0.8.1",
     "@accordproject/ergo-test": "0.8.1",
