@@ -472,6 +472,8 @@ let pretty_unary_op p sym callb ff u a =
   | OpOrderBy atts ->
       fprintf ff "@[<hv 0>%s%a(%a)@]" "sort" (pretty_squared_names sym) (List.map fst atts) (callb 0 sym) a
   | OpToString -> pretty_unary_exp sym callb "toString" ff a
+  | OpGenerateText -> pretty_unary_exp sym callb "generateText" ff a
+  | OpLength -> pretty_unary_exp sym callb "stringLength" ff a
   | OpSubstring (n1,None) -> pretty_unary_exp sym callb ("substring["^(string_of_int n1)^"]") ff a
   | OpSubstring (n1,Some n2) -> pretty_unary_exp sym callb ("substring["^(string_of_int n1)^","^(string_of_int n2)^"]") ff a
   | OpLike (n1,None) -> pretty_unary_exp sym callb ("like["^(Util.string_of_char_list n1)^"]") ff a
@@ -654,6 +656,7 @@ let string_of_binary_op b =
   | OpBagDiff -> "aminus"
   | OpBagMin -> "amin"
   | OpBagMax -> "amax"
+  | OpBagNth -> "anth"
   | OpContains -> "acontains"
   | OpStringConcat -> "asconcat"
   | OpForeignBinary fb -> string_of_foreign_binary_op (Obj.magic fb)
@@ -675,6 +678,7 @@ let pretty_binary_op p sym callb ff b a1 a2 =
   | OpBagDiff -> pretty_infix_exp p 18 sym callb ("\\",1) ff a1 a2
   | OpBagMin -> pretty_infix_exp p 20 sym callb ("{min}",5) ff a1 a2
   | OpBagMax -> pretty_infix_exp p 20 sym callb ("{max}",5) ff a1 a2
+  | OpBagNth -> pretty_infix_exp p 20 sym callb ("{nth}",5) ff a1 a2
   | OpContains -> pretty_infix_exp p 16 sym callb sym.sin ff a1 a2
   | OpStringConcat -> pretty_infix_exp p 18 sym callb ("^",1) ff a1 a2
   | OpForeignBinary fb -> pretty_foreign_binary_op p sym callb ff (Obj.magic fb) a1 a2

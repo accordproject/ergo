@@ -153,7 +153,7 @@ Section EJSON.
 
     Fixpoint json_to_ejson (j:json) : ejson :=
       match j with
-      | jnil => ejnull
+      | jnull => ejnull
       | jnumber n => ejnumber n
       | jbool b => ejbool b
       | jstring s => ejstring (`s)
