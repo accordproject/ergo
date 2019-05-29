@@ -30,8 +30,8 @@ Module EData(ergomodel:ErgoBackendModel).
   Definition t : Set 
     := data.
   
-  Definition jnil : json
-    := JSON.jnil.
+  Definition jnull : json
+    := JSON.jnull.
   Definition jnumber z : json 
     := JSON.jnumber z.
   Definition jbool b : json 

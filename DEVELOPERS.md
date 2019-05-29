@@ -59,7 +59,7 @@ We recommend to install those using opam \([https://opam.ocaml.org](https://opam
 ```text
 $ opam repo add coq-released https://coq.inria.fr/opam/released
 $ opam install ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx atdgen re calendar
-$ opam install coq.8.8.2 coq-qcert.1.2.0
+$ opam install coq.8.8.2 coq-qcert.1.3.0
 ```
 
 #### Build the Ergo Compiler and REPL

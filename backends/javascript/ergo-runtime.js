@@ -231,13 +231,14 @@ function toStringQ(v, quote) {
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;
     }
-    var result2 = "{";
+    var result2 = generateText ? "" : "{";
     var first = true;
     for (var key in v) {
-        if (first) first = false; else result2 += ", ";
-        result2 += toStringQ(key, quote) + ": " + toStringQ(v[key], quote);
+        if (first) first = false; else result2 += generateText ? "" : ", ";
+        result2 += generateText ? toStringQ(v[key], quote) : toStringQ(key, quote) + ": " + toStringQ(v[key], quote);
     }
-    return result2 + "}";
+    result2 += generateText ? "" : "}";
+    return result2;
 }
 function bunion(b1, b2) {
     var result = [ ];
@@ -301,6 +302,17 @@ function bmax(b1, b2) {
     }
     while (i2 < length2) { result.push(v2[i2]); i2++; }
     return result;
+}
+function bnth(b1, n) {
+    var index = n;
+    if(n.hasOwnProperty('nat')){
+	    index = n.nat;
+    }
+    if (b1[index]) {
+        return left(b1[index]);
+    } else {
+        return right(null);
+    }
 }
 function sub_brand(b1,b2) {
     var bsub=null;
@@ -510,6 +522,9 @@ function natArithMean(b) {
 }
 function count(v) {
     return v.length;
+}
+function stringLength(v) {
+    return { "nat" : v.length };
 }
 function floatOfNat(v) {
     if(v.hasOwnProperty('nat')){
