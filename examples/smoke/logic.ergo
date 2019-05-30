@@ -35,6 +35,8 @@ contract Smoke over TemplateModel {
 		enforce([1,2,3][2] = some(3));
 		enforce([1,2,3][3] = none);
 		enforce({a:[1,2,3]}.a[1] = some(2));
+		enforce(length("") = 0);
+		enforce(length("abcd") = 4);
     return MyResponse{
       output: "Smoke.test successful"
     }

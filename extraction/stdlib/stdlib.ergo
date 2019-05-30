@@ -83,7 +83,7 @@ define function sinh(x:Double) : Double
 define function tan(x:Double) : Double
 define function tanh(x:Double) : Double
 
-// conversions from string
+// String operations
 define function doubleOpt(x:String) : Double?
 define function double(x:String) : Double {
 	match doubleOpt(x) with
@@ -106,6 +106,7 @@ define function longOpt(x:String) : Long? {
 define function long(x:String) : Long {
 	return integer(x)
 }
+define function length(x:String) : Long
 
 // Polymorphic operations
 define function toString(x:Any) : String

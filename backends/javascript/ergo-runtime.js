@@ -231,13 +231,13 @@ function toStringQ(v, quote) {
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;
     }
-    var result2 = generateText ? "" : "{";
+    var result2 = "{";
     var first = true;
     for (var key in v) {
-        if (first) first = false; else result2 += generateText ? "" : ", ";
-        result2 += generateText ? toStringQ(v[key], quote) : toStringQ(key, quote) + ": " + toStringQ(v[key], quote);
+        if (first) first = false; else result2 += ", ";
+        result2 += toStringQ(key, quote) + ": " + toStringQ(v[key], quote);
     }
-    result2 += generateText ? "" : "}";
+    result2 += "}";
     return result2;
 }
 function bunion(b1, b2) {
