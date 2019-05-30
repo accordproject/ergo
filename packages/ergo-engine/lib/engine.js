@@ -94,7 +94,7 @@ class Engine {
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
 
-        const validContract = logic.validateInput(contract); // ensure the contract is valid
+        const validContract = logic.validateContract(contract); // ensure the contract is valid
         const validRequest = logic.validateInput(request); // ensure the request is valid
         const validState = logic.validateInput(state); // ensure the state is valid
 
@@ -104,7 +104,8 @@ class Engine {
         const callScript = logic.getDispatchCall();
 
         const context = {
-            data: validContract,
+            data: validContract.serialized,
+            composerData: validContract.validated,
             state: validState,
             now: now,
             request: validRequest
@@ -144,7 +145,7 @@ class Engine {
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
 
-        const validContract = logic.validateInput(contract); // ensure the contract is valid
+        const validContract = logic.validateContract(contract); // ensure the contract is valid
         const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
         const validState = logic.validateInput(state); // ensure the state is valid
 
@@ -152,9 +153,9 @@ class Engine {
 
         const script = this.cacheJsScript(logic.getScriptManager(), contractId);
         const callScript = logic.getInvokeCall(clauseName);
-
         const context = {
-            data: validContract,
+            data: validContract.serialized,
+            composerData: validContract.validated,
             state: validState,
             now: now,
             params: validParams
@@ -208,7 +209,7 @@ class Engine {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'generateText', contract, params, defaultState, currentTime);
+        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime);
     }
 
     /**

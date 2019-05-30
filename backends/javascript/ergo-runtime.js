@@ -200,12 +200,12 @@ function arithMean(b) {
     }
 }
 function toString(v) {
-    return toStringQ(v, "\"", false);
+    return toStringQ(v, "\"");
 }
 function generateText(v) {
-    return toStringQ(v, "", true);
+    return toTextQ(v, "");
 }
-function toStringQ(v, quote, generateText) {
+function toStringQ(v, quote) {
     if (v === null)
         return "null";
     var t = typeof v;
@@ -220,13 +220,13 @@ function toStringQ(v, quote, generateText) {
     if ({}.toString.apply(v) == "[object Array]") {
         v = v.slice();
         v.sort();
-        var result = generateText ? "" : "[";
+        var result = "[";
         for (var i=0, n=v.length; i<n; i++) {
             if (i > 0)
-                generateText ? result += "" : result += ", ";
-            result += toStringQ(v[i], quote);
+                result += ", ";
+          result += toStringQ(v[i], quote);
         }
-        return generateText ? result + "" : result + "]";
+        return result + "]";
     }
     if (moment.isMoment(v)) {
         return v.format();
@@ -234,13 +234,52 @@ function toStringQ(v, quote, generateText) {
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;
     }
-    var result2 = generateText ? "" : "{";
+    var result2 = "{";
     var first = true;
     for (var key in v) {
-        if (first) first = false; else result2 += generateText ? "" : ", ";
-        result2 += generateText ? toStringQ(v[key], quote) : toStringQ(key, quote) + ": " + toStringQ(v[key], quote);
+        if (first) first = false; else result2 += ", ";
+        result2 += toStringQ(key, quote) + ": " + toStringQ(v[key], quote);
     }
-    result2 += generateText ? "" : "}";
+    result2 += "}";
+    return result2;
+}
+function toTextQ(v, quote) {
+    if (v === null)
+        return "null";
+    var t = typeof v;
+    if (t == "string")
+        return quote + v + quote;
+    if (t == "boolean")
+        return "" + v;
+    if (t == "number") {
+        if (Math.floor(v) == v) return (new Number(v)).toFixed(1); // Make sure there is always decimal point
+        else return "" + v;
+    }
+    if ({}.toString.apply(v) == "[object Array]") {
+        v = v.slice();
+        v.sort();
+        var result = "";
+        for (var i=0, n=v.length; i<n; i++) {
+            if (i > 0)
+                result += "";
+          result += toTextQ(v[i], quote);
+        }
+        return result + "";
+    }
+    if (moment.isMoment(v)) {
+        return v.format();
+    }
+    if(v.hasOwnProperty('nat')){
+        return "" + v.nat;
+    }
+    var result2 = "";
+    var first = true;
+    for (var key in v) {
+        if (key !== "$class") {
+            if (first) first = false; else result2 += " ";
+            result2 += toTextQ(v[key], quote);
+        }
+    }
     return result2;
 }
 function bunion(b1, b2) {
@@ -307,10 +346,7 @@ function bmax(b1, b2) {
     return result;
 }
 function bnth(b1, n) {
-    var index = n;
-    if(n.hasOwnProperty('nat')){
-	    index = n.nat;
-    }
+    var index = natUnbox(n);
     if (b1[index]) {
         return b1[index];
     } else {
@@ -461,6 +497,9 @@ function escapeRegExp(string){
 }
 
 // Nat operations
+function natBox(v) {
+    return { "nat": v };
+}
 function natUnbox(v) {
     var t = typeof v;
     if (t == "number") { return Math.floor(v); }
@@ -468,73 +507,69 @@ function natUnbox(v) {
     return v;
 }
 function natPlus(v1, v2) {
-    return natUnbox(v1) + natUnbox(v2);
+    return natBox(natUnbox(v1) + natUnbox(v2));
 }
 function natMinus(v1, v2) {
-    return natUnbox(v1) - natUnbox(v2);
+    return natBox(natUnbox(v1) - natUnbox(v2));
 }
 function natMult(v1, v2) {
-    return natUnbox(v1) * natUnbox(v2);
+    return natBox(natUnbox(v1) * natUnbox(v2));
 }
 function natDiv(v1, v2) {
-    return Math.floor(natUnbox(v1) / natUnbox(v2));
+    return natBox(Math.floor(natUnbox(v1) / natUnbox(v2)));
 }
 function natRem(v1, v2) {
-    return Math.floor(natUnbox(v1) % natUnbox(v2));
+    return natBox(Math.floor(natUnbox(v1) % natUnbox(v2)));
 }
 function natMin(v1, v2) {
-    return Math.min(natUnbox(v1),natUnbox(v2));
+    return natBox(Math.min(natUnbox(v1),natUnbox(v2)));
 }
 function natMax(v1, v2) {
-    return Math.max(natUnbox(v1),natUnbox(v2));
+    return natBox(Math.max(natUnbox(v1),natUnbox(v2)));
 }
 function natAbs(v) {
-    return Math.abs(natUnbox(v1),natUnbox(v2));
+    return natBox(Math.abs(natUnbox(v1),natUnbox(v2)));
 }
 function natLog2(v) {
-    return Math.floor(Math.log2(natUnbox(v))); // Default Z.log2 is log_inf, biggest integer lower than log2
+    return natBox(Math.floor(Math.log2(natUnbox(v)))); // Default Z.log2 is log_inf, biggest integer lower than log2
 }
 function natSqrt(v) {
-    return Math.floor(Math.sqrt(natUnbox(v))); // See Z.sqrt biggest integer lower than sqrt
+    return natBox(Math.floor(Math.sqrt(natUnbox(v)))); // See Z.sqrt biggest integer lower than sqrt
 }
 function natSum(b) {
     var result = 0;
     for (var i=0; i<b.length; i++)
         result += natUnbox(b[i]);
-    return result;
+    return natBox(result);
 }
 function natMinApply(b) {
     var numbers = [ ];
     for (var i=0; i<b.length; i++)
         numbers.push(natUnbox(b[i].nat));
-    return Math.min.apply(Math,numbers);
+    return natBox(Math.min.apply(Math,numbers));
 }
 function natMaxApply(b) {
     var numbers = [ ];
     for (var i=0; i<b.length; i++)
         numbers.push(natUnbox(b[i]));
-    return Math.max.apply(Math,numbers);
+    return natBox(Math.max.apply(Math,numbers));
 }
 function natArithMean(b) {
     var len = b.length;
     if(len == 0) {
-        return 0;
+        return natBox(0);
     } else {
-        return Math.floor(natSum(b)/len);
+        return natBox(Math.floor(natSum(b)/len));
     }
 }
 function count(v) {
-    return v.length;
+    return natBox(v.length);
 }
 function stringLength(v) {
-    return { "nat" : v.length };
+    return natBox(v.length);
 }
 function floatOfNat(v) {
-    if(v.hasOwnProperty('nat')){
-        return "" + v.nat;
-    } else {
-        return v;
-    }
+    return natUnbox(v);
 }
 function substring(v, start, len) {
     return v.substring(start,len);
@@ -654,8 +689,7 @@ function dateTimePeriodFromString(stringDuration) {
 
 function dateTimeDurationFromNat(part, v) {
     mustBeUnit(part);
-    var num;
-    if (v.hasOwnProperty('nat')) { num = v.nat; } else { num = v; }
+    var num = natUnbox(v);
     // 'quarters' not built into durations
     if (part === QUARTERS) {
         return moment.duration(num * 3,'months');

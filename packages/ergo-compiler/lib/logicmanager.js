@@ -17,6 +17,7 @@
 const Factory = require('composer-concerto').Factory;
 const Introspector = require('composer-concerto').Introspector;
 const Serializer = require('composer-concerto').Serializer;
+const ErgoSerializer = require('./ergoserializer');
 const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
 const ModelFile = require('composer-concerto').ModelFile;
 const APModelManager = require('../lib/apmodelmanager');
@@ -48,8 +49,8 @@ class LogicManager {
         this.introspector = new Introspector(this.modelManager);
         this.factory = new Factory(this.modelManager);
         this.serializer = new Serializer(this.factory, this.modelManager);
+        this.ergoserializer = new ErgoSerializer(this.factory, this.modelManager);
         this.validated = false;
-        this.addModelFile(Builtin.markdownModel, 'org.accordproject.markdown');
     }
 
     /**
@@ -181,6 +182,15 @@ unwrapError(__result);
     }
 
     /**
+     * Provides access to the ErgoSerializer for this TemplateLogic. The Serializer
+     * is used to serialize instances of the types defined within this TemplateLogic.
+     * @return {Serializer} the Serializer for this TemplateLogic
+     */
+    getErgoSerializer() {
+        return this.ergoserializer;
+    }
+
+    /**
      * Provides access to the ScriptManager for this TemplateLogic. The ScriptManager
      * manage access to the scripts that have been defined within this TemplateLogic.
      * @return {ScriptManager} the ScriptManager for this TemplateLogic
@@ -302,6 +312,7 @@ unwrapError(__result);
      */
     validateInput(input) {
         const serializer = this.getSerializer();
+        const ergoserializer = this.getErgoSerializer();
 
         if (input === null) { return null; }
 
@@ -309,7 +320,25 @@ unwrapError(__result);
         const validInput = serializer.fromJSON(input, {validate: false, acceptResourcesForRelationships: true});
         validInput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
         validInput.validate();
-        return serializer.toJSON(validInput, {permitResourcesForRelationships:true});
+        return ergoserializer.toJSON(validInput, {permitResourcesForRelationships:true});
+    }
+
+    /**
+     * Validate contract JSON
+     * @param {object} contract - the contract JSON
+     * @return {object} the validated contract
+     */
+    validateContract(contract) {
+        const serializer = this.getSerializer();
+        const ergoserializer = this.getErgoSerializer();
+
+        if (contract === null) { return null; }
+
+        // ensure the contract is valid
+        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
+        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+        validContract.validate();
+        return { serialized: ergoserializer.toJSON(validContract, {permitResourcesForRelationships:true}), validated: validContract};
     }
 
     /**
@@ -336,11 +365,12 @@ unwrapError(__result);
      */
     validateOutput(output) {
         const serializer = this.getSerializer();
+        const ergoserializer = this.getErgoSerializer();
 
         if (output === null) { return null; }
 
         if (output instanceof Object) {
-            const validOutput = serializer.fromJSON(output, {validate: false, acceptResourcesForRelationships: true});
+            const validOutput = ergoserializer.fromJSON(output, {validate: false, acceptResourcesForRelationships: true});
             validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
             validOutput.validate();
             return serializer.toJSON(validOutput, {convertResourcesToRelationships: true});

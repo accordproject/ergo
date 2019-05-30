@@ -14,6 +14,16 @@
 
 'use strict';
 
+const systemModel = `namespace org.accordproject.base
+abstract asset Asset {  }
+abstract participant Participant {  }
+abstract transaction Transaction identified by transactionId {
+  o String transactionId
+}
+abstract event Event identified by eventId {
+  o String eventId
+}`;
+
 const contractModel = `namespace org.accordproject.cicero.contract
 
 /**
@@ -382,4 +392,4 @@ concept MarkdownOptions {
 }
 `;
 
-module.exports = { contractModel, runtimeModel, moneyModel, timeModel, markdownModel };
+module.exports = { systemModel, contractModel, runtimeModel, moneyModel, timeModel, markdownModel };

@@ -18,7 +18,7 @@ import org.accordproject.markdown.*
 
 contract Interests over TemplateModel {
 	// Generate Text
-	clause generateText(options:MarkdownOptions) : String {
+	clause toText(options:MarkdownOptions) : String {
 		return {{
 This is a fixed interest loan to the amount of [{loanAmount}]
 at the yearly interest rate of [{rate}]%

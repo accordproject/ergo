@@ -194,6 +194,7 @@ Section ErgoCStdlib.
     ("org.accordproject.ergo.stdlib.logString", mk_unary  (OpForeignUnary (enhanced_unary_log_op uop_log_string)))
       (* String *)
       :: ("org.accordproject.ergo.stdlib.toString", mk_unary OpToString)
+      :: ("org.accordproject.ergo.stdlib.toText", mk_unary OpGenerateText)
       :: ("org.accordproject.ergo.stdlib.length", mk_unary OpLength)
       (* Natural numbers // Integer *)
       :: ("org.accordproject.ergo.stdlib.integerAbs", mk_unary (OpNatUnary NatAbs))

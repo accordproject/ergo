@@ -36,21 +36,21 @@ contract Smoke over TemplateModel {
     enforce(some(A{ a : 1 })?.a ?? 2 = 1);
     enforce(C{ contract : "foo" }.contract = "foo");
     enforce(C{ contract : "foo" }.contract = "foo");
-		enforce(infinity = 1.0/0.0);
-		enforce(-infinity = -1.0/0.0);
-		enforce("\"\\
+    enforce(infinity = 1.0/0.0);
+    enforce(-infinity = -1.0/0.0);
+    enforce("\"\\
 	" = "\034\092\010\013\009");
-		enforce("\"\\
+    enforce("\"\\
 	" = "\"\\\n\r\t");
     enforce(arraySubtract([1,2,3],[2,3,4]) = [1]);
-		enforce([1,2,3][-1] = none);
-		enforce([1,2,3][0] = some(1));
-		enforce([1,2,3][1] = some(2));
-		enforce([1,2,3][2] = some(3));
-		enforce([1,2,3][3] = none);
-		enforce({a:[1,2,3]}.a[1] = some(2));
-		enforce(length("") = 0);
-		enforce(length("abcd") = 4);
+    enforce([1,2,3][-1] = none);
+    enforce([1,2,3][0] = some(1));
+    enforce([1,2,3][1] = some(2));
+    enforce([1,2,3][2] = some(3));
+    enforce([1,2,3][3] = none);
+    enforce({a:[1,2,3]}.a[1] = some(2));
+    enforce(length("") = 0);
+    enforce(length("abcd") = 4);
     return MyResponse{
       output: "Smoke.test successful"
     }
