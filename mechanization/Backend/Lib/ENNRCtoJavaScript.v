@@ -416,7 +416,7 @@ End sanitizer.
                      | OpLt => `"(compare(" +++ e1 +++ `"," +++ e2 +++ `") < 0)" (* XXX Use compare! *)
                      | OpLe => `"(compare(" +++ e1 +++ `"," +++ e2 +++ `") <= 0)" (* XXX Use compare! *)
                      | OpBagUnion => `"bunion(" +++ e1 +++ `", " +++ e2 +++ `")"
-                     | OpBagDiff => `"bminus(" +++ e2 +++ `", " +++ e1 +++ `")"
+                     | OpBagDiff => `"bminus(" +++ e1 +++ `", " +++ e2 +++ `")"
                      | OpBagMin => `"bmin(" +++ e1 +++ `", " +++ e2 +++ `")"
                      | OpBagMax => `"bmax(" +++ e1 +++ `", " +++ e2 +++ `")"
                      | OpBagNth => `"bnth(" +++ e1 +++ `", " +++ e2 +++ `")"
