@@ -11,10 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+namespace org.accordproject.helloworld
 
-namespace org.accordproject.interests
-
-import org.accordproject.loan.interests.*
-
-contract Interests over TemplateModel {
+contract HelloWorld over TemplateModel {
+  // Simple Clause
+  clause helloworld(request : Request) : Response {
+    return Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")", number: doubleToInteger(0.0) }
+  }
 }

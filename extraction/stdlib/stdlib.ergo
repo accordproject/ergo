@@ -112,6 +112,7 @@ define function length(x:String) : Long
 define function logString(x:String) : Unit
 
 // Polymorphic operations
+define function toText(x:Any) : String
 define function toString(x:Any) : String
 define function distinct(x:Any[]) : Any[]
 define function count(x:Any[]) : Integer

@@ -17,16 +17,7 @@
 const fsPath = require('path');
 
 const ModelManager = require('composer-concerto').ModelManager;
-
-const systemModel = `namespace org.accordproject.base
-abstract asset Asset {  }
-abstract participant Participant {  }
-abstract transaction Transaction identified by transactionId {
-  o String transactionId
-}
-abstract event Event identified by eventId {
-  o String eventId
-}`;
+const Builtin = require('./builtin');
 
 /**
  * Accord Project Model Manager. Bootstraps the ModelManager with system files.
@@ -41,7 +32,8 @@ class APModelManager extends ModelManager {
      */
     constructor() {
         super();
-        this.addModelFile(systemModel, 'org.accordproject.base.cto', false, true);
+        this.addModelFile(Builtin.systemModel, 'org.accordproject.base.cto', false, true);
+        this.addModelFile(Builtin.markdownModel, '@org.accordproject.markdown', false, true);
     }
 
     /**

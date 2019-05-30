@@ -201,7 +201,7 @@
     "clauseName": "generateText",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15.0,\nand monthly payments of {{667.0}}\n"
+      "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n"
     }
   }
 ]

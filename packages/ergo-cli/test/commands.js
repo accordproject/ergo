@@ -198,13 +198,29 @@ describe('ergo', () => {
             const ctoPath = Path.join('test/examples/interests', 'model.cto');
             const contractPath = { file: Path.join('test/examples/interests', 'contract.json') };
             const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, null);
-            result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15.0,\nand monthly payments of {{667.0}}\n');
+            result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
+        });
+        it('should generate text for a smart Ergo contract (wrap variable)', async function () {
+            const ergoPath = Path.join('test/examples/interests', 'logic.ergo');
+            const ergoPath2 = Path.join('test/examples/interests', 'interests.ergo');
+            const ctoPath = Path.join('test/examples/interests', 'model.cto');
+            const contractPath = { file: Path.join('test/examples/interests', 'contract.json') };
+            const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, { wrapVariables: true });
+            result.response.should.equal('\nThis is a fixed interest loan to the amount of [{100000.0}]\nat the yearly interest rate of [{2.5}]%\nwith a loan term of [{15}],\nand monthly payments of {{667.0}}\n');
+        });
+        it('should generate text for a smart Ergo contract (markdown)', async function () {
+            const ergoPath = Path.join('test/examples/interests', 'logic.ergo');
+            const ergoPath2 = Path.join('test/examples/interests', 'interests.ergo');
+            const ctoPath = Path.join('test/examples/interests', 'model.cto');
+            const contractPath = { file: Path.join('test/examples/interests', 'contract.json') };
+            const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, { markdown: true });
+            result.response.should.equal('\nThis is a fixed interest loan to the amount of <variable name="loanAmount" value="100000.0"/>\nat the yearly interest rate of <variable name="rate" value="2.5"/>%\nwith a loan term of <variable name="loanDuration" value="15"/>,\nand monthly payments of <computed value="667.0"/>\n');
         });
         it('should throw when smart Ergo clause without a cto', async function () {
             const ergoPath = Path.join('test/examples/interests', 'logic.ergo');
             const ergoPath2 = Path.join('test/examples/interests', 'interests.ergo');
             const contractPath = { file: Path.join('test/examples/interests', 'contract.json') };
-            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interests/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
+            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interests/logic.ergo line 20 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/interests', 'model.cto');
@@ -219,13 +235,13 @@ describe('ergo', () => {
             const ctoPath = Path.join('test/examples/interestsvar', 'model.cto');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'contract.json') };
             const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, null);
-            result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15.0,\nand monthly payments of {{667.0}}\n');
+            result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
         });
         it('should throw when smart Ergo clause without a cto', async function () {
             const ergoPath = Path.join('test/examples/interestsvar', 'logic.ergo');
             const ergoPath2 = Path.join('test/examples/interestsvar', 'interests.ergo');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'contract.json') };
-            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interestsvar/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
+            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interestsvar/logic.ergo line 20 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/interestsvar', 'model.cto');
@@ -239,7 +255,7 @@ describe('ergo', () => {
             const ctoPath = Path.join('test/examples/interestsvar', 'model.cto');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'contract.json') };
             const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', templatePath, null);
-            result.response.should.equal('This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15.0,\nand monthly payments of {{667.0}}\n');
+            result.response.should.equal('This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
         });
         it('should initialize a smart Ergo contract state (template content)', async function () {
             const templateContent = {
@@ -255,7 +271,7 @@ and monthly payments of {{monthlyPaymentFormula(contract.loanAmount,contract.rat
             const ctoPath = Path.join('test/examples/interestsvar', 'model.cto');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'contract.json') };
             const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', templateContent, null);
-            result.response.should.equal('This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15.0,\nand monthly payments of {{667.0}}\n');
+            result.response.should.equal('This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
         });
     });
     describe('#initinstallmentsale', function () {

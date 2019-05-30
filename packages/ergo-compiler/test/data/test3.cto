@@ -1,5 +1,14 @@
 namespace org.accordproject.copyrightlicense
 
+enum Bar {
+  o GRR
+  o YAY
+}
+
+asset Baz identified by bazId {
+  o String bazId
+}
+
 transaction PaymentRequest {
   o String input
 }
@@ -10,4 +19,9 @@ transaction PayOut {
 
 concept FOO {
   o Double amount
+  o Double maybeAmount optional
+  o Integer someNumber
+  o Integer[] someArray
+  o Bar stuff
+  --> Baz relationship
 }

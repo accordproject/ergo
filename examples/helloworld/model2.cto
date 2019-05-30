@@ -12,9 +12,28 @@
  * limitations under the License.
  */
 
-namespace org.accordproject.interests
+namespace org.accordproject.helloworld
 
-import org.accordproject.loan.interests.*
+transaction Request {
+  o String input
+}
 
-contract Interests over TemplateModel {
+transaction Response {
+  o String output
+  o Integer number
+}
+
+/**
+ * The template model
+ */
+@AccordTemplateModel("helloworld")
+concept TemplateModel {
+  /**
+   * The name for the clause
+   */
+  o String name
+}
+
+concept TextResponse {
+  o String text
 }

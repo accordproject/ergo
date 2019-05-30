@@ -18,13 +18,13 @@ define function variableTag(variableName:String,text:Any,options:MarkdownOptions
 	if options.markdown
 	then return "<variable name=\"" ++ variableName ++ "\" value=\"" ++ toString(text) ++ "\"/>"
 	else if options.wrapVariables
-	then return "[{" ++ toString(text) ++ "}]"
-	else return toString(text)
+	then return "[{" ++ toText(text) ++ "}]"
+	else return toText(text)
 }
 
 define function computedTag(text:Any,options:MarkdownOptions) : String {
 	if options.markdown
 	then return "<computed value=\"" ++ toString(text) ++ "\"/>"
-	else return "{{" ++ toString(text) ++ "}}"
+	else return "{{" ++ toText(text) ++ "}}"
 }
 
