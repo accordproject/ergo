@@ -180,7 +180,9 @@ Section ErgoCStdlib.
                           (foreign_binary_operator_table prov).
 
   Definition unary_operator_table prov : ergo_stdlib_table :=
+    (* String *)
     ("org.accordproject.ergo.stdlib.toString", mk_unary prov OpToString)
+      :: ("org.accordproject.ergo.stdlib.length", mk_unary prov OpLength)
       (* Natural numbers // Integer *)
       :: ("org.accordproject.ergo.stdlib.integerAbs", mk_unary prov (OpNatUnary NatAbs))
       :: ("org.accordproject.ergo.stdlib.integerLog2", mk_unary prov (OpNatUnary NatLog2))
