@@ -309,9 +309,9 @@ function bnth(b1, n) {
 	    index = n.nat;
     }
     if (b1[index]) {
-        return left(b1[index]);
+        return b1[index];
     } else {
-        return right(null);
+        return null;
     }
 }
 function sub_brand(b1,b2) {

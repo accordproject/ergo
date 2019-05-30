@@ -174,6 +174,8 @@ Module EOperators(ergomodel:ErgoBackendModel).
       := BinaryOperators.OpBagMin.
     Definition opbagmax : op
       := BinaryOperators.OpBagMax.
+    Definition opnth : op
+      := BinaryOperators.OpBagNth.
     Definition opcontains : op
       := BinaryOperators.OpContains.
     Definition opstringconcat : op

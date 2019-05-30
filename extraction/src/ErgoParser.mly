@@ -81,6 +81,7 @@ let mk_provenance
 %left PLUSPLUS
 %nonassoc uminus
 %right NOT
+%right LBRACKET
 %left DOT QUESTIONDOT
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main_module
@@ -404,6 +405,9 @@ expr:
     { ErgoCompiler.eforeach (mk_provenance $startpos $endpos) fl None e2 }
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach (mk_provenance $startpos $endpos) fl (Some econd) e2 }
+(* Array index *)
+| e1 = expr LBRACKET e2 = expr RBRACKET
+    { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opnth e1 e2 }
 (* Unary operators *)
 | MINUS e = expr %prec uminus
     { ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos) EOpUMinus e }

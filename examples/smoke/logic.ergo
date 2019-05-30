@@ -29,6 +29,12 @@ contract Smoke over TemplateModel {
 		enforce("\"\\
 	" = "\"\\\n\r\t");
     enforce(arraySubtract([1,2,3],[2,3,4]) = [1]);
+		enforce([1,2,3][-1] = none);
+		enforce([1,2,3][0] = some(1));
+		enforce([1,2,3][1] = some(2));
+		enforce([1,2,3][2] = some(3));
+		enforce([1,2,3][3] = none);
+		enforce({a:[1,2,3]}.a[1] = some(2));
     return MyResponse{
       output: "Smoke.test successful"
     }
