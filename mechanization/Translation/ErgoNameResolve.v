@@ -837,10 +837,10 @@ Section ErgoNameResolution.
         end
       end.
 
-    Definition generateTextClause (prov:provenance) (template:lrergo_expr) : lrergo_clause :=
+    Definition toTextClause (prov:provenance) (template:lrergo_expr) : lrergo_clause :=
       mkClause
         prov
-        "generateText"%string
+        "toText"%string
         (mkErgoTypeSignature
            prov
            (("options"%string,
@@ -852,9 +852,9 @@ Section ErgoNameResolution.
     Fixpoint add_template_to_clauses (prov:provenance) (template:lrergo_expr) (cl:list lrergo_clause) :=
       match cl with
       | nil =>
-        (generateTextClause prov template) :: nil
+        (toTextClause prov template) :: nil
       | cl1 :: rest =>
-        if (string_dec cl1.(clause_name) "generateText")
+        if (string_dec cl1.(clause_name) "toText")
         then cl
         else cl1 :: (add_template_to_clauses prov template rest)
       end.

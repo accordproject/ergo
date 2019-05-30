@@ -228,7 +228,7 @@ End sanitizer.
       | dunit =>
         ejnull
       | dnat n =>
-        ejnumber (float_of_int n)
+        ejobject ((`"nat"%string, ejnumber (float_of_int n))::nil)
       | dfloat n =>
         ejnumber n
       | dbool b =>
@@ -393,7 +393,7 @@ End sanitizer.
                      | OpNatMean => `"natArithMean(" +++ e1 +++ `")"
                      | OpFloatOfNat => `"floatOfNat(" +++ e1 +++ `")"
                      | OpFloatUnary u => float_uarithToJs u e1
-                     | OpFloatTruncate => `"Math.trunc(" +++ e1 +++ `")" 
+                     | OpFloatTruncate => `"natBox(Math.trunc(" +++ e1 +++ `"))" 
                      | OpFloatSum => `"sum(" +++ e1 +++ `")"
                      | OpFloatMean => `"arithMean(" +++ e1 +++ `")"
                      | OpFloatBagMin => `"Math.min.apply(Math," +++ e1 +++ `")"
