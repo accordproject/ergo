@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-cli",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "Ergo CLI",
   "repository": {
     "type": "git",
@@ -28,9 +28,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/ergo-compiler": "0.8.4",
-    "@accordproject/ergo-engine": "0.8.4",
-    "@accordproject/ergo-test": "0.8.4",
+    "@accordproject/ergo-compiler": "0.8.5",
+    "@accordproject/ergo-engine": "0.8.5",
+    "@accordproject/ergo-test": "0.8.5",
     "moment-mini": "2.22.1",
     "jsome": "2.5.0",
     "winston": "^3.2.1",
