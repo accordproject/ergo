@@ -1,10 +1,9 @@
 # Developing Ergo
 
-* [Overview](#overview)
-* [Development Setup](#development-setup)
-* [Coding Rules](#rules)
-* [Commit Message Guidelines](.#commits)
-* [Writing Documentation](.#documentation)
+* [Development Setup][developers.setup]
+* [Coding Rules][developers.rules]
+* [Commit Message Guidelines][developers.commits]
+* [Writing Documentation][developers.documentation]
 
 ## Overview
 
@@ -18,7 +17,7 @@ The code is located in the following directories:
 * in `extraction` support code in OCaml \(includes the parser\)
 * in `packages` the JavaScript packages, containing the Ergo compiler API and command-line tools
 
-##  Development Setup
+## <a name="setup"> Development Setup
 
 ### Installing Dependencies
 
@@ -88,99 +87,142 @@ We write unit and integration tests with Mocha. To run all of the tests once run
 lerna run test
 ```
 
-##  Coding Rules
+## <a name="rules"></a> Coding Rules
 
 To ensure consistency throughout the source code, keep these rules in mind as you are working:
 
-* All features or bug fixes **must be tested** by one or more \[specs\]\[unit-testing\].
-* All public API methods **must be documented** with jsdoc. To see how we document our APIs, please check out the existing source code and see the section about [writing documentation](./#documentation)
+* All features or bug fixes **must be tested** by one or more [specs][developers.unit-tests].
+* All public API methods **must be documented** with jsdoc. To see how we document our APIs, please check
+  out the existing source code and see the section about [writing documentation][developers.documentation]
 * With the exceptions listed below, we follow the rules contained in
+  [Google's JavaScript Style Guide][google].
 
-  \[Google's JavaScript Style Guide\]\[js-style-guide\].
+## <a name="commits"></a> Git Commit Guidelines
 
-##  Git Commit Guidelines
+We have very precise rules over how our git commit messages can be formatted.  This leads to **more
+readable messages** that are easy to follow when looking through the **project history** and **git logs**.  
+But also, we use the git commit messages to **generate the Ergo change log**.
 
-We have very precise rules over how our git commit messages can be formatted. This leads to **more readable messages** that are easy to follow when looking through the **project history**. But also, we use the git commit messages to **generate the Ergo change log**.
-
-The commit message formatting can be added using a typical git workflow or through the use of a CLI wizard \([Commitizen](https://github.com/commitizen/cz-cli)\). To use the wizard, run `yarn run commit` in your terminal after staging your changes in git.
+The commit message formatting can be added using a version of typical git workflow.
 
 ### Commit Message Format
+Each commit message consists of a mandatory **type**, **scope**, **subject**, and **footer**. This is a specific format:
 
-Each commit message consists of a **header**, a **body** and a **footer**. The header has a special format that includes a **type**, a **scope** and a **subject**:
-
-```text
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
+```shell
+    <type>(<scope>): <subject> - <footer>
 ```
 
-The **header** is mandatory and the **scope** of the header is optional.
-
-Any line of the commit message cannot be longer 100 characters! This allows the message to be easier to read on GitHub as well as in various git tools.
+This allows the message to be easier to read on GitHub as well as in various git tools.
 
 ### Revert
-
-If the commit reverts a previous commit, it should begin with `revert:`, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted. A commit with this format is automatically created by the \[`git revert`\]\[git-revert\] command.
+If the commit reverts a previous commit, it should begin with `revert: `, followed by the subject, where it 
+should say: `this reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
+A commit with this format is automatically created by the `git revert` command.
 
 ### Type
-
 Must be one of the following:
 
-* **feat**: A new feature
-* **fix**: A bug fix
-* **docs**: Documentation only changes
-* **style**: Changes that do not affect the meaning of the code \(white-space, formatting, missing semi-colons, etc\)
-* **refactor**: A code change that neither fixes a bug nor adds a feature
-* **perf**: A code change that improves performance
-* **test**: Adding missing or correcting existing tests
-* **chore**: Changes to the build process or auxiliary tools and libraries such as documentation
-
+* **`feat`**: A new feature
+* **`fix`**: A bug fix
+* **`docs`**: Documentation only changes
+* **`style`**: Changes that do not affect the meaning of the code (white-space, formatting, missing
+  semi-colons, etc)
+* **`refactor`**: A code change that neither fixes a bug nor adds a feature
+* **`perf`**: A code change that improves performance
+* **`test`**: Adding missing or correcting existing tests
+* **`chore`**: Changes to the build process or auxiliary tools and libraries such as documentation
   generation
 
 ### Scope
-
-The scope could be anything specifying place of the commit change. For example `engine`, `template`, `clause`, etc...
+The scope will be specifying the place of the commit change; the focal point of new code or best 
+description for where changes can be found.
 
 You can use `*` when the change affects more than a single scope.
 
 ### Subject
-
 The subject contains succinct description of the change:
 
 * use the imperative, present tense: "change" not "changed" nor "changes"
 * don't capitalize first letter
-* no dot \(.\) at the end
-
-### Body
-
-Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes". The body should include the motivation for the change and contrast this with previous behavior.
+* kept under 50 characters
+* no dot (.) at the end
 
 ### Footer
+The footer should contain [reference GitHub Issues that this commit addresses][github-issues].
 
-The footer should contain any information about **Breaking Changes** and is also the place to \[reference GitHub issues that this commit closes\]\[closing-issues\].
+## <a name="pullrequests"></a> GitHub Pull Request Guidelines
+Pull Requests should consist of a complete addition to the code which contains value. 
+Because the commits inside follow a pattern, the title should be an extension or summary of all the commits inside.
 
-**Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
+Pull Request titles should follow [commit message formatting][developers.commits].
 
-A detailed explanation can be found in this \[document\]\[commit-message-format\].
+Formatting for the body is displayed in this example:
+
+```shell
+# Issue #20
+
+### Changes
+- Change one
+  - Subchange one
+  - Subchange two
+- Change two
+- Theoretically this should be listing all the commit messages included in this PR
+
+### Flags
+- Possible issues or holds for reviewers to note
+- List any breaking changes here.
+
+### Related Issues
+- Link any issues or pull requests relating to this
+```
+
+When approved and ready to merge, a Pull Request should be squashed down to a single buildable commit and merged into master.
 
 ##  Writing Documentation
 
-The Ergo project uses [docusaurus](http://docusaurus.io/) for the language documentation.
+The Ergo project uses [docusaurus][docusaurus] for the language documentation.
 
 Code documentation uses the following tools:
-- [coq2html](https://github.com/xavierleroy/coq2html) for the compiler specification (install with `opam install coq-coq2html`)
-- [odoc](https://github.com/ocaml/odoc) (install with `opam install odoc`)
-- [JSDoc](http://usejsdoc.org) for the JavaScript part of the code
+- [coq2html][coq2html] for the compiler specification (install with `opam install coq-coq2html`)
+- [odoc][odoc] (install with `opam install odoc`)
+- [JSDoc][jsdoc] for the JavaScript part of the code
 
 This means that all the docs are stored inline in the source code and so are kept in sync as it changes.
 
 This means that since we generate the documentation from the source code, we can easily provide version-specific documentation by simply checking out a version of Ergo and running the build.
 
 ## License <a name="license"></a>
-Accord Project source code files are made available under the Apache License, Version 2.0 (Apache-2.0), located in the LICENSE file. Accord Project documentation files are made available under the Creative Commons Attribution 4.0 International License (CC-BY-4.0), available at http://creativecommons.org/licenses/by/4.0/.
+
+Accord Project source code files are made available under the [Apache License, Version 2.0][apache].
+
+Accord Project documentation files are made available under the [Creative Commons Attribution 4.0 International License][creativecommons] (CC-BY-4.0).
 
 Copyright 2018-2019 Clause, Inc.
+
+[developers.setup]: DEVELOPERS.md#setup
+[developers.rules]: DEVELOPERS.md#rules
+[developers.commits]: DEVELOPERS.md#commits
+[developers.documentation]: DEVELOPERS.md#documentation
+[developers.unit-tests]: DEVELOPERS.md#unit-tests
+
+[git]: http://git-scm.com/
+[git-setup]: https://help.github.com/en/articles/set-up-git
+[node]: https://nodejs.org/en/
+[nvm]: https://github.com/creationix/nvm
+[nvm-windows]: https://github.com/coreybutler/nvm-windows
+[github]: https://github.com/accordproject/ergo
+[github-signup]: https://github.com/signup/free
+[github-issues]: https://github.com/accordproject/ergo/issues
+[github-forking]: http://help.github.com/forking
+[google]: https://google.github.io/styleguide/jsguide.html
+[commit]: https://github.com/commitizen/cz-cli
+
+[docusaurus]: http://docusaurus.io/
+[coq2html]: https://github.com/xavierleroy/coq2html
+[odoc]: https://github.com/ocaml/odoc
+[jsdoc]: http://usejsdoc.org/
+
+[apache]: https://github.com/accordproject/ergo/blob/master/LICENSE
+[creativecommons]: http://creativecommons.org/licenses/by/4.0/
 
 
