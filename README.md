@@ -129,12 +129,10 @@ $ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/log
 }
 ```
 
-Copyright 2018-2019 Clause, Inc.
-
 ---
 
 <a href="https://docs.accordproject.org/">
-	<img src="assets/APLogo.png" alt="Accord Project Logo" />
+	<img src="assets/APLogo.png" alt="Accord Project Logo" width="880" />
 </a>
 
 Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts.
@@ -182,6 +180,8 @@ Join the Accord Project Technology Working Group [Slack channel][slack] to get i
 Accord Project source code files are made available under the [Apache License, Version 2.0][apache].
 
 Accord Project documentation files are made available under the [Creative Commons Attribution 4.0 International License][creativecommons] (CC-BY-4.0).
+
+Copyright 2018-2019 Clause, Inc.
 
 [docsergo]: https://docs.accordproject.org/docs/ergo.html
 [apmain]: https://accordproject.org/ 
