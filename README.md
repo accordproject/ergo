@@ -129,13 +129,6 @@ $ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/log
 }
 ```
 
-## For developers
-
-We welcome contributions. We encourage contributors to consult the following
-[Guidelines][contribute]
-
-To setup for development, please consult the [Developer Guide][developer]
-
 Copyright 2018-2019 Clause, Inc.
 
 ---
