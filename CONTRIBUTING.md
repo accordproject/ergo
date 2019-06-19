@@ -63,7 +63,7 @@ If you're making a small change \(typo, phrasing\) don't worry about filing an i
 
 For large fixes, please build and test the documentation before submitting the PR to be sure you haven't accidentally introduced any layout or formatting issues. You should also make sure that your commit message follows the **[Commit Message Guidelines][developers.commits]**.
 
-##  Issue Submission Guidelines
+## <a name="submit"></a> Issue Submission Guidelines
 
 Before you submit your issue search the archive, maybe your question was already answered.
 
@@ -73,7 +73,7 @@ The "[new issue][github-new-issue]" form contains a number of prompts that you s
 
 **If you get help, help others. Good karma rulez!**
 
-##  Pull Request Submission Guidelines
+## <a name="submit-pr"></a> Pull Request Submission Guidelines
 
 Before you submit your pull request consider the following guidelines:
 
@@ -174,7 +174,7 @@ After your pull request is merged, you can safely delete your branch and pull th
     git push origin master
   ```
 
-##  Signing the Contributor License Agreement \(CLA\)
+## <a name="cla"></a> Signing the Contributor License Agreement \(CLA\)
 
 Upon submmitting a Pull Request, a friendly bot will ask you to sign our CLA if you haven't done so before. Unfortunately, this is necessary for documentation changes, too. It's a quick process, we promise!
 
