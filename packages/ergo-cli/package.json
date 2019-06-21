@@ -13,9 +13,9 @@
     "licchk": "license-check",
     "test:mocha": "mocha",
     "test:cucumber": "cucumber-js test/features --require .cucumber.js --world-parameters '{\"rootdir\":\"./test\"}'",
-    "test:all": "npm run test:mocha && npm run test:cucumber",
-    "test:cov": "nyc npm run test:all",
-    "test": "npm run test:all && npm run test:cov"
+    "test:mocha": "mocha",
+    "test": "npm run test:mocha && npm run test:cucumber",
+    "test:cov": "nyc npm run test"
   },
   "contributors": [
     {
