@@ -20,7 +20,7 @@ Feature: Dispatch Tests
 """
     Then it should fail with the error
 """
-Compilation error (at file examples/dispatchtest/logic.ergo line 16 col 0). Multiple clauses can process the request 'org.accordproject.dispatchtest.Request4'
+Compilation error (at file examples/dispatchtest/logic.ergo line 17 col 0). Multiple clauses can process the request 'org.accordproject.dispatchtest.Request4'
 contract DispatchTest over TemplateModel {
 ^                                         
 """
