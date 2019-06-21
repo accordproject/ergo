@@ -33,7 +33,7 @@
     "@accordproject/ergo-test": "0.8.5",
     "moment-mini": "2.22.1",
     "jsome": "2.5.0",
-    "winston": "^3.2.1",
+    "winston": "3.2.1",
     "yargs": "9.0.1",
     "chalk": "2.4.1"
   },
@@ -46,7 +46,7 @@
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-things": "0.2.0",
-    "cucumber": "^5.1.0",
+    "cucumber": "5.1.0",
     "eslint": "4.19.1",
     "jsdoc": "3.5.5",
     "lerna": "2.11.0",

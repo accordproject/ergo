@@ -66,18 +66,32 @@
       "NOTICES.md",
       "PULL_REQUEST_TEMPLATE.md",
       "LICENSE",
-      "contrib-notes/QA-CHECKLIST-TEMPLATE.md",
+      "README.rst",
       "markdown-license.txt",
       "extraction/_build/",
+      "extraction/extracted/",
       "extraction/_build_js",
+      "bin/",
       "docs/",
+      ".DS_Store",
       "Makefile",
+      "mechanization/Makefile",
+      "extraction/Makefile",
+      "backends/java/Makefile",
       "Makefile.coq",
       "Makefile.coq.conf",
-      "extraction/Makefile",
-      "mechanization/Makefile",
       ".coqdeps.d",
-      "_CoqProject"
+      "_CoqProject",
+      "extraction/src/Cto_j.ml",
+      "extraction/src/Cto_j.mli",
+      "extraction/src/Cto_t.ml",
+      "extraction/src/Cto_t.mli",
+      "extraction/src/Monitor_j.ml",
+      "extraction/src/Monitor_j.mli",
+      "extraction/src/Monitor_t.ml",
+      "extraction/src/Monitor_t.mli",
+      "backends/java/.classpath",
+      "backends/java/.project"
     ],
     "file_type_method": "EXCLUDE",
     "file_types": [
@@ -91,8 +105,6 @@
       ".aux",
       ".v.d",
       ".ctoj",
-      ".ml",
-      ".mli",
       ".depends",
       ".annot",
       ".byte",
@@ -101,19 +113,29 @@
       ".tem",
       ".txt",
       ".config",
-      ".coq_modules"
+      ".conf",
+      ".coq_modules",
+      ".ergoi",
+      ".hbs",
+      ".md",
+      ".class",
+      ".xml",
+      ".jar",
+      ".native",
+      ".vim",
+      ".result"
     ],
     "insert_license": false,
     "license_formats": {
-      "js|ergo|cto": {
+      "js|ergo|cto|java": {
         "prepend": "/*",
         "append": " */",
         "eachLine": {
           "prepend": " * "
         }
       },
-      "v|atd|mll|mly": {
-        "prepend": "*",
+      "v|atd|mll|mly|ml|mli": {
+        "prepend": "(*",
         "append": " *)",
         "eachLine": {
           "prepend": " * "

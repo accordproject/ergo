@@ -11,7 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- namespace org.accordproject.ergo.math
+
+namespace org.accordproject.ergo.math
 
 define constant PI = 4.0 * atan(1.0)
 define constant E = exp(1.0)

@@ -33,7 +33,7 @@
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-things": "0.2.0",
-    "cucumber": "^5.1.0"
+    "cucumber": "5.1.0"
   },
   "devDependencies": {
     "eslint": "4.19.1",

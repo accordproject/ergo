@@ -41,7 +41,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworld', 'contract.json') };
             const requestPath = { file: Path.join('test/examples/helloworld', 'request.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.execute([ergoPath], undefined, contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic.ergo line 16 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+            return Commands.execute([ergoPath], undefined, contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/helloworld', 'model.cto');
@@ -165,7 +165,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworld', 'contract.json') };
             const paramsPath = { file: Path.join('test/examples/helloworld', 'params.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.invoke([ergoPath], undefined, 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic4.ergo line 16 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+            return Commands.invoke([ergoPath], undefined, 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic4.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/helloworld', 'model.cto');
