@@ -14,10 +14,8 @@
     "lint": "eslint .",
     "postlint": "npm run licchk",
     "licchk": "license-check",
-    "test:mocha": "mocha",
-    "test:all": "npm run test:mocha",
-    "test:cov": "nyc npm run test:all",
-    "test": "npm run test:all && npm run test:cov"
+    "test": "mocha",
+    "test:cov": "nyc npm run test"
   },
   "contributors": [
     {
