@@ -6,45 +6,37 @@
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 [![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
 
-[https://docs.accordproject.org/docs/ergo](https://docs.accordproject.org/docs/ergo.html)
-
 ## About
 
-This is the source code for the Ergo compiler. Ergo is the [Accord
-Project](https://accordproject.org/) language for Smart Legal Contracts.
+This is the source code for the Ergo compiler. Ergo is the [Accord Project][apmain]
+language for Smart Legal Contracts.
 
-The Ergo compiler is distributed as an [npm
-package](https://www.npmjs.com/package/@accordproject/ergo-cli). If
-you want to install Ergo, consult the [getting
-started](#getting-started) section.
+The Ergo compiler is distributed as an [npm package][npmpkg]. 
 
-The Ergo compiler is written in [Coq](https://coq.inria.fr) with a parser and
-some support code written in [OCaml](https://ocaml.org). It makes extensive use
-of the [Q*cert compiler](https://querycert.github.io) for code generation.
+The Ergo compiler is written using the [Coq][coq] proof assistant, with parsing and
+support code written in [OCaml][OCaml]. It makes extensive use
+of the [Q*cert compiler][Qcert] for code generation and type checking.
 
 Both the Ergo language and its compiler are in early development
 phase. If you would like to build from source or to contribute,
-consult the [for developers](#for-developers) section.
+consult the [DEVELOPERS][developers] file.
 
-## Try it out
+## Try Ergo online
 
 If you want to take a peek at Ergo without installing anything, check
-out the interactive [REPL](https://ergorepl.netlify.com)
-(read-eval-print-loop) for Ergo stand-alone, or the [Accord Project
-Template Studio](https://studio.accordproject.org) showing how Ergo
-can express the logic of legal templates.
+out the interactive [REPL][REPL]
+(read-eval-print-loop) for Ergo stand-alone, or the [Accord Project Template Studio][studio] 
+which illustrates Ergo in Accord Project templates.
 
 ## Documentation
 
-The most recent documentation for the Ergo language and compiler is
-available at
-[https://docs.accordproject.org/docs/ergo.html](https://docs.accordproject.org/docs/ergo)
+The most recent Ergo documentation is in the [Ergo Language Guide][docergo].
 
-## Getting started
+## Quickstart
 
 ### Install Ergo
 
-The easiest way to install Ergo is as a [Node.js](https://nodejs.org/) package.
+The easiest way to install Ergo is as a [Node.js][nodejs] package.
 Once you have Node.js installed on your machine, you can get the Ergo compiler
 and command-line using the Node.js package manager by typing the following in a
 terminal:
@@ -67,7 +59,7 @@ $ ergoc --help
 $ ergorun --help
 ```
 
-### Compiling your first contract
+### Compile a contract
 
 To compile your first Ergo contract to JavaScript:
 
@@ -104,18 +96,6 @@ To compile and invoke a specific contract clause:
 
 ```text
 $ ergorun invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --clauseName volumediscount --contract ./examples/volumediscount/contract.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
-06:40:29 - info:
-{
-  "response": {
-    "discountRate": 2.8,
-    "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
-  },
-  "state": {
-    "$class": "org.accordproject.cicero.contract.AccordContractState",
-    "stateId": "1"
-  },
-  "emit": []
-}
 ```
 
 To compile and obtain the initial state for the contract:
@@ -123,30 +103,78 @@ To compile and obtain the initial state for the contract:
 ```text
 $ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contract ./examples/volumediscount/contract.json
 06:40:29 - info:
-{
-  "response": null,
-  "state": {
-    "stateId": "org.accordproject.cicero.contract.AccordContractState#1",
-    "$class": "org.accordproject.cicero.contract.AccordContractState"
-  },
-  "emit": []
-}
 ```
 
-## For developers
+---
 
-We welcome contributions. We encourage contributors to consult the following
-[Guidelines](./CONTRIBUTING.md)
+<a href="https://www.accordproject.org/">
+  <img src="assets/APLogo.png" alt="Accord Project Logo" width="400" />
+</a>
 
-To setup for development, please consult the [Developer Guide](./DEVELOPERS.md)
+Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound].
+
+## Learn More About Accord Project
+
+### Overview
+* [Accord Project][apmain]
+* [Accord Project News][apnews]
+* [Accord Project Blog][apblog]
+* [Accord Project Slack][apslack]
+* [Accord Project Technical Documentation][apdoc]
+* [Accord Project GitHub][apgit]
+
+
+### Documentation
+* [Getting Started with Accord Project][docwelcome]
+* [Concepts and High-level Architecture][dochighlevel]
+* [How to use the Cicero Templating System][doccicero]
+* [How to Author Accord Project Templates][docstudio]
+* [Ergo Language Guide][docergo]
+
+## Contributing
+
+The Accord Project technology is being developed as open source. All the software packages are being actively maintained on GitHub and we encourage organizations and individuals to contribute requirements, documentation, issues, new templates, and code.
+
+Find out what’s coming on our [blog][apblog].
+
+Join the Accord Project Technology Working Group [Slack channel][apslack] to get involved!
+
+For code contributions, read our [CONTRIBUTING guide][contributing] and information for [DEVELOPERS][developers].
 
 ## License <a name="license"></a>
 
-Accord Project source code files are made available under the Apache License,
-Version 2.0 (Apache-2.0), located in the [LICENSE](./LICENSE) file. Accord
-Project documentation files are made available under the Creative Commons
-Attribution 4.0 International License (CC-BY-4.0), available at
-http://creativecommons.org/licenses/by/4.0/.
+Accord Project source code files are made available under the [Apache License, Version 2.0][apache].
+Accord Project documentation files are made available under the [Creative Commons Attribution 4.0 International License][creativecommons] (CC-BY-4.0).
 
 Copyright 2018-2019 Clause, Inc.
 
+[apmain]: https://accordproject.org/ 
+[apworkgroup]: https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MjZvYzIzZHVrYnI1aDVzbjZnMHJqYmtwaGlfMjAxNzExMTVUMjEwMDAwWiBkYW5AY2xhdXNlLmlv&tmsrc=dan%40clause.io
+[apblog]: https://medium.com/@accordhq
+[apnews]: https://www.accordproject.org/news/
+[apgit]:  https://github.com/accordproject/
+[apdoc]: https://docs.accordproject.org/
+[apslack]: https://accord-project-slack-signup.herokuapp.com
+
+[docspec]: https://docs.accordproject.org/docs/spec-overview.html
+[docwelcome]: https://docs.accordproject.org/docs/accordproject.html
+[dochighlevel]: https://docs.accordproject.org/docs/spec-concepts.html
+[docergo]: https://docs.accordproject.org/docs/logic-ergo.html
+[docstart]: https://docs.accordproject.org/docs/accordproject.html
+[doccicero]: https://docs.accordproject.org/docs/basic-use.html
+[docstudio]: https://docs.accordproject.org/docs/advanced-latedelivery.html
+
+[contributing]: https://github.com/accordproject/ergo/blob/master/CONTRIBUTING.md
+[developers]: https://github.com/accordproject/ergo/blob/master/DEVELOPERS.md
+
+[linuxfound]: https://www.linuxfoundation.org
+[npmpkg]: https://www.npmjs.com/package/@accordproject/ergo-cli
+[coq]: https://coq.inria.fr
+[OCaml]: https://ocaml.org
+[Qcert]: https://querycert.github.io
+[REPL]: https://ergorepl.netlify.com
+[studio]: https://studio.accordproject.org
+[nodejs]: https://nodejs.org/
+
+[apache]: https://github.com/accordproject/ergo/blob/master/LICENSE
+[creativecommons]: http://creativecommons.org/licenses/by/4.0/
