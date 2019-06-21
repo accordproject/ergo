@@ -33,6 +33,7 @@ common_steps: &common_steps
           sed -i "s/^jobs: [0-9]*/jobs: $NJOBS/g" ~/.opam/config
           eval $(opam env)
           opam switch create 4.07.1 || true
+          opam switch set 4.07.1
           opam repo add coq-released https://coq.inria.fr/opam/released || true
           opam update || true
     - run:
