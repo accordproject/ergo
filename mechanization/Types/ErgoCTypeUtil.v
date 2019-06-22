@@ -56,7 +56,16 @@ Section ErgoCTypeUtil.
     | OpNeg => fmt_easy "!"%string tbool arg
     | OpFloatUnary FloatNeg => fmt_easy "-"%string tfloat arg
     | OpDot name => "The field " ++ name ++ " does not belong to type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
-    | _ => "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
+    | OpIdentity | OpRec _ | OpBag
+    | OpLeft | OpRight | OpBrand _ | OpUnbrand | OpCast _ =>
+      "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
+    | OpRecRemove _ | OpRecProject _
+    | OpSingleton | OpFlatten | OpDistinct | OpOrderBy _
+    | OpCount | OpToString | OpGenerateText | OpLength | OpSubstring _ _ | OpLike _ _
+    | OpNatUnary _ | OpNatSum | OpNatMin | OpNatMax | OpNatMean | OpFloatOfNat
+    | OpFloatUnary _ | OpFloatTruncate | OpFloatSum | OpFloatMean | OpFloatBagMin | OpFloatBagMax
+    | OpForeignUnary _ =>
+      "This function received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
     end.
 
   Definition ergo_format_binop_error nsctxt (op : binary_op) (arg1 : ergoc_type) (arg2 : ergoc_type) : string :=
@@ -72,21 +81,29 @@ Section ErgoCTypeUtil.
     match op with
     | OpAnd => fmt_easy "and"%string tbool tbool
     | OpOr => fmt_easy "or"%string tbool tbool
+    | OpLt => fmt_easy "<"%string tnat tnat
+    | OpLe => fmt_easy "<="%string tnat tnat
     | OpFloatBinary FloatPlus => fmt_easy "+"%string tfloat tfloat
     | OpFloatBinary FloatMinus => fmt_easy "-"%string tfloat tfloat
     | OpFloatBinary FloatMult => fmt_easy "*"%string tfloat tfloat
     | OpFloatBinary FloatDiv => fmt_easy "/"%string tfloat tfloat
     | OpFloatBinary FloatPow => fmt_easy "^"%string tfloat tfloat
-    | OpNatBinary NatPlus => fmt_easy "+i"%string tnat tnat
-    | OpNatBinary NatMinus => fmt_easy "-i"%string tnat tnat
-    | OpNatBinary NatMult => fmt_easy "*i"%string tnat tnat
-    | OpNatBinary NatDiv => fmt_easy "/i"%string tnat tnat
-    | OpNatBinary NatPow => fmt_easy "^i"%string tnat tnat
+    | OpNatBinary NatPlus => fmt_easy "+"%string tnat tnat
+    | OpNatBinary NatMinus => fmt_easy "-"%string tnat tnat
+    | OpNatBinary NatMult => fmt_easy "*"%string tnat tnat
+    | OpNatBinary NatDiv => fmt_easy "/"%string tnat tnat
+    | OpNatBinary NatPow => fmt_easy "^"%string tnat tnat
     | OpFloatCompare FloatLt => fmt_easy "<"%string tfloat tfloat
     | OpFloatCompare FloatLe => fmt_easy "<="%string tfloat tfloat
     | OpFloatCompare FloatGt => fmt_easy ">"%string tfloat tfloat
     | OpFloatCompare FloatGe => fmt_easy ">="%string tfloat tfloat
-    | _ => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string nsctxt arg2) ++ "'."
+    | OpRecConcat | OpRecMerge
+    | OpEqual | OpStringConcat
+      => "This operator received unexpected arguments of type `" ++ (ergoc_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string nsctxt arg2) ++ "'."
+    | OpBagUnion | OpBagDiff | OpBagMin | OpBagMax | OpBagNth | OpContains
+    | OpFloatBinary FloatMin | OpFloatBinary FloatMax
+    | OpForeignBinary _
+      => "This function received unexpected arguments of type `" ++ (ergoc_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string nsctxt arg2) ++ "'."
     end.
 
   Definition ergo_format_unary_operator_dispatch_error nsctxt (op : ergo_unary_operator)
