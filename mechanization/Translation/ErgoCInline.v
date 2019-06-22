@@ -80,7 +80,9 @@ Section ErgoCInline.
         match fn.(functionc_body) with
         | None =>
           match lookup String.string_dec ergoc_stdlib fname with
-          | Some fn => esuccess (fn.(functionc_body), discard_param_types fn.(functionc_sig).(sigc_params))
+          | Some fn =>
+            let fn := fn prov in
+            esuccess (fn.(functionc_body), discard_param_types fn.(functionc_sig).(sigc_params))
           | None => built_in_function_not_found_error prov fname
           end
         | Some _ => esuccess (fn.(functionc_body), keep_param_types fn.(functionc_sig).(sigc_params))
