@@ -44,7 +44,7 @@ Section ErgoCExpand.
     match zipped with
     | None => main_parameter_mismatch_error prov
     | Some _ =>
-      esuccess (ECallClause prov coname clname (EVar prov v0 :: effparamrest))
+      esuccess (ECallClause prov coname clname (EVar prov v0 :: effparamrest)) nil
     end.
 
   Definition case_of_sig
@@ -65,9 +65,9 @@ Section ErgoCExpand.
         elift (fun x =>
                  ((type0,(CaseLet prov v0 (Some type0),x))::nil))
               (create_call prov coname clname v0 effparam0 effparamrest prunedcallparams)
-      | _ => esuccess nil (* XXX May want to make this a warning *)
+      | _ => esuccess nil nil (* XXX May want to make this a warning *)
       end
-    | _ => esuccess nil (* XXX May want to make this a warning *)
+    | _ => esuccess nil nil (* XXX May want to make this a warning *)
     end.
 
   Definition make_cases
@@ -182,7 +182,7 @@ Section ErgoCExpand.
              (c:ergoc_contract) : eresult ergoc_contract :=
     let prov := c.(contractc_annot) in
     if in_dec string_dec clause_main_name (map fst c.(contractc_clauses))
-    then esuccess c
+    then esuccess c nil
     else
       elift
         (fun main_clause =>
@@ -197,9 +197,9 @@ Section ErgoCExpand.
              (order:list laergo_type_declaration)
              (d:ergoc_declaration) : eresult ergoc_declaration :=
     match d with
-    | DCExpr _ _ => esuccess d
-    | DCConstant _ _ _ _ => esuccess d
-    | DCFunc _ _ _ => esuccess d
+    | DCExpr _ _ => esuccess d nil
+    | DCConstant _ _ _ _ => esuccess d nil
+    | DCFunc _ _ _ => esuccess d nil
     | DCContract prov cn c =>
       let cd := add_init_clause_to_contract c in
       elift

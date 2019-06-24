@@ -89,20 +89,20 @@ Section ErgoNameResolution.
       match ic with
       | ImportAll prov ns =>
         match lookup string_dec ctxt.(namespace_ctxt_modules) ns with
-        | Some tbl => esuccess tbl
+        | Some tbl => esuccess tbl nil
         | None => import_not_found_error prov ns
         end
       | ImportSelf prov ns =>
         match lookup string_dec ctxt.(namespace_ctxt_modules) ns with
-        | Some tbl => esuccess tbl
-        | None => esuccess empty_namespace_table
+        | Some tbl => esuccess tbl nil
+        | None => esuccess empty_namespace_table nil
         end
       | ImportName prov ns ln =>
         match lookup string_dec ctxt.(namespace_ctxt_modules) ns with
         | Some tbl =>
           match lookup string_dec tbl.(namespace_table_types) ln with
           | None => import_name_not_found_error prov ns ln
-          | Some an => esuccess (one_type_to_namespace_table ln an)
+          | Some an => esuccess (one_type_to_namespace_table ln an) nil
           end
         | None => import_not_found_error prov ns
         end
@@ -151,17 +151,17 @@ Section ErgoNameResolution.
              (nsctxt:namespace_ctxt)
              (t:lrergo_type) : eresult laergo_type :=
       match t with
-      | ErgoTypeAny prov => esuccess (ErgoTypeAny prov)
-      | ErgoTypeNothing prov => esuccess (ErgoTypeNothing prov)
-      | ErgoTypeUnit prov => esuccess (ErgoTypeUnit prov)
-      | ErgoTypeBoolean prov => esuccess (ErgoTypeBoolean prov)
-      | ErgoTypeString prov => esuccess (ErgoTypeString prov)
-      | ErgoTypeDouble prov => esuccess (ErgoTypeDouble prov)
-      | ErgoTypeLong prov => esuccess (ErgoTypeLong prov)
-      | ErgoTypeInteger prov => esuccess (ErgoTypeInteger prov)
-      | ErgoTypeDateTime prov => esuccess (ErgoTypeDateTime prov)
-      | ErgoTypeDuration prov => esuccess (ErgoTypeDuration prov)
-      | ErgoTypePeriod prov => esuccess (ErgoTypePeriod prov)
+      | ErgoTypeAny prov => esuccess (ErgoTypeAny prov) nil
+      | ErgoTypeNothing prov => esuccess (ErgoTypeNothing prov) nil
+      | ErgoTypeUnit prov => esuccess (ErgoTypeUnit prov) nil
+      | ErgoTypeBoolean prov => esuccess (ErgoTypeBoolean prov) nil
+      | ErgoTypeString prov => esuccess (ErgoTypeString prov) nil
+      | ErgoTypeDouble prov => esuccess (ErgoTypeDouble prov) nil
+      | ErgoTypeLong prov => esuccess (ErgoTypeLong prov) nil
+      | ErgoTypeInteger prov => esuccess (ErgoTypeInteger prov) nil
+      | ErgoTypeDateTime prov => esuccess (ErgoTypeDateTime prov) nil
+      | ErgoTypeDuration prov => esuccess (ErgoTypeDuration prov) nil
+      | ErgoTypePeriod prov => esuccess (ErgoTypePeriod prov) nil
       | ErgoTypeClassRef prov rn =>
         let an := resolve_type_name prov nsctxt rn in
         elift (fun an =>
@@ -195,7 +195,7 @@ Section ErgoNameResolution.
                (nsctxt:namespace_ctxt)
                (en:option relative_name) : eresult (option absolute_name) :=
       match en with
-      | None => esuccess None
+      | None => esuccess None nil
       | Some rn => elift Some (resolve_type_name prov nsctxt rn)
       end.
 
@@ -217,14 +217,14 @@ Section ErgoNameResolution.
       in
       let output_type : eresult (option laergo_type) :=
           match sig.(type_signature_output) with
-          | None => esuccess None
+          | None => esuccess None nil
           | Some out_ty =>
             elift Some (resolve_ergo_type ectxt nsctxt out_ty)
           end
       in
       let emits_type : eresult (option laergo_type) :=
           match sig.(type_signature_emits) with
-          | None => esuccess None
+          | None => esuccess None nil
           | Some emits_ty =>
             elift Some (resolve_ergo_type ectxt nsctxt emits_ty)
           end
@@ -251,7 +251,7 @@ Section ErgoNameResolution.
                (d:lrergo_type_declaration_desc)
       : eresult laergo_type_declaration_desc :=
       match d with
-      | ErgoTypeEnum l => esuccess (ErgoTypeEnum l)
+      | ErgoTypeEnum l => esuccess (ErgoTypeEnum l) nil
       | ErgoTypeTransaction isabs extends_name ergo_type_struct =>
         elift2 (ErgoTypeTransaction isabs)
                (resolve_extends prov nsctxt extends_name)
@@ -311,7 +311,7 @@ Section ErgoNameResolution.
                (nsctxt:namespace_ctxt)
                (p:lrergo_pattern) : eresult (laergo_pattern) :=
       match p with
-      | CaseData prov d => esuccess (CaseData prov d)
+      | CaseData prov d => esuccess (CaseData prov d) nil
       | CaseWildcard prov ta => elift (CaseWildcard prov) (resolve_type_annotation prov nsctxt ta)
       | CaseLet prov v ta => elift (CaseLet prov v) (resolve_type_annotation prov nsctxt ta)
       | CaseLetOption prov v ta => elift (CaseLetOption prov v) (resolve_type_annotation prov nsctxt ta)
@@ -323,17 +323,17 @@ Section ErgoNameResolution.
              (nsctxt:namespace_ctxt)
              (e:lrergo_expr) : eresult laergo_expr :=
       match e with
-      | EThisContract prov => esuccess (EThisContract prov)
-      | EThisClause prov => esuccess (EThisClause prov)
-      | EThisState prov => esuccess (EThisState prov)
-      | EVar prov v => esuccess (EVar prov v)
-      | EConst prov d => esuccess (EConst prov d)
-      | ENone prov => esuccess (ENone prov)
+      | EThisContract prov => esuccess (EThisContract prov) nil
+      | EThisClause prov => esuccess (EThisClause prov) nil
+      | EThisState prov => esuccess (EThisState prov) nil
+      | EVar prov v => esuccess (EVar prov v) nil
+      | EConst prov d => esuccess (EConst prov d) nil
+      | ENone prov => esuccess (ENone prov) nil
       | ESome prov e =>
         elift (ESome prov)
               (resolve_ergo_expr ectxt nsctxt e)
       | EArray prov el =>
-        let init_el := esuccess nil in
+        let init_el := esuccess nil nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
@@ -363,7 +363,7 @@ Section ErgoNameResolution.
       | ELet prov v ta e1 e2 =>
         let rta :=
             match ta with
-            | None => esuccess None
+            | None => esuccess None nil
             | Some ta => elift Some (resolve_ergo_type ectxt nsctxt ta)
             end
         in
@@ -373,7 +373,7 @@ Section ErgoNameResolution.
                (resolve_ergo_expr ectxt nsctxt e2)
       | ENew prov cr el =>
         let rcr := resolve_type_name prov nsctxt cr in
-        let init_rec := esuccess nil in
+        let init_rec := esuccess nil nil in
         let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
             let e := resolve_ergo_expr ectxt nsctxt (snd att) in
@@ -381,7 +381,7 @@ Section ErgoNameResolution.
         in
         elift2 (ENew prov) rcr (fold_right proc_one init_rec el)
       | ERecord prov el =>
-        let init_rec := esuccess nil in
+        let init_rec := esuccess nil nil in
         let proc_one (att:string * lrergo_expr) (acc:eresult (list (string * laergo_expr))) :=
             let attname := fst att in
             let e := resolve_ergo_expr ectxt nsctxt (snd att) in
@@ -390,7 +390,7 @@ Section ErgoNameResolution.
         elift (ERecord prov) (fold_right proc_one init_rec el)
       | ECallFun prov fname el =>
         let rfname := resolve_function_name prov nsctxt fname in
-        let init_el := esuccess nil in
+        let init_el := esuccess nil nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
@@ -400,14 +400,14 @@ Section ErgoNameResolution.
         elift2 (ECallFun prov) rfname (fold_right proc_one init_el el)
       | ECallFunInGroup prov gname fname el =>
         let rgname := resolve_contract_name prov nsctxt gname in
-        let init_el := esuccess nil in
+        let init_el := esuccess nil nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
               (resolve_ergo_expr ectxt nsctxt e)
               acc
         in
-        elift3 (ECallFunInGroup prov) rgname (esuccess fname) (fold_right proc_one init_el el)
+        elift3 (ECallFunInGroup prov) rgname (esuccess fname nil) (fold_right proc_one init_el el)
       | EMatch prov e0 ecases edefault =>
         let ec0 := resolve_ergo_expr ectxt nsctxt e0 in
         let eccases :=
@@ -421,7 +421,7 @@ Section ErgoNameResolution.
                                      (resolve_ergo_expr ectxt nsctxt pe)) acc)
                        apcase
             in
-            fold_left proc_one ecases (esuccess nil)
+            fold_left proc_one ecases (esuccess nil nil)
         in
         let ecdefault := resolve_ergo_expr ectxt nsctxt edefault in
         eolift
@@ -436,11 +436,11 @@ Section ErgoNameResolution.
         let re2 := resolve_ergo_expr ectxt nsctxt e2 in
         let recond :=
             match econd with
-            | None => esuccess None
+            | None => esuccess None nil
             | Some econd => elift Some (resolve_ergo_expr ectxt nsctxt econd)
             end
         in
-        let init_e := esuccess nil in
+        let init_e := esuccess nil nil in
         let proc_one
               (foreach:string * lrergo_expr)
               (acc:eresult (list (string * laergo_expr)))
@@ -467,7 +467,7 @@ Section ErgoNameResolution.
       | SFunReturn prov e => elift (SFunReturn prov) (resolve_ergo_expr ectxt nsctxt e)
       | SThrow prov e =>  elift (SThrow prov) (resolve_ergo_expr ectxt nsctxt e)
       | SCallClause prov e0 fname el =>
-        let init_el := esuccess nil in
+        let init_el := esuccess nil nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
@@ -476,10 +476,10 @@ Section ErgoNameResolution.
         in
         elift3 (SCallClause prov)
                (resolve_ergo_expr ectxt nsctxt e0)
-               (esuccess fname)
+               (esuccess fname nil)
                (fold_right proc_one init_el el)
       | SCallContract prov e0 el =>
-        let init_el := esuccess nil in
+        let init_el := esuccess nil nil in
         let proc_one (e:lrergo_expr) (acc:eresult (list laergo_expr)) : eresult (list laergo_expr) :=
             elift2
               cons
@@ -500,7 +500,7 @@ Section ErgoNameResolution.
       | SLet prov v ta e1 s2 =>
         let rta :=
             match ta with
-            | None => esuccess None
+            | None => esuccess None nil
             | Some ta => elift Some (resolve_ergo_type ectxt nsctxt ta)
             end
         in
@@ -516,7 +516,7 @@ Section ErgoNameResolution.
       | SEnforce prov e1 os2 s3 =>
         let rs2 :=
             match os2 with
-            | None => esuccess None
+            | None => esuccess None nil
             | Some s2 => elift Some (resolve_ergo_stmt ectxt nsctxt s2)
             end
         in
@@ -537,7 +537,7 @@ Section ErgoNameResolution.
                                      (resolve_ergo_stmt ectxt nsctxt pe)) acc)
                        apcase
             in
-            fold_left proc_one scases (esuccess nil)
+            fold_left proc_one scases (esuccess nil nil)
         in
         let scdefault := resolve_ergo_stmt ectxt nsctxt sdefault in
         eolift
@@ -561,7 +561,7 @@ Section ErgoNameResolution.
       let prov := f.(function_annot) in
       let rbody :=
           match f.(function_body) with
-          | None => esuccess None
+          | None => esuccess None nil
           | Some body => elift Some (resolve_ergo_expr ectxt nsctxt body)
           end
       in
@@ -578,7 +578,7 @@ Section ErgoNameResolution.
       let rcname := c.(clause_name) in
       let rbody :=
           match c.(clause_body) with
-          | None => esuccess None
+          | None => esuccess None nil
           | Some body => elift Some (resolve_ergo_stmt ectxt nsctxt body)
           end
       in
@@ -602,7 +602,7 @@ Section ErgoNameResolution.
       let rtemplate := resolve_ergo_type ectxt nsctxt c.(contract_template) in
       let rstate :=
           match c.(contract_state) with
-          | None => esuccess None
+          | None => esuccess None nil
           | Some state => elift Some (resolve_ergo_type ectxt nsctxt state)
           end
       in
@@ -620,7 +620,7 @@ Section ErgoNameResolution.
       let actxt := nsctxt.(namespace_ctxt_abstract) in
       match d with
       | DNamespace prov ns =>
-        esuccess (DNamespace prov ns, local_namespace_scope nsctxt ns)
+        esuccess (DNamespace prov ns, local_namespace_scope nsctxt ns) nil
       | DImport prov id =>
         elift (fun x => (DImport prov id, x)) (resolve_one_import nsctxt id)
       | DType prov td =>
@@ -639,7 +639,7 @@ Section ErgoNameResolution.
         let an := absolute_name_of_local_name module_ns ln in
         let rta :=
             match ta with
-            | None => esuccess None
+            | None => esuccess None nil
             | Some ta => elift Some (resolve_ergo_type ectxt nsctxt ta)
             end
         in
@@ -716,7 +716,7 @@ Section ErgoNameResolution.
                (m:lrergo_module)
       : eresult namespace_ctxt :=
       if is_builtin_import ns
-      then esuccess ctxt
+      then esuccess ctxt nil
       else
         let builtin_cto_imports :=
             (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
@@ -732,7 +732,7 @@ Section ErgoNameResolution.
                (ns:namespace_name)
       : eresult namespace_ctxt :=
       if is_builtin_import ns
-      then esuccess ctxt
+      then esuccess ctxt nil
       else
         let builtin_cto_imports :=
             (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))

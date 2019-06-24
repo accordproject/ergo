@@ -172,10 +172,10 @@ Section ErgoType.
 
   Definition lift_default_state_name (state:option laergo_type) : eresult absolute_name :=
     match state with
-    | None => esuccess default_state_absolute_name
+    | None => esuccess default_state_absolute_name nil
     | Some et =>
       match et with
-      | ErgoTypeClassRef _ r => esuccess r
+      | ErgoTypeClassRef _ r => esuccess r nil
       | _ => unresolved_name_error (type_annot et)
       end
     end.

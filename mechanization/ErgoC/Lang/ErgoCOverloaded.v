@@ -114,7 +114,7 @@ Section ErgoCOverloaded.
       | nil => efailure (ETypeError prov (ergo_format_unary_operator_dispatch_error nsctxt eop t))
       | (op_criteria, op_fun) :: bltops' =>
         match op_criteria t with
-        | Some r => esuccess (op_fun prov r eT) (* Found a successful dispatch *)
+        | Some r => esuccess (op_fun prov r eT) nil (* Found a successful dispatch *)
         | None => try_unary_dispatch nsctxt prov eop bltops' eT (* try next operator *)
         end
       end.
@@ -200,7 +200,7 @@ Section ErgoCOverloaded.
       | nil => efailure (ETypeError prov (ergo_format_binary_operator_dispatch_error nsctxt eop t1 t2))
       | (op_criteria, op_fun) :: bltops' =>
         match op_criteria t1 t2 with
-        | Some r => esuccess (op_fun prov r eT1 eT2) (* Found a successful dispatch *)
+        | Some r => esuccess (op_fun prov r eT1 eT2) nil (* Found a successful dispatch *)
         | None => try_binary_dispatch nsctxt prov eop bltops' eT1 eT2 (* try next operator *)
         end
       end.

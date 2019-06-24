@@ -19,7 +19,7 @@ open ErgoConfig
 
 open PrettyIL
 
-let res_convert code =
+let res_convert code warnings =
   let contract_name =
     begin match code.res_contract_name with
     | None -> None

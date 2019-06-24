@@ -49,7 +49,7 @@ Section ErgoCTypecheck.
     | EConst prov d =>
       let topt := eresult_of_option (infer_data_type d) (ETypeError prov "Bad constant.") in
       elift (fun T => EConst (prov,T) d) topt
-    | ENone prov => esuccess (ENone (prov, toption tbottom))
+    | ENone prov => esuccess (ENone (prov, toption tbottom)) nil
     | ESome prov e =>
       elift (fun eT => ESome (prov,toption (exprct_type_annot eT)) eT) (ergoc_typecheck_expr nsctxt ctxt e)
     | EArray prov es =>
@@ -63,18 +63,18 @@ Section ErgoCTypecheck.
                             (new'::(fst eT'), ergoc_type_join (exprct_type_annot new') (snd eT')))
                          (ergoc_typecheck_expr nsctxt ctxt new))
                     eT)
-               (esuccess (nil,tbottom)) es)
+               (esuccess (nil,tbottom) nil) es)
     | EUnaryOperator prov eop e =>
       match ergoc_typecheck_expr nsctxt ctxt e with
-      | Success _ _ t =>
+      | Success _ _ (t,w) =>
         unary_dispatch nsctxt prov eop t
       | Failure _ _ f => efailure f
       end
     | EBinaryOperator prov eop e1 e2 =>
       match ergoc_typecheck_expr nsctxt ctxt e1 with
-      | Success _ _ t1 =>
+      | Success _ _ (t1,w1) =>
         match ergoc_typecheck_expr nsctxt ctxt e2 with
-        | Success _ _ t2 =>
+        | Success _ _ (t2,w2) =>
           binary_dispatch nsctxt prov eop t1 t2
         | Failure _ _ f => efailure f
         end
@@ -82,23 +82,23 @@ Section ErgoCTypecheck.
       end
     | EUnaryBuiltin prov op e =>
       match ergoc_typecheck_expr nsctxt ctxt e with
-      | Success _ _ eT =>
+      | Success _ _ (eT,w) =>
         let t := exprct_type_annot eT in
         match ergoc_type_infer_unary_op op t with
-        | Some (r, _) => esuccess (EUnaryBuiltin (prov,r) op eT)
+        | Some (r, _) => esuccess (EUnaryBuiltin (prov,r) op eT) w
         | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt op t))
         end
       | Failure _ _ f => efailure f
       end
     | EBinaryBuiltin prov op e1 e2 =>
       match ergoc_typecheck_expr nsctxt ctxt e1 with
-      | Success _ _ eT1 =>
+      | Success _ _ (eT1,w1) =>
         match ergoc_typecheck_expr nsctxt ctxt e2 with
-        | Success _ _ eT2 =>
+        | Success _ _ (eT2,w2) =>
           let t1 := exprct_type_annot eT1 in
           let t2 := exprct_type_annot eT2 in
           match ergoc_type_infer_binary_op op t1 t2 with
-          | Some (r, _, _) => esuccess (EBinaryBuiltin (prov,r) op eT1 eT2)
+          | Some (r, _, _) => esuccess (EBinaryBuiltin (prov,r) op eT1 eT2) (w1++w2)
           | None => efailure (ETypeError prov (ergo_format_binop_error nsctxt op t1 t2))
           end
         | Failure _ _ f => efailure f
@@ -181,7 +181,7 @@ Section ErgoCTypecheck.
                                         (ergoc_type_infer_unary_op (OpRec (fst next)) ft)
                                         (ETypeError prov "Bad record! Failed to init."%string)))
                             (ergoc_typecheck_expr nsctxt ctxt (snd next))))
-               (esuccess (nil,empty_rec_type)) rs)
+               (esuccess (nil,empty_rec_type) nil) rs)
     | ENew prov name rs =>
       eolift
         (fun rsT' =>
@@ -206,16 +206,16 @@ Section ErgoCTypecheck.
                                     (ergoc_type_infer_unary_op (OpRec (fst next)) ft)
                                     (ETypeError prov "Bad record! Failed to init."%string)))
                         (ergoc_typecheck_expr nsctxt ctxt (snd next))))
-           (esuccess (nil,empty_rec_type)) rs)
+           (esuccess (nil,empty_rec_type) nil) rs)
     | ECallFun prov fname args => function_not_inlined_error prov "typing" fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
     | EMatch prov term pes default =>
       match ergoc_typecheck_expr nsctxt ctxt term with
       | Failure _ _ f => efailure f
-      | Success _ _ eT0 =>
+      | Success _ _ (eT0,w0) =>
         match ergoc_typecheck_expr nsctxt ctxt default with
         | Failure _ _ f => efailure f
-        | Success _ _ dT =>
+        | Success _ _ (dT,wT) =>
           let t0 := exprct_type_annot eT0 in
           let dt := exprct_type_annot dT in
           elift
@@ -299,7 +299,7 @@ Section ErgoCTypecheck.
                                  (tbrand (b::nil)))
                               res)
                   end)
-               (esuccess (nil, dt))
+               (esuccess (nil, dt) (w0++wT))
                pes)
         end
       end
@@ -333,7 +333,7 @@ Section ErgoCTypecheck.
                           func.(functionc_annot)
                           func.(functionc_sig)
                           None,
-                        dctxt)
+                        dctxt) nil
     | Some body =>
       let tsig :=
           map (fun x => (fst x, ergo_type_to_ergoc_type (snd x)))
@@ -347,7 +347,7 @@ Section ErgoCTypecheck.
                                  func.(functionc_annot)
                                  func.(functionc_sig)
                                  (Some outT),
-                               dctxt)
+                               dctxt) nil
            | Some eoutt' =>
              let expectedt := ergo_type_to_ergoc_type eoutt' in
              if subtype_dec outt expectedt
@@ -355,7 +355,7 @@ Section ErgoCTypecheck.
                               func.(functionc_annot)
                               func.(functionc_sig)
                               (Some outT),
-                            dctxt)
+                            dctxt) nil
              else
                let body_prov := bodyc_annot func in
                match func.(functionc_annot) with
@@ -425,7 +425,7 @@ Section ErgoCTypecheck.
            let t' := (ergo_type_to_ergoc_type t) in
            if subtype_dec vt t' then
              let ctxt' := type_context_update_global_env dctxt name t' in
-             esuccess (DCTConstant (prov,t') name (Some t) vT, ctxt')
+             esuccess (DCTConstant (prov,t') name (Some t) vT, ctxt') nil
            else
              efailure (fmt_err t' vt))
         exprT

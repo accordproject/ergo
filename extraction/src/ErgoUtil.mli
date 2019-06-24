@@ -29,7 +29,7 @@ val ergo_system_error : string -> eerror
 (** [ergo_parse_error msg filename start end] *)
 val ergo_parse_error : string -> string -> Lexing.position -> Lexing.position -> eerror
 
-val wrap_jerrors : ('a -> 'b) -> 'a eresult -> 'b
+val wrap_jerrors : ('a -> ewarning list -> 'b) -> 'a eresult -> 'b
 
 val string_of_error_with_source_text : string -> eerror -> string
 val string_of_error_with_source_file : string -> eerror -> string

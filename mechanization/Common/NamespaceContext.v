@@ -59,22 +59,22 @@ Section NamespaceContext.
     Definition lookup_type_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_types) ln with
       | None => type_name_not_found_error prov ln
-      | Some an => esuccess an
+      | Some an => esuccess an nil
       end.
     Definition lookup_constant_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_constants) ln with
       | None => variable_name_not_found_error prov ln
-      | Some an => esuccess an
+      | Some an => esuccess an nil
       end.
     Definition lookup_function_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_functions) ln with
       | None => function_name_not_found_error prov ln
-      | Some an => esuccess an
+      | Some an => esuccess an nil
       end.
     Definition lookup_contract_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_contracts) ln with
       | None => contract_name_not_found_error prov ln
-      | Some an => esuccess an
+      | Some an => esuccess an nil
       end.
 
     Definition add_type_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=

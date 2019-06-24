@@ -35,12 +35,12 @@ Section ErgoMap.
     let maybe_fn := elift_maybe (fn ctx) in
     maybe_fn
       match expr with
-      | EThisContract _ => esuccess expr
-      | EThisClause _ => esuccess expr
-      | EThisState _ => esuccess expr
-      | EVar _ _ => esuccess expr
-      | EConst _ _ => esuccess expr
-      | ENone _ => esuccess expr
+      | EThisContract _ => esuccess expr nil
+      | EThisClause _ => esuccess expr nil
+      | EThisState _ => esuccess expr nil
+      | EVar _ _ => esuccess expr nil
+      | EConst _ _ => esuccess expr nil
+      | ENone _ => esuccess expr nil
       | ESome loc e =>
         elift (ESome loc) (ergo_map_expr ctx ctxt_new_variable_scope fn e)
       | EArray loc a =>
@@ -48,7 +48,7 @@ Section ErgoMap.
               (fold_left
                  (fun ls na =>
                     elift2 postpend ls (ergo_map_expr ctx ctxt_new_variable_scope fn na))
-                 a (esuccess nil))
+                 a (esuccess nil nil))
       | EUnaryOperator loc o e =>
         elift (EUnaryOperator loc o)
               (ergo_map_expr ctx ctxt_new_variable_scope fn e)
@@ -77,24 +77,24 @@ Section ErgoMap.
                  (fun ls nr =>
                     elift2 postpend ls
                            (elift (fun x => (fst nr, x)) (ergo_map_expr ctx ctxt_new_variable_scope fn (snd nr))))
-                 rs (esuccess nil))
+                 rs (esuccess nil nil))
       | ENew loc n rs =>
         elift (ENew loc n)
               (fold_left
                  (fun ls nr =>
                     elift2 postpend ls
                            (elift (fun x => (fst nr, x)) (ergo_map_expr ctx ctxt_new_variable_scope fn (snd nr))))
-                 rs (esuccess nil))
+                 rs (esuccess nil nil))
       | ECallFun loc fn' args =>
         elift (ECallFun loc fn')
               (fold_left (fun ls nv =>
                             elift2 postpend ls (ergo_map_expr ctx ctxt_new_variable_scope fn nv))
-                         args (esuccess nil))
+                         args (esuccess nil nil))
       | ECallFunInGroup loc gn fn' args =>
         elift (ECallFunInGroup loc gn fn')
               (fold_left (fun ls nv =>
                             elift2 postpend ls (ergo_map_expr ctx ctxt_new_variable_scope fn nv))
-                         args (esuccess nil))
+                         args (esuccess nil nil))
       | EForeach loc rs whr fn' =>
         elift3
           (EForeach loc)
@@ -102,10 +102,10 @@ Section ErgoMap.
              (fun ls nr =>
                 elift2 postpend ls
                        (elift (fun x => (fst nr, x)) (ergo_map_expr ctx ctxt_new_variable_scope fn (snd nr))))
-             rs (esuccess nil))
+             rs (esuccess nil nil))
           (match whr with
            | Some whr' => (elift Some) (ergo_map_expr ctx ctxt_new_variable_scope fn whr')
-           | None => esuccess None
+           | None => esuccess None nil
            end)
           (ergo_map_expr ctx ctxt_new_variable_scope fn fn')
 
@@ -136,7 +136,7 @@ Section ErgoMap.
                                                        ctxt_new_variable_scope fn e)
                                 end
                                 prev)
-                           (esuccess nil)
+                           (esuccess nil nil)
                            pes))
                (ergo_map_expr ctx ctxt_new_variable_scope fn def))
           (ergo_map_expr ctx ctxt_new_variable_scope fn expr)

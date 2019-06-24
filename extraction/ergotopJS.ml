@@ -31,7 +31,7 @@ let repl rctxt text =
              (* eval *)
              let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
-             (answer ^ (wrap_jerrors Util.string_of_char_list out), rctxt')
+             (answer ^ (wrap_jerrors (fun x warnings -> Util.string_of_char_list x) out), rctxt')
            end)
         ("",rctxt) decls
   with
@@ -52,7 +52,7 @@ let usage =
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
 let safe_init_repl_ctxt inputs =
   ErgoUtil.wrap_jerrors
-    (fun x -> x)
+    (fun x warnings -> x)
     (ErgoTopUtil.my_init_repl_context inputs)
 
 let make_init_rctxt gconf =

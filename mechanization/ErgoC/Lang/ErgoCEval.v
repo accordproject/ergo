@@ -48,24 +48,24 @@ Section ErgoCTEval.
     | EVar (prov,_) name =>
       match lookup String.string_dec (ctxt.(eval_context_local_env)++ctxt.(eval_context_global_env)) name with
       | None => variable_name_not_found_error prov name
-      | Some d => esuccess d
+      | Some d => esuccess d nil
       end
-    | EConst (prov,_) d => esuccess d
-    | ENone (prov,_) => esuccess dnone
+    | EConst (prov,_) d => esuccess d nil
+    | ENone (prov,_) => esuccess dnone nil
     | ESome (prov,_) e => elift dsome (ergoct_eval_expr ctxt e)
     | EArray (prov,_) es =>
       let rcoll :=
           fold_left
             (fun ls new =>
                match ls with
-               | Success _ _ ls' =>
+               | Success _ _ (ls',w1) =>
                  match ergoct_eval_expr ctxt new with
-                 | Success _ _ new' => esuccess (ls' ++ (new'::nil))
+                 | Success _ _ (new',w2) => esuccess (ls' ++ (new'::nil)) (w1 ++ w2)
                  | Failure _ _ f => efailure f
                  end
                | Failure _ _ f => efailure f
                end)
-            es (esuccess nil)
+            es (esuccess nil nil)
       in
       elift dcoll rcoll
     | EUnaryOperator (prov,_) o e =>
@@ -74,22 +74,22 @@ Section ErgoCTEval.
       eval_binary_operator_error prov o
     | EUnaryBuiltin (prov,_) o e  =>
       match ergoct_eval_expr ctxt e with
-      | Success _ _ e' =>
+      | Success _ _ (e',w1) =>
         (* TODO this takes a type hierarchy as a list of string * strings. *)
         match ergo_unary_builtin_eval nil o e' with
-        | Some r => esuccess r
+        | Some r => esuccess r w1
         | None => eval_unary_builtin_error prov o
         end
       | Failure _ _ f => efailure f
       end
     | EBinaryBuiltin (prov,_) o e1 e2 =>
       match ergoct_eval_expr ctxt e1 with
-      | Success _ _ e1' =>
+      | Success _ _ (e1',w1) =>
         match ergoct_eval_expr ctxt e2 with
-        | Success _ _ e2' =>
+        | Success _ _ (e2',w2) =>
           (* TODO this takes a type hierarchy as a list of string * strings. *)
           match ergo_binary_builtin_eval nil o e1' e2' with
-          | Some r => esuccess r
+          | Some r => esuccess r (w1 ++ w2)
           | None => eval_binary_builtin_error prov o
           end
         | Failure _ _ f => efailure f
@@ -98,14 +98,14 @@ Section ErgoCTEval.
       end
     | EIf (prov,_) c t f =>
       match ergoct_eval_expr ctxt c with
-      | Success _ _ (dbool true) => ergoct_eval_expr ctxt t
-      | Success _ _ (dbool false) => ergoct_eval_expr ctxt f
+      | Success _ _ (dbool true, _) => ergoct_eval_expr ctxt t
+      | Success _ _ (dbool false, _) => ergoct_eval_expr ctxt f
       | Success _ _ _ => eval_if_not_boolean_error prov
       | Failure _ _ f => efailure f
       end
     | ELet (prov,_) n t v e =>
       match ergoct_eval_expr ctxt v with
-      | Success _ _ v' =>
+      | Success _ _ (v',w1) =>
         let ctxt' := eval_context_update_local_env ctxt n v' in
         ergoct_eval_expr ctxt' e
       | Failure _ _ f => efailure f
@@ -117,15 +117,15 @@ Section ErgoCTEval.
                let name := fst nv in
                let value := snd nv in
                match ls with
-               | Success _ _ ls' =>
+               | Success _ _ (ls', w1) =>
                  match ergoct_eval_expr ctxt value with
                  (* TODO OpRecConcat to normalize shadowing properly *)
-                 | Success _ _ value' => esuccess (ls' ++ ((name, value')::nil))
+                 | Success _ _ (value', w2) => esuccess (ls' ++ ((name, value')::nil)) (w1++w2)
                  | Failure _ _ f => efailure f
                  end
                | Failure _ _ f => efailure f
                end)
-            rs (esuccess nil)
+            rs (esuccess nil nil)
       in
       elift drec (elift rec_sort rrec)
     (* RIP modularity *)
@@ -136,18 +136,18 @@ Section ErgoCTEval.
              let name := fst nv in
              let value := snd nv in
              match ls with
-             | Success _ _ ls' =>
+             | Success _ _ (ls',w1) =>
                match ergoct_eval_expr ctxt value with
                (* TODO OpRecConcat to normalize shadowing properly *)
-               | Success _ _ value' => esuccess (ls' ++ ((name, value')::nil))
+               | Success _ _ (value',w2) => esuccess (ls' ++ ((name, value')::nil)) (w1++w2)
                | Failure _ _ f => efailure f
                end
              | Failure _ _ f => efailure f
              end)
-          rs (esuccess nil)
+          rs (esuccess nil nil)
       with
       | Failure _ _ f => efailure f
-      | Success _ _ r => esuccess (dbrand (nr::nil) (drec (rec_sort r)))
+      | Success _ _ (r,w) => esuccess (dbrand (nr::nil) (drec (rec_sort r))) w
       end
     (* EXPECTS: no function calls in expression *)
     | ECallFun (prov,_) fname args => function_not_inlined_error prov "eval" fname
@@ -166,7 +166,7 @@ Section ErgoCTEval.
       in
       match ergoct_eval_expr ctxt term with
       | Failure _ _ f => efailure f
-      | Success _ _ dat =>
+      | Success _ _ (dat,w) =>
         fold_left
           (fun default_result pe =>
              match pe with
@@ -212,7 +212,7 @@ Section ErgoCTEval.
     | EForeach (prov,_) ((name,arr)::nil) None fn =>
       match ergoct_eval_expr ctxt arr with
       | Failure _ _ f => efailure f
-      | Success _ _ (dcoll arr') =>
+      | Success _ _ (dcoll arr', w) =>
         (elift dcoll)
           (emaplift
              (fun elt => ergoct_eval_expr (eval_context_update_local_env ctxt name elt) fn)
@@ -232,11 +232,11 @@ Section ErgoCTEval.
       elift (fun x => (dctxt, Some x)) (ergoct_eval_expr dctxt expr)
     | DCTConstant (prov,_) name ta expr =>
       let expr' := ergoct_eval_expr dctxt expr in
-      eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None)) expr'
+      eolift (fun val => esuccess (eval_context_update_global_env dctxt name val, None) nil) expr'
     | DCTFunc prov name func =>
-      esuccess (dctxt, None)
+      esuccess (dctxt, None) nil
     | DCTContract prov name contr =>
-      esuccess (dctxt, None)
+      esuccess (dctxt, None) nil
     end.
 
 End ErgoCTEval.

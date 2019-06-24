@@ -196,7 +196,7 @@ Section ErgoTypetoErgoCType.
                (decls:list laergo_type_declaration)
       : ErgoCType.tbrand_model * list laergo_type_declaration :=
       match brand_model_of_declarations decls with
-      | Success _ _ s => s
+      | Success _ _ (s,_) => s
       | Failure _ _ e => (tempty_brand_model, nil) (* Not used *)
       end.
 

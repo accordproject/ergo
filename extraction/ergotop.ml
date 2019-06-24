@@ -60,7 +60,7 @@ let rec read_nonempty_multiline () = read_chunk true
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
 let safe_init_repl_ctxt inputs =
   wrap_jerrors
-    (fun x -> x)
+    (fun x warnings-> x)
     (ErgoTopUtil.my_init_repl_context inputs)
 
 (* REPL *)
@@ -76,7 +76,7 @@ let rec repl rctxt =
              (* eval *)
              let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
-             print_string (fmt_out (wrap_jerrors Util.string_of_char_list out));
+             print_string (fmt_out (wrap_jerrors (fun x warning -> (Util.string_of_char_list x)) out));
              rctxt'
            end)
         rctxt decls
