@@ -37,28 +37,28 @@ Section ErgotoErgoC.
     | EThisContract prov =>
       match ctxt.(compilation_context_current_contract) with
       | None => use_contract_not_in_contract_error prov
-      | Some _ => esuccess (thisContract prov)
+      | Some _ => esuccess (thisContract prov) nil
       end
     | EThisClause prov => 
       match ctxt.(compilation_context_current_clause) with
       | None => not_in_clause_error prov
       | Some clause_name =>
-        esuccess (thisClause prov clause_name)
+        esuccess (thisClause prov clause_name) nil
       end
     | EThisState prov =>
-      esuccess (thisState prov)
+      esuccess (thisState prov) nil
     | EVar prov v =>
-      esuccess (EVar prov v)
+      esuccess (EVar prov v) nil
     | EConst prov d =>
-      esuccess (EConst prov d)
+      esuccess (EConst prov d) nil
     | ENone prov =>
-      esuccess (ENone prov)
+      esuccess (ENone prov) nil
     | ESome prov e =>
       elift
         (ESome prov)
         (ergo_expr_to_ergoc_expr ctxt e)
     | EArray prov el =>
-      let init_el := esuccess nil in
+      let init_el := esuccess nil nil in
       let proc_one (e:laergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
           elift2
             cons
@@ -96,7 +96,7 @@ Section ErgotoErgoC.
       then
         efailure (ECompilationError prov ("Cannot create instance of abstract type `" ++ cr ++ "'"))
       else
-        let init_rec := esuccess nil in
+        let init_rec := esuccess nil nil in
         let proc_one (att:string * laergo_expr) (acc:eresult (list (string * ergoc_expr))) :=
             let attname := fst att in
             let e := ergo_expr_to_ergoc_expr ctxt (snd att) in
@@ -104,7 +104,7 @@ Section ErgotoErgoC.
         in
         elift (ENew prov cr) (fold_right proc_one init_rec el)
     | ERecord prov el =>
-      let init_rec := esuccess nil in
+      let init_rec := esuccess nil nil in
       let proc_one (att:string * laergo_expr) (acc:eresult (list (string * ergoc_expr))) :=
           let attname := fst att in
           let e := ergo_expr_to_ergoc_expr ctxt (snd att) in
@@ -112,7 +112,7 @@ Section ErgotoErgoC.
       in
       elift (ERecord prov) (fold_right proc_one init_rec el)
     | ECallFun prov fname el =>
-      let init_el := esuccess nil in
+      let init_el := esuccess nil nil in
       let proc_one (e:laergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
           elift2
             cons
@@ -121,7 +121,7 @@ Section ErgotoErgoC.
       in
       elift (ECallFun prov fname) (fold_right proc_one init_el el)
     | ECallFunInGroup prov gname fname el =>
-      let init_el := esuccess nil in
+      let init_el := esuccess nil nil in
       let proc_one (e:laergo_expr) (acc:eresult (list ergoc_expr)) : eresult (list ergoc_expr) :=
           elift2
             cons
@@ -138,7 +138,7 @@ Section ErgotoErgoC.
                      elift (fun x => (fst ecase, x)::acc)
                            (ergo_expr_to_ergoc_expr ctxt (snd ecase))) acc
             in
-            fold_left proc_one ecases (esuccess nil)
+            fold_left proc_one ecases (esuccess nil nil)
         in
         let ecdefault := ergo_expr_to_ergoc_expr ctxt edefault in
         eolift
@@ -232,7 +232,7 @@ Section ErgotoErgoC.
       elift3 (EIf prov)
              (elift (EUnaryBuiltin prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
              (esuccess (EError prov
-                               (EConst prov (enforce_error_content prov ""))))
+                               (EConst prov (enforce_error_content prov ""))) nil)
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 (Some s2) s3 =>
       elift3 (EIf prov)
@@ -248,7 +248,7 @@ Section ErgotoErgoC.
                    elift (fun x => (fst scase, x)::acc)
                          (ergo_stmt_to_expr ctxt (snd scase))) acc
           in
-          fold_left proc_one scases (esuccess nil)
+          fold_left proc_one scases (esuccess nil nil)
       in
       let scdefault := ergo_stmt_to_expr ctxt sdefault in
       eolift
@@ -276,7 +276,7 @@ Section ErgotoErgoC.
     let response := c.(clause_sig).(type_signature_output) in
     let body :=
         match c.(clause_body) with
-        | None => esuccess None
+        | None => esuccess None nil
         | Some stmt => elift Some (ergo_stmt_to_expr ctxt stmt)
         end
     in
@@ -290,7 +290,7 @@ Section ErgotoErgoC.
     let prov := f.(function_annot) in
     let body :=
         match f.(function_body) with
-        | None => esuccess None
+        | None => esuccess None nil
         | Some e =>
           elift Some (ergo_expr_to_ergoc_expr ctxt e)
         end
@@ -328,15 +328,15 @@ Section ErgotoErgoC.
              (ctxt:compilation_context)
              (d:laergo_declaration) : eresult (list ergoc_declaration * compilation_context) :=
     match d with
-    | DNamespace prov ns => esuccess (nil, ctxt)
-    | DImport prov import => esuccess (nil, ctxt)
+    | DNamespace prov ns => esuccess (nil, ctxt) nil
+    | DImport prov import => esuccess (nil, ctxt) nil
     | DType prov ergo_type =>
       let name := ergo_type.(type_declaration_name) in
       if in_dec string_dec name (map type_declaration_name
                                      ctxt.(compilation_context_new_type_decls)) then
         efailure (ECompilationError prov ("Cannot redefine type `" ++ name ++ "'"))
       else
-        esuccess (nil, compilation_context_add_new_type_declaration ctxt ergo_type)
+        esuccess (nil, compilation_context_add_new_type_declaration ctxt ergo_type) nil
     | DStmt prov s =>
       elift
         (fun x => (x::nil, ctxt))
@@ -380,7 +380,7 @@ Section ErgotoErgoC.
                    (declaration_to_calculus ctxt d))
           acc
     in
-    fold_left proc_one dl (esuccess (nil, ctxt)).
+    fold_left proc_one dl (esuccess (nil, ctxt) nil).
 
   (** Translate a module to a module+calculus *)
   Definition ergo_module_to_calculus

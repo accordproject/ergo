@@ -80,7 +80,7 @@ Section ErgoDriver.
       eolift (fun res =>
                 let '(mls, op, ctxt) := res in
                 match op with
-                | Some p => esuccess (mls, p, ctxt)
+                | Some p => esuccess (mls, p, ctxt) nil
                 | None => no_ergo_module_error dummy_provenance
                 end) (resolve_inputs_opt inputs).
 
@@ -203,8 +203,8 @@ Section ErgoDriver.
                      let nsctxt := sctxt.(compilation_context_namespace)  in
                      match ergoc_typecheck_decl nsctxt sctxt.(compilation_context_type_ctxt) decl with
                      | Failure _ _ f => efailure f
-                     | Success _ _ (declt, tctxt') =>
-                       esuccess (declt, compilation_context_update_type_ctxt sctxt tctxt')
+                     | Success _ _ ((declt, tctxt'),w) =>
+                       esuccess (declt, compilation_context_update_type_ctxt sctxt tctxt') w
                      end)
                   (fst xy)
                   (snd xy)
@@ -366,15 +366,17 @@ Section ErgoDriver.
       let typ := ergoct_declaration_type decl in
       match ergoct_eval_decl ctxt.(repl_context_eval_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (dctxt', None) => esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt')
-      | Success _ _ (dctxt', Some out) =>
+      | Success _ _ ((dctxt', None),w) => esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt') w
+      | Success _ _ ((dctxt', Some out),w) =>
         match unpack_output out with
-        | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt')
+        | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt') w
         | Some (_, _, state) =>
           let newctxt :=
               match typ with (* XXX If we have a data, don't we also have a type ??? *)
               | None =>
-                esuccess (update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state))
+                esuccess
+                  (update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state))
+                  w
               | Some typ =>
                 elift
                   (fun ty =>
@@ -408,7 +410,7 @@ Section ErgoDriver.
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
       match ergo_declaration_to_ergoct_inlined ctxt.(repl_context_comp_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ (decls, sctxt') =>
+      | Success _ _ ((decls, sctxt'), w) =>
         let rctxt' := update_repl_ctxt_comp_ctxt ctxt sctxt' in
         ergoct_repl_eval_declarations rctxt' decls
       end.
@@ -438,7 +440,7 @@ Section ErgoDriver.
     Definition refresh_brand_model_in_comp_ctxt {bm:brand_model} (ctxt:@compilation_context bm) :
       eresult (ErgoCType.tbrand_model * @compilation_context bm) :=
       match ctxt.(compilation_context_new_type_decls) with
-      | nil => esuccess (bm, ctxt)
+      | nil => esuccess (bm, ctxt) nil
       | _ =>
         let all_decls := ctxt.(compilation_context_type_decls) ++ ctxt.(compilation_context_new_type_decls) in
         let new_bm := ErgoTypetoErgoCType.brand_model_of_declarations all_decls in

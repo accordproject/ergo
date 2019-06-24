@@ -107,14 +107,14 @@ Section ErgoCTtoErgoNNRC.
     | EThisState (prov,_) => state_in_calculus_error prov (* XXX We should prove it never happens *)
     | EVar (prov,_) v =>
       if in_dec string_dec v env
-      then esuccess (NNRCGetConstant v)
-      else esuccess (NNRCVar v)
+      then esuccess (NNRCGetConstant v) nil
+      else esuccess (NNRCVar v) nil
     | EConst (prov,_) d =>
-      esuccess (NNRCConst d)
-    | ENone (prov,_) => esuccess (NNRCConst dunit) (* XXX Not safe ! *)
+      esuccess (NNRCConst d) nil
+    | ENone (prov,_) => esuccess (NNRCConst dunit) nil (* XXX Not safe ! *)
     | ESome (prov,_) e => ergoct_expr_to_nnrc env e (* XXX Not safe ! *)
     | EArray (prov,_) el =>
-      let init_el := esuccess nil in
+      let init_el := esuccess nil nil in
       let proc_one (e:ergo_expr) (acc:eresult (list nnrc_expr)) : eresult (list nnrc_expr) :=
           elift2
             cons
@@ -147,7 +147,7 @@ Section ErgoCTtoErgoNNRC.
               (ergoct_expr_to_nnrc env e1)
               (ergoct_expr_to_nnrc env e2)
     | ENew (prov,_) cr nil =>
-      esuccess (new_expr cr (NNRCConst (drec nil)))
+      esuccess (new_expr cr (NNRCConst (drec nil))) nil
     | ENew (prov,_) cr ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           elift (NNRCUnop (OpRec s0)) (ergoct_expr_to_nnrc env init)
@@ -160,7 +160,7 @@ Section ErgoCTtoErgoNNRC.
       in
       elift (new_expr cr) (fold_left proc_one rest init_rec)
     | ERecord (prov,_) nil =>
-      esuccess (NNRCConst (drec nil))
+      esuccess (NNRCConst (drec nil)) nil
     | ERecord (prov,_) ((s0,init)::rest) =>
       let init_rec : eresult nnrc :=
           elift (NNRCUnop (OpRec s0)) (ergoct_expr_to_nnrc env init)
@@ -183,7 +183,7 @@ Section ErgoCTtoErgoNNRC.
                    elift (fun x => (fst ecase, x)::acc)
                          (ergoct_expr_to_nnrc env (snd ecase))) acc
           in
-          fold_left proc_one ecases (esuccess nil)
+          fold_left proc_one ecases (esuccess nil nil)
       in
       let ecdefault := ergoct_expr_to_nnrc env edefault in
       eolift
@@ -208,7 +208,7 @@ Section ErgoCTtoErgoNNRC.
                            acc
                      in
                      let eccases_folded : eresult nnrc_expr :=
-                         fold_left proc_one_case eccases (esuccess ecdefault)
+                         fold_left proc_one_case eccases (esuccess ecdefault nil)
                      in
                      elift (NNRCLet v0 ec0) eccases_folded)
                   ecdefault) eccases) ec0
@@ -249,7 +249,7 @@ Section ErgoCTtoErgoNNRC.
   Definition contractct_to_nnrc
              (cn:local_name)
              (c:ergoct_contract) : eresult nnrc_function_table :=
-    let init := esuccess nil in
+    let init := esuccess nil nil in
     let proc_one
           (acc:eresult (list nnrc_function))
           (s:absolute_name * ergoct_function)
@@ -287,7 +287,7 @@ Section ErgoCTtoErgoNNRC.
   (** Translate a module to a module+calculus *)
   Definition declarationsct_calculus_with_table (dl:list ergoct_declaration)
     : eresult (list nnrc_declaration) :=
-    let init := esuccess nil in
+    let init := esuccess nil nil in
     let proc_one
           (acc:eresult (list nnrc_declaration))
           (s:ergoct_declaration)

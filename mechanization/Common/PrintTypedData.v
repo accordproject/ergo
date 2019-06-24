@@ -32,7 +32,7 @@ Section PrintTypedData.
     | None => "~" ++ b
     | Some local_name =>
       match resolve_type_name dummy_provenance nsctxt (None,local_name) with
-      | Success _ _ resolved_b =>
+      | Success _ _ (resolved_b,_) =>
         if string_dec resolved_b b
         then
           local_name
@@ -296,7 +296,7 @@ Section PrintTypedData.
             | None =>  None
             | Some typ =>
               match unpack_failure_type nsctxt typ with
-              | Success _ _ f => Some f
+              | Success _ _ (f,_) => Some f
               | Failure _ _ _ => None
               end
             end
@@ -310,7 +310,7 @@ Section PrintTypedData.
               | None =>  (None, None, None)
               | Some typ =>
                 match unpack_success_type nsctxt typ with
-                | Success _ _ (r,e,s) => (Some r, Some e, Some s)
+                | Success _ _ ((r,e,s),_) => (Some r, Some e, Some s)
                 | Failure _ _ _ => (None, None, None)
                 end
               end

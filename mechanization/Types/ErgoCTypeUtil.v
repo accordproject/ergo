@@ -34,13 +34,13 @@ Section ErgoCTypeUtil.
     let jt := ergoc_type_join t1 t2 in
     if ergoc_type_subtype_dec ttop jt
     then efailure (ETypeError prov ("Join between types is TOP.")%string)
-    else esuccess jt.
+    else esuccess jt nil.
 
   Definition ergoc_type_meet_safe prov (t1 t2:ergoc_type) : eresult ergoc_type :=
     let jt := ergoc_type_meet t1 t2 in
     if ergoc_type_subtype_dec jt tbottom
     then efailure (ETypeError prov ("Meet between types is BOTTOM.")%string)
-    else esuccess jt.
+    else esuccess jt nil.
 
   Program Definition empty_rec_type : ergoc_type := Rec Closed nil _.
 

@@ -48,7 +48,7 @@ Section ErgoCInline.
   Definition ergo_inline_foreach' (ctxt : compilation_context) (expr : ergo_expr) :=
     match expr with
     | EForeach prov rs whr fn =>
-      (compose Some esuccess)
+      (compose Some (fun x => esuccess x nil))
         (fold_right
            (fun rcd ker => (EUnaryBuiltin prov OpFlatten) (EForeach prov (rcd::nil) whr ker))
            (match whr with
@@ -82,10 +82,10 @@ Section ErgoCInline.
           match lookup String.string_dec ergoc_stdlib fname with
           | Some fn =>
             let fn := fn prov in
-            esuccess (fn.(functionc_body), discard_param_types fn.(functionc_sig).(sigc_params))
+            esuccess (fn.(functionc_body), discard_param_types fn.(functionc_sig).(sigc_params)) nil
           | None => built_in_function_not_found_error prov fname
           end
-        | Some _ => esuccess (fn.(functionc_body), keep_param_types fn.(functionc_sig).(sigc_params))
+        | Some _ => esuccess (fn.(functionc_body), keep_param_types fn.(functionc_sig).(sigc_params)) nil
         end
     in
     eolift
@@ -96,7 +96,7 @@ Section ErgoCInline.
          | Some body =>
            match zip fnparams args with
            | Some args' =>
-             esuccess (ergo_letify_function' (ProvFunc (loc_of_provenance prov) fname) body args')
+             esuccess (ergo_letify_function' (ProvFunc (loc_of_provenance prov) fname) body args') nil
            | None =>
              call_params_error prov fname
            end
@@ -130,14 +130,14 @@ Section ErgoCInline.
     match expr with
     | EVar loc name => Some
       match lookup String.string_dec (ctxt.(compilation_context_local_env)) name with
-      | Some _ => esuccess expr
+      | Some _ => esuccess expr nil
       | None =>
         if in_dec String.string_dec name (ctxt.(compilation_context_params_env))
-        then esuccess expr
+        then esuccess expr nil
         else
           match lookup String.string_dec (ctxt.(compilation_context_global_env)) name with
-          | Some val => esuccess val
-          | None => esuccess expr
+          | Some val => esuccess val nil
+          | None => esuccess expr nil
           end
       end
     | _ => None
@@ -150,13 +150,13 @@ Section ErgoCInline.
     let params := map fst fn.(functionc_sig).(sigc_params) in
     let ctxt := compilation_context_set_params_env ctxt params in
     match fn.(functionc_body) with
-    | None => esuccess fn
+    | None => esuccess fn nil
     | Some expr =>
       match eolift (ergo_inline_expr ctxt) (ergo_inline_globals ctxt expr) with
-      | Success _ _ new_body =>
+      | Success _ _ (new_body,w) =>
         esuccess (mkFuncC fn.(functionc_annot)
                                fn.(functionc_sig)
-                                    (Some new_body))
+                                    (Some new_body)) w
       | Failure _ _ f => efailure f
       end
     end.

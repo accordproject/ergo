@@ -59,6 +59,7 @@ Module ErgoCompiler.
 
   (** Results *)
   Definition eerror : Set := Result.eerror.
+  Definition ewarning : Set := Result.ewarning.
   Definition system_error : provenance -> String.string -> eerror := Result.ESystemError.
   Definition parse_error : provenance -> String.string -> eerror := Result.EParseError.
   Definition compilation_error : provenance -> String.string -> eerror := Result.ECompilationError.
@@ -66,7 +67,7 @@ Module ErgoCompiler.
   Definition runtime_error : provenance -> String.string -> eerror := Result.ERuntimeError.
 
   Definition eresult (A:Set) : Set := Result.eresult A.
-  Definition esuccess (A:Set) : A -> eresult A := Result.esuccess.
+  Definition esuccess (A:Set) : A -> list ewarning -> eresult A := Result.esuccess.
   Definition efailure (A:Set) : eerror -> eresult A := Result.efailure.
 
   Definition result_file : Set := ErgoNNRC.result_file.

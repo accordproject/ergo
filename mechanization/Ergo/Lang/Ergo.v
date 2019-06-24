@@ -244,7 +244,7 @@ Section Ergo.
                (prov:provenance) (dl:list laergo_declaration) : eresult (absolute_name * laergo_contract) :=
       match lookup_contracts_in_declarations dl with
       | nil => should_have_one_contract_error prov
-      | c :: nil => esuccess c
+      | c :: nil => esuccess c nil
       | _ :: _ => should_have_one_contract_error prov
       end.
 

@@ -164,7 +164,7 @@ let process_file f (file_name, file_content) =
 let wrap_jerrors f e =
   begin match e with
   | Failure e -> ergo_raise e
-  | Success x -> f x
+  | Success (x,w) -> f x w
   end
 
 (** Ergo call *)
