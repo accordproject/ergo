@@ -59,17 +59,6 @@ class FunctionDeclaration {
     }
 
     /**
-     * Visitor design pattern
-     * @param {Object} visitor - the visitor
-     * @param {Object} parameters  - the parameter
-     * @return {Object} the result of visiting or null
-     * @private
-     */
-    accept(visitor,parameters) {
-        return visitor.visit(this, parameters);
-    }
-
-    /**
      * Returns the text of this function.
      *
      * @return {string} the text that defines the function
