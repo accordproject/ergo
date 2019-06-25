@@ -23,6 +23,7 @@ val error_kind : eerror -> string
 val error_message : eerror -> string
 val error_loc_start : eerror -> location_point
 val error_loc_end : eerror -> location_point
+val error_loc_file : eerror -> string option
 
 (** [ergo_system_error msg] *)
 val ergo_system_error : string -> eerror

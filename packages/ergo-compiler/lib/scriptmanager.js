@@ -14,9 +14,12 @@
 
 'use strict';
 
-const ErgoError = require('./ergoerror');
 const ErgoCompiler = require('./compiler');
 const Script = require('./script');
+const CompilerException = require('./compilerexception');
+const TypeException = require('./typeexception');
+const ParseException = require('composer-concerto').ParseException;
+const SystemException = require('./systemexception');
 
 /**
  * <p>
@@ -271,6 +274,39 @@ class ScriptManager {
     }
 
     /**
+     * Throw the right kind of error
+     * @param {object} error - Ergo compiler error
+     * @throws {BaseFileException}
+     */
+    throwCompilerException(error) {
+        let fileLocation = {};
+
+        // Convert from Ergo file location to Concerto file location
+        fileLocation.start = {
+            line: error.locstart.line,
+            column: error.locstart.column
+        };
+        fileLocation.end = {
+            line: error.locend.line,
+            column: error.locend.column
+        };
+
+        if (error.kind === 'SystemError') {
+            throw new SystemException(error.message, fileLocation, error.fullMessage, error.fileName);
+        }
+        if (error.kind === 'ParseError') {
+            // HACK!
+            const pErr = new ParseException(error.message, fileLocation, error.fileName, 'ergo-compiler');
+            pErr.message = error.fullMessage;
+            throw pErr;
+        } else if (error.kind === 'TypeError') {
+            throw new TypeException(error.message, fileLocation, error.fullMessage, error.fileName);
+        } else {
+            throw new CompilerException(error.message, fileLocation, error.fullMessage, error.fileName);
+        }
+    }
+
+    /**
      * Compile the Ergo logic
      * @param {boolean} force - whether to force recompilation of the logic
      * @return {object} The script compiled to JavaScript
@@ -292,7 +328,7 @@ class ScriptManager {
             const link = this.target === 'java' ? false : true;
             const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.target,link, this.warnings);
             if (compiledErgo.hasOwnProperty('error')) {
-                throw new ErgoError(compiledErgo.error);
+                this.throwCompilerException(compiledErgo.error);
             }
             this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success, compiledErgo.contractName);
         }

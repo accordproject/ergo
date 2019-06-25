@@ -14,7 +14,6 @@
 
 'use strict';
 
-const ErgoError = require('../lib/ergoerror');
 const ErgoCompiler = require('../lib/compiler');
 const TemplateLogic = require('../lib/templatelogic');
 
@@ -32,6 +31,8 @@ const ctoSample3 = fs.readFileSync('./test/data/test3.cto','utf8');
 const ergoSample = fs.readFileSync('./test/data/test.ergo', 'utf8');
 const ergoSample2 = fs.readFileSync('./test/data/test2.ergo', 'utf8');
 const ergoSample3 = fs.readFileSync('./test/data/test3.ergo', 'utf8');
+const ergoSample4 = fs.readFileSync('./test/data/test4.ergo', 'utf8');
+const ergoSample5 = fs.readFileSync('./test/data/test5.ergo', 'utf8');
 const jsSample = fs.readFileSync('./test/data/test.js', 'utf8');
 const jsSample2 = fs.readFileSync('./test/data/test2.js', 'utf8');
 
@@ -123,20 +124,60 @@ describe('TemplateLogic', () => {
             try {
                 templateLogic.compileLogicSync(false);
             } catch (error) {
-                expect(error instanceof ErgoError).to.equal(true);
+                expect(error.name).to.equal('ParseException');
                 expect(error.message).to.equal('Parse error (at file test2.ergo line 33 col 0). \n\n');
-                expect(error.descriptor).to.deep.equal({
-                    'kind': 'ParseError',
-                    'locend': {
-                        'character': 0,
+                expect(error.fileLocation).to.deep.equal({
+                    'end': {
+                        'column': 0,
                         'line': 33
                     },
-                    'locstart': {
-                        'character': 0,
+                    'fileName': 'test2.ergo',
+                    'start': {
+                        'column': 0,
                         'line': 33
+                    }
+                });
+            }
+        });
+
+        it('should fail to load a logic file with a type error to the script manager', () => {
+            const templateLogic = new TemplateLogic('cicero');
+            templateLogic.addLogicFile(ergoSample4,'test4.ergo');
+            try {
+                templateLogic.compileLogicSync(false);
+            } catch (error) {
+                expect(error.name).to.equal('TypeException');
+                expect(error.message).to.equal('Type error (at file test4.ergo line 30 col 32). This operator received unexpected arguments of type `String\'  and `String\'.\n     return MyResponse{ output: "Hello " ++ contract.name ++ " (" ++ request.input + ")" }\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ');
+                expect(error.fileLocation).to.deep.equal({
+                    'end': {
+                        'column': 88,
+                        'line': 30
                     },
-                    'message': 'Parse error',
-                    'verbose': 'Parse error (at file test2.ergo line 33 col 0). \n\n'
+                    'start': {
+                        'column': 32,
+                        'line': 30
+                    }
+                });
+            }
+        });
+
+        it('should fail to load a logic file with a compilation error to the script manager', () => {
+            const templateLogic = new TemplateLogic('cicero');
+            templateLogic.addLogicFile(ergoSample5,'test5.ergo');
+            try {
+                templateLogic.compileLogicSync(false);
+            } catch (error) {
+                expect(error.name).to.equal('CompilerException');
+                expect(error.message).to.equal('Compilation error (at file test5.ergo line 4 col 7). Import not found: NOTTHERE\nimport NOTTHERE.*\n       ^^^^^^^^^^');
+                expect(error.fileLocation).to.deep.equal({
+                    'end': {
+                        'column': 17,
+                        'line': 4
+                    },
+                    'start': {
+                        'column': 7,
+                        'line': 4
+                    }
                 });
             }
         });
@@ -156,23 +197,7 @@ describe('TemplateLogic', () => {
         it('should fail to load a bogus logic file to the script manager (async)', () => {
             const templateLogic = new TemplateLogic('cicero');
             templateLogic.addLogicFile(ergoSample2,'test2.ergo');
-            templateLogic.compileLogic(false).catch((error) => {
-                expect(error instanceof ErgoError).to.equal(true);
-                expect(error.message).to.equal('Parse error (at file test2.ergo line 33 col 0). \n\n');
-                expect(error.descriptor).to.deep.equal({
-                    'kind': 'ParseError',
-                    'locend': {
-                        'character': 0,
-                        'line': 33
-                    },
-                    'locstart': {
-                        'character': 0,
-                        'line': 33
-                    },
-                    'message': 'Parse error',
-                    'verbose': 'Parse error (at file test2.ergo line 33 col 0). \n\n'
-                });
-            });
+            expect(templateLogic.compileLogic(false)).to.be.eventually.rejectedWith(Error, 'Parse error (at file test2.ergo line 33 col 0). \n\n').and.have.property('name', 'ParseException');
         });
 
         it('should load a logic file to the script manager (with Ergo builtin)', () => {

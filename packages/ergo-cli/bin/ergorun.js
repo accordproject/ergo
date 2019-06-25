@@ -74,7 +74,8 @@ require('yargs')
                 Logger.info(JSON.stringify(result));
             })
             .catch((err) => {
-                Logger.error(err.message + ' ' + JSON.stringify(err));
+                Logger.error(err.message);
+                Logger.error(JSON.stringify(err));
             });
     })
     .command('invoke', 'invoke a clause for an Ergo contract', (yargs) => {
@@ -131,7 +132,8 @@ require('yargs')
                 Logger.info(JSON.stringify(result));
             })
             .catch((err) => {
-                Logger.error(err.message + ' ' + JSON.stringify(err));
+                Logger.error(err.message);
+                Logger.error(JSON.stringify(err));
             });
     })
     .command('init', 'invoke init for an Ergo contract', (yargs) => {
@@ -181,7 +183,8 @@ require('yargs')
                 Logger.info(JSON.stringify(result));
             })
             .catch((err) => {
-                Logger.error(err.message + ' ' + JSON.stringify(err));
+                Logger.error(err.message);
+                Logger.error(JSON.stringify(err));
             });
     })
     .option('verbose', {

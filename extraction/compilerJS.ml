@@ -74,28 +74,36 @@ let wrap_all wrap_f l =
 let json_loc_of_loc loc =
   object%js
     val line = loc.line
-    val character = loc.column
+    val column = loc.column
   end
 
 let json_loc_missing () = json_loc_of_loc dummy_location.loc_start
+
+let json_loc_file f =
+  begin match f with
+  | None -> Js.null
+  | Some file -> Js.some (Js.string file)
+  end
 
 let json_of_ergo_error gconf error =
   let source_table = ErgoConfig.get_source_table gconf in
   object%js
     val kind = Js.string (error_kind error)
     val message= Js.string (error_message error)
+    val fileName = json_loc_file (error_loc_file error)
     val locstart = json_loc_of_loc (error_loc_start error)
     val locend = json_loc_of_loc (error_loc_end error)
-    val verbose= Js.string (string_of_error_with_table source_table error)
+    val fullMessage = Js.string (string_of_error_with_table source_table error)
   end
 
 let json_of_ergo_success () =
   object%js
     val kind = Js.string ""
     val message= Js.string ""
+    val fileName = Js.null
     val locstart = json_loc_missing ()
     val locend = json_loc_missing ()
-    val verbose = Js.string ""
+    val fullMessage = Js.string ""
   end
 
 let json_of_result res warnings =

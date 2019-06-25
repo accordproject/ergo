@@ -66,25 +66,25 @@ describe('ergo-compiler', () => {
             const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
             result.error.kind.should.equal('ParseError');
             result.error.message.should.equal('Parse error');
-            result.error.locstart.should.deep.equal({ 'line' : 17, 'character' : 20 });
-            result.error.locend.should.deep.equal({ 'line' : 17, 'character' : 23 });
+            result.error.locstart.should.deep.equal({ 'line' : 17, 'column' : 20 });
+            result.error.locend.should.deep.equal({ 'line' : 17, 'column' : 23 });
         });
     });
     describe('#parseerrormessage', function () {
         it('should format parse error', async function () {
-            const result = await ErgoCompiler.ergoErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'verbose' : 'Parse error (at file ./test/examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } });
+            const result = await ErgoCompiler.ergoErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'fullMessage' : 'Parse error (at file ./test/examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'column' : 25 }, 'locend' : { 'line' : 16, 'column' : 26 } });
             result.should.deep.equal('Parse error');
         });
     });
     describe('#verboseparseerrormessage', function () {
-        it('should format verbose parse error', async function () {
-            const result = await ErgoCompiler.ergoVerboseErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'verbose' : 'Parse error (at file ./test/examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'character' : 25 }, 'locend' : { 'line' : 16, 'character' : 26 } });
+        it('should format fullMessage parse error', async function () {
+            const result = await ErgoCompiler.ergoVerboseErrorToString({ 'kind' : 'ParseError', 'message' : 'Parse error', 'fullMessage' : 'Parse error (at file ./test/examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ', 'locstart' : { 'line' : 16, 'column' : 25 }, 'locend' : { 'line' : 16, 'column' : 26 } });
             result.should.deep.equal('Parse error (at file ./test/examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                ');
         });
     });
     describe('#compilationerrormessage', function () {
         it('should format compilation error', async function () {
-            const result = await ErgoCompiler.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } });
+            const result = await ErgoCompiler.ergoErrorToString({ 'kind' : 'CompilationError', 'message' : 'Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'column' : -1 }, 'locend' : { 'line' : -1, 'column' : -1 } });
             result.should.deep.equal('Import not found: org.accordproject.test');
         });
     });
@@ -147,7 +147,7 @@ describe('ergo-compiler', () => {
             const ctoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
-            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.test', 'verbose' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
+            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'fileName': null, 'message': 'Import not found: org.accordproject.test', 'fullMessage' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'column' : -1 }, 'locend' : { 'line' : -1, 'column' : -1 } } });
         });
     });
     describe('#compilelatedeliveryandlinkfail', function () {
@@ -157,7 +157,7 @@ describe('ergo-compiler', () => {
             const ctoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', true);
-            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'message': 'Import not found: org.accordproject.test', 'verbose' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'character' : -1 }, 'locend' : { 'line' : -1, 'character' : -1 } } });
+            result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'fileName': null, 'message': 'Import not found: org.accordproject.test', 'fullMessage' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'column' : -1 }, 'locend' : { 'line' : -1, 'column' : -1 } } });
         });
     });
     describe('#parsecto', function () {
