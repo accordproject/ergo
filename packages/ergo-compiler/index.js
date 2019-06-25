@@ -23,7 +23,8 @@ module.exports.ComposerConcerto = require('composer-concerto');
 
 module.exports.Logger = require('./lib/logger.js');
 module.exports.Util = require('./lib/util.js');
-module.exports.ErgoError = require('./lib/ergoerror.js');
+module.exports.CompilerException = require('./lib/compilerexception.js');
+module.exports.TypeException = require('./lib/typeexception.js');
 module.exports.APModelManager = require('./lib/apmodelmanager.js');
 module.exports.ScriptManager = require('./lib/scriptmanager.js');
 module.exports.Compiler = require('./lib/compiler.js');

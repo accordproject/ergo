@@ -41,6 +41,11 @@ let ergo_runtime_error msg filename start_pos end_pos =
 let ergo_raise error =
   raise (Ergo_Error error)
 
+let file_of_provenance prov =
+  let loc = loc_of_provenance prov in
+  let file = Util.string_of_char_list loc.loc_file in
+  if file = "" || file = "stdin" then None else Some file
+
 let error_kind error =
   begin match error with
   | ESystemError (_,_) -> "SystemError"
@@ -61,22 +66,20 @@ let error_message error =
     end
   in string_of_char_list msg
 
+let error_prov error =
+  begin match error with
+  | ESystemError (prov,_) -> prov
+  | EParseError (prov,_) -> prov
+  | ECompilationError (prov,_) -> prov
+  | ETypeError (prov,_) -> prov
+  | ERuntimeError (prov,_) -> prov
+  end
 let error_loc_start error =
-  begin match error with
-  | ESystemError (loc,_) -> (loc_of_provenance loc).loc_start
-  | EParseError (prov,_) -> (loc_of_provenance prov).loc_start
-  | ECompilationError (prov,_) -> (loc_of_provenance prov).loc_start
-  | ETypeError (prov,_) -> (loc_of_provenance prov).loc_start
-  | ERuntimeError (prov,_) -> (loc_of_provenance prov).loc_start
-  end
+  (loc_of_provenance (error_prov error)).loc_start
 let error_loc_end error =
-  begin match error with
-  | ESystemError (prov,_) -> (loc_of_provenance prov).loc_end
-  | EParseError (prov,_) -> (loc_of_provenance prov).loc_end
-  | ECompilationError (prov,_) -> (loc_of_provenance prov).loc_end
-  | ETypeError (prov,_) -> (loc_of_provenance prov).loc_end
-  | ERuntimeError (prov,_) -> (loc_of_provenance prov).loc_end
-  end
+  (loc_of_provenance (error_prov error)).loc_end
+let error_loc_file error =
+  file_of_provenance (error_prov error)
 
 let underline_prov source prov =
   begin try
@@ -96,14 +99,16 @@ let underline_prov source prov =
   | _ -> ""
   end
 
-let no_file file =
-  file = "" || file = "stdin"
-
 let string_of_error_prov prov =
   let loc = loc_of_provenance prov in
+  let file_part =
+    begin match file_of_provenance prov with
+    | None -> ""
+    | Some file -> "file " ^ file ^ " "
+    end
+  in
   let error_message = 
-    let file = Util.string_of_char_list loc.loc_file in
-    (if no_file file then "" else "file " ^ file ^ " ") ^
+    file_part ^
     (if (loc.loc_start.line != -1 && loc.loc_start.column != -1)
      then
        "line " ^ (string_of_int loc.loc_start.line)

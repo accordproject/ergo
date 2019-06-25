@@ -127,7 +127,7 @@ class Compiler {
      * @returns {string} verbose error message
      */
     static ergoVerboseErrorToString(error) {
-        return error.verbose;
+        return error.fullMessage;
     }
 
 
