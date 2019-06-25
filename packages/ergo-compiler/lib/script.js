@@ -87,17 +87,6 @@ class Script {
     }
 
     /**
-     * Visitor design pattern
-     * @param {Object} visitor - the visitor
-     * @param {Object} parameters  - the parameter
-     * @return {Object} the result of visiting or null
-     * @private
-     */
-    accept(visitor,parameters) {
-        return visitor.visit(this, parameters);
-    }
-
-    /**
      * Returns the identifier of the script
      * @return {string} the identifier of the script
      */

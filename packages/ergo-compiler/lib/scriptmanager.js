@@ -50,17 +50,6 @@ class ScriptManager {
     }
 
     /**
-     * Visitor design pattern
-     * @param {Object} visitor - the visitor
-     * @param {Object} parameters  - the parameter
-     * @return {Object} the result of visiting or null
-     * @private
-     */
-    accept(visitor,parameters) {
-        return visitor.visit(this, parameters);
-    }
-
-    /**
      * Change the compilation target. Note: This might force recompilation if logic has already been compiled.
      * @param {String} target - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
      * @param {boolean} recompile - whether to force recompilation of the logic

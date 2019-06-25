@@ -16,7 +16,8 @@ namespace org.accordproject.volumediscount
 
 contract VolumeDiscount over VolumeDiscountContract {
    // Clause for volume discount
-   clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
+	clause volumediscount(request : VolumeDiscountRequest) : VolumeDiscountResponse {
+		enforce true;
     if request.netAnnualChargeVolume < contract.firstVolume
     then return VolumeDiscountResponse{ discountRate: contract.firstRate }
     else if request.netAnnualChargeVolume < contract.secondVolume

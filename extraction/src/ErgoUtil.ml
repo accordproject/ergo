@@ -94,6 +94,7 @@ let underline_prov source prov =
            then '^'
            else ' ')
     in
+    let line = Re.Str.global_replace (Re.Str.regexp "\t") " " line in
     "\n" ^ line ^ "\n" ^ underline
   with
   | _ -> ""
