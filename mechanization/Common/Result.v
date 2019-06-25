@@ -57,39 +57,55 @@ Section Result.
         (fun xw : (A * list ewarning) =>
            let (x,w) := xw in
            (f x, w)) a.
+    Definition elift_warning {A B:Set} (f:A * list ewarning -> B) (a:eresult A) : eresult B :=
+      lift_failure_in
+        (fun xw : (A * list ewarning) =>
+           (f xw, snd xw)) a.
     Definition elift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
-      lift_failure_in_two
-        (fun xw1 : (A * list ewarning) =>
-           fun xw2 : (B * list ewarning) =>
-             let (x1,w1) := xw1 in
-             let (x2,w2) := xw2 in
-             (f x1 x2, w1 ++ w2)) a b.
+      eolift (fun x => elift (fun y => f x y) b) a.
     Definition elift3 {A B C D:Set} (f:A -> B -> C -> D)
                (a:eresult A) (b:eresult B) (c:eresult C) : eresult D :=
-      lift_failure_in_three
-        (fun xw1 : (A * list ewarning) =>
-           fun xw2 : (B * list ewarning) =>
-             fun xw3 : (C * list ewarning) =>
-               let (x1,w1) := xw1 in
-               let (x2,w2) := xw2 in
-               let (x3,w3) := xw3 in
-               (f x1 x2 x3, w1 ++ w2 ++ w3)) a b c.
+      eolift (fun x => elift2 (fun y z => f x y z) b c) a.
     Definition elift4 {A B C D E:Set} (f:A -> B -> C -> D -> E)
                (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) : eresult E :=
-      eolift (fun x => elift (fun g => g x) (elift3 f a b c)) d.
+      eolift (fun x => elift3 (fun y z xx => f x y z xx) b c d) a.
     Definition elift5 {A B C D E F:Set} (f:A -> B -> C -> D -> E -> F)
                (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) (e:eresult E) : eresult F :=
-      eolift (fun x => elift (fun g => g x) (elift4 f a b c d)) e.
+      eolift (fun x => elift4 (fun y z xx yy => f x y z xx yy) b c d e) a.
 
     Fixpoint emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
       let init_bl := Success (list B * list ewarning) _ (nil, nil) in
       let proc_one := fun (a : A) (acc : eresult (list B)) => elift2 cons (f a) acc in
       fold_right proc_one init_bl al.
 
-    (* XXX Those don't process warnings *)
-    Definition eresult_of_option {A:Set} (a:option A) (e:eerror) : eresult A :=
-      result_of_option (lift (fun x => (x,nil)) a) e.
+    (* Fold-left over functions returning eresults *)
+    Definition elift_fold_left {A:Set} {B:Set}
+               (f : A -> B -> eresult A) (l:list B) (a:A) : eresult A :=
+      let proc_one (acc:eresult A) (x:B)
+          : eresult A :=
+          eolift (fun acc => f acc x) acc
+      in
+      fold_left proc_one l (esuccess a nil).
 
+    (* Variant of Fold-left for functions passing eresults with a context *)
+    Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
+               (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
+      elift_fold_left
+        (fun acc c =>
+           elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
+        l
+        (nil, c).
+
+    Definition eflatmaplift {A B:Set} (f:A -> eresult (list B)) (al:list A) : eresult (list B) :=
+      elift_fold_left
+        (fun acc c =>
+           elift (fun mc => acc ++ mc) (f c))
+        al nil.
+
+    Definition eresult_of_option {A:Set} (a:option A) (e:eerror) (warnings:list ewarning) : eresult A :=
+      result_of_option (lift (fun x => (x,warnings)) a) e.
+
+    (* XXX Those don't process warnings *)
     Definition elift_both {A B:Set} (f: A -> B) (g:eerror -> B) (a:eresult A) : B :=
       match a with
       | Success _ _ (s,_) => f s
@@ -115,30 +131,6 @@ Section Result.
       | Failure _ _ f => efailure f
       | Success _ _ (s,_) => s
       end.
-
-    (* Fold-left over functions returning eresults *)
-    Definition elift_fold_left {A:Set} {B:Set}
-               (f : A -> B -> eresult A) (l:list B) (a:A) : eresult A :=
-      let proc_one (acc:eresult A) (x:B)
-          : eresult A :=
-          eolift (fun acc => f acc x) acc
-      in
-      fold_left proc_one l (esuccess a nil).
-
-    (* Variant of Fold-left for functions passing eresults with a context *)
-    Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
-               (f : C -> A -> eresult (B * C)) (l:list A) (c:C) : eresult (list B * C) :=
-      elift_fold_left
-        (fun acc c =>
-           elift (fun mc => ((fst acc)++((fst mc)::nil), snd mc)) (f (snd acc) c))
-        l
-        (nil, c).
-
-    Definition eflatmaplift {A B:Set} (f:A -> eresult (list B)) (al:list A) : eresult (list B) :=
-      elift_fold_left
-        (fun acc c =>
-           elift (fun mc => acc ++ mc) (f c))
-        al nil.
 
     Section qcert.
       Definition eerror_of_qerror (prov:provenance) (qe:qerror) :=
@@ -306,4 +298,14 @@ Section Result.
     Definition duplicate_clause_for_request_check prov (l:list string) (succ:A) : eresult A :=
       no_duplicates_with_err l succ (duplicate_clause_for_request_error prov).
   End Duplicates.
+
+
+  Section warnings.
+    Definition string_of_warning (w:ewarning) : string :=
+      match w with
+      | EWarning prov msg => msg
+      end.
+    Definition print_warnings {A:Set} (prefix:string) (x:eresult A) : eresult A :=
+      elift_warning (fun xy => coq_print_warnings prefix (List.map string_of_warning (snd xy)) (fst xy)) x.
+  End warnings.
 End Result.

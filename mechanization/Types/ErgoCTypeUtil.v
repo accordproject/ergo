@@ -188,8 +188,8 @@ Section ErgoCTypeUtil.
         nsctxt name "respond" "responds" actual_resp expected_resp.
 
   Definition ergo_format_clause_return_error nsctxt (name:string) (actual expected:ergoc_type) : string :=
-    let actual_quad := unpack_output_type nsctxt actual in
-    let expected_quad := unpack_output_type nsctxt expected in
+    let actual_quad := unpack_output_type nsctxt actual nil in
+    let expected_quad := unpack_output_type nsctxt expected nil in
     let normal_error := ergo_format_clause_return_normal_error nsctxt name actual expected in
     let fallback_error := fun e => ergo_format_clause_return_fallback_error nsctxt name actual expected in
     elift2_both

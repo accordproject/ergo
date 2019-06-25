@@ -98,7 +98,7 @@ let json_of_ergo_success () =
     val verbose = Js.string ""
   end
 
-let json_of_result res =
+let json_of_result res warnings =
   object%js
     val error = json_of_ergo_success ()
     val result = Js.string res
@@ -106,7 +106,7 @@ let json_of_result res =
     val contractName = Js.null
   end
 
-let json_of_result_with_contract_name cn res =
+let json_of_result_with_contract_name cn res warnings =
   object%js
     val error = json_of_ergo_success ()
     val result = Js.string res
@@ -128,11 +128,11 @@ let ergo_compile input =
     let gconf = global_config_of_json gconf input in
     let target_lang = ErgoConfig.get_target_lang gconf in
     let all_modules = ErgoConfig.get_all_sorted gconf in
-    let (contract_name,file,res) = ErgoCompile.ergo_compile target_lang all_modules in
+    let (contract_name,file,res,warnings) = ErgoCompile.ergo_compile target_lang all_modules in
     let res = ErgoCompile.ergo_link gconf res in
     begin match contract_name with
-    | None -> json_of_result res
-    | Some cn -> json_of_result_with_contract_name cn res
+    | None -> json_of_result res warnings
+    | Some cn -> json_of_result_with_contract_name cn res warnings
     end
   with
   | Ergo_Error error -> json_of_error gconf error

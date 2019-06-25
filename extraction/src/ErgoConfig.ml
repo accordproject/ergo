@@ -85,6 +85,7 @@ type global_config = {
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
   mutable econf_link : bool;
+  mutable econf_warnings : bool;
 }
 
 let empty_config () = {
@@ -94,6 +95,7 @@ let empty_config () = {
   econf_ctos = [];
   econf_modules = [];
   econf_link = false;
+  econf_warnings = false;
 } 
 
 let get_source_lang gconf = gconf.econf_source
@@ -159,4 +161,7 @@ let default_config () =
         (ErgoUtil.string_of_error_with_table [] error);
       exit 2
   end
+
+let set_warnings gconf () =
+  gconf.econf_warnings <- true
 

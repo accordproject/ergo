@@ -43,7 +43,8 @@ Section ErgoCompContext.
         compilation_context_current_clause : option string;                (**r current clause in scope if any *)
         compilation_context_type_ctxt : type_context;                      (**r the type context *)
         compilation_context_type_decls : list laergo_type_declaration;     (**r type declarations *)
-        compilation_context_new_type_decls : list laergo_type_declaration; (**r type declarations *)
+        compilation_context_new_type_decls : list laergo_type_declaration; (**r new type declarations *)
+        compilation_context_warnings : list ewarning;                      (**r warnings up to that point *)
       }.
 
   Definition namespace_ctxt_of_compilation_context (ctxt:compilation_context) : namespace_ctxt :=
@@ -61,7 +62,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
          
   Definition compilation_context_update_function_env
              (ctxt : compilation_context)
@@ -77,7 +79,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition update_function_group_env
              (gname:string)
@@ -104,7 +107,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition compilation_context_update_global_env
              (ctxt : compilation_context)
@@ -120,7 +124,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition compilation_context_update_local_env
              (ctxt : compilation_context)
@@ -136,7 +141,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition compilation_context_set_local_env
              (ctxt : compilation_context)
@@ -151,7 +157,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition compilation_context_update_params_env
              (ctxt : compilation_context)
@@ -166,7 +173,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition compilation_context_set_params_env
              (ctxt : compilation_context)
@@ -181,7 +189,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition set_namespace_in_compilation_context
              (ns:namespace_name)
@@ -205,7 +214,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
   
   Definition set_current_clause (ctxt:compilation_context) (cname:string) : compilation_context :=
     mkCompCtxt ctxt.(compilation_context_namespace)
@@ -218,7 +228,8 @@ Section ErgoCompContext.
                (Some cname)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition compilation_context_update_type_ctxt
              (ctxt: compilation_context)
@@ -233,7 +244,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                nctxt
                ctxt.(compilation_context_type_decls)
-               ctxt.(compilation_context_new_type_decls).
+               ctxt.(compilation_context_new_type_decls)
+               ctxt.(compilation_context_warnings).
 
   Definition compilation_context_update_type_declarations
              (ctxt: compilation_context)
@@ -249,7 +261,8 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                (sort_decls old_decls)
-               (sort_decls new_decls).
+               (sort_decls new_decls)
+               ctxt.(compilation_context_warnings).
   
   Definition compilation_context_add_new_type_declaration
              (ctxt: compilation_context)
@@ -264,13 +277,45 @@ Section ErgoCompContext.
                ctxt.(compilation_context_current_clause)
                ctxt.(compilation_context_type_ctxt)
                ctxt.(compilation_context_type_decls)
-               (sort_decls (ctxt.(compilation_context_new_type_decls) ++ (decl::nil))).
+               (sort_decls (ctxt.(compilation_context_new_type_decls) ++ (decl::nil)))
+               ctxt.(compilation_context_warnings).
+
+  Definition compilation_context_add_warnings
+             (ctxt: compilation_context)
+             (warnings:list ewarning) : compilation_context :=
+    mkCompCtxt ctxt.(compilation_context_namespace)
+               ctxt.(compilation_context_function_env)
+               ctxt.(compilation_context_function_group_env)
+               ctxt.(compilation_context_global_env)
+               ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
+               ctxt.(compilation_context_current_contract)
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_type_ctxt)
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls)
+               (ctxt.(compilation_context_warnings) ++ warnings).
+
+  Definition compilation_context_reset_warnings
+             (ctxt: compilation_context) : compilation_context :=
+    mkCompCtxt ctxt.(compilation_context_namespace)
+               ctxt.(compilation_context_function_env)
+               ctxt.(compilation_context_function_group_env)
+               ctxt.(compilation_context_global_env)
+               ctxt.(compilation_context_local_env)
+               ctxt.(compilation_context_params_env)
+               ctxt.(compilation_context_current_contract)
+               ctxt.(compilation_context_current_clause)
+               ctxt.(compilation_context_type_ctxt)
+               ctxt.(compilation_context_type_decls)
+               ctxt.(compilation_context_new_type_decls)
+               nil.
 
   Definition get_all_decls ctxt : list laergo_type_declaration :=
     sort_decls (ctxt.(compilation_context_type_decls) ++ ctxt.(compilation_context_new_type_decls)).
 
   Definition init_compilation_context nsctxt decls : compilation_context :=
-    mkCompCtxt nsctxt nil nil nil nil nil None None empty_type_context decls nil.
+    mkCompCtxt nsctxt nil nil nil nil nil None None empty_type_context decls nil nil.
 
   Definition is_abstract_class
              (ctxt: compilation_context)

@@ -35,6 +35,15 @@ val string_of_error_with_source_text : string -> eerror -> string
 val string_of_error_with_source_file : string -> eerror -> string
 val string_of_error_with_table : (string * string) list -> eerror -> string
 
+(** Ergo warnings *)
+val ignore_warnings : ewarning list -> unit
+
+val print_warnings_with_source_text : string -> ewarning list -> unit
+val print_warnings_with_source_file : string -> ewarning list -> unit
+val print_warnings_with_table : (string * string) list -> ewarning list -> unit
+
+val return_result_print_warnings : bool -> string -> char list -> ewarning list -> string
+
 (** [mk_provenance_of_loc_pair filename start end] *)
 val mk_provenance_of_loc_pair : string -> Lexing.position -> Lexing.position -> provenance
 
