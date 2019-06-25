@@ -46,6 +46,8 @@ Extract Constant Misc.estring_concat => "(fun s1 s2 -> s1 ^ s2)".
 Extract Constant Misc.flat_map_estring => "(fun f s -> Util.flat_map_string f s)".
 Extract Constant Misc.find_duplicate => "(fun l -> Util.find_duplicate l)".
 
+Extract Constant Misc.coq_print_warnings => "(fun prefix warnings x -> Util.coq_print_warnings prefix warnings x)".
+
 (* Ergo modules *)
 Require ErgoCompiler.
 Extraction "ErgoComp" ErgoCompiler.ErgoCompiler.

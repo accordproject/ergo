@@ -27,7 +27,7 @@ let res_convert code warnings =
     end
   in
   (* Printf.printf "NNRC Module: %s" (pretty_nnrc_module false 0 false (Jarray []) false code.res_nnrc); *)
-  (contract_name, string_of_char_list code.res_file, code.res_content)
+  (contract_name, string_of_char_list code.res_file, code.res_content, warnings)
 
 let compile_module_to_javascript version inputs =
   let code = ErgoCompiler.ergo_module_to_javascript version inputs in
@@ -80,9 +80,11 @@ let print_monitor source_file =
 
 let ergo_proc gconf inputs =
   let target_lang = ErgoConfig.get_target_lang gconf in
+  let source_table = ErgoConfig.get_source_table gconf in
   let ext = extension_of_lang target_lang in
-  let (contract_name,source_file,result) = ergo_compile target_lang inputs in
+  let (contract_name,source_file,result,warnings) = ergo_compile target_lang inputs in
   Printf.printf "Compiling Ergo '%s' -- " source_file;
   let result = ergo_link gconf result in
+  if gconf.econf_warnings then print_warnings_with_table source_table warnings;
   print_generate source_file ext result;
   print_monitor source_file

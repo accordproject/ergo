@@ -188,11 +188,13 @@ Section PrintTypedData.
       in
       eresult_of_option
         (lift snd osuccess)
-        (unpack_error nsctxt "either" out).
+        (unpack_error nsctxt "either" out)
+        nil.
 
     Definition unpack_success_type
                (nsctxt:namespace_ctxt)
                (out:ergoc_type)
+               (warnings: list ewarning)
       : eresult (ergoc_type * ergoc_type * ergoc_type) :=
       let osuccess :=
           match unteither out with
@@ -204,13 +206,15 @@ Section PrintTypedData.
           eresult_of_option
             (lift fst osuccess)
             (unpack_error nsctxt "either" out)
+            nil
       in
       let response :=
           elift fst
                 (eolift
                    (fun success =>
                       (eresult_of_option (ergoc_type_infer_unary_op (OpDot "response") success)
-                                         (unpack_error nsctxt "response" out)))
+                                         (unpack_error nsctxt "response" out))
+                        nil)
                    success)
       in
       let emit :=
@@ -218,7 +222,8 @@ Section PrintTypedData.
                 (eolift
                    (fun success =>
                       (eresult_of_option (ergoc_type_infer_unary_op (OpDot "emit") success)
-                                         (unpack_error nsctxt "emit" out)))
+                                         (unpack_error nsctxt "emit" out))
+                        nil)
                    success)
       in
       let state :=
@@ -226,7 +231,8 @@ Section PrintTypedData.
                 (eolift
                    (fun success =>
                       (eresult_of_option (ergoc_type_infer_unary_op (OpDot "state") success)
-                                         (unpack_error nsctxt "state" out))) 
+                                         (unpack_error nsctxt "state" out))
+                        warnings)
                    success)
       in
       elift3 (fun r e s => (r,e,s))
@@ -234,12 +240,14 @@ Section PrintTypedData.
 
     Definition unpack_output_type
                (nsctxt:namespace_ctxt)
-               (out:ergoc_type) : eresult (ergoc_type * ergoc_type * ergoc_type * ergoc_type) :=
+               (out:ergoc_type)
+               (warnings:list ewarning)
+      : eresult (ergoc_type * ergoc_type * ergoc_type * ergoc_type) :=
       elift2
         (fun x y =>
            let '(respt,emitt,statet) := x in
            (respt,emitt,statet,y))
-        (unpack_success_type nsctxt out)
+        (unpack_success_type nsctxt out warnings)
         (unpack_failure_type nsctxt out).
 
   End Types.
@@ -309,7 +317,7 @@ Section PrintTypedData.
               match typ with
               | None =>  (None, None, None)
               | Some typ =>
-                match unpack_success_type nsctxt typ with
+                match unpack_success_type nsctxt typ nil with
                 | Success _ _ ((r,e,s),_) => (Some r, Some e, Some s)
                 | Failure _ _ _ => (None, None, None)
                 end

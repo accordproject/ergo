@@ -421,4 +421,10 @@ let find_duplicate sl =
       Some s
   end
 
+let coq_print_warning prefix warning =
+  Printf.printf "[WARNING][%s] %s\n" prefix (string_of_char_list warning)
+
+let coq_print_warnings prefix warnings x =
+  List.iter (coq_print_warning (string_of_char_list prefix)) warnings;
+  x
 

@@ -101,3 +101,5 @@ val flat_map_string : (char -> string) -> string -> string
 
 val find_duplicate : char list list -> char list option
 
+val coq_print_warnings : char list -> char list list -> 'a -> 'a
+

@@ -44,10 +44,10 @@ Section ErgoCTypecheck.
     | EThisState    prov => efailure (ESystemError prov "No `state' in ergoc")
     | EVar prov name =>
       let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
-      let topt := eresult_of_option opt (ETypeError prov ("Variable `" ++ name ++ "' not found.")%string) in
+      let topt := eresult_of_option opt (ETypeError prov ("Variable `" ++ name ++ "' not found.")%string) nil in
       elift (fun T => EVar (prov,T) name) topt
     | EConst prov d =>
-      let topt := eresult_of_option (infer_data_type d) (ETypeError prov "Bad constant.") in
+      let topt := eresult_of_option (infer_data_type d) (ETypeError prov "Bad constant.") nil in
       elift (fun T => EConst (prov,T) d) topt
     | ENone prov => esuccess (ENone (prov, toption tbottom)) nil
     | ESome prov e =>
@@ -172,14 +172,14 @@ Section ErgoCTypecheck.
                        elift (fun T' => (fst next'::fst sofar',compose fst fst T'))
                              (eresult_of_option
                                 (ergoc_type_infer_binary_op OpRecConcat (snd next') (snd sofar'))
-                                (ETypeError prov "Bad record! Failed to concat."%string)))
+                                (ETypeError prov "Bad record! Failed to concat."%string) nil))
                     sofar
                     (eolift (fun efT =>
                                let ft := exprct_type_annot efT in
                                elift (fun T => ((fst next,efT), fst T))
                                      (eresult_of_option
                                         (ergoc_type_infer_unary_op (OpRec (fst next)) ft)
-                                        (ETypeError prov "Bad record! Failed to init."%string)))
+                                        (ETypeError prov "Bad record! Failed to init."%string) nil))
                             (ergoc_typecheck_expr nsctxt ctxt (snd next))))
                (esuccess (nil,empty_rec_type) nil) rs)
     | ENew prov name rs =>
@@ -188,7 +188,7 @@ Section ErgoCTypecheck.
            elift (fun T'' => ENew (prov, fst T'') name (fst rsT'))
                  (eresult_of_option
                     (infer_brand_strict (name::nil) (snd rsT'))
-                    (ETypeError prov (ergo_format_new_error nsctxt name (snd rsT')))))
+                    (ETypeError prov (ergo_format_new_error nsctxt name (snd rsT'))) nil))
         (fold_right
            (fun (next:string * ergoc_expr) (sofar:eresult (list (string * ergoct_expr) * ergoc_type)) =>
               eolift2
@@ -197,14 +197,14 @@ Section ErgoCTypecheck.
                    elift (fun T' => (fst next'::fst sofar',compose fst fst T'))
                          (eresult_of_option
                             (ergoc_type_infer_binary_op OpRecConcat (snd next') (snd sofar'))
-                            (ETypeError prov "Bad record! Failed to concat."%string)))
+                            (ETypeError prov "Bad record! Failed to concat."%string) nil))
                 sofar
                 (eolift (fun efT =>
                            let ft := exprct_type_annot efT in
                            elift (fun T => ((fst next,efT), fst T))
                                  (eresult_of_option
                                     (ergoc_type_infer_unary_op (OpRec (fst next)) ft)
-                                    (ETypeError prov "Bad record! Failed to init."%string)))
+                                    (ETypeError prov "Bad record! Failed to init."%string) nil))
                         (ergoc_typecheck_expr nsctxt ctxt (snd next))))
            (esuccess (nil,empty_rec_type) nil) rs)
     | ECallFun prov fname args => function_not_inlined_error prov "typing" fname
@@ -317,7 +317,7 @@ Section ErgoCTypecheck.
                 (untcoll arr')
                 (ETypeError
                    prov
-                   ("foreach expects an array to iterate over, but was given something of type `" ++ (ergoc_type_to_string nsctxt arr') ++ "'."))))
+                   ("foreach expects an array to iterate over, but was given something of type `" ++ (ergoc_type_to_string nsctxt arr') ++ "'.")) nil))
         (ergoc_typecheck_expr nsctxt ctxt arr)
     | EForeach prov _ _ _ =>
       complex_foreach_in_calculus_error prov

@@ -364,19 +364,21 @@ Section ErgoDriver.
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
       let nsctxt := ctxt.(repl_context_comp_ctxt).(compilation_context_namespace)  in
       let typ := ergoct_declaration_type decl in
+      let warnings := ctxt.(repl_context_comp_ctxt).(compilation_context_warnings) in
       match ergoct_eval_decl ctxt.(repl_context_eval_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ ((dctxt', None),w) => esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt') w
+      | Success _ _ ((dctxt', None),w) =>
+        esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt') (warnings++w)
       | Success _ _ ((dctxt', Some out),w) =>
         match unpack_output out with
-        | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt') w
+        | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt') (warnings++w)
         | Some (_, _, state) =>
           let newctxt :=
               match typ with (* XXX If we have a data, don't we also have a type ??? *)
               | None =>
                 esuccess
                   (update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state))
-                  w
+                  warnings
               | Some typ =>
                 elift
                   (fun ty =>
@@ -386,7 +388,7 @@ Section ErgoDriver.
                      in
                      let sctxt1 := ctxt1.(repl_context_comp_ctxt).(compilation_context_type_ctxt) in
                      update_repl_ctxt_type_ctxt ctxt1 (type_context_update_global_env sctxt1 this_state statety))
-                  (unpack_success_type nsctxt typ)
+                  (unpack_success_type nsctxt typ warnings)
               end
           in
           elift (fun ctxt => (typ, Some out, ctxt)) newctxt
@@ -410,7 +412,8 @@ Section ErgoDriver.
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
       match ergo_declaration_to_ergoct_inlined ctxt.(repl_context_comp_ctxt) decl with
       | Failure _ _ f => efailure f
-      | Success _ _ ((decls, sctxt'), w) =>
+      | Success _ _ ((decls, sctxt'), warnings) =>
+        let sctxt' := compilation_context_add_warnings sctxt' warnings in
         let rctxt' := update_repl_ctxt_comp_ctxt ctxt sctxt' in
         ergoct_repl_eval_declarations rctxt' decls
       end.
@@ -430,6 +433,11 @@ Section ErgoDriver.
                (rctxt : repl_context)
                (decl : lrergo_declaration)
       : eresult string * repl_context :=
+      let rctxt :=
+          let sctxt := rctxt.(repl_context_comp_ctxt) in
+          let sctxt := compilation_context_reset_warnings sctxt in
+          update_repl_ctxt_comp_ctxt rctxt sctxt
+      in
       let result := ergoct_eval_decl_via_calculus rctxt decl in
       let out := ergo_string_of_result rctxt result in
       (out, lift_repl_ctxt rctxt result).

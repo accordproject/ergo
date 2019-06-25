@@ -118,6 +118,10 @@ Section Misc.
     Parameter find_duplicate : list string -> option string.
   End Duplicates.
 
+  Section Warnings.
+    Context {A:Set}.
+    Parameter coq_print_warnings : string -> list string -> A -> A.
+  End Warnings.
 End Misc.
 
 Notation "` e" := (string_to_estring e) (left associativity, at level 40) : estring_scope.

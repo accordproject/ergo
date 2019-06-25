@@ -229,10 +229,13 @@ Section ErgotoErgoC.
              (ergo_stmt_to_expr ctxt s2)
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 None s3 =>
+      let warning_no_else :=
+          EWarning prov "No else in enforce"
+      in
       elift3 (EIf prov)
              (elift (EUnaryBuiltin prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
              (esuccess (EError prov
-                               (EConst prov (enforce_error_content prov ""))) nil)
+                               (EConst prov (enforce_error_content prov ""))) (warning_no_else::nil))
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 (Some s2) s3 =>
       elift3 (EIf prov)

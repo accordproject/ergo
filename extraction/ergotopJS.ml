@@ -16,13 +16,14 @@ open Js_of_ocaml
 
 open ParseUtil
 open ErgoUtil
+open ErgoConfig
 
 let welcome () =
   print_string ("Welcome to ERGOTOP version " ^ ergo_version ^ "\n")
 
 (* REPL *)
 
-let repl rctxt text =
+let repl gconf rctxt text =
   try
       let decls = ParseUtil.parse_ergo_declarations_from_string "stdin" text in
       List.fold_left
@@ -31,7 +32,7 @@ let repl rctxt text =
              (* eval *)
              let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
-             (answer ^ (wrap_jerrors (fun x warnings -> Util.string_of_char_list x) out), rctxt')
+             (answer ^ (wrap_jerrors (return_result_print_warnings gconf.econf_warnings text) out), rctxt')
            end)
         ("",rctxt) decls
   with
@@ -52,7 +53,7 @@ let usage =
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
 let safe_init_repl_ctxt inputs =
   ErgoUtil.wrap_jerrors
-    (fun x warnings -> x)
+    (fun x w -> x)
     (ErgoTopUtil.my_init_repl_context inputs)
 
 let make_init_rctxt gconf =
@@ -72,7 +73,7 @@ let main gconf args =
       val version = Js.string ergo_version
       val buildate = Js.string Resources.builddate
       method runLine rctxt line =
-        let (out, rctxt') = repl rctxt (Js.to_string line) in
+        let (out, rctxt') = repl gconf rctxt (Js.to_string line) in
         Js.some
           (object%js
             val out = Js.string out

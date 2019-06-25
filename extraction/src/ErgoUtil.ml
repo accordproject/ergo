@@ -150,6 +150,29 @@ let string_of_error_with_source_file source error =
 let string_of_error_with_table source_table error =
   string_of_error underline_source source_table error
 
+(** Ergo warnings *)
+let string_of_warning f x warning =
+  begin match warning with
+  | EWarning (prov, msg) ->
+      "Warning" ^ (string_of_error_prov prov) ^ ". " ^ (Util.string_of_char_list msg) ^ (f x prov)
+  end
+
+let print_warning f x w =
+  Printf.printf ("%s\n") (string_of_warning f x w)
+
+let print_warnings f x ws =
+  List.iter (print_warning f x) ws
+
+let print_warnings_with_source_text source warning =
+  print_warnings underline_prov source warning
+let print_warnings_with_source_file source warning =
+  print_warnings underline_prov (string_of_file source) warning
+let print_warnings_with_table source_table warning =
+  print_warnings underline_source source_table warning
+
+let ignore_warnings ws =
+  ()
+
 (** Version number *)
 let ergo_version = string_of_char_list ergo_version
 
@@ -161,11 +184,20 @@ let get_version cmd () =
 let process_file f (file_name, file_content) =
   f (file_name,file_content)
 
+(** fw applied to warnings, f applied to result *)
 let wrap_jerrors f e =
   begin match e with
   | Failure e -> ergo_raise e
   | Success (x,w) -> f x w
   end
+
+let return_result_print_warnings on text x warnings =
+  if on then
+    begin
+      let print_warnings = print_warnings_with_source_text text in
+      print_warnings warnings
+    end;
+  Util.string_of_char_list x
 
 (** Ergo call *)
 let ergo_call contract_name =

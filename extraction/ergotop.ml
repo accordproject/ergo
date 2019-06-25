@@ -15,6 +15,7 @@
 open ErgoComp.ErgoCompiler
 open ParseUtil
 open ErgoUtil
+open ErgoConfig
 
 let welcome () =
   if Unix.isatty Unix.stdin
@@ -60,11 +61,11 @@ let rec read_nonempty_multiline () = read_chunk true
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
 let safe_init_repl_ctxt inputs =
   wrap_jerrors
-    (fun x warnings-> x)
+    (fun x y -> x)
     (ErgoTopUtil.my_init_repl_context inputs)
 
 (* REPL *)
-let rec repl rctxt =
+let rec repl gconf rctxt =
   (* read *)
   let text = read_nonempty_multiline () in
   try
@@ -76,18 +77,18 @@ let rec repl rctxt =
              (* eval *)
              let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
-             print_string (fmt_out (wrap_jerrors (fun x warning -> (Util.string_of_char_list x)) out));
+             print_string (fmt_out (wrap_jerrors (return_result_print_warnings gconf.econf_warnings text) out));
              rctxt'
            end)
         rctxt decls
     in
     (* loop *)
-    repl rctxt'
+    repl gconf rctxt'
   with
   | Ergo_Error e ->
       print_string (string_of_error_with_source_text text e);
       print_string "\n" ;
-      repl rctxt
+      repl gconf rctxt
   | End_of_file -> None
 
 let args_list gconf =
@@ -95,8 +96,8 @@ let args_list gconf =
     [
       ("-version", Arg.Unit (get_version "The Ergo toplevel"),
        " Print version and exit");
-      ("--version", Arg.Unit (get_version "The Ergo toplevel"),
-       " Print version and exit");
+      ("--warnings", Arg.Unit (ErgoConfig.set_warnings gconf),
+       " Print warnings");
     ]
 
 let usage =
@@ -109,7 +110,7 @@ let main gconf args =
   let all_modules = ErgoConfig.get_all_sorted gconf in
   let rctxt = safe_init_repl_ctxt all_modules in
   welcome ();
-  repl rctxt
+  repl gconf rctxt
 
 let wrap_error gconf e =
   let source_table = ErgoConfig.get_source_table gconf in
