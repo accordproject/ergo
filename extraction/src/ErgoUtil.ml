@@ -170,6 +170,11 @@ let print_warnings_with_source_file source warning =
 let print_warnings_with_table source_table warning =
   print_warnings underline_source source_table warning
 
+let string_of_warning_with_table source_table warning =
+  string_of_warning underline_source source_table warning
+let string_of_warnings_with_table source_table warnings =
+  List.map (string_of_warning_with_table source_table) warnings
+
 let ignore_warnings ws =
   ()
 

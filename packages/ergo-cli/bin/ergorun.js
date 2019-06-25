@@ -39,6 +39,11 @@ require('yargs')
         yargs.option('request', {
             describe: 'path to the request data'
         }).array('request');
+        yargs.option('warnings', {
+            describe: 'print warnings',
+            type: 'boolean',
+            default: false
+        });
     }, (argv) => {
         let ctoPaths = [];
         let ergoPaths = [];
@@ -60,7 +65,11 @@ require('yargs')
         }
 
         // Run contract
-        Commands.execute(ergoPaths, ctoPaths, { file: argv.contract }, argv.state ? { file: argv.state } : null, argv.currentTime, argv.request.map(r => { return { file: r }; }))
+        Commands.execute(
+            ergoPaths, ctoPaths, { file: argv.contract },
+            argv.state ? { file: argv.state } : null,
+            argv.currentTime, argv.request.map(r => { return { file: r }; }),
+            argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -91,6 +100,11 @@ require('yargs')
             type: 'string',
             default: {}
         });
+        yargs.option('warnings', {
+            describe: 'print warnings',
+            type: 'boolean',
+            default: false
+        });
     }, (argv) => {
         let ctoPaths = [];
         let ergoPaths = [];
@@ -112,7 +126,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.invoke(ergoPaths, ctoPaths, argv.clauseName, { file: argv.contract }, { file: argv.state }, argv.currentTime, { file: argv.params })
+        Commands.invoke(ergoPaths, ctoPaths, argv.clauseName, { file: argv.contract }, { file: argv.state }, argv.currentTime, { file: argv.params }, argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -136,6 +150,11 @@ require('yargs')
             type: 'string',
             default: null
         });
+        yargs.option('warnings', {
+            describe: 'print warnings',
+            type: 'boolean',
+            default: false
+        });
     }, (argv) => {
         let ctoPaths = [];
         let ergoPaths = [];
@@ -157,7 +176,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.init(ergoPaths, ctoPaths, { file: argv.contract }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' })
+        Commands.init(ergoPaths, ctoPaths, { file: argv.contract }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })

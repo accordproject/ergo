@@ -36,13 +36,14 @@ class TemplateLogic {
     /**
      * Create the TemplateLogic.
      * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @param {Object} options  - e.g., { warnings: true }
      */
-    constructor(target) {
+    constructor(target, options) {
         ErgoCompiler.isValidTarget(target);
         this.target = target;
         this.contractName = null;
         this.modelManager = new APModelManager();
-        this.scriptManager = new ScriptManager(this.target, this.modelManager);
+        this.scriptManager = new ScriptManager(this.target, this.modelManager, options);
         this.introspector = new Introspector(this.modelManager);
         this.factory = new Factory(this.modelManager);
         this.serializer = new Serializer(this.factory, this.modelManager);

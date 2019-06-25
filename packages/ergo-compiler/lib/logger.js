@@ -46,7 +46,7 @@ const jsonColor =  winston.format(info => {
         return info;
     }
 
-    if (info[LEVEL] === 'info') {
+    if (info[LEVEL] === 'info' || info[LEVEL] === 'warn') {
         if(typeof info.message === 'object') {
             info[MESSAGE] = `${tsFormat()} - ${info.level}:${padding}\n${jsome.getColoredString(info.message, null, 2)}`;
         } else if(isJSON(info.message)) {
