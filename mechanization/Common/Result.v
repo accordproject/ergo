@@ -233,8 +233,6 @@ Section Result.
       efailure (ESystemError prov ("Built in function " ++ fname ++ " not found")).
     Definition built_in_function_without_body_error {A} prov (fname:string) : eresult A :=
       efailure (ESystemError prov ("Built in function " ++ fname ++ " does not have a body")).
-    Definition TODO {A : Set} prov (feature:string) : eresult A :=
-      efailure (ESystemError prov ("Feature " ++ feature ++ " not implemented.")%string).
 
     Definition enforce_error_content (prov:provenance) (msg:string) : ErgoData.data :=
       let message := format_error "Enforce Error" prov msg in
