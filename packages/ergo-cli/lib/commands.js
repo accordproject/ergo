@@ -49,11 +49,12 @@ class Commands {
      * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
      * @param {string[]} requestsInput the requests
+     * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput) {
+    static execute(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput,warnings) {
         const engine = new Engine();
-        const templateLogic = new TemplateLogic('es6');
+        const templateLogic = new TemplateLogic('es6', { warnings });
         templateLogic.addErgoBuiltin();
         if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
@@ -97,11 +98,12 @@ class Commands {
      * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
      * @param {object} paramsInput the parameters for the clause
+     * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of invocation
      */
-    static invoke(ergoPaths,ctoPaths,clauseName,contractInput,stateInput,currentTime,paramsInput) {
+    static invoke(ergoPaths,ctoPaths,clauseName,contractInput,stateInput,currentTime,paramsInput,warnings) {
         const engine = new Engine();
-        const templateLogic = new TemplateLogic('es6');
+        const templateLogic = new TemplateLogic('es6', { warnings });
         templateLogic.addErgoBuiltin();
         if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
@@ -129,11 +131,12 @@ class Commands {
      * @param {string} contractInput the contract data
      * @param {string} currentTime the definition of 'now'
      * @param {object} paramsInput the parameters for the clause
+     * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput) {
+    static init(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput,warnings) {
         const engine = new Engine();
-        const templateLogic = new TemplateLogic('es6');
+        const templateLogic = new TemplateLogic('es6', { warnings });
         templateLogic.addErgoBuiltin();
         if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {

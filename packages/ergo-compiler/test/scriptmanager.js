@@ -66,7 +66,7 @@ describe('ScriptManager', () => {
         });
 
         it('should compile Ergo scripts', async function() {
-            const scriptManager = new ScriptManager('cicero',modelManager);
+            const scriptManager = new ScriptManager('cicero',modelManager, {});
             const script1 = scriptManager.createScript('test.js','.js',jsSample);
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);

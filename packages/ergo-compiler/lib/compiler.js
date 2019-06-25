@@ -16,6 +16,7 @@
 
 const CompilerCore=require('../extracted/compilercore');
 const CTOParser = require('composer-concerto/lib/introspect/parser');
+const Logger = require('./logger');
 
 /**
  * <p>
@@ -64,9 +65,10 @@ class Compiler {
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} target language (es5|es6|cicero|java)
      * @param {boolean} link whether to link the javascript runtime
+     * @param {boolean} warnings whether to print warnings
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(ergoSources,ctoSources,target,link) {
+    static compileToJavaScript(ergoSources,ctoSources,target,link,warnings) {
         // Built-in config
         const config= {
             'source' : 'ergo',
@@ -85,6 +87,7 @@ class Compiler {
         }
         // Call compiler
         const compiled = CompilerCore.compile(config);
+        if (warnings) { compiled.warnings.map((w) => { Logger.warn(w); } ); }
         if (compiled.code) {
             return { 'error' : compiled.error };
         } else {
@@ -99,10 +102,11 @@ class Compiler {
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} target language (es5|es6|cicero|java)
      * @param {boolean} link whether to link the javascript runtime
+     * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoSources,ctoSources,target,link) {
-        const result = this.compileToJavaScript(ergoSources,ctoSources,target,link);
+    static compile(ergoSources,ctoSources,target,link,warnings) {
+        const result = this.compileToJavaScript(ergoSources,ctoSources,target,link,warnings);
         return Promise.resolve(result);
     }
 

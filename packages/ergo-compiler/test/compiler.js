@@ -102,7 +102,15 @@ describe('ergo-compiler', () => {
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
             const ctoFile = Path.resolve('test', 'examples/helloworld', 'model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false);
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false, false);
+            result.success.should.not.be.null;
+        });
+        it('should compile a smart Ergo contract to JavaScript and print a warning (ES6)', async function () {
+            const ergoFile = Path.resolve('test', 'examples/helloworld', 'logicWarn.ergo');
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            const ctoFile = Path.resolve('test', 'examples/helloworld', 'model.cto');
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], 'es6', false, true);
             result.success.should.not.be.null;
         });
         it('should compile and link a smart Ergo contract to JavaScript (ES5)', async function () {

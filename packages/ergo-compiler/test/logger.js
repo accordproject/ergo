@@ -49,6 +49,20 @@ describe('logger', () => {
             });
         });
     });
+    describe('#logger.warn', function () {
+        it('should call logger.warn', async function () {
+            Logger.warn('This is logging some warning');
+        });
+        it('should call logger.warn with JSON', async function () {
+            Logger.log({
+                level: 'warn',
+                message: { 'message' : 'This is a JSON message' }
+            });
+        });
+        it('should call logger.warn with stringified JSON', async function () {
+            Logger.warn('{ "message" : "This is a JSON message" }');
+        });
+    });
     describe('#logger.info', function () {
         it('should call logger.info', async function () {
             Logger.info('This is logging some useful information');

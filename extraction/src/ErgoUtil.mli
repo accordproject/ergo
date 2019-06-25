@@ -44,6 +44,8 @@ val print_warnings_with_table : (string * string) list -> ewarning list -> unit
 
 val return_result_print_warnings : bool -> string -> char list -> ewarning list -> string
 
+val string_of_warnings_with_table : (string * string) list -> ewarning list -> string list
+
 (** [mk_provenance_of_loc_pair filename start end] *)
 val mk_provenance_of_loc_pair : string -> Lexing.position -> Lexing.position -> provenance
 
