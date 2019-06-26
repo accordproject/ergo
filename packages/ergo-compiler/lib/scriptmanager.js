@@ -283,10 +283,7 @@ class ScriptManager {
         if (error.kind === 'CompilationError') {
             throw new CompilerException(error.message, fileLocation, error.fullMessage, error.fileName);
         } else if (error.kind === 'ParseError') {
-            // HACK!
-            const pErr = new ParseException(error.message, fileLocation, error.fileName, 'ergo-compiler');
-            pErr.message = error.fullMessage;
-            throw pErr;
+            throw new ParseException(error.message, fileLocation, error.fileName, error.fullMessage, 'ergo-compiler');
         } else if (error.kind === 'TypeError') {
             throw new TypeException(error.message, fileLocation, error.fullMessage, error.fileName);
         } else {
