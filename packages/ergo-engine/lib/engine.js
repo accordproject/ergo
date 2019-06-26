@@ -79,7 +79,7 @@ class Engine {
 
     /**
      * Execute a clause, passing in the request object
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic to execute
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} request - the request, a JS object that can be deserialized
@@ -129,7 +129,7 @@ class Engine {
 
     /**
      * Invoke a clause, passing in the parameters for that clause
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic to execute
      * @param {string} contractId - the contract identifier
      * @param {string} clauseName - the clause name
      * @param {object} contract - the contract data
@@ -179,7 +179,7 @@ class Engine {
 
     /**
      * Initialize a clause
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic to execute
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
@@ -197,7 +197,7 @@ class Engine {
     /**
      * Compile then initialize a clause
      *
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic to execute
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
@@ -213,7 +213,7 @@ class Engine {
     /**
      * Compile then invoke a clause
      *
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic to execute
      * @param {string} clauseName - the clause name
      * @param {object} contract contract data in JSON
      * @param {object} params - the clause parameters
@@ -232,7 +232,7 @@ class Engine {
     /**
      * Compile then execute a clause, passing in the request object
      *
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic to execute
      * @param {object} contract - the contract data
      * @param {object} request - the request, a JS object that can be deserialized
      * using the Composer serializer.

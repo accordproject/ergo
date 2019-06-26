@@ -15,7 +15,7 @@
 'use strict';
 
 const ErgoCompiler = require('../lib/compiler');
-const TemplateLogic = require('../lib/templatelogic');
+const LogicManager = require('../lib/logicmanager');
 
 const fs = require('fs');
 const chai = require('chai');
@@ -36,93 +36,93 @@ const ergoSample5 = fs.readFileSync('./test/data/test5.ergo', 'utf8');
 const jsSample = fs.readFileSync('./test/data/test.js', 'utf8');
 const jsSample2 = fs.readFileSync('./test/data/test2.js', 'utf8');
 
-describe('TemplateLogic', () => {
+describe('LogicManager', () => {
     describe('#constructors-accessors', () => {
 
         it('should create a template logic', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.should.not.be.null;
-            templateLogic.getIntrospector().should.not.be.null;
-            templateLogic.getFactory().should.not.be.null;
-            templateLogic.getSerializer().should.not.be.null;
-            templateLogic.getScriptManager().should.not.be.null;
-            templateLogic.getModelManager().should.not.be.null;
+            const logicManager = new LogicManager('cicero');
+            logicManager.should.not.be.null;
+            logicManager.getIntrospector().should.not.be.null;
+            logicManager.getFactory().should.not.be.null;
+            logicManager.getSerializer().should.not.be.null;
+            logicManager.getScriptManager().should.not.be.null;
+            logicManager.getModelManager().should.not.be.null;
         });
 
         it('should load a model to the model manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addModelFile(ctoSample,'test.cto');
-            const modelManager = templateLogic.getModelManager();
+            const logicManager = new LogicManager('cicero');
+            logicManager.addModelFile(ctoSample,'test.cto');
+            const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
         });
 
         it('should load a model to the model manager (bulk)', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addModelFiles([ctoSample],['test.cto']);
-            const modelManager = templateLogic.getModelManager();
+            const logicManager = new LogicManager('cicero');
+            logicManager.addModelFiles([ctoSample],['test.cto']);
+            const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
         });
 
         it('should load a logic file to the script manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
-            templateLogic.getDispatchCall().length.should.equal(154);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.compileLogicSync(false);
+            logicManager.getInvokeCall('helloworld').length.should.equal(233);
+            logicManager.getDispatchCall().length.should.equal(154);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
         });
 
         it('should succeed creating a dispatch call for a JS logic file with a contract class (ES6)', () => {
-            const templateLogic = new TemplateLogic('es6');
-            templateLogic.addLogicFile(jsSample2,'test2.js');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getDispatchCall().length.should.equal(188);
+            const logicManager = new LogicManager('es6');
+            logicManager.addLogicFile(jsSample2,'test2.js');
+            logicManager.compileLogicSync(false);
+            logicManager.getDispatchCall().length.should.equal(188);
         });
 
         it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
-            const templateLogic = new TemplateLogic('es6');
-            templateLogic.addLogicFile(jsSample2,'test2.js');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall().length.should.equal(204);
+            const logicManager = new LogicManager('es6');
+            logicManager.addLogicFile(jsSample2,'test2.js');
+            logicManager.compileLogicSync(false);
+            logicManager.getInvokeCall().length.should.equal(204);
         });
 
         it('should succeed creating an invoke call for a JS logic file with a contract class (Cicero)', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(jsSample2,'test2.js');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall().length.should.equal(204);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(jsSample2,'test2.js');
+            logicManager.compileLogicSync(false);
+            logicManager.getInvokeCall().length.should.equal(204);
         });
 
         it('should fail creating a dispatch call for a JS logic file with no contract class (ES6)', () => {
-            const templateLogic = new TemplateLogic('es6');
-            templateLogic.addLogicFile(jsSample,'test.js');
-            templateLogic.compileLogicSync(false);
-            (() => templateLogic.getDispatchCall()).should.throw('Cannot create dispatch call for target: es6 without a contract name');
+            const logicManager = new LogicManager('es6');
+            logicManager.addLogicFile(jsSample,'test.js');
+            logicManager.compileLogicSync(false);
+            (() => logicManager.getDispatchCall()).should.throw('Cannot create dispatch call for target: es6 without a contract name');
         });
 
         it('should fail creating an invoke call for a JS logic file with no contract class (ES6)', () => {
-            const templateLogic = new TemplateLogic('es6');
-            templateLogic.addLogicFile(jsSample,'test.js');
-            templateLogic.compileLogicSync(false);
-            (() => templateLogic.getInvokeCall()).should.throw('Cannot create invoke call for target: es6 without a contract name');
+            const logicManager = new LogicManager('es6');
+            logicManager.addLogicFile(jsSample,'test.js');
+            logicManager.compileLogicSync(false);
+            (() => logicManager.getInvokeCall()).should.throw('Cannot create invoke call for target: es6 without a contract name');
         });
 
         it('should fail creating an invoke call for a JS logic file with no contract class (Cicero)', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(jsSample,'test.js');
-            templateLogic.compileLogicSync(false);
-            (() => templateLogic.getInvokeCall()).should.throw('Cannot create invoke call for target: cicero without a contract name');
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(jsSample,'test.js');
+            logicManager.compileLogicSync(false);
+            (() => logicManager.getInvokeCall()).should.throw('Cannot create invoke call for target: cicero without a contract name');
         });
 
         it('should fail to load a bogus logic file to the script manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample2,'test2.ergo');
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample2,'test2.ergo');
             try {
-                templateLogic.compileLogicSync(false);
+                logicManager.compileLogicSync(false);
             } catch (error) {
                 expect(error.name).to.equal('ParseException');
                 expect(error.message).to.equal('Parse error (at file test2.ergo line 33 col 0). \n\n');
@@ -141,10 +141,10 @@ describe('TemplateLogic', () => {
         });
 
         it('should fail to load a logic file with a type error to the script manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample4,'test4.ergo');
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample4,'test4.ergo');
             try {
-                templateLogic.compileLogicSync(false);
+                logicManager.compileLogicSync(false);
             } catch (error) {
                 expect(error.name).to.equal('TypeException');
                 expect(error.message).to.equal('Type error (at file test4.ergo line 30 col 32). This operator received unexpected arguments of type `String\'  and `String\'.\n     return MyResponse{ output: "Hello " ++ contract.name ++ " (" ++ request.input + ")" }\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ');
@@ -163,10 +163,10 @@ describe('TemplateLogic', () => {
         });
 
         it('should fail to load a logic file with a compilation error to the script manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample5,'test5.ergo');
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample5,'test5.ergo');
             try {
-                templateLogic.compileLogicSync(false);
+                logicManager.compileLogicSync(false);
             } catch (error) {
                 expect(error.name).to.equal('CompilerException');
                 expect(error.message).to.equal('Compilation error (at file test5.ergo line 4 col 7). Import not found: NOTTHERE\nimport NOTTHERE.*\n       ^^^^^^^^^^');
@@ -184,111 +184,111 @@ describe('TemplateLogic', () => {
         });
 
         it('should load a logic file to the script manager (async)', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.compileLogic(false).then((logicCode) => {
-                templateLogic.getInvokeCall('helloworld').length.should.equal(233);
-                templateLogic.getDispatchCall().length.should.equal(154);
-                templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-                templateLogic.compileLogicSync(false);
-                templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.compileLogic(false).then((logicCode) => {
+                logicManager.getInvokeCall('helloworld').length.should.equal(233);
+                logicManager.getDispatchCall().length.should.equal(154);
+                logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+                logicManager.compileLogicSync(false);
+                logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
             });
         });
 
         it('should fail to load a bogus logic file to the script manager (async)', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample2,'test2.ergo');
-            expect(templateLogic.compileLogic(false)).to.be.eventually.rejectedWith(Error, 'Parse error (at file test2.ergo line 33 col 0). \n\n').and.have.property('name', 'ParseException');
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample2,'test2.ergo');
+            expect(logicManager.compileLogic(false)).to.be.eventually.rejectedWith(Error, 'Parse error (at file test2.ergo line 33 col 0). \n\n').and.have.property('name', 'ParseException');
         });
 
         it('should load a logic file to the script manager (with Ergo builtin)', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addErgoBuiltin();
-            templateLogic.addLogicFile(ergoSample,'test3.ergo');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
-            templateLogic.getDispatchCall().length.should.equal(154);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addErgoBuiltin();
+            logicManager.addLogicFile(ergoSample,'test3.ergo');
+            logicManager.compileLogicSync(false);
+            logicManager.getInvokeCall('helloworld').length.should.equal(233);
+            logicManager.getDispatchCall().length.should.equal(154);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
         });
 
         it('should load a logic file (without extension) to the script manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test');
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
         });
 
         it('should set the contract name', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
             const contractName = 'org.accordproject.helloemit.HelloWorld';
-            templateLogic.setContractName(contractName);
-            templateLogic.getContractName().should.equal(ErgoCompiler.contractCallName(contractName));
+            logicManager.setContractName(contractName);
+            logicManager.getContractName().should.equal(ErgoCompiler.contractCallName(contractName));
         });
 
         it('should set the compilation target to ES6 and recompile the logic', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.getTarget().should.equal('cicero');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-            templateLogic.setTarget('es6', true);
-            templateLogic.getTarget().should.equal('es6');
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.getTarget().should.equal('cicero');
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            logicManager.setTarget('es6', true);
+            logicManager.getTarget().should.equal('es6');
             const contractName = 'org.accordproject.helloemit.HelloWorld';
-            templateLogic.setContractName(contractName);
-            templateLogic.getContractName().should.equal(ErgoCompiler.contractCallName(contractName));
-            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
-            templateLogic.getDispatchCall().length.should.equal(216);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27227);
+            logicManager.setContractName(contractName);
+            logicManager.getContractName().should.equal(ErgoCompiler.contractCallName(contractName));
+            logicManager.getInvokeCall('helloworld').length.should.equal(233);
+            logicManager.getDispatchCall().length.should.equal(216);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(27227);
         });
 
         it('should fail to create init and dispatch for ES6 without a contract name', () => {
-            const templateLogic = new TemplateLogic('es6');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.getTarget().should.equal('es6');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
-            templateLogic.getDispatchCall().length.should.equal(216);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27227);
+            const logicManager = new LogicManager('es6');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.getTarget().should.equal('es6');
+            logicManager.compileLogicSync(false);
+            logicManager.getInvokeCall('helloworld').length.should.equal(233);
+            logicManager.getDispatchCall().length.should.equal(216);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(27227);
         });
 
         it('should set the compilation target to ES6 but not recompile the logic', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-            templateLogic.setTarget('es6', false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            logicManager.setTarget('es6', false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
         });
 
         it('should set the compilation target to ES5', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.getTarget().should.equal('cicero');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-            templateLogic.setTarget('es5', true);
-            templateLogic.getTarget().should.equal('es5');
-            templateLogic.getInvokeCall('helloworld').length.should.equal(157);
-            templateLogic.getDispatchCall().length.should.equal(140);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(27087);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.getTarget().should.equal('cicero');
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            logicManager.setTarget('es5', true);
+            logicManager.getTarget().should.equal('es5');
+            logicManager.getInvokeCall('helloworld').length.should.equal(157);
+            logicManager.getDispatchCall().length.should.equal(140);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(27087);
         });
 
         it('should fail to create init code for Java', () => {
-            const templateLogic = new TemplateLogic('java');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.getTarget().should.equal('java');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(10015);
-            (() => templateLogic.getInvokeCall('helloworld')).should.throw('Unsupported target: java');
-            (() => templateLogic.getDispatchCall()).should.throw('Unsupported target: java');
+            const logicManager = new LogicManager('java');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.getTarget().should.equal('java');
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(10015);
+            (() => logicManager.getInvokeCall('helloworld')).should.throw('Unsupported target: java');
+            (() => logicManager.getDispatchCall()).should.throw('Unsupported target: java');
         });
 
         it('should load a model without a name to the model manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            const modelManager = templateLogic.getModelManager();
+            const logicManager = new LogicManager('cicero');
+            const modelManager = logicManager.getModelManager();
             modelManager.addModelFile(ctoSample,null,true);
             modelManager.getModels().map(x => x.name).should.deep.equal(['org.accordproject.copyrightlicense.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
@@ -296,57 +296,57 @@ describe('TemplateLogic', () => {
     });
 
     describe('#updates', () => {
-        let templateLogic;
+        let logicManager;
         beforeEach(async function () {
-            templateLogic = new TemplateLogic('cicero');
-            templateLogic.addModelFile(ctoSample,'test.cto');
+            logicManager = new LogicManager('cicero');
+            logicManager.addModelFile(ctoSample,'test.cto');
         });
 
         it('should update a model to the model manager', () => {
-            const modelManager = templateLogic.getModelManager();
-            templateLogic.updateModel(ctoSample,'test.cto');
+            const modelManager = logicManager.getModelManager();
+            logicManager.updateModel(ctoSample,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
-            templateLogic.updateModel(ctoSample3,'test.cto');
+            logicManager.updateModel(ctoSample3,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
             modelManager.getModels()[0].content.length.should.equal(170);
-            templateLogic.updateModel(ctoSample2,'test.cto');
+            logicManager.updateModel(ctoSample2,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
             modelManager.getModels()[0].content.length.should.equal(173);
         });
 
         it('should add a model to the model manager', () => {
-            const modelManager = templateLogic.getModelManager();
-            templateLogic.updateModel(ctoSample2,'test2.cto');
+            const modelManager = logicManager.getModelManager();
+            logicManager.updateModel(ctoSample2,'test2.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto','test2.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
             modelManager.getModels()[1].content.length.should.equal(173);
         });
 
         it('should update a logic file in the script manager', () => {
-            const templateLogic = new TemplateLogic('cicero');
-            templateLogic.addLogicFile(ergoSample,'test.ergo');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getInvokeCall('helloworld').length.should.equal(233);
-            templateLogic.getDispatchCall().length.should.equal(154);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-            templateLogic.updateLogic(ergoSample,'test.ergo');
-            templateLogic.compileLogicSync(false);
-            templateLogic.updateLogic(ergoSample,'testNEW.ergo');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
-            templateLogic.updateLogic(ergoSample3,'test.ergo');
-            templateLogic.compileLogicSync(false);
-            templateLogic.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            const logicManager = new LogicManager('cicero');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.compileLogicSync(false);
+            logicManager.getInvokeCall('helloworld').length.should.equal(233);
+            logicManager.getDispatchCall().length.should.equal(154);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            logicManager.updateLogic(ergoSample,'test.ergo');
+            logicManager.compileLogicSync(false);
+            logicManager.updateLogic(ergoSample,'testNEW.ergo');
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
+            logicManager.updateLogic(ergoSample3,'test.ergo');
+            logicManager.compileLogicSync(false);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(26386);
         });
 
     });
 
     describe('#validation', () => {
-        let templateLogic;
+        let logicManager;
         beforeEach(async function () {
-            templateLogic = new TemplateLogic('cicero');
-            templateLogic.addModelFile(ctoSample,'test.cto');
+            logicManager = new LogicManager('cicero');
+            logicManager.addModelFile(ctoSample,'test.cto');
         });
 
         it('should succeed validating an input', () => {
@@ -354,21 +354,21 @@ describe('TemplateLogic', () => {
                 '$class': 'org.accordproject.copyrightlicense.PaymentRequest',
                 'input': 'FOO'
             };
-            const validInput = templateLogic.validateInput(input);
+            const validInput = logicManager.validateInput(input);
             validInput.should.not.be.null;
             validInput.should.have.property('timestamp');
             validInput.should.have.property('transactionId');
             validInput.should.deep.include(input);
         });
         it('should propagate null when validating an input', () => {
-            expect(templateLogic.validateInput(null)).to.equal(null);
+            expect(logicManager.validateInput(null)).to.equal(null);
         });
         it('should fail validating an input with an unknown class', () => {
             const input = {
                 '$class': 'org.accordproject.promissorynote.Payment',
                 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
             };
-            (() => templateLogic.validateInput(input)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => logicManager.validateInput(input)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
 
         it('should succeed validating an output', () => {
@@ -376,25 +376,25 @@ describe('TemplateLogic', () => {
                 '$class': 'org.accordproject.copyrightlicense.PayOut',
                 'amount': 200.00
             };
-            const validOutput = templateLogic.validateOutput(output);
+            const validOutput = logicManager.validateOutput(output);
             validOutput.should.not.be.null;
             validOutput.should.have.property('timestamp');
             validOutput.should.have.property('transactionId');
             validOutput.should.deep.include(output);
         });
         it('should propagate null when validating an output', () => {
-            expect(templateLogic.validateOutput(null)).to.equal(null);
+            expect(logicManager.validateOutput(null)).to.equal(null);
         });
         it('should propagate strings or numbers when validating an output', () => {
-            expect(templateLogic.validateOutput('test string')).to.equal('test string');
-            expect(templateLogic.validateOutput(100.0)).to.equal(100.0);
+            expect(logicManager.validateOutput('test string')).to.equal('test string');
+            expect(logicManager.validateOutput(100.0)).to.equal(100.0);
         });
         it('should fail validating an output with an unknown class', () => {
             const output = {
                 '$class': 'org.accordproject.promissorynote.Payment',
                 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
             };
-            (() => templateLogic.validateOutput(output)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => logicManager.validateOutput(output)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
 
         it('should succeed validating an input record', () => {
@@ -406,7 +406,7 @@ describe('TemplateLogic', () => {
                 'x': 100.00,
                 'y': 'foo'
             };
-            const validInputRecord = templateLogic.validateInputRecord(inputRecord);
+            const validInputRecord = logicManager.validateInputRecord(inputRecord);
             validInputRecord.should.not.be.null;
             validInputRecord.should.have.property('request');
             validInputRecord.request.should.have.property('timestamp');
@@ -426,7 +426,7 @@ describe('TemplateLogic', () => {
                 'x': 100.00,
                 'y': 'foo'
             };
-            (() => templateLogic.validateInputRecord(inputRecord)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => logicManager.validateInputRecord(inputRecord)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
 
         it('should succeed validating an output array', () => {
@@ -434,7 +434,7 @@ describe('TemplateLogic', () => {
                 '$class': 'org.accordproject.copyrightlicense.PayOut',
                 'amount': 200.00
             };
-            const validOutputArray = templateLogic.validateOutputArray([output]);
+            const validOutputArray = logicManager.validateOutputArray([output]);
             validOutputArray.should.not.be.null;
             validOutputArray.length.should.equal(1);
             validOutputArray[0].should.have.property('timestamp');
@@ -447,7 +447,7 @@ describe('TemplateLogic', () => {
                 '$class': 'org.accordproject.promissorynote.Payment',
                 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
             };
-            (() => templateLogic.validateOutputArray([output])).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => logicManager.validateOutputArray([output])).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
     });
 });

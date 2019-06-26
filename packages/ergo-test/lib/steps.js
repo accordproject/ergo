@@ -20,7 +20,7 @@ const Path = require('path');
 const Chai = require('chai');
 const expect = Chai.expect;
 
-const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
+const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 const Engine = require('@accordproject/ergo-engine').VMEngine;
 const Util = require('./util');
 
@@ -30,29 +30,29 @@ const { Before, Given, When, Then } = require('cucumber');
  * Invoke Ergo contract initialization
  *
  * @param {object} engine - the execution engine
- * @param {object} templateLogic - the Template Logic
+ * @param {object} logicManager - the Template Logic
  * @param {object} contractJson contract data in JSON
  * @param {string} currentTime the definition of 'now'
  * @returns {object} Promise to the initial state of the contract
  */
-function init(engine,templateLogic,contractJson,currentTime) {
+function init(engine,logicManager,contractJson,currentTime) {
     const params = {};
-    return engine.compileAndInit(templateLogic,contractJson,params,currentTime);
+    return engine.compileAndInit(logicManager,contractJson,params,currentTime);
 }
 
 /**
  * Execute the Ergo contract with a request
  *
  * @param {object} engine - the execution engine
- * @param {object} templateLogic - the Template Logic
+ * @param {object} logicManager - the Template Logic
  * @param {object} contractJson - contract data in JSON
  * @param {object} stateJson - state data in JSON
  * @param {string} currentTime - the definition of 'now'
  * @param {object} requestJson - state data in JSON
  * @returns {object} Promise to the response
  */
-function execute(engine,templateLogic,contractJson,stateJson,currentTime,requestJson) {
-    return engine.compileAndExecute(templateLogic,contractJson,requestJson,stateJson,currentTime);
+function execute(engine,logicManager,contractJson,stateJson,currentTime,requestJson) {
+    return engine.compileAndExecute(logicManager,contractJson,requestJson,stateJson,currentTime);
 }
 
 // Defaults
@@ -65,13 +65,13 @@ Before(function () {
     this.engine = new Engine();
     this.rootdir = Util.resolveRootDir(this.parameters);
     this.currentTime = '1970-01-01T00:00:00Z';
-    this.templateLogic = new TemplateLogic('es6');
+    this.logicManager = new LogicManager('es6');
     this.state = defaultState;
-    this.templateLogic.addErgoBuiltin();
+    this.logicManager.addErgoBuiltin();
 });
 
 Given('the target platform {string}', function (target) {
-    this.templateLogic.setTarget(target);
+    this.logicManager.setTarget(target);
 });
 
 Given('the current time is {string}', function(currentTime) {
@@ -79,22 +79,22 @@ Given('the current time is {string}', function(currentTime) {
 });
 
 Given('the Ergo contract {string} in file {string}', function(paramName,paramFile) {
-    this.templateLogic.setContractName(paramName);
+    this.logicManager.setContractName(paramName);
     const fileName = Path.resolve(this.rootdir, paramFile);
     const logicFile = Fs.readFileSync(fileName, 'utf8');
-    this.templateLogic.addLogicFile(logicFile,paramFile);
+    this.logicManager.addLogicFile(logicFile,paramFile);
 });
 
 Given('the Ergo logic in file {string}', function(paramFile) {
     const fileName = Path.resolve(this.rootdir, paramFile);
     const logicFile = Fs.readFileSync(fileName, 'utf8');
-    this.templateLogic.addLogicFile(logicFile,paramFile);
+    this.logicManager.addLogicFile(logicFile,paramFile);
 });
 
 Given('the model in file {string}', function(paramFile) {
     const fileName = Path.resolve(this.rootdir, paramFile);
     const modelFile = Fs.readFileSync(fileName, 'utf8');
-    this.templateLogic.addModelFile(modelFile,paramFile);
+    this.logicManager.addModelFile(modelFile,paramFile);
 });
 
 Given('the contract data', function (actualContract) {
@@ -120,7 +120,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ response },this.answer);
     } else {
-        return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
+        return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -132,7 +132,7 @@ Then('it should respond with', function (expectedResponse) {
 
 Then('the initial state( of the contract) should be', function (expectedState) {
     const state = JSON.parse(expectedState);
-    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -142,7 +142,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -157,7 +157,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ state },this.answer);
     } else {
-        return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
+        return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -174,7 +174,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ emit },this.answer);
     } else {
-        return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
+        return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
@@ -186,7 +186,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
 
 Then('the following initial obligations have( also) been emitted', function (expectedEmit) {
     const emit = JSON.parse(expectedEmit);
-    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime)
         .then((actualAnswer) => {
             this.answer = actualAnswer;
             expect(actualAnswer).to.have.property('emit');
@@ -196,14 +196,14 @@ Then('the following initial obligations have( also) been emitted', function (exp
 });
 
 Then('it should fail with the error', function (expectedError) {
-    return execute(this.engine,this.templateLogic,this.contract,this.state,this.currentTime,this.request)
+    return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
         .catch((actualError) => {
             expect(actualError.message).to.equal(expectedError);
         });
 });
 
 Then('it should fail to initialize with the error', function (expectedError) {
-    return init(this.engine,this.templateLogic,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime)
         .catch((actualError) => {
             expect(actualError.message).to.equal(expectedError);
         });

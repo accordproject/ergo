@@ -31,10 +31,10 @@ const Builtin = require('./builtin');
  * @abstract
  * @memberof module:ergo-compiler
  */
-class TemplateLogic {
+class LogicManager {
 
     /**
-     * Create the TemplateLogic.
+     * Create the LogicManager.
      * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
      * @param {Object} options  - e.g., { warnings: true }
      */
@@ -398,4 +398,4 @@ unwrapError(__result);
 
 }
 
-module.exports = TemplateLogic;
+module.exports = LogicManager;

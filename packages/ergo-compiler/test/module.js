@@ -27,14 +27,14 @@ describe('Module', () => {
     describe('#exports', () => {
 
         it('should export classes', () => {
-            index.Logger.should.not.be.null;
-            index.Util.should.not.be.null;
-            index.CompilerException.should.not.be.null;
-            index.TypeException.should.not.be.null;
             index.APModelManager.should.not.be.null;
-            index.ScriptManager.should.not.be.null;
             index.Compiler.should.not.be.null;
-            index.TemplateLogic.should.not.be.null;
+            index.CompilerException.should.not.be.null;
+            index.LogicManager.should.not.be.null;
+            index.Logger.should.not.be.null;
+            index.ScriptManager.should.not.be.null;
+            index.TypeException.should.not.be.null;
+            index.Util.should.not.be.null;
             index.version.should.not.be.null;
         });
     });

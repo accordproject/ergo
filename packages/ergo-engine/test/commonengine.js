@@ -14,7 +14,7 @@
 
 'use strict';
 
-const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
+const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 
 const Chai = require('chai');
 const expect = Chai.expect;
@@ -83,12 +83,12 @@ function compareSuccess(expected,actual) {
  */
 function runWorkload(Engine, target) {
     let engine = new Engine();
-    let templateLogic;
+    let logicManager;
 
     beforeEach(async function () {
         engine = new Engine();
-        templateLogic = new TemplateLogic(target);
-        templateLogic.addErgoBuiltin();
+        logicManager = new LogicManager(target);
+        logicManager.addErgoBuiltin();
     });
 
     afterEach(() => {});
@@ -116,23 +116,23 @@ function runWorkload(Engine, target) {
                 for (let i = 0; i < ergo.length; i++) {
                     const ergoFile = Path.resolve(__dirname, dir, ergo[i]);
                     const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                    templateLogic.addLogicFile(ergoContent, Path.join(dir, ergo[i]));
+                    logicManager.addLogicFile(ergoContent, Path.join(dir, ergo[i]));
                 }
                 for (let i = 0; i < models.length; i++) {
                     const ctoFile = Path.resolve(__dirname, dir, models[i]);
                     const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                    templateLogic.addModelFile(ctoContent, Path.join(dir, models[i]));
+                    logicManager.addModelFile(ctoContent, Path.join(dir, models[i]));
                 }
-                templateLogic.setContractName(contractName);
+                logicManager.setContractName(contractName);
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 if (state === null) {
                     if (expected.hasOwnProperty('error')) {
-                        return engine.compileAndInit(templateLogic, contractJson, currentTime)
+                        return engine.compileAndInit(logicManager, contractJson, currentTime)
                             .catch((actualError) => {
                                 expect(actualError.message).to.equal(expected.error);
                             });
                     } else {
-                        return engine.compileAndInit(templateLogic, contractJson, currentTime)
+                        return engine.compileAndInit(logicManager, contractJson, currentTime)
                             .then((actualAnswer) => {
                                 return compareSuccess(expected, actualAnswer);
                             });
@@ -143,12 +143,12 @@ function runWorkload(Engine, target) {
                         const params = test.params;
                         const clauseName = test.clauseName;
                         if (expected.hasOwnProperty('error')) {
-                            return engine.compileAndInvoke(templateLogic, clauseName, contractJson, params, stateJson, currentTime)
+                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndInvoke(templateLogic, clauseName, contractJson, params, stateJson, currentTime)
+                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });
@@ -157,12 +157,12 @@ function runWorkload(Engine, target) {
                         const request = test.request;
                         const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                         if (expected.hasOwnProperty('error')) {
-                            return engine.compileAndExecute(templateLogic, contractJson, requestJson, stateJson, currentTime)
+                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndExecute(templateLogic, contractJson, requestJson, stateJson, currentTime)
+                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });
