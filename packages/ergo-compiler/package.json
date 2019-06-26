@@ -26,7 +26,7 @@
     "access": "public"
   },
   "dependencies": {
-    "composer-concerto": "0.71.2",
+    "composer-concerto": "0.71.3",
     "debug": "4.1.0",
     "fast-safe-stringify": "2.0.5",
     "jsome": "2.5.0",

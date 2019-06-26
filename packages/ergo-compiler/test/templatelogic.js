@@ -126,12 +126,12 @@ describe('TemplateLogic', () => {
             } catch (error) {
                 expect(error.name).to.equal('ParseException');
                 expect(error.message).to.equal('Parse error (at file test2.ergo line 33 col 0). \n\n');
+                expect(error.fileName).to.equal('test2.ergo');
                 expect(error.fileLocation).to.deep.equal({
                     'end': {
                         'column': 0,
                         'line': 33
                     },
-                    'fileName': 'test2.ergo',
                     'start': {
                         'column': 0,
                         'line': 33
@@ -148,6 +148,7 @@ describe('TemplateLogic', () => {
             } catch (error) {
                 expect(error.name).to.equal('TypeException');
                 expect(error.message).to.equal('Type error (at file test4.ergo line 30 col 32). This operator received unexpected arguments of type `String\'  and `String\'.\n     return MyResponse{ output: "Hello " ++ contract.name ++ " (" ++ request.input + ")" }\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ');
+                expect(error.fileName).to.equal('test4.ergo');
                 expect(error.fileLocation).to.deep.equal({
                     'end': {
                         'column': 88,
