@@ -16,7 +16,7 @@
 
 const Fs = require('fs');
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
-const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
+const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 const Engine = require('@accordproject/ergo-engine').VMEngine;
 
 /**
@@ -55,19 +55,19 @@ class Commands {
     static execute(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput,warnings) {
         try {
             const engine = new Engine();
-            const templateLogic = new TemplateLogic('es6', { warnings });
-            templateLogic.addErgoBuiltin();
+            const logicManager = new LogicManager('es6', { warnings });
+            logicManager.addErgoBuiltin();
             if (!ergoPaths) { return Promise.reject('No input ergo found'); }
             for (let i = 0; i < ergoPaths.length; i++) {
                 const ergoFile = ergoPaths[i];
                 const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                templateLogic.addLogicFile(ergoContent, ergoFile);
+                logicManager.addLogicFile(ergoContent, ergoFile);
             }
             if (!ctoPaths) { ctoPaths = []; }
             for (let i = 0; i < ctoPaths.length; i++) {
                 const ctoFile = ctoPaths[i];
                 const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                templateLogic.addModelFile(ctoContent, ctoFile);
+                logicManager.addModelFile(ctoContent, ctoFile);
             }
             const contractJson = getJson(contractInput);
             let requestsJson = [];
@@ -76,7 +76,7 @@ class Commands {
             }
             let initResponse;
             if (stateInput === null) {
-                initResponse = engine.compileAndInit(templateLogic, contractJson, {}, currentTime);
+                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime);
             } else {
                 const stateJson = getJson(stateInput);
                 initResponse = Promise.resolve({ state: stateJson });
@@ -84,7 +84,7 @@ class Commands {
             // Get all the other requests and chain execution through Promise.reduce()
             return requestsJson.reduce((promise,requestJson) => {
                 return promise.then((result) => {
-                    return engine.compileAndExecute(templateLogic, contractJson, requestJson, result.state, currentTime);
+                    return engine.compileAndExecute(logicManager, contractJson, requestJson, result.state, currentTime);
                 });
             }, initResponse);
         } catch (err) {
@@ -108,24 +108,24 @@ class Commands {
     static invoke(ergoPaths,ctoPaths,clauseName,contractInput,stateInput,currentTime,paramsInput,warnings) {
         try {
             const engine = new Engine();
-            const templateLogic = new TemplateLogic('es6', { warnings });
-            templateLogic.addErgoBuiltin();
+            const logicManager = new LogicManager('es6', { warnings });
+            logicManager.addErgoBuiltin();
             if (!ergoPaths) { return Promise.reject('No input ergo found'); }
             for (let i = 0; i < ergoPaths.length; i++) {
                 const ergoFile = ergoPaths[i];
                 const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                templateLogic.addLogicFile(ergoContent, ergoFile);
+                logicManager.addLogicFile(ergoContent, ergoFile);
             }
             if (!ctoPaths) { ctoPaths = []; }
             for (let i = 0; i < ctoPaths.length; i++) {
                 const ctoFile = ctoPaths[i];
                 const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                templateLogic.addModelFile(ctoContent, ctoFile);
+                logicManager.addModelFile(ctoContent, ctoFile);
             }
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
             const stateJson = getJson(stateInput);
-            return engine.compileAndInvoke(templateLogic, clauseName, contractJson, clauseParams, stateJson, currentTime);
+            return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime);
         } catch (err) {
             return Promise.reject(err);
         }
@@ -145,23 +145,23 @@ class Commands {
     static init(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput,warnings) {
         try {
             const engine = new Engine();
-            const templateLogic = new TemplateLogic('es6', { warnings });
-            templateLogic.addErgoBuiltin();
+            const logicManager = new LogicManager('es6', { warnings });
+            logicManager.addErgoBuiltin();
             if (!ergoPaths) { return Promise.reject('No input ergo found'); }
             for (let i = 0; i < ergoPaths.length; i++) {
                 const ergoFile = ergoPaths[i];
                 const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                templateLogic.addLogicFile(ergoContent, ergoFile);
+                logicManager.addLogicFile(ergoContent, ergoFile);
             }
             if (!ctoPaths) { ctoPaths = []; }
             for (let i = 0; i < ctoPaths.length; i++) {
                 const ctoFile = ctoPaths[i];
                 const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                templateLogic.addModelFile(ctoContent, ctoFile);
+                logicManager.addModelFile(ctoContent, ctoFile);
             }
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
-            return engine.compileAndInit(templateLogic, contractJson, clauseParams, currentTime);
+            return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime);
         } catch (err) {
             return Promise.reject(err);
         }

@@ -267,7 +267,7 @@ class ScriptManager {
      * @param {object} error - Ergo compiler error
      * @throws {BaseFileException}
      */
-    throwCompilerException(error) {
+    static _throwCompilerException(error) {
         let fileLocation = {};
 
         // Convert from Ergo file location to Concerto file location
@@ -313,7 +313,7 @@ class ScriptManager {
             const link = this.target === 'java' ? false : true;
             const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.target,link, this.warnings);
             if (compiledErgo.hasOwnProperty('error')) {
-                this.throwCompilerException(compiledErgo.error);
+                ScriptManager._throwCompilerException(compiledErgo.error);
             }
             this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success, compiledErgo.contractName);
         }

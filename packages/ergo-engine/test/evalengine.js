@@ -16,7 +16,7 @@
 
 const runWorkload = require('./commonengine').runWorkload;
 const EvalEngine = require('../lib/evalengine');
-const TemplateLogic = require('@accordproject/ergo-compiler').TemplateLogic;
+const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 
 describe('#evalengine', () => {
     it('should behave as a proper Eval Engine', () => {
@@ -28,11 +28,11 @@ describe('#evalengine', () => {
 
     it('should cache a script', () => {
         const engine = new EvalEngine();
-        const templateLogic = new TemplateLogic('es6');
+        const logicManager = new LogicManager('es6');
         const script = 'const a = 1';
-        templateLogic.addLogicFile(script,'test2.js');
-        templateLogic.compileLogicSync(false);
-        const scriptManager = templateLogic.getScriptManager();
+        logicManager.addLogicFile(script,'test2.js');
+        logicManager.compileLogicSync(false);
+        const scriptManager = logicManager.getScriptManager();
         engine.cacheJsScript(scriptManager,'test2.js').should.equal(script);
         engine.cacheJsScript(scriptManager,'test2.js').should.equal(script);
     });
