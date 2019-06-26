@@ -280,10 +280,9 @@ class ScriptManager {
             column: error.locend.column
         };
 
-        if (error.kind === 'SystemError') {
-            throw new SystemException(error.message, fileLocation, error.fullMessage, error.fileName);
-        }
-        if (error.kind === 'ParseError') {
+        if (error.kind === 'CompilationError') {
+            throw new CompilerException(error.message, fileLocation, error.fullMessage, error.fileName);
+        } else if (error.kind === 'ParseError') {
             // HACK!
             const pErr = new ParseException(error.message, fileLocation, error.fileName, 'ergo-compiler');
             pErr.message = error.fullMessage;
@@ -291,7 +290,7 @@ class ScriptManager {
         } else if (error.kind === 'TypeError') {
             throw new TypeException(error.message, fileLocation, error.fullMessage, error.fileName);
         } else {
-            throw new CompilerException(error.message, fileLocation, error.fullMessage, error.fileName);
+            throw new SystemException(error.message, fileLocation, error.fullMessage, error.fileName);
         }
     }
 
