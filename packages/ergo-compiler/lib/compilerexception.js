@@ -38,7 +38,7 @@ class CompilerException extends BaseFileException {
      * @param {String} component - the optional component which throws this error
      */
     constructor(message, fileLocation, fullMessage, fileName, component) {
-        super(message, fileLocation, fullMessage, fileName || null, component || 'ergo-compiler');
+        super(message, fileLocation, fullMessage, fileName, component || 'ergo-compiler');
     }
 }
 
