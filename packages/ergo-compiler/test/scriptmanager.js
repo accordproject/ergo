@@ -85,6 +85,14 @@ describe('ScriptManager', () => {
             (() => scriptManager.compileLogic()).should.throw('Parse error (at file test2.ergo line 33 col 0). ');
         });
 
+        it('should fail to compile an Ergo script with an undefined built-in function', async function() {
+            const scriptManager = new ScriptManager('cicero',modelManager);
+            const ergoErr = fs.readFileSync('./test/examples/smoke/builtinErr.ergo', 'utf8');
+            const script1 = scriptManager.createScript('builtinErr.ergo','.ergo',ergoErr);
+            scriptManager.addScript(script1);
+            (() => scriptManager.compileLogic()).should.throw('System error. [ec2en/function] Function org.accordproject.builtin.foo did not get inlined');
+        });
+
         it('should delete both JavaScript and Ergo scripts if they exist', async function() {
             const scriptManager = new ScriptManager('cicero',modelManager);
             const script1 = scriptManager.createScript('test.js','.js',jsSample);

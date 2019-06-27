@@ -36,7 +36,15 @@ describe('ergo', () => {
             const result = await Commands.execute([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
-        it('should throw when executeing a request to a smart Ergo contract without its cto', async function () {
+        it('should throw when executing a request to a smart Ergo contract with an illegal model', async function () {
+            const ergoPath = Path.join('test/examples/helloworld', 'logic.ergo');
+            const ctoPath = Path.join('test/examples/helloworld', 'modelErr.cto');
+            const contractPath = { file: Path.join('test/examples/helloworld', 'contract.json') };
+            const requestPath = { file: Path.join('test/examples/helloworld', 'request.json') };
+            const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
+            return Commands.execute([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/helloworld/modelErr.cto line 15 column 1');
+        });
+        it('should throw when executing a request to a smart Ergo contract without its cto', async function () {
             const ergoPath = Path.join('test/examples/helloworld', 'logic.ergo');
             const contractPath = { file: Path.join('test/examples/helloworld', 'contract.json') };
             const requestPath = { file: Path.join('test/examples/helloworld', 'request.json') };
@@ -143,6 +151,14 @@ describe('ergo', () => {
             const result = await Commands.invoke([ergoPath], [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath);
             result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
         });
+        it('should throw when invoking a clause in a smart Ergo contract with an illegal model', async function () {
+            const ergoPath = Path.join('test/examples/helloworld', 'logic.ergo');
+            const ctoPath = Path.join('test/examples/helloworld', 'modelErr.cto');
+            const contractPath = { file: Path.join('test/examples/helloworld', 'contract.json') };
+            const paramsPath = { file: Path.join('test/examples/helloworld', 'params.json') };
+            const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
+            return Commands.invoke([ergoPath], [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/helloworld/modelErr.cto line 15 column 1');
+        });
         it('should invoke a clause in a smart Ergo contract (JSON parameters)', async function () {
             const ergoPath = Path.join('test/examples/helloworld', 'logic4.ergo');
             const ctoPath = Path.join('test/examples/helloworld', 'model.cto');
@@ -184,7 +200,14 @@ describe('ergo', () => {
             const result = await Commands.init([ergoPath], [ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath);
             result.state.balance_remaining.should.equal(10000.00);
         });
-        it('should throw when smart Ergo clause without a cto', async function () {
+        it('should throw when initializing a smart Ergo contract with an illegal model', async function () {
+            const ergoPath = Path.join('test/examples/installment-sale', 'logic.ergo');
+            const ctoPath = Path.join('test/examples/installment-sale', 'modelErr.cto');
+            const contractPath = { file: Path.join('test/examples/installment-sale', 'contract.json') };
+            const paramsPath = { file: Path.join('test/examples/installment-sale', 'params.json') };
+            return Commands.init([ergoPath], [ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/installment-sale/modelErr.cto line 15 column 1');
+        });
+        it('should throw when initializing a smart Ergo clause without a cto', async function () {
             const ergoPath = Path.join('test/examples/installment-sale', 'logic.ergo');
             const contractPath = { file: Path.join('test/examples/installment-sale', 'contract.json') };
             const paramsPath = { file: Path.join('test/examples/installment-sale', 'params.json') };
