@@ -371,6 +371,10 @@ Section ErgoNameResolution.
                rta
                (resolve_ergo_expr ectxt nsctxt e1)
                (resolve_ergo_expr ectxt nsctxt e2)
+      | EPrint prov e1 e2 =>
+        elift2 (EPrint prov)
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_expr ectxt nsctxt e2)
       | ENew prov cr el =>
         let rcr := resolve_type_name prov nsctxt cr in
         let init_rec := esuccess nil nil in
@@ -506,6 +510,10 @@ Section ErgoNameResolution.
         in
         elift3 (SLet prov v)
                rta
+               (resolve_ergo_expr ectxt nsctxt e1)
+               (resolve_ergo_stmt ectxt nsctxt s2)
+      | SPrint prov e1 s2 =>
+        elift2 (SPrint prov)
                (resolve_ergo_expr ectxt nsctxt e1)
                (resolve_ergo_stmt ectxt nsctxt s2)
       | SIf prov e1 s2 s3 =>

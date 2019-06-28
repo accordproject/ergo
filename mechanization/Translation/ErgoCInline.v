@@ -152,13 +152,11 @@ Section ErgoCInline.
     match fn.(functionc_body) with
     | None => esuccess fn nil
     | Some expr =>
-      match eolift (ergo_inline_expr ctxt) (ergo_inline_globals ctxt expr) with
-      | Success _ _ (new_body,w) =>
-        esuccess (mkFuncC fn.(functionc_annot)
-                               fn.(functionc_sig)
-                                    (Some new_body)) w
-      | Failure _ _ f => efailure f
-      end
+      elift (fun new_body =>
+               mkFuncC fn.(functionc_annot)
+                       fn.(functionc_sig)
+                       (Some new_body))
+            (eolift (ergo_inline_expr ctxt) (ergo_inline_globals ctxt expr))
     end.
 
   Definition ergoc_inline_clause

@@ -23,3 +23,5 @@ val nrc_log_endPass : nrc_logger_token_type -> 'a -> nrc_logger_token_type
 
 val nrc_set_trace : (Obj.t->sexp) -> string -> unit
 
+val log_string : char list -> unit
+

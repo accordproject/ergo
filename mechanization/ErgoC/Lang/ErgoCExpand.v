@@ -91,8 +91,8 @@ Section ErgoCExpand.
               elift (fun cases =>
                        EMatch prov effparam0
                               cases
-                              (EError prov
-                                      (EConst prov (default_match_error_content prov))))
+                              (EFailure prov
+                                        (EConst prov (default_match_error_content prov))))
                     ecases)
            (eflatmaplift (case_of_sig prov coname v0 effparam0 effparamrest) ss).
 
@@ -212,7 +212,7 @@ Section ErgoCExpand.
              (order:list laergo_type_declaration)
              (dl:list ergoc_declaration) : eresult (list ergoc_declaration) :=
     emaplift (ergoc_expand_declaration order) dl.
-    
+
   (** Pre-processing. At the moment only add main clauses when missing *)
   Definition ergoc_expand_module
              (order:list laergo_type_declaration)

@@ -230,6 +230,8 @@ Module ErgoCompiler.
     := Ergo.EIf prov e1 e2 e3.
   Definition elet prov (v:String.string) (t:option ErgoType.ergo_type) (e1 e2:ergo_expr) : ergo_expr
     := Ergo.ELet prov v t e1 e2.
+  Definition eprint prov (e1 e2:ergo_expr) : ergo_expr
+    := Ergo.EPrint prov e1 e2.
   Definition enew prov n rec : ergo_expr 
     := Ergo.ENew prov n rec.
   Definition erecord prov rec : ergo_expr 
@@ -264,6 +266,8 @@ Module ErgoCompiler.
     Ergo.SEmit prov e s.
   Definition slet prov (v:String.string) (t:option ErgoType.ergo_type) (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
     Ergo.SLet prov v t e1 s2.
+  Definition sprint prov (e1:ergo_expr) (s2:ergo_stmt) : ergo_stmt :=
+    Ergo.SPrint prov e1 s2.
   Definition sif prov e1 s2 s3 : ergo_stmt :=
     Ergo.SIf prov e1 s2 s3.
   Definition senforce prov (e1:ergo_expr) (s2: option ergo_stmt) (s3:ergo_stmt) : ergo_stmt :=

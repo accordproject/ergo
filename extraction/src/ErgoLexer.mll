@@ -49,6 +49,7 @@
 	      "then", THEN;
 	      "else", ELSE;
 	      "let", LET;
+	      "info", INFO;
 	      "foreach", FOREACH;
 	      "return", RETURN;
 	      "in", IN;

@@ -16,6 +16,7 @@ Require Import String.
 Require Import List.
 
 Require Import Qcert.Common.CommonSystem.
+Require Import ErgoSpec.Backend.Model.LogModelPart.
 Require Import ErgoSpec.Backend.Model.MathModelPart.
 Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
 Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
@@ -185,8 +186,10 @@ Section ErgoCStdlib.
                           (foreign_binary_operator_table).
 
   Definition unary_operator_table : ergo_stdlib_table :=
-    (* String *)
-    ("org.accordproject.ergo.stdlib.toString", mk_unary OpToString)
+    (* Log *)
+    ("org.accordproject.ergo.stdlib.logString", mk_unary  (OpForeignUnary (enhanced_unary_log_op uop_log_string)))
+      (* String *)
+      :: ("org.accordproject.ergo.stdlib.toString", mk_unary OpToString)
       :: ("org.accordproject.ergo.stdlib.length", mk_unary OpLength)
       (* Natural numbers // Integer *)
       :: ("org.accordproject.ergo.stdlib.integerAbs", mk_unary (OpNatUnary NatAbs))

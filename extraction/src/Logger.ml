@@ -93,3 +93,6 @@ let nrc_log_endPass tok output =
   else
     tok
 
+let log_string x =
+  Printf.printf "%s\n" (Util.string_of_char_list x)
+

@@ -771,6 +771,11 @@ function dateTimeEndOf(part, date) {
     return date.endOf(part);
 }
 
+/* Logging */
+function logString(v) {
+  logger.info(v);
+}
+
 /* Unwrapping errors on output */
 function unwrapError(result) {
     if (result.hasOwnProperty('left')) {

@@ -43,7 +43,7 @@ let mk_provenance
 %token EMITS
 
 %token ENFORCE IF THEN ELSE
-%token LET FOREACH IN WHERE
+%token LET INFO FOREACH IN WHERE
 %token RETURN THROW STATE CALL SEND
 %token CONSTANT
 %token MATCH WITH
@@ -69,7 +69,7 @@ let mk_provenance
 %left SEMI
 %left ELSE
 %left RETURN
-%left MATCH IF LET CONTRACT
+%left MATCH IF LET CONTRACT INFO
 %left OR
 %left AND
 %left EQUAL NEQUAL
@@ -283,6 +283,8 @@ stmt:
       ErgoCompiler.scallcontract (mk_provenance $startpos $endpos) e0 e1 }
 | LET vt = identannot EQUAL e1 = expr SEMI s2 = stmt
     { ErgoCompiler.slet (mk_provenance $startpos $endpos) (fst vt) (snd vt) e1 s2 }
+| INFO LPAREN e1 = expr RPAREN SEMI s2 = stmt
+    { ErgoCompiler.sprint (mk_provenance $startpos $endpos) e1 s2 }
 | IF e1 = expr THEN s2 = stmt ELSE s3 = stmt
     { ErgoCompiler.sif (mk_provenance $startpos $endpos) e1 s2 s3 }
 | ENFORCE e1 = expr ELSE s2 = stmt SEMI s3 = stmt
@@ -399,6 +401,8 @@ expr:
     { ErgoCompiler.ethis_state (mk_provenance $startpos $endpos) }
 | LET vt = identannot EQUAL e1 = expr SEMI e2 = expr
     { ErgoCompiler.elet (mk_provenance $startpos $endpos) (fst vt) (snd vt) e1 e2 }
+| INFO LPAREN e1 = expr RPAREN SEMI e2 = expr
+    { ErgoCompiler.eprint (mk_provenance $startpos $endpos) e1 e2 }
 | MATCH e0 = expr csd = cases
     { ErgoCompiler.ematch (mk_provenance $startpos $endpos) e0 (fst csd) (snd csd) }
 | FOREACH fl = foreachlist RETURN e2 = expr
@@ -613,6 +617,7 @@ safeident_base:
 | THEN { "then" }
 | ELSE { "else" }
 | LET { "let" }
+| INFO { "info" }
 | FOREACH { "foreach" }
 | RETURN { "return" }
 | IN { "in" }

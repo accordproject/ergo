@@ -146,6 +146,8 @@ Section ErgoCTtoErgoNNRC.
       elift2 (NNRCLet v)
               (ergoct_expr_to_nnrc env e1)
               (ergoct_expr_to_nnrc env e2)
+    | EPrint (prov,_) v e =>
+      print_in_calculus_error prov
     | ENew (prov,_) cr nil =>
       esuccess (new_expr cr (NNRCConst (drec nil))) nil
     | ENew (prov,_) cr ((s0,init)::rest) =>
