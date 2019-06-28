@@ -28,6 +28,9 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
 Require Import ErgoSpec.Translation.ErgoCompContext.
 
+Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
+Require Import ErgoSpec.Backend.Model.LogModelPart.
+
 Section ErgotoErgoC.
   Context {bm:brand_model}.
 
@@ -90,6 +93,14 @@ Section ErgotoErgoC.
     | ELet prov v ta e1 e2 =>
       elift2 (ELet prov v ta)
              (ergo_expr_to_ergoc_expr ctxt e1)
+             (ergo_expr_to_ergoc_expr ctxt e2)
+    | EPrint prov e1 e2 =>
+      elift2 (ELet prov "__log__" None)
+             (elift
+                (EUnaryBuiltin prov (OpForeignUnary (enhanced_unary_log_op uop_log_string)))
+                (elift
+                   (EUnaryBuiltin prov OpToString)
+                   (ergo_expr_to_ergoc_expr ctxt e1)))
              (ergo_expr_to_ergoc_expr ctxt e2)
     | ENew prov cr el =>
       if is_abstract_class ctxt cr
@@ -188,7 +199,7 @@ Section ErgotoErgoC.
     | SFunReturn prov e => (* Returning from a function does not have state or emit, just the result *)
       ergo_expr_to_ergoc_expr ctxt e
     | SThrow prov e =>
-      elift (EError prov)
+      elift (EFailure prov)
             (ergo_expr_to_ergoc_expr ctxt e)
     | SCallClause prov (EThisContract _) clname el =>
       match ctxt.(compilation_context_current_contract) with
@@ -222,6 +233,14 @@ Section ErgotoErgoC.
         (ELet prov vname vtype)
         (ergo_expr_to_ergoc_expr ctxt e1)
         (ergo_stmt_to_expr ctxt s2)
+    | SPrint prov e1 s2 =>
+      elift2 (ELet prov "__log__" None)
+             (elift
+                (EUnaryBuiltin prov (OpForeignUnary (enhanced_unary_log_op uop_log_string)))
+                (elift
+                   (EUnaryBuiltin prov OpToString)
+                   (ergo_expr_to_ergoc_expr ctxt e1)))
+             (ergo_stmt_to_expr ctxt s2)
     | SIf prov e1 s2 s3 =>
       elift3
         (EIf prov)
@@ -234,8 +253,8 @@ Section ErgotoErgoC.
       in
       elift3 (EIf prov)
              (elift (EUnaryBuiltin prov OpNeg) (ergo_expr_to_ergoc_expr ctxt e1))
-             (esuccess (EError prov
-                               (EConst prov (enforce_error_content prov ""))) (warning_no_else::nil))
+             (esuccess (EFailure prov
+                                 (EConst prov (enforce_error_content prov ""))) (warning_no_else::nil))
              (ergo_stmt_to_expr ctxt s3)
     | SEnforce prov e1 (Some s2) s3 =>
       elift3 (EIf prov)

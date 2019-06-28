@@ -63,7 +63,7 @@ Section ErgoCSugar.
   Definition ESuccess (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
     EUnaryBuiltin prov OpLeft e.
 
-  Definition EError (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
+  Definition EFailure (prov:provenance) (e:ergoc_expr) : ergoc_expr :=
     EUnaryBuiltin prov OpRight e.
 
   Definition ECallClause (prov:provenance) (coname clname:string) (el:list ergoc_expr) : ergoc_expr :=

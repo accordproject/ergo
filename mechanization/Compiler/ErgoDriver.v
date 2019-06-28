@@ -201,11 +201,11 @@ Section ErgoDriver.
                 elift_context_fold_left
                   (fun (sctxt : compilation_context) (decl : ergoc_declaration) =>
                      let nsctxt := sctxt.(compilation_context_namespace)  in
-                     match ergoc_typecheck_decl nsctxt sctxt.(compilation_context_type_ctxt) decl with
-                     | Failure _ _ f => efailure f
-                     | Success _ _ ((declt, tctxt'),w) =>
-                       esuccess (declt, compilation_context_update_type_ctxt sctxt tctxt') w
-                     end)
+                     elift (fun xy : ergoct_declaration * type_context =>
+                              let (declt, tctxt') := xy in
+                              (declt, compilation_context_update_type_ctxt sctxt tctxt'))
+                           (ergoc_typecheck_decl nsctxt sctxt.(compilation_context_type_ctxt) decl)
+)
                   (fst xy)
                   (snd xy)
              ) inlined.
@@ -365,35 +365,37 @@ Section ErgoDriver.
       let nsctxt := ctxt.(repl_context_comp_ctxt).(compilation_context_namespace)  in
       let typ := ergoct_declaration_type decl in
       let warnings := ctxt.(repl_context_comp_ctxt).(compilation_context_warnings) in
-      match ergoct_eval_decl ctxt.(repl_context_eval_ctxt) decl with
-      | Failure _ _ f => efailure f
-      | Success _ _ ((dctxt', None),w) =>
-        esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt') (warnings++w)
-      | Success _ _ ((dctxt', Some out),w) =>
-        match unpack_output out with
-        | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt') (warnings++w)
-        | Some (_, _, state) =>
-          let newctxt :=
-              match typ with (* XXX If we have a data, don't we also have a type ??? *)
-              | None =>
-                esuccess
-                  (update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state))
-                  warnings
-              | Some typ =>
-                elift
-                  (fun ty =>
-                     let '(_, _, statety) := ty in
-                     let ctxt1 :=
-                         update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state)
-                     in
-                     let sctxt1 := ctxt1.(repl_context_comp_ctxt).(compilation_context_type_ctxt) in
-                     update_repl_ctxt_type_ctxt ctxt1 (type_context_update_global_env sctxt1 this_state statety))
-                  (unpack_success_type nsctxt typ warnings)
-              end
-          in
-          elift (fun ctxt => (typ, Some out, ctxt)) newctxt
-        end
-      end.
+      let init := eolift (ergoct_eval_decl ctxt.(repl_context_eval_ctxt)) (esuccess decl warnings) in
+      eolift (fun xy : eval_context * option ergo_data =>
+                let (dctxt', od) := xy in
+                match od with
+                | None =>
+                  esuccess (typ, None, update_repl_ctxt_eval_ctxt ctxt dctxt') nil
+                | Some out =>
+                  match unpack_output out with
+                  | None => esuccess (typ, Some out, update_repl_ctxt_eval_ctxt ctxt dctxt') nil
+                  | Some (_, _, state) =>
+                    let newctxt :=
+                        match typ with (* XXX If we have a data, don't we also have a type ??? *)
+                        | None =>
+                          esuccess
+                            (update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state))
+                            warnings
+                        | Some typ =>
+                          elift
+                            (fun ty =>
+                               let '(_, _, statety) := ty in
+                               let ctxt1 :=
+                                   update_repl_ctxt_eval_ctxt ctxt (eval_context_update_global_env dctxt' this_state state)
+                               in
+                               let sctxt1 := ctxt1.(repl_context_comp_ctxt).(compilation_context_type_ctxt) in
+                               update_repl_ctxt_type_ctxt ctxt1 (type_context_update_global_env sctxt1 this_state statety))
+                            (unpack_success_type nsctxt typ warnings)
+                        end
+                    in
+                    elift (fun ctxt => (typ, Some out, ctxt)) newctxt
+                  end
+                end) init.
 
     Definition ergoct_repl_eval_declarations
                (ctxt:repl_context) (decls:list ergoct_declaration)
@@ -410,13 +412,13 @@ Section ErgoDriver.
                (ctxt : repl_context)
                (decl : lrergo_declaration)
       : eresult (option ergoc_type * option ergo_data * repl_context) :=
-      match ergo_declaration_to_ergoct_inlined ctxt.(repl_context_comp_ctxt) decl with
-      | Failure _ _ f => efailure f
-      | Success _ _ ((decls, sctxt'), warnings) =>
-        let sctxt' := compilation_context_add_warnings sctxt' warnings in
-        let rctxt' := update_repl_ctxt_comp_ctxt ctxt sctxt' in
-        ergoct_repl_eval_declarations rctxt' decls
-      end.
+      eolift_warning
+        (fun xyw : (list ergoct_declaration * compilation_context) * list ewarning =>
+           let '(decls, sctxt', warnings) := xyw in
+           let sctxt' := compilation_context_add_warnings sctxt' warnings in
+           let rctxt' := update_repl_ctxt_comp_ctxt ctxt sctxt' in
+           ergoct_repl_eval_declarations rctxt' decls)
+        (ergo_declaration_to_ergoct_inlined ctxt.(repl_context_comp_ctxt) decl).
 
     Definition ergo_string_of_result
                (rctxt : repl_context)

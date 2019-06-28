@@ -43,8 +43,9 @@ Require Import Qcert.DNNRC.Lang.DNNRCBase.
 Require Import Qcert.tDNNRC.Lang.tDNNRC.
 Require Import Qcert.DNNRC.Lang.Dataframe.
 
-Require Import ErgoSpec.Backend.Model.MathModelPart.
 Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
+Require Import ErgoSpec.Backend.Model.MathModelPart.
+Require Import ErgoSpec.Backend.Model.LogModelPart.
 
 Import ListNotations.
 
@@ -185,6 +186,7 @@ Definition jenhancedstring s := JENHANCED_string s.
 
 Inductive enhanced_unary_op
   :=
+  | enhanced_unary_log_op : log_unary_op -> enhanced_unary_op
   | enhanced_unary_math_op : math_unary_op -> enhanced_unary_op
   | enhanced_unary_date_time_op : date_time_unary_op -> enhanced_unary_op.
 
@@ -245,10 +247,24 @@ Definition ondstringfloatopt (f : String.string -> option float) (d : data) : op
      | _ => None
      end.
 
+Definition ondstringunit (f : String.string -> unit) (d : data) : option data
+  := match d with
+     | dstring s =>
+       match f s with                                           (* Call log *)
+       | y => if unit_eqdec y tt then Some dunit else None      (* Return unit *)
+       end
+     | _ => None
+     end.
+
 Definition ondfloat {A} (f : float -> A) (d : data) : option A
   := match d with
      | dfloat s => Some (f s)
      | _ => None
+     end.
+
+Definition log_unary_op_interp (op:log_unary_op) (d:data) : option data
+  := match op with
+     | uop_log_string => ondstringunit LOG_string d
      end.
 
 Definition math_unary_op_interp (op:math_unary_op) (d:data) : option data
@@ -296,6 +312,7 @@ Definition enhanced_unary_op_interp
            (op:enhanced_unary_op)
            (d:data) : option data
   := match op with
+     | enhanced_unary_log_op f => log_unary_op_interp f d
      | enhanced_unary_math_op f => math_unary_op_interp f d
      | enhanced_unary_date_time_op f => date_time_unary_op_interp f d
      end.
@@ -311,6 +328,7 @@ Next Obligation.
   decide equality.
   - decide equality.
   - decide equality.
+  - decide equality.
     decide equality.
     decide equality.
     decide equality.
@@ -320,11 +338,14 @@ Defined.
 Next Obligation.
   constructor; intros op.
   destruct op.
+  - exact (log_unary_op_tostring l).
   - exact (math_unary_op_tostring m).
   - exact (date_time_unary_op_tostring d).
 Defined.
 Next Obligation.
   destruct op; simpl in H.
+  - destruct l; simpl in H; unfold ondstringunit, lift in H; simpl in H;
+      destruct d; simpl in H; try discriminate; invcs H; repeat constructor.
   - destruct m; simpl in H; unfold ondstring, ondfloat, lift in H; simpl in H;
       destruct d; simpl in H; try discriminate; invcs H; repeat constructor.
     destruct (FLOAT_of_string s); try discriminate; invcs H2; repeat constructor.
@@ -488,6 +509,8 @@ Definition enhanced_to_java_unary_op
            (quotel:String.string) (fu:enhanced_unary_op)
            (d:java_json) : java_json
   := match fu with
+     | enhanced_unary_log_op op =>
+       log_to_java_unary_op indent eol quotel op d
      | enhanced_unary_math_op op =>
        math_to_java_unary_op indent eol quotel op d
      | enhanced_unary_date_time_op op =>
@@ -528,6 +551,8 @@ Definition enhanced_to_javascript_unary_op
            (quotel:String.string) (fu:enhanced_unary_op)
            (d:String.string) : String.string
   := match fu with
+     | enhanced_unary_log_op op =>
+       log_to_javascript_unary_op indent eol quotel op d
      | enhanced_unary_math_op op =>
        math_to_javascript_unary_op indent eol quotel op d
      | enhanced_unary_date_time_op op =>
@@ -550,6 +575,8 @@ Definition enhanced_to_ajavascript_unary_op
            (fu:enhanced_unary_op)
            (e:JsSyntax.expr) : JsSyntax.expr
   := match fu with
+     | enhanced_unary_log_op op =>
+       log_to_ajavascript_unary_op op e
      | enhanced_unary_math_op op =>
        math_to_ajavascript_unary_op op e
      | enhanced_unary_date_time_op op =>
@@ -582,6 +609,7 @@ Instance enhanced_foreign_to_ajavascript :
 
 Definition enhanced_to_scala_unary_op (op: enhanced_unary_op) (d: string) : string :=
   match op with
+  | enhanced_unary_log_op op => "EnhancedModel: log ops not supported for now."
   | enhanced_unary_math_op op => "EnhancedModel: math ops not supported for now."
   | enhanced_unary_date_time_op op => "EnhancedModel: date time ops not supported for now."
   end.
@@ -1594,6 +1622,11 @@ Proof.
   - exact None.
 Defined.
 
+Inductive log_unary_op_has_type {model:brand_model} :
+  log_unary_op -> rtype -> rtype -> Prop
+  :=
+  | tuop_log_string : log_unary_op_has_type uop_log_string RType.String Unit.
+
 Inductive math_unary_op_has_type {model:brand_model} :
   math_unary_op -> rtype -> rtype -> Prop
   :=
@@ -1623,6 +1656,12 @@ Inductive date_time_unary_op_has_type {model:brand_model} :
   | tuop_date_time_period_from_string : date_time_unary_op_has_type uop_date_time_period_from_string RType.String DateTimePeriod
   | tuop_date_time_period_from_nat part : date_time_unary_op_has_type (uop_date_time_period_from_nat part) RType.Nat DateTimePeriod
 .
+
+Definition log_unary_op_type_infer {model : brand_model} (op:log_unary_op) (τ₁:rtype) : option rtype :=
+  match op with
+  | uop_log_string =>
+    if isString τ₁ then Some Unit else None
+  end.
 
 Definition math_unary_op_type_infer {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option rtype :=
   match op with
@@ -1664,6 +1703,12 @@ Definition date_time_unary_op_type_infer {model : brand_model} (op:date_time_una
     if isNat τ₁ then Some DateTimePeriod else None
   end.
 
+Definition log_unary_op_type_infer_sub {model : brand_model} (op:log_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
+  match op with
+  | uop_log_string =>
+    enforce_unary_op_schema (τ₁,RType.String) Unit
+  end.
+
 Definition math_unary_op_type_infer_sub {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
   match op with
   | uop_math_of_string =>
@@ -1697,6 +1742,23 @@ Definition date_time_unary_op_type_infer_sub {model : brand_model} (op:date_time
   | uop_date_time_period_from_nat part =>
     enforce_unary_op_schema (τ₁,RType.Nat) DateTimePeriod
   end.
+
+Lemma log_unary_op_typing_sound {model : brand_model}
+      (fu : log_unary_op) (τin τout : rtype) :
+  log_unary_op_has_type fu τin τout ->
+  forall din : data,
+    din ▹ τin ->
+    exists dout : data,
+      log_unary_op_interp fu din = Some dout /\ dout ▹ τout.
+Proof.
+  inversion 1; subst;
+    try solve[inversion 1; subst;
+              try invcs H0;
+              try invcs H3;
+              simpl; simpl;
+              eexists; split; try reflexivity;
+              repeat constructor].
+Qed.
 
 Lemma math_unary_op_typing_sound {model : brand_model}
       (fu : math_unary_op) (τin τout : rtype) :
@@ -1802,6 +1864,9 @@ Qed.
 
 Inductive enhanced_unary_op_has_type {model:brand_model} : enhanced_unary_op -> rtype -> rtype -> Prop
   :=
+  | tenhanced_unary_log_op fu τin τout:
+      log_unary_op_has_type fu τin τout ->
+      enhanced_unary_op_has_type (enhanced_unary_log_op fu) τin τout
   | tenhanced_unary_math_op fu τin τout:
       math_unary_op_has_type fu τin τout ->
       enhanced_unary_op_has_type (enhanced_unary_math_op fu) τin τout
@@ -1811,6 +1876,7 @@ Inductive enhanced_unary_op_has_type {model:brand_model} : enhanced_unary_op -> 
 
 Definition enhanced_unary_op_typing_infer {model:brand_model} (fu:enhanced_unary_op) (τ:rtype) : option rtype :=
   match fu with
+  | enhanced_unary_log_op op => log_unary_op_type_infer op τ
   | enhanced_unary_math_op op => math_unary_op_type_infer op τ
   | enhanced_unary_date_time_op op => date_time_unary_op_type_infer op τ
   end.
@@ -1824,6 +1890,11 @@ Lemma enhanced_unary_op_typing_infer_correct
 Proof.
   intros.
   destruct fu; simpl.
+  - destruct l; simpl in *;
+      destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          inversion H; subst; clear H; constructor;
+            rewrite String_canon; constructor.
   - destruct m; simpl in *;
       destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
@@ -1903,6 +1974,14 @@ Lemma enhanced_unary_op_typing_infer_least
 Proof.
   intros.
   destruct fu; simpl in *.
+  - destruct l; simpl in *;
+      destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          inversion H; subst; clear H;
+            try (rewrite String_canon in H0);
+            inversion H0; subst; clear H0;
+              inversion H1; subst; clear H1;
+                reflexivity.
   - destruct m; simpl in *;
       destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
@@ -1997,6 +2076,12 @@ Lemma enhanced_unary_op_typing_infer_complete
 Proof.
   intros.
   destruct fu; simpl in *.
+  - destruct l; simpl in *;
+      destruct τ₁; simpl in *; try congruence;
+        destruct x; simpl in *; try congruence;
+          unfold not; intros;
+            inversion H0; subst; clear H0;
+              inversion H2; subst; clear H2; inversion H.
   - destruct m; simpl in *;
       destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
@@ -2019,6 +2104,7 @@ Qed.
 
 Definition enhanced_unary_op_typing_infer_sub {model:brand_model} (fu:enhanced_unary_op) (τ:rtype) : option (rtype*rtype) :=
   match fu with
+  | enhanced_unary_log_op op => log_unary_op_type_infer_sub op τ
   | enhanced_unary_math_op op => math_unary_op_type_infer_sub op τ
   | enhanced_unary_date_time_op op => date_time_unary_op_type_infer_sub op τ
   end.
@@ -2033,6 +2119,7 @@ Lemma enhanced_unary_op_typing_sound {model : brand_model}
 Proof.
   intros.
   destruct H.
+  - eapply log_unary_op_typing_sound; eauto.
   - eapply math_unary_op_typing_sound; eauto.
   - eapply date_time_unary_op_typing_sound; eauto.
 Qed.

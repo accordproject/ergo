@@ -31,16 +31,15 @@ Section PrintTypedData.
     match get_local_part b with
     | None => "~" ++ b
     | Some local_name =>
-      match resolve_type_name dummy_provenance nsctxt (None,local_name) with
-      | Success _ _ (resolved_b,_) =>
-        if string_dec resolved_b b
-        then
-          local_name
-        else
-          "~" ++ b
-      | Failure _ _ _ =>
-        "~" ++ b
-      end
+      elift_both
+        (fun resolved_b =>
+           if string_dec resolved_b b
+           then
+             local_name
+           else
+             "~" ++ b)
+        (fun _ => "~" ++ b)
+        (resolve_type_name dummy_provenance nsctxt (None,local_name))
     end.
 
   Definition print_multiple_brands (nsctxt:namespace_ctxt) (bs:list string) : string :=
@@ -302,11 +301,7 @@ Section PrintTypedData.
         let failure_type :=
             match typ with
             | None =>  None
-            | Some typ =>
-              match unpack_failure_type nsctxt typ with
-              | Success _ _ (f,_) => Some f
-              | Failure _ _ _ => None
-              end
+            | Some typ => elift_both Some (fun _ => None) (unpack_failure_type nsctxt typ)
             end
         in
         "Failure. " ++ (string_of_data nsctxt msg) ++ (string_of_result_type nsctxt failure_type)
@@ -317,10 +312,10 @@ Section PrintTypedData.
               match typ with
               | None =>  (None, None, None)
               | Some typ =>
-                match unpack_success_type nsctxt typ nil with
-                | Success _ _ ((r,e,s),_) => (Some r, Some e, Some s)
-                | Failure _ _ _ => (None, None, None)
-                end
+                elift_both
+                  (fun res => let '(r,e,s) := res in (Some r, Some e, Some s))
+                  (fun _ => (None, None, None))
+                  (unpack_success_type nsctxt typ nil)
               end
           in
           (string_of_emits nsctxt emits emit_type)

@@ -52,6 +52,9 @@ Section Result.
                 (x',w ++ w'))
              (f x)) a.
 
+    Definition eolift_warning {A B:Set} (f:A * list ewarning -> eresult B) (a:eresult A) : eresult B :=
+      lift_failure f a.
+
     Definition elift {A B:Set} (f:A -> B) (a:eresult A) : eresult B :=
       lift_failure_in
         (fun xw : (A * list ewarning) =>
@@ -61,6 +64,7 @@ Section Result.
       lift_failure_in
         (fun xw : (A * list ewarning) =>
            (f xw, snd xw)) a.
+
     Definition elift2 {A B C:Set} (f:A -> B -> C) (a:eresult A) (b:eresult B) : eresult C :=
       eolift (fun x => elift (fun y => f x y) b) a.
     Definition elift3 {A B C D:Set} (f:A -> B -> C -> D)
@@ -73,11 +77,6 @@ Section Result.
                (a:eresult A) (b:eresult B) (c:eresult C) (d:eresult D) (e:eresult E) : eresult F :=
       eolift (fun x => elift4 (fun y z xx yy => f x y z xx yy) b c d e) a.
 
-    Fixpoint emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
-      let init_bl := Success (list B * list ewarning) _ (nil, nil) in
-      let proc_one := fun (a : A) (acc : eresult (list B)) => elift2 cons (f a) acc in
-      fold_right proc_one init_bl al.
-
     (* Fold-left over functions returning eresults *)
     Definition elift_fold_left {A:Set} {B:Set}
                (f : A -> B -> eresult A) (l:list B) (a:A) : eresult A :=
@@ -86,6 +85,12 @@ Section Result.
           eolift (fun acc => f acc x) acc
       in
       fold_left proc_one l (esuccess a nil).
+
+    (* Map over functions returning eresults *)
+    Definition emaplift {A B:Set} (f:A -> eresult B) (al:list A) : eresult (list B) :=
+      let init_bl := Success (list B * list ewarning) _ (nil, nil) in
+      let proc_one := fun (acc : eresult (list B)) (a : A) => elift2 (fun acc x => app acc (x::nil)) acc (f a) in
+      fold_left proc_one al init_bl.
 
     (* Variant of Fold-left for functions passing eresults with a context *)
     Definition elift_context_fold_left {A:Set} {B:Set} {C:Set}
@@ -105,7 +110,19 @@ Section Result.
     Definition eresult_of_option {A:Set} (a:option A) (e:eerror) (warnings:list ewarning) : eresult A :=
       result_of_option (lift (fun x => (x,warnings)) a) e.
 
-    (* XXX Those don't process warnings *)
+    Definition eolift2 {A B C:Set} (f : A -> B -> eresult C) (a : eresult A) (b : eresult B) : eresult C :=
+      eolift id (elift2 f a b).
+     
+    Definition elift_maybe {A:Set} (f: A -> option (eresult A)) (a:eresult A) : eresult A :=
+      eolift
+        (fun x =>
+           match x with
+           | None => a
+           | Some s => s
+           end)
+        (elift f a).
+
+    (* XXX Those lose warnings *)
     Definition elift_both {A B:Set} (f: A -> B) (g:eerror -> B) (a:eresult A) : B :=
       match a with
       | Success _ _ (s,_) => f s
@@ -119,17 +136,6 @@ Section Result.
         | Failure _ _ e => g e
         end
       | Failure _ _ e => g e
-      end.
-    Definition elift_maybe {A:Set} (f: A -> option (eresult A)) (a:eresult A) : eresult A :=
-      match elift f a with
-      | Success _ _ (Some s, w) => s
-      | Success _ _ (None, w) => a
-      | Failure _ _ e => efailure e
-      end.
-    Definition eolift2 {A B C:Set} (f : A -> B -> eresult C) (a : eresult A) (b : eresult B) : eresult C :=
-      match elift2 f a b with
-      | Failure _ _ f => efailure f
-      | Success _ _ (s,_) => s
       end.
 
     Section qcert.
@@ -256,6 +262,8 @@ Section Result.
       efailure (ESystemError prov "Should not find 'state' in Ergo Calculus").
     Definition complex_foreach_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should only have single loop foreach in Ergo Calculus").
+    Definition print_in_calculus_error {A} prov : eresult A :=
+      efailure (ESystemError prov "Should not find 'print' in Ergo Calculus").
     Definition function_not_inlined_error {A} prov msg fname : eresult A :=
       efailure (ESystemError prov ("[" ++ msg ++ "] " ++ "Function " ++ fname ++ " did not get inlined")).
     Definition function_in_group_not_inlined_error {A} prov gname fname : eresult A :=

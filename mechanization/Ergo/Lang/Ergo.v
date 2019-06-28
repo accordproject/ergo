@@ -52,6 +52,7 @@ Section Ergo.
     | EBinaryBuiltin : A -> ErgoOps.Binary.op -> ergo_expr -> ergo_expr -> ergo_expr (**r binary builtin *)
     | EIf : A -> ergo_expr -> ergo_expr -> ergo_expr -> ergo_expr (**r conditional *)
     | ELet : A -> string -> option (@ergo_type A' N) -> ergo_expr -> ergo_expr -> ergo_expr (**r local variable binding *)
+    | EPrint : A -> ergo_expr -> ergo_expr -> ergo_expr (**r print *)
     | ERecord : A -> list (string * ergo_expr) -> ergo_expr (**r create a new record *)
     | ENew : A -> N -> list (string * ergo_expr) -> ergo_expr (**r create a new concept/object *)
     | ECallFun : A -> N -> list ergo_expr -> ergo_expr (**r function call *)
@@ -77,6 +78,7 @@ Section Ergo.
       | EBinaryBuiltin a _ _ _ => a
       | EIf a _ _ _ => a
       | ELet a _ _ _ _ => a
+      | EPrint a _ _ => a
       | ERecord a _ => a
       | ENew a _ _ => a
       | ECallFun a _ _ => a
@@ -95,6 +97,7 @@ Section Ergo.
     | SSetState : A -> ergo_expr -> ergo_stmt -> ergo_stmt
     | SEmit : A -> ergo_expr -> ergo_stmt -> ergo_stmt
     | SLet : A -> string -> option (@ergo_type A N) -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable *)
+    | SPrint : A -> ergo_expr -> ergo_stmt -> ergo_stmt (**r local variable *)
     | SIf : A -> ergo_expr -> ergo_stmt -> ergo_stmt -> ergo_stmt
     | SEnforce : A -> ergo_expr -> option ergo_stmt -> ergo_stmt -> ergo_stmt (**r enforce *)
     | SMatch : A -> ergo_expr -> (list (@ergo_pattern A N * ergo_stmt)) -> ergo_stmt -> ergo_stmt
@@ -110,6 +113,7 @@ Section Ergo.
       | SSetState a _ _ => a
       | SEmit a _ _ => a
       | SLet a _ _ _ _ => a
+      | SPrint a _ _ => a
       | SIf a _ _ _ => a
       | SEnforce a _ _ _ => a
       | SMatch a _ _ _ => a

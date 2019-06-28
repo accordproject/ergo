@@ -413,6 +413,7 @@ let date_time_period_to_string part =
 
 let string_of_foreign_unary_op fu : string =
   begin match fu with
+  | Enhanced_unary_log_op -> "logString"
   | Enhanced_unary_math_op Uop_math_of_string -> "ofString"
   | Enhanced_unary_math_op Uop_math_acos -> "acos"
   | Enhanced_unary_math_op Uop_math_asin -> "asin"

@@ -108,6 +108,9 @@ define function long(x:String) : Long {
 }
 define function length(x:String) : Long
 
+// Log operations
+define function logString(x:String) : Unit
+
 // Polymorphic operations
 define function toString(x:Any) : String
 define function distinct(x:Any[]) : Any[]

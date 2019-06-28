@@ -26,6 +26,7 @@ Require Import Basics.
 
 Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Result.
 Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
@@ -37,8 +38,18 @@ Require Import ErgoSpec.Ergo.Lang.Ergo.
 Section ErgoCTEval.
   Context {m:brand_model}.
 
-  Definition ergo_unary_builtin_eval := ErgoOps.Unary.eval.
-  Definition ergo_binary_builtin_eval := ErgoOps.Binary.eval.
+  Definition ergo_unary_builtin_eval
+             (prov:provenance) (o:unary_op) (d:ergo_data) : eresult ergo_data :=
+    match ErgoOps.Unary.eval brand_relation_brands o d with
+    | Some r => esuccess r nil
+    | None => eval_unary_builtin_error prov o
+    end.
+  Definition ergo_binary_builtin_eval
+             (prov:provenance) (o:binary_op) (d1 d2:ergo_data) : eresult ergo_data :=
+    match ErgoOps.Binary.eval brand_relation_brands o d1 d2 with
+    | Some r => esuccess r nil
+    | None => eval_binary_builtin_error prov o
+    end.
 
   Fixpoint ergoct_eval_expr (ctxt : eval_context) (expr : ergoct_expr) : eresult ergo_data :=
     match expr with
@@ -54,101 +65,58 @@ Section ErgoCTEval.
     | ENone (prov,_) => esuccess dnone nil
     | ESome (prov,_) e => elift dsome (ergoct_eval_expr ctxt e)
     | EArray (prov,_) es =>
-      let rcoll :=
-          fold_left
-            (fun ls new =>
-               match ls with
-               | Success _ _ (ls',w1) =>
-                 match ergoct_eval_expr ctxt new with
-                 | Success _ _ (new',w2) => esuccess (ls' ++ (new'::nil)) (w1 ++ w2)
-                 | Failure _ _ f => efailure f
-                 end
-               | Failure _ _ f => efailure f
-               end)
-            es (esuccess nil nil)
-      in
+      let rcoll := emaplift (ergoct_eval_expr ctxt) es in
       elift dcoll rcoll
     | EUnaryOperator (prov,_) o e =>
       eval_unary_operator_error prov o
     | EBinaryOperator (prov,_) o e1 e2 =>
       eval_binary_operator_error prov o
     | EUnaryBuiltin (prov,_) o e  =>
-      match ergoct_eval_expr ctxt e with
-      | Success _ _ (e',w1) =>
-        (* TODO this takes a type hierarchy as a list of string * strings. *)
-        match ergo_unary_builtin_eval nil o e' with
-        | Some r => esuccess r w1
-        | None => eval_unary_builtin_error prov o
-        end
-      | Failure _ _ f => efailure f
-      end
+      eolift
+        (ergo_unary_builtin_eval prov o)
+        (ergoct_eval_expr ctxt e)
     | EBinaryBuiltin (prov,_) o e1 e2 =>
-      match ergoct_eval_expr ctxt e1 with
-      | Success _ _ (e1',w1) =>
-        match ergoct_eval_expr ctxt e2 with
-        | Success _ _ (e2',w2) =>
-          (* TODO this takes a type hierarchy as a list of string * strings. *)
-          match ergo_binary_builtin_eval nil o e1' e2' with
-          | Some r => esuccess r (w1 ++ w2)
-          | None => eval_binary_builtin_error prov o
-          end
-        | Failure _ _ f => efailure f
-        end
-      | Failure _ _ f => efailure f
-      end
+      eolift2
+        (ergo_binary_builtin_eval prov o)
+        (ergoct_eval_expr ctxt e1)
+        (ergoct_eval_expr ctxt e2)
     | EIf (prov,_) c t f =>
-      match ergoct_eval_expr ctxt c with
-      | Success _ _ (dbool true, _) => ergoct_eval_expr ctxt t
-      | Success _ _ (dbool false, _) => ergoct_eval_expr ctxt f
-      | Success _ _ _ => eval_if_not_boolean_error prov
-      | Failure _ _ f => efailure f
-      end
-    | ELet (prov,_) n t v e =>
-      match ergoct_eval_expr ctxt v with
-      | Success _ _ (v',w1) =>
-        let ctxt' := eval_context_update_local_env ctxt n v' in
-        ergoct_eval_expr ctxt' e
-      | Failure _ _ f => efailure f
-      end
+      eolift
+        (fun d =>
+           match d with
+           | dbool true => ergoct_eval_expr ctxt t
+           | dbool false => ergoct_eval_expr ctxt f
+           | _ => eval_if_not_boolean_error prov
+           end)
+        (ergoct_eval_expr ctxt c)
+    | ELet (prov,_) n t e1 e2 =>
+      eolift
+        (fun d =>
+           let ctxt' := eval_context_update_local_env ctxt n d in
+           ergoct_eval_expr ctxt' e2)
+        (ergoct_eval_expr ctxt e1)
+    | EPrint (prov,_) v e =>
+      print_in_calculus_error prov
     | ERecord prov rs =>
       let rrec :=
-          fold_left
-            (fun ls nv =>
-               let name := fst nv in
-               let value := snd nv in
-               match ls with
-               | Success _ _ (ls', w1) =>
-                 match ergoct_eval_expr ctxt value with
-                 (* TODO OpRecConcat to normalize shadowing properly *)
-                 | Success _ _ (value', w2) => esuccess (ls' ++ ((name, value')::nil)) (w1++w2)
-                 | Failure _ _ f => efailure f
-                 end
-               | Failure _ _ f => efailure f
-               end)
-            rs (esuccess nil nil)
+          emaplift
+            (fun nv =>
+               let att := fst nv in
+               let e := snd nv in
+               elift (fun d => (att, d)) (ergoct_eval_expr ctxt e))
+            rs
       in
       elift drec (elift rec_sort rrec)
-    (* RIP modularity *)
     | ENew (prov,_) nr rs =>
-      match
-        fold_left
-          (fun ls nv =>
-             let name := fst nv in
-             let value := snd nv in
-             match ls with
-             | Success _ _ (ls',w1) =>
-               match ergoct_eval_expr ctxt value with
-               (* TODO OpRecConcat to normalize shadowing properly *)
-               | Success _ _ (value',w2) => esuccess (ls' ++ ((name, value')::nil)) (w1++w2)
-               | Failure _ _ f => efailure f
-               end
-             | Failure _ _ f => efailure f
-             end)
-          rs (esuccess nil nil)
-      with
-      | Failure _ _ f => efailure f
-      | Success _ _ (r,w) => esuccess (dbrand (nr::nil) (drec (rec_sort r))) w
-      end
+      let rrec :=
+          emaplift
+            (fun nv =>
+               let att := fst nv in
+               let e := snd nv in
+               elift (fun d => (att, d)) (ergoct_eval_expr ctxt e))
+            rs
+      in
+      elift (fun r => (dbrand (nr::nil) (drec (rec_sort r)))) rrec
     (* EXPECTS: no function calls in expression *)
     | ECallFun (prov,_) fname args => function_not_inlined_error prov "eval" fname
     | ECallFunInGroup (prov,_) gname fname args => function_in_group_not_inlined_error prov gname fname
@@ -164,9 +132,7 @@ Section ErgoCTEval.
             | _ => default
             end
       in
-      match ergoct_eval_expr ctxt term with
-      | Failure _ _ f => efailure f
-      | Success _ _ (dat,w) =>
+      let apply_match dat :=
         fold_left
           (fun default_result pe =>
              match pe with
@@ -206,19 +172,22 @@ Section ErgoCTEval.
                end
              end)
           pes (ergoct_eval_expr ctxt default)
-       end
-
+      in
+      eolift apply_match (ergoct_eval_expr ctxt term)
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach (prov,_) ((name,arr)::nil) None fn =>
-      match ergoct_eval_expr ctxt arr with
-      | Failure _ _ f => efailure f
-      | Success _ _ (dcoll arr', w) =>
-        (elift dcoll)
-          (emaplift
-             (fun elt => ergoct_eval_expr (eval_context_update_local_env ctxt name elt) fn)
-             arr')
-      | Success _ _ _ => eval_foreach_not_on_array_error prov
-      end
+      let rcoll :=
+          eolift
+            (fun d =>
+               match d with
+               | dcoll arr' =>
+                 emaplift
+                   (fun elt => ergoct_eval_expr (eval_context_update_local_env ctxt name elt) fn)
+                   arr'
+               | _ => eval_foreach_not_on_array_error prov
+               end) (ergoct_eval_expr ctxt arr)
+      in
+      elift dcoll rcoll
     | EForeach (prov,_) _ _ _ =>
       complex_foreach_in_calculus_error prov
     end.

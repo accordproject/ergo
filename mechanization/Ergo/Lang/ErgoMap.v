@@ -71,6 +71,10 @@ Section ErgoMap.
         elift2 (fun v' b' => (ELet loc) n t v' b')
                (ergo_map_expr ctx ctxt_new_variable_scope fn v)
                (ergo_map_expr (ctxt_new_variable_scope ctx n v) ctxt_new_variable_scope fn b)
+      | EPrint loc v b =>
+        elift2 (fun v' b' => (EPrint loc) v' b')
+               (ergo_map_expr ctx ctxt_new_variable_scope fn v)
+               (ergo_map_expr ctx ctxt_new_variable_scope fn b)
       | ERecord loc rs =>
         elift (ERecord loc)
               (fold_left

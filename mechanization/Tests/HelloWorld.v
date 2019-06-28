@@ -167,25 +167,5 @@ contract HelloWorld over TemplateModel {
   Definition inputs (p:lrergo_module) : list ergo_input :=
     List.app (List.app ctos ergos) (InputErgo p::nil).
 
-  (*
-  Definition ergo_module_to_javascript_top
-             (version:jsversion)
-             (inputs:list lrergo_input) : eresult result_file :=
-    let bm : eresult brand_model := brand_model_from_inputs inputs in
-    eolift (fun bm :brand_model=>
-              let cinit := compilation_context_from_inputs inputs in
-              eolift (fun init : laergo_module * compilation_context =>
-                        let (p, ctxt) := init in
-                        let res := ergo_module_to_javascript version ctxt p in
-                        elift (mkResultFile p.(module_file)) res)
-                     cinit) bm.
-
-  Definition test(p:lrergo_module) : string :=
-    match ergo_module_to_javascript_top ES6 (inputs p) with
-    | Success _ _ f => f.(res_content)
-    | Failure _ _ _ => "FAILURE"
-    end.
-*)
-  (* Eval vm_compute in (test p1). *)
 End HelloWorld.
 

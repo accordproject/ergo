@@ -65,46 +65,32 @@ Section ErgoCTypecheck.
                     eT)
                (esuccess (nil,tbottom) nil) es)
     | EUnaryOperator prov eop e =>
-      match ergoc_typecheck_expr nsctxt ctxt e with
-      | Success _ _ (t,w) =>
-        unary_dispatch nsctxt prov eop t
-      | Failure _ _ f => efailure f
-      end
+      eolift (unary_dispatch nsctxt prov eop)
+             (ergoc_typecheck_expr nsctxt ctxt e)
     | EBinaryOperator prov eop e1 e2 =>
-      match ergoc_typecheck_expr nsctxt ctxt e1 with
-      | Success _ _ (t1,w1) =>
-        match ergoc_typecheck_expr nsctxt ctxt e2 with
-        | Success _ _ (t2,w2) =>
-          binary_dispatch nsctxt prov eop t1 t2
-        | Failure _ _ f => efailure f
-        end
-      | Failure _ _ f => efailure f
-      end
+      eolift2 (binary_dispatch nsctxt prov eop)
+              (ergoc_typecheck_expr nsctxt ctxt e1)
+              (ergoc_typecheck_expr nsctxt ctxt e2)
     | EUnaryBuiltin prov op e =>
-      match ergoc_typecheck_expr nsctxt ctxt e with
-      | Success _ _ (eT,w) =>
-        let t := exprct_type_annot eT in
-        match ergoc_type_infer_unary_op op t with
-        | Some (r, _) => esuccess (EUnaryBuiltin (prov,r) op eT) w
-        | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt op t))
-        end
-      | Failure _ _ f => efailure f
-      end
+      eolift
+        (fun eT =>
+           let t := exprct_type_annot eT in
+           match ergoc_type_infer_unary_op op t with
+           | Some (r, _) => esuccess (EUnaryBuiltin (prov,r) op eT) nil
+           | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt op t))
+           end)
+        (ergoc_typecheck_expr nsctxt ctxt e)
     | EBinaryBuiltin prov op e1 e2 =>
-      match ergoc_typecheck_expr nsctxt ctxt e1 with
-      | Success _ _ (eT1,w1) =>
-        match ergoc_typecheck_expr nsctxt ctxt e2 with
-        | Success _ _ (eT2,w2) =>
+      eolift2
+        (fun eT1 eT2 =>
           let t1 := exprct_type_annot eT1 in
           let t2 := exprct_type_annot eT2 in
           match ergoc_type_infer_binary_op op t1 t2 with
-          | Some (r, _, _) => esuccess (EBinaryBuiltin (prov,r) op eT1 eT2) (w1++w2)
+          | Some (r, _, _) => esuccess (EBinaryBuiltin (prov,r) op eT1 eT2) nil
           | None => efailure (ETypeError prov (ergo_format_binop_error nsctxt op t1 t2))
-          end
-        | Failure _ _ f => efailure f
-        end
-      | Failure _ _ f => efailure f
-      end
+          end)
+        (ergoc_typecheck_expr nsctxt ctxt e1)
+        (ergoc_typecheck_expr nsctxt ctxt e2)
     | EIf prov c t f =>
       eolift (fun cT' =>
                 if ergoc_type_subtype_dec (exprct_type_annot cT') tbool then
@@ -162,6 +148,8 @@ Section ErgoCTypecheck.
             else
               efailure (fmt_err t' vt))
          (ergoc_typecheck_expr nsctxt ctxt v))
+    | EPrint prov v e =>
+      print_in_calculus_error prov
     | ERecord prov rs =>
       elift (fun eT => ERecord (prov,(snd eT)) (fst eT))
             (fold_right
@@ -210,12 +198,8 @@ Section ErgoCTypecheck.
     | ECallFun prov fname args => function_not_inlined_error prov "typing" fname
     | ECallFunInGroup prov gname fname args => function_in_group_not_inlined_error prov gname fname
     | EMatch prov term pes default =>
-      match ergoc_typecheck_expr nsctxt ctxt term with
-      | Failure _ _ f => efailure f
-      | Success _ _ (eT0,w0) =>
-        match ergoc_typecheck_expr nsctxt ctxt default with
-        | Failure _ _ f => efailure f
-        | Success _ _ (dT,wT) =>
+      eolift2
+        (fun eT0 dT =>
           let t0 := exprct_type_annot eT0 in
           let dt := exprct_type_annot dT in
           elift
@@ -299,10 +283,10 @@ Section ErgoCTypecheck.
                                  (tbrand (b::nil)))
                               res)
                   end)
-               (esuccess (nil, dt) (w0++wT))
-               pes)
-        end
-      end
+               (esuccess (nil, dt) nil)
+               pes))
+        (ergoc_typecheck_expr nsctxt ctxt term)
+        (ergoc_typecheck_expr nsctxt ctxt default)
     (* EXPECTS: each foreach has only one dimension and no where *)
     | EForeach prov ((name,arr)::nil) None fn =>
       eolift
