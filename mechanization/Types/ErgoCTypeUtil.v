@@ -55,7 +55,7 @@ Section ErgoCTypeUtil.
     match op with
     | OpNeg => fmt_easy "!"%string tbool arg
     | OpFloatUnary FloatNeg => fmt_easy "-"%string tfloat arg
-    | OpDot name => "The field " ++ name ++ " does not belong to type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
+    | OpDot name => "The field `" ++ name ++ "' does not exist in type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
     | OpIdentity | OpRec _ | OpBag
     | OpLeft | OpRight | OpBrand _ | OpUnbrand | OpCast _ =>
       "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
@@ -202,5 +202,17 @@ Section ErgoCTypeUtil.
     let actual_s := ergoc_type_to_string nsctxt actual in
     let expected_s := ergoc_type_to_string nsctxt expected in
     "Function " ++ name ++ " should return `" ++ expected_s ++ "' but actually returns `" ++ actual_s ++ "'".
+
+  Definition make_unary_operator_criteria op nsctxt prov t : eresult ergoc_type :=
+    match ergoc_type_infer_unary_op op t with
+    | Some (r, _) => esuccess r nil
+    | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt op t))
+    end.
+
+  Definition make_binary_operator_criteria op nsctxt prov t1 t2 : eresult ergoc_type :=
+    match ergoc_type_infer_binary_op op t1 t2 with
+    | Some (r, _, _) => esuccess r nil
+    | None => efailure (ETypeError prov (ergo_format_binop_error nsctxt op t1 t2))
+    end.
 
 End ErgoCTypeUtil.
