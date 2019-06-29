@@ -38,7 +38,7 @@ Section ErgoCOverloaded.
 
   Section UnaryOperator.
     Definition unary_dispatch_spec : Set :=
-      (ergoc_type -> option ergoc_type)
+      (namespace_ctxt -> provenance -> ergoc_type -> eresult ergoc_type)
       * (provenance -> ergoc_type -> ergoct_expr -> ergoct_expr).
 
     Definition unary_dispatch_table : Set :=
@@ -47,31 +47,25 @@ Section ErgoCOverloaded.
     Definition make_unary_operator_fun op prov t e : ergoct_expr :=
       EUnaryBuiltin (prov,t) op e.
 
-    Definition make_unary_operator_criteria op t : option ergoc_type :=
-      match ergoc_type_infer_unary_op op t with
-      | Some (r, _) => Some r
-      | None => None
-      end.
-
     Definition make_unary_operator op : unary_dispatch_spec :=
       (make_unary_operator_criteria op, make_unary_operator_fun op).
   
     Definition make_nat_minus_fun prov t e : ergoct_expr :=
       EBinaryBuiltin (prov,t) (OpNatBinary NatMinus) (EConst (prov, tnat) (dnat 0)) e.
 
-    Definition make_nat_minus_criteria t : option ergoc_type :=
+    Definition make_nat_minus_criteria nsctxt prov t : eresult ergoc_type :=
       match ergoc_type_infer_binary_op (OpNatBinary NatMinus) tnat t with
-      | Some (r, _, _) => Some r
-      | None => None
+      | Some (r, _, _) => esuccess r nil
+      | None => efailure (ETypeError prov (ergo_format_binop_error nsctxt (OpNatBinary NatMinus) tnat t))
       end.
 
     Definition make_nat_minus_operator : unary_dispatch_spec :=
       (make_nat_minus_criteria, make_nat_minus_fun).
-  
-    Definition make_dot_criteria name t : option ergoc_type :=
+
+    Definition make_dot_criteria name nsctxt prov t : eresult ergoc_type :=
       match ergoc_type_infer_unary_op (OpDot name) t with
-      | Some (r, _) => Some r
-      | None => None
+      | Some (r, _) => esuccess r nil
+      | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt (OpDot name) t))
       end.
 
     Definition make_dot_operator name : unary_dispatch_spec :=
@@ -80,14 +74,14 @@ Section ErgoCOverloaded.
     Definition make_unbrand_dot_fun name prov t e : ergoct_expr :=
       EUnaryBuiltin (prov,t) (OpDot name) (EUnaryBuiltin (prov,t) OpUnbrand e).
 
-    Definition make_unbrand_dot_criteria name t : option ergoc_type :=
+    Definition make_unbrand_dot_criteria name nsctxt prov t : eresult ergoc_type :=
       match ergoc_type_infer_unary_op OpUnbrand t with
       | Some (r1, _) =>
         match ergoc_type_infer_unary_op (OpDot name) r1 with
-        | Some (r2, _) => Some r2
-        | None => None
+        | Some (r2, _) => esuccess r2 nil
+        | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt (OpDot name) t))
         end
-      | None => None
+      | None => efailure (ESystemError prov "WRONG KIND")
       end.
 
     Definition make_unbrand_dot_operator name : unary_dispatch_spec :=
@@ -100,45 +94,52 @@ Section ErgoCOverloaded.
           :: (make_nat_minus_operator)
           :: nil
       | EOpDot name =>
-        (make_dot_operator name)
-          :: (make_unbrand_dot_operator name)
+         (make_unbrand_dot_operator name)
+          :: (make_dot_operator name)
           :: nil
       end.
 
-    Fixpoint try_unary_dispatch nsctxt prov
+    Fixpoint try_unary_dispatch
+             nsctxt prov
+             (prev: eerror)
              (eop:ergo_unary_operator)
              (bltops:unary_dispatch_table)
              (eT:ergoct_expr) : eresult ergoct_expr :=
       let t := exprct_type_annot eT in
       match bltops with
       | nil => efailure (ETypeError prov (ergo_format_unary_operator_dispatch_error nsctxt eop t))
+      | (op_criteria, op_fun) :: nil =>
+        elift_both
+          (fun r => esuccess (op_fun prov r eT) nil)               (* found a successful dispatch *)
+          (fun err =>
+             match err with
+             | ESystemError _ _ => efailure prev (* Fall back to previous good error *)
+             | _ => efailure err
+             end)
+          (op_criteria nsctxt prov t)
       | (op_criteria, op_fun) :: bltops' =>
-        match op_criteria t with
-        | Some r => esuccess (op_fun prov r eT) nil (* Found a successful dispatch *)
-        | None => try_unary_dispatch nsctxt prov eop bltops' eT (* try next operator *)
-        end
+        elift_both
+          (fun r => esuccess (op_fun prov r eT) nil)               (* found a successful dispatch *)
+          (fun err => try_unary_dispatch nsctxt prov err eop bltops' eT) (* try next operator *)
+          (op_criteria nsctxt prov t)
       end.
 
     Definition unary_dispatch nsctxt prov
                (eop:ergo_unary_operator)
                (eT:ergoct_expr) : eresult ergoct_expr :=
-      try_unary_dispatch nsctxt prov eop (unary_operator_dispatch_table eop) eT.
+      let t := exprct_type_annot eT in
+      let init_prev := ETypeError prov (ergo_format_unary_operator_dispatch_error nsctxt eop t) in
+      try_unary_dispatch nsctxt prov init_prev eop (unary_operator_dispatch_table eop) eT.
 
   End UnaryOperator.
 
   Section BinaryOperator.
     Definition binary_dispatch_spec : Set :=
-      (ergoc_type -> ergoc_type -> option ergoc_type)
+      (namespace_ctxt -> provenance -> ergoc_type -> ergoc_type -> eresult ergoc_type)
       * (provenance -> ergoc_type -> ergoct_expr -> ergoct_expr -> ergoct_expr).
 
     Definition binary_dispatch_table : Set :=
       list binary_dispatch_spec.
-
-    Definition make_binary_operator_criteria op t1 t2 : option ergoc_type :=
-      match ergoc_type_infer_binary_op op t1 t2 with
-      | Some (r, _, _) => Some r
-      | None => None
-      end.
 
     Definition make_binary_operator_fun op prov t e1 e2 : ergoct_expr :=
       EBinaryBuiltin (prov,t) op e1 e2.
@@ -199,10 +200,10 @@ Section ErgoCOverloaded.
       match bltops with
       | nil => efailure (ETypeError prov (ergo_format_binary_operator_dispatch_error nsctxt eop t1 t2))
       | (op_criteria, op_fun) :: bltops' =>
-        match op_criteria t1 t2 with
-        | Some r => esuccess (op_fun prov r eT1 eT2) nil (* Found a successful dispatch *)
-        | None => try_binary_dispatch nsctxt prov eop bltops' eT1 eT2 (* try next operator *)
-        end
+        elift_both
+          (fun r => esuccess (op_fun prov r eT1 eT2) nil) (* Found a successful dispatch *)
+          (fun _ => try_binary_dispatch nsctxt prov eop bltops' eT1 eT2) (* try next operator *)
+          (op_criteria nsctxt prov t1 t2)
       end.
 
     Definition binary_dispatch nsctxt prov
