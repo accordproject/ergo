@@ -54,7 +54,7 @@
   },
   "license-check-and-add-config": {
     "folder": ".",
-    "license": "LICENSE_BANNER",
+    "license": "HEADER",
     "exact_paths_method": "EXCLUDE",
     "exact_paths": [
       ".git",
@@ -66,7 +66,7 @@
       "NOTICES.md",
       "PULL_REQUEST_TEMPLATE.md",
       "LICENSE",
-      "LICENSE_BANNER",
+      "HEADER",
       "README.rst",
       "markdown-license.txt",
       "extraction/_build/",
