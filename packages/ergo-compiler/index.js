@@ -20,6 +20,7 @@
  */
 
 module.exports.ComposerConcerto = require('composer-concerto');
+module.exports.ComposerConcertoTools = require('composer-concerto-tools');
 
 module.exports.APModelManager = require('./lib/apmodelmanager.js');
 module.exports.Compiler = require('./lib/compiler.js');
