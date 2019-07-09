@@ -125,6 +125,7 @@
       ".jar",
       ".native",
       ".vim",
+      ".el",
       ".result"
     ],
     "insert_license": false,
