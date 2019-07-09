@@ -112,7 +112,7 @@ $ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/log
   <img src="assets/APLogo.png" alt="Accord Project Logo" width="400" />
 </a>
 
-Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound].
+Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
 
 ## Learn More About Accord Project
 
@@ -169,6 +169,7 @@ Copyright 2018-2019 Clause, Inc.
 [developers]: https://github.com/accordproject/ergo/blob/master/DEVELOPERS.md
 
 [linuxfound]: https://www.linuxfoundation.org
+[charter]: https://github.com/accordproject/ergo/blob/master/CHARTER.md
 [npmpkg]: https://www.npmjs.com/package/@accordproject/ergo-cli
 [coq]: https://coq.inria.fr
 [OCaml]: https://ocaml.org
