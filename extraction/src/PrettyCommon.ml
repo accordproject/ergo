@@ -415,7 +415,9 @@ let date_time_period_to_string part =
 
 let string_of_foreign_unary_op fu : string =
   begin match fu with
-  | Enhanced_unary_log_op -> "logString"
+  | Enhanced_unary_log_op Uop_log_string -> "logString"
+  | Enhanced_unary_log_op Uop_log_encode_string -> "encodeString"
+  | Enhanced_unary_log_op Uop_log_decode_string -> "decodeString"
   | Enhanced_unary_math_op Uop_math_of_string -> "ofString"
   | Enhanced_unary_math_op Uop_math_acos -> "acos"
   | Enhanced_unary_math_op Uop_math_asin -> "asin"
@@ -476,6 +478,7 @@ let pretty_unary_op p sym callb ff u a =
   | OpOrderBy atts ->
       fprintf ff "@[<hv 0>%s%a(%a)@]" "sort" (pretty_squared_names sym) (List.map fst atts) (callb 0 sym) a
   | OpToString -> pretty_unary_exp sym callb "toString" ff a
+  | OpToJSON -> pretty_unary_exp sym callb "toJSON" ff a
   | OpGenerateText -> pretty_unary_exp sym callb "generateText" ff a
   | OpLength -> pretty_unary_exp sym callb "stringLength" ff a
   | OpSubstring (n1,None) -> pretty_unary_exp sym callb ("substring["^(string_of_int n1)^"]") ff a
@@ -666,6 +669,7 @@ let string_of_binary_op b =
   | OpBagNth -> "anth"
   | OpContains -> "acontains"
   | OpStringConcat -> "asconcat"
+  | OpStringJoin -> "asjoin"
   | OpForeignBinary fb -> string_of_foreign_binary_op (Obj.magic fb)
   end
 
@@ -688,6 +692,7 @@ let pretty_binary_op p sym callb ff b a1 a2 =
   | OpBagNth -> pretty_infix_exp p 20 sym callb ("{nth}",5) ff a1 a2
   | OpContains -> pretty_infix_exp p 16 sym callb sym.sin ff a1 a2
   | OpStringConcat -> pretty_infix_exp p 18 sym callb ("^",1) ff a1 a2
+  | OpStringJoin -> pretty_infix_exp p 18 sym callb ("{join}",1) ff a1 a2
   | OpForeignBinary fb -> pretty_foreign_binary_op p sym callb ff (Obj.magic fb) a1 a2
   end
 

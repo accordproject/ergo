@@ -56,6 +56,7 @@ Module ErgoCompiler.
 
   (** Names *)
   Definition relative_name : Set := Names.relative_name.
+  Definition this_name : String.string := Names.this_this.
 
   (** Results *)
   Definition eerror : Set := Result.eerror.
@@ -204,6 +205,8 @@ Module ErgoCompiler.
     := Ast.CaseLetOption.
 
   (** Expressions *)
+  Definition ethis_this prov : ergo_expr
+    := Ergo.EThis prov.
   Definition ethis_contract prov : ergo_expr
     := Ergo.EThisContract prov.
   Definition ethis_clause prov : ergo_expr

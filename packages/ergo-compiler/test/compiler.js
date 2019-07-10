@@ -144,7 +144,7 @@ describe('ergo-compiler', () => {
         it('should fail when compiling a smart Ergo contract to JavaScript', async function () {
             const ergoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'logic.ergo');
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            const ctoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'model.cto');
+            const ctoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'model2.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], null, 'es6', false);
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'fileName': null, 'message': 'Import not found: org.accordproject.test', 'fullMessage' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'column' : -1 }, 'locend' : { 'line' : -1, 'column' : -1 } } });
@@ -154,7 +154,7 @@ describe('ergo-compiler', () => {
         it('should fail when compiling and linking a smart Ergo contract to JavaScript', async function () {
             const ergoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'logic.ergo');
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            const ctoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'model.cto');
+            const ctoFile = Path.resolve('test', 'examples/latedeliveryandpenalty', 'model2.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], null, 'es6', true);
             result.should.deep.equal({ 'error' : { 'kind' : 'CompilationError', 'fileName': null, 'message': 'Import not found: org.accordproject.test', 'fullMessage' : 'Compilation error. Import not found: org.accordproject.test', 'locstart' : { 'line' : -1, 'column' : -1 }, 'locend' : { 'line' : -1, 'column' : -1 } } });

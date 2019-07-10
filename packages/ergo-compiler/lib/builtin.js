@@ -387,7 +387,6 @@ const markdownModel = `
 namespace org.accordproject.markdown
 
 concept MarkdownOptions {
-  o Boolean markdown
   o Boolean wrapVariables
 }
 `;

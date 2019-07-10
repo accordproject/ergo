@@ -1,0 +1,6 @@
+{
+  "$class": "org.accordproject.helloworld.TemplateModel",
+  "name": "Fred Blogs",
+  "clause1" : { "$class": "org.accordproject.helloworld.Clause1", "name" : "John Do" },
+  "clause2" : { "$class": "org.accordproject.helloworld.Clause1", "name" : "Jane Doe" }
+}

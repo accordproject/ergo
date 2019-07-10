@@ -17,11 +17,14 @@
   open LexUtil
   open ErgoParser
 
-  let keyword_table =
+  let make_keyword_table table = 
     let tbl = Hashtbl.create 39 in
     begin
-      List.iter (fun (key, data) -> Hashtbl.add tbl key data)
-	      [ (* declarations *)
+      List.iter (fun (key, data) -> Hashtbl.add tbl key data) table; tbl
+    end
+
+  let reserved_table = [
+        (* Declarations *)
 	      "namespace", NAMESPACE;
 	      "import", IMPORT;
 	      "define", DEFINE;
@@ -35,7 +38,7 @@
 	      "participant", PARTICIPANT;
 	      "enum", ENUM;
 	      "extends", EXTENDS;
-        (* contract *)
+        (* Contracts *)
 	      "contract", CONTRACT;
 	      "over", OVER;
 	      "clause", CLAUSE;
@@ -70,8 +73,22 @@
         "some", SOME;
         "nan", FLOAT nan;
         "infinity", FLOAT infinity;
-	    ]; tbl
-    end
+	]
+
+  let block_table = [
+	  "list", LIST;
+    "order", ORDER;
+    "join", JOIN;
+	  "clause", CLAUSE;
+	  "foreach", FOREACH;
+	  "if", IF;
+	  "else", ELSE;
+	  "optional", OPTIONAL;
+	  "with", WITH;
+  ]
+
+  let keyword_table = make_keyword_table reserved_table
+  let block_keyword_table = make_keyword_table block_table
 
   let char_for_backslash c =
   begin match c with
@@ -84,6 +101,17 @@
 
   let decimal_code  c d u =
     100 * (Char.code c - 48) + 10 * (Char.code d - 48) + (Char.code u - 48)
+
+  let push_kind kind =
+    begin match kind with
+    | LIST -> push_list ()
+    | ORDER -> push_order ()
+    | JOIN -> push_join ()
+    | WITH -> push_with ()
+    | IF -> push_if ()
+    | CLAUSE -> push_clause ()
+    | _ -> raise (LexError "Unsupported block kind\n")
+    end
 }
 
 let newline = ('\010' | '\013' | "\013\010")
@@ -198,7 +226,10 @@ and linecomment = parse
 and text lh = parse
 | "{{" { lh_push_state lh ExprState; OPENEXPR (lh_get_string lh) }
 | "}}" { ignore(lh_pop_state lh); CLOSETEXT (lh_get_string lh) }
-| "[{" { lh_push_state lh VarState; OPENVAR (lh_get_string lh) }
+| "{{#" { lh_push_state lh StartNestedState; OPENVARSHARP (lh_get_string lh) }
+| "{{else" { lh_push_state lh StartNestedState; OPENVARELSE (lh_get_string lh) }
+| "{{/" { lh_push_state lh EndNestedState; OPENVARSLASH (lh_get_string lh) }
+| "{[" { lh_push_state lh VarState; OPENVAR (lh_get_string lh) }
 | '\\' (['0'-'9'] as c) (['0'-'9'] as d) (['0'-'9']  as u)
     { let v = decimal_code c d u in
     if v > 255 then
@@ -215,11 +246,10 @@ and text lh = parse
 and var lh = parse
 | eof { EOF }
 | "as" { AS }
-| ":?" { COLONQUESTION }
 | [' ' '\t']
     { var lh lexbuf }
 | newline
-    { Lexing.new_line lexbuf; token lh lexbuf }
+    { Lexing.new_line lexbuf; var lh lexbuf }
 | letter identchar*
     { let s = Lexing.lexeme lexbuf in
       IDENT s }
@@ -228,7 +258,49 @@ and var lh = parse
       lh_reset_string lh; string lh lexbuf;
       lexbuf.lex_start_p <- string_start;
       let s = lh_get_string lh in STRING s }
-| "}]"
+| "]}"
     { lh_reset_string lh;
       ignore(lh_pop_state lh);
       CLOSEVAR }
+
+and startnested lh = parse
+| eof { EOF }
+| [' ' '\t']
+    { startnested lh lexbuf }
+| newline
+    { Lexing.new_line lexbuf; startnested lh lexbuf }
+| letter identchar*
+    { let s = Lexing.lexeme lexbuf in
+      try
+        let kind = Hashtbl.find block_keyword_table s in
+        push_kind kind; kind
+      with Not_found ->
+        push_name s; IDENT s }
+| '"'
+    { let string_start = lexbuf.lex_start_p in
+      lh_reset_string lh; string lh lexbuf;
+      lexbuf.lex_start_p <- string_start;
+      let s = lh_get_string lh in STRING s }
+| "}}"
+    { lh_reset_string lh;
+      ignore(lh_pop_state lh);
+      CLOSEVAR }
+
+and endnested lh = parse
+| eof { EOF }
+| [' ' '\t']
+    { endnested lh lexbuf }
+| newline
+    { Lexing.new_line lexbuf; endnested lh lexbuf }
+| letter identchar*
+    { let s = Lexing.lexeme lexbuf in
+      try
+        let kind = Hashtbl.find block_keyword_table s in
+        pop_nested (); kind
+      with Not_found ->
+        IDENT s }
+| "}}"
+    { lh_reset_string lh;
+      ignore(lh_pop_state lh);
+      CLOSEVAR }
+

@@ -37,6 +37,11 @@ Section ErgotoErgoC.
   (** Translate Ergo expression to calculus *)
   Fixpoint ergo_expr_to_ergoc_expr (ctxt:compilation_context) (e:laergo_expr) : eresult ergoc_expr :=
     match e with
+    | EThis prov =>
+      match ctxt.(compilation_context_current_contract) with
+      | None => use_contract_not_in_contract_error prov
+      | Some _ => esuccess (thisThis prov) nil
+      end
     | EThisContract prov =>
       match ctxt.(compilation_context_current_contract) with
       | None => use_contract_not_in_contract_error prov

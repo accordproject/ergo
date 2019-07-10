@@ -191,7 +191,7 @@ describe('ergo', () => {
             return Commands.invoke(undefined, [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null).should.be.rejectedWith('No input ergo found');
         });
     });
-    describe('#generatetextwithinterests', function () {
+    describe('#generatetext', function () {
         it('should generate text for a smart Ergo contract', async function () {
             const ergoPath = Path.join('test/examples/interests', 'logic.ergo');
             const ergoPath2 = Path.join('test/examples/interests', 'interests.ergo');
@@ -206,15 +206,16 @@ describe('ergo', () => {
             const ctoPath = Path.join('test/examples/interests', 'model.cto');
             const contractPath = { file: Path.join('test/examples/interests', 'contract.json') };
             const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, { wrapVariables: true });
-            result.response.should.equal('\nThis is a fixed interest loan to the amount of [{100000.0}]\nat the yearly interest rate of [{2.5}]%\nwith a loan term of [{15}],\nand monthly payments of {{667.0}}\n');
+            result.response.should.equal('\nThis is a fixed interest loan to the amount of <variable id="loanAmount" value="100000.0"/>\nat the yearly interest rate of <variable id="rate" value="2.5"/>%\nwith a loan term of <variable id="loanDuration" value="15"/>,\nand monthly payments of <computed value="667.0"/>\n');
         });
-        it('should generate text for a smart Ergo contract (markdown)', async function () {
-            const ergoPath = Path.join('test/examples/interests', 'logic.ergo');
-            const ergoPath2 = Path.join('test/examples/interests', 'interests.ergo');
-            const ctoPath = Path.join('test/examples/interests', 'model.cto');
-            const contractPath = { file: Path.join('test/examples/interests', 'contract.json') };
-            const result = await Commands.generateText([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, { markdown: true });
-            result.response.should.equal('\nThis is a fixed interest loan to the amount of <variable name="loanAmount" value="100000.0"/>\nat the yearly interest rate of <variable name="rate" value="2.5"/>%\nwith a loan term of <variable name="loanDuration" value="15"/>,\nand monthly payments of <computed value="667.0"/>\n');
+        it('should generate text for a late delivery and penalty contract (wrap variable)', async function () {
+            const templatePath = { file: Path.join('test/examples/latedeliveryandpenalty', 'template.tem') };
+            const ergoPath = Path.join('test/examples/latedeliveryandpenalty', 'logic.ergo');
+            const ctoPath = Path.join('test/examples/latedeliveryandpenalty', 'model.cto');
+            const ctoPath2 = Path.join('test/examples/latedeliveryandpenalty', 'test.cto');
+            const contractPath = { file: Path.join('test/examples/latedeliveryandpenalty', 'contract.json') };
+            const result = await Commands.generateText([ergoPath], [ctoPath2,ctoPath], contractPath, '1970-01-01T00:00:00Z', templatePath, { wrapVariables: true });
+            result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<variable id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases,"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
         });
         it('should throw when smart Ergo clause without a cto', async function () {
             const ergoPath = Path.join('test/examples/interests', 'logic.ergo');
@@ -260,9 +261,9 @@ describe('ergo', () => {
         it('should initialize a smart Ergo contract state (template content)', async function () {
             const templateContent = {
                 name: 'foo.tem',
-                content: `This is a fixed interest loan to the amount of [{loanAmount}]
-at the yearly interest rate of [{rate}]%
-with a loan term of [{loanDuration}],
+                content: `This is a fixed interest loan to the amount of {[loanAmount]}
+at the yearly interest rate of {[rate]}%
+with a loan term of {[loanDuration]},
 and monthly payments of {{monthlyPaymentFormula(contract.loanAmount,contract.rate,contract.loanDuration)}}
 `
             };

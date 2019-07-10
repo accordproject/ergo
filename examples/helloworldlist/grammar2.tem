@@ -1,0 +1,3 @@
+Name of the person to greet: {[name]}.
+Thank you!
+{{#order items}}Here is a name: {[name]} {{ length(this.name) }}{{#order subitems}}Includes: {[name]} {{/order}}{{/order}}

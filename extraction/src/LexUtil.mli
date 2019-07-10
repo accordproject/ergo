@@ -20,12 +20,50 @@ exception LexError of string
 (* Current file *)
 val filename : string ref
 
+(* Current input for templates *)
+type template_input =
+  | ContractInput
+  | ClauseEnter
+  | ClauseInput of string
+  | ListEnter
+  | ListInput of string
+  | OrderEnter
+  | OrderInput of string
+  | JoinEnter
+  | JoinInput of string
+  | WithEnter
+  | WithInput of string
+  | IfEnter
+  | IfInput of string
+
+type template_state = {
+    template_stack: template_input Stack.t;
+    template_depth: int ref;
+  }
+
+val current_template_input : template_state
+val init_current_template_input : unit -> unit
+
+val push_clause : unit -> unit
+val push_list : unit -> unit
+val push_order : unit -> unit
+val push_join : unit -> unit
+val push_with : unit -> unit
+val push_if : unit -> unit
+val push_name : string -> unit
+val pop_nested : unit -> unit
+
+val make_list_sep : unit -> string
+val make_order_sep : unit -> string
+
 (* Lexer Handler *)
 
 type lex_state =
   | ExprState
   | TextState
   | VarState
+  | StartNestedState
+  | EndNestedState
 
 type lex_handler
 

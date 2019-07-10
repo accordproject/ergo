@@ -18,6 +18,13 @@ open LexUtil
 open ErgoUtil
 open ErgoComp
 
+(* File provenance *)
+let mk_provenance
+    (start_pos: Lexing.position)
+    (end_pos: Lexing.position) : provenance =
+    mk_provenance_of_loc_pair !filename start_pos end_pos
+
+(* QNames *)
 let relative_name_of_qname qn =
   begin match qn with
   | (None,last) -> (None,Util.char_list_of_string last)
@@ -26,32 +33,77 @@ let relative_name_of_qname qn =
        Util.char_list_of_string last)
   end
 
-let mk_provenance
-    (start_pos: Lexing.position)
-    (end_pos: Lexing.position) : provenance =
-    mk_provenance_of_loc_pair !filename start_pos end_pos
+let make_template_input prov =
+  ErgoCompiler.ethis_this prov
 
-let make_template_variable startpos endpos ve =
-  let prov = mk_provenance startpos endpos in
+(* Construct AST for variables *)
+let make_template_variable prov name ve =
   let varparam =
     ErgoCompiler.econst prov
-      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string (fst ve)))
+      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
   in
-  let textparam = snd ve in
   let optionsparam = ErgoCompiler.evar prov (Util.char_list_of_string "options") in
   ErgoCompiler.ecallfun
     prov
     (relative_name_of_qname (Some "org.accordproject.markdown","variableTag"))
-    [varparam;textparam;optionsparam]
+    [varparam;ve;optionsparam]
 
-let make_template_computed startpos endpos e =
-  let prov = mk_provenance startpos endpos in
+let make_template_computed prov e =
   let textparam = e in
   let optionsparam = ErgoCompiler.evar prov (Util.char_list_of_string "options") in
   ErgoCompiler.ecallfun
     prov
     (relative_name_of_qname (Some "org.accordproject.markdown","computedTag"))
     [textparam;optionsparam]
+
+let make_template_list prov name ve =
+  let a = Util.char_list_of_string name in
+  let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
+  let fl = (ErgoCompiler.this_name, e) :: [] in
+  let bullet = make_list_sep () in
+  ErgoCompiler.eforeach prov fl None
+    (ErgoCompiler.etext prov
+       (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve))
+
+let make_template_order prov name ve =
+  let a = Util.char_list_of_string name in
+  let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
+  let fl = (ErgoCompiler.this_name, e) :: [] in
+  let bullet = make_order_sep () in
+  ErgoCompiler.eforeach prov fl None
+    (ErgoCompiler.etext prov
+       (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve))
+
+let make_template_join prov name sep ve =
+  let a = Util.char_list_of_string name in
+  let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
+  let fl = (ErgoCompiler.this_name, e) :: [] in
+  ErgoCompiler.ebinarybuiltin prov
+    ErgoCompiler.ErgoOps.Binary.opstringjoin
+    (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string sep)))
+    (ErgoCompiler.eforeach prov fl None
+       (ErgoCompiler.etext prov ve))
+
+let make_template_with prov name ve =
+  let a = Util.char_list_of_string name in
+  let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
+  ErgoCompiler.elet prov ErgoCompiler.this_name None e
+    (ErgoCompiler.etext prov ve)
+
+let make_template_clause prov name ve =
+  make_template_with prov name ve (* XXX May have to be revised eventually *)
+
+let make_template_if_else prov name ve1 ve2 =
+  let a = Util.char_list_of_string name in
+  let econd = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
+  ErgoCompiler.eif prov
+    econd
+    (make_template_variable prov name (ErgoCompiler.etext prov ve1))
+    (make_template_variable prov name (ErgoCompiler.etext prov ve2))
+
+let make_template_if prov name ve1 =
+  let ve2 = [ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string ""))] in
+  make_template_if_else prov name ve1 ve2
 
 %}
 
@@ -65,7 +117,7 @@ let make_template_computed startpos endpos e =
 %token CLOSEVAR
 %token <string> CLOSETEXT
 %token <string> OPENEXPR
-%token <string> OPENVAR
+%token <string> OPENVAR OPENVARSHARP OPENVARSLASH OPENVARELSE
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
 %token ABSTRACT TRANSACTION CONCEPT EVENT ASSET PARTICIPANT ENUM EXTENDS
@@ -96,7 +148,7 @@ let make_template_computed startpos endpos e =
 %token LCURLY RCURLY
 %token EOF
 
-%token COLONQUESTION AS
+%token AS LIST ORDER JOIN OPTIONAL
 
 %left SEMI
 %left ELSE
@@ -499,10 +551,53 @@ textlist:
     { [] }
 | s0 = OPENEXPR e = expr CLOSEEXPR sl = textlist
     { let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
-      sfirst :: (make_template_computed $startpos $endpos e) :: sl }
-| s0 = OPENVAR ve = varexpr CLOSEVAR sl = textlist
+      sfirst :: (make_template_computed (mk_provenance $startpos $endpos) e) :: sl }
+| s0 = OPENVAR nameve = varexpr CLOSEVAR sl = textlist
     { let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
-      sfirst :: (make_template_variable $startpos $endpos ve) :: sl }
+      sfirst :: (make_template_variable (mk_provenance $startpos $endpos) (fst nameve) (snd nameve)) :: sl }
+| s0 = OPENVARSHARP CLAUSE v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH CLAUSE CLOSEVAR sl2 = textlist
+    { begin
+        let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+        let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
+        [sfirst] @ [make_template_clause (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
+      end }
+| s0 = OPENVARSHARP LIST v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH LIST CLOSEVAR sl2 = textlist
+    { begin
+        let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+        let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
+        [sfirst] @ [make_template_list (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
+      end }
+| s0 = OPENVARSHARP ORDER v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH ORDER CLOSEVAR sl2 = textlist
+    { begin
+        let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+        let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
+        [sfirst] @ [make_template_order (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
+      end }
+| s0 = OPENVARSHARP JOIN v0 = safeblock_base sep = STRING CLOSEVAR sl1 = textlist s1 = OPENVARSLASH JOIN CLOSEVAR sl2 = textlist
+    { begin
+        let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+        let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
+        [sfirst] @ [make_template_join (mk_provenance $startpos $endpos) v0 sep (sl1 @ [slast])] @ sl2
+      end }
+| s0 = OPENVARSHARP WITH v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH WITH CLOSEVAR sl2 = textlist
+    { begin
+        let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+        let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
+        [sfirst] @ [make_template_with (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
+      end }
+| s0 = OPENVARSHARP IF v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH IF CLOSEVAR sl2 = textlist
+    { begin
+        let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+        let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
+        [sfirst] @ [make_template_if (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
+      end }
+| s0 = OPENVARSHARP IF v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARELSE CLOSEVAR sl2 = textlist s2 = OPENVARSLASH IF CLOSEVAR sl3 = textlist
+    { begin
+        let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
+        let smid = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
+        let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s2)) in
+        [sfirst] @ [make_template_if_else (mk_provenance $startpos $endpos) v0 (sl1 @ [smid]) (sl2 @ [slast])] @ sl3
+      end }
 
 varexpr:
 | v = IDENT AS s = STRING
@@ -511,15 +606,13 @@ varexpr:
          (relative_name_of_qname (Some "org.accordproject.time","format"))
          [ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos)
             (EOpDot (Util.char_list_of_string v))
-            (ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos));
+            (make_template_input (mk_provenance $startpos $endpos));
           ErgoCompiler.econst (mk_provenance $startpos $endpos)
             (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))]) }
-| s = STRING COLONQUESTION v = IDENT
-    { (v,ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))) }
 | v = IDENT
     { (v,ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos)
           (EOpDot (Util.char_list_of_string v))
-          (ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos))) }
+          (make_template_input (mk_provenance $startpos $endpos))) }
 
 (* foreach list *)
 foreachlist:
@@ -707,4 +800,14 @@ safeident_base:
 | SOME { "some" }
 | TRUE { "true" }
 | FALSE { "false" }
+
+safeblock_base:
+| i = IDENT { i }
+| CLAUSE { "clause" }
+| IF { "if" }
+| FOREACH { "foreach" }
+| WITH { "with" }
+| LIST { "list" }
+| OPTIONAL { "optional" }
+
 

@@ -25,6 +25,7 @@ Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.Ergo.Lang.ErgoMap.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
+Require Import ErgoSpec.ErgoC.Lang.ErgoCSugar.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.
 
 Require Import ErgoSpec.Translation.ErgoCompContext.
@@ -128,7 +129,7 @@ Section ErgoCInline.
            (ctxt : compilation_context)
            (expr : ergoc_expr) :=
     match expr with
-    | EVar loc name => Some
+    | EVar prov name => Some
       match lookup String.string_dec (ctxt.(compilation_context_local_env)) name with
       | Some _ => esuccess expr nil
       | None =>
@@ -137,7 +138,14 @@ Section ErgoCInline.
         else
           match lookup String.string_dec (ctxt.(compilation_context_global_env)) name with
           | Some val => esuccess val nil
-          | None => esuccess expr nil
+          | None =>
+            (* Handles "this" binding for free variables in template *)
+            match lookup String.string_dec (ctxt.(compilation_context_local_env)) this_this with
+            | Some _ =>
+              esuccess (EUnaryBuiltin prov (OpDot name) (EUnaryBuiltin prov OpUnbrand (thisThis prov))) nil
+            | None =>
+              esuccess expr nil
+            end
           end
       end
     | _ => None

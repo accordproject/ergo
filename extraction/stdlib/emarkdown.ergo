@@ -15,16 +15,14 @@
 namespace org.accordproject.markdown
 
 define function variableTag(variableName:String,text:Any,options:MarkdownOptions) : String {
-	if options.markdown
-	then return "<variable name=\"" ++ variableName ++ "\" value=\"" ++ toString(text) ++ "\"/>"
-	else if options.wrapVariables
-	then return "[{" ++ toText(text) ++ "}]"
+	if options.wrapVariables
+	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(toText(text)) ++ "\"/>"
 	else return toText(text)
 }
 
 define function computedTag(text:Any,options:MarkdownOptions) : String {
-	if options.markdown
-	then return "<computed value=\"" ++ toString(text) ++ "\"/>"
+	if options.wrapVariables
+	then return "<computed value=\"" ++ encode(toText(text)) ++ "\"/>"
 	else return "{{" ++ toText(text) ++ "}}"
 }
 

@@ -53,6 +53,7 @@ Section ErgoCTEval.
 
   Fixpoint ergoct_eval_expr (ctxt : eval_context) (expr : ergoct_expr) : eresult ergo_data :=
     match expr with
+    | EThis (prov,_) => this_in_calculus_error prov
     | EThisContract (prov,_) => contract_in_calculus_error prov
     | EThisClause   (prov,_) => clause_in_calculus_error prov
     | EThisState    (prov,_) => state_in_calculus_error prov

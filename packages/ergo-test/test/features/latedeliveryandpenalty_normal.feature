@@ -3,7 +3,6 @@ Feature: Late delivery contract
 
   Background:
     Given the Ergo contract "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty" in file "examples/latedeliveryandpenalty/logic.ergo"
-    And the model in file "examples/latedeliveryandpenalty/test.cto"
     And the model in file "examples/latedeliveryandpenalty/model.cto"
     And the contract data
 """
@@ -11,18 +10,18 @@ Feature: Late delivery contract
   "$class": "org.accordproject.latedeliveryandpenalty.TemplateModel",
   "forceMajeure": true,
   "penaltyDuration": {
-    "$class": "org.accordproject.test.Duration",
+    "$class": "org.accordproject.time.Duration",
     "amount": 2,
-    "unit": "DAY"
+    "unit": "days"
   },
   "penaltyPercentage": 10.5,
   "capPercentage": 55,
   "termination": {
-    "$class": "org.accordproject.test.Duration",
+    "$class": "org.accordproject.time.Duration",
     "amount": 15,
-    "unit": "DAY"
+    "unit": "days"
   },
-  "fractionalPart": "DAY"
+  "fractionalPart": "days"
 }
 """
 

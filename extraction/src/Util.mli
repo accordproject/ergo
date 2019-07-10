@@ -103,3 +103,8 @@ val find_duplicate : char list list -> char list option
 
 val coq_print_warnings : char list -> char list list -> 'a -> 'a
 
+(* Encoding/Decoding *)
+val encode_string : char list -> char list
+val decode_string : char list -> char list
+
+
