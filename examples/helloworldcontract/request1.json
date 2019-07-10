@@ -1,0 +1,4 @@
+{
+    "$class": "org.accordproject.helloworld.Clause1Request",
+    "input": "Accord Project"
+}

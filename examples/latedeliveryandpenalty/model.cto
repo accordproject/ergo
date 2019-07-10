@@ -14,7 +14,7 @@
 
 namespace org.accordproject.latedeliveryandpenalty
 
-import org.accordproject.test.*
+import org.accordproject.time.*
 
 /**
  * Defines the data model for the LateDeliveryAndPenalty template.

@@ -228,7 +228,6 @@ class Commands {
         const params = {
             options: {
                 '$class': 'org.accordproject.markdown.MarkdownOptions',
-                'markdown': options && options.markdown ? options.markdown : false,
                 'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
             }
         };

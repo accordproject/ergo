@@ -39,7 +39,7 @@ common_steps: &common_steps
     - run:
         name: "Install OCaml deps"
         command: |
-          opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar
+          opam install -y --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri
     - run:
         name: "Install Coq"
         command: |

@@ -39,6 +39,7 @@ Section ErgoCTypecheck.
 
   Fixpoint ergoc_typecheck_expr nsctxt (ctxt : type_context) (expr : ergoc_expr) : eresult ergoct_expr :=
     match expr with
+    | EThis prov => this_in_calculus_error prov
     | EThisContract prov => contract_in_calculus_error prov
     | EThisClause   prov => clause_in_calculus_error prov
     | EThisState    prov => state_in_calculus_error prov

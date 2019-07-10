@@ -200,11 +200,6 @@ require('yargs')
             type: 'string',
             default: Moment().format() // Defaults to now
         });
-        yargs.option('markdown', {
-            describe: 'generate with markdown notations',
-            type: 'boolean',
-            default: false
-        });
         yargs.option('wrapVariables', {
             describe: 'wrap variables in curly braces',
             type: 'boolean',
@@ -241,7 +236,6 @@ require('yargs')
         }
 
         const options = {
-            markdown: argv.markdown,
             wrapVariables: argv.wrapVariables,
         };
         // Generate text

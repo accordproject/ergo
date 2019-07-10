@@ -324,6 +324,7 @@ Section ErgoNameResolution.
              (nsctxt:namespace_ctxt)
              (e:lrergo_expr) : eresult laergo_expr :=
       match e with
+      | EThis prov => esuccess (EThis prov) nil
       | EThisContract prov => esuccess (EThisContract prov) nil
       | EThisClause prov => esuccess (EThisClause prov) nil
       | EThisState prov => esuccess (EThisState prov) nil

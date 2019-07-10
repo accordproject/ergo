@@ -38,6 +38,7 @@ Section Ergo.
 
     (** Expression *)
     Inductive ergo_expr :=
+    | EThis : A -> ergo_expr (**r generic this *)
     | EThisContract : A -> ergo_expr (**r this contract *)
     | EThisClause : A -> ergo_expr (**r this clause *)
     | EThisState : A -> ergo_expr (**r this state *)
@@ -65,6 +66,7 @@ Section Ergo.
 
     Definition expr_annot (e:ergo_expr) : A :=
       match e with
+      | EThis a => a
       | EThisContract a => a
       | EThisClause a => a
       | EThisState a => a

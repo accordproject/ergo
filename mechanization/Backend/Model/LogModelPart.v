@@ -38,16 +38,24 @@ Definition jsFunc (name d1 d2:string)
 (* Axioms *)
 Axiom LOG_string : string -> unit.
 Extract Inlined Constant LOG_string => "(fun x -> Logger.log_string x)".
+Axiom LOG_encode_string : string -> string.
+Extract Inlined Constant LOG_encode_string => "(fun x -> Util.encode_string x)".
+Axiom LOG_decode_string : string -> string.
+Extract Inlined Constant LOG_decode_string => "(fun x -> Util.decode_string x)".
 
 (* Ast *)
 Inductive log_unary_op
   :=
   | uop_log_string : log_unary_op
+  | uop_log_encode_string : log_unary_op
+  | uop_log_decode_string : log_unary_op
 .
 
 Definition log_unary_op_tostring (f:log_unary_op) : String.string
   := match f with
      | uop_log_string => "logString"
+     | uop_log_encode_string => "encodeString"
+     | uop_log_decode_string => "decodeString"
      end.
 
 (* Code generation *)
@@ -57,6 +65,8 @@ Definition log_to_java_unary_op
              (d:java_json) : java_json
   := match fu with
      | uop_log_string => mk_java_unary_op0 "logString" d
+     | uop_log_encode_string => mk_java_unary_op0 "encodeString" d
+     | uop_log_decode_string => mk_java_unary_op0 "decodeString" d
      end.
 
 Definition log_to_javascript_unary_op
@@ -64,7 +74,9 @@ Definition log_to_javascript_unary_op
              (quotel:String.string) (fu:log_unary_op)
              (d:String.string) : String.string
   := match fu with
-     | uop_math_of_string => "logString(" ++ d ++ ")"
+     | uop_log_string => "logString(" ++ d ++ ")"
+     | uop_log_encode_string => "encodeString(" ++ d ++ ")"
+     | uop_log_decode_string => "decodeString(" ++ d ++ ")"
      end.
 
 Definition log_to_ajavascript_unary_op
@@ -72,5 +84,7 @@ Definition log_to_ajavascript_unary_op
              (e:JsSyntax.expr) : JsSyntax.expr
   := match fu with
      | uop_log_string => call_runtime "logString" [ e ]
+     | uop_log_encode_string => call_runtime "encodeString" [ e ]
+     | uop_log_decode_string => call_runtime "decodeString" [ e ]
      end.
 

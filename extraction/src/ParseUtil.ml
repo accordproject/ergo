@@ -39,13 +39,18 @@ let lexer_dispatch lh buf  =
   | ExprState -> ErgoLexer.token lh buf
   | TextState -> ErgoLexer.text lh buf
   | VarState -> ErgoLexer.var lh buf
+  | StartNestedState -> ErgoLexer.startnested lh buf
+  | EndNestedState -> ErgoLexer.endnested lh buf
   end
 
 let parse_ergo_module f : ergo_module =
+  init_current_template_input ();
   parse ErgoParser.main_module (lexer_dispatch (lh_make_expr ())) f
 let parse_ergo_declarations f : ergo_declaration list =
+  init_current_template_input ();
   parse ErgoParser.top_decls (lexer_dispatch (lh_make_expr ())) f
 let parse_template f : ergo_expr =
+  init_current_template_input ();
   parse ErgoParser.template (lexer_dispatch (lh_make_text ())) f
 
 (** Parse from buffer *)

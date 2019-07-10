@@ -428,3 +428,9 @@ let coq_print_warnings prefix warnings x =
   List.iter (coq_print_warning (string_of_char_list prefix)) warnings;
   x
 
+open Uri
+let encode_string x =
+  char_list_of_string (Uri.pct_encode ~component:`Query (string_of_char_list x))
+let decode_string x =
+  char_list_of_string (Uri.pct_decode (string_of_char_list x))
+

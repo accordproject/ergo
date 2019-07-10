@@ -192,7 +192,6 @@
     "params": {
       "options": {
         "$class": "org.accordproject.markdown.MarkdownOptions",
-        "markdown": false,
         "wrapVariables": false
       }
     },
@@ -202,6 +201,27 @@
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
       "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n"
+    }
+  },
+  {
+    "name": "helloworldcontract (generate text)",
+    "dir": "examples/helloworldcontract",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "params": {
+      "options": {
+        "$class": "org.accordproject.markdown.MarkdownOptions",
+        "wrapVariables": false
+      }
+    },
+    "grammar": "grammar.tem",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "Name of the person to greet: Fred Blogs.\nThank you!\n Here is a first name: John Do \n Here is a second name: Jane Doe \n"
     }
   }
 ]

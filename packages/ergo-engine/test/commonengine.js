@@ -123,6 +123,11 @@ function runWorkload(Engine, target) {
                     const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
                     logicManager.addModelFile(ctoContent, Path.join(dir, models[i]));
                 }
+                if (test.grammar) {
+                    const templateFile = Path.resolve(__dirname, dir, test.grammar);
+                    const templateContent = Fs.readFileSync(templateFile, 'utf8');
+                    logicManager.addTemplateFile(templateContent, Path.join(dir, test.grammar));
+                }
                 logicManager.setContractName(contractName);
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 if (state === null) {

@@ -268,6 +268,13 @@ Definition ondstringunit (f : String.string -> unit) (d : data) : option data
      | _ => None
      end.
 
+Definition ondstringstring (f : String.string -> string) (d : data) : option data
+  := match d with
+     | dstring s =>
+       Some (dstring (f s))
+     | _ => None
+     end.
+
 Definition ondfloat {A} (f : float -> A) (d : data) : option A
   := match d with
      | dfloat s => Some (f s)
@@ -277,6 +284,8 @@ Definition ondfloat {A} (f : float -> A) (d : data) : option A
 Definition log_unary_op_interp (op:log_unary_op) (d:data) : option data
   := match op with
      | uop_log_string => ondstringunit LOG_string d
+     | uop_log_encode_string => ondstringstring LOG_encode_string d
+     | uop_log_decode_string => ondstringstring LOG_decode_string d
      end.
 
 Definition math_unary_op_interp (op:math_unary_op) (d:data) : option data
@@ -508,12 +517,28 @@ Next Obligation.
       ; repeat constructor.
 Qed.
 
+Program Instance enhanced_foreign_to_JSON : foreign_to_JSON
+  := mk_foreign_to_JSON enhanced_foreign_data _ _.
+Next Obligation.
+  (* TODO: For now, we assume that JSON supports floating point *)
+  exact None.
+Defined.
+Next Obligation.
+  destruct fd.
+  - exact (jstring (jenhancedstring s)).
+  - exact (jstring (DATE_TIME_FORMAT_to_string d)).
+  - exact (jstring (@toString _ date_time_foreign_data.(@foreign_data_tostring ) d)).
+  - exact (jstring (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) d)).
+  - exact (jstring (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) d)).
+Defined.
+
 Instance enhanced_foreign_runtime :
   foreign_runtime
   := mk_foreign_runtime
        enhanced_foreign_data
        enhanced_foreign_unary_op
-       enhanced_foreign_binary_op.
+       enhanced_foreign_binary_op
+       enhanced_foreign_to_JSON.
 
 (* TODO: fix me *)
 Definition enhanced_to_java_data
@@ -651,21 +676,6 @@ Instance enhanced_foreign_to_scala {ftype: foreign_type}:
     Like our left/right encoding.  so that we can use it for
     timescale/timepoint.  just using a string may work for now.
  *)
-
-Program Instance enhanced_foreign_to_JSON : foreign_to_JSON
-  := mk_foreign_to_JSON enhanced_foreign_data _ _.
-Next Obligation.
-  (* TODO: For now, we assume that JSON supports floating point *)
-  exact None.
-Defined.
-Next Obligation.
-  destruct fd.
-  - exact (jstring (jenhancedstring s)).
-  - exact (jstring (DATE_TIME_FORMAT_to_string d)).
-  - exact (jstring (@toString _ date_time_foreign_data.(@foreign_data_tostring ) d)).
-  - exact (jstring (@toString _ date_time_duration_foreign_data.(@foreign_data_tostring ) d)).
-  - exact (jstring (@toString _ date_time_period_foreign_data.(@foreign_data_tostring ) d)).
-Defined.
 
 Inductive enhanced_numeric_type :=
 | enhanced_numeric_int
@@ -1661,7 +1671,9 @@ Defined.
 Inductive log_unary_op_has_type {model:brand_model} :
   log_unary_op -> rtype -> rtype -> Prop
   :=
-  | tuop_log_string : log_unary_op_has_type uop_log_string RType.String Unit.
+  | tuop_log_string : log_unary_op_has_type uop_log_string RType.String Unit
+  | tuop_log_encode_string : log_unary_op_has_type uop_log_encode_string RType.String RType.String
+  | tuop_log_decode_string : log_unary_op_has_type uop_log_decode_string RType.String RType.String.
 
 Inductive math_unary_op_has_type {model:brand_model} :
   math_unary_op -> rtype -> rtype -> Prop
@@ -1698,6 +1710,10 @@ Definition log_unary_op_type_infer {model : brand_model} (op:log_unary_op) (τ�
   match op with
   | uop_log_string =>
     if isString τ₁ then Some Unit else None
+  | uop_log_encode_string =>
+    if isString τ₁ then Some RType.String else None
+  | uop_log_decode_string =>
+    if isString τ₁ then Some RType.String else None
   end.
 
 Definition math_unary_op_type_infer {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option rtype :=
@@ -1746,6 +1762,10 @@ Definition log_unary_op_type_infer_sub {model : brand_model} (op:log_unary_op) (
   match op with
   | uop_log_string =>
     enforce_unary_op_schema (τ₁,RType.String) Unit
+  | uop_log_encode_string =>
+    enforce_unary_op_schema (τ₁,RType.String) RType.String
+  | uop_log_decode_string =>
+    enforce_unary_op_schema (τ₁,RType.String) RType.String
   end.
 
 Definition math_unary_op_type_infer_sub {model : brand_model} (op:math_unary_op) (τ₁:rtype) : option (rtype*rtype) :=
@@ -1935,6 +1955,7 @@ Proof.
       destruct τ₁; simpl in *; try congruence;
         destruct x; simpl in *; try congruence;
           inversion H; subst; clear H; constructor;
+            try (rewrite String_canon; constructor);
             rewrite String_canon; constructor.
   - destruct m; simpl in *;
       destruct τ₁; simpl in *; try congruence;

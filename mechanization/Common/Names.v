@@ -41,6 +41,7 @@ Section Names.
     Definition clause_init_name : local_name := "init". (* Init method -- defaults to setting default state *)
 
     (** This *)
+    Definition this_this := "this".         (* Context-dependent current value -- for templates *)
     Definition this_contract := "contract". (* Contains all contract data and clause data *)
     Definition this_state := "state".       (* Contains state *)
     Definition this_emit := "emit".         (* Contains emit *)

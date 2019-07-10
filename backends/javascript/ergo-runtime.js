@@ -568,6 +568,9 @@ function count(v) {
 function stringLength(v) {
     return natBox(v.length);
 }
+function stringJoin(sep, v) {
+    return v.join(sep);
+}
 function floatOfNat(v) {
     return natUnbox(v);
 }
@@ -620,21 +623,21 @@ function dateTimeComponent(part, date) {
     date = mustBeDate(date);
     switch(part) {
     case SECONDS:
-        return date.second();
+        return natBox(date.second());
     case MINUTES:
-        return date.minute();
+        return natBox(date.minute());
     case HOURS:
-        return date.hour();
+        return natBox(date.hour());
     case DAYS:
-        return date.date();
+        return natBox(date.date());
     case WEEKS:
-        return date.week();
+        return natBox(date.week());
     case MONTHS:
-        return date.month() + 1; // Shift by one to get 1-12 range on months (Moment uses 0-11)
+        return natBox(date.month() + 1); // Shift by one to get 1-12 range on months (Moment uses 0-11)
     case QUARTERS:
-        return date.quarter();
+        return natBox(date.quarter());
     case YEARS:
-        return date.year();
+        return natBox(date.year());
     default:
         throw new Error("Unknown DateTime component: " + part);
     }
@@ -667,7 +670,7 @@ function dateTimeMin(v) {
 
 function dateTimeDurationAmount(v) {
     v = mustBeDuration(v);
-    return v.asSeconds();
+    return natBox(v.asSeconds());
 }
 
 function dateTimeDurationFromString(stringDuration) {
@@ -806,6 +809,15 @@ function dateTimeEndOf(part, date) {
     date = mustBeDate(date);
     mustBeUnit(part);
     return date.endOf(part);
+}
+
+/* encode/decode */
+function encodeString(v) {
+  return encodeURI(v);
+}
+
+function decodeString(v) {
+  return decodeURI(v);
 }
 
 /* Logging */
