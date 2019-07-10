@@ -57,9 +57,9 @@ describe('ScriptManager', () => {
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(2);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
-            scriptManager.getCompiledScript().getContents().length.should.equal(27703);
-            scriptManager.getCompiledJavaScript().length.should.equal(27703);
-            scriptManager.allFunctionDeclarations().length.should.equal(107);
+            scriptManager.getCompiledScript().getContents().length.should.equal(28123);
+            scriptManager.getCompiledJavaScript().length.should.equal(28123);
+            scriptManager.allFunctionDeclarations().length.should.equal(110);
             scriptManager.allFunctionDeclarations().filter(x => x.name === '__init').length.should.equal(1);
             expect(scriptManager.hasInit()).to.not.throw;
             expect(scriptManager.hasDispatch()).to.not.throw;
@@ -71,8 +71,8 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(27703);
-            scriptManager.getCompiledScript().getContents().length.should.equal(27703);
+            scriptManager.compileLogic().getContents().length.should.equal(28123);
+            scriptManager.getCompiledScript().getContents().length.should.equal(28123);
             scriptManager.getAllScripts().length.should.equal(3);
         });
 
@@ -165,8 +165,8 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(27703);
-            scriptManager.getCompiledJavaScript().length.should.equal(27703);
+            scriptManager.compileLogic().getContents().length.should.equal(28123);
+            scriptManager.getCompiledJavaScript().length.should.equal(28123);
             scriptManager.clearScripts();
             return (() => scriptManager.getCompiledJavaScript()).should.throw('Did not find any compiled JavaScript logic');
         });

@@ -1,0 +1,41 @@
+{
+  "$class": "org.accordproject.helloworld.TemplateModel",
+  "name": "Fred Blogs",
+  "items" : [
+    {
+      "$class": "org.accordproject.helloworld.Item",
+      "name" : "Nail",
+      "description": {
+        "$class": "org.accordproject.helloworld.Description",
+        "size": 100,
+        "kind": "Construction"
+      },
+      "subitems" : []
+    },
+    {
+      "$class": "org.accordproject.helloworld.Item",
+      "name" : "Suitcase",
+      "description": {
+        "$class": "org.accordproject.helloworld.Description",
+        "size": 2,
+        "kind": "Travel"
+      },
+      "subitems" : [
+        { "$class": "org.accordproject.helloworld.SubItem", "name" : "J1" },
+        { "$class": "org.accordproject.helloworld.SubItem", "name" : "J2" }
+      ]
+    },
+    {
+      "$class": "org.accordproject.helloworld.Item",
+      "name" : "Laptop",
+      "description": {
+        "$class": "org.accordproject.helloworld.Description",
+        "size": 20,
+        "kind": "Electronics"
+      },
+      "subitems" : [
+        { "$class": "org.accordproject.helloworld.SubItem", "name" : "D1" }
+      ]
+    }
+  ]
+}

@@ -196,6 +196,8 @@ Section ErgoCStdlib.
       :: ("org.accordproject.ergo.stdlib.toString", mk_unary OpToString)
       :: ("org.accordproject.ergo.stdlib.toText", mk_unary OpGenerateText)
       :: ("org.accordproject.ergo.stdlib.length", mk_unary OpLength)
+      :: ("org.accordproject.ergo.stdlib.encode", mk_unary  (OpForeignUnary (enhanced_unary_log_op uop_log_encode_string)))
+      :: ("org.accordproject.ergo.stdlib.decode", mk_unary  (OpForeignUnary (enhanced_unary_log_op uop_log_decode_string)))
       (* Natural numbers // Integer *)
       :: ("org.accordproject.ergo.stdlib.integerAbs", mk_unary (OpNatUnary NatAbs))
       :: ("org.accordproject.ergo.stdlib.integerLog2", mk_unary (OpNatUnary NatLog2))
@@ -244,6 +246,7 @@ Section ErgoCStdlib.
         :: ("org.accordproject.ergo.stdlib.arrayAdd", mk_binary OpBagUnion)
         :: ("org.accordproject.ergo.stdlib.arraySubtract", mk_binary OpBagDiff)
         :: ("org.accordproject.ergo.stdlib.inArray", mk_binary OpContains)
+        :: ("org.accordproject.ergo.stdlib.join", mk_binary OpStringJoin)
         :: nil.
 
     Definition builtin_table : ergo_stdlib_table :=

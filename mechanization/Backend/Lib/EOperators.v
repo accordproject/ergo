@@ -180,6 +180,8 @@ Module EOperators(ergomodel:ErgoBackendModel).
       := BinaryOperators.OpContains.
     Definition opstringconcat : op
       := BinaryOperators.OpStringConcat.
+    Definition opstringjoin : op
+      := BinaryOperators.OpStringJoin.
 
     Definition eval
                (h:BrandRelation.brand_relation_t)

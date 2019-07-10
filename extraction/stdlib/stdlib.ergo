@@ -107,6 +107,9 @@ define function long(x:String) : Long {
 	return integer(x)
 }
 define function length(x:String) : Long
+define function join(x:String, y:String[]) : String
+define function encode(x:String) : String
+define function decode(x:String) : String
 
 // Log operations
 define function logString(x:String) : Unit

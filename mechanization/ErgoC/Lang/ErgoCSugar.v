@@ -38,6 +38,9 @@ Section ErgoCSugar.
   Definition setState (prov:provenance) e1 e2 : ergoc_expr :=
     ELet prov local_state None e1 e2.
 
+  Definition thisThis (prov:provenance) : ergoc_expr :=
+    EVar prov this_this.
+
   Definition thisContract (prov:provenance) : ergoc_expr :=
     let prov := ProvThisContract (loc_of_provenance prov) in
     EVar prov this_contract.
@@ -96,6 +99,13 @@ Section ErgoCSugar.
                 (EVar prov local_state)
                 (EVar prov local_emit)).
 
+  Definition EBindThis (prov:provenance) (clname:string) (e:ergoc_expr) :=
+    ELet prov
+         this_this
+         None
+         (thisContract prov)
+         e.
+
   Definition EWrapTop (prov:provenance) (e:ergoc_expr) :=
     ELet prov
          local_state
@@ -141,8 +151,8 @@ Section ErgoCSugar.
              ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
              ::params)
     in
-    let wrapped_body := lift (EWrapTop prov) body
-    in
+    let wrapped_body := lift (EWrapTop prov) (lift (EBindThis prov clname) body) in
+    (* let wrapped_body := lift (EWrapTop prov) (body) in *)
     (clname,
      mkFuncC
        prov

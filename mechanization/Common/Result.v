@@ -252,6 +252,8 @@ Section Result.
     Definition should_have_one_contract_error {A} prov : eresult A :=
       efailure (ECompilationError prov "Should have exactly one contract").
 
+    Definition this_in_calculus_error {A} prov : eresult A :=
+      efailure (ESystemError prov "Should not find 'this' in Ergo Calculus").
     Definition contract_in_calculus_error {A} prov : eresult A :=
       efailure (ESystemError prov "Should not find 'contract' in Ergo Calculus").
     Definition clause_in_calculus_error {A} prov : eresult A :=

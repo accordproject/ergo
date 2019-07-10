@@ -36,6 +36,7 @@ Section ErgoMap.
     let apply_map := ergo_map_expr ctxt_new_variable_scope fn in
     maybe_fn
       match expr with
+      | EThis _ => esuccess expr nil
       | EThisContract _ => esuccess expr nil
       | EThisClause _ => esuccess expr nil
       | EThisState _ => esuccess expr nil

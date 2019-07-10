@@ -102,6 +102,7 @@ Section ErgoCTtoErgoNNRC.
   Fixpoint ergoct_expr_to_nnrc
            (env:list string) (e:ergoct_expr) : eresult nnrc_expr :=
     match e with
+    | EThis (prov,_) => this_in_calculus_error prov (* XXX We should prove it never happens *)
     | EThisContract (prov,_) => contract_in_calculus_error prov (* XXX We should prove it never happens *)
     | EThisClause (prov,_) => clause_in_calculus_error prov (* XXX We should prove it never happens *)
     | EThisState (prov,_) => state_in_calculus_error prov (* XXX We should prove it never happens *)
