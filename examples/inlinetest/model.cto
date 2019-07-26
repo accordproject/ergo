@@ -19,7 +19,11 @@ transaction MyRequest {
 
 transaction MyResponse {
   o Integer output1
-  o Integer[] output2
+  o Integer output2
+  o Integer[] output3
+  o Integer output4
+  o Integer output5
+  o Integer[] output6
 }
 
 concept TemplateModel {
