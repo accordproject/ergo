@@ -41,9 +41,9 @@ Section ErgoCInline.
   Context {bm:brand_model}.
 
   Definition ergo_map_expr_sane ctxt fn expr :=
-    @ergo_map_expr provenance provenance absolute_name compilation_context ctxt
+    @ergo_map_expr provenance provenance absolute_name compilation_context
                    (fun ctxt name expr => compilation_context_update_local_env ctxt name expr)
-                   fn expr.
+                   fn ctxt expr.
 
   Definition ergo_inline_foreach' (ctxt : compilation_context) (expr : ergo_expr) :=
     match expr with

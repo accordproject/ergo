@@ -162,5 +162,22 @@
     "expected": {
       "error": "Parse error (at file examples/bad-logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
     }
+  },
+  {
+    "name": "inlinetest",
+    "dir": "examples/inlinetest",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.smoke.Math",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "output1": 2,
+        "output2": [1,2,3]
+      }
+    }
   }
 ]
