@@ -15,12 +15,17 @@
 namespace org.accordproject.inline
 
 define constant c = 1
+define constant d = c
 
 contract Smoke over TemplateModel {
 	clause c1(r:MyRequest) : MyResponse {
     return MyResponse{
 			output1: let c = 2; c,
-			output2: foreach c in [1,2,3] return c
+			output2: match 2 with let c then c else 0,
+			output3: foreach c in [1,2,3] return c,
+			output4: let c = 2; d,
+			output5: match 2 with let c then c else 0,
+			output6: foreach c in [1,2,3] return d
 		}
 	}
 }

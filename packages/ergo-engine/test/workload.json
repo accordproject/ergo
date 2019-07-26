@@ -174,10 +174,13 @@
     "contractName": "org.accordproject.smoke.Math",
     "currentTime": null,
     "expected": {
-      "response": {
-        "output1": 2,
-        "output2": [1,2,3]
-      }
+      "$class": "org.accordproject.inline.MyResponse",
+      "output1": 2,
+      "output2": 2,
+      "output3": [1, 2, 3],
+      "output4": 2,
+      "output5": 2,
+      "output6": [1, 2, 3]
     }
   }
 ]
