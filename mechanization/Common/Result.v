@@ -229,6 +229,10 @@ Section Result.
       efailure (ERuntimeError prov "Matched LetOption without an option.").
     Definition eval_foreach_not_on_array_error {A} prov : eresult A :=
       efailure (ERuntimeError prov "Foreach needs to be called on an array").
+    Definition template_type_not_found_error {A} prov : eresult A :=
+      efailure (ERuntimeError prov ("Cannot find template type (one declared type should extend either AcccordContract or AccordClause)")).
+    Definition more_than_one_template_type_error {A} prov msg : eresult A :=
+      efailure (ERuntimeError prov ("Multiple template type (at most one of " ++ msg ++ " should extend either AcccordContract or AccordClause)")).
 
     (** System errors *)
     Definition no_ergo_module_error {A} prov : eresult A :=
@@ -317,3 +321,4 @@ Section Result.
       elift_warning (fun xy => coq_print_warnings prefix (List.map string_of_warning (snd xy)) (fst xy)) x.
   End warnings.
 End Result.
+

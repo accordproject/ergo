@@ -83,7 +83,7 @@ type global_config = {
   mutable econf_target : lang;
   mutable econf_source_template : (string * string) option;
   mutable econf_sources_text : (string * string) list;
-  mutable econf_template : ergo_expr option;
+  mutable econf_template : (string * ergo_expr) option;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
   mutable econf_link : bool;
@@ -119,7 +119,7 @@ let add_template gconf tem =
   gconf.econf_template <- Some tem
 let add_template_file gconf (f,fcontent) =
   gconf.econf_source_template <- Some (f,fcontent);
-  add_template gconf (ParseUtil.parse_template_from_string f fcontent)
+  add_template gconf (f, ParseUtil.parse_template_from_string f fcontent)
 let add_source_text gconf f fcontent =
   gconf.econf_sources_text <- (f,fcontent) :: gconf.econf_sources_text
 let add_cto gconf cto =
