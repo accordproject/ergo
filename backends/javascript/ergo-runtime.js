@@ -229,7 +229,7 @@ function toStringQ(v, quote) {
         return result + "]";
     }
     if (moment.isMoment(v)) {
-        return v.format();
+        return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;
@@ -267,7 +267,7 @@ function toTextQ(v, quote) {
         return result + "";
     }
     if (moment.isMoment(v)) {
-        return v.format();
+        return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;

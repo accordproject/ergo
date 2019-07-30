@@ -57,6 +57,7 @@ MODULES = \
   ErgoNNRC/Lang/ErgoNNRCSugar \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
+  Translation/ErgoAssembly \
   Translation/ErgoCompContext \
   Translation/ErgoCInline \
   Translation/ErgotoErgoC \

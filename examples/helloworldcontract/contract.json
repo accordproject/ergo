@@ -1,5 +1,6 @@
 {
   "$class": "org.accordproject.helloworld.TemplateModel",
+  "contractId": "ed9eafac-a4d2-47c4-a03b-a95b93848c4d",
   "name": "Fred Blogs",
   "clause1" : { "$class": "org.accordproject.helloworld.Clause1", "name" : "John Do" },
   "clause2" : { "$class": "org.accordproject.helloworld.Clause1", "name" : "Jane Doe" }

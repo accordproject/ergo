@@ -136,6 +136,7 @@ Section ErgoNameResolution.
       accordproject_base_namespace
         :: accordproject_stdlib_namespace
         :: accordproject_time_namespace
+        :: accordproject_markdown_namespace
         :: nil.
     Definition is_stdlib_import (ns:namespace_name) : bool :=
       if in_dec string_dec ns stdlib_imports
@@ -681,6 +682,8 @@ Section ErgoNameResolution.
                (resolve_contract_name prov nsctxt rn)
       end.
 
+    Definition resolve_ergo_template_expr := resolve_ergo_expr.
+    
     Definition resolve_ergo_declarations
                (ctxt:namespace_ctxt)
                (decls: list lrergo_declaration)
@@ -803,6 +806,20 @@ Section ErgoNameResolution.
            ctxt
            (patch_ergo_imports module_ns declarations)).
 
+    Definition resolve_ergo_template
+               (ctxt:namespace_ctxt)
+               (ftemplate:option (string * lrergo_expr)) : eresult (option (string * laergo_expr)) :=
+      let ectxt := ctxt.(namespace_ctxt_enums) in
+      match ftemplate with
+      | None => esuccess None nil
+      | Some t =>
+        let (fname, template) := t in
+        elift
+          (fun x =>
+             Some (fname, x))
+          (resolve_ergo_template_expr ectxt ctxt template)
+      end.
+
     Definition resolve_ergo_modules
                (ctxt:namespace_ctxt)
                (ml:list lrergo_module) : eresult (list laergo_module * namespace_ctxt) :=
@@ -820,15 +837,15 @@ Section ErgoNameResolution.
         ctos
         ctxt.
 
-    Fixpoint split_ctos_and_ergos (inputs:list lrergo_input)
+    Fixpoint triage_ctos_and_ergos (inputs:list lrergo_input)
       : (list lrcto_package * list lrergo_module * option lrergo_module) :=
       match inputs with
       | nil => (nil, nil, None)
       | InputCTO cto :: rest =>
-        let '(ctos', rest', p') := split_ctos_and_ergos rest in
+        let '(ctos', rest', p') := triage_ctos_and_ergos rest in
         (cto :: ctos', rest', p')
       | InputErgo ml :: rest =>
-        let '(ctos', rest', p') := split_ctos_and_ergos rest in
+        let '(ctos', rest', p') := triage_ctos_and_ergos rest in
         match p' with
         | None =>
           if is_stdlib_import ml.(module_namespace)
@@ -836,63 +853,6 @@ Section ErgoNameResolution.
           else (ctos', rest', Some ml)
         | Some _ => (ctos', ml :: rest', p')
         end
-      end.
-
-    Definition toTextClause (prov:provenance) (template:lrergo_expr) : lrergo_clause :=
-      mkClause
-        prov
-        "toText"%string
-        (mkErgoTypeSignature
-           prov
-           (("options"%string,
-             ErgoTypeClassRef prov (Some "org.accordproject.markdown"%string, "MarkdownOptions"%string))::nil)
-           (Some (ErgoTypeString prov))
-           None)
-        (Some (SReturn prov template)).
-    
-    Fixpoint add_template_to_clauses (prov:provenance) (template:lrergo_expr) (cl:list lrergo_clause) :=
-      match cl with
-      | nil =>
-        (toTextClause prov template) :: nil
-      | cl1 :: rest =>
-        if (string_dec cl1.(clause_name) "toText")
-        then cl
-        else cl1 :: (add_template_to_clauses prov template rest)
-      end.
-
-    Definition add_template_to_contract (template:lrergo_expr) (c:lrergo_contract) :=
-      mkContract
-        c.(contract_annot)
-        c.(contract_template)
-        c.(contract_state)
-        (add_template_to_clauses c.(contract_annot) template c.(contract_clauses)).
-
-    Definition add_template_to_declaration (template:lrergo_expr) (decl:lrergo_declaration) :=
-      match decl with
-      | DContract a ln c => DContract a ln (add_template_to_contract template c)
-      | _ => decl
-      end.
-
-    Definition add_template_to_module (template:lrergo_expr) (main:option lrergo_module) :=
-      match main with
-      | None => None
-      | Some emod =>
-        Some (
-            mkModule
-              emod.(module_annot)
-              emod.(module_file)
-              emod.(module_prefix)              
-              emod.(module_namespace)
-              (List.map (add_template_to_declaration template) emod.(module_declarations))
-          )
-      end.
-    
-    Definition preprocess_ctos_and_ergos (inputs:list lrergo_input) (template:option lrergo_expr)
-      : (list lrcto_package * list lrergo_module * option lrergo_module) :=
-      let '(ctos, ergos, main) := split_ctos_and_ergos inputs in
-      match template with
-      | None => (ctos,ergos,main)
-      | Some template => (ctos,ergos, add_template_to_module template main)
       end.
 
   End Top.
