@@ -58,6 +58,7 @@ Section Names.
     Definition accordproject_contract_namespace : string := "org.accordproject.cicero.contract"%string.
     Definition accordproject_stdlib_namespace : string := "org.accordproject.ergo.stdlib"%string.
     Definition accordproject_time_namespace : string := "org.accordproject.time"%string.
+    Definition accordproject_markdown_namespace : string := "org.accordproject.markdown"%string.
     Definition accordproject_ergotop_namespace : string := "org.accordproject.ergo.top"%string.
 
     (* Accord Project system types *)

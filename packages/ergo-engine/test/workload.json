@@ -223,5 +223,26 @@
     "expected": {
       "response": "Name of the person to greet: Fred Blogs.\nThank you!\n Here is a first name: John Do \n Here is a second name: Jane Doe \n"
     }
+  },
+  {
+    "name": "helloworldcontract (generate text without logic)",
+    "dir": "examples/helloworldcontract",
+    "ergo": [],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "params": {
+      "options": {
+        "$class": "org.accordproject.markdown.MarkdownOptions",
+        "wrapVariables": false
+      }
+    },
+    "grammar": "grammar.tem",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "Name of the person to greet: Fred Blogs.\nThank you!\n Here is a first name: John Do \n Here is a second name: Jane Doe \n"
+    }
   }
 ]

@@ -163,7 +163,7 @@ class ErgoJSONGenerator {
         switch (field.getType()) {
         case 'DateTime':
         {
-            return obj.isUtc() ? obj.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : obj.format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+            return obj;
         }
         case 'Integer':
         case 'Long':

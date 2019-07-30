@@ -313,7 +313,7 @@ class ScriptManager {
         }
         const codeExt = this.target === 'java' ? '.java' : '.js';
         let sourceErgo = this.getLogic();
-        if (sourceErgo === undefined || sourceErgo.length === 0) {
+        if (sourceErgo === undefined || sourceErgo.length === 0 && !this.sourceTemplate) {
             const allJsScripts = this.getCombinedScripts();
             if (allJsScripts === '') {
                 return null;

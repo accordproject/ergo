@@ -41,21 +41,25 @@ let compile_module_to_java inputs template =
   let code = ErgoCompiler.ergo_module_to_java inputs template in
   wrap_jerrors res_convert code
 
+let adjust_template_file template =
+  begin match template with
+  | None -> None
+  | Some template -> Some (char_list_of_string (fst template), snd template)
+  end
+
 let ergo_compile target_lang inputs template =
-  let result =
-    begin match target_lang with
-    | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
-    | ES5 ->
-        compile_module_to_javascript ES5 inputs template
-    | ES6 ->
-        compile_module_to_javascript ES6 inputs template
-    | Cicero ->
-        compile_module_to_cicero inputs template
-    | Java ->
-        compile_module_to_java inputs template
-    end
-  in
-  result
+  let template = adjust_template_file template in
+  begin match target_lang with
+  | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
+  | ES5 ->
+      compile_module_to_javascript ES5 inputs template
+  | ES6 ->
+      compile_module_to_javascript ES6 inputs template
+  | Cicero ->
+      compile_module_to_cicero inputs template
+  | Java ->
+      compile_module_to_java inputs template
+  end
 
 let ergo_link gconf result =
   if should_link gconf
