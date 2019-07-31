@@ -16,7 +16,7 @@ namespace org.accordproject.helloworld
 contract HelloWorld over TemplateModel {
   // Simple Clause
   clause helloworld(request : Request) : Response {
-    return Response{ output: {{
+    return Response{ output: `
 
 Payments.
 
@@ -34,6 +34,6 @@ Payments.
 
 5. Royalty Statements. At the same time as payments are made under Section 4., Licensee shall submit a statement showing the total Net Sales Price of Licensed Product[s] received by Licensee and its Affiliates and sublicensees and the total amount of any sublicense royalties and other fees received by Licensee in the relevant Quarterly Period.
 
-Hello {{ contract.name }} ({{ request.input }}) {{ foreach x in [1,2,3] return x+2 }} }} }
+Hello {{% contract.name %}} ({{% request.input %}}) {{% foreach x in [1,2,3] return x+2 %}} ` }
   }
 }

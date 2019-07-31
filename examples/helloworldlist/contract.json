@@ -1,5 +1,6 @@
 {
   "$class": "org.accordproject.helloworld.TemplateModel",
+  "contractId": "111",
   "name": "Fred Blogs",
   "items" : [
     {

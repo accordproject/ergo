@@ -115,7 +115,7 @@ let make_template_if prov name ve1 =
 %token OPENTEXT
 %token CLOSEEXPR
 %token CLOSEVAR
-%token <string> CLOSETEXT
+%token <string> CLOSETEXT EOFTEXT
 %token <string> OPENEXPR
 %token <string> OPENVAR OPENVARSHARP OPENVARSLASH OPENVARELSE
 
@@ -541,7 +541,7 @@ expr:
 
 (* text *)
 template:
-| sl = textlist s0 = CLOSETEXT
+| sl = textlist s0 = EOFTEXT
     { let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
       let sl' = sl @ [slast] in
       ErgoCompiler.etext (mk_provenance $startpos $endpos) sl' }
