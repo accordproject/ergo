@@ -76,8 +76,8 @@
 	]
 
   let block_table = [
-	  "list", LIST;
-    "order", ORDER;
+	  "ulist", LIST;
+    "olist", ORDER;
     "join", JOIN;
 	  "clause", CLAUSE;
 	  "foreach", FOREACH;
@@ -175,11 +175,11 @@ rule token lh = parse
       lh_reset_string lh; string lh lexbuf;
       lexbuf.lex_start_p <- string_start;
       let s = lh_get_string lh in STRING s }
-| "{{"
+| "`"
     { lh_reset_string lh;
       lh_push_state lh TextState;
       OPENTEXT }
-| "}}"
+| "%}}"
     { lh_reset_string lh;
       ignore(lh_pop_state lh);
       CLOSEEXPR }
@@ -224,12 +224,12 @@ and linecomment = parse
       { linecomment lexbuf }
 
 and text lh = parse
-| "{{" { lh_push_state lh ExprState; OPENEXPR (lh_get_string lh) }
-| "}}" { ignore(lh_pop_state lh); CLOSETEXT (lh_get_string lh) }
+| "`" { ignore(lh_pop_state lh); CLOSETEXT (lh_get_string lh) }
+| "{{%" { lh_push_state lh ExprState; OPENEXPR (lh_get_string lh) }
 | "{{#" { lh_push_state lh StartNestedState; OPENVARSHARP (lh_get_string lh) }
 | "{{else" { lh_push_state lh StartNestedState; OPENVARELSE (lh_get_string lh) }
 | "{{/" { lh_push_state lh EndNestedState; OPENVARSLASH (lh_get_string lh) }
-| "{[" { lh_push_state lh VarState; OPENVAR (lh_get_string lh) }
+| "{{" { lh_push_state lh VarState; OPENVAR (lh_get_string lh) }
 | '\\' (['0'-'9'] as c) (['0'-'9'] as d) (['0'-'9']  as u)
     { let v = decimal_code c d u in
     if v > 255 then
@@ -237,7 +237,7 @@ and text lh = parse
     else lh_add_char_to_string lh(Char.chr v); text lh lexbuf }
 | '\\' (backslash_escapes as c) { lh_add_char_to_string lh (char_for_backslash c); text lh lexbuf }
 | eof    { if lh_in_template lh
-           then begin ignore(lh_pop_state lh); CLOSETEXT (lh_get_string lh) end
+           then begin ignore(lh_pop_state lh); EOFTEXT (lh_get_string lh) end
            else raise (LexError "Text not terminated.\n") }
 | newline
     { Lexing.new_line lexbuf; lh_add_char_to_string lh (Lexing.lexeme_char lexbuf 0); text lh lexbuf }
@@ -258,7 +258,7 @@ and var lh = parse
       lh_reset_string lh; string lh lexbuf;
       lexbuf.lex_start_p <- string_start;
       let s = lh_get_string lh in STRING s }
-| "]}"
+| "}}"
     { lh_reset_string lh;
       ignore(lh_pop_state lh);
       CLOSEVAR }

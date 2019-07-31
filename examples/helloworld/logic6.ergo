@@ -16,6 +16,6 @@ namespace org.accordproject.helloworld
 contract HelloWorld over TemplateModel {
   // Simple Clause
   clause helloworld(request : Request) : Response {
-    return Response{ output: {{Hello {{ contract.name }} ({{ request.input }}) {{ foreach x in [1,2,3] return x+2 }} }} }
+    return Response{ output: {{`Hello {{% contract.name %}} ({{% request.input %}}) {{% foreach x in [1,2,3] return x+2 %}}`}} }
   }
 }
