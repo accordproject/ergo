@@ -18,10 +18,10 @@ import org.accordproject.markdown.*
 contract HelloWorld over TemplateModel {
 	// Generate Text
 	clause toText(options:MarkdownOptions) : TextResponse {
-		return TextResponse { text : {{
-Name of the person to greet: {{contract.name}}.
+		return TextResponse { text : `
+Name of the person to greet: {{% contract.name %}}.
 Thank you!
-}}
+`
 	}
 	}
 

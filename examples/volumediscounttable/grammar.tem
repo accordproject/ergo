@@ -21,7 +21,7 @@ a) Settlement Amount. Our agent will pay you according to your payment plan, as 
 b) Discount. The Discount is determined according to the following table:
 
 | Annual Dollar Volume      | Discount             |
-{{ foreach r in contract.rates
-return {{| Between {{ r.volumeAbove ?? 0.0 }} and {{ r.volumeUpTo ?? infinity }} | {{ r.rate }} |
-}}
-}}
+{{% foreach r in contract.rates
+return `| Between {{% r.volumeAbove ?? 0.0 %}} and {{% r.volumeUpTo ?? infinity %}} | {{% r.rate %}} |
+`
+%}}

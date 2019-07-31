@@ -261,10 +261,10 @@ describe('ergo', () => {
         it('should initialize a smart Ergo contract state (template content)', async function () {
             const templateContent = {
                 name: 'foo.tem',
-                content: `This is a fixed interest loan to the amount of {[loanAmount]}
-at the yearly interest rate of {[rate]}%
-with a loan term of {[loanDuration]},
-and monthly payments of {{monthlyPaymentFormula(contract.loanAmount,contract.rate,contract.loanDuration)}}
+                content: `This is a fixed interest loan to the amount of {{loanAmount}}
+at the yearly interest rate of {{rate}}%
+with a loan term of {{loanDuration}},
+and monthly payments of {{% monthlyPaymentFormula(contract.loanAmount,contract.rate,contract.loanDuration) %}}
 `
             };
             const ergoPath = Path.join('test/examples/interestsvar', 'logic2.ergo');

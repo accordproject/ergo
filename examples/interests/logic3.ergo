@@ -19,11 +19,11 @@ import org.accordproject.markdown.*
 contract Interests over TemplateModel {
 	// Generate Text
 	clause toText(options:MarkdownOptions) : String {
-		return {{
-This is a fixed interest loan to the amount of {[loanAmount]}
-at the yearly interest rate of {[rate]}%
-with a loan term of {[loanDuration]},
-and monthly payments of {{
+		return `
+This is a fixed interest loan to the amount of {{loanAmount}}
+at the yearly interest rate of {{rate}}%
+with a loan term of {{loanDuration}},
+and monthly payments of {{%
 	let term = longToDouble(contract.loanDuration * 12);
   if (contract.rate = 0.0)
 	then (contract.loanAmount / term)
@@ -33,7 +33,7 @@ and monthly payments of {{
       (monthlyRate * contract.loanAmount)
       / (1.0 - ((1.0 + monthlyRate) ^ (-term)));
 			roundn(monthlyPayment, 0)
-}}
-}}
+%}}
+`
 	}
 }

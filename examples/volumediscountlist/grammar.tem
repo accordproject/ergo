@@ -19,4 +19,4 @@ a) Settlement Amount. Our agent will pay you according to your payment plan, as 
     (ii) any amounts you owe us or our Affiliates, 
     (iii) any amounts for which we have Chargebacks, and (iv) any Credits you submit. Our agent will subtract the full amount of all applicable deductions, rejections, and withholdings, from this payment to you (or debit your Bank Account), but if it cannot, then you must pay it promptly upon demand.
 b) Discount. The Discount is determined according to the following table:
-{{#list rates}}{[volumeAbove]}$ million <= Volume < {[volumeUpTo]}$ million : {[rate]}%{{/list}}
+{{#ulist rates}}{{volumeAbove}}$ million <= Volume < {{volumeUpTo}}$ million : {{rate}}%{{/ulist}}
