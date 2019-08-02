@@ -42,19 +42,17 @@ let make_template_variable prov name ve =
     ErgoCompiler.econst prov
       (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
   in
-  let optionsparam = ErgoCompiler.evar prov (Util.char_list_of_string "options") in
   ErgoCompiler.ecallfun
     prov
     (relative_name_of_qname (Some "org.accordproject.markdown","variableTag"))
-    [varparam;ve;optionsparam]
+    [varparam;ve]
 
 let make_template_computed prov e =
   let textparam = e in
-  let optionsparam = ErgoCompiler.evar prov (Util.char_list_of_string "options") in
   ErgoCompiler.ecallfun
     prov
     (relative_name_of_qname (Some "org.accordproject.markdown","computedTag"))
-    [textparam;optionsparam]
+    [textparam]
 
 let make_template_list prov name ve =
   let a = Util.char_list_of_string name in

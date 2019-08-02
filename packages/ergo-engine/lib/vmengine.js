@@ -57,18 +57,22 @@ class VMEngine extends Engine {
     /**
      * Call to execute a call in a JavaScript machine
      * @param {number} utcOffset - UTC Offset for this execution
+     * @param {object} now - the definition of 'now'
+     * @param {object} options to the text generation
      * @param {object} context - global variables to set in the VM
      * @param {object} script - the initial script to load
      * @param {object} call - the execution call
      * @return {object} the result of execution
      */
-    runVMScriptCall(utcOffset,context,script,call) {
+    runVMScriptCall(utcOffset,now,options,context,script,call) {
         const vm = new VM({
             timeout: 1000,
             sandbox: {
                 moment: moment,
                 logger: Logger,
-                utcOffset: utcOffset
+                utcOffset: utcOffset,
+                now: now,
+                options: options
             }
         });
         vm.freeze(context, 'context');

@@ -145,14 +145,14 @@ function runWorkload(Engine, target) {
                 } else {
                     if (test.clauseName) {
                         if (test.clauseName === 'generateText') {
-                            const params = test.params;
+                            const options = test.options;
                             if (expected.hasOwnProperty('error')) {
-                                return engine.compileAndGenerateText(logicManager, contractJson, params, currentTime)
+                                return engine.compileAndGenerateText(logicManager, contractJson, {}, currentTime, options)
                                     .catch((actualError) => {
                                         expect(actualError.message).to.equal(expected.error);
                                     });
                             } else {
-                                return engine.compileAndGenerateText(logicManager, contractJson, params, currentTime)
+                                return engine.compileAndGenerateText(logicManager, contractJson, {}, currentTime, options)
                                     .then((actualAnswer) => {
                                         return compareSuccess(expected, actualAnswer);
                                     });

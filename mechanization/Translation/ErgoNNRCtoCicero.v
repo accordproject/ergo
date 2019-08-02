@@ -77,7 +77,7 @@ Section ErgoNNRCtoCicero.
        eol
        quotel)
       +++ `"function " +++ `fun_name +++ `"(context) {" +++ eol
-      +++ `"  let pcontext = { '" +++ `request_param +++ `"' : context.request, 'state': context.state, 'contract': context.contract, 'emit': context.emit, 'now': context.now};" +++ eol
+      +++ `"  let pcontext = { '" +++ `request_param +++ `"' : context.request, '__state': context.__state, '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
       +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
       +++ `"  return new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"()." +++ `ErgoCodeGen.javascript_identifier_sanitizer clause_name +++ `"(pcontext);" +++ eol
       +++ `"}" +++ eol.
@@ -93,7 +93,7 @@ Section ErgoNNRCtoCicero.
              (quotel:estring) : estring :=
     let state_init := `"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }" in
     `"function " +++ `fun_name +++ `"(context) {" +++ eol
-     +++ `"  let pcontext = { 'state': " +++ state_init +++ `", 'contract': context.contract, 'emit': context.emit, 'now': context.now};" +++ eol
+     +++ `"  let pcontext = { 'state': " +++ state_init +++ `", '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
      +++ `"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
      +++ `"  return new " +++ `ErgoCodeGen.javascript_identifier_sanitizer contract_name +++ `"().init(pcontext);" +++ eol
      +++ `"}" +++ eol.

@@ -23,6 +23,7 @@ Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
 Require Import ErgoSpec.Common.Provenance.
+Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
@@ -250,7 +251,8 @@ Section ErgoCStdlib.
         :: nil.
 
     Definition builtin_table : ergo_stdlib_table :=
-      ("org.accordproject.time.now", fun prov => mk_naked_closure nil (EVar prov "now") prov)
+      ("org.accordproject.time.now", fun prov => mk_naked_closure nil (EVar prov current_time) prov)
+        :: ("org.accordproject.markdown.getOptions", fun prov => mk_naked_closure nil (EVar prov markdown_options) prov)
         :: nil.
 
     Definition ergoc_stdlib : ergo_stdlib_table :=

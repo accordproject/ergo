@@ -27,6 +27,6 @@ Thank you!
 
   // Simple Clause
   clause helloworld(request : Request) : Response {
-    return Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")" }
+    return Response{ output: `Hello {{% name %}} ({{% request.input %}})` }
   }
 }

@@ -19,6 +19,7 @@ Require Import List.
 Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Result.
+Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.NamespaceContext.
 
@@ -52,9 +53,9 @@ Section PrintTypedData.
                (out : ergo_data)
       : option (ergo_data * list ergo_data * ergo_data) :=
       match out with
-      | (dleft (drec (("emit", dcoll emits)
-                        ::("response", response)
-                        ::("state", state)
+      | (dleft (drec (("__emit", dcoll emits)
+                        ::("__response", response)
+                        ::("__state", state)
                         ::nil))) =>
         Some (response, emits, state)
       | _ => None
@@ -213,8 +214,8 @@ Section PrintTypedData.
           elift fst
                 (eolift
                    (fun success =>
-                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot "response") success)
-                                         (unpack_error nsctxt "response" out))
+                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot this_response) success)
+                                         (unpack_error nsctxt this_response out))
                         nil)
                    success)
       in
@@ -222,8 +223,8 @@ Section PrintTypedData.
           elift fst
                 (eolift
                    (fun success =>
-                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot "emit") success)
-                                         (unpack_error nsctxt "emit" out))
+                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot this_emit) success)
+                                         (unpack_error nsctxt this_emit out))
                         nil)
                    success)
       in
@@ -231,8 +232,8 @@ Section PrintTypedData.
           elift fst
                 (eolift
                    (fun success =>
-                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot "state") success)
-                                         (unpack_error nsctxt "state" out))
+                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot this_state) success)
+                                         (unpack_error nsctxt this_state out))
                         warnings)
                    success)
       in
