@@ -98,7 +98,7 @@ class LogicManager {
         if (target === 'cicero') {
             this.getScriptManager().hasDispatch();
             code = `
-const __result = __dispatch({contract:context.data,state:context.state,emit:[],now:context.now,request:context.request});
+const __result = __dispatch({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
 unwrapError(__result);
         `;
         } else if (target === 'es6') {
@@ -106,7 +106,7 @@ unwrapError(__result);
                 const contractName = this.getContractName();
                 code = `
 let contractObj = new ${contractName}();
-const __result = contractObj.main({contract:context.data,state:context.state,emit:[],now:context.now,request:context.request});
+const __result = contractObj.main({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
 unwrapError(__result);
 `;
             } else {
@@ -114,7 +114,7 @@ unwrapError(__result);
             }
         } else if (target === 'es5') {
             code = `
-const __result = main({contract:context.data,state:context.state,emit:[],now:context.now,request:context.request});
+const __result = main({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
 unwrapError(__result);
 `;
         } else {
@@ -137,7 +137,7 @@ unwrapError(__result);
                 const contractName = this.getContractName();
                 code = `
 let contractObj = new ${contractName}();
-const __result = contractObj.${clauseName}(Object.assign({}, {contract:context.data,state:context.state,emit:[],now:context.now} ,context.params));
+const __result = contractObj.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
 unwrapError(__result);
 `;
             } else {
@@ -145,7 +145,7 @@ unwrapError(__result);
             }
         } else if (target === 'es5') {
             code = `
-const __result = ${clauseName}(Object.assign({}, {contract:context.data,state:context.state,emit:[],now:context.now} ,context.params));
+const __result = ${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
 unwrapError(__result);
 `;
         } else {

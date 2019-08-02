@@ -229,7 +229,7 @@ Section ErgoCTtoErgoNNRC.
   Definition functionct_to_nnrc
              (fn:absolute_name)
              (f:ergoct_function) : eresult nnrc_function :=
-    let env := List.map fst f.(functionct_sig).(sigc_params) in
+    let env := current_time :: markdown_options :: (List.map fst f.(functionct_sig).(sigc_params)) in
     match f.(functionct_body) with
     | Some body =>
       elift
@@ -274,11 +274,11 @@ Section ErgoCTtoErgoNNRC.
     | DCTExpr prov e =>
       elift
         DNExpr
-        (ergoct_expr_to_nnrc nil e)
+        (ergoct_expr_to_nnrc (current_time::markdown_options::nil) e)
     | DCTConstant prov v _ e => (* Ignores the type annotation *)
       elift
         (DNConstant v) (* Add new variable to translation_context *)
-        (ergoct_expr_to_nnrc nil e)
+        (ergoct_expr_to_nnrc (current_time::markdown_options::nil) e)
     | DCTFunc prov fn f =>
       elift
         DNFunc (* Add new function to translation_context *)

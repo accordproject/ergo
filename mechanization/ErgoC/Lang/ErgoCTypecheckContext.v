@@ -49,7 +49,8 @@ Section ErgoCTypecheckContext.
                   new_local_env.
 
   Definition empty_type_context :=
-    mkEvalContext  ((current_time,tdateTime)
+    mkEvalContext  ((markdown_options,tbrand (default_markdown_options::nil))
+                      ::(current_time,tdateTime)
                       ::(this_contract,tunit)
                       ::(this_state,tunit)
                       ::(this_emit,tcoll tbottom)

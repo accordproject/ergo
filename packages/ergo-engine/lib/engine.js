@@ -87,12 +87,19 @@ class Engine {
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    async execute(logic, contractId, contract, request, state, currentTime) {
+    async execute(logic, contractId, contract, request, state, currentTime, options) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
+        const validOptions = options ? options : {
+            options: {
+                '$class': 'org.accordproject.markdown.MarkdownOptions',
+                'wrapVariables': false,
+            }
+        };
 
         const validContract = logic.validateContract(contract); // ensure the contract is valid
         const validRequest = logic.validateInput(request); // ensure the request is valid
@@ -105,18 +112,16 @@ class Engine {
 
         const context = {
             data: validContract.serialized,
-            composerData: validContract.validated,
             state: validState,
-            now: now,
             request: validRequest
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,context,script,callScript);
+        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
 
-        const validResponse = logic.validateOutput(result.response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.emit); // ensure all the emits are valid
+        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
+        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
+        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
@@ -138,12 +143,19 @@ class Engine {
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    async invoke(logic, contractId, clauseName, contract, params, state, currentTime) {
+    async invoke(logic, contractId, clauseName, contract, params, state, currentTime, options) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
+        const validOptions = options ? options : {
+            options: {
+                '$class': 'org.accordproject.markdown.MarkdownOptions',
+                'wrapVariables': false,
+            }
+        };
 
         const validContract = logic.validateContract(contract); // ensure the contract is valid
         const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
@@ -155,18 +167,16 @@ class Engine {
         const callScript = logic.getInvokeCall(clauseName);
         const context = {
             data: validContract.serialized,
-            composerData: validContract.validated,
             state: validState,
-            now: now,
             params: validParams
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,context,script,callScript);
+        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
 
-        const validResponse = logic.validateOutput(result.response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.emit); // ensure all the emits are valid
+        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
+        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
+        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
@@ -185,14 +195,15 @@ class Engine {
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    async init(logic, contractId, contract, params, currentTime) {
+    async init(logic, contractId, contract, params, currentTime, options) {
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime);
+        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options);
     }
 
     /**
@@ -202,14 +213,15 @@ class Engine {
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    async generateText(logic, contractId, contract, params, currentTime) {
+    async generateText(logic, contractId, contract, params, currentTime, options) {
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime);
+        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime, options);
     }
 
     /**
@@ -219,12 +231,13 @@ class Engine {
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInit(logic, contract, params, currentTime) {
+    compileAndInit(logic, contract, params, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.init(logic, contractId, contract, params, currentTime);
+            return this.init(logic, contractId, contract, params, currentTime, options);
         });
     }
 
@@ -235,12 +248,13 @@ class Engine {
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndGenerateText(logic, contract, params, currentTime) {
+    compileAndGenerateText(logic, contract, params, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.generateText(logic, contractId, contract, params, currentTime);
+            return this.generateText(logic, contractId, contract, params, currentTime, options);
         });
     }
 
@@ -254,12 +268,13 @@ class Engine {
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInvoke(logic, clauseName, contract, params, state, currentTime) {
+    compileAndInvoke(logic, clauseName, contract, params, state, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime);
+            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options);
         });
     }
 
@@ -273,12 +288,13 @@ class Engine {
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    compileAndExecute(logic, contract, request, state, currentTime) {
+    compileAndExecute(logic, contract, request, state, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.execute(logic, contractId, contract, request, state, currentTime);
+            return this.execute(logic, contractId, contract, request, state, currentTime, options);
         });
     }
 

@@ -84,7 +84,7 @@ Section ErgoC.
       | nil => nil
       | (n,f) :: dl' =>
         match f.(functionc_sig).(sigc_params) with
-        | current_time::this_contract::this_state::this_emit::((name,ErgoTypeClassRef _ _)::nil) =>
+        | this_contract::this_state::this_emit::((name,ErgoTypeClassRef _ _)::nil) =>
           (n,f.(functionc_sig)) :: lookup_clausec_request_signatures dl'
         | _ =>
           lookup_clausec_request_signatures dl'

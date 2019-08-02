@@ -73,14 +73,12 @@ Section ErgoCSugar.
     let params :=
         if string_dec clname clause_init_name
         then
-          ((EVar prov current_time)
-             ::(thisContract prov)
+          ((thisContract prov)
              ::(EConst prov dunit)
              ::(EVar prov local_emit)
              ::el)
         else
-          ((EVar prov current_time)
-             ::(thisContract prov)
+          ((thisContract prov)
              ::(EVar prov local_state)
              ::(EVar prov local_emit)
              ::el)
@@ -139,14 +137,12 @@ Section ErgoCSugar.
     let params :=
         if string_dec clname clause_init_name
         then
-          ((current_time, (ErgoTypeDateTime prov))
-             ::(this_contract, template)
+          ((this_contract, template)
              ::(this_state, ErgoTypeUnit prov)
              ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
              ::params)
         else
-          ((current_time, (ErgoTypeDateTime prov))
-             ::(this_contract, template)
+          ((this_contract, template)
              ::(this_state, state_type)
              ::(this_emit, ErgoTypeArray prov (ErgoTypeNothing prov))
              ::params)

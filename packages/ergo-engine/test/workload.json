@@ -189,12 +189,11 @@
     "ergo": ["interests.ergo","logic.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
-    "params": {
-      "options": {
-        "$class": "org.accordproject.markdown.MarkdownOptions",
-        "wrapVariables": false
-      }
+    "options": {
+      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "wrapVariables": false
     },
+    "params": {},
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
     "clauseName": "generateText",
@@ -209,12 +208,11 @@
     "ergo": ["logic.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
-    "params": {
-      "options": {
-        "$class": "org.accordproject.markdown.MarkdownOptions",
-        "wrapVariables": false
-      }
+    "options": {
+      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "wrapVariables": false
     },
+    "params": {},
     "grammar": "grammar.tem",
     "state": "state.json",
     "contractName": "org.accordproject.helloworld.HelloWorld",
@@ -230,12 +228,11 @@
     "ergo": [],
     "models": ["model.cto"],
     "contract": "contract.json",
-    "params": {
-      "options": {
-        "$class": "org.accordproject.markdown.MarkdownOptions",
-        "wrapVariables": false
-      }
+    "options": {
+      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "wrapVariables": false
     },
+    "params": {},
     "grammar": "grammar.tem",
     "state": "state.json",
     "contractName": "org.accordproject.helloworld.HelloWorld",

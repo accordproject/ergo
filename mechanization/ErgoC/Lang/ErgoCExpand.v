@@ -58,7 +58,7 @@ Section ErgoCExpand.
     let callparams := (snd s).(sigc_params) in
     match callparams with
     | nil => main_at_least_one_parameter_error prov
-    | current_time::this_contract::this_state::this_emit::(param0, et)::otherparams =>
+    | this_contract::this_state::this_emit::(param0, et)::otherparams =>
       match et with
       | ErgoTypeClassRef _ type0 =>
         let prunedcallparams := (param0, et)::otherparams in

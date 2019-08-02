@@ -41,14 +41,16 @@ Section Names.
     Definition clause_init_name : local_name := "init". (* Init method -- defaults to setting default state *)
 
     (** This *)
-    Definition this_this := "this".         (* Context-dependent current value -- for templates *)
-    Definition this_contract := "contract". (* Contains all contract data and clause data *)
-    Definition this_state := "state".       (* Contains state *)
-    Definition this_emit := "emit".         (* Contains emit *)
-    Definition this_response := "response". (* Contains response *)
-    Definition local_state := "lstate".     (* Contains local state *)
-    Definition local_emit := "lemit".       (* Contains local emit *)
-    Definition current_time := "now".       (* Contains current time *)
+    Definition this_this := "__this".           (* Context-dependent current value -- for templates *)
+    Definition this_contract := "__contract".   (* Contains all contract data and clause data *)
+    Definition this_state := "__state".         (* Contains state *)
+    Definition this_emit := "__emit".           (* Contains emit *)
+    Definition this_request := "__request".     (* Contains request *)
+    Definition this_response := "__response".   (* Contains response *)
+    Definition local_state := "__lstate".       (* Contains local state *)
+    Definition local_emit := "__lemit".         (* Contains local emit *)
+    Definition current_time := "__now".         (* Contains current time *)
+    Definition markdown_options := "__options". (* Contains current time *)
 
   End ReservedNames.
   
@@ -82,6 +84,8 @@ Section Names.
     (* Ergo types *)
     Definition default_error_absolute_name : string :=
       absolute_name_of_local_name accordproject_stdlib_namespace "ErgoErrorResponse".
+    Definition default_markdown_options : string :=
+      absolute_name_of_local_name accordproject_markdown_namespace "MarkdownOptions".
 
   End TypeNames.
 

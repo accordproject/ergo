@@ -345,7 +345,7 @@ End sanitizer.
         * ejavascript                         (* JavaScript expression holding result *)
         * nat                                (* next available unused temporary *)
       := match n with
-         | NNRCGetConstant v => (`"", `"vc$" +++ `v, t)
+         | NNRCGetConstant v => (`"", `"" +++ `v, t)
          | NNRCVar v =>
            match assoc_lookupr equiv_dec ivs v with
            | Some v_string => (`"", `v_string, t)
