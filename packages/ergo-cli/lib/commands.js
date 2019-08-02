@@ -98,7 +98,7 @@ class Commands {
             }
             let initResponse;
             if (stateInput === null) {
-                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime);
+                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, null);
             } else {
                 const stateJson = getJson(stateInput);
                 initResponse = Promise.resolve({ state: stateJson });
@@ -106,7 +106,7 @@ class Commands {
             // Get all the other requests and chain execution through Promise.reduce()
             return requestsJson.reduce((promise,requestJson) => {
                 return promise.then((result) => {
-                    return engine.compileAndExecute(logicManager, contractJson, requestJson, result.state, currentTime);
+                    return engine.compileAndExecute(logicManager, contractJson, requestJson, result.state, currentTime, null);
                 });
             }, initResponse);
         } catch (err) {
@@ -150,7 +150,7 @@ class Commands {
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
             const stateJson = getJson(stateInput);
-            return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime);
+            return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime, null);
         } catch (err) {
             return Promise.reject(err);
         }
@@ -189,7 +189,7 @@ class Commands {
             }
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
-            return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime);
+            return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime, null);
         } catch (err) {
             return Promise.reject(err);
         }
@@ -225,13 +225,11 @@ class Commands {
             logicManager.addModelFile(ctoContent, ctoFile);
         }
         const contractJson = getJson(contractInput);
-        const params = {
-            options: {
-                '$class': 'org.accordproject.markdown.MarkdownOptions',
-                'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
-            }
+        const markdownOtions = {
+            '$class': 'org.accordproject.markdown.MarkdownOptions',
+            'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
         };
-        return engine.compileAndGenerateText(logicManager,contractJson,params,currentTime);
+        return engine.compileAndGenerateText(logicManager,contractJson,{},currentTime,markdownOtions);
     }
 
     /**

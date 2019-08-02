@@ -14,14 +14,16 @@
 
 namespace org.accordproject.markdown
 
-define function variableTag(variableName:String,text:Any,options:MarkdownOptions) : String {
-	if options.wrapVariables
+define function getOptions() : MarkdownOptions
+
+define function variableTag(variableName:String,text:Any) : String {
+	if getOptions().wrapVariables
 	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(toText(text)) ++ "\"/>"
 	else return toText(text)
 }
 
-define function computedTag(text:Any,options:MarkdownOptions) : String {
-	if options.wrapVariables
+define function computedTag(text:Any) : String {
+	if getOptions().wrapVariables
 	then return "<computed value=\"" ++ encode(toText(text)) ++ "\"/>"
 	else return "{{" ++ toText(text) ++ "}}"
 }

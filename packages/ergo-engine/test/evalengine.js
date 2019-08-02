@@ -23,7 +23,7 @@ describe('#evalengine', () => {
         const engine = new EvalEngine();
         engine.kind().should.equal('eval');
         engine.compileVMScript('const a = 1;').should.not.be.null;
-        engine.runVMScriptCall(2,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
+        engine.runVMScriptCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
     });
 
     it('should cache a script', () => {

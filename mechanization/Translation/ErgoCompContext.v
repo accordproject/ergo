@@ -323,5 +323,5 @@ Section ErgoCompContext.
     if in_dec string_dec n ctxt.(compilation_context_namespace).(namespace_ctxt_abstract)
     then true
     else false.
-  
+
 End ErgoCompContext.
