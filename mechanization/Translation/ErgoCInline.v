@@ -123,34 +123,34 @@ Section ErgoCInline.
   end.
   Definition ergo_inline_functions ctxt := ergo_map_expr_sane ctxt ergo_inline_functions'.
 
-  Definition ergo_inline_expr := ergo_inline_functions.
-
   Definition ergo_inline_globals'
            (ctxt : compilation_context)
            (expr : ergoc_expr) :=
     match expr with
-    | EVar prov name => Some
+    | EVar prov name =>
       match lookup String.string_dec (ctxt.(compilation_context_local_env)) name with
-      | Some _ => esuccess expr nil
+      | Some _ => Some (esuccess expr nil)
       | None =>
         if in_dec String.string_dec name (ctxt.(compilation_context_params_env))
-        then esuccess expr nil
+        then Some (esuccess expr nil)
         else
           match lookup String.string_dec (ctxt.(compilation_context_global_env)) name with
-          | Some val => esuccess val nil
+          | Some val => Some (esuccess val nil)
           | None =>
             (* Handles "this" binding for free variables in template *)
             match lookup String.string_dec (ctxt.(compilation_context_local_env)) this_this with
-            | Some _ =>
-              esuccess (EUnaryBuiltin prov (OpDot name) (EUnaryBuiltin prov OpUnbrand (thisThis prov))) nil
-            | None =>
-              esuccess expr nil
+            | Some _ => Some (esuccess (EUnaryBuiltin prov (OpDot name) (EUnaryBuiltin prov OpUnbrand (thisThis prov))) nil)
+            | None => Some (esuccess expr nil)
             end
           end
       end
     | _ => None
     end.
-  Definition ergo_inline_globals ctxt := ergo_map_expr_sane ctxt ergo_inline_globals'.
+  Definition ergo_inline_globals (ctxt:compilation_context) (expr:ergoc_expr) : eresult ergoc_expr :=
+    ergo_map_expr_sane ctxt ergo_inline_globals' expr.
+
+  Definition ergo_inline_expr (ctxt:compilation_context) (expr:ergoc_expr) : eresult ergoc_expr :=
+    eolift (ergo_inline_functions ctxt) (ergo_inline_globals ctxt expr).
 
   Definition ergo_inline_function
              (ctxt : compilation_context)
@@ -164,7 +164,7 @@ Section ErgoCInline.
                mkFuncC fn.(functionc_annot)
                        fn.(functionc_sig)
                        (Some new_body))
-            (eolift (ergo_inline_expr ctxt) (ergo_inline_globals ctxt expr))
+            (ergo_inline_expr ctxt expr)
     end.
 
   Definition ergoc_inline_clause

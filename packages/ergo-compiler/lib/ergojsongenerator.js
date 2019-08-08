@@ -141,8 +141,23 @@ class ErgoJSONGenerator {
                 }
             }
             result = array;
-        } else if (field.isPrimitive() || ModelUtil.isEnum(field)) {
+        } else if (field.isPrimitive()) {
             result = this.convertToJSON(field, obj);
+        } else if (ModelUtil.isEnum(field)) {
+            // Boxes an enum value to the expected combination of sum types
+            const enumDeclaration = field.getParent().getModelFile().getType(field.getType());
+            const enumName = enumDeclaration.getFullyQualifiedName();
+            const properties = enumDeclaration.getProperties();
+            let either = { 'left' : obj };
+            for(let n=0; n < properties.length; n++) {
+                const property = properties[n];
+                if(property.getName() === obj) {
+                    break;
+                } else {
+                    either = { 'right' : either };
+                }
+            }
+            result = { 'type' : [enumName], 'data': either };
         } else {
             parameters.stack.push(obj);
             const classDeclaration = parameters.modelManager.getType(obj.getFullyQualifiedType());

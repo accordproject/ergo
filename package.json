@@ -6,7 +6,7 @@
     "postinstall": "npm run pkgcheck && npm run bootstrap",
     "bootstrap": "lerna bootstrap",
     "pretest": "npm run depcheck && npm run licchk",
-    "test": "lerna exec -- npm run test:cov",
+    "test": "lerna run test:cov",
     "coverage": "istanbul-combine -d coverage -r lcov packages/ergo-cli/coverage/*.json packages/ergo-compiler/coverage/*.json  packages/ergo-engine/coverage/*.json && cat ./coverage/lcov.info | coveralls",
     "publish": "./scripts/manualrelease.sh",
     "repoclean": "lerna clean",

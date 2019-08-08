@@ -52,7 +52,7 @@ contract HelloWorld over TemplateModel {
                 (("request", ErgoTypeClassRef dummy_provenance (None,"Request"))::nil)
                 (Some (ErgoTypeClassRef dummy_provenance (None,"Response")))
                 None)
-             (Some (SReturn dummy_provenance (EVar dummy_provenance "request"))).
+             (Some (SReturn dummy_provenance (EVar dummy_provenance (None,"request")))).
 
   Definition c1 : lrergo_contract :=
     mkContract dummy_provenance

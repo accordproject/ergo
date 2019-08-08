@@ -116,10 +116,10 @@ Section ErgoType.
     Section Enum.
       Definition type_declaration_is_enum
                  (d:ergo_type_declaration_desc)
-      : bool :=
+      : option (list string) :=
         match d with
-        | ErgoTypeEnum _ => true
-        | _ => false
+        | ErgoTypeEnum enum_list => Some enum_list
+        | _ => None
         end.
 
   End Enum.

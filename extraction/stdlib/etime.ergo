@@ -48,18 +48,18 @@ define function durationWeeks(x:Long) : InternalDuration
 
 define function durationToInternalDuration(du:Duration) : InternalDuration {
 	match du.unit
-	with "seconds" then return durationSeconds(du.amount)
-	with "minutes" then return durationMinutes(du.amount)
-	with "hours" then return durationHours(du.amount)
-	with "days" then return durationDays(du.amount)
-	with "weeks" then return durationWeeks(du.amount)
+	with seconds then return durationSeconds(du.amount)
+	with minutes then return durationMinutes(du.amount)
+	with hours then return durationHours(du.amount)
+	with ~org.accordproject.time.TemporalUnit.days then return durationDays(du.amount)
+	with ~org.accordproject.time.TemporalUnit.weeks then return durationWeeks(du.amount)
 	else return durationSeconds(du.amount) // Defaults to seconds
 }
 
 define function durationAmount(du:InternalDuration) : Long
 
 define function internalDurationToDuration(du:InternalDuration) : Duration {
-	return Duration{ unit: "seconds", amount: durationAmount(du) }
+	return Duration{ unit: seconds, amount: durationAmount(du) }
 }
 
 // Cast a duration to a given temporal unit
@@ -69,47 +69,47 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
 	else
 	  let amount = 
   	  match u
-	    with "seconds" then
+	    with seconds then
 	      match du.unit
-	      with "minutes" then du.amount * 60
-	      with "hours" then du.amount * 60 * 60
-	      with "days" then du.amount * 60 * 60 * 24
-	      with "weeks" then du.amount * 60 * 60 * 24 * 7
+	      with minutes then du.amount * 60
+	      with hours then du.amount * 60 * 60
+	      with ~org.accordproject.time.TemporalUnit.days then du.amount * 60 * 60 * 24
+	      with ~org.accordproject.time.TemporalUnit.weeks then du.amount * 60 * 60 * 24 * 7
 	      else du.amount // Default to seconds
-	    with "minutes" then
+	    with minutes then
 	      match du.unit
-	      with "seconds" then du.amount / 60
-	      with "hours" then du.amount * 60
-	      with "days" then du.amount * 60 * 24
-	      with "weeks" then du.amount * 60 * 24 * 7
+	      with seconds then du.amount / 60
+	      with hours then du.amount * 60
+	      with ~org.accordproject.time.TemporalUnit.days then du.amount * 60 * 24
+	      with ~org.accordproject.time.TemporalUnit.weeks then du.amount * 60 * 24 * 7
 	      else du.amount * 60 // Default to seconds
-	    with "hours" then
+	    with hours then
 	      match du.unit
-	      with "seconds" then du.amount / 60 / 60
-	      with "minutes" then du.amount * 60
-	      with "days" then du.amount * 24
-	      with "weeks" then du.amount * 24 * 7
+	      with seconds then du.amount / 60 / 60
+	      with minutes then du.amount * 60
+	      with ~org.accordproject.time.TemporalUnit.days then du.amount * 24
+	      with ~org.accordproject.time.TemporalUnit.weeks then du.amount * 24 * 7
 	      else du.amount * 60 * 60 // Default to seconds
-	    with "days" then
+	    with ~org.accordproject.time.TemporalUnit.days then
 	      match du.unit
-	      with "seconds" then du.amount / 60 / 60 / 24
-	      with "minutes" then du.amount * 60 / 24
-	      with "hours" then du.amount / 24
-	      with "weeks" then du.amount * 7
+	      with seconds then du.amount / 60 / 60 / 24
+	      with minutes then du.amount * 60 / 24
+	      with hours then du.amount / 24
+	      with ~org.accordproject.time.TemporalUnit.weeks then du.amount * 7
 	      else du.amount / 60 / 60 / 24 // Default to seconds
-	    with "weeks" then
+	    with ~org.accordproject.time.TemporalUnit.weeks then
 	      match du.unit
-	      with "seconds" then du.amount / 60 / 60 / 24 / 7
-	      with "minutes" then du.amount * 60 / 24 / 7
-	      with "hours" then du.amount / 24 / 7
-	      with "days" then du.amount / 7
+	      with seconds then du.amount / 60 / 60 / 24 / 7
+	      with minutes then du.amount * 60 / 24 / 7
+	      with hours then du.amount / 24 / 7
+	      with ~org.accordproject.time.TemporalUnit.days then du.amount / 7
 	      else du.amount / 60 / 60 / 24 / 7 // Default to seconds
 	    else // Default to seconds
 	      match du.unit
-	      with "minutes" then du.amount * 60
-	      with "hours" then du.amount * 60 * 60
-	      with "days" then du.amount * 60 * 60 * 24
-	      with "week" then du.amount * 60 * 60 * 24 * 7
+	      with minutes then du.amount * 60
+	      with hours then du.amount * 60 * 60
+	      with ~org.accordproject.time.TemporalUnit.days then du.amount * 60 * 60 * 24
+	      with ~org.accordproject.time.TemporalUnit.weeks then du.amount * 60 * 60 * 24 * 7
 	      else du.amount // Default to seconds
 		;
 		return Duration{ unit: u, amount: amount }
@@ -121,7 +121,7 @@ define function diffDurationAs(x:DateTime, y:DateTime, z:TemporalUnit) : Duratio
 	return durationAs(internalDurationToDuration(diffInternal(x,y)),z)
 }
 define function diffDuration(x:DateTime, y:DateTime) : Duration {
-	return diffDurationAs(x, y, "seconds") // Defaults to seconds
+	return diffDurationAs(x, y, seconds) // Defaults to seconds
 }
 
 // Add and subtract durations
@@ -150,11 +150,11 @@ define function periodYears(x:Long) : InternalPeriod
 
 define function periodToInternalPeriod(du:Period) : InternalPeriod {
 	match du.unit
-	with "days" then return periodDays(du.amount)
-	with "weeks" then return periodWeeks(du.amount)
-	with "months" then return periodMonths(du.amount)
-	with "quarters" then return periodQuarters(du.amount)
-	with "years" then return periodYears(du.amount)
+	with days then return periodDays(du.amount)
+	with weeks then return periodWeeks(du.amount)
+	with months then return periodMonths(du.amount)
+	with quarters then return periodQuarters(du.amount)
+	with years then return periodYears(du.amount)
 	else return periodDays(du.amount) // Defaults to days
 }
 
@@ -166,12 +166,18 @@ define function diffAsMonths(x:DateTime, y:DateTime) : Long {
 }
 define function diffPeriodAs(x:DateTime, y:DateTime, z:PeriodUnit) : Period {
 	match z
-	with "days" then let d = diffDurationAs(x,y,"days"); return Period{ amount: d.amount, unit: "days" }
-	with "weeks" then let w = diffDurationAs(x,y,"weeks"); return Period{ amount: w.amount, unit: "weeks" }
-	with "months" then let m = diffAsMonths(x,y); return Period{ amount: m, unit: "months" }
-	with "quarters" then let m = diffAsMonths(x,y);  return Period{ amount: m / 3, unit: "quarters" }
-	with "years" then let m = diffAsMonths(x,y); return Period{ amount: m / 12, unit: "years" }
-	else let d = diffDurationAs(x,y,"days"); return Period{ amount: d.amount, unit: "days" }
+	with days
+	   then let d = diffDurationAs(x,y,~org.accordproject.time.TemporalUnit.days);
+	   return Period{ amount: d.amount, unit: days }
+	with ~org.accordproject.time.PeriodUnit.weeks
+	   then let w = diffDurationAs(x,y,~org.accordproject.time.TemporalUnit.weeks);
+	   return Period{ amount: w.amount, unit: weeks }
+	with months then let m = diffAsMonths(x,y); return Period{ amount: m, unit: months }
+	with quarters then let m = diffAsMonths(x,y);  return Period{ amount: m / 3, unit: quarters }
+	with years then let m = diffAsMonths(x,y); return Period{ amount: m / 12, unit: years }
+	else
+	   let d = diffDurationAs(x,y,~org.accordproject.time.TemporalUnit.days);
+	   return Period{ amount: d.amount, unit: days }
 }
 
 // Add and subtract periods
@@ -194,11 +200,11 @@ define function startOfYear(x:DateTime) : DateTime
 
 define function startOf(x:DateTime, y:PeriodUnit) : DateTime {
 	match y
-	with "days" then return startOfDay(x)
-	with "weeks" then return startOfWeek(x)
-	with "months" then return startOfMonth(x)
-	with "quarters" then return startOfQuarter(x)
-	with "years" then return startOfYear(x)
+	with days then return startOfDay(x)
+	with weeks then return startOfWeek(x)
+	with months then return startOfMonth(x)
+	with quarters then return startOfQuarter(x)
+	with years then return startOfYear(x)
 	else return startOfDay(x) // Default to days
 }
 
@@ -210,11 +216,11 @@ define function endOfYear(x:DateTime) : DateTime
 
 define function endOf(x:DateTime, y:PeriodUnit) : DateTime {
 	match y
-	with "days" then return endOfDay(x)
-	with "weeks" then return endOfWeek(x)
-	with "months" then return endOfMonth(x)
-	with "quarters" then return endOfQuarter(x)
-	with "years" then return endOfYear(x)
+	with days then return endOfDay(x)
+	with weeks then return endOfWeek(x)
+	with months then return endOfMonth(x)
+	with quarters then return endOfQuarter(x)
+	with years then return endOfYear(x)
 	else return endOfDay(x) // Default to days
 }
 

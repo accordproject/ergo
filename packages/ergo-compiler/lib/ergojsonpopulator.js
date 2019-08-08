@@ -232,11 +232,16 @@ class ErgoJSONPopulator {
         case 'String':
             result = json.toString();
             break;
-        default:
+        default: {
             // everything else should be an enumerated value...
-            result = json;
+            // unpack the enum
+            let current = json.data;
+            while (!current.left) {
+                current = current.right;
+            }
+            result = current.left;
         }
-
+        }
         return result;
     }
 

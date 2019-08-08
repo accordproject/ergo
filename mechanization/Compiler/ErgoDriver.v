@@ -209,7 +209,9 @@ Section ErgoDriver.
       let am := resolve_ergo_declaration ns_ctxt ld in
       eolift (fun amc =>
                 let ctxt := compilation_context_update_namespace ctxt (snd amc) in
-                declaration_to_calculus ctxt (fst amc))
+                elift (fun xy => (concat (fst xy), snd xy))
+                      (elift_context_fold_left
+                         declaration_to_calculus (fst amc) ctxt))
              am.
 
     Definition ergo_declaration_to_ergoct_inlined
@@ -280,7 +282,9 @@ Section ErgoDriver.
           coq_time "ergoc(typed)->nnrc"
                    (eolift (fun xy => ergoct_module_to_nnrc (fst xy))) pc in
       coq_time "nnrc->js"
-               (elift (fun x => (x,nnrc_module_to_javascript_top version (@brand_relation_brands (@brand_model_relation _ bm)) x)))
+               (elift (fun x =>
+                         let inheritance := (@brand_relation_brands (@brand_model_relation _ bm)) in
+                         (x,nnrc_module_to_javascript_top version inheritance x)))
                pn.
 
     Definition ergo_module_to_java
@@ -345,7 +349,8 @@ Section ErgoDriver.
                          let sigs := lookup_contract_signatures (snd c) in
                          let pc := ergo_module_to_ergoct ctxt p in
                          let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
-                         elift (fun x => (contract_name, x,ergoc_module_to_cicero contract_name (snd c).(contract_state) sigs x)) pn)
+                         let inheritance := (@brand_relation_brands (@brand_model_relation _ bm)) in
+                         elift (fun x => (contract_name, x,ergoc_module_to_cicero inheritance contract_name (snd c).(contract_state) sigs x)) pn)
                       ec
                 in
                 elift (fun xyz =>

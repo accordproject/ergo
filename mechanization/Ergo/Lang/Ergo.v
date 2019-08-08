@@ -25,6 +25,7 @@ Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Result.
 Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.NamespaceContext.
 Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.Types.CTO.
 Require Import ErgoSpec.Types.ErgoType.
@@ -42,7 +43,7 @@ Section Ergo.
     | EThisContract : A -> ergo_expr (**r this contract *)
     | EThisClause : A -> ergo_expr (**r this clause *)
     | EThisState : A -> ergo_expr (**r this state *)
-    | EVar : A -> string -> ergo_expr (**r variable *)
+    | EVar : A -> N -> ergo_expr (**r variable *)
     | EConst : A -> ErgoData.data -> ergo_expr (**r constant *)
     | EText : A -> list ergo_expr -> ergo_expr (**r embedded text *)
     | ENone : A -> ergo_expr (**r none *)
@@ -299,6 +300,25 @@ Section Ergo.
     Definition modules_get_type_decls (m:list laergo_module) : list laergo_type_declaration :=
       List.concat (List.map module_get_type_decls m).
   End TypeDeclarations.
-  
+
+
+  Section Enums.
+    Fixpoint either_from_enum_values (enum_values:list string) : list (string * data) :=
+      match enum_values with
+      | nil => nil
+      | x :: enum_values' =>
+        let new_values := either_from_enum_values enum_values' in
+        (x, dleft (dstring x)) :: (map (fun xy => (fst xy, dright (snd xy))) new_values)
+      end.
+
+    Definition globals_from_enum prov (enum:string * list string) : list (string * laergo_expr * data) :=
+      let (enum_name, enum_values) := enum in
+      map (fun xy =>
+             let d := dbrand (enum_name::nil) (snd xy) in
+             (fst xy, (EConst prov d), d))
+          (either_from_enum_values enum_values).
+
+  End Enums.
+
 End Ergo.
 

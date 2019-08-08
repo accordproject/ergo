@@ -25,11 +25,11 @@ contract AcceptanceOfDelivery over TemplateModel {
     ;
 
     let status =
-      if isAfter(now(), addDuration(received, Duration{amount:contract.businessDays, unit: "days"}))
-      then "OUTSIDE_INSPECTION_PERIOD"
+      if isAfter(now(), addDuration(received, Duration{amount:contract.businessDays, unit: ~org.accordproject.time.TemporalUnit.days}))
+      then OUTSIDE_INSPECTION_PERIOD
       else if request.inspectionPassed
-      then "PASSED_TESTING"
-      else "FAILED_TESTING"
+      then PASSED_TESTING
+      else FAILED_TESTING
     ;
     return InspectionResponse{
       status : status,

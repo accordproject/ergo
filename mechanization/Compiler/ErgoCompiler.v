@@ -163,8 +163,6 @@ Module ErgoCompiler.
   Definition ergo_type_array prov et : ergo_type
     := ErgoType.ErgoTypeArray prov et.
 
-  Definition ergo_type_enum : list String.string -> ergo_type_declaration_desc
-    := ErgoType.ErgoTypeEnum.
   Definition ergo_type_transaction :
     bool -> option relative_name -> list (String.string * ergo_type) -> ergo_type_declaration_desc
     := ErgoType.ErgoTypeTransaction.
@@ -197,6 +195,8 @@ Module ErgoCompiler.
   (** Patterns *)
   Definition ecasedata : Provenance.provenance -> ErgoData.data -> Ast.lrergo_pattern
     := Ast.CaseData.
+  Definition ecaseenum : Provenance.provenance -> (option String.string * String.string) -> Ast.lrergo_pattern
+    := Ast.CaseEnum.
   Definition ecasewildcard : Provenance.provenance -> Ast.type_annotation -> Ast.lrergo_pattern
     := Ast.CaseWildcard.
   Definition ecaselet : Provenance.provenance -> String.string -> Ast.type_annotation -> Ast.lrergo_pattern
@@ -214,7 +214,7 @@ Module ErgoCompiler.
   Definition ethis_state prov : ergo_expr
     := Ergo.EThisState prov.
   Definition evar prov v: ergo_expr
-    := Ergo.EVar prov v.
+    := Ergo.EVar prov v. (* Local variable creation is always in no-namespace *)
   Definition econst prov d :ergo_expr
     := Ergo.EConst prov d.
   Definition enone prov : ergo_expr
@@ -302,7 +302,7 @@ Module ErgoCompiler.
   Definition dstmt prov s : ergo_declaration
     := Ergo.DStmt prov s.
   Definition dconstant prov v ta e : ergo_declaration
-    := Ergo.DConstant prov v ta e.
+    := Ergo.DConstant prov v ta e. (* XXX enum flag always false *)
   Definition dfunc prov fn f : ergo_declaration
     := Ergo.DFunc prov fn f.
   Definition dcontract prov cn c : ergo_declaration

@@ -18,18 +18,18 @@ import org.accordproject.time.*
 
 contract Duration over TemplateModel {
   clause test(request : MyRequest) : MyResponse {
-    enforce(isSame(addDuration(dateTime("2018-01-02"), Duration{amount:1, unit: "days"}),
-			             addDuration(dateTime("2018-01-01"), Duration{amount:2, unit: "days"})));
-    enforce(isSame(addDuration(dateTime("2019-01-08"), Duration{amount:1, unit: "weeks"}),
-			             addDuration(dateTime("2019-01-01"), Duration{amount:2, unit: "weeks"})));
-    enforce(isSame(subtractDuration(dateTime("2018-01-01"), Duration{amount:1, unit: "days"}),
-			             subtractDuration(dateTime("2018-01-02"), Duration{amount:2, unit: "days"})));
-    enforce(isSame(subtractDuration(dateTime("2019-01-01"), Duration{amount:1, unit: "weeks"}),
-			             subtractDuration(dateTime("2019-01-08"), Duration{amount:2, unit: "weeks"})));
-    enforce(isSame(addPeriod(dateTime("2018-02-01"), Period{amount:1, unit: "months"}),
-			             addPeriod(dateTime("2018-01-01"), Period{amount:2, unit: "months"})));
-    enforce(isSame(addPeriod(dateTime("2020-01-01"), Period{amount:1, unit: "years"}),
-			             addPeriod(dateTime("2019-01-01"), Period{amount:2, unit: "years"})));
+    enforce(isSame(addDuration(dateTime("2018-01-02"), Duration{amount:1, unit: ~org.accordproject.time.TemporalUnit.days}),
+			             addDuration(dateTime("2018-01-01"), Duration{amount:2, unit: ~org.accordproject.time.TemporalUnit.days})));
+    enforce(isSame(addDuration(dateTime("2019-01-08"), Duration{amount:1, unit: ~org.accordproject.time.TemporalUnit.weeks}),
+			             addDuration(dateTime("2019-01-01"), Duration{amount:2, unit: ~org.accordproject.time.TemporalUnit.weeks})));
+    enforce(isSame(subtractDuration(dateTime("2018-01-01"), Duration{amount:1, unit: ~org.accordproject.time.TemporalUnit.days}),
+			             subtractDuration(dateTime("2018-01-02"), Duration{amount:2, unit: ~org.accordproject.time.TemporalUnit.days})));
+    enforce(isSame(subtractDuration(dateTime("2019-01-01"), Duration{amount:1, unit: ~org.accordproject.time.TemporalUnit.weeks}),
+			             subtractDuration(dateTime("2019-01-08"), Duration{amount:2, unit: ~org.accordproject.time.TemporalUnit.weeks})));
+    enforce(isSame(addPeriod(dateTime("2018-02-01"), Period{amount:1, unit: months}),
+			             addPeriod(dateTime("2018-01-01"), Period{amount:2, unit: months})));
+    enforce(isSame(addPeriod(dateTime("2020-01-01"), Period{amount:1, unit: years}),
+			             addPeriod(dateTime("2019-01-01"), Period{amount:2, unit: years})));
     enforce(isSame(dateTimeMax([dateTime("2018-01-08"), dateTime("2019-01-08"), dateTime("2011-01-08")]),
 			dateTime("2019-01-08")));
     enforce(isSame(dateTimeMin([dateTime("2018-01-08"), dateTime("2019-01-08"), dateTime("2011-01-08")]),

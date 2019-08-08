@@ -205,6 +205,14 @@ function toString(v) {
 function generateText(v) {
     return toTextQ(v, "");
 }
+function isEnum(v) {
+  if (v.type) {
+        var isE = either(cast(["org.accordproject.base.Enum"],v));
+        return isE;
+    } else {
+        return false;
+    }
+}
 function toStringQ(v, quote) {
     if (v === null)
         return "null";
@@ -233,6 +241,13 @@ function toStringQ(v, quote) {
     }
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;
+    }
+    if (isEnum(v)) {
+        var enumval = v.data;
+        while (!enumval.left) {
+            enumval = enumval.right;
+        }
+        return "" + enumval.left
     }
     var result2 = "{";
     var first = true;
@@ -271,6 +286,13 @@ function toTextQ(v, quote) {
     }
     if(v.hasOwnProperty('nat')){
         return "" + v.nat;
+    }
+    if (isEnum(v)) {
+        var enumval = v.data;
+        while (!enumval.left) {
+            enumval = enumval.right;
+        }
+        return "" + enumval.left
     }
     var result2 = "";
     var first = true;

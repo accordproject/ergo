@@ -171,7 +171,7 @@ let default_config () =
     gconf
   with
   | ErgoUtil.Ergo_Error error ->
-      Printf.eprintf "Cannot log Ergo stdlib:\n%s\n"
+      Printf.eprintf "Cannot load Ergo standard library:\n%s\n"
         (ErgoUtil.string_of_error_with_table [] error);
       exit 2
   end

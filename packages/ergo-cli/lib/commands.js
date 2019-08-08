@@ -228,6 +228,7 @@ class Commands {
         const markdownOtions = {
             '$class': 'org.accordproject.markdown.MarkdownOptions',
             'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
+            'template': true,
         };
         return engine.compileAndGenerateText(logicManager,contractJson,{},currentTime,markdownOtions);
     }

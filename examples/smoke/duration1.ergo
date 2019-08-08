@@ -33,8 +33,8 @@ contract Duration over TemplateModel {
       output1: d1,
       output2: d2,
 			output3: diffDurationAs(d1, d2, "weeks"),
-			test: isSame(addDuration(dateTime("2018-01-02"), Duration{amount:1, unit: "days"}),
-   				         addDuration(dateTime("2018-01-01"), Duration{amount:2, unit: "days"}))
+			test: isSame(addDuration(dateTime("2018-01-02"), Duration{amount:1, unit: ~org.accordproject.time.TemporalUnit.days}),
+   				         addDuration(dateTime("2018-01-01"), Duration{amount:2, unit: ~org.accordproject.time.TemporalUnit.days}))
     }
   }
 }

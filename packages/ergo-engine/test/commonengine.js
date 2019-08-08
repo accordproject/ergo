@@ -104,6 +104,8 @@ function runWorkload(Engine, target) {
         const contractName = test.contractName;
         const currentTime = test.currentTime ? test.currentTime : '1970-01-01T00:00:00Z';
         const expected = test.expected;
+        const options = test.options;
+
         let resultKind;
         if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
             resultKind = 'fail';
@@ -145,7 +147,6 @@ function runWorkload(Engine, target) {
                 } else {
                     if (test.clauseName) {
                         if (test.clauseName === 'generateText') {
-                            const options = test.options;
                             if (expected.hasOwnProperty('error')) {
                                 return engine.compileAndGenerateText(logicManager, contractJson, {}, currentTime, options)
                                     .catch((actualError) => {
@@ -162,12 +163,12 @@ function runWorkload(Engine, target) {
                             const params = test.params;
                             const clauseName = test.clauseName;
                             if (expected.hasOwnProperty('error')) {
-                                return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime)
+                                return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
                                     .catch((actualError) => {
                                         expect(actualError.message).to.equal(expected.error);
                                     });
                             } else {
-                                return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime)
+                                return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
                                     .then((actualAnswer) => {
                                         return compareSuccess(expected, actualAnswer);
                                     });
@@ -178,12 +179,12 @@ function runWorkload(Engine, target) {
                         const request = test.request;
                         const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                         if (expected.hasOwnProperty('error')) {
-                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime)
+                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime, options)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime)
+                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime, options)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });

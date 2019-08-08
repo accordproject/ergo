@@ -143,6 +143,9 @@ Section ErgoMap.
                                 | (CaseData _ _, e) =>
                                   elift (fun x => (fst pe, x))
                                         (apply_map ctx e)
+                                | (CaseEnum _ _, e) =>
+                                  elift (fun x => (fst pe, x))
+                                        (apply_map ctx e)
                                 | (CaseWildcard _ _, e) =>
                                   elift (fun x => (fst pe, x))
                                         (apply_map ctx e)
