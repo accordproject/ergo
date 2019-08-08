@@ -60,6 +60,7 @@ Section Ast.
 
       Inductive ergo_pattern :=
       | CaseData : A -> ErgoData.data -> ergo_pattern                  (**r match against value *)
+      | CaseEnum : A -> N -> ergo_pattern                              (**r match against enum *)
       | CaseWildcard : A -> type_annotation -> ergo_pattern            (**r match anything *)
       | CaseLet : A -> string -> type_annotation -> ergo_pattern       (**r match against type *)
       | CaseLetOption : A -> string -> type_annotation -> ergo_pattern (**r match against type *)

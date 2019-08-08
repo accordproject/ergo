@@ -23,9 +23,9 @@ contract StartEndTest over TemplateModel {
     return TestResponse{
 			now: now(),
 			date: date,
-			dateFormat: format(endOf(date, "quarters"),"YYYY/MM/DD"),
-      startOfDay: startOf(date, "days"),
-      endOfDay: endOf(date, "days")
+			dateFormat: format(endOf(date, quarters),"YYYY/MM/DD"),
+      startOfDay: startOf(date, days),
+      endOfDay: endOf(date, days)
     }
   }
 }

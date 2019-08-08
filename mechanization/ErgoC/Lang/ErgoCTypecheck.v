@@ -224,6 +224,17 @@ Section ErgoCTypecheck.
                              sofarT
                              (ergoc_typecheck_expr nsctxt ctxt res)
                     end
+                  | (CaseEnum prov name, res) =>
+                    let opt := lookup String.string_dec (ctxt.(type_context_local_env)++ctxt.(type_context_global_env)) name in
+                    let topt := eresult_of_option opt (ETypeError prov ("Enum `" ++ name ++ "' not found.")%string) nil in
+                    eolift (fun dt =>
+                             elift2 (fun sofarT eT =>
+                                       let et := exprct_type_annot eT in
+                                       let sofart := ergoc_type_join et (snd sofarT) in
+                                       ((CaseEnum (prov,sofart) name,eT)::fst sofarT, sofart))
+                                    sofarT
+                                    (ergoc_typecheck_expr nsctxt ctxt res))
+                           topt
                   | (CaseWildcard prov None, res) =>
                     elift2 (fun sofarT eT =>
                               let et := exprct_type_annot eT in

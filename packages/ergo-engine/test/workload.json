@@ -5,6 +5,11 @@
     "ergo": ["logic.ergo"],
     "models": ["smoke.cto"],
     "contract": "contract.json",
+    "options": {
+      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "wrapVariables": false,
+      "template": false
+    },
     "request": "request.json",
     "state": "state.json",
     "contractName": "org.accordproject.smoke.Smoke",
@@ -191,7 +196,8 @@
     "contract": "contract.json",
     "options": {
       "$class": "org.accordproject.markdown.MarkdownOptions",
-      "wrapVariables": false
+      "wrapVariables": false,
+      "template": true
     },
     "params": {},
     "state": "state.json",
@@ -203,14 +209,31 @@
     }
   },
   {
-    "name": "helloworldcontract (generate text)",
+    "name": "interests clause (generate text)",
+    "dir": "examples/interests",
+    "ergo": ["interests.ergo","logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "options": null,
+    "params": {},
+    "state": "state.json",
+    "contractName": "org.accordproject.interests.Interests",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of 667.0\n"
+    }
+  },
+  {
+    "name": "helloworldcontract (generate text for template)",
     "dir": "examples/helloworldcontract",
     "ergo": ["logic.ergo"],
     "models": ["model.cto"],
     "contract": "contract.json",
     "options": {
       "$class": "org.accordproject.markdown.MarkdownOptions",
-      "wrapVariables": false
+      "wrapVariables": false,
+      "template": true
     },
     "params": {},
     "grammar": "grammar.tem",
@@ -230,7 +253,8 @@
     "contract": "contract.json",
     "options": {
       "$class": "org.accordproject.markdown.MarkdownOptions",
-      "wrapVariables": false
+      "wrapVariables": false,
+      "template": true
     },
     "params": {},
     "grammar": "grammar.tem",

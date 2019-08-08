@@ -187,6 +187,8 @@ Section Result.
       efailure (ECompilationError prov ("Cannot find namespace '" ++ ns ++ "'")).
     Definition variable_name_not_found_error {A} prov (ln:string) : eresult A :=
       efailure (ECompilationError prov ("Cannot find variable with name '" ++ ln ++ "'")).
+    Definition enum_name_not_found_error {A} prov (ln:string) : eresult A :=
+      efailure (ECompilationError prov ("Cannot find enum with name '" ++ ln ++ "'")).
     Definition function_name_not_found_error {A} prov (ln:string) : eresult A :=
       efailure (ECompilationError prov ("Cannot find function with name '" ++ ln ++ "'")).
     Definition contract_name_not_found_error {A} prov (ln:string) : eresult A :=
@@ -227,6 +229,8 @@ Section Result.
       efailure (ERuntimeError prov "'If' condition not boolean.").
     Definition eval_match_let_optional_not_on_option_error {A} prov : eresult A :=
       efailure (ERuntimeError prov "Matched LetOption without an option.").
+    Definition eval_match_enum_error {A} prov : eresult A :=
+      efailure (ERuntimeError prov "Enum case not resolved in match.").
     Definition eval_foreach_not_on_array_error {A} prov : eresult A :=
       efailure (ERuntimeError prov "Foreach needs to be called on an array").
     Definition template_type_not_found_error {A} prov : eresult A :=

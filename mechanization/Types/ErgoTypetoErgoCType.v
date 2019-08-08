@@ -27,55 +27,66 @@ Require Import ErgoSpec.Types.ErgoType.
 
 Section ErgoTypetoErgoCType.
   Definition expand_hierarchy : Set := list string.
-  Definition expanded_type : Set := list (string * laergo_type).
+  Inductive expanded_type :=
+  | ClassObjectType : list (string * laergo_type) -> expanded_type
+  | ClassEnumType : list string -> expanded_type.
   Definition expand_ctxt : Set := list (string * (expand_hierarchy * expanded_type)).
 
   Section ErgoTypeExpansion.
     (** Assumes decls sorted in topological order *)
-    Definition ergo_expand_extends
+    Definition ergo_expand_class_object_extends
                (ctxt:expand_ctxt)
                (this:absolute_name)
                (super:absolute_name)
                (localtype:list (string * laergo_type)) : expand_ctxt :=
       match lookup string_dec ctxt super with
-      | None => ctxt (** XXX Should be a system error *)
-      | Some (hierarchy, etype) =>
-        (this, (super::hierarchy,etype ++ localtype)) :: ctxt
+      | Some (hierarchy, (ClassObjectType etype)) =>
+        (this, (super::hierarchy,(ClassObjectType (etype ++ localtype)))) :: ctxt
+      | _ => ctxt (** XXX Should be a system error? *)
       end.
+
+    Definition ergo_expand_class_enum_extends
+               (ctxt:expand_ctxt)
+               (this:absolute_name)
+               (super:absolute_name)
+               (enum_list:list string) : expand_ctxt :=
+      (* ctxt. *)
+      (this, (super::nil, (ClassEnumType enum_list))) :: ctxt.
 
     Definition ergo_decl_expand_extends (ctxt:expand_ctxt)
                (this:absolute_name)
                (decl_desc:laergo_type_declaration_desc) : expand_ctxt :=
       match decl_desc with
-      | ErgoTypeEnum _ => ctxt
+      | ErgoTypeEnum enum_list =>
+        ergo_expand_class_enum_extends ctxt this default_enum_absolute_name enum_list
       | ErgoTypeTransaction _ None rtl =>
         if string_dec this default_transaction_absolute_name
-        then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this default_transaction_absolute_name rtl
+        then (this, (nil, ClassObjectType rtl)) :: ctxt
+        else ergo_expand_class_object_extends ctxt this default_transaction_absolute_name rtl
       | ErgoTypeTransaction _ (Some super) rtl =>
-        ergo_expand_extends ctxt this super rtl
+        ergo_expand_class_object_extends ctxt this super rtl
       | ErgoTypeConcept _ None rtl =>
-        (this, (nil, rtl)) :: ctxt
+        (this, (nil, ClassObjectType rtl)) :: ctxt
       | ErgoTypeConcept _ (Some super) rtl =>
-        ergo_expand_extends ctxt this super rtl
+        ergo_expand_class_object_extends ctxt this super rtl
       | ErgoTypeEvent _ None rtl =>
         if string_dec this default_event_absolute_name
-        then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this default_event_absolute_name rtl
+        then (this, (nil, ClassObjectType rtl)) :: ctxt
+        else ergo_expand_class_object_extends ctxt this default_event_absolute_name rtl
       | ErgoTypeEvent _ (Some super) rtl =>
-        ergo_expand_extends ctxt this super rtl
+        ergo_expand_class_object_extends ctxt this super rtl
       | ErgoTypeAsset _ None rtl =>
         if string_dec this default_asset_absolute_name
-        then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this default_asset_absolute_name rtl
+        then (this, (nil, ClassObjectType rtl)) :: ctxt
+        else ergo_expand_class_object_extends ctxt this default_asset_absolute_name rtl
       | ErgoTypeAsset _ (Some super) rtl =>
-        ergo_expand_extends ctxt this super rtl
+        ergo_expand_class_object_extends ctxt this super rtl
       | ErgoTypeParticipant _ None rtl =>
         if string_dec this default_participant_absolute_name
-        then (this, (nil, rtl)) :: ctxt
-        else ergo_expand_extends ctxt this default_participant_absolute_name rtl
+        then (this, (nil, ClassObjectType rtl)) :: ctxt
+        else ergo_expand_class_object_extends ctxt this default_participant_absolute_name rtl
       | ErgoTypeParticipant _ (Some super) rtl =>
-        ergo_expand_extends ctxt this super rtl
+        ergo_expand_class_object_extends ctxt this super rtl
       | ErgoTypeGlobal _ => ctxt
       | ErgoTypeFunction _ => ctxt
       | ErgoTypeContract _ _ _ => ctxt
@@ -91,10 +102,11 @@ Section ErgoTypetoErgoCType.
         decls nil.
 
     Definition ergo_hierarchy_from_expand (ctxt : expand_ctxt) :=
-      List.concat
-        (List.map (fun xyz =>
-                     List.map (fun x => (fst xyz, x)) (fst (snd xyz)))
-                  ctxt).
+      (List.concat
+         (List.map (fun xyz =>
+                      let '(super, (hierarchy, _)) := xyz in
+                      List.map (fun x => (super, x)) hierarchy)
+                   ctxt)).
 
   End ErgoTypeExpansion.
 
@@ -133,18 +145,35 @@ Section ErgoTypetoErgoCType.
       | ErgoTypeSum _ t1 t2 => teither (ergo_type_to_ergoc_type t1) (ergo_type_to_ergoc_type t2)
       end.
 
+    Fixpoint enum_type_of_list (enum_list: list string) : ectype :=
+      match enum_list with
+      | nil => tstring
+      | item :: enum_list' =>
+        teither tstring (enum_type_of_list enum_list')
+      end.
+
+    Definition ergo_ctype_from_expanded_type (et:expanded_type) : ectype :=
+      match et with
+      | ClassObjectType rtl =>
+        trec
+          open_kind
+          (rec_sort
+             (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
+          (rec_sort_sorted
+             (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl)
+             (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
+             eq_refl)
+      | ClassEnumType enum_list =>
+        enum_type_of_list enum_list
+      end.
+    
     Definition ergo_ctype_decl_from_expand (ctxt : expand_ctxt) : tbrand_context_decls :=
-      List.map (fun xyz =>
-                  (fst xyz,
-                   let rtl := snd (snd xyz) in
-                   trec
-                     open_kind
-                     (rec_sort
-                        (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
-                     (rec_sort_sorted
-                        (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl)
-                        (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
-                        eq_refl))) ctxt.
+      (default_enum_absolute_name, ttop)
+        :: (List.map (fun xyz =>
+                        (fst xyz,
+                         let expanded := snd (snd xyz) in
+                         ergo_ctype_from_expanded_type expanded))
+                     ctxt).
 
   End ErgoTypetoErgoCType.
 

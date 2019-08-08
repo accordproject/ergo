@@ -14,20 +14,37 @@
 
 Require Import String.
 
+Require Import ErgoSpec.Backend.Model.LogModelPart.
+Require Import EquivDec.
+
+Section Debug.
+  Definition DEBUG_aux {A} s (d1 d2 : A) : A
+    := match LOG_string s with                      (* Call log *)
+       | y => if unit_eqdec y tt then d1 else d2    (* Return d *)
+       end.
+  Definition DEBUG {A} s (d:A) : A :=
+    DEBUG_aux s d d.
+                                   
+End Debug.
+
 Section Names.
   Local Open Scope string.
 
   Section ScopedNames.
     Definition local_name : Set := string.
     Definition namespace_name : Set := string.
+    Definition enum_name : Set := string.
     Definition namespace_prefix : Set := option namespace_name.
 
     Definition relative_name : Set := namespace_prefix * local_name.
     Definition absolute_name : Set := string.
 
-    Definition absolute_name_of_local_name (ns: namespace_name) (ln: local_name) : absolute_name :=
+    Definition absolute_name_of_local_name (ns:namespace_name) (ln:local_name) : absolute_name :=
       ns ++ "." ++ ln.
 
+    Definition enum_namespace (ns:namespace_name) (en:enum_name) : namespace_name :=
+      ns ++ "." ++ en.
+      
     Definition absolute_name_of_relative_name (local_ns: namespace_name) (rn: relative_name) : absolute_name :=
       match rn with
       | (None,ln) => absolute_name_of_local_name local_ns ln
@@ -64,6 +81,8 @@ Section Names.
     Definition accordproject_ergotop_namespace : string := "org.accordproject.ergo.top"%string.
 
     (* Accord Project system types *)
+    Definition default_enum_absolute_name : string :=
+      absolute_name_of_local_name accordproject_base_namespace "Enum".
     Definition default_event_absolute_name : string :=
       absolute_name_of_local_name accordproject_base_namespace "Event".
     Definition default_transaction_absolute_name : string :=

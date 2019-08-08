@@ -98,6 +98,7 @@ class Engine {
             options: {
                 '$class': 'org.accordproject.markdown.MarkdownOptions',
                 'wrapVariables': false,
+                'template': false,
             }
         };
 
@@ -125,7 +126,7 @@ class Engine {
 
         const answer = {
             'clause': contractId,
-            'request': validRequest,
+            'request': request, // Keep the original request
             'response': validResponse,
             'state': validNewState,
             'emit': validEmit,
@@ -154,6 +155,7 @@ class Engine {
             options: {
                 '$class': 'org.accordproject.markdown.MarkdownOptions',
                 'wrapVariables': false,
+                'template': false,
             }
         };
 
@@ -180,7 +182,7 @@ class Engine {
 
         const answer = {
             'clause': contractId,
-            'params': validParams,
+            'params': params, // Keep the original params
             'response': validResponse,
             'state': validNewState,
             'emit': validEmit,

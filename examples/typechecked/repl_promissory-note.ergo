@@ -54,7 +54,7 @@ contract PromissoryNote over PromissoryNoteContract {
     let outstanding = contract.amount.doubleValue - request.amountPaid.doubleValue;
     enforce outstanding >= 0.0;
 
-    let numberOfDays = diffWithUnit(now(),contract.date,"days");
+    let numberOfDays = diffWithUnit(now(),contract.date,~org.accordproject.time.TemporalUnit.days);
     enforce numberOfDays >= 0.0;
     let compounded =  outstanding * compoundInterestMultiple(contract.interestRate, numberOfDays);
 
