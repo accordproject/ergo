@@ -136,12 +136,14 @@ Section ErgoNNRCtoCicero.
         +++ wrapper_function_for_init true "__init" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name eol quotel.
 
   Definition javascript_of_module_with_dispatch
+             (inheritance: list (string*string))
              (contract_name:string)
              (signatures:list (string * string * string * string * string) * string)
              (p:nnrc_module)
              (eol:estring)
              (quotel:estring) : ErgoCodeGen.ejavascript :=
     (preamble eol) +++ eol
+                   +++ (javascript_of_inheritance inheritance eol quotel)
                    +++ (wrapper_functions contract_name signatures eol quotel)
                    +++ (javascript_of_declarations ES6 p.(modulen_declarations) 0 0 eol quotel)
                    +++ (javascript_main_dispatch_and_init contract_name eol quotel)
@@ -191,11 +193,13 @@ Section ErgoNNRCtoCicero.
     end.
 
   Definition ergoc_module_to_cicero
+             (inheritance: list (string*string))
              (contract_name:string)
              (contract_state_type:option ergo_type)
              (sigs: list (string * ergo_type_signature))
              (p:nnrc_module) : ErgoCodeGen.ejavascript :=
     javascript_of_module_with_dispatch
+      inheritance
       contract_name
       (filter_signatures_with_state p.(modulen_namespace) contract_state_type sigs)
       p

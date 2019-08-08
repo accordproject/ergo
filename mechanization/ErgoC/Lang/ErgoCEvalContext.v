@@ -49,7 +49,12 @@ Section ErgoCEvalContext.
                   new_local_env.
 
   Definition empty_eval_context :=
-    mkEvalContext  ((current_time, dforeign (ErgoEnhancedModel.enhanceddateTime ErgoEnhancedModel.enhanceddateTime_now))
+    mkEvalContext  ((markdown_options,
+                     dbrand (default_markdown_options::nil)
+                            (drec (("wrapVariables"%string, dbool false)
+                                     ::("template"%string, dbool false)
+                                     ::nil)))
+                      ::(current_time, dforeign (ErgoEnhancedModel.enhanceddateTime ErgoEnhancedModel.enhanceddateTime_now))
                       ::(this_contract, dunit)
                       ::(this_state, dunit)
                       ::(this_emit, dcoll nil)
@@ -57,3 +62,4 @@ Section ErgoCEvalContext.
                    (nil).
 
 End ErgoCEvalContext.
+

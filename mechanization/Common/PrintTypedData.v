@@ -78,6 +78,13 @@ Section PrintTypedData.
     Definition js_quote_string (s:string) : string
       := flat_map_string js_quote_char s.
 
+    Fixpoint string_of_enum (nsctxt:namespace_ctxt) (d : ergo_data) : string :=
+      match d with
+      | dleft (dstring x) => x
+      | dright d' => string_of_enum nsctxt d'
+      | _ => "???should be enum???"
+      end.
+    
     Fixpoint string_of_data (nsctxt:namespace_ctxt) (d : ergo_data) : string :=
       let jsonify := ErgoData.data_to_json_string fmt_dq in
       let string_of_rec : list (string * ergo_data) -> string :=
@@ -105,6 +112,8 @@ Section PrintTypedData.
            ++ "]"
       | dleft s => "some(" ++ (string_of_data nsctxt s) ++ ")"
       | dright _ => "none"
+      | dbrand (b::nil) (dleft x) => string_of_enum nsctxt (dleft x)
+      | dbrand (b::nil) (dright x) => string_of_enum nsctxt (dright x)
       | dbrand (b::nil) d' => print_brand nsctxt b ++ (string_of_data nsctxt d')
       | dbrand _ _ => "???more than one brand???"
       | drec r => string_of_rec r 

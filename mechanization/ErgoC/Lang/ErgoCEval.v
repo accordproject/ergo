@@ -136,13 +136,25 @@ Section ErgoCTEval.
       in
       let apply_match dat :=
         fold_left
-          (fun default_result pe =>
+          (fun default_result (pe:tlaergo_pattern * ergoct_expr) =>
              match pe with
              | (CaseData prov d, res) =>
                if Data.data_eq_dec d dat then
                  ergoct_eval_expr ctxt res
                else
                  default_result
+             | (CaseEnum (prov,_) name, res) =>
+               let case_d :=
+                   match lookup String.string_dec (ctxt.(eval_context_local_env)++ctxt.(eval_context_global_env)) name with
+                   | None => enum_name_not_found_error prov name
+                   | Some d => esuccess d nil
+                   end
+               in
+               eolift (fun d =>
+                        if Data.data_eq_dec d dat then
+                          ergoct_eval_expr ctxt res
+                        else
+                          default_result) case_d
              | (CaseWildcard prov None, res) =>
                ergoct_eval_expr ctxt res
              | (CaseLet prov name None, res) =>

@@ -34,10 +34,22 @@ Require Import ErgoSpec.Backend.ErgoBackend.
 Section ErgoCTtoErgoNNRC.
   Context {m : brand_model}.
 
-  Definition ergo_pattern_to_nnrc (input_expr:nnrc_expr) (p:tlaergo_pattern) : (list string * nnrc_expr) :=
+  Definition ergo_pattern_to_nnrc
+             (env:list string)
+             (input_expr:nnrc_expr)
+             (p:tlaergo_pattern) : (list string * nnrc_expr) :=
     match p with
     | CaseData _ d =>
       (nil, NNRCIf (NNRCBinop OpEqual input_expr (NNRCConst d))
+                   (NNRCUnop OpLeft (NNRCConst (drec nil)))
+                   (NNRCUnop OpRight (NNRCConst dunit)))
+    | CaseEnum _ v =>
+      let case_d :=
+          if in_dec string_dec v env
+          then NNRCGetConstant v
+          else NNRCVar v
+      in
+      (nil, NNRCIf (NNRCBinop OpEqual input_expr case_d)
                    (NNRCUnop OpLeft (NNRCConst (drec nil)))
                    (NNRCUnop OpRight (NNRCConst dunit)))
     | CaseWildcard _ None =>
@@ -201,7 +213,7 @@ Section ErgoCTtoErgoNNRC.
                            (acc:eresult nnrc_expr)
                            (ecase:ergo_pattern * nnrc_expr)
                          : eresult nnrc_expr :=
-                         let (vars, pattern_expr) := ergo_pattern_to_nnrc (NNRCVar v0) (fst ecase) in
+                         let (vars, pattern_expr) := ergo_pattern_to_nnrc env (NNRCVar v0) (fst ecase) in
                          elift
                            (fun cont_expr : nnrc_expr =>
                               pack_pattern

@@ -16,5 +16,6 @@ namespace org.accordproject.markdown
 
 concept MarkdownOptions {
 	o Boolean wrapVariables
+	o Boolean template
 }
 

@@ -38,12 +38,12 @@ Section ErgoSugar.
            e
            ((CaseLetOption a "$option" None,
              (ESome a
-                    (EUnaryOperator a (EOpDot pname) (EVar a "$option")))) :: nil)
+                    (EUnaryOperator a (EOpDot pname) (EVar a (None,"$option"%string))))) :: nil)
            (ENone a).
 
   Definition EOptionalDefault (a:A) (e1 e2:@rergo_expr A A') :=
     EMatch a e1
-           ((CaseLetOption a "$option" None, EVar a "$option") :: nil)
+           ((CaseLetOption a "$option" None, EVar a (None,"$option"%string)) :: nil)
            e2.
 
 End ErgoSugar.

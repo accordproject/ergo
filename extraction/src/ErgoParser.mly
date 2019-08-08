@@ -94,10 +94,13 @@ let make_template_clause prov name ve =
 let make_template_if_else prov name ve1 ve2 =
   let a = Util.char_list_of_string name in
   let econd = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
-  ErgoCompiler.eif prov
-    econd
-    (make_template_variable prov name (ErgoCompiler.etext prov ve1))
-    (make_template_variable prov name (ErgoCompiler.etext prov ve2))
+  make_template_variable
+    prov
+    name
+    (ErgoCompiler.eif prov
+       econd
+       (ErgoCompiler.etext prov ve1)
+       (ErgoCompiler.etext prov ve2))
 
 let make_template_if prov name ve1 =
   let ve2 = [ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string ""))] in
@@ -414,6 +417,8 @@ type_annotation:
 cases_stmt:
 | ELSE s = stmt
     { ([],s) }
+| WITH v = qname THEN s = stmt cs = cases_stmt
+    { ((ErgoCompiler.ecaseenum (mk_provenance $startpos $endpos) v,s)::(fst cs), snd cs) }
 | WITH d = data THEN s = stmt cs = cases_stmt
     { ((ErgoCompiler.ecasedata (mk_provenance $startpos $endpos) d,s)::(fst cs), snd cs) }
 | WITH UNDERSCORE ta = type_annotation THEN e = stmt cs = cases_stmt
@@ -426,6 +431,8 @@ cases_stmt:
 cases_fstmt:
 | ELSE s = fstmt
     { ([],s) }
+| WITH v = qname THEN s = fstmt cs = cases_fstmt
+    { ((ErgoCompiler.ecaseenum (mk_provenance $startpos $endpos) v,s)::(fst cs), snd cs) }
 | WITH d = data THEN s = fstmt cs = cases_fstmt
     { ((ErgoCompiler.ecasedata (mk_provenance $startpos $endpos) d,s)::(fst cs), snd cs) }
 | WITH UNDERSCORE ta = type_annotation THEN e = fstmt cs = cases_fstmt
@@ -467,8 +474,8 @@ expr:
       let sl' = sl @ [slast] in
       ErgoCompiler.etext (mk_provenance $startpos $endpos) sl' }
 (* Expressions *)
-| v = IDENT
-    { ErgoCompiler.evar (mk_provenance $startpos $endpos) (Util.char_list_of_string v) }
+| v = qname
+    { ErgoCompiler.evar (mk_provenance $startpos $endpos) v }
 | e = expr DOT a = safeident
     { ErgoCompiler.eunaryoperator (mk_provenance $startpos $endpos) (EOpDot a) e }
 | e = expr QUESTIONDOT a = safeident
@@ -636,6 +643,8 @@ cases:
     { ([],e) }
 | WITH d = data THEN e = expr cs = cases
     { ((ErgoCompiler.ecasedata (mk_provenance $startpos $endpos) d,e)::(fst cs), snd cs) }
+| WITH v = qname THEN e = expr cs = cases
+    { ((ErgoCompiler.ecaseenum (mk_provenance $startpos $endpos) v,e)::(fst cs), snd cs) }
 | WITH UNDERSCORE ta = type_annotation THEN e = expr cs = cases
     { ((ErgoCompiler.ecasewildcard (mk_provenance $startpos $endpos) ta,e)::(fst cs), snd cs) }
 | WITH LET v = ident ta = type_annotation THEN e = expr cs = cases

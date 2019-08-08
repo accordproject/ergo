@@ -1,0 +1,4 @@
+{
+    "$class": "org.accordproject.enumtest.Request",
+    "thing": "FOO"
+}

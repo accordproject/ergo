@@ -18,9 +18,11 @@ Require Import List.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Result.
 Require Import ErgoSpec.Common.Names.
+Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.NamespaceContext.
 Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Types.ErgoTypetoErgoCType.
+Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCStdlib.
