@@ -49,8 +49,8 @@ Section ErgoCEvalContext.
                   new_local_env.
 
   Definition empty_eval_context :=
-    mkEvalContext  ((markdown_options,
-                     dbrand (default_markdown_options::nil)
+    mkEvalContext  ((options,
+                     dbrand (default_options::nil)
                             (drec (("wrapVariables"%string, dbool false)
                                      ::("template"%string, dbool false)
                                      ::nil)))

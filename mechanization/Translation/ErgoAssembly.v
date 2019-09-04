@@ -33,8 +33,7 @@ Section ErgoAssembly.
       "toText"%string
       (mkErgoTypeSignature
          prov
-         (("options"%string,
-           ErgoTypeClassRef prov ("org.accordproject.markdown.MarkdownOptions"%string))::nil)
+         nil
          (Some (ErgoTypeString prov))
          None)
       (Some (SReturn prov template)).

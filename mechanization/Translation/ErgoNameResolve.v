@@ -130,7 +130,8 @@ Section ErgoNameResolution.
       accordproject_base_namespace
         :: accordproject_stdlib_namespace
         :: accordproject_time_namespace
-        :: accordproject_markdown_namespace
+        :: accordproject_options_namespace
+        :: accordproject_template_namespace
         :: nil.
     Definition is_stdlib_import (ns:namespace_name) : bool :=
       if in_dec string_dec ns stdlib_imports

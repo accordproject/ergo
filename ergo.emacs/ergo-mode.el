@@ -93,8 +93,8 @@ that constant is changed.")
   '("function"    "with"        "match"     "none"
     "namespace"   "enforce"     "if"        "then"      "else"      "let"
     "foreach"     "import"      "where"     "return"    "constant"
-    "section"     "contract"    "clause"    "over"      "define"
-    "set"         "state"       "emit"      "throw"
+    "upon"        "request"     "contract"  "clause"    "over"      "define"
+    "set"         "state"       "emit"      "emits"     "throw"
     "extends"     "event"       "asset"     "enum"      "concept"
     "participant" "transaction" "abstract")
   "All keywords in the Ergo language.  Used for font locking.")
@@ -769,6 +769,7 @@ The following extra functions are defined:
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist (cons "\\.ergo\\'" 'ergo-mode))
+(add-to-list 'auto-mode-alist (cons "\\.cto\\'" 'ergo-mode))
 
 (defun ergo--apply-rcs-patch (patch-buffer)
   "Apply an RCS-formatted diff from PATCH-BUFFER to the current buffer."

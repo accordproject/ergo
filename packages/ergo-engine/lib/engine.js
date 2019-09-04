@@ -96,7 +96,7 @@ class Engine {
         const utcOffset = now.utcOffset();
         const validOptions = options ? options : {
             options: {
-                '$class': 'org.accordproject.markdown.MarkdownOptions',
+                '$class': 'org.accordproject.ergo.options.Options',
                 'wrapVariables': false,
                 'template': false,
             }
@@ -153,7 +153,7 @@ class Engine {
         const utcOffset = now.utcOffset();
         const validOptions = options ? options : {
             options: {
-                '$class': 'org.accordproject.markdown.MarkdownOptions',
+                '$class': 'org.accordproject.ergo.options.Options',
                 'wrapVariables': false,
                 'template': false,
             }

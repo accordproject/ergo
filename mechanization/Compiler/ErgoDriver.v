@@ -373,7 +373,7 @@ Section ErgoDriver.
     Definition init_repl_context
                (inputs : list lrergo_input) : eresult repl_context :=
       elift (mkREPLCtxt ErgoCEvalContext.empty_eval_context)
-            (eolift (set_namespace_in_compilation_context accordproject_ergotop_namespace)
+            (eolift (set_namespace_in_compilation_context accordproject_top_namespace)
                     (compilation_context_from_inputs_no_main inputs None nil)). (* XXX No Template! *)
 
     Definition update_repl_ctxt_comp_ctxt

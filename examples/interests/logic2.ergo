@@ -14,11 +14,10 @@
 namespace org.accordproject.interests
 
 import org.accordproject.loan.interests.*
-import org.accordproject.markdown.*
 
 contract Interests over TemplateModel {
 	// Generate Text
-	clause toText(options:MarkdownOptions) : String {
+	clause toText() : String {
 		return `
 This is a fixed interest loan to the amount of {{loanAmount}}
 at the yearly interest rate of {{rate}}%

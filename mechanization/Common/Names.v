@@ -67,18 +67,21 @@ Section Names.
     Definition local_state := "__lstate".       (* Contains local state *)
     Definition local_emit := "__lemit".         (* Contains local emit *)
     Definition current_time := "__now".         (* Contains current time *)
-    Definition markdown_options := "__options". (* Contains current time *)
+    Definition options := "__options".          (* Contains external options *)
 
   End ReservedNames.
   
   Section TypeNames.
+    (* Built-in Cicero *)
     Definition accordproject_base_namespace : string := "org.accordproject.base"%string.
     Definition accordproject_runtime_namespace : string := "org.accordproject.cicero.runtime"%string.
     Definition accordproject_contract_namespace : string := "org.accordproject.cicero.contract"%string.
     Definition accordproject_stdlib_namespace : string := "org.accordproject.ergo.stdlib"%string.
     Definition accordproject_time_namespace : string := "org.accordproject.time"%string.
-    Definition accordproject_markdown_namespace : string := "org.accordproject.markdown"%string.
-    Definition accordproject_ergotop_namespace : string := "org.accordproject.ergo.top"%string.
+    (* Built-in Ergo *)
+    Definition accordproject_top_namespace : string := "org.accordproject.ergo.top"%string.
+    Definition accordproject_options_namespace : string := "org.accordproject.ergo.options"%string.
+    Definition accordproject_template_namespace : string := "org.accordproject.ergo.template"%string.
 
     (* Accord Project system types *)
     Definition default_enum_absolute_name : string :=
@@ -103,8 +106,8 @@ Section Names.
     (* Ergo types *)
     Definition default_error_absolute_name : string :=
       absolute_name_of_local_name accordproject_stdlib_namespace "ErgoErrorResponse".
-    Definition default_markdown_options : string :=
-      absolute_name_of_local_name accordproject_markdown_namespace "MarkdownOptions".
+    Definition default_options : string :=
+      absolute_name_of_local_name accordproject_options_namespace "Options".
 
   End TypeNames.
 

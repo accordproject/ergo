@@ -14,8 +14,6 @@
 
 namespace org.accordproject.volumediscount
 
-import org.accordproject.markdown.*
-
 define function findRate(volume: Double, rateTable: RateRange[]) : Double? {
   return singleton(
     foreach r in rateTable
