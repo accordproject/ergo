@@ -6,7 +6,7 @@
     "models": ["smoke.cto"],
     "contract": "contract.json",
     "options": {
-      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "$class": "org.accordproject.ergo.options.Options",
       "wrapVariables": false,
       "template": false
     },
@@ -195,7 +195,7 @@
     "models": ["model.cto"],
     "contract": "contract.json",
     "options": {
-      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "$class": "org.accordproject.ergo.options.Options",
       "wrapVariables": false,
       "template": true
     },
@@ -231,7 +231,7 @@
     "models": ["model.cto"],
     "contract": "contract.json",
     "options": {
-      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "$class": "org.accordproject.ergo.options.Options",
       "wrapVariables": false,
       "template": true
     },
@@ -252,7 +252,7 @@
     "models": ["model.cto"],
     "contract": "contract.json",
     "options": {
-      "$class": "org.accordproject.markdown.MarkdownOptions",
+      "$class": "org.accordproject.ergo.options.Options",
       "wrapVariables": false,
       "template": true
     },

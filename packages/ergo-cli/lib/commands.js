@@ -226,7 +226,7 @@ class Commands {
         }
         const contractJson = getJson(contractInput);
         const markdownOtions = {
-            '$class': 'org.accordproject.markdown.MarkdownOptions',
+            '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
             'template': true,
         };

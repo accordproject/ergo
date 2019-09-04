@@ -66,7 +66,7 @@ Section Misc.
     (* This assumes no two nodes have the same string *)
     Parameter coq_distinct : (A -> string) -> list A -> list A.
     Parameter coq_toposort : (A -> B) -> (A -> string) -> list (A * list A) -> list A.
-    Parameter coq_sort_given_topo_order : (A -> B) -> (C-> B) -> (A -> string) -> list A -> list C -> list C.
+    Parameter coq_sort_given_topo_order : list A -> (A -> string) -> (C-> string) -> (A -> string) -> list C -> list C.
   End TopoSort.
 
   Section TimeInstrumentation.

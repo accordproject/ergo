@@ -249,7 +249,12 @@ let compare_of_order o labely labelx name x1 x2 =
   else
     let fl = List.filter (fun x -> labely x = labelx x1 || labely x = labelx x2) o in
     begin match fl with
-    | [] | _ :: [] -> raise (Failure ("Could not find request types during dispatch creation"))
+    | [] | _ :: [] ->
+        raise (Failure ("Could not find request types ["
+                        ^ (string_of_char_list (labelx x1))
+                        ^ ", "
+                        ^ (string_of_char_list (labelx x2))
+                        ^  "] during dispatch creation"))
     | y1 :: y2 :: [] ->
         if labelx x1 = labely y1
         then +1
@@ -266,7 +271,7 @@ let coq_distinct name l =
   print_order "DISTINCT OUPUT" (fun x -> string_of_char_list (name x)) l;
   l
 
-let sort_given_topo_order labely labelx name order l =
+let sort_given_topo_order order labely labelx name l =
   print_order "SORT GIVEN TOPO" name order;
   let comp = compare_of_order order labely labelx name in
   List.sort comp l
@@ -275,8 +280,8 @@ let coq_toposort label name graph =
   let sorted = toposort label (fun x -> string_of_char_list (name x)) graph in
   sorted
 
-let coq_sort_given_topo_order labely labelx name order l =
-  let sorted = sort_given_topo_order labely labelx (fun x -> string_of_char_list (name x)) order l in
+let coq_sort_given_topo_order order labely labelx name l =
+  let sorted = sort_given_topo_order order labely labelx (fun x -> string_of_char_list (name x)) l in
   sorted
 
 (* Tests

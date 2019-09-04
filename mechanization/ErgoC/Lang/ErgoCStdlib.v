@@ -252,7 +252,8 @@ Section ErgoCStdlib.
 
     Definition builtin_table : ergo_stdlib_table :=
       ("org.accordproject.time.now", fun prov => mk_naked_closure nil (EVar prov current_time) prov)
-        :: ("org.accordproject.markdown.getOptions", fun prov => mk_naked_closure nil (EVar prov markdown_options) prov)
+        :: ("org.accordproject.ergo.stdlib.getOptions",
+            fun prov => mk_naked_closure nil (EVar prov options) prov)
         :: nil.
 
     Definition ergoc_stdlib : ergo_stdlib_table :=

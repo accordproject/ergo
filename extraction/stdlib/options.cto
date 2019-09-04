@@ -12,20 +12,10 @@
  * limitations under the License.
  */
 
-namespace org.accordproject.markdown
+namespace org.accordproject.ergo.options
 
-define function getOptions() : MarkdownOptions
-
-define function variableTag(variableName:String,text:Any) : String {
-	if getOptions().wrapVariables
-	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(toText(text)) ++ "\"/>"
-	else return toText(text)
+concept Options {
+	o Boolean wrapVariables
+	o Boolean template
 }
 
-define function computedTag(text:Any) : String {
-	if getOptions().wrapVariables
-	then return "<computed value=\"" ++ encode(toText(text)) ++ "\"/>"
-	else if getOptions().template
-	then return "{{" ++ toText(text) ++ "}}"
-	else return toText(text)
-}

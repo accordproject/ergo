@@ -234,7 +234,7 @@ Section ErgoTypetoErgoCType.
   Section Expand.
     Context {A:Set}.
     Definition sort_given_topo_order (order:list laergo_type_declaration) (label:A -> string) (l:list A) : list A :=
-      coq_sort_given_topo_order label_of_decl label name_of_decl order l.
+      coq_sort_given_topo_order order label_of_decl label name_of_decl l.
   End Expand.
 
 End ErgoTypetoErgoCType.
