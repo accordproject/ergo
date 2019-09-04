@@ -136,3 +136,7 @@ define function failure(x:String) : ErgoErrorResponse {
 		message: x
 	}
 }
+
+// Currently set options
+define function getOptions() : ~org.accordproject.ergo.options.Options
+

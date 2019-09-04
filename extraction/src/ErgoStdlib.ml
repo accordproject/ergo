@@ -19,10 +19,10 @@ let ergo_stdcto =
     ("$ERGODIR/extraction/stdlib/contract.cto", contract);
     ("$ERGODIR/extraction/stdlib/money.cto", money);
     ("$ERGODIR/extraction/stdlib/time.cto", time);
-    ("$ERGODIR/extraction/stdlib/markdown.cto", markdown);
+    ("$ERGODIR/extraction/stdlib/options.cto", options);
     ("$ERGODIR/extraction/stdlib/runtime.cto", runtime); ]
 let ergo_stdlib =
   [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", stdlib);
     ("$ERGODIR/extraction/stdlib/etime.ergo", etime);
-    ("$ERGODIR/extraction/stdlib/emarkdown.ergo", emarkdown) ];
+    ("$ERGODIR/extraction/stdlib/template.ergo", template) ];
 

@@ -44,14 +44,14 @@ let make_template_variable prov name ve =
   in
   ErgoCompiler.ecallfun
     prov
-    (relative_name_of_qname (Some "org.accordproject.markdown","variableTag"))
+    (relative_name_of_qname (Some "org.accordproject.ergo.template","variableTag"))
     [varparam;ve]
 
 let make_template_computed prov e =
   let textparam = e in
   ErgoCompiler.ecallfun
     prov
-    (relative_name_of_qname (Some "org.accordproject.markdown","computedTag"))
+    (relative_name_of_qname (Some "org.accordproject.ergo.template","computedTag"))
     [textparam]
 
 let make_template_list prov name ve =

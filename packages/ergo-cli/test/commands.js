@@ -221,7 +221,7 @@ describe('ergo', () => {
             const ergoPath = Path.join('test/examples/interests', 'logic.ergo');
             const ergoPath2 = Path.join('test/examples/interests', 'interests.ergo');
             const contractPath = { file: Path.join('test/examples/interests', 'contract.json') };
-            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interests/logic.ergo line 20 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
+            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interests/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/interests', 'model.cto');
@@ -242,7 +242,7 @@ describe('ergo', () => {
             const ergoPath = Path.join('test/examples/interestsvar', 'logic.ergo');
             const ergoPath2 = Path.join('test/examples/interestsvar', 'interests.ergo');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'contract.json') };
-            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interestsvar/logic.ergo line 20 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
+            return Commands.generateText([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interestsvar/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/interestsvar', 'model.cto');
