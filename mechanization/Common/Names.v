@@ -102,6 +102,10 @@ Section Names.
       absolute_name_of_local_name accordproject_runtime_namespace "Response".
     Definition default_state_absolute_name : string :=
       absolute_name_of_local_name accordproject_contract_namespace "AccordContractState".
+    Definition default_contract_absolute_name : string :=
+      absolute_name_of_local_name accordproject_contract_namespace "AccordContract".
+    Definition default_clause_absolute_name : string :=
+      absolute_name_of_local_name accordproject_contract_namespace "AccordClause".
 
     (* Ergo types *)
     Definition default_error_absolute_name : string :=

@@ -92,23 +92,31 @@ Section ErgoAssembly.
 
   Definition find_template prov (emods:list laergo_module) : eresult laergo_type :=
     let decls := template_of_ergo_modules emods in
-    let templates :=
-        filter
-          (fun x =>
-             let '(template, rel) := x in
-             if string_dec rel "org.accordproject.cicero.contract.AccordContract"
-             then true
-             else if string_dec rel "org.accordproject.cicero.contract.AccordClause"
-             then true
-             else false) decls
+    let templateType_cond templateType x :=
+        let rel := snd x in
+        if string_dec rel templateType
+        then true
+        else false
     in
+    (* First check if one can find a contract template type *)
+    let templates := filter (templateType_cond default_contract_absolute_name) decls in
     match templates with
-    | nil => template_type_not_found_error prov
+    | nil =>
+      (* If not, look for a clause template type *)
+      let templates := filter (templateType_cond default_clause_absolute_name) decls in
+      match templates with
+      | nil => template_type_not_found_error prov
+      | (name,_) :: nil => esuccess (ErgoTypeClassRef prov name) nil
+      | _ :: _ => more_than_one_template_type_error prov (String.concat "," (map fst templates))
+      end
     | (name,_) :: nil => esuccess (ErgoTypeClassRef prov name) nil
     | _ :: _ => more_than_one_template_type_error prov (String.concat "," (map fst templates))
     end.
 
-  Definition empty_main (prov:provenance) (fname:string) (emods:list laergo_module) : eresult laergo_module :=
+  Definition empty_main
+             (prov:provenance)
+             (fname:string)
+             (emods:list laergo_module) : eresult laergo_module :=
     elift (fun template =>
              mkModule prov fname "logic" "Empty"%string
                       (DContract prov "Ergo"%string
