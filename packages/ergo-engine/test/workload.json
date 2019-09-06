@@ -52,6 +52,20 @@
     }
   },
   {
+    "name": "opttest",
+    "dir": "examples/opttest",
+    "ergo": ["logic.ergo"],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.opttest.OptTest",
+    "currentTime": null,
+    "expected": {
+      "error": "Type error (at file examples/opttest/logic.ergo line 20 col 2). The let type annotation `Nothing?' for the name `foo' does not match the actual type `Integer?'.\n  let foo : Nothing? =   // This should fail\n  ^                                         "
+    }
+  },
+  {
     "name": "helloworldstate",
     "dir": "examples/helloworldstate",
     "ergo": ["logic.ergo"],
