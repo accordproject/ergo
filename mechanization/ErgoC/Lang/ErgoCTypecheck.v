@@ -249,6 +249,19 @@ Section ErgoCTypecheck.
                               ((CaseLet (prov,sofart) name None,eT)::fst sofarT, sofart))
                            sofarT
                            (ergoc_typecheck_expr nsctxt (type_context_update_local_env ctxt name t0) res)
+                  | (CaseLet prov name (Some b), res) =>
+                    elift2 (fun sofarT eT =>
+                              let et := exprct_type_annot eT in
+                              let sofart := ergoc_type_join et (snd sofarT) in
+                              ((CaseLet (prov,sofart) name (Some b), eT)::fst sofarT, sofart))
+                           sofarT
+                           (ergoc_typecheck_expr
+                              nsctxt
+                              (type_context_update_local_env
+                                 ctxt
+                                 name
+                                 (tbrand (b::nil)))
+                              res)
                   | (CaseLetOption prov name None, res) =>
                     match unteither t0 with
                     | None =>
@@ -267,7 +280,8 @@ Section ErgoCTypecheck.
                       case_option_not_on_either_error prov
                     | Some (st, ft) =>
                       elift2 (fun sofarT eT =>
-                                let sofart := snd sofarT in
+                                let et := exprct_type_annot eT in
+                                let sofart := ergoc_type_join et (snd sofarT) in
                                 ((CaseLetOption (prov,sofart) name (Some b), eT)::fst sofarT, sofart))
                              sofarT
                              (ergoc_typecheck_expr
@@ -283,18 +297,6 @@ Section ErgoCTypecheck.
                               ((CaseWildcard (prov,sofart) (Some b), eT)::fst sofarT, sofart))
                            sofarT
                            (ergoc_typecheck_expr nsctxt ctxt res)
-                  | (CaseLet prov name (Some b), res) =>
-                    elift2 (fun sofarT eT =>
-                              let sofart := snd sofarT in
-                              ((CaseLet (prov,sofart) name (Some b), eT)::fst sofarT, sofart))
-                           sofarT
-                           (ergoc_typecheck_expr
-                              nsctxt
-                              (type_context_update_local_env
-                                 ctxt
-                                 name
-                                 (tbrand (b::nil)))
-                              res)
                   end)
                (esuccess (nil, dt) nil)
                pes))
