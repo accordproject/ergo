@@ -28,8 +28,8 @@
   "dependencies": {
     "@accordproject/concerto": "0.80.0",
     "@accordproject/concerto-tools": "0.80.0",
-    "@accordproject/markdown-common": "0.3.0",
-    "@accordproject/markdown-cicero": "0.3.0",
+    "@accordproject/markdown-common": "0.3.1",
+    "@accordproject/markdown-cicero": "0.3.1",
     "debug": "4.1.0",
     "fast-safe-stringify": "2.0.5",
     "jsome": "2.5.0",
