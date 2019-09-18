@@ -15,7 +15,7 @@
 'use strict';
 
 const FunctionDeclaration = require('./functiondeclaration');
-const JavaScriptParser = require('composer-concerto/lib/codegen/javascriptparser');
+const JavaScriptParser = require('@accordproject/concerto/lib/codegen/javascriptparser');
 const debug = require('debug')('cicero:Script');
 
 /**

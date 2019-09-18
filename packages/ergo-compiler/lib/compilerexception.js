@@ -14,7 +14,7 @@
 
 'use strict';
 
-const BaseFileException = require('composer-concerto').BaseFileException;
+const BaseFileException = require('@accordproject/concerto').BaseFileException;
 
 /**
  * Exception throws when ergo compilation fails

@@ -14,16 +14,16 @@
 
 'use strict';
 
-const EventDeclaration = require('composer-concerto/lib/introspect/eventdeclaration');
-const ConceptDeclaration = require('composer-concerto/lib/introspect/conceptdeclaration');
-const EnumDeclaration = require('composer-concerto/lib/introspect/enumdeclaration');
-const Globalize = require('composer-concerto/lib/globalize');
+const EventDeclaration = require('@accordproject/concerto/lib/introspect/eventdeclaration');
+const ConceptDeclaration = require('@accordproject/concerto/lib/introspect/conceptdeclaration');
+const EnumDeclaration = require('@accordproject/concerto/lib/introspect/enumdeclaration');
+const Globalize = require('@accordproject/concerto/lib/globalize');
 const JSONGenerator = require('./ergojsongenerator');
 const JSONPopulator = require('./ergojsonpopulator');
-const Typed = require('composer-concerto/lib/model/typed');
-const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
-const TransactionDeclaration = require('composer-concerto/lib/introspect/transactiondeclaration');
-const TypedStack = require('composer-concerto/lib/serializer/typedstack');
+const Typed = require('@accordproject/concerto/lib/model/typed');
+const ResourceValidator = require('@accordproject/concerto/lib/serializer/resourcevalidator');
+const TransactionDeclaration = require('@accordproject/concerto/lib/introspect/transactiondeclaration');
+const TypedStack = require('@accordproject/concerto/lib/serializer/typedstack');
 
 const baseDefaultOptions = {
     validate: true

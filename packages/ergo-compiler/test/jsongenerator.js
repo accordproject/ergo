@@ -14,11 +14,11 @@
 
 'use strict';
 
-const Factory = require('composer-concerto/lib/factory');
+const Factory = require('@accordproject/concerto/lib/factory');
 const JSONGenerator = require('../lib/ergojsongenerator');
 const APModelManager = require('../lib/apmodelmanager');
-const TypedStack = require('composer-concerto/lib/serializer/typedstack');
-const ModelUtil = require('composer-concerto/lib/modelutil');
+const TypedStack = require('@accordproject/concerto/lib/serializer/typedstack');
+const ModelUtil = require('@accordproject/concerto/lib/modelutil');
 const Moment = require('moment-mini');
 
 let chai = require('chai'), should = chai.should();
