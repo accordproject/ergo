@@ -14,13 +14,13 @@
 
 'use strict';
 
-const ClassDeclaration = require('composer-concerto/lib/introspect/classdeclaration');
-const Field = require('composer-concerto/lib/introspect/field');
-const RelationshipDeclaration = require('composer-concerto/lib/introspect/relationshipdeclaration');
-const Relationship = require('composer-concerto/lib/model/relationship');
-const Util = require('composer-concerto/lib/util');
-const ModelUtil = require('composer-concerto/lib/modelutil');
-const ValidationException = require('composer-concerto/lib/serializer/validationexception');
+const ClassDeclaration = require('@accordproject/concerto/lib/introspect/classdeclaration');
+const Field = require('@accordproject/concerto/lib/introspect/field');
+const RelationshipDeclaration = require('@accordproject/concerto/lib/introspect/relationshipdeclaration');
+const Relationship = require('@accordproject/concerto/lib/model/relationship');
+const Util = require('@accordproject/concerto/lib/util');
+const ModelUtil = require('@accordproject/concerto/lib/modelutil');
+const ValidationException = require('@accordproject/concerto/lib/serializer/validationexception');
 const Moment = require('moment-mini');
 
 /**

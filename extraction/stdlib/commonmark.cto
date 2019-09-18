@@ -36,8 +36,21 @@ abstract concept Child extends Node {
 concept Text extends Child {
 }
 
+concept Attribute {
+    o String name
+    o String value
+}
+concept TagInfo {
+    o String tagName
+    o String attributeString
+    o Attribute[] attributes
+    o String content
+    o Boolean closed
+}
+
 concept CodeBlock extends Child {
     o String info optional
+    o TagInfo tag optional
 }
 
 concept Code extends Child {
@@ -45,9 +58,11 @@ concept Code extends Child {
 }
 
 concept HtmlInline extends Child {
+    o TagInfo tag optional
 }
 
 concept HtmlBlock extends Child {
+    o TagInfo tag optional
 }
 
 concept Emph extends Child {

@@ -14,15 +14,15 @@
 
 'use strict';
 
-const ClassDeclaration = require('composer-concerto/lib/introspect/classdeclaration');
-const Field = require('composer-concerto/lib/introspect/field');
-const RelationshipDeclaration = require('composer-concerto/lib/introspect/relationshipdeclaration');
-const Resource = require('composer-concerto/lib/model/resource');
-const Identifiable = require('composer-concerto/lib/model/identifiable');
-const Typed = require('composer-concerto/lib/model/typed');
-const Concept = require('composer-concerto/lib/model/concept');
-const ModelUtil = require('composer-concerto/lib/modelutil');
-const Util = require('composer-concerto/lib/util');
+const ClassDeclaration = require('@accordproject/concerto/lib/introspect/classdeclaration');
+const Field = require('@accordproject/concerto/lib/introspect/field');
+const RelationshipDeclaration = require('@accordproject/concerto/lib/introspect/relationshipdeclaration');
+const Resource = require('@accordproject/concerto/lib/model/resource');
+const Identifiable = require('@accordproject/concerto/lib/model/identifiable');
+const Typed = require('@accordproject/concerto/lib/model/typed');
+const Concept = require('@accordproject/concerto/lib/model/concept');
+const ModelUtil = require('@accordproject/concerto/lib/modelutil');
+const Util = require('@accordproject/concerto/lib/util');
 
 /**
  * Converts the contents of a Resource to JSON. The parameters
