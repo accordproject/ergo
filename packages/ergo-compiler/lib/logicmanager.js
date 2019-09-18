@@ -14,12 +14,12 @@
 
 'use strict';
 
-const Factory = require('composer-concerto').Factory;
-const Introspector = require('composer-concerto').Introspector;
-const Serializer = require('composer-concerto').Serializer;
+const Factory = require('@accordproject/concerto').Factory;
+const Introspector = require('@accordproject/concerto').Introspector;
+const Serializer = require('@accordproject/concerto').Serializer;
 const ErgoSerializer = require('./ergoserializer');
-const ResourceValidator = require('composer-concerto/lib/serializer/resourcevalidator');
-const ModelFile = require('composer-concerto').ModelFile;
+const ResourceValidator = require('@accordproject/concerto/lib/serializer/resourcevalidator');
+const ModelFile = require('@accordproject/concerto').ModelFile;
 const APModelManager = require('../lib/apmodelmanager');
 const ScriptManager = require('../lib/scriptmanager');
 const ErgoCompiler = require('./compiler');

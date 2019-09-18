@@ -14,14 +14,14 @@
 
 'use strict';
 
-const Factory = require('composer-concerto/lib/factory');
-const Field = require('composer-concerto/lib/introspect/field');
+const Factory = require('@accordproject/concerto/lib/factory');
+const Field = require('@accordproject/concerto/lib/introspect/field');
 const JSONPopulator = require('../lib/ergojsonpopulator');
 const APModelManager = require('../lib/apmodelmanager');
-const Relationship = require('composer-concerto/lib/model/relationship');
-const Resource = require('composer-concerto/lib/model/resource');
-const TypedStack = require('composer-concerto/lib/serializer/typedstack');
-const TypeNotFoundException = require('composer-concerto/lib/typenotfoundexception');
+const Relationship = require('@accordproject/concerto/lib/model/relationship');
+const Resource = require('@accordproject/concerto/lib/model/resource');
+const TypedStack = require('@accordproject/concerto/lib/serializer/typedstack');
+const TypeNotFoundException = require('@accordproject/concerto/lib/typenotfoundexception');
 const Moment = require('moment-mini');
 
 require('chai').should();

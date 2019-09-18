@@ -20,7 +20,9 @@ let ergo_stdcto =
     ("$ERGODIR/extraction/stdlib/money.cto", money);
     ("$ERGODIR/extraction/stdlib/time.cto", time);
     ("$ERGODIR/extraction/stdlib/options.cto", options);
-    ("$ERGODIR/extraction/stdlib/runtime.cto", runtime); ]
+    ("$ERGODIR/extraction/stdlib/runtime.cto", runtime);
+    ("$ERGODIR/extraction/stdlib/commonmark.cto", commonmark);
+    ("$ERGODIR/extraction/stdlib/ciceromark.cto", ciceromark); ]
 let ergo_stdlib =
   [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", stdlib);
     ("$ERGODIR/extraction/stdlib/etime.ergo", etime);

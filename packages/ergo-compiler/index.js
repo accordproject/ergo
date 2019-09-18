@@ -19,14 +19,14 @@
  * @module ergo-compiler
  */
 
-module.exports.ComposerConcerto = require('composer-concerto');
-module.exports.ComposerConcertoTools = require('composer-concerto-tools');
+module.exports.ComposerConcerto = require('@accordproject/concerto');
+module.exports.ComposerConcertoTools = require('@accordproject/concerto-tools');
 
 module.exports.APModelManager = require('./lib/apmodelmanager.js');
 module.exports.Compiler = require('./lib/compiler.js');
 module.exports.CompilerException = require('./lib/compilerexception.js');
 module.exports.LogicManager = require('./lib/logicmanager.js');
-module.exports.Logger = require('./lib/logger.js');
+module.exports.Logger = require('@accordproject/markdown-common').Logger;
 module.exports.ScriptManager = require('./lib/scriptmanager.js');
 module.exports.TypeException = require('./lib/typeexception.js');
 module.exports.Util = require('./lib/util.js');

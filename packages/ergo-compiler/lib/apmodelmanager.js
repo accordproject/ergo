@@ -16,7 +16,7 @@
 
 const fsPath = require('path');
 
-const ModelManager = require('composer-concerto').ModelManager;
+const ModelManager = require('@accordproject/concerto').ModelManager;
 const Builtin = require('./builtin');
 
 /**
