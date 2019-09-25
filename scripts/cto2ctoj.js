@@ -16,7 +16,7 @@
 'use strict';
 
 const Fs = require('fs');
-const CTOParser = require('composer-concerto/lib/introspect/parser');
+const CTOParser = require('@accordproject/concerto/lib/introspect/parser');
 
 require('yargs')
     .command('parse', 'parse CTO file to JSON', (yargs) => {
