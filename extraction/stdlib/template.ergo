@@ -14,16 +14,16 @@
 
 namespace org.accordproject.ergo.template
 
-define function variableTag(variableName:String,text:Any) : String {
+define function variableTag(variableName:String,text:String) : String {
 	if getOptions().wrapVariables
-	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(toText(text)) ++ "\"/>"
-	else return toText(text)
+	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\"/>"
+	else return text
 }
 
-define function computedTag(text:Any) : String {
+define function computedTag(text:String) : String {
 	if getOptions().wrapVariables
-	then return "<computed value=\"" ++ encode(toText(text)) ++ "\"/>"
+	then return "<computed value=\"" ++ encode(text) ++ "\"/>"
 	else if getOptions().template
-	then return "{{" ++ toText(text) ++ "}}"
-	else return toText(text)
+	then return "{{" ++ text ++ "}}"
+	else return text
 }

@@ -64,7 +64,7 @@ Section ErgotoErgoC.
       let proc_one (e:laergo_expr) (acc:eresult ergoc_expr) : eresult ergoc_expr :=
           elift2
             (EBinaryBuiltin prov OpStringConcat)
-            (elift (EUnaryBuiltin prov OpGenerateText) (ergo_expr_to_ergoc_expr ctxt e))
+            (ergo_expr_to_ergoc_expr ctxt e)
             acc
       in
       fold_right proc_one init_el el

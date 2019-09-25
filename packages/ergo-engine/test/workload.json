@@ -256,7 +256,7 @@
     "clauseName": "generateText",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "response": "Name of the person to greet: Fred Blogs.\nThank you!\n Here is a first name: John Do \n Here is a second name: Jane Doe \n"
+      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n Here is a first name: \"John Do\" \n Here is a second name: \"Jane Doe\" \n"
     }
   },
   {
@@ -277,7 +277,7 @@
     "clauseName": "generateText",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "response": "Name of the person to greet: Fred Blogs.\nThank you!\n Here is a first name: John Do \n Here is a second name: Jane Doe \n"
+      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n Here is a first name: \"John Do\" \n Here is a second name: \"Jane Doe\" \n"
     }
   }
 ]
