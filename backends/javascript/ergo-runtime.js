@@ -203,7 +203,7 @@ function toString(v) {
     return toStringQ(v, "\"");
 }
 function generateText(v) {
-    return toTextQ(v, "");
+    return toTextQ(v, "\"");
 }
 function isEnum(v) {
   if (v.type) {
