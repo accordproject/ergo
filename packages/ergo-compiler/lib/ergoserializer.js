@@ -81,6 +81,8 @@ class ErgoSerializer {
      * @param {boolean} [options.deduplicateResources] - Generate $id for resources and
      * if a resources appears multiple times in the object graph only the first instance is
      * serialized in full, subsequent instances are replaced with a reference to the $id
+     * @param {boolean} [options.convertResourcesToId] - Convert resources that
+     * are specified for relationship fields into their id, false by default.
      * @return {Object} - The Javascript Object that represents the resource
      * @throws {Error} - throws an exception if resource is not an instance of
      * Resource or fails validation.
@@ -108,7 +110,8 @@ class ErgoSerializer {
         const generator = new JSONGenerator(
             options.convertResourcesToRelationships === true,
             options.permitResourcesForRelationships === true,
-            options.deduplicateResources === true
+            options.deduplicateResources === true,
+            options.convertResourcesToId === true,
         );
 
         parameters.stack.clear();

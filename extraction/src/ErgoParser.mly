@@ -92,18 +92,24 @@ let make_template_list prov name ve =
   let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
   let fl = (ErgoCompiler.this_name, e) :: [] in
   let bullet = make_list_sep () in
-  ErgoCompiler.eforeach prov fl None
-    (ErgoCompiler.etext prov
-       (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve))
+  ErgoCompiler.ebinarybuiltin prov
+    ErgoCompiler.ErgoOps.Binary.opstringjoin
+    (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
+    (ErgoCompiler.eforeach prov fl None
+       (ErgoCompiler.etext prov
+          (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
 
 let make_template_order prov name ve =
   let a = Util.char_list_of_string name in
   let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
   let fl = (ErgoCompiler.this_name, e) :: [] in
   let bullet = make_order_sep () in
-  ErgoCompiler.eforeach prov fl None
-    (ErgoCompiler.etext prov
-       (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve))
+  ErgoCompiler.ebinarybuiltin prov
+    ErgoCompiler.ErgoOps.Binary.opstringjoin
+    (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
+    (ErgoCompiler.eforeach prov fl None
+       (ErgoCompiler.etext prov
+          (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
 
 let make_template_join prov name sep ve =
   let a = Util.char_list_of_string name in
