@@ -261,7 +261,7 @@ class ErgoJSONGenerator {
                 throw new Error('Did not find a relationship for ' + relationshipDeclaration.getFullyQualifiedTypeName() + ' found ' + relationshipOrResource);
             }
         }
-        return relationshipOrResource.toURI();
+        return relationshipOrResource.getIdentifier(); // Uses identifier in Ergo runtime
     }
 }
 

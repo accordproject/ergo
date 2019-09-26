@@ -37,15 +37,13 @@ let make_template_input prov =
   ErgoCompiler.ethis_this prov
 
 let make_template_variable prov v =
-  let ve =
-    ErgoCompiler.ecallfun
-      prov
-      (relative_name_of_qname (Some "org.accordproject.ergo.stdlib","toText"))
-      [ErgoCompiler.eunaryoperator prov
-         (EOpDot (Util.char_list_of_string v))
-         (make_template_input prov)]
-  in (v,ve)
-    
+  ErgoCompiler.ecallfun
+    prov
+    (relative_name_of_qname (Some "org.accordproject.ergo.stdlib","toText"))
+    [ErgoCompiler.eunaryoperator prov
+       (EOpDot (Util.char_list_of_string v))
+       (make_template_input prov)]
+
 let make_template_computed prov e =
   ErgoCompiler.ecallfun
     prov
@@ -53,15 +51,13 @@ let make_template_computed prov e =
     [e]
 
 let make_template_variable_as prov v s =
-  let ve =
-    ErgoCompiler.ecallfun prov
-      (relative_name_of_qname (Some "org.accordproject.time","format"))
-      [ErgoCompiler.eunaryoperator prov
-         (EOpDot (Util.char_list_of_string v))
-         (make_template_input prov);
-       ErgoCompiler.econst prov
-         (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))]
-  in (v,ve)
+  ErgoCompiler.ecallfun prov
+    (relative_name_of_qname (Some "org.accordproject.time","format"))
+    [ErgoCompiler.eunaryoperator prov
+       (EOpDot (Util.char_list_of_string v))
+       (make_template_input prov);
+     ErgoCompiler.econst prov
+       (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))]
 
 (* Construct AST for variables *)
 let wrap_template_variable prov name ve =
@@ -73,6 +69,16 @@ let wrap_template_variable prov name ve =
     prov
     (relative_name_of_qname (Some "org.accordproject.ergo.template","variableTag"))
     [varparam;ve]
+
+let wrap_template_variable_as prov name ve fe =
+  let varparam =
+    ErgoCompiler.econst prov
+      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
+  in
+  ErgoCompiler.ecallfun
+    prov
+    (relative_name_of_qname (Some "org.accordproject.ergo.template","variableTagAs"))
+    [varparam;ve;fe]
 
 let wrap_template_computed prov e =
   let textparam = e in
@@ -584,9 +590,9 @@ textlist:
 | s0 = OPENEXPR e = expr CLOSEEXPR sl = textlist
     { let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
       sfirst :: (wrap_template_computed (mk_provenance $startpos $endpos) (make_template_computed (mk_provenance $startpos $endpos) e)) :: sl }
-| s0 = OPENVAR nameve = varexpr CLOSEVAR sl = textlist
+| s0 = OPENVAR ve = varexpr CLOSEVAR sl = textlist
     { let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
-      sfirst :: (wrap_template_variable (mk_provenance $startpos $endpos) (fst nameve) (snd nameve)) :: sl }
+      sfirst :: ve :: sl }
 | s0 = OPENVARSHARP CLAUSE v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH CLAUSE CLOSEVAR sl2 = textlist
     { begin
         let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
@@ -633,9 +639,14 @@ textlist:
 
 varexpr:
 | v = IDENT AS s = STRING
-    { make_template_variable_as (mk_provenance $startpos $endpos) v s }
+    { let prov = mk_provenance $startpos $endpos in
+      let ve = make_template_variable_as prov v s in
+      wrap_template_variable_as prov v ve
+        (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))) }
 | v = IDENT
-    { make_template_variable (mk_provenance $startpos $endpos) v }
+    { let prov = mk_provenance $startpos $endpos in
+      let ve = make_template_variable prov v in
+      wrap_template_variable prov v ve }
 
 (* foreach list *)
 foreachlist:
