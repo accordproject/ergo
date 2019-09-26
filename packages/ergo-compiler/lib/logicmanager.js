@@ -326,9 +326,12 @@ unwrapError(__result);
     /**
      * Validate contract JSON
      * @param {object} contract - the contract JSON
+     * @param {object} options - parameters for contract variables validation
      * @return {object} the validated contract
      */
-    validateContract(contract) {
+    validateContract(contract, options) {
+        options = options || {};
+
         const serializer = this.getSerializer();
         const ergoserializer = this.getErgoSerializer();
 
@@ -338,7 +341,7 @@ unwrapError(__result);
         const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
         validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
         validContract.validate();
-        return { serialized: ergoserializer.toJSON(validContract, {permitResourcesForRelationships:true}), validated: validContract};
+        return { serialized: ergoserializer.toJSON(validContract, Object.assign(options, {permitResourcesForRelationships:true})), validated: validContract };
     }
 
     /**

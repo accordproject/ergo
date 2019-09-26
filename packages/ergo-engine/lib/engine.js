@@ -159,7 +159,7 @@ class Engine {
             }
         };
 
-        const validContract = logic.validateContract(contract); // ensure the contract is valid
+        const validContract = logic.validateContract(contract, options); // ensure the contract is valid
         const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
         const validState = logic.validateInput(state); // ensure the state is valid
 
@@ -219,11 +219,13 @@ class Engine {
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
     async generateText(logic, contractId, contract, params, currentTime, options) {
+        options = options || {};
+
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime, options);
+        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime, Object.assign(options, {convertResourcesToId: true}));
     }
 
     /**
