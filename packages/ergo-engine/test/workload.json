@@ -279,5 +279,110 @@
     "expected": {
       "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n Here is a first name: \"John Do\" \n Here is a second name: \"Jane Doe\" \n"
     }
+  },
+  {
+    "name": "volume discount (unordered list)",
+    "dir": "examples/volumediscountlist",
+    "ergo": [],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "options": {
+      "$class": "org.accordproject.ergo.options.Options",
+      "wrapVariables": false,
+      "template": true
+    },
+    "params": {},
+    "grammar": "grammar.tem",
+    "state": "state.json",
+    "contractName": "org.accordproject.volumediscountlist.VolumeDiscount",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "Volume-Based Card Acceptance Agreement [Abbreviated]\n\nThis Agreement is by and between Card, Inc., a New York corporation, and you, the Merchant. By accepting the Card, you agree to be bound by the Agreement. \nDiscount means an amount that we charge you for accepting the Card, which amount is: \n(i) a percentage (Discount Rate) of the face amount of the Charge that you submit, or a flat per-\nTransaction fee, or a combination of both; and/or \n(ii) a Monthly Flat Fee (if you meet our requirements).\n\nTransaction Processing and Payments. Our Card acceptance, processing, and payment requirements are set forth in the Merchant Regulations. Some requirements are summarized here for ease of reference, but do not supersede the provisions in the Merchant Regulations.\nPayment for Charges. We will pay you, through our agent, according to your payment plan in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n(i) the Discount, \n(ii) any amounts you owe us or our Affiliates, \n(iii) any amounts for which we have Chargebacks and \n(iv) any Credits you submit. Your initial Discount is indicated in the Agreement or otherwise provided to you in writing by us. In addition to your Discount we may charge you additional fees and assessments, as listed in the Merchant Regulations or as otherwise provided to you in writing by us. We may adjust any of these amounts and may change any other amount we charge you for accepting the Card.\n\nSETTLEMENT\na) Settlement Amount. Our agent will pay you according to your payment plan, as described below, in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n    (i) the Discount, \n    (ii) any amounts you owe us or our Affiliates, \n    (iii) any amounts for which we have Chargebacks, and (iv) any Credits you submit. Our agent will subtract the full amount of all applicable deductions, rejections, and withholdings, from this payment to you (or debit your Bank Account), but if it cannot, then you must pay it promptly upon demand.\nb) Discount. The Discount is determined according to the following table:\n\n- 1.0$ million <= Volume < 10.0$ million : 3.1%\n- 10.0$ million <= Volume < 50.0$ million : 2.9%\n- 50.0$ million <= Volume < 500.0$ million : 2.5%\n- 500.0$ million <= Volume < 1000.0$ million : 1.0%\n"
+    }
+  },
+  {
+    "name": "volume discount (ordered list)",
+    "dir": "examples/volumediscountlist",
+    "ergo": [],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "options": {
+      "$class": "org.accordproject.ergo.options.Options",
+      "wrapVariables": false,
+      "template": true
+    },
+    "params": {},
+    "grammar": "grammar2.tem",
+    "state": "state.json",
+    "contractName": "org.accordproject.volumediscountlist.VolumeDiscount",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "Volume-Based Card Acceptance Agreement [Abbreviated]\n\nThis Agreement is by and between Card, Inc., a New York corporation, and you, the Merchant. By accepting the Card, you agree to be bound by the Agreement. \nDiscount means an amount that we charge you for accepting the Card, which amount is: \n(i) a percentage (Discount Rate) of the face amount of the Charge that you submit, or a flat per-\nTransaction fee, or a combination of both; and/or \n(ii) a Monthly Flat Fee (if you meet our requirements).\n\nTransaction Processing and Payments. Our Card acceptance, processing, and payment requirements are set forth in the Merchant Regulations. Some requirements are summarized here for ease of reference, but do not supersede the provisions in the Merchant Regulations.\nPayment for Charges. We will pay you, through our agent, according to your payment plan in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n(i) the Discount, \n(ii) any amounts you owe us or our Affiliates, \n(iii) any amounts for which we have Chargebacks and \n(iv) any Credits you submit. Your initial Discount is indicated in the Agreement or otherwise provided to you in writing by us. In addition to your Discount we may charge you additional fees and assessments, as listed in the Merchant Regulations or as otherwise provided to you in writing by us. We may adjust any of these amounts and may change any other amount we charge you for accepting the Card.\n\nSETTLEMENT\na) Settlement Amount. Our agent will pay you according to your payment plan, as described below, in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n    (i) the Discount, \n    (ii) any amounts you owe us or our Affiliates, \n    (iii) any amounts for which we have Chargebacks, and (iv) any Credits you submit. Our agent will subtract the full amount of all applicable deductions, rejections, and withholdings, from this payment to you (or debit your Bank Account), but if it cannot, then you must pay it promptly upon demand.\nb) Discount. The Discount is determined according to the following table:\n\n1. 1.0$ million <= Volume < 10.0$ million : 3.1%\n1. 10.0$ million <= Volume < 50.0$ million : 2.9%\n1. 50.0$ million <= Volume < 500.0$ million : 2.5%\n1. 500.0$ million <= Volume < 1000.0$ million : 1.0%\n"
+    }
+  },
+  {
+    "name": "Generate text for a nested list block",
+    "dir": "examples/helloworldlist",
+    "ergo": [],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "options": {
+      "$class": "org.accordproject.ergo.options.Options",
+      "wrapVariables": false,
+      "template": true
+    },
+    "params": {},
+    "grammar": "grammar.tem",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.Helloworld",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n\n- Here is a name: \"Nail\" {{4}}\n- Here is a name: \"Suitcase\" {{8}}\n   - Includes: \"J1\" \n   - Includes: \"J2\" \n- Here is a name: \"Laptop\" {{6}}\n   - Includes: \"D1\" \n"
+    }
+  },
+  {
+    "name": "Nested unordered list block",
+    "dir": "examples/helloworldlist",
+    "ergo": [],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "options": {
+      "$class": "org.accordproject.ergo.options.Options",
+      "wrapVariables": false,
+      "template": true
+    },
+    "params": {},
+    "grammar": "grammar.tem",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.Helloworld",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n\n- Here is a name: \"Nail\" {{4}}\n- Here is a name: \"Suitcase\" {{8}}\n   - Includes: \"J1\" \n   - Includes: \"J2\" \n- Here is a name: \"Laptop\" {{6}}\n   - Includes: \"D1\" \n"
+    }
+  },
+  {
+    "name": "Nested ordered list block",
+    "dir": "examples/helloworldlist",
+    "ergo": [],
+    "models": ["model.cto"],
+    "contract": "contract.json",
+    "options": {
+      "$class": "org.accordproject.ergo.options.Options",
+      "wrapVariables": false,
+      "template": true
+    },
+    "params": {},
+    "grammar": "grammar2.tem",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.Helloworld",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n\n1. Here is a name: \"Nail\" {{4}}\n1. Here is a name: \"Suitcase\" {{8}}\n   1. Includes: \"J1\" \n   1. Includes: \"J2\" \n1. Here is a name: \"Laptop\" {{6}}\n   1. Includes: \"D1\" \n"
+    }
   }
 ]

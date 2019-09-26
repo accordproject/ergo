@@ -45,11 +45,14 @@ class ErgoJSONGenerator {
      * @param {boolean} [deduplicateResources] If resources appear several times
      * in the object graph only the first instance is serialized, with only the $id
      * written for subsequent instances, false by default.
+     * @param {boolean} [convertResourcesToId] Convert resources that
+     * are specified for relationship fields into their id, false by default.
      */
-    constructor(convertResourcesToRelationships, permitResourcesForRelationships, deduplicateResources) {
+    constructor(convertResourcesToRelationships, permitResourcesForRelationships, deduplicateResources, convertResourcesToId) {
         this.convertResourcesToRelationships = convertResourcesToRelationships;
         this.permitResourcesForRelationships = permitResourcesForRelationships;
         this.deduplicateResources = deduplicateResources;
+        this.convertResourcesToId = convertResourcesToId;
     }
 
     /**
@@ -261,7 +264,11 @@ class ErgoJSONGenerator {
                 throw new Error('Did not find a relationship for ' + relationshipDeclaration.getFullyQualifiedTypeName() + ' found ' + relationshipOrResource);
             }
         }
-        return relationshipOrResource.getIdentifier(); // Uses identifier in Ergo runtime
+        if (this.convertResourcesToId) {
+            return relationshipOrResource.getIdentifier(); // Uses identifier in Ergo runtime
+        } else {
+            return relationshipOrResource.toURI();
+        }
     }
 }
 
