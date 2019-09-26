@@ -20,6 +20,12 @@ define function variableTag(variableName:String,text:String) : String {
 	else return text
 }
 
+define function variableTagAs(variableName:String,text:String,format:String) : String {
+	if getOptions().wrapVariables
+	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\" format=\"" ++ encode(format) ++ "\"/>"
+	else return text
+}
+
 define function computedTag(text:String) : String {
 	if getOptions().wrapVariables
 	then return "<computed value=\"" ++ encode(text) ++ "\"/>"
