@@ -61,7 +61,7 @@ Section ErgoCTypeUtil.
       "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'"
     | OpRecRemove _ | OpRecProject _
     | OpSingleton | OpFlatten | OpDistinct | OpOrderBy _
-    | OpCount | OpToString | OpGenerateText | OpLength | OpSubstring _ _ | OpLike _ _
+    | OpCount | OpToString | OpToText | OpLength | OpSubstring _ _ | OpLike _ _
     | OpNatUnary _ | OpNatSum | OpNatMin | OpNatMax | OpNatMean | OpFloatOfNat
     | OpFloatUnary _ | OpFloatTruncate | OpFloatSum | OpFloatMean | OpFloatBagMin | OpFloatBagMax
     | OpForeignUnary _ =>
