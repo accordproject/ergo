@@ -342,9 +342,109 @@ Definition enhanced_unary_op_interp
 
 Require Import String.
 
+Fixpoint enumToString (b:brands) (d:data) : string
+     :=
+     match d with
+     | dleft (dstring s) =>
+       append "~"
+              (append (@toString _ ToString_brands b)
+                      (append "."
+                              (stringToString s)))
+     | dright d => enumToString b d
+     | _ => "<BOGUS ENUM>"
+     end.
+
+Fixpoint dataToString (d:data) : string
+  := match d with
+     | dunit => "unit"%string
+     | dnat n => toString n
+     | dfloat n => toString n
+     | dbool b => toString b
+     | dstring s => bracketString """"%string (stringToString s) """"%string
+     | dcoll l => bracketString 
+                    "["%string
+                    (concat ", "
+                            (string_sort (map dataToString l)))
+                    "]"%string
+     | drec lsd => bracketString
+                     "{"%string
+                     (concat "," 
+                             (map (fun xy => let '(x,y):=xy in 
+                                             (append (stringToString x) (append ":"%string
+                                                                                (dataToString y)))
+                                  ) lsd))
+                     "}"%string
+     | dleft d => bracketString
+                    "Left("%string
+                    (dataToString d)
+                    ")"%string
+     | dright d => bracketString
+                     "Right("%string
+                     (dataToString d)
+                     ")"%string
+     | dbrand b d =>
+       match d with
+       | drec _ =>
+         append "~"
+                (append (@toString _ ToString_brands b)
+                        (dataToString d))
+       | dleft _
+       | dright _ =>
+         enumToString b d
+       | _ =>
+         dataToString d
+       end
+     | dforeign fd => toString fd
+     end.
+
+Fixpoint dataToText (d:data) : string
+  := match d with
+     | dunit => "unit"%string
+     | dnat n => toString n
+     | dfloat n => toString n
+     | dbool b => toString b
+     | dstring s => bracketString """"%string (stringToString s) """"%string
+     | dcoll l => bracketString 
+                    "["%string
+                    (concat ", "
+                            (string_sort (map dataToText l)))
+                    "]"%string
+     | drec lsd => bracketString
+                     "{"%string
+                     (concat "," 
+                             (map (fun xy => let '(x,y):=xy in 
+                                             (append (stringToString x) (append ":"%string
+                                                                                (dataToText y)))
+                                  ) lsd))
+                     "}"%string
+     | dleft d => bracketString
+                    "Left("%string
+                    (dataToText d)
+                    ")"%string
+     | dright d => bracketString
+                     "Right("%string
+                     (dataToText d)
+                     ")"%string
+     | dbrand b d =>
+       match d with
+       | drec _ =>
+         append "~"
+                (append (@toString _ ToString_brands b)
+                        (dataToText d))
+       | dleft _
+       | dright _ =>
+         enumToString b d
+       | _ =>
+         dataToText d
+       end
+     | dforeign fd => toString fd
+     end.
+
 Program Instance enhanced_foreign_unary_op : foreign_unary_op
   := { foreign_unary_op_type := enhanced_unary_op
-       ; foreign_unary_op_interp := enhanced_unary_op_interp }.
+       ; foreign_unary_op_interp := enhanced_unary_op_interp
+       ; foreign_unary_op_data_tostring := dataToString
+       ; foreign_unary_op_data_totext := dataToText }.
 Next Obligation.
   red; unfold equiv; intros.
   change ({x = y} + {x <> y}).

@@ -195,7 +195,7 @@ Section ErgoCStdlib.
     ("org.accordproject.ergo.stdlib.logString", mk_unary  (OpForeignUnary (enhanced_unary_log_op uop_log_string)))
       (* String *)
       :: ("org.accordproject.ergo.stdlib.toString", mk_unary OpToString)
-      :: ("org.accordproject.ergo.stdlib.toText", mk_unary OpGenerateText)
+      :: ("org.accordproject.ergo.stdlib.toText", mk_unary OpToText)
       :: ("org.accordproject.ergo.stdlib.length", mk_unary OpLength)
       :: ("org.accordproject.ergo.stdlib.encode", mk_unary  (OpForeignUnary (enhanced_unary_log_op uop_log_encode_string)))
       :: ("org.accordproject.ergo.stdlib.decode", mk_unary  (OpForeignUnary (enhanced_unary_log_op uop_log_decode_string)))
