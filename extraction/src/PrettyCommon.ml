@@ -478,7 +478,7 @@ let pretty_unary_op p sym callb ff u a =
   | OpOrderBy atts ->
       fprintf ff "@[<hv 0>%s%a(%a)@]" "sort" (pretty_squared_names sym) (List.map fst atts) (callb 0 sym) a
   | OpToString -> pretty_unary_exp sym callb "toString" ff a
-  | OpGenerateText -> pretty_unary_exp sym callb "generateText" ff a
+  | OpToText -> pretty_unary_exp sym callb "toText" ff a
   | OpLength -> pretty_unary_exp sym callb "stringLength" ff a
   | OpSubstring (n1,None) -> pretty_unary_exp sym callb ("substring["^(string_of_int n1)^"]") ff a
   | OpSubstring (n1,Some n2) -> pretty_unary_exp sym callb ("substring["^(string_of_int n1)^","^(string_of_int n2)^"]") ff a
