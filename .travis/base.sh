@@ -37,7 +37,7 @@ if [ ! -f ${DIR}/build.cfg ]; then
     echo "ABORT_BUILD=false" > ${DIR}/build.cfg
     echo "ABORT_CODE=0" >> ${DIR}/build.cfg
     ## determine the build type here
-    if [ -z "${TRAVIS_TAG}" ]; then
+    if [ -z "${TRAVIS_TAG}" ] || [ "${TRAVIS_BRANCH}" != "master" ]; then
         BUILD_RELEASE="unstable"
         BUILD_FOCUS="latest"
     else
