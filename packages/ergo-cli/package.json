@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-cli",
-  "version": "0.9.4",
+  "version": "0.20.0-alpha.2",
   "description": "Ergo CLI",
   "repository": {
     "type": "git",
@@ -27,14 +27,14 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/ergo-compiler": "0.9.4",
-    "@accordproject/ergo-engine": "0.9.4",
-    "@accordproject/ergo-test": "0.9.4",
-    "moment-mini": "2.22.1",
+    "@accordproject/ergo-compiler": "0.20.0-alpha.2",
+    "@accordproject/ergo-engine": "0.20.0-alpha.2",
+    "@accordproject/ergo-test": "0.20.0-alpha.2",
+    "chalk": "2.4.1",
     "jsome": "2.5.0",
+    "moment-mini": "2.22.1",
     "winston": "3.2.1",
-    "yargs": "9.0.1",
-    "chalk": "2.4.1"
+    "yargs": "9.0.1"
   },
   "bin": {
     "ergoc": "./bin/ergoc.js",
@@ -87,5 +87,6 @@
     "branches": 70,
     "functions": 92,
     "lines": 93
-  }
+  },
+  "gitHead": "bf65386e8590dff56f8b9bc0bb657263ff049437"
 }
