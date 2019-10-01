@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-compiler",
-  "version": "0.9.4",
+  "version": "0.20.0-alpha.2",
   "description": "Ergo Compiler",
   "repository": {
     "type": "git",
@@ -28,8 +28,8 @@
   "dependencies": {
     "@accordproject/concerto": "0.80.3",
     "@accordproject/concerto-tools": "0.80.3",
-    "@accordproject/markdown-common": "0.3.2",
     "@accordproject/markdown-cicero": "0.3.2",
+    "@accordproject/markdown-common": "0.3.2",
     "debug": "4.1.0",
     "fast-safe-stringify": "2.0.5",
     "jsome": "2.5.0",
@@ -83,5 +83,6 @@
     "branches": 70,
     "functions": 92,
     "lines": 93
-  }
+  },
+  "gitHead": "bf65386e8590dff56f8b9bc0bb657263ff049437"
 }
