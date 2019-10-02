@@ -1,12 +1,19 @@
-![Ergo](./ergo.png)
+<p align="center">
+  <a href="./ergo.png">
+    <img src="./ergo.png" alt="Ergo logo">
+  </a>
+</p>
 
 ![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
 ![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
 [![Coverage Status](https://coveralls.io/repos/github/accordproject/ergo/badge.svg?branch=master)](https://coveralls.io/github/accordproject/ergo?branch=master)
+[![GitHub license](https://img.shields.io/github/license/accordproject/ergo?color=bright-green)](https://github.com/accordproject/ergo/blob/master/LICENSE)
 [![downloads](https://img.shields.io/npm/dm/@accordproject/ergo-cli)](https://www.npmjs.com/package/@accordproject/ergo-cli)
 [![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8b6ef766-c6d0-45bb-bff6-03104e6ff913/deploy-status)](https://app.netlify.com/sites/ergorepl/deploys)
+[![join slack](https://img.shields.io/badge/Slack-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
+
 
 ## About
 
@@ -109,9 +116,11 @@ $ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/log
 
 ---
 
-<a href="https://www.accordproject.org/">
-  <img src="assets/APLogo.png" alt="Accord Project Logo" width="400" />
-</a>
+<p align="center">
+  <a href="https://www.accordproject.org/">
+    <img src="assets/APLogo.png" alt="Accord Project Logo" width="400" />
+  </a>
+</p>
 
 Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
 
