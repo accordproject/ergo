@@ -45,9 +45,9 @@ The most recent Ergo documentation is in the [Ergo Language Guide][docergo].
 
 ### Install Ergo
 
-The easiest way to install Ergo is as a [Node.js][nodejs] package.
+The easiest way to install Ergo is as an [npm(Node.js Package Manager)][nodejs] package.
 Once you have Node.js installed on your machine, you can get the Ergo compiler
-and command-line using the Node.js package manager by typing the following in a
+and command-line using npm by typing the following in a
 terminal:
 
 ```text
@@ -61,7 +61,7 @@ $ ergoc --version
 $ ergorun --version
 ```
 
-Then, to get command line help:
+Then, to get command-line help:
 
 ```text
 $ ergoc --help
