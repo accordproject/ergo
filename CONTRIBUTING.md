@@ -96,7 +96,7 @@ Before you submit your pull request consider the following guidelines:
 * Follow our [Coding Rules][developers.rules].
 * Ensure you provide a DCO sign-off for your commits using the -s option of git commit. For more information see [how this works][dcohow].
 * If the changes affect public APIs, change or add relevant [documentation][developers.documentation].
-* Run the [unit][developers.unit-tests] the test suite, and ensure that all tests pass.
+* Run the [unit][developers.unit-tests] test suite, and ensure that all tests pass.
 
 * Commit your changes using a descriptive commit message that follows our [commit message conventions][developers.commits]. Adherence to the [commit message conventions][developers.commits] is required, because release notes are automatically generated from these messages.
 
