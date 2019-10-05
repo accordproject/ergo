@@ -26,7 +26,7 @@ Do not open issues for general support questions as we want to keep GitHub issue
 Stack Overflow is a much better place to ask questions since:
 
 * there are thousands of people willing to help on Stack Overflow
-* Questions and answers stay available for public viewing so your question/answer might help someone else
+* questions and answers stay available for public viewing so your question / answer might help someone else
 * Stack Overflow's voting system assures that the best answers are prominently visible.
 
 To save your and our time, we will systematically close all issues that are requests for general support and redirect people to the section you are reading right now.
@@ -69,7 +69,7 @@ Before you submit your issue search the archive, maybe your question was already
 
 If your issue appears to be a bug and hasn't been reported, open a new issue. Help us to maximize the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
 
-The "[new issue][github-new-issue]" form contains several prompts that you should fill out to make it easier to understand and categorize the issue.
+The "[new issue][github-new-issue]" form contains a number of prompts that you should fill out to make it easier to understand and categorize the issue.
 
 **If you get help, help others. Good karma rulez!**
 
@@ -98,21 +98,21 @@ Before you submit your pull request consider the following guidelines:
 * If the changes affect public APIs, change or add relevant [documentation][developers.documentation].
 * Run the [unit][developers.unit-tests] the test suite, and ensure that all tests pass.
 
-* Commit your changes using a descriptive commit message that follows our [commit message conventions][developers.commits]. Adherence to the [commit message conventions][developers.commits] is required because release notes are automatically generated from these messages.
+* Commit your changes using a descriptive commit message that follows our [commit message conventions][developers.commits]. Adherence to the [commit message conventions][developers.commits] is required, because release notes are automatically generated from these messages.
 
   ```text
     git commit -a
   ```
 
-  Note: the optional commit `-a` command-line option will automatically "add" and "rm" edited files.
+  Note: the optional commit `-a` command line option will automatically "add" and "rm" edited files.
 
-* Before creating the Pull Request, ensure your branch sits on top of master (as opposed to branch off a branch). This ensures the reviewer will need only minimal effort to integrate your work by the fast-forwarding master:
+* Before creating the Pull Request, ensure your branch sits on top of master (as opposed to branch off a branch). This ensures the reviewer will need only minimal effort to integrate your work by fast-fowarding master:
 
   ```text
     git rebase upstream/master
   ```
 
-* Last step before creating the Pull Request, package and run all tests the last time:
+* Last step before creating the Pull Request, package and run all tests a last time:
 
   ```text
     npm run test
