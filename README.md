@@ -66,6 +66,9 @@ Then, to get command line help:
 ```text
 $ ergoc --help
 $ ergorun --help
+$ ergo --help
+$ ergo compile --help
+$ ergo execute --help
 ```
 
 ### Compile a contract
