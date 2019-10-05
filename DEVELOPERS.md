@@ -38,7 +38,7 @@ npm install -g lerna@2.11.0
 
 To contribute code to Ergo, you must have a GitHub account so you can push code to your own fork of Ergo and open Pull Requests in the \[GitHub Repository\]\[github\].
 
-To create a Github account, follow the instructions [here](https://github.com/signup/free). Afterwards, go ahead and [fork](http://help.github.com/forking) the [main Ergo repository](https://github.com/accordproject/ergo).
+To create a Github account, follow the instructions [here](https://github.com/signup/free). Afterwards, go ahead and [fork](http://help.github.com/forking) the [main Ergo repository](Github).
 
 ### Install development version
 
