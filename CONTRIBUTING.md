@@ -47,10 +47,10 @@ You can request a new feature by submitting an issue to our [GitHub Repository][
 
 If you would like to implement a new feature then consider what kind of change it is:
 
-* **Major Changes** that you wish to contribute to the project should be discussed first in an
+* **Major Changes** that you wish to contribute to the project should be discussed first in a
   [GitHub issue][github-issues] that clearly outlines the changes and benefits of the feature.
 * **Small Changes** can directly be crafted and submitted to the [GitHub Repository][github]
-  as a Pull Request. See the section about [Pull Request Submission Guidelines][contribute.submitpr], and
+  as a Pull Request. See the section about [Pull Request Submission Guidelines][contribute.submitpr] and
   for detailed information the [core development documentation][developers].
 
 ###  Want a Doc Fix?
@@ -98,7 +98,7 @@ Before you submit your pull request consider the following guidelines:
 * If the changes affect public APIs, change or add relevant [documentation][developers.documentation].
 * Run the [unit][developers.unit-tests] test suite, and ensure that all tests pass.
 
-* Commit your changes using a descriptive commit message that follows our [commit message conventions][developers.commits]. Adherence to the [commit message conventions][developers.commits] is required, because release notes are automatically generated from these messages.
+* Commit your changes using a descriptive commit message that follows our [commit message conventions][developers.commits]. Adherence to the [commit message conventions][developers.commits] is required because release notes are automatically generated from these messages.
 
   ```text
     git commit -a
@@ -178,8 +178,8 @@ After your pull request is merged, you can safely delete your branch and pull th
 
 Upon submitting a Pull Request, a friendly bot will ask you to sign our CLA if you haven't done so before. Unfortunately, this is necessary for documentation changes, too. It's a quick process, we promise!
 
-* For individuals we have a [simple click-through form][claindiv].
-* For corporations we'll need you to
+* For individuals, we have a [simple click-through form][claindiv].
+* For corporations, we'll need you to
 
   [print, sign and one of scan+email, fax or mail the form][clacorp].
 
