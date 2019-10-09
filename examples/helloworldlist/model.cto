@@ -50,6 +50,7 @@ asset TemplateModel extends AccordContract {
    */
   o String name
   o Item[] items
+  o Double[] prices
 }
 
 concept TextResponse {

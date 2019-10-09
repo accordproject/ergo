@@ -38,10 +38,12 @@
 	      "participant", PARTICIPANT;
 	      "enum", ENUM;
 	      "extends", EXTENDS;
-        (* Contracts *)
+        (* Magic variables *)
+	      "this", THIS;
 	      "contract", CONTRACT;
-	      "over", OVER;
 	      "clause", CLAUSE;
+        (* Contracts *)
+	      "over", OVER;
 	      "emits", EMITS;
 	      "state", STATE;
 	      "call", CALL;

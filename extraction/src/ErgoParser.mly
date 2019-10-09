@@ -161,8 +161,8 @@ let make_template_if prov name ve1 =
 
 %token NAMESPACE IMPORT DEFINE FUNCTION
 %token ABSTRACT TRANSACTION CONCEPT EVENT ASSET PARTICIPANT ENUM EXTENDS
-%token CONTRACT OVER CLAUSE
-%token EMITS
+%token THIS CONTRACT CLAUSE
+%token OVER EMITS
 
 %token ENFORCE IF THEN ELSE
 %token LET INFO FOREACH IN WHERE
@@ -529,6 +529,8 @@ expr:
     { ErgoCompiler.enew (mk_provenance $startpos $endpos) qn r }
 | LCURLY r = reclist RCURLY
     { ErgoCompiler.erecord (mk_provenance $startpos $endpos) r }
+| THIS
+    { ErgoCompiler.ethis_this (mk_provenance $startpos $endpos) }
 | CONTRACT
     { ErgoCompiler.ethis_contract (mk_provenance $startpos $endpos) }
 | CLAUSE
