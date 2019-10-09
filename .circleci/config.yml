@@ -48,7 +48,7 @@ common_steps: &common_steps
     - run:
         name: "Install Q*cert"
         command: |
-          opam install -y -v coq-qcert.1.4.0
+          opam install -y -v coq-qcert.1.4.1
         no_output_timeout: 30m
     - save_cache:
         <<: *common_cache_key
