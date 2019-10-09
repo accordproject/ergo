@@ -2,6 +2,7 @@
   "$class": "org.accordproject.helloworld.TemplateModel",
   "contractId": "111",
   "name": "Fred Blogs",
+  "prices": [100,2.4,34.99],
   "items" : [
     {
       "$class": "org.accordproject.helloworld.Item",
