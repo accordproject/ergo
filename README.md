@@ -37,6 +37,11 @@ out the interactive [REPL][REPL]
 (read-eval-print-loop) for Ergo stand-alone, or the [Accord Project Template Studio][studio] 
 which illustrates Ergo in Accord Project templates.
 
+![DeepinScreenshot_select-area_20191009192910](https://user-images.githubusercontent.com/42344931/66488526-afc9a800-eacb-11e9-89ad-6aa63c7042f5.png)
+
+### SCREENSHOT OF THE ACCORD PROJECT TEMPLATE STUDIO
+
+
 ## Documentation
 
 The most recent Ergo documentation is in the [Ergo Language Guide][docergo].
