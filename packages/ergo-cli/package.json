@@ -34,12 +34,11 @@
     "jsome": "2.5.0",
     "moment-mini": "2.22.1",
     "winston": "3.2.1",
-    "yargs": "9.0.1"
+    "yargs": "13.2.4"
   },
   "bin": {
-    "ergoc": "./bin/ergoc.js",
-    "ergorun": "./bin/ergorun.js",
-    "ergotop": "./bin/ergotop.js"
+    "ergo": "./index.js",
+    "ergotop": "./ergotop.js"
   },
   "devDependencies": {
     "chai": "4.2.0",
@@ -59,7 +58,8 @@
       "!./coverage/**/*",
       "!./node_modules/**/*",
       "!./out/**/*",
-      "!bin/*",
+      "!./index.js",
+      "!./ergotop.js",
       "!extracted/ergoccore.js",
       "!extracted/ergotopcore.js"
     ],

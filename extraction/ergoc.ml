@@ -26,15 +26,15 @@ let args_list gconf =
   Arg.align
     [
       ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
-       " Print version and exit");
+       " print version and exit");
       ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
-       "<lang> Target platform (default: es6) " ^ available_targets_message);
+       "<lang> target platform (default: es6) " ^ available_targets_message);
       ("--link", Arg.Unit (ErgoConfig.set_link gconf),
-       " Adds the Ergo runtime to the target code (es5,es6,cicero only)");
+       " link the Ergo runtime with the target code (es5,es6,cicero only)");
       ("--monitor", Arg.Set Util.monitoring,
-       " Produce compilation time information");
+       " produce compilation time information");
       ("--warnings", Arg.Unit (ErgoConfig.set_warnings gconf),
-       " Print warnings");
+       " print warnings");
     ]
 
 let usage =

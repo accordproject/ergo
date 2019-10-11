@@ -212,6 +212,9 @@ class Commands {
         const engine = new Engine();
         const logicManager = new LogicManager('es6',sourceTemplate);
         logicManager.addErgoBuiltin();
+        if (sourceTemplate) {
+            logicManager.addTemplateFile(sourceTemplate.content, sourceTemplate.name);
+        }
         if (!ergoPaths) { return Promise.reject('No input ergo found'); }
         for (let i = 0; i < ergoPaths.length; i++) {
             const ergoFile = ergoPaths[i];
