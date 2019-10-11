@@ -50,43 +50,62 @@ Once you have Node.js installed on your machine, you can get the Ergo compiler
 and command-line using the Node.js package manager by typing the following in a
 terminal:
 
-```text
+```sh
 $ npm install -g @accordproject/ergo-cli
 ```
 
-This will install the compiler itself (`ergoc`) and command-line tools (`ergorun` and `ergotop`) to create and invoke Ergo contracts. You can check that both have been installed and print the version number by typing the following in a terminal:
+This will install the Ergo command-line (`ergo`) and Read-Eval-Print-Loop (`ergotop`). Those will allow you to create, test and compile Ergo contracts. You can check your installed version by typing the following in a terminal:
 
-```text
-$ ergoc --version
-$ ergorun --version
+```sh
+$ ergo --version
 ```
 
-Then, to get command line help:
+Or to get command line help:
 
-```text
-$ ergoc --help
-$ ergorun --help
+```sh
+$ ergo --help
+ergo <command>
+
+Commands:
+  ergo draft       create a contract text from data
+  ergo request     send a request to the contract
+  ergo invoke      invoke a clause of the contract
+  ergo initialize  initialize the state for a contract
+  ergo compile     compile a contract
+
+Options:
+  --help         Show help                                             [boolean]
+  --version      Show version number                                   [boolean]
+  --verbose, -v                                                 [default: false]
 ```
 
 ### Compile a contract
 
 To compile your first Ergo contract to JavaScript:
 
-```text
-$ ergoc ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo
-15:17:08 - info: Logging initialized. 2018-05-24T19:17:08.024Z
+```sh
+$ ergo compile ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo
 Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples/volumediscount/logic.js
 ```
 
 By default, Ergo compiles to JavaScript for execution. You can inspect
 the compiled JavaScript code in `./examples/volumediscount/logic.js`
 
-### Invoke a contract
+### Initialize a contract
 
-To compile and execute a contract by sending a request:
+To obtain the initial state of the contract:
 
-```text
-$ ergorun execute ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contract ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+```sh
+$ ergo initialize ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --data ./examples/volumediscount/contract.json
+06:40:29 - info:
+```
+
+### Send a request
+
+To send a request to a contract:
+
+```sh
+$ ergo request ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --data ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 06:40:01 - info:
 {
   "response": {
@@ -101,17 +120,20 @@ $ ergorun execute ./examples/volumediscount/model.cto ./examples/volumediscount/
 }
 ```
 
-To compile and invoke a specific contract clause:
+### Invoke a clause
 
-```text
-$ ergorun invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --clauseName volumediscount --contract ./examples/volumediscount/contract.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
+To invoke a specific clause of the contract:
+
+```sh
+$ ergo invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --clauseName volumediscount --data ./examples/volumediscount/contract.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
 ```
 
-To compile and obtain the initial state for the contract:
+### Create contract text
 
-```text
-$ ergorun init ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --contract ./examples/volumediscount/contract.json
-06:40:29 - info:
+To create a contract text from a contract:
+
+```sh
+$ ergo draft ./examples/volumediscount/model.cto --template ./examples/volumediscount/grammar.tem --data ./examples/volumediscount/contract.json
 ```
 
 ---

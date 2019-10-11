@@ -15,7 +15,7 @@
 
 'use strict';
 
-const Commands = require('../lib/commands');
+const Commands = require('./lib/commands');
 const Logger = require('@accordproject/ergo-compiler').Logger;
 
 try {
@@ -28,7 +28,7 @@ try {
         }
     }
 
-    const ergotop = require('../extracted/ergotopcore.js').ergotop;
+    const ergotop = require('./extracted/ergotopcore.js').ergotop;
     const readline = require('readline');
     const chalk = require('chalk');
 
