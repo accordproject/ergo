@@ -26,7 +26,7 @@ Before you can build Ergo, you must install and configure the following dependen
 * [Git](http://git-scm.com/): The \[Github Guide to Installing Git\]\[git-setup\] is a good source of information.
 * [Node.js v8.x \(LTS\)](http://nodejs.org): We use Node to generate the documentation, run a development web server, run tests, and generate distributable files. Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 
-We recommend using [nvm](https://github.com/creationix/nvm) \(or [nvm-windows](https://github.com/coreybutler/nvm-windows)\) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
+We recommend using [nvm](https://github.com/creationix/nvm) (or [nvm-windows](https://github.com/coreybutler/nvm-windows)) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
 
 * [Lerna](https://lernajs.io): We use lerna to handle multiple npm packages in the Ergo repository. To install:
 
@@ -36,9 +36,9 @@ npm install -g lerna@2.11.0
 
 ### Forking Ergo on Github
 
-To contribute code to Ergo, you must have a GitHub account so you can push code to your own fork of Ergo and open Pull Requests in the \[GitHub Repository\]\[github\].
+To contribute code to Ergo, you must have a GitHub account so you can push code to your own fork of Ergo and open Pull Requests in the [GitHub Repository](github).
 
-To create a Github account, follow the instructions [here](https://github.com/signup/free). Afterwards, go ahead and [fork](http://help.github.com/forking) the [main Ergo repository](Github).
+To create a Github account, follow the instructions [here](https://github.com/signup/free). Afterwards, go ahead and [fork](http://help.github.com/forking) the [main Ergo repository](github).
 
 ### Install development version
 
