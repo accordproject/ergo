@@ -60,7 +60,48 @@ function getTemplate(input) {
  */
 class Commands {
     /**
-     * Execute an Ergo contract with a request
+     * Invoke generateText for an Ergo contract
+     *
+     * @param {string[]} ergoPaths paths to the Ergo modules
+     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} contractInput the contract data
+     * @param {string} currentTime the definition of 'now'
+     * @param {string} templateInput the template
+     * @param {object} options to the text generation
+     * @returns {object} Promise to the result of execution
+     */
+    static draft(ergoPaths,ctoPaths,contractInput,currentTime,templateInput, options) {
+        // Get the template if provided
+        const sourceTemplate = getTemplate(templateInput);
+        const engine = new Engine();
+        const logicManager = new LogicManager('es6',sourceTemplate);
+        logicManager.addErgoBuiltin();
+        if (sourceTemplate) {
+            logicManager.addTemplateFile(sourceTemplate.content, sourceTemplate.name);
+        }
+        if (!ergoPaths) { return Promise.reject('No input ergo found'); }
+        for (let i = 0; i < ergoPaths.length; i++) {
+            const ergoFile = ergoPaths[i];
+            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
+            logicManager.addLogicFile(ergoContent, ergoFile);
+        }
+        if (!ctoPaths) { ctoPaths = []; }
+        for (let i = 0; i < ctoPaths.length; i++) {
+            const ctoFile = ctoPaths[i];
+            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
+            logicManager.addModelFile(ctoContent, ctoFile);
+        }
+        const contractJson = getJson(contractInput);
+        const markdownOtions = {
+            '$class': 'org.accordproject.ergo.options.Options',
+            'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
+            'template': true,
+        };
+        return engine.compileAndGenerateText(logicManager,contractJson,{},currentTime,markdownOtions);
+    }
+
+    /**
+     * Send a request an Ergo contract
      *
      * @param {string[]} ergoPaths paths to the Ergo modules
      * @param {string[]} ctoPaths paths to CTO models
@@ -72,7 +113,7 @@ class Commands {
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static execute(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput,templateInput,warnings) {
+    static request(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput,templateInput,warnings) {
         try {
             // Get the template if provided
             const sourceTemplate = getTemplate(templateInput);
@@ -168,7 +209,7 @@ class Commands {
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static init(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput,templateInput,warnings) {
+    static initialize(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput,templateInput,warnings) {
         try {
             // Get the template if provided
             const sourceTemplate = getTemplate(templateInput);
@@ -193,47 +234,6 @@ class Commands {
         } catch (err) {
             return Promise.reject(err);
         }
-    }
-
-    /**
-     * Invoke generateText for an Ergo contract
-     *
-     * @param {string[]} ergoPaths paths to the Ergo modules
-     * @param {string[]} ctoPaths paths to CTO models
-     * @param {string} contractInput the contract data
-     * @param {string} currentTime the definition of 'now'
-     * @param {string} templateInput the template
-     * @param {object} options to the text generation
-     * @returns {object} Promise to the result of execution
-     */
-    static generateText(ergoPaths,ctoPaths,contractInput,currentTime,templateInput, options) {
-        // Get the template if provided
-        const sourceTemplate = getTemplate(templateInput);
-        const engine = new Engine();
-        const logicManager = new LogicManager('es6',sourceTemplate);
-        logicManager.addErgoBuiltin();
-        if (sourceTemplate) {
-            logicManager.addTemplateFile(sourceTemplate.content, sourceTemplate.name);
-        }
-        if (!ergoPaths) { return Promise.reject('No input ergo found'); }
-        for (let i = 0; i < ergoPaths.length; i++) {
-            const ergoFile = ergoPaths[i];
-            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            logicManager.addLogicFile(ergoContent, ergoFile);
-        }
-        if (!ctoPaths) { ctoPaths = []; }
-        for (let i = 0; i < ctoPaths.length; i++) {
-            const ctoFile = ctoPaths[i];
-            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            logicManager.addModelFile(ctoContent, ctoFile);
-        }
-        const contractJson = getJson(contractInput);
-        const markdownOtions = {
-            '$class': 'org.accordproject.ergo.options.Options',
-            'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
-            'template': true,
-        };
-        return engine.compileAndGenerateText(logicManager,contractJson,{},currentTime,markdownOtions);
     }
 
     /**

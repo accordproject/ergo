@@ -1,0 +1,5 @@
+{
+    "$class": "org.accordproject.helloworldstate.State",
+		"counter" : 0,
+    "lastInput" : ""
+}

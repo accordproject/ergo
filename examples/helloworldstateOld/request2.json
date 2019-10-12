@@ -1,0 +1,4 @@
+{
+    "$class": "org.accordproject.helloworldstate.MyRequest",
+    "input": "Linux Foundation"
+}
