@@ -1,0 +1,10 @@
+{
+  "$class": "org.accordproject.volumediscount.VolumeDiscountContract",
+  "parties": null,
+  "contractId": "cr1",
+  "firstVolume": 1,
+  "secondVolume": 10,
+  "firstRate": 3,
+  "secondRate": 2.9,
+  "thirdRate": 2.8
+}

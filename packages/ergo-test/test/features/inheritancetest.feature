@@ -2,8 +2,8 @@ Feature: Inheritance test
   This describe the expected behavior for Ergo compiler when handling requests which exploit inheritance.
 
   Background:
-    Given the Ergo contract "org.accordproject.inheritancetest.InheritanceTest" in file "examples/inheritancetest/logic.ergo"
-    And the model in file "examples/inheritancetest/model.cto"
+    Given the Ergo contract "org.accordproject.inheritancetest.InheritanceTest" in file "examples/inheritancetest/logic/logic.ergo"
+    And the model in file "examples/inheritancetest/model/model.cto"
     And the contract data
 """
 {

@@ -96,7 +96,7 @@ the compiled JavaScript code in `./examples/volumediscount/logic.js`
 To obtain the initial state of the contract:
 
 ```sh
-$ ergo initialize ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --data ./examples/volumediscount/contract.json
+$ ergo initialize ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo --data ./examples/volumediscount/data.json
 06:40:29 - info:
 ```
 
@@ -105,7 +105,7 @@ $ ergo initialize ./examples/volumediscount/model.cto ./examples/volumediscount/
 To send a request to a contract:
 
 ```sh
-$ ergo request ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --data ./examples/volumediscount/contract.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergo request ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 06:40:01 - info:
 {
   "response": {
@@ -125,7 +125,7 @@ $ ergo request ./examples/volumediscount/model.cto ./examples/volumediscount/log
 To invoke a specific clause of the contract:
 
 ```sh
-$ ergo invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo --clauseName volumediscount --data ./examples/volumediscount/contract.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
+$ ergo invoke ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo --clauseName volumediscount --data ./examples/volumediscount/data.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
 ```
 
 ### Create contract text
@@ -133,7 +133,7 @@ $ ergo invoke ./examples/volumediscount/model.cto ./examples/volumediscount/logi
 To create a contract text from a contract:
 
 ```sh
-$ ergo draft ./examples/volumediscount/model.cto --template ./examples/volumediscount/grammar.tem --data ./examples/volumediscount/contract.json
+$ ergo draft ./examples/volumediscount/model/model.cto ./examples/volumediscount/grammar/grammar.tem --data ./examples/volumediscount/data.json
 ```
 
 ---
