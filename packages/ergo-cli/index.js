@@ -51,34 +51,17 @@ require('yargs')
             default: false
         });
     }, (argv) => {
-        let ctoPaths = [];
-        let ergoPaths = [];
-        let templatePath = null;
-
-        const files = argv._;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (file.split('.').pop() === 'cto') {
-                //Logger.info('Found model: ' + file);
-                ctoPaths.push(file);
-            } else if (file.split('.').pop() === 'ergo') {
-                //Logger.info('Found logic: ' + file);
-                ergoPaths.push(file);
-            } else if (file.split('.').pop() === 'tem') {
-                //Logger.info('Found grammar: ' + file);
-                templatePath = { file: file };
-            }
-        }
+        let files = argv._;
 
         if (argv.verbose) {
-            Logger.info(`draft for Ergo ${ergoPaths} over data ${argv.data}`);
+            Logger.info(`create contract text from data ${argv.data}`);
         }
 
         const options = {
             wrapVariables: argv.wrapVariables,
         };
         // Draft
-        Commands.draft(ergoPaths, ctoPaths, { file: argv.data }, argv.currentTime, templatePath, options)
+        Commands.draft(argv.template, files, { file: argv.data }, argv.currentTime, options)
             .then((result) => {
                 Logger.info(result.response);
             })
@@ -105,42 +88,26 @@ require('yargs')
         yargs.option('request', {
             describe: 'path to the request data'
         }).array('request');
+        yargs.option('template', {
+            describe: 'path to the template directory',
+            type: 'string',
+            default: null
+        });
         yargs.option('warnings', {
             describe: 'print warnings',
             type: 'boolean',
             default: false
         });
     }, (argv) => {
-        let ctoPaths = [];
-        let ergoPaths = [];
-        let templatePath = null;
-
-        const files = argv._;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (file.split('.').pop() === 'cto') {
-                //Logger.info('Found model: ' + file);
-                ctoPaths.push(file);
-            } else if (file.split('.').pop() === 'ergo') {
-                //Logger.info('Found logic: ' + file);
-                ergoPaths.push(file);
-            } else if (file.split('.').pop() === 'tem') {
-                //Logger.info('Found grammar: ' + file);
-                templatePath = { file: file };
-            }
-        }
+        let files = argv._;
 
         if (argv.verbose) {
-            Logger.info(`send request ${argv.request} to logic ${ergoPaths} instantiated with contract data ${argv.data} with request, when in state ${argv.state}`);
+            Logger.info(`send request ${argv.request} for contract data ${argv.data}`);
         }
 
         // Run contract
-        Commands.request(
-            ergoPaths, ctoPaths, { file: argv.data },
-            argv.state ? { file: argv.state } : null,
-            argv.currentTime, argv.request.map(r => { return { file: r }; }),
-            templatePath,
-            argv.warnings)
+        Commands.request(argv.template, files, { file: argv.data }, argv.state ? { file: argv.state } : null,
+            argv.currentTime, argv.request.map(r => { return { file: r }; }), argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -182,31 +149,14 @@ require('yargs')
             default: false
         });
     }, (argv) => {
-        let ctoPaths = [];
-        let ergoPaths = [];
-        let templatePath = null;
-
-        const files = argv._;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (file.split('.').pop() === 'cto') {
-                //Logger.info('Found model: ' + file);
-                ctoPaths.push(file);
-            } else if (file.split('.').pop() === 'ergo') {
-                //Logger.info('Found logic: ' + file);
-                ergoPaths.push(file);
-            } else if (file.split('.').pop() === 'tem') {
-                //Logger.info('Found grammar: ' + file);
-                templatePath = { file: file };
-            }
-        }
+        let files = argv._;
 
         if (argv.verbose) {
-            Logger.info(`call Ergo ${ergoPaths} over data ${argv.data} with params ${argv.params}, state ${argv.state} and CTOs ${ctoPaths}`);
+            Logger.info(`invoke clause ${argv.clauseName} in contract`);
         }
 
         // Run contract
-        Commands.invoke(ergoPaths, ctoPaths, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, { file: argv.params }, templatePath, argv.warnings)
+        Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, { file: argv.params }, argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -230,37 +180,25 @@ require('yargs')
             type: 'string',
             default: null
         });
+        yargs.option('template', {
+            describe: 'path to the template directory',
+            type: 'string',
+            default: null
+        });
         yargs.option('warnings', {
             describe: 'print warnings',
             type: 'boolean',
             default: false
         });
     }, (argv) => {
-        let ctoPaths = [];
-        let ergoPaths = [];
-        let templatePath = null;
-
-        const files = argv._;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (file.split('.').pop() === 'cto') {
-                //Logger.info('Found model: ' + file);
-                ctoPaths.push(file);
-            } else if (file.split('.').pop() === 'ergo') {
-                //Logger.info('Found logic: ' + file);
-                ergoPaths.push(file);
-            } else if (file.split('.').pop() === 'tem') {
-                //Logger.info('Found grammar: ' + file);
-                templatePath = file;
-            }
-        }
+        let files = argv._;
 
         if (argv.verbose) {
-            Logger.info(`init Ergo ${ergoPaths} over data ${argv.data} with params ${argv.params} and CTOs ${ctoPaths}`);
+            Logger.info(`initialize contract state with data ${argv.data}`);
         }
 
         // Run contract
-        Commands.initialize(ergoPaths, ctoPaths, { file: argv.data }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' }, templatePath, argv.warnings)
+        Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })

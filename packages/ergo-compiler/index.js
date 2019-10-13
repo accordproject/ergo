@@ -27,4 +27,6 @@ module.exports.Logger = require('@accordproject/concerto-core').Logger;
 module.exports.ScriptManager = require('./lib/scriptmanager.js');
 module.exports.TypeException = require('./lib/typeexception.js');
 module.exports.Util = require('./lib/util.js');
+module.exports.FileLoader = require('./lib/fileloader.js');
+module.exports.ErgoLoader = require('./lib/ergoloader.js');
 module.exports.version = require('./package.json');

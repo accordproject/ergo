@@ -36,15 +36,14 @@ class LogicManager {
     /**
      * Create the LogicManager.
      * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
-     * @param {string} sourceTemplate - an optional template source
      * @param {Object} options  - e.g., { warnings: true }
      */
-    constructor(target, sourceTemplate, options) {
+    constructor(target, options) {
         ErgoCompiler.isValidTarget(target);
         this.target = target;
         this.contractName = null;
         this.modelManager = new APModelManager();
-        this.scriptManager = new ScriptManager(this.target, this.modelManager, sourceTemplate, options);
+        this.scriptManager = new ScriptManager(this.target, this.modelManager, options);
         this.introspector = new Introspector(this.modelManager);
         this.factory = new Factory(this.modelManager);
         this.serializer = new Serializer(this.factory, this.modelManager);
@@ -287,10 +286,10 @@ unwrapError(__result);
      * Add Ergo built-in models
      */
     addErgoBuiltin() {
-        this.addModelFile(Builtin.timeModel, 'org.accordproject.time');
-        this.addModelFile(Builtin.moneyModel, 'org.accordproject.money');
-        this.addModelFile(Builtin.contractModel, 'org.accordproject.cicero.contract');
-        this.addModelFile(Builtin.runtimeModel, 'org.accordproject.cicero.runtime');
+        this.addModelFile(Builtin.timeModel, '@org.accordproject.time.cto');
+        this.addModelFile(Builtin.moneyModel, '@org.accordproject.money.cto');
+        this.addModelFile(Builtin.contractModel, '@org.accordproject.cicero.contract.cto');
+        this.addModelFile(Builtin.runtimeModel, '@org.accordproject.cicero.runtime.cto');
         this.validateModelFiles();
     }
 
