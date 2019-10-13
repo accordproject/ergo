@@ -16,6 +16,7 @@
 
 const ErgoCompiler = require('../lib/compiler');
 const LogicManager = require('../lib/logicmanager');
+const ErgoLoader = require('../lib/ergoloader');
 
 const fs = require('fs');
 const chai = require('chai');
@@ -292,6 +293,108 @@ describe('LogicManager', () => {
             modelManager.addModelFile(ctoSample,null,true);
             modelManager.getModels().map(x => x.name).should.deep.equal(['org.accordproject.copyrightlicense.cto']);
             modelManager.getModels()[0].content.length.should.equal(175);
+        });
+    });
+
+    describe('#loader-dir', () => {
+        it('should load a directory with no grammar', async function () {
+            const logicManager = await ErgoLoader.fromDirectory('./test/examples/acceptance-of-delivery', {});
+            const modelManager = logicManager.getModelManager();
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.cicero.contract.cto',
+                '@org.accordproject.cicero.runtime.cto',
+                'model.cto'
+            ]);
+            modelManager.getModels()[0].content.length.should.equal(462);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(43395);
+        });
+
+        it('should load a directory with grammar', async function () {
+            const logicManager = await ErgoLoader.fromDirectory('./test/examples/helloworldcontract');
+            const modelManager = logicManager.getModelManager();
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.cicero.contract.cto',
+                '@org.accordproject.cicero.runtime.cto',
+                'model.cto'
+            ]);
+            modelManager.getModels()[0].content.length.should.equal(462);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(39680);
+        });
+    });
+
+    describe('#loader-zip', () => {
+        it('should load a Zip with no grammar', async function () {
+            const buffer = fs.readFileSync('./test/examples/acceptance-of-delivery.zip');
+            const logicManager = await ErgoLoader.fromZip(buffer, {});
+            const modelManager = logicManager.getModelManager();
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.cicero.contract.cto',
+                '@org.accordproject.cicero.runtime.cto',
+                'model.cto'
+            ]);
+            modelManager.getModels()[0].content.length.should.equal(462);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(43395);
+        });
+
+        it('should load a Zip with grammar', async function () {
+            const buffer = fs.readFileSync('./test/examples/helloworldcontract.zip');
+            const logicManager = await ErgoLoader.fromZip(buffer);
+            const modelManager = logicManager.getModelManager();
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.cicero.contract.cto',
+                '@org.accordproject.cicero.runtime.cto',
+                'model.cto'
+            ]);
+            modelManager.getModels()[0].content.length.should.equal(462);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(39680);
+        });
+    });
+
+
+    describe('#loader-files', () => {
+        it('should load files with no grammar', async function () {
+            const files = [
+                './test/examples/acceptance-of-delivery/model/model.cto',
+                './test/examples/acceptance-of-delivery/logic/logic.ergo',
+            ];
+            const logicManager = await ErgoLoader.fromFiles(files, {});
+            const modelManager = logicManager.getModelManager();
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.cicero.contract.cto',
+                '@org.accordproject.cicero.runtime.cto',
+                'model.cto'
+            ]);
+            modelManager.getModels()[0].content.length.should.equal(462);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(43395);
+        });
+
+        it('should load a Zip with grammar', async function () {
+            const files = [
+                './test/examples/helloworldcontract/model/model.cto',
+                './test/examples/helloworldcontract/logic/logic.ergo',
+                './test/examples/helloworldcontract/grammar/template.tem',
+            ];
+            const logicManager = await ErgoLoader.fromFiles(files);
+            const modelManager = logicManager.getModelManager();
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.cicero.contract.cto',
+                '@org.accordproject.cicero.runtime.cto',
+                'model.cto'
+            ]);
+            modelManager.getModels()[0].content.length.should.equal(462);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(39680);
         });
     });
 

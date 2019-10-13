@@ -33,7 +33,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const requestPath = { file: Path.join('test/examples/helloworld', 'request.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            const result = await Commands.request([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+            const result = await Commands.request(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
         });
         it('should throw when executing a request to a smart Ergo contract with an illegal model', async function () {
@@ -42,21 +42,21 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const requestPath = { file: Path.join('test/examples/helloworld', 'request.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.request([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/helloworld/model/modelErr.cto line 15 column 1');
+            return Commands.request(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/helloworld/model/modelErr.cto line 15 column 1');
         });
         it('should throw when executing a request to a smart Ergo contract without its cto', async function () {
             const ergoPath = Path.join('test/examples/helloworld', 'logic/logic.ergo');
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const requestPath = { file: Path.join('test/examples/helloworld', 'request.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.request([ergoPath], undefined, contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic/logic.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+            return Commands.request(null, [ergoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic/logic.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/helloworld', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const requestPath = { file: Path.join('test/examples/helloworld', 'request.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.request(undefined, [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('No input ergo found');
+            return Commands.request(null, [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('No input ergo found');
         });
     });
     describe('#executehellostate', function () {
@@ -66,7 +66,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworldstate', 'data.json') };
             const requestPath = { file: Path.join('test/examples/helloworldstate', 'request1.json') };
             const statePath = { file: Path.join('test/examples/helloworldstate', 'state1.json') };
-            const result = await Commands.request([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+            const result = await Commands.request(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
             result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1.0)');
         });
         it('should execute a smart Ergo contract with state thrice', async function () {
@@ -76,7 +76,7 @@ describe('ergo', () => {
             const requestPath = { file: Path.join('test/examples/helloworldstate', 'request1.json') };
             const requestPath2 = { file: Path.join('test/examples/helloworldstate', 'request2.json') };
             const statePath = { file: Path.join('test/examples/helloworldstate', 'state1.json') };
-            const result = await Commands.request([ergoPath], [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath,requestPath2,requestPath2]);
+            const result = await Commands.request(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath,requestPath2,requestPath2]);
             result.response.output.should.equal('Hello Fred Blogs (Linux Foundation) (3.0)');
         });
     });
@@ -85,7 +85,7 @@ describe('ergo', () => {
             const ergoPath = Path.join('test/examples/installment-sale', 'logic/logic.ergo');
             const ctoPath = Path.join('test/examples/installment-sale', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/installment-sale', 'data.json') };
-            const result = await Commands.request([ergoPath], [ctoPath], contractPath, null, '1970-01-01T00:00:00Z', []);
+            const result = await Commands.request(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', []);
             result.state.balance_remaining.should.equal(10000.00);
         });
         it('should initialize a smart Ergo contract and execute one request', async function () {
@@ -93,7 +93,7 @@ describe('ergo', () => {
             const ctoPath = Path.join('test/examples/installment-sale', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/installment-sale', 'data.json') };
             const requestPath = { file: Path.join('test/examples/installment-sale', 'request.json') };
-            const result = await Commands.request([ergoPath], [ctoPath], contractPath, null, '1970-01-01T00:00:00Z', [requestPath]);
+            const result = await Commands.request(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', [requestPath]);
             result.state.balance_remaining.should.equal(7612.499999999999);
         });
     });
@@ -105,7 +105,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/promissory-note', 'data.json')};
             const requestPath = { file: Path.join('test/examples/promissory-note', 'request.json') };
             const statePath = { file: Path.join('test/examples/promissory-note', 'state.json') };
-            const result = await Commands.request([ergoPath], [ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+            const result = await Commands.request(null, [ergoPath, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
             result.response.outstandingBalance.should.equal(1425.4396822450633);
         });
     });
@@ -118,7 +118,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/promissory-note', 'data.json')};
             const requestPath = { file: Path.join('test/examples/promissory-note', 'request.json') };
             const statePath = { file: Path.join('test/examples/promissory-note', 'state.json') };
-            const result = await Commands.request([ergoPath1, ergoPath2], [ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+            const result = await Commands.request(null, [ergoPath1, ergoPath2, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
             result.response.outstandingBalance.should.equal(1425.4396822450633);
         });
     });
@@ -129,7 +129,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/acceptance-of-delivery', 'data.json') };
             const requestPath = { file: Path.join('test/examples/acceptance-of-delivery', 'request.json') };
             const statePath = { file: Path.join('test/examples/acceptance-of-delivery', 'state.json') };
-            const result = await Commands.request([ergoPath], [ctoPath], contractPath, statePath, '2019-01-20T16:34:00-05:00', [requestPath]);
+            const result = await Commands.request(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-20T16:34:00-05:00', [requestPath]);
             result.response.status.should.equal('OUTSIDE_INSPECTION_PERIOD');
         });
         it('should execute a smart Ergo contract', async function () {
@@ -138,7 +138,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/acceptance-of-delivery', 'data.json') };
             const requestPath = { file: Path.join('test/examples/acceptance-of-delivery', 'request.json') };
             const statePath = { file: Path.join('test/examples/acceptance-of-delivery', 'state.json') };
-            const result = await Commands.request([ergoPath], [ctoPath], contractPath, statePath, '2019-01-11T16:34:00-05:00', [requestPath]);
+            const result = await Commands.request(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-11T16:34:00-05:00', [requestPath]);
             result.response.status.should.equal('PASSED_TESTING');
         });
     });
@@ -149,7 +149,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/helloworld', 'params.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            const result = await Commands.invoke([ergoPath], [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null);
+            const result = await Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null);
             result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
         });
         it('should throw when invoking a clause in a smart Ergo contract with an illegal model', async function () {
@@ -158,7 +158,7 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/helloworld', 'params.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.invoke([ergoPath], [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/helloworld/model/modelErr.cto line 15 column 1');
+            return Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/helloworld/model/modelErr.cto line 15 column 1');
         });
         it('should invoke a clause in a smart Ergo contract (JSON parameters)', async function () {
             const ergoPath = Path.join('test/examples/helloworld', 'logic/logic4.ergo');
@@ -174,7 +174,7 @@ describe('ergo', () => {
                 }`
             };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            const result = await Commands.invoke([ergoPath], [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsJson, null);
+            const result = await Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsJson, null);
             result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
         });
         it('should throw when smart Ergo clause without a cto', async function () {
@@ -182,14 +182,14 @@ describe('ergo', () => {
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/helloworld', 'params.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.invoke([ergoPath], undefined, 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic/logic4.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+            return Commands.invoke(null, [ergoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/helloworld/logic/logic4.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/helloworld', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/helloworld', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/helloworld', 'params.json') };
             const statePath = { file: Path.join('test/examples/helloworld', 'state.json') };
-            return Commands.invoke(undefined, [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null).should.be.rejectedWith('No input ergo found');
+            return Commands.invoke(null, [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null).should.be.rejectedWith('No input ergo found');
         });
     });
     describe('#generatetext', function () {
@@ -198,7 +198,7 @@ describe('ergo', () => {
             const ergoPath2 = Path.join('test/examples/interests', 'logic/interests.ergo');
             const ctoPath = Path.join('test/examples/interests', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/interests', 'data.json') };
-            const result = await Commands.draft([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, null);
+            const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath], contractPath, '1970-01-01T00:00:00Z', null);
             result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
         });
         it('should generate text for a smart Ergo contract (wrap variable)', async function () {
@@ -206,28 +206,28 @@ describe('ergo', () => {
             const ergoPath2 = Path.join('test/examples/interests', 'logic/interests.ergo');
             const ctoPath = Path.join('test/examples/interests', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/interests', 'data.json') };
-            const result = await Commands.draft([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, { wrapVariables: true });
+            const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
             result.response.should.equal('\nThis is a fixed interest loan to the amount of <variable id="loanAmount" value="100000.0"/>\nat the yearly interest rate of <variable id="rate" value="2.5"/>%\nwith a loan term of <variable id="loanDuration" value="15"/>,\nand monthly payments of <computed value="667.0"/>\n');
         });
         it('should generate text for a late delivery and penalty contract (wrap variable)', async function () {
-            const templatePath = { file: Path.join('test/examples/latedeliveryandpenalty', 'grammar/template.tem') };
+            const templatePath = Path.join('test/examples/latedeliveryandpenalty', 'grammar/template.tem');
             const ergoPath = Path.join('test/examples/latedeliveryandpenalty', 'logic/logic.ergo');
             const ctoPath = Path.join('test/examples/latedeliveryandpenalty', 'model/model.cto');
             const ctoPath2 = Path.join('test/examples/latedeliveryandpenalty', 'model/test.cto');
             const contractPath = { file: Path.join('test/examples/latedeliveryandpenalty', 'data.json') };
-            const result = await Commands.draft([ergoPath], [ctoPath2,ctoPath], contractPath, '1970-01-01T00:00:00Z', templatePath, { wrapVariables: true });
+            const result = await Commands.draft(null, [ergoPath, templatePath, ctoPath2, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
             result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<variable id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases,"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
         });
         it('should throw when smart Ergo clause without a cto', async function () {
             const ergoPath = Path.join('test/examples/interests', 'logic/logic.ergo');
             const ergoPath2 = Path.join('test/examples/interests', 'logic/interests.ergo');
             const contractPath = { file: Path.join('test/examples/interests', 'data.json') };
-            return Commands.draft([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interests/logic/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
+            return Commands.draft(null, [ergoPath, ergoPath2], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('Compilation error (at file test/examples/interests/logic/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/interests', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/interests', 'data.json') };
-            return Commands.draft(undefined, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('No input ergo found');
+            return Commands.draft(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('No input ergo found');
         });
     });
     describe('#generatetextwithinterestsvar', function () {
@@ -236,43 +236,27 @@ describe('ergo', () => {
             const ergoPath2 = Path.join('test/examples/interestsvar', 'logic/interests.ergo');
             const ctoPath = Path.join('test/examples/interestsvar', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'data.json') };
-            const result = await Commands.draft([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, null);
+            const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath], contractPath, '1970-01-01T00:00:00Z', null);
             result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
         });
         it('should throw when smart Ergo clause without a cto', async function () {
             const ergoPath = Path.join('test/examples/interestsvar', 'logic/logic.ergo');
             const ergoPath2 = Path.join('test/examples/interestsvar', 'logic/interests.ergo');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'data.json') };
-            return Commands.draft([ergoPath,ergoPath2], undefined, contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('Compilation error (at file test/examples/interestsvar/logic/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
+            return Commands.draft(null, [ergoPath, ergoPath2], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('Compilation error (at file test/examples/interestsvar/logic/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/interestsvar', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/interestsvar', 'data.json') };
-            return Commands.draft(undefined, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, null).should.be.rejectedWith('No input ergo found');
+            return Commands.draft(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('No input ergo found');
         });
         it('should initialize a smart Ergo contract state', async function () {
-            const templatePath = { file: Path.join('test/examples/interestsvar2', 'grammar/logic2.tem') };
+            const templatePath = Path.join('test/examples/interestsvar2', 'grammar/template.tem');
             const ergoPath = Path.join('test/examples/interestsvar2', 'logic/logic2.ergo');
             const ergoPath2 = Path.join('test/examples/interestsvar2', 'logic/interests.ergo');
             const ctoPath = Path.join('test/examples/interestsvar2', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/interestsvar2', 'data.json') };
-            const result = await Commands.draft([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', templatePath, null);
-            result.response.should.equal('This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
-        });
-        it('should initialize a smart Ergo contract state (template content)', async function () {
-            const templateContent = {
-                name: 'foo.tem',
-                content: `This is a fixed interest loan to the amount of {{loanAmount}}
-at the yearly interest rate of {{rate}}%
-with a loan term of {{loanDuration}},
-and monthly payments of {{% monthlyPaymentFormula(contract.loanAmount,contract.rate,contract.loanDuration) %}}
-`
-            };
-            const ergoPath = Path.join('test/examples/interestsvar2', 'logic/logic2.ergo');
-            const ergoPath2 = Path.join('test/examples/interestsvar2', 'logic/interests.ergo');
-            const ctoPath = Path.join('test/examples/interestsvar2', 'model/model.cto');
-            const contractPath = { file: Path.join('test/examples/interestsvar2', 'data.json') };
-            const result = await Commands.draft([ergoPath,ergoPath2], [ctoPath], contractPath, '1970-01-01T00:00:00Z', templateContent, null);
+            const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath, templatePath], contractPath, '1970-01-01T00:00:00Z', null);
             result.response.should.equal('This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
         });
     });
@@ -282,7 +266,7 @@ and monthly payments of {{% monthlyPaymentFormula(contract.loanAmount,contract.r
             const ctoPath = Path.join('test/examples/installment-sale', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/installment-sale', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/installment-sale', 'params.json') };
-            const result = await Commands.initialize([ergoPath], [ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath);
+            const result = await Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath);
             result.state.balance_remaining.should.equal(10000.00);
         });
         it('should throw when initializing a smart Ergo contract with an illegal model', async function () {
@@ -290,19 +274,19 @@ and monthly payments of {{% monthlyPaymentFormula(contract.loanAmount,contract.r
             const ctoPath = Path.join('test/examples/installment-sale', 'model/modelErr.cto');
             const contractPath = { file: Path.join('test/examples/installment-sale', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/installment-sale', 'params.json') };
-            return Commands.initialize([ergoPath], [ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/installment-sale/model/modelErr.cto line 15 column 1');
+            return Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/installment-sale/model/modelErr.cto line 15 column 1');
         });
         it('should throw when initializing a smart Ergo clause without a cto', async function () {
             const ergoPath = Path.join('test/examples/installment-sale', 'logic/logic.ergo');
             const contractPath = { file: Path.join('test/examples/installment-sale', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/installment-sale', 'params.json') };
-            return Commands.initialize([ergoPath], undefined, contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/installment-sale/logic/logic.ergo line 19 col 30). Cannot find type with name \'TemplateModel\'\ncontract InstallmentSale over TemplateModel state InstallmentSaleState {\n                              ^^^^^^^^^^^^^                             ');
+            return Commands.initialize(null, [ergoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/installment-sale/logic/logic.ergo line 19 col 30). Cannot find type with name \'TemplateModel\'\ncontract InstallmentSale over TemplateModel state InstallmentSaleState {\n                              ^^^^^^^^^^^^^                             ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/installment-sale', 'model/model.cto');
             const contractPath = { file: Path.join('test/examples/installment-sale', 'data.json') };
             const paramsPath = { file: Path.join('test/examples/installment-sale', 'params.json') };
-            return Commands.initialize(undefined, [ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('No input ergo found');
+            return Commands.initialize(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('No input ergo found');
         });
     });
     describe('#parsectotofile', function () {

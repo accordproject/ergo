@@ -109,6 +109,7 @@
       ".aux",
       ".v.d",
       ".ctoj",
+      ".zip",
       ".depends",
       ".annot",
       ".byte",

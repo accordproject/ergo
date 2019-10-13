@@ -79,24 +79,20 @@ Options:
   --verbose, -v                                                 [default: false]
 ```
 
-### Compile a contract
+### Create contract text
 
-To compile your first Ergo contract to JavaScript:
+To create a contract text from a contract:
 
 ```sh
-$ ergo compile ./examples/volumediscount/model.cto ./examples/volumediscount/logic.ergo
-Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples/volumediscount/logic.js
+$ ergo draft --template ./examples/volumediscount --data ./examples/volumediscount/data.json
 ```
-
-By default, Ergo compiles to JavaScript for execution. You can inspect
-the compiled JavaScript code in `./examples/volumediscount/logic.js`
 
 ### Initialize a contract
 
 To obtain the initial state of the contract:
 
 ```sh
-$ ergo initialize ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo --data ./examples/volumediscount/data.json
+$ ergo initialize --template ./examples/volumediscount --data ./examples/volumediscount/data.json
 06:40:29 - info:
 ```
 
@@ -105,12 +101,19 @@ $ ergo initialize ./examples/volumediscount/model/model.cto ./examples/volumedis
 To send a request to a contract:
 
 ```sh
-$ ergo request ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergo  request --template ./examples/volumediscount --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 06:40:01 - info:
 {
+  "clause": "orgXaccordprojectXvolumediscountXVolumeDiscount",
+  "request": {
+    "$class": "org.accordproject.volumediscount.VolumeDiscountRequest",
+    "netAnnualChargeVolume": 10.4
+  },
   "response": {
+    "$class": "org.accordproject.volumediscount.VolumeDiscountResponse",
     "discountRate": 2.8,
-    "$class": "org.accordproject.volumediscount.VolumeDiscountResponse"
+    "transactionId": "13fa7cb6-03fc-4fd8-8e12-9a85ac8d5eb7",
+    "timestamp": "2019-10-12T23:56:33.688Z"
   },
   "state": {
     "$class": "org.accordproject.cicero.contract.AccordContractState",
@@ -125,16 +128,20 @@ $ ergo request ./examples/volumediscount/model/model.cto ./examples/volumediscou
 To invoke a specific clause of the contract:
 
 ```sh
-$ ergo invoke ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo --clauseName volumediscount --data ./examples/volumediscount/data.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
+$ ergo invoke --template ./examples/volumediscount --clauseName volumediscount --data ./examples/volumediscount/data.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
 ```
 
-### Create contract text
+### Compile a contract
 
-To create a contract text from a contract:
+To compile your first Ergo contract to JavaScript:
 
 ```sh
-$ ergo draft ./examples/volumediscount/model/model.cto ./examples/volumediscount/grammar/grammar.tem --data ./examples/volumediscount/data.json
+$ ergo compile ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo
+Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples/volumediscount/logic.js
 ```
+
+By default, Ergo compiles to JavaScript for execution. You can inspect
+the compiled JavaScript code in `./examples/volumediscount/logic.js`
 
 ---
 

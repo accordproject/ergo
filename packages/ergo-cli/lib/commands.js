@@ -15,8 +15,8 @@
 'use strict';
 
 const Fs = require('fs');
+const ErgoLoader = require('@accordproject/ergo-compiler').ErgoLoader;
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
-const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 const Engine = require('@accordproject/ergo-engine').VMEngine;
 
 /**
@@ -36,22 +36,23 @@ function getJson(input) {
 }
 
 /**
- * Load a file or JSON string
+ * Load a template from directory or files
  *
- * @param {object} input either a file name or a json string
- * @return {string} content of file
+ * @param {string} template - template directory
+ * @param {string[]} files - input files
+ * @return {Promise<LogicManager>} a Promise to the instantiated logicmanager
  */
-function getTemplate(input) {
-    if (!input) {
-        return null;
+async function loadTemplate(template, files) {
+    let logicManager = null;
+    if (template) {
+        logicManager = await ErgoLoader.fromDirectory(template);
     } else {
-        if (input.file) {
-            const content = Fs.readFileSync(input.file, 'utf8');
-            return { content: content, name: input.file };
-        } else {
-            return input;
-        }
+        logicManager = await ErgoLoader.fromFiles(files);
     }
+    if (logicManager.getScriptManager().getLogic().length === 0) {
+        throw new Error('No input ergo found');
+    }
+    return logicManager;
 }
 
 /**
@@ -62,81 +63,46 @@ class Commands {
     /**
      * Invoke generateText for an Ergo contract
      *
-     * @param {string[]} ergoPaths paths to the Ergo modules
-     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} template - template directory
+     * @param {string[]} files - input files
      * @param {string} contractInput the contract data
      * @param {string} currentTime the definition of 'now'
-     * @param {string} templateInput the template
      * @param {object} options to the text generation
      * @returns {object} Promise to the result of execution
      */
-    static draft(ergoPaths,ctoPaths,contractInput,currentTime,templateInput, options) {
-        // Get the template if provided
-        const sourceTemplate = getTemplate(templateInput);
-        const engine = new Engine();
-        const logicManager = new LogicManager('es6',sourceTemplate);
-        logicManager.addErgoBuiltin();
-        if (sourceTemplate) {
-            logicManager.addTemplateFile(sourceTemplate.content, sourceTemplate.name);
-        }
-        if (!ergoPaths) { return Promise.reject('No input ergo found'); }
-        for (let i = 0; i < ergoPaths.length; i++) {
-            const ergoFile = ergoPaths[i];
-            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            logicManager.addLogicFile(ergoContent, ergoFile);
-        }
-        if (!ctoPaths) { ctoPaths = []; }
-        for (let i = 0; i < ctoPaths.length; i++) {
-            const ctoFile = ctoPaths[i];
-            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            logicManager.addModelFile(ctoContent, ctoFile);
-        }
+    static async draft(template,files,contractInput,currentTime,options) {
+        const logicManager = await loadTemplate(template,files);
         const contractJson = getJson(contractInput);
         const markdownOtions = {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
             'template': true,
         };
+        const engine = new Engine();
         return engine.compileAndGenerateText(logicManager,contractJson,{},currentTime,markdownOtions);
     }
 
     /**
      * Send a request an Ergo contract
      *
-     * @param {string[]} ergoPaths paths to the Ergo modules
-     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} template - template directory
+     * @param {string[]} files - input files
      * @param {string} contractInput the contract data
      * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
      * @param {string[]} requestsInput the requests
-     * @param {string} templateInput the template
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static request(ergoPaths,ctoPaths,contractInput,stateInput,currentTime,requestsInput,templateInput,warnings) {
+    static async request(template,files,contractInput,stateInput,currentTime,requestsInput,warnings) {
         try {
-            // Get the template if provided
-            const sourceTemplate = getTemplate(templateInput);
-            const engine = new Engine();
-            const logicManager = new LogicManager('es6', sourceTemplate, { warnings });
-            logicManager.addErgoBuiltin();
-            if (!ergoPaths) { return Promise.reject('No input ergo found'); }
-            for (let i = 0; i < ergoPaths.length; i++) {
-                const ergoFile = ergoPaths[i];
-                const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                logicManager.addLogicFile(ergoContent, ergoFile);
-            }
-            if (!ctoPaths) { ctoPaths = []; }
-            for (let i = 0; i < ctoPaths.length; i++) {
-                const ctoFile = ctoPaths[i];
-                const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                logicManager.addModelFile(ctoContent, ctoFile);
-            }
+            const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);
             let requestsJson = [];
             for (let i = 0; i < requestsInput.length; i++) {
                 requestsJson.push(getJson(requestsInput[i]));
             }
+            const engine = new Engine();
             let initResponse;
             if (stateInput === null) {
                 initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, null);
@@ -158,39 +124,23 @@ class Commands {
     /**
      * Invoke an Ergo contract's clause
      *
-     * @param {string[]} ergoPaths paths to the Ergo modules
-     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} template - template directory
+     * @param {string[]} files - input files
      * @param {string} clauseName the name of the clause to invoke
      * @param {string} contractInput the contract data
      * @param {string} stateInput the contract state
      * @param {string} currentTime the definition of 'now'
      * @param {object} paramsInput the parameters for the clause
-     * @param {string} templateInput the template
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of invocation
      */
-    static invoke(ergoPaths,ctoPaths,clauseName,contractInput,stateInput,currentTime,paramsInput,templateInput,warnings) {
+    static async invoke(template,files,clauseName,contractInput,stateInput,currentTime,paramsInput,warnings) {
         try {
-        // Get the template if provided
-            const sourceTemplate = getTemplate(templateInput);
-            const engine = new Engine();
-            const logicManager = new LogicManager('es6', sourceTemplate, { warnings });
-            logicManager.addErgoBuiltin();
-            if (!ergoPaths) { return Promise.reject('No input ergo found'); }
-            for (let i = 0; i < ergoPaths.length; i++) {
-                const ergoFile = ergoPaths[i];
-                const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                logicManager.addLogicFile(ergoContent, ergoFile);
-            }
-            if (!ctoPaths) { ctoPaths = []; }
-            for (let i = 0; i < ctoPaths.length; i++) {
-                const ctoFile = ctoPaths[i];
-                const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                logicManager.addModelFile(ctoContent, ctoFile);
-            }
+            const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
             const stateJson = getJson(stateInput);
+            const engine = new Engine();
             return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime, null);
         } catch (err) {
             return Promise.reject(err);
@@ -200,36 +150,20 @@ class Commands {
     /**
      * Invoke init for an Ergo contract
      *
-     * @param {string[]} ergoPaths paths to the Ergo modules
-     * @param {string[]} ctoPaths paths to CTO models
+     * @param {string} template - template directory
+     * @param {string[]} files - input files
      * @param {string} contractInput the contract data
      * @param {string} currentTime the definition of 'now'
      * @param {object} paramsInput the parameters for the clause
-     * @param {string} templateInput the template
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static initialize(ergoPaths,ctoPaths,contractInput,currentTime,paramsInput,templateInput,warnings) {
+    static async initialize(template,files,contractInput,currentTime,paramsInput,warnings) {
         try {
-            // Get the template if provided
-            const sourceTemplate = getTemplate(templateInput);
-            const engine = new Engine();
-            const logicManager = new LogicManager('es6', sourceTemplate, { warnings });
-            logicManager.addErgoBuiltin();
-            if (!ergoPaths) { return Promise.reject('No input ergo found'); }
-            for (let i = 0; i < ergoPaths.length; i++) {
-                const ergoFile = ergoPaths[i];
-                const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-                logicManager.addLogicFile(ergoContent, ergoFile);
-            }
-            if (!ctoPaths) { ctoPaths = []; }
-            for (let i = 0; i < ctoPaths.length; i++) {
-                const ctoFile = ctoPaths[i];
-                const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                logicManager.addModelFile(ctoContent, ctoFile);
-            }
+            const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
+            const engine = new Engine();
             return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime, null);
         } catch (err) {
             return Promise.reject(err);

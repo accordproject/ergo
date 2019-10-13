@@ -35,6 +35,8 @@ describe('Module', () => {
             index.ScriptManager.should.not.be.null;
             index.TypeException.should.not.be.null;
             index.Util.should.not.be.null;
+            index.FileLoader.should.not.be.null;
+            index.ErgoLoader.should.not.be.null;
             index.version.should.not.be.null;
         });
     });

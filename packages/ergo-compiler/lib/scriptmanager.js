@@ -39,16 +39,15 @@ class ScriptManager {
      * </p>
      * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
      * @param {ModelManager} modelManager - The ModelManager to use for this ScriptManager
-     * @param {string} sourceTemplate - an optional template source
      * @param {Object} options  - e.g., { warnings: true }
      */
-    constructor(target, modelManager, sourceTemplate, options) {
+    constructor(target, modelManager, options) {
         this.target = target;
         this.modelManager = modelManager;
         this.scripts = {};
         this.compiledScript = null;
         this.warnings = options && options.warnings || false;
-        this.sourceTemplate = sourceTemplate;
+        this.sourceTemplate = null;
     }
 
     /**
