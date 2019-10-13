@@ -28,7 +28,7 @@ Before you can build Ergo, you must install and configure the following dependen
  
 We recommend using [nvm](https://github.com/creationix/nvm) (or [nvm-windows](https://github.com/coreybutler/nvm-windows)) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
  
-* [Lerna](https://lernajs.io): We use lerna to handle multiple npm packages in the Ergo repository. To install:
+* [Lerna](https://lerna.js.org): We use lerna to handle multiple npm packages in the Ergo repository. To install:
  
 ```
 npm install -g lerna@2.11.0
