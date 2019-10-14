@@ -11,11 +11,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 namespace org.accordproject.helloworld
 
-contract HelloWorld over TemplateModel {
-  // Simple Clause
-  clause helloworld(request : Request) : Response {
-    return Response{ output: `Hello {{% contract.name %}} ({{% request.input %}})` }
-  }
+transaction Request {
+  o String input
+}
+
+transaction Response {
+  o String output
+}
+
+/**
+ * The template model
+ */
+@AccordTemplateModel("helloworld")
+concept TemplateModel {
+  /**
+   * The name for the clause
+   */
+  o String name
+}
+
+concept TextResponse {
+  o String text
 }
