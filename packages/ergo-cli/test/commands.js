@@ -210,7 +210,7 @@ describe('ergo', () => {
             result.response.should.equal('\nThis is a fixed interest loan to the amount of <variable id="loanAmount" value="100000.0"/>\nat the yearly interest rate of <variable id="rate" value="2.5"/>%\nwith a loan term of <variable id="loanDuration" value="15"/>,\nand monthly payments of <computed value="667.0"/>\n');
         });
         it('should generate text for a late delivery and penalty contract (wrap variable)', async function () {
-            const templatePath = Path.join('test/examples/latedeliveryandpenalty', 'grammar/template.tem');
+            const templatePath = Path.join('test/examples/latedeliveryandpenalty', 'grammar/template.tem.md');
             const ergoPath = Path.join('test/examples/latedeliveryandpenalty', 'logic/logic.ergo');
             const ctoPath = Path.join('test/examples/latedeliveryandpenalty', 'model/model.cto');
             const ctoPath2 = Path.join('test/examples/latedeliveryandpenalty', 'model/test.cto');
@@ -251,7 +251,7 @@ describe('ergo', () => {
             return Commands.draft(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('No input ergo found');
         });
         it('should initialize a smart Ergo contract state', async function () {
-            const templatePath = Path.join('test/examples/interestsvar2', 'grammar/template.tem');
+            const templatePath = Path.join('test/examples/interestsvar2', 'grammar/template.tem.md');
             const ergoPath = Path.join('test/examples/interestsvar2', 'logic/logic2.ergo');
             const ergoPath2 = Path.join('test/examples/interestsvar2', 'logic/interests.ergo');
             const ctoPath = Path.join('test/examples/interestsvar2', 'model/model.cto');
