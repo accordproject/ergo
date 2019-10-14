@@ -209,8 +209,8 @@
   },
   {
     "name": "helloworld (with call)",
-    "dir": "examples/helloworld4",
-    "ergo": ["logic/logic4.ergo"],
+    "dir": "examples/helloworld3",
+    "ergo": ["logic/logic3.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
     "params": {
