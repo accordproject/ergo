@@ -94,7 +94,7 @@ class Commands {
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static async request(template,files,contractInput,stateInput,currentTime,requestsInput,warnings) {
+    static async execute(template,files,contractInput,stateInput,currentTime,requestsInput,warnings) {
         try {
             const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);

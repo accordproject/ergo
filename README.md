@@ -68,7 +68,7 @@ ergo <command>
 
 Commands:
   ergo draft       create a contract text from data
-  ergo request     send a request to the contract
+  ergo execute     send a request to the contract
   ergo invoke      invoke a clause of the contract
   ergo initialize  initialize the state for a contract
   ergo compile     compile a contract
@@ -96,12 +96,12 @@ $ ergo initialize --template ./examples/volumediscount --data ./examples/volumed
 06:40:29 - info:
 ```
 
-### Send a request
+### Send a request to a contract
 
 To send a request to a contract:
 
 ```sh
-$ ergo  request --template ./examples/volumediscount --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergo execute --template ./examples/volumediscount --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 06:40:01 - info:
 {
   "clause": "orgXaccordprojectXvolumediscountXVolumeDiscount",

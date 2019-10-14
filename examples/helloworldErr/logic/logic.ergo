@@ -14,13 +14,9 @@
 
 namespace org.accordproject.helloworld
 
-define function sayhello(name: String, input: String) : String {
-	return "Hello " ++ name ++ " (" ++ input ++ ")"
-}
-
 contract HelloWorld over TemplateModel {
   // Simple Clause
   clause helloworld(request : Request) : Response {
-    return Response{ output: sayhello(contract.name,request.input) }
+    return Response{ output: "Hello \"" ++ contract.name ++ "\" (" ++ request.input ++ ")" }
   }
 }

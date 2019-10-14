@@ -20,7 +20,6 @@ transaction Request {
 
 transaction Response {
   o String output
-  o Integer number
 }
 
 /**

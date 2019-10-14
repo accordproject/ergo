@@ -106,9 +106,9 @@ describe('ergo-compiler', () => {
             result.success.should.not.be.null;
         });
         it('should compile a smart Ergo contract to JavaScript and print a warning (ES6)', async function () {
-            const ergoFile = Path.resolve('test', 'examples/helloworld', 'logic/logicWarn.ergo');
+            const ergoFile = Path.resolve('test', 'examples/helloworldWarning', 'logic/logicWarn.ergo');
             const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            const ctoFile = Path.resolve('test', 'examples/helloworld', 'model/model.cto');
+            const ctoFile = Path.resolve('test', 'examples/helloworldWarning', 'model/model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], null, 'es6', false, true);
             result.success.should.not.be.null;

@@ -103,7 +103,7 @@ Section PrintTypedData.
       | dfloat f => toString f
       | dbool true => "true"
       | dbool false => "false"
-      | dstring s => jsonify (dstring (js_quote_string s))
+      | dstring s => jsonify (dstring s)
       | dcoll arr =>
         "["
            ++ (String.concat
