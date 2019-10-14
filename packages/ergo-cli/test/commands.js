@@ -144,11 +144,11 @@ describe('ergo', () => {
     });
     describe('#invokehelloworld', function () {
         it('should invoke a clause in a smart Ergo contract', async function () {
-            const ergoPath = Path.join('test/examples/helloworld4', 'logic/logic4.ergo');
-            const ctoPath = Path.join('test/examples/helloworld4', 'model/model.cto');
-            const contractPath = { file: Path.join('test/examples/helloworld4', 'data.json') };
-            const paramsPath = { file: Path.join('test/examples/helloworld4', 'params.json') };
-            const statePath = { file: Path.join('test/examples/helloworld4', 'state.json') };
+            const ergoPath = Path.join('test/examples/helloworld3', 'logic/logic3.ergo');
+            const ctoPath = Path.join('test/examples/helloworld3', 'model/model.cto');
+            const contractPath = { file: Path.join('test/examples/helloworld3', 'data.json') };
+            const paramsPath = { file: Path.join('test/examples/helloworld3', 'params.json') };
+            const statePath = { file: Path.join('test/examples/helloworld3', 'state.json') };
             const result = await Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null);
             result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
         });
@@ -161,9 +161,9 @@ describe('ergo', () => {
             return Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File test/examples/helloworldErr/model/modelErr.cto line 15 column 1');
         });
         it('should invoke a clause in a smart Ergo contract (JSON parameters)', async function () {
-            const ergoPath = Path.join('test/examples/helloworld4', 'logic/logic4.ergo');
-            const ctoPath = Path.join('test/examples/helloworld4', 'model/model.cto');
-            const contractPath = { file: Path.join('test/examples/helloworld4', 'data.json') };
+            const ergoPath = Path.join('test/examples/helloworld3', 'logic/logic3.ergo');
+            const ctoPath = Path.join('test/examples/helloworld3', 'model/model.cto');
+            const contractPath = { file: Path.join('test/examples/helloworld3', 'data.json') };
             const paramsJson = {
                 content: `{
                     "request": {
@@ -178,11 +178,11 @@ describe('ergo', () => {
             result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
         });
         it('should throw when smart Ergo clause without a cto', async function () {
-            const ergoPath = Path.join('test/examples/helloworld4', 'logic/logic4.ergo');
-            const contractPath = { file: Path.join('test/examples/helloworld4', 'data.json') };
-            const paramsPath = { file: Path.join('test/examples/helloworld4', 'params.json') };
-            const statePath = { file: Path.join('test/examples/helloworld4', 'state.json') };
-            return Commands.invoke(null, [ergoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/helloworld4/logic/logic4.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+            const ergoPath = Path.join('test/examples/helloworld3', 'logic/logic3.ergo');
+            const contractPath = { file: Path.join('test/examples/helloworld3', 'data.json') };
+            const paramsPath = { file: Path.join('test/examples/helloworld3', 'params.json') };
+            const statePath = { file: Path.join('test/examples/helloworld3', 'state.json') };
+            return Commands.invoke(null, [ergoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file test/examples/helloworld3/logic/logic3.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
         });
         it('should fail when Ergo logic is missing', async function () {
             const ctoPath = Path.join('test/examples/helloworld', 'model/model.cto');
