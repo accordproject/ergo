@@ -46,10 +46,10 @@ async function fromDirectory(path, options) {
     await logicManager.getModelManager().updateExternalModels();
 
     // load and add the template
-    let templatizedGrammar = await FileLoader.loadFileContents(path, 'grammar/template.tem', false, false);
+    let templatizedGrammar = await FileLoader.loadFileContents(path, 'grammar/template.tem.md', false, false);
 
     if(templatizedGrammar) {
-        logicManager.addTemplateFile(templatizedGrammar,'grammar/template.tem');
+        logicManager.addTemplateFile(templatizedGrammar,'grammar/template.tem.md');
     }
 
     // load and add the ergo files
@@ -89,10 +89,10 @@ async function fromZip(buffer, options) {
     await logicManager.getModelManager().updateExternalModels();
 
     // load and add the template
-    let templatizedGrammar = await FileLoader.loadZipFileContents(zip, 'grammar/template.tem', false, false);
+    let templatizedGrammar = await FileLoader.loadZipFileContents(zip, 'grammar/template.tem.md', false, false);
 
     if(templatizedGrammar) {
-        logicManager.addTemplateFile(templatizedGrammar,'grammar/template.tem');
+        logicManager.addTemplateFile(templatizedGrammar,'grammar/template.tem.md');
     }
 
     // load and add the ergo files
@@ -129,8 +129,12 @@ async function fromFiles(files, options) {
             modelPaths.push(file);
         } else if (file.split('.').pop() === 'ergo') {
             logicPaths.push(file);
-        } else if (file.split('.').pop() === 'tem') {
-            grammarPath = file;
+        } else if (file.split('.').pop() === 'md') {
+            const fileSplit = file.split('.');
+            fileSplit.pop();
+            if (fileSplit.pop() === 'tem') {
+                grammarPath = file;
+            }
         }
     }
     modelPaths.forEach((path) => {

@@ -382,7 +382,7 @@ describe('LogicManager', () => {
             const files = [
                 './test/examples/helloworldcontract/model/model.cto',
                 './test/examples/helloworldcontract/logic/logic.ergo',
-                './test/examples/helloworldcontract/grammar/template.tem',
+                './test/examples/helloworldcontract/grammar/template.tem.md',
             ];
             const logicManager = await ErgoLoader.fromFiles(files);
             const modelManager = logicManager.getModelManager();
