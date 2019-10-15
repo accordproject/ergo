@@ -192,7 +192,7 @@ Accord Project source code files are made available under the [Apache License, V
 
 Accord Project documentation files are made available under the [Creative Commons Attribution 4.0 International License][creativecommons] (CC-BY-4.0).
 
-[coc]: https://github.com/accordproject/docs/blob/master/Accord%20Project%20Code%20of%20Conduct.pdf
+[coc]: https://www.linuxfoundation.org/code-of-conduct
 [stackoverflow]: http://stackoverflow.com/questions/tagged/ergo
 [apslack]: https://accord-project-slack-signup.herokuapp.com
 [apergoslack]: https://accord-project.slack.com/messages/C9HLJHREG/
