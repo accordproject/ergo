@@ -15,7 +15,7 @@
 'use strict';
 
 const FunctionDeclaration = require('./functiondeclaration');
-const JavaScriptParser = require('@accordproject/concerto-core/lib/codegen/javascriptparser');
+const JavaScriptParser = require('./javascriptparser');
 const debug = require('debug')('ergo-compiler:Script');
 
 /**
