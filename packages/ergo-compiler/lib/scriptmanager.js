@@ -322,7 +322,7 @@ class ScriptManager {
             // Do not link to runtime for Java target, only for JavaScript
             const link = this.target === 'java' ? false : true;
             const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.sourceTemplate,this.target,link,this.warnings);
-            if (compiledErgo.hasOwnProperty('error')) {
+            if (Object.prototype.hasOwnProperty.call(compiledErgo,'error')) {
                 ScriptManager._throwCompilerException(compiledErgo.error);
             }
             this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success, compiledErgo.contractName);

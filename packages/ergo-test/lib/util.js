@@ -63,15 +63,15 @@ function compareComponent(expected,actual) {
  * @param {string} actual the successful result as returned by the engine
  */
 function compareSuccess(expected,actual) {
-    if (expected.hasOwnProperty('state')) {
+    if (Object.prototype.hasOwnProperty.call(expected, 'state')) {
         expect(actual).to.have.property('state');
         compareComponent(expected.state, actual.state);
     }
-    if (expected.hasOwnProperty('response')) {
+    if (Object.prototype.hasOwnProperty.call(expected, 'response')) {
         expect(actual).to.have.property('response');
         compareComponent(expected.response, actual.response);
     }
-    if (expected.hasOwnProperty('emit')) {
+    if (Object.prototype.hasOwnProperty.call(expected, 'emit')) {
         expect(actual).to.have.property('emit');
         compareComponent(expected.emit, actual.emit);
     }

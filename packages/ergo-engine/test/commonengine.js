@@ -61,15 +61,15 @@ function compareComponent(expected,actual) {
  * @param {string} actual the successful result as returned by the engine
  */
 function compareSuccess(expected,actual) {
-    if (expected.hasOwnProperty('state')) {
+    if (Object.prototype.hasOwnProperty.call(expected, 'state')) {
         expect(actual).to.have.property('state');
         compareComponent(expected.state, actual.state);
     }
-    if (expected.hasOwnProperty('response')) {
+    if (Object.prototype.hasOwnProperty.call(expected, 'response')) {
         expect(actual).to.have.property('response');
         compareComponent(expected.response, actual.response);
     }
-    if (expected.hasOwnProperty('emit')) {
+    if (Object.prototype.hasOwnProperty.call(expected, 'emit')) {
         expect(actual).to.have.property('emit');
         compareComponent(expected.emit, actual.emit);
     }
@@ -107,7 +107,7 @@ function runWorkload(Engine, target) {
         const options = test.options;
 
         let resultKind;
-        if (expected.hasOwnProperty('compilationerror') || expected.hasOwnProperty('error')) {
+        if (Object.prototype.hasOwnProperty.call(expected, 'compilationerror') || Object.prototype.hasOwnProperty.call(expected, 'error')) {
             resultKind = 'fail';
         } else {
             resultKind = 'succeed';
@@ -133,7 +133,7 @@ function runWorkload(Engine, target) {
                 logicManager.setContractName(contractName);
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 if (state === null) {
-                    if (expected.hasOwnProperty('error')) {
+                    if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
                         return engine.compileAndInit(logicManager, contractJson, currentTime)
                             .catch((actualError) => {
                                 expect(actualError.message).to.equal(expected.error);
@@ -147,7 +147,7 @@ function runWorkload(Engine, target) {
                 } else {
                     if (test.clauseName) {
                         if (test.clauseName === 'generateText') {
-                            if (expected.hasOwnProperty('error')) {
+                            if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
                                 return engine.compileAndGenerateText(logicManager, contractJson, {}, currentTime, options)
                                     .catch((actualError) => {
                                         expect(actualError.message).to.equal(expected.error);
@@ -162,7 +162,7 @@ function runWorkload(Engine, target) {
                             const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
                             const params = test.params;
                             const clauseName = test.clauseName;
-                            if (expected.hasOwnProperty('error')) {
+                            if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
                                 return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
                                     .catch((actualError) => {
                                         expect(actualError.message).to.equal(expected.error);
@@ -178,7 +178,7 @@ function runWorkload(Engine, target) {
                         const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
                         const request = test.request;
                         const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
-                        if (expected.hasOwnProperty('error')) {
+                        if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
                             return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime, options)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
