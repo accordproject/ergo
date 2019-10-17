@@ -153,6 +153,7 @@ class FileLoader {
         }));
         return result.reduce((a, f) => a.concat(f), []).filter((f) => f !== null);
     }
+
     /**
      * Prepare the text for parsing (normalizes new lines, etc)
      * @param {string} input - the text for the clause
