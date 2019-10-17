@@ -12,8 +12,7 @@
 [![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
 ![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8b6ef766-c6d0-45bb-bff6-03104e6ff913/deploy-status)](https://app.netlify.com/sites/ergorepl/deploys)
-[![join slack](https://img.shields.io/badge/Slack-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
-
+[![Join the Accord Project Slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
 ## About
 
