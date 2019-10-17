@@ -1,5 +1,5 @@
 common_cache_key: &common_cache_key
-  key: dependency-cache-{{ .Branch }}-{{ checksum "../ocaml-version" }}-{{ checksum ".circleci/config.yml" }}
+  key: dependency-cache-{{ checksum "../ocaml-version" }}-{{ checksum ".circleci/config.yml" }}
 
 common_steps: &common_steps
   steps:
