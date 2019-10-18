@@ -154,7 +154,7 @@ The subject contains succinct description of the change:
 * no dot (.) at the end
 
 ### Footer
-The footer should contain [reference GitHub Issues that this commit addresses][github-issues].
+The footer should contain [reference GitHub Issues][github-issues] that this commit addresses.
 
 ## <a name="pullrequests"></a> GitHub Pull Request Guidelines
 Pull Requests should consist of a complete addition to the code which contains value.
@@ -186,7 +186,7 @@ When approved and ready to merge, a Pull Request should be squashed down to a si
 
 ##  Writing Documentation
 
-The Ergo project uses [docusaurus][docusaurus] for the language documentation.
+The Ergo project uses [Docusaurus][docusaurus] for the language documentation.
 
 Code documentation uses the following tools:
 - [coq2html][coq2html] for the compiler specification (install with `opam install coq-coq2html`)
