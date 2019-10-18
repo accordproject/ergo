@@ -15,6 +15,7 @@
 'use strict';
 
 const chai = require('chai');
+const should = chai.should();
 const fs = require('fs');
 
 const ScriptManager = require('../lib/scriptmanager');
@@ -83,6 +84,18 @@ describe('ScriptManager', () => {
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
             (() => scriptManager.compileLogic()).should.throw('Parse error (at file test2.ergo line 33 col 0). ');
+        });
+
+        it('should return no compiled script when no Ergo or JS', async function() {
+            const scriptManager = new ScriptManager('cicero',modelManager);
+            scriptManager.getCombinedScripts().should.equal('');
+            should.equal(scriptManager.compileLogic(false),null);
+        });
+        it('should return no combined script when not compiled', async function() {
+            const scriptManager = new ScriptManager('cicero',modelManager);
+            const script2 = scriptManager.createScript('test2.ergo','.ergo',ergoSample2);
+            scriptManager.addScript(script2);
+            scriptManager.getCombinedScripts().should.equal('');
         });
 
         it('should fail to compile an Ergo script with an undefined built-in function', async function() {

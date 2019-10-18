@@ -43,7 +43,7 @@ function getJson(input) {
  * @return {Promise<LogicManager>} a Promise to the instantiated logicmanager
  */
 async function loadTemplate(template, files) {
-    let logicManager = null;
+    let logicManager;
     if (template) {
         logicManager = await ErgoLoader.fromDirectory(template);
     } else {

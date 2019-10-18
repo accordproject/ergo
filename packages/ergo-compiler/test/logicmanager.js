@@ -474,6 +474,10 @@ describe('LogicManager', () => {
             (() => logicManager.validateInput(input)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
 
+        it('should propagate null when validating a contract', () => {
+            expect(logicManager.validateContract(null)).to.equal(null);
+        });
+
         it('should succeed validating an output', () => {
             const output = {
                 '$class': 'org.accordproject.copyrightlicense.PayOut',
