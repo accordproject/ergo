@@ -36,6 +36,19 @@ describe('#vmengine', () => {
         engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
         engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
     });
+
+    it('should clear the cache', () => {
+        const engine = new VMEngine();
+        const logicManager = new LogicManager('es6', null);
+        const script = 'const a = 1';
+        logicManager.addLogicFile(script,'test2.js');
+        logicManager.compileLogicSync(false);
+        const scriptManager = logicManager.getScriptManager();
+        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
+        engine.clearCacheJsScript();
+        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
+    });
 });
 
 describe('Execute ES6', () => {
