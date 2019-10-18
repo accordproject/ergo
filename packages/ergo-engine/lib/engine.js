@@ -62,6 +62,14 @@ class Engine {
     }
 
     /**
+     * Clear the JavaScript logic cache
+     * @private
+     */
+    clearCacheJsScript() {
+        this.scripts = {};
+    }
+
+    /**
      * Compile and cache JavaScript logic
      * @param {ScriptManager} scriptManager  - the script manager
      * @param {string} contractId - the contract identifier
