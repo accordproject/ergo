@@ -56,9 +56,6 @@ npm-setup:
 	@echo "[Ergo] "
 	lerna bootstrap
 
-publish:
-	lerna bootstrap && lerna publish --force-publish=*
-
 ## Documentation
 documentation:
 	$(MAKE) -C mechanization documentation
