@@ -43,3 +43,4 @@ website/node_modules
 website/i18n/*
 !website/i18n/en.json
 *.sw[p]
+thumbs.db
