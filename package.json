@@ -84,6 +84,7 @@
       "Makefile.coq.conf",
       ".coqdeps.d",
       "_CoqProject",
+      ".all-contributorsrc",
       "extraction/src/Cto_j.ml",
       "extraction/src/Cto_j.mli",
       "extraction/src/Cto_t.ml",
