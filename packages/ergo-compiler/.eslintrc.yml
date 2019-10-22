@@ -11,7 +11,7 @@ rules:
         - error
         - 4
     linebreak-style:
-        - error
+        - warn
         - unix
     quotes:
         - error
