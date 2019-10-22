@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "postlint": "npm run licchk",
     "licchk": "license-check",
-    "test:cucumber": "cucumber-js test/features --require lib/steps.js --world-parameters '{\"rootdir\":\"./test\"}'",
+    "test:cucumber": "cucumber-js test/features --require lib/steps.js --world-parameters \"{\\\"rootdir\\\":\\\"./test\\\"}\"",
     "test:mocha": "mocha",
     "test": "npm run test:mocha && npm run test:cucumber",
     "test:cov": "nyc npm run test"
