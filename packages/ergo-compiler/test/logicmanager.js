@@ -18,13 +18,17 @@ const ErgoCompiler = require('../lib/compiler');
 const LogicManager = require('../lib/logicmanager');
 const ErgoLoader = require('../lib/ergoloader');
 
-const fs = require('fs');
 const chai = require('chai');
 const expect = chai.expect;
 
 chai.should();
 chai.use(require('chai-things'));
 chai.use(require('chai-as-promised'));
+
+const fs = require('fs');
+const Path = require('path');
+
+const EXAMPLES_DIR = '../../examples';
 
 const ctoSample = fs.readFileSync('./test/data/test.cto','utf8');
 const ctoSample2 = fs.readFileSync('./test/data/test2.cto','utf8');
@@ -298,7 +302,7 @@ describe('LogicManager', () => {
 
     describe('#loader-dir', () => {
         it('should load a directory with no grammar', async function () {
-            const logicManager = await ErgoLoader.fromDirectory('./test/examples/acceptance-of-delivery', {});
+            const logicManager = await ErgoLoader.fromDirectory(Path.join(EXAMPLES_DIR,'acceptance-of-delivery'), {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
@@ -312,7 +316,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a directory with grammar', async function () {
-            const logicManager = await ErgoLoader.fromDirectory('./test/examples/helloworldcontract');
+            const logicManager = await ErgoLoader.fromDirectory(Path.join(EXAMPLES_DIR,'helloworldcontract'));
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
@@ -328,7 +332,7 @@ describe('LogicManager', () => {
 
     describe('#loader-zip', () => {
         it('should load a Zip with no grammar', async function () {
-            const buffer = fs.readFileSync('./test/examples/acceptance-of-delivery.zip');
+            const buffer = fs.readFileSync(Path.join(EXAMPLES_DIR,'acceptance-of-delivery.zip'));
             const logicManager = await ErgoLoader.fromZip(buffer, {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
@@ -343,7 +347,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a Zip with grammar', async function () {
-            const buffer = fs.readFileSync('./test/examples/helloworldcontract.zip');
+            const buffer = fs.readFileSync(Path.join(EXAMPLES_DIR,'helloworldcontract.zip'));
             const logicManager = await ErgoLoader.fromZip(buffer);
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
@@ -362,8 +366,8 @@ describe('LogicManager', () => {
     describe('#loader-files', () => {
         it('should load files with no grammar', async function () {
             const files = [
-                './test/examples/acceptance-of-delivery/model/model.cto',
-                './test/examples/acceptance-of-delivery/logic/logic.ergo',
+                Path.join(EXAMPLES_DIR,'acceptance-of-delivery/model/model.cto'),
+                Path.join(EXAMPLES_DIR,'acceptance-of-delivery/logic/logic.ergo'),
             ];
             const logicManager = await ErgoLoader.fromFiles(files, {});
             const modelManager = logicManager.getModelManager();
@@ -380,9 +384,9 @@ describe('LogicManager', () => {
 
         it('should load a Zip with grammar', async function () {
             const files = [
-                './test/examples/helloworldcontract/model/model.cto',
-                './test/examples/helloworldcontract/logic/logic.ergo',
-                './test/examples/helloworldcontract/grammar/template.tem.md',
+                Path.join(EXAMPLES_DIR,'helloworldcontract/model/model.cto'),
+                Path.join(EXAMPLES_DIR,'helloworldcontract/logic/logic.ergo'),
+                Path.join(EXAMPLES_DIR,'helloworldcontract/grammar/template.tem.md'),
             ];
             const logicManager = await ErgoLoader.fromFiles(files);
             const modelManager = logicManager.getModelManager();
