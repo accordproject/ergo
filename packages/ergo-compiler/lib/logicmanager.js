@@ -14,6 +14,8 @@
 
 'use strict';
 
+const slash = require('slash');
+
 const Factory = require('@accordproject/concerto-core').Factory;
 const Introspector = require('@accordproject/concerto-core').Introspector;
 const Serializer = require('@accordproject/concerto-core').Serializer;
@@ -202,7 +204,7 @@ unwrapError(__result);
      * @param {string} fileName - an optional file name to associate with the logic file
      */
     addLogicFile(logicFile,fileName) {
-        const logicFileName = fileName;
+        const logicFileName = slash(fileName);
         let logicExt;
         if (fileName.indexOf('.') === -1) {
             logicExt = '.ergo';
@@ -219,7 +221,7 @@ unwrapError(__result);
      * @param {string} fileName - an optional file name to associate with the template file
      */
     addTemplateFile(templateFile,fileName) {
-        this.getScriptManager().addTemplateFile(templateFile,fileName);
+        this.getScriptManager().addTemplateFile(templateFile,slash(fileName));
     }
 
     /**
@@ -229,7 +231,7 @@ unwrapError(__result);
      */
     addModelFile(modelFile, fileName) {
         this.validated = false;
-        this.getModelManager().addModelFile(modelFile,fileName,true);
+        this.getModelManager().addModelFile(modelFile,slash(fileName),true);
     }
 
     /**
@@ -241,7 +243,7 @@ unwrapError(__result);
      */
     addModelFiles(modelFiles, modelFileNames) {
         this.validated = false;
-        this.getModelManager().addModelFiles(modelFiles, modelFileNames, true);
+        this.getModelManager().addModelFiles(modelFiles, modelFileNames.map(name => slash(name)), true);
     }
 
     /**
