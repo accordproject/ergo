@@ -1,7 +1,7 @@
 [
   {
     "name": "smoketest",
-    "dir": "examples/smoke",
+    "dir": "../../../examples/smoke",
     "ergo": ["logic.ergo"],
     "models": ["smoke.cto"],
     "contract": "data.json",
@@ -22,7 +22,7 @@
   },
   {
     "name": "durationtest",
-    "dir": "examples/smoke",
+    "dir": "../../../examples/smoke",
     "ergo": ["duration.ergo"],
     "models": ["duration.cto"],
     "contract": "data.json",
@@ -37,7 +37,7 @@
   },
   {
     "name": "mathtest",
-    "dir": "examples/smoke",
+    "dir": "../../../examples/smoke",
     "ergo": ["math.ergo"],
     "models": ["smoke.cto"],
     "contract": "data.json",
@@ -53,7 +53,7 @@
   },
   {
     "name": "opttest",
-    "dir": "examples/opttest",
+    "dir": "../../../examples/opttest",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -62,12 +62,12 @@
     "contractName": "org.accordproject.opttest.OptTest",
     "currentTime": null,
     "expected": {
-      "error": "Type error (at file examples/opttest/logic/logic.ergo line 20 col 2). The let type annotation `Nothing?' for the name `foo' does not match the actual type `Integer?'.\n  let foo : Nothing? =   // This should fail\n  ^                                         "
+      "error": "Type error (at file ../../../examples/opttest/logic/logic.ergo line 20 col 2). The let type annotation `Nothing?' for the name `foo' does not match the actual type `Integer?'.\n  let foo : Nothing? =   // This should fail\n  ^                                         "
     }
   },
   {
     "name": "helloworldstate (old style)",
-    "dir": "examples/helloworldstateOld",
+    "dir": "../../../examples/helloworldstateOld",
     "ergo": ["logic/logicOld.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -85,7 +85,7 @@
   },
   {
     "name": "helloworldstate 1 (old style)",
-    "dir": "examples/helloworldstateOld",
+    "dir": "../../../examples/helloworldstateOld",
     "ergo": ["logic/logicOld.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -107,7 +107,7 @@
   },
   {
     "name": "helloworldstate 2 (old style)",
-    "dir": "examples/helloworldstateOld",
+    "dir": "../../../examples/helloworldstateOld",
     "ergo": ["logic/logicOld.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -129,7 +129,7 @@
   },
   {
     "name": "helloworldstate init (new style)",
-    "dir": "examples/helloworldstate",
+    "dir": "../../../examples/helloworldstate",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -147,7 +147,7 @@
   },
   {
     "name": "helloworldstate 1 (new style)",
-    "dir": "examples/helloworldstate",
+    "dir": "../../../examples/helloworldstate",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -169,7 +169,7 @@
   },
   {
     "name": "helloworldstate 2 (new style)",
-    "dir": "examples/helloworldstate",
+    "dir": "../../../examples/helloworldstate",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -191,7 +191,7 @@
   },
   {
     "name": "helloworldstate (with current time)",
-    "dir": "examples/helloworldstate",
+    "dir": "../../../examples/helloworldstate",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -209,7 +209,7 @@
   },
   {
     "name": "helloworld (with call)",
-    "dir": "examples/helloworld3",
+    "dir": "../../../examples/helloworld3",
     "ergo": ["logic/logic3.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -233,7 +233,7 @@
   },
   {
     "name": "initemittest",
-    "dir": "examples/initemittest",
+    "dir": "../../../examples/initemittest",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -252,7 +252,7 @@
   },
   {
     "name": "initemittest (greeting)",
-    "dir": "examples/initemittest",
+    "dir": "../../../examples/initemittest",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -275,7 +275,7 @@
   },
   {
     "name": "bad logic",
-    "dir": "examples/bad-logic",
+    "dir": "../../../examples/bad-logic",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -285,12 +285,12 @@
     "clauseName": "helloworld",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "error": "Parse error (at file examples/bad-logic/logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
+      "error": "Parse error (at file ../../../examples/bad-logic/logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
     }
   },
   {
     "name": "inlinetest",
-    "dir": "examples/inlinetest",
+    "dir": "../../../examples/inlinetest",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -310,7 +310,7 @@
   },
   {
     "name": "interests clause (generate text)",
-    "dir": "examples/interests",
+    "dir": "../../../examples/interests",
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -330,7 +330,7 @@
   },
   {
     "name": "interests clause (generate text)",
-    "dir": "examples/interests",
+    "dir": "../../../examples/interests",
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -346,7 +346,7 @@
   },
   {
     "name": "helloworldcontract (generate text for template)",
-    "dir": "examples/helloworldcontract",
+    "dir": "../../../examples/helloworldcontract",
     "ergo": ["logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -367,7 +367,7 @@
   },
   {
     "name": "helloworldcontract (generate text without logic)",
-    "dir": "examples/helloworldcontract",
+    "dir": "../../../examples/helloworldcontract",
     "ergo": [],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -388,7 +388,7 @@
   },
   {
     "name": "volume discount (unordered list)",
-    "dir": "examples/volumediscountlist",
+    "dir": "../../../examples/volumediscountlist",
     "ergo": [],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -409,7 +409,7 @@
   },
   {
     "name": "volume discount (ordered list)",
-    "dir": "examples/volumediscountlist",
+    "dir": "../../../examples/volumediscountlist",
     "ergo": [],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -430,7 +430,7 @@
   },
   {
     "name": "Generate text for a nested list block",
-    "dir": "examples/helloworldlist",
+    "dir": "../../../examples/helloworldlist",
     "ergo": [],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -451,7 +451,7 @@
   },
   {
     "name": "Nested unordered list block",
-    "dir": "examples/helloworldlist",
+    "dir": "../../../examples/helloworldlist",
     "ergo": [],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -472,7 +472,7 @@
   },
   {
     "name": "Nested ordered list block",
-    "dir": "examples/helloworldlist2",
+    "dir": "../../../examples/helloworldlist2",
     "ergo": [],
     "models": ["model/model.cto"],
     "contract": "data.json",
