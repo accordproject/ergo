@@ -1,53 +1,50 @@
 <p align="center">
-  <a href="./ergo.png">
+  <a href="https://www.accordproject.org/projects/ergo">
     <img src="./ergo.png" alt="Ergo logo">
   </a>
 </p>
 
-![Build Status](https://travis-ci.org/accordproject/ergo.svg?branch=master)
-![CircleCI](https://circleci.com/gh/accordproject/ergo.svg?style=shield)
-[![Coverage Status](https://coveralls.io/repos/github/accordproject/ergo/badge.svg?branch=master)](https://coveralls.io/github/accordproject/ergo?branch=master)
-[![GitHub license](https://img.shields.io/github/license/accordproject/ergo?color=bright-green)](https://github.com/accordproject/ergo/blob/master/LICENSE)
-[![downloads](https://img.shields.io/npm/dm/@accordproject/ergo-cli)](https://www.npmjs.com/package/@accordproject/ergo-cli)
-[![npm version](https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg)](https://badge.fury.io/js/%40accordproject%2Fergo-cli)
-![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/8b6ef766-c6d0-45bb-bff6-03104e6ff913/deploy-status)](https://app.netlify.com/sites/ergorepl/deploys)
-[![Join the Accord Project Slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
+<p align="center">
+  <a href="https://travis-ci.org/accordproject/cicero"><img src="https://travis-ci.org/accordproject/cicero.svg?branch=master" alt="Build Status"></a>
+  <a href="https://circleci.com/gh/accordproject/ergo"><img src="https://circleci.com/gh/accordproject/ergo.svg?style=shield" alt="Build Mechanization Status"></a>
+  <a href="https://coveralls.io/github/accordproject/ergo?branch=master"><img src="https://coveralls.io/repos/github/accordproject/ergo/badge.svg?branch=master" alt="Coverage Status"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/accordproject/ergo?color=bright-green" alt="GitHub license"></a>
+  <a href="https://www.npmjs.com/package/@accordproject/ergo-cli"><img src="https://img.shields.io/npm/dm/@accordproject/ergo-cli" alt="downloads"></a>
+  <a href="https://badge.fury.io/js/%40accordproject%2Fergo-cli"><img src="https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg" alt="npm version"></a>
+  <a href="https://accord-project-slack-signup.herokuapp.com/">
+    <img src="https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue" alt="Join the Accord Project Slack"/>
+  </a>
+</p>
 
-## About
+## Introduction
 
-This is the source code for the Ergo compiler. Ergo is the [Accord Project][apmain]
-language for Smart Legal Contracts.
+This is the source code for the Ergo compiler. Ergo is the [Accord Project][apmain] language for Smart Legal Contracts.
 
 The Ergo compiler is distributed as an [npm package][npmpkg]. 
 
-The Ergo compiler is written using the [Coq][coq] proof assistant, with parsing and
-support code written in [OCaml][OCaml]. It makes extensive use
-of the [Q*cert compiler][Qcert] for code generation and type checking.
+The Ergo compiler is written using the [Coq][coq] proof assistant, with parsing and support code written in [OCaml][OCaml]. It makes extensive use of the [Q*cert compiler][Qcert] for code generation and type checking.
 
-Both the Ergo language and its compiler are in early development
-phase. If you would like to build from source or to contribute,
-consult the [DEVELOPERS][developers] file.
+Both the Ergo language and its compiler are in early development phase. If you would like to build from source or to contribute, consult the [DEVELOPERS][developers] file.
 
 ## Try Ergo online
 
-If you want to take a peek at Ergo without installing anything, check
-out the interactive [REPL][REPL]
-(read-eval-print-loop) for Ergo stand-alone, or the [Accord Project Template Studio][studio] 
-which illustrates Ergo in Accord Project templates.
+If you want to take a peek at Ergo without installing anything, check out the interactive [REPL][REPL] (read-eval-print-loop) for Ergo stand-alone, or the [Accord Project Template Studio][studio] which illustrates Ergo in Accord Project templates.
 
 ## Documentation
 
 The most recent Ergo documentation is in the [Ergo Language Guide][docergo].
 
-## Quickstart
+## Structure of the Code Repository
 
-### Install Ergo
+Top level repository (ergo), with sub packages. Each sub-package is published as an independent npm module using `lerna`:
+* [ergo-cli](https://github.com/accordproject/ergo/tree/master/packages/ergo-cli) : Command line interface for the Ergo compiler
+* [ergo-compiler](https://github.com/accordproject/ergo/tree/master/packages/ergo-core) : Core classes for the Ergo compiler
+* [ergo-engine](https://github.com/accordproject/ergo/tree/master/packages/ergo-engine) : A Node.js VM based execution engine for Ergo
+* [ergo-test](https://github.com/accordproject/ergo/tree/master/packages/ergo-test) : Cucumber based testing for Ergo
 
-The easiest way to install Ergo is as a [Node.js][nodejs] package.
-Once you have Node.js installed on your machine, you can get the Ergo compiler
-and command-line using the Node.js package manager by typing the following in a
-terminal:
+## Installation
+
+The easiest way to install Ergo is as a [Node.js][nodejs] package. Once you have Node.js installed on your machine, you can get the Ergo compiler and command-line using the Node.js package manager by typing the following in a terminal:
 
 ```sh
 $ npm install -g @accordproject/ergo-cli
@@ -142,6 +139,15 @@ Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples
 By default, Ergo compiles to JavaScript for execution. You can inspect
 the compiled JavaScript code in `./examples/volumediscount/logic.js`
 
+
+[npmpkg]: https://www.npmjs.com/package/@accordproject/ergo-cli
+[coq]: https://coq.inria.fr
+[OCaml]: https://ocaml.org
+[Qcert]: https://querycert.github.io
+[REPL]: https://ergorepl.netlify.com
+[studio]: https://studio.accordproject.org
+[nodejs]: https://nodejs.org/
+
 ---
 
 <p align="center">
@@ -171,7 +177,6 @@ Accord Project is an open source, non-profit, initiative working to transform co
 * [Ergo Language Guide][docergo]
 
 ### Ecosystem
-
 
 #### Core libraries:
 <table>
@@ -287,7 +292,7 @@ Accord Project is an open source, non-profit, initiative working to transform co
       <th id="blank"></th>
       <td headers><a href="https://github.com/accordproject/markdown-transform/tree/master/packages/markdown-cicero">markdown-cicero</a></td>
       <td headers><a href="https://badge.fury.io/js/%40accordproject%2Fmarkdown-cicero"><img src="https://badge.fury.io/js/%40accordproject%2Fmarkdown-cicero.svg" alt="npm version"></a></td>
-      <td headers>CiceroDOM: Markdown extensions for contracts, clauses, variables etc.</td>
+      <td headers>Markdown extensions for contracts, clauses, variables etc.</td>
       </tr>
        <tr>
       <th id="blank"></th>
@@ -311,13 +316,13 @@ Accord Project is an open source, non-profit, initiative working to transform co
       <td headers>Markdown Editor</td>
       <td headers><a href="https://github.com/accordproject/markdown-editor">markdown-editor</a></td>
       <td headers><img src="https://badge.fury.io/js/%40accordproject%2Fmarkdown-editor.svg" alt="npm version"></a></td>
-      <td headers>WYSIWYG rich text web editor that persists text as markdown. Based on Slate.js</td>
+      <td headers>WYSIWYG rich text web editor for markdown based on Slate.js</td>
     </tr>
      <tr>
      <td headers="co1 c1">Cicero UI</td>
       <td headers="co2 c1"><a href="https://github.com/accordproject/cicero-ui">cicero-ui</a></td>
       <td headers="co3 c1"> <a href="https://badge.fury.io/js/%40accordproject%2Fcicero-ui"><img src="https://badge.fury.io/js/%40accordproject%2Fcicero-ui.svg" alt="npm version"></a></td>
-       <td headers="co4 c1">WYSIWYG contract editor, template libary browser, error panel component</td>
+       <td headers="co4 c1">React UI components for Cicero</td>
      </tr>
      <tr>
      <td headers="co1 c1">Concerto UI</td>
@@ -326,7 +331,6 @@ Accord Project is an open source, non-profit, initiative working to transform co
        <td headers="co4 c1">Dynamic web forms generated from Concerto models</td>
      </tr>
 </table>
-  
 
 #### Template Editors:
 
@@ -403,6 +407,8 @@ Accord Project documentation files are made available under the [Creative Common
 
 Copyright 2018-2019 Clause, Inc. All trademarks are the property of their respective owners. See [LF Projects Trademark Policy](https://lfprojects.org/policies/trademark-policy/).
 
+[linuxfound]: https://www.linuxfoundation.org
+[charter]: https://github.com/accordproject/ergo/blob/master/CHARTER.md
 [apmain]: https://accordproject.org/ 
 [apworkgroup]: https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MjZvYzIzZHVrYnI1aDVzbjZnMHJqYmtwaGlfMjAxNzExMTVUMjEwMDAwWiBkYW5AY2xhdXNlLmlv&tmsrc=dan%40clause.io
 [apblog]: https://medium.com/@accordhq
@@ -421,16 +427,6 @@ Copyright 2018-2019 Clause, Inc. All trademarks are the property of their respec
 
 [contributing]: https://github.com/accordproject/ergo/blob/master/CONTRIBUTING.md
 [developers]: https://github.com/accordproject/ergo/blob/master/DEVELOPERS.md
-
-[linuxfound]: https://www.linuxfoundation.org
-[charter]: https://github.com/accordproject/ergo/blob/master/CHARTER.md
-[npmpkg]: https://www.npmjs.com/package/@accordproject/ergo-cli
-[coq]: https://coq.inria.fr
-[OCaml]: https://ocaml.org
-[Qcert]: https://querycert.github.io
-[REPL]: https://ergorepl.netlify.com
-[studio]: https://studio.accordproject.org
-[nodejs]: https://nodejs.org/
 
 [apache]: https://github.com/accordproject/ergo/blob/master/LICENSE
 [creativecommons]: http://creativecommons.org/licenses/by/4.0/
