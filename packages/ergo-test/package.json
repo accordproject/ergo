@@ -70,10 +70,10 @@
     "exclude": [],
     "all": true,
     "check-coverage": true,
-    "statements": 93,
-    "branches": 70,
-    "functions": 92,
-    "lines": 93
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100
   },
   "gitHead": "bf65386e8590dff56f8b9bc0bb657263ff049437"
 }

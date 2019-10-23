@@ -386,7 +386,7 @@ describe('LogicManager', () => {
             const files = [
                 Path.join(EXAMPLES_DIR,'helloworldcontract/model/model.cto'),
                 Path.join(EXAMPLES_DIR,'helloworldcontract/logic/logic.ergo'),
-                Path.join(EXAMPLES_DIR,'helloworldcontract/grammar/template.tem.md'),
+                Path.join(EXAMPLES_DIR,'helloworldcontract/text/grammar.tem.md'),
             ];
             const logicManager = await ErgoLoader.fromFiles(files);
             const modelManager = logicManager.getModelManager();
