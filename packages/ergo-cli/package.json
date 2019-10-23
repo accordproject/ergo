@@ -2,10 +2,18 @@
   "name": "@accordproject/ergo-cli",
   "version": "0.20.0-beta.1",
   "description": "Ergo CLI",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/accordproject/ergo"
+  "engines": {
+    "node": ">=8",
+    "npm": ">=3"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "ergo": "./index.js",
+    "ergotop": "./ergotop.js"
+  },
+  "main": "index.js",
   "scripts": {
     "pretest": "npm run lint",
     "lint": "eslint .",
@@ -16,16 +24,23 @@
     "test": "npm run test:mocha && npm run test:cucumber",
     "test:cov": "nyc npm run test"
   },
-  "contributors": [
-    {
-      "name": "Jerome Simeon",
-      "email": "jerome@clause.io"
-    }
-  ],
-  "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/accordproject/ergo"
   },
+  "keywords": [
+    "accord project",
+    "contracts",
+    "smart",
+    "legal",
+    "tech"
+  ],
+  "author": "clause.io",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/accordproject/cicero/issues"
+  },
+  "homepage": "https://www.accordproject.org/projects/ergo",
   "dependencies": {
     "@accordproject/ergo-compiler": "0.20.0-beta.1",
     "@accordproject/ergo-engine": "0.20.0-beta.1",
@@ -35,10 +50,6 @@
     "moment-mini": "2.22.1",
     "winston": "3.2.1",
     "yargs": "13.2.4"
-  },
-  "bin": {
-    "ergo": "./index.js",
-    "ergotop": "./ergotop.js"
   },
   "devDependencies": {
     "chai": "4.2.0",
@@ -83,10 +94,10 @@
     "exclude": [],
     "all": true,
     "check-coverage": true,
-    "statements": 93,
-    "branches": 70,
-    "functions": 92,
-    "lines": 93
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100
   },
   "gitHead": "bf65386e8590dff56f8b9bc0bb657263ff049437"
 }

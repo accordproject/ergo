@@ -46,10 +46,10 @@ async function fromDirectory(path, options) {
     await logicManager.getModelManager().updateExternalModels();
 
     // load and add the template
-    let templatizedGrammar = await FileLoader.loadFileContents(path, 'grammar/template.tem.md', false, false);
+    let templatizedGrammar = await FileLoader.loadFileContents(path, 'text/grammar.tem.md', false, false);
 
     if(templatizedGrammar) {
-        logicManager.addTemplateFile(templatizedGrammar,'grammar/template.tem.md');
+        logicManager.addTemplateFile(templatizedGrammar,'text/grammar.tem.md');
     }
 
     // load and add the ergo files
@@ -89,10 +89,10 @@ async function fromZip(buffer, options) {
     await logicManager.getModelManager().updateExternalModels();
 
     // load and add the template
-    let templatizedGrammar = await FileLoader.loadZipFileContents(zip, 'grammar/template.tem.md', false, false);
+    let templatizedGrammar = await FileLoader.loadZipFileContents(zip, 'text/grammar.tem.md', false, false);
 
     if(templatizedGrammar) {
-        logicManager.addTemplateFile(templatizedGrammar,'grammar/template.tem.md');
+        logicManager.addTemplateFile(templatizedGrammar,'text/grammar.tem.md');
     }
 
     // load and add the ergo files
