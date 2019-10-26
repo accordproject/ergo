@@ -43,7 +43,7 @@ class Engine {
 
     /**
     /**
-     * Call to compile a script for a JavaScript machine
+     * Compile a script for a JavaScript machine
      * @param {string} script - the script
      */
     compileVMScript(script) {
@@ -51,7 +51,7 @@ class Engine {
     }
 
     /**
-     * Call to execute a call in a JavaScript machine
+     * Execute a call in a JavaScript machine
      * @param {number} utcOffset - UTC Offset for this execution
      * @param {object} context - global variables to set in the VM
      * @param {object} script - the initial script to load
@@ -86,8 +86,8 @@ class Engine {
     }
 
     /**
-     * Execute a clause, passing in the request object
-     * @param {LogicManager} logic  - the logic to execute
+     * Trigger a clause, passing in the request object
+     * @param {LogicManager} logic  - the logic
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} request - the request, a JS object that can be deserialized
@@ -98,7 +98,7 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    async execute(logic, contractId, contract, request, state, currentTime, options) {
+    async trigger(logic, contractId, contract, request, state, currentTime, options) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
@@ -144,7 +144,7 @@ class Engine {
 
     /**
      * Invoke a clause, passing in the parameters for that clause
-     * @param {LogicManager} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic
      * @param {string} contractId - the contract identifier
      * @param {string} clauseName - the clause name
      * @param {object} contract - the contract data
@@ -200,7 +200,7 @@ class Engine {
 
     /**
      * Initialize a clause
-     * @param {LogicManager} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
@@ -218,7 +218,7 @@ class Engine {
 
     /**
      * Generate Text
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {TemplateLogic} logic  - the logic
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
@@ -239,7 +239,7 @@ class Engine {
     /**
      * Compile then initialize a clause
      *
-     * @param {LogicManager} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
@@ -256,7 +256,7 @@ class Engine {
     /**
      * Compile then generate text
      *
-     * @param {TemplateLogic} logic  - the logic to execute
+     * @param {TemplateLogic} logic  - the logic
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
@@ -273,7 +273,7 @@ class Engine {
     /**
      * Compile then invoke a clause
      *
-     * @param {LogicManager} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic
      * @param {string} clauseName - the clause name
      * @param {object} contract contract data in JSON
      * @param {object} params - the clause parameters
@@ -291,9 +291,9 @@ class Engine {
     }
 
     /**
-     * Compile then execute a clause, passing in the request object
+     * Compile then trigger a clause, passing in the request object
      *
-     * @param {LogicManager} logic  - the logic to execute
+     * @param {LogicManager} logic  - the logic
      * @param {object} contract - the contract data
      * @param {object} request - the request, a JS object that can be deserialized
      * using the Composer serializer.
@@ -303,10 +303,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    compileAndExecute(logic, contract, request, state, currentTime, options) {
+    compileAndTrigger(logic, contract, request, state, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.execute(logic, contractId, contract, request, state, currentTime, options);
+            return this.trigger(logic, contractId, contract, request, state, currentTime, options);
         });
     }
 

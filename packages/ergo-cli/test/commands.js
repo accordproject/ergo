@@ -25,14 +25,14 @@ const Path = require('path');
 
 const EXAMPLES_DIR = '../../examples';
 
-describe('#executehello', function () {
-    it('should execute a request to a smart Ergo contract', async function () {
+describe('#triggerhello', function () {
+    it('should trigger a request to a smart Ergo contract', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'helloworld', 'logic/logic.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'helloworld', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'state.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
         result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
     });
     it('should throw when executing a request to a smart Ergo contract with an illegal model', async function () {
@@ -41,79 +41,79 @@ describe('#executehello', function () {
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworldErr', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'helloworldErr', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworldErr', 'state.json') };
-        return Commands.execute(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File ../../examples/helloworldErr/model/modelErr.cto line 15 column 1');
+        return Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File ../../examples/helloworldErr/model/modelErr.cto line 15 column 1');
     });
     it('should throw when executing a request to a smart Ergo contract without its cto', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'helloworld', 'logic/logic.ergo');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'state.json') };
-        return Commands.execute(null, [ergoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Compilation error (at file ../../examples/helloworld/logic/logic.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+        return Commands.trigger(null, [ergoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Compilation error (at file ../../examples/helloworld/logic/logic.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
     });
     it('should fail when Ergo logic is missing', async function () {
         const ctoPath = Path.join(EXAMPLES_DIR, 'helloworld', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'state.json') };
-        return Commands.execute(null, [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('No input ergo found');
+        return Commands.trigger(null, [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('No input ergo found');
     });
 });
 
-describe('#executehellostate', function () {
-    it('should execute a smart Ergo contract with state once', async function () {
+describe('#triggerhellostate', function () {
+    it('should trigger a smart Ergo contract with state once', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'helloworldstate', 'logic/logic.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'helloworldstate', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworldstate', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'helloworldstate', 'request1.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworldstate', 'state1.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
         result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1.0)');
     });
-    it('should execute a smart Ergo contract with state thrice', async function () {
+    it('should trigger a smart Ergo contract with state thrice', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'helloworldstate', 'logic/logic.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'helloworldstate', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworldstate', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'helloworldstate', 'request1.json') };
         const requestPath2 = { file: Path.join(EXAMPLES_DIR, 'helloworldstate', 'request2.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworldstate', 'state1.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath,requestPath2,requestPath2]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath,requestPath2,requestPath2]);
         result.response.output.should.equal('Hello Fred Blogs (Linux Foundation) (3.0)');
     });
 });
 
-describe('#executeinstallmentsale', function () {
+describe('#triggerinstallmentsale', function () {
     it('should initialize a smart Ergo contract state', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'installment-sale', 'logic/logic.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'installment-sale', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'installment-sale', 'data.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', []);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', []);
         result.state.balance_remaining.should.equal(10000.00);
     });
-    it('should initialize a smart Ergo contract and execute one request', async function () {
+    it('should initialize a smart Ergo contract and trigger one request', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'installment-sale', 'logic/logic.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'installment-sale', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'installment-sale', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'installment-sale', 'request.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', [requestPath]);
         result.state.balance_remaining.should.equal(7612.499999999999);
     });
 });
 
-describe('#executepromissorynote', function () {
-    it('should execute a smart Ergo contract', async function () {
+describe('#triggerpromissorynote', function () {
+    it('should trigger a smart Ergo contract', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'promissory-note', 'logic/logic.ergo');
         const ctoPath1 = Path.join(EXAMPLES_DIR, 'promissory-note', 'model/business.cto');
         const ctoPath2 = Path.join(EXAMPLES_DIR, 'promissory-note', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'promissory-note', 'data.json')};
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'promissory-note', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'promissory-note', 'state.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
         result.response.outstandingBalance.should.equal(1425.4396822450633);
     });
 });
 
-describe('#executepromissorynotemodule', function () {
-    it('should execute a smart Ergo contract with two modules', async function () {
+describe('#triggerpromissorynotemodule', function () {
+    it('should trigger a smart Ergo contract with two modules', async function () {
         const ergoPath1 = Path.join(EXAMPLES_DIR, 'promissory-note', 'logic/money.ergo');
         const ergoPath2 = Path.join(EXAMPLES_DIR, 'promissory-note', 'logic/logic3.ergo');
         const ctoPath1 = Path.join(EXAMPLES_DIR, 'promissory-note', 'model/business.cto');
@@ -121,28 +121,28 @@ describe('#executepromissorynotemodule', function () {
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'promissory-note', 'data.json')};
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'promissory-note', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'promissory-note', 'state.json') };
-        const result = await Commands.execute(null, [ergoPath1, ergoPath2, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath1, ergoPath2, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
         result.response.outstandingBalance.should.equal(1425.4396822450633);
     });
 });
 
-describe('#executeacceptanceofdelivery', function () {
-    it('should execute a smart Ergo contract', async function () {
+describe('#triggeracceptanceofdelivery', function () {
+    it('should trigger a smart Ergo contract', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'logic/logic.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'state.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-20T16:34:00-05:00', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-20T16:34:00-05:00', [requestPath]);
         result.response.status.should.equal('OUTSIDE_INSPECTION_PERIOD');
     });
-    it('should execute a smart Ergo contract', async function () {
+    it('should trigger a smart Ergo contract', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'logic/logic.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'data.json') };
         const requestPath = { file: Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'request.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'acceptance-of-delivery', 'state.json') };
-        const result = await Commands.execute(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-11T16:34:00-05:00', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-11T16:34:00-05:00', [requestPath]);
         result.response.status.should.equal('PASSED_TESTING');
     });
 });
@@ -221,13 +221,13 @@ describe('#draft', function () {
         const ctoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'model/model.cto');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'data.json') };
         const result = await Commands.draft(null, [ergoPath, grammarPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<variable id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases,"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
+        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<variable id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases%2C"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
     });
     it('should draft text for a late delivery and penalty contract (from directory)', async function () {
         const templatePath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty');
         const contractPath = { file: Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'data.json') };
         const result = await Commands.draft(templatePath, [], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<variable id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases,"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
+        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<variable id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases%2C"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
     });
     it('should throw when smart Ergo clause without a cto', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'interests', 'logic/logic.ergo');
