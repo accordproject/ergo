@@ -52,7 +52,7 @@ ergo-extraction-refresh:
 
 npm-setup:
 	@echo "[Ergo] "
-	@echo "[Ergo] Setting up Lerna"
+	@echo "[Ergo] Setting up for Node.js build"
 	@echo "[Ergo] "
 	lerna bootstrap
 

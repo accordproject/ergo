@@ -69,9 +69,9 @@ require('yargs')
                 Logger.error(err.message + '\n' + JSON.stringify(err));
             });
     })
-    .command('execute', 'send a request to the contract', (yargs) => {
+    .command('trigger', 'send a request to the contract', (yargs) => {
         yargs.demandOption(['data', 'request'], 'Please provide at least the contract data and a request');
-        yargs.usage('Usage: $0 request --data [file] --state [file] --request [file] [cto files] [ergo files]');
+        yargs.usage('Usage: $0 trigger --data [file] --state [file] --request [file] [cto files] [ergo files]');
         yargs.option('data', {
             describe: 'path to the contract data'
         });
@@ -106,7 +106,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.execute(argv.template, files, { file: argv.data }, argv.state ? { file: argv.state } : null,
+        Commands.trigger(argv.template, files, { file: argv.data }, argv.state ? { file: argv.state } : null,
             argv.currentTime, argv.request.map(r => { return { file: r }; }), argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));

@@ -179,12 +179,12 @@ function runWorkload(Engine, target) {
                         const request = test.request;
                         const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                         if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime, options)
+                            return engine.compileAndTrigger(logicManager, contractJson, requestJson, stateJson, currentTime, options)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndExecute(logicManager, contractJson, requestJson, stateJson, currentTime, options)
+                            return engine.compileAndTrigger(logicManager, contractJson, requestJson, stateJson, currentTime, options)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });

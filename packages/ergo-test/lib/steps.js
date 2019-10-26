@@ -41,7 +41,7 @@ function init(engine,logicManager,contractJson,currentTime) {
 }
 
 /**
- * Execute the Ergo contract with a request
+ * Trigger the Ergo contract with a request
  *
  * @param {object} engine - the execution engine
  * @param {object} logicManager - the Template Logic
@@ -51,8 +51,8 @@ function init(engine,logicManager,contractJson,currentTime) {
  * @param {object} requestJson - state data in JSON
  * @returns {object} Promise to the response
  */
-function execute(engine,logicManager,contractJson,stateJson,currentTime,requestJson) {
-    return engine.compileAndExecute(logicManager,contractJson,requestJson,stateJson,currentTime);
+function trigger(engine,logicManager,contractJson,stateJson,currentTime,requestJson) {
+    return engine.compileAndTrigger(logicManager,contractJson,requestJson,stateJson,currentTime);
 }
 
 // Defaults
@@ -120,7 +120,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ response },this.answer);
     } else {
-        return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -157,7 +157,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ state },this.answer);
     } else {
-        return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -174,7 +174,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ emit },this.answer);
     } else {
-        return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
@@ -196,7 +196,7 @@ Then('the following initial obligations have( also) been emitted', function (exp
 });
 
 Then('it should fail with the error', function (expectedError) {
-    return execute(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+    return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
         .catch((actualError) => {
             expect(actualError.message).to.equal(expectedError);
         });
