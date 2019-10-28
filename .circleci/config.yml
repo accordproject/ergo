@@ -64,7 +64,8 @@ common_steps: &common_steps
         name: 'Build the Ergo compiler'
         command:  |
           eval $(opam env)
-          make ergo
+          make setup
+          make all
     - run:
         name: 'Testing'
         command:  |

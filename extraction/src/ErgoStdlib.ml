@@ -16,13 +16,13 @@ open Resources
 
 let ergo_stdcto =
   [ ("$ERGODIR/extraction/stdlib/accordproject.cto", accordproject);
-    ("$ERGODIR/extraction/stdlib/contract.cto", contract);
-    ("$ERGODIR/extraction/stdlib/money.cto", money);
-    ("$ERGODIR/extraction/stdlib/time.cto", time);
+    ("$ERGODIR/extraction/stdlib/contract.cto", Contract.contract);
+    ("$ERGODIR/extraction/stdlib/money.cto", Money.money);
+    ("$ERGODIR/extraction/stdlib/time.cto", Time.time);
     ("$ERGODIR/extraction/stdlib/options.cto", options);
-    ("$ERGODIR/extraction/stdlib/runtime.cto", runtime);
-    ("$ERGODIR/extraction/stdlib/commonmark.cto", commonmark);
-    ("$ERGODIR/extraction/stdlib/ciceromark.cto", ciceromark); ]
+    ("$ERGODIR/extraction/stdlib/runtime.cto", Runtime.runtime);
+    ("$ERGODIR/extraction/stdlib/commonmark.cto", Commonmark.commonmark);
+    ("$ERGODIR/extraction/stdlib/ciceromark.cto", Ciceromark.ciceromark); ]
 let ergo_stdlib =
   [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", stdlib);
     ("$ERGODIR/extraction/stdlib/etime.ergo", etime);

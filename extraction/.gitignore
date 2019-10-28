@@ -17,10 +17,8 @@
 /out/
 /*.aux
 /.paths
-extracted/StaticConfig.ml
-extracted/ErgoComp.ml
-extracted/ErgoComp.mli
-extracted/Resources.ml
+extracted/*.ml
+extracted/*.mli
 src/Cto_j.ml
 src/Cto_j.mli
 src/Cto_t.ml
