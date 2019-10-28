@@ -24,7 +24,7 @@ The code is located in the following directories:
 Before you can build Ergo, you must install and configure the following prerequisites on your machine:
 
 * [Git](http://git-scm.com/): The [Github Guide to Installing Git][git-setup] is a good source of information.
-* [Node.js v8.x \(LTS\)](http://nodejs.org): We use Node to generate the documentation, run a development web server, run tests, and generate distributable files. Depending on your system, you can install Node either from source or as a pre-packaged bundle.
+* [Node.js v8.x \(LTS\)](http://nodejs.org): We use Node to generate the documentation, run a development web server, run tests, and generate distributable files. Depending on your system, you can install Node either from the source or as a pre-packaged bundle.
 
 We recommend using [nvm](https://github.com/creationix/nvm) (or [nvm-windows](https://github.com/coreybutler/nvm-windows)) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
 
@@ -141,15 +141,15 @@ Must be one of the following:
 
 ### Scope
 The scope will be specifying the place of the commit change; the focal point of new code or best
-description for where changes can be found.
+description of where changes can be found.
 
 You can use `*` when the change affects more than a single scope.
 
 ### Subject
-The subject contains succinct description of the change:
+The subject contains a succinct description of the change:
 
 * use the imperative, present tense: "change" not "changed" nor "changes"
-* don't capitalize first letter
+* don't capitalize the first letter
 * kept under 50 characters
 * no dot (.) at the end
 
@@ -172,7 +172,7 @@ Formatting for the body is displayed in this example:
  - Subchange one
  - Subchange two
 - Change two
-- Theoretically this should be listing all the commit messages included in this PR
+- Theoretically, this should be listing all the commit messages included in this PR
 
 ### Flags
 - Possible issues or holds for reviewers to note
