@@ -109,7 +109,7 @@ We have very precise rules over how our git commit messages can be formatted.  T
 readable messages** that are easy to follow when looking through the **project history** and **git logs**. 
 But also, we use the git commit messages to **generate the Ergo change log**.
 
-The commit message formatting can be added using a version of the typical git workflow.
+The commit message formatting can be added using a version of typical git workflow.
 
 ### Commit Message Format
 Each commit message consists of a mandatory **type**, **scope**, **subject**, and **footer**. This is a specific format:
