@@ -26,9 +26,12 @@ FILES = $(addprefix mechanization/,$(MODULES:%=%.v))
 all:
 	@$(MAKE) MAKEFLAGS= ergo
 
+# Setup
+setup:
+	@$(MAKE) npm-setup
+
 # Regenerate the npm directory
 ergo:
-	@$(MAKE) npm-setup
 	@$(MAKE) ergo-mechanization
 	@$(MAKE) MAKEFLAGS= ergo-extraction-refresh
 
@@ -54,7 +57,7 @@ npm-setup:
 	@echo "[Ergo] "
 	@echo "[Ergo] Setting up for Node.js build"
 	@echo "[Ergo] "
-	lerna bootstrap
+	npm install
 
 ## Documentation
 documentation:
@@ -86,6 +89,7 @@ clean-npm:
 	- @rm -rf dist
 
 cleanall-npm: clean-npm
+	- @node ./scripts/external/cleanExternalModels.js
 	- @rm -f ergo*.tgz
 	- @rm -rf node_modules
 	- @rm -rf .nyc_output
@@ -107,7 +111,6 @@ cleanall: Makefile.coq
 	- @$(MAKE) cleanall-npm
 	- @$(MAKE) cleanall-extraction
 	- @$(MAKE) cleanall-mechanization
-	- @$(MAKE) cleanall-npm
 	- @$(MAKE) -C packages/ergo-compiler cleanall
 	- @$(MAKE) -C packages/ergo-engine cleanall
 	- @$(MAKE) -C packages/ergo-cli cleanall

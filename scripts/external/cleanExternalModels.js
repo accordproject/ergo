@@ -12,23 +12,17 @@
  * limitations under the License.
  */
 
-namespace org.accordproject.ergo.monitor
+'use strict';
 
-/**
- * Describes a phase
- */
-concept Phase {
-  o String name
-  o Double single
-  o Double cummulative
-  o Double total
-  o Phase[] subphases
+const path = require('path');
+
+const scriptDir = path.join(__dirname,'..','..');
+const ergoModels = require('./ergo.json');
+
+const { process } = require('./processExternals');
+
+async function run() {
+    await process(scriptDir, ergoModels, true); // Add models to markdown-common
+    console.log('DONE!');
 }
-
-/**
- * Monitor
- */
-concept Monitor {
-  o Phase[] phases
-}
-
+run();

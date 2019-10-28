@@ -24,7 +24,7 @@ The code is located in the following directories:
 Before you can build Ergo, you must install and configure the following prerequisites on your machine:
 
 * [Git](http://git-scm.com/): The [Github Guide to Installing Git][git-setup] is a good source of information.
-* [Node.js v8.x \(LTS\)](http://nodejs.org): We use Node to generate the documentation, run a development web server, run tests, and generate distributable files. Depending on your system, you can install Node either from the source or as a pre-packaged bundle.
+* [Node.js v10.x \(LTS\)](http://nodejs.org): We use Node to generate the documentation, run a development web server, run tests, and generate distributable files. Depending on your system, you can install Node either from the source or as a pre-packaged bundle.
 
 We recommend using [nvm](https://github.com/creationix/nvm) (or [nvm-windows](https://github.com/coreybutler/nvm-windows)) to manage and install Node.js, which makes it easy to change the version of Node.js per project.
 
@@ -74,7 +74,8 @@ To recompile Ergo from its source, do:
 
 ```sh
 $ make cleanall
-$ make
+$ make setup
+$ make all
 ```
 
 If successful, you should find the following binaries in the `bin/` directory:
