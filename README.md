@@ -24,7 +24,7 @@ The Ergo compiler is distributed as an [npm package][npmpkg].
 
 The Ergo compiler is written using the [Coq][coq] proof assistant, with parsing and support code written in [OCaml][OCaml]. It makes extensive use of the [Q*cert compiler][Qcert] for code generation and type checking.
 
-Both the Ergo language and its compiler are in early development phase. If you would like to build from source or to contribute, consult the [DEVELOPERS][developers] file.
+Both the Ergo language and its compiler are in the early development phase. If you would like to build from source or to contribute, consult the [DEVELOPERS][developers] file.
 
 ## Try Ergo online
 
@@ -56,7 +56,7 @@ This will install the Ergo command-line (`ergo`) and Read-Eval-Print-Loop (`ergo
 $ ergo --version
 ```
 
-Or to get command line help:
+Or to get command-line help:
 
 ```sh
 $ ergo --help
@@ -64,7 +64,7 @@ ergo <command>
 
 Commands:
   ergo draft       create a contract text from data
-  ergo execute     send a request to the contract
+  ergo trigger     send a request to the contract
   ergo invoke      invoke a clause of the contract
   ergo initialize  initialize the state for a contract
   ergo compile     compile a contract
@@ -97,7 +97,7 @@ $ ergo initialize --template ./examples/volumediscount --data ./examples/volumed
 To send a request to a contract:
 
 ```sh
-$ ergo execute --template ./examples/volumediscount --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergo trigger --template ./examples/volumediscount --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
 06:40:01 - info:
 {
   "clause": "orgXaccordprojectXvolumediscountXVolumeDiscount",
@@ -156,7 +156,7 @@ the compiled JavaScript code in `./examples/volumediscount/logic.js`
   </a>
 </p>
 
-Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
+Accord Project is an open source, a non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
 
 ## Learn More About Accord Project
 

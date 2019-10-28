@@ -94,7 +94,7 @@ class Commands {
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static async execute(template,files,contractInput,stateInput,currentTime,requestsInput,warnings) {
+    static async trigger(template,files,contractInput,stateInput,currentTime,requestsInput,warnings) {
         try {
             const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);
@@ -113,7 +113,7 @@ class Commands {
             // Get all the other requests and chain execution through Promise.reduce()
             return requestsJson.reduce((promise,requestJson) => {
                 return promise.then((result) => {
-                    return engine.compileAndExecute(logicManager, contractJson, requestJson, result.state, currentTime, null);
+                    return engine.compileAndTrigger(logicManager, contractJson, requestJson, result.state, currentTime, null);
                 });
             }, initResponse);
         } catch (err) {

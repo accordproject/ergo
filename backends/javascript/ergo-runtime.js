@@ -835,11 +835,11 @@ function dateTimeEndOf(part, date) {
 
 /* encode/decode */
 function encodeString(v) {
-  return encodeURI(v);
+  return encodeURIComponent(v);
 }
 
 function decodeString(v) {
-  return decodeURI(v);
+  return decodeURIComponent(v);
 }
 
 /* Logging */

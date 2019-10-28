@@ -41,7 +41,7 @@ class EvalEngine extends Engine {
     }
 
     /**
-     * Call to compile a script for a JavaScript machine
+     * Compile a script for a JavaScript machine
      * @param {string} script - the script
      * @return {object} the VM-ready script object
      */
@@ -50,7 +50,7 @@ class EvalEngine extends Engine {
     }
 
     /**
-     * Call to execute a call in a JavaScript machine
+     * Execute a call in a JavaScript machine
      * @param {number} utcOffset - UTC Offset for this execution
      * @param {object} now - the definition of 'now'
      * @param {object} options to the text generation
