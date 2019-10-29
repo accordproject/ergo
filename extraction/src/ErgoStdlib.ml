@@ -19,7 +19,7 @@ let ergo_stdcto =
     ("$ERGODIR/extraction/stdlib/contract.cto", Contract.contract);
     ("$ERGODIR/extraction/stdlib/money.cto", Money.money);
     ("$ERGODIR/extraction/stdlib/time.cto", Time.time);
-    ("$ERGODIR/extraction/stdlib/options.cto", options);
+    ("$ERGODIR/extraction/stdlib/options.cto", Options.options);
     ("$ERGODIR/extraction/stdlib/runtime.cto", Runtime.runtime);
     ("$ERGODIR/extraction/stdlib/commonmark.cto", Commonmark.commonmark);
     ("$ERGODIR/extraction/stdlib/ciceromark.cto", Ciceromark.ciceromark); ]

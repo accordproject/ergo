@@ -111,11 +111,11 @@ ATDS=src/Cto_t.ml src/Cto_t.mli src/Cto_j.ml src/Cto_j.mli src/Monitor_t.ml src/
 %.ctoj: %.cto
 	../scripts/cto2ctoj.js parse $<
 
-extracted/Resources.ml: stdlib/accordproject.ctoj stdlib/options.ctoj \
+extracted/Resources.ml: stdlib/accordproject.ctoj \
                         stdlib/stdlib.ergo stdlib/etime.ergo stdlib/template.ergo \
                         ../backends/javascript/ergo-runtime.js
 	echo '(* generated ocaml file *)' > extracted/Resources.ml
-	(for i in accordproject options; do \
+	(for i in accordproject; do \
          echo "let $$i = {xxx|"; \
          cat stdlib/$$i.ctoj; \
          echo "|xxx}"; \
