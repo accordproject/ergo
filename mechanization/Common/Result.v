@@ -325,6 +325,10 @@ Section Result.
       end.
     Definition print_warnings {A:Set} (prefix:string) (x:eresult A) : eresult A :=
       elift_warning (fun xy => coq_print_warnings prefix (List.map string_of_warning (snd xy)) (fst xy)) x.
+
+    Definition warning_no_else prov : ewarning :=
+      EWarning prov "No else in enforce".
+    Definition warning_global_shadowing prov (name:string) :=
+      EWarning prov ("Constant " ++ name ++ " hides an existing constant with the same name").
   End warnings.
 End Result.
-

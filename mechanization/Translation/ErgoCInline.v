@@ -205,9 +205,16 @@ Section ErgoCInline.
     | DCExpr prov expr =>
       elift (fun x => (DCExpr prov x, ctxt)) (ergo_inline_expr ctxt expr)
     | DCConstant prov name ta expr =>
-      elift (fun x =>
-               (DCConstant prov name ta x, compilation_context_update_global_env ctxt name x))
-            (ergo_inline_expr ctxt expr)
+      let global_shadowing_warning :=
+          match lookup String.string_dec (ctxt.(compilation_context_global_env)) name with
+          | Some val => warning_global_shadowing prov name :: nil
+          | None => nil
+          end
+      in
+      eolift (fun x =>
+                
+                (esuccess (DCConstant prov name ta x, compilation_context_update_global_env ctxt name x) global_shadowing_warning))
+             (ergo_inline_expr ctxt expr)
     | DCFunc prov name fn =>
       elift (fun x =>
                (DCFunc prov name x, compilation_context_update_function_env ctxt name x))
