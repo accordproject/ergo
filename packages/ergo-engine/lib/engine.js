@@ -226,7 +226,7 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    async generateText(logic, contractId, contract, params, currentTime, options) {
+    async draft(logic, contractId, contract, params, currentTime, options) {
         options = options || {};
 
         const defaultState = {
@@ -263,10 +263,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndGenerateText(logic, contract, params, currentTime, options) {
+    compileAndDraft(logic, contract, params, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.generateText(logic, contractId, contract, params, currentTime, options);
+            return this.draft(logic, contractId, contract, params, currentTime, options);
         });
     }
 

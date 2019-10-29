@@ -148,12 +148,12 @@ function runWorkload(Engine, target) {
                     if (test.clauseName) {
                         if (test.clauseName === 'generateText') {
                             if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                                return engine.compileAndGenerateText(logicManager, contractJson, {}, currentTime, options)
+                                return engine.compileAndDraft(logicManager, contractJson, {}, currentTime, options)
                                     .catch((actualError) => {
                                         expect(actualError.message).to.equal(expected.error);
                                     });
                             } else {
-                                return engine.compileAndGenerateText(logicManager, contractJson, {}, currentTime, options)
+                                return engine.compileAndDraft(logicManager, contractJson, {}, currentTime, options)
                                     .then((actualAnswer) => {
                                         return compareSuccess(expected, actualAnswer);
                                     });
