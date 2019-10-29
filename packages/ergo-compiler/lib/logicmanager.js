@@ -288,10 +288,10 @@ unwrapError(__result);
      * Add Ergo built-in models
      */
     addErgoBuiltin() {
-        this.addModelFile(Builtin.timeModel, '@org.accordproject.time.cto');
-        this.addModelFile(Builtin.moneyModel, '@org.accordproject.money.cto');
-        this.addModelFile(Builtin.contractModel, '@org.accordproject.cicero.contract.cto');
-        this.addModelFile(Builtin.runtimeModel, '@org.accordproject.cicero.runtime.cto');
+        this.addModelFile(Builtin.TimeModel, '@org.accordproject.time.cto');
+        this.addModelFile(Builtin.MoneyModel, '@org.accordproject.money.cto');
+        this.addModelFile(Builtin.ContractModel, '@org.accordproject.cicero.contract.cto');
+        this.addModelFile(Builtin.RuntimeModel, '@org.accordproject.cicero.runtime.cto');
         this.validateModelFiles();
     }
 

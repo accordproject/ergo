@@ -32,8 +32,7 @@ class APModelManager extends ModelManager {
      */
     constructor() {
         super();
-        this.addModelFile(Builtin.systemModel, 'org.accordproject.base.cto', false, true);
-        this.addModelFile(Builtin.markdownModel, '@org.accordproject.markdown', false, true);
+        this.addModelFile(Builtin.SystemModel, 'org.accordproject.base.cto', false, true);
     }
 
     /**

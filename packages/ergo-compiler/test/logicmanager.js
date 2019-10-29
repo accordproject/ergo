@@ -306,12 +306,12 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.cicero.contract.cto',
+                '@models.accordproject.org.money@0.2.0.cto',
+                '@models.accordproject.org.cicero.contract.cto',
                 '@org.accordproject.cicero.runtime.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(462);
+            modelManager.getModels()[0].content.length.should.equal(1330);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(43413);
         });
 
@@ -320,12 +320,12 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.cicero.contract.cto',
+                '@models.accordproject.org.money@0.2.0.cto',
+                '@models.accordproject.org.cicero.contract.cto',
                 '@org.accordproject.cicero.runtime.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(462);
+            modelManager.getModels()[0].content.length.should.equal(1330);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(39698);
         });
     });
@@ -337,12 +337,12 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.cicero.contract.cto',
+                '@models.accordproject.org.money@0.2.0.cto',
+                '@models.accordproject.org.cicero.contract.cto',
                 '@org.accordproject.cicero.runtime.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(462);
+            modelManager.getModels()[0].content.length.should.equal(1330);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(43413);
         });
 
@@ -352,12 +352,12 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.cicero.contract.cto',
+                '@models.accordproject.org.money@0.2.0.cto',
+                '@models.accordproject.org.cicero.contract.cto',
                 '@org.accordproject.cicero.runtime.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(462);
+            modelManager.getModels()[0].content.length.should.equal(1330);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(39698);
         });
     });
@@ -373,12 +373,12 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.cicero.contract.cto',
+                '@models.accordproject.org.money@0.2.0.cto',
+                '@models.accordproject.org.cicero.contract.cto',
                 '@org.accordproject.cicero.runtime.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(462);
+            modelManager.getModels()[0].content.length.should.equal(1330);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(43413);
         });
 
@@ -392,12 +392,12 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.cicero.contract.cto',
+                '@models.accordproject.org.money@0.2.0.cto',
+                '@models.accordproject.org.cicero.contract.cto',
                 '@org.accordproject.cicero.runtime.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(462);
+            modelManager.getModels()[0].content.length.should.equal(1330);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(39698);
         });
     });
