@@ -79,7 +79,9 @@
     "include": [
       "lib/**/*.js"
     ],
-    "exclude": [],
+    "exclude": [
+      "lib/externalModels/*.js"
+    ],
     "all": true,
     "check-coverage": true,
     "statements": 93,
