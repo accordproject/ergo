@@ -61,7 +61,7 @@ async function loadTemplate(template, files) {
  */
 class Commands {
     /**
-     * Invoke generateText for an Ergo contract
+     * Invoke draft for an Ergo contract
      *
      * @param {string} template - template directory
      * @param {string[]} files - input files
@@ -79,7 +79,7 @@ class Commands {
             'template': true,
         };
         const engine = new Engine();
-        return engine.compileAndGenerateText(logicManager,contractJson,{},currentTime,markdownOtions);
+        return engine.compileAndDraft(logicManager,contractJson,{},currentTime,markdownOtions);
     }
 
     /**
