@@ -42,18 +42,26 @@ Section ErgoNameResolution.
       (ns', ctxt)
     | DImport _ _ :: rest =>
       namespace_ctxt_of_ergo_decls ctxt ns rest
-    | DType tname td :: rest =>
+    | DType prov td :: rest =>
       let ln := td.(type_declaration_name) in
       let an := absolute_name_of_local_name ns ln in
+      let ef : enum_flag :=
+          match type_declaration_is_enum td.(type_declaration_type) with
+          | None => EnumNone
+          | Some enum_list =>
+            let proc_enum := globals_from_enum prov (an,enum_list) in
+            EnumType (map (fun xyz => (fst (fst xyz), snd xyz)) proc_enum)
+          end
+      in
       let (ns, ctxt) := namespace_ctxt_of_ergo_decls ctxt ns rest in
-      (ns, add_type_to_namespace_ctxt ctxt ns ln an)
+      (ns, add_type_to_namespace_ctxt ctxt ns ln an ef)
     | DStmt _ _ :: rest =>
       let ctxt := namespace_ctxt_of_ergo_decls ctxt ns rest in
       ctxt
     | DConstant _ ln ta cd :: rest =>
       let an := absolute_name_of_local_name ns ln in
       let (ns, ctxt) := namespace_ctxt_of_ergo_decls ctxt ns rest in
-      (ns, add_constant_to_namespace_ctxt ctxt ns ln None an)
+      (ns, add_constant_to_namespace_ctxt ctxt ns ln EnumNone an)
     | DFunc _ ln fd :: rest =>
       let an := absolute_name_of_local_name ns ln in
       let (ns, ctxt) := namespace_ctxt_of_ergo_decls ctxt ns rest in
@@ -96,8 +104,17 @@ Section ErgoNameResolution.
         match lookup string_dec ctxt.(namespace_ctxt_modules) ns with
         | Some tbl =>
           match lookup string_dec tbl.(namespace_table_types) ln with
-          | None => import_name_not_found_error prov ns ln
-          | Some an => esuccess (one_type_to_namespace_table ln (fst an)) nil
+          | None =>
+            match lookup string_dec tbl.(namespace_table_constants) ln with
+            | Some an =>
+              esuccess (import_one_constant_to_namespace_table ln (fst an)) nil
+            | None =>
+              import_name_not_found_error prov ns ln
+            end
+          | Some (an,EnumType l) =>
+            esuccess (import_one_enum_type_to_namespace_table ln an l) nil
+          | Some (an,_) =>
+            esuccess (import_one_type_to_namespace_table ln an) nil
           end
         | None => import_not_found_error prov ns
         end
@@ -281,8 +298,8 @@ Section ErgoNameResolution.
       let name := absolute_name_of_local_name module_ns decl.(type_declaration_name) in
       let enumglobals : list (string * laergo_expr * data) :=
           match type_declaration_is_enum decl.(type_declaration_type) with
-          | Some enum_list => globals_from_enum prov (name,enum_list)
           | None => nil
+          | Some enum_list => globals_from_enum prov (name,enum_list)
           end
       in
       let actxt :=
@@ -322,13 +339,13 @@ Section ErgoNameResolution.
       | EThisClause prov => esuccess (EThisClause prov) nil
       | EThisState prov => esuccess (EThisState prov) nil
       | EVar prov (None,v) =>
-        let cname := resolve_constant_name prov nsctxt (None,v) in
+        let cname := resolve_all_constant_name prov nsctxt (None,v) in
         elift_both
           (fun x => esuccess (EVar prov x) nil)
           (fun e => esuccess (EVar prov v) nil)
           cname
       | EVar prov (Some ns,v) =>
-        let cname := resolve_constant_name prov nsctxt (Some ns,v) in
+        let cname := resolve_all_constant_name prov nsctxt (Some ns,v) in
         elift
           (EVar prov)
           cname
@@ -637,11 +654,11 @@ Section ErgoNameResolution.
 
     Definition resolve_ergo_declaration
                (nsctxt:namespace_ctxt)
-               (d:lrergo_declaration)
+               (decl:lrergo_declaration)
       : eresult (list laergo_declaration * namespace_ctxt) :=
       let module_ns : namespace_name := nsctxt.(namespace_ctxt_namespace) in
       let actxt := nsctxt.(namespace_ctxt_abstract) in
-      match d with
+      match decl with
       | DNamespace prov ns =>
         esuccess (DNamespace prov ns :: nil, local_namespace_scope nsctxt ns) nil
       | DImport prov id =>
@@ -649,7 +666,15 @@ Section ErgoNameResolution.
       | DType prov td =>
         let ln := td.(type_declaration_name) in
         let an := absolute_name_of_local_name module_ns ln in
-        let nsctxt := add_type_to_namespace_ctxt_current nsctxt ln an in
+        let ef : enum_flag :=
+            match type_declaration_is_enum td.(type_declaration_type) with
+            | None => EnumNone
+            | Some enum_list =>
+              let proc_enum := globals_from_enum prov (an,enum_list) in
+              EnumType (map (fun xyz => (fst (fst xyz), snd xyz)) proc_enum)
+            end
+        in
+        let nsctxt := add_type_to_namespace_ctxt_current nsctxt ln an ef in
         elift (fun xy : abstract_ctxt * laergo_declaration * list (string * laergo_expr * data) =>
                  let '(actxt,x,globalenums) := xy in
                  let nsctxt := update_namespace_context_abstract nsctxt actxt in
@@ -659,10 +684,10 @@ Section ErgoNameResolution.
                        (map (fun xyz : string * laergo_expr * data =>
                                let '(en, expr, d) := xyz in
                                let an := absolute_name_of_local_name enum_ns en in
-                               ((en,(an,Some d)), DConstant prov an None expr)
+                               ((en,(an,EnumValue d)), DConstant prov an None expr)
                                ) globalenums)
                  in
-                 let nsctxt := add_econstants_to_namespace_ctxt nsctxt enum_ns rglobalnames in
+                 let nsctxt := add_econstants_to_namespace_ctxt_current nsctxt enum_ns rglobalnames in
                  (x::rglobalenums, nsctxt))
               (resolve_ergo_type_declaration prov module_ns nsctxt (actxt, td))
       | DStmt prov st =>
@@ -675,8 +700,8 @@ Section ErgoNameResolution.
             | Some ta => elift Some (resolve_ergo_type nsctxt ta)
             end
         in
-        let nsctxt := add_constant_to_namespace_ctxt_current nsctxt ln None an in
-        elift2 (fun ta x => (DConstant prov an ta x::nil, nsctxt)) (* XXX Switch to use global name! *) 
+        let nsctxt := add_constant_to_namespace_ctxt_current nsctxt ln an EnumNone in
+        elift2 (fun ta x => (DConstant prov an ta x::nil, nsctxt))
                rta
                (resolve_ergo_expr nsctxt e)
       | DFunc prov ln fd =>

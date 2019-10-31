@@ -18,6 +18,7 @@
 
 Require Import String.
 Require Import List.
+Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.ErgoBackend.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Names.
@@ -27,8 +28,11 @@ Section NamespaceContext.
 
   Section NameTable.
     (** Maps local names to absolute names for a given ErgoType module *)
-    Definition enum_value : Set := option data.
-    Definition name_table : Set := list (local_name * (absolute_name * enum_value)).
+    Inductive enum_flag :=
+    | EnumNone : enum_flag
+    | EnumValue : data -> enum_flag
+    | EnumType : list (string * data) -> enum_flag.
+    Definition name_table : Set := list (local_name * (absolute_name * enum_flag)).
 
     (** Maps namespaces to the names tables for that namespace *)
     Record namespace_table : Set :=
@@ -41,16 +45,18 @@ Section NamespaceContext.
     Definition empty_namespace_table : namespace_table :=
       mkNamespaceTable nil nil nil nil.
 
-    Definition one_type_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
-      mkNamespaceTable ((ln,(an,None))::nil) nil nil nil.
-    Definition one_constant_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
-      mkNamespaceTable nil ((ln,(an,None))::nil) nil nil.
-    Definition one_econstant_to_namespace_table (ln:local_name) (an:absolute_name) (enum:data) : namespace_table :=
-      mkNamespaceTable nil ((ln,(an,Some enum))::nil) nil nil.
-    Definition one_function_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
-      mkNamespaceTable nil nil ((ln,(an,None))::nil) nil.
-    Definition one_contract_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
-      mkNamespaceTable nil nil nil ((ln,(an,None))::nil).
+    Definition import_one_type_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
+      mkNamespaceTable ((ln,(an,EnumNone))::nil) nil nil nil.
+    Definition import_one_enum_type_to_namespace_table (ln:local_name) (an:absolute_name) (el:list (string * data)) : namespace_table :=
+      let cs := map (fun ef : string * data => let (ename,d) := ef in
+                               (ename, (absolute_name_of_local_name an ename, EnumValue d))) el in
+      mkNamespaceTable ((ln,(an,EnumType el))::nil) cs nil nil.
+    Definition import_one_constant_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
+      mkNamespaceTable nil ((ln,(an,EnumNone))::nil) nil nil.
+    Definition import_one_function_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
+      mkNamespaceTable nil nil ((ln,(an,EnumNone))::nil) nil.
+    Definition import_one_contract_to_namespace_table (ln:local_name) (an:absolute_name) : namespace_table :=
+      mkNamespaceTable nil nil nil ((ln,(an,EnumNone))::nil).
 
     Definition namespace_table_app (tbl1 tbl2:namespace_table) : namespace_table :=
       mkNamespaceTable
@@ -64,19 +70,18 @@ Section NamespaceContext.
       | None => type_name_not_found_error prov ln
       | Some an => esuccess (fst an) nil
       end.
+
     Definition lookup_constant_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_constants) ln with
       | None => variable_name_not_found_error prov ln
-      | Some an => esuccess (fst an) nil
+      | Some (an,EnumNone) => esuccess an nil
+      | Some (_,_) => variable_name_not_found_error prov ln
       end.
     Definition lookup_econstant_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult (absolute_name * data) :=
       match lookup string_dec tbl.(namespace_table_constants) ln with
       | None => enum_name_not_found_error prov ln
-      | Some an =>
-        match snd an with
-        | None => enum_name_not_found_error prov ln
-        | Some d => esuccess (fst an, d) nil
-        end
+      | Some (an,EnumValue d) => esuccess (an, d) nil
+      | Some (_, _) => enum_name_not_found_error prov ln
       end.
     Definition lookup_function_name (prov:provenance) (tbl:namespace_table) (ln:local_name) : eresult absolute_name :=
       match lookup string_dec tbl.(namespace_table_functions) ln with
@@ -89,19 +94,19 @@ Section NamespaceContext.
       | Some an => esuccess (fst an) nil
       end.
 
-    Definition add_type_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=
+    Definition add_type_to_namespace_table (ln:local_name) (an:absolute_name) (ef:enum_flag) (tbl:namespace_table) :=
       mkNamespaceTable
-        ((ln,(an,None))::tbl.(namespace_table_types))
+        ((ln,(an,ef))::tbl.(namespace_table_types))
         tbl.(namespace_table_constants)
         tbl.(namespace_table_functions)
-        tbl.(namespace_table_contracts).
-    Definition add_constant_to_namespace_table (ln:local_name) (enum:option data) (an:absolute_name) (tbl:namespace_table) :=
+              tbl.(namespace_table_contracts).
+    Definition add_constant_to_namespace_table (ln:local_name) (an:absolute_name) (ef:enum_flag) (tbl:namespace_table) :=
       mkNamespaceTable
         tbl.(namespace_table_types)
-        ((ln,(an,enum))::tbl.(namespace_table_constants))
+        ((ln,(an,ef))::tbl.(namespace_table_constants))
         tbl.(namespace_table_functions)
         tbl.(namespace_table_contracts).
-    Definition add_constants_to_namespace_table (lns:list (local_name * (absolute_name * enum_value))) (tbl:namespace_table) :=
+    Definition add_constants_to_namespace_table (lns:list (local_name * (absolute_name * enum_flag))) (tbl:namespace_table) :=
       mkNamespaceTable
         tbl.(namespace_table_types)
         (lns ++ tbl.(namespace_table_constants))
@@ -117,14 +122,14 @@ Section NamespaceContext.
       mkNamespaceTable
         tbl.(namespace_table_types)
         tbl.(namespace_table_constants)
-        ((ln,(an,None))::tbl.(namespace_table_functions))
+        ((ln,(an,EnumNone))::tbl.(namespace_table_functions))
         tbl.(namespace_table_contracts).
     Definition add_contract_to_namespace_table (ln:local_name) (an:absolute_name) (tbl:namespace_table) :=
       mkNamespaceTable 
         tbl.(namespace_table_types)
         tbl.(namespace_table_constants)
         tbl.(namespace_table_functions)
-        ((ln,(an,None))::tbl.(namespace_table_contracts)).
+        ((ln,(an,EnumNone))::tbl.(namespace_table_contracts)).
   End NameTable.
 
   Definition abstract_ctxt : Set := list string.
@@ -196,23 +201,12 @@ Section NamespaceContext.
                     actxt.
     
   Definition add_type_to_namespace_ctxt
-             (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) (an:absolute_name) :=
-    update_namespace_context_modules ctxt ns (add_type_to_namespace_table ln an).
+             (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) (an:absolute_name) (ef:enum_flag) :=
+    update_namespace_context_modules ctxt ns (add_type_to_namespace_table ln an ef).
 
   Definition add_constant_to_namespace_ctxt
-             (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) (enum:option data) (an:absolute_name) :=
-    update_namespace_context_modules ctxt ns (add_constant_to_namespace_table ln enum an).
-
-  Definition add_econstants_to_namespace_ctxt
-             (ctxt:namespace_ctxt) (ens:namespace_name)
-             (lns:list (local_name * (absolute_name * enum_value))) : namespace_ctxt :=
-    let ctxt :=
-        fold_left (fun ctxt xyz =>
-                     let '(ln,(an,flag)):= xyz in
-                     update_namespace_context_current_both ctxt (add_constant_to_namespace_table ln flag an))
-                  lns ctxt
-    in
-    update_namespace_context_modules ctxt ens (add_constants_to_namespace_table lns).
+             (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) (ef:enum_flag) (an:absolute_name) :=
+    update_namespace_context_modules ctxt ns (add_constant_to_namespace_table ln an ef).
 
   Definition add_function_to_namespace_ctxt
              (ctxt:namespace_ctxt) (ns:namespace_name) (ln:local_name) (an:absolute_name) :=
@@ -223,12 +217,23 @@ Section NamespaceContext.
     update_namespace_context_modules ctxt ns (add_contract_to_namespace_table ln an).
 
   Definition add_type_to_namespace_ctxt_current
-             (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) :=
-    update_namespace_context_current_both ctxt (add_type_to_namespace_table ln an).
+             (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) (ef:enum_flag) :=
+    update_namespace_context_current_both ctxt (add_type_to_namespace_table ln an ef).
 
   Definition add_constant_to_namespace_ctxt_current
-             (ctxt:namespace_ctxt) (ln:local_name) (enum:enum_value) (an:absolute_name) :=
-    update_namespace_context_current_both ctxt (add_constant_to_namespace_table ln enum an).
+             (ctxt:namespace_ctxt) (ln:local_name) (an:absolute_name) (ef:enum_flag) :=
+    update_namespace_context_current_both ctxt (add_constant_to_namespace_table ln an ef).
+
+  Definition add_econstants_to_namespace_ctxt_current
+             (ctxt:namespace_ctxt) (ens:namespace_name)
+             (lns:list (local_name * (absolute_name * enum_flag))) : namespace_ctxt :=
+    let ctxt :=
+        fold_left (fun ctxt xyz =>
+                     let '(ln,(an,ef)):= xyz in
+                     update_namespace_context_current_both ctxt (add_constant_to_namespace_table ln an ef))
+                  lns ctxt
+    in
+    (update_namespace_context_modules ctxt ens (add_constants_to_namespace_table lns)).
 
   Definition hide_constant_from_namespace_ctxt_current
              (ctxt:namespace_ctxt) (ln:local_name) :=
@@ -333,6 +338,9 @@ Section NamespaceContext.
     | None => lookup_econstant_name prov tbl (snd rn)
     | Some ns => verify_econstant_name prov ctxt ns (snd rn)
     end.
+  Definition resolve_all_constant_name (prov:provenance) (ctxt:namespace_ctxt) (rn:relative_name) :=
+    elift_fail (fun _ => elift fst (resolve_econstant_name prov ctxt rn))
+               (resolve_constant_name prov ctxt rn).
   Definition resolve_function_name (prov:provenance) (ctxt:namespace_ctxt) (rn:relative_name) :=
     let tbl : namespace_table := ctxt.(namespace_ctxt_current_in_scope) in
     match fst rn with
