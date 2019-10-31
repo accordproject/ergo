@@ -123,6 +123,11 @@ Section Result.
         (elift f a).
 
     (* XXX Those lose warnings *)
+    Definition elift_fail {A:Set} (g:eerror -> eresult A) (a:eresult A) : eresult A :=
+      match a with
+      | Success _ _ (s,_) => a
+      | Failure _ _ e => g e
+      end.
     Definition elift_both {A B:Set} (f: A -> B) (g:eerror -> B) (a:eresult A) : B :=
       match a with
       | Success _ _ (s,_) => f s
