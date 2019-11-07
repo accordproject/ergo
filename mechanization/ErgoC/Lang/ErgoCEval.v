@@ -135,8 +135,9 @@ Section ErgoCTEval.
             end
       in
       let apply_match dat :=
-        fold_left
-          (fun default_result (pe:tlaergo_pattern * ergoct_expr) =>
+        (* Note: this uses a fold right because we want to keep the last matching case *)
+        fold_right
+          (fun (pe:tlaergo_pattern * ergoct_expr) default_result =>
              match pe with
              | (CaseData prov d, res) =>
                if Data.data_eq_dec d dat then
@@ -185,7 +186,7 @@ Section ErgoCTEval.
                | _ => default_result
                end
              end)
-          pes (ergoct_eval_expr ctxt default)
+          (ergoct_eval_expr ctxt default) pes
       in
       eolift apply_match (ergoct_eval_expr ctxt term)
     (* EXPECTS: each foreach has only one dimension and no where *)
