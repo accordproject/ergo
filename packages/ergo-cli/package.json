@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-cli",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "Ergo CLI",
   "engines": {
     "node": ">=8",
@@ -42,9 +42,9 @@
   },
   "homepage": "https://www.accordproject.org/projects/ergo",
   "dependencies": {
-    "@accordproject/ergo-compiler": "0.20.0",
-    "@accordproject/ergo-engine": "0.20.0",
-    "@accordproject/ergo-test": "0.20.0",
+    "@accordproject/ergo-compiler": "0.20.1",
+    "@accordproject/ergo-engine": "0.20.1",
+    "@accordproject/ergo-test": "0.20.1",
     "chalk": "2.4.1",
     "jsome": "2.5.0",
     "moment-mini": "2.22.1",
