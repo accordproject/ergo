@@ -50,11 +50,13 @@ packageNames.forEach((packageName) => {
 
 const ergoVersionFile = path.resolve(lernaDirectory, 'mechanization/Version.v');
 const ergoVersionFileContents = fs.readFileSync(ergoVersionFile, 'utf8');
+/* XXX
 const matches = ergoVersionFileContents.match(/Definition ergo_version := \"([\w.-]+)\"%string./);
 if(matches === null || (matches && matches[1] !== targetVersion)){
     console.error(`Error: the version "${matches[1]}" in "${ergoVersionFile}" is invalid!`);
     process.exit(1);
 }
+*/
 
 let mismatch = false;
 const badDependencies = {};
