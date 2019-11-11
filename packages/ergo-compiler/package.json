@@ -26,9 +26,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/concerto-core": "0.82.4",
-    "@accordproject/markdown-cicero": "0.7.6",
-    "@accordproject/markdown-common": "0.7.6",
+    "@accordproject/concerto-core": "0.82.5",
+    "@accordproject/markdown-cicero": "0.8.0",
+    "@accordproject/markdown-common": "0.8.0",
     "acorn": "5.1.2",
     "debug": "4.1.0",
     "doctrine": "3.0.0",
