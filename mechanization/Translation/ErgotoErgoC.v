@@ -401,9 +401,10 @@ Section ErgotoErgoC.
     | DSetContract prov cn e1 =>
       let ctxt := set_current_contract ctxt cn None in
       elift
-        (fun x => (x :: (DCConstant prov this_state None (EConst prov dunit)) :: nil,ctxt))
-        (elift (DCConstant prov this_contract None)
-               (ergo_expr_to_ergoc_expr ctxt e1))
+        (fun x => ((DCConstant prov this_contract None x)
+                     :: (DCConstant prov local_state None (EConst prov dunit))
+                     :: nil, ctxt))
+        (ergo_expr_to_ergoc_expr ctxt e1)
     end.
 
   (** Translate a module to a module+calculus *)
