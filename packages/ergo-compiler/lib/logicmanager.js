@@ -398,7 +398,6 @@ unwrapError(__result);
                   (currentModels.filter(x => x.getName() === name))[0];
             const previousContent = previousModelFile.getDefinitions();
             if (content !== previousContent) {
-                modelManager.validateModelFile(content, name);
                 const previousNamespace = previousModelFile.getNamespace();
                 const newNamespace = new ModelFile(modelManager, content, name).getNamespace();
                 if (previousNamespace === newNamespace) {

@@ -109,8 +109,6 @@ class ScriptManager {
             throw new Error('Script file does not exist');
         }
         this.addScript(script);
-        // Re-compile Ergo
-        this.compileLogic(true);
     }
 
     /**
