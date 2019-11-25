@@ -26,6 +26,12 @@ define function variableTagAs(variableName:String,text:String,format:String) : S
 	else return text
 }
 
+define function ifBlockTag(variableName:String,text:String) : String {
+	if getOptions().wrapVariables
+	then return "<if id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\"/>"
+	else return text
+}
+
 define function computedTag(text:String) : String {
 	if getOptions().wrapVariables
 	then return "<computed value=\"" ++ encode(text) ++ "\"/>"

@@ -2,16 +2,16 @@
   "$class": "org.accordproject.latedeliveryandpenalty.TemplateModel",
   "forceMajeure": false,
   "penaltyDuration": {
-    "$class": "org.accordproject.base.Duration",
-    "amount": 9,
-    "unit": "DAY"
-  },
-  "penaltyPercentage": 7,
-  "capPercentage": 2,
-  "termination": {
-    "$class": "org.accordproject.base.Duration",
+    "$class": "org.accordproject.time.Duration",
     "amount": 2,
-    "unit": "WEEK"
+    "unit": "days"
   },
-  "fractionalPart": "DAY"
+  "penaltyPercentage": 10.5,
+  "capPercentage": 55,
+  "termination": {
+    "$class": "org.accordproject.time.Duration",
+    "amount": 15,
+    "unit": "days"
+  },
+  "fractionalPart": "days"
 }
