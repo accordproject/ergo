@@ -80,6 +80,16 @@ let wrap_template_variable_as prov name ve fe =
     (relative_name_of_qname (Some "org.accordproject.ergo.template","variableTagAs"))
     [varparam;ve;fe]
 
+let wrap_template_if_block prov name ve =
+  let varparam =
+    ErgoCompiler.econst prov
+      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
+  in
+  ErgoCompiler.ecallfun
+    prov
+    (relative_name_of_qname (Some "org.accordproject.ergo.template","ifBlockTag"))
+    [varparam;ve]
+
 let wrap_template_computed prov e =
   let textparam = e in
   ErgoCompiler.ecallfun
@@ -133,7 +143,7 @@ let make_template_clause prov name ve =
 let make_template_if_else prov name ve1 ve2 =
   let a = Util.char_list_of_string name in
   let econd = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
-  wrap_template_variable
+  wrap_template_if_block
     prov
     name
     (ErgoCompiler.eif prov
