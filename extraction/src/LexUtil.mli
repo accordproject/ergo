@@ -45,8 +45,8 @@ val current_template_input : template_state
 val init_current_template_input : unit -> unit
 
 val push_clause : unit -> unit
-val push_list : unit -> unit
-val push_order : unit -> unit
+val push_ulist : unit -> unit
+val push_olist : unit -> unit
 val push_join : unit -> unit
 val push_with : unit -> unit
 val push_if : unit -> unit

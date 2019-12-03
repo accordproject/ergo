@@ -97,7 +97,7 @@ let wrap_template_computed prov e =
     (relative_name_of_qname (Some "org.accordproject.ergo.template","computedTag"))
     [textparam]
 
-let make_template_list prov name ve =
+let make_template_ulist prov name ve =
   let a = Util.char_list_of_string name in
   let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
   let fl = (ErgoCompiler.this_name, e) :: [] in
@@ -115,17 +115,23 @@ let make_template_list prov name ve =
     (relative_name_of_qname (Some "org.accordproject.ergo.template","listBlockTag"))
     [listContent]
 
-let make_template_order prov name ve =
+let make_template_olist prov name ve =
   let a = Util.char_list_of_string name in
   let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
   let fl = (ErgoCompiler.this_name, e) :: [] in
   let bullet = make_order_sep () in
-  ErgoCompiler.ebinarybuiltin prov
-    ErgoCompiler.ErgoOps.Binary.opstringjoin
-    (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
-    (ErgoCompiler.eforeach prov fl None
-       (ErgoCompiler.etext prov
-          (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
+  let listContent =
+    ErgoCompiler.ebinarybuiltin prov
+      ErgoCompiler.ErgoOps.Binary.opstringjoin
+      (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
+      (ErgoCompiler.eforeach prov fl None
+         (ErgoCompiler.etext prov
+            (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
+  in
+  ErgoCompiler.ecallfun
+    prov
+    (relative_name_of_qname (Some "org.accordproject.ergo.template","listBlockTag"))
+    [listContent]
 
 let make_template_join prov name sep ve =
   let a = Util.char_list_of_string name in
@@ -204,7 +210,7 @@ let make_template_if prov name ve1 =
 %token LCURLY RCURLY
 %token EOF
 
-%token AS LIST ORDER JOIN OPTIONAL
+%token AS ULIST OLIST JOIN OPTIONAL
 
 %left SEMI
 %left ELSE
@@ -625,17 +631,17 @@ textlist:
         let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
         [sfirst] @ [make_template_clause (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
       end }
-| s0 = OPENVARSHARP LIST v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH LIST CLOSEVAR sl2 = textlist
+| s0 = OPENVARSHARP ULIST v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH ULIST CLOSEVAR sl2 = textlist
     { begin
         let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
         let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
-        [sfirst] @ [make_template_list (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
+        [sfirst] @ [make_template_ulist (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
       end }
-| s0 = OPENVARSHARP ORDER v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH ORDER CLOSEVAR sl2 = textlist
+| s0 = OPENVARSHARP OLIST v0 = safeblock_base CLOSEVAR sl1 = textlist s1 = OPENVARSLASH OLIST CLOSEVAR sl2 = textlist
     { begin
         let sfirst = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s0)) in
         let slast = ErgoCompiler.econst (mk_provenance $startpos $endpos) (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s1)) in
-        [sfirst] @ [make_template_order (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
+        [sfirst] @ [make_template_olist (mk_provenance $startpos $endpos) v0 (sl1 @ [slast])] @ sl2
       end }
 | s0 = OPENVARSHARP JOIN v0 = safeblock_base sep = STRING CLOSEVAR sl1 = textlist s1 = OPENVARSLASH JOIN CLOSEVAR sl2 = textlist
     { begin
@@ -869,7 +875,7 @@ safeblock_base:
 | IF { "if" }
 | FOREACH { "foreach" }
 | WITH { "with" }
-| LIST { "list" }
+| ULIST { "ulist" }
+| OLIST { "olist" }
 | OPTIONAL { "optional" }
-
 

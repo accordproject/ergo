@@ -78,8 +78,8 @@
 	]
 
   let block_table = [
-	  "ulist", LIST;
-    "olist", ORDER;
+	  "ulist", ULIST;
+    "olist", OLIST;
     "join", JOIN;
 	  "clause", CLAUSE;
 	  "foreach", FOREACH;
@@ -106,8 +106,8 @@
 
   let push_kind kind =
     begin match kind with
-    | LIST -> push_list ()
-    | ORDER -> push_order ()
+    | ULIST -> push_ulist ()
+    | OLIST -> push_olist ()
     | JOIN -> push_join ()
     | WITH -> push_with ()
     | IF -> push_if ()

@@ -74,9 +74,9 @@ let push_clause () =
   | IfInput _ -> raise (LexError ("Cannot nest clause inside with block"))
   end
 
-let push_list () =
+let push_ulist () =
   Stack.push ListEnter current_template_input.template_stack
-let push_order () =
+let push_olist () =
   Stack.push OrderEnter current_template_input.template_stack
 let push_join () =
   Stack.push JoinEnter current_template_input.template_stack
