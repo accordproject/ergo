@@ -32,6 +32,12 @@ define function ifBlockTag(variableName:String,text:String) : String {
 	else return text
 }
 
+define function listBlockTag(text:String) : String {
+	if getOptions().wrapVariables
+	then return "```<list/>" ++ text ++ "\n```"
+	else return text
+}
+
 define function computedTag(text:String) : String {
 	if getOptions().wrapVariables
 	then return "<computed value=\"" ++ encode(text) ++ "\"/>"
