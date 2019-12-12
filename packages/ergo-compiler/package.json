@@ -26,7 +26,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/concerto-core": "0.82.6",
+    "@accordproject/concerto-core": "0.82.7-20191212180105",
     "@accordproject/markdown-cicero": "0.10.0",
     "@accordproject/markdown-common": "0.10.0",
     "acorn": "5.1.2",
