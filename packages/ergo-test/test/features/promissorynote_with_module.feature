@@ -24,11 +24,7 @@ Feature: Promissory note Contract
   "lender": "Clause",
   "legalEntity": "CORP",
   "lenderAddress": "246 5th Ave, 3rd Fl, New York, NY 10001",
-  "principal": {
-    "$class": "org.accordproject.money.MonetaryAmount",
-    "doubleValue": 500,
-    "currencyCode": "USD"
-  },
+  "principal": 500,
   "maturityDate": "2019-01-20",
   "defaultDays": 90,
   "insolvencyDays": 90,
@@ -54,4 +50,3 @@ Feature: Promissory note Contract
   "$class": "org.accordproject.promissorynote.Result"
 }
 """
-
