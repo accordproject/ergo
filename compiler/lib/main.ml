@@ -12,7 +12,6 @@
  * limitations under the License.
  *)
 
-open Ergo_lib
 open ErgoConfig
 
 (* Command line args *)

@@ -77,7 +77,8 @@ configure:
 # Regenerate the npm directory
 ergo:
 	@$(MAKE) ergo-mechanization
-	@$(MAKE) MAKEFLAGS= ergo-extraction
+	@$(MAKE) MAKEFLAGS= ergo-ocaml-extraction
+	@$(MAKE) MAKEFLAGS= ergo-js-extraction
 
 ergo-mechanization: _CoqProject Makefile.coq
 	@echo "[Ergo] "
@@ -85,12 +86,18 @@ ergo-mechanization: _CoqProject Makefile.coq
 	@echo "[Ergo] "
 	@$(MAKE) -f Makefile.coq
 
-ergo-extraction:
+ergo-ocaml-extraction:
 	@echo "[Ergo] "
-	@echo "[Ergo] Compiling the extracted OCaml"
+	@echo "[Ergo] Extracting Ergo Compiler to OCaml"
 	@echo "[Ergo] "
 	@$(MAKE) -C compiler/extraction
 	dune build @install
+
+ergo-js-extraction:
+	@echo "[Ergo] "
+	@echo "[Ergo] Extracting Ergo Compiler to JavaScript"
+	@echo "[Ergo] "
+	@$(MAKE) -C compiler/libjs
 
 npm-setup:
 	@echo "[Ergo] "
@@ -117,12 +124,18 @@ cleanall-mechanization:
 	- @rm -f _CoqProject
 	- @find compiler/core \( -name '*.vo' -or -name '*.v.d' -or -name '*.glob'  -or -name '*.aux' \) -print0 | xargs -0 rm -f
 
-clean-extraction:
+clean-ocaml-extraction:
 	- @$(MAKE) -C compiler/extraction clean
 
-cleanall-extraction:
+cleanall-ocaml-extraction:
 	- @$(MAKE) -C compiler/extraction cleanall
 	- dune clean
+
+clean-js-extraction:
+	- @$(MAKE) -C compiler/libjs clean
+
+cleanall-js-extraction:
+	- @$(MAKE) -C compiler/libjs cleanall
 
 clean-npm:
 	- @rm -f package-lock.json
@@ -139,7 +152,8 @@ cleanall-npm: clean-npm
 
 clean: Makefile.coq
 	- @$(MAKE) clean-npm
-	- @$(MAKE) clean-extraction
+	- @$(MAKE) clean-ocaml-extraction
+	- @$(MAKE) clean-js-extraction
 	- @$(MAKE) -C packages/ergo-compiler clean
 	- @$(MAKE) -C packages/ergo-engine clean
 	- @$(MAKE) -C packages/ergo-cli clean
@@ -149,7 +163,7 @@ cleanall: Makefile.coq
 	@echo "[Ergo] Cleaning up"
 	@echo "[Ergo] "
 	- @$(MAKE) cleanall-npm
-	- @$(MAKE) cleanall-extraction
+	- @$(MAKE) cleanall-ocaml-extraction
 	- @$(MAKE) cleanall-mechanization
 	- @$(MAKE) -C packages/ergo-compiler cleanall
 	- @$(MAKE) -C packages/ergo-engine cleanall

@@ -17,9 +17,6 @@ include ../../Makefile.config
 # Contains the list of all the Coq modules
 include ../../Makefile.coq_modules
 
-## Configuraton
-ERGO_HOME=$(CURDIR)/../..
-
 ## Toplevel
 all: ./ErgoComp.ml
 

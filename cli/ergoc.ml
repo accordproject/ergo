@@ -32,7 +32,7 @@ let wrap_error gconf e =
 let _ =
   let gconf = ErgoConfig.default_config () in
   begin try
-    Ergoc_common.main gconf (patch_argv Sys.argv)
+    Main.main gconf (patch_argv Sys.argv)
   with
   | e ->
       wrap_error gconf e
