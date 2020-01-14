@@ -14,15 +14,24 @@
 
 namespace org.accordproject.volumediscount
 
+<<<<<<< HEAD
 import org.accordproject.contract.*
 import org.accordproject.runtime.*
+=======
+import org.accordproject.cicero.contract.*
+import org.accordproject.cicero.runtime.*
+>>>>>>> 587d4826 (chore(build) Switch to OCaml 4.09 and Qcert 2.0)
 
 /**
  * Defines the data model for the VolumeDiscount template.
  * This defines the structure of the abstract syntax tree that the parser for the template
  * must generate from input source text.
  */
+<<<<<<< HEAD
 asset VolumeDiscountContract extends Contract {
+=======
+asset VolumeDiscountContract extends AccordContract {
+>>>>>>> 587d4826 (chore(build) Switch to OCaml 4.09 and Qcert 2.0)
   /**
    * First volume
    */
