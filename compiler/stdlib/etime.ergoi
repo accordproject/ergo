@@ -1,0 +1,70 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.accordproject.time
+
+// DateTime operations
+// Current DateTime
+define function now() : DateTime
+// Parse a DateTime
+define function dateTime(x:String) : DateTime
+
+// DateTime components
+define function getSecond(x:DateTime) : Long
+define function getMinute(x:DateTime) : Long
+define function getHour(x:DateTime) : Long
+define function getDay(x:DateTime) : Long
+define function getWeek(x:DateTime) : Long
+define function getMonth(x:DateTime) : Long
+define function getQuarter(x:DateTime) : Long
+define function getYear(x:DateTime) : Long
+
+// Comparisons between dates
+define function isAfter(x:DateTime, y:DateTime) : Boolean
+define function isBefore(x:DateTime, y:DateTime) : Boolean
+define function isSame(x:DateTime, y:DateTime) : Boolean
+
+// Aggregate functions on dates
+define function dateTimeMin(x:DateTime[]) : DateTime
+define function dateTimeMax(x:DateTime[]) : DateTime
+
+// Durations
+// Cast a duration to a given temporal unit
+define function durationAs(du:Duration, u:TemporalUnit) : Duration
+
+// Duration difference between two dates
+define function diffDurationAs(x:DateTime, y:DateTime, z:TemporalUnit) : Duration
+define function diffDuration(x:DateTime, y:DateTime) : Duration // Defaults to seconds
+
+// Add and subtract durations
+define function addDuration(x:DateTime, y:Duration) : DateTime
+define function subtractDuration(x:DateTime, y:Duration) : DateTime
+
+// Divide two durations
+define function divideDuration(x:Duration, y:Duration) : Double
+
+// Periods
+// Period difference between two dates
+define function diffPeriodAs(x:DateTime, y:DateTime, z:TemporalUnit) : Period
+
+// Add and subtract periods
+define function addPeriod(x:DateTime, y:Period) : DateTime
+define function subtractPeriod(x:DateTime, y:Period) : DateTime
+
+// Move the date to the closest start or end of a period
+define function startOf(x:DateTime, y:PeriodUnit) : DateTime
+define function endOf(x:DateTime, y:PeriodUnit) : DateTime
+
+// Format
+define function format(x:DateTime,y:String) : String
