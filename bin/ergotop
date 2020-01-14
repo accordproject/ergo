@@ -1,2 +1,2 @@
 #!/bin/bash
-rlwrap "${BASH_SOURCE%/*}/ergotop.native" "$@"
+rlwrap "${BASH_SOURCE%/*}/../_build/install/default/bin/ergotop" "$@"

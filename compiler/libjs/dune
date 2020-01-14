@@ -1,0 +1,5 @@
+(executables
+ (names compilerJS ergocJS ergotopJS)
+ (libraries unix js_of_ocaml ergo_lib)
+ (preprocess (pps js_of_ocaml.ppx))
+)
