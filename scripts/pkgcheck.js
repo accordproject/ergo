@@ -48,7 +48,7 @@ packageNames.forEach((packageName) => {
     packages[packageName] = thisPackage;
 });
 
-const ergoVersionFile = path.resolve(lernaDirectory, 'mechanization/Version.v');
+const ergoVersionFile = path.resolve(lernaDirectory, 'compiler/core/Version.v');
 const ergoVersionFileContents = fs.readFileSync(ergoVersionFile, 'utf8');
 /* XXX
 const matches = ergoVersionFileContents.match(/Definition ergo_version := \"([\w.-]+)\"%string./);
