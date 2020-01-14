@@ -26,7 +26,7 @@ const targetVersion = semver.inc(lernaConfig.version, 'patch');
 lernaConfig.version = targetVersion;
 fs.writeFileSync(lernaConfigFile, JSON.stringify(lernaConfig, null, 2), 'utf8');
 
-const mechanizationVersionFileContents =`(*
+const compilerVersionFileContents =`(*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -50,4 +50,4 @@ Section Version.
 End Version.
 
 `;
-const mechanizationVersionFile = fs.writeFileSync(path.resolve(lernaDirectory, 'mechanization/Version.v'),mechanizationVersionFileContents, 'utf8');
+const compilerVersionFile = fs.writeFileSync(path.resolve(lernaDirectory, 'compiler/core/Version.v'),compilerVersionFileContents, 'utf8');

@@ -15,8 +15,8 @@
 'use strict';
 
 const path = require('path');
-const fs = require('fs')
-const mkdirp = require('mkdirp')
+const fs = require('fs');
+const mkdirp = require('mkdirp');
 const url = require('url');
 const handlebars = require('handlebars');
 

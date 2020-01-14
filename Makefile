@@ -20,20 +20,64 @@ include Makefile.coq_modules
 #
 CP=cp
 
-FILES = $(addprefix mechanization/,$(MODULES:%=%.v))
+FILES = $(addprefix compiler/core/,$(MODULES:%=%.v))
 
 ## Compiler
 all:
 	@$(MAKE) MAKEFLAGS= ergo
 
-# Setup
-setup:
+# Stdlib
+
+%.ctoj: %.cto
+	./scripts/cto2ctoj.js parse $<
+
+compiler/lib/Resources.ml: compiler/stdlib/accordproject.ctoj \
+                           compiler/stdlib/stdlib.ergo \
+                           compiler/stdlib/etime.ergo \
+                           compiler/stdlib/template.ergo \
+                           ./runtimes/javascript/ergo-runtime.js
+	echo '(* generated ocaml file *)' > compiler/lib/Resources.ml
+	(for i in accordproject; do \
+         echo "let $$i = {xxx|"; \
+         cat compiler/stdlib/$$i.ctoj; \
+         echo "|xxx}"; \
+         done) >> compiler/lib/Resources.ml
+	(for i in stdlib etime template; do \
+         echo "let $$i = {xxx|"; \
+         cat compiler/stdlib/$$i.ergo; \
+         echo "|xxx}"; \
+         done) >> compiler/lib/Resources.ml
+	(for i in runtime; do \
+         echo "let ergo_$$i = {xxx|"; \
+         cat ./runtimes/javascript/ergo-$$i.js; \
+         echo "|xxx}"; \
+         done) >> compiler/lib/Resources.ml
+	(echo `date "+let builddate = {xxx|%b %d, %Y|xxx}"`) >> compiler/lib/Resources.ml
+
+# Configure
+./runtimes/javascript/ergo_runtime.ml:
+	$(MAKE) -C ./runtimes/javascript
+
+./compiler/lib/js_runtime.ml: ./runtimes/javascript/ergo_runtime.ml
+	cp ./runtimes/javascript/ergo_runtime.ml ./compiler/lib/js_runtime.ml
+
+./compiler/lib/static_config.ml:
+	echo "(* This file is generated *)" > ./compiler/lib/static_config.ml
+	echo "let ergo_home = \"$(CURDIR)\"" >> ./compiler/lib/static_config.ml
+
+prepare: ./compiler/lib/js_runtime.ml ./compiler/lib/static_config.ml compiler/lib/Resources.ml Makefile.coq
+
+configure:
+	@echo "[Ergo] "
+	@echo "[Ergo] Configuring Build"
+	@echo "[Ergo] "
+	@$(MAKE) prepare
 	@$(MAKE) npm-setup
 
 # Regenerate the npm directory
 ergo:
 	@$(MAKE) ergo-mechanization
-	@$(MAKE) MAKEFLAGS= ergo-extraction-refresh
+	@$(MAKE) MAKEFLAGS= ergo-extraction
 
 ergo-mechanization: _CoqProject Makefile.coq
 	@echo "[Ergo] "
@@ -45,13 +89,8 @@ ergo-extraction:
 	@echo "[Ergo] "
 	@echo "[Ergo] Compiling the extracted OCaml"
 	@echo "[Ergo] "
-	@$(MAKE) -C extraction all
-
-ergo-extraction-refresh:
-	@echo "[Ergo] "
-	@echo "[Ergo] Extracting mechanization to OCaml"
-	@echo "[Ergo] "
-	@$(MAKE) -C extraction all-refresh
+	@$(MAKE) -C compiler/extraction
+	dune build @install
 
 npm-setup:
 	@echo "[Ergo] "
@@ -61,7 +100,7 @@ npm-setup:
 
 ## Documentation
 documentation:
-	$(MAKE) -C mechanization documentation
+	$(MAKE) -C compiler/core documentation
 
 ## Testing
 test:
@@ -76,13 +115,14 @@ cleanall-mechanization:
 	- @rm -f Makefile.coq
 	- @rm -f Makefile.coq.conf
 	- @rm -f _CoqProject
-	- @find mechanization \( -name '*.vo' -or -name '*.v.d' -or -name '*.glob'  -or -name '*.aux' \) -print0 | xargs -0 rm -f
+	- @find compiler/core \( -name '*.vo' -or -name '*.v.d' -or -name '*.glob'  -or -name '*.aux' \) -print0 | xargs -0 rm -f
 
 clean-extraction:
-	- @$(MAKE) -C extraction clean
+	- @$(MAKE) -C compiler/extraction clean
 
 cleanall-extraction:
-	- @$(MAKE) -C extraction cleanall
+	- @$(MAKE) -C compiler/extraction cleanall
+	- dune clean
 
 clean-npm:
 	- @rm -f package-lock.json
@@ -121,9 +161,9 @@ _CoqProject: Makefile.config
 	@echo "[Ergo] Setting up Coq"
 	@echo "[Ergo] "
 ifneq ($(QCERT),)
-	(echo "-R mechanization ErgoSpec -R $(QCERT)/coq Qcert";) > _CoqProject
+	(echo "-R compiler/core ErgoSpec -R $(QCERT)/coq Qcert";) > _CoqProject
 else
-	(echo "-R mechanization ErgoSpec";) > _CoqProject
+	(echo "-R compiler/core ErgoSpec";) > _CoqProject
 endif
 
 Makefile.coq: _CoqProject Makefile $(FILES)
