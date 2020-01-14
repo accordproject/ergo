@@ -1,0 +1,5 @@
+(executables
+ (names ergoc ergodep ergotop)
+ (public_names ergoc ergodep ergotop)
+ (package coq-ergo-lang)
+ (libraries unix ergo_lib))

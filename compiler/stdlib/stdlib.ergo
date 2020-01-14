@@ -1,0 +1,152 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.accordproject.ergo.stdlib
+
+import org.accordproject.cicero.runtime.*
+import org.accordproject.money.*
+
+// Double operations
+define function sqrt(x:Double) : Double
+define function exp(x:Double) : Double
+define function log(x:Double) : Double
+define function log10(x:Double) : Double
+define function ceil(x:Double) : Double
+define function floor(x:Double) : Double
+define function abs(x:Double) : Double
+define function max(x:Double[]) : Double
+define function min(x:Double[]) : Double
+define function average(x:Double[]) : Double
+define function sum(x:Double[]) : Double
+define function doubleToInteger(x:Double) : Integer
+define function doubleToLong(x:Double) : Long
+define function truncate(x:Double) : Integer
+
+define function maxPair(x:Double, y:Double) : Double
+define function minPair(x:Double, y:Double) : Double
+
+// Integer operations
+define function integerAbs(x:Integer) : Integer
+define function integerLog2(x:Integer) : Integer
+define function integerSqrt(x:Integer) : Integer
+define function integerToDouble(x:Integer) : Double
+
+define function integerMin(x:Integer, y:Integer) : Integer
+define function integerMax(x:Integer, y:Integer) : Integer
+define function integerModulo(x:Integer, y:Integer) : Integer {
+  let result = x % y;
+  if result >= 0 then return result
+  else return -result
+}
+
+// Long operations
+define function longAbs(x:Long) : Long
+define function longLog2(x:Long) : Long
+define function longSqrt(x:Long) : Long
+define function longToDouble(x:Long) : Double
+
+define function longMin(x:Long, y:Long) : Long
+define function longMax(x:Long, y:Long) : Long
+define function longModulo(x:Long, y:Long) : Long {
+  let result = x % y;
+  if result >= 0 then return result
+  else return -result
+}
+
+define constant maxPosInteger32 : Long =  doubleToLong(2.0 ^ 32.0 - 1.0)
+define constant maxInteger32 : Long =  doubleToLong(2.0 ^ 31.0 - 1.0)
+define constant minInteger32 : Long = doubleToLong(- 2.0 ^ 31.0)
+define function longToInteger32(x:Integer) : Integer {
+  let shift = maxInteger32 + 1;
+  return (x + shift) % (maxPosInteger32 + 1) - shift
+}
+
+// Math operations
+define function acos(x:Double) : Double
+define function asin(x:Double) : Double
+define function atan(x:Double) : Double
+define function atan2(x:Double, y:Double) : Double
+define function cos(x:Double) : Double
+define function cosh(x:Double) : Double
+define function sin(x:Double) : Double
+define function sinh(x:Double) : Double
+define function tan(x:Double) : Double
+define function tanh(x:Double) : Double
+
+// String operations
+define function doubleOpt(x:String) : Double?
+define function double(x:String) : Double {
+  match doubleOpt(x) with
+  let? v then return v
+  else return nan
+}
+define function integerOpt(x:String) : Integer? {
+  match doubleOpt(x) with
+  let? v then return some(doubleToInteger(v))
+  else return none
+}
+define function integer(x:String) : Integer {
+  match integerOpt(x) with
+  let? v then return v
+  else return 0
+}
+define function longOpt(x:String) : Long? {
+  return integerOpt(x)
+}
+define function long(x:String) : Long {
+  return integer(x)
+}
+define function length(x:String) : Long
+define function join(x:String, y:String[]) : String
+define function encode(x:String) : String
+define function decode(x:String) : String
+
+// Log operations
+define function logString(x:String) : Unit
+
+// Polymorphic operations
+define function toText(x:Any) : String
+define function toString(x:Any) : String
+define function distinct(x:Any[]) : Any[]
+define function count(x:Any[]) : Integer
+define function flatten(x:Any[][]) : Any[]
+define function singleton(x:Any[]) : Any
+define function arrayAdd(x:Any[],y:Any[]) : Any[]
+define function arraySubtract(x:Any[],y:Any[]) : Any[]
+define function inArray(x:Any,y:Any[]) : Boolean
+define function containsAll(l1:Any[], l2:Any[]) : Boolean {
+  return arraySubtract(l1,l2) = []
+}
+
+define transaction ErgoErrorResponse extends ErrorResponse{
+  message : String
+}
+define function failure(x:String) : ErgoErrorResponse {
+  return ErgoErrorResponse{
+    message: x
+  }
+}
+
+// Currently set options
+define function getOptions() : ~org.accordproject.ergo.options.Options
+
+define function monetaryAmountFormatInternal(x:Double, y:String) : String
+define function monetaryCodeFormatInternal(x:String, y:String) : String
+
+define function doubleFormat(x:Double, y:String) : String {
+	return monetaryAmountFormatInternal(x,y)
+}
+define function monetaryAmountFormat(m:MonetaryAmount, f:String) : String {
+	return monetaryAmountFormatInternal(m.doubleValue, monetaryCodeFormatInternal(toString(m.currencyCode),f))
+}

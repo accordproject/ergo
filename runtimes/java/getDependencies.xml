@@ -1,0 +1,14 @@
+<project name="dependencies" default="get">
+
+<property name="repo" value="http://central.maven.org/maven2/"/>
+	
+<property name="gson" value="com/google/code/gson/gson/2.8.2/gson-2.8.2.jar"/>
+<property name="gson-src" value="com/google/code/gson/gson/2.8.2/gson-2.8.2-sources.jar"/>
+
+<target name="get">
+	<delete dir="lib"/>
+	<mkdir dir="lib"/>
+	<get src="${repo}${gson}" dest="lib"/>
+	<get src="${repo}${gson-src}" dest="lib"/>
+</target>
+</project>
