@@ -17,7 +17,8 @@ module Ergo_lib = struct end (* Hack for dune bug, see https://github.com/ocaml/
 open Util
 open Lex_util
 open Ergo_util
-open Core
+open ErgoCompiler
+open Provenance
 
 (* File provenance *)
 let mk_provenance
@@ -192,10 +193,10 @@ let make_template_if prov name veTrue =
 %left DOT QUESTIONDOT
 %left AS
 
-%start <Core.ErgoCompiler.ergo_module> main_module
-%start <Core.ErgoCompiler.ergo_declaration list> top_decls
-%start <Core.ErgoCompiler.ergo_expr> template
-%start <Core.ErgoCompiler.ergo_expr> top_expr
+%start <ErgoCompiler.ergo_module> main_module
+%start <ErgoCompiler.ergo_declaration list> top_decls
+%start <ErgoCompiler.ergo_expr> template
+%start <ErgoCompiler.ergo_expr> top_expr
 
 %%
 
@@ -751,10 +752,10 @@ qname_import:
     { begin match qn with
       | (None,_) -> ergo_raise (ergo_parse_error "Malformed import" !filename $startpos $endpos)
       | (Some prefix, "*") ->
-          ImportAll (mk_provenance $startpos $endpos,
+          Ast.ImportAll (mk_provenance $startpos $endpos,
                      char_list_of_string prefix)
       | (Some prefix, last) ->
-          ImportName (mk_provenance $startpos $endpos,
+          Ast.ImportName (mk_provenance $startpos $endpos,
                       char_list_of_string prefix,
                       char_list_of_string last)
       end }

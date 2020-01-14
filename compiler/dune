@@ -38,6 +38,8 @@
 
 (copy_files stdlib/*.{ml,mli})
 (copy_files atds/*.{atd})
+(copy_files util/*.{ml,mli})
+(copy_files wasm/*.{ml,mli})
 (copy_files extraction/*.{ml,mli})
 (copy_files parsing/*.{mll,mly})
 (copy_files# lib/*.{ml,mli})
@@ -47,5 +49,5 @@
 (library
  (name ergo_lib)
  (public_name coq-ergo-lang)
- (libraries atdgen base64 re.str uri calendar)
+ (libraries atdgen base64 re.str uri calendar coq-qcert)
 )

@@ -302,7 +302,7 @@ describe('LogicManager', () => {
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(135644);
         });
 
-        it('should load a directory with formula', async function () {
+        it('should load a directory with grammar', async function () {
             const logicManager = await ErgoLoader.fromDirectory(Path.join(TESTS_DIR,'helloworldcontract'));
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([

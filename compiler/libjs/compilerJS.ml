@@ -18,8 +18,8 @@ open Js_of_ocaml
 
 open Ergo_lib
 open Ergo_util
-open Core
 open Config
+open Provenance
 
 (**********************************)
 (* Configuration support          *)

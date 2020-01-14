@@ -38,6 +38,7 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheck.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCExpand.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
+Require Import ErgoSpec.ErgoWasm.Lang.ErgoWasm.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgoAssembly.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
@@ -48,6 +49,7 @@ Require Import ErgoSpec.Translation.ErgoCTtoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoErgoImp.
 Require Import ErgoSpec.Translation.ErgoImptoES6.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
+Require Import ErgoSpec.Translation.ErgoImptoWasm.
 
 Section ErgoDriver.
   Section CompilerPre.
@@ -293,8 +295,7 @@ Section ErgoDriver.
 
     Definition ergo_module_to_java_top
                (inputs:list lrergo_input)
-               (template:option (list (string * lrergo_expr)))
-      : eresult result_file :=
+               (template:option (string * lrergo_expr)) : eresult result_file :=
       let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
       eolift (fun xy :brand_model * list laergo_type_declaration=>
                 let bm := fst xy in
@@ -305,6 +306,7 @@ Section ErgoDriver.
                           elift (fun xy => mkResultFile None p.(module_file) (snd xy)) res)
                        cinit) bm.
 
+    Locate ergo_imp_module_to_es6.
     Definition ergoc_module_to_es6
                (bm:brand_model)
                (contract_name:string)
@@ -315,6 +317,14 @@ Section ErgoDriver.
         contract_name
         contract_state_type
         sigs
+        (ergo_nnrc_module_to_imp p).
+
+    Definition ergoc_module_to_wasm
+               (bm:brand_model)
+               (contract_name:string)
+               (p:ergo_nnrc_module) : ErgoWasm.wasm_ast :=
+      ergo_imp_module_to_wasm
+        contract_name
         (ergo_nnrc_module_to_imp p).
 
     Definition ergo_module_to_es6_top
@@ -339,6 +349,36 @@ Section ErgoDriver.
                          let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
                          elift (fun x => (contract_name, x,
                                           ergoc_module_to_es6 bm contract_name (snd c).(contract_state) sigs x)) pn)
+                      ec
+                in
+                elift (fun xyz =>
+                         let '(contract_name, nmod, ncontent) := xyz in
+                         mkResultFile (Some contract_name) p.(module_file) ncontent)
+                      res)
+             ctxt) bm.
+
+    Definition ergo_module_to_wasm_top
+               (inputs:list lrergo_input)
+               (template:option (list (string * lrergo_expr)))
+      : eresult result_file :=
+      let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
+      eolift
+        (fun xy :brand_model * list laergo_type_declaration=>
+           let bm := fst xy in
+           let ctxt := compilation_context_from_inputs inputs template (snd xy) in
+           eolift
+             (fun init : laergo_module * compilation_context =>
+                let (p, ctxt) := init in
+                let res :=
+                    let ec := lookup_single_contract p in
+                    eolift
+                      (fun c : local_name * ergo_contract =>
+                         let contract_name := (fst c) in 
+                         let sigs := lookup_contract_signatures (snd c) in
+                         let pc := ergo_module_to_ergoct ctxt p in
+                         let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
+                         elift (fun x => (contract_name, x,
+                                          ErgoWasm.wasm_ast_to_string (ergoc_module_to_wasm bm contract_name x))) pn)
                       ec
                 in
                 elift (fun xyz =>

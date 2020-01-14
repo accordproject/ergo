@@ -47,10 +47,6 @@ unwrapError(__result);
 `;
     return code;
 }
-=======
-const Util = require('@accordproject/ergo-compiler').Util;
-const boxedCollections = require('@accordproject/ergo-compiler').boxedCollections;
->>>>>>> 587d4826 (chore(build) Switch to OCaml 4.09 and Qcert 2.0)
 
 /**
  * <p>
@@ -272,7 +268,6 @@ class Engine {
             'wrapVariables': false,
             'template': true,
         };
-
         const defaultState = {
             '$class':'org.accordproject.runtime.State'
         };

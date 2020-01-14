@@ -403,16 +403,16 @@ Section DateTimeOperators.
       | uop_date_time_get_months => "dateTimeGetMonths"
       | uop_date_time_get_quarters => "dateTimeGetQuarters"
       | uop_date_time_get_years => "dateTimeGetYears"
-      | uop_date_time_start_of_day => "dateTimeStartOf"
-      | uop_date_time_start_of_week => "dateTimeStartOf"
-      | uop_date_time_start_of_month => "dateTimeStartOf"
-      | uop_date_time_start_of_quarter => "dateTimeStartOf"
-      | uop_date_time_start_of_year => "dateTimeStartOf"
+      | uop_date_time_start_of_day => "dateTimeStartOfDay"
+      | uop_date_time_start_of_week => "dateTimeStartOfWeek"
+      | uop_date_time_start_of_month => "dateTimeStartOfMonth"
+      | uop_date_time_start_of_quarter => "dateTimeStartOfQuarter"
+      | uop_date_time_start_of_year => "dateTimeStartOfYear"
       | uop_date_time_end_of_day => "dateTimeEndOfDay"
       | uop_date_time_end_of_week => "dateTimeEndOfWeek"
       | uop_date_time_end_of_month => "dateTimeEndOfMonth"
       | uop_date_time_end_of_quarter => "dateTimeEndOfQuarter"
-      | uop_date_time_end_of_year => "dateTimeEndOfYears"
+      | uop_date_time_end_of_year => "dateTimeEndOfYear"
       | uop_date_time_format_from_string => "dateTimeFormatFromString"
       | uop_date_time_from_string => "DateTimeFromString"
       | uop_date_time_max => "dateTimeMax"
@@ -611,6 +611,57 @@ Section DateTimeOperators.
       | EJsonRuntimeDateTimeIsBefore => "dateTimeIsBefore"
       | EJsonRuntimeDateTimeIsAfter => "dateTimeIsAfter"
       | EJsonRuntimeDateTimeDiff => "dateTimeDiff"
+      end.
+
+    Definition ejson_date_time_runtime_op_fromstring (s:string) : option ejson_date_time_runtime_op :=
+      match s with
+      (* Unary *)
+      | "dateTimeGetSeconds" => Some EJsonRuntimeDateTimeGetSeconds
+      | "dateTimeGetMinutes" => Some EJsonRuntimeDateTimeGetMinutes
+      | "dateTimeGetHours" => Some EJsonRuntimeDateTimeGetHours
+      | "dateTimeGetDays" => Some EJsonRuntimeDateTimeGetDays
+      | "dateTimeGetWeeks" => Some EJsonRuntimeDateTimeGetWeeks
+      | "dateTimeGetMonths" => Some EJsonRuntimeDateTimeGetMonths
+      | "dateTimeGetQuarters" => Some EJsonRuntimeDateTimeGetQuarters
+      | "dateTimeGetYears" => Some EJsonRuntimeDateTimeGetYears
+      | "dateTimeStartOfDay" => Some EJsonRuntimeDateTimeStartOfDay
+      | "dateTimeStartOfWeek" => Some EJsonRuntimeDateTimeStartOfWeek
+      | "dateTimeStartOfMonth" => Some EJsonRuntimeDateTimeStartOfMonth
+      | "dateTimeStartOfQuarter" => Some EJsonRuntimeDateTimeStartOfQuarter
+      | "dateTimeStartOfYear" => Some EJsonRuntimeDateTimeStartOfYear
+      | "dateTimeEndOfDay" => Some EJsonRuntimeDateTimeEndOfDay
+      | "dateTimeEndOfWeek" => Some EJsonRuntimeDateTimeEndOfWeek
+      | "dateTimeEndOfMonth" => Some EJsonRuntimeDateTimeEndOfMonth
+      | "dateTimeEndOfQuarter" => Some EJsonRuntimeDateTimeEndOfQuarter
+      | "dateTimeEndOfYear" => Some EJsonRuntimeDateTimeEndOfYear
+      | "dateTimeFormatFromString" => Some EJsonRuntimeDateTimeFormatFromString
+      | "dateTimeFromString" => Some EJsonRuntimeDateTimeFromString
+      | "dateTimeMax" => Some EJsonRuntimeDateTimeMax
+      | "dateTimeMin" => Some EJsonRuntimeDateTimeMin
+      | "dateTimeDurationAmount" => Some EJsonRuntimeDateTimeDurationAmount
+      | "dateTimeDurationFromString" => Some EJsonRuntimeDateTimeDurationFromString
+      | "dateTimePeriodFromString" => Some EJsonRuntimeDateTimePeriodFromString
+      | "dateTimeDurationFromSeconds" => Some EJsonRuntimeDateTimeDurationFromSeconds
+      | "dateTimeDurationFromMinutes" => Some EJsonRuntimeDateTimeDurationFromMinutes
+      | "dateTimeDurationFromHours" => Some EJsonRuntimeDateTimeDurationFromHours
+      | "dateTimeDurationFromDays" => Some EJsonRuntimeDateTimeDurationFromDays
+      | "dateTimeDurationFromWeeks" => Some EJsonRuntimeDateTimeDurationFromWeeks
+      | "dateTimePeriodFromDays" => Some EJsonRuntimeDateTimePeriodFromDays
+      | "dateTimePeriodFromWeeks" => Some EJsonRuntimeDateTimePeriodFromWeeks
+      | "dateTimePeriodFromMonths" => Some EJsonRuntimeDateTimePeriodFromMonths
+      | "dateTimePeriodFromQuarters" => Some EJsonRuntimeDateTimePeriodFromQuarters
+      | "dateTimePeriodFromYears" => Some EJsonRuntimeDateTimePeriodFromYears
+      (* Binary *)
+      | "dateTimeFormat" => Some EJsonRuntimeDateTimeFormat
+      | "dateTimeAdd" => Some EJsonRuntimeDateTimeAdd
+      | "dateTimeSubtract" => Some EJsonRuntimeDateTimeSubtract
+      | "dateTimeAddPeriod" => Some EJsonRuntimeDateTimeAddPeriod
+      | "dateTimeSubtractPeriod" => Some EJsonRuntimeDateTimeSubtractPeriod
+      | "dateTimeIsSame" => Some EJsonRuntimeDateTimeIsSame
+      | "dateTimeIsBefore" => Some EJsonRuntimeDateTimeIsBefore
+      | "dateTimeIsAfter" => Some EJsonRuntimeDateTimeIsAfter
+      | "dateTimeDiff" => Some EJsonRuntimeDateTimeDiff
+      | _ => None
       end.
 
   End toEJson.

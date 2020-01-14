@@ -12,7 +12,19 @@
  * limitations under the License.
  *)
 
-open ErgoCompiler.ErgoCompiler
+type sexp =
+  | SBool of bool
+  | SString of string
+  | SInt of int
+  | SFloat of float
+  | STerm of (string * sexp list)
 
-val cto_import: string -> Cto_j.model -> cto_package
+let rec sexp_to_string (se:sexp) : string =
+  match se with
+  | SBool b -> string_of_bool b
+  | SString s -> "\"" ^ s ^ "\""
+  | SInt i -> string_of_int i
+  | SFloat f -> string_of_float f
+  | STerm (id,sel) ->
+      "(" ^ id ^ " " ^ (String.concat " " (List.map sexp_to_string sel)) ^ ")"
 

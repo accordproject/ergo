@@ -71,5 +71,11 @@ Section LogOperators.
       | EJsonRuntimeLogString => "logString"
       end.
 
+    Definition ejson_log_runtime_op_fromstring (s:string) : option ejson_log_runtime_op :=
+      match s with
+      | "logString" => Some EJsonRuntimeLogString
+      | _ => None
+      end.
+
   End toEJson.
 End LogOperators.

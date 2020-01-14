@@ -98,6 +98,28 @@ Definition enhanced_foreign_ejson_runtime_op_tostring op : string :=
   | enhanced_ejson_monetary_amount sop => ejson_monetary_amount_runtime_op_tostring sop
   end.
 
+Definition enhanced_foreign_ejson_runtime_op_fromstring (s:string) : option _ :=
+  match ejson_uri_runtime_op_fromstring s with
+  | Some op => Some (enhanced_ejson_uri op)
+  | None =>
+    match ejson_log_runtime_op_fromstring s with
+    | Some op => Some (enhanced_ejson_log op)
+    | None =>
+      match ejson_math_runtime_op_fromstring s with
+      | Some op => Some (enhanced_ejson_math op)
+      | None =>
+        match ejson_date_time_runtime_op_fromstring s with
+        | Some op => Some (enhanced_ejson_date_time op)
+        | None =>
+          match ejson_monetary_amount_runtime_op_fromstring s with
+          | Some op => Some (enhanced_ejson_monetary_amount op)
+          | None => None
+          end
+        end
+      end
+    end
+  end.
+
 Definition enhanced_ejson_uri_runtime_op_interp op (dl:list ejson) : option ejson :=
   match op with
   | EJsonRuntimeUriEncode =>
@@ -736,7 +758,7 @@ Section toString. (* XXX Maybe to move as a component ? *)
 End toString.
 
 Program Instance enhanced_foreign_ejson_runtime : foreign_ejson_runtime :=
-  mk_foreign_ejson_runtime enhanced_foreign_ejson enhanced_foreign_ejson_runtime_op _ _ _ _ _.
+  mk_foreign_ejson_runtime enhanced_foreign_ejson enhanced_foreign_ejson_runtime_op _ _ _ _ _ _.
 Next Obligation.
   red; unfold equiv; intros.
   change ({x = y} + {x <> y}).
@@ -756,6 +778,9 @@ Next Obligation.
 Defined.
 Next Obligation.
   exact (ejsonToString H).
+Defined.
+Next Obligation.
+  exact (enhanced_foreign_ejson_runtime_op_fromstring H).
 Defined.
 Next Obligation.
   exact (ejsonToText H).

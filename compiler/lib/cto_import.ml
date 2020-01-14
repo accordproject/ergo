@@ -14,8 +14,10 @@
 
 open Util
 open Ergo_util
-open Core
+open CTO
 open Cto_j
+open ErgoCompiler
+open Provenance
 
 let filename = ref ""
 
