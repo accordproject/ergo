@@ -14,8 +14,9 @@
 
 open Util
 open Ergo_util
-open Core
 open Config
+open Result0
+open ErgoCompiler
 
 let res_convert code warnings =
   let contract_name =

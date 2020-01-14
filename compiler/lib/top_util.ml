@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-open Core.ErgoCompiler
+open ErgoCompiler.ErgoCompiler
 
 let repl_bm = ref ergo_empty_brand_model
 let my_init_repl_context input =

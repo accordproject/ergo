@@ -225,14 +225,22 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for draft
      */
+<<<<<<< HEAD
     calculate(logic, contractId, name, contract, currentTime, options) {
         options = options || {};
 
+=======
+    async draft(logic, contractId, contract, params, currentTime, options) {
+>>>>>>> WIP(Wasm) Some initial compiler extension for Wasm
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
+<<<<<<< HEAD
         return this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, options, {convertResourcesToId: true});
+=======
+        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime, options, {convertResourcesToId: true});
+>>>>>>> WIP(Wasm) Some initial compiler extension for Wasm
     }
 
     /**

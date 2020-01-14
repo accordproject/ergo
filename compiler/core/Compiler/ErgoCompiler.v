@@ -72,7 +72,7 @@ Module ErgoCompiler.
   Definition esuccess (A:Set) : A -> list ewarning -> eresult A := Result.esuccess.
   Definition efailure (A:Set) : eerror -> eresult A := Result.efailure.
 
-  Definition result_file : Set := ErgoNNRC.result_file.
+  Definition result_file : Set := Result.result_file.
   
   (** CTOs *)
   Definition cto_type := CTO.lrcto_type.
@@ -322,11 +322,11 @@ Module ErgoCompiler.
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_es6_top.
 
-  Definition ergo_module_to_java :
+  Definition ergo_module_to_wasm :
     list ergo_input
     -> option (list (String.string * ergo_expr))
     -> Result.eresult result_file
-    := ErgoDriver.ergo_module_to_java_top.
+    := ErgoDriver.ergo_module_to_wasm_top.
 
   (** Brand model *)
   Definition ergo_brand_model := ErgoCType.tbrand_model.

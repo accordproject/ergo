@@ -12,7 +12,10 @@
  * limitations under the License.
  *)
 
-open Core
+open Ast
+open Ergo
+open Result0
+open Provenance
 
 (** Ergo errors *)
 exception Ergo_Error of eerror
