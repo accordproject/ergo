@@ -13,7 +13,6 @@
  *)
 
 {
-  open Util
   open LexUtil
   open ErgoParser
 

@@ -31,12 +31,6 @@ let ergo_system_error msg =
   ESystemError (dummy_provenance,char_list_of_string msg)
 let ergo_parse_error msg filename start_pos end_pos =
   EParseError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
-let ergo_compilation_error msg filename start_pos end_pos =
-  ECompilationError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
-let ergo_type_error msg filename start_pos end_pos =
-  ETypeError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
-let ergo_runtime_error msg filename start_pos end_pos =
-  ERuntimeError (mk_provenance_of_loc_pair filename start_pos end_pos, char_list_of_string msg)
 
 let ergo_raise error =
   raise (Ergo_Error error)
@@ -151,8 +145,6 @@ let string_of_error f x error =
   end
 let string_of_error_with_source_text source error =
   string_of_error underline_prov source error
-let string_of_error_with_source_file source error =
-  string_of_error underline_prov (string_of_file source) error
 let string_of_error_with_table source_table error =
   string_of_error underline_source source_table error
 
@@ -190,10 +182,6 @@ let ergo_version = string_of_char_list ergo_version
 let get_version cmd () =
   print_endline (cmd ^ ", version " ^ ergo_version);
   exit 0
-
-(** Additional utility functions *)
-let process_file f (file_name, file_content) =
-  f (file_name,file_content)
 
 (** fw applied to warnings, f applied to result *)
 let wrap_jerrors f e =
