@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-open ErgoCompiler.ErgoCompiler
-
-val cto_import: string -> Cto_j.model -> cto_package
+(* Encoding/Decoding *)
+val encode : char list -> char list
+val decode : char list -> char list
 

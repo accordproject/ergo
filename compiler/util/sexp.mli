@@ -12,7 +12,12 @@
  * limitations under the License.
  *)
 
-open ErgoCompiler.ErgoCompiler
+type sexp =
+  | SBool of bool
+  | SString of string
+  | SInt of int
+  | SFloat of float
+  | STerm of (string * sexp list)
 
-val cto_import: string -> Cto_j.model -> cto_package
+val sexp_to_string : sexp -> string
 

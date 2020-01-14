@@ -338,4 +338,13 @@ Section Result.
     Definition warning_global_shadowing prov (name:string) :=
       EWarning prov ("Constant " ++ name ++ " hides an existing constant with the same name").
   End warnings.
+
+  Section file.
+    Record result_file :=
+      mkResultFile
+        { res_contract_name : option string;
+          res_file : string;
+          res_content : nstring; }.
+
+  End file.
 End Result.

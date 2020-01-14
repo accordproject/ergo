@@ -59,12 +59,6 @@ Section ErgoNNRC.
 
   End Syntax.
 
-  Record result_file :=
-    mkResultFile
-      { res_contract_name : option string;
-        res_file : string;
-        res_content : nstring; }.
-
   (** Eval-based semantics for ergo_nnrc *)
   Section Evaluation.
     Context {m : brand_model}.

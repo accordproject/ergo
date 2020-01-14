@@ -75,6 +75,13 @@ Section MonetaryAmountOperators.
       | EJsonRuntimeMonetaryCodeFormat => "monetaryCodeFormat"
       end.
 
+    Definition ejson_monetary_amount_runtime_op_fromstring (s:string) : option ejson_monetary_amount_runtime_op :=
+      match s with
+      | "monetaryAmountFormat" => Some EJsonRuntimeMonetaryAmountFormat
+      | "monetaryCodeFormat" => Some EJsonRuntimeMonetaryCodeFormat
+      | _ => None
+      end.
+
   End toEJson.
   
 End MonetaryAmountOperators.

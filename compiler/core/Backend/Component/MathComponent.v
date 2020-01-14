@@ -166,5 +166,20 @@ Section MathOperators.
       | EJsonRuntimeTanh => "tanh"
       end.
 
+    Definition ejson_math_runtime_op_fromstring (s:string) : option ejson_math_runtime_op :=
+      match s with
+      | "floatOfString" => Some EJsonRuntimeFloatOfString
+      | "acos" => Some EJsonRuntimeAcos
+      | "asin" => Some EJsonRuntimeAsin
+      | "atan" => Some EJsonRuntimeAtan
+      | "atan2" => Some EJsonRuntimeAtan2
+      | "cos" => Some EJsonRuntimeCos
+      | "cosh" => Some EJsonRuntimeCosh
+      | "sin" => Some EJsonRuntimeSin
+      | "sinh" => Some EJsonRuntimeSinh
+      | "tan" => Some EJsonRuntimeTan
+      | "tanh" => Some EJsonRuntimeTanh
+      | _ => None
+      end.
   End toEJson.
 End MathOperators.

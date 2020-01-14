@@ -259,7 +259,7 @@ describe('LogicManager', () => {
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.getTarget().should.equal('java');
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(10719);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(10720);
             (() => logicManager.getInvokeCall('helloworld')).should.throw('Unsupported target: java');
             (() => logicManager.getDispatchCall()).should.throw('Unsupported target: java');
         });
@@ -288,7 +288,7 @@ describe('LogicManager', () => {
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(137499);
         });
 
-        it('should load a directory with formula', async function () {
+        it('should load a directory with grammar', async function () {
             const logicManager = await ErgoLoader.fromDirectory(Path.join(TESTS_DIR,'helloworldcontract'));
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([

@@ -12,7 +12,8 @@
  * limitations under the License.
  *)
 
-open ErgoCompiler.ErgoCompiler
-
-val cto_import: string -> Cto_j.model -> cto_package
+let encode x =
+  Util.char_list_of_string (Uri.pct_encode ~component:`Scheme (Util.string_of_char_list x))
+let decode x =
+  Util.char_list_of_string (Uri.pct_decode (Util.string_of_char_list x))
 
