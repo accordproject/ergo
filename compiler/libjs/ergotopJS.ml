@@ -14,7 +14,7 @@
 
 open Js_of_ocaml
 
-open ParseUtil
+open Ergo_lib
 open ErgoUtil
 open ErgoConfig
 
@@ -102,5 +102,4 @@ let _ =
   | e ->
       Js.raise_js_error (wrap_error gconf e)
   end
-
 
