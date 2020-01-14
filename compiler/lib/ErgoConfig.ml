@@ -12,7 +12,6 @@
  * limitations under the License.
  *)
 
-open Util
 open ErgoUtil
 open ErgoComp.ErgoCompiler
 

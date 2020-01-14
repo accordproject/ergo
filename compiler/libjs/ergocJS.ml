@@ -14,6 +14,7 @@
 
 open Js_of_ocaml
 
+open Ergo_lib
 open ErgoUtil
 
 let wrap_error gconf e =
@@ -28,7 +29,7 @@ let wrap_error gconf e =
 let _ =
   let gconf = ErgoConfig.default_config () in
   begin try
-    Ergoc.main gconf Sys.argv
+    Main.main gconf Sys.argv
   with
   | e ->
       Js.raise_js_error (wrap_error gconf e)
