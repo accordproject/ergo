@@ -15,20 +15,36 @@
 MODULES = \
   Version \
   Utils/Misc \
-  Utils/EJSON \
+  Backend/ForeignModel \
   Backend/ForeignErgo \
-  Backend/Model/DateTimeModelPart \
-  Backend/Model/MathModelPart \
-  Backend/Model/LogModelPart \
-  Backend/Model/ErgoEnhancedModel \
-  Backend/Model/ErgoBackendModel \
-  Backend/Model/ErgoBackendRuntime \
-  Backend/Lib/ENNRCtoJavaScript \
-  Backend/Lib/ECType \
-  Backend/Lib/EData \
-  Backend/Lib/EOperators \
-  Backend/Lib/ECodeGen \
-  Backend/ErgoBackend \
+  Backend/Component/DateTimeComponent \
+  Backend/Component/MathComponent \
+  Backend/Component/LogComponent \
+	Backend/Qcert/QcertData \
+	Backend/Qcert/QcertEJson \
+	Backend/Qcert/QcertDataToEJson \
+	Backend/Qcert/QcertEJsonToJSON \
+	Backend/Qcert/QcertToJava \
+	Backend/Qcert/QcertToJavascriptAst \
+	Backend/Qcert/QcertReduceOps \
+	Backend/Qcert/QcertToReduceOps \
+	Backend/Qcert/QcertToSpark \
+	Backend/Qcert/QcertType \
+	Backend/Qcert/QcertToScala \
+	Backend/Qcert/QcertTypeToJSON \
+	Backend/Qcert/QcertDataTyping \
+	Backend/Qcert/QcertRuntime \
+	Backend/Qcert/QcertTyping \
+	Backend/Qcert/QcertModel \
+	Backend/Qcert/QcertCompiler \
+	Backend/Lib/QBackendModel \
+	Backend/Lib/QBackendRuntime \
+  Backend/Lib/QType \
+  Backend/Lib/QData \
+  Backend/Lib/QOps \
+  Backend/Lib/QNNRCtoJavaScript \
+  Backend/Lib/QCodeGen \
+  Backend/QLib \
   Common/Provenance \
   Common/Names \
   Common/NamespaceContext \

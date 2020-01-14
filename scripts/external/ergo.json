@@ -1,6 +1,6 @@
 {
     "js": "packages/ergo-compiler/lib/externalModels",
-    "ocaml": "extraction/extracted",
+    "ocaml": "compiler/stdlib",
     "models": [
         "https://models.accordproject.org/markdown/commonmark.cto",
         "https://models.accordproject.org/markdown/ciceromark.cto",

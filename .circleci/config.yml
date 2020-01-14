@@ -39,7 +39,7 @@ common_steps: &common_steps
     - run:
         name: "Install OCaml deps"
         command: |
-          opam install -y -v --jobs=2 ocamlbuild menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri
+          opam install -y -v --jobs=2 dune menhir camlp5 base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri
     - run:
         name: "Install Coq"
         command: |
@@ -64,7 +64,7 @@ common_steps: &common_steps
         name: 'Build the Ergo compiler'
         command:  |
           eval $(opam env)
-          make setup
+          make configure
           make all
     - run:
         name: 'Testing'

@@ -1,0 +1,44 @@
+(ocamllex
+  (modules ErgoLexer)
+)
+
+(menhir
+  (modules ErgoParser)
+)
+
+(rule
+ (targets Monitor_j.ml
+          Monitor_j.mli)
+ (deps    Monitor.atd)
+ (action  (run atdgen -j -j-std %{deps})))
+
+(rule
+ (targets Monitor_t.ml
+          Monitor_t.mli)
+ (deps    Monitor.atd)
+ (action  (run atdgen -t %{deps})))
+
+(rule
+ (targets Cto_j.ml
+          Cto_j.mli)
+ (deps    Cto.atd)
+ (action  (run atdgen -j -j-std %{deps})))
+
+(rule
+ (targets Cto_t.ml
+          Cto_t.mli)
+ (deps    Cto.atd)
+ (action  (run atdgen -t %{deps})))
+
+(library
+ (name ergo_lib)
+ (public_name coq-ergo-lang)
+ (libraries atdgen base64 re.str uri calendar)
+)
+
+(copy_files stdlib/*.{ml,mli})
+(copy_files atds/*.{atd})
+(copy_files extraction/*.{ml,mli})
+(copy_files parsers/*.{mll,mly})
+(copy_files# lib/*.{ml,mli})
+
