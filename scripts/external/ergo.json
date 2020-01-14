@@ -1,6 +1,6 @@
 {
     "js": "packages/ergo-compiler/lib/externalModels",
-    "ocaml": "extraction/extracted",
+    "ocaml": "compiler/stdlib",
     "models": [
         "https://models.accordproject.org/cicero/contract.cto",
         "https://models.accordproject.org/cicero/runtime.cto",

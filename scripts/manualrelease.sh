@@ -29,7 +29,7 @@ git pull origin master
 # Increase the version number
 npm run pkgbump
 TARGET_VERSION=$( jq -r '.version' lerna.json )
-git add mechanization/Version.v
+git add compiler/core/Version.v
 git add package.json
 git commit -m "chore(release): Bump Ergo source version" -s
 
