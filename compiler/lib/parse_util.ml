@@ -14,10 +14,10 @@
 
 (* This module contains parsing utilities *)
 
-open ErgoUtil
-open LexUtil
+open Ergo_util
+open Lex_util
 
-open ErgoComp.ErgoCompiler
+open Core.ErgoCompiler
 
 (** Generic parse *)
 let parse parser lexer buf =
@@ -36,22 +36,22 @@ let parse parser lexer buf =
 
 let lexer_dispatch lh buf  =
   begin match lh_top_state lh with
-  | ExprState -> ErgoLexer.token lh buf
-  | TextState -> ErgoLexer.text lh buf
-  | VarState -> ErgoLexer.var lh buf
-  | StartNestedState -> ErgoLexer.startnested lh buf
-  | EndNestedState -> ErgoLexer.endnested lh buf
+  | ExprState -> Ergo_lexer.token lh buf
+  | TextState -> Ergo_lexer.text lh buf
+  | VarState -> Ergo_lexer.var lh buf
+  | StartNestedState -> Ergo_lexer.startnested lh buf
+  | EndNestedState -> Ergo_lexer.endnested lh buf
   end
 
 let parse_ergo_module f : ergo_module =
   init_current_template_input ();
-  parse ErgoParser.main_module (lexer_dispatch (lh_make_expr ())) f
+  parse Ergo_parser.main_module (lexer_dispatch (lh_make_expr ())) f
 let parse_ergo_declarations f : ergo_declaration list =
   init_current_template_input ();
-  parse ErgoParser.top_decls (lexer_dispatch (lh_make_expr ())) f
+  parse Ergo_parser.top_decls (lexer_dispatch (lh_make_expr ())) f
 let parse_template f : ergo_expr =
   init_current_template_input ();
-  parse ErgoParser.template (lexer_dispatch (lh_make_text ())) f
+  parse Ergo_parser.template (lexer_dispatch (lh_make_text ())) f
 
 (** Parse from buffer *)
 let parse_string p_fun s =
@@ -70,5 +70,5 @@ let parse_template_from_string fname s : ergo_expr =
 
 let parse_cto_package_from_string fname s : cto_package =
   filename := unpatch_cto_extension fname;
-  CtoImport.cto_import !filename (Cto_j.model_of_string s)
+  Cto_import.cto_import !filename (Cto_j.model_of_string s)
 

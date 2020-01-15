@@ -12,22 +12,15 @@
  * limitations under the License.
  *)
 
-open ErgoComp.ErgoCompiler
+(* This module contains parsing utilities *)
 
-let repl_bm = ref ergo_empty_brand_model
-let my_init_repl_context input =
-  begin match ergo_brand_model_from_inputs input with
-  | Success ((bm,_),warnings) -> repl_bm := bm; init_repl_context !repl_bm input
-  | Failure e -> ErgoUtil.ergo_raise e
-  end
-let my_ergo_repl_eval_decl rctxt decl =
-  begin match ergo_refresh_brand_model !repl_bm rctxt with
-  | Success ((bm, rctxt'),warnings) ->
-      repl_bm := bm;
-      ergo_repl_eval_decl
-        !repl_bm
-        rctxt'
-        decl
-  | Failure e -> ErgoUtil.ergo_raise e
-  end
+open Core.ErgoCompiler
 
+val parse_ergo_module : Lexing.lexbuf -> ergo_module
+val parse_ergo_declarations : Lexing.lexbuf -> ergo_declaration list
+
+val parse_ergo_module_from_string : string -> string -> ergo_module
+val parse_ergo_declarations_from_string : string -> string -> ergo_declaration list
+val parse_template_from_string : string -> string -> ergo_expr
+
+val parse_cto_package_from_string : string -> string -> cto_package

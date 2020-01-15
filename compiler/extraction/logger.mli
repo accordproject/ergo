@@ -12,15 +12,16 @@
  * limitations under the License.
  *)
 
-(* This module contains parsing utilities *)
+(* This module contains the implementation for the optimization logger *)
 
-open ErgoComp.ErgoCompiler
+open Util
+open Sexp
 
-val parse_ergo_module : Lexing.lexbuf -> ergo_module
-val parse_ergo_declarations : Lexing.lexbuf -> ergo_declaration list
+val nrc_log_startPass : string -> 'a -> nrc_logger_token_type
+val nrc_log_step : nrc_logger_token_type -> string -> 'a -> 'a -> nrc_logger_token_type
+val nrc_log_endPass : nrc_logger_token_type -> 'a -> nrc_logger_token_type
 
-val parse_ergo_module_from_string : string -> string -> ergo_module
-val parse_ergo_declarations_from_string : string -> string -> ergo_declaration list
-val parse_template_from_string : string -> string -> ergo_expr
+val nrc_set_trace : (Obj.t->sexp) -> string -> unit
 
-val parse_cto_package_from_string : string -> string -> cto_package
+val log_string : char list -> unit
+

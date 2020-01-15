@@ -17,9 +17,9 @@
 open Js_of_ocaml
 
 open Ergo_lib
-open ErgoUtil
-open ErgoComp
-open ErgoConfig
+open Ergo_util
+open Core
+open Config
 
 (**********************************)
 (* Configuration support          *)
@@ -56,23 +56,23 @@ let global_config_of_json gconf j =
   let iter_inputs = iter_inputs gconf in
   let iter_template = iter_template gconf in
   (* Template *)
-  iter_template (fun gconf x -> ErgoConfig.add_template_file gconf x)
+  iter_template (fun gconf x -> add_template_file gconf x)
     (fun x -> x##.name)
     (fun x -> x##.content)
     j##.sourceTemplate;
   (* CTOs *)
-  iter_inputs (fun gconf x -> ErgoConfig.add_cto_file gconf x)
+  iter_inputs (fun gconf x -> add_cto_file gconf x)
     (fun x -> x##.name)
     (fun x -> x##.content)
     j##.cto;
   (* Ergos *)
-  iter_inputs (fun gconf x -> ErgoConfig.add_module_file gconf x)
+  iter_inputs (fun gconf x -> add_module_file gconf x)
     (fun x -> x##.name)
     (fun x -> x##.content)
     j##.ergo;
   (* Target *)
-  apply_bool (fun gconf b -> if b then ErgoConfig.set_link gconf ()) j##.link;
-  apply ErgoConfig.set_target_lang j##.target;
+  apply_bool (fun gconf b -> if b then set_link gconf ()) j##.link;
+  apply set_target_lang j##.target;
   gconf
 
 let wrap_all wrap_f l =
@@ -95,7 +95,7 @@ let json_loc_file f =
   end
 
 let json_of_ergo_error gconf error =
-  let source_table = ErgoConfig.get_source_table gconf in
+  let source_table = get_source_table gconf in
   object%js
     val kind = Js.string (error_kind error)
     val message= Js.string (error_message error)
@@ -148,13 +148,13 @@ let ergo_compile input =
   let gconf = default_config () in
   begin try
     let gconf = global_config_of_json gconf input in
-    let target_lang = ErgoConfig.get_target_lang gconf in
-    let template = ErgoConfig.get_template gconf in
-    let all_modules = ErgoConfig.get_all_sorted gconf in
-    let (contract_name,file,res,warnings) = ErgoCompile.ergo_compile target_lang all_modules template in
-    let source_table = ErgoConfig.get_source_table gconf in
+    let target_lang = get_target_lang gconf in
+    let template = get_template gconf in
+    let all_modules = get_all_sorted gconf in
+    let (contract_name,file,res,warnings) = Compile.ergo_compile target_lang all_modules template in
+    let source_table = get_source_table gconf in
     let warnings = string_of_warnings_with_table source_table warnings in
-    let res = ErgoCompile.ergo_link gconf res in
+    let res = Compile.ergo_link gconf res in
     begin match contract_name with
     | None -> json_of_result res warnings
     | Some cn -> json_of_result_with_contract_name cn res warnings
@@ -165,16 +165,16 @@ let ergo_compile input =
   end
 
 let ergo_version unit =
-  ErgoUtil.ergo_version
+  ergo_version
 
 let ergo_call contract =
-  Js.string (ErgoUtil.ergo_call (Js.to_string contract##.name))
+  Js.string (ergo_call (Js.to_string contract##.name))
 
 let lang_of_target s =
-  Js.string (ErgoConfig.script_lang_of_target (Js.to_string s))
+  Js.string (script_lang_of_target (Js.to_string s))
 
 let available_targets () =
-  let a = Array.of_list ErgoConfig.available_targets in
+  let a = Array.of_list available_targets in
   let a_js = Array.map (fun x -> Js.string x) a in
   Js.array a_js
 

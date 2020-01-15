@@ -13,9 +13,9 @@
  *)
 
 open Util
-open ErgoUtil
-open ErgoComp
-open ErgoConfig
+open Ergo_util
+open Core
+open Config
 
 let res_convert code warnings =
   let contract_name =
@@ -81,10 +81,10 @@ let print_monitor source_file =
   else ()
 
 let ergo_proc gconf inputs =
-  let target_lang = ErgoConfig.get_target_lang gconf in
-  let source_table = ErgoConfig.get_source_table gconf in
+  let target_lang = get_target_lang gconf in
+  let source_table = get_source_table gconf in
   let ext = extension_of_lang target_lang in
-  let template = ErgoConfig.get_template gconf in
+  let template = get_template gconf in
   let (contract_name,source_file,result,warnings) = ergo_compile target_lang inputs template in
   Printf.printf "Compiling Ergo '%s' -- " source_file;
   let result = ergo_link gconf result in

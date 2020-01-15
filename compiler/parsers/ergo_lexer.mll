@@ -13,8 +13,8 @@
  *)
 
 {
-  open LexUtil
-  open ErgoParser
+  open Lex_util
+  open Ergo_parser
 
   let make_keyword_table table = 
     let tbl = Hashtbl.create 39 in

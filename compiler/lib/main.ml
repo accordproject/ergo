@@ -12,22 +12,22 @@
  * limitations under the License.
  *)
 
-open ErgoConfig
+open Config
 
 (* Command line args *)
 
 let args_list gconf =
   Arg.align
     [
-      ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
+      ("--version", Arg.Unit (Ergo_util.get_version "The Ergo compiler"),
        " print version and exit");
-      ("--target", Arg.String (ErgoConfig.set_target_lang gconf),
+      ("--target", Arg.String (set_target_lang gconf),
        "<lang> target platform (default: es6) " ^ available_targets_message);
-      ("--link", Arg.Unit (ErgoConfig.set_link gconf),
+      ("--link", Arg.Unit (set_link gconf),
        " link the Ergo runtime with the target code (es5,es6,cicero only)");
       ("--monitor", Arg.Set Util.monitoring,
        " produce compilation time information");
-      ("--warnings", Arg.Unit (ErgoConfig.set_warnings gconf),
+      ("--warnings", Arg.Unit (set_warnings gconf),
        " print warnings");
     ]
 
@@ -35,13 +35,13 @@ let usage =
   "Usage: "^Filename.basename (Sys.argv.(0))^" [options] [cto files] [ergo files]"
 
 let main gconf args =
-  let (cto_files,input_files,template_file) = ErgoUtil.parse_args args_list usage args gconf in
-  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (ErgoConfig.add_module_file gconf) input_files;
+  let (cto_files,input_files,template_file) = Ergo_util.parse_args args_list usage args gconf in
+  List.iter (add_cto_file gconf) cto_files;
+  List.iter (add_module_file gconf) input_files;
   begin match template_file with
   | None -> ()
-  | Some t -> ErgoConfig.add_template_file gconf t
+  | Some t -> add_template_file gconf t
   end;
-  let all_modules = ErgoConfig.get_all_sorted gconf in
-  ErgoCompile.ergo_proc gconf all_modules
+  let all_modules = get_all_sorted gconf in
+  Compile.ergo_proc gconf all_modules
 
