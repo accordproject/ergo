@@ -65,7 +65,7 @@ compiler/lib/resources.ml: compiler/stdlib/accordproject.ctoj \
 	echo "(* This file is generated *)" > ./compiler/lib/static_config.ml
 	echo "let ergo_home = \"$(CURDIR)\"" >> ./compiler/lib/static_config.ml
 
-prepare: ./compiler/lib/js_runtime.ml ./compiler/lib/static_config.ml compiler/lib/Resources.ml Makefile.coq
+prepare: ./compiler/lib/js_runtime.ml ./compiler/lib/static_config.ml compiler/lib/resources.ml Makefile.coq
 
 configure:
 	@echo "[Ergo] "
@@ -119,6 +119,7 @@ clean-mechanization: Makefile.coq
 
 cleanall-mechanization:
 	- @$(MAKE) -f Makefile.coq cleanall
+	- @rm -f ./compiler/lib/js_runtime.ml ./compiler/lib/static_config.ml compiler/lib/resources.ml
 	- @rm -f Makefile.coq
 	- @rm -f Makefile.coq.conf
 	- @rm -f _CoqProject
@@ -138,8 +139,6 @@ cleanall-js-extraction:
 	- @$(MAKE) -C compiler/libjs cleanall
 
 clean-npm:
-	- @rm -f package-lock.json
-	- @rm -rf dist
 
 cleanall-npm: clean-npm
 	- @node ./scripts/external/cleanExternalModels.js
