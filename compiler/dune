@@ -1,40 +1,40 @@
+;; Parser rules
+
 (ocamllex
-  (modules ErgoLexer)
+  (modules ergo_lexer)
 )
 
 (menhir
-  (modules ErgoParser)
+  (modules ergo_parser)
 )
 
+;; Atd rules
+
 (rule
- (targets Monitor_j.ml
-          Monitor_j.mli)
- (deps    Monitor.atd)
+ (targets monitor_j.ml
+          monitor_j.mli)
+ (deps    monitor.atd)
  (action  (run atdgen -j -j-std %{deps})))
 
 (rule
- (targets Monitor_t.ml
-          Monitor_t.mli)
- (deps    Monitor.atd)
+ (targets monitor_t.ml
+          monitor_t.mli)
+ (deps    monitor.atd)
  (action  (run atdgen -t %{deps})))
 
 (rule
- (targets Cto_j.ml
-          Cto_j.mli)
- (deps    Cto.atd)
+ (targets cto_j.ml
+          cto_j.mli)
+ (deps    cto.atd)
  (action  (run atdgen -j -j-std %{deps})))
 
 (rule
- (targets Cto_t.ml
-          Cto_t.mli)
- (deps    Cto.atd)
+ (targets cto_t.ml
+          cto_t.mli)
+ (deps    cto.atd)
  (action  (run atdgen -t %{deps})))
 
-(library
- (name ergo_lib)
- (public_name coq-ergo-lang)
- (libraries atdgen base64 re.str uri calendar)
-)
+;; Includes
 
 (copy_files stdlib/*.{ml,mli})
 (copy_files atds/*.{atd})
@@ -42,3 +42,10 @@
 (copy_files parsers/*.{mll,mly})
 (copy_files# lib/*.{ml,mli})
 
+;; Ergo library
+
+(library
+ (name ergo_lib)
+ (public_name coq-ergo-lang)
+ (libraries atdgen base64 re.str uri calendar)
+)
