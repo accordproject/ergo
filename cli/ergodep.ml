@@ -13,16 +13,16 @@
  *)
 
 open Ergo_lib
-open ErgoUtil
+open Ergo_util
 
 (* Command line args *)
 
 let args_list gconf =
   Arg.align
     [
-      ("-version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
+      ("-version", Arg.Unit (get_version "The Ergo compiler"),
        " Print version and exit");
-      ("--version", Arg.Unit (ErgoUtil.get_version "The Ergo compiler"),
+      ("--version", Arg.Unit (get_version "The Ergo compiler"),
        " Print version and exit");
     ]
 
@@ -39,32 +39,32 @@ let print_dependency (x,ys) =
   Format.printf "%s:%a@\n" x label_of_dependencies ys
 
 let main gconf args =
-  let (cto_files,input_files,template_file) = ErgoUtil.parse_args args_list usage args gconf in
-  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (ErgoConfig.add_module_file gconf) input_files;
+  let (cto_files,input_files,template_file) = parse_args args_list usage args gconf in
+  List.iter (Config.add_cto_file gconf) cto_files;
+  List.iter (Config.add_module_file gconf) input_files;
   begin match template_file with
   | None -> ()
-  | Some t -> ErgoConfig.add_template_file gconf t
+  | Some t -> Config.add_template_file gconf t
   end;
-  let all_modules = ErgoConfig.get_all_sorted gconf in
+  let all_modules = Config.get_all_sorted gconf in
   List.iter print_dependency (labels_of_graph all_modules)
 
 let wrap_error gconf e =
-  let source_table = ErgoConfig.get_source_table gconf in
+  let source_table = Config.get_source_table gconf in
   begin match e with
-  | ErgoUtil.Ergo_Error error ->
+  | Ergo_Error error ->
       Printf.eprintf "%s\n"
-        (ErgoUtil.string_of_error_with_table source_table error);
+        (string_of_error_with_table source_table error);
       exit 2
   | exn ->
       Printf.eprintf "%s\n"
-        (ErgoUtil.string_of_error_with_table source_table
-           (ErgoUtil.ergo_system_error (Printexc.to_string exn)));
+        (string_of_error_with_table source_table
+           (ergo_system_error (Printexc.to_string exn)));
       exit 2
   end
 
 let _ =
-  let gconf = ErgoConfig.default_config () in
+  let gconf = Config.default_config () in
   begin try
     main gconf (patch_argv Sys.argv)
   with

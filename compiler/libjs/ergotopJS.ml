@@ -15,8 +15,8 @@
 open Js_of_ocaml
 
 open Ergo_lib
-open ErgoUtil
-open ErgoConfig
+open Ergo_util
+open Config
 
 let welcome () =
   print_string ("Welcome to ERGOTOP version " ^ ergo_version ^ "\n")
@@ -25,18 +25,18 @@ let welcome () =
 
 let repl gconf rctxt text =
   try
-      let decls = ParseUtil.parse_ergo_declarations_from_string "stdin" text in
+      let decls = Parse_util.parse_ergo_declarations_from_string "stdin" text in
       List.fold_left
         (fun (answer,rctxt) decl ->
            begin
              (* eval *)
-             let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
+             let (out,rctxt') = Top_util.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
              (answer ^ (wrap_jerrors (return_result_print_warnings gconf.econf_warnings text) out), rctxt')
            end)
         ("",rctxt) decls
   with
-    ErgoUtil.Ergo_Error e -> (ErgoUtil.string_of_error_with_source_text text e ^ "\n", rctxt)
+    Ergo_Error e -> (string_of_error_with_source_text text e ^ "\n", rctxt)
 
 let args_list gconf =
   Arg.align
@@ -52,22 +52,22 @@ let usage =
 
 (* Initialize the REPL ctxt, catching errors in input CTOs and modules *)
 let safe_init_repl_ctxt inputs =
-  ErgoUtil.wrap_jerrors
+  wrap_jerrors
     (fun x w -> x)
-    (ErgoTopUtil.my_init_repl_context inputs)
+    (Top_util.my_init_repl_context inputs)
 
 let make_init_rctxt gconf =
-  let all_modules = ErgoConfig.get_all_sorted gconf in
+  let all_modules = get_all_sorted gconf in
   let rctxt = safe_init_repl_ctxt all_modules in
   rctxt
 
 let main gconf args =
-  let (cto_files,input_files,template_file) = ErgoUtil.parse_args args_list usage args gconf in
-  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (ErgoConfig.add_module_file gconf) input_files;
+  let (cto_files,input_files,template_file) = parse_args args_list usage args gconf in
+  List.iter (add_cto_file gconf) cto_files;
+  List.iter (add_module_file gconf) input_files;
   begin match template_file with
   | None -> ()
-  | Some t -> ErgoConfig.add_template_file gconf t
+  | Some t -> add_template_file gconf t
   end;
   let rctxt = make_init_rctxt gconf in
   welcome ();
@@ -86,7 +86,7 @@ let main gconf args =
     end)
 
 let wrap_error gconf e =
-  let source_table = ErgoConfig.get_source_table gconf in
+  let source_table = get_source_table gconf in
   begin match e with
   | Ergo_Error error ->
       new%js Js.error_constr (Js.string (string_of_error_with_table source_table error))
@@ -95,9 +95,9 @@ let wrap_error gconf e =
   end
 
 let _ =
-  let gconf = ErgoConfig.default_config () in
+  let gconf = default_config () in
   begin try
-    main gconf (ErgoUtil.patch_argv Sys.argv)
+    main gconf (patch_argv Sys.argv)
   with
   | e ->
       Js.raise_js_error (wrap_error gconf e)

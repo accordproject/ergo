@@ -13,8 +13,8 @@
  *)
 
 open Ergo_lib
-open ErgoUtil
-open ErgoConfig
+open Ergo_util
+open Config
 
 let welcome () =
   if Unix.isatty Unix.stdin
@@ -61,7 +61,7 @@ let rec read_nonempty_multiline () = read_chunk true
 let safe_init_repl_ctxt inputs =
   wrap_jerrors
     (fun x y -> x)
-    (ErgoTopUtil.my_init_repl_context inputs)
+    (Top_util.my_init_repl_context inputs)
 
 (* REPL *)
 let rec repl gconf rctxt =
@@ -69,12 +69,12 @@ let rec repl gconf rctxt =
   let text = read_nonempty_multiline () in
   try
     let rctxt' =
-      let decls = ParseUtil.parse_ergo_declarations_from_string "stdin" text in
+      let decls = Parse_util.parse_ergo_declarations_from_string "stdin" text in
       List.fold_left
         (fun rctxt decl ->
            begin
              (* eval *)
-             let (out,rctxt') = ErgoTopUtil.my_ergo_repl_eval_decl rctxt decl in
+             let (out,rctxt') = Top_util.my_ergo_repl_eval_decl rctxt decl in
              (* print *)
              print_string (fmt_out (wrap_jerrors (return_result_print_warnings gconf.econf_warnings text) out));
              rctxt'
@@ -95,7 +95,7 @@ let args_list gconf =
     [
       ("-version", Arg.Unit (get_version "The Ergo toplevel"),
        " Print version and exit");
-      ("--warnings", Arg.Unit (ErgoConfig.set_warnings gconf),
+      ("--warnings", Arg.Unit (set_warnings gconf),
        " Print warnings");
     ]
 
@@ -104,19 +104,19 @@ let usage =
 
 let main gconf args =
   let (cto_files,input_files,template_file) = parse_args args_list usage args gconf in
-  List.iter (ErgoConfig.add_cto_file gconf) cto_files;
-  List.iter (ErgoConfig.add_module_file gconf) input_files;
+  List.iter (add_cto_file gconf) cto_files;
+  List.iter (add_module_file gconf) input_files;
   begin match template_file with
   | None -> ()
-  | Some t -> ErgoConfig.add_template_file gconf t
+  | Some t -> add_template_file gconf t
   end;
-  let all_modules = ErgoConfig.get_all_sorted gconf in
+  let all_modules = get_all_sorted gconf in
   let rctxt = safe_init_repl_ctxt all_modules in
   welcome ();
   repl gconf rctxt
 
 let wrap_error gconf e =
-  let source_table = ErgoConfig.get_source_table gconf in
+  let source_table = get_source_table gconf in
   begin match e with
   | Ergo_Error error ->
       Printf.eprintf "%s\n"
@@ -130,7 +130,7 @@ let wrap_error gconf e =
   end
 
 let _ =
-  let gconf = ErgoConfig.default_config () in
+  let gconf = default_config () in
   begin try
     main gconf (patch_argv Sys.argv)
   with
