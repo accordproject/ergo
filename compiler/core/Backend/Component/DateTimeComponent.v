@@ -28,199 +28,199 @@ Local Open Scope nstring_scope.
 
 (** Defines the foreign support for DateTime. Posits axioms for the
    basic data/operators, and defines how they are extracted to ocaml
-   (using helper functions defined in DateTime.ml) *)
+   (using helper functions defined in date_time_component.ml) *)
 
 (** Axioms *)
 (** A format description for date&time *)
 Axiom DATE_TIME_FORMAT : Set.
-Extract Constant DATE_TIME_FORMAT => "DateTime.date_time_format".
+Extract Constant DATE_TIME_FORMAT => "Date_time_component.date_time_format".
 
 Axiom DATE_TIME_FORMAT_eq : DATE_TIME_FORMAT -> DATE_TIME_FORMAT -> bool.
-Extract Inlined Constant DATE_TIME_FORMAT_eq => "(fun x y -> DateTime.format_eq x y)".
+Extract Inlined Constant DATE_TIME_FORMAT_eq => "(fun x y -> Date_time_component.format_eq x y)".
 
 Conjecture DATE_TIME_FORMAT_eq_correct :
   forall f1 f2, (DATE_TIME_FORMAT_eq f1 f2 = true <-> f1 = f2).
 
 Axiom DATE_TIME_FORMAT_to_string : DATE_TIME_FORMAT -> string.
-Extract Inlined Constant DATE_TIME_FORMAT_to_string => "(fun x -> Util.char_list_of_string (DateTime.format_to_string x))".
+Extract Inlined Constant DATE_TIME_FORMAT_to_string => "(fun x -> Util.char_list_of_string (Date_time_component.format_to_string x))".
 
 Axiom DATE_TIME_FORMAT_from_string : string -> DATE_TIME_FORMAT.
-Extract Inlined Constant DATE_TIME_FORMAT_from_string => "(fun x -> DateTime.format_from_string (Util.string_of_char_list x))".
+Extract Inlined Constant DATE_TIME_FORMAT_from_string => "(fun x -> Date_time_component.format_from_string (Util.string_of_char_list x))".
 
 (** A duration *)
 Axiom DATE_TIME_DURATION : Set.
-Extract Constant DATE_TIME_DURATION => "DateTime.duration".
+Extract Constant DATE_TIME_DURATION => "Date_time_component.duration".
 
 Axiom DATE_TIME_DURATION_eq : DATE_TIME_DURATION -> DATE_TIME_DURATION -> bool.
-Extract Inlined Constant DATE_TIME_DURATION_eq => "(fun x y -> DateTime.duration_eq x y)".
+Extract Inlined Constant DATE_TIME_DURATION_eq => "(fun x y -> Date_time_component.duration_eq x y)".
 
 Conjecture DATE_TIME_DURATION_eq_correct :
   forall f1 f2, (DATE_TIME_DURATION_eq f1 f2 = true <-> f1 = f2).
 
 Axiom DATE_TIME_DURATION_to_string : DATE_TIME_DURATION -> string.
-Extract Inlined Constant DATE_TIME_DURATION_to_string => "(fun x -> Util.char_list_of_string (DateTime.duration_to_string x))".
+Extract Inlined Constant DATE_TIME_DURATION_to_string => "(fun x -> Util.char_list_of_string (Date_time_component.duration_to_string x))".
 
 Axiom DATE_TIME_DURATION_from_string : string -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_from_string => "(fun x -> DateTime.duration_from_string (Util.string_of_char_list x))".
+Extract Inlined Constant DATE_TIME_DURATION_from_string => "(fun x -> Date_time_component.duration_from_string (Util.string_of_char_list x))".
 
 Axiom DATE_TIME_DURATION_amount : DATE_TIME_DURATION -> Z.
-Extract Inlined Constant DATE_TIME_DURATION_amount => "(fun x -> DateTime.duration_amount x)".
+Extract Inlined Constant DATE_TIME_DURATION_amount => "(fun x -> Date_time_component.duration_amount x)".
 
 (** A time period *)
 Axiom DATE_TIME_PERIOD : Set.
-Extract Constant DATE_TIME_PERIOD => "DateTime.period".
+Extract Constant DATE_TIME_PERIOD => "Date_time_component.period".
 
 Axiom DATE_TIME_PERIOD_eq : DATE_TIME_PERIOD -> DATE_TIME_PERIOD -> bool.
-Extract Inlined Constant DATE_TIME_PERIOD_eq => "(fun x y -> DateTime.period_eq x y)".
+Extract Inlined Constant DATE_TIME_PERIOD_eq => "(fun x y -> Date_time_component.period_eq x y)".
 
 Conjecture DATE_TIME_PERIOD_eq_correct :
   forall f1 f2, (DATE_TIME_PERIOD_eq f1 f2 = true <-> f1 = f2).
 
 Axiom DATE_TIME_PERIOD_to_string : DATE_TIME_PERIOD -> string.
-Extract Inlined Constant DATE_TIME_PERIOD_to_string => "(fun x -> Util.char_list_of_string (DateTime.period_to_string x))".
+Extract Inlined Constant DATE_TIME_PERIOD_to_string => "(fun x -> Util.char_list_of_string (Date_time_component.period_to_string x))".
 
 Axiom DATE_TIME_PERIOD_from_string : string -> DATE_TIME_PERIOD.
-Extract Inlined Constant DATE_TIME_PERIOD_from_string => "(fun x -> DateTime.period_from_string (Util.string_of_char_list x))".
+Extract Inlined Constant DATE_TIME_PERIOD_from_string => "(fun x -> Date_time_component.period_from_string (Util.string_of_char_list x))".
 
 (** A date&time *)
 Axiom DATE_TIME : Set.
-Extract Constant DATE_TIME => "DateTime.dateTime".
+Extract Constant DATE_TIME => "Date_time_component.dateTime".
 
 Axiom DATE_TIME_now : DATE_TIME.
-Extract Inlined Constant DATE_TIME_now => "(DateTime.now ())".
+Extract Inlined Constant DATE_TIME_now => "(Date_time_component.now ())".
 
 Axiom DATE_TIME_eq : DATE_TIME -> DATE_TIME -> bool.
-Extract Inlined Constant DATE_TIME_eq => "(fun x y -> DateTime.eq x y)".
+Extract Inlined Constant DATE_TIME_eq => "(fun x y -> Date_time_component.eq x y)".
 
 Conjecture DATE_TIME_eq_correct :
   forall f1 f2, (DATE_TIME_eq f1 f2 = true <-> f1 = f2).
 
 Axiom DATE_TIME_format : DATE_TIME -> DATE_TIME_FORMAT -> string.
-Extract Inlined Constant DATE_TIME_format => "(fun x f -> Util.char_list_of_string (DateTime.to_string_format x f))".
+Extract Inlined Constant DATE_TIME_format => "(fun x f -> Util.char_list_of_string (Date_time_component.to_string_format x f))".
 
 Axiom DATE_TIME_from_string : string -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_from_string => "(fun x -> DateTime.from_string (Util.string_of_char_list x))".
+Extract Inlined Constant DATE_TIME_from_string => "(fun x -> Date_time_component.from_string (Util.string_of_char_list x))".
 
 Axiom DATE_TIME_to_string : DATE_TIME -> string.
-Extract Inlined Constant DATE_TIME_to_string => "(fun x -> Util.char_list_of_string (DateTime.to_string x))".
+Extract Inlined Constant DATE_TIME_to_string => "(fun x -> Util.char_list_of_string (Date_time_component.to_string x))".
 
 (** Components of a date and time *)
 Axiom DATE_TIME_get_seconds : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_seconds => "(fun x -> DateTime.get_seconds x)".
+Extract Inlined Constant DATE_TIME_get_seconds => "(fun x -> Date_time_component.get_seconds x)".
 
 Axiom DATE_TIME_get_minutes : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_minutes => "(fun x -> DateTime.get_minutes x)".
+Extract Inlined Constant DATE_TIME_get_minutes => "(fun x -> Date_time_component.get_minutes x)".
 
 Axiom DATE_TIME_get_hours : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_hours => "(fun x -> DateTime.get_hours x)".
+Extract Inlined Constant DATE_TIME_get_hours => "(fun x -> Date_time_component.get_hours x)".
 
 Axiom DATE_TIME_get_days : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_days => "(fun x -> DateTime.get_days x)".
+Extract Inlined Constant DATE_TIME_get_days => "(fun x -> Date_time_component.get_days x)".
 
 Axiom DATE_TIME_get_weeks : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_weeks => "(fun x -> DateTime.get_weeks x)".
+Extract Inlined Constant DATE_TIME_get_weeks => "(fun x -> Date_time_component.get_weeks x)".
 
 Axiom DATE_TIME_get_months : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_months => "(fun x -> DateTime.get_months x)".
+Extract Inlined Constant DATE_TIME_get_months => "(fun x -> Date_time_component.get_months x)".
   
 Axiom DATE_TIME_get_quarters : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_quarters => "(fun x -> DateTime.get_quarters x)".
+Extract Inlined Constant DATE_TIME_get_quarters => "(fun x -> Date_time_component.get_quarters x)".
   
 Axiom DATE_TIME_get_years : DATE_TIME -> Z.
-Extract Inlined Constant DATE_TIME_get_years => "(fun x -> DateTime.get_years x)".
+Extract Inlined Constant DATE_TIME_get_years => "(fun x -> Date_time_component.get_years x)".
 
 (** Min/Max for date and time *)
 Axiom DATE_TIME_max : list DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_max => "(fun x -> DateTime.max x)".
+Extract Inlined Constant DATE_TIME_max => "(fun x -> Date_time_component.max x)".
 
 Axiom DATE_TIME_min : list DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_min => "(fun x -> DateTime.min x)".
+Extract Inlined Constant DATE_TIME_min => "(fun x -> Date_time_component.min x)".
 
 (** Construct a duration *)
 Axiom DATE_TIME_DURATION_from_seconds : Z -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_from_seconds => "(fun x -> DateTime.duration_from_seconds x)".
+Extract Inlined Constant DATE_TIME_DURATION_from_seconds => "(fun x -> Date_time_component.duration_from_seconds x)".
   
 Axiom DATE_TIME_DURATION_from_minutes : Z -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_from_minutes => "(fun x -> DateTime.duration_from_minutes x)".
+Extract Inlined Constant DATE_TIME_DURATION_from_minutes => "(fun x -> Date_time_component.duration_from_minutes x)".
   
 Axiom DATE_TIME_DURATION_from_hours : Z -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_from_hours => "(fun x -> DateTime.duration_from_hours x)".
+Extract Inlined Constant DATE_TIME_DURATION_from_hours => "(fun x -> Date_time_component.duration_from_hours x)".
   
 Axiom DATE_TIME_DURATION_from_days : Z -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_from_days => "(fun x -> DateTime.duration_from_days x)".
+Extract Inlined Constant DATE_TIME_DURATION_from_days => "(fun x -> Date_time_component.duration_from_days x)".
 
 Axiom DATE_TIME_DURATION_from_weeks : Z -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_DURATION_from_weeks => "(fun x -> DateTime.duration_from_weeks x)".
+Extract Inlined Constant DATE_TIME_DURATION_from_weeks => "(fun x -> Date_time_component.duration_from_weeks x)".
   
 (** Construct a period *)
 Axiom DATE_TIME_PERIOD_from_days : Z -> DATE_TIME_PERIOD.
-Extract Inlined Constant DATE_TIME_PERIOD_from_days => "(fun x -> DateTime.period_from_days x)".
+Extract Inlined Constant DATE_TIME_PERIOD_from_days => "(fun x -> Date_time_component.period_from_days x)".
   
 Axiom DATE_TIME_PERIOD_from_weeks : Z -> DATE_TIME_PERIOD.
-Extract Inlined Constant DATE_TIME_PERIOD_from_weeks => "(fun x -> DateTime.period_from_weeks x)".
+Extract Inlined Constant DATE_TIME_PERIOD_from_weeks => "(fun x -> Date_time_component.period_from_weeks x)".
   
 Axiom DATE_TIME_PERIOD_from_months : Z -> DATE_TIME_PERIOD.
-Extract Inlined Constant DATE_TIME_PERIOD_from_months => "(fun x -> DateTime.period_from_months x)".
+Extract Inlined Constant DATE_TIME_PERIOD_from_months => "(fun x -> Date_time_component.period_from_months x)".
   
 Axiom DATE_TIME_PERIOD_from_quarters : Z -> DATE_TIME_PERIOD.
-Extract Inlined Constant DATE_TIME_PERIOD_from_quarters => "(fun x -> DateTime.period_from_quarters x)".
+Extract Inlined Constant DATE_TIME_PERIOD_from_quarters => "(fun x -> Date_time_component.period_from_quarters x)".
   
 Axiom DATE_TIME_PERIOD_from_years : Z -> DATE_TIME_PERIOD.
-Extract Inlined Constant DATE_TIME_PERIOD_from_years => "(fun x -> DateTime.period_from_years x)".
+Extract Inlined Constant DATE_TIME_PERIOD_from_years => "(fun x -> Date_time_component.period_from_years x)".
 
 (** Start of a period *)
 Axiom DATE_TIME_start_of_day : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_start_of_day => "(fun x -> DateTime.start_of_day x)".
+Extract Inlined Constant DATE_TIME_start_of_day => "(fun x -> Date_time_component.start_of_day x)".
 
 Axiom DATE_TIME_start_of_month : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_start_of_month => "(fun x -> DateTime.start_of_month x)".
+Extract Inlined Constant DATE_TIME_start_of_month => "(fun x -> Date_time_component.start_of_month x)".
 
 Axiom DATE_TIME_start_of_week : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_start_of_week => "(fun x -> DateTime.start_of_week x)".
+Extract Inlined Constant DATE_TIME_start_of_week => "(fun x -> Date_time_component.start_of_week x)".
 
 Axiom DATE_TIME_start_of_quarter : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_start_of_quarter => "(fun x -> DateTime.start_of_quarter x)".
+Extract Inlined Constant DATE_TIME_start_of_quarter => "(fun x -> Date_time_component.start_of_quarter x)".
 
 Axiom DATE_TIME_start_of_year : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_start_of_year => "(fun x -> DateTime.start_of_year x)".
+Extract Inlined Constant DATE_TIME_start_of_year => "(fun x -> Date_time_component.start_of_year x)".
 
 (** End of a period *)
 Axiom DATE_TIME_end_of_day : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_end_of_day => "(fun x -> DateTime.end_of_day x)".
+Extract Inlined Constant DATE_TIME_end_of_day => "(fun x -> Date_time_component.end_of_day x)".
 
 Axiom DATE_TIME_end_of_week : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_end_of_week => "(fun x -> DateTime.end_of_week x)".
+Extract Inlined Constant DATE_TIME_end_of_week => "(fun x -> Date_time_component.end_of_week x)".
 
 Axiom DATE_TIME_end_of_month : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_end_of_month => "(fun x -> DateTime.end_of_month x)".
+Extract Inlined Constant DATE_TIME_end_of_month => "(fun x -> Date_time_component.end_of_month x)".
 
 Axiom DATE_TIME_end_of_quarter : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_end_of_quarter => "(fun x -> DateTime.end_of_quarter x)".
+Extract Inlined Constant DATE_TIME_end_of_quarter => "(fun x -> Date_time_component.end_of_quarter x)".
 
 Axiom DATE_TIME_end_of_year : DATE_TIME -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_end_of_year => "(fun x -> DateTime.end_of_year x)".
+Extract Inlined Constant DATE_TIME_end_of_year => "(fun x -> Date_time_component.end_of_year x)".
 
 (** Arithmetics *)
 Axiom DATE_TIME_add : DATE_TIME -> DATE_TIME_DURATION -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_add => "(fun x y -> DateTime.add x y)".
+Extract Inlined Constant DATE_TIME_add => "(fun x y -> Date_time_component.add x y)".
 
 Axiom DATE_TIME_subtract : DATE_TIME -> DATE_TIME_DURATION -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_subtract => "(fun x y ->  DateTime.subtract x y)".
+Extract Inlined Constant DATE_TIME_subtract => "(fun x y ->  Date_time_component.subtract x y)".
 
 Axiom DATE_TIME_is_before : DATE_TIME -> DATE_TIME -> bool.
-Extract Inlined Constant DATE_TIME_is_before => "(fun x y -> DateTime.is_before x y)".
+Extract Inlined Constant DATE_TIME_is_before => "(fun x y -> Date_time_component.is_before x y)".
 
 Axiom DATE_TIME_is_after : DATE_TIME -> DATE_TIME -> bool.
-Extract Inlined Constant DATE_TIME_is_after => "(fun x y -> DateTime.is_after x y)".
+Extract Inlined Constant DATE_TIME_is_after => "(fun x y -> Date_time_component.is_after x y)".
 
 Axiom DATE_TIME_diff : DATE_TIME -> DATE_TIME -> DATE_TIME_DURATION.
-Extract Inlined Constant DATE_TIME_diff => "(fun x y -> DateTime.diff x y)".
+Extract Inlined Constant DATE_TIME_diff => "(fun x y -> Date_time_component.diff x y)".
 
 Axiom DATE_TIME_add_period : DATE_TIME -> DATE_TIME_PERIOD -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_add_period => "(fun x y -> DateTime.add_period x y)".
+Extract Inlined Constant DATE_TIME_add_period => "(fun x y -> Date_time_component.add_period x y)".
 
 Axiom DATE_TIME_subtract_period : DATE_TIME -> DATE_TIME_PERIOD -> DATE_TIME.
-Extract Inlined Constant DATE_TIME_subtract_period => "(fun x y ->  DateTime.subtract_period x y)".
+Extract Inlined Constant DATE_TIME_subtract_period => "(fun x y ->  Date_time_component.subtract_period x y)".
 
 Section DateTimeModel.
   (** Equality *)
