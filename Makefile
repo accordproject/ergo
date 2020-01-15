@@ -71,8 +71,8 @@ configure:
 	@echo "[Ergo] "
 	@echo "[Ergo] Configuring Build"
 	@echo "[Ergo] "
+	npm install
 	@$(MAKE) prepare
-	@$(MAKE) npm-setup
 
 # Regenerate the npm directory
 ergo:
@@ -98,12 +98,6 @@ ergo-js-extraction:
 	@echo "[Ergo] Extracting Ergo Compiler to JavaScript"
 	@echo "[Ergo] "
 	@$(MAKE) -C compiler/libjs
-
-npm-setup:
-	@echo "[Ergo] "
-	@echo "[Ergo] Setting up for Node.js build"
-	@echo "[Ergo] "
-	npm install
 
 ## Documentation
 documentation:
