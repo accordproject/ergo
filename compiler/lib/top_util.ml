@@ -12,7 +12,22 @@
  * limitations under the License.
  *)
 
-open ErgoComp.ErgoCompiler
+open Core.ErgoCompiler
 
-val cto_import: string -> Cto_j.model -> cto_package
+let repl_bm = ref ergo_empty_brand_model
+let my_init_repl_context input =
+  begin match ergo_brand_model_from_inputs input with
+  | Success ((bm,_),warnings) -> repl_bm := bm; init_repl_context !repl_bm input
+  | Failure e -> Ergo_util.ergo_raise e
+  end
+let my_ergo_repl_eval_decl rctxt decl =
+  begin match ergo_refresh_brand_model !repl_bm rctxt with
+  | Success ((bm, rctxt'),warnings) ->
+      repl_bm := bm;
+      ergo_repl_eval_decl
+        !repl_bm
+        rctxt'
+        decl
+  | Failure e -> Ergo_util.ergo_raise e
+  end
 

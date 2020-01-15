@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-open ErgoComp.ErgoCompiler
+open Core.ErgoCompiler
 
 type lang =
   | Ergo

@@ -18,12 +18,12 @@ include ../../Makefile.config
 include ../../Makefile.coq_modules
 
 ## Toplevel
-all: ./ErgoComp.ml
+all: ./core.ml
 
 ## Extraction
 VO_FILES = $(MODULES:%=../core/%.vo)
 
-./ErgoComp.ml ./ErgoComp.mli: $(VO_FILES)
+./core.ml ./core.mli: $(VO_FILES)
 ifneq ($(QCERT),)
 	(coqc -R ../core ErgoSpec -R ../../$(QCERT)/compiler/core Qcert ./ErgoExtraction.v)
 else
@@ -36,7 +36,7 @@ clean:
 
 cleanall: clean
 	rm -f ErgoExtraction.glob ErgoExtraction.vo .ErgoExtraction.aux
-	rm -rf ErgoComp.ml ErgoComp.mli
+	rm -rf core.ml core.mli
 	rm -rf *~
 
 .NOTPARALLEL: 

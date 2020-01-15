@@ -15,9 +15,9 @@
 %{
 module Ergo_lib = struct end (* Hack for dune bug, see https://github.com/ocaml/dune/issues/2450 *)
 open Util
-open LexUtil
-open ErgoUtil
-open ErgoComp
+open Lex_util
+open Ergo_util
+open Core
 
 (* File provenance *)
 let mk_provenance
@@ -192,10 +192,10 @@ let make_template_if prov name veTrue =
 %left DOT QUESTIONDOT
 %left AS
 
-%start <ErgoComp.ErgoCompiler.ergo_module> main_module
-%start <ErgoComp.ErgoCompiler.ergo_declaration list> top_decls
-%start <ErgoComp.ErgoCompiler.ergo_expr> template
-%start <ErgoComp.ErgoCompiler.ergo_expr> top_expr
+%start <Core.ErgoCompiler.ergo_module> main_module
+%start <Core.ErgoCompiler.ergo_declaration list> top_decls
+%start <Core.ErgoCompiler.ergo_expr> template
+%start <Core.ErgoCompiler.ergo_expr> top_expr
 
 %%
 
