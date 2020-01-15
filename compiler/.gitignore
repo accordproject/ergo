@@ -15,7 +15,7 @@
 /out/
 /*.aux
 /.paths
-extraction/ErgoComp.ml
-extraction/ErgoComp.mli
+extraction/core.ml
+extraction/core.mli
 lib/Resources.ml
 stdlib/*.ml

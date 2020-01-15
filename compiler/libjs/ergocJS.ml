@@ -15,10 +15,10 @@
 open Js_of_ocaml
 
 open Ergo_lib
-open ErgoUtil
+open Ergo_util
 
 let wrap_error gconf e =
-  let source_table = ErgoConfig.get_source_table gconf in
+  let source_table = Config.get_source_table gconf in
   begin match e with
   | Ergo_Error error ->
       new%js Js.error_constr (Js.string (string_of_error_with_table source_table error))
@@ -27,7 +27,7 @@ let wrap_error gconf e =
   end
 
 let _ =
-  let gconf = ErgoConfig.default_config () in
+  let gconf = Config.default_config () in
   begin try
     Main.main gconf Sys.argv
   with

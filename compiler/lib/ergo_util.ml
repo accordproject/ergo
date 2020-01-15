@@ -13,7 +13,7 @@
  *)
 
 open Util
-open ErgoComp
+open Core
 
 (** Ergo errors *)
 exception Ergo_Error of eerror
