@@ -12,8 +12,8 @@
  * limitations under the License.
  *)
 
-open ErgoUtil
-open ErgoComp.ErgoCompiler
+open Ergo_util
+open Core.ErgoCompiler
 
 type lang =
   | Ergo
@@ -107,8 +107,8 @@ let get_template gconf = gconf.econf_template
 let get_ctos gconf = gconf.econf_ctos
 let get_modules gconf = gconf.econf_modules
 let get_all gconf =
-  (List.map (fun x -> ErgoComp.InputCTO x) (get_ctos gconf))
-  @ (List.map (fun x -> ErgoComp.InputErgo x) (get_modules gconf))
+  (List.map (fun x -> Core.InputCTO x) (get_ctos gconf))
+  @ (List.map (fun x -> Core.InputErgo x) (get_modules gconf))
 let get_all_sorted gconf =
   topo_sort_inputs (get_all gconf)
 
@@ -123,7 +123,7 @@ let add_template gconf tem =
   in
   gconf.econf_template <- newtem
 let add_template_file gconf (f,fcontent) =
-  let parsed = (f, ParseUtil.parse_ergo_expr_from_string f fcontent) in
+  let parsed = (f, Parse_util.parse_ergo_expr_from_string f fcontent) in
   let newtem =
     begin match gconf.econf_source_template with
     | None -> Some [(f,fcontent)]
@@ -138,19 +138,19 @@ let add_cto gconf cto =
   gconf.econf_ctos <- gconf.econf_ctos @ [cto]
 let add_cto_file gconf (f,fcontent) =
   add_source_text gconf f fcontent;
-  add_cto gconf (ParseUtil.parse_cto_package_from_string f fcontent)
+  add_cto gconf (Parse_util.parse_cto_package_from_string f fcontent)
 let add_module gconf m =
   gconf.econf_modules <- gconf.econf_modules @ [m]
 let add_module_file gconf (f,fcontent) =
   add_source_text gconf f fcontent;
-  add_module gconf (ParseUtil.parse_ergo_module_from_string f fcontent)
+  add_module gconf (Parse_util.parse_ergo_module_from_string f fcontent)
 
 let get_stdlib () =
-  let stdctos = ErgoStdlib.ergo_stdcto in
-  let stdlib = ErgoStdlib.ergo_stdlib in
+  let stdctos = Stdlib.ergo_stdcto in
+  let stdlib = Stdlib.ergo_stdlib in
   (stdctos@stdlib,
-   Util.map_assoc ParseUtil.parse_cto_package_from_string stdctos,
-   Util.map_assoc ParseUtil.parse_ergo_module_from_string stdlib)
+   Util.map_assoc Parse_util.parse_cto_package_from_string stdctos,
+   Util.map_assoc Parse_util.parse_ergo_module_from_string stdlib)
 
 let add_stdlib gconf =
   let (sources,ctos,mls) = get_stdlib () in
@@ -182,9 +182,9 @@ let default_config () =
     add_stdlib gconf;
     gconf
   with
-  | ErgoUtil.Ergo_Error error ->
+  | Ergo_Error error ->
       Printf.eprintf "Cannot load Ergo standard library:\n%s\n"
-        (ErgoUtil.string_of_error_with_table [] error);
+        (string_of_error_with_table [] error);
       exit 2
   end
 

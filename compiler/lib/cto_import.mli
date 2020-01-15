@@ -12,16 +12,7 @@
  * limitations under the License.
  *)
 
-(* This module contains the implementation for the optimization logger *)
+open Core.ErgoCompiler
 
-open Util
-open SExp
-
-val nrc_log_startPass : string -> 'a -> nrc_logger_token_type
-val nrc_log_step : nrc_logger_token_type -> string -> 'a -> 'a -> nrc_logger_token_type
-val nrc_log_endPass : nrc_logger_token_type -> 'a -> nrc_logger_token_type
-
-val nrc_set_trace : (Obj.t->sexp) -> string -> unit
-
-val log_string : char list -> unit
+val cto_import: string -> Cto_j.model -> cto_package
 

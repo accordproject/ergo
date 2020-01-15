@@ -14,7 +14,7 @@
 
 (* This module contains the implementation for the optimization logger *)
 
-open SExp
+open Sexp
 
 type logger_verbosity =
   | LOG_NONE

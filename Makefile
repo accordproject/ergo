@@ -31,28 +31,28 @@ all:
 %.ctoj: %.cto
 	./scripts/cto2ctoj.js parse $<
 
-compiler/lib/Resources.ml: compiler/stdlib/accordproject.ctoj \
+compiler/lib/resources.ml: compiler/stdlib/accordproject.ctoj \
                            compiler/stdlib/stdlib.ergo \
                            compiler/stdlib/etime.ergo \
                            compiler/stdlib/template.ergo \
                            ./runtimes/javascript/ergo-runtime.js
-	echo '(* generated ocaml file *)' > compiler/lib/Resources.ml
+	echo '(* generated ocaml file *)' > compiler/lib/resources.ml
 	(for i in accordproject; do \
          echo "let $$i = {xxx|"; \
          cat compiler/stdlib/$$i.ctoj; \
          echo "|xxx}"; \
-         done) >> compiler/lib/Resources.ml
+         done) >> compiler/lib/resources.ml
 	(for i in stdlib etime template; do \
          echo "let $$i = {xxx|"; \
          cat compiler/stdlib/$$i.ergo; \
          echo "|xxx}"; \
-         done) >> compiler/lib/Resources.ml
+         done) >> compiler/lib/resources.ml
 	(for i in runtime; do \
          echo "let ergo_$$i = {xxx|"; \
          cat ./runtimes/javascript/ergo-$$i.js; \
          echo "|xxx}"; \
-         done) >> compiler/lib/Resources.ml
-	(echo `date "+let builddate = {xxx|%b %d, %Y|xxx}"`) >> compiler/lib/Resources.ml
+         done) >> compiler/lib/resources.ml
+	(echo `date "+let builddate = {xxx|%b %d, %Y|xxx}"`) >> compiler/lib/resources.ml
 
 # Configure
 ./runtimes/javascript/ergo_runtime.ml:

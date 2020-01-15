@@ -13,8 +13,8 @@
  *)
 
 open Util
-open ErgoUtil
-open ErgoComp
+open Ergo_util
+open Core
 open Cto_j
 
 let filename = ref ""
@@ -143,7 +143,7 @@ let cto_declarations_of_body dl =
   List.map cto_declaration_of_defn dl
 
 let cto_import_of_import i =
-  ErgoUtil.cto_import_decl_of_import_namespace i.cto_import_namespace
+  cto_import_decl_of_import_namespace i.cto_import_namespace
 
 let cto_import f (m:model) : ErgoCompiler.cto_package =
   filename := f;

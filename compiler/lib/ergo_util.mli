@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-open ErgoComp
+open Core
 
 (** Ergo errors *)
 exception Ergo_Error of eerror

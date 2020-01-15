@@ -43,4 +43,4 @@ Extract Constant Misc.coq_print_warnings => "(fun prefix warnings x -> Util.coq_
 
 (* Ergo modules *)
 Require ErgoCompiler.
-Extraction "ErgoComp" ErgoCompiler.ErgoCompiler.
+Extraction "core" ErgoCompiler.ErgoCompiler.
