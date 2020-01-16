@@ -21,7 +21,6 @@ Require ErgoSpec.Backend.Lib.QType.
 Require ErgoSpec.Backend.Lib.QData.
 Require ErgoSpec.Backend.Lib.QOps.
 Require ErgoSpec.Backend.Lib.QCodeGen.
-Require ErgoSpec.Backend.Lib.QNNRCtoJavaScript.
 
 Module QcertBackend := QBackendRuntime.QBackendRuntime <+ QcertModel.CompEnhanced.
 Module QcertData := QData.QData(QcertBackend).
