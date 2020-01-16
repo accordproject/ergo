@@ -94,13 +94,6 @@ Section Misc.
     Parameter coq_time : string -> (A -> B) -> A -> B.
   End TimeInstrumentation.
 
-  (** Backends *)
-  Section Config.
-    Inductive jsversion :=
-    | ES5 : jsversion
-    | ES6 : jsversion.
-  End Config.
-
   (** Can printout warnings *)
   Section Warnings.
     Context {A:Set}.
