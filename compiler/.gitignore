@@ -17,5 +17,7 @@
 /.paths
 extraction/core.ml
 extraction/core.mli
-lib/Resources.ml
+lib/js_runtime.ml
+lib/static_config.ml
+lib/resources.ml
 stdlib/*.ml

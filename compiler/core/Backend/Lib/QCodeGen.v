@@ -14,6 +14,7 @@
 
 Require Import String.
 Require Import Qcert.Utils.Utils.
+Require Import Qcert.Data.DataSystem.
 Require Import Qcert.EJson.EJsonRuntime.
 Require Import Qcert.Driver.CompLang.
 Require Import Qcert.Driver.CompDriver.
@@ -21,6 +22,7 @@ Require Import Qcert.Driver.CompDriver.
 (* Require Import ErgoSpec.Utils.Misc. *)
 Require Import ErgoSpec.Backend.Lib.QBackendModel.
 Require Import ErgoSpec.Backend.Lib.QBackendRuntime.
+Require Import ErgoSpec.Backend.Lib.QNNRCtoJavaScript.
 
 Module QCodeGen(ergomodel:QBackendModel).
   Local Open Scope list_scope.
@@ -44,17 +46,20 @@ Module QCodeGen(ergomodel:QBackendModel).
   
   Definition ejavascript := CompLang.javascript.
 
-  Definition nnrc_expr_to_javascript (n:nnrc_expr) (t1 t2:nat) (s1 s2:nstring) (h:list (string*string)) := ^"<STUB>".
+  Definition nnrc_expr_to_ejavascript {bm:brand_model} (e:nnrc_expr) : ejavascript :=
+    nnrc_expr_to_javascript nil None "test" e.
 
-  Definition nnrc_expr_to_javascript_method (s0:nstring) (n:nnrc_expr) (t:nat) (s1 s2:nstring) (ls:list nstring) (s3:string) := ^"<STUB>".
+  Definition nnrc_expr_to_javascript_method
+             {bm:brand_model}
+             (e:nnrc_expr) (fname:string) (input_vs:list string) :=
+    nnrc_expr_to_javascript input_vs None fname e.
 
   Definition nnrc_expr_to_javascript_fun_lift
+             {bm:brand_model}
              (e:nnrc_expr)
              (fname:String.string)
-             (input_v:String.string)
-             (init_indent:nat)
-             (eol:nstring)
-             (quotel:nstring) : ejavascript := ^"<STUB>".
+             (input_v:String.string) : ejavascript :=
+    nnrc_expr_to_javascript (input_v::nil) None fname e.
 
   Definition inheritanceToJS (h:list (string*string)) : nstring :=
     ^(ejsonStringify
