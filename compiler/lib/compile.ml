@@ -27,8 +27,8 @@ let res_convert code warnings =
   (* Printf.printf "NNRC Module: %s" (pretty_nnrc_module false 0 false (Jarray []) false code.res_nnrc); *)
   (contract_name, string_of_char_list code.res_file, code.res_content, warnings)
 
-let compile_module_to_javascript version inputs template =
-  let code = ErgoCompiler.ergo_module_to_javascript version inputs template in
+let compile_module_to_javascript inputs template =
+  let code = ErgoCompiler.ergo_module_to_javascript inputs template in
   wrap_jerrors res_convert code
 
 let compile_module_to_cicero inputs template =
@@ -49,10 +49,8 @@ let ergo_compile target_lang inputs template =
   let template = adjust_template_file template in
   begin match target_lang with
   | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
-  | ES5 ->
-      compile_module_to_javascript ES5 inputs template
   | ES6 ->
-      compile_module_to_javascript ES6 inputs template
+      compile_module_to_javascript inputs template
   | Cicero ->
       compile_module_to_cicero inputs template
   | Java ->

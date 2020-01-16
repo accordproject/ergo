@@ -274,7 +274,6 @@ Section ErgoDriver.
                cinit.
 
     Definition ergo_module_to_javascript
-               (version:jsversion)
                (ctxt:compilation_context)
                (p:laergo_module) : eresult (nnrc_module * QcertCodeGen.ejavascript) :=
       let pc := ergo_module_to_ergoct ctxt p in
@@ -284,7 +283,7 @@ Section ErgoDriver.
       coq_time "nnrc->js"
                (elift (fun x =>
                          let inheritance := (@brand_relation_brands (@brand_model_relation _ bm)) in
-                         (x,nnrc_module_to_javascript_top version inheritance x)))
+                         (x,nnrc_module_to_javascript_top inheritance x)))
                pn.
 
     Definition ergo_module_to_java
@@ -302,7 +301,6 @@ Section ErgoDriver.
     Local Open Scope nstring_scope.
 
     Definition ergo_module_to_javascript_top
-               (version:jsversion)
                (inputs:list lrergo_input)
                (template:option (string * lrergo_expr)) : eresult result_file :=
       let bm : eresult (brand_model * list laergo_type_declaration) :=
@@ -313,7 +311,7 @@ Section ErgoDriver.
                 let cinit := compilation_context_from_inputs inputs template (snd xy) in
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
-                          let res := ergo_module_to_javascript version ctxt p in
+                          let res := ergo_module_to_javascript ctxt p in
                           elift (fun xy => mkResultFile None p.(module_file) (fst xy) (snd xy)) res)
                        cinit) bm.
 
