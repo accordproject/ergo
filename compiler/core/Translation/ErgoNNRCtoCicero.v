@@ -43,6 +43,7 @@ Section ErgoNNRCtoCicero.
     if generated
     then ^""
     else
+      eol +++
       ^"/**" +++ eol
              +++ ^" * Execute the smart clause" +++ eol
              +++ ^" * @param {Context} context - the Accord context" +++ eol
@@ -69,6 +70,7 @@ Section ErgoNNRCtoCicero.
              (clause_name:string)
              (eol:nstring)
              (quotel:nstring) : nstring :=
+    let fname := QcertCodeGen.javascript_identifier_sanitizer fun_name in
     (accord_annotation
        generated
        clause_name
@@ -78,11 +80,12 @@ Section ErgoNNRCtoCicero.
        state_type
        eol
        quotel)
-      +++ ^"function " +++ ^fun_name +++ ^"(context) {" +++ eol
+      +++ eol
+      +++ ^"function " +++ ^fname +++ ^"(context) {" +++ eol
       +++ ^"  let pcontext = { '" +++ ^request_param +++ ^"' : context.request, '__state': context.__state, '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
       +++ ^"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
-      +++ ^"  return new " +++ ^ contract_name +++ ^"()." +++ ^ clause_name +++ ^"(pcontext);" +++ eol
-      +++ ^"}" +++ eol.
+      +++ ^"  return " +++ ^ contract_name +++ ^"." +++ ^ clause_name +++ ^"(pcontext);" +++ eol
+      +++ ^"}".
 
   Definition wrapper_function_for_init
              (generated:bool)
@@ -93,12 +96,13 @@ Section ErgoNNRCtoCicero.
              (contract_name:string)
              (eol:nstring)
              (quotel:nstring) : nstring :=
+    let fname := QcertCodeGen.javascript_identifier_sanitizer fun_name in
     let state_init := ^"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }" in
-    ^"function " +++ ^fun_name +++ ^"(context) {" +++ eol
-     +++ ^"  let pcontext = { 'state': " +++ state_init +++ ^", '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
-     +++ ^"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
-     +++ ^"  return new " +++ ^contract_name +++ ^"().init(pcontext);" +++ eol
-     +++ ^"}" +++ eol.
+    eol +++ ^"function " +++ ^fname +++ ^"(context) {" +++ eol
+        +++ ^"  let pcontext = { 'state': " +++ state_init +++ ^", '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
+        +++ ^"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
+        +++ ^"  return new " +++ ^contract_name +++ ^"().init(pcontext);" +++ eol
+        +++ ^"}".
 
   Definition apply_wrapper_function
              (contract_name:string)
@@ -134,8 +138,7 @@ Section ErgoNNRCtoCicero.
              (contract_name:string)
              (eol:nstring)
              (quotel:nstring) : nstring :=
-    ^"" +++ ^"const contract = new " +++ ^contract_name +++ ^"();" +++ eol
-        +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name clause_main_name eol quotel
+    ^"" +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name clause_main_name eol quotel
         +++ wrapper_function_for_init true "__init" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name eol quotel.
 
   Definition javascript_of_module_with_dispatch
@@ -145,12 +148,12 @@ Section ErgoNNRCtoCicero.
              (p:nnrc_module)
              (eol:nstring)
              (quotel:nstring) : nstring :=
-    (preamble eol) +++ eol
+    (QcertCodeGen.js_ast_to_javascript preamble) +++ eol
                    +++ (javascript_of_inheritance inheritance eol quotel)
                    +++ (wrapper_functions contract_name signatures eol quotel)
-                   +++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
+                   +++ (javascript_of_declarations p.(modulen_declarations))
                    +++ (javascript_main_dispatch_and_init contract_name eol quotel)
-                   +++ (postamble eol).
+                   +++ (QcertCodeGen.js_ast_to_javascript postamble).
 
   Fixpoint filter_signatures
            (namespace:string)
