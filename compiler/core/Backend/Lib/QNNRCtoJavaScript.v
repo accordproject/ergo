@@ -46,8 +46,8 @@ Section QNNRCtoJavaScript.
   Definition nnrc_expr_to_javascript_function constants (cname:option string) (fname:string) (e:nnrc) : js_ast :=
     imp_ejson_to_js_ast
       cname
-      (imp_qcert_to_imp_ejson
-         (nnrs_imp_to_imp_qcert
+      (imp_data_to_imp_ejson
+         (nnrs_imp_to_imp_data
             fname
             (nnrs_to_nnrs_imp
                (nnrc_to_nnrs

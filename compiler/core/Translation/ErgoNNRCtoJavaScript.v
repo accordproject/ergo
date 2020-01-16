@@ -30,6 +30,8 @@ Section ErgoNNRCtoJavaScript.
   Local Open Scope string_scope.
   Local Open Scope nstring_scope.
 
+  Context {bm:brand_model}.
+
   (** Top-level expression *)
   Definition javascript_of_expression
              (e:nnrc_expr)                  (* expression to translate *)
@@ -38,7 +40,7 @@ Section ErgoNNRCtoJavaScript.
              (eol:nstring)                   (* Choice of end of line character *)
              (quotel:nstring)                (* Choice of quote character *)
     : nstring
-    := QcertCodeGen.nnrc_expr_to_javascript e t i eol quotel nil.
+    := QcertCodeGen.nnrc_expr_to_ejavascript e.
 
   (** Top-level constant *)
   Definition javascript_of_constant
@@ -50,7 +52,7 @@ Section ErgoNNRCtoJavaScript.
              (quotel:nstring)                (* Choice of quote character *)
     : QcertCodeGen.ejavascript
     := 
-      let s1 := QcertCodeGen.nnrc_expr_to_javascript bind t i eol quotel nil in
+      let s1 := QcertCodeGen.nnrc_expr_to_ejavascript bind in
       let v0 : string := ("v"%string ++ v) in
       s1 +++ (EmitUtil.indent i) +++ ^"var " +++ ^v0 +++ ^" = <STUB>;" +++ eol.
 
@@ -61,8 +63,8 @@ Section ErgoNNRCtoJavaScript.
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.ejavascript :=
     let input_v := "context"%string in
-    QcertCodeGen.nnrc_expr_to_javascript_method (^input_v) e 1 eol quotel (^input_v::nil)
-                                               (QcertCodeGen.javascript_identifier_sanitizer fname).
+    QcertCodeGen.nnrc_expr_to_javascript_method e (QcertCodeGen.javascript_identifier_sanitizer fname)
+                                                (input_v::nil).
 
   (** Single function *)
   Definition javascript_function_of_body
@@ -72,7 +74,7 @@ Section ErgoNNRCtoJavaScript.
              (quotel:nstring) : QcertCodeGen.ejavascript :=
     let input_v := "context"%string in
     let init_indent := 0 in
-    QcertCodeGen.nnrc_expr_to_javascript_fun_lift e (QcertCodeGen.javascript_identifier_sanitizer fname) input_v init_indent eol quotel.
+    QcertCodeGen.nnrc_expr_to_javascript_fun_lift e (QcertCodeGen.javascript_identifier_sanitizer fname) input_v.
 
   Definition javascript_function_of_nnrc_function
              (f:nnrc_function)
