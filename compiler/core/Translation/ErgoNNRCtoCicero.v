@@ -29,6 +29,8 @@ Section ErgoNNRCtoCicero.
   Local Open Scope string_scope.
   Local Open Scope nstring_scope.
 
+  Context {bm:brand_model}.
+
   Definition accord_annotation
              (generated:bool)
              (clause_name:string)
