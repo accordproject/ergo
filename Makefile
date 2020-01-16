@@ -168,7 +168,7 @@ _CoqProject: Makefile.config
 	@echo "[Ergo] Setting up Coq"
 	@echo "[Ergo] "
 ifneq ($(QCERT),)
-	(echo "-R compiler/core ErgoSpec -R $(QCERT)/coq Qcert";) > _CoqProject
+	(echo "-R compiler/core ErgoSpec -R $(QCERT)/compiler/core Qcert";) > _CoqProject
 else
 	(echo "-R compiler/core ErgoSpec";) > _CoqProject
 endif
