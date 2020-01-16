@@ -17,7 +17,7 @@
 Require Import String.
 Require Import List.
 
-Require Import Qcert.JavaScriptAst.Lang.JavaScriptAst.
+Require Import Qcert.JavaScriptAst.JavaScriptAstRuntime.
 Require Import Qcert.Driver.CompDriver.
 Require Import ErgoSpec.Version.
 Require Import ErgoSpec.Utils.Misc.
@@ -34,129 +34,73 @@ Section ErgoNNRCtoJavaScript.
 
   (** Top-level expression *)
   Definition javascript_of_expression
+             (globals:list string)
              (e:nnrc_expr)                  (* expression to translate *)
-             (t : nat)                      (* next available unused temporary *)
-             (i : nat)                      (* indentation level *)
-             (eol:nstring)                   (* Choice of end of line character *)
-             (quotel:nstring)                (* Choice of quote character *)
-    : nstring
-    := QcertCodeGen.nnrc_expr_to_ejavascript e.
+    : js_ast
+    := nil. (* XXX TODO -- either support or prove it is not being emitted *)
 
   (** Top-level constant *)
   Definition javascript_of_constant
+             (globals:list string)
              (v:string)                     (* constant name *)
              (bind:nnrc_expr)               (* expression computing the constant *)
-             (t : nat)                      (* next available unused temporary *)
-             (i : nat)                      (* indentation level *)
-             (eol:nstring)                   (* Choice of end of line character *)
-             (quotel:nstring)                (* Choice of quote character *)
-    : QcertCodeGen.ejavascript
-    := 
-      let s1 := QcertCodeGen.nnrc_expr_to_ejavascript bind in
-      let v0 : string := ("v"%string ++ v) in
-      s1 +++ (EmitUtil.indent i) +++ ^"var " +++ ^v0 +++ ^" = <STUB>;" +++ eol.
+    : js_ast
+    := nil. (* XXX TODO -- either support or prove it is not being emitted *)
 
   (** Single function *)
-  Definition javascript_function_of_body
-             (e:nnrc_expr)
-             (fname:string)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    let input_v := "context"%string in
-    let init_indent := 0 in
-    QcertCodeGen.nnrc_expr_to_ejavascript_fun_lift e (QcertCodeGen.javascript_identifier_sanitizer fname) input_v.
-
   Definition javascript_function_of_nnrc_function
+             (globals:list string)
              (f:nnrc_function)
-             (tname:option string)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    let fname := function_name_in_table tname f.(functionn_name) in
-    javascript_function_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel.
-
-  Definition javascript_functions_of_nnrc_functions
-             (fl:list nnrc_function)
-             (tname:option string)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    nstring_multi_append eol (fun f => javascript_function_of_nnrc_function f tname eol quotel) fl.
+             (tname:option string) : js_ast :=
+    let fname := QcertCodeGen.javascript_identifier_sanitizer (function_name_in_table tname f.(functionn_name)) in
+    QcertCodeGen.nnrc_expr_to_javascript_function globals (fname, f.(functionn_lambda).(lambdan_body)).
 
   (** Single method *)
-  Definition javascript_method_of_nnrc_function
-             (globals:list string)
-             (f:nnrc_function) : QcertCodeGen.ejavascript :=
-    let fname := QcertCodeGen.javascript_identifier_sanitizer f.(functionn_name) in
-    let e := f.(functionn_lambda).(lambdan_body) in
-    let input_v := "context"%string in
-    QcertCodeGen.nnrc_expr_to_ejavascript_method globals fname e.
-
-  Definition javascript_methods_of_nnrc_functions
-             (globals:list string)
-             (fl:list nnrc_function)
-             (tname:string)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    nstring_multi_append eol (fun f => javascript_method_of_nnrc_function globals f) fl.
-
   Definition javascript_of_nnrc_function_table
              (globals:list string)
-             (ft:nnrc_function_table)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    let tname := QcertCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in
-    ^"class " +++ ^tname +++ ^" {" +++ eol
-              +++ (javascript_methods_of_nnrc_functions globals ft.(function_tablen_funs) tname eol quotel) +++ eol
-              +++ ^"}" +++ eol.
+             (ft:nnrc_function_table) : js_ast :=
+    let cname := QcertCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in
+    QcertCodeGen.nnrc_expr_to_javascript_function_table
+      globals cname
+      (List.map (fun f => (QcertCodeGen.javascript_identifier_sanitizer f.(functionn_name),
+                           f.(functionn_lambda).(lambdan_body))) ft.(function_tablen_funs)).
 
-  Definition preamble (eol:nstring) : nstring :=
-    ^"" +++ ^"/* Generated using ergoc version " +++ ^ergo_version +++ ^" */" +++ eol
-        +++ ^"'use strict';" +++ eol
-        +++ ^"/*eslint-disable no-unused-vars*/" +++ eol
-        +++ ^"/*eslint-disable no-undef*/" +++ eol
-        +++ ^"/*eslint-disable no-var*/" +++ eol
-        +++ eol.
+  Definition preamble : js_ast :=
+    (comment (" Generated using ergoc version " ++ ergo_version ++ " "))
+      :: strictmode
+      :: (comment "eslint-disable no-unused-vars")
+      :: (comment "eslint-disable no-undef")
+      :: (comment "eslint-disable no-var")
+      :: nil.
 
-  Definition postamble (eol:nstring) :=
-    ^"" +++ eol
-        +++ ^"/*eslint-enable no-unused-vars*/" +++ eol
-        +++ ^"/*eslint-enable no-undef*/" +++ eol
-         +++ eol.
+  Definition postamble : js_ast :=
+    (comment "eslint-enable no-unused-vars")
+      :: (comment "eslint-enable no-undef")
+      :: nil.
     
   Definition javascript_of_declaration
+             (globals:list string)    (* globally known variables -- avoid list *)
              (s : nnrc_declaration)   (* statement to translate *)
-             (t : nat)                (* next available unused temporary *)
-             (i : nat)                (* indentation level *)
-             (eol : nstring)
-             (quotel : nstring)
-    : QcertCodeGen.ejavascript          (* JavaScript statements for computing result *)
+    : js_ast
     :=
       match s with
-      | DNExpr e => javascript_of_expression e t i eol quotel
-      | DNConstant v e => javascript_of_constant v e t i eol quotel
-      | DNFunc f => javascript_function_of_nnrc_function f None eol quotel
-      | DNFuncTable ft => javascript_of_nnrc_function_table (* globals *) nil ft eol quotel
+      | DNExpr e => javascript_of_expression globals e
+      | DNConstant v e => javascript_of_constant globals v e
+      | DNFunc f => javascript_function_of_nnrc_function globals f None
+      | DNFuncTable ft => javascript_of_nnrc_function_table globals ft
       end.
 
   Definition javascript_of_declarations
              (sl : list nnrc_declaration) (* statements to translate *)
-             (t : nat)                    (* next available unused temporary *)
-             (i : nat)                    (* indentation level *)
-             (eol : nstring)
-             (quotel : nstring)
     : QcertCodeGen.ejavascript
-    := let proc_one
-             (s:nnrc_declaration)
-             (acc:QcertCodeGen.ejavascript) : QcertCodeGen.ejavascript :=
-           let s1:= javascript_of_declaration s 1 i eol quotel in
-           (acc +++ s1) (* XXX Ignores e1! *)
-       in
-       fold_right proc_one (^"") sl.
+    := let js_ast_full := List.concat (List.map (javascript_of_declaration (* XXX globals *) nil) sl) in
+       js_ast_to_javascript js_ast_full.
 
   Definition javascript_of_inheritance
              (inheritance:list (string * string))
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.ejavascript :=
-    ^"" +++ ^"var inheritance = " +++ eol
+    ^"" +++ ^"const inheritance = " +++ eol
         +++ (QcertCodeGen.inheritanceToJS inheritance)
         +++ ^";" +++ eol
         +++ eol.
@@ -166,10 +110,10 @@ Section ErgoNNRCtoJavaScript.
              (p:nnrc_module)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.ejavascript :=
-    (preamble eol) +++ eol
+    (js_ast_to_javascript preamble) +++ eol
                    +++ (javascript_of_inheritance inheritance eol quotel)
-                   +++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
-                   +++ (postamble eol).
+                   +++ (javascript_of_declarations p.(modulen_declarations))
+                   +++ (js_ast_to_javascript postamble).
 
   Definition nnrc_module_to_javascript_top
              (inheritance: list (string*string))
