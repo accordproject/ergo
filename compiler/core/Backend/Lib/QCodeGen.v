@@ -22,7 +22,6 @@ Require Import Qcert.Driver.CompDriver.
 (* Require Import ErgoSpec.Utils.Misc. *)
 Require Import ErgoSpec.Backend.Lib.QBackendModel.
 Require Import ErgoSpec.Backend.Lib.QBackendRuntime.
-Require Import ErgoSpec.Backend.Lib.QNNRCtoJavaScript.
 
 Module QCodeGen(ergomodel:QBackendModel).
   Local Open Scope list_scope.
@@ -46,15 +45,33 @@ Module QCodeGen(ergomodel:QBackendModel).
   
   Definition ejavascript := CompLang.javascript.
 
+  Definition nnrc_expr_to_javascript_function {bm:brand_model} constants (cname:option string) (fname:string) (e:nnrc) : js_ast :=
+    imp_ejson_to_js_ast
+      cname
+      (imp_data_to_imp_ejson
+         (nnrs_imp_to_imp_data
+            fname
+            (nnrs_to_nnrs_imp
+               (nnrc_to_nnrs
+                  constants e)))).
+
+  Definition js_ast_to_javascript (q:js_ast) : javascript :=
+    js_ast_to_javascript q.
+
+  Definition nnrc_expr_to_javascript {bm:brand_model} constants (cname:option string) (fname:string) (e:nnrc) : javascript :=
+    js_ast_to_javascript (nnrc_expr_to_javascript_function constants cname fname e).
+
   Definition nnrc_expr_to_ejavascript {bm:brand_model} (e:nnrc_expr) : ejavascript :=
     nnrc_expr_to_javascript nil None "test" e.
 
-  Definition nnrc_expr_to_javascript_method
+  Definition nnrc_expr_to_ejavascript_method
              {bm:brand_model}
-             (e:nnrc_expr) (fname:string) (input_vs:list string) :=
-    nnrc_expr_to_javascript input_vs None fname e.
+             (globals:list string)
+             (fname:string)
+             (e:nnrc_expr) :=
+    nnrc_expr_to_javascript globals (* class name *) None fname e.
 
-  Definition nnrc_expr_to_javascript_fun_lift
+  Definition nnrc_expr_to_ejavascript_fun_lift
              {bm:brand_model}
              (e:nnrc_expr)
              (fname:String.string)
