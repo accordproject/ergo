@@ -16,6 +16,8 @@ Require Import String.
 Require Import Qcert.Utils.Utils.
 Require Import Qcert.Data.DataSystem.
 Require Import Qcert.EJson.EJsonRuntime.
+Require Import Qcert.JavaScriptAst.JavaScriptAstRuntime.
+Require Import Qcert.Translation.Lang.ImpEJsontoJavaScriptAst.
 Require Import Qcert.Driver.CompLang.
 Require Import Qcert.Driver.CompDriver.
 
@@ -40,43 +42,37 @@ Module QCodeGen(ergomodel:QBackendModel).
   Definition eindent := EmitUtil.indent.
   Definition equotel_double := EmitUtil.nquotel_double.
   Definition eeol_newline := EmitUtil.neol_newline.
-
   Definition javascript_identifier_sanitizer := EmitUtil.jsIdentifierSanitize.
   
   Definition ejavascript := CompLang.javascript.
 
-  Definition nnrc_expr_to_javascript_function {bm:brand_model} constants (cname:option string) (fname:string) (e:nnrc) : js_ast :=
-    imp_ejson_to_js_ast
-      cname
-      (imp_data_to_imp_ejson
-         (nnrs_imp_to_imp_data
-            fname
-            (nnrs_to_nnrs_imp
-               (nnrc_to_nnrs
-                  constants e)))).
+  Definition nnrc_expr_to_imp_ejson
+             {bm:brand_model}
+             (globals:list string)
+             (f:string * nnrc) : imp_ejson :=
+    let (fname,fbody) := f in
+    (imp_data_to_imp_ejson
+       (nnrs_imp_to_imp_data
+          fname
+          (nnrs_to_nnrs_imp
+             (nnrc_to_nnrs
+                globals fbody)))).
+  
+  Definition nnrc_expr_to_javascript_function
+             {bm:brand_model}
+             (globals:list string)
+             (f:string * nnrc) : js_ast :=
+    imp_ejson_to_function (nnrc_expr_to_imp_ejson globals f).
+
+  Definition nnrc_expr_to_javascript_function_table
+             {bm:brand_model}
+             (globals:list string)
+             (cname:string)
+             (ftable:list (string * nnrc_expr)) : js_ast :=
+    imp_ejson_table_to_topdecls cname (List.map (nnrc_expr_to_imp_ejson globals) ftable).
 
   Definition js_ast_to_javascript (q:js_ast) : javascript :=
     js_ast_to_javascript q.
-
-  Definition nnrc_expr_to_javascript {bm:brand_model} constants (cname:option string) (fname:string) (e:nnrc) : javascript :=
-    js_ast_to_javascript (nnrc_expr_to_javascript_function constants cname fname e).
-
-  Definition nnrc_expr_to_ejavascript {bm:brand_model} (e:nnrc_expr) : ejavascript :=
-    nnrc_expr_to_javascript nil None "test" e.
-
-  Definition nnrc_expr_to_ejavascript_method
-             {bm:brand_model}
-             (globals:list string)
-             (fname:string)
-             (e:nnrc_expr) :=
-    nnrc_expr_to_javascript globals (* class name *) None fname e.
-
-  Definition nnrc_expr_to_ejavascript_fun_lift
-             {bm:brand_model}
-             (e:nnrc_expr)
-             (fname:String.string)
-             (input_v:String.string) : ejavascript :=
-    nnrc_expr_to_javascript (input_v::nil) None fname e.
 
   Definition inheritanceToJS (h:list (string*string)) : nstring :=
     ^(ejsonStringify
