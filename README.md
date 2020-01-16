@@ -168,7 +168,6 @@ Accord Project is an open source, non-profit, initiative working to transform co
 * [Accord Project Technical Documentation][apdoc]
 * [Accord Project GitHub][apgit]
 
-
 ### Documentation
 * [Getting Started with Accord Project][docwelcome]
 * [Concepts and High-level Architecture][dochighlevel]

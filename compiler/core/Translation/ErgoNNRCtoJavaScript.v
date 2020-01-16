@@ -56,16 +56,6 @@ Section ErgoNNRCtoJavaScript.
       let v0 : string := ("v"%string ++ v) in
       s1 +++ (EmitUtil.indent i) +++ ^"var " +++ ^v0 +++ ^" = <STUB>;" +++ eol.
 
-  (** Single method *)
-  Definition javascript_method_of_body
-             (e:nnrc_expr)
-             (fname:string)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    let input_v := "context"%string in
-    QcertCodeGen.nnrc_expr_to_javascript_method e (QcertCodeGen.javascript_identifier_sanitizer fname)
-                                                (input_v::nil).
-
   (** Single function *)
   Definition javascript_function_of_body
              (e:nnrc_expr)
@@ -74,7 +64,7 @@ Section ErgoNNRCtoJavaScript.
              (quotel:nstring) : QcertCodeGen.ejavascript :=
     let input_v := "context"%string in
     let init_indent := 0 in
-    QcertCodeGen.nnrc_expr_to_javascript_fun_lift e (QcertCodeGen.javascript_identifier_sanitizer fname) input_v.
+    QcertCodeGen.nnrc_expr_to_ejavascript_fun_lift e (QcertCodeGen.javascript_identifier_sanitizer fname) input_v.
 
   Definition javascript_function_of_nnrc_function
              (f:nnrc_function)
@@ -91,46 +81,32 @@ Section ErgoNNRCtoJavaScript.
              (quotel:nstring) : QcertCodeGen.ejavascript :=
     nstring_multi_append eol (fun f => javascript_function_of_nnrc_function f tname eol quotel) fl.
 
+  (** Single method *)
   Definition javascript_method_of_nnrc_function
-             (f:nnrc_function)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    let fname := f.(functionn_name) in
-    javascript_method_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel.
-    
+             (globals:list string)
+             (f:nnrc_function) : QcertCodeGen.ejavascript :=
+    let fname := QcertCodeGen.javascript_identifier_sanitizer f.(functionn_name) in
+    let e := f.(functionn_lambda).(lambdan_body) in
+    let input_v := "context"%string in
+    QcertCodeGen.nnrc_expr_to_ejavascript_method globals fname e.
+
   Definition javascript_methods_of_nnrc_functions
+             (globals:list string)
              (fl:list nnrc_function)
              (tname:string)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.ejavascript :=
-    nstring_multi_append eol (fun f => javascript_method_of_nnrc_function f eol quotel) fl.
+    nstring_multi_append eol (fun f => javascript_method_of_nnrc_function globals f) fl.
 
-  Definition es5_of_nnrc_function_table
-             (ft:nnrc_function_table)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    (* let tname := QcertCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in *)
-    let tname := None in
-    javascript_functions_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel +++ eol.
-
-  Definition es6_of_nnrc_function_table
+  Definition javascript_of_nnrc_function_table
+             (globals:list string)
              (ft:nnrc_function_table)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.ejavascript :=
     let tname := QcertCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in
     ^"class " +++ ^tname +++ ^" {" +++ eol
-              +++ (javascript_methods_of_nnrc_functions ft.(function_tablen_funs) tname eol quotel) +++ eol
+              +++ (javascript_methods_of_nnrc_functions globals ft.(function_tablen_funs) tname eol quotel) +++ eol
               +++ ^"}" +++ eol.
-
-  Definition javascript_of_nnrc_function_table
-             (version:jsversion)
-             (ft:nnrc_function_table)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    match version with
-    | ES5 => es5_of_nnrc_function_table ft eol quotel
-    | ES6 => es6_of_nnrc_function_table ft eol quotel
-    end.
 
   Definition preamble (eol:nstring) : nstring :=
     ^"" +++ ^"/* Generated using ergoc version " +++ ^ergo_version +++ ^" */" +++ eol
@@ -147,7 +123,6 @@ Section ErgoNNRCtoJavaScript.
          +++ eol.
     
   Definition javascript_of_declaration
-             (version:jsversion)
              (s : nnrc_declaration)   (* statement to translate *)
              (t : nat)                (* next available unused temporary *)
              (i : nat)                (* indentation level *)
@@ -159,11 +134,10 @@ Section ErgoNNRCtoJavaScript.
       | DNExpr e => javascript_of_expression e t i eol quotel
       | DNConstant v e => javascript_of_constant v e t i eol quotel
       | DNFunc f => javascript_function_of_nnrc_function f None eol quotel
-      | DNFuncTable ft => javascript_of_nnrc_function_table version ft eol quotel
+      | DNFuncTable ft => javascript_of_nnrc_function_table (* globals *) nil ft eol quotel
       end.
 
   Definition javascript_of_declarations
-             (version:jsversion)
              (sl : list nnrc_declaration) (* statements to translate *)
              (t : nat)                    (* next available unused temporary *)
              (i : nat)                    (* indentation level *)
@@ -173,7 +147,7 @@ Section ErgoNNRCtoJavaScript.
     := let proc_one
              (s:nnrc_declaration)
              (acc:QcertCodeGen.ejavascript) : QcertCodeGen.ejavascript :=
-           let s1:= javascript_of_declaration version s 1 i eol quotel in
+           let s1:= javascript_of_declaration s 1 i eol quotel in
            (acc +++ s1) (* XXX Ignores e1! *)
        in
        fold_right proc_one (^"") sl.
@@ -188,21 +162,19 @@ Section ErgoNNRCtoJavaScript.
         +++ eol.
   
   Definition nnrc_module_to_javascript
-             (version:jsversion)
              (inheritance: list (string*string))
              (p:nnrc_module)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.ejavascript :=
     (preamble eol) +++ eol
                    +++ (javascript_of_inheritance inheritance eol quotel)
-                   +++ (javascript_of_declarations version p.(modulen_declarations) 0 0 eol quotel)
+                   +++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
                    +++ (postamble eol).
 
   Definition nnrc_module_to_javascript_top
-             (version:jsversion)
              (inheritance: list (string*string))
              (p:nnrc_module) : QcertCodeGen.ejavascript :=
-    nnrc_module_to_javascript version inheritance p EmitUtil.neol_newline EmitUtil.nquotel_double.
+    nnrc_module_to_javascript inheritance p EmitUtil.neol_newline EmitUtil.nquotel_double.
 
 End ErgoNNRCtoJavaScript.
 

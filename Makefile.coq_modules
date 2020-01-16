@@ -42,7 +42,6 @@ MODULES = \
   Backend/Lib/QType \
   Backend/Lib/QData \
   Backend/Lib/QOps \
-  Backend/Lib/QNNRCtoJavaScript \
   Backend/Lib/QCodeGen \
   Backend/QLib \
   Common/Provenance \

@@ -16,7 +16,6 @@ open Core.ErgoCompiler
 
 type lang =
   | Ergo
-  | ES5
   | ES6
   | Cicero
   | Java
