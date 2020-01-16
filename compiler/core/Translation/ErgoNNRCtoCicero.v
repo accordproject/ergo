@@ -148,7 +148,7 @@ Section ErgoNNRCtoCicero.
     (preamble eol) +++ eol
                    +++ (javascript_of_inheritance inheritance eol quotel)
                    +++ (wrapper_functions contract_name signatures eol quotel)
-                   +++ (javascript_of_declarations ES6 p.(modulen_declarations) 0 0 eol quotel)
+                   +++ (javascript_of_declarations p.(modulen_declarations) 0 0 eol quotel)
                    +++ (javascript_main_dispatch_and_init contract_name eol quotel)
                    +++ (postamble eol).
 
