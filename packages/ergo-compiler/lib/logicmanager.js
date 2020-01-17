@@ -37,7 +37,7 @@ class LogicManager {
 
     /**
      * Create the LogicManager.
-     * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @param {String} target  - compiler target (either: 'cicero', 'es6', or 'java')
      * @param {Object} options  - e.g., { warnings: true }
      */
     constructor(target, options) {
@@ -54,7 +54,7 @@ class LogicManager {
 
     /**
      * Get the compilation target.
-     * @return {String} the compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @return {String} the compiler target (either: 'cicero', 'es6', or 'java')
      */
     getTarget() {
         return this.target;
@@ -62,7 +62,7 @@ class LogicManager {
 
     /**
      * Set the compilation target. Note: This might force recompilation if logic has already been compiled.
-     * @param {String} target - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @param {String} target - compiler target (either: 'cicero', 'es6', or 'java')
      * @param {boolean} recompile - whether to force recompilation of the logic
      */
     setTarget(target, recompile) {
@@ -104,18 +104,12 @@ unwrapError(__result);
             if (this.getContractName()) {
                 const contractName = this.getContractName();
                 code = `
-let contractObj = new ${contractName}();
-const __result = contractObj.main({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
+const __result = ${contractName}.main({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
 unwrapError(__result);
 `;
             } else {
                 throw new Error(`Cannot create dispatch call for target: ${target} without a contract name`);
             }
-        } else if (target === 'es5') {
-            code = `
-const __result = main({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
-unwrapError(__result);
-`;
         } else {
             throw new Error(`Unsupported target: ${target}`);
         }
@@ -135,18 +129,12 @@ unwrapError(__result);
             if (this.getContractName()) {
                 const contractName = this.getContractName();
                 code = `
-let contractObj = new ${contractName}();
-const __result = contractObj.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
+const __result = ${contractName}.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
 unwrapError(__result);
 `;
             } else {
                 throw new Error(`Cannot create invoke call for target: ${target} without a contract name`);
             }
-        } else if (target === 'es5') {
-            code = `
-const __result = ${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
-unwrapError(__result);
-`;
         } else {
             throw new Error(`Unsupported target: ${target}`);
         }
