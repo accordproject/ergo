@@ -25,7 +25,7 @@ chai.use(require('chai-as-promised'));
 const fs = require('fs');
 const Path = require('path');
 
-const EXAMPLES_DIR = '../../examples';
+const TESTS_DIR = '../../tests';
 
 const ScriptManager = require('../lib/scriptmanager');
 const APModelManager = require('../lib/apmodelmanager');
@@ -62,9 +62,9 @@ describe('ScriptManager', () => {
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(2);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
-            scriptManager.getCompiledScript().getContents().length.should.equal(37450);
-            scriptManager.getCompiledJavaScript().length.should.equal(37450);
-            scriptManager.allFunctionDeclarations().length.should.equal(111);
+            scriptManager.getCompiledScript().getContents().length.should.equal(45285);
+            scriptManager.getCompiledJavaScript().length.should.equal(45285);
+            scriptManager.allFunctionDeclarations().length.should.equal(109);
             scriptManager.allFunctionDeclarations().filter(x => x.name === '__init').length.should.equal(1);
             expect(scriptManager.hasInit()).to.not.throw;
             expect(scriptManager.hasDispatch()).to.not.throw;
@@ -76,8 +76,8 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(37450);
-            scriptManager.getCompiledScript().getContents().length.should.equal(37450);
+            scriptManager.compileLogic().getContents().length.should.equal(45285);
+            scriptManager.getCompiledScript().getContents().length.should.equal(45285);
             scriptManager.getAllScripts().length.should.equal(3);
         });
 
@@ -104,7 +104,7 @@ describe('ScriptManager', () => {
 
         it('should fail to compile an Ergo script with an undefined built-in function', async function() {
             const scriptManager = new ScriptManager('cicero',modelManager);
-            const ergoErr = fs.readFileSync(Path.join(EXAMPLES_DIR,'smoke/builtinErr.ergo'), 'utf8');
+            const ergoErr = fs.readFileSync(Path.join(TESTS_DIR,'smoke/builtinErr.ergo'), 'utf8');
             const script1 = scriptManager.createScript('builtinErr.ergo','.ergo',ergoErr);
             scriptManager.addScript(script1);
             (() => scriptManager.compileLogic()).should.throw('System error. [ec2en/function] Function org.accordproject.builtin.foo did not get inlined');
@@ -182,8 +182,8 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(37450);
-            scriptManager.getCompiledJavaScript().length.should.equal(37450);
+            scriptManager.compileLogic().getContents().length.should.equal(45285);
+            scriptManager.getCompiledJavaScript().length.should.equal(45285);
             scriptManager.clearScripts();
             return (() => scriptManager.getCompiledJavaScript()).should.throw('Did not find any compiled JavaScript logic');
         });

@@ -44,9 +44,9 @@ describe('Validator', () => {
             validInput.should.not.have.property('timestamp');
             validInput.should.have.property('amount');
             validInput.should.have.property('someNumber');
-            validInput.someNumber.should.have.property('nat');
-            validInput.someNumber.nat.should.equal(3);
-            validInput.someArray.should.deep.equal([{'nat':0},{'nat':1},{'nat':2}]);
+            validInput.someNumber.should.have.property('$nat');
+            validInput.someNumber.$nat.should.equal(3);
+            validInput.someArray.should.deep.equal([{'$nat':0},{'$nat':1},{'$nat':2}]);
             validInput.relationship.should.deep.equal({ '$class' : 'org.accordproject.copyrightlicense.Baz', 'bazId': '1' });
             const validOutput = logicManager.validateOutput(validInput);
             validOutput.relationship.should.equal('resource:org.accordproject.copyrightlicense.Baz#1');
@@ -69,9 +69,9 @@ describe('Validator', () => {
             validContract.serialized.should.not.have.property('timestamp');
             validContract.serialized.should.have.property('amount');
             validContract.serialized.should.have.property('someNumber');
-            validContract.serialized.someNumber.should.have.property('nat');
-            validContract.serialized.someNumber.nat.should.equal(3);
-            validContract.serialized.someArray.should.deep.equal([{'nat':0},{'nat':1},{'nat':2}]);
+            validContract.serialized.someNumber.should.have.property('$nat');
+            validContract.serialized.someNumber.$nat.should.equal(3);
+            validContract.serialized.someArray.should.deep.equal([{'$nat':0},{'$nat':1},{'$nat':2}]);
             validContract.serialized.relationship.should.deep.equal({ '$class' : 'org.accordproject.copyrightlicense.Baz', 'bazId': '1' });
         });
     });
