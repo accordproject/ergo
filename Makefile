@@ -24,6 +24,7 @@ FILES = $(addprefix compiler/core/,$(MODULES:%=%.v))
 
 ## Compiler
 all:
+	@$(MAKE) prepare
 	@$(MAKE) MAKEFLAGS= ergo
 
 # Stdlib
@@ -35,7 +36,7 @@ compiler/lib/resources.ml: compiler/stdlib/accordproject.ctoj \
                            compiler/stdlib/stdlib.ergo \
                            compiler/stdlib/etime.ergo \
                            compiler/stdlib/template.ergo \
-                           ./runtimes/javascript/ergo-runtime.js
+                           runtimes/javascript/ergo-runtime.js
 	echo '(* generated ocaml file *)' > compiler/lib/resources.ml
 	(for i in accordproject; do \
          echo "let $$i = {xxx|"; \
@@ -55,7 +56,11 @@ compiler/lib/resources.ml: compiler/stdlib/accordproject.ctoj \
 	(echo `date "+let builddate = {xxx|%b %d, %Y|xxx}"`) >> compiler/lib/resources.ml
 
 # Configure
-./runtimes/javascript/ergo_runtime.ml:
+runtimes/javascript/ergo-runtime.js: runtimes/javascript/ergo-runtime-core.js \
+                           runtimes/javascript/ergo-runtime-date-time.js \
+                           runtimes/javascript/ergo-runtime-log.js \
+                           runtimes/javascript/ergo-runtime-math.js \
+                           runtimes/javascript/ergo-runtime-uri.js
 	$(MAKE) -C ./runtimes/javascript
 
 ./compiler/lib/js_runtime.ml: ./runtimes/javascript/ergo_runtime.ml
@@ -65,7 +70,8 @@ compiler/lib/resources.ml: compiler/stdlib/accordproject.ctoj \
 	echo "(* This file is generated *)" > ./compiler/lib/static_config.ml
 	echo "let ergo_home = \"$(CURDIR)\"" >> ./compiler/lib/static_config.ml
 
-prepare: ./compiler/lib/js_runtime.ml ./compiler/lib/static_config.ml compiler/lib/resources.ml Makefile.coq
+prepare: ./compiler/lib/static_config.ml compiler/lib/resources.ml Makefile.coq
+	$(MAKE) -C ./runtimes/javascript
 
 configure:
 	@echo "[Ergo] "
@@ -150,6 +156,7 @@ clean: Makefile.coq
 	- @$(MAKE) -C packages/ergo-compiler clean
 	- @$(MAKE) -C packages/ergo-engine clean
 	- @$(MAKE) -C packages/ergo-cli clean
+	- @$(MAKE) -C runtimes/javascript clean
 
 cleanall: Makefile.coq
 	@echo "[Ergo] "
@@ -161,6 +168,7 @@ cleanall: Makefile.coq
 	- @$(MAKE) -C packages/ergo-compiler cleanall
 	- @$(MAKE) -C packages/ergo-engine cleanall
 	- @$(MAKE) -C packages/ergo-cli cleanall
+	- @$(MAKE) -C runtimes/javascript cleanall
 
 ##
 _CoqProject: Makefile.config
