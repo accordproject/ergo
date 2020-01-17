@@ -28,7 +28,7 @@ chai.use(require('chai-as-promised'));
 const fs = require('fs');
 const Path = require('path');
 
-const EXAMPLES_DIR = '../../examples';
+const TESTS_DIR = '../../tests';
 
 const ctoSample = fs.readFileSync('./test/data/test.cto','utf8');
 const ctoSample2 = fs.readFileSync('./test/data/test2.cto','utf8');
@@ -74,7 +74,7 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('cicero');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogicSync(false);
-            logicManager.getInvokeCall('helloworld').length.should.equal(250);
+            logicManager.getInvokeCall('helloworld').length.should.equal(213);
             logicManager.getDispatchCall().length.should.equal(172);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33556);
             logicManager.compileLogicSync(false);
@@ -85,21 +85,21 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(jsSample2,'test2.js');
             logicManager.compileLogicSync(false);
-            logicManager.getDispatchCall().length.should.equal(206);
+            logicManager.getDispatchCall().length.should.equal(169);
         });
 
         it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
             const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(jsSample2,'test2.js');
             logicManager.compileLogicSync(false);
-            logicManager.getInvokeCall().length.should.equal(221);
+            logicManager.getInvokeCall().length.should.equal(184);
         });
 
         it('should succeed creating an invoke call for a JS logic file with a contract class (Cicero)', () => {
             const logicManager = new LogicManager('cicero');
             logicManager.addLogicFile(jsSample2,'test2.js');
             logicManager.compileLogicSync(false);
-            logicManager.getInvokeCall().length.should.equal(221);
+            logicManager.getInvokeCall().length.should.equal(184);
         });
 
         it('should fail creating a dispatch call for a JS logic file with no contract class (ES6)', () => {
@@ -192,7 +192,7 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('cicero');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogic(false).then((logicCode) => {
-                logicManager.getInvokeCall('helloworld').length.should.equal(250);
+                logicManager.getInvokeCall('helloworld').length.should.equal(213);
                 logicManager.getDispatchCall().length.should.equal(172);
                 logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33556);
                 logicManager.compileLogicSync(false);
@@ -211,7 +211,7 @@ describe('LogicManager', () => {
             logicManager.addErgoBuiltin();
             logicManager.addLogicFile(ergoSample,'test3.ergo');
             logicManager.compileLogicSync(false);
-            logicManager.getInvokeCall('helloworld').length.should.equal(250);
+            logicManager.getInvokeCall('helloworld').length.should.equal(213);
             logicManager.getDispatchCall().length.should.equal(172);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33556);
             logicManager.compileLogicSync(false);
@@ -267,18 +267,6 @@ describe('LogicManager', () => {
             logicManager.setTarget('es6', false);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33556);
         });
-
-        it('should set the compilation target to ES5', () => {
-            const logicManager = new LogicManager('cicero');
-            logicManager.addLogicFile(ergoSample,'test.ergo');
-            logicManager.getTarget().should.equal('cicero');
-            logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33556);
-            logicManager.setTarget('es5', true);
-            logicManager.getTarget().should.equal('es5');
-            logicManager.getInvokeCall('helloworld').length.should.equal(174);
-            logicManager.getDispatchCall().length.should.equal(158);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(31715);
         });
 
         it('should fail to create init code for Java', () => {
@@ -302,7 +290,7 @@ describe('LogicManager', () => {
 
     describe('#loader-dir', () => {
         it('should load a directory with no formula', async function () {
-            const logicManager = await ErgoLoader.fromDirectory(Path.join(EXAMPLES_DIR,'acceptance-of-delivery'), {});
+            const logicManager = await ErgoLoader.fromDirectory(Path.join(TESTS_DIR,'acceptance-of-delivery'), {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
@@ -316,7 +304,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a directory with formula', async function () {
-            const logicManager = await ErgoLoader.fromDirectory(Path.join(EXAMPLES_DIR,'helloworldcontract'));
+            const logicManager = await ErgoLoader.fromDirectory(Path.join(TESTS_DIR,'helloworldcontract'));
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
@@ -332,7 +320,7 @@ describe('LogicManager', () => {
 
     describe('#loader-zip', () => {
         it('should load a Zip with no formula', async function () {
-            const buffer = fs.readFileSync(Path.join(EXAMPLES_DIR,'acceptance-of-delivery.zip'));
+            const buffer = fs.readFileSync(Path.join(TESTS_DIR,'acceptance-of-delivery.zip'));
             const logicManager = await ErgoLoader.fromZip(buffer, {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
@@ -347,7 +335,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a Zip with formula', async function () {
-            const buffer = fs.readFileSync(Path.join(EXAMPLES_DIR,'helloworldcontract.zip'));
+            const buffer = fs.readFileSync(Path.join(TESTS_DIR,'helloworldcontract.zip'));
             const logicManager = await ErgoLoader.fromZip(buffer);
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
@@ -366,8 +354,8 @@ describe('LogicManager', () => {
     describe('#loader-files', () => {
         it('should load files with no formula', async function () {
             const files = [
-                Path.join(EXAMPLES_DIR,'acceptance-of-delivery/model/model.cto'),
-                Path.join(EXAMPLES_DIR,'acceptance-of-delivery/logic/logic.ergo'),
+                Path.join(TESTS_DIR,'acceptance-of-delivery/model/model.cto'),
+                Path.join(TESTS_DIR,'acceptance-of-delivery/logic/logic.ergo'),
             ];
             const logicManager = await ErgoLoader.fromFiles(files, {});
             const modelManager = logicManager.getModelManager();
@@ -384,9 +372,9 @@ describe('LogicManager', () => {
 
         it('should load a Zip with formula', async function () {
             const files = [
-                Path.join(EXAMPLES_DIR,'helloworldcontract/model/model.cto'),
-                Path.join(EXAMPLES_DIR,'helloworldcontract/logic/logic.ergo'),
-                Path.join(EXAMPLES_DIR,'helloworldcontract/text/formula.tem'),
+                Path.join(TESTS_DIR,'helloworldcontract/model/model.cto'),
+                Path.join(TESTS_DIR,'helloworldcontract/logic/logic.ergo'),
+                Path.join(TESTS_DIR,'helloworldcontract/text/formula.tem'),
             ];
             const logicManager = await ErgoLoader.fromFiles(files);
             const modelManager = logicManager.getModelManager();
@@ -434,7 +422,7 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('cicero');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogicSync(false);
-            logicManager.getInvokeCall('helloworld').length.should.equal(250);
+            logicManager.getInvokeCall('helloworld').length.should.equal(213);
             logicManager.getDispatchCall().length.should.equal(172);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33556);
             logicManager.updateLogic(ergoSample,'test.ergo');
