@@ -12,23 +12,8 @@
  * limitations under the License.
  */
 
-/* Initialize inheritance */
-var inheritance;
-
 /* "standard library" (implementation of unary and binary operators) */
-function unwrap(doc) {
-    // Unwrap for Enhanced TxStore format
-    if ("state" in doc && !("$class" in doc)) {
-        if (doc.state == "COMMITTED")
-            return JSON.parse(doc.currentValue);
-        else
-            return null; // Not sure if we will need something more fancy for un-committed data
-    }
-    // Leave as-is
-    else
-        return doc;
-}
-function concat(r1, r2) {
+function recConcat(r1, r2) {
     var result = { };
     for (var key2 in r2)
         result[key2] = r2[key2];
@@ -80,10 +65,10 @@ function fastdistinct(b) {
 function compare(v1, v2) {
     var t1 = typeof v1, t2 = typeof v2;
     if (t1 == "object" && v1 !== null) {
-        if (v1.hasOwnProperty('nat')) { t1 = "number"; v1 = v1.nat; }
+        if (v1.hasOwnProperty('$nat')) { t1 = "number"; v1 = v1.$nat; }
     };
     if (t2 == "object" && v2 !== null) {
-        if (v2.hasOwnProperty('nat')) { t2 = "number"; v2 = v2.nat; }
+        if (v2.hasOwnProperty('$nat')) { t2 = "number"; v2 = v2.$nat; }
     };
     if (t1 != t2)
         return t1 < t2 ? -1 : +1;
@@ -128,8 +113,8 @@ function compareOfMultipleCriterias(scl) {
         var current_compare = 0;
         for (var i=0; i<scl.length; i++) {
             var sc = scl[i];
-            if ("asc" in sc) { current_compare = compare(deref(a,sc['asc']), deref(b,sc['asc'])); }
-            else if ("desc" in sc) { current_compare = -(compare(deref(a,sc['asc']), deref(b,sc['asc']))); }
+            if ("asc" in sc) { current_compare = compare(recDot(a,sc['asc']), recDot(b,sc['asc'])); }
+            else if ("desc" in sc) { current_compare = -(compare(recDot(a,sc['asc']), recDot(b,sc['asc']))); }
 
             if (current_compare == -1) { return -1; }
             else if(current_compare == 1) { return 1; }
@@ -239,15 +224,15 @@ function toStringQ(v, quote) {
     if (moment.isMoment(v)) {
         return v.format('MM/DD/YYYY');
     }
-    if(v.hasOwnProperty('nat')){
-        return "" + v.nat;
+    if(v.hasOwnProperty('$nat')){
+        return "" + v.$nat;
     }
     if (isEnum(v)) {
         var enumval = v.data;
-        while (!enumval.left) {
-            enumval = enumval.right;
+        while (!enumval.$left) {
+            enumval = enumval.$right;
         }
-        return "" + enumval.left
+        return "" + enumval.$left
     }
     var result2 = "{";
     var first = true;
@@ -284,15 +269,15 @@ function toTextQ(v, quote) {
     if (moment.isMoment(v)) {
         return v.format('MM/DD/YYYY');
     }
-    if(v.hasOwnProperty('nat')){
-        return "" + v.nat;
+    if(v.hasOwnProperty('$nat')){
+        return "" + v.$nat;
     }
     if (isEnum(v)) {
         var enumval = v.data;
-        while (!enumval.left) {
-            enumval = enumval.right;
+        while (!enumval.$left) {
+            enumval = enumval.$right;
         }
-        return "" + enumval.left
+        return "" + enumval.$left
     }
     var result2 = "";
     var first = true;
@@ -388,10 +373,10 @@ function sub_brand(b1,b2) {
     return false;
 }
 function left(v) {
-    return { left : v };
+    return { $left : v };
 }
 function right(v) {
-    return { right : v };
+    return { $right : v };
 }
 function mustBeArray(obj) {
     if (Array.isArray(obj))
@@ -456,13 +441,13 @@ function either(v) {
     if (v == null)
         return false;
     if (typeof v === "object")
-        return !("right" in v);
+        return !("$right" in v);
     return true;
 }
 function toLeft(v) {
     if (typeof v === "object") {
-        if ("left" in v)
-            return v.left;
+        if ("$left" in v)
+            return v.$left;
         if ("$value" in v)
             return v.$value;
         if (looksLikeRelationship(v))
@@ -473,11 +458,11 @@ function toLeft(v) {
 function toRight(v) {
     if (v === null)
         return null;
-    if (typeof v === "object" && "right" in v)
-        return v.right;
+    if (typeof v === "object" && "$right" in v)
+        return v.$right;
     return undefined;
 }
-function deref(receiver, member) {
+function recDot(receiver, member) {
     if (typeof receiver === "object" && member in receiver) {
         var ans = receiver[member];
         if (ans === null) {
@@ -485,7 +470,7 @@ function deref(receiver, member) {
         }
         if (typeof ans === "object" && looksLikeRelationship(ans))
             ans = left(ans["key"]);
-        if (("$class" in receiver) && typeof ans === "object" && !("left" in ans) && !Array.isArray(ans))
+        if (("$class" in receiver) && typeof ans === "object" && !("$left" in ans) && !Array.isArray(ans))
             ans = left(ans);
         return ans;
     }
@@ -520,12 +505,12 @@ function escapeRegExp(string){
 
 // Nat operations
 function natBox(v) {
-    return { "nat": v };
+    return { "$nat": v };
 }
 function natUnbox(v) {
     var t = typeof v;
     if (t == "number") { return Math.floor(v); }
-    if (t == "object") { if (v !== null) if (v.hasOwnProperty('nat')) return Math.floor(v.nat) };
+    if (t == "object") { if (v !== null) if (v.hasOwnProperty('$nat')) return Math.floor(v.$nat) };
     return v;
 }
 function natPlus(v1, v2) {
@@ -567,7 +552,7 @@ function natSum(b) {
 function natMinApply(b) {
     var numbers = [ ];
     for (var i=0; i<b.length; i++)
-        numbers.push(natUnbox(b[i].nat));
+        numbers.push(natUnbox(b[i].$nat));
     return natBox(Math.min.apply(Math,numbers));
 }
 function natMaxApply(b) {
@@ -605,7 +590,7 @@ function substringNoLength(v, start) {
 
 /* Unwrapping errors on output */
 function unwrapError(result) {
-    if (result.hasOwnProperty('left')) {
+    if (result.hasOwnProperty('$left')) {
         return toLeft(result);
     } else {
         var failure = toRight(result);

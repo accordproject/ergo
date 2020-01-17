@@ -80,7 +80,7 @@ Options:
 To create a contract text from a contract:
 
 ```sh
-$ ergo draft --template ./examples/volumediscount --data ./examples/volumediscount/data.json
+$ ergo draft --template ./tests/volumediscount --data ./tests/volumediscount/data.json
 ```
 
 ### Initialize a contract
@@ -88,7 +88,7 @@ $ ergo draft --template ./examples/volumediscount --data ./examples/volumediscou
 To obtain the initial state of the contract:
 
 ```sh
-$ ergo initialize --template ./examples/volumediscount --data ./examples/volumediscount/data.json
+$ ergo initialize --template ./tests/volumediscount --data ./tests/volumediscount/data.json
 06:40:29 - info:
 ```
 
@@ -97,7 +97,7 @@ $ ergo initialize --template ./examples/volumediscount --data ./examples/volumed
 To send a request to a contract:
 
 ```sh
-$ ergo trigger --template ./examples/volumediscount --data ./examples/volumediscount/data.json --request ./examples/volumediscount/request.json --state ./examples/volumediscount/state.json
+$ ergo trigger --template ./tests/volumediscount --data ./tests/volumediscount/data.json --request ./tests/volumediscount/request.json --state ./tests/volumediscount/state.json
 06:40:01 - info:
 {
   "clause": "orgXaccordprojectXvolumediscountXVolumeDiscount",
@@ -124,7 +124,7 @@ $ ergo trigger --template ./examples/volumediscount --data ./examples/volumedisc
 To invoke a specific clause of the contract:
 
 ```sh
-$ ergo invoke --template ./examples/volumediscount --clauseName volumediscount --data ./examples/volumediscount/data.json --params ./examples/volumediscount/params.json --state ./examples/volumediscount/state.json
+$ ergo invoke --template ./tests/volumediscount --clauseName volumediscount --data ./tests/volumediscount/data.json --params ./tests/volumediscount/params.json --state ./tests/volumediscount/state.json
 ```
 
 ### Compile a contract
@@ -132,12 +132,12 @@ $ ergo invoke --template ./examples/volumediscount --clauseName volumediscount -
 To compile your first Ergo contract to JavaScript:
 
 ```sh
-$ ergo compile ./examples/volumediscount/model/model.cto ./examples/volumediscount/logic/logic.ergo
-Processing file: ./examples/volumediscount/logic.ergo -- compiled to: ./examples/volumediscount/logic.js
+$ ergo compile ./tests/volumediscount/model/model.cto ./tests/volumediscount/logic/logic.ergo
+Processing file: ./tests/volumediscount/logic.ergo -- compiled to: ./tests/volumediscount/logic.js
 ```
 
 By default, Ergo compiles to JavaScript for execution. You can inspect
-the compiled JavaScript code in `./examples/volumediscount/logic.js`
+the compiled JavaScript code in `./tests/volumediscount/logic.js`
 
 
 [npmpkg]: https://www.npmjs.com/package/@accordproject/ergo-cli
