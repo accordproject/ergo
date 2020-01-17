@@ -54,9 +54,6 @@ describe('#vmengine', () => {
 describe('Execute ES6', () => {
     runWorkload(VMEngine, 'es6');
 });
-describe('Execute ES5', () => {
-    runWorkload(VMEngine, 'es5');
-});
 describe('Execute Cicero', () => {
     runWorkload(VMEngine, 'cicero');
 });
