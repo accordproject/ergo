@@ -70,7 +70,6 @@ Section ErgoNNRCtoCicero.
              (clause_name:string)
              (eol:nstring)
              (quotel:nstring) : nstring :=
-    let fname := QcertCodeGen.javascript_identifier_sanitizer fun_name in
     (accord_annotation
        generated
        clause_name
@@ -81,7 +80,7 @@ Section ErgoNNRCtoCicero.
        eol
        quotel)
       +++ eol
-      +++ ^"function " +++ ^fname +++ ^"(context) {" +++ eol
+      +++ ^"function " +++ ^fun_name +++ ^"(context) {" +++ eol
       +++ ^"  let pcontext = { '" +++ ^request_param +++ ^"' : context.request, '__state': context.__state, '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
       +++ ^"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
       +++ ^"  return " +++ ^ contract_name +++ ^"." +++ ^ clause_name +++ ^"(pcontext);" +++ eol
@@ -96,9 +95,8 @@ Section ErgoNNRCtoCicero.
              (contract_name:string)
              (eol:nstring)
              (quotel:nstring) : nstring :=
-    let fname := QcertCodeGen.javascript_identifier_sanitizer fun_name in
     let state_init := ^"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }" in
-    eol +++ ^"function " +++ ^fname +++ ^"(context) {" +++ eol
+    eol +++ ^"function " +++ ^fun_name +++ ^"(context) {" +++ eol
         +++ ^"  let pcontext = { 'state': " +++ state_init +++ ^", '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
         +++ ^"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
         +++ ^"  return new " +++ ^contract_name +++ ^"().init(pcontext);" +++ eol
@@ -112,7 +110,7 @@ Section ErgoNNRCtoCicero.
              (quotel:nstring) : nstring :=
     let '(clause_name, request_name, request_type, response_type, emit_type) := signature in
     let fun_name : string :=
-        contract_name ++ "_"%string ++ clause_name
+        QcertCodeGen.javascript_identifier_sanitizer (contract_name ++ "_"%string ++ clause_name)
     in
     if string_dec clause_name clause_init_name
     then ^""
