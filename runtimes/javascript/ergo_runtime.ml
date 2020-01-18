@@ -569,6 +569,9 @@ function floatArithMean(b) {
         return floatSum(b)/len;
     }
 }
+function natOfFloat(v) {
+    return natBox(Math.trunc(v));
+}
 
 /* Unwrapping errors on output */
 function unwrapError(result) {
