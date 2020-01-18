@@ -112,12 +112,15 @@ Section ErgoNNRCtoCicero.
     let fun_name : string :=
         QcertCodeGen.javascript_identifier_sanitizer (contract_name ++ "_"%string ++ clause_name)
     in
+    let cname : string :=
+        QcertCodeGen.javascript_identifier_sanitizer contract_name
+    in
     if string_dec clause_name clause_init_name
     then ^""
     else
       wrapper_function_for_clause
         false
-        fun_name request_name request_type response_type emit_type contract_state_type contract_name clause_name eol quotel.
+        fun_name request_name request_type response_type emit_type contract_state_type cname clause_name eol quotel.
   
   Definition wrapper_functions
              (contract_name:string)
@@ -136,8 +139,11 @@ Section ErgoNNRCtoCicero.
              (contract_name:string)
              (eol:nstring)
              (quotel:nstring) : nstring :=
-    ^"" +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name clause_main_name eol quotel
-        +++ wrapper_function_for_init true "__init" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" contract_name eol quotel.
+    let cname : string :=
+        QcertCodeGen.javascript_identifier_sanitizer contract_name
+    in
+    ^"" +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" cname clause_main_name eol quotel
+        +++ wrapper_function_for_init true "__init" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" cname eol quotel.
 
   Definition javascript_of_module_with_dispatch
              (inheritance: list (string*string))
