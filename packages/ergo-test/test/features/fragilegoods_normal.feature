@@ -2,8 +2,8 @@ Feature: Fragile goods Contract
   This describes the expected behavior for the Accord Project's Fragile goods contract
 
   Background:
-    Given the Ergo contract "io.clause.demo.fragileGoods.FragileGoods" in file "../../../examples/fragilegoods/logic/logic.ergo"
-    And the model in file "../../../examples/fragilegoods/model/model.cto"
+    Given the Ergo contract "io.clause.demo.fragileGoods.FragileGoods" in file "../../../tests/fragilegoods/logic/logic.ergo"
+    And the model in file "../../../tests/fragilegoods/model/model.cto"
     And the contract data
 """
 {

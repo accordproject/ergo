@@ -2,9 +2,9 @@ Feature: Promissory note Contract
   This describes the expected behavior for the Accord Project's Promissory note contract
 
   Background:
-    Given the Ergo contract "org.accordproject.promissorynote.PromissoryNote" in file "../../../examples/promissory-note/logic/logic.ergo"
-    And the model in file "../../../examples/promissory-note/model/business.cto"
-    And the model in file "../../../examples/promissory-note/model/model.cto"
+    Given the Ergo contract "org.accordproject.promissorynote.PromissoryNote" in file "../../../tests/promissory-note/logic/logic.ergo"
+    And the model in file "../../../tests/promissory-note/model/business.cto"
+    And the model in file "../../../tests/promissory-note/model/model.cto"
     And the contract data
 """
 {

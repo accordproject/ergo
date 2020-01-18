@@ -2,8 +2,8 @@ Feature: Late delivery contract
   This describe the expected behavior for the Accord Project's late delivery and penalty contract
 
   Background:
-    Given the Ergo contract "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty" in file "../../../examples/latedeliveryandpenalty/logic/logic.ergo"
-    And the model in file "../../../examples/latedeliveryandpenalty/model/model.cto"
+    Given the Ergo contract "org.accordproject.latedeliveryandpenalty.LateDeliveryAndPenalty" in file "../../../tests/latedeliveryandpenalty/logic/logic.ergo"
+    And the model in file "../../../tests/latedeliveryandpenalty/model/model.cto"
     And the contract data
 """
 {

@@ -2,8 +2,8 @@ Feature: Volume discount (with fee)
   This describe the expected behavior for an alternative version of the Accord Project's volume discount contract with a fixed fee added
 
   Background:
-    Given the model in file "../../../examples/volumediscount3/model/model.cto"
-    And the Ergo contract "org.accordproject.volumediscount.VolumeDiscount" in file "../../../examples/volumediscount3/logic/logic3.ergo"
+    Given the model in file "../../../tests/volumediscount3/model/model.cto"
+    And the Ergo contract "org.accordproject.volumediscount.VolumeDiscount" in file "../../../tests/volumediscount3/logic/logic3.ergo"
     And the contract data
 """
 {

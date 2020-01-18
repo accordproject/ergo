@@ -2,8 +2,8 @@ Feature: Fred Blog's Hello World
   This describe the expected behavior for the Accord Project's helloworld contract for Fred Blog
 
   Background:
-    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "../../../examples/helloworld/logic/logic.ergo"
-    And the model in file "../../../examples/helloworld/model/model.cto"
+    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "../../../tests/helloworld/logic/logic.ergo"
+    And the model in file "../../../tests/helloworld/model/model.cto"
     And the contract data
 """
 {
