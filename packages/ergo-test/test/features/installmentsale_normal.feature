@@ -2,8 +2,8 @@ Feature: Installment sale Contract
   This describes the expected behavior for the Accord Project's Installment sale contract
 
   Background:
-    Given the Ergo contract "org.accordproject.installmentsale.InstallmentSale" in file "../../../examples/installment-sale/logic/logic.ergo"
-    And the model in file "../../../examples/installment-sale/model/model.cto"
+    Given the Ergo contract "org.accordproject.installmentsale.InstallmentSale" in file "../../../tests/installment-sale/logic/logic.ergo"
+    And the model in file "../../../tests/installment-sale/model/model.cto"
     And the contract data
 """
 {

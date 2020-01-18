@@ -2,8 +2,8 @@ Feature: Volume discount (with let)
   This describe the expected behavior for an alternative version of the Accord Project's volume discount contract with a let binding in the logic
 
   Background:
-    Given the model in file "../../../examples/volumediscount2/model/model.cto"
-    And the Ergo contract "org.accordproject.volumediscount.VolumeDiscount" in file "../../../examples/volumediscount2/logic/logic2.ergo"
+    Given the model in file "../../../tests/volumediscount2/model/model.cto"
+    And the Ergo contract "org.accordproject.volumediscount.VolumeDiscount" in file "../../../tests/volumediscount2/logic/logic2.ergo"
     And the contract data
 """
 {
