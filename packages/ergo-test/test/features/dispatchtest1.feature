@@ -2,8 +2,8 @@ Feature: Dispatch Tests
   This describe the expected behavior when dispatching requests to a clause
 
   Background:
-    Given the Ergo contract "org.accordproject.dispatchtest.DispatchTest" in file "../../../examples/dispatchtest/logic/logic.ergo"
-    And the model in file "../../../examples/dispatchtest/model/model.cto"
+    Given the Ergo contract "org.accordproject.dispatchtest.DispatchTest" in file "../../../tests/dispatchtest/logic/logic.ergo"
+    And the model in file "../../../tests/dispatchtest/model/model.cto"
     And the contract data
 """
 {
@@ -20,7 +20,7 @@ Feature: Dispatch Tests
 """
     Then it should fail with the error
 """
-Compilation error (at file ../../../examples/dispatchtest/logic/logic.ergo line 17 col 0). Multiple clauses can process the request 'org.accordproject.dispatchtest.Request4'
+Compilation error (at file ../../../tests/dispatchtest/logic/logic.ergo line 17 col 0). Multiple clauses can process the request 'org.accordproject.dispatchtest.Request4'
 contract DispatchTest over TemplateModel {
 ^                                         
 """
