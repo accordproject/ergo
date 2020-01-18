@@ -598,7 +598,7 @@ function unwrapError(result) {
  * limitations under the License.
  */
 
-/* Addendum to the Ergo runtime for DateTime, Duration and Periods support */
+/* JavaScript runtime for DateTime component */
 
 /* Utilities */
 var SECONDS = "second";
@@ -619,7 +619,6 @@ function mustBeDate(date) {
         return date.clone().utcOffset(utcOffset, false);;
     }
 }
-
 function mustBeDateArray(dateArray) {
     var newDateArray = [];
     for (var i=0; i<dateArray.length; i++) {
@@ -627,7 +626,6 @@ function mustBeDateArray(dateArray) {
     }
     return newDateArray;
 }
-
 function mustBeDuration(d) {
     if (typeof d == "string") {
         return moment.duration(d);
@@ -635,7 +633,6 @@ function mustBeDuration(d) {
         return d.clone();
     }
 }
-
 function mustBeUnit(unit) {
     if (unit === SECONDS
         || unit === MINUTES
@@ -663,37 +660,100 @@ function compareDates(date1, date2) {
 }
 
 /* DateTime */
-function dateTimeComponent(part, date) {
+function dateTimeGetSeconds(date) {
     date = mustBeDate(date);
-    switch(part) {
-    case SECONDS:
-        return natBox(date.second());
-    case MINUTES:
-        return natBox(date.minute());
-    case HOURS:
-        return natBox(date.hour());
-    case DAYS:
-        return natBox(date.date());
-    case WEEKS:
-        return natBox(date.week());
-    case MONTHS:
-        return natBox(date.month() + 1); // Shift by one to get 1-12 range on months (Moment uses 0-11)
-    case QUARTERS:
-        return natBox(date.quarter());
-    case YEARS:
-        return natBox(date.year());
-    default:
-        throw new Error("Unknown DateTime component: " + part);
-    }
+    return natBox(date.second());
+}
+function dateTimeGetMinutes(date) {
+    date = mustBeDate(date);
+    return natBox(date.minute());
+}
+function dateTimeGetHours(date) {
+    date = mustBeDate(date);
+    return natBox(date.hour());
+}
+function dateTimeGetDays(date) {
+    date = mustBeDate(date);
+    return natBox(date.date());
+}
+function dateTimeGetWeeks(date) {
+    date = mustBeDate(date);
+    return natBox(date.week());
+}
+function dateTimeGetMonths(date) {
+    date = mustBeDate(date);
+    return natBox(date.month() + 1);
+}
+function dateTimeGetQuarters(date) {
+    date = mustBeDate(date);
+    return natBox(date.quarter());
+}
+function dateTimeGetYears(date) {
+    date = mustBeDate(date);
+    return natBox(date.year());
 }
 
+function dateTimeStartOfDay(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.startOf('day');
+}
+function dateTimeStartOfWeek(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.startOf('week');
+}
+function dateTimeStartOfMonth(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.startOf('month');
+}
+function dateTimeStartOfQuarter(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.startOf('quarter');
+}
+function dateTimeStartOfYear(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.startOf('year');
+}
+
+function dateTimeEndOfDay(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.endOf('day');
+}
+function dateTimeEndOfWeek(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.endOf('week');
+}
+function dateTimeEndOfMonth(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.endOf('month');
+}
+function dateTimeEndOfQuarter(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.endOf('quarter');
+}
+function dateTimeEndOfYear(date) {
+    date = mustBeDate(date);
+    mustBeUnit(part);
+    return date.endOf('year');
+}
+/* DateTime Formating */
+function dateTimeFormatFromString(s) {
+  return s;
+}
 function dateTimeFromString(stringDate) {
     return moment.parseZone(stringDate).utcOffset(utcOffset, false);
 }
 
 var minDateTime = moment.parseZone("0001-01-01 00:00:00").utcOffset(utcOffset, false);
 var maxDateTime = moment.parseZone("3268-01-21 23:59:59").utcOffset(utcOffset, false);
-
 function dateTimeMax(v) {
     var v1 = mustBeDateArray(v);
     if (v1.length === 0) {
@@ -702,7 +762,6 @@ function dateTimeMax(v) {
         return moment.max(v1);
     }
 }
-
 function dateTimeMin(v) {
     var v1 = mustBeDateArray(v);
     if (v1.length === 0) {
@@ -730,23 +789,54 @@ function dateTimeDurationFromString(stringDuration) {
     throw new Error("Not well formed duration input: " + stringDuration);
 }
 
+function dateTimeDurationFromSeconds(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'second');
+}
+function dateTimeDurationFromMinutes(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'minute');
+}
+function dateTimeDurationFromHours(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'hour');
+}
+function dateTimeDurationFromDays(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'day');
+}
+function dateTimeDurationFromWeeks(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'week');
+}
+
 function dateTimePeriodFromString(stringDuration) {
     return dateTimeDurationFromString(stringDuration);
 }
-
-function dateTimeDurationFromNat(part, v) {
-    mustBeUnit(part);
+function dateTimePeriodFromDays(v) {
     var num = natUnbox(v);
-    // 'quarters' not built into durations
-    if (part === QUARTERS) {
-        return moment.duration(num * 3,'months');
-    } else {
-        return moment.duration(num,part);
-    }
+    return moment.duration(num,'day');
+}
+function dateTimePeriodFromWeeks(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'week');
+}
+function dateTimePeriodFromMonths(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'month');
+}
+function dateTimePeriodFromQuarters(v) {
+    var num = natUnbox(v);
+    return moment.duration(num * 3,'month');
+}
+function dateTimePeriodFromYears(v) {
+    var num = natUnbox(v);
+    return moment.duration(num,'year');
 }
 
-function dateTimePeriodFromNat(part, v) {
-    return dateTimeDurationFromNat(part, v);
+function dateTimeFormat(date,f) {
+  date = mustBeDate(date);
+  return date.format(f);
 }
 
 function dateTimeAdd(date, duration) {
@@ -754,7 +844,6 @@ function dateTimeAdd(date, duration) {
     duration = mustBeDuration(duration);
     return date.add(duration);
 }
-
 function dateTimeSubtract(date, d) {
     date = mustBeDate(date);
     d = mustBeDuration(d);
@@ -766,7 +855,6 @@ function dateTimeAddPeriod(date, period) {
     period = mustBeDuration(period);
     return date.add(period);
 }
-
 function dateTimeSubtractPeriod(date, period) {
     date = mustBeDate(date);
     period = mustBeDuration(period);
@@ -776,11 +864,9 @@ function dateTimeSubtractPeriod(date, period) {
 function dateTimeIsSame(date1, date2) {
     return compareDates(date1, date2) === 0;
 }
-
 function dateTimeIsBefore(date1, date2) {
     return compareDates(date1,date2) < 0;
 }
-
 function dateTimeIsAfter(date1, date2) {
     return compareDates(date1, date2) > 0;
 }
@@ -791,26 +877,6 @@ function dateTimeDiff(date1, date2) {
     return moment.duration(date1.diff(date2,'seconds'),'seconds');
 }
 
-function dateTimeStartOf(part, date) {
-    date = mustBeDate(date);
-    mustBeUnit(part);
-    return date.startOf(part);
-}
-
-function dateTimeEndOf(part, date) {
-    date = mustBeDate(date);
-    mustBeUnit(part);
-    return date.endOf(part);
-}
-
-/* DateTime Formating */
-function dateTimeFormatFromString(s) {
-  return s;
-}
-function dateTimeFormat(date,f) {
-  date = mustBeDate(date);
-  return date.format(f);
-}
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -825,14 +891,13 @@ function dateTimeFormat(date,f) {
  * limitations under the License.
  */
 
-/* Addendum to the Ergo runtime for URI support */
+/* JavaScript runtime for Uri component */
 
-/* encode/decode */
-function encodeString(v) {
+function uriEncode(v) {
   return encodeURIComponent(v);
 }
 
-function decodeString(v) {
+function uriDecode(v) {
   return decodeURIComponent(v);
 }
 /*
