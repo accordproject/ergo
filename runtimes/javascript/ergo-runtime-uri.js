@@ -12,13 +12,12 @@
  * limitations under the License.
  */
 
-/* Addendum to the Ergo runtime for URI support */
+/* JavaScript runtime for Uri component */
 
-/* encode/decode */
-function encodeString(v) {
+function uriEncode(v) {
   return encodeURIComponent(v);
 }
 
-function decodeString(v) {
+function uriDecode(v) {
   return decodeURIComponent(v);
 }
