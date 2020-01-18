@@ -696,53 +696,43 @@ function dateTimeGetYears(date) {
 
 function dateTimeStartOfDay(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.startOf('day');
 }
 function dateTimeStartOfWeek(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.startOf('week');
 }
 function dateTimeStartOfMonth(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.startOf('month');
 }
 function dateTimeStartOfQuarter(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.startOf('quarter');
 }
 function dateTimeStartOfYear(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.startOf('year');
 }
 
 function dateTimeEndOfDay(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.endOf('day');
 }
 function dateTimeEndOfWeek(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.endOf('week');
 }
 function dateTimeEndOfMonth(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.endOf('month');
 }
 function dateTimeEndOfQuarter(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.endOf('quarter');
 }
 function dateTimeEndOfYear(date) {
     date = mustBeDate(date);
-    mustBeUnit(part);
     return date.endOf('year');
 }
 /* DateTime Formating */

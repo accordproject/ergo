@@ -2,8 +2,8 @@ Feature: Bad logic
   This describe the expected behavior for Ergo compiler when a function has duplicate bindings.
 
   Background:
-    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "../../../examples/bad-function/logic/logic.ergo"
-    And the model in file "../../../examples/helloworld/model/model.cto"
+    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "../../../tests/bad-function/logic/logic.ergo"
+    And the model in file "../../../tests/helloworld/model/model.cto"
     And the contract data
 """
 {
@@ -22,7 +22,7 @@ Feature: Bad logic
 """
     Then it should fail with the error
 """
-Compilation error (at file ../../../examples/bad-function/logic/logic.ergo line 17 col 0). Variable 'a' is bound multiple times in 'org.accordproject.helloworld.f'
+Compilation error (at file ../../../tests/bad-function/logic/logic.ergo line 17 col 0). Variable 'a' is bound multiple times in 'org.accordproject.helloworld.f'
 define function f(a:Integer, a:String) {
 ^                                       
 """

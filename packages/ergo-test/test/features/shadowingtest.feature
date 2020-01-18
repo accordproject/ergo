@@ -2,8 +2,8 @@ Feature: Shadowing test
   This describe the expected behavior for Ergo compiler when calling consecutive functions with the same variable names
 
   Background:
-    Given the Ergo contract "org.accordproject.shadowingtest.ShadowingTest" in file "../../../examples/shadowingtest/logic/logic.ergo"
-    And the model in file "../../../examples/shadowingtest/model/model.cto"
+    Given the Ergo contract "org.accordproject.shadowingtest.ShadowingTest" in file "../../../tests/shadowingtest/logic/logic.ergo"
+    And the model in file "../../../tests/shadowingtest/model/model.cto"
     And the contract data
 """
 {
