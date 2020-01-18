@@ -2,8 +2,8 @@ Feature: Bad logic
   This describe the expected behavior for Ergo compiler when there is a parse error.
 
   Background:
-    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "../../../examples/bad-logic/logic/logic.ergo"
-    And the model in file "../../../examples/bad-logic/model/model.cto"
+    Given the Ergo contract "org.accordproject.helloworld.HelloWorld" in file "../../../tests/bad-logic/logic/logic.ergo"
+    And the model in file "../../../tests/bad-logic/model/model.cto"
     And the contract data
 """
 {
@@ -22,7 +22,7 @@ Feature: Bad logic
 """
     Then it should fail with the error
 """
-Parse error (at file ../../../examples/bad-logic/logic/logic.ergo line 17 col 20). 
+Parse error (at file ../../../tests/bad-logic/logic/logic.ergo line 17 col 20). 
 contract HelloWorld ovr TemplateModel {
                     ^^^                
 """
