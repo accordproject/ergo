@@ -31,9 +31,9 @@ contract Smoke over TemplateModel {
     enforce(some(1) ?? 2 = 1);
     enforce(some(A{ a : 1 })?.a = some(1));
     enforce(some(A{ a : 1 })?.a != none);
+    enforce(some(A{ a : 1 })?.a ?? 2 = 1);
     enforce(none?.a = none);
     enforce(none?.a ?? 2 = 2);
-    enforce(some(A{ a : 1 })?.a ?? 2 = 1);
     enforce(C{ contract : "foo" }.contract = "foo");
     enforce(C{ contract : "foo" }.contract = "foo");
     enforce(infinity = 1.0/0.0);
