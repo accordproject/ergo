@@ -287,10 +287,10 @@ function brand(b,v) {
 }
 function unbrand(v) {
     if (typeof v === "object")
-        if ("$class" in v) {
+        if ("$class" in v && !("$data" in v)) {
             return recRemove(v,"$class");
         } else {
-            return ("data" in v) ? v.data : v;
+            return ("$data" in v) ? v.$data : v;
         }
     throw ("TypeError: unbrand called on non-object" + JSON.stringify(v));
 }
@@ -306,9 +306,9 @@ function enhanced_cast(brands,v) {
 }
 function cast(brands,v) {
     mustBeArray(brands);
-    if ("$class" in v)
+    if ("$class" in v && !("$data" in v))
         return enhanced_cast(brands,v);
-    var type = v.type;
+    var type = v.$class;
     mustBeArray(type);
     if (brands.length == 1 && brands[0] == "Any") { /* cast to top of inheritance is built-in */
         return mkLeft(v);
