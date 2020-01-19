@@ -267,7 +267,6 @@ describe('LogicManager', () => {
             logicManager.setTarget('es6', false);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33556);
         });
-        });
 
         it('should fail to create init code for Java', () => {
             const logicManager = new LogicManager('java');
