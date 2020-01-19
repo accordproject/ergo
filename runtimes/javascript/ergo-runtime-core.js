@@ -49,9 +49,8 @@ function sub_brand(b1,b2) {
     return false;
 }
 function isEnum(v) {
-  if (v.type) {
-        var isE = either(cast(["org.accordproject.base.Enum"],v));
-        return isE;
+  if (v.$class) {
+        return either(cast(["org.accordproject.base.Enum"],v));
     } else {
         return false;
     }
@@ -144,7 +143,7 @@ function toStringQ(v, quote) {
         return "" + v.$nat;
     }
     if (isEnum(v)) {
-        var enumval = v.data;
+        var enumval = v.$data;
         while (!enumval.$left) {
             enumval = enumval.$right;
         }
@@ -189,7 +188,7 @@ function toTextQ(v, quote) {
         return "" + v.$nat;
     }
     if (isEnum(v)) {
-        var enumval = v.data;
+        var enumval = v.$data;
         while (!enumval.$left) {
             enumval = enumval.$right;
         }
