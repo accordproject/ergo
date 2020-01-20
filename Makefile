@@ -57,6 +57,7 @@ compiler/lib/resources.ml: compiler/stdlib/accordproject.ctoj \
 
 # Configure
 runtimes/javascript/ergo-runtime.js: runtimes/javascript/ergo-runtime-core.js \
+                           runtimes/javascript/ergo-runtime-tostring.js \
                            runtimes/javascript/ergo-runtime-date-time.js \
                            runtimes/javascript/ergo-runtime-log.js \
                            runtimes/javascript/ergo-runtime-math.js \
