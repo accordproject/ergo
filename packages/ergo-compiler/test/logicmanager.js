@@ -76,9 +76,9 @@ describe('LogicManager', () => {
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall('helloworld').length.should.equal(213);
             logicManager.getDispatchCall().length.should.equal(172);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
         });
 
         it('should succeed creating a dispatch call for a JS logic file with a contract class (ES6)', () => {
@@ -194,9 +194,9 @@ describe('LogicManager', () => {
             logicManager.compileLogic(false).then((logicCode) => {
                 logicManager.getInvokeCall('helloworld').length.should.equal(213);
                 logicManager.getDispatchCall().length.should.equal(172);
-                logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+                logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
                 logicManager.compileLogicSync(false);
-                logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+                logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
             });
         });
 
@@ -213,9 +213,9 @@ describe('LogicManager', () => {
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall('helloworld').length.should.equal(213);
             logicManager.getDispatchCall().length.should.equal(172);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
         });
 
         it('should load a logic file (without extension) to the script manager', () => {
@@ -238,15 +238,15 @@ describe('LogicManager', () => {
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.getTarget().should.equal('cicero');
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
             logicManager.setTarget('es6', true);
             logicManager.getTarget().should.equal('es6');
             const contractName = 'org.accordproject.helloemit.HelloWorld';
             logicManager.setContractName(contractName);
             logicManager.getContractName().should.equal(ErgoCompiler.contractCallName(contractName));
-            logicManager.getInvokeCall('helloworld').length.should.equal(250);
-            logicManager.getDispatchCall().length.should.equal(234);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(31859);
+            logicManager.getInvokeCall('helloworld').length.should.equal(213);
+            logicManager.getDispatchCall().length.should.equal(197);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(46815);
         });
 
         it('should fail to create init and dispatch for ES6 without a contract name', () => {
@@ -254,31 +254,18 @@ describe('LogicManager', () => {
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.getTarget().should.equal('es6');
             logicManager.compileLogicSync(false);
-            logicManager.getInvokeCall('helloworld').length.should.equal(250);
-            logicManager.getDispatchCall().length.should.equal(234);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(31859);
+            logicManager.getInvokeCall('helloworld').length.should.equal(213);
+            logicManager.getDispatchCall().length.should.equal(197);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(46815);
         });
 
         it('should set the compilation target to ES6 but not recompile the logic', () => {
             const logicManager = new LogicManager('cicero');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
             logicManager.setTarget('es6', false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
-        });
-
-        it('should set the compilation target to ES5', () => {
-            const logicManager = new LogicManager('cicero');
-            logicManager.addLogicFile(ergoSample,'test.ergo');
-            logicManager.getTarget().should.equal('cicero');
-            logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
-            logicManager.setTarget('es5', true);
-            logicManager.getTarget().should.equal('es5');
-            logicManager.getInvokeCall('helloworld').length.should.equal(174);
-            logicManager.getDispatchCall().length.should.equal(158);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(31713);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
         });
 
         it('should fail to create init code for Java', () => {
@@ -312,7 +299,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(41116);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(134481);
         });
 
         it('should load a directory with formula', async function () {
@@ -326,7 +313,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(36074);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(72161);
         });
     });
 
@@ -343,7 +330,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(41116);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(134481);
         });
 
         it('should load a Zip with formula', async function () {
@@ -358,7 +345,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(36074);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(72161);
         });
     });
 
@@ -379,7 +366,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(41116);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(134481);
         });
 
         it('should load a Zip with formula', async function () {
@@ -398,7 +385,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(36074);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(72161);
         });
     });
 
@@ -436,15 +423,15 @@ describe('LogicManager', () => {
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall('helloworld').length.should.equal(213);
             logicManager.getDispatchCall().length.should.equal(172);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
             logicManager.updateLogic(ergoSample,'test.ergo');
             logicManager.compileLogicSync(false);
             logicManager.updateLogic(ergoSample,'testNEW.ergo');
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
             logicManager.updateLogic(ergoSample3,'test.ergo');
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(33554);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48436);
         });
 
     });
