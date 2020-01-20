@@ -15,8 +15,8 @@
 ############# Shouldn't have to be changed after this
 all: ergo-runtime.js ergo_runtime.ml
 
-ergo-runtime.js: ergo-runtime-core.js ergo-runtime-date-time.js ergo-runtime-uri.js ergo-runtime-math.js ergo-runtime-log.js
-	(for i in ergo-runtime-core.js ergo-runtime-date-time.js ergo-runtime-uri.js ergo-runtime-math.js ergo-runtime-log.js; do \
+ergo-runtime.js: ergo-runtime-core.js ergo-runtime-tostring.js ergo-runtime-date-time.js ergo-runtime-uri.js ergo-runtime-math.js ergo-runtime-log.js
+	(for i in ergo-runtime-core.js ergo-runtime-tostring.js ergo-runtime-date-time.js ergo-runtime-uri.js ergo-runtime-math.js ergo-runtime-log.js; do \
          cat $$i; \
          done) > ergo-runtime.js
 
