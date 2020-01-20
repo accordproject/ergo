@@ -76,35 +76,35 @@ function compareDates(date1, date2) {
 /* DateTime */
 function dateTimeGetSeconds(date) {
     date = mustBeDate(date);
-    return natBox(date.second());
+    return boxNat(date.second());
 }
 function dateTimeGetMinutes(date) {
     date = mustBeDate(date);
-    return natBox(date.minute());
+    return boxNat(date.minute());
 }
 function dateTimeGetHours(date) {
     date = mustBeDate(date);
-    return natBox(date.hour());
+    return boxNat(date.hour());
 }
 function dateTimeGetDays(date) {
     date = mustBeDate(date);
-    return natBox(date.date());
+    return boxNat(date.date());
 }
 function dateTimeGetWeeks(date) {
     date = mustBeDate(date);
-    return natBox(date.week());
+    return boxNat(date.week());
 }
 function dateTimeGetMonths(date) {
     date = mustBeDate(date);
-    return natBox(date.month() + 1);
+    return boxNat(date.month() + 1);
 }
 function dateTimeGetQuarters(date) {
     date = mustBeDate(date);
-    return natBox(date.quarter());
+    return boxNat(date.quarter());
 }
 function dateTimeGetYears(date) {
     date = mustBeDate(date);
-    return natBox(date.year());
+    return boxNat(date.year());
 }
 
 function dateTimeStartOfDay(date) {
@@ -177,7 +177,7 @@ function dateTimeMin(v) {
 
 function dateTimeDurationAmount(v) {
     v = mustBeDuration(v);
-    return natBox(v.asSeconds());
+    return boxNat(v.asSeconds());
 }
 
 function dateTimeDurationFromString(stringDuration) {
@@ -194,23 +194,23 @@ function dateTimeDurationFromString(stringDuration) {
 }
 
 function dateTimeDurationFromSeconds(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'second');
 }
 function dateTimeDurationFromMinutes(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'minute');
 }
 function dateTimeDurationFromHours(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'hour');
 }
 function dateTimeDurationFromDays(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'day');
 }
 function dateTimeDurationFromWeeks(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'week');
 }
 
@@ -218,23 +218,23 @@ function dateTimePeriodFromString(stringDuration) {
     return dateTimeDurationFromString(stringDuration);
 }
 function dateTimePeriodFromDays(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'day');
 }
 function dateTimePeriodFromWeeks(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'week');
 }
 function dateTimePeriodFromMonths(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'month');
 }
 function dateTimePeriodFromQuarters(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num * 3,'month');
 }
 function dateTimePeriodFromYears(v) {
-    var num = natUnbox(v);
+    var num = unboxNat(v);
     return moment.duration(num,'year');
 }
 
