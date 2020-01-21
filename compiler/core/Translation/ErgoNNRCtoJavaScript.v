@@ -27,8 +27,7 @@ Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
 Require Import ErgoSpec.Backend.QLib.
 
 Section ErgoNNRCtoJavaScript.
-  Local Open Scope string_scope.
-  Local Open Scope nstring_scope.
+  Local Open Scope list_scope.
 
   Context {bm:brand_model}.
 
@@ -92,33 +91,20 @@ Section ErgoNNRCtoJavaScript.
 
   Definition javascript_of_declarations
              (sl : list nnrc_declaration) (* statements to translate *)
-    : QcertCodeGen.ejavascript
-    := let js_ast_full := List.concat (List.map (javascript_of_declaration (* XXX globals *) nil) sl) in
-       js_ast_to_javascript js_ast_full.
+    : js_ast
+    := List.concat (List.map (javascript_of_declaration (* XXX globals *) nil) sl).
 
-  Definition javascript_of_inheritance
-             (inheritance:list (string * string))
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    ^"" +++ ^"const inheritance = " +++ eol
-        +++ (QcertCodeGen.inheritanceToJS inheritance)
-        +++ ^";" +++ eol
-        +++ eol.
-  
   Definition nnrc_module_to_javascript
              (inheritance: list (string*string))
-             (p:nnrc_module)
-             (eol:nstring)
-             (quotel:nstring) : QcertCodeGen.ejavascript :=
-    (js_ast_to_javascript preamble) +++ eol
-                   +++ (javascript_of_inheritance inheritance eol quotel)
-                   +++ (javascript_of_declarations p.(modulen_declarations))
-                   +++ (js_ast_to_javascript postamble).
+             (p:nnrc_module) : js_ast :=
+    preamble ++ (QcertCodeGen.javascript_of_inheritance inheritance)
+             ++ (javascript_of_declarations p.(modulen_declarations))
+             ++ (postamble).
 
   Definition nnrc_module_to_javascript_top
              (inheritance: list (string*string))
              (p:nnrc_module) : QcertCodeGen.ejavascript :=
-    nnrc_module_to_javascript inheritance p EmitUtil.neol_newline EmitUtil.nquotel_double.
+    js_ast_to_javascript (nnrc_module_to_javascript inheritance p).
 
 End ErgoNNRCtoJavaScript.
 
