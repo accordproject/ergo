@@ -153,9 +153,9 @@ Section ErgoNNRCtoCicero.
              (eol:nstring)
              (quotel:nstring) : nstring :=
     (QcertCodeGen.js_ast_to_javascript preamble) +++ eol
-                   +++ (javascript_of_inheritance inheritance eol quotel)
+                   +++ (QcertCodeGen.js_ast_to_javascript (QcertCodeGen.javascript_of_inheritance inheritance))
                    +++ (wrapper_functions contract_name signatures eol quotel)
-                   +++ (javascript_of_declarations p.(modulen_declarations))
+                   +++ (QcertCodeGen.js_ast_to_javascript (javascript_of_declarations p.(modulen_declarations)))
                    +++ (javascript_main_dispatch_and_init contract_name eol quotel)
                    +++ (QcertCodeGen.js_ast_to_javascript postamble).
 
