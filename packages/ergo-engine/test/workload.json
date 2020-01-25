@@ -356,11 +356,7 @@
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": false
-    },
+    "options": null,
     "params": {},
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
