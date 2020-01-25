@@ -103,11 +103,9 @@ class Engine {
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
         const validOptions = options ? options : {
-            options: {
-                '$class': 'org.accordproject.ergo.options.Options',
-                'wrapVariables': false,
-                'template': false,
-            }
+            '$class': 'org.accordproject.ergo.options.Options',
+            'wrapVariables': false,
+            'template': false,
         };
 
         const validContract = logic.validateContract(contract); // ensure the contract is valid
@@ -122,7 +120,8 @@ class Engine {
         const context = {
             data: validContract.serialized,
             state: validState,
-            request: validRequest
+            request: validRequest,
+            options: validOptions
         };
 
         // execute the logic
@@ -153,21 +152,20 @@ class Engine {
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
+     * @param {object} validateOptions to the validation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    async invoke(logic, contractId, clauseName, contract, params, state, currentTime, options) {
+    async invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, validateOptions) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
-        const validOptions = options ? options : {
-            options: {
-                '$class': 'org.accordproject.ergo.options.Options',
-                'wrapVariables': false,
-                'template': false,
-            }
+        const invokeOptions = options ? options : {
+            '$class': 'org.accordproject.ergo.options.Options',
+            'wrapVariables': false,
+            'template': false,
         };
 
-        const validContract = logic.validateContract(contract, options); // ensure the contract is valid
+        const validContract = logic.validateContract(contract, validateOptions); // ensure the contract is valid
         const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
         const validState = logic.validateInput(state); // ensure the state is valid
 
@@ -178,11 +176,12 @@ class Engine {
         const context = {
             data: validContract.serialized,
             state: validState,
-            params: validParams
+            params: validParams,
+            __options: invokeOptions
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
+        const result = this.runVMScriptCall(utcOffset,now,invokeOptions,context,script,callScript);
 
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
@@ -213,7 +212,7 @@ class Engine {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options);
+        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, null);
     }
 
     /**
@@ -227,13 +226,11 @@ class Engine {
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
     async draft(logic, contractId, contract, params, currentTime, options) {
-        options = options || {};
-
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime, Object.assign(options, {convertResourcesToId: true}));
+        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime, options, {convertResourcesToId: true});
     }
 
     /**
@@ -286,7 +283,7 @@ class Engine {
     compileAndInvoke(logic, clauseName, contract, params, state, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options);
+            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, null);
         });
     }
 

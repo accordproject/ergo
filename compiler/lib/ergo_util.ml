@@ -241,7 +241,7 @@ let anon_args cto_files input_files template_file f =
   let extension = Filename.extension f in
   if extension = ".ctoj"
   then cto_files := (f, Util.string_of_file f) :: !cto_files
-  else if extension = ".tem"
+  else if Filename.check_suffix f ".tem.md"
   then
     begin match !template_file with
     | None -> template_file := Some (f, Util.string_of_file f)
