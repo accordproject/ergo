@@ -81,8 +81,7 @@ Section ErgoNNRCtoCicero.
        quotel)
       +++ eol
       +++ ^"function " +++ ^fun_name +++ ^"(context) {" +++ eol
-      +++ ^"  let pcontext = { '" +++ ^request_param +++ ^"' : context.request, '__state': context.__state, '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
-      +++ ^"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
+      +++ ^"  let pcontext = Object.assign(context, { '" +++ ^request_param +++ ^"' : context.request });" +++ eol
       +++ ^"  return " +++ ^ contract_name +++ ^"." +++ ^ clause_name +++ ^"(pcontext);" +++ eol
       +++ ^"}".
 
@@ -97,8 +96,7 @@ Section ErgoNNRCtoCicero.
              (quotel:nstring) : nstring :=
     let state_init := ^"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }" in
     eol +++ ^"function " +++ ^fun_name +++ ^"(context) {" +++ eol
-        +++ ^"  let pcontext = { 'state': " +++ state_init +++ ^", '__contract': context.__contract, '__emit': context.__emit, '__now': context.__now, '__options': context.__options};" +++ eol
-        +++ ^"  //logger.info('ergo context: '+JSON.stringify(pcontext))" +++ eol
+        +++ ^"  let pcontext = Object.assign(context, { 'state': " +++ state_init +++ ^" });" +++ eol
         +++ ^"  return new " +++ ^contract_name +++ ^"().init(pcontext);" +++ eol
         +++ ^"}".
 
