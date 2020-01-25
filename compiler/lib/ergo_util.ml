@@ -241,7 +241,7 @@ let anon_args cto_files input_files template_files f =
   let extension = Filename.extension f in
   if extension = ".ctoj"
   then cto_files := (f, Util.string_of_file f) :: !cto_files
-  else if extension = ".tem"
+  else if Filename.check_suffix f ".tem"
   then template_files := (f, Util.string_of_file f) :: !template_files
   else if extension = ".ergo"
   then input_files := (f, Util.string_of_file f) :: !input_files
