@@ -119,52 +119,36 @@ Proof.
   destruct a; try reflexivity.
   destruct f; try reflexivity.
   unfold lift; simpl.
-  assert ((@lift_map (@data enhanced_foreign_data) DATE_TIME
-             (fun d : @data enhanced_foreign_data =>
-              match d return (option DATE_TIME) with
-              | dunit => @None DATE_TIME
-              | dnat _ => @None DATE_TIME
-              | dfloat _ => @None DATE_TIME
-              | dbool _ => @None DATE_TIME
-              | dstring _ => @None DATE_TIME
-              | dcoll _ => @None DATE_TIME
-              | drec _ => @None DATE_TIME
-              | dleft _ => @None DATE_TIME
-              | dright _ => @None DATE_TIME
-              | dbrand _ _ => @None DATE_TIME
-              | dforeign f =>
-                  match f return (option DATE_TIME) with
-                  | enhanceddateTimeformat _ => @None DATE_TIME
-                  | enhanceddateTime fd => @Some DATE_TIME fd
-                  | enhanceddateTimeduration _ => @None DATE_TIME
-                  | enhanceddateTimeperiod _ => @None DATE_TIME
-                  end
-              end) l)
-      =@lift_map (@data enhanced_foreign_data) DATE_TIME
-        (fun d0 : @data enhanced_foreign_data =>
-         match d0 return (option DATE_TIME) with
-         | dunit => @None DATE_TIME
-         | dnat _ => @None DATE_TIME
-         | dfloat _ => @None DATE_TIME
-         | dbool _ => @None DATE_TIME
-         | dstring _ => @None DATE_TIME
-         | dcoll _ => @None DATE_TIME
-         | drec _ => @None DATE_TIME
-         | dleft _ => @None DATE_TIME
-         | dright _ => @None DATE_TIME
-         | dbrand _ _ => @None DATE_TIME
-         | dforeign f =>
-             match f return (option DATE_TIME) with
-             | enhanceddateTimeformat _ => @None DATE_TIME
-             | enhanceddateTime fd => @Some DATE_TIME fd
-             | enhanceddateTimeduration _ => @None DATE_TIME
-             | enhanceddateTimeperiod _ => @None DATE_TIME
-             end
-         end) l
-    ) by reflexivity.
   unfold enhanced_foreign_data, QcertData.enhanced_foreign_data_obligation_5 in *.
-  admit.
-Admitted.
+  assert (ejson_dates
+        (@map
+           (@data
+              (mk_foreign_data enhanced_data QcertData.enhanced_foreign_data_obligation_1
+                 (fun a : enhanced_data => QcertData.enhanced_foreign_data_obligation_2 a)
+                 (fun a : enhanced_data => QcertData.enhanced_foreign_data_obligation_3 a)
+                 (fun a : enhanced_data => QcertData.enhanced_foreign_data_obligation_4 a)
+                 (fun (a : enhanced_data) (_ : QcertData.enhanced_foreign_data_obligation_2 a) =>
+                  @eq_refl enhanced_data a) QcertData.enhanced_foreign_data_obligation_6))
+           (@ejson enhanced_foreign_ejson)
+           (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson) l)
+          =
+          (ejson_dates
+             (@map (@data (@foreign_runtime_data enhanced_foreign_runtime)) (@ejson enhanced_foreign_ejson)
+                   (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson) l))) by reflexivity.
+  rewrite <- H in IHl.
+  rewrite <- IHl; clear IHl.
+  reflexivity.
+Qed.
+
+Lemma lift_map_onddateTime l:
+  (lift_map (fun d : data => match d with
+                             | dforeign (enhanceddateTime fd) => Some fd
+                             | _ => None
+                             end) l)
+  = lift_map (onddateTime (fun x : DATE_TIME => x)) l.
+Proof.
+  reflexivity.
+Qed.
 
 Lemma unary_op_to_ejson_correct (uop:enhanced_unary_op) :
   forall br d,
@@ -179,26 +163,12 @@ Proof.
   - destruct d; destruct m; simpl; try reflexivity.
     destruct (FLOAT_of_string s); reflexivity.
   - destruct d; destruct d0; simpl; try reflexivity; unfold lift;
-      try (destruct f; simpl; try reflexivity).
-    + rewrite <- ejson_lifted_dbag_comm.
-      induction l; simpl in *; try reflexivity.
-      unfold onddateTimeList, lift in *; simpl in *.
-      unfold lift_dateTimeList in *; simpl in *.
-      destruct a; try reflexivity;
-        destruct f; try reflexivity; unfold lift in *; simpl.
-      destruct (lift_map (onddateTime (fun x : DATE_TIME => x)) l); simpl.
-      admit.
-      admit.
-    + rewrite <- ejson_lifted_dbag_comm.
-      induction l; simpl in *; try reflexivity.
-      unfold onddateTimeList, lift in *; simpl in *.
-      unfold lift_dateTimeList in *; simpl in *.
-      destruct a; try reflexivity;
-        destruct f; try reflexivity; unfold lift in *; simpl.
-      destruct (lift_map (onddateTime (fun x : DATE_TIME => x)) l); simpl.
-      admit.
-      admit.
-Admitted.
+      try (destruct f; simpl; try reflexivity);
+      rewrite <- ejson_lifted_dbag_comm;
+      unfold onddateTimeList, lift_dateTimeList;
+      rewrite lift_map_onddateTime;
+      destruct ((lift_map (onddateTime (fun x : DATE_TIME => x)) l)); simpl; try reflexivity.
+Qed.
 
 Definition binary_op_to_ejson (op:enhanced_binary_op) : enhanced_foreign_ejson_runtime_op :=
   match op with
@@ -237,6 +207,20 @@ Proof.
           destruct f0; try reflexivity.
 Qed.
 
+(* XXX TODO *)
+Lemma ejson_tostring_correct d:
+  dataToString d = ejsonToString (data_to_ejson d).
+Proof.
+  admit.
+Admitted.
+
+(* XXX TODO *)
+Lemma ejson_totext_correct d:
+  dataToString d = ejsonToString (data_to_ejson d).
+Proof.
+  admit.
+Admitted.
+
 Program Instance enhanced_foreign_to_ejson_runtime : foreign_to_ejson_runtime :=
   mk_foreign_to_ejson_runtime
     enhanced_foreign_runtime
@@ -256,10 +240,9 @@ Defined.
 Next Obligation.
   apply binary_op_to_ejson_correct.
 Defined.
-(* XXX TODO *)
 Next Obligation.
-  admit.
-Admitted.
+  apply ejson_tostring_correct.
+Defined.
 Next Obligation.
-  admit.
-Admitted.
+  apply ejson_totext_correct.
+Defined.
