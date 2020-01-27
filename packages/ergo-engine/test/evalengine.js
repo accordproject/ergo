@@ -41,7 +41,3 @@ describe('#evalengine', () => {
 describe('Execute ES6', () => {
     runWorkload(EvalEngine, 'es6');
 });
-describe('Execute Cicero', () => {
-    runWorkload(EvalEngine, 'cicero');
-});
-
