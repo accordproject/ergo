@@ -13,14 +13,14 @@
 #
 
 ###
-### WARNING: This file is meant to be invoked by the qcert/Makefile documentation target, not run directly
+### WARNING: This file is meant to be invoked by the ergo/Makefile documentation target, not run directly
 ###
 
-include ../Makefile.coq_modules
+include ../../Makefile.coq_modules
 
 COQ_FILES = $(MODULES:%=%.v)
 GLOB_FILES = $(MODULES:%=%.glob)
-TECHDOCS=../../techdocs
+TECHDOCS=../../../techdocs
 
 documentation: $(GLOB_FILES) $(COQ_FILES)
 	mkdir -p $(TECHDOCS)/docs/assets/specification
