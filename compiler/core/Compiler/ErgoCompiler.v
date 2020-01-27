@@ -313,17 +313,11 @@ Module ErgoCompiler.
     := Ergo.DSetContract prov cn e.
 
   (** Compilation *)
-  Definition ergo_module_to_javascript :
+  Definition ergo_module_to_es6 :
     list ergo_input
     -> option (String.string * ergo_expr)
     -> Result.eresult result_file
-    := ErgoDriver.ergo_module_to_javascript_top.
-
-  Definition ergo_module_to_cicero :
-    list ergo_input
-    -> option (String.string * ergo_expr)
-    -> Result.eresult result_file
-    := ErgoDriver.ergo_module_to_cicero_top.
+    := ErgoDriver.ergo_module_to_es6_top.
 
   Definition ergo_module_to_java :
     list ergo_input

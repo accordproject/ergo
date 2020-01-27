@@ -45,7 +45,7 @@ describe('LogicManager', () => {
     describe('#constructors-accessors', () => {
 
         it('should create a template logic', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.should.not.be.null;
             logicManager.getIntrospector().should.not.be.null;
             logicManager.getFactory().should.not.be.null;
@@ -55,7 +55,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a model to the model manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addModelFile(ctoSample,'test.cto');
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
@@ -63,7 +63,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a model to the model manager (bulk)', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addModelFiles([ctoSample],['test.cto']);
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
@@ -71,7 +71,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a logic file to the script manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall('helloworld').length.should.equal(213);
@@ -85,7 +85,7 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(jsSample2,'test2.js');
             logicManager.compileLogicSync(false);
-            logicManager.getDispatchCall().length.should.equal(169);
+            logicManager.getDispatchCall().length.should.equal(172);
         });
 
         it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
@@ -95,18 +95,11 @@ describe('LogicManager', () => {
             logicManager.getInvokeCall().length.should.equal(184);
         });
 
-        it('should succeed creating an invoke call for a JS logic file with a contract class (Cicero)', () => {
-            const logicManager = new LogicManager('cicero');
+        it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(jsSample2,'test2.js');
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall().length.should.equal(184);
-        });
-
-        it('should fail creating a dispatch call for a JS logic file with no contract class (ES6)', () => {
-            const logicManager = new LogicManager('es6');
-            logicManager.addLogicFile(jsSample,'test.js');
-            logicManager.compileLogicSync(false);
-            (() => logicManager.getDispatchCall()).should.throw('Cannot create dispatch call for target: es6 without a contract name');
         });
 
         it('should fail creating an invoke call for a JS logic file with no contract class (ES6)', () => {
@@ -116,15 +109,8 @@ describe('LogicManager', () => {
             (() => logicManager.getInvokeCall()).should.throw('Cannot create invoke call for target: es6 without a contract name');
         });
 
-        it('should fail creating an invoke call for a JS logic file with no contract class (Cicero)', () => {
-            const logicManager = new LogicManager('cicero');
-            logicManager.addLogicFile(jsSample,'test.js');
-            logicManager.compileLogicSync(false);
-            (() => logicManager.getInvokeCall()).should.throw('Cannot create invoke call for target: cicero without a contract name');
-        });
-
         it('should fail to load a bogus logic file to the script manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample2,'test2.ergo');
             try {
                 logicManager.compileLogicSync(false);
@@ -146,7 +132,7 @@ describe('LogicManager', () => {
         });
 
         it('should fail to load a logic file with a type error to the script manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample4,'test4.ergo');
             try {
                 logicManager.compileLogicSync(false);
@@ -168,7 +154,7 @@ describe('LogicManager', () => {
         });
 
         it('should fail to load a logic file with a compilation error to the script manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample5,'test5.ergo');
             try {
                 logicManager.compileLogicSync(false);
@@ -189,7 +175,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a logic file to the script manager (async)', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogic(false).then((logicCode) => {
                 logicManager.getInvokeCall('helloworld').length.should.equal(213);
@@ -201,13 +187,13 @@ describe('LogicManager', () => {
         });
 
         it('should fail to load a bogus logic file to the script manager (async)', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample2,'test2.ergo');
             expect(logicManager.compileLogic(false)).to.be.eventually.rejectedWith(Error, 'Parse error (at file test2.ergo line 33 col 0). \n\n').and.have.property('name', 'ParseException');
         });
 
         it('should load a logic file to the script manager (with Ergo builtin)', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addErgoBuiltin();
             logicManager.addLogicFile(ergoSample,'test3.ergo');
             logicManager.compileLogicSync(false);
@@ -219,14 +205,14 @@ describe('LogicManager', () => {
         });
 
         it('should load a logic file (without extension) to the script manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample,'test');
             logicManager.compileLogicSync(false);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(49956);
         });
 
         it('should set the contract name', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             const contractName = 'org.accordproject.helloemit.HelloWorld';
             logicManager.setContractName(contractName);
@@ -234,9 +220,9 @@ describe('LogicManager', () => {
         });
 
         it('should set the compilation target to ES6 and recompile the logic', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample,'test.ergo');
-            logicManager.getTarget().should.equal('cicero');
+            logicManager.getTarget().should.equal('es6');
             logicManager.compileLogicSync(false);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(49956);
             logicManager.setTarget('es6', true);
@@ -245,8 +231,8 @@ describe('LogicManager', () => {
             logicManager.setContractName(contractName);
             logicManager.getContractName().should.equal(ErgoCompiler.contractCallName(contractName));
             logicManager.getInvokeCall('helloworld').length.should.equal(213);
-            logicManager.getDispatchCall().length.should.equal(197);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48840);
+            logicManager.getDispatchCall().length.should.equal(172);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(49956);
         });
 
         it('should fail to create init and dispatch for ES6 without a contract name', () => {
@@ -255,12 +241,12 @@ describe('LogicManager', () => {
             logicManager.getTarget().should.equal('es6');
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall('helloworld').length.should.equal(213);
-            logicManager.getDispatchCall().length.should.equal(197);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(48840);
+            logicManager.getDispatchCall().length.should.equal(172);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(49956);
         });
 
         it('should set the compilation target to ES6 but not recompile the logic', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogicSync(false);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(49956);
@@ -279,7 +265,7 @@ describe('LogicManager', () => {
         });
 
         it('should load a model without a name to the model manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             const modelManager = logicManager.getModelManager();
             modelManager.addModelFile(ctoSample,null,true);
             modelManager.getModels().map(x => x.name).should.deep.equal(['org.accordproject.copyrightlicense.cto']);
@@ -299,7 +285,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(136404);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(137655);
         });
 
         it('should load a directory with grammar', async function () {
@@ -313,7 +299,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(74169);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(76579);
         });
     });
 
@@ -330,7 +316,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(136404);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(137655);
         });
 
         it('should load a Zip with grammar', async function () {
@@ -345,7 +331,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(74169);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(76579);
         });
     });
 
@@ -366,7 +352,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(136404);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(137655);
         });
 
         it('should load a Zip with grammar', async function () {
@@ -385,14 +371,14 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(74169);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(76579);
         });
     });
 
     describe('#updates', () => {
         let logicManager;
         beforeEach(async function () {
-            logicManager = new LogicManager('cicero');
+            logicManager = new LogicManager('es6');
             logicManager.addModelFile(ctoSample,'test.cto');
         });
 
@@ -418,7 +404,7 @@ describe('LogicManager', () => {
         });
 
         it('should update a logic file in the script manager', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall('helloworld').length.should.equal(213);
@@ -439,7 +425,7 @@ describe('LogicManager', () => {
     describe('#validation', () => {
         let logicManager;
         beforeEach(async function () {
-            logicManager = new LogicManager('cicero');
+            logicManager = new LogicManager('es6');
             logicManager.addModelFile(ctoSample,'test.cto');
         });
 

@@ -37,7 +37,7 @@ class LogicManager {
 
     /**
      * Create the LogicManager.
-     * @param {String} target  - compiler target (either: 'cicero', 'es6', or 'java')
+     * @param {String} target  - compiler target (either: 'es6', or 'java')
      * @param {Object} options  - e.g., { warnings: true }
      */
     constructor(target, options) {
@@ -54,7 +54,7 @@ class LogicManager {
 
     /**
      * Get the compilation target.
-     * @return {String} the compiler target (either: 'cicero', 'es6', or 'java')
+     * @return {String} the compiler target (either: 'es6', or 'java')
      */
     getTarget() {
         return this.target;
@@ -62,7 +62,7 @@ class LogicManager {
 
     /**
      * Set the compilation target. Note: This might force recompilation if logic has already been compiled.
-     * @param {String} target - compiler target (either: 'cicero', 'es6', or 'java')
+     * @param {String} target - compiler target (either: 'es6', or 'java')
      * @param {boolean} recompile - whether to force recompilation of the logic
      */
     setTarget(target, recompile) {
@@ -94,22 +94,12 @@ class LogicManager {
     getDispatchCall() {
         const target = this.getTarget();
         let code;
-        if (target === 'cicero') {
+        if (target === 'es6') {
             this.getScriptManager().hasDispatch();
             code = `
 const __result = __dispatch({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
 unwrapError(__result);
         `;
-        } else if (target === 'es6') {
-            if (this.getContractName()) {
-                const contractName = this.getContractName();
-                code = `
-const __result = ${contractName}.main({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
-unwrapError(__result);
-`;
-            } else {
-                throw new Error(`Cannot create dispatch call for target: ${target} without a contract name`);
-            }
         } else {
             throw new Error(`Unsupported target: ${target}`);
         }
@@ -125,7 +115,7 @@ unwrapError(__result);
     getInvokeCall(clauseName) {
         const target = this.getTarget();
         let code;
-        if (target === 'cicero' || target === 'es6') {
+        if (target === 'es6') {
             if (this.getContractName()) {
                 const contractName = this.getContractName();
                 code = `

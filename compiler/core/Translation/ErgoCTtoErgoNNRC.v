@@ -279,23 +279,19 @@ Section ErgoCTtoErgoNNRC.
       (List.fold_left proc_one c.(contractct_clauses) init).
 
   (** Translate a statement to a statement+calculus *)
-  Definition declarationct_to_nnrc (s:ergoct_declaration) : eresult nnrc_declaration :=
+  Definition declarationct_to_nnrc (s:ergoct_declaration) : eresult (list nnrc_declaration) :=
     match s with
-    | DCTExpr prov e =>
-      elift
-        DNExpr
-        (ergoct_expr_to_nnrc (current_time::options::nil) e)
-    | DCTConstant prov v _ e => (* Ignores the type annotation *)
-      elift
-        (DNConstant v) (* Add new variable to translation_context *)
-        (ergoct_expr_to_nnrc (current_time::options::nil) e)
+    (* XXX Expressions and constants are dropped, immaterial *)
+    | DCTExpr prov e => esuccess nil nil
+    | DCTConstant prov v _ e => esuccess nil nil
     | DCTFunc prov fn f =>
       elift
-        DNFunc (* Add new function to translation_context *)
+        (fun f => DNFunc f :: nil)
         (functionct_to_nnrc fn f)
     | DCTContract prov cn c =>
-      elift DNFuncTable
-            (contractct_to_nnrc cn c)
+      elift
+        (fun f => DNFuncTable f :: nil)
+        (contractct_to_nnrc cn c)
     end.
 
   (** Translate a module to a module+calculus *)
@@ -309,7 +305,7 @@ Section ErgoCTtoErgoNNRC.
         eolift
           (fun acc : list nnrc_declaration =>
              let edecl := declarationct_to_nnrc s in
-             elift (fun news : nnrc_declaration => news::acc)
+             elift (fun news : list nnrc_declaration => news ++ acc)
                    edecl)
           acc
     in

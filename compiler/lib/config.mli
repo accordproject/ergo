@@ -17,7 +17,6 @@ open Core.ErgoCompiler
 type lang =
   | Ergo
   | ES6
-  | Cicero
   | Java
 
 val lang_of_target : string -> lang
