@@ -255,8 +255,8 @@ function distinct(b) {
     for (var i=0; i<b.length; i=i+1) {
         var v = b[i];
         var dup = false;
-        for (var j=0; j<result.length; j=j+1) {
-            if (equal(v,result[j])) { dup = true; break; }
+        for (var j=i+1; j<b.length; j=j+1) {
+            if (equal(v,b[j])) { dup = true; break; }
         }
         if (!(dup)) { result.push(v); } else { dup = false; }
     }
@@ -389,8 +389,38 @@ function sort(b,scl) {
     result.sort(compareFun);
     return result;
 }
-function groupBy(l) { // Not implemented
-    throw new Error('groupBy not implemented');
+function groupByOfKey(l,k,keysf) {
+    result = [ ];
+    l.forEach((x) => {
+        if (equal(keysf(x),k)) {
+            result.push(x);
+        }
+    });
+    return result;
+}
+function groupByNested(l,keysf) {
+    var keys = distinct(l.map(keysf));
+    var result = [ ];
+    keys.forEach((k) => {
+        result.push({ 'keys': k, 'group' : groupByOfKey(l,k,keysf) });
+    });
+    return result;
+}
+function groupBy(g,kl,l) {
+    // g is partition name
+    // kl is key list
+    // l is input collection of records
+    var keysf = function (j) {
+        return recProject(j,kl);
+    };
+    var grouped = groupByNested(l,keysf);
+    var result = [ ];
+    grouped.forEach((x) => {
+        var gRec = {};
+        gRec[g] = x.group;
+        result.push(recConcat(x.keys, gRec));
+    });
+    return result;
 }
 
 /* String */

@@ -311,7 +311,7 @@ Section toString. (* XXX Maybe to move as a component ? *)
     | dcoll l => string_bracket
                    "["%string
                    (concat ", "
-                           (string_sort (map dataToString l)))
+                           (map dataToString l))
                    "]"%string
     | drec lsd => string_bracket
                     "{"%string
