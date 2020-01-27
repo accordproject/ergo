@@ -32,22 +32,19 @@ describe('ergo-compiler', () => {
 
     describe('#targets', () => {
         it('should return all the compiler targets', () => {
-            ErgoCompiler.availableTargets().should.deep.equal(['es6','cicero','java']);
+            ErgoCompiler.availableTargets().should.deep.equal(['es6','java']);
         });
         it('es5 should *not* be a valid target', () => {
-            (() => ErgoCompiler.isValidTarget('es5')).should.throw('Unknown target: es5 (available: es6,cicero,java)');
+            (() => ErgoCompiler.isValidTarget('es5')).should.throw('Unknown target: es5 (available: es6,java)');
         });
         it('es6 should be a valid target', () => {
             ErgoCompiler.isValidTarget('es6').should.equal(true);
-        });
-        it('cicero should be a valid target', () => {
-            ErgoCompiler.isValidTarget('cicero').should.equal(true);
         });
         it('java should be a valid target', () => {
             ErgoCompiler.isValidTarget('java').should.equal(true);
         });
         it('should not be a valid target', () => {
-            (() => ErgoCompiler.isValidTarget('es7')).should.throw('Unknown target: es7 (available: es6,cicero,java)');
+            (() => ErgoCompiler.isValidTarget('es7')).should.throw('Unknown target: es7 (available: es6,java)');
         });
     });
 
@@ -113,16 +110,6 @@ describe('ergo-compiler', () => {
             const ctoFile = Path.resolve(TESTS_DIR, 'helloworld', 'model/model.cto');
             const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
             const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], null, 'es6', true);
-            result.success.should.not.be.null;
-        });
-    });
-    describe('#compilehellocicero', function () {
-        it('should compile a smart Ergo contract for Cicero', async function () {
-            const ergoFile = Path.resolve(TESTS_DIR, 'helloworld', 'logic/logic.ergo');
-            const ergoContent = Fs.readFileSync(ergoFile, 'utf8');
-            const ctoFile = Path.resolve(TESTS_DIR, 'helloworld', 'model/model.cto');
-            const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-            const result = await ErgoCompiler.compile([{ 'name': ergoFile, 'content' : ergoContent }], [{ 'name': ctoFile, 'content' : ctoContent }], null, 'cicero', false);
             result.success.should.not.be.null;
         });
     });

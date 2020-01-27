@@ -28,7 +28,7 @@ const ctoSample3 = fs.readFileSync('./test/data/test3.cto','utf8');
 describe('Validator', () => {
     describe('#validationErgo', () => {
         it('should succeed validating an input', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addModelFile(ctoSample3,'test.cto');
 
             const input = {
@@ -53,7 +53,7 @@ describe('Validator', () => {
         });
 
         it('should succeed validating an contract', () => {
-            const logicManager = new LogicManager('cicero');
+            const logicManager = new LogicManager('es6');
             logicManager.addModelFile(ctoSample3,'test.cto');
 
             const contract = {

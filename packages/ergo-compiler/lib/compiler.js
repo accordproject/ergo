@@ -64,7 +64,7 @@ class Compiler {
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} sourceTemplate - an optional template source
-     * @param {string} target language (es5|es6|cicero|java)
+     * @param {string} target language (es6|java)
      * @param {boolean} link whether to link the javascript runtime
      * @param {boolean} warnings whether to print warnings
      * @returns {string} The compiled JavaScript code
@@ -103,7 +103,7 @@ class Compiler {
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {string} sourceTemplate - an optional template source
-     * @param {string} target language (es5|es6|cicero|java)
+     * @param {string} target language (es6|java)
      * @param {boolean} link whether to link the javascript runtime
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the compiled JavaScript code

@@ -28,36 +28,6 @@ Section ErgoNNRCtoJava.
   Local Open Scope string_scope.
   Local Open Scope nstring_scope.
 
-  (** Top-level expression *)
-  Definition java_of_expression
-             (e:nnrc_expr)                  (* expression to translate *)
-             (t : nat)                      (* next available unused temporary *)
-             (i : nat)                      (* indentation level *)
-             (eol:nstring)                  (* Choice of end of line character *)
-             (quotel:nstring)               (* Choice of quote character *)
-    : QcertCodeGen.java
-      * QcertCodeGen.java_data
-      * nat
-    := QcertCodeGen.nnrc_expr_java_unshadow e t i eol quotel nil nil.
-
-  (** Top-level constant *)
-  Definition java_of_constant
-             (v:string)                     (* constant name *)
-             (bind:nnrc_expr)               (* expression computing the constant *)
-             (t : nat)                      (* next available unused temporary *)
-             (i : nat)                      (* indentation level *)
-             (eol:nstring)                  (* Choice of end of line character *)
-             (quotel:nstring)               (* Choice of quote character *)
-    : QcertCodeGen.java
-      * QcertCodeGen.java_data
-      * nat
-    := 
-      let '(s1, e1, t2) := QcertCodeGen.nnrc_expr_to_java bind t i eol quotel nil in
-      let v0 := ^QcertCodeGen.java_identifier_sanitizer ("v" ++ v) in
-      (s1 +++ (QcertCodeGen.eindent i) +++ ^"var " +++ v0 +++ ^" = " +++ (QcertCodeGen.from_java_data e1) +++ ^";" +++ eol,
-       QcertCodeGen.mk_java_data v0,
-       t2).
-
   (** Single method *)
   Definition java_method_of_body
              (e:nnrc_expr)
@@ -108,8 +78,6 @@ Section ErgoNNRCtoJava.
       * nat                           (* next available unused temporary *)
     :=
       match s with
-      | DNExpr e => java_of_expression e t i eol quotel
-      | DNConstant v e => java_of_constant v e t i eol quotel
       | DNFunc f => (^"",QcertCodeGen.mk_java_data (^""),t) (* XXX Not sure what to do with functions *)
       | DNFuncTable ft => (java_class_of_nnrc_function_table filename ft eol quotel,QcertCodeGen.mk_java_data (^"null"),t)
       end.

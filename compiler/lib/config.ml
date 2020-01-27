@@ -18,14 +18,12 @@ open Core.ErgoCompiler
 type lang =
   | Ergo
   | ES6
-  | Cicero
   | Java
 
 let lang_of_target s =
   begin match s with
   | "ergo" -> Ergo
   | "es6" -> ES6
-  | "cicero" -> Cicero
   | "java" -> Java
   | _ -> ergo_raise (ergo_system_error ("Unknown language: " ^ s))
   end
@@ -34,7 +32,6 @@ let name_of_lang s =
   begin match s with
   | Ergo -> "ergo"
   | ES6 -> "es6"
-  | Cicero -> "cicero"
   | Java -> "java"
   end
 
@@ -42,7 +39,6 @@ let extension_of_lang lang =
   begin match lang with
   | Ergo -> ".ergo"
   | ES6 -> ".js"
-  | Cicero -> "_cicero.js"
   | Java -> ".java"
   end
 
@@ -50,7 +46,6 @@ let script_lang_of_lang lang =
   begin match lang with
   | Ergo -> ".ergo"
   | ES6 -> ".js"
-  | Cicero -> ".js"
   | Java -> ".java"
   end
 
@@ -61,11 +56,10 @@ let can_link_runtime lang =
   begin match lang with
   | Ergo -> false
   | ES6 -> true
-  | Cicero -> true
   | Java -> false
   end
 
-let targets = [ES6;Cicero;Java]
+let targets = [ES6;Java]
 let available_targets = List.map name_of_lang targets
 
 let available_targets_message =

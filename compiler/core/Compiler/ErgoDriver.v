@@ -44,8 +44,7 @@ Require Import ErgoSpec.Translation.ErgotoErgoC.
 Require Import ErgoSpec.Translation.ErgoCompContext.
 Require Import ErgoSpec.Translation.ErgoCInline.
 Require Import ErgoSpec.Translation.ErgoCTtoErgoNNRC.
-Require Import ErgoSpec.Translation.ErgoNNRCtoJavaScript.
-Require Import ErgoSpec.Translation.ErgoNNRCtoCicero.
+Require Import ErgoSpec.Translation.ErgoNNRCtoES6.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 
 Section ErgoDriver.
@@ -300,21 +299,6 @@ Section ErgoDriver.
 
     Local Open Scope nstring_scope.
 
-    Definition ergo_module_to_javascript_top
-               (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr)) : eresult result_file :=
-      let bm : eresult (brand_model * list laergo_type_declaration) :=
-          coq_time "init(load types)"
-                   brand_model_from_inputs inputs in
-      eolift (fun xy :brand_model * list laergo_type_declaration=>
-                let bm := fst xy in
-                let cinit := compilation_context_from_inputs inputs template (snd xy) in
-                eolift (fun init : laergo_module * compilation_context =>
-                          let (p, ctxt) := init in
-                          let res := ergo_module_to_javascript ctxt p in
-                          elift (fun xy => mkResultFile None p.(module_file) (fst xy) (snd xy)) res)
-                       cinit) bm.
-
     Definition ergo_module_to_java_top
                (inputs:list lrergo_input)
                (template:option (string * lrergo_expr)) : eresult result_file :=
@@ -328,7 +312,7 @@ Section ErgoDriver.
                           elift (fun xy => mkResultFile None p.(module_file) (fst xy) (snd xy)) res)
                        cinit) bm.
 
-    Definition ergo_module_to_cicero_top
+    Definition ergo_module_to_es6_top
                (inputs:list lrergo_input)
                (template:option (string * lrergo_expr)) : eresult result_file :=
       let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
