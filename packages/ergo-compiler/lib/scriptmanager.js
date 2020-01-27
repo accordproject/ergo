@@ -37,7 +37,7 @@ class ScriptManager {
      * <strong>Note: Only to be called by framework code. Applications should
      * retrieve instances from {@link BusinessNetworkDefinition}</strong>
      * </p>
-     * @param {String} target  - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @param {String} target  - compiler target (either: 'es6', or 'java')
      * @param {ModelManager} modelManager - The ModelManager to use for this ScriptManager
      * @param {Object} options  - e.g., { warnings: true }
      */
@@ -52,7 +52,7 @@ class ScriptManager {
 
     /**
      * Change the compilation target. Note: This might force recompilation if logic has already been compiled.
-     * @param {String} target - compiler target (either: 'cicero', 'es5', 'es6', or 'java')
+     * @param {String} target - compiler target (either: 'es6', or 'java')
      * @param {boolean} recompile - whether to force recompilation of the logic
      */
     changeTarget(target, recompile) {
