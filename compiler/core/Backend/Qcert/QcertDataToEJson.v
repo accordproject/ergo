@@ -211,7 +211,27 @@ Qed.
 Lemma ejson_tostring_correct d:
   dataToString d = ejsonToString (data_to_ejson d).
 Proof.
-  admit.
+  induction d; simpl; intros; try reflexivity.
+  - unfold ejsonArrayToString.
+    f_equal; f_equal.
+    rewrite map_map.
+    rewrite Forall_forall in H.
+    induction c; intros; try reflexivity; simpl.
+    rewrite IHc; clear IHc; intros.
+    + rewrite H; [reflexivity|]; simpl; left; reflexivity.
+    + apply H; simpl; right; assumption.
+  - admit.
+  - unfold ejsonLeftToString.
+    rewrite IHd; clear IHd.
+    destruct
+      (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson d);
+      try reflexivity.
+  - unfold ejsonRightToString.
+    rewrite IHd; clear IHd.
+    destruct
+      (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson d);
+      try reflexivity.
+  - admit.
 Admitted.
 
 (* XXX TODO *)
