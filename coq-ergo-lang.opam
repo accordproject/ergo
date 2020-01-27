@@ -30,6 +30,7 @@ depends: [
   "coq" {>= "8.8.2" & < "8.9~"}
   "coq-flocq" {>= "2.6.1" & < "3.0~"}
   "coq-jsast" {>= "1.0.9"}
+  "coq-qcert" {>= "2.0.0~alpha.1"}
   "menhir"
   "base64"
   "uri"
