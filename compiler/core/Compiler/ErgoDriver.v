@@ -297,6 +297,7 @@ Section ErgoDriver.
   End CompilerCore.
 
   Section CompilerTop.
+    Context {bm:brand_model}.
 
     Local Open Scope nstring_scope.
 
@@ -310,7 +311,7 @@ Section ErgoDriver.
                 eolift (fun init : laergo_module * compilation_context =>
                           let (p, ctxt) := init in
                           let res := ergo_module_to_java ctxt p in
-                          elift (fun xy => mkResultFile None p.(module_file) (fst xy) (snd xy)) res)
+                          elift (fun xy => mkResultFile None p.(module_file) (snd xy)) res)
                        cinit) bm.
 
     Definition ergo_module_to_es6_top
@@ -338,7 +339,7 @@ Section ErgoDriver.
                 in
                 elift (fun xyz =>
                          let '(contract_name, nmod, ncontent) := xyz in
-                         mkResultFile (Some contract_name) p.(module_file) nmod ncontent)
+                         mkResultFile (Some contract_name) p.(module_file) ncontent)
                       res)
              ctxt) bm.
     

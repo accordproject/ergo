@@ -28,6 +28,8 @@ Section ErgoNNRCtoJava.
   Local Open Scope string_scope.
   Local Open Scope nstring_scope.
 
+  Context {m : brand_model}.
+
   (** Single method *)
   Definition java_method_of_body
              (e:nnrc_expr)

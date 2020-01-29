@@ -54,10 +54,15 @@ Section ErgoCT.
       snd (expr_annot e).
 
     (** Function *)
+    Record sigct :=
+      mkSigCT
+        { sigct_params: list (string * qcert_type);
+          sigct_output : qcert_type; }.
+
     Record ergoct_function :=
       mkFuncCT
         { functionct_annot : provenance;
-          functionct_sig : sigc;
+          functionct_sig : sigct;
           functionct_body : option ergoct_expr; }.
 
     (** Contract *)

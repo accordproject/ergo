@@ -328,15 +328,29 @@ Section ErgoCTypecheck.
              (dctxt : type_context)
              (func : ergoc_function) : eresult (ergoct_function * type_context) :=
     match func.(functionc_body) with
-    | None => esuccess (mkFuncCT
-                          func.(functionc_annot)
-                          func.(functionc_sig)
-                          None,
-                        dctxt) nil
-    | Some body =>
-      let tsig :=
+    | None =>
+      let tparams :=
           map (fun x => (fst x, ergo_type_to_qcert_type (snd x)))
-              func.(functionc_sig).(sigc_params) in
+              func.(functionc_sig).(sigc_params)
+      in
+      let toutput :=
+          match func.(functionc_sig).(sigc_output) with
+          | Some eout =>
+            ergo_type_to_qcert_type eout
+          | None => ttop (* For external function with no output type, fall back to Any *)
+          end
+      in
+      esuccess (mkFuncCT
+                  func.(functionc_annot)
+                  (mkSigCT tparams toutput)
+                  None,
+                dctxt) nil
+    | Some body =>
+      (* Translate function parameters types *)
+      let tparams :=
+          map (fun x => (fst x, ergo_type_to_qcert_type (snd x)))
+              func.(functionc_sig).(sigc_params)
+      in
       eolift
         (fun outT =>
            let outt := exprct_type_annot outT in
@@ -344,7 +358,7 @@ Section ErgoCTypecheck.
            match eoutt with
            | None => esuccess (mkFuncCT
                                  func.(functionc_annot)
-                                 func.(functionc_sig)
+                                 (mkSigCT tparams outt)
                                  (Some outT),
                                dctxt) nil
            | Some eoutt' =>
@@ -352,7 +366,7 @@ Section ErgoCTypecheck.
              if subtype_dec outt expectedt
              then esuccess (mkFuncCT
                               func.(functionc_annot)
-                              func.(functionc_sig)
+                              (mkSigCT tparams expectedt)
                               (Some outT),
                             dctxt) nil
              else
@@ -366,7 +380,7 @@ Section ErgoCTypecheck.
                  efailure (ETypeError body_prov (ergo_format_function_return_error nsctxt name outt expectedt))
                end
            end)
-        (ergoc_expr_typecheck nsctxt (type_context_set_local_env dctxt tsig) body)
+        (ergoc_expr_typecheck nsctxt (type_context_set_local_env dctxt tparams) body)
     end.
 
   Definition ergoc_clause_typecheck

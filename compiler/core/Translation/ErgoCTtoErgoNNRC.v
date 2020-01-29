@@ -239,15 +239,15 @@ Section ErgoCTtoErgoNNRC.
   Definition functionct_to_nnrc
              (fn:absolute_name)
              (f:ergoct_function) : eresult nnrc_function :=
-    let env := current_time :: options :: (List.map fst f.(functionct_sig).(sigc_params)) in
+    let env := current_time :: options :: (List.map fst f.(functionct_sig).(sigct_params)) in
     match f.(functionct_body) with
     | Some body =>
       elift
         (mkFuncN fn)
         (elift
            (mkLambdaN
-              f.(functionct_sig).(sigc_params)
-              f.(functionct_sig).(sigc_output))
+              f.(functionct_sig).(sigct_params)
+              f.(functionct_sig).(sigct_output))
            (ergoct_expr_to_nnrc env body))
     | None => function_not_inlined_error f.(functionct_annot) "ec2en/function" fn
     end.
