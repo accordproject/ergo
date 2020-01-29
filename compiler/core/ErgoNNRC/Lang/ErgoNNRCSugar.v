@@ -27,7 +27,7 @@ Section ErgoNNRCSugar.
   Open Scope string.
 
   (** Fresh variables *)
-  Definition fresh_in_match {A} (eccases:list (A * nnrc_expr)) (ecdefault:nnrc_expr) :=
+  Definition fresh_in_match {A} (eccases:list (A * ergo_nnrc_expr)) (ecdefault:ergo_nnrc_expr) :=
     fresh_var
       "$match"
       (List.app
@@ -35,17 +35,17 @@ Section ErgoNNRCSugar.
             (List.map (fun eccase => nnrc_free_vars (snd eccase)) eccases))
          (nnrc_free_vars ecdefault)).
 
-  Definition fresh_in_case (pattern_expr:nnrc_expr) (else_expr:nnrc_expr) : string :=
+  Definition fresh_in_case (pattern_expr:ergo_nnrc_expr) (else_expr:ergo_nnrc_expr) : string :=
     fresh_var "$case"
               (List.app (nnrc_free_vars pattern_expr) (nnrc_free_vars else_expr)).
 
-  Definition fresh_in_lift_error (e:nnrc_expr) :=
+  Definition fresh_in_lift_error (e:ergo_nnrc_expr) :=
     fresh_var2 "$lifte" "$lifte" (nnrc_free_vars e).
-  Definition fresh_in_lift_optional (e:nnrc_expr) :=
+  Definition fresh_in_lift_optional (e:ergo_nnrc_expr) :=
     fresh_var2 "$lifto" "$lifto" (nnrc_free_vars e).
 
   (** New Array *)
-  Definition new_array (el:list nnrc_expr) : nnrc_expr :=
+  Definition new_array (el:list ergo_nnrc_expr) : ergo_nnrc_expr :=
     match el with
     | nil => NNRCConst (dcoll nil)
     | e1::erest =>
@@ -53,7 +53,7 @@ Section ErgoNNRCSugar.
     end.
 
   (** [new Concept{ field1: expr1, ... fieldn: exprn }] creates a record and brands it with the concept name *)
-  Definition new_expr (brand:string) (struct_expr:nnrc_expr) : nnrc_expr :=
+  Definition new_expr (brand:string) (struct_expr:ergo_nnrc_expr) : ergo_nnrc_expr :=
     NNRCUnop (OpBrand (brand :: nil)) struct_expr.
 
   Section Examples.

@@ -32,7 +32,7 @@ Section ErgoNNRCtoJava.
 
   (** Single method *)
   Definition java_method_of_body
-             (e:nnrc_expr)
+             (e:ergo_nnrc_expr)
              (fname:string)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.java :=
@@ -41,14 +41,14 @@ Section ErgoNNRCtoJava.
 
   Definition java_method_of_nnrc_function
              (fname:string)
-             (fbody:nnrc_lambda)
+             (fbody:ergo_nnrc_lambda)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.java :=
     let fnameSafe := fname in
-    java_method_of_body fbody.(nnrc_lambda_body) fnameSafe eol quotel.
+    java_method_of_body fbody.(lambdan_body) fnameSafe eol quotel.
 
   Definition java_methods_of_nnrc_functions
-             (fl:list (string * nnrc_lambda))
+             (fl:list (string * ergo_nnrc_lambda))
              (tname:string)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.java :=
@@ -56,7 +56,7 @@ Section ErgoNNRCtoJava.
 
   Definition java_class_of_nnrc_function_table
              (filename:string)
-             (ft:nnrc_function_table)
+             (ft:ergo_nnrc_function_table)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.java :=
     let tname := QcertCodeGen.java_identifier_sanitizer filename in (* XXX For Java class name has to be filename *)
@@ -71,30 +71,30 @@ Section ErgoNNRCtoJava.
 
   Definition java_of_declaration
              (filename:string)
-             (s : nnrc_declaration)   (* statement to translate *)
-             (t : nat)                (* next available unused temporary *)
-             (i : nat)                (* indentation level *)
+             (s : ergo_nnrc_declaration) (* statement to translate *)
+             (t : nat)                   (* next available unused temporary *)
+             (i : nat)                   (* indentation level *)
              (eol : nstring)
              (quotel : nstring)
-    : QcertCodeGen.java                (* Java statements for computing result *)
-      * QcertCodeGen.java_data         (* Java expression holding result *)
-      * nat                           (* next available unused temporary *)
+    : QcertCodeGen.java                  (* Java statements for computing result *)
+      * QcertCodeGen.java_data           (* Java expression holding result *)
+      * nat                              (* next available unused temporary *)
     :=
       match s with
       | DNFunc fname fbody => (^"",QcertCodeGen.mk_java_data (^""),t) (* XXX Not sure what to do with standalone functions *)
-      | DNFuncTable ft => (java_class_of_nnrc_function_table filename ft eol quotel,QcertCodeGen.mk_java_data (^"null"),t)
+      | DNFuncTable cname ft => (java_class_of_nnrc_function_table filename ft eol quotel,QcertCodeGen.mk_java_data (^"null"),t)
       end.
 
   Definition java_of_declarations
              (filename:string)
-             (sl : list nnrc_declaration) (* statements to translate *)
-             (t : nat)                    (* next available unused temporary *)
-             (i : nat)                    (* indentation level *)
+             (sl : list ergo_nnrc_declaration) (* statements to translate *)
+             (t : nat)                         (* next available unused temporary *)
+             (i : nat)                         (* indentation level *)
              (eol : nstring)
              (quotel : nstring)
     : QcertCodeGen.java
     := let proc_one
-             (s:nnrc_declaration)
+             (s:ergo_nnrc_declaration)
              (acc:QcertCodeGen.java * nat) : QcertCodeGen.java * nat :=
            let '(s0, t0) := acc in
            let '(s1, e1, t1) := java_of_declaration filename s t0 i eol quotel in
@@ -106,7 +106,7 @@ Section ErgoNNRCtoJava.
 
   Definition nnrc_module_to_java
              (filename:string)
-             (p:nnrc_module)
+             (p:ergo_nnrc_module)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.java :=
     (preamble eol) +++ eol
@@ -114,7 +114,7 @@ Section ErgoNNRCtoJava.
 
   Definition nnrc_module_to_java_top
              (filename:string)
-             (p:nnrc_module) : QcertCodeGen.java :=
+             (p:ergo_nnrc_module) : QcertCodeGen.java :=
     nnrc_module_to_java filename p QcertCodeGen.eeol_newline QcertCodeGen.equotel_double.
 
 End ErgoNNRCtoJava.
