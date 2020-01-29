@@ -22,17 +22,17 @@ Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Backend.QLib.
 
 Section ErgoNNRC.
-  Context {m : brand_model}.
-
   Section Syntax.
+    Context {m : brand_model}.
+
     (** Expression *)
     Definition nnrc_expr := QcertCodeGen.nnrc_expr.
-    Definition nnrc_type := laergo_type.
+    Definition nnrc_type := qcert_type.
 
     Record lambdan :=
       mkLambdaN
         { lambdan_params: list (string * nnrc_type);
-          lambdan_output : option nnrc_type;
+          lambdan_output : nnrc_type;
           lambdan_body : nnrc_expr; }.
 
     (** Function *)
@@ -64,7 +64,6 @@ Section ErgoNNRC.
     mkResultFile {
         res_contract_name : option string;
         res_file : string;
-        res_nnrc : nnrc_module;
         res_content : nstring;
       }.
 
