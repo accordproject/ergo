@@ -36,8 +36,8 @@ Section ErgoCTtoErgoNNRC.
 
   Definition ergo_pattern_to_nnrc
              (env:list string)
-             (input_expr:nnrc_expr)
-             (p:tlaergo_pattern) : (list string * nnrc_expr) :=
+             (input_expr:ergo_nnrc_expr)
+             (p:tlaergo_pattern) : (list string * ergo_nnrc_expr) :=
     match p with
     | CaseData _ d =>
       (nil, NNRCIf (NNRCBinop OpEqual input_expr (NNRCConst d))
@@ -87,13 +87,13 @@ Section ErgoCTtoErgoNNRC.
 
   Definition pack_pattern
              (vars:list string)
-             (pattern_expr:nnrc_expr)
-             (else_expr:nnrc_expr)
-             (cont_expr:nnrc_expr)
-    : nnrc_expr :=
+             (pattern_expr:ergo_nnrc_expr)
+             (else_expr:ergo_nnrc_expr)
+             (cont_expr:ergo_nnrc_expr)
+    : ergo_nnrc_expr :=
     let v_rec := fresh_in_case pattern_expr else_expr in
     let init_expr := else_expr in
-    let proc_one (acc:nnrc_expr) (v:string) :=
+    let proc_one (acc:ergo_nnrc_expr) (v:string) :=
         NNRCLet v (NNRCUnop (OpDot v) (NNRCVar v_rec)) acc
     in
     let inner_expr :=
@@ -110,7 +110,7 @@ Section ErgoCTtoErgoNNRC.
 
   (** Translate calculus expressions to NNRC *)
   Fixpoint ergoct_expr_to_nnrc
-           (env:list string) (e:ergoct_expr) : eresult nnrc_expr :=
+           (env:list string) (e:ergoct_expr) : eresult ergo_nnrc_expr :=
     match e with
     | EThis (prov,_) => this_in_calculus_error prov (* XXX We should prove it never happens *)
     | EThisContract (prov,_) => contract_in_calculus_error prov (* XXX We should prove it never happens *)
@@ -127,7 +127,7 @@ Section ErgoCTtoErgoNNRC.
     | ESome (prov,_) e => elift (NNRCUnop OpLeft) (ergoct_expr_to_nnrc env e)
     | EArray (prov,_) el =>
       let init_el := esuccess nil nil in
-      let proc_one (e:ergo_expr) (acc:eresult (list nnrc_expr)) : eresult (list nnrc_expr) :=
+      let proc_one (e:ergo_expr) (acc:eresult (list ergo_nnrc_expr)) : eresult (list ergo_nnrc_expr) :=
           elift2
             cons
             (ergoct_expr_to_nnrc env e)
@@ -201,19 +201,19 @@ Section ErgoCTtoErgoNNRC.
       in
       let ecdefault := ergoct_expr_to_nnrc env edefault in
       eolift
-        (fun ec0 : nnrc_expr =>
+        (fun ec0 : ergo_nnrc_expr =>
            eolift
              (fun eccases =>
                 eolift
                   (fun ecdefault =>
                      let v0 : string := fresh_in_match eccases ecdefault in
                      let proc_one_case
-                           (acc:eresult nnrc_expr)
-                           (ecase:ergo_pattern * nnrc_expr)
-                         : eresult nnrc_expr :=
+                           (acc:eresult ergo_nnrc_expr)
+                           (ecase:ergo_pattern * ergo_nnrc_expr)
+                         : eresult ergo_nnrc_expr :=
                          let (vars, pattern_expr) := ergo_pattern_to_nnrc env (NNRCVar v0) (fst ecase) in
                          elift
-                           (fun cont_expr : nnrc_expr =>
+                           (fun cont_expr : ergo_nnrc_expr =>
                               pack_pattern
                                 vars
                                 pattern_expr
@@ -221,7 +221,7 @@ Section ErgoCTtoErgoNNRC.
                                 cont_expr)
                            acc
                      in
-                     let eccases_folded : eresult nnrc_expr :=
+                     let eccases_folded : eresult ergo_nnrc_expr :=
                          fold_left proc_one_case eccases (esuccess ecdefault nil)
                      in
                      elift (NNRCLet v0 ec0) eccases_folded)
@@ -238,7 +238,7 @@ Section ErgoCTtoErgoNNRC.
   (** Translate a function to function+calculus *)
   Definition functionct_to_nnrc
              (fn:absolute_name)
-             (f:ergoct_function) : eresult (string * nnrc_lambda) :=
+             (f:ergoct_function) : eresult (string * ergo_nnrc_lambda) :=
     let env := current_time :: options :: (List.map fst f.(functionct_sig).(sigct_params)) in
     match f.(functionct_body) with
     | Some body =>
@@ -246,6 +246,7 @@ Section ErgoCTtoErgoNNRC.
         (fun x => (fn,x))
         (elift
            (mkLambdaN
+              f.(functionct_annot)
               f.(functionct_sig).(sigct_params)
               f.(functionct_sig).(sigct_output))
            (ergoct_expr_to_nnrc env body))
@@ -255,31 +256,30 @@ Section ErgoCTtoErgoNNRC.
   (** Translate a declaration to a declaration+calculus *)
   Definition clausect_declaration_to_nnrc
              (fn:absolute_name)
-             (f:ergoct_function) : eresult (string * nnrc_lambda) :=
+             (f:ergoct_function) : eresult (string * ergo_nnrc_lambda) :=
     functionct_to_nnrc fn f.
 
   (** Translate a contract to a contract+calculus *)
   (** For a contract, add 'contract' and 'now' to the translation_context *)
   Definition contractct_to_nnrc
-             (cn:local_name)
-             (c:ergoct_contract) : eresult nnrc_function_table :=
+             (c:ergoct_contract) : eresult ergo_nnrc_function_table :=
     let init := esuccess nil nil in
     let proc_one
-          (acc:eresult (list (string * nnrc_lambda)))
+          (acc:eresult (list (string * ergo_nnrc_lambda)))
           (s:absolute_name * ergoct_function)
-        : eresult (list (string * nnrc_lambda)) :=
+        : eresult (list (string * ergo_nnrc_lambda)) :=
         eolift
-          (fun acc : list (string * nnrc_lambda) =>
-             elift (fun news : (string * nnrc_lambda) => news::acc)
+          (fun acc : list (string * ergo_nnrc_lambda) =>
+             elift (fun news : (string * ergo_nnrc_lambda) => news::acc)
                    (clausect_declaration_to_nnrc (fst s) (snd s)))
           acc
     in
     elift
-      (mkFuncTableN cn)
+      (fun x => mkFuncTableN c.(contractct_annot) x)
       (List.fold_left proc_one c.(contractct_clauses) init).
 
   (** Translate a statement to a statement+calculus *)
-  Definition declarationct_to_nnrc (s:ergoct_declaration) : eresult (list nnrc_declaration) :=
+  Definition declarationct_to_nnrc (s:ergoct_declaration) : eresult (list ergo_nnrc_declaration) :=
     match s with
     (* XXX Expressions and constants are dropped, immaterial *)
     | DCTExpr prov e => esuccess nil nil
@@ -290,34 +290,34 @@ Section ErgoCTtoErgoNNRC.
         (functionct_to_nnrc fn f)
     | DCTContract prov cn c =>
       elift
-        (fun f => DNFuncTable f :: nil)
-        (contractct_to_nnrc cn c)
+        (fun f => DNFuncTable cn f :: nil)
+        (contractct_to_nnrc c)
     end.
 
   (** Translate a module to a module+calculus *)
   Definition declarationsct_calculus_with_table (dl:list ergoct_declaration)
-    : eresult (list nnrc_declaration) :=
+    : eresult (list ergo_nnrc_declaration) :=
     let init := esuccess nil nil in
     let proc_one
-          (acc:eresult (list nnrc_declaration))
+          (acc:eresult (list ergo_nnrc_declaration))
           (s:ergoct_declaration)
-        : eresult (list nnrc_declaration) :=
+        : eresult (list ergo_nnrc_declaration) :=
         eolift
-          (fun acc : list nnrc_declaration =>
+          (fun acc : list ergo_nnrc_declaration =>
              let edecl := declarationct_to_nnrc s in
-             elift (fun news : list nnrc_declaration => news ++ acc)
+             elift (fun news : list ergo_nnrc_declaration => news ++ acc)
                    edecl)
           acc
     in
     List.fold_left proc_one dl init.
 
   (** Translate a module to a module+calculus *)
-  Definition modulect_to_nnrc_with_table (p:ergoct_module) : eresult nnrc_module :=
+  Definition modulect_to_nnrc_with_table (p:ergoct_module) : eresult ergo_nnrc_module :=
     elift
-      (mkModuleN p.(modulect_namespace))
+      (mkModuleN p.(modulect_annot) p.(modulect_namespace))
       (declarationsct_calculus_with_table p.(modulect_declarations)).
 
-  Definition ergoct_module_to_nnrc (m:ergoct_module) : eresult nnrc_module :=
+  Definition ergoct_module_to_nnrc (m:ergoct_module) : eresult ergo_nnrc_module :=
     modulect_to_nnrc_with_table m.
 
   Section Examples.

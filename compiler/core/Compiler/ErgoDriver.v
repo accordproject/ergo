@@ -275,7 +275,7 @@ Section ErgoDriver.
 
     Definition ergo_module_to_javascript
                (ctxt:compilation_context)
-               (p:laergo_module) : eresult (nnrc_module * QcertCodeGen.ejavascript) :=
+               (p:laergo_module) : eresult (ergo_nnrc_module * QcertCodeGen.ejavascript) :=
       let pc := ergo_module_to_ergoct ctxt p in
       let pn :=
           coq_time "ergoc(typed)->nnrc"
@@ -288,7 +288,7 @@ Section ErgoDriver.
 
     Definition ergo_module_to_java
                (ctxt:compilation_context)
-               (p:laergo_module) : eresult (nnrc_module * QcertCodeGen.java) :=
+               (p:laergo_module) : eresult (ergo_nnrc_module * QcertCodeGen.java) :=
       let filename := p.(module_prefix) in
       let pc := ergo_module_to_ergoct ctxt p in
       let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in

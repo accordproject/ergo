@@ -17,6 +17,10 @@
 (** * Abstract Syntax *)
 
 Require Import String.
+Require Import List.
+Require Import Qcert.Driver.CompEval.
+Require Import ErgoSpec.Common.Provenance.
+Require Import ErgoSpec.Common.Result.
 Require Import ErgoSpec.Backend.QLib.
 
 Section ErgoNNRC.
@@ -24,44 +28,118 @@ Section ErgoNNRC.
     Context {m : brand_model}.
 
     (** Expression *)
-    Definition nnrc_expr := QcertCodeGen.nnrc_expr.
-    Definition nnrc_type := qcert_type.
+    Definition ergo_nnrc_expr := QcertCodeGen.nnrc_expr.
+    Definition ergo_nnrc_type := qcert_type.
 
-    (** Functions *)
-    Record nnrc_lambda :=
+    (** Function *)
+    Record ergo_nnrc_lambda :=
       mkLambdaN
-        { nnrc_lambda_params: list (string * nnrc_type);
-          nnrc_lambda_output : nnrc_type;
-          nnrc_lambda_body : nnrc_expr; }.
+        { lambdan_provenance : provenance;
+          lambdan_params: list (string * ergo_nnrc_type);
+          lambdan_output : ergo_nnrc_type;
+          lambdan_body : ergo_nnrc_expr; }.
 
     (** Function table *)
-    Record nnrc_function_table :=
+    Record ergo_nnrc_function_table :=
       mkFuncTableN
-        { function_tablen_name : string;
-          function_tablen_funs : list (string * nnrc_lambda); }.
+        { function_tablen_provenance : provenance;
+          function_tablen_funs : list (string * ergo_nnrc_lambda); }.
 
     (** Declaration *)
-    Inductive nnrc_declaration :=
-    | DNFunc : string -> nnrc_lambda -> nnrc_declaration
-    | DNFuncTable : nnrc_function_table -> nnrc_declaration.
+    Inductive ergo_nnrc_declaration :=
+    | DNFunc : string -> ergo_nnrc_lambda -> ergo_nnrc_declaration
+    | DNFuncTable : string -> ergo_nnrc_function_table -> ergo_nnrc_declaration.
 
     (** Module. *)
-    Record nnrc_module :=
+    Record ergo_nnrc_module :=
       mkModuleN
-        { modulen_namespace : string;
-          modulen_declarations : list nnrc_declaration; }.
+        { modulen_provenance : provenance;
+          modulen_namespace : string;
+          modulen_declarations : list ergo_nnrc_declaration; }.
 
   End Syntax.
 
   Record result_file :=
-    mkResultFile {
-        res_contract_name : option string;
+    mkResultFile
+      { res_contract_name : option string;
         res_file : string;
-        res_content : nstring;
-      }.
+        res_content : nstring; }.
 
+  (** Eval-based semantics for ergo_nnrc *)
   Section Evaluation.
-    
+    Context {m : brand_model}.
+
+    Local Open Scope string.
+
+    Definition ergo_nnrc_lambda_eval
+               (f:ergo_nnrc_lambda)
+               (params:list (string * qcert_data)) : eresult qcert_data
+      :=
+        let e := f.(lambdan_body) in
+        let prov := f.(lambdan_provenance) in
+        eresult_of_option (eval_nnrc e params) (ERuntimeError prov "ErgoNNRC eval failed") nil.
+
+    Definition ergo_nnrc_function_table_eval
+               (tname:string)
+               (fname:string)
+               (tf:ergo_nnrc_function_table)
+               (params:list (string * qcert_data)) : eresult qcert_data
+      :=
+        match lookup string_dec tf.(function_tablen_funs) fname with
+        | None => efailure (ERuntimeError tf.(function_tablen_provenance) ("ErgoNNRC eval cannot find function with name " ++ fname ++ " in table " ++ tname))
+        | Some f =>
+          ergo_nnrc_lambda_eval f params
+        end.
+
+    Fixpoint ergo_nnrc_declaration_lookup_function
+             (fname:string)
+             (m:list ergo_nnrc_declaration) : option ergo_nnrc_lambda
+      :=
+      match m with
+      | nil => None
+      | DNFunc fname' f :: m' =>
+        if string_dec fname' fname
+        then Some f
+        else ergo_nnrc_declaration_lookup_function fname m'
+      | DNFuncTable _ _ :: m' =>
+        ergo_nnrc_declaration_lookup_function fname m'
+      end.
+
+    Fixpoint ergo_nnrc_declaration_lookup_table
+             (tname:string)
+             (m:list ergo_nnrc_declaration) : option ergo_nnrc_function_table
+      :=
+      match m with
+      | nil => None
+      | DNFunc _ _ :: m' =>
+        ergo_nnrc_declaration_lookup_table tname m'
+      | DNFuncTable tname' tf :: m' =>
+        if string_dec tname' tname
+        then Some tf
+        else ergo_nnrc_declaration_lookup_table tname m'
+      end.
+
+    Definition ergo_nnrc_module_eval
+               (otname:option string) (fname:string) (m:ergo_nnrc_module)
+               (params: list (string * qcert_data)) : eresult qcert_data
+      :=
+      match otname with
+      | None =>
+        match ergo_nnrc_declaration_lookup_function fname m.(modulen_declarations) with
+        | None =>
+          efailure (ERuntimeError m.(modulen_provenance) ("ErgoNNRC eval cannot find function with name " ++ fname))
+        | Some f =>
+          ergo_nnrc_lambda_eval f params
+        end
+      | Some tname =>
+        match ergo_nnrc_declaration_lookup_table fname m.(modulen_declarations) with
+        | None =>
+          efailure (ERuntimeError m.(modulen_provenance) ("ErgoNNRC eval cannot find function with name " ++ fname))
+        | Some fl =>
+          ergo_nnrc_function_table_eval tname fname fl params
+        end
+      end.
+
   End Evaluation.
 End ErgoNNRC.
 
