@@ -24,8 +24,8 @@ Require Import ErgoSpec.Common.Result.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.Common.PrintTypedData.
-Require Import ErgoSpec.Types.ErgoCTypeUtil.
-Require Import ErgoSpec.Types.ErgoTypetoErgoCType.
+Require Import ErgoSpec.Types.QcertTypeUtil.
+Require Import ErgoSpec.Types.ErgoTypetoQcertType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCT.
@@ -38,8 +38,8 @@ Section ErgoCOverloaded.
 
   Section UnaryOperator.
     Definition unary_dispatch_spec : Set :=
-      (namespace_ctxt -> provenance -> ergoc_type -> eresult ergoc_type)
-      * (provenance -> ergoc_type -> ergoct_expr -> ergoct_expr).
+      (namespace_ctxt -> provenance -> qcert_type -> eresult qcert_type)
+      * (provenance -> qcert_type -> ergoct_expr -> ergoct_expr).
 
     Definition unary_dispatch_table : Set :=
       list unary_dispatch_spec.
@@ -53,8 +53,8 @@ Section ErgoCOverloaded.
     Definition make_nat_minus_fun prov t e : ergoct_expr :=
       EBinaryBuiltin (prov,t) (OpNatBinary NatMinus) (EConst (prov, tnat) (dnat 0)) e.
 
-    Definition make_nat_minus_criteria nsctxt prov t : eresult ergoc_type :=
-      match ergoc_type_infer_binary_op (OpNatBinary NatMinus) tnat t with
+    Definition make_nat_minus_criteria nsctxt prov t : eresult qcert_type :=
+      match qcert_type_infer_binary_op (OpNatBinary NatMinus) tnat t with
       | Some (r, _, _) => esuccess r nil
       | None => efailure (ETypeError prov (ergo_format_binop_error nsctxt (OpNatBinary NatMinus) tnat t))
       end.
@@ -62,8 +62,8 @@ Section ErgoCOverloaded.
     Definition make_nat_minus_operator : unary_dispatch_spec :=
       (make_nat_minus_criteria, make_nat_minus_fun).
 
-    Definition make_dot_criteria name nsctxt prov t : eresult ergoc_type :=
-      match ergoc_type_infer_unary_op (OpDot name) t with
+    Definition make_dot_criteria name nsctxt prov t : eresult qcert_type :=
+      match qcert_type_infer_unary_op (OpDot name) t with
       | Some (r, _) => esuccess r nil
       | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt (OpDot name) t))
       end.
@@ -74,10 +74,10 @@ Section ErgoCOverloaded.
     Definition make_unbrand_dot_fun name prov t e : ergoct_expr :=
       EUnaryBuiltin (prov,t) (OpDot name) (EUnaryBuiltin (prov,t) OpUnbrand e).
 
-    Definition make_unbrand_dot_criteria name nsctxt prov t : eresult ergoc_type :=
-      match ergoc_type_infer_unary_op OpUnbrand t with
+    Definition make_unbrand_dot_criteria name nsctxt prov t : eresult qcert_type :=
+      match qcert_type_infer_unary_op OpUnbrand t with
       | Some (r1, _) =>
-        match ergoc_type_infer_unary_op (OpDot name) r1 with
+        match qcert_type_infer_unary_op (OpDot name) r1 with
         | Some (r2, _) => esuccess r2 nil
         | None => efailure (ETypeError prov (ergo_format_unop_error nsctxt (OpDot name) t))
         end
@@ -135,8 +135,8 @@ Section ErgoCOverloaded.
 
   Section BinaryOperator.
     Definition binary_dispatch_spec : Set :=
-      (namespace_ctxt -> provenance -> ergoc_type -> ergoc_type -> eresult ergoc_type)
-      * (provenance -> ergoc_type -> ergoct_expr -> ergoct_expr -> ergoct_expr).
+      (namespace_ctxt -> provenance -> qcert_type -> qcert_type -> eresult qcert_type)
+      * (provenance -> qcert_type -> ergoct_expr -> ergoct_expr -> ergoct_expr).
 
     Definition binary_dispatch_table : Set :=
       list binary_dispatch_spec.

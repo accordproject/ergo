@@ -24,27 +24,27 @@ Section ErgoCTypecheckContext.
 
   Record type_context :=
     mkEvalContext
-      { type_context_global_env : list (string * ergoc_type);
-        type_context_local_env : list (string * ergoc_type);
+      { type_context_global_env : list (string * qcert_type);
+        type_context_local_env : list (string * qcert_type);
       }.
 
   Definition type_context_update_global_env
              (ctxt : type_context)
              (name : string)
-             (value : ergoc_type) : type_context :=
+             (value : qcert_type) : type_context :=
     mkEvalContext ((name, value)::ctxt.(type_context_global_env))
                   ctxt.(type_context_local_env).
 
   Definition type_context_update_local_env
              (ctxt : type_context)
              (name : string)
-             (value : ergoc_type) : type_context :=
+             (value : qcert_type) : type_context :=
     mkEvalContext ctxt.(type_context_global_env)
                   ((name, value)::ctxt.(type_context_local_env)).
 
   Definition type_context_set_local_env
              (ctxt : type_context)
-             (new_local_env : list (string * ergoc_type)) : type_context :=
+             (new_local_env : list (string * qcert_type)) : type_context :=
     mkEvalContext ctxt.(type_context_global_env)
                   new_local_env.
 

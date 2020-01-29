@@ -25,27 +25,27 @@ Section ErgoCEvalContext.
 
   Record eval_context :=
     mkEvalContext
-      { eval_context_global_env : list (string * ergo_data);
-        eval_context_local_env : list (string * ergo_data);
+      { eval_context_global_env : list (string * qcert_data);
+        eval_context_local_env : list (string * qcert_data);
       }.
 
   Definition eval_context_update_global_env
              (ctxt : eval_context)
              (name : string)
-             (value : ergo_data) : eval_context :=
+             (value : qcert_data) : eval_context :=
     mkEvalContext ((name, value)::ctxt.(eval_context_global_env))
                   ctxt.(eval_context_local_env).
 
   Definition eval_context_update_local_env
              (ctxt : eval_context)
              (name : string)
-             (value : ergo_data) : eval_context :=
+             (value : qcert_data) : eval_context :=
     mkEvalContext ctxt.(eval_context_global_env)
                   ((name, value)::ctxt.(eval_context_local_env)).
 
   Definition eval_context_set_local_env
              (ctxt : eval_context)
-             (new_local_env : list (string * ergo_data)) : eval_context :=
+             (new_local_env : list (string * qcert_data)) : eval_context :=
     mkEvalContext ctxt.(eval_context_global_env)
                   new_local_env.
 

@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-(** ErgoNNRC is an IL with function tables where the body is written in NNRC. It is the main IL interfacing with Q*cert for code-generation. *)
+(** ErgoNNRC is an IL with function tables where the body of those functions is written as NNRC expressions. It is the main interface with Q*cert for code-generation. *)
 
 (** * Abstract Syntax *)
 
@@ -22,12 +22,12 @@ Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Backend.QLib.
 
 Section ErgoNNRC.
+  Context {m : brand_model}.
 
   Section Syntax.
-
     (** Expression *)
     Definition nnrc_expr := QcertCodeGen.nnrc_expr.
-    Definition nnrc_type := laergo_type. (* XXX To be changed to Q*cert type *)
+    Definition nnrc_type := laergo_type.
 
     Record lambdan :=
       mkLambdaN

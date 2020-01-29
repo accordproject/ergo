@@ -17,6 +17,8 @@
 Require Import String.
 Require Import List.
 
+Require Import Qcert.Utils.Utils.
+Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Common.Result.
@@ -233,11 +235,41 @@ Section ErgoType.
                (decls:list laergo_type_declaration) : list (absolute_name * absolute_name) :=
       List.concat (List.map type_declaration_extend_rel decls).
   End Extends.
-  
-  Definition type_name_of_type (t:laergo_type) : option string :=
-    match t with
-    | ErgoTypeClassRef _ tname => Some tname
-    | _ => None
-    end.
-  
+
+  Section Utils.
+    Definition type_name_of_type (t:laergo_type) : option string :=
+      match t with
+      | ErgoTypeClassRef _ tname => Some tname
+      | _ => None
+      end.
+
+    Definition label_of_decl (decl:laergo_type_declaration) : string := decl.(type_declaration_name).
+    Definition name_of_decl : laergo_type_declaration -> string := label_of_decl.
+
+    Definition decls_table (decls:list laergo_type_declaration) : list (string * laergo_type_declaration) :=
+      List.map (fun d => (d.(type_declaration_name), d)) decls.
+    Definition edge_of_decl
+               (dt:list (string * laergo_type_declaration))
+               (decl:laergo_type_declaration) : laergo_type_declaration * list laergo_type_declaration
+      :=
+        let outedges := type_declaration_extend_rel decl in
+        (decl, List.concat (List.map (fun xy => match lookup string_dec dt (snd xy) with | None => nil | Some x => x :: nil end) outedges)).
+    Definition graph_of_decls (decls:list laergo_type_declaration)
+      : list (laergo_type_declaration * list (laergo_type_declaration))
+      :=
+        let dt := decls_table decls in
+        map (edge_of_decl dt) decls.
+
+    Definition sort_decls (decls:list laergo_type_declaration) : list laergo_type_declaration :=
+      let decls := coq_distinct name_of_decl decls in
+      coq_toposort label_of_decl name_of_decl (graph_of_decls decls).
+
+  End Utils.
+
+  Section Expand.
+    Context {A:Set}.
+    Definition sort_given_topo_order (order:list laergo_type_declaration) (label:A -> string) (l:list A) : list A :=
+      coq_sort_given_topo_order order label_of_decl label name_of_decl l.
+  End Expand.
+
 End ErgoType.
