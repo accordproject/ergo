@@ -25,7 +25,7 @@ Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.Types.ErgoType.
 
-Section ErgoTypetoErgoCType.
+Section ErgoTypetoQcertType.
   Definition expand_hierarchy : Set := list string.
   Inductive expanded_type :=
   | ClassObjectType : list (string * laergo_type) -> expanded_type
@@ -117,7 +117,7 @@ Section ErgoTypetoErgoCType.
 
     Definition enums_ctxt : Set := list string.
 
-    Fixpoint ergo_type_to_ergoc_type (t:laergo_type) : ergoc_type :=
+    Fixpoint ergo_type_to_qcert_type (t:laergo_type) : qcert_type :=
       match t with
       | ErgoTypeAny _ => ttop
       | ErgoTypeNothing _ => tbottom
@@ -132,36 +132,36 @@ Section ErgoTypetoErgoCType.
       | ErgoTypeDuration _ => tduration
       | ErgoTypePeriod _ => tperiod
       | ErgoTypeClassRef _ cr => tbrand (cr::nil)
-      | ErgoTypeOption _ t => teither (ergo_type_to_ergoc_type t) tunit
+      | ErgoTypeOption _ t => teither (ergo_type_to_qcert_type t) tunit
       | ErgoTypeRecord _ rtl =>
         trec
           open_kind
-          (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
+          (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_qcert_type (snd xy))) rtl))
           (rec_sort_sorted
-             (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl)
-             (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
+             (List.map (fun xy => (fst xy, ergo_type_to_qcert_type (snd xy))) rtl)
+             (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_qcert_type (snd xy))) rtl))
              eq_refl)
-      | ErgoTypeArray _ t => tcoll (ergo_type_to_ergoc_type t)
-      | ErgoTypeSum _ t1 t2 => teither (ergo_type_to_ergoc_type t1) (ergo_type_to_ergoc_type t2)
+      | ErgoTypeArray _ t => tcoll (ergo_type_to_qcert_type t)
+      | ErgoTypeSum _ t1 t2 => teither (ergo_type_to_qcert_type t1) (ergo_type_to_qcert_type t2)
       end.
 
-    Fixpoint enum_type_of_list (enum_list: list string) : ectype :=
+    Fixpoint enum_type_of_list (enum_list: list string) : qcert_type :=
       match enum_list with
       | nil => tstring
       | item :: enum_list' =>
         teither tstring (enum_type_of_list enum_list')
       end.
 
-    Definition ergo_ctype_from_expanded_type (et:expanded_type) : ectype :=
+    Definition ergo_ctype_from_expanded_type (et:expanded_type) : qcert_type :=
       match et with
       | ClassObjectType rtl =>
         trec
           open_kind
           (rec_sort
-             (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
+             (List.map (fun xy => (fst xy, ergo_type_to_qcert_type (snd xy))) rtl))
           (rec_sort_sorted
-             (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl)
-             (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_ergoc_type (snd xy))) rtl))
+             (List.map (fun xy => (fst xy, ergo_type_to_qcert_type (snd xy))) rtl)
+             (rec_sort (List.map (fun xy => (fst xy, ergo_type_to_qcert_type (snd xy))) rtl))
              eq_refl)
       | ClassEnumType enum_list =>
         enum_type_of_list enum_list
@@ -179,34 +179,16 @@ Section ErgoTypetoErgoCType.
 
   Section Translate.
     Local Open Scope string.
-    
+
     Import QcertType.
 
     Definition brand_relation_maybe hierarchy : eresult tbrand_relation
       := eresult_of_qresult dummy_provenance (mk_tbrand_relation hierarchy).
 
-    (* Compute (brand_relation_maybe StoreDecls). *)
-
     Definition mk_model_type_decls
                {br:brand_relation}
                (ctxt : expand_ctxt) : tbrand_context_decls :=
       @ergo_ctype_decl_from_expand br ctxt.
-
-    Definition label_of_decl (decl:laergo_type_declaration) : string := decl.(type_declaration_name).
-    Definition name_of_decl : laergo_type_declaration -> string := label_of_decl.
-    Definition decls_table (decls:list laergo_type_declaration) : list (string * laergo_type_declaration) :=
-      List.map (fun d => (d.(type_declaration_name), d)) decls.
-    Definition edge_of_decl (dt:list (string * laergo_type_declaration)) (decl:laergo_type_declaration) : laergo_type_declaration * list laergo_type_declaration :=
-      let outedges := type_declaration_extend_rel decl in
-      (decl, List.concat (List.map (fun xy => match lookup string_dec dt (snd xy) with | None => nil | Some x => x :: nil end) outedges)).
-    Definition graph_of_decls (decls:list laergo_type_declaration)
-      : list (laergo_type_declaration * list (laergo_type_declaration)) :=
-      let dt := decls_table decls in
-      map (edge_of_decl dt) decls.
-    
-    Definition sort_decls (decls:list laergo_type_declaration) : list laergo_type_declaration :=
-      let decls := coq_distinct name_of_decl decls in
-      coq_toposort label_of_decl name_of_decl (graph_of_decls decls).
 
     Definition brand_model_of_declarations
                (decls:list laergo_type_declaration)
@@ -231,10 +213,4 @@ Section ErgoTypetoErgoCType.
 
   End Translate.
 
-  Section Expand.
-    Context {A:Set}.
-    Definition sort_given_topo_order (order:list laergo_type_declaration) (label:A -> string) (l:list A) : list A :=
-      coq_sort_given_topo_order order label_of_decl label name_of_decl l.
-  End Expand.
-
-End ErgoTypetoErgoCType.
+End ErgoTypetoQcertType.

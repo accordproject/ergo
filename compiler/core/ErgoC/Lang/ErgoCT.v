@@ -33,14 +33,14 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Section ErgoCT.
   Context {m : brand_model}.
 
-  Definition tlaergo_pattern := @ergo_pattern (provenance * ergoc_type) absolute_name.
-  Definition tlaergo_expr := @ergo_expr (provenance * ergoc_type) provenance absolute_name.
-  Definition tlaergo_stmt := @ergo_stmt (provenance * ergoc_type) provenance absolute_name.
-  Definition tlaergo_function := @ergo_function (provenance * ergoc_type) provenance absolute_name.
-  Definition tlaergo_clause := @ergo_clause (provenance * ergoc_type) provenance absolute_name.
-  Definition tlaergo_contract := @ergo_contract (provenance * ergoc_type) provenance absolute_name.
-  Definition tlaergo_declaration := @ergo_declaration (provenance * ergoc_type) provenance absolute_name.
-  Definition tlaergo_module := @ergo_module (provenance * ergoc_type) provenance absolute_name.
+  Definition tlaergo_pattern := @ergo_pattern (provenance * qcert_type) absolute_name.
+  Definition tlaergo_expr := @ergo_expr (provenance * qcert_type) provenance absolute_name.
+  Definition tlaergo_stmt := @ergo_stmt (provenance * qcert_type) provenance absolute_name.
+  Definition tlaergo_function := @ergo_function (provenance * qcert_type) provenance absolute_name.
+  Definition tlaergo_clause := @ergo_clause (provenance * qcert_type) provenance absolute_name.
+  Definition tlaergo_contract := @ergo_contract (provenance * qcert_type) provenance absolute_name.
+  Definition tlaergo_declaration := @ergo_declaration (provenance * qcert_type) provenance absolute_name.
+  Definition tlaergo_module := @ergo_module (provenance * qcert_type) provenance absolute_name.
 
   Section Syntax.
 
@@ -50,7 +50,7 @@ Section ErgoCT.
     Definition exprct_prov_annot (e:ergoct_expr) : provenance :=
       fst (expr_annot e).
     
-    Definition exprct_type_annot (e:ergoct_expr) : ergoc_type :=
+    Definition exprct_type_annot (e:ergoct_expr) : qcert_type :=
       snd (expr_annot e).
 
     (** Function *)
@@ -68,8 +68,8 @@ Section ErgoCT.
 
     (** Declaration *)
     Inductive ergoct_declaration :=
-    | DCTExpr : provenance * ergoc_type -> ergoct_expr -> ergoct_declaration
-    | DCTConstant : provenance * ergoc_type -> absolute_name -> option laergo_type -> ergoct_expr -> ergoct_declaration
+    | DCTExpr : provenance * qcert_type -> ergoct_expr -> ergoct_declaration
+    | DCTConstant : provenance * qcert_type -> absolute_name -> option laergo_type -> ergoct_expr -> ergoct_declaration
     | DCTFunc : provenance -> absolute_name -> ergoct_function -> ergoct_declaration
     | DCTContract : provenance -> absolute_name -> ergoct_contract -> ergoct_declaration.
 

@@ -31,7 +31,7 @@ Module QcertType := QType.QType(QcertBackend).
 (* Useful definitions *)
 Section Defs.
   Definition zip {A} {B} : list A -> list B -> option (list (A * B)) := zip.
-  Definition ergo_data := QcertData.data.
-  Definition ergoc_type {br} := @QcertType.ectype br.
+  Definition qcert_data := QcertData.data.
+  Definition qcert_type {br} := @QcertType.qtype br.
 End Defs.
 

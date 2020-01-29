@@ -40,11 +40,9 @@ Section ErgoNNRCSugar.
               (List.app (nnrc_free_vars pattern_expr) (nnrc_free_vars else_expr)).
 
   Definition fresh_in_lift_error (e:nnrc_expr) :=
-    fresh_var2 "$lifte" "$lifte"
-               (nnrc_free_vars e).
+    fresh_var2 "$lifte" "$lifte" (nnrc_free_vars e).
   Definition fresh_in_lift_optional (e:nnrc_expr) :=
-    fresh_var2 "$lifto" "$lifto"
-               (nnrc_free_vars e).
+    fresh_var2 "$lifto" "$lifto" (nnrc_free_vars e).
 
   (** New Array *)
   Definition new_array (el:list nnrc_expr) : nnrc_expr :=
