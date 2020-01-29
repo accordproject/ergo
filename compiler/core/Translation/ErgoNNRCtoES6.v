@@ -64,20 +64,21 @@ Section ErgoNNRCtoES6.
     Definition javascript_function_of_nnrc_function
                (globals:list string)
                (fname:string)
-               (fbody:nnrc_lambda)
+               (fbody:ergo_nnrc_lambda)
                (tname:option string) : js_ast :=
       let fnameSafe := QcertCodeGen.javascript_identifier_sanitizer (function_name_in_table tname fname) in
-      QcertCodeGen.nnrc_expr_to_javascript_function globals (fnameSafe, fbody.(nnrc_lambda_body)).
+      QcertCodeGen.nnrc_expr_to_javascript_function globals (fnameSafe, fbody.(lambdan_body)).
 
     (** Function table *)
     Definition javascript_of_nnrc_function_table
                (globals:list string)
-               (ft:nnrc_function_table) : js_ast :=
-      let cname := QcertCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in
+               (cname:string)
+               (ft:ergo_nnrc_function_table) : js_ast :=
+      let cnameSafe := QcertCodeGen.javascript_identifier_sanitizer cname in
       QcertCodeGen.nnrc_expr_to_javascript_function_table
-        globals cname
+        globals cnameSafe
         (List.map (fun f => ((QcertCodeGen.javascript_identifier_sanitizer (fst f)),
-                             (snd f).(nnrc_lambda_body))) ft.(function_tablen_funs)).
+                             (snd f).(lambdan_body))) ft.(function_tablen_funs)).
 
     Definition preamble : js_ast :=
       (comment (" Generated using ergoc version " ++ ergo_version ++ " "))
@@ -94,27 +95,27 @@ Section ErgoNNRCtoES6.
 
     Definition javascript_of_declaration
                (globals:list string)    (* globally known variables -- avoid list *)
-               (s : nnrc_declaration)   (* statement to translate *)
+               (s : ergo_nnrc_declaration)   (* statement to translate *)
       : js_ast
       :=
         match s with
         | DNFunc fname fbody => javascript_function_of_nnrc_function globals fname fbody None
-        | DNFuncTable ft => javascript_of_nnrc_function_table globals ft
+        | DNFuncTable cname ft => javascript_of_nnrc_function_table globals cname ft
         end.
 
-    Definition javascript_of_declarations (sl : list nnrc_declaration) : js_ast
+    Definition javascript_of_declarations (sl : list ergo_nnrc_declaration) : js_ast
       := List.concat (List.map (javascript_of_declaration (* XXX globals *) nil) sl).
 
     Definition nnrc_module_to_javascript
                (inheritance: list (string*string))
-               (p:nnrc_module) : js_ast :=
+               (p:ergo_nnrc_module) : js_ast :=
       preamble ++ (QcertCodeGen.javascript_of_inheritance inheritance)
                ++ (javascript_of_declarations p.(modulen_declarations))
                ++ (postamble).
 
     Definition nnrc_module_to_javascript_top
                (inheritance: list (string*string))
-               (p:nnrc_module) : QcertCodeGen.ejavascript :=
+               (p:ergo_nnrc_module) : QcertCodeGen.ejavascript :=
       js_ast_to_javascript (nnrc_module_to_javascript inheritance p).
 
   End ToJsAst.
@@ -216,7 +217,7 @@ Section ErgoNNRCtoES6.
                (inheritance: list (string*string))
                (contract_name:string)
                (signatures:list (string * string * string * string * string) * string)
-               (p:nnrc_module)
+               (p:ergo_nnrc_module)
                (eol:nstring)
                (quotel:nstring) : nstring :=
       (QcertCodeGen.js_ast_to_javascript preamble) +++ eol
@@ -274,7 +275,7 @@ Section ErgoNNRCtoES6.
                (contract_name:string)
                (contract_state_type:option ergo_type)
                (sigs: list (string * ergo_type_signature))
-               (p:nnrc_module) : QcertCodeGen.ejavascript :=
+               (p:ergo_nnrc_module) : QcertCodeGen.ejavascript :=
       javascript_of_module_with_dispatch
         inheritance
         contract_name
