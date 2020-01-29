@@ -238,12 +238,12 @@ Section ErgoCTtoErgoNNRC.
   (** Translate a function to function+calculus *)
   Definition functionct_to_nnrc
              (fn:absolute_name)
-             (f:ergoct_function) : eresult nnrc_function :=
+             (f:ergoct_function) : eresult (string * nnrc_lambda) :=
     let env := current_time :: options :: (List.map fst f.(functionct_sig).(sigct_params)) in
     match f.(functionct_body) with
     | Some body =>
       elift
-        (mkFuncN fn)
+        (fun x => (fn,x))
         (elift
            (mkLambdaN
               f.(functionct_sig).(sigct_params)
@@ -255,7 +255,7 @@ Section ErgoCTtoErgoNNRC.
   (** Translate a declaration to a declaration+calculus *)
   Definition clausect_declaration_to_nnrc
              (fn:absolute_name)
-             (f:ergoct_function) : eresult nnrc_function :=
+             (f:ergoct_function) : eresult (string * nnrc_lambda) :=
     functionct_to_nnrc fn f.
 
   (** Translate a contract to a contract+calculus *)
@@ -265,12 +265,12 @@ Section ErgoCTtoErgoNNRC.
              (c:ergoct_contract) : eresult nnrc_function_table :=
     let init := esuccess nil nil in
     let proc_one
-          (acc:eresult (list nnrc_function))
+          (acc:eresult (list (string * nnrc_lambda)))
           (s:absolute_name * ergoct_function)
-        : eresult (list nnrc_function) :=
+        : eresult (list (string * nnrc_lambda)) :=
         eolift
-          (fun acc : list nnrc_function =>
-             elift (fun news : nnrc_function => news::acc)
+          (fun acc : list (string * nnrc_lambda) =>
+             elift (fun news : (string * nnrc_lambda) => news::acc)
                    (clausect_declaration_to_nnrc (fst s) (snd s)))
           acc
     in
@@ -286,7 +286,7 @@ Section ErgoCTtoErgoNNRC.
     | DCTConstant prov v _ e => esuccess nil nil
     | DCTFunc prov fn f =>
       elift
-        (fun f => DNFunc f :: nil)
+        (fun f => DNFunc (fst f) (snd f) :: nil)
         (functionct_to_nnrc fn f)
     | DCTContract prov cn c =>
       elift
