@@ -14,7 +14,7 @@
 
 'use strict';
 
-const Logger = require('@accordproject/ergo-compiler').Logger;
+const Logger = require('@accordproject/concerto-core').Logger;
 const Util = require('@accordproject/ergo-compiler').Util;
 
 /**

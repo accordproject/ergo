@@ -21,7 +21,7 @@ Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.NamespaceContext.
 Require Import ErgoSpec.Types.ErgoType.
-Require Import ErgoSpec.Types.ErgoTypetoErgoCType.
+Require Import ErgoSpec.Types.ErgoTypetoQcertType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
