@@ -34,72 +34,72 @@ Module QType(ergomodel:QBackendModel).
   Definition closed_kind : record_kind
     := RType.Closed.
 
-  Definition ectype_struct {br:brand_relation} : Set
+  Definition qtype_struct {br:brand_relation} : Set
     := RType.rtype₀.
-  Definition ectype {br:brand_relation} : Set
+  Definition qtype {br:brand_relation} : Set
     := RType.rtype.
   Definition t {br:brand_relation} : Set
-    := ectype.
+    := qtype.
 
   Definition sorted_pf_type {br:brand_relation} srl
-      := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string ectype srl) = true.
+      := SortingAdd.is_list_sorted Bindings.ODT_lt_dec (@Assoc.domain String.string qtype srl) = true.
 
-  Definition tbottom {br:brand_relation} : ectype
+  Definition tbottom {br:brand_relation} : qtype
     := RType.Bottom.  
-  Definition ttop {br:brand_relation} : ectype
+  Definition ttop {br:brand_relation} : qtype
     := RType.Top.
-  Definition tunit {br:brand_relation} : ectype
+  Definition tunit {br:brand_relation} : qtype
     := RType.Unit.
-  Definition tfloat {br:brand_relation} : ectype
+  Definition tfloat {br:brand_relation} : qtype
     := RType.Float.
-  Definition tnat {br:brand_relation} : ectype
+  Definition tnat {br:brand_relation} : qtype
     := RType.Nat.
-  Definition tbool {br:brand_relation} : ectype
+  Definition tbool {br:brand_relation} : qtype
     := RType.Bool.
-  Definition tstring {br:brand_relation} : ectype
+  Definition tstring {br:brand_relation} : qtype
     := RType.String.
-  Definition tdateTimeFormat {br:brand_relation} : ectype
+  Definition tdateTimeFormat {br:brand_relation} : qtype
     := DateTimeFormat.
-  Definition tdateTime {br:brand_relation} : ectype
+  Definition tdateTime {br:brand_relation} : qtype
     := DateTime.
-  Definition tduration {br:brand_relation} : ectype
+  Definition tduration {br:brand_relation} : qtype
     := DateTimeDuration.
-  Definition tperiod {br:brand_relation} : ectype
+  Definition tperiod {br:brand_relation} : qtype
     := DateTimePeriod.
-  Definition tcoll {br:brand_relation} : ectype -> ectype
+  Definition tcoll {br:brand_relation} : qtype -> qtype
     := RType.Coll.
-  Definition trec {br:brand_relation} : record_kind -> forall (r:list (String.string*ectype)), sorted_pf_type r -> ectype
+  Definition trec {br:brand_relation} : record_kind -> forall (r:list (String.string*qtype)), sorted_pf_type r -> qtype
     := RType.Rec.
-  Definition teither {br:brand_relation} : ectype -> ectype -> ectype
+  Definition teither {br:brand_relation} : qtype -> qtype -> qtype
     := RType.Either.
-  Definition tarrow {br:brand_relation} : ectype -> ectype -> ectype
+  Definition tarrow {br:brand_relation} : qtype -> qtype -> qtype
     := RType.Arrow.
-  Definition tbrand {br:brand_relation} : list String.string -> ectype 
+  Definition tbrand {br:brand_relation} : list String.string -> qtype 
     := RType.Brand.
 
-  Definition toption {br:brand_relation} : ectype -> ectype
+  Definition toption {br:brand_relation} : qtype -> qtype
     := RType.Option.
 
   (* Support for type checking *)
-  Definition ergoc_type_meet {br:brand_relation} : ectype -> ectype -> ectype := rtype_meet.
-  Definition ergoc_type_join {br:brand_relation} : ectype -> ectype -> ectype := rtype_join.
+  Definition qcert_type_meet {br:brand_relation} : qtype -> qtype -> qtype := rtype_meet.
+  Definition qcert_type_join {br:brand_relation} : qtype -> qtype -> qtype := rtype_join.
 
-  Definition ergoc_type_subtype {br:brand_relation} : ectype -> ectype -> Prop := subtype.
-  Theorem ergoc_type_subtype_dec {m:brand_model}  (t1 t2:ectype) :
-    {ergoc_type_subtype t1 t2} + {~ ergoc_type_subtype t1 t2}.
+  Definition qcert_type_subtype {br:brand_relation} : qtype -> qtype -> Prop := subtype.
+  Theorem qcert_type_subtype_dec {m:brand_model}  (t1 t2:qtype) :
+    {qcert_type_subtype t1 t2} + {~ qcert_type_subtype t1 t2}.
   Proof.
     apply subtype_dec.
   Defined.
     
-  Definition untcoll {m:brand_model} : ectype -> option ectype := tuncoll.
-  Definition unteither {m:brand_model} : ectype -> option (ectype * ectype) := tuneither.
-  Definition untrec {m:brand_model} : ectype -> option (record_kind * (list (string * ectype))) := tunrec.
+  Definition untcoll {m:brand_model} : qtype -> option qtype := tuncoll.
+  Definition unteither {m:brand_model} : qtype -> option (qtype * qtype) := tuneither.
+  Definition untrec {m:brand_model} : qtype -> option (record_kind * (list (string * qtype))) := tunrec.
 
-  Definition ergoc_type_infer_data {m:brand_model} : data -> Datatypes.option ectype := infer_data_type.
-  Definition ergoc_type_infer_binary_op {m:brand_model} : binary_op -> ectype -> ectype -> option (ectype * ectype * ectype) := infer_binary_op_type_sub.
-  Definition ergoc_type_infer_unary_op {m:brand_model} : unary_op -> ectype -> option (ectype * ectype) := infer_unary_op_type_sub.
+  Definition qcert_type_infer_data {m:brand_model} : data -> Datatypes.option qtype := infer_data_type.
+  Definition qcert_type_infer_binary_op {m:brand_model} : binary_op -> qtype -> qtype -> option (qtype * qtype * qtype) := infer_binary_op_type_sub.
+  Definition qcert_type_infer_unary_op {m:brand_model} : unary_op -> qtype -> option (qtype * qtype) := infer_unary_op_type_sub.
 
-  Definition unpack_ergoc_type {br:brand_relation} (t:ectype) : ectype_struct := proj1_sig t.
+  Definition unpack_qcert_type {br:brand_relation} (t:qtype) : qtype_struct := proj1_sig t.
   
   Definition tbrand_relation : Set := brand_relation.
   Definition tempty_brand_relation : tbrand_relation := mkBrand_relation nil (eq_refl _) (eq_refl _).
@@ -117,9 +117,9 @@ Module QType(ergomodel:QBackendModel).
   Program Definition tempty_brand_model : tbrand_model :=
     @make_brand_model _ tempty_brand_relation (mkBrand_context nil _) _.
 
-  Definition ergoc_type_unpack {br:brand_relation} (t:ectype) : ectype_struct := proj1_sig t.
+  Definition qcert_type_unpack {br:brand_relation} (t:qtype) : qtype_struct := proj1_sig t.
 
-  Program Definition ergoc_closed_from_open {m:brand_model} (t:ectype) : ectype :=
+  Program Definition qcert_type_closed_from_open {m:brand_model} (t:qtype) : qtype :=
     match untrec t with
     | None => t
     | Some (k, fields) => Rec Closed fields _
@@ -132,8 +132,8 @@ Module QType(ergomodel:QBackendModel).
   Qed.
 
   (* Stricter version of brand typing -- checks that t is a subtype of the closed form for type of b *)
-  Definition infer_brand_strict {m:brand_model} (b:brands) (t:ectype) : option (rtype * ectype) :=
-    if (subtype_dec t (ergoc_closed_from_open (brands_type b)))
+  Definition infer_brand_strict {m:brand_model} (b:brands) (t:qtype) : option (rtype * qtype) :=
+    if (subtype_dec t (qcert_type_closed_from_open (brands_type b)))
     then Some (Brand b, t)
     else None.
 
@@ -141,11 +141,11 @@ Module QType(ergomodel:QBackendModel).
     fold_left rremove sl rt.
 
   (* Returns a pair with: fields in the expected brand not in the actual record + fields in the actual record not in the expected brand *)
-  Definition diff_record_types {m:brand_model} (b:brands) (t:ectype) : option (list string * list string) :=
+  Definition diff_record_types {m:brand_model} (b:brands) (t:qtype) : option (list string * list string) :=
     match tunrec t with
     | None => None
     | Some (_, actual_rt) =>
-      match tunrec (ergoc_closed_from_open (brands_type b)) with
+      match tunrec (qcert_type_closed_from_open (brands_type b)) with
       | None => None
       | Some (_, expected_rt) =>
         let in_expected_not_in_actual := recminus expected_rt (map fst actual_rt) in
@@ -154,7 +154,7 @@ Module QType(ergomodel:QBackendModel).
       end
     end.
 
-  Fixpoint rec_fields_that_are_not_subtype {m:brand_model} (t1 t2:list (string*ectype)) : list (string * ectype * ectype) :=
+  Fixpoint rec_fields_that_are_not_subtype {m:brand_model} (t1 t2:list (string*qtype)) : list (string * qtype * qtype) :=
     match t1, t2 with
     | nil, _ => nil
     | _, nil => nil
@@ -170,11 +170,11 @@ Module QType(ergomodel:QBackendModel).
         rec_fields_that_are_not_subtype rest1 rest2
     end.
   
-  Definition fields_that_are_not_subtype {m:brand_model} (b:brands) (t:ectype) : list (string * ectype * ectype) :=
+  Definition fields_that_are_not_subtype {m:brand_model} (b:brands) (t:qtype) : list (string * qtype * qtype) :=
     match tunrec t with
     | None => nil
     | Some (_, actual_rt) =>
-      match tunrec (ergoc_closed_from_open (brands_type b)) with
+      match tunrec (qcert_type_closed_from_open (brands_type b)) with
       | None => nil
       | Some (_, expected_rt) =>
         rec_fields_that_are_not_subtype expected_rt actual_rt

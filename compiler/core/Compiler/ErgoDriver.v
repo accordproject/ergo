@@ -28,6 +28,7 @@ Require Import ErgoSpec.Common.Ast.
 Require Import ErgoSpec.Common.PrintTypedData.
 Require Import ErgoSpec.Types.CTO.
 Require Import ErgoSpec.Types.ErgoType.
+Require Import ErgoSpec.Types.ErgoTypetoQcertType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 Require Import ErgoSpec.ErgoC.Lang.ErgoC.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCEvalContext.
@@ -138,7 +139,7 @@ Section ErgoDriver.
       : eresult (QcertType.tbrand_model * list laergo_type_declaration) :=
       let resolved := just_resolved_inputs inputs None in (* XXX No Template! *)
       let type_decls := elift modules_get_type_decls resolved in
-      eolift ErgoTypetoErgoCType.brand_model_of_declarations type_decls.
+      eolift brand_model_of_declarations type_decls.
 
   End CompilerPre.
 
@@ -185,7 +186,7 @@ Section ErgoDriver.
                 let (mod,ctxt) := xy in
                 let nsctxt := ctxt.(compilation_context_namespace) in
                 let sctxt := ctxt.(compilation_context_type_ctxt) in
-                let pctypes := ergoc_typecheck_module nsctxt sctxt mod in
+                let pctypes := ergoc_module_typecheck nsctxt sctxt mod in
                 elift (fun xy : ergoct_module * type_context =>
                          let (mod, sctxt') := xy in
                          (mod, compilation_context_update_type_ctxt ctxt sctxt')) pctypes
@@ -244,7 +245,7 @@ Section ErgoDriver.
                      elift (fun xy : ergoct_declaration * type_context =>
                               let (declt, tctxt') := xy in
                               (declt, compilation_context_update_type_ctxt sctxt tctxt'))
-                           (ergoc_typecheck_decl nsctxt sctxt.(compilation_context_type_ctxt) decl))
+                           (ergoc_decl_typecheck nsctxt sctxt.(compilation_context_type_ctxt) decl))
                   (fst xy)
                   (snd xy)
              ) inlined.
@@ -381,7 +382,7 @@ Section ErgoDriver.
 
     Definition lift_repl_ctxt
                (orig_ctxt : repl_context)
-               (result : eresult (option ergoc_type * option ergo_data * repl_context))
+               (result : eresult (option qcert_type * option qcert_data * repl_context))
                : repl_context
       :=
         elift_both
@@ -391,12 +392,12 @@ Section ErgoDriver.
 
     Definition ergoc_repl_eval_declaration
                (ctxt:repl_context) (decl:ergoct_declaration)
-      : eresult (option ergoc_type * option ergo_data * repl_context) :=
+      : eresult (option qcert_type * option qcert_data * repl_context) :=
       let nsctxt := ctxt.(repl_context_comp_ctxt).(compilation_context_namespace)  in
       let typ := ergoct_declaration_type decl in
       let warnings := ctxt.(repl_context_comp_ctxt).(compilation_context_warnings) in
       let init := eolift (ergoct_eval_decl ctxt.(repl_context_eval_ctxt)) (esuccess decl warnings) in
-      eolift (fun xy : eval_context * option ergo_data =>
+      eolift (fun xy : eval_context * option qcert_data =>
                 let (dctxt', od) := xy in
                 match od with
                 | None =>
@@ -429,7 +430,7 @@ Section ErgoDriver.
 
     Definition ergoct_repl_eval_declarations
                (ctxt:repl_context) (decls:list ergoct_declaration)
-      : eresult (option ergoc_type * option ergo_data * repl_context) :=
+      : eresult (option qcert_type * option qcert_data * repl_context) :=
       elift
         (fun xy =>
            (last_some_pair (fst xy), snd xy))
@@ -441,7 +442,7 @@ Section ErgoDriver.
     Definition ergoct_eval_decl_via_calculus
                (ctxt : repl_context)
                (decl : lrergo_declaration)
-      : eresult (option ergoc_type * option ergo_data * repl_context) :=
+      : eresult (option qcert_type * option qcert_data * repl_context) :=
       eolift_warning
         (fun xyw : (list ergoct_declaration * compilation_context) * list ewarning =>
            let '(decls, sctxt', warnings) := xyw in
@@ -452,7 +453,7 @@ Section ErgoDriver.
 
     Definition ergo_string_of_result
                (rctxt : repl_context)
-               (result : eresult (option ergoc_type * option ergo_data * repl_context))
+               (result : eresult (option qcert_type * option qcert_data * repl_context))
       : eresult string :=
       let nsctxt := rctxt.(repl_context_comp_ctxt).(compilation_context_namespace)  in
       let global_env := rctxt.(repl_context_eval_ctxt).(eval_context_global_env) in
@@ -483,7 +484,7 @@ Section ErgoDriver.
       | nil => esuccess (bm, ctxt) nil
       | _ =>
         let all_decls := ctxt.(compilation_context_type_decls) ++ ctxt.(compilation_context_new_type_decls) in
-        let new_bm := ErgoTypetoErgoCType.brand_model_of_declarations all_decls in
+        let new_bm := brand_model_of_declarations all_decls in
         elift (fun xy =>
                  let bm := fst xy in
                  let new_ctxt := compilation_context_update_type_declarations ctxt all_decls nil in

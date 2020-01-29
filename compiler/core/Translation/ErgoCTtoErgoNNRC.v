@@ -324,7 +324,7 @@ Section ErgoCTtoErgoNNRC.
     Open Scope string.
     Definition env0 : list string := nil.
 
-    Definition typed_dummy_provenance : provenance * ergoc_type := (dummy_provenance, Unit).
+    Definition typed_dummy_provenance : provenance * qcert_type := (dummy_provenance, Unit).
     
     (**r Test pattern matching on values *)
     Definition input1 := dnat 2.

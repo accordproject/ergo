@@ -51,8 +51,8 @@ Section PrintTypedData.
     Context {br:brand_relation}.
 
     Definition unpack_output
-               (out : ergo_data)
-      : option (ergo_data * list ergo_data * ergo_data) :=
+               (out : qcert_data)
+      : option (qcert_data * list qcert_data * qcert_data) :=
       match out with
       | (dleft (drec (("__emit", dcoll emits)
                         ::("__response", response)
@@ -79,15 +79,15 @@ Section PrintTypedData.
     Definition js_quote_string (s:string) : string
       := flat_map_string js_quote_char s.
 
-    Fixpoint string_of_enum (nsctxt:namespace_ctxt) (d : ergo_data) : string :=
+    Fixpoint string_of_enum (nsctxt:namespace_ctxt) (d : qcert_data) : string :=
       match d with
       | dleft (dstring x) => x
       | dright d' => string_of_enum nsctxt d'
       | _ => "???should be enum???"
       end.
 
-    Fixpoint string_of_data (nsctxt:namespace_ctxt) (d : ergo_data) : string :=
-      let string_of_rec : list (string * ergo_data) -> string :=
+    Fixpoint string_of_data (nsctxt:namespace_ctxt) (d : qcert_data) : string :=
+      let string_of_rec : list (string * qcert_data) -> string :=
           fun rec =>
             ("{"
                 ++ (String.concat
@@ -168,16 +168,17 @@ Section PrintTypedData.
       | Foreign₀ _ => "(unknown foreign type)"
       end.
 
-    Definition ergoc_type_to_string
-               (nsctxt:namespace_ctxt) (t : ectype) : string :=
-      rtype_to_string nsctxt (ergoc_type_unpack t).
+
+    Definition qcert_type_to_string
+               (nsctxt:namespace_ctxt) (t : qcert_type) : string :=
+      rtype_to_string nsctxt (qcert_type_unpack t).
 
     Definition string_of_result_type
-               (nsctxt:namespace_ctxt) (result : option ergoc_type)
+               (nsctxt:namespace_ctxt) (result : option qcert_type)
       : string :=
       match result with
       | None => ""
-      | Some typ => " : " ++ (ergoc_type_to_string nsctxt typ)
+      | Some typ => " : " ++ (qcert_type_to_string nsctxt typ)
       end.
 
     Definition unpack_error nsctxt kind out :=
@@ -189,8 +190,8 @@ Section PrintTypedData.
 
     Definition unpack_failure_type
                (nsctxt:namespace_ctxt)
-               (out : ergoc_type)
-      : eresult ergoc_type :=
+               (out : qcert_type)
+      : eresult qcert_type :=
       let osuccess :=
           match unteither out with
           | None => None
@@ -204,9 +205,9 @@ Section PrintTypedData.
 
     Definition unpack_success_type
                (nsctxt:namespace_ctxt)
-               (out:ergoc_type)
+               (out:qcert_type)
                (warnings: list ewarning)
-      : eresult (ergoc_type * ergoc_type * ergoc_type) :=
+      : eresult (qcert_type * qcert_type * qcert_type) :=
       let osuccess :=
           match unteither out with
           | None => None
@@ -223,7 +224,7 @@ Section PrintTypedData.
           elift fst
                 (eolift
                    (fun success =>
-                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot this_response) success)
+                      (eresult_of_option (qcert_type_infer_unary_op (OpDot this_response) success)
                                          (unpack_error nsctxt this_response out))
                         nil)
                    success)
@@ -232,7 +233,7 @@ Section PrintTypedData.
           elift fst
                 (eolift
                    (fun success =>
-                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot this_emit) success)
+                      (eresult_of_option (qcert_type_infer_unary_op (OpDot this_emit) success)
                                          (unpack_error nsctxt this_emit out))
                         nil)
                    success)
@@ -241,7 +242,7 @@ Section PrintTypedData.
           elift fst
                 (eolift
                    (fun success =>
-                      (eresult_of_option (ergoc_type_infer_unary_op (OpDot this_state) success)
+                      (eresult_of_option (qcert_type_infer_unary_op (OpDot this_state) success)
                                          (unpack_error nsctxt this_state out))
                         warnings)
                    success)
@@ -251,9 +252,9 @@ Section PrintTypedData.
 
     Definition unpack_output_type
                (nsctxt:namespace_ctxt)
-               (out:ergoc_type)
+               (out:qcert_type)
                (warnings:list ewarning)
-      : eresult (ergoc_type * ergoc_type * ergoc_type * ergoc_type) :=
+      : eresult (qcert_type * qcert_type * qcert_type * qcert_type) :=
       elift2
         (fun x y =>
            let '(respt,emitt,statet) := x in
@@ -268,14 +269,14 @@ Section PrintTypedData.
 
     Definition string_of_response
                (nsctxt:namespace_ctxt)
-               (response:ergo_data)
-               (response_type:option ergoc_type) : string :=
+               (response:qcert_data)
+               (response_type:option qcert_type) : string :=
       "Response. " ++ (string_of_data nsctxt response) ++ (string_of_result_type nsctxt response_type).
 
     Definition string_of_emits
                (nsctxt:namespace_ctxt)
-               (emits:list ergo_data)
-               (emit_type:option ergoc_type) : string :=
+               (emits:list qcert_data)
+               (emit_type:option qcert_type) : string :=
       match emits with
       | nil => ""
       | e1 :: erest =>
@@ -289,9 +290,9 @@ Section PrintTypedData.
 
     Definition string_of_state
                (nsctxt:namespace_ctxt)
-               (old_state : option ergo_data)
-               (new_state : ergo_data)
-               (state_type: option ergoc_type)
+               (old_state : option qcert_data)
+               (new_state : qcert_data)
+               (state_type: option qcert_type)
       : string :=
       let jsonify := string_of_data nsctxt in
       match old_state with
@@ -305,9 +306,9 @@ Section PrintTypedData.
 
     Definition string_of_typed_data
                (nsctxt:namespace_ctxt)
-               (old_state : option ergo_data)
-               (data: ergo_data)
-               (typ: option ergoc_type) : string :=
+               (old_state : option qcert_data)
+               (data: qcert_data)
+               (typ: option qcert_type) : string :=
       match data with
       | dright msg =>
         let failure_type :=
@@ -339,8 +340,8 @@ Section PrintTypedData.
 
     Definition string_of_typed_result
                (nsctxt:namespace_ctxt)
-               (old_state : option ergo_data)
-               (result : option ergoc_type * option ergo_data) : string :=
+               (old_state : option qcert_data)
+               (result : option qcert_type * option qcert_data) : string :=
       match result with
       | (_, None) => ""
       | (typ, Some dat) => (string_of_typed_data nsctxt old_state dat typ) ++ fmt_nl

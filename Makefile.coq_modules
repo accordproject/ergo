@@ -51,9 +51,9 @@ MODULES = \
   Common/Result \
   Common/PrintTypedData \
   Types/CTO \
-  Types/ErgoCTypeUtil \
+  Types/QcertTypeUtil \
   Types/ErgoType \
-  Types/ErgoTypetoErgoCType \
+  Types/ErgoTypetoQcertType \
   Ergo/Lang/Ergo \
   Ergo/Lang/ErgoMap \
   Ergo/Lang/ErgoSem \

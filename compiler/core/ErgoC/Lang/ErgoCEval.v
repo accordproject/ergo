@@ -39,19 +39,19 @@ Section ErgoCTEval.
   Context {m:brand_model}.
 
   Definition ergo_unary_builtin_eval
-             (prov:provenance) (o:unary_op) (d:ergo_data) : eresult ergo_data :=
+             (prov:provenance) (o:unary_op) (d:qcert_data) : eresult qcert_data :=
     match QcertOps.Unary.eval brand_relation_brands o d with
     | Some r => esuccess r nil
     | None => eval_unary_builtin_error prov o
     end.
   Definition ergo_binary_builtin_eval
-             (prov:provenance) (o:binary_op) (d1 d2:ergo_data) : eresult ergo_data :=
+             (prov:provenance) (o:binary_op) (d1 d2:qcert_data) : eresult qcert_data :=
     match QcertOps.Binary.eval brand_relation_brands o d1 d2 with
     | Some r => esuccess r nil
     | None => eval_binary_builtin_error prov o
     end.
 
-  Fixpoint ergoct_eval_expr (ctxt : eval_context) (expr : ergoct_expr) : eresult ergo_data :=
+  Fixpoint ergoct_eval_expr (ctxt : eval_context) (expr : ergoct_expr) : eresult qcert_data :=
     match expr with
     | EThis (prov,_) => this_in_calculus_error prov
     | EThisContract (prov,_) => contract_in_calculus_error prov
@@ -210,7 +210,7 @@ Section ErgoCTEval.
   Definition ergoct_eval_decl
              (dctxt : eval_context)
              (decl : ergoct_declaration)
-    : eresult (eval_context * option ergo_data) :=
+    : eresult (eval_context * option qcert_data) :=
     match decl with
     | DCTExpr (prov,_) expr =>
       elift (fun x => (dctxt, Some x)) (ergoct_eval_expr dctxt expr)
