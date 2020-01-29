@@ -17,8 +17,6 @@
 (** * Abstract Syntax *)
 
 Require Import String.
-Require Import ErgoSpec.Utils.Misc.
-Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Backend.QLib.
 
 Section ErgoNNRC.
@@ -29,27 +27,22 @@ Section ErgoNNRC.
     Definition nnrc_expr := QcertCodeGen.nnrc_expr.
     Definition nnrc_type := qcert_type.
 
-    Record lambdan :=
+    (** Functions *)
+    Record nnrc_lambda :=
       mkLambdaN
-        { lambdan_params: list (string * nnrc_type);
-          lambdan_output : nnrc_type;
-          lambdan_body : nnrc_expr; }.
-
-    (** Function *)
-    Record nnrc_function :=
-      mkFuncN
-        { functionn_name : string;
-          functionn_lambda : lambdan; }.
+        { nnrc_lambda_params: list (string * nnrc_type);
+          nnrc_lambda_output : nnrc_type;
+          nnrc_lambda_body : nnrc_expr; }.
 
     (** Function table *)
     Record nnrc_function_table :=
       mkFuncTableN
         { function_tablen_name : string;
-          function_tablen_funs : list nnrc_function; }.
+          function_tablen_funs : list (string * nnrc_lambda); }.
 
     (** Declaration *)
     Inductive nnrc_declaration :=
-    | DNFunc : nnrc_function -> nnrc_declaration
+    | DNFunc : string -> nnrc_lambda -> nnrc_declaration
     | DNFuncTable : nnrc_function_table -> nnrc_declaration.
 
     (** Module. *)
@@ -67,12 +60,8 @@ Section ErgoNNRC.
         res_content : nstring;
       }.
 
-  Section Semantics.
-    (* XXX Nothing yet -- relational semantics should go here *)
-  End Semantics.
-
   Section Evaluation.
-    (* XXX Nothing yet -- evaluation semantics should go here *)
+    
   End Evaluation.
 End ErgoNNRC.
 

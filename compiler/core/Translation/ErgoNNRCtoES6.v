@@ -63,10 +63,11 @@ Section ErgoNNRCtoES6.
     (** Single function *)
     Definition javascript_function_of_nnrc_function
                (globals:list string)
-               (f:nnrc_function)
+               (fname:string)
+               (fbody:nnrc_lambda)
                (tname:option string) : js_ast :=
-      let fname := QcertCodeGen.javascript_identifier_sanitizer (function_name_in_table tname f.(functionn_name)) in
-      QcertCodeGen.nnrc_expr_to_javascript_function globals (fname, f.(functionn_lambda).(lambdan_body)).
+      let fnameSafe := QcertCodeGen.javascript_identifier_sanitizer (function_name_in_table tname fname) in
+      QcertCodeGen.nnrc_expr_to_javascript_function globals (fnameSafe, fbody.(nnrc_lambda_body)).
 
     (** Function table *)
     Definition javascript_of_nnrc_function_table
@@ -75,8 +76,8 @@ Section ErgoNNRCtoES6.
       let cname := QcertCodeGen.javascript_identifier_sanitizer ft.(function_tablen_name) in
       QcertCodeGen.nnrc_expr_to_javascript_function_table
         globals cname
-        (List.map (fun f => (QcertCodeGen.javascript_identifier_sanitizer f.(functionn_name),
-                             f.(functionn_lambda).(lambdan_body))) ft.(function_tablen_funs)).
+        (List.map (fun f => ((QcertCodeGen.javascript_identifier_sanitizer (fst f)),
+                             (snd f).(nnrc_lambda_body))) ft.(function_tablen_funs)).
 
     Definition preamble : js_ast :=
       (comment (" Generated using ergoc version " ++ ergo_version ++ " "))
@@ -97,7 +98,7 @@ Section ErgoNNRCtoES6.
       : js_ast
       :=
         match s with
-        | DNFunc f => javascript_function_of_nnrc_function globals f None
+        | DNFunc fname fbody => javascript_function_of_nnrc_function globals fname fbody None
         | DNFuncTable ft => javascript_of_nnrc_function_table globals ft
         end.
 
