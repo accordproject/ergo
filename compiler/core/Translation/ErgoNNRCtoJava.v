@@ -40,18 +40,19 @@ Section ErgoNNRCtoJava.
     QcertCodeGen.nnrc_expr_to_java_method input_v e 1 eol quotel ((input_v, ^input_v)::nil) (^QcertCodeGen.java_identifier_sanitizer fname).
 
   Definition java_method_of_nnrc_function
-             (f:nnrc_function)
+             (fname:string)
+             (fbody:nnrc_lambda)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.java :=
-    let fname := f.(functionn_name) in
-    java_method_of_body f.(functionn_lambda).(lambdan_body) fname eol quotel.
+    let fnameSafe := fname in
+    java_method_of_body fbody.(nnrc_lambda_body) fnameSafe eol quotel.
 
   Definition java_methods_of_nnrc_functions
-             (fl:list nnrc_function)
+             (fl:list (string * nnrc_lambda))
              (tname:string)
              (eol:nstring)
              (quotel:nstring) : QcertCodeGen.java :=
-    nstring_multi_append eol (fun f => java_method_of_nnrc_function f eol quotel) fl.
+    nstring_multi_append eol (fun f => java_method_of_nnrc_function (fst f) (snd f) eol quotel) fl.
 
   Definition java_class_of_nnrc_function_table
              (filename:string)
@@ -80,7 +81,7 @@ Section ErgoNNRCtoJava.
       * nat                           (* next available unused temporary *)
     :=
       match s with
-      | DNFunc f => (^"",QcertCodeGen.mk_java_data (^""),t) (* XXX Not sure what to do with functions *)
+      | DNFunc fname fbody => (^"",QcertCodeGen.mk_java_data (^""),t) (* XXX Not sure what to do with standalone functions *)
       | DNFuncTable ft => (java_class_of_nnrc_function_table filename ft eol quotel,QcertCodeGen.mk_java_data (^"null"),t)
       end.
 
