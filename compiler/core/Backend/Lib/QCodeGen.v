@@ -17,6 +17,8 @@ Require Import Qcert.Utils.Utils.
 Require Import Qcert.Data.DataSystem.
 Require Import Qcert.EJson.EJsonRuntime.
 Require Import Qcert.JavaScriptAst.JavaScriptAstRuntime.
+Require Import Qcert.Translation.Lang.NNRSimptoImpData.
+Require Import Qcert.Translation.Lang.ImpDatatoImpEJson.
 Require Import Qcert.Translation.Lang.ImpEJsontoJavaScriptAst.
 Require Import Qcert.Driver.CompLang.
 Require Import Qcert.Driver.CompDriver.
@@ -45,8 +47,36 @@ Module QCodeGen(ergomodel:QBackendModel).
     Definition equotel_double := EmitUtil.nquotel_double.
     Definition eeol_newline := EmitUtil.neol_newline.
     Definition javascript_identifier_sanitizer := EmitUtil.jsIdentifierSanitize.
-  End Emit.    
+  End Emit.
 
+  Section Imp.
+    Definition imp_ejson_function := ImpEJson.imp_ejson_function.
+    Definition imp_ejson_lib := ImpEJson.imp_ejson.
+
+    Definition nnrc_expr_to_imp_ejson_function
+               {bm:brand_model}
+               (globals:list string)
+               (fbody:nnrc) : imp_ejson_function :=
+      imp_data_function_to_imp_ejson
+        brand_relation_brands
+        (nnrs_imp_to_imp_data_function
+           (nnrs_to_nnrs_imp
+              (nnrc_to_nnrs
+                 globals fbody))).
+
+    Definition imp_function_to_javascript_ast
+               {bm:brand_model}
+               (fname:string)
+               (fbody:imp_ejson_function) : js_ast :=
+      imp_ejson_function_to_topdecl fname fbody :: nil.
+
+    Definition imp_function_table_to_javascript_ast
+               {bm:brand_model}
+               (cname:string)
+               (ftable:imp_ejson_lib) : js_ast :=
+      imp_ejson_table_to_class cname ftable :: nil.
+
+  End Imp.
 
   (* JavaScript code generation *)
   Section JavaScript.
@@ -64,7 +94,7 @@ Module QCodeGen(ergomodel:QBackendModel).
             (nnrs_to_nnrs_imp
                (nnrc_to_nnrs
                   globals fbody)))).
-  
+
     Definition nnrc_expr_to_javascript_function
                {bm:brand_model}
                (globals:list string)

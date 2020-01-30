@@ -71,6 +71,7 @@ MODULES = \
   ErgoC/Lang/ErgoCExpand \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
+  ErgoImp/Lang/ErgoImp \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
   Translation/ErgoAssembly \
@@ -78,7 +79,8 @@ MODULES = \
   Translation/ErgoCInline \
   Translation/ErgotoErgoC \
   Translation/ErgoCTtoErgoNNRC \
-  Translation/ErgoNNRCtoES6 \
+  Translation/ErgoNNRCtoErgoImp \
+  Translation/ErgoImptoES6 \
   Translation/ErgoNNRCtoJava \
   Compiler/ErgoDriver \
   Compiler/ErgoCompiler \
