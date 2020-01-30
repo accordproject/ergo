@@ -45,7 +45,8 @@ Require Import ErgoSpec.Translation.ErgotoErgoC.
 Require Import ErgoSpec.Translation.ErgoCompContext.
 Require Import ErgoSpec.Translation.ErgoCInline.
 Require Import ErgoSpec.Translation.ErgoCTtoErgoNNRC.
-Require Import ErgoSpec.Translation.ErgoNNRCtoES6.
+Require Import ErgoSpec.Translation.ErgoNNRCtoErgoImp.
+Require Import ErgoSpec.Translation.ErgoImptoES6.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
 
 Section ErgoDriver.
@@ -273,19 +274,6 @@ Section ErgoDriver.
                                 (ergo_modules_to_ergoct ctxt mls)))
                cinit.
 
-    Definition ergo_module_to_javascript
-               (ctxt:compilation_context)
-               (p:laergo_module) : eresult (ergo_nnrc_module * QcertCodeGen.ejavascript) :=
-      let pc := ergo_module_to_ergoct ctxt p in
-      let pn :=
-          coq_time "ergoc(typed)->nnrc"
-                   (eolift (fun xy => ergoct_module_to_nnrc (fst xy))) pc in
-      coq_time "nnrc->js"
-               (elift (fun x =>
-                         let inheritance := (@brand_relation_brands (@brand_model_relation _ bm)) in
-                         (x,nnrc_module_to_javascript_top inheritance x)))
-               pn.
-
     Definition ergo_module_to_java
                (ctxt:compilation_context)
                (p:laergo_module) : eresult (ergo_nnrc_module * QcertCodeGen.java) :=
@@ -297,8 +285,6 @@ Section ErgoDriver.
   End CompilerCore.
 
   Section CompilerTop.
-    Context {bm:brand_model}.
-
     Local Open Scope nstring_scope.
 
     Definition ergo_module_to_java_top
@@ -313,6 +299,18 @@ Section ErgoDriver.
                           let res := ergo_module_to_java ctxt p in
                           elift (fun xy => mkResultFile None p.(module_file) (snd xy)) res)
                        cinit) bm.
+
+    Definition ergoc_module_to_es6
+               (bm:brand_model)
+               (contract_name:string)
+               (contract_state_type:option ergo_type)
+               (sigs: list (string * ergo_type_signature))
+               (p:ergo_nnrc_module) : QcertCodeGen.ejavascript :=
+      ergo_imp_module_to_es6
+        contract_name
+        contract_state_type
+        sigs
+        (ergo_nnrc_module_to_imp p).
 
     Definition ergo_module_to_es6_top
                (inputs:list lrergo_input)
@@ -333,8 +331,8 @@ Section ErgoDriver.
                          let sigs := lookup_contract_signatures (snd c) in
                          let pc := ergo_module_to_ergoct ctxt p in
                          let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
-                         let inheritance := (@brand_relation_brands (@brand_model_relation _ bm)) in
-                         elift (fun x => (contract_name, x,ergoc_module_to_cicero inheritance contract_name (snd c).(contract_state) sigs x)) pn)
+                         elift (fun x => (contract_name, x,
+                                          ergoc_module_to_es6 bm contract_name (snd c).(contract_state) sigs x)) pn)
                       ec
                 in
                 elift (fun xyz =>
