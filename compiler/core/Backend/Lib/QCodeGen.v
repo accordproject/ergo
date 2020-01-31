@@ -22,6 +22,7 @@ Require Import Qcert.Translation.Lang.ImpDatatoImpEJson.
 Require Import Qcert.Translation.Lang.ImpEJsontoJavaScriptAst.
 Require Import Qcert.Driver.CompLang.
 Require Import Qcert.Driver.CompDriver.
+Require Import Qcert.Driver.CompCorrectness.
 
 (* Require Import ErgoSpec.Utils.Misc. *)
 Require Import ErgoSpec.Backend.Lib.QBackendModel.
@@ -54,15 +55,8 @@ Module QCodeGen(ergomodel:QBackendModel).
     Definition imp_ejson_lib := ImpEJson.imp_ejson.
 
     Definition nnrc_expr_to_imp_ejson_function
-               {bm:brand_model}
-               (globals:list string)
-               (fbody:nnrc) : imp_ejson_function :=
-      imp_data_function_to_imp_ejson
-        brand_relation_brands
-        (nnrs_imp_to_imp_data_function
-           (nnrs_to_nnrs_imp
-              (nnrc_to_nnrs
-                 globals fbody))).
+      {bm:brand_model} :=
+      CompCorrectness.nnrc_expr_to_imp_ejson_function.
 
     Definition imp_function_to_javascript_ast
                {bm:brand_model}

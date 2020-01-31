@@ -119,26 +119,32 @@ Section ErgoNNRC.
         else ergo_nnrc_declaration_lookup_table tname m'
       end.
 
-    Definition ergo_nnrc_module_eval
-               (otname:option string) (fname:string) (m:ergo_nnrc_module)
+    (** Main semantics for ErgoNNRC, based on contract invokation.
+        [ergo_nnrc_invoke m callname params] invokes [callname] in module [m] with parameters [params]
+        [callname] can either be [(None,fname)] invoking a function or [(Some cname, fname)] invoking clause [fname] in contract [cname] *)
+    Definition ergo_nnrc_invoke
+               (m:ergo_nnrc_module)
+               (callname: option string * string)
                (params: list (string * qcert_data)) : eresult qcert_data
       :=
-      match otname with
-      | None =>
-        match ergo_nnrc_declaration_lookup_function fname m.(modulen_declarations) with
-        | None =>
-          efailure (ERuntimeError m.(modulen_provenance) ("ErgoNNRC eval cannot find function with name " ++ fname))
-        | Some f =>
-          ergo_nnrc_lambda_eval f params
-        end
-      | Some tname =>
-        match ergo_nnrc_declaration_lookup_table fname m.(modulen_declarations) with
-        | None =>
-          efailure (ERuntimeError m.(modulen_provenance) ("ErgoNNRC eval cannot find function with name " ++ fname))
-        | Some fl =>
-          ergo_nnrc_function_table_eval tname fname fl params
-        end
-      end.
+        match callname with
+        (** Calls a function *)
+        | (None,fname) =>
+          match ergo_nnrc_declaration_lookup_function fname m.(modulen_declarations) with
+          | None =>
+            efailure (ERuntimeError m.(modulen_provenance) ("ErgoNNRC eval cannot find function with name " ++ fname))
+          | Some f =>
+            ergo_nnrc_lambda_eval f params
+          end
+        (** Calls a clause in a contract *)
+        | (Some cname, fname) =>
+          match ergo_nnrc_declaration_lookup_table fname m.(modulen_declarations) with
+          | None =>
+            efailure (ERuntimeError m.(modulen_provenance) ("ErgoNNRC eval cannot find function with name " ++ fname))
+          | Some fl =>
+            ergo_nnrc_function_table_eval cname fname fl params
+          end
+        end.
 
   End Evaluation.
 End ErgoNNRC.
