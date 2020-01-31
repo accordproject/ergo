@@ -58,7 +58,9 @@ Section ErgoImp.
                (params:list (string * qcert_data)) : eresult qcert_data
       :=
         let jparams :=
-            EJson.ejobject (List.map (fun xy => (fst xy, DataToEJson.data_to_ejson (snd xy))) params)
+            EJson.ejobject
+              (rec_sort (K:=string)
+                 (List.map (fun xy => (key_encode (fst xy), DataToEJson.data_to_ejson (snd xy))) params))
         in
         eresult_of_option
           (lift DataToEJson.ejson_to_data
@@ -108,26 +110,31 @@ Section ErgoImp.
         else ergo_imp_declaration_lookup_table tname m'
       end.
 
-    Definition ergo_imp_module_eval
-               (otname:option string) (fname:string) (m:ergo_imp_module)
+    (** Main semantics for ErgoImp, based on contract invokation.
+        [ergo_imp_invoke m callname params] invokes [callname] in module [m] with parameters [params]
+        [callname] can either be [(None,fname)] invoking a function or [(Some cname, fname)] invoking clause [fname] in contract [cname] *)
+    Definition ergo_imp_invoke
+               (m:ergo_imp_module)
+               (callname: option string * string)
                (params: list (string * qcert_data)) : eresult qcert_data
       :=
-      match otname with
-      | None =>
-        match ergo_imp_declaration_lookup_function fname m.(modulei_declarations) with
-        | None =>
-          efailure (ERuntimeError m.(modulei_provenance) ("ErgoImp eval cannot find function with name " ++ fname))
-        | Some f =>
-          ergo_imp_lambda_eval f params
-        end
-      | Some tname =>
-        match ergo_imp_declaration_lookup_table fname m.(modulei_declarations) with
-        | None =>
-          efailure (ERuntimeError m.(modulei_provenance) ("ErgoImp eval cannot find function with name " ++ fname))
-        | Some fl =>
-          ergo_imp_function_table_eval tname fname fl params
-        end
-      end.
+        match callname with
+          (** Calls a function *)
+        | (None, fname) =>
+          match ergo_imp_declaration_lookup_function fname m.(modulei_declarations) with
+          | None =>
+            efailure (ERuntimeError m.(modulei_provenance) ("ErgoImp eval cannot find function with name " ++ fname))
+          | Some f =>
+            ergo_imp_lambda_eval f params
+          end
+        | (Some cname, fname) =>
+          match ergo_imp_declaration_lookup_table fname m.(modulei_declarations) with
+          | None =>
+            efailure (ERuntimeError m.(modulei_provenance) ("ErgoImp eval cannot find function with name " ++ fname))
+          | Some fl =>
+            ergo_imp_function_table_eval cname fname fl params
+          end
+        end.
 
   End Evaluation.
 End ErgoImp.
