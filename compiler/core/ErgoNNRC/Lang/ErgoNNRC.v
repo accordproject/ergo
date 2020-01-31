@@ -121,7 +121,9 @@ Section ErgoNNRC.
 
     (** Main semantics for ErgoNNRC, based on contract invokation.
         [ergo_nnrc_invoke m callname params] invokes [callname] in module [m] with parameters [params]
-        [callname] can either be [(None,fname)] invoking a function or [(Some cname, fname)] invoking clause [fname] in contract [cname] *)
+        [callname] can either be:
+         - [(None,fname)] invoking function [fname], or
+         - [(Some cname, fname)] invoking clause [fname] in contract [cname] *)
     Definition ergo_nnrc_invoke
                (m:ergo_nnrc_module)
                (callname: option string * string)
