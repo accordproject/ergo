@@ -224,10 +224,10 @@ Section ErgoNNRCtoErgoImp.
 
     (** Main theorem of correctness for ErgoNNRC to ErgoImp translation.
 
-        It states that invoking a contract on ErgoNNRC yields the same
-        result (same successful evaluation or same error) as invoking
-        a contract on that contract translated to ErgoImp *)
-
+     It states that invoking a contract on ErgoNNRC yields the same
+     result (same successful evaluation or same error) as invoking the
+     same clause of that contract after it has been translated to
+     ErgoImp *)
     Theorem ergo_nnrc_to_imp_correct (m : ergo_nnrc_module) :
       forall callname : (option string * string),
       forall params: list (string * qcert_data),
@@ -238,15 +238,17 @@ Section ErgoNNRCtoErgoImp.
       destruct o; simpl.
       (* Proof for contract invoke *)
       - rewrite ergo_function_table_lookup_correct; simpl.
-        Opaque ergo_imp_declaration_lookup_function.
-        destruct (ergo_nnrc_declaration_lookup_table s (modulen_declarations m)); try reflexivity; simpl.
+        destruct (ergo_nnrc_declaration_lookup_table s (modulen_declarations m));
+          try reflexivity; simpl.
         unfold ergo_nnrc_function_table_eval.
         rewrite <- ergo_function_in_function_table_lookup_correct.
-        destruct (lookup string_dec (function_tablen_funs e) s); try reflexivity; simpl.
+        destruct (lookup string_dec (function_tablen_funs e) s);
+          try reflexivity; simpl.
         apply ergo_nnrc_lambda_to_imp_correct.
       (* Proof for function invoke *)
       - rewrite ergo_function_lookup_correct; simpl.
-        destruct (ergo_nnrc_declaration_lookup_function s (modulen_declarations m)); try reflexivity; simpl.
+        destruct (ergo_nnrc_declaration_lookup_function s (modulen_declarations m));
+          try reflexivity; simpl.
         apply ergo_nnrc_lambda_to_imp_correct.
     Qed.
 
