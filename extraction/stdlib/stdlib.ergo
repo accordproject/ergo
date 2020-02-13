@@ -44,9 +44,9 @@ define function integerToDouble(x:Integer) : Double
 define function integerMin(x:Integer, y:Integer) : Integer
 define function integerMax(x:Integer, y:Integer) : Integer
 define function integerModulo(x:Integer, y:Integer) : Integer {
-	let result = x % y;
-	if result >= 0 then return result
-	else return -result
+  let result = x % y;
+  if result >= 0 then return result
+  else return -result
 }
 
 // Long operations
@@ -58,9 +58,9 @@ define function longToDouble(x:Long) : Double
 define function longMin(x:Long, y:Long) : Long
 define function longMax(x:Long, y:Long) : Long
 define function longModulo(x:Long, y:Long) : Long {
-	let result = x % y;
-	if result >= 0 then return result
-	else return -result
+  let result = x % y;
+  if result >= 0 then return result
+  else return -result
 }
 
 define constant maxPosInteger32 : Long =  doubleToLong(2.0 ^ 32.0 - 1.0)
@@ -86,25 +86,25 @@ define function tanh(x:Double) : Double
 // String operations
 define function doubleOpt(x:String) : Double?
 define function double(x:String) : Double {
-	match doubleOpt(x) with
-	let? v then return v
-	else return nan
+  match doubleOpt(x) with
+  let? v then return v
+  else return nan
 }
 define function integerOpt(x:String) : Integer? {
-	match doubleOpt(x) with
-	let? v then return some(doubleToInteger(v))
-	else return none
+  match doubleOpt(x) with
+  let? v then return some(doubleToInteger(v))
+  else return none
 }
 define function integer(x:String) : Integer {
-	match integerOpt(x) with
-	let? v then return v
-	else return 0
+  match integerOpt(x) with
+  let? v then return v
+  else return 0
 }
 define function longOpt(x:String) : Long? {
-	return integerOpt(x)
+  return integerOpt(x)
 }
 define function long(x:String) : Long {
-	return integer(x)
+  return integer(x)
 }
 define function length(x:String) : Long
 define function join(x:String, y:String[]) : String
@@ -125,16 +125,16 @@ define function arrayAdd(x:Any[],y:Any[]) : Any[]
 define function arraySubtract(x:Any[],y:Any[]) : Any[]
 define function inArray(x:Any,y:Any[]) : Boolean
 define function containsAll(l1:Any[], l2:Any[]) : Boolean {
-	return arraySubtract(l1,l2) = []
+  return arraySubtract(l1,l2) = []
 }
 
 define transaction ErgoErrorResponse extends ErrorResponse{
-	message : String
+  message : String
 }
 define function failure(x:String) : ErgoErrorResponse {
-	return ErgoErrorResponse{
-		message: x
-	}
+  return ErgoErrorResponse{
+    message: x
+  }
 }
 
 // Currently set options
