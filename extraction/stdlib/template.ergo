@@ -15,33 +15,37 @@
 namespace org.accordproject.ergo.template
 
 define function variableTag(variableName:String,text:String) : String {
-	if getOptions().wrapVariables
-	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\"/>"
-	else return text
+  if getOptions().wrapVariables
+  then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\"/>"
+  else return text
 }
 
 define function variableTagAs(variableName:String,text:String,format:String) : String {
-	if getOptions().wrapVariables
-	then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\" format=\"" ++ encode(format) ++ "\"/>"
-	else return text
+  if getOptions().wrapVariables
+  then return "<variable id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\" format=\"" ++ encode(format) ++ "\"/>"
+  else return text
 }
 
-define function ifBlockTag(variableName:String,text:String) : String {
-	if getOptions().wrapVariables
-	then return "<if id=\"" ++ variableName ++ "\" value=\"" ++ encode(text) ++ "\"/>"
-	else return text
+define function ifBlockTag(variableName:String,condition:Boolean,whenTrue:String,whenFalse:String) : String {
+  if getOptions().wrapVariables
+  then
+    let conditionText = if condition then "true" else "false";
+    return "<if id=\"" ++ variableName ++ "\" value=\"" ++ conditionText ++ "\" whenTrue=\"" ++ encode(whenTrue) ++ "\" whenFalse=\"" ++ encode(whenFalse) ++ "\"/>"
+  else
+    let conditionText = if condition then whenTrue else whenFalse;
+    return conditionText
 }
 
 define function listBlockTag(text:String) : String {
-	if getOptions().wrapVariables
-	then return "```<list/>" ++ text ++ "\n```"
-	else return text
+  if getOptions().wrapVariables
+  then return "```<list/>" ++ text ++ "\n```"
+  else return text
 }
 
 define function computedTag(text:String) : String {
-	if getOptions().wrapVariables
-	then return "<computed value=\"" ++ encode(text) ++ "\"/>"
-	else if getOptions().template
-	then return "{{" ++ text ++ "}}"
-	else return text
+  if getOptions().wrapVariables
+  then return "<computed value=\"" ++ encode(text) ++ "\"/>"
+  else if getOptions().template
+  then return "{{" ++ text ++ "}}"
+  else return text
 }

@@ -80,7 +80,7 @@ let wrap_template_variable_as prov name ve fe =
     (relative_name_of_qname (Some "org.accordproject.ergo.template","variableTagAs"))
     [varparam;ve;fe]
 
-let wrap_template_if_block prov name ve =
+let wrap_template_if_block prov name veCond veTrue veFalse =
   let varparam =
     ErgoCompiler.econst prov
       (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
@@ -88,7 +88,7 @@ let wrap_template_if_block prov name ve =
   ErgoCompiler.ecallfun
     prov
     (relative_name_of_qname (Some "org.accordproject.ergo.template","ifBlockTag"))
-    [varparam;ve]
+    [varparam;veCond;veTrue;veFalse]
 
 let wrap_template_computed prov e =
   let textparam = e in
@@ -152,20 +152,19 @@ let make_template_with prov name ve =
 let make_template_clause prov name ve =
   make_template_with prov name ve (* XXX May have to be revised eventually *)
 
-let make_template_if_else prov name ve1 ve2 =
+let make_template_if_else prov name veTrue veFalse =
   let a = Util.char_list_of_string name in
   let econd = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
   wrap_template_if_block
     prov
     name
-    (ErgoCompiler.eif prov
-       econd
-       (ErgoCompiler.etext prov ve1)
-       (ErgoCompiler.etext prov ve2))
+    econd
+    (ErgoCompiler.etext prov veTrue)
+    (ErgoCompiler.etext prov veFalse)
 
-let make_template_if prov name ve1 =
-  let ve2 = [ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string ""))] in
-  make_template_if_else prov name ve1 ve2
+let make_template_if prov name veTrue =
+  let veFalse = [ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string ""))] in
+  make_template_if_else prov name veTrue veFalse
 
 %}
 
