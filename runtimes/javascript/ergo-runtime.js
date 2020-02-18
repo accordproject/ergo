@@ -15,12 +15,6 @@
 /* JavaScript runtime for core operators */
 
 /* Utilities */
-function mustBeArray(obj) {
-    if (Array.isArray(obj)) {
-        return;
-    }
-    throw new Error('Expected an array but got: ' + JSON.stringify(obj));
-}
 function boxNat(v) {
     return { '$nat': v };
 }
@@ -29,6 +23,20 @@ function unboxNat(v) {
 }
 function isNat(v) {
     return Object.prototype.hasOwnProperty.call(v,'$nat');
+}
+function boxColl(v, len) {
+    len = (typeof len !== 'undefined') ?  len : v.length;
+    return { '$coll': v, '$length': len };
+}
+function unboxColl(v) {
+    return v['$coll'];
+}
+function isBoxColl(obj) {
+    return (Object.prototype.hasOwnProperty.call(obj,'$coll') &&
+            Object.prototype.hasOwnProperty.call(obj,'$length'));
+}
+function collLength(v) {
+    return v['$length'];
 }
 function boxLeft(v) {
     return { '$left' : v };
@@ -51,9 +59,10 @@ function isRight(v) {
 function sub_brand(b1,b2) {
     var bsub=null;
     var bsup=null;
-    for (var i=0; i<inheritance.length; i=i+1) {
-        bsub = inheritance[i].sub;
-        bsup = inheritance[i].sup;
+    var inheritanceUnbox = isBoxColl(inheritance)?unboxColl(inheritance):inheritance;
+    for (var i=0; i<inheritanceUnbox.length; i=i+1) {
+        bsub = inheritanceUnbox[i].sub;
+        bsup = inheritanceUnbox[i].sup;
         if ((b1 === bsub) && (b2 === bsup)) { return true; }
     }
     return false;
@@ -71,10 +80,16 @@ function compare(v1, v2) {
     var t1 = typeof v1, t2 = typeof v2;
     if (t1 === 'object' && v1 !== null) {
         if (isNat(v1)) { t1 = 'number'; v1 = unboxNat(v1); }
+        if (isBoxColl(v1)) {
+	          v1 = unboxColl(v1).slice(0, collLength(v1));
+	      }
     };
     if (t2 === 'object' && v2 !== null) {
         if (isNat(v2)) { t2 = 'number'; v2 = unboxNat(v2); }
-    };
+        if (isBoxColl(v2)) {
+	          v2 = unboxColl(v2).slice(0, collLength(v2));
+	      }
+    }
     if (t1 != t2) {
         return t1 < t2 ? -1 : +1;
     }
@@ -168,7 +183,27 @@ function recDot(receiver, member) {
     if (typeof receiver === 'object' && Object.prototype.hasOwnProperty.call(receiver,member)) {
         return receiver[member];
     }
-    throw new Error('TypeError: recDot called on non-record');
+    throw new Error('TypeError: recDot(' + member +') called on non-record (' + JSON.stringify(receiver) + ')');
+}
+
+/* Array */
+function array(...args) {
+    return boxColl(Array.of(...args));
+}
+function arrayLength(v) {
+    return boxNat(v.$length);
+}
+function arrayPush(v1,v2) {
+    var content1 = unboxColl(v1);
+    if (content1.length !== collLength(v1)) {
+	      content1 = content1.slice(0, collLength(length));
+    }
+    content1.push(v2);
+    return boxColl(content1);
+}
+function arrayAccess(v1,v2) {
+    var content1 = unboxColl(v1);
+    return content1[unboxNat(v2)];
 }
 
 /* Sum */
@@ -197,44 +232,25 @@ function toRight(v) {
     throw new Error('TypeError: toRight called on non-sum');
 }
 
-/* Brand */ /* XXX TODO! */
+/* Brand */
 function brand(b,v) {
-    v['$class'] = b[0];
-    return v
+    return { '$class' : b, '$data' : v };
 }
 function unbrand(v) {
-    if (typeof v === 'object')
-        if (Object.prototype.hasOwnProperty.call(v,'$class') && !(Object.prototype.hasOwnProperty.call(v,'$data'))) {
-            return recRemove(v,'$class');
-        } else {
-            return (Object.prototype.hasOwnProperty.call(v,'$data')) ? v.$data : v;
-        }
-    throw ('TypeError: unbrand called on non-object' + JSON.stringify(v));
-}
-function enhanced_cast(brands,v) {
-    var type = v.$class;
-    if (brands.length != 1) {
-        throw 'Can\'t handle multiple brands yet';
+    if (typeof v === 'object' && Object.prototype.hasOwnProperty.call(v,'$class') && Object.prototype.hasOwnProperty.call(v,'$data')) {
+        return v.$data;
     }
-    var brand = brands[0];
-    if (brand === type || brand === 'Any' || sub_brand(type, brand)) {
-        return boxLeft(v);
-    }
-    return boxRight(null);
+    throw new Error('TypeError: unbrand called on non-object (' + JSON.stringify(v) + ')');
 }
 function cast(brands,v) {
-    mustBeArray(brands);
-    if (Object.prototype.hasOwnProperty.call(v,'$class') && !(Object.prototype.hasOwnProperty.call(v,'$data'))) {
-        return enhanced_cast(brands,v);
-    }
-    var type = v.$class;
-    mustBeArray(type);
-    if (brands.length === 1 && brands[0] === 'Any') { /* cast to top of inheritance is built-in */
+    var brandsUnbox = isBoxColl(brands) ? unboxColl(brands) : brands;
+    var type = isBoxColl(v.$class) ? unboxColl(v.$class) : v.$class;
+    if (brandsUnbox.length === 1 && brandsUnbox[0] === 'Any') { /* cast to top of inheritance is built-in */
         return boxLeft(v);
     }
     brands:
-    for (var i in brands) {
-        var b = brands[i];
+    for (var i in brandsUnbox) {
+        var b = brandsUnbox[i];
         for (var j in type) {
             var t = type[j];
             if (equal(t,b) || sub_brand(t,b)) {
@@ -249,49 +265,61 @@ function cast(brands,v) {
 }
 
 /* Collection */
+function iterColl(b, f) {
+    var content = unboxColl(b);
+    for (let i = 0; i < collLength(b); i++) {
+	      f(content[i]);
+    }
+}
 function distinct(b) {
     var result = [ ];
-    for (var i=0; i<b.length; i=i+1) {
-        var v = b[i];
+    var content = unboxColl(b);
+    for (var i=0; i < collLength(b); i=i+1) {
+        var v = content[i];
         var dup = false;
-        for (var j=i+1; j<b.length; j=j+1) {
-            if (equal(v,b[j])) { dup = true; break; }
+        for (var j=i+1; j < collLength(b); j=j+1) {
+            if (equal(v,content[j])) { dup = true; break; }
         }
         if (!(dup)) { result.push(v); } else { dup = false; }
     }
-    return result;
+    return boxColl(result);
 }
 function singleton(v) {
-    if (v.length === 1) {
-        return boxLeft(v[0]);
+    var content = unboxColl(v);
+    if (collLength(v) === 1) {
+        return boxLeft(content[0]);
     } else {
         return boxRight(null); /* Not a singleton */
     }
 }
 function flatten(aOuter) {
     var result = [ ];
-    for (var iOuter=0, nOuter=aOuter.length; iOuter<nOuter; iOuter = iOuter+1) {
-        var aInner = aOuter[iOuter];
-        for (var iInner=0, nInner=aInner.length; iInner<nInner; iInner = iInner+1) {
-            result.push(aInner[iInner]);
+    var aOuterContent = unboxColl(aOuter);
+    for (var iOuter=0, nOuter=collLength(aOuter); iOuter<nOuter; iOuter = iOuter+1) {
+        var aInner = aOuterContent[iOuter];
+        var aInnerContent = unboxColl(aInner);
+        for (var iInner=0, nInner=collLength(aInner); iInner<nInner; iInner = iInner+1) {
+            result.push(aInnerContent[iInner]);
         }
     }
-    return result;
+    return boxColl(result);
 }
 function union(b1, b2) {
-    var result = [ ];
-    for (var i1=0; i1<b1.length; i1=i1+1) {
-        result.push(b1[i1]);
+    var content1 = unboxColl(b1);
+    var content2 = unboxColl(b2);
+    if (content1.length !== collLength(b1)) {
+	      content1 = content1.slice(0, collLength(b1));
     }
-    for (var i2=0; i2<b2.length; i2=i2+1) {
-        result.push(b2[i2]);
+    for (let i = 0; i < content2.length; i++) {
+        content1.push(content2[i]);
     }
+    var result = boxColl(content1);
     return result;
 }
 function minus(b1, b2) {
     var result = [ ];
-    var v1 = b1.slice();
-    var v2 = b2.slice();
+    var v1 = unboxColl(b1).slice(0, collLength(b1));
+    var v2 = unboxColl(b2).slice(0, collLength(b2));
     v1.sort(compare);
     v2.sort(compare);
     var i2=0;
@@ -305,12 +333,12 @@ function minus(b1, b2) {
             result.push(v1[i1]);
         }
     }
-    return result;
+    return boxColl(result);
 }
 function min(b1, b2) {
     var result = [ ];
-    var v1 = b1.slice();
-    var v2 = b2.slice();
+    var v1 = unboxColl(b1).slice(0, collLength(b1));
+    var v2 = unboxColl(b2).slice(0, collLength(b2));
     v1.sort(compare);
     v2.sort(compare);
     var i2=0;
@@ -322,12 +350,12 @@ function min(b1, b2) {
             if (compare(v1[i1],v2[i2]) === 0) result.push(v1[i1]);
         }
     }
-    return result;
+    return boxColl(result);
 }
 function max(b1, b2) {
     var result = [ ];
-    var v1 = b1.slice();
-    var v2 = b2.slice();
+    var v1 = unboxColl(b1).slice(0, collLength(b1));
+    var v2 = unboxColl(b2).slice(0, collLength(b2));
     v1.sort(compare);
     v2.sort(compare);
     var i2=0;
@@ -341,25 +369,27 @@ function max(b1, b2) {
         result.push(v1[i1]);
     }
     while (i2 < length2) { result.push(v2[i2]); i2=i2+1; }
-    return result;
+    return boxColl(result);
 }
 function nth(b1, n) {
     var index = n;
+    var content = unboxColl(b1);
     if (isNat(n)){
         index = unboxNat(n);
     }
-    if (b1[index]) {
-        return boxLeft(b1[index]);
+    if (0 <= index && index < collLength(b1)) {
+        return boxLeft(content[index]);
     } else {
         return boxRight(null);
     }
 }
 function count(v) {
-    return boxNat(v.length);
+    return arrayLength(v);
 }
 function contains(v, b) {
-    for (var i=0; i<b.length; i=i+1) {
-        if (equal(v, toLeft(b[i]))) {
+    var content = unboxColl(b);
+    for (var i=0; i<collLength(b); i=i+1) {
+        if (equal(v, content[i])) {
             return true;
         }
     }
@@ -381,24 +411,24 @@ function compareOfMultipleCriterias(scl) {
     
 }
 function sort(b,scl) {
-    var result = [ ];
     if (scl.length === 0) { return b; } // Check for no sorting criteria
     var compareFun = compareOfMultipleCriterias(scl);
-    result = b.slice(); /* Sorting in place leads to inconsistencies, notably as it re-orders the input WM in the middle of processing */
+    /* Sorting in place leads to inconsistencies, notably as it re-orders the input WM in the middle of processing */
+    var result = unboxColl(b).slice(0, collLength(b));
     result.sort(compareFun);
-    return result;
+    return boxColl(result);
 }
 function groupByOfKey(l,k,keysf) {
-    result = [ ];
+    var result = [ ];
     l.forEach((x) => {
         if (equal(keysf(x),k)) {
             result.push(x);
         }
     });
-    return result;
+    return boxColl(result);
 }
 function groupByNested(l,keysf) {
-    var keys = distinct(l.map(keysf));
+    var keys = unboxColl(distinct(boxColl(l.map(keysf))));
     var result = [ ];
     keys.forEach((k) => {
         result.push({ 'keys': k, 'group' : groupByOfKey(l,k,keysf) });
@@ -406,6 +436,8 @@ function groupByNested(l,keysf) {
     return result;
 }
 function groupBy(g,kl,l) {
+    l = unboxColl(l).slice(0, collLength(l));
+    kl = unboxColl(kl).slice(0, collLength(kl));
     // g is partition name
     // kl is key list
     // l is input collection of records
@@ -419,7 +451,7 @@ function groupBy(g,kl,l) {
         gRec[g] = x.group;
         result.push(recConcat(x.keys, gRec));
     });
-    return result;
+    return boxColl(result);
 }
 
 /* String */
@@ -433,7 +465,8 @@ function substringEnd(v, start) {
     return v.substring(unboxNat(start));
 }
 function stringJoin(sep, v) {
-    return v.join(sep);
+    var content = unboxColl(v).slice(0, collLength(v));
+    return content.join(sep);
 }
 function like(pat, s) {
     var reg1 = escapeRegExp(pat);
@@ -480,32 +513,35 @@ function natMaxPair(v1, v2) {
     return boxNat(Math.max(unboxNat(v1),unboxNat(v2)));
 }
 function natSum(b) {
+    var content = unboxColl(b);
     var result = 0;
-    for (var i=0; i<b.length; i=i+1) {
-        result += unboxNat(b[i]);
+    for (var i=0; i<collLength(b); i=i+1) {
+        result += unboxNat(content[i]);
     }
     return boxNat(result);
 }
 function natMin(b) {
+    var content = unboxColl(b);
     var numbers = [ ];
-    for (var i=0; i<b.length; i=i+1) {
-        numbers.push(unboxNat(b[i]));
+    for (var i=0; i<collLength(b); i=i+1) {
+        numbers.push(unboxNat(content[i]));
     }
     return boxNat(Math.min.apply(Math,numbers));
 }
 function natMax(b) {
+    var content = unboxColl(b);
     var numbers = [ ];
-    for (var i=0; i<b.length; i=i+1) {
-        numbers.push(unboxNat(b[i]));
+    for (var i=0; i<collLength(b); i=i+1) {
+        numbers.push(unboxNat(content[i]));
     }
     return boxNat(Math.max.apply(Math,numbers));
 }
 function natArithMean(b) {
-    var len = b.length;
+    var len = collLength(b);
     if (len === 0) {
         return boxNat(0);
     } else {
-        return boxNat(Math.floor(natSum(b)/len));
+        return boxNat(Math.floor(unboxNat(natSum(b))/len));
     }
 }
 function floatOfNat(v) {
@@ -514,38 +550,31 @@ function floatOfNat(v) {
 
 /* Float */
 function floatSum(b) {
+    var content = unboxColl(b);
     var result = 0;
-    for (var i=0; i<b.length; i=i+1) {
-        result += b[i];
+    for (var i=0; i<collLength(b); i=i+1) {
+        result += content[i];
     }
     return result;
 }
 function floatArithMean(b) {
-    var len = b.length;
+    var len = collLength(b);
     if (len === 0) {
         return 0;
     } else {
         return floatSum(b)/len;
     }
 }
+function floatMin(b) {
+    var content = unboxColl(b).slice(0, collLength(b));
+    return Math.min.apply(Math,content);
+}
+function floatMax(b) {
+    var content = unboxColl(b).slice(0, collLength(b));
+    return Math.max.apply(Math,content);
+}
 function natOfFloat(v) {
     return boxNat(Math.trunc(v));
-}
-
-/* Unwrapping errors on output */
-function unwrapError(result) {
-    if (result.hasOwnProperty('$left')) {
-        return toLeft(result);
-    } else {
-        var failure = toRight(result);
-        var message = "Unknown Ergo Logic Error (Please file a GitHub issue)";
-        if (either(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure))) {
-            message = unbrand(toLeft(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure))).message;
-        } else {
-            message = JSON.stringify(toRight(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure)));
-        }
-        throw new Error("[Ergo] " + message);
-    }
 }
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -703,6 +732,7 @@ function mustBeDate(date) {
     }
 }
 function mustBeDateArray(dateArray) {
+	  dateArray = unboxColl(dateArray).slice(0, collLength(dateArray));
     var newDateArray = [];
     for (var i=0; i<dateArray.length; i++) {
         newDateArray.push(mustBeDate(dateArray[i]));
@@ -1093,4 +1123,34 @@ function codeSymbol(c) {
 function monetaryCodeFormat(v,f) {
     const code = v.substring(v.length-3);
     return f.replace(/K/gi,codeSymbol(code)).replace(/CCC/gi,code);
+}
+
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Unwrapping errors on output */
+function unwrapError(result) {
+    if (result.hasOwnProperty('$left')) {
+        return toLeft(result);
+    } else {
+        var failure = toRight(result);
+        var message = "Unknown Ergo Logic Error (Please file a GitHub issue)";
+        if (either(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure))) {
+            message = unbrand(toLeft(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure))).message;
+        } else {
+            message = JSON.stringify(toRight(cast(["org.accordproject.ergo.stdlib.ErgoErrorResponse"],failure)));
+        }
+        throw new Error("[Ergo] " + message);
+    }
 }

@@ -16,6 +16,7 @@
 
 const Logger = require('@accordproject/concerto-core').Logger;
 const Util = require('@accordproject/ergo-compiler').Util;
+const boxedCollections = require('@accordproject/ergo-compiler').boxedCollections;
 
 /**
  * <p>
@@ -102,11 +103,11 @@ class Engine {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
-        const validOptions = options ? options : {
+        const validOptions = boxedCollections.boxColl(options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
-        };
+        });
 
         const validContract = logic.validateContract(contract); // ensure the contract is valid
         const validRequest = logic.validateInput(request); // ensure the request is valid
@@ -126,7 +127,6 @@ class Engine {
 
         // execute the logic
         const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
-
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
@@ -159,11 +159,11 @@ class Engine {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
-        const invokeOptions = options ? options : {
+        const invokeOptions = boxedCollections.boxColl(options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
-        };
+        });
 
         const validContract = logic.validateContract(contract, validateOptions); // ensure the contract is valid
         const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
