@@ -29,8 +29,8 @@ define function variableTagAs(variableName:String,text:String,format:String) : S
 define function ifBlockTag(variableName:String,condition:Boolean,whenTrue:String,whenFalse:String) : String {
   if getOptions().wrapVariables
   then
-    let conditionText = if condition then "true" else "false";
-    return "<if id=\"" ++ variableName ++ "\" value=\"" ++ conditionText ++ "\" whenTrue=\"" ++ encode(whenTrue) ++ "\" whenFalse=\"" ++ encode(whenFalse) ++ "\"/>"
+    let conditionText = if condition then whenTrue else whenFalse;
+    return "<if id=\"" ++ variableName ++ "\" value=\"" ++ encode(conditionText) ++ "\" whenTrue=\"" ++ encode(whenTrue) ++ "\" whenFalse=\"" ++ encode(whenFalse) ++ "\"/>"
   else
     let conditionText = if condition then whenTrue else whenFalse;
     return conditionText
