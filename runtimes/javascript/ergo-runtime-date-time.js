@@ -34,6 +34,7 @@ function mustBeDate(date) {
     }
 }
 function mustBeDateArray(dateArray) {
+	  dateArray = unboxColl(dateArray).slice(0, collLength(dateArray));
     var newDateArray = [];
     for (var i=0; i<dateArray.length; i++) {
         newDateArray.push(mustBeDate(dateArray[i]));
