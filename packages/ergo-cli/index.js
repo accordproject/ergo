@@ -67,7 +67,7 @@ require('yargs')
                 Logger.info(JSON.stringify(result));
             })
             .catch((err) => {
-                Logger.error(err.message);
+                Logger.error(err);
             });
     })
     .command('invoke', 'invoke a clause of the contract', (yargs) => {
