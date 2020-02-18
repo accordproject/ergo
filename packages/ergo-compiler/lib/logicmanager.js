@@ -26,6 +26,7 @@ const Script = require('./script');
 const ScriptManager = require('../lib/scriptmanager');
 const ErgoCompiler = require('./compiler');
 const Builtin = require('./builtin');
+const boxedCollections = require('./boxedCollections');
 
 /**
  * Packages the logic for a legal clause or contract template and a given target platform. This includes the model, Ergo logic and compiled version of that logic when required.
@@ -98,7 +99,7 @@ class LogicManager {
         if (target === 'es6') {
             this.getScriptManager().hasDispatch();
             code = `
-const __result = __dispatch({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request});
+const __result = __dispatch({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0},request:context.request});
 unwrapError(__result);
         `;
         } else {
@@ -120,7 +121,7 @@ unwrapError(__result);
             if (this.getContractName()) {
                 const contractName = this.getContractName();
                 code = `
-const __result = ${contractName}.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
+const __result = ${contractName}.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0}},context.params));
 unwrapError(__result);
 `;
             } else {
@@ -302,7 +303,8 @@ unwrapError(__result);
         const validInput = serializer.fromJSON(input, {validate: false, acceptResourcesForRelationships: true});
         validInput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
         validInput.validate();
-        return serializer.toJSON(validInput, {ergo:true,permitResourcesForRelationships:true});
+        const vJson = serializer.toJSON(validInput, {ergo:true,permitResourcesForRelationships:true});
+        return boxedCollections.boxColl(vJson);
     }
 
     /**
@@ -322,7 +324,8 @@ unwrapError(__result);
         const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
         validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
         validContract.validate();
-        return { serialized: serializer.toJSON(validContract, Object.assign(options, {ergo:true,permitResourcesForRelationships:true})), validated: validContract };
+        const vJson = serializer.toJSON(validContract, Object.assign(options, {ergo:true,permitResourcesForRelationships:true}));
+        return { serialized: boxedCollections.boxColl(vJson), validated: validContract };
     }
 
     /**
@@ -353,7 +356,8 @@ unwrapError(__result);
         if (output === null) { return null; }
 
         if (output instanceof Object) {
-            const validOutput = serializer.fromJSON(output, {ergo: true, validate: false, acceptResourcesForRelationships: true});
+            const vJson = boxedCollections.unboxColl(output);
+            const validOutput = serializer.fromJSON(vJson, {ergo: true, validate: false, acceptResourcesForRelationships: true});
             validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
             validOutput.validate();
             return serializer.toJSON(validOutput, {convertResourcesToRelationships: true});
@@ -364,10 +368,11 @@ unwrapError(__result);
 
     /**
      * Validate output JSON array
-     * @param {Array<object>} outputArray - the output JSON array
+     * @param {*} output - the output JSON array
      * @return {Array<object>} the validated output array
      */
-    validateOutputArray(outputArray) {
+    validateOutputArray(output) {
+        const outputArray = boxedCollections.unboxColl(output);
         let resultArray = [];
         for (let i = 0; i < outputArray.length; i++) {
             resultArray.push(this.validateOutput(outputArray[i]));
