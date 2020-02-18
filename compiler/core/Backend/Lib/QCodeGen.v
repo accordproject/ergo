@@ -16,6 +16,7 @@ Require Import String.
 Require Import Qcert.Utils.Utils.
 Require Import Qcert.Data.DataSystem.
 Require Import Qcert.EJson.EJsonRuntime.
+Require Import Qcert.Imp.Lang.Imp.
 Require Import Qcert.JavaScriptAst.JavaScriptAstRuntime.
 Require Import Qcert.Translation.Lang.NNRSimptoImpData.
 Require Import Qcert.Translation.Lang.ImpDatatoImpEJson.
@@ -105,13 +106,16 @@ Module QCodeGen(ergomodel:QBackendModel).
     Definition js_ast_to_javascript (q:js_ast) : javascript :=
       js_ast_to_javascript q.
 
-    Definition javascript_of_inheritance (h:list (string*string)) : js_ast :=
+    Definition javascript_of_inheritance (h:list (string*string)) : topdecl :=
       constdecl "inheritance"
-                (ejson_to_js_ast
-                   (ejarray
+                (imp_ejson_expr_to_js_ast
+                   (ImpExprOp
+                      EJsonOpArray
                       (List.map (fun x =>
-                                   ejobject (("sub"%string,ejstring (fst x))
-                                               :: ("sup"%string, (ejstring (snd x))) :: nil)) h))) :: nil.
+                                   ImpExprOp
+                                     (EJsonOpObject ("sub"%string :: "sup"%string :: nil))
+                                     (ImpExprConst (cejstring (fst x)) :: ImpExprConst (cejstring (snd x)) :: nil)) h))).
+
   End JavaScript.
 
   Section Java.

@@ -101,8 +101,8 @@ Section ErgoImptoES6.
       := List.concat (List.map ergo_imp_declaration_to_javascript_ast sl).
 
     Definition ergo_imp_module_to_javascript_ast
-               (p:ergo_imp_module) : js_ast :=
-      preamble ++ (QcertCodeGen.javascript_of_inheritance brand_relation_brands)
+               (p:ergo_imp_module) : list topdecl :=
+      preamble ++ (QcertCodeGen.javascript_of_inheritance brand_relation_brands :: nil)
                ++ (ergo_imp_declarations_to_javascript_ast p.(modulei_declarations))
                ++ (postamble).
 
