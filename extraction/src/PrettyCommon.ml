@@ -623,6 +623,8 @@ let string_of_foreign_binary_op fb =
   | Enhanced_binary_date_time_op Bop_date_time_is_before -> "DateTimeIsBefore"
   | Enhanced_binary_date_time_op Bop_date_time_is_after -> "DateTimeIsAfter"
   | Enhanced_binary_date_time_op Bop_date_time_diff -> "DateTimeDiff"
+  | Enhanced_binary_monetary_amount_op Bop_monetary_amount_format -> "MonetaryAmountFormat"
+  | Enhanced_binary_monetary_amount_op Bop_monetary_code_format -> "MonetaryCodeFormat"
   end
 
 let pretty_foreign_binary_op p sym callb ff fb a1 a2 =
@@ -647,6 +649,10 @@ let pretty_foreign_binary_op p sym callb ff fb a1 a2 =
      pretty_infix_exp p 18 sym callb ("T>",1) ff a1 a2
   | Enhanced_binary_date_time_op Bop_date_time_diff ->
       pretty_infix_exp p 18 sym callb ("TD",1) ff a1 a2
+  | Enhanced_binary_monetary_amount_op Bop_monetary_amount_format ->
+      pretty_infix_exp p 18 sym callb ("Mf",1) ff a1 a2
+  | Enhanced_binary_monetary_amount_op Bop_monetary_code_format ->
+      pretty_infix_exp p 18 sym callb ("Cf",1) ff a1 a2
   end
 
 let string_of_binary_op b =
