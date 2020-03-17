@@ -15,6 +15,7 @@
 namespace org.accordproject.ergo.stdlib
 
 import org.accordproject.cicero.runtime.*
+import org.accordproject.money.*
 
 // Double operations
 define function sqrt(x:Double) : Double
@@ -140,3 +141,12 @@ define function failure(x:String) : ErgoErrorResponse {
 // Currently set options
 define function getOptions() : ~org.accordproject.ergo.options.Options
 
+define function monetaryAmountFormatInternal(x:Double, y:String) : String
+define function monetaryCodeFormatInternal(x:String, y:String) : String
+
+define function doubleFormat(x:Double, y:String) : String {
+	return monetaryAmountFormatInternal(x,y)
+}
+define function monetaryAmountFormat(m:MonetaryAmount, f:String) : String {
+	return monetaryAmountFormatInternal(m.doubleValue, monetaryCodeFormatInternal(toString(m.currencyCode),f))
+}

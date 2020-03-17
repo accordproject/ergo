@@ -19,6 +19,7 @@ Require Import Qcert.Common.CommonSystem.
 Require Import ErgoSpec.Backend.Model.LogModelPart.
 Require Import ErgoSpec.Backend.Model.MathModelPart.
 Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
+Require Import ErgoSpec.Backend.Model.MonetaryAmountModelPart.
 Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require Import ErgoSpec.Backend.ForeignErgo.
 Require Import ErgoSpec.Backend.Model.ErgoBackendModel.
@@ -184,6 +185,11 @@ Section ErgoCStdlib.
           mk_binary (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_is_after)))
       :: ("org.accordproject.time.diffInternal",
           mk_binary (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_diff)))
+    (* Monetary/Amount *)
+      :: ("org.accordproject.ergo.stdlib.monetaryAmountFormatInternal"%string,
+          mk_binary (OpForeignBinary (enhanced_binary_monetary_amount_op bop_monetary_amount_format)))
+      :: ("org.accordproject.ergo.stdlib.monetaryCodeFormatInternal"%string,
+          mk_binary (OpForeignBinary (enhanced_binary_monetary_amount_op bop_monetary_code_format)))
       :: nil.
 
   Definition foreign_table : ergo_stdlib_table :=

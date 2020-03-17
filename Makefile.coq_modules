@@ -20,6 +20,7 @@ MODULES = \
   Backend/Model/DateTimeModelPart \
   Backend/Model/MathModelPart \
   Backend/Model/LogModelPart \
+  Backend/Model/MonetaryAmountModelPart \
   Backend/Model/ErgoEnhancedModel \
   Backend/Model/ErgoBackendModel \
   Backend/Model/ErgoBackendRuntime \

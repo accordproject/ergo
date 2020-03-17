@@ -329,6 +329,48 @@
     }
   },
   {
+    "name": "interests clause (generate text) (grammar)",
+    "dir": "../../../examples/interestsgrammar",
+    "ergo": ["logic/interests.ergo","logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "options": {
+      "$class": "org.accordproject.ergo.options.Options",
+      "wrapVariables": false,
+      "template": true
+    },
+    "params": {},
+    "grammar": "text/grammar.tem.md",
+    "state": "state.json",
+    "contractName": "org.accordproject.interests.Interests",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n"
+    }
+  },
+  {
+    "name": "interests clause (generate text) (grammar + format)",
+    "dir": "../../../examples/interestsformat",
+    "ergo": ["logic/interests.ergo","logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "options": {
+      "$class": "org.accordproject.ergo.options.Options",
+      "wrapVariables": false,
+      "template": true
+    },
+    "params": {},
+    "grammar": "text/grammar.tem.md",
+    "state": "state.json",
+    "contractName": "org.accordproject.interests.Interests",
+    "clauseName": "generateText",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": "This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 3,\nand monthly payments of {{\"2,886.0 USD\"}}\n"
+    }
+  },
+  {
     "name": "interests clause (generate text)",
     "dir": "../../../examples/interests",
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
