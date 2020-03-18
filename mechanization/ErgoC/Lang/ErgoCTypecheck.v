@@ -320,6 +320,9 @@ Section ErgoCTypecheck.
         (ergoc_typecheck_expr nsctxt ctxt arr)
     | EForeach prov _ _ _ =>
       complex_foreach_in_calculus_error prov
+    | EAs prov f e =>
+      eolift (as_dispatch nsctxt prov f)
+             (ergoc_typecheck_expr nsctxt ctxt e)
     end.
 
   Definition ergoc_typecheck_function

@@ -287,6 +287,8 @@ Section Result.
       efailure (ESystemError prov ("[" ++ msg ++ "] " ++ "Function " ++ fname ++ " did not get inlined")).
     Definition function_in_group_not_inlined_error {A} prov gname fname : eresult A :=
       efailure (ESystemError prov ("Clause " ++ fname ++ " in contract " ++ gname ++ " did not get inlined")).
+    Definition as_in_calculus_error {A} prov : eresult A :=
+      efailure (ESystemError prov "Should not find 'as' in Ergo Calculus").
   End Builtin.
 
   Section Duplicates.

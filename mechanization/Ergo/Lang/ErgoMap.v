@@ -165,6 +165,9 @@ Section ErgoMap.
                            pes))
                (apply_map ctx def))
           (apply_map ctx expr)
+      | EAs loc f e =>
+        elift (EAs loc f)
+              (apply_map ctx e)
       end.
 
 End ErgoMap.

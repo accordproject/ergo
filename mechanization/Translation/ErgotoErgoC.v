@@ -202,6 +202,10 @@ Section ErgotoErgoC.
                         e)
       in
       fold_right proc_one init_e foreachs
+    | EAs prov f e =>
+      elift
+        (EAs prov f)
+        (ergo_expr_to_ergoc_expr ctxt e)
     end.
 
   (** Translate an Ergo statement to an Ergo expression *)

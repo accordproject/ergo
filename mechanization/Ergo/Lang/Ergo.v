@@ -63,6 +63,7 @@ Section Ergo.
     | EMatch : A -> ergo_expr -> list (@ergo_pattern A N * ergo_expr) -> ergo_expr -> ergo_expr (**r match-case *)
     | EForeach : A -> list (string * ergo_expr)
                  -> option ergo_expr -> ergo_expr -> ergo_expr (**r foreach with optional where *)
+    | EAs : A -> string -> ergo_expr -> ergo_expr (**r format expression *)
     .
 
     Definition expr_annot (e:ergo_expr) : A :=
@@ -90,6 +91,7 @@ Section Ergo.
       | ECallFunInGroup a _ _ _ => a
       | EMatch a _ _ _ => a
       | EForeach a _ _ _ => a
+      | EAs a _ _ => a
       end.
     
     (** Statement *)

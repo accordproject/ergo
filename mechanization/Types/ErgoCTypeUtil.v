@@ -106,6 +106,14 @@ Section ErgoCTypeUtil.
       => "This function received unexpected arguments of type `" ++ (ergoc_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (ergoc_type_to_string nsctxt arg2) ++ "'."
     end.
 
+  Definition ergo_format_as_operator_dispatch_error nsctxt (arg : ergoc_type) : string :=
+    let fmt_easy :=
+        fun actual =>
+          ("Cannot use 'as' on operand of type `" ++
+                        (ergoc_type_to_string nsctxt actual) ++ "'.")%string
+    in
+    fmt_easy arg.
+    
   Definition ergo_format_unary_operator_dispatch_error nsctxt (op : ergo_unary_operator)
      (arg : ergoc_type) : string :=
     "This operator received an unexpected argument of type `" ++ (ergoc_type_to_string nsctxt arg) ++ "'.".

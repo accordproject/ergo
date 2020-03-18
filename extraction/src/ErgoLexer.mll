@@ -67,6 +67,7 @@
 	      "with", WITH;
         "or", OR;
         "and", AND;
+        "as", AS;
 	      (* Data *)
 	      "true", TRUE;
 	      "false", FALSE;

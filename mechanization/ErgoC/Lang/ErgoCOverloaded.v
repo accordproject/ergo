@@ -18,6 +18,9 @@ Require Import Basics.
 
 Require Import ErgoSpec.Utils.Misc.
 Require Import ErgoSpec.Backend.ErgoBackend.
+Require Import ErgoSpec.Backend.Model.DateTimeModelPart.
+Require Import ErgoSpec.Backend.Model.MonetaryAmountModelPart.
+Require Import ErgoSpec.Backend.Model.ErgoEnhancedModel.
 Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Common.NamespaceContext.
 Require Import ErgoSpec.Common.Result.
@@ -212,4 +215,93 @@ Section ErgoCOverloaded.
       try_binary_dispatch nsctxt prov eop (binary_operator_dispatch_table eop) eT1 eT2.
 
   End BinaryOperator.
+
+  Section AsExpr.
+    Definition as_dispatch_spec : Set :=
+      (namespace_ctxt -> provenance -> ergoc_type -> eresult ergoc_type)
+      * (provenance -> ergoc_type -> ergoct_expr -> ergoct_expr).
+
+    Definition as_dispatch_table : Set :=
+      list as_dispatch_spec.
+
+    Definition make_as_double_criteria nsctxt prov t : eresult ergoc_type :=
+      if (ergoc_type_subtype_dec t tfloat)
+      then esuccess tstring nil
+      else efailure (ETypeError prov (ergo_format_as_operator_dispatch_error nsctxt t)).
+
+    Definition make_as_double_fun f prov t e1 : ergoct_expr :=
+      EBinaryBuiltin (prov,t) (OpForeignBinary (enhanced_binary_monetary_amount_op bop_monetary_amount_format)) e1 (EConst (prov,tstring) (dstring f)).
+
+    Definition make_as_double f : as_dispatch_spec :=
+      (make_as_double_criteria, make_as_double_fun f).
+
+    Definition make_as_datetime_criteria nsctxt prov t : eresult ergoc_type :=
+      if (ergoc_type_subtype_dec t DateTime)
+      then esuccess tstring nil
+      else efailure (ETypeError prov (ergo_format_as_operator_dispatch_error nsctxt t)).
+
+    Definition make_as_datetime_fun f prov t e1 : ergoct_expr :=
+      EBinaryBuiltin (prov,t) (OpForeignBinary (enhanced_binary_date_time_op bop_date_time_format)) e1
+                     (EUnaryBuiltin (prov,t) (OpForeignUnary (enhanced_unary_date_time_op uop_date_time_format_from_string)) (EConst (prov,tstring) (dstring f))).
+
+    Definition make_as_datetime f : as_dispatch_spec :=
+      (make_as_datetime_criteria, make_as_datetime_fun f).
+
+    Definition make_as_monetaryamount_criteria nsctxt prov t : eresult ergoc_type :=
+      if (ergoc_type_subtype_dec t (Brand ("org.accordproject.money.MonetaryAmount"%string::nil)))
+      then esuccess tstring nil
+      else efailure (ETypeError prov (ergo_format_as_operator_dispatch_error nsctxt t)).
+
+    Definition make_as_monetaryamount_fun f prov t e1 : ergoct_expr :=
+      let doubleValue := make_unbrand_dot_fun "doubleValue" prov tfloat e1 in
+      let currencyCode := EUnaryBuiltin (prov,tstring) OpToString (make_unbrand_dot_fun "currencyCode" prov tstring e1) in
+      let format := EConst (prov,tstring) (dstring f) in
+      EBinaryBuiltin (prov,t) (OpForeignBinary (enhanced_binary_monetary_amount_op bop_monetary_amount_format))
+                     doubleValue
+                     (EBinaryBuiltin (prov,tstring) (OpForeignBinary (enhanced_binary_monetary_amount_op bop_monetary_code_format))
+                                     currencyCode
+                                     format).
+
+    Definition make_as_monetaryamount f : as_dispatch_spec :=
+      (make_as_monetaryamount_criteria, make_as_monetaryamount_fun f).
+
+    Definition as_operator_dispatch_table f : as_dispatch_table :=
+      (make_as_monetaryamount f)
+        :: (make_as_datetime f)
+        :: (make_as_double f)
+        :: nil.
+
+    Fixpoint try_as_dispatch
+             nsctxt prov
+             (prev: eerror)
+             (f:string)
+             (dt:as_dispatch_table)
+             (eT:ergoct_expr) : eresult ergoct_expr :=
+      let t := exprct_type_annot eT in
+      match dt with
+      | nil => efailure prev
+      | (op_criteria, op_fun) :: nil =>
+        elift_both
+          (fun r => esuccess (op_fun prov r eT) nil)               (* found a successful dispatch *)
+          (fun err =>
+             match err with
+             | ESystemError _ _ => efailure prev (* Fall back to previous good error *)
+             | _ => efailure err
+             end)
+          (op_criteria nsctxt prov t)
+      | (op_criteria, op_fun) :: bltops' =>
+        elift_both
+          (fun r => esuccess (op_fun prov r eT) nil)                  (* found a successful dispatch *)
+          (fun err => try_as_dispatch nsctxt prov err f bltops' eT) (* try next type *)
+          (op_criteria nsctxt prov t)
+      end.
+
+    Definition as_dispatch nsctxt prov f
+               (eT:ergoct_expr) : eresult ergoct_expr :=
+      let t := exprct_type_annot eT in
+      let init_prev := ETypeError prov (ergo_format_as_operator_dispatch_error nsctxt t) in
+      try_as_dispatch nsctxt prov init_prev f (as_operator_dispatch_table f) eT.
+   
+  End AsExpr.
+
 End ErgoCOverloaded.

@@ -249,6 +249,8 @@ Module ErgoCompiler.
     := Ergo.EMatch prov e0 epl ed.
   Definition eforeach prov efl ew er : ergo_expr
     := Ergo.EForeach prov efl ew er.
+  Definition eas prov f e0 : ergo_expr
+    := Ergo.EAs prov f e0.
 
   Section Integer.
     Local Open Scope Z_scope.
