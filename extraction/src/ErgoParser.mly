@@ -51,13 +51,11 @@ let make_template_computed prov e =
     [e]
 
 let make_template_variable_as prov v s =
-  ErgoCompiler.ecallfun prov
-    (relative_name_of_qname (Some "org.accordproject.time","format"))
-    [ErgoCompiler.eunaryoperator prov
+  ErgoCompiler.eas prov
+    (Util.char_list_of_string s)
+    (ErgoCompiler.eunaryoperator prov
        (EOpDot (Util.char_list_of_string v))
-       (make_template_input prov);
-     ErgoCompiler.econst prov
-       (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))]
+       (make_template_input prov))
 
 (* Construct AST for variables *)
 let wrap_template_variable prov name ve =

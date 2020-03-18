@@ -15,6 +15,7 @@
 namespace org.accordproject.interests
 
 import org.accordproject.time.* from https://models.accordproject.org/v2.0/time.cto
+import org.accordproject.money.* from https://models.accordproject.org/money@0.2.0.cto
 
 transaction Request {
   o String input
@@ -25,7 +26,7 @@ transaction Response {
 }
 
 concept TemplateModel {
-  o Double loanAmount
+  o MonetaryAmount loanAmount
   o Double rate
   o Integer loanDuration
 }

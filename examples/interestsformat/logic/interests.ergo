@@ -27,22 +27,24 @@ define function roundn(x:Double, n:Integer) {
 }
 
 // Formula taken from https://en.wikipedia.org/wiki/Mortgage_calculator#Monthly_payment_formula
-define function monthlyPaymentFormula(loanAmount: Double, rate: Double, loanDuration: Integer) : MonetaryAmount {
+define function monthlyPaymentFormula(loanAmount: MonetaryAmount, rate: Double, loanDuration: Integer) : MonetaryAmount {
+	let currency = loanAmount.currencyCode;
+	let amount = loanAmount.doubleValue;
   let term = longToDouble(loanDuration * 12);
-  if (rate = 0.0) then return MonetaryAmount{ doubleValue: (loanAmount / term), currencyCode: USD }
+  if (rate = 0.0) then return MonetaryAmount{ doubleValue: (amount / term), currencyCode: currency }
   else
     let monthlyRate = (rate / 12.0) / 100.0;
     let monthlyPayment =
-      (monthlyRate * loanAmount)
+      (monthlyRate * amount)
       / (1.0 - ((1.0 + monthlyRate) ^ (-term)));
-    return MonetaryAmount{ doubleValue: roundn(monthlyPayment, 0), currencyCode: USD }
+    return MonetaryAmount{ doubleValue: roundn(monthlyPayment, 0), currencyCode: currency }
 }
 
-define function cummulativeInterests(loanAmount: Double, rate: Double, loanDuration: Integer) : MonetaryAmount {
+define function cummulativeInterests(loanAmount: MonetaryAmount, rate: Double, loanDuration: Integer) : MonetaryAmount {
   let term = longToDouble(loanDuration * 12);
   let monthly = monthlyPaymentFormula(loanAmount, rate, loanDuration);
   return MonetaryAmount{
-    doubleValue: term * (monthly.doubleValue - loanAmount),
+    doubleValue: term * (monthly.doubleValue - loanAmount.doubleValue),
     currencyCode: monthly.currencyCode
   }
 }
