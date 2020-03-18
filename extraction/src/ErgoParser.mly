@@ -228,6 +228,7 @@ let make_template_if prov name veTrue =
 %right NOT
 %right LBRACKET
 %left DOT QUESTIONDOT
+%left AS
 
 %start <ErgoComp.ErgoCompiler.ergo_module> main_module
 %start <ErgoComp.ErgoCompiler.ergo_declaration list> top_decls
@@ -568,6 +569,8 @@ expr:
     { ErgoCompiler.eforeach (mk_provenance $startpos $endpos) fl None e2 }
 | FOREACH fl = foreachlist WHERE econd = expr RETURN e2 = expr
     { ErgoCompiler.eforeach (mk_provenance $startpos $endpos) fl (Some econd) e2 }
+| e1 = expr AS f = STRING
+    { ErgoCompiler.eas (mk_provenance $startpos $endpos) (Util.char_list_of_string f) e1 }
 (* Array index *)
 | e1 = expr LBRACKET e2 = expr RBRACKET
     { ErgoCompiler.ebinarybuiltin (mk_provenance $startpos $endpos) ErgoCompiler.ErgoOps.Binary.opnth e1 e2 }
@@ -860,6 +863,7 @@ safeident_base:
 | SET { "set" }
 | EMIT { "emit" }
 | WITH { "with" }
+| AS { "as" }
 | OR { "or" }
 | AND { "and" }
 | UNIT { "unit" }

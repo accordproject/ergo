@@ -490,6 +490,9 @@ Section ErgoNameResolution.
                (fold_right proc_one init_e foreachs)
                recond
                re2
+      | EAs prov f e =>
+        elift (EAs prov f)
+              (resolve_ergo_expr nsctxt e)
       end.
 
     (** Name resolution for statements *)

@@ -53,6 +53,7 @@ contract Smoke over TemplateModel {
     enforce(length("abcd") = 4);
 		enforce(toString(1.0) = "1.0");
 		enforce(toString(1) = "1");
+		enforce(4413413.481 as "0,0.00" = "4,413,413.48");
 		enforce(encode("http://foo bar") = "http%3A%2F%2Ffoo%20bar");
 		enforce(decode("http%3A%2F%2Ffoo%20bar") = "http://foo bar");
     return MyResponse{

@@ -235,6 +235,7 @@ Section ErgoCTtoErgoNNRC.
         (ergoct_expr_to_nnrc env e2)
     | EForeach (prov,_) _ _ _ =>
       complex_foreach_in_calculus_error prov (* XXX We should prove it never happens *)
+    | EAs (prov,_) _ _ => as_in_calculus_error prov (* XXX We should prove it never happens *)
     end.
 
   (** Translate a function to function+calculus *)

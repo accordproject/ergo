@@ -205,6 +205,8 @@ Section ErgoCTEval.
       elift dcoll rcoll
     | EForeach (prov,_) _ _ _ =>
       complex_foreach_in_calculus_error prov
+    | EAs (prov,_) _ _ =>
+      as_in_calculus_error prov
     end.
 
   Definition ergoct_eval_decl
