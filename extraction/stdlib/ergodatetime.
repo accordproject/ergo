@@ -1,0 +1,128 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+//made on template studio
+namespace org.accordproject.ergodatetime
+
+define constant SECONDS_PER_DAY = 24 * 60 * 60
+define constant SECONDS_PER_HOUR = 60 * 60
+define constant SECONDS_PER_MINUTE = 60
+define constant OFFSET = 2440588  //so that the secods may start counting from 0(ist jan 1970 is 0)
+//assignng number to each day of the weekDay
+
+define constant MON = 1
+define constant TUE = 2
+define constant WED = 3
+define constant THU = 4
+define constant FRI = 5
+define constant SAT = 6
+define constant SUN = 7
+
+ /*
+ the date conversion algorithm from
+ http://aa.usno.navy.mil/faq/docs/JD_Formula.php
+ */
+
+  define function DayToDate(year : Double , month : Double , day : Double) : Double {
+        enforce year >= 1970;
+    
+       let days : Double = day
+          - 32075
+          + 1461 * (year + 4800 + (month - 14) / 12) / 4
+          + 367 * (month - 2 - (month - 14) / 12 * 12) / 12
+          - 3 * ((year + 4900 + (month - 14) / 12) / 100) / 4
+          - OFFSET;
+
+        return days }
+																					
+
+    define function daysToDate(_days : Double) (Double : year, Double:month, Double:day) {
+       let Integer __days =  Integer(_days);
+
+                Integer L = __days + 68569 + OFFSET19700101;
+                Integer N = 4 * L / 146097;
+        L = L - (146097 * N + 3) / 4;
+                Integer _year = 4000 * (L + 1) / 1461001;
+        L = L - 1461 * _year / 4 + 31;
+                Integer _month = 80 * L / 2447;
+        Integer _day = L - 2447 * _month / 80;
+        L = _month / 11;
+        _month = _month + 2 - 12 * L;
+        _year = 100 * (N - 49) + _year + L;
+
+       let   year:Double = Double(_year);
+       let  month:Double = Double(_month);
+       let  day:Double = Double(_day);
+      
+      return year;
+      return month;
+      return day;
+    }
+
+
+  function ergodatetimevalid(year : Double, month:Double ,day:Double,hour:Double, minute:Double, second:Double) Boolean: { let valid : Boolean;
+        if (isValidDate(year, month, day)) 
+         then if (hour < 24 && minute < 60 && second < 60) 
+         then valid = true;
+            }
+
+
+    
+    function leapyearcheck(timestamp : Double)  leapYear : Boolean {
+        (uint year,,) = daysToDate(timestamp / SECONDS_PER_DAY);
+        leapYear = _isLeapYear(year);
+    }
+   
+
+	function getDayOfWeek(uint timestamp) internal pure returns (uint dayOfWeek) {
+        uint _days = timestamp / SECONDS_PER_DAY;
+        dayOfWeek = (_days + 3) % 7 + 1;
+    }
+
+    function WeekDay(timestamp : Double)  weekDay : Boolean {
+        weekDay = getDayOfWeek(timestamp) <= FRI;
+    }
+    function WeekEnd(timestamp : Double) weekEnd : Boolean{
+        weekEnd = getDayOfWeek(timestamp) >= _SAT;
+    }
+
+	function _getDaysInMonth(year : Double , month : Double )  daysInMonth : Double {
+     foreach month in [1 , 3 , 5 , 7 , 8 , 10 ,12) 
+        return daysInMonth = 31;
+      else if (month != 2) 
+          then  daysInMonth = 30;
+       else 
+            daysInMonth = _isLeapYear(year) ? 29 : 28;
+        
+    }
+
+    function getDaysInMonth(timestamp : Double)  daysInMonth : Double {
+        (uint year, uint month,) = _daysToDate(timestamp / SECONDS_PER_DAY);
+        daysInMonth = _getDaysInMonth(year, month);
+    }
+    
+    // 1 = Monday, 7 = Sunday
+    function getDayOfWeek(timestamp : Double)  dayOfWeek : Double {
+        _days : Double = timestamp / SECONDS_PER_DAY;
+        dayOfWeek = (_days + 3) % 7 + 1;
+    }
+
+    function getYear(timestamp : Double)  year : Double {
+        (year,,) = _daysToDate(timestamp / SECONDS_PER_DAY);
+    }
+    function getMonth(timestamp : Double) month : Double {
+        (,month,) = _daysToDate(timestamp / SECONDS_PER_DAY);
+    }
+    function getDay(timestamp : Double)  day : Double {
+        (,,day) = _daysToDate(timestamp / SECONDS_PER_DAY);
+    }
