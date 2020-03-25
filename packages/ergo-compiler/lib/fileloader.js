@@ -90,16 +90,21 @@ class FileLoader {
      * @param {string} fileName the relative file name
      * @param {boolean} json if true the file is converted to a JS Object using JSON.parse
      * @param {boolean} required whether the file is required
+     * @param {Buffer} buffer if true the file is converted to a Buffer
      * @return {Promise<string>} a promise to the contents of the file or null if it does not exist and
      * required is false
      */
-    static async loadFileContents(path, fileName, json=false, required=false) {
+    static async loadFileContents(path, fileName, json=false, required=false, buffer=false) {
 
         Logger.debug('loadFileContents', 'Loading ' + fileName);
         const filePath = fsPath.resolve(path, fileName);
 
         if (fs.existsSync(filePath)) {
+            if(buffer) {
+                return fs.readFileSync(filePath);
+            }
             const contents = fs.readFileSync(filePath, ENCODING);
+
             if(json && contents) {
                 return JSON.parse(contents);
             }
