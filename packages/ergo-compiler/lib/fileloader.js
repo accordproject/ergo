@@ -18,10 +18,13 @@ const fs = require('fs');
 const fsPath = require('path');
 const Logger = require('@accordproject/concerto-core').Logger;
 const promisify = require('util').promisify;
+const imageType = require('image-type');
+const imageSize = promisify(require('image-size'));
 const readdir = fs.readdir ? promisify(fs.readdir) : undefined;
 const stat = fs.stat ? promisify(fs.stat) : undefined;
 
 const ENCODING = 'utf8';
+const ALLOWED_MIMETYPES = ['image/png'];
 
 /**
  * A utility class to load files from zip or directories
@@ -145,16 +148,45 @@ class FileLoader {
      * @param {*} path the root path
      * @param {string} fileName the relative file name
      * @param {boolean} required whether the file is required
+     * @param {Number} aspectRatio aspect ratio of the image
+     * @param {Number} epsilon allowed error in dimensions of the image file
      * @return {Promise<Buffer>} a promise to the buffer of the file or null if
      * it does not exist and required is false
      */
-    static async loadFileBuffer(path, fileName, required=false) {
+    static async loadFileBuffer(path, fileName, required=false, aspectRatio=1, epsilon=0.05) {
 
         Logger.debug('loadFileBuffer', 'Loading ' + fileName);
         const filePath = fsPath.resolve(path, fileName);
 
         if (fs.existsSync(filePath)) {
-            return fs.readFileSync(filePath);
+            let contents;
+            contents = fs.readFileSync(filePath);
+            // checks if mime-type is allowed
+            if (ALLOWED_MIMETYPES.includes(imageType(contents).mime)) {
+
+                return imageSize(filePath)
+                    .then(dimension => {
+                        const width = dimension.width;
+                        const height = dimension.height;
+                        if (width > 0 && height > 0) {
+                            const ratio = width/height;
+                            // this is done to give some allowance to the user so that they don't need to
+                            // upload exact square images
+                            const upperBound = aspectRatio + epsilon;
+                            const lowerBound = aspectRatio - epsilon;
+                            if (ratio < lowerBound || ratio > upperBound) {
+                                throw new Error(`
+                                    ${fileName} isn't of correct dimension. Its aspect 
+                                    ratio should be between ${lowerBound} and ${upperBound}.
+                                `);
+                            }
+                            return fs.readFileSync(filePath);
+                        }
+                    });
+            }
+            else {
+                throw new Error('Only PNG images are allowed');
+            }
         }
         else {
             if(required) {

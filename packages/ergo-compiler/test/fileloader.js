@@ -22,14 +22,23 @@ const expect = chai.expect;
 describe('FileLoader', () => {
 
     describe('#loadFileBuffer', () => {
+
         it('should return an instace of Buffer if required is true', async () => {
             const content = await FileLoader.loadFileBuffer('./test/data', 'logo.png', true);
             expect(content).to.be.instanceOf(Buffer);
         });
 
         it('should return null if file is not found and required is false', async () => {
-            const content = await FileLoader.loadFileBuffer('./test/data', '404.png', false);
+            const content = await FileLoader.loadFileBuffer('./test', 'logo.png', false);
             expect(content).to.be.null;
+        });
+
+        it('should throw an error if the mime-type is not allowed', async () => {
+            await expect(FileLoader.loadFileBuffer('./test/data/fakePNG', 'logo.png', true)).to.be.eventually.rejectedWith(Error);
+        });
+
+        it('should throw an error if the image is of incorrect aspectRatio', async () => {
+            await expect(FileLoader.loadFileBuffer('./test/data', 'logo.png', true, 2, 0.05)).to.be.eventually.rejectedWith(Error);
         });
     });
 
