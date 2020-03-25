@@ -84,27 +84,45 @@ class FileLoader {
     }
 
     /**
+     * Loads a required buffer of a file from the zip, displaying an error if missing
+     * @internal
+     * @param {*} zip the JSZip instance
+     * @param {string} path the file path within the zip
+     * @param {boolean} required whether the file is required
+     * @return {Promise<Buffer>} a promise to the Buffer of the zip file or null if it does not exist and
+     * required is false
+     */
+    static async loadZipFileBuffer(zip, path, required=false) {
+        Logger.debug('loadZipFileBuffer', 'Loading ' + path);
+        let zipFile = zip.file(path);
+        if(!zipFile && required) {
+            throw new Error(`Failed to find ${path} in archive file.`);
+        }
+
+        else if(zipFile) {
+            return zipFile.async('nodebuffer');
+        }
+
+        return null;
+    }
+
+    /**
      * Loads a required file from a directory, displaying an error if missing
      * @internal
      * @param {*} path the root path
      * @param {string} fileName the relative file name
      * @param {boolean} json if true the file is converted to a JS Object using JSON.parse
      * @param {boolean} required whether the file is required
-     * @param {Buffer} buffer if true the file is converted to a Buffer
      * @return {Promise<string>} a promise to the contents of the file or null if it does not exist and
      * required is false
      */
-    static async loadFileContents(path, fileName, json=false, required=false, buffer=false) {
+    static async loadFileContents(path, fileName, json=false, required=false) {
 
         Logger.debug('loadFileContents', 'Loading ' + fileName);
         const filePath = fsPath.resolve(path, fileName);
 
         if (fs.existsSync(filePath)) {
-            if(buffer) {
-                return fs.readFileSync(filePath);
-            }
             const contents = fs.readFileSync(filePath, ENCODING);
-
             if(json && contents) {
                 return JSON.parse(contents);
             }
@@ -118,6 +136,31 @@ class FileLoader {
             }
         }
 
+        return null;
+    }
+
+    /**
+     * Loads a file as buffer from a directory, displaying an error if missing
+     * @internal
+     * @param {*} path the root path
+     * @param {string} fileName the relative file name
+     * @param {boolean} required whether the file is required
+     * @return {Promise<Buffer>} a promise to the buffer of the file or null if
+     * it does not exist and required is false
+     */
+    static async loadFileBuffer(path, fileName, required=false) {
+
+        Logger.debug('loadFileBuffer', 'Loading ' + fileName);
+        const filePath = fsPath.resolve(path, fileName);
+
+        if (fs.existsSync(filePath)) {
+            return fs.readFileSync(filePath);
+        }
+        else {
+            if(required) {
+                throw new Error(`Failed to find ${fileName} in directory`);
+            }
+        }
         return null;
     }
 
