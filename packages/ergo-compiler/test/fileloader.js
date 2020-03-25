@@ -17,14 +17,19 @@
 const FileLoader = require('../lib/fileloader');
 
 const chai = require('chai');
-const except = chai.expect;
+const expect = chai.expect;
 
 describe('FileLoader', () => {
 
-    describe('#loadFileContents', () => {
-        it('should return a Buffer if buffer is true', async () => {
-            const content = await FileLoader.loadFileContents('packages/ergo-compiler/test/data', 'logo.png', false, false, true);
-            except(content).to.be.instanceOf(Buffer);
+    describe('#loadFileBuffer', () => {
+        it('should return an instace of Buffer if required is true', async () => {
+            const content = await FileLoader.loadFileBuffer('./test/data', 'logo.png', true);
+            expect(content).to.be.instanceOf(Buffer);
+        });
+
+        it('should return null if file is not found and required is false', async () => {
+            const content = await FileLoader.loadFileBuffer('./test/data', '404.png', false);
+            expect(content).to.be.null;
         });
     });
 
