@@ -50,7 +50,7 @@ let subst_code_symbol get x1 s =
   | "GBP" -> "£"
   | "PLN" -> "zł"
   | "USD" -> "$"
-  | "YEN" -> "¥"
+  | "JPY" -> "¥"
   | _ -> x1 (* Defaults to ISO code *)
   end
 
