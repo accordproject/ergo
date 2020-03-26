@@ -14,22 +14,50 @@
 
 'use strict';
 
-const FileLoader = require('../lib/fileloader');
-
+const fs = require('fs');
+const JSZip = require('jszip');
 const chai = require('chai');
 const expect = chai.expect;
+
+const FileLoader = require('../lib/fileloader');
 
 describe('FileLoader', () => {
 
     describe('#loadFileBuffer', () => {
-        it('should return an instace of Buffer if required is true', async () => {
+        it('should return an instace of Buffer', async () => {
             const content = await FileLoader.loadFileBuffer('./test/data', 'logo.png', true);
             expect(content).to.be.instanceOf(Buffer);
         });
 
         it('should return null if file is not found and required is false', async () => {
-            const content = await FileLoader.loadFileBuffer('./test/data', '404.png', false);
+            const content = await FileLoader.loadFileBuffer('./test', 'logo.png', false);
             expect(content).to.be.null;
+        });
+
+        it('should throw an error if file is not found and required is true', async () => {
+            await expect(FileLoader.loadFileBuffer('./test', 'logo.png', true)).to.be.eventually.rejectedWith(Error);
+        });
+    });
+
+    describe('#loadZipFileBuffer', () => {
+        it('should return an instace of Buffer', () => {
+            const zip = new JSZip();
+            zip.loadAsync(fs.readFileSync('./test/data/logo.cta'))
+                .then(async (zip) => {
+                    const content = await FileLoader.loadZipFileBuffer(zip, 'logo.png', true);
+                    expect(content).to.be.an.instanceOf(Buffer);
+                });
+        });
+
+        it('should return null if path is not found inside the zip and required is false', async () => {
+            const zip = new JSZip();
+            const content = await FileLoader.loadZipFileBuffer(zip, 'logo.png', false);
+            expect(content).to.be.null;
+        });
+
+        it('should throw an error if path is not found inside the zip and required is true', async () => {
+            const zip = new JSZip();
+            await expect(FileLoader.loadZipFileBuffer(zip, 'logo.png', true)).to.be.eventually.rejectedWith(Error);
         });
     });
 
