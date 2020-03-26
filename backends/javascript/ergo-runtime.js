@@ -895,7 +895,7 @@ function codeSymbol(c) {
     case 'GBP' : return '£';
     case 'PLN' : return 'zł';
     case 'USD' : return '$';
-    case 'YEN' : return '¥';
+    case 'JPY' : return '¥';
     default : return c; // Defaults to ISO code
     }
 }
