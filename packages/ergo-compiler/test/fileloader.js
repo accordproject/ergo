@@ -42,7 +42,7 @@ describe('FileLoader', () => {
     describe('#loadZipFileBuffer', () => {
         it('should return an instace of Buffer', () => {
             const zip = new JSZip();
-            zip.loadAsync(fs.readFileSync('./test/data/logo.cta'))
+            zip.loadAsync(fs.readFileSync('./test/data/logo.zip'))
                 .then(async (zip) => {
                     const content = await FileLoader.loadZipFileBuffer(zip, 'logo.png', true);
                     expect(content).to.be.an.instanceOf(Buffer);
