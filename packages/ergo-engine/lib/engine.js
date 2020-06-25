@@ -96,9 +96,9 @@ class Engine {
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
-     * @return {Promise} a promise that resolves to a result for the clause
+     * @return {object} the result for the clause
      */
-    async trigger(logic, contractId, contract, request, state, currentTime, options) {
+    trigger(logic, contractId, contract, request, state, currentTime, options) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
@@ -139,7 +139,7 @@ class Engine {
             'state': validNewState,
             'emit': validEmit,
         };
-        return Promise.resolve(answer);
+        return answer;
     }
 
     /**
@@ -153,9 +153,9 @@ class Engine {
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
-     * @return {Promise} a promise that resolves to a result for the clause
+     * @return {object} the result for the clause
      */
-    async invoke(logic, contractId, clauseName, contract, params, state, currentTime, options) {
+    invoke(logic, contractId, clauseName, contract, params, state, currentTime, options) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
@@ -195,7 +195,7 @@ class Engine {
             'state': validNewState,
             'emit': validEmit,
         };
-        return Promise.resolve(answer);
+        return answer;
     }
 
     /**
@@ -206,7 +206,7 @@ class Engine {
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
-     * @return {Promise} a promise that resolves to a result for the clause initialization
+     * @return {object} the result for the clause initialization
      */
     async init(logic, contractId, contract, params, currentTime, options) {
         const defaultState = {
@@ -224,7 +224,7 @@ class Engine {
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
-     * @return {Promise} a promise that resolves to a result for the clause initialization
+     * @return {object} the result for draft
      */
     async draft(logic, contractId, contract, params, currentTime, options) {
         options = options || {};
