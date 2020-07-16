@@ -310,7 +310,7 @@
   },
   {
     "name": "interests clause (formula)",
-    "dir": "../../../examples/interestsgrammar",
+    "dir": "../../../tests/interestsgrammar",
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",
@@ -331,7 +331,7 @@
   },
   {
     "name": "interests clause (formula + format)",
-    "dir": "../../../examples/interestsformat",
+    "dir": "../../../tests/interestsformat",
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
     "models": ["model/model.cto"],
     "contract": "data.json",

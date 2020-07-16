@@ -17,6 +17,10 @@ Require Import List.
 Require Import Basics.
 
 Require Import ErgoSpec.Utils.Misc.
+Require Import ErgoSpec.Backend.Qcert.QcertData.
+Require Import ErgoSpec.Backend.Qcert.QcertTyping.
+Require Import ErgoSpec.Backend.Component.DateTimeComponent.
+Require Import ErgoSpec.Backend.Component.MonetaryAmountComponent.
 Require Import ErgoSpec.Backend.QLib.
 Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Common.NamespaceContext.
@@ -215,14 +219,14 @@ Section ErgoCOverloaded.
 
   Section AsExpr.
     Definition as_dispatch_spec : Set :=
-      (namespace_ctxt -> provenance -> ergoc_type -> eresult ergoc_type)
-      * (provenance -> ergoc_type -> ergoct_expr -> ergoct_expr).
+      (namespace_ctxt -> provenance -> qcert_type -> eresult qcert_type)
+      * (provenance -> qcert_type -> ergoct_expr -> ergoct_expr).
 
     Definition as_dispatch_table : Set :=
       list as_dispatch_spec.
 
-    Definition make_as_double_criteria nsctxt prov t : eresult ergoc_type :=
-      if (ergoc_type_subtype_dec t tfloat)
+    Definition make_as_double_criteria nsctxt prov t : eresult qcert_type :=
+      if (qcert_type_subtype_dec t tfloat)
       then esuccess tstring nil
       else efailure (ETypeError prov (ergo_format_as_operator_dispatch_error nsctxt t)).
 
@@ -232,8 +236,8 @@ Section ErgoCOverloaded.
     Definition make_as_double f : as_dispatch_spec :=
       (make_as_double_criteria, make_as_double_fun f).
 
-    Definition make_as_datetime_criteria nsctxt prov t : eresult ergoc_type :=
-      if (ergoc_type_subtype_dec t DateTime)
+    Definition make_as_datetime_criteria nsctxt prov t : eresult qcert_type :=
+      if (qcert_type_subtype_dec t DateTime)
       then esuccess tstring nil
       else efailure (ETypeError prov (ergo_format_as_operator_dispatch_error nsctxt t)).
 
@@ -244,8 +248,8 @@ Section ErgoCOverloaded.
     Definition make_as_datetime f : as_dispatch_spec :=
       (make_as_datetime_criteria, make_as_datetime_fun f).
 
-    Definition make_as_monetaryamount_criteria nsctxt prov t : eresult ergoc_type :=
-      if (ergoc_type_subtype_dec t (Brand ("org.accordproject.money.MonetaryAmount"%string::nil)))
+    Definition make_as_monetaryamount_criteria nsctxt prov t : eresult qcert_type :=
+      if (qcert_type_subtype_dec t (Brand ("org.accordproject.money.MonetaryAmount"%string::nil)))
       then esuccess tstring nil
       else efailure (ETypeError prov (ergo_format_as_operator_dispatch_error nsctxt t)).
 

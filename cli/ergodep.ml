@@ -44,7 +44,7 @@ let main gconf args =
   List.iter (Config.add_module_file gconf) input_files;
   begin match template_files with
   | [] -> ()
-  | _ -> List.iter (add_template_file gconf) template_files
+  | _ -> List.iter (Config.add_template_file gconf) template_files
   end;
   let all_modules = Config.get_all_sorted gconf in
   List.iter print_dependency (labels_of_graph all_modules)
