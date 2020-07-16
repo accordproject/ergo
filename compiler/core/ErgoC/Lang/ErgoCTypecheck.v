@@ -322,7 +322,7 @@ Section ErgoCTypecheck.
       complex_foreach_in_calculus_error prov
     | EAs prov f e =>
       eolift (as_dispatch nsctxt prov f)
-             (ergoc_typecheck_expr nsctxt ctxt e)
+             (ergoc_expr_typecheck nsctxt ctxt e)
     end.
 
   Definition ergoc_function_typecheck

@@ -28,6 +28,7 @@ Require Import Qcert.Compiler.Component.UriComponent.
 Require Import LogComponent.
 Require Import MathComponent.
 Require Import DateTimeComponent.
+Require Import MonetaryAmountComponent.
 
 Require Import QcertData.
 
@@ -85,6 +86,7 @@ Inductive enhanced_foreign_ejson_runtime_op :=
 | enhanced_ejson_log : ejson_log_runtime_op -> enhanced_foreign_ejson_runtime_op
 | enhanced_ejson_math : ejson_math_runtime_op -> enhanced_foreign_ejson_runtime_op
 | enhanced_ejson_date_time : ejson_date_time_runtime_op -> enhanced_foreign_ejson_runtime_op
+| enhanced_ejson_monetary_amount : ejson_monetary_amount_runtime_op -> enhanced_foreign_ejson_runtime_op
 .
 
 Definition enhanced_foreign_ejson_runtime_op_tostring op : string :=
@@ -93,6 +95,7 @@ Definition enhanced_foreign_ejson_runtime_op_tostring op : string :=
   | enhanced_ejson_log sop => ejson_log_runtime_op_tostring sop
   | enhanced_ejson_math sop => ejson_math_runtime_op_tostring sop
   | enhanced_ejson_date_time sop => ejson_date_time_runtime_op_tostring sop
+  | enhanced_ejson_monetary_amount sop => ejson_monetary_amount_runtime_op_tostring sop
   end.
 
 Definition enhanced_ejson_uri_runtime_op_interp op (dl:list ejson) : option ejson :=
@@ -585,6 +588,27 @@ Definition enhanced_ejson_date_time_runtime_op_interp op (dl:list ejson) : optio
          end) dl
   end.
 
+Definition enhanced_ejson_monetary_amount_runtime_op_interp op (dl:list ejson) : option ejson :=
+  match op with
+  (* Binary *)
+  | EJsonRuntimeMonetaryAmountFormat =>
+    apply_binary
+      (fun d1 d2 : ejson =>
+         match d1, d2 with
+         | ejnumber f1, ejstring s2 =>
+           Some (ejstring (MONETARY_AMOUNT_format f1 s2))
+         | _, _ => None
+       end) dl
+  | EJsonRuntimeMonetaryCodeAdd =>
+    apply_binary
+      (fun d1 d2 : ejson =>
+         match d1, d2 with
+         | ejstring s1, ejstring s2 =>
+           Some (ejstring (MONETARY_CODE_format s1 s2))
+         | _, _ => None
+         end) dl
+  end.
+
 Definition enhanced_foreign_ejson_runtime_op_interp op :=
   match op with
   | enhanced_ejson_uri sop =>
@@ -595,6 +619,8 @@ Definition enhanced_foreign_ejson_runtime_op_interp op :=
     enhanced_ejson_math_runtime_op_interp sop
   | enhanced_ejson_date_time sop =>
     enhanced_ejson_date_time_runtime_op_interp sop
+  | enhanced_ejson_monetary_amount sop =>
+    enhanced_ejson_monetary_amount_runtime_op_interp sop
   end.
 
 Section toString. (* XXX Maybe to move as a component ? *)
@@ -714,6 +740,7 @@ Program Instance enhanced_foreign_ejson_runtime : foreign_ejson_runtime :=
 Next Obligation.
   red; unfold equiv; intros.
   change ({x = y} + {x <> y}).
+  decide equality.
   decide equality.
   decide equality.
   decide equality.

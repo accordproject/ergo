@@ -25,6 +25,7 @@ Require Import Qcert.Compiler.Component.UriComponent.
 Require Import LogComponent.
 Require Import MathComponent.
 Require Import DateTimeComponent.
+Require Import MonetaryAmountComponent.
 
 Local Open Scope nstring_scope.
 
@@ -62,6 +63,8 @@ Definition enhanced_to_java_binary_op
        math_to_java_binary_op indent eol quotel op d1 d2
      | enhanced_binary_date_time_op op =>
        date_time_to_java_binary_op indent eol quotel op d1 d2
+     | enhanced_binary_monetary_amount_op op =>
+       monetary_amount_to_java_binary_op indent eol quotel op d1 d2
      end.
 
 Instance enhanced_foreign_to_java :
