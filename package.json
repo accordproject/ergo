@@ -168,5 +168,6 @@
         "file": "markdown-license.txt"
       }
     }
-  }
+  },
+  "dependencies": {}
 }

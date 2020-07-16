@@ -1,7 +1,0 @@
-{
-  "request": {
-    "$class": "org.accordproject.helloworld.Request",
-    "input": "Accord Project"
-  },
-  "hello": "Bonjour,"
-}

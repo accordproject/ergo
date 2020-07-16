@@ -149,10 +149,10 @@ describe('#triggeracceptanceofdelivery', function () {
 
 describe('#invokehelloworld', function () {
     it('should invoke a clause in a smart Ergo contract (from directory)', async function () {
-        const templatePath = Path.join(EXAMPLES_DIR, 'helloworld3');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworld3', 'data.json') };
-        const paramsPath = { file: Path.join(EXAMPLES_DIR, 'helloworld3', 'params.json') };
-        const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworld3', 'state.json') };
+        const templatePath = Path.join(TESTS_DIR, 'helloworld3');
+        const contractPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'data.json') };
+        const paramsPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'params.json') };
+        const statePath = { file: Path.join(TESTS_DIR, 'helloworld3', 'state.json') };
         const result = await Commands.invoke(templatePath, [], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null);
         result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
     });

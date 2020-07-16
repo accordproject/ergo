@@ -64,7 +64,7 @@ describe('FileLoader', () => {
     describe('#loadZipFileContents', () => {
         it('should return an instance of file', () => {
             const zip = new JSZip();
-            zip.loadAsync(fs.readFileSync('../../examples/helloworldcontract.zip'))
+            zip.loadAsync(fs.readFileSync('../../tests/helloworldcontract.zip'))
                 .then(async (zip) => {
                     expect(
                         await FileLoader.loadZipFileContents(zip, 'helloworldcontract/request.json', true, false)
@@ -89,7 +89,7 @@ describe('FileLoader', () => {
 
     describe('#loadFileContents', () => {
         it('should return an instance of file', async () => {
-            const content = await FileLoader.loadFileContents('../../examples/helloworldcontract', 'request.json', true, false);
+            const content = await FileLoader.loadFileContents('../../tests/helloworldcontract', 'request.json', true, false);
             expect(content).to.deep.equal({
                 '$class': 'org.accordproject.helloworld.Request',
                 'input': 'Accord Project',
@@ -97,12 +97,12 @@ describe('FileLoader', () => {
         });
 
         it('should return null if path is not found and required is false', async () => {
-            const content = await FileLoader.loadFileContents('../../examples/helloworldcontract', 'foo.json', true, false);
+            const content = await FileLoader.loadFileContents('../../tests/helloworldcontract', 'foo.json', true, false);
             expect(content).to.be.null;
         });
 
         it('should throw an error if path is not found and required is true', async () => {
-            await expect(FileLoader.loadFileContents('../../examples/helloworldcontract', 'foo.json', true, true)).to.be.eventually.rejectedWith(Error);
+            await expect(FileLoader.loadFileContents('../../tests/helloworldcontract', 'foo.json', true, true)).to.be.eventually.rejectedWith(Error);
         });
     });
 
