@@ -106,11 +106,11 @@ Section QcertTypeUtil.
       => "This function received unexpected arguments of type `" ++ (qcert_type_to_string nsctxt arg1) ++ "' " ++ " and `" ++ (qcert_type_to_string nsctxt arg2) ++ "'."
     end.
 
-  Definition ergo_format_as_operator_dispatch_error nsctxt (arg : ergoc_type) : string :=
+  Definition ergo_format_as_operator_dispatch_error nsctxt (arg : qcert_type) : string :=
     let fmt_easy :=
         fun actual =>
           ("Cannot use 'as' on operand of type `" ++
-                        (ergoc_type_to_string nsctxt actual) ++ "'.")%string
+                        (qcert_type_to_string nsctxt actual) ++ "'.")%string
     in
     fmt_easy arg.
     

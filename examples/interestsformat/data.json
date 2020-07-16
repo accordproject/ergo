@@ -1,8 +1,0 @@
-{
-  "$class": "org.accordproject.interests.TemplateModel",
-  "loanAmount": { "$class": "org.accordproject.money.MonetaryAmount",
-                  "doubleValue" : 100000,
-                  "currencyCode" : "GBP" },
-  "rate": 2.5,
-  "loanDuration": 3
-}

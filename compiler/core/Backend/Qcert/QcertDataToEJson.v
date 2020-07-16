@@ -30,6 +30,7 @@ Require Import Qcert.Compiler.Component.UriComponent.
 Require Import LogComponent.
 Require Import MathComponent.
 Require Import DateTimeComponent.
+Require Import MonetaryAmountComponent.
 
 Require Import QcertData.
 Require Import QcertEJson.
@@ -188,6 +189,11 @@ Definition binary_op_to_ejson (op:enhanced_binary_op) : enhanced_foreign_ejson_r
     | bop_date_time_is_after => enhanced_ejson_date_time EJsonRuntimeDateTimeIsAfter
     | bop_date_time_diff => enhanced_ejson_date_time EJsonRuntimeDateTimeDiff
     end
+  | enhanced_binary_monetary_amount_op mop =>
+    match mop with
+    | bop_monetary_amount_format => enhanced_ejson_monetary_amount EJsonRuntimeMonetaryAmountFormat
+    | bop_monetary_code_format => enhanced_ejson_monetary_amount EJsonRuntimeMonetaryCodeFormat
+    end
   end.
 
 Lemma binary_op_to_ejson_correct (bop:enhanced_binary_op) :
@@ -202,6 +208,10 @@ Proof.
         destruct f; simpl; try reflexivity;
           destruct f0; try reflexivity.
   - destruct d; simpl;
+      destruct d1; destruct d2; try reflexivity;
+        destruct f; simpl; try reflexivity;
+          destruct f0; try reflexivity.
+  - destruct m; simpl;
       destruct d1; destruct d2; try reflexivity;
         destruct f; simpl; try reflexivity;
           destruct f0; try reflexivity.

@@ -26,6 +26,7 @@ Require Import Qcert.Compiler.Component.UriComponent.
 Require Import LogComponent.
 Require Import MathComponent.
 Require Import DateTimeComponent.
+Require Import MonetaryAmountComponent.
 
 Import ListNotations.
 Local Open Scope list_scope.
@@ -350,6 +351,7 @@ End toString.
 Inductive enhanced_binary_op :=
 | enhanced_binary_math_op : math_binary_op -> enhanced_binary_op
 | enhanced_binary_date_time_op : date_time_binary_op -> enhanced_binary_op
+| enhanced_binary_monetary_amount_op : monetary_amount_binary_op -> enhanced_binary_op
 .
 
 Definition ondfloat2 {A} (f : float -> float -> A) (d1 d2 : data) : option A :=
@@ -412,6 +414,25 @@ Definition date_time_binary_op_interp
   | bop_date_time_diff => lift denhanceddateTimeduration (onddateTime2 DATE_TIME_diff d1 d2)
   end.
 
+Definition monetary_amount_binary_op_interp
+           (op:monetary_amount_binary_op) (d1 d2:data) : option data
+  := match op with
+     | bop_monetary_amount_format =>
+       match d1, d2 with
+       | dfloat f1, dstring s2 =>
+         Some (dstring (MONETARY_AMOUNT_format f1 s2))
+       | _, _ =>
+         None
+       end
+     | bop_monetary_code_format =>
+       match d1, d2 with
+       | dstring s1, dstring s2 =>
+         Some (dstring (MONETARY_CODE_format s1 s2))
+       | _, _ =>
+         None
+       end
+     end.
+
 Definition enhanced_binary_op_interp
            (br:brand_relation_t)
            (op:enhanced_binary_op)
@@ -419,6 +440,7 @@ Definition enhanced_binary_op_interp
   match op with
   | enhanced_binary_math_op f => math_binary_op_interp f d1 d2
   | enhanced_binary_date_time_op f => date_time_binary_op_interp f d1 d2
+  | enhanced_binary_monetary_amount_op f => monetary_amount_binary_op_interp f d1 d2
   end.
 
 Program Instance enhanced_foreign_operators : foreign_operators
@@ -483,6 +505,7 @@ Next Obligation.
   destruct op.
   - exact (math_binary_op_tostring m).
   - exact (date_time_binary_op_tostring d).
+  - exact (monetary_amount_binary_op_tostring m).
 Defined.
 Next Obligation.
   destruct op; simpl in H.
@@ -498,6 +521,14 @@ Next Obligation.
       unfold rondbooldateTime2, onddateTime2, denhanceddateTime, lift in H
       ; destruct d1; simpl in H; try discriminate
       ; destruct f; simpl in H; try discriminate
+      ; destruct d2; simpl in H; try discriminate
+      ; try (destruct f; simpl in H; try discriminate)
+      ; invcs H
+      ; repeat constructor.
+  - destruct m; simpl in H;
+      unfold ondfloat2, lift in H
+      ; destruct d1; simpl in H; try discriminate
+      ; try (destruct f; simpl in H; try discriminate)
       ; destruct d2; simpl in H; try discriminate
       ; try (destruct f; simpl in H; try discriminate)
       ; invcs H
