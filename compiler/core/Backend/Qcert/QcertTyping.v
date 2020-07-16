@@ -26,6 +26,7 @@ Require Import Qcert.Compiler.Component.UriComponent.
 Require Import LogComponent.
 Require Import MathComponent.
 Require Import DateTimeComponent.
+Require Import MonetaryAmountComponent.
 
 Require Import QcertData.
 Require Import QcertEJson.
@@ -739,6 +740,14 @@ Inductive date_time_binary_op_has_type {model:brand_model} :
       date_time_binary_op_has_type bop_date_time_diff DateTime DateTime DateTimeDuration
 .
 
+Inductive monetary_amount_binary_op_has_type {model:brand_model} :
+  monetary_amount_binary_op -> rtype -> rtype -> rtype -> Prop
+  :=
+  | tbop_monetary_amount_format :
+        monetary_amount_binary_op_has_type bop_monetary_amount_format Float RType.String RType.String
+  | tbop_monetary_code_format :
+        monetary_amount_binary_op_has_type bop_monetary_code_format RType.String RType.String RType.String.
+
 Definition math_binary_op_type_infer {model : brand_model} (op:math_binary_op) (τ₁ τ₂:rtype) :=
   match op with
   | bop_math_atan2 =>
@@ -765,6 +774,14 @@ Definition date_time_binary_op_type_infer {model : brand_model} (op:date_time_bi
     if isDateTime τ₁ && isDateTime τ₂ then Some Bool else None
   | bop_date_time_diff  =>
     if isDateTime τ₁ && isDateTime τ₂ then Some DateTimeDuration else None
+  end.
+
+Definition monetary_amount_binary_op_type_infer {model : brand_model} (op:monetary_amount_binary_op) (τ₁ τ₂:rtype) :=
+  match op with
+  | bop_monetary_amount_format =>
+    if isFloat τ₁ && isString τ₂ then Some RType.String else None
+  | bop_monetary_code_format =>
+    if isString τ₁ && isString τ₂ then Some RType.String else None
   end.
 
 Lemma math_binary_op_typing_sound {model : brand_model}
@@ -807,6 +824,25 @@ Proof.
           repeat constructor.
 Qed.
 
+Lemma monetary_amount_binary_op_typing_sound {model : brand_model}
+      (fb : monetary_amount_binary_op) (τin₁ τin₂ τout : rtype) :
+  monetary_amount_binary_op_has_type fb τin₁ τin₂ τout ->
+  forall din₁ din₂ : data,
+    din₁ ▹ τin₁ ->
+    din₂ ▹ τin₂ ->
+    exists dout : data,
+      monetary_amount_binary_op_interp fb din₁ din₂ = Some dout /\ dout ▹ τout.
+Proof.
+  inversion 1; subst;
+    inversion 1; subst;
+      inversion 1; subst;
+        try invcs H0;
+        try invcs H1;
+        simpl;
+        eexists; split; try reflexivity;
+          repeat constructor.
+Qed.
+
 Definition math_binary_op_type_infer_sub {model : brand_model} (op:math_binary_op) (τ₁ τ₂:rtype) : option (rtype*rtype*rtype) :=
   match op with
   | bop_math_atan2 =>
@@ -835,6 +871,14 @@ Definition date_time_binary_op_type_infer_sub {model : brand_model} (op:date_tim
     enforce_binary_op_schema (τ₁,DateTime) (τ₂,DateTime) DateTimeDuration
   end.
 
+Definition monetary_amount_binary_op_type_infer_sub {model : brand_model} (op:monetary_amount_binary_op) (τ₁ τ₂:rtype) : option (rtype*rtype*rtype) :=
+  match op with
+  | bop_monetary_amount_format =>
+    enforce_binary_op_schema (τ₁,Float) (τ₂,RType.String) RType.String
+  | bop_monetary_code_format =>
+    enforce_binary_op_schema (τ₁,RType.String) (τ₂,RType.String) RType.String
+  end.
+
 Inductive enhanced_binary_op_has_type {model:brand_model} :
   enhanced_binary_op -> rtype -> rtype -> rtype -> Prop
   :=
@@ -843,12 +887,16 @@ Inductive enhanced_binary_op_has_type {model:brand_model} :
       enhanced_binary_op_has_type (enhanced_binary_math_op fb) τin₁ τin₂ τout
   | tenhanced_binary_date_time_op fb τin₁ τin₂ τout:
       date_time_binary_op_has_type fb τin₁ τin₂ τout ->
-      enhanced_binary_op_has_type (enhanced_binary_date_time_op fb) τin₁ τin₂ τout.
+      enhanced_binary_op_has_type (enhanced_binary_date_time_op fb) τin₁ τin₂ τout
+  | tenhanced_binary_monetary_amount_op fb τin₁ τin₂ τout:
+      monetary_amount_binary_op_has_type fb τin₁ τin₂ τout ->
+      enhanced_binary_op_has_type (enhanced_binary_monetary_amount_op fb) τin₁ τin₂ τout.
 
 Definition enhanced_binary_op_typing_infer {model:brand_model} (op:enhanced_binary_op) (τ₁ τ₂:rtype) :=
   match op with
   | enhanced_binary_math_op fb => math_binary_op_type_infer fb τ₁ τ₂
   | enhanced_binary_date_time_op fb => date_time_binary_op_type_infer fb τ₁ τ₂
+  | enhanced_binary_monetary_amount_op fb => monetary_amount_binary_op_type_infer fb τ₁ τ₂
   end.
 
 Lemma enhanced_binary_op_typing_infer_correct
@@ -880,6 +928,17 @@ Proof.
         ; invcs H
         ; constructor
         ; repeat rewrite Nat_canon
+        ; repeat rewrite Foreign_canon
+        ; repeat rewrite String_canon
+        ; try constructor.
+  - destruct m; simpl in *;
+      destruct τ₁; destruct τ₂; simpl in *; try discriminate;
+        unfold isDateTime, isDateTimeDuration, isNat, isDateTimeFormat in *
+        ; destruct x; simpl in H; try discriminate
+        ; destruct x0; simpl in H; try discriminate
+        ; invcs H
+        ; constructor
+        ; repeat rewrite Float_canon
         ; repeat rewrite Foreign_canon
         ; repeat rewrite String_canon
         ; try constructor.
@@ -917,6 +976,17 @@ Proof.
       ; invcs H0
       ; invcs H1
       ; reflexivity.
+  - destruct m; simpl in *;
+      destruct τ₁; destruct τ₂; simpl in *; try discriminate
+      ; unfold isDateTime, isDateTimeDuration, isNat in *
+      ; destruct x; simpl in H; try discriminate
+      ; destruct x0; simpl in H; try discriminate
+      ; try (destruct ft; simpl in H; try discriminate)
+      ; invcs H
+      ; repeat rewrite Foreign_canon in H0
+      ; invcs H0
+      ; invcs H1
+      ; reflexivity.
 Qed.
 
 Lemma enhanced_binary_op_typing_infer_complete
@@ -931,12 +1001,15 @@ Proof.
     destruct m; simpl in *; invcs H1; simpl in H; try discriminate.
   - intro HH; invcs HH.
     destruct d; simpl in *; invcs H1; simpl in H; try discriminate.
+  - intro HH; invcs HH.
+    destruct m; simpl in *; invcs H1; simpl in H; try discriminate.
 Qed.
 
 Definition enhanced_binary_op_typing_infer_sub {model:brand_model} (op:enhanced_binary_op) (τ₁ τ₂:rtype) :=
   match op with
   | enhanced_binary_math_op fb => math_binary_op_type_infer_sub fb τ₁ τ₂
   | enhanced_binary_date_time_op fb => date_time_binary_op_type_infer_sub fb τ₁ τ₂
+  | enhanced_binary_monetary_amount_op fb => monetary_amount_binary_op_type_infer_sub fb τ₁ τ₂
   end.
 
 Lemma enhanced_binary_op_typing_sound {model : brand_model}
@@ -952,6 +1025,7 @@ Proof.
   destruct H.
   - eapply math_binary_op_typing_sound; eauto.
   - eapply date_time_binary_op_typing_sound; eauto.
+  - eapply monetary_amount_binary_op_typing_sound; eauto.
 Qed.
 
 Instance enhanced_foreign_operators_typing
