@@ -157,21 +157,21 @@ $(DIST2): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoCom
 	cp _build_js/$(BIN2) $(DIST2)
 
 _build_js/$(BYTE2): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN2).$(ML)
-	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE2)
+	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml-ppx -Is extracted -Is src $(BYTE2)
 
 $(DIST3): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE3) $(DIST1)
 	js_of_ocaml _build_js/$(BYTE3) -o _build_js/$(BIN3)
 	cp _build_js/$(BIN3) $(DIST3)
 
 _build_js/$(BYTE3): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN3).$(ML)
-	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE3)
+	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml-ppx -Is extracted -Is src $(BYTE3)
 
 $(DIST5): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli _build_js/$(BYTE5) $(DIST1)
 	js_of_ocaml _build_js/$(BYTE5) -o _build_js/$(BIN5)
 	cp _build_js/$(BIN5) $(DIST5)
 
 _build_js/$(BYTE5): $(ATDS) extracted/Resources.ml extracted/ErgoComp.ml extracted/ErgoComp.mli $(MAIN5).$(ML)
-	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml.ppx -Is extracted -Is src $(BYTE5)
+	$(OCAMLBUILD) $(MENHIRFLAG) -build-dir _build_js -use-ocamlfind -package js_of_ocaml -package js_of_ocaml-ppx -Is extracted -Is src $(BYTE5)
 
 ## Clean
 
