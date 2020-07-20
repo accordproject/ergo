@@ -89,9 +89,7 @@
       "compiler/Makefile",
       "compiler/dune",
       "compiler/core/Makefile",
-      "compiler/extraction/Makefile",
-      "compiler/extraction/core.ml",
-      "compiler/extraction/core.mli",
+      "compiler/extraction",
       "compiler/lib/resources.ml",
       "compiler/lib/static_config.ml",
       "compiler/libjs/.merlin",
@@ -110,6 +108,7 @@
     ],
     "file_type_method": "EXCLUDE",
     "file_types": [
+      ".gitignore",
       ".yml",
       ".log",
       ".enc",
