@@ -129,97 +129,159 @@ Section ErgoNNRCtoErgoImp.
       unfold CompEval.h.
       unfold ergo_nnrc_function_to_imp.
       unfold QcertCodeGen.nnrc_expr_to_imp_ejson_function.
-      rewrite (@eval_nnrc_to_imp_correct _ _ _ _ _ bm).
+      rewrite (@eval_nnrc_to_imp_correct _ _ _ _ _ _ _ bm).
       unfold CompEval.h.
       unfold nnrc_expr_to_imp_ejson_function.
       assert (
-          (@lift (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+          (@lift (@EJson.ejson QcertEJson.enhanced_ejson)
           (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime))
-          (@DataToEJson.ejson_to_data QcertData.enhanced_foreign_runtime QcertEJson.enhanced_foreign_ejson
+          (@DataToEJson.ejson_to_data QcertData.enhanced_foreign_runtime QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op 
              QcertDataToEJson.enhanced_foreign_to_ejson)
-          (@ImpEJsonEval.imp_ejson_function_eval QcertEJson.enhanced_foreign_ejson
-             (@ForeignDataToEJson.foreign_to_ejson_runtime QcertData.enhanced_foreign_runtime
-                QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson)
+          (@ImpEJsonEval.imp_ejson_function_eval
+             QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson
+              QcertEJson.enhanced_foreign_ejson_runtime_op
+             (@ForeignDataToEJson.foreign_to_ejson_runtime QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson QcertData.enhanced_foreign_runtime
+                QcertDataToEJson.enhanced_foreign_to_ejson)
              (@brand_relation_brands (@brand_model_relation QcertType.enhanced_foreign_type bm))
              (@ImpDatatoImpEJson.imp_data_function_to_imp_ejson QcertData.enhanced_foreign_runtime
-                QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson
-                (@ForeignDataToEJson.foreign_to_ejson_runtime QcertData.enhanced_foreign_runtime
-                   QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson)
+                QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson
+                (@ForeignDataToEJson.foreign_to_ejson_runtime
+                   QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson QcertData.enhanced_foreign_runtime
+                QcertDataToEJson.enhanced_foreign_to_ejson)
                 QcertDataToEJson.enhanced_foreign_to_ejson_runtime
                 (@CompEval.h QcertType.enhanced_foreign_type bm)
                 (@NNRSimptoImpData.nnrs_imp_to_imp_data_function QcertData.enhanced_foreign_runtime
                    (@nnrs_to_nnrs_imp QcertData.enhanced_foreign_runtime
                       (@nnrc_to_nnrs QcertData.enhanced_foreign_runtime (@nil string) (@lambdan_body bm f)))))
-             (@EJson.ejobject QcertEJson.enhanced_foreign_ejson
-                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+             (@EJson.ejobject QcertEJson.enhanced_ejson
+                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_ejson)
                    (@map (prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)))
-                      (prod string (@EJson.ejson QcertEJson.enhanced_foreign_ejson))
+                      (prod string (@EJson.ejson QcertEJson.enhanced_ejson))
                       (fun xy : prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) =>
-                       @pair string (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+                       @pair string (@EJson.ejson QcertEJson.enhanced_ejson)
                          (key_encode
                             (@fst string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy))
                          (@DataToEJson.data_to_ejson QcertData.enhanced_foreign_runtime
-                            QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson
+                            QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson
                             (@snd string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy)))
                       params)))))
-          = (@lift (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+          = (@lift (@EJson.ejson QcertEJson.enhanced_ejson)
           (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime))
-          (@DataToEJson.ejson_to_data QcertData.enhanced_foreign_runtime QcertEJson.enhanced_foreign_ejson
-             QcertDataToEJson.enhanced_foreign_to_ejson)
-          (@ImpEJsonEval.imp_ejson_function_eval QcertEJson.enhanced_foreign_ejson
-             QcertEJson.enhanced_foreign_ejson_runtime
+          (@DataToEJson.ejson_to_data QcertData.enhanced_foreign_runtime QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson
+             QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson)
+          (@ImpEJsonEval.imp_ejson_function_eval QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson
+             QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson_runtime
              (@brand_relation_brands (@brand_model_relation QcertType.enhanced_foreign_type bm))
              (@ImpDatatoImpEJson.imp_data_function_to_imp_ejson QcertData.enhanced_foreign_runtime
-                QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson
-                (@ForeignDataToEJson.foreign_to_ejson_runtime QcertData.enhanced_foreign_runtime
-                   QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson)
+                QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson
+                (@ForeignDataToEJson.foreign_to_ejson_runtime
+                   QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson QcertData.enhanced_foreign_runtime QcertDataToEJson.enhanced_foreign_to_ejson)
                 QcertDataToEJson.enhanced_foreign_to_ejson_runtime
                 (@CompEval.h QcertType.enhanced_foreign_type bm)
                 (@NNRSimptoImpData.nnrs_imp_to_imp_data_function QcertData.enhanced_foreign_runtime
                    (@nnrs_to_nnrs_imp QcertData.enhanced_foreign_runtime
                       (@nnrc_to_nnrs QcertData.enhanced_foreign_runtime (@nil string) (@lambdan_body bm f)))))
-             (@EJson.ejobject QcertEJson.enhanced_foreign_ejson
-                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+             (@EJson.ejobject QcertEJson.enhanced_ejson
+                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_ejson)
                    (@map (prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)))
-                      (prod string (@EJson.ejson QcertEJson.enhanced_foreign_ejson))
+                      (prod string (@EJson.ejson QcertEJson.enhanced_ejson))
                       (fun xy : prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) =>
-                       @pair string (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+                       @pair string (@EJson.ejson QcertEJson.enhanced_ejson)
                          (key_encode
                             (@fst string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy))
                          (@DataToEJson.data_to_ejson QcertData.enhanced_foreign_runtime
-                            QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson
+                            QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson
                             (@snd string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy)))
                       params)))))
         ) by reflexivity.
       rewrite H; clear H.
-      destruct (@lift (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
-          (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime))
-          (@DataToEJson.ejson_to_data QcertData.enhanced_foreign_runtime QcertEJson.enhanced_foreign_ejson
-             QcertDataToEJson.enhanced_foreign_to_ejson)
-          (@ImpEJsonEval.imp_ejson_function_eval QcertEJson.enhanced_foreign_ejson
-             QcertEJson.enhanced_foreign_ejson_runtime
+      unfold eresult_of_option.
+      unfold lift.
+      Set Printing All.
+      assert (@ImpEJsonEval.imp_ejson_function_eval QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson
+             QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson_runtime
              (@brand_relation_brands (@brand_model_relation QcertType.enhanced_foreign_type bm))
              (@ImpDatatoImpEJson.imp_data_function_to_imp_ejson QcertData.enhanced_foreign_runtime
-                QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson
-                (@ForeignDataToEJson.foreign_to_ejson_runtime QcertData.enhanced_foreign_runtime
-                   QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson)
+                QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson
+                QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson
+                (@ForeignDataToEJson.foreign_to_ejson_runtime QcertEJson.enhanced_ejson
+                   QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson
+                   QcertData.enhanced_foreign_runtime QcertDataToEJson.enhanced_foreign_to_ejson)
                 QcertDataToEJson.enhanced_foreign_to_ejson_runtime
                 (@CompEval.h QcertType.enhanced_foreign_type bm)
                 (@NNRSimptoImpData.nnrs_imp_to_imp_data_function QcertData.enhanced_foreign_runtime
                    (@nnrs_to_nnrs_imp QcertData.enhanced_foreign_runtime
                       (@nnrc_to_nnrs QcertData.enhanced_foreign_runtime (@nil string) (@lambdan_body bm f)))))
-             (@EJson.ejobject QcertEJson.enhanced_foreign_ejson
-                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+             (@EJson.ejobject QcertEJson.enhanced_ejson
+                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_ejson)
                    (@map (prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)))
-                      (prod string (@EJson.ejson QcertEJson.enhanced_foreign_ejson))
+                      (prod string (@EJson.ejson QcertEJson.enhanced_ejson))
                       (fun xy : prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) =>
-                       @pair string (@EJson.ejson QcertEJson.enhanced_foreign_ejson)
+                       @pair string (@EJson.ejson QcertEJson.enhanced_ejson)
                          (key_encode
                             (@fst string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy))
-                         (@DataToEJson.data_to_ejson QcertData.enhanced_foreign_runtime
-                            QcertEJson.enhanced_foreign_ejson QcertDataToEJson.enhanced_foreign_to_ejson
+                         (@DataToEJson.data_to_ejson QcertData.enhanced_foreign_runtime QcertEJson.enhanced_ejson
+                            QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op
+                            QcertDataToEJson.enhanced_foreign_to_ejson
                             (@snd string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy)))
-                      params))))); simpl; auto.
+                      params)))
+             = @ImpEJsonEval.imp_ejson_function_eval QcertBackend.ergo_foreign_ejson
+             QcertEJson.enhanced_foreign_ejson QcertBackend.ergo_foreign_ejson_runtime_op
+             QcertEJson.enhanced_foreign_ejson_runtime
+             (@brand_relation_brands (@brand_model_relation QcertType.enhanced_foreign_type bm))
+             (@ImpDatatoImpEJson.imp_data_function_to_imp_ejson QcertData.enhanced_foreign_runtime
+                QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson
+                QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson
+                (@ForeignDataToEJson.foreign_to_ejson_runtime QcertEJson.enhanced_ejson
+                   QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson
+                   QcertData.enhanced_foreign_runtime QcertDataToEJson.enhanced_foreign_to_ejson)
+                QcertDataToEJson.enhanced_foreign_to_ejson_runtime
+                (@CompEval.h QcertType.enhanced_foreign_type bm)
+                (@NNRSimptoImpData.nnrs_imp_to_imp_data_function QcertData.enhanced_foreign_runtime
+                   (@nnrs_to_nnrs_imp QcertData.enhanced_foreign_runtime
+                      (@nnrc_to_nnrs QcertData.enhanced_foreign_runtime (@nil string) (@lambdan_body bm f)))))
+             (@EJson.ejobject QcertEJson.enhanced_ejson
+                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_ejson)
+                   (@map (prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)))
+                      (prod string (@EJson.ejson QcertEJson.enhanced_ejson))
+                      (fun xy : prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) =>
+                       @pair string (@EJson.ejson QcertEJson.enhanced_ejson)
+                         (key_encode
+                            (@fst string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy))
+                         (@DataToEJson.data_to_ejson QcertData.enhanced_foreign_runtime QcertEJson.enhanced_ejson
+                            QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op
+                            QcertDataToEJson.enhanced_foreign_to_ejson
+                            (@snd string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy)))
+                      params)))) by reflexivity; intros.
+      rewrite H; clear H.
+      destruct (@ImpEJsonEval.imp_ejson_function_eval QcertBackend.ergo_foreign_ejson
+             QcertEJson.enhanced_foreign_ejson QcertBackend.ergo_foreign_ejson_runtime_op
+             QcertEJson.enhanced_foreign_ejson_runtime
+             (@brand_relation_brands (@brand_model_relation QcertType.enhanced_foreign_type bm))
+             (@ImpDatatoImpEJson.imp_data_function_to_imp_ejson QcertData.enhanced_foreign_runtime
+                QcertEJson.enhanced_ejson QcertEJson.enhanced_foreign_ejson
+                QcertEJson.enhanced_foreign_ejson_runtime_op QcertDataToEJson.enhanced_foreign_to_ejson
+                (@ForeignDataToEJson.foreign_to_ejson_runtime QcertEJson.enhanced_ejson
+                   QcertEJson.enhanced_foreign_ejson_runtime_op QcertEJson.enhanced_foreign_ejson
+                   QcertData.enhanced_foreign_runtime QcertDataToEJson.enhanced_foreign_to_ejson)
+                QcertDataToEJson.enhanced_foreign_to_ejson_runtime
+                (@CompEval.h QcertType.enhanced_foreign_type bm)
+                (@NNRSimptoImpData.nnrs_imp_to_imp_data_function QcertData.enhanced_foreign_runtime
+                   (@nnrs_to_nnrs_imp QcertData.enhanced_foreign_runtime
+                      (@nnrc_to_nnrs QcertData.enhanced_foreign_runtime (@nil string) (@lambdan_body bm f)))))
+             (@EJson.ejobject QcertEJson.enhanced_ejson
+                (@rec_sort string ODT_string (@EJson.ejson QcertEJson.enhanced_ejson)
+                   (@map (prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)))
+                      (prod string (@EJson.ejson QcertEJson.enhanced_ejson))
+                      (fun xy : prod string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) =>
+                       @pair string (@EJson.ejson QcertEJson.enhanced_ejson)
+                         (key_encode
+                            (@fst string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy))
+                         (@DataToEJson.data_to_ejson QcertData.enhanced_foreign_runtime QcertEJson.enhanced_ejson
+                            QcertEJson.enhanced_foreign_ejson QcertEJson.enhanced_foreign_ejson_runtime_op
+                            QcertDataToEJson.enhanced_foreign_to_ejson
+                            (@snd string (@data (@foreign_runtime_data QcertData.enhanced_foreign_runtime)) xy)))
+                      params)))); simpl; auto.
     Qed.
 
     (** Main theorem of correctness for ErgoNNRC to ErgoImp translation.

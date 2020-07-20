@@ -19,12 +19,14 @@ type lang =
   | Ergo
   | ES6
   | Java
+  | Wasm
 
 let lang_of_target s =
   begin match s with
   | "ergo" -> Ergo
   | "es6" -> ES6
   | "java" -> Java
+  | "wasm" -> Wasm
   | _ -> ergo_raise (ergo_system_error ("Unknown language: " ^ s))
   end
 
@@ -33,6 +35,7 @@ let name_of_lang s =
   | Ergo -> "ergo"
   | ES6 -> "es6"
   | Java -> "java"
+  | Wasm -> "wasm"
   end
 
 let extension_of_lang lang =
@@ -40,6 +43,7 @@ let extension_of_lang lang =
   | Ergo -> ".ergo"
   | ES6 -> ".js"
   | Java -> ".java"
+  | Wasm -> ".wat"
   end
 
 let script_lang_of_lang lang =
@@ -47,6 +51,7 @@ let script_lang_of_lang lang =
   | Ergo -> ".ergo"
   | ES6 -> ".js"
   | Java -> ".java"
+  | Wasm -> ".wat"
   end
 
 let script_lang_of_target s =
@@ -57,9 +62,10 @@ let can_link_runtime lang =
   | Ergo -> false
   | ES6 -> true
   | Java -> false
+  | Wasm -> false
   end
 
-let targets = [ES6;Java]
+let targets = [ES6;Java;Wasm]
 let available_targets = List.map name_of_lang targets
 
 let available_targets_message =

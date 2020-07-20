@@ -38,7 +38,7 @@ Local Open Scope list_scope.
 
 Definition enhanced_ejson : Set := enhanced_data.
 
-Program Instance enhanced_foreign_ejson : foreign_ejson
+Program Instance enhanced_foreign_ejson : foreign_ejson enhanced_ejson
   := mk_foreign_ejson enhanced_ejson _ _ _ _ _ _.
 Next Obligation.
   red.
@@ -120,7 +120,7 @@ Definition enhanced_foreign_ejson_runtime_op_fromstring (s:string) : option _ :=
     end
   end.
 
-Definition enhanced_ejson_uri_runtime_op_interp op (dl:list ejson) : option ejson :=
+Definition enhanced_ejson_uri_runtime_op_interp op (dl:list (@ejson enhanced_ejson)) : option ejson :=
   match op with
   | EJsonRuntimeUriEncode =>
     apply_unary
@@ -138,7 +138,7 @@ Definition enhanced_ejson_uri_runtime_op_interp op (dl:list ejson) : option ejso
          end) dl
   end.
 
-Definition onjstringunit (f : String.string -> unit) (j : ejson) : option ejson :=
+Definition onjstringunit (f : String.string -> unit) (j : (@ejson enhanced_ejson)) : option (@ejson enhanced_ejson) :=
   match j with
   | ejstring s =>
     match f s with                                            (* Call log *)
@@ -154,7 +154,7 @@ Definition enhanced_ejson_log_runtime_op_interp op (dl:list ejson) : option ejso
       (onjstringunit LOG_string) dl
   end.
 
-Definition enhanced_ejson_math_runtime_op_interp op (dl:list ejson) : option ejson :=
+Definition enhanced_ejson_math_runtime_op_interp op (dl:list (@ejson enhanced_ejson)) : option (@ejson enhanced_ejson) :=
   match op with
   | EJsonRuntimeFloatOfString =>
     apply_unary
@@ -610,7 +610,7 @@ Definition enhanced_ejson_date_time_runtime_op_interp op (dl:list ejson) : optio
          end) dl
   end.
 
-Definition enhanced_ejson_monetary_amount_runtime_op_interp op (dl:list ejson) : option ejson :=
+Definition enhanced_ejson_monetary_amount_runtime_op_interp op (dl:list (@ejson enhanced_ejson)) : option ejson :=
   match op with
   (* Binary *)
   | EJsonRuntimeMonetaryAmountFormat =>
@@ -646,7 +646,7 @@ Definition enhanced_foreign_ejson_runtime_op_interp op :=
   end.
 
 Section toString. (* XXX Maybe to move as a component ? *)
-  Fixpoint ejsonEnumToString (b:brands) (j:ejson) : string :=
+  Fixpoint ejsonEnumToString (b:brands) (j:@ejson enhanced_ejson) : string :=
     match j with
     | ejobject ((s1,j)::nil) =>
       if (string_dec s1 "$left") then
@@ -757,8 +757,8 @@ Section toString. (* XXX Maybe to move as a component ? *)
 
 End toString.
 
-Program Instance enhanced_foreign_ejson_runtime : foreign_ejson_runtime :=
-  mk_foreign_ejson_runtime enhanced_foreign_ejson enhanced_foreign_ejson_runtime_op _ _ _ _ _ _.
+Program Instance enhanced_foreign_ejson_runtime : foreign_ejson_runtime enhanced_foreign_ejson_runtime_op :=
+  mk_foreign_ejson_runtime enhanced_foreign_ejson_runtime_op enhanced_ejson enhanced_foreign_ejson _ _ _ _ _ _.
 Next Obligation.
   red; unfold equiv; intros.
   change ({x = y} + {x <> y}).

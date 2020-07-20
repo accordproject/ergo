@@ -88,9 +88,13 @@ Module EnhancedModel(bm:CompilerBrandModel(EnhancedForeignType)) <: CompilerMode
     := @enhanced_basic_model bm.compiler_brand_model.
   Definition compiler_model_foreign_runtime : foreign_runtime
     := enhanced_foreign_runtime.
-  Definition compiler_model_foreign_ejson : foreign_ejson
+  Definition compiler_model_foreign_ejson_model : Set
+    := enhanced_ejson.
+  Definition compiler_model_foreign_ejson : foreign_ejson compiler_model_foreign_ejson_model
     := enhanced_foreign_ejson.
-  Definition compiler_model_foreign_to_ejson : foreign_to_ejson
+  Definition compiler_model_foreign_ejson_runtime_op : Set
+    := enhanced_foreign_ejson_runtime_op.
+  Definition compiler_model_foreign_to_ejson : foreign_to_ejson compiler_model_foreign_ejson_model compiler_model_foreign_ejson_runtime_op
     := enhanced_foreign_to_ejson.
   Definition compiler_model_foreign_to_ejson_runtime : foreign_to_ejson_runtime
     := enhanced_foreign_to_ejson_runtime.

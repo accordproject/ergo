@@ -38,8 +38,8 @@ Require Import QcertEJson.
 Import ListNotations.
 Local Open Scope list_scope.
 
-Program Instance enhanced_foreign_to_ejson : foreign_to_ejson
-  := mk_foreign_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson _ _ _ _.
+Program Instance enhanced_foreign_to_ejson : foreign_to_ejson _ _
+  := mk_foreign_to_ejson enhanced_ejson enhanced_foreign_ejson_runtime_op enhanced_foreign_ejson enhanced_foreign_runtime _ _ _ _.
 Next Obligation.
   exact j. (* XXX enhanced_ejson is the same as enhanced_data *)
 Defined.
@@ -130,12 +130,12 @@ Proof.
                  (fun a : enhanced_data => QcertData.enhanced_foreign_data_obligation_4 a)
                  (fun (a : enhanced_data) (_ : QcertData.enhanced_foreign_data_obligation_2 a) =>
                   @eq_refl enhanced_data a) QcertData.enhanced_foreign_data_obligation_6))
-           (@ejson enhanced_foreign_ejson)
-           (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson) l)
+           (@ejson enhanced_ejson)
+           (@data_to_ejson enhanced_foreign_runtime enhanced_ejson enhanced_foreign_ejson enhanced_foreign_ejson_runtime_op enhanced_foreign_to_ejson) l)
           =
           (ejson_dates
-             (@map (@data (@foreign_runtime_data enhanced_foreign_runtime)) (@ejson enhanced_foreign_ejson)
-                   (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson) l))) by reflexivity.
+             (@map (@data (@foreign_runtime_data enhanced_foreign_runtime)) (@ejson enhanced_ejson)
+                   (@data_to_ejson enhanced_foreign_runtime enhanced_ejson enhanced_foreign_ejson enhanced_foreign_ejson_runtime_op enhanced_foreign_to_ejson) l))) by reflexivity.
   rewrite <- H in IHl.
   rewrite <- IHl; clear IHl.
   reflexivity.
@@ -234,12 +234,12 @@ Proof.
   - unfold ejsonLeftToString.
     rewrite IHd; clear IHd.
     destruct
-      (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson d);
+      (@data_to_ejson enhanced_foreign_runtime enhanced_ejson enhanced_foreign_ejson enhanced_foreign_ejson_runtime_op enhanced_foreign_to_ejson d);
       try reflexivity.
   - unfold ejsonRightToString.
     rewrite IHd; clear IHd.
     destruct
-      (@data_to_ejson enhanced_foreign_runtime enhanced_foreign_ejson enhanced_foreign_to_ejson d);
+      (@data_to_ejson enhanced_foreign_runtime enhanced_ejson enhanced_foreign_ejson enhanced_foreign_ejson_runtime_op enhanced_foreign_to_ejson d);
       try reflexivity.
   - admit.
 Admitted.
@@ -253,8 +253,10 @@ Admitted.
 
 Program Instance enhanced_foreign_to_ejson_runtime : foreign_to_ejson_runtime :=
   mk_foreign_to_ejson_runtime
-    enhanced_foreign_runtime
+    enhanced_ejson
+    enhanced_foreign_ejson_runtime_op
     enhanced_foreign_ejson
+    enhanced_foreign_runtime
     enhanced_foreign_to_ejson
     enhanced_foreign_ejson_runtime
     _ _ _ _ _ _.
