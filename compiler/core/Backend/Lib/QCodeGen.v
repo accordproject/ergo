@@ -52,8 +52,9 @@ Module QCodeGen(ergomodel:QBackendModel).
   End Emit.
 
   Section Imp.
-    Definition imp_ejson_function := ImpEJson.imp_ejson_function.
-    Definition imp_ejson_lib := ImpEJson.imp_ejson.
+    
+    Definition imp_ejson_function := @ImpEJson.imp_ejson_function ergomodel.ergo_foreign_ejson ergomodel.ergo_foreign_ejson_runtime_op.
+    Definition imp_ejson_lib := @ImpEJson.imp_ejson ergomodel.ergo_foreign_ejson ergomodel.ergo_foreign_ejson_runtime_op.
 
     Definition nnrc_expr_to_imp_ejson_function
       {bm:brand_model} :=

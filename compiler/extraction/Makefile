@@ -36,7 +36,7 @@ clean:
 
 cleanall: clean
 	rm -f ErgoExtraction.glob ErgoExtraction.vo .ErgoExtraction.aux
-	rm -rf core.ml core.mli
+	rm -rf *.ml *.mli
 	rm -rf *~
 
 .NOTPARALLEL: 
