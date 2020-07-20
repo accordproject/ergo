@@ -23,8 +23,9 @@ Definition enhanced_ejson_to_ajavascript_expr (j:enhanced_ejson) : JsAst.JsSynta
   JsAst.JsSyntax.expr_literal (JsAst.JsSyntax.literal_null).
 
 Instance enhanced_foreign_ejson_to_ajavascript :
-  @foreign_ejson_to_ajavascript enhanced_foreign_ejson
+  @foreign_ejson_to_ajavascript enhanced_ejson enhanced_foreign_ejson
   := mk_foreign_ejson_to_ajavascript
+       enhanced_ejson
        enhanced_foreign_ejson
        enhanced_ejson_to_ajavascript_expr.
 

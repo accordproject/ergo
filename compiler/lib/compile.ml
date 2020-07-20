@@ -36,6 +36,10 @@ let compile_module_to_java inputs template =
   let code = ErgoCompiler.ergo_module_to_java inputs template in
   wrap_jerrors res_convert code
 
+let compile_module_to_wasm inputs template =
+  let code = ErgoCompiler.ergo_module_to_wasm inputs template in
+  wrap_jerrors res_convert code
+
 let adjust_template_file template =
   begin match template with
   | None -> None
@@ -49,6 +53,7 @@ let ergo_compile target_lang inputs template =
   | Ergo -> ergo_raise (ergo_system_error "Target language cannot be Ergo")
   | ES6 -> compile_module_to_es6 inputs template
   | Java -> compile_module_to_java inputs template
+  | Wasm -> compile_module_to_wasm inputs template
   end
 
 let ergo_link gconf result =
