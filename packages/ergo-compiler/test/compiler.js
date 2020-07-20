@@ -32,10 +32,10 @@ describe('ergo-compiler', () => {
 
     describe('#targets', () => {
         it('should return all the compiler targets', () => {
-            ErgoCompiler.availableTargets().should.deep.equal(['es6','java']);
+            ErgoCompiler.availableTargets().should.deep.equal(['es6','java','wasm']);
         });
         it('es5 should *not* be a valid target', () => {
-            (() => ErgoCompiler.isValidTarget('es5')).should.throw('Unknown target: es5 (available: es6,java)');
+            (() => ErgoCompiler.isValidTarget('es5')).should.throw('Unknown target: es5 (available: es6,java,wasm)');
         });
         it('es6 should be a valid target', () => {
             ErgoCompiler.isValidTarget('es6').should.equal(true);
@@ -44,7 +44,7 @@ describe('ergo-compiler', () => {
             ErgoCompiler.isValidTarget('java').should.equal(true);
         });
         it('should not be a valid target', () => {
-            (() => ErgoCompiler.isValidTarget('es7')).should.throw('Unknown target: es7 (available: es6,java)');
+            (() => ErgoCompiler.isValidTarget('es7')).should.throw('Unknown target: es7 (available: es6,java,wasm)');
         });
     });
 
