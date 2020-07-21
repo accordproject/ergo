@@ -301,7 +301,7 @@ describe('LogicManager', () => {
     });
 
     describe('#loader-dir', () => {
-        it('should load a directory with no grammar', async function () {
+        it('should load a directory with no formula', async function () {
             const logicManager = await ErgoLoader.fromDirectory(Path.join(EXAMPLES_DIR,'acceptance-of-delivery'), {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
@@ -315,7 +315,7 @@ describe('LogicManager', () => {
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(45966);
         });
 
-        it('should load a directory with grammar', async function () {
+        it('should load a directory with formula', async function () {
             const logicManager = await ErgoLoader.fromDirectory(Path.join(EXAMPLES_DIR,'helloworldcontract'));
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
@@ -326,12 +326,12 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(42251);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(40924);
         });
     });
 
     describe('#loader-zip', () => {
-        it('should load a Zip with no grammar', async function () {
+        it('should load a Zip with no formula', async function () {
             const buffer = fs.readFileSync(Path.join(EXAMPLES_DIR,'acceptance-of-delivery.zip'));
             const logicManager = await ErgoLoader.fromZip(buffer, {});
             const modelManager = logicManager.getModelManager();
@@ -346,7 +346,7 @@ describe('LogicManager', () => {
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(45966);
         });
 
-        it('should load a Zip with grammar', async function () {
+        it('should load a Zip with formula', async function () {
             const buffer = fs.readFileSync(Path.join(EXAMPLES_DIR,'helloworldcontract.zip'));
             const logicManager = await ErgoLoader.fromZip(buffer);
             const modelManager = logicManager.getModelManager();
@@ -358,13 +358,13 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(42251);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(40924);
         });
     });
 
 
     describe('#loader-files', () => {
-        it('should load files with no grammar', async function () {
+        it('should load files with no formula', async function () {
             const files = [
                 Path.join(EXAMPLES_DIR,'acceptance-of-delivery/model/model.cto'),
                 Path.join(EXAMPLES_DIR,'acceptance-of-delivery/logic/logic.ergo'),
@@ -382,11 +382,11 @@ describe('LogicManager', () => {
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(45966);
         });
 
-        it('should load a Zip with grammar', async function () {
+        it('should load a Zip with formula', async function () {
             const files = [
                 Path.join(EXAMPLES_DIR,'helloworldcontract/model/model.cto'),
                 Path.join(EXAMPLES_DIR,'helloworldcontract/logic/logic.ergo'),
-                Path.join(EXAMPLES_DIR,'helloworldcontract/text/grammar.tem.md'),
+                Path.join(EXAMPLES_DIR,'helloworldcontract/text/formula.tem'),
             ];
             const logicManager = await ErgoLoader.fromFiles(files);
             const modelManager = logicManager.getModelManager();
@@ -398,7 +398,7 @@ describe('LogicManager', () => {
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(42251);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(40924);
         });
     });
 

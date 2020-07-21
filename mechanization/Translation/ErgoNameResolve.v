@@ -849,16 +849,15 @@ Section ErgoNameResolution.
 
     Definition resolve_ergo_template
                (ctxt:namespace_ctxt)
-               (ftemplate:option (string * lrergo_expr)) : eresult (option (string * laergo_expr)) :=
-      match ftemplate with
-      | None => esuccess None nil
-      | Some t =>
-        let (fname, template) := t in
-        elift
-          (fun x =>
-             Some (fname, x))
-          (resolve_ergo_template_expr ctxt template)
-      end.
+               (ftemplate:list (string * lrergo_expr)) : eresult (list (string * laergo_expr)) :=
+      elift_fold_left
+        (fun acc template =>
+           let fname : string := fst template in
+           let template : lrergo_expr := snd template in
+           elift (fun x =>
+                    (fname, x) :: acc)
+                 (resolve_ergo_template_expr ctxt template))
+        ftemplate nil.
 
     Definition resolve_ergo_modules
                (ctxt:namespace_ctxt)

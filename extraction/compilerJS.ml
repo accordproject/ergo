@@ -44,7 +44,7 @@ let iter_inputs gconf f g h o =
 let iter_template gconf f g h o =
   iter_array_gen gconf
     (fun gconf a ->
-       ignore (Js.Opt.iter a (fun x -> f gconf (Js.to_string (g x), Js.to_string (h x))))) o
+       ignore (Js.array_map (fun x -> f gconf (Js.to_string (g x), Js.to_string (h x))) a)) o
 
 (**********************************)
 (* Equivalent to qcert cmd        *)

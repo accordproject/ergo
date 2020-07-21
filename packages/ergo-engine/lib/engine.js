@@ -217,23 +217,23 @@ class Engine {
     }
 
     /**
-     * Generate Text
+     * Calculate formula
      * @param {TemplateLogic} logic  - the logic
      * @param {string} contractId - the contract identifier
+     * @param {string} name - the formula name
      * @param {object} contract - the contract data
-     * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
      * @return {object} the result for draft
      */
-    async draft(logic, contractId, contract, params, currentTime, options) {
+    async calculate(logic, contractId, name, contract, currentTime, options) {
         options = options || {};
 
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'toText', contract, params, defaultState, currentTime, Object.assign(options, {convertResourcesToId: true}));
+        return this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, Object.assign(options, {convertResourcesToId: true}));
     }
 
     /**
@@ -254,19 +254,19 @@ class Engine {
     }
 
     /**
-     * Compile then generate text
+     * Compile then calculate formula
      *
      * @param {TemplateLogic} logic  - the logic
+     * @param {string} name - the formula name
      * @param {object} contract - the contract data
-     * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndDraft(logic, contract, params, currentTime, options) {
+    compileAndCalculate(logic, name, contract, currentTime, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.draft(logic, contractId, contract, params, currentTime, options);
+            return this.calculate(logic, contractId, name, contract, currentTime, options);
         });
     }
 

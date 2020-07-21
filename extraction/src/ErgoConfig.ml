@@ -81,9 +81,9 @@ let available_targets_message =
 type global_config = {
   mutable econf_source : lang;
   mutable econf_target : lang;
-  mutable econf_source_template : (string * string) option;
+  mutable econf_source_template : ((string * string) list) option;
   mutable econf_sources_text : (string * string) list;
-  mutable econf_template : (string * ergo_expr) option;
+  mutable econf_template : ((string * ergo_expr) list) option;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
   mutable econf_link : bool;
@@ -116,10 +116,23 @@ let get_all_sorted gconf =
 let set_source_lang gconf s = gconf.econf_source <- (lang_of_target s)
 let set_target_lang gconf s = gconf.econf_target <- (lang_of_target s)
 let add_template gconf tem =
-  gconf.econf_template <- Some tem
+  let newtem =
+    begin match gconf.econf_template with
+    | None -> Some [tem]
+    | Some tem' -> Some (tem' @ [tem])
+    end
+  in
+  gconf.econf_template <- newtem
 let add_template_file gconf (f,fcontent) =
-  gconf.econf_source_template <- Some (f,fcontent);
-  add_template gconf (f, ParseUtil.parse_template_from_string f fcontent)
+  let parsed = (f, ParseUtil.parse_ergo_expr_from_string f fcontent) in
+  let newtem =
+    begin match gconf.econf_source_template with
+    | None -> Some [(f,fcontent)]
+    | Some tem' -> Some (tem' @ [(f,fcontent)])
+    end
+  in
+  gconf.econf_source_template <- newtem;
+  add_template gconf parsed
 let add_source_text gconf f fcontent =
   gconf.econf_sources_text <- (f,fcontent) :: gconf.econf_sources_text
 let add_cto gconf cto =
@@ -149,7 +162,7 @@ let add_stdlib gconf =
 let get_source_table gconf =
   begin match gconf.econf_source_template with
   | None -> gconf.econf_sources_text
-  | Some x -> x :: gconf.econf_sources_text
+  | Some x -> x @ gconf.econf_sources_text
   end
 
 let set_link gconf () = gconf.econf_link <- true

@@ -61,28 +61,6 @@ async function loadTemplate(template, files) {
  */
 class Commands {
     /**
-     * Invoke draft for an Ergo contract
-     *
-     * @param {string} template - template directory
-     * @param {string[]} files - input files
-     * @param {string} contractInput the contract data
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} options to the text generation
-     * @returns {object} Promise to the result of execution
-     */
-    static async draft(template,files,contractInput,currentTime,options) {
-        const logicManager = await loadTemplate(template,files);
-        const contractJson = getJson(contractInput);
-        const markdownOtions = {
-            '$class': 'org.accordproject.ergo.options.Options',
-            'wrapVariables': options && options.wrapVariables ? options.wrapVariables : false,
-            'template': true,
-        };
-        const engine = new Engine();
-        return engine.compileAndDraft(logicManager,contractJson,{},currentTime,markdownOtions);
-    }
-
-    /**
      * Send a request an Ergo contract
      *
      * @param {string} template - template directory

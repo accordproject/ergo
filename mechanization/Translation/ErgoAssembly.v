@@ -27,41 +27,37 @@ Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.Ergo.Lang.Ergo.
 
 Section ErgoAssembly.
-  Definition toTextClause (prov:provenance) (template:laergo_expr) : laergo_clause :=
+  Definition toDraftClause (prov:provenance) (name:string) (template:laergo_expr) : laergo_clause :=
     mkClause
       prov
-      "toText"%string
+      name
       (mkErgoTypeSignature
          prov
          nil
          (Some (ErgoTypeString prov))
          None)
-      (Some (SReturn prov template)).
+      (Some (SReturn prov
+                     (ECallFun prov
+                               "org.accordproject.ergo.stdlib.toText"%string
+                               (template::nil)))).
 
-  Fixpoint add_template_to_clauses (prov:provenance) (template:laergo_expr) (cl:list laergo_clause) :=
-    match cl with
-    | nil =>
-      (toTextClause prov template) :: nil
-    | cl1 :: rest =>
-      if (string_dec cl1.(clause_name) "toText")
-      then cl
-      else cl1 :: (add_template_to_clauses prov template rest)
-    end.
+  Fixpoint add_template_to_clauses (prov:provenance) (template:list (string * laergo_expr)) (cl:list laergo_clause) :=
+    cl ++ (List.map (fun xy => toDraftClause prov (fst xy) (snd xy)) template).
 
-  Definition add_template_to_contract (template:laergo_expr) (c:laergo_contract) :=
+  Definition add_template_to_contract (template:list (string * laergo_expr)) (c:laergo_contract) :=
     mkContract
       c.(contract_annot)
       c.(contract_template)
       c.(contract_state)
       (add_template_to_clauses c.(contract_annot) template c.(contract_clauses)).
 
-  Definition add_template_to_declaration (template:laergo_expr) (decl:laergo_declaration) :=
+  Definition add_template_to_declaration (template:list (string * laergo_expr)) (decl:laergo_declaration) :=
     match decl with
     | DContract a ln c => DContract a ln (add_template_to_contract template c)
     | _ => decl
     end.
 
-  Definition add_template_to_module (template:laergo_expr) (main:laergo_module) :=
+  Definition add_template_to_module (template:list (string * laergo_expr)) (main:laergo_module) :=
     mkModule
       main.(module_annot)
       main.(module_file)

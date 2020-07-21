@@ -41,12 +41,12 @@ let usage =
   "Usage: "^Filename.basename (Sys.argv.(0))^" [options] [cto files] [ergo files]"
 
 let main gconf args =
-  let (cto_files,input_files,template_file) = ErgoUtil.parse_args args_list usage args gconf in
+  let (cto_files,input_files,template_files) = ErgoUtil.parse_args args_list usage args gconf in
   List.iter (ErgoConfig.add_cto_file gconf) cto_files;
   List.iter (ErgoConfig.add_module_file gconf) input_files;
-  begin match template_file with
-  | None -> ()
-  | Some t -> ErgoConfig.add_template_file gconf t
+  begin match template_files with
+  | [] -> ()
+  | _ -> List.iter (ErgoConfig.add_template_file gconf) template_files
   end;
   let all_modules = ErgoConfig.get_all_sorted gconf in
   ErgoCompile.ergo_proc gconf all_modules

@@ -63,20 +63,25 @@ class Compiler {
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} sourceTemplate - an optional template source
+     * @param {Array<{name:string, content:string}>} templateSources formulas! XXX
      * @param {string} target language (es5|es6|cicero|java)
      * @param {boolean} link whether to link the javascript runtime
      * @param {boolean} warnings whether to print warnings
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(ergoSources,ctoSources,sourceTemplate,target,link,warnings) {
+    static compileToJavaScript(ergoSources,ctoSources,templateSources,target,link,warnings) {
         // Built-in config
         const config= {
             'source' : 'ergo',
             'target' : target,
             'link' : link
         };
-        config.sourceTemplate = sourceTemplate ? sourceTemplate : null;
+        config.sourceTemplate = [];
+        if (templateSources) {
+            for (let i = 0; i < templateSources.length; i++) {
+                config.sourceTemplate.push(templateSources[i]);
+            }
+        }
         config.ergo = [];
         for (let i = 0; i < ergoSources.length; i++) {
             config.ergo.push(ergoSources[i]);
@@ -102,14 +107,14 @@ class Compiler {
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
-     * @param {string} sourceTemplate - an optional template source
+     * @param {Array<{name:string, content:string}>} templateSources formulas! XXX
      * @param {string} target language (es5|es6|cicero|java)
      * @param {boolean} link whether to link the javascript runtime
      * @param {boolean} warnings whether to print warnings
      * @returns {object} Promise to the compiled JavaScript code
      */
-    static compile(ergoSources,ctoSources,sourceTemplate,target,link,warnings) {
-        const result = this.compileToJavaScript(ergoSources,ctoSources,sourceTemplate,target,link,warnings);
+    static compile(ergoSources,ctoSources,templateSources,target,link,warnings) {
+        const result = this.compileToJavaScript(ergoSources,ctoSources,templateSources,target,link,warnings);
         return Promise.resolve(result);
     }
 

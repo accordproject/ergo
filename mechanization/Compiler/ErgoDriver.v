@@ -52,7 +52,7 @@ Section ErgoDriver.
   Section CompilerPre.
     Definition resolve_inputs_opt
                (inputs:list lrergo_input)
-               (ftemplate:option (string * lrergo_expr))
+               (ftemplate:option (list (string * lrergo_expr)))
     : eresult ((list laergo_module * option laergo_module) * namespace_ctxt) :=
       (* Sort out what's CTO and what's Ergo *)
       let '(ctos, mls, p) := triage_ctos_and_ergos inputs in
@@ -88,28 +88,31 @@ Section ErgoDriver.
       eolift
         (fun xyz : (list laergo_module * option laergo_module) * namespace_ctxt =>
            let '(emods, p, ctxt) := xyz in
-           let rtem := resolve_ergo_template ctxt ftemplate in
-           eolift (fun rtem : option (string * laergo_expr) =>
-                     match rtem with (* XXX It's ok to discard the context since templates cannot change it *)
-                     | None => esuccess xyz nil
-                     | Some rtem =>
-                       let (fname, rtem) := rtem in
-                       let p :=
-                           match p with
-                           | None => empty_main dummy_provenance fname emods
-                           | Some p => esuccess p nil
-                           end
-                       in
-                       elift (fun p =>
-                                (emods, Some (add_template_to_module rtem p), ctxt))
-                             p
-                     end)
-                  rtem
-        ) mls_and_main.
+           match ftemplate with
+           | None => esuccess xyz nil
+           | Some ftemplate =>
+             let rtem := resolve_ergo_template ctxt ftemplate in
+             eolift (fun rtem : list (string * laergo_expr) =>
+                       match rtem with
+                       | nil => esuccess xyz nil
+                       | _ =>
+                         let p :=
+                             match p with
+                             (* XXX Uses default "formulas" name when there is no logic/contract *)
+                             | None => empty_main dummy_provenance "formulas"%string emods
+                             | Some p => esuccess p nil
+                             end
+                         in
+                         elift (fun p =>
+                                  (emods, Some (add_template_to_module rtem p), ctxt))
+                               p
+                       end) rtem
+           end)
+        mls_and_main.
 
     Definition resolve_inputs
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr))
+               (template:option (list (string * lrergo_expr)))
       : eresult ((list laergo_module * laergo_module) * namespace_ctxt) :=
       eolift (fun res =>
                 let '(mls, op, ctxt) := res in
@@ -120,7 +123,7 @@ Section ErgoDriver.
 
     Definition resolve_inputs_no_main
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr))
+               (template:option (list (string * lrergo_expr)))
       : eresult (list laergo_module * namespace_ctxt) :=
       elift (fun res =>
                let '(mls, op, ctxt) := res in
@@ -131,7 +134,8 @@ Section ErgoDriver.
       
     Definition just_resolved_inputs
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr)) : eresult (list laergo_module) :=
+               (template:option (list (string * lrergo_expr)))
+      : eresult (list laergo_module) :=
       let resolved := resolve_inputs_no_main inputs template in
       elift (fun x => (fst x)) resolved.
 
@@ -149,7 +153,7 @@ Section ErgoDriver.
     (* Initialize compilation context *)
     Definition init_compilation_context_from_inputs
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr))
+               (template:option (list (string * lrergo_expr)))
                (order:list laergo_type_declaration) :
       eresult ((list laergo_module * laergo_module) * compilation_context) :=
       let rinputs := resolve_inputs inputs template in
@@ -161,7 +165,7 @@ Section ErgoDriver.
 
     Definition init_compilation_context_from_inputs_no_main
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr))
+               (template:option (list (string * lrergo_expr)))
                (order:list laergo_type_declaration) :
       eresult (list laergo_module * compilation_context) :=
       let rinputs := resolve_inputs_no_main inputs template in
@@ -252,7 +256,7 @@ Section ErgoDriver.
 
     Definition compilation_context_from_inputs
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr))
+               (template:option (list (string * lrergo_expr)))
                (order:list laergo_type_declaration) : eresult (laergo_module * compilation_context) :=
       let cinit := init_compilation_context_from_inputs inputs template order in
       eolift (fun init =>
@@ -263,7 +267,7 @@ Section ErgoDriver.
     
     Definition compilation_context_from_inputs_no_main
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr))
+               (template:option (list (string * lrergo_expr)))
                (order:list laergo_type_declaration) : eresult compilation_context :=
       let cinit := init_compilation_context_from_inputs_no_main inputs template order in
       coq_time "init(load modules)"
@@ -304,7 +308,8 @@ Section ErgoDriver.
     Definition ergo_module_to_javascript_top
                (version:jsversion)
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr)) : eresult result_file :=
+               (template:option (list (string * lrergo_expr)))
+      : eresult result_file :=
       let bm : eresult (brand_model * list laergo_type_declaration) :=
           coq_time "init(load types)"
                    brand_model_from_inputs inputs in
@@ -319,7 +324,8 @@ Section ErgoDriver.
 
     Definition ergo_module_to_java_top
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr)) : eresult result_file :=
+               (template:option (list (string * lrergo_expr)))
+      : eresult result_file :=
       let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
       eolift (fun xy :brand_model * list laergo_type_declaration=>
                 let bm := fst xy in
@@ -332,7 +338,8 @@ Section ErgoDriver.
 
     Definition ergo_module_to_cicero_top
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr)) : eresult result_file :=
+               (template:option (list (string * lrergo_expr)))
+      : eresult result_file :=
       let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
       eolift
         (fun xy :brand_model * list laergo_type_declaration=>

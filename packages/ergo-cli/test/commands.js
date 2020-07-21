@@ -148,6 +148,14 @@ describe('#triggeracceptanceofdelivery', function () {
 });
 
 describe('#invokehelloworld', function () {
+    it('should invoke a clause in a smart Ergo contract (from directory)', async function () {
+        const templatePath = Path.join(EXAMPLES_DIR, 'helloworld3');
+        const contractPath = { file: Path.join(EXAMPLES_DIR, 'helloworld3', 'data.json') };
+        const paramsPath = { file: Path.join(EXAMPLES_DIR, 'helloworld3', 'params.json') };
+        const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworld3', 'state.json') };
+        const result = await Commands.invoke(templatePath, [], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null);
+        result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
+    });
     it('should invoke a clause in a smart Ergo contract', async function () {
         const ergoPath = Path.join(EXAMPLES_DIR, 'helloworld3', 'logic/logic3.ergo');
         const ctoPath = Path.join(EXAMPLES_DIR, 'helloworld3', 'model/model.cto');
@@ -195,105 +203,6 @@ describe('#invokehelloworld', function () {
         const paramsPath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'params.json') };
         const statePath = { file: Path.join(EXAMPLES_DIR, 'helloworld', 'state.json') };
         return Commands.invoke(null, [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null).should.be.rejectedWith('No input ergo found');
-    });
-});
-
-describe('#draft', function () {
-    it('should draft text for a smart Ergo contract', async function () {
-        const ergoPath = Path.join(EXAMPLES_DIR, 'interests', 'logic/logic.ergo');
-        const ergoPath2 = Path.join(EXAMPLES_DIR, 'interests', 'logic/interests.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'interests', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interests', 'data.json') };
-        const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath], contractPath, '1970-01-01T00:00:00Z', null);
-        result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
-    });
-    it('should draft text for a smart Ergo contract (wrap variable)', async function () {
-        const ergoPath = Path.join(EXAMPLES_DIR, 'interests', 'logic/logic.ergo');
-        const ergoPath2 = Path.join(EXAMPLES_DIR, 'interests', 'logic/interests.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'interests', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interests', 'data.json') };
-        const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('\nThis is a fixed interest loan to the amount of <variable id="loanAmount" value="100000.0"/>\nat the yearly interest rate of <variable id="rate" value="2.5"/>%\nwith a loan term of <variable id="loanDuration" value="15"/>,\nand monthly payments of <computed value="667.0"/>\n');
-    });
-    it('should draft text for a late delivery and penalty contract (wrap variable)', async function () {
-        const grammarPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'text/grammar.tem.md');
-        const ergoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'logic/logic.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'data.json') };
-        const result = await Commands.draft(null, [ergoPath, grammarPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<if id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases%2C" whenTrue="%20except%20for%20Force%20Majeure%20cases%2C" whenFalse=""/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
-    });
-    it('should draft text for a late delivery and penalty contract without force majeure (wrap variable)', async function () {
-        const grammarPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'text/grammar.tem.md');
-        const ergoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'logic/logic.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'data-noforcemajeure.json') };
-        const result = await Commands.draft(null, [ergoPath, grammarPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<if id="forceMajeure" value="" whenTrue="%20except%20for%20Force%20Majeure%20cases%2C" whenFalse=""/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
-    });
-    it('should draft text for a late delivery and penalty contract (from directory)', async function () {
-        const templatePath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'latedeliveryandpenalty', 'data.json') };
-        const result = await Commands.draft(templatePath, [], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<if id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases%2C" whenTrue="%20except%20for%20Force%20Majeure%20cases%2C" whenFalse=""/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
-    });
-    it('should draft text for a late delivery and penalty contract with else (wrap variable)', async function () {
-        const grammarPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'text/grammar.tem.md');
-        const ergoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'logic/logic.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'data.json') };
-        const result = await Commands.draft(null, [ergoPath, grammarPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<if id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases%2C" whenTrue="%20except%20for%20Force%20Majeure%20cases%2C" whenFalse="%20even%20in%20cases%20of%20Force%20Majeure%2C"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
-    });
-    it('should draft text for a late delivery and penalty contract without force majeure with else (wrap variable)', async function () {
-        const grammarPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'text/grammar.tem.md');
-        const ergoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'logic/logic.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'latedeliveryandpenaltyelse', 'data-noforcemajeure.json') };
-        const result = await Commands.draft(null, [ergoPath, grammarPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', { wrapVariables: true });
-        result.response.should.equal('Late Delivery and Penalty. In case of delayed delivery<if id="forceMajeure" value="%20even%20in%20cases%20of%20Force%20Majeure%2C" whenTrue="%20except%20for%20Force%20Majeure%20cases%2C" whenFalse="%20even%20in%20cases%20of%20Force%20Majeure%2C"/> the Seller shall pay to the Buyer for every <variable id="penaltyDuration" value="2%20days"/> of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however, exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery. If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.');
-    });
-    it('should throw when smart Ergo clause without a cto', async function () {
-        const ergoPath = Path.join(EXAMPLES_DIR, 'interests', 'logic/logic.ergo');
-        const ergoPath2 = Path.join(EXAMPLES_DIR, 'interests', 'logic/interests.ergo');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interests', 'data.json') };
-        return Commands.draft(null, [ergoPath, ergoPath2], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('Compilation error (at file ../../examples/interests/logic/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
-    });
-    it('should fail when Ergo logic is missing', async function () {
-        const ctoPath = Path.join(EXAMPLES_DIR, 'interests', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interests', 'data.json') };
-        return Commands.draft(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('No input ergo found');
-    });
-});
-
-describe('#draftwithinterestsvar', function () {
-    it('should draft text for a smart Ergo contract', async function () {
-        const ergoPath = Path.join(EXAMPLES_DIR, 'interestsvar', 'logic/logic.ergo');
-        const ergoPath2 = Path.join(EXAMPLES_DIR, 'interestsvar', 'logic/interests.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'interestsvar', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interestsvar', 'data.json') };
-        const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath], contractPath, '1970-01-01T00:00:00Z', null);
-        result.response.should.equal('\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
-    });
-    it('should throw when smart Ergo clause without a cto', async function () {
-        const ergoPath = Path.join(EXAMPLES_DIR, 'interestsvar', 'logic/logic.ergo');
-        const ergoPath2 = Path.join(EXAMPLES_DIR, 'interestsvar', 'logic/interests.ergo');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interestsvar', 'data.json') };
-        return Commands.draft(null, [ergoPath, ergoPath2], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('Compilation error (at file ../../examples/interestsvar/logic/logic.ergo line 19 col 24). Cannot find type with name \'TemplateModel\'\ncontract Interests over TemplateModel {\n                        ^^^^^^^^^^^^^  ');
-    });
-    it('should fail when Ergo logic is missing', async function () {
-        const ctoPath = Path.join(EXAMPLES_DIR, 'interestsvar', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interestsvar', 'data.json') };
-        return Commands.draft(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null).should.be.rejectedWith('No input ergo found');
-    });
-    it('should initialize a smart Ergo contract state', async function () {
-        const grammarPath = Path.join(EXAMPLES_DIR, 'interestsvar2', 'text/grammar.tem.md');
-        const ergoPath = Path.join(EXAMPLES_DIR, 'interestsvar2', 'logic/logic2.ergo');
-        const ergoPath2 = Path.join(EXAMPLES_DIR, 'interestsvar2', 'logic/interests.ergo');
-        const ctoPath = Path.join(EXAMPLES_DIR, 'interestsvar2', 'model/model.cto');
-        const contractPath = { file: Path.join(EXAMPLES_DIR, 'interestsvar2', 'data.json') };
-        const result = await Commands.draft(null, [ergoPath, ergoPath2, ctoPath, grammarPath], contractPath, '1970-01-01T00:00:00Z', null);
-        result.response.should.equal('This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n');
     });
 });
 

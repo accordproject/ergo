@@ -318,19 +318,19 @@ Module ErgoCompiler.
   Definition ergo_module_to_javascript :
     Misc.jsversion
     -> list ergo_input
-    -> option (String.string * ergo_expr)
+    -> option (list (String.string * ergo_expr))
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_javascript_top.
 
   Definition ergo_module_to_cicero :
     list ergo_input
-    -> option (String.string * ergo_expr)
+    -> option (list (String.string * ergo_expr))
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_cicero_top.
 
   Definition ergo_module_to_java :
     list ergo_input
-    -> option (String.string * ergo_expr)
+    -> option (list (String.string * ergo_expr))
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_java_top.
 
