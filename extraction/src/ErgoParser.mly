@@ -231,6 +231,7 @@ let make_template_if prov name veTrue =
 %start <ErgoComp.ErgoCompiler.ergo_module> main_module
 %start <ErgoComp.ErgoCompiler.ergo_declaration list> top_decls
 %start <ErgoComp.ErgoCompiler.ergo_expr> template
+%start <ErgoComp.ErgoCompiler.ergo_expr> top_expr
 
 %%
 
@@ -243,6 +244,10 @@ top_decls:
     { [] }
 | d = top_decl dl = top_decls
     { d :: dl }
+
+top_expr:
+| e = expr EOF
+    { e }
 
 emodule:
 | NAMESPACE qn = qname_prefix ds = decls

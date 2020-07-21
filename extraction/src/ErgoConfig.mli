@@ -32,9 +32,9 @@ val available_targets_message : string
 type global_config = {
   mutable econf_source : lang;
   mutable econf_target : lang;
-  mutable econf_source_template : (string * string) option;
+  mutable econf_source_template : ((string * string) list) option;
   mutable econf_sources_text : (string * string) list;
-  mutable econf_template : (string * ergo_expr) option;
+  mutable econf_template : ((string * ergo_expr) list) option;
   mutable econf_ctos : cto_package list;
   mutable econf_modules : ergo_module list;
   mutable econf_link : bool;
@@ -45,7 +45,7 @@ val default_config : unit -> global_config
 
 val get_source_lang : global_config -> lang
 val get_target_lang : global_config -> lang
-val get_template : global_config -> (string * ergo_expr) option
+val get_template : global_config -> ((string * ergo_expr) list) option
 val get_ctos : global_config -> cto_package list
 val get_modules : global_config -> ergo_module list
 val get_all : global_config -> ergo_input list

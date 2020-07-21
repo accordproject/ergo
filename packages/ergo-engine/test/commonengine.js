@@ -128,7 +128,8 @@ function runWorkload(Engine, target) {
                 if (test.grammar) {
                     const templateFile = Path.resolve(__dirname, dir, test.grammar);
                     const templateContent = Fs.readFileSync(templateFile, 'utf8');
-                    logicManager.addTemplateFile(templateContent, Path.join(dir, test.grammar));
+                    const formulaName = Path.basename(test.grammar).replace('.tem','');
+                    logicManager.addTemplateFile(templateContent, formulaName);
                 }
                 logicManager.setContractName(contractName);
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
@@ -145,34 +146,33 @@ function runWorkload(Engine, target) {
                             });
                     }
                 } else {
-                    if (test.clauseName) {
-                        if (test.clauseName === 'generateText') {
-                            if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                                return engine.compileAndDraft(logicManager, contractJson, {}, currentTime, options)
-                                    .catch((actualError) => {
-                                        expect(actualError.message).to.equal(expected.error);
-                                    });
-                            } else {
-                                return engine.compileAndDraft(logicManager, contractJson, {}, currentTime, options)
-                                    .then((actualAnswer) => {
-                                        return compareSuccess(expected, actualAnswer);
-                                    });
-                            }
+                    if (test.invoke) {
+                        const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
+                        const params = test.params;
+                        const clauseName = test.invoke;
+                        if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
+                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
+                                .catch((actualError) => {
+                                    expect(actualError.message).to.equal(expected.error);
+                                });
                         } else {
-                            const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));
-                            const params = test.params;
-                            const clauseName = test.clauseName;
-                            if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                                return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
-                                    .catch((actualError) => {
-                                        expect(actualError.message).to.equal(expected.error);
-                                    });
-                            } else {
-                                return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
-                                    .then((actualAnswer) => {
-                                        return compareSuccess(expected, actualAnswer);
-                                    });
-                            }
+                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
+                                .then((actualAnswer) => {
+                                    return compareSuccess(expected, actualAnswer);
+                                });
+                        }
+                    } else if (test.calculate) {
+                        const formulaName = test.calculate;
+                        if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
+                            return engine.compileAndCalculate(logicManager, formulaName, contractJson, currentTime, options)
+                                .catch((actualError) => {
+                                    expect(actualError.message).to.equal(expected.error);
+                                });
+                        } else {
+                            return engine.compileAndCalculate(logicManager, formulaName, contractJson, currentTime, options)
+                                .then((actualAnswer) => {
+                                    return compareSuccess(expected, actualAnswer);
+                                });
                         }
                     } else {
                         const stateJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, state), 'utf8'));

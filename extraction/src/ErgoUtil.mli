@@ -58,7 +58,7 @@ val parse_args :
   -> Arg.usage_msg
   -> string array
   -> 'conf
-  -> ((string * string) list * (string * string) list * (string * string) option)
+  -> ((string * string) list * (string * string) list * (string * string) list)
 
 val patch_argv : string array -> string array
 

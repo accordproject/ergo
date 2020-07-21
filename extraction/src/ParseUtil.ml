@@ -46,6 +46,9 @@ let lexer_dispatch lh buf  =
 let parse_ergo_module f : ergo_module =
   init_current_template_input ();
   parse ErgoParser.main_module (lexer_dispatch (lh_make_expr ())) f
+let parse_ergo_expr f : ergo_expr =
+  init_current_template_input ();
+  parse ErgoParser.top_expr (lexer_dispatch (lh_make_expr ())) f
 let parse_ergo_declarations f : ergo_declaration list =
   init_current_template_input ();
   parse ErgoParser.top_decls (lexer_dispatch (lh_make_expr ())) f
@@ -61,6 +64,9 @@ let parse_string p_fun s =
 let parse_ergo_module_from_string fname s : ergo_module =
   filename := fname;
   parse_string parse_ergo_module s
+let parse_ergo_expr_from_string fname s : ergo_expr =
+  filename := fname;
+  parse_string parse_ergo_expr s
 let parse_ergo_declarations_from_string fname s : ergo_declaration list =
   filename := fname;
   parse_string parse_ergo_declarations s

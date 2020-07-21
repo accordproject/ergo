@@ -44,7 +44,8 @@ let compile_module_to_java inputs template =
 let adjust_template_file template =
   begin match template with
   | None -> None
-  | Some template -> Some (char_list_of_string (fst template), snd template)
+  | Some template ->
+      Some (List.map (function xy -> (char_list_of_string (fst xy), snd xy)) template)
   end
 
 let ergo_compile target_lang inputs template =

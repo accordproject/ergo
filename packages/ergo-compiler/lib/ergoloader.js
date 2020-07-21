@@ -45,13 +45,6 @@ async function fromDirectory(path, options) {
     // Update external models
     await logicManager.getModelManager().updateExternalModels();
 
-    // load and add the template
-    let templatizedGrammar = await FileLoader.loadFileContents(path, 'text/grammar.tem.md', false, false);
-
-    if(templatizedGrammar) {
-        logicManager.addTemplateFile(templatizedGrammar,'text/grammar.tem.md');
-    }
-
     // load and add the ergo files
     const ergoFiles = await FileLoader.loadFilesContents(path, /logic[/\\].*\.ergo$/);
     ergoFiles.forEach((file) => {
@@ -59,6 +52,13 @@ async function fromDirectory(path, options) {
         const resolvedFilePath = slash(fsPath.resolve(file.name));
         const truncatedPath = resolvedFilePath.replace(resolvedPath+'/', '');
         logicManager.addLogicFile(file.contents, truncatedPath);
+    });
+
+    // load and add the formulas
+    let formulas = await FileLoader.loadFilesContents(path, /text[/\\].*\.tem$/);
+    formulas.forEach((file) => {
+        const baseName = fsPath.basename(file.name).replace('.tem','');
+        logicManager.addTemplateFile(file.contents, baseName);
     });
 
     return logicManager;
@@ -88,17 +88,17 @@ async function fromZip(buffer, options) {
     // Update external models
     await logicManager.getModelManager().updateExternalModels();
 
-    // load and add the template
-    let templatizedGrammar = await FileLoader.loadZipFileContents(zip, 'text/grammar.tem.md', false, false);
-
-    if(templatizedGrammar) {
-        logicManager.addTemplateFile(templatizedGrammar,'text/grammar.tem.md');
-    }
-
     // load and add the ergo files
     const ergoFiles = await FileLoader.loadZipFilesContents(zip, /logic[/\\].*\.ergo$/);
     ergoFiles.forEach((file) => {
         logicManager.addLogicFile(file.contents, file.name);
+    });
+
+    // load and add the formulas
+    let formulas = await FileLoader.loadZipFilesContents(zip, /text[/\\].*\.tem$/);
+    formulas.forEach((file) => {
+        const baseName = fsPath.basename(file.name).replace('.tem','');
+        logicManager.addTemplateFile(file.contents, baseName);
     });
 
     return logicManager;
@@ -121,7 +121,7 @@ async function fromFiles(files, options) {
 
     let modelPaths = [];
     let logicPaths = [];
-    let grammarPath = null;
+    let formulaPaths = [];
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -129,12 +129,8 @@ async function fromFiles(files, options) {
             modelPaths.push(file);
         } else if (file.split('.').pop() === 'ergo') {
             logicPaths.push(file);
-        } else if (file.split('.').pop() === 'md') {
-            const fileSplit = file.split('.');
-            fileSplit.pop();
-            if (fileSplit.pop() === 'tem') {
-                grammarPath = file;
-            }
+        } else if (file.split('.').pop() === 'tem') {
+            formulaPaths.push(file);
         }
     }
     modelPaths.forEach((path) => {
@@ -145,16 +141,17 @@ async function fromFiles(files, options) {
     // Update external models
     await logicManager.getModelManager().updateExternalModels();
 
-    // load and add the template
-    if(grammarPath) {
-        const templatizedGrammar = fs.readFileSync(grammarPath, 'utf8');
-        logicManager.addTemplateFile(templatizedGrammar,grammarPath);
-    }
-
     // load and add the ergo files
     logicPaths.forEach((path) => {
         const file = fs.readFileSync(path, 'utf8');
         logicManager.addLogicFile(file, path);
+    });
+
+    // load and add the formulas
+    formulaPaths.forEach((path) => {
+        const file = fs.readFileSync(path, 'utf8');
+        const baseName = fsPath.basename(path).replace('.tem','');
+        logicManager.addTemplateFile(file, baseName);
     });
 
     return logicManager;

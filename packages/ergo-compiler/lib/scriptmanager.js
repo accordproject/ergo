@@ -47,7 +47,7 @@ class ScriptManager {
         this.scripts = {};
         this.compiledScript = null;
         this.warnings = options && options.warnings || false;
-        this.sourceTemplate = null;
+        this.sourceTemplates = [];
     }
 
     /**
@@ -89,7 +89,7 @@ class ScriptManager {
      * @param {string} fileName - an optional file name to associate with the template file
      */
     addTemplateFile(templateFile,fileName) {
-        this.sourceTemplate = { 'name' : fileName, 'content': templateFile };
+        this.sourceTemplates.push({ 'name' : fileName, 'content': templateFile });
     }
 
     /**
@@ -310,7 +310,7 @@ class ScriptManager {
         }
         const codeExt = this.target === 'java' ? '.java' : '.js';
         let sourceErgo = this.getLogic();
-        if (sourceErgo === undefined || sourceErgo.length === 0 && !this.sourceTemplate) {
+        if (sourceErgo === undefined || sourceErgo.length === 0 && this.sourceTemplates.length === 0) {
             const allJsScripts = this.getCombinedScripts();
             if (allJsScripts === '') {
                 return null;
@@ -319,7 +319,7 @@ class ScriptManager {
         } else {
             // Do not link to runtime for Java target, only for JavaScript
             const link = this.target === 'java' ? false : true;
-            const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.sourceTemplate,this.target,link,this.warnings);
+            const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.sourceTemplates,this.target,link,this.warnings);
             if (Object.prototype.hasOwnProperty.call(compiledErgo,'error')) {
                 ScriptManager._throwCompilerException(compiledErgo.error);
             }

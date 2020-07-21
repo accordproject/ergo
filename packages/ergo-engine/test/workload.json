@@ -222,7 +222,7 @@
     },
     "state": "state.json",
     "contractName": "org.accordproject.helloworld.HelloWorld",
-    "clauseName": "helloworld",
+    "invoke": "helloworld",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
       "response": {
@@ -282,7 +282,7 @@
     "params": {},
     "state": "state.json",
     "contractName": "org.accordproject.helloworld.HelloWorld",
-    "clauseName": "helloworld",
+    "invoke": "helloworld",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
       "error": "Parse error (at file ../../../examples/bad-logic/logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
@@ -309,27 +309,7 @@
     }
   },
   {
-    "name": "interests clause (generate text)",
-    "dir": "../../../examples/interests",
-    "ergo": ["logic/interests.ergo","logic/logic.ergo"],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "state": "state.json",
-    "contractName": "org.accordproject.interests.Interests",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n"
-    }
-  },
-  {
-    "name": "interests clause (generate text) (grammar)",
+    "name": "interests clause (formula)",
     "dir": "../../../examples/interestsgrammar",
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
     "models": ["model/model.cto"],
@@ -340,17 +320,17 @@
       "template": true
     },
     "params": {},
-    "grammar": "text/grammar.tem.md",
+    "grammar": "text/interests.tem",
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
-    "clauseName": "generateText",
+    "calculate": "interests",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "response": "This is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of {{667.0}}\n"
+      "response": "667.0"
     }
   },
   {
-    "name": "interests clause (generate text) (grammar + format)",
+    "name": "interests clause (formula + format)",
     "dir": "../../../examples/interestsformat",
     "ergo": ["logic/interests.ergo","logic/logic.ergo"],
     "models": ["model/model.cto"],
@@ -361,13 +341,13 @@
       "template": true
     },
     "params": {},
-    "grammar": "text/grammar.tem.md",
+    "grammar": "text/interests.tem",
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
-    "clauseName": "generateText",
+    "calculate": "interests",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "response": "This is a fixed interest loan to the amount of £100,000.0 (GBP)\nat the yearly interest rate of 2.5%\nwith a loan term of 3,\nand monthly payments of {{\"£2,886.0 (GBP)\"}}\n"
+      "response": "\"£2,886.0 (GBP)\""
     }
   },
   {
@@ -380,157 +360,10 @@
     "params": {},
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
-    "clauseName": "generateText",
+    "invoke": "toText",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
       "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of 667.0\n"
-    }
-  },
-  {
-    "name": "helloworldcontract (generate text for template)",
-    "dir": "../../../examples/helloworldcontract",
-    "ergo": ["logic/logic.ergo"],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "grammar": "text/grammar.tem.md",
-    "state": "state.json",
-    "contractName": "org.accordproject.helloworld.HelloWorld",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n Here is a first name: \"John Do\" \n Here is a second name: \"Jane Doe\" \n"
-    }
-  },
-  {
-    "name": "helloworldcontract (generate text without logic)",
-    "dir": "../../../examples/helloworldcontract",
-    "ergo": [],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "grammar": "text/grammar.tem.md",
-    "state": "state.json",
-    "contractName": "org.accordproject.helloworld.HelloWorld",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n Here is a first name: \"John Do\" \n Here is a second name: \"Jane Doe\" \n"
-    }
-  },
-  {
-    "name": "volume discount (unordered list)",
-    "dir": "../../../examples/volumediscountlist",
-    "ergo": [],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "grammar": "text/grammar.tem.md",
-    "state": "state.json",
-    "contractName": "org.accordproject.volumediscountlist.VolumeDiscount",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "Volume-Based Card Acceptance Agreement [Abbreviated]\n\nThis Agreement is by and between Card, Inc., a New York corporation, and you, the Merchant. By accepting the Card, you agree to be bound by the Agreement. \nDiscount means an amount that we charge you for accepting the Card, which amount is: \n(i) a percentage (Discount Rate) of the face amount of the Charge that you submit, or a flat per-\nTransaction fee, or a combination of both; and/or \n(ii) a Monthly Flat Fee (if you meet our requirements).\n\nTransaction Processing and Payments. Our Card acceptance, processing, and payment requirements are set forth in the Merchant Regulations. Some requirements are summarized here for ease of reference, but do not supersede the provisions in the Merchant Regulations.\nPayment for Charges. We will pay you, through our agent, according to your payment plan in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n(i) the Discount, \n(ii) any amounts you owe us or our Affiliates, \n(iii) any amounts for which we have Chargebacks and \n(iv) any Credits you submit. Your initial Discount is indicated in the Agreement or otherwise provided to you in writing by us. In addition to your Discount we may charge you additional fees and assessments, as listed in the Merchant Regulations or as otherwise provided to you in writing by us. We may adjust any of these amounts and may change any other amount we charge you for accepting the Card.\n\nSETTLEMENT\na) Settlement Amount. Our agent will pay you according to your payment plan, as described below, in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n    (i) the Discount, \n    (ii) any amounts you owe us or our Affiliates, \n    (iii) any amounts for which we have Chargebacks, and (iv) any Credits you submit. Our agent will subtract the full amount of all applicable deductions, rejections, and withholdings, from this payment to you (or debit your Bank Account), but if it cannot, then you must pay it promptly upon demand.\nb) Discount. The Discount is determined according to the following table:\n\n- 1.0$ million <= Volume < 10.0$ million : 3.1%\n- 10.0$ million <= Volume < 50.0$ million : 2.9%\n- 50.0$ million <= Volume < 500.0$ million : 2.5%\n- 500.0$ million <= Volume < 1000.0$ million : 1.0%\n"
-    }
-  },
-  {
-    "name": "volume discount (ordered list)",
-    "dir": "../../../examples/volumediscountlist",
-    "ergo": [],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "grammar": "text/grammar2.tem.md",
-    "state": "state.json",
-    "contractName": "org.accordproject.volumediscountlist.VolumeDiscount",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "Volume-Based Card Acceptance Agreement [Abbreviated]\n\nThis Agreement is by and between Card, Inc., a New York corporation, and you, the Merchant. By accepting the Card, you agree to be bound by the Agreement. \nDiscount means an amount that we charge you for accepting the Card, which amount is: \n(i) a percentage (Discount Rate) of the face amount of the Charge that you submit, or a flat per-\nTransaction fee, or a combination of both; and/or \n(ii) a Monthly Flat Fee (if you meet our requirements).\n\nTransaction Processing and Payments. Our Card acceptance, processing, and payment requirements are set forth in the Merchant Regulations. Some requirements are summarized here for ease of reference, but do not supersede the provisions in the Merchant Regulations.\nPayment for Charges. We will pay you, through our agent, according to your payment plan in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n(i) the Discount, \n(ii) any amounts you owe us or our Affiliates, \n(iii) any amounts for which we have Chargebacks and \n(iv) any Credits you submit. Your initial Discount is indicated in the Agreement or otherwise provided to you in writing by us. In addition to your Discount we may charge you additional fees and assessments, as listed in the Merchant Regulations or as otherwise provided to you in writing by us. We may adjust any of these amounts and may change any other amount we charge you for accepting the Card.\n\nSETTLEMENT\na) Settlement Amount. Our agent will pay you according to your payment plan, as described below, in US dollars for the face amount of Charges submitted from your Establishments less all applicable deductions, rejections, and withholdings, which include: \n    (i) the Discount, \n    (ii) any amounts you owe us or our Affiliates, \n    (iii) any amounts for which we have Chargebacks, and (iv) any Credits you submit. Our agent will subtract the full amount of all applicable deductions, rejections, and withholdings, from this payment to you (or debit your Bank Account), but if it cannot, then you must pay it promptly upon demand.\nb) Discount. The Discount is determined according to the following table:\n\n1. 1.0$ million <= Volume < 10.0$ million : 3.1%\n1. 10.0$ million <= Volume < 50.0$ million : 2.9%\n1. 50.0$ million <= Volume < 500.0$ million : 2.5%\n1. 500.0$ million <= Volume < 1000.0$ million : 1.0%\n"
-    }
-  },
-  {
-    "name": "Generate text for a nested list block",
-    "dir": "../../../examples/helloworldlist",
-    "ergo": [],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "grammar": "text/grammar.tem.md",
-    "state": "state.json",
-    "contractName": "org.accordproject.helloworld.Helloworld",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n\n- Here is a name: \"Nail\" {{4}}\n- Here is a name: \"Suitcase\" {{8}}\n   - Includes: \"J1\" \n   - Includes: \"J2\" \n- Here is a name: \"Laptop\" {{6}}\n   - Includes: \"D1\" \n"
-    }
-  },
-  {
-    "name": "Nested unordered list block",
-    "dir": "../../../examples/helloworldlist",
-    "ergo": [],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "grammar": "text/grammar.tem.md",
-    "state": "state.json",
-    "contractName": "org.accordproject.helloworld.Helloworld",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n\n- Here is a name: \"Nail\" {{4}}\n- Here is a name: \"Suitcase\" {{8}}\n   - Includes: \"J1\" \n   - Includes: \"J2\" \n- Here is a name: \"Laptop\" {{6}}\n   - Includes: \"D1\" \n"
-    }
-  },
-  {
-    "name": "Nested ordered list block",
-    "dir": "../../../examples/helloworldlist2",
-    "ergo": [],
-    "models": ["model/model.cto"],
-    "contract": "data.json",
-    "options": {
-      "$class": "org.accordproject.ergo.options.Options",
-      "wrapVariables": false,
-      "template": true
-    },
-    "params": {},
-    "grammar": "text/grammar.tem.md",
-    "state": "state.json",
-    "contractName": "org.accordproject.helloworld.Helloworld",
-    "clauseName": "generateText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
-    "expected": {
-      "response": "Name of the person to greet: \"Fred Blogs\".\nThank you!\n\n1. Here is a name: \"Nail\" {{4}}\n1. Here is a name: \"Suitcase\" {{8}}\n   1. Includes: \"J1\" \n   1. Includes: \"J2\" \n1. Here is a name: \"Laptop\" {{6}}\n   1. Includes: \"D1\" \n"
     }
   }
 ]

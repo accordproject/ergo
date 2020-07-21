@@ -24,51 +24,6 @@ require('yargs')
     .demandCommand(1, '# Please specify a command')
     .recommendCommands()
     .strict()
-    .command('draft', 'create a contract text from data', (yargs) => {
-        yargs.demandOption(['data'], 'Please provide at least the contract data');
-        yargs.usage('Usage: $0 draft --data [file] [ctos] [ergos]');
-        yargs.option('data', {
-            describe: 'path to the contract data'
-        });
-        yargs.option('currentTime', {
-            describe: 'the current time',
-            type: 'string',
-            default: Moment().format() // Defaults to now
-        });
-        yargs.option('wrapVariables', {
-            describe: 'wrap variables in curly braces',
-            type: 'boolean',
-            default: false
-        });
-        yargs.option('template', {
-            describe: 'path to the template directory',
-            type: 'string',
-            default: null
-        });
-        yargs.option('warnings', {
-            describe: 'print warnings',
-            type: 'boolean',
-            default: false
-        });
-    }, (argv) => {
-        let files = argv._;
-
-        if (argv.verbose) {
-            Logger.info(`create contract text from data ${argv.data}`);
-        }
-
-        const options = {
-            wrapVariables: argv.wrapVariables,
-        };
-        // Draft
-        Commands.draft(argv.template, files, { file: argv.data }, argv.currentTime, options)
-            .then((result) => {
-                Logger.info(result.response);
-            })
-            .catch((err) => {
-                Logger.error(err.message + '\n' + JSON.stringify(err));
-            });
-    })
     .command('trigger', 'send a request to the contract', (yargs) => {
         yargs.demandOption(['data', 'request'], 'Please provide at least the contract data and a request');
         yargs.usage('Usage: $0 trigger --data [file] --state [file] --request [file] [cto files] [ergo files]');
