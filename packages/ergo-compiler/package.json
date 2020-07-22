@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-compiler",
-  "version": null,
+  "version": "0.20.10",
   "description": "Ergo Compiler",
   "repository": {
     "type": "git",

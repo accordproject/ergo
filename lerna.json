@@ -3,6 +3,6 @@
   "packages": [
     "packages/*"
   ],
-  "version": null,
+  "version": "0.20.10",
   "hoist": true
 }
