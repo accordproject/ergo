@@ -208,7 +208,7 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for the clause initialization
      */
-    async init(logic, contractId, contract, params, currentTime, options) {
+    init(logic, contractId, contract, params, currentTime, options) {
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
@@ -226,7 +226,7 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for draft
      */
-    async calculate(logic, contractId, name, contract, currentTime, options) {
+    calculate(logic, contractId, name, contract, currentTime, options) {
         options = options || {};
 
         const defaultState = {
