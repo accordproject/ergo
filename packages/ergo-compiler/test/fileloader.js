@@ -40,7 +40,7 @@ describe('FileLoader', () => {
     });
 
     describe('#loadZipFileBuffer', () => {
-        it('should return an instace of Buffer', () => {
+        it('should return an instance of Buffer', () => {
             const zip = new JSZip();
             zip.loadAsync(fs.readFileSync('./test/data/logo.zip'))
                 .then(async (zip) => {
@@ -58,6 +58,51 @@ describe('FileLoader', () => {
         it('should throw an error if path is not found inside the zip and required is true', async () => {
             const zip = new JSZip();
             await expect(FileLoader.loadZipFileBuffer(zip, 'logo.png', true)).to.be.eventually.rejectedWith(Error);
+        });
+    });
+
+    describe('#loadZipFileContents', () => {
+        it('should return an instance of file', () => {
+            const zip = new JSZip();
+            zip.loadAsync(fs.readFileSync('../../examples/helloworldcontract.zip'))
+                .then(async (zip) => {
+                    expect(
+                        await FileLoader.loadZipFileContents(zip, 'helloworldcontract/request.json', true, false)
+                    ).to.deep.equal({
+                        '$class': 'org.accordproject.helloworld.Request',
+                        'input': 'Accord Project',
+                    });
+                });
+        });
+
+        it('should return null if path is not found inside the zip and required is false', async () => {
+            const zip = new JSZip();
+            const content = await FileLoader.loadZipFileContents(zip, 'requiest.json', true, false);
+            expect(content).to.be.null;
+        });
+
+        it('should throw an error if path is not found inside the zip and required is true', async () => {
+            const zip = new JSZip();
+            await expect(FileLoader.loadZipFileContents(zip, 'request.json', true, true)).to.be.eventually.rejectedWith(Error);
+        });
+    });
+
+    describe('#loadFileContents', () => {
+        it('should return an instance of file', async () => {
+            const content = await FileLoader.loadFileContents('../../examples/helloworldcontract', 'request.json', true, false);
+            expect(content).to.deep.equal({
+                '$class': 'org.accordproject.helloworld.Request',
+                'input': 'Accord Project',
+            });
+        });
+
+        it('should return null if path is not found and required is false', async () => {
+            const content = await FileLoader.loadFileContents('../../examples/helloworldcontract', 'foo.json', true, false);
+            expect(content).to.be.null;
+        });
+
+        it('should throw an error if path is not found and required is true', async () => {
+            await expect(FileLoader.loadFileContents('../../examples/helloworldcontract', 'foo.json', true, true)).to.be.eventually.rejectedWith(Error);
         });
     });
 
