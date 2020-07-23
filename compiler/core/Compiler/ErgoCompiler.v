@@ -322,6 +322,12 @@ Module ErgoCompiler.
     -> Result.eresult result_file
     := ErgoDriver.ergo_module_to_es6_top.
 
+  Definition ergo_module_to_java :
+    list ergo_input
+    -> option (list (String.string * ergo_expr))
+    -> Result.eresult result_file
+    := ErgoDriver.ergo_module_to_java_top.
+
   Definition ergo_module_to_wasm :
     list ergo_input
     -> option (list (String.string * ergo_expr))
