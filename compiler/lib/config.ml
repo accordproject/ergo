@@ -101,13 +101,8 @@ let get_template gconf = gconf.econf_template
 let get_ctos gconf = gconf.econf_ctos
 let get_modules gconf = gconf.econf_modules
 let get_all gconf =
-<<<<<<< HEAD:compiler/lib/config.ml
-  (List.map (fun x -> Core.InputCTO x) (get_ctos gconf))
-  @ (List.map (fun x -> Core.InputErgo x) (get_modules gconf))
-=======
   (List.map (fun x -> Ergo.InputCTO x) (get_ctos gconf))
   @ (List.map (fun x -> Ergo.InputErgo x) (get_modules gconf))
->>>>>>> WIP(Wasm) Some initial compiler extension for Wasm:compiler/lib/config.ml
 let get_all_sorted gconf =
   topo_sort_inputs (get_all gconf)
 
@@ -122,7 +117,6 @@ let add_template gconf tem =
   in
   gconf.econf_template <- newtem
 let add_template_file gconf (f,fcontent) =
-<<<<<<< HEAD:compiler/lib/config.ml
   let parsed = (f, Parse_util.parse_ergo_expr_from_string f fcontent) in
   let newtem =
     begin match gconf.econf_source_template with
@@ -132,10 +126,6 @@ let add_template_file gconf (f,fcontent) =
   in
   gconf.econf_source_template <- newtem;
   add_template gconf parsed
-=======
-  gconf.econf_source_template <- Some (f,fcontent);
-  add_template gconf (f, Parse_util.parse_template_from_string f fcontent)
->>>>>>> WIP(Wasm) Some initial compiler extension for Wasm:compiler/lib/config.ml
 let add_source_text gconf f fcontent =
   gconf.econf_sources_text <- (f,fcontent) :: gconf.econf_sources_text
 let add_cto gconf cto =

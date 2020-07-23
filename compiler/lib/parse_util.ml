@@ -46,12 +46,9 @@ let lexer_dispatch lh buf  =
 let parse_ergo_module f : ergo_module =
   init_current_template_input ();
   parse Ergo_parser.main_module (lexer_dispatch (lh_make_expr ())) f
-<<<<<<< HEAD:compiler/lib/parse_util.ml
 let parse_ergo_expr f : ergo_expr =
   init_current_template_input ();
   parse Ergo_parser.top_expr (lexer_dispatch (lh_make_expr ())) f
-=======
->>>>>>> WIP(Wasm) Some initial compiler extension for Wasm:compiler/lib/parse_util.ml
 let parse_ergo_declarations f : ergo_declaration list =
   init_current_template_input ();
   parse Ergo_parser.top_decls (lexer_dispatch (lh_make_expr ())) f

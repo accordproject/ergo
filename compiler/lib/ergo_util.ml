@@ -244,18 +244,8 @@ let anon_args cto_files input_files template_files f =
   let extension = Filename.extension f in
   if extension = ".ctoj"
   then cto_files := (f, Util.string_of_file f) :: !cto_files
-<<<<<<< HEAD:compiler/lib/ergo_util.ml
   else if Filename.check_suffix f ".tem"
   then template_files := (f, Util.string_of_file f) :: !template_files
-=======
-  else if Filename.check_suffix f ".tem.md"
-  then
-    begin match !template_file with
-    | None -> template_file := Some (f, Util.string_of_file f)
-    | Some _ ->
-      ergo_raise (ergo_system_error ("Can only have one .tem file"))
-    end
->>>>>>> WIP(Wasm) Some initial compiler extension for Wasm:compiler/lib/ergo_util.ml
   else if extension = ".ergo"
   then input_files := (f, Util.string_of_file f) :: !input_files
   else ergo_raise (ergo_system_error (f ^ " is not cto, ctoj or ergo file"))
