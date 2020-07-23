@@ -295,7 +295,8 @@ Section ErgoDriver.
 
     Definition ergo_module_to_java_top
                (inputs:list lrergo_input)
-               (template:option (string * lrergo_expr)) : eresult result_file :=
+               (template:option (list (string * lrergo_expr)))
+      : eresult result_file :=
       let bm : eresult (brand_model * list laergo_type_declaration) := brand_model_from_inputs inputs in
       eolift (fun xy :brand_model * list laergo_type_declaration=>
                 let bm := fst xy in
@@ -306,7 +307,6 @@ Section ErgoDriver.
                           elift (fun xy => mkResultFile None p.(module_file) (snd xy)) res)
                        cinit) bm.
 
-    Locate ergo_imp_module_to_es6.
     Definition ergoc_module_to_es6
                (bm:brand_model)
                (contract_name:string)

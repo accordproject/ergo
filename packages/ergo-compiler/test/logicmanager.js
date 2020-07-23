@@ -259,7 +259,7 @@ describe('LogicManager', () => {
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.getTarget().should.equal('java');
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(10720);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(10719);
             (() => logicManager.getInvokeCall('helloworld')).should.throw('Unsupported target: java');
             (() => logicManager.getDispatchCall()).should.throw('Unsupported target: java');
         });
