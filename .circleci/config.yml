@@ -32,8 +32,8 @@ common_steps: &common_steps
           opam init --disable-sandboxing -j 1 -n -y
           sed -i "s/^jobs: [0-9]*/jobs: $NJOBS/g" ~/.opam/config
           eval $(opam env)
-          opam switch create 4.07.1 || true
-          opam switch set 4.07.1
+          opam switch create $OCAML_VERSION || true
+          opam switch set $OCAML_VERSION
           opam repo add coq-released https://coq.inria.fr/opam/released || true
           opam update || true
     - run:
@@ -48,7 +48,7 @@ common_steps: &common_steps
     - run:
         name: "Install Q*cert"
         command: |
-          opam install -y -v coq-qcert.1.4.1
+          opam install -y -v coq-qcert.2.0.0
         no_output_timeout: 30m
     - save_cache:
         <<: *common_cache_key
@@ -73,12 +73,12 @@ common_steps: &common_steps
 
 version: 2
 jobs:
-  4.07.1:
+  4.09.1:
     docker:
     - image: circleci/openjdk:8-jdk
     environment:
       - TERM: dumb
-      - OCAML_VERSION: "4.07.x"
+      - OCAML_VERSION: "4.09.1"
       - CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       - NJOBS: 2
       - NPM_CONFIG_PREFIX: "~/.npm-global"
@@ -88,4 +88,4 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - 4.07.1
+      - 4.09.1
