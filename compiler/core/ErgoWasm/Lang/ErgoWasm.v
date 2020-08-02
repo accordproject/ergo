@@ -39,6 +39,6 @@ Section ErgoWasm.
 
 End ErgoWasm.
 
-Extract Constant wasm_ast => "Qcert_lib.Wasm_ast.t".
-Extract Constant wasm_ast_eval => "Qcert_lib.Wasm_ast.eval".
-Extract Constant wasm_ast_to_string => "Qcert_lib.Wasm_ast.to_string".
+Extract Constant wasm_ast => "Wasm_ast.t".
+Extract Constant wasm_ast_eval => "Wasm_ast.eval".
+Extract Constant wasm_ast_to_string => "Wasm_ast.to_string".

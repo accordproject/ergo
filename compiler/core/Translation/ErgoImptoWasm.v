@@ -41,4 +41,4 @@ Section ErgoImptoWasm.
     ergo_imp_ejson_to_wasm_ast p.
 End ErgoImptoWasm.
 
-Extract Constant ergo_imp_ejson_to_wasm_ast => "Ergo_wasm_translate.ergo_imp".
+Extract Constant ergo_imp_ejson_to_wasm_ast => "Wasm_ast.ergo_imp_ejson_to_wasm_ast".
