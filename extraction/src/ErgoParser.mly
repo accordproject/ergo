@@ -58,35 +58,11 @@ let make_template_variable_as prov v s =
        (make_template_input prov))
 
 (* Construct AST for variables *)
-let wrap_template_variable prov name ve =
-  let varparam =
-    ErgoCompiler.econst prov
-      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
-  in
-  ErgoCompiler.ecallfun
-    prov
-    (relative_name_of_qname (Some "org.accordproject.ergo.template","variableTag"))
-    [varparam;ve]
-
-let wrap_template_variable_as prov name ve fe =
-  let varparam =
-    ErgoCompiler.econst prov
-      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
-  in
-  ErgoCompiler.ecallfun
-    prov
-    (relative_name_of_qname (Some "org.accordproject.ergo.template","variableTagAs"))
-    [varparam;ve;fe]
-
 let wrap_template_if_block prov name veCond veTrue veFalse =
-  let varparam =
-    ErgoCompiler.econst prov
-      (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string name))
-  in
   ErgoCompiler.ecallfun
     prov
     (relative_name_of_qname (Some "org.accordproject.ergo.template","ifBlockTag"))
-    [varparam;veCond;veTrue;veFalse]
+    [veCond;veTrue;veFalse]
 
 let wrap_template_computed prov e =
   let textparam = e in
@@ -100,36 +76,24 @@ let make_template_ulist prov name ve =
   let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
   let fl = (ErgoCompiler.this_name, e) :: [] in
   let bullet = make_list_sep () in
-  let listContent =
-    ErgoCompiler.ebinarybuiltin prov
-      ErgoCompiler.ErgoOps.Binary.opstringjoin
-      (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
-      (ErgoCompiler.eforeach prov fl None
-         (ErgoCompiler.etext prov
-            (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
-  in
-  ErgoCompiler.ecallfun
-    prov
-    (relative_name_of_qname (Some "org.accordproject.ergo.template","listBlockTag"))
-    [listContent]
+  ErgoCompiler.ebinarybuiltin prov
+    ErgoCompiler.ErgoOps.Binary.opstringjoin
+    (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
+    (ErgoCompiler.eforeach prov fl None
+       (ErgoCompiler.etext prov
+          (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
 
 let make_template_olist prov name ve =
   let a = Util.char_list_of_string name in
   let e = ErgoCompiler.eunaryoperator prov (EOpDot a) (ErgoCompiler.ethis_this prov) in
   let fl = (ErgoCompiler.this_name, e) :: [] in
   let bullet = make_order_sep () in
-  let listContent =
-    ErgoCompiler.ebinarybuiltin prov
-      ErgoCompiler.ErgoOps.Binary.opstringjoin
-      (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
-      (ErgoCompiler.eforeach prov fl None
-         (ErgoCompiler.etext prov
-            (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
-  in
-  ErgoCompiler.ecallfun
-    prov
-    (relative_name_of_qname (Some "org.accordproject.ergo.template","listBlockTag"))
-    [listContent]
+  ErgoCompiler.ebinarybuiltin prov
+    ErgoCompiler.ErgoOps.Binary.opstringjoin
+    (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string "")))
+    (ErgoCompiler.eforeach prov fl None
+       (ErgoCompiler.etext prov
+          (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string bullet)) :: ve)))
 
 let make_template_join prov name sep ve =
   let a = Util.char_list_of_string name in
@@ -677,13 +641,10 @@ textlist:
 varexpr:
 | v = IDENT AS s = STRING
     { let prov = mk_provenance $startpos $endpos in
-      let ve = make_template_variable_as prov v s in
-      wrap_template_variable_as prov v ve
-        (ErgoCompiler.econst prov (ErgoCompiler.ErgoData.dstring (Util.char_list_of_string s))) }
+      make_template_variable_as prov v s }
 | v = IDENT
     { let prov = mk_provenance $startpos $endpos in
-      let ve = make_template_variable prov v in
-      wrap_template_variable prov v ve }
+      make_template_variable prov v }
 
 (* foreach list *)
 foreachlist:
