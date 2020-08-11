@@ -22,6 +22,7 @@ const Serializer = require('@accordproject/concerto-core').Serializer;
 const ResourceValidator = require('@accordproject/concerto-core/lib/serializer/resourcevalidator');
 const ModelFile = require('@accordproject/concerto-core').ModelFile;
 const APModelManager = require('../lib/apmodelmanager');
+const Script = require('./script');
 const ScriptManager = require('../lib/scriptmanager');
 const ErgoCompiler = require('./compiler');
 const Builtin = require('./builtin');
@@ -253,6 +254,20 @@ unwrapError(__result);
         if (!this.validated) {
             this.getModelManager().validateModelFiles();
             this.validated = true;
+        }
+    }
+
+    /**
+     * Register compiled logic
+     */
+    registerCompiledLogicSync() {
+        const scriptManager = this.getScriptManager();
+        const mainScript = scriptManager.getCombinedScripts();
+        if (mainScript) {
+            const script = new Script(this, 'main.js', '.js', mainScript, null);
+            const contractName = script.getContractName();
+            if (contractName) { this.setContractName(contractName); }
+            scriptManager.compiledScript = script;
         }
     }
 
