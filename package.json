@@ -120,7 +120,7 @@
       ".vok",
       ".glob",
       ".aux",
-      ".v.d",
+      ".d",
       ".ctoj",
       ".zip",
       ".depends",
