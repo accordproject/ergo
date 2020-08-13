@@ -29,12 +29,12 @@ Before you can build Ergo, you must install and configure the following prerequi
 $ npm install -g lerna@^3.15.0
 ```
 
-* [opam](https://opam.ocaml.org): the OCaml package manager, for OCaml 4.07.1. To install:
+* [opam](https://opam.ocaml.org): the OCaml package manager, for OCaml 4.09.1. To install:
 
 ```sh
 $ sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
 $ eval $(opam env)
-$ opam switch create 4.07.1
+$ opam switch create 4.09.1
 ```
 
 #### Install development version
@@ -53,8 +53,8 @@ To rebuild the compiler from the source, you will need Coq 8.8.2 and OCaml 4.07.
  
 ```sh
 $ opam repo add coq-released https://coq.inria.fr/opam/released
-$ opam install ocamlbuild menhir base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri
-$ opam install coq.8.8.2 coq-qcert.1.4.1
+$ opam install dune menhir base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri
+$ opam install coq.8.8.2 coq-qcert.2.0.0
 ```
 
 ##### Build the Ergo Compiler and REPL
@@ -63,7 +63,7 @@ To recompile Ergo from its source, do:
 
 ```sh
 $ make cleanall
-$ make setup
+$ make configure
 $ make all
 ```
 
@@ -80,7 +80,7 @@ If successful, you should find the following binaries in the `bin/` directory:
 We write unit and integration tests with Mocha and Cucumber. To run all of the tests once run:
 
 ```text
-lerna run test
+npm run test
 ```
 
 ###  Writing Documentation
