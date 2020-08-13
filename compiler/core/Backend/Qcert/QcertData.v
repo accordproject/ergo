@@ -109,7 +109,7 @@ Definition onddateTime {A} (f : DATE_TIME -> A) (d : data) : option A :=
 
 Definition lift_dateTimeList (l:list data) : option (list DATE_TIME) :=
   lift_map
-    (fun d =>
+    (fun d : data =>
        match d with
        | dforeign (enhanceddateTime fd) => Some fd
        | _ => None
@@ -512,7 +512,6 @@ Next Obligation.
   - destruct m; simpl in H;
       unfold ondfloat2, lift in H
       ; destruct d1; simpl in H; try discriminate
-      ; destruct f; simpl in H; try discriminate
       ; destruct d2; simpl in H; try discriminate
       ; try (destruct f; simpl in H; try discriminate)
       ; invcs H

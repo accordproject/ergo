@@ -14,6 +14,7 @@
 
 Require Import String.
 Require Import List.
+Require Import ZArith.
 Require Import Basics.
 
 Require Import ErgoSpec.Utils.Misc.
