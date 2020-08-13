@@ -12,8 +12,9 @@
  * limitations under the License.
  *)
 
-Require String.
-Require Qcert.Brands.BrandRelation.
+Require Import String.
+Require Import ZArith.
+Require Import Qcert.Brands.BrandRelation.
 
 Require ErgoSpec.Version.
 Require ErgoSpec.Utils.Misc.
