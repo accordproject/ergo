@@ -1110,16 +1110,16 @@ function unwrapError(result) {
 
 /* Addendum to the Ergo runtime for monetary amount support */
 
-/* MonetaryAmount Formating */
 function monetaryAmountFormat(v,f) {
-    return f.replace(/0.0.00?0?/gi, function(a){
-        const sep1 = a.charAt(1);
-        const sep2 = a.charAt(3);
-        const len = a.length-4;
+    return f.replace(/0(.)0((.)(0+))?/gi, function(_a,sep1,_b,sep2,digits){
+        const len = digits ? digits.length : 0;
         const vs = v.toFixed(len);
-        const d = vs.substring(vs.length - len);
-        let res = sep2 + d;
-        let i = vs.substring(0,vs.length - (len+1));
+        let res = '';
+        if (sep2) {
+            const d = vs.substring(vs.length - len);
+            res += sep2 + d;
+        }
+        let i = vs.substring(0,vs.length - (len === 0 ? 0 : len+1));
         while (i.length > 3) {
             res = sep1 + i.substring(i.length - 3) + res;
             i = i.substring(0, i.length - 3);
@@ -1129,11 +1129,39 @@ function monetaryAmountFormat(v,f) {
 }
 function codeSymbol(c) {
     switch (c) {
-    case 'EUR' : return '€';
-    case 'GBP' : return '£';
-    case 'PLN' : return 'zł';
     case 'USD' : return '$';
+    case 'EUR' : return '€';
     case 'JPY' : return '¥';
+    case 'GBP' : return '£';
+    case 'AUD' : return 'A$';
+    case 'CAD' : return 'C$';
+    case 'CHF' : return 'CHF';
+    case 'CNY' : return '元';
+    case 'HKD' : return 'HK$';
+    case 'NZD' : return 'NZ$';
+    case 'KRW' : return '₩';
+    case 'SGD' : return 'S$';
+    case 'MXN' : return 'MEX$';
+    case 'INR' : return '₹';
+    case 'RUB' : return '₽';
+    case 'ZAR' : return 'R';
+    case 'TRY' : return '₺';
+    case 'BRL' : return 'R$';
+    case 'TWD' : return 'NT$';
+    case 'PLN' : return 'zł';
+    case 'THB' : return '฿';
+    case 'IDR' : return 'Rp';
+    case 'HUF' : return 'Ft';
+    case 'CZK' : return 'Kč';
+    case 'ILS' : return '₪';
+    case 'CLP' : return 'CLP$';
+    case 'PHP' : return '₱';
+    case 'AED' : return 'د.إ';
+    case 'COP' : return 'COL$';
+    case 'SAR' : return '﷼';
+    case 'MYR' : return 'RM';
+    case 'RON' : return 'L';
+    case 'BGN' : return 'лв.';
     default : return c; // Defaults to ISO code
     }
 }
