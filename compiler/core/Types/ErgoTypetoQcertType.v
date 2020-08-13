@@ -92,7 +92,7 @@ Section ErgoTypetoQcertType.
       | ErgoTypeContract _ _ _ => ctxt
       end.
 
-    Fixpoint ergo_expand_extends_in_declarations (decls:list laergo_type_declaration) : expand_ctxt :=
+    Definition ergo_expand_extends_in_declarations (decls:list laergo_type_declaration) : expand_ctxt :=
       List.fold_left
         (fun ctxt decl =>
            ergo_decl_expand_extends

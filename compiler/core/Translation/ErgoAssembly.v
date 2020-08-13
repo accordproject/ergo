@@ -41,7 +41,7 @@ Section ErgoAssembly.
                                "org.accordproject.ergo.stdlib.toText"%string
                                (template::nil)))).
 
-  Fixpoint add_template_to_clauses (prov:provenance) (template:list (string * laergo_expr)) (cl:list laergo_clause) :=
+  Definition add_template_to_clauses (prov:provenance) (template:list (string * laergo_expr)) (cl:list laergo_clause) :=
     cl ++ (List.map (fun xy => toDraftClause prov (fst xy) (snd xy)) template).
 
   Definition add_template_to_contract (template:list (string * laergo_expr)) (c:laergo_contract) :=
