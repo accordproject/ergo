@@ -27,7 +27,7 @@ Import ListNotations.
 Local Open Scope string.
 Local Open Scope nstring_scope.
 
-Axiom MONETARY_AMOUNT_format : Float.float -> String.string -> String.string.
+Axiom MONETARY_AMOUNT_format : FloatAdd.float -> String.string -> String.string.
 Extract Inlined Constant MONETARY_AMOUNT_format => "(fun x1 f -> Util.char_list_of_string (MonetaryAmount.amount_to_string_format x1 (Util.string_of_char_list f)))".
 
 Axiom MONETARY_CODE_format : String.string -> String.string -> String.string.
