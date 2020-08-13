@@ -62,7 +62,7 @@ Section PrintTypedData.
       | _ => None
       end.
 
-    Definition fmt_nl := String.String (ascii_of_N 10) EmptyString.
+    Definition fmt_nl := String.String (ascii_of_nat 10) EmptyString.
     Definition fmt_dq := """".
 
     Definition js_quote_char (a:ascii) : string

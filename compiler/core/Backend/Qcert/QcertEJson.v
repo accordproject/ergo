@@ -413,7 +413,7 @@ Definition enhanced_ejson_date_time_runtime_op_interp op (dl:list ejson) : optio
          end) dl
   | EJsonRuntimeDateTimeDurationAmount =>
     apply_unary
-      (fun d =>
+      (fun d : ejson =>
          match d with
          | ejforeign (enhanceddateTimeduration fd) =>
            Some (ejbigint (DATE_TIME_DURATION_amount fd))

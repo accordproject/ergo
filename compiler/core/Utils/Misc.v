@@ -49,7 +49,7 @@ Section Misc.
     Definition postpend {A} (ls : list A) (a : A) : list A :=
       ls ++ (a :: nil).
 
-    Fixpoint last_some {A} (l:list (option A)) : option A :=
+    Definition last_some {A} (l:list (option A)) : option A :=
       let proc_one (one:option A) (acc:option A) :=
           match acc with
           | Some x => Some x
@@ -61,7 +61,7 @@ Section Misc.
         None
         l.
 
-    Fixpoint last_some_pair {A} {B} (l:list ((option A) * (option B))) : ((option A) * (option B)) :=
+    Definition last_some_pair {A} {B} (l:list ((option A) * (option B))) : ((option A) * (option B)) :=
       let proc_one (one : ((option A) * (option B))) (acc : ((option A) * (option B))) :=
           match acc with
           | (Some x, Some y) => acc

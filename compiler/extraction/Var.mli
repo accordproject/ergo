@@ -1,2 +1,0 @@
-
-type var = char list

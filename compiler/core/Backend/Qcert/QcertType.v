@@ -111,7 +111,7 @@ Proof.
     inversion H; inversion H0; congruence.
 Qed.
 
-Instance enhanced_type_lattice : Lattice enhanced_type eq
+#[refine] Instance enhanced_type_lattice : Lattice enhanced_type eq
   := {
       join := enhanced_type_join
       ; meet := enhanced_type_meet

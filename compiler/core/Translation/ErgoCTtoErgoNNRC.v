@@ -16,6 +16,7 @@
 
 Require Import String.
 Require Import List.
+Require Import ZArith.
 
 Require Import Qcert.NNRC.NNRCRuntime.
 
