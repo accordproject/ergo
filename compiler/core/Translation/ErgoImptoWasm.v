@@ -33,12 +33,13 @@ Section ErgoImptoWasm.
 
   Context {bm:brand_model}.
 
-  Axiom ergo_imp_ejson_to_wasm_ast : ergo_imp_module -> wasm_ast.
+  Axiom ergo_imp_ejson_to_wasm_ast : brand_relation_t -> ergo_imp_module -> wasm_ast.
+  Definition ergo_imp_ejson_to_wasm_ast_typed := ergo_imp_ejson_to_wasm_ast brand_relation_brands.
 
   Definition ergo_imp_module_to_wasm
              (contract_name:string)
              (p:ergo_imp_module) : wasm_ast :=
-    ergo_imp_ejson_to_wasm_ast p.
+    ergo_imp_ejson_to_wasm_ast_typed p.
 End ErgoImptoWasm.
 
 Extract Constant ergo_imp_ejson_to_wasm_ast => "Wasm_ast.ergo_imp_ejson_to_wasm_ast".
