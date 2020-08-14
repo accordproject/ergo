@@ -58,7 +58,7 @@ class Engine {
      * @param {object} script - the initial script to load
      * @param {object} call - the execution call
      */
-    runVMScriptCall(utcOffset,context,script,call) {
+    async runVMScriptCall(utcOffset,context,script,call) {
         throw new Error('[runVMScriptCall] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
     }
 
@@ -99,7 +99,7 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for the clause
      */
-    trigger(logic, contractId, contract, request, state, currentTime, options) {
+    async trigger(logic, contractId, contract, request, state, currentTime, options) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
@@ -126,7 +126,7 @@ class Engine {
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
+        const result = await this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
@@ -155,7 +155,7 @@ class Engine {
      * @param {object} validateOptions to the validation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, validateOptions) {
+    async invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, validateOptions) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
@@ -181,7 +181,7 @@ class Engine {
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,invokeOptions,context,script,callScript);
+        const result = await this.runVMScriptCall(utcOffset,now,invokeOptions,context,script,callScript);
 
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
@@ -207,12 +207,12 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for the clause initialization
      */
-    init(logic, contractId, contract, params, currentTime, options) {
+    async init(logic, contractId, contract, params, currentTime, options) {
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, null);
+        return await this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, null);
     }
 
     /**
@@ -225,14 +225,14 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for draft
      */
-    calculate(logic, contractId, name, contract, currentTime, options) {
+    async calculate(logic, contractId, name, contract, currentTime, options) {
         options = options || {};
 
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, options, {convertResourcesToId: true});
+        return await this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, options, {convertResourcesToId: true});
     }
 
     /**
@@ -245,11 +245,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInit(logic, contract, params, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.init(logic, contractId, contract, params, currentTime, options);
-        });
+    async compileAndInit(logic, contract, params, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.init(logic, contractId, contract, params, currentTime, options);
     }
 
     /**
@@ -262,11 +261,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndCalculate(logic, name, contract, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.calculate(logic, contractId, name, contract, currentTime, options);
-        });
+    async compileAndCalculate(logic, name, contract, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.calculate(logic, contractId, name, contract, currentTime, options);
     }
 
     /**
@@ -282,11 +280,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInvoke(logic, clauseName, contract, params, state, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, null);
-        });
+    async compileAndInvoke(logic, clauseName, contract, params, state, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, null);
     }
 
     /**
@@ -302,11 +299,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    compileAndTrigger(logic, contract, request, state, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.trigger(logic, contractId, contract, request, state, currentTime, options);
-        });
+    async compileAndTrigger(logic, contract, request, state, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.trigger(logic, contractId, contract, request, state, currentTime, options);
     }
 
 }
