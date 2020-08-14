@@ -88,7 +88,7 @@ class Engine {
      * @param {object} script - the initial script to load
      * @param {object} call - the execution call
      */
-    runVMScriptCall(utcOffset,context,script,call) {
+    async runVMScriptCall(utcOffset,context,script,call) {
         throw new Error('[runVMScriptCall] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
     }
 
