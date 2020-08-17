@@ -25,7 +25,7 @@ require('yargs')
     .strict()
     .command('trigger', 'send a request to the contract', (yargs) => {
         yargs.demandOption(['data', 'request'], 'Please provide at least the contract data and a request');
-        yargs.usage('Usage: $0 trigger --data [file] --state [file] --request [file] [cto files] [ergo files]');
+        yargs.usage('Usage: $0 trigger --data [file] --state [file] --request [file] --target [lang] [cto files] [ergo files]');
         yargs.option('data', {
             describe: 'path to the contract data'
         });
@@ -52,6 +52,11 @@ require('yargs')
             type: 'string',
             default: null
         });
+        yargs.option('target', {
+            describe: 'Target platform (available: es6,java,wasm)',
+            type: 'string',
+            default: 'es6'
+        });
         yargs.option('warnings', {
             describe: 'print warnings',
             type: 'boolean',
@@ -66,7 +71,11 @@ require('yargs')
 
         // Run contract
         Commands.trigger(argv.template, files, { file: argv.data }, argv.state ? { file: argv.state } : null,
+<<<<<<< HEAD
             argv.currentTime, argv.utcOffset, argv.request.map(r => { return { file: r }; }), argv.warnings)
+=======
+            argv.currentTime, argv.request.map(r => { return { file: r }; }), argv.warnings, argv.target)
+>>>>>>> e8435333 (feature(wasm) Some initial code for the new Ergo to Wasm compiler)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -76,7 +85,7 @@ require('yargs')
     })
     .command('invoke', 'invoke a clause of the contract', (yargs) => {
         yargs.demandOption(['clauseName', 'data', 'state', 'params'], 'Please provide at least the clauseName, with contract data, state, and parameters');
-        yargs.usage('Usage: $0 invoke --data [file] --state [file] --params [file] [cto files] [ergo files]');
+        yargs.usage('Usage: $0 invoke --data [file] --state [file] --params [file] --target [lang] [cto files] [ergo files]');
         yargs.option('clauseName', {
             describe: 'the name of the clause to invoke'
         });
@@ -107,6 +116,11 @@ require('yargs')
             type: 'string',
             default: null
         });
+        yargs.option('target', {
+            describe: 'Target platform (available: es6,java,wasm)',
+            type: 'string',
+            default: 'es6'
+        });
         yargs.option('warnings', {
             describe: 'print warnings',
             type: 'boolean',
@@ -120,7 +134,11 @@ require('yargs')
         }
 
         // Run contract
+<<<<<<< HEAD
         Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, argv.utcOffset, { file: argv.params }, argv.warnings)
+=======
+        Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, { file: argv.params }, argv.warnings, argv.target)
+>>>>>>> e8435333 (feature(wasm) Some initial code for the new Ergo to Wasm compiler)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -130,7 +148,7 @@ require('yargs')
     })
     .command('initialize', 'initialize the state for a contract', (yargs) => {
         yargs.demandOption(['data'], 'Please provide at least contract data and parameters');
-        yargs.usage('Usage: $0 intialize --data [file] --params [file] [cto files] [ergo files]');
+        yargs.usage('Usage: $0 intialize --data [file] --params [file] --target [lang] [cto files] [ergo files]');
         yargs.option('data', {
             describe: 'path to the contract data'
         });
@@ -154,6 +172,11 @@ require('yargs')
             type: 'string',
             default: null
         });
+        yargs.option('target', {
+            describe: 'Target platform (available: es6,java,wasm)',
+            type: 'string',
+            default: 'es6'
+        });
         yargs.option('warnings', {
             describe: 'print warnings',
             type: 'boolean',
@@ -167,7 +190,11 @@ require('yargs')
         }
 
         // Run contract
+<<<<<<< HEAD
         Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.utcOffset, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings)
+=======
+        Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings, argv.target)
+>>>>>>> e8435333 (feature(wasm) Some initial code for the new Ergo to Wasm compiler)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -178,12 +205,12 @@ require('yargs')
     .command('compile', 'compile a contract', (yargs) => {
         yargs.usage('Usage: $0 compile --target [lang] --link --monitor --warnings [cto files] [ergo files]');
         yargs.option('target', {
-            describe: 'Target platform (available: es5,es6,cicero,java)',
+            describe: 'Target platform (available: es6,java,wasm)',
             type: 'string',
             default: 'es6'
         });
         yargs.option('link', {
-            describe: 'Link the Ergo runtime with the target code (es5,es6,cicero only)',
+            describe: 'Link the Ergo runtime with the target code (es6 only)',
             type: 'boolean',
             default: false
         });

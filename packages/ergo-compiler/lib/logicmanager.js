@@ -33,7 +33,7 @@ class LogicManager {
 
     /**
      * Create the LogicManager.
-     * @param {String} target  - compiler target (either: 'es6', or 'java')
+     * @param {String} target  - compiler target (either: 'es6', 'java', or 'wasm')
      * @param {Object} options  - e.g., { warnings: true }
      */
     constructor(target, options) {

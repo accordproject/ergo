@@ -47,6 +47,14 @@ class EvalEngine extends Engine {
     }
 
     /**
+     * Engine runtime
+     * @return {string} which runtime of engine
+     */
+    runtime() {
+        return 'es6';
+    }
+
+    /**
      * Compile a script for a JavaScript machine
      * @param {string} script - the script
      * @return {object} the VM-ready script object

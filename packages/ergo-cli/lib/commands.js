@@ -17,12 +17,12 @@
 const Fs = require('fs');
 const ErgoLoader = require('@accordproject/ergo-compiler').ErgoLoader;
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
-const Engine = require('@accordproject/ergo-engine').VMEngine;
+const buildengine = require('@accordproject/ergo-engine').buildengine;
 
 /**
  * Load a file or JSON string
  *
- * @param {object} input either a file name or a json string
+ * @param {object} input - either a file name or a json string
  * @return {object} JSON object
  */
 function getJson(input) {
@@ -40,14 +40,15 @@ function getJson(input) {
  *
  * @param {string} template - template directory
  * @param {string[]} files - input files
+ * @param {string} target - the target execution platform
  * @return {Promise<LogicManager>} a Promise to the instantiated logicmanager
  */
-async function loadTemplate(template, files) {
+async function loadTemplate(template, files, target) {
     let logicManager;
     if (template) {
-        logicManager = await ErgoLoader.fromDirectory(template);
+        logicManager = await ErgoLoader.fromDirectory(template,null,target);
     } else {
-        logicManager = await ErgoLoader.fromFiles(files);
+        logicManager = await ErgoLoader.fromFiles(files,target);
     }
     if (logicManager.getScriptManager().getLogic().length === 0) {
         throw new Error('No input ergo found');
@@ -73,18 +74,18 @@ class Commands {
      * @param {boolean} warnings - whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static async trigger(template,files,contractInput,stateInput,currentTime,utcOffset,requestsInput,warnings) {
+    static async trigger(template,files,contractInput,stateInput,currentTime,utcOffset,requestsInput,warnings,target) {
         try {
-            const logicManager = await loadTemplate(template,files);
+            const logicManager = await loadTemplate(template,files,target);
             const contractJson = getJson(contractInput);
             let requestsJson = [];
             for (let i = 0; i < requestsInput.length; i++) {
                 requestsJson.push(getJson(requestsInput[i]));
             }
-            const engine = new Engine();
+            const engine = buildengine(target);
             let initResponse;
             if (stateInput === null) {
-                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, utcOffset);
+                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, utcOffset, target);
             } else {
                 const stateJson = getJson(stateInput);
                 initResponse = Promise.resolve({ state: stateJson });
@@ -112,15 +113,16 @@ class Commands {
      * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} paramsInput - the parameters for the clause
      * @param {boolean} warnings - whether to print warnings
+     * @param {string} target - the target execution platform
      * @returns {object} Promise to the result of invocation
      */
-    static async invoke(template,files,clauseName,contractInput,stateInput,currentTime,utcOffset,paramsInput,warnings) {
+    static async invoke(template,files,clauseName,contractInput,stateInput,currentTime,utcOffset,paramsInput,warnings,target) {
         try {
-            const logicManager = await loadTemplate(template,files);
+            const logicManager = await loadTemplate(template,files,target);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
             const stateJson = getJson(stateInput);
-            const engine = new Engine();
+            const engine = buildengine(target);
             return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime, utcOffset);
         } catch (err) {
             return Promise.reject(err);
@@ -137,14 +139,15 @@ class Commands {
      * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} paramsInput - the parameters for the clause
      * @param {boolean} warnings - whether to print warnings
+     * @param {string} target - the target execution platform
      * @returns {object} Promise to the result of execution
      */
-    static async initialize(template,files,contractInput,currentTime,utcOffset,paramsInput,warnings) {
+    static async initialize(template,files,contractInput,currentTime,utcOffset,paramsInput,warnings,target) {
         try {
-            const logicManager = await loadTemplate(template,files);
+            const logicManager = await loadTemplate(template,files,target);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
-            const engine = new Engine();
+            const engine = buildengine(target);
             return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime, utcOffset);
         } catch (err) {
             return Promise.reject(err);

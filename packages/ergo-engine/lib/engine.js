@@ -69,7 +69,15 @@ class Engine {
      * @return {string} which kind of engine
      */
     kind() {
-        return 'empty';
+        return undefined;
+    }
+
+    /**
+     * Engine runtime
+     * @return {string} which runtime of engine
+     */
+    runtime() {
+        return undefined;
     }
 
     /**

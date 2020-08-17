@@ -27,14 +27,15 @@ const LogicManager = require('./logicmanager');
  *
  * @param {String} path to a local directory
  * @param {Object} [options] - an optional set of options to configure the instance.
+ * @param {string} target - the target execution platform
  * @return {Promise<LogicManager>} a Promise to the instantiated logicmanager
  */
-async function fromDirectory(path, options) {
+async function fromDirectory(path, options, target='es6') {
     if (!options) {
         options = {};
     }
 
-    const logicManager = new LogicManager('es6', options);
+    const logicManager = new LogicManager(target, options);
 
     const ctoFiles = await FileLoader.loadFilesContents(path, /model[/\\].*\.cto$/);
     ctoFiles.forEach((file) => {
@@ -68,15 +69,16 @@ async function fromDirectory(path, options) {
  *
  * @param {Buffer} buffer - the buffer to a Zip (zip) file
  * @param {Object} [options] - an optional set of options to configure the instance.
+ * @param {string} target - the target execution platform
  * @return {Promise<LogicManager>} a Promise to the instantiated logicmanager
  */
-async function fromZip(buffer, options) {
+async function fromZip(buffer, options, target='es6') {
     if (!options) {
         options = {};
     }
 
     const zip = await JSZip.loadAsync(buffer);
-    const logicManager = new LogicManager('es6', options);
+    const logicManager = new LogicManager(target, options);
 
     const ctoFiles = await FileLoader.loadZipFilesContents(zip, /model[/\\].*\.cto$/);
     ctoFiles.forEach((file) => {
@@ -107,14 +109,15 @@ async function fromZip(buffer, options) {
  *
  * @param {String[]} files - file names
  * @param {Object} [options] - an optional set of options to configure the instance.
+ * @param {string} target - the target execution platform
  * @return {Promise<LogicManager>} a Promise to the instantiated logicmanager
  */
-async function fromFiles(files, options) {
+async function fromFiles(files, options, target='es6') {
     if (!options) {
         options = {};
     }
 
-    const logicManager = new LogicManager('es6', options);
+    const logicManager = new LogicManager(target, options);
 
     let modelPaths = [];
     let logicPaths = [];

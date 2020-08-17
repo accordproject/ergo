@@ -14,13 +14,23 @@
 
 'use strict';
 
-/**
- * Ergo Engine - execution for JavaScript runtimes
- * @module ergo-engine
- */
+const WasmEngine = require('./wasmengine');
+const EvalEngine = require('./evalengine');
+const VMEngine = require('./vmengine');
 
-module.exports.Engine = require('./lib/engine');
-module.exports.VMEngine = require('./lib/vmengine');
-module.exports.WasmEngine = require('./lib/wasmengine');
-module.exports.buildengine = require('./lib/buildengine');
-module.exports.version = require('./package.json');
+/**
+ * @param {string} target - the target runtime
+ * @param {boolean} browser - run in the browser
+ * @return {*} an execution engine
+ */
+function buildEngine(target,browser) {
+    if (target === 'wasm') {
+        return new WasmEngine();
+    } else if (browser) {
+        return new EvalEngine();
+    } else {
+        return new VMEngine();
+    }
+}
+
+module.exports = buildEngine;

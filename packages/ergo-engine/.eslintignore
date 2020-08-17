@@ -4,3 +4,4 @@ node_modules
 out
 umd
 test/data
+lib/binary_encoding.js

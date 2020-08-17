@@ -36,6 +36,7 @@
   "dependencies": {
     "@accordproject/concerto-core": "1.0.0",
     "@accordproject/ergo-compiler": "0.22.0",
+    "@assemblyscript/loader": "^0.14.8",
     "dayjs": "1.10.4",
     "vm2": "3.5.0"
   },
