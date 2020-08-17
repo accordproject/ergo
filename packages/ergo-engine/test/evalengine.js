@@ -22,8 +22,8 @@ describe('#evalengine', () => {
     it('should behave as a proper Eval Engine', () => {
         const engine = new EvalEngine();
         engine.kind().should.equal('eval');
-        engine.compileVMScript('const a = 1;').should.not.be.null;
-        engine.runVMScriptCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
+        engine.instantiate('const a = 1;').should.not.be.null;
+        engine.invokeCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
     });
 
     it('should cache a script', () => {
@@ -33,8 +33,8 @@ describe('#evalengine', () => {
         logicManager.addLogicFile(script,'test2.js');
         logicManager.compileLogicSync(false);
         const scriptManager = logicManager.getScriptManager();
-        engine.cacheJsScript(scriptManager,'test2.js').should.equal(script);
-        engine.cacheJsScript(scriptManager,'test2.js').should.equal(script);
+        engine.cacheModule(scriptManager,'test2.js').should.equal(script);
+        engine.cacheModule(scriptManager,'test2.js').should.equal(script);
     });
 });
 

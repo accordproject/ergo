@@ -22,8 +22,8 @@ describe('#vmengine', () => {
     it('should behave as a proper VM engine', () => {
         const engine = new VMEngine();
         engine.kind().should.equal('vm2');
-        engine.compileVMScript('const a = 1;').should.not.be.null;
-        engine.runVMScriptCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
+        engine.instantiate('const a = 1;').should.not.be.null;
+        engine.invokeCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
     });
 
     it('should cache a script', () => {
@@ -33,8 +33,8 @@ describe('#vmengine', () => {
         logicManager.addLogicFile(script,'test2.js');
         logicManager.compileLogicSync(false);
         const scriptManager = logicManager.getScriptManager();
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
     });
 
     it('should clear the cache', () => {
@@ -44,10 +44,10 @@ describe('#vmengine', () => {
         logicManager.addLogicFile(script,'test2.js');
         logicManager.compileLogicSync(false);
         const scriptManager = logicManager.getScriptManager();
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
-        engine.clearCacheJsScript();
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
+        engine.clearCache();
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
     });
 });
 
