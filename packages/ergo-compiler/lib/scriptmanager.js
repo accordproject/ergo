@@ -308,7 +308,7 @@ class ScriptManager {
         if (this.compiledScript && !force) {
             return this.compiledScript;
         }
-        const codeExt = this.target === 'java' ? '.java' : '.js';
+        const codeExt = this.target === 'java' ? '.java' : this.target === 'wasm' ? '.wasm' : '.js';
         let sourceErgo = this.getLogic();
         if (sourceErgo === undefined || sourceErgo.length === 0 && this.sourceTemplates.length === 0) {
             const allJsScripts = this.getCombinedScripts();
@@ -318,8 +318,8 @@ class ScriptManager {
             this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, allJsScripts, null);
         } else {
             // Do not link to runtime for Java target, only for JavaScript
-            const link = this.target === 'java' ? false : true;
-            const compiledErgo = ErgoCompiler.compileToJavaScript(sourceErgo,this.modelManager.getModels(),this.sourceTemplates,this.target,link,this.warnings);
+            const link = this.target === 'es6' ? true : false;
+            const compiledErgo = ErgoCompiler.compileSync(sourceErgo,this.modelManager.getModels(),this.sourceTemplates,this.target,link,this.warnings);
             if (Object.prototype.hasOwnProperty.call(compiledErgo,'error')) {
                 ScriptManager._throwCompilerException(compiledErgo.error);
             }
@@ -354,20 +354,6 @@ class ScriptManager {
             throw new Error(`Function ${name} was not found in logic`);
         }
     }
-    /**
-     * Checks that the logic has a dispatch function
-     */
-    hasDispatch() {
-        this.hasFunctionDeclaration('__dispatch');
-    }
-
-    /**
-     * Checks that the logic has an init function
-     */
-    hasInit() {
-        this.hasFunctionDeclaration('__init');
-    }
-
 }
 
 module.exports = ScriptManager;
