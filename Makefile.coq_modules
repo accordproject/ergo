@@ -72,7 +72,8 @@ MODULES = \
   ErgoNNRC/Lang/ErgoNNRC \
   ErgoNNRC/Lang/ErgoNNRCSugar \
   ErgoImp/Lang/ErgoImp \
-  ErgoWasm/Lang/ErgoWasm \
+  ErgoWasmAst/Lang/ErgoWasmAst \
+  ErgoWasmBinary/Lang/ErgoWasmBinary \
   Translation/CTOtoErgo \
   Translation/ErgoNameResolve \
   Translation/ErgoAssembly \
@@ -83,7 +84,8 @@ MODULES = \
   Translation/ErgoNNRCtoErgoImp \
   Translation/ErgoImptoES6 \
   Translation/ErgoNNRCtoJava \
-  Translation/ErgoImptoWasm \
+  Translation/ErgoImptoWasmAst \
+  Translation/WasmAsttoWasmBinary \
   Compiler/ErgoDriver \
   Compiler/ErgoCompiler \
   Tests/HelloWorld

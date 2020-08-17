@@ -38,7 +38,8 @@ Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheckContext.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCTypecheck.
 Require Import ErgoSpec.ErgoC.Lang.ErgoCExpand.
 Require Import ErgoSpec.ErgoNNRC.Lang.ErgoNNRC.
-Require Import ErgoSpec.ErgoWasm.Lang.ErgoWasm.
+Require Import ErgoSpec.ErgoWasmAst.Lang.ErgoWasmAst.
+Require Import ErgoSpec.ErgoWasmBinary.Lang.ErgoWasmBinary.
 Require Import ErgoSpec.Translation.CTOtoErgo.
 Require Import ErgoSpec.Translation.ErgoAssembly.
 Require Import ErgoSpec.Translation.ErgoNameResolve.
@@ -49,7 +50,8 @@ Require Import ErgoSpec.Translation.ErgoCTtoErgoNNRC.
 Require Import ErgoSpec.Translation.ErgoNNRCtoErgoImp.
 Require Import ErgoSpec.Translation.ErgoImptoES6.
 Require Import ErgoSpec.Translation.ErgoNNRCtoJava.
-Require Import ErgoSpec.Translation.ErgoImptoWasm.
+Require Import ErgoSpec.Translation.ErgoImptoWasmAst.
+Require Import ErgoSpec.Translation.WasmAsttoWasmBinary.
 
 Section ErgoDriver.
   Section CompilerPre.
@@ -322,10 +324,11 @@ Section ErgoDriver.
     Definition ergoc_module_to_wasm
                (bm:brand_model)
                (contract_name:string)
-               (p:ergo_nnrc_module) : ErgoWasm.wasm_ast :=
-      ergo_imp_module_to_wasm
-        contract_name
-        (ergo_nnrc_module_to_imp p).
+               (p:ergo_nnrc_module) : ErgoWasmBinary.wasm :=
+      ergo_wasm_ast_to_ergo_wasm
+        (ergo_imp_module_to_wasm_ast
+           contract_name
+           (ergo_nnrc_module_to_imp p)).
 
     Definition ergo_module_to_es6_top
                (inputs:list lrergo_input)
@@ -378,7 +381,7 @@ Section ErgoDriver.
                          let pc := ergo_module_to_ergoct ctxt p in
                          let pn := eolift (fun xy => ergoct_module_to_nnrc (fst xy)) pc in
                          elift (fun x => (contract_name, x,
-                                          ErgoWasm.wasm_ast_to_string (ergoc_module_to_wasm bm contract_name x))) pn)
+                                          ErgoWasmBinary.wasm_to_string (ergoc_module_to_wasm bm contract_name x))) pn)
                       ec
                 in
                 elift (fun xyz =>
