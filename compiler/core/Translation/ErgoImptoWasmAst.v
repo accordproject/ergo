@@ -26,9 +26,9 @@ Require Import ErgoSpec.Common.Names.
 Require Import ErgoSpec.Types.ErgoType.
 Require Import ErgoSpec.ErgoImp.Lang.ErgoImp.
 Require Import ErgoSpec.Backend.QLib.
-Require Import ErgoSpec.ErgoWasm.Lang.ErgoWasm.
+Require Import ErgoSpec.ErgoWasmAst.Lang.ErgoWasmAst.
 
-Section ErgoImptoWasm.
+Section ErgoImptoWasmAst.
   Local Open Scope list_scope.
 
   Context {bm:brand_model}.
@@ -36,10 +36,10 @@ Section ErgoImptoWasm.
   Axiom ergo_imp_ejson_to_wasm_ast : brand_relation_t -> ergo_imp_module -> wasm_ast.
   Definition ergo_imp_ejson_to_wasm_ast_typed := ergo_imp_ejson_to_wasm_ast brand_relation_brands.
 
-  Definition ergo_imp_module_to_wasm
+  Definition ergo_imp_module_to_wasm_ast
              (contract_name:string)
              (p:ergo_imp_module) : wasm_ast :=
     ergo_imp_ejson_to_wasm_ast_typed p.
-End ErgoImptoWasm.
+End ErgoImptoWasmAst.
 
 Extract Constant ergo_imp_ejson_to_wasm_ast => "Wasm_ast.ergo_imp_ejson_to_wasm_ast".

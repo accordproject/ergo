@@ -27,17 +27,17 @@ Require Import ErgoSpec.Backend.Qcert.QcertEJson.
 Require Import ErgoSpec.Common.Provenance.
 Require Import ErgoSpec.Common.Result.
 
-Section ErgoWasm.
+Section ErgoWasmAst.
   Context {m : brand_model}.
 
   (** WASM programs are in AST form *)
   (** Same type as in Q*cert *)
   Definition wasm_ast : Set := wasm_ast.
-  Definition wasm_ast_eval :brand_relation_t -> wasm_ast -> jbindings -> option ejson
+  Definition wasm_ast_eval : wasm_ast -> jbindings -> option ejson
     := @wasm_ast_eval enhanced_ejson.
   Definition wasm_ast_to_string : wasm_ast -> nstring := wasm_ast_to_string.
 
-End ErgoWasm.
+End ErgoWasmAst.
 
 Extract Constant wasm_ast => "Wasm_ast.t".
 Extract Constant wasm_ast_eval => "Wasm_ast.eval".
