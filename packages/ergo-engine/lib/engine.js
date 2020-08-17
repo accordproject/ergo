@@ -31,7 +31,7 @@ class Engine {
      * Create the Engine.
      */
     constructor() {
-        this.scripts = {};
+        this.modules = {};
     }
 
     /**
@@ -52,68 +52,46 @@ class Engine {
 
     /**
     /**
-     * Compile a script for a JavaScript machine
-     * @param {string} script - the script
+     * instantiate
+     * @param {module} module - the module
      */
-    compileVMScript(script) {
-        throw new Error('[compileVMScript] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
+    instantiate(module) {
+        throw new Error('[instantiate] Cannot instantiate module: create engine for a specific platform');
     }
 
     /**
-     * Execute a call in a JavaScript machine
+     * Execute a call
      * @param {number} utcOffset - UTC Offset for this execution
      * @param {object} context - global variables to set in the VM
-     * @param {object} script - the initial script to load
+     * @param {object} module - the module to load
      * @param {object} call - the execution call
      */
-    async runVMScriptCall(utcOffset,context,script,call) {
-        throw new Error('[runVMScriptCall] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
+    async invokeCall(utcOffset,context,module,call) {
+        throw new Error('[invokeCall] Cannot create invoke call for contract: create engine for a specific platform');
     }
 
     /**
-     * Clear the JavaScript logic cache
+     * Clear the module cache
      * @private
      */
-    clearCacheJsScript() {
-        this.scripts = {};
+    clearCache() {
+        this.modules = {};
     }
 
     /**
-     * Compile and cache JavaScript logic
+     * Instantiate and cache the module
      * @param {ScriptManager} scriptManager  - the script manager
      * @param {string} contractId - the contract identifier
-     * @return {VMScript} the cached script
+     * @return {module} the cached module
      * @private
      */
-    cacheJsScript(scriptManager, contractId) {
-        if (!this.scripts[contractId]) {
-            const allJsScripts = scriptManager.getCompiledJavaScript();
-            const script = this.compileVMScript(allJsScripts);
-            this.scripts[contractId] = script;
+    cacheModule(scriptManager, contractId) {
+        if (!this.modules[contractId]) {
+            const module = scriptManager.getCompiledModule();
+            const moduleInstance = this.instantiate(module);
+            this.modules[contractId] = moduleInstance;
         }
-        return this.scripts[contractId];
-    }
-
-    /**
-     * Trigger a clause, passing in the request object -- trigger means invoking main
-     * @param {LogicManager} logic  - the logic
-     * @param {string} contractId - the contract identifier
-     * @param {object} contract - the contract data
-     * @param {object} request - the request, a JS object that can be deserialized
-     * using the Composer serializer.
-     * @param {object} state - the contract state, a JS object that can be deserialized
-     * using the Composer serializer.
-     * @param {string} currentTime - the definition of 'now'
-     * @param {object} options to the text generation
-     * @return {object} the result for the clause
-     */
-    async trigger(logic, contractId, contract, request, state, currentTime, options) {
-        const params = { request: request };
-        const answer = await this.invoke(logic, contractId, 'main', contract, params, state, currentTime, options, null);
-        // Adjust result for triggers -- remove params, add request back
-        delete answer.params;
-        answer.request = request;
-        return answer;
+        return this.modules[contractId];
     }
 
     /**
@@ -146,8 +124,9 @@ class Engine {
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
-        const script = this.cacheJsScript(logic.getScriptManager(), contractId);
-        const callScript = logic.getInvokeCall(clauseName);
+        const module = this.cacheModule(logic.getScriptManager(), contractId);
+        const contractName = logic.getContractName();
+        const call = this.getInvokeCall(contractName,clauseName);
         const context = {
             data: validContract.serialized,
             state: validState,
@@ -156,7 +135,7 @@ class Engine {
         };
 
         // execute the logic
-        const result = await this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
+        const result = await this.invokeCall(utcOffset,now,validOptions,context,module,call);
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
@@ -187,6 +166,28 @@ class Engine {
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
         return await this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, null);
+    }
+
+    /**
+     * Trigger a clause, passing in the request object -- trigger means invoking main
+     * @param {LogicManager} logic  - the logic
+     * @param {string} contractId - the contract identifier
+     * @param {object} contract - the contract data
+     * @param {object} request - the request, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {object} state - the contract state, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
+     * @return {object} the result for the clause
+     */
+    async trigger(logic, contractId, contract, request, state, currentTime, options) {
+        const params = { request: request };
+        const answer = await this.invoke(logic, contractId, 'main', contract, params, state, currentTime, options, null);
+        // Adjust result for triggers -- replace 'params' by 'request'
+        delete answer.params;
+        answer.request = request;
+        return answer;
     }
 
     /**

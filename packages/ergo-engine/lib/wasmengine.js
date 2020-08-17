@@ -96,11 +96,11 @@ class WasmEngine extends Engine {
 
     /**
      * Compile a script for a JavaScript machine
-     * @param {string} script - the script
-     * @return {object} the VM-ready script object
+     * @param {*} module - the module
+     * @return {object} the instantiated module
      */
-    compileVMScript(script) {
-        return script;
+    instantiate(module) {
+        return module;
     }
 
     /**
@@ -113,7 +113,7 @@ class WasmEngine extends Engine {
      * @param {object} call - the execution call
      * @return {object} the result of execution
      */
-    async runVMScriptCall(utcOffset,now,options,context,script,call) {
+    async invokeCall(utcOffset,now,options,context,script,call) {
         logger.debug(`Calling eval with context ${context}`);
         const response = await invoke(null, script + call, null, null);
         return response;

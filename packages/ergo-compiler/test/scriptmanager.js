@@ -60,7 +60,7 @@ describe('ScriptManager', () => {
             scriptManager.allFunctionDeclarations().length.should.equal(2);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
             scriptManager.getCompiledScript().getContents().length.should.equal(50125);
-            scriptManager.getCompiledJavaScript().length.should.equal(50125);
+            scriptManager.getCompiledModule().length.should.equal(50125);
             scriptManager.allFunctionDeclarations().length.should.equal(150);
         });
 
@@ -177,9 +177,9 @@ describe('ScriptManager', () => {
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
             scriptManager.compileLogic().getContents().length.should.equal(50125);
-            scriptManager.getCompiledJavaScript().length.should.equal(50125);
+            scriptManager.getCompiledModule().length.should.equal(50125);
             scriptManager.clearScripts();
-            return (() => scriptManager.getCompiledJavaScript()).should.throw('Did not find any compiled JavaScript logic');
+            return (() => scriptManager.getCompiledModule()).should.throw('Did not find any compiled logic');
         });
 
     });
