@@ -45,7 +45,7 @@ class ScriptManager {
         this.target = target;
         this.modelManager = modelManager;
         this.scripts = {};
-        this.compiledScript = null;
+        this.compiledModule = null;
         this.warnings = options && options.warnings || false;
         this.sourceTemplates = [];
     }
@@ -146,8 +146,8 @@ class ScriptManager {
      */
     getAllScripts() {
         let result = this.getScripts();
-        if (this.compiledScript !== null) {
-            result.push(this.compiledScript);
+        if (this.compiledModule !== null) {
+            result.push(this.compiledModule);
         }
         return result;
     }
@@ -222,7 +222,7 @@ class ScriptManager {
      */
     clearScripts() {
         this.scripts = {};
-        this.compiledScript = null;
+        this.compiledModule = null;
     }
 
     /**
@@ -245,21 +245,22 @@ class ScriptManager {
     }
 
     /**
-     * Get the compiled JavaScript
-     * @return {string} the Script
+     * Get the compiled module
+     * @return {string} the module
      * @private
      */
-    getCompiledJavaScript() {
-        const compiledScript = this.compiledScript;
-        let allJsScripts = '';
+    getCompiledModule() {
+        const compiledModule = this.compiledModule;
+        let module = '';
 
-        if (compiledScript) {
-            allJsScripts += compiledScript.getContents();
+        if (compiledModule) {
+            // XXX This has to change for multiple modules!
+            module += compiledModule.getContents();
         } else {
-            throw new Error('Did not find any compiled JavaScript logic');
+            throw new Error('Did not find any compiled logic');
         }
 
-        return allJsScripts;
+        return module;
     }
 
     /**
@@ -305,8 +306,8 @@ class ScriptManager {
      * @return {object} The script compiled to JavaScript
      */
     compileLogic(force) {
-        if (this.compiledScript && !force) {
-            return this.compiledScript;
+        if (this.compiledModule && !force) {
+            return this.compiledModule;
         }
         const codeExt = this.target === 'java' ? '.java' : this.target === 'wasm' ? '.wasm' : '.js';
         let sourceErgo = this.getLogic();
@@ -315,7 +316,7 @@ class ScriptManager {
             if (allJsScripts === '') {
                 return null;
             }
-            this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, allJsScripts, null);
+            this.compiledModule = new Script(this.modelManager, 'main'+codeExt, codeExt, allJsScripts, null);
         } else {
             // Do not link to runtime for Java target, only for JavaScript
             const link = this.target === 'es6' ? true : false;
@@ -323,9 +324,9 @@ class ScriptManager {
             if (Object.prototype.hasOwnProperty.call(compiledErgo,'error')) {
                 ScriptManager._throwCompilerException(compiledErgo.error);
             }
-            this.compiledScript = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success, compiledErgo.contractName);
+            this.compiledModule = new Script(this.modelManager, 'main'+codeExt, codeExt, compiledErgo.success, compiledErgo.contractName);
         }
-        return this.compiledScript;
+        return this.compiledModule;
     }
 
     /**
