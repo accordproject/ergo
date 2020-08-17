@@ -25,7 +25,6 @@ const Engine = require('../lib/engine');
 describe('#evalengine', () => {
     it('should fail running when using a base Engine', async () => {
         const engine = new Engine();
-        engine.kind().should.equal('empty');
         (() => engine.compileVMScript('const a = 1;')).should.throw('[compileVMScript] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
         return engine.runVMScriptCall(2,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.be.rejectedWith('[runVMScriptCall] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
     });
