@@ -160,15 +160,7 @@ let get_source_table gconf =
 
 let set_link gconf () = gconf.econf_link <- true
 let should_link gconf =
-  if gconf.econf_link
-  then
-    if can_link_runtime gconf.econf_target
-    then true
-    else ergo_raise
-           (ergo_system_error
-              ("Cannot link for target: " ^ (name_of_lang gconf.econf_target)))
-  else
-    false
+  gconf.econf_link && can_link_runtime gconf.econf_target
 
 let default_config () =
   begin try
