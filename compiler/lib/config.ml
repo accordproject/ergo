@@ -43,7 +43,7 @@ let extension_of_lang lang =
   | Ergo -> ".ergo"
   | ES6 -> ".js"
   | Java -> ".java"
-  | Wasm -> ".wat"
+  | Wasm -> ".wasm"
   end
 
 let script_lang_of_lang lang =
@@ -51,7 +51,7 @@ let script_lang_of_lang lang =
   | Ergo -> ".ergo"
   | ES6 -> ".js"
   | Java -> ".java"
-  | Wasm -> ".wat"
+  | Wasm -> ".wasm"
   end
 
 let script_lang_of_target s =
