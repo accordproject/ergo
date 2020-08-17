@@ -104,25 +104,13 @@ describe('LogicManager', () => {
 
         it('should succeed creating a dispatch call for a JS logic file with a contract class (ES6)', () => {
             const logicManager = new LogicManager('es6');
-            logicManager.addLogicFile(jsSample2,'test2.js');
-            logicManager.compileLogicSync(false);
-        });
-
-        it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
-            const logicManager = new LogicManager('es6');
-            logicManager.addLogicFile(jsSample2,'test2.js');
-            logicManager.compileLogicSync(false);
-        });
-
-        it('should succeed creating an invoke call for a JS logic file with a contract class (ES6)', () => {
-            const logicManager = new LogicManager('es6');
-            logicManager.addLogicFile(jsSample2,'test2.js');
-            logicManager.compileLogicSync(false);
-        });
-
-        it('should fail creating an invoke call for a JS logic file with no contract class (ES6)', () => {
-            const logicManager = new LogicManager('es6');
             logicManager.addLogicFile(jsSample,'test.js');
+            logicManager.compileLogicSync(false);
+        });
+
+        it('should succeed creating a dispatch call for a JS logic file with a contract class (ES6)', () => {
+            const logicManager = new LogicManager('es6');
+            logicManager.addLogicFile(jsSample2,'test2.js');
             logicManager.compileLogicSync(false);
         });
 
@@ -267,7 +255,7 @@ describe('LogicManager', () => {
             logicManager.addLogicFile(ergoSample,'test.ergo');
             logicManager.getTarget().should.equal('java');
             logicManager.compileLogicSync(false);
-            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(10592);
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(10719);
         });
 
         it('should load a model without a name to the model manager', () => {

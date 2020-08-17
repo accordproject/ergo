@@ -59,12 +59,9 @@ describe('ScriptManager', () => {
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(2);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
-            scriptManager.getCompiledScript().getContents().length.should.equal(47852);
-            scriptManager.getCompiledJavaScript().length.should.equal(47852);
-            scriptManager.allFunctionDeclarations().length.should.equal(152);
-            scriptManager.allFunctionDeclarations().filter(x => x.name === '__init').length.should.equal(1);
-            expect(scriptManager.hasInit()).to.not.throw;
-            expect(scriptManager.hasDispatch()).to.not.throw;
+            scriptManager.getCompiledScript().getContents().length.should.equal(50125);
+            scriptManager.getCompiledModule().length.should.equal(50125);
+            scriptManager.allFunctionDeclarations().length.should.equal(150);
         });
 
         it('should compile Ergo scripts', async function() {
@@ -179,10 +176,10 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(47852);
-            scriptManager.getCompiledJavaScript().length.should.equal(47852);
+            scriptManager.compileLogic().getContents().length.should.equal(50125);
+            scriptManager.getCompiledModule().length.should.equal(50125);
             scriptManager.clearScripts();
-            return (() => scriptManager.getCompiledJavaScript()).should.throw('Did not find any compiled JavaScript logic');
+            return (() => scriptManager.getCompiledModule()).should.throw('Did not find any compiled logic');
         });
 
     });

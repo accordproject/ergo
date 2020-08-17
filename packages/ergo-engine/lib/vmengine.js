@@ -60,11 +60,11 @@ class VMEngine extends Engine {
 
     /**
      * Compile a script for a JavaScript machine
-     * @param {string} script - the script
-     * @return {object} the VM-ready script object
+     * @param {string} module - the module
+     * @return {object} the VM-ready module
      */
-    compileVMScript(script) {
-        return new VMScript(script);
+    instantiate(module) {
+        return new VMScript(module);
     }
 
     /**
@@ -77,7 +77,7 @@ class VMEngine extends Engine {
      * @param {object} call - the execution call
      * @return {object} the result of execution
      */
-    runVMScriptCall(utcOffset,now,options,context,script,call) {
+    invokeCall(utcOffset,now,options,context,script,call) {
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -91,6 +91,26 @@ class VMEngine extends Engine {
         vm.freeze(context, 'context');
         vm.run(script);
         return vm.run(call);
+    }
+
+    /**
+     * Generate the invocation logic
+     * @param {String} contractName - the contract name
+     * @param {String} clauseName - the clause name inside that contract
+     * @return {String} the invocation code
+     * @private
+     */
+    getInvokeCall(contractName,clauseName) {
+        let code;
+        if (contractName) {
+            code = `
+const __result = ${contractName}.${clauseName}(Object.assign({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0}}, context.params));
+unwrapError(__result);
+`;
+        } else {
+            throw new Error('Cannot invoke contract without a contract name');
+        }
+        return code;
     }
 
 }
