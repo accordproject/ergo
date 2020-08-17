@@ -125,7 +125,7 @@ class Engine {
     }
 
     /**
-     * Trigger a clause, passing in the request object
+     * Trigger a clause, passing in the request object -- trigger means invoking main
      * @param {LogicManager} logic  - the logic
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
@@ -139,46 +139,11 @@ class Engine {
      * @return {object} the result for the clause
      */
     trigger(logic, contractId, contract, request, state, currentTime, utcOffset, options) {
-        const modelManager = logic.getModelManager();
-        const scriptManager = logic.getScriptManager();
-
-        // Set the current time and UTC Offset
-        const { currentTime: now, utcOffset: offset } = DateTimeUtil.setCurrentTime(currentTime, utcOffset);
-        const validOptions = validateES6.validateInput(modelManager, options ? options : {
-            '$class': 'org.accordproject.ergo.options.Options',
-            'wrapVariables': false,
-            'template': false,
-        });
-
-        const validContract = validateES6.validateContract(modelManager, contract, offset); // ensure the contract is valid
-        const validRequest = validateES6.validateInput(modelManager, request, offset); // ensure the request is valid
-        const validState = validateES6.validateInput(modelManager, state, offset); // ensure the state is valid
-
-        Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
-
-        const script = this.cacheJsScript(scriptManager, contractId);
-        const callScript = getDispatchCall(scriptManager);
-
-        const context = {
-            data: validContract.serialized,
-            state: validState,
-            request: validRequest,
-            options: validOptions
-        };
-
-        // execute the logic
-        const result = this.runVMScriptCall(offset,now,validOptions,context,script,callScript);
-        const validResponse = validateES6.validateOutput(modelManager, result.__response, offset); // ensure the response is valid
-        const validNewState = validateES6.validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
-        const validEmit = validateES6.validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
-
-        const answer = {
-            'clause': contractId,
-            'request': request, // Keep the original request
-            'response': validResponse,
-            'state': validNewState,
-            'emit': validEmit,
-        };
+        const params = { request: request };
+        const answer = this.invoke(logic, contractId, 'main', contract, params, state, currentTime, utcOffset, options, null);
+        // Adjust result for triggers -- remove params, add request back
+        delete answer.params;
+        answer.request = request;
         return answer;
     }
 
