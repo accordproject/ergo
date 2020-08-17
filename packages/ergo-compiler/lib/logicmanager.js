@@ -89,26 +89,6 @@ class LogicManager {
     }
 
     /**
-     * Generate the runtime dispatch logic
-     * @return {String} the dispatch code
-     * @private
-     */
-    getDispatchCall() {
-        const target = this.getTarget();
-        let code;
-        if (target === 'es6') {
-            this.getScriptManager().hasDispatch();
-            code = `
-const __result = __dispatch({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0},request:context.request});
-unwrapError(__result);
-        `;
-        } else {
-            throw new Error(`Unsupported target: ${target}`);
-        }
-        return code;
-    }
-
-    /**
      * Generate the invocation logic
      * @param {String} clauseName - the clause name
      * @return {String} the invocation code
