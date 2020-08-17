@@ -196,16 +196,6 @@ Section ErgoImptoES6.
                                              eol
                                              quotel) (fst signatures)).
 
-    Definition javascript_main_dispatch_and_init
-               (contract_name:string)
-               (eol:nstring)
-               (quotel:nstring) : nstring :=
-      let cname : string :=
-          QcertCodeGen.javascript_identifier_sanitizer contract_name
-      in
-      ^"" +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.runtime.Request" "org.accordproject.runtime.Response" "org.accordproject.runtime.Emit" "org.accordproject.runtime.State" cname clause_main_name eol quotel
-          +++ wrapper_function_for_init true "__init" "org.accordproject.runtime.Response" "org.accordproject.runtime.Emit" "org.accordproject.runtime.State" cname eol quotel.
-
     Definition javascript_of_module_with_dispatch
                (contract_name:string)
                (signatures:list (string * string * string * string * string) * string)
@@ -215,7 +205,6 @@ Section ErgoImptoES6.
       (QcertCodeGen.js_ast_to_javascript preamble) +++ eol
                    +++ (wrapper_functions contract_name signatures eol quotel)
                    +++ (ergo_imp_module_to_javascript_top brand_relation_brands p)
-                   +++ (javascript_main_dispatch_and_init contract_name eol quotel)
                    +++ (QcertCodeGen.js_ast_to_javascript postamble).
 
     Fixpoint filter_signatures

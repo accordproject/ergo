@@ -352,7 +352,6 @@ describe('LogicManager', () => {
         });
     });
 
-
     describe('#loader-files', () => {
         it('should load files with no formula', async function () {
             const files = [

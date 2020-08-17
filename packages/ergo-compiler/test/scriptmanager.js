@@ -18,7 +18,6 @@ const chai = require('chai');
 const should = chai.should();
 
 chai.should();
-const expect = chai.expect;
 chai.use(require('chai-things'));
 chai.use(require('chai-as-promised'));
 
@@ -57,8 +56,6 @@ describe('ScriptManager', () => {
             scriptManager.getScriptsForTarget('ergo').length.should.equal(1);
             scriptManager.getScriptsForTarget('es5').length.should.equal(1);
             scriptManager.getScriptsForTarget('java').length.should.equal(0);
-            (() => scriptManager.hasInit()).should.throw('Function __init was not found in logic');
-            (() => scriptManager.hasDispatch()).should.not.throw;
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(2);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
