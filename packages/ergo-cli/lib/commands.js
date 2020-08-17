@@ -17,12 +17,12 @@
 const Fs = require('fs');
 const ErgoLoader = require('@accordproject/ergo-compiler').ErgoLoader;
 const ErgoCompiler = require('@accordproject/ergo-compiler').Compiler;
-const Engine = require('@accordproject/ergo-engine').VMEngine;
+const buildengine = require('@accordproject/ergo-engine').buildengine;
 
 /**
  * Load a file or JSON string
  *
- * @param {object} input either a file name or a json string
+ * @param {object} input - either a file name or a json string
  * @return {object} JSON object
  */
 function getJson(input) {
@@ -40,14 +40,15 @@ function getJson(input) {
  *
  * @param {string} template - template directory
  * @param {string[]} files - input files
+ * @param {string} target - the target execution platform
  * @return {Promise<LogicManager>} a Promise to the instantiated logicmanager
  */
-async function loadTemplate(template, files) {
+async function loadTemplate(template, files, target) {
     let logicManager;
     if (template) {
-        logicManager = await ErgoLoader.fromDirectory(template);
+        logicManager = await ErgoLoader.fromDirectory(template,null,target);
     } else {
-        logicManager = await ErgoLoader.fromFiles(files);
+        logicManager = await ErgoLoader.fromFiles(files,target);
     }
     if (logicManager.getScriptManager().getLogic().length === 0) {
         throw new Error('No input ergo found');
@@ -65,25 +66,26 @@ class Commands {
      *
      * @param {string} template - template directory
      * @param {string[]} files - input files
-     * @param {string} contractInput the contract data
-     * @param {string} stateInput the contract state
-     * @param {string} currentTime the definition of 'now'
-     * @param {string[]} requestsInput the requests
-     * @param {boolean} warnings whether to print warnings
+     * @param {string} contractInput - the contract data
+     * @param {string} stateInput - the contract state
+     * @param {string} currentTime - the definition of 'now'
+     * @param {string[]} requestsInput - the requests
+     * @param {boolean} warnings - whether to print warnings
+     * @param {string} target - the target execution platform
      * @returns {object} Promise to the result of execution
      */
-    static async trigger(template,files,contractInput,stateInput,currentTime,requestsInput,warnings) {
+    static async trigger(template,files,contractInput,stateInput,currentTime,requestsInput,warnings,target) {
         try {
-            const logicManager = await loadTemplate(template,files);
+            const logicManager = await loadTemplate(template,files,target);
             const contractJson = getJson(contractInput);
             let requestsJson = [];
             for (let i = 0; i < requestsInput.length; i++) {
                 requestsJson.push(getJson(requestsInput[i]));
             }
-            const engine = new Engine();
+            const engine = buildengine(target);
             let initResponse;
             if (stateInput === null) {
-                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, null);
+                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, null, target);
             } else {
                 const stateJson = getJson(stateInput);
                 initResponse = Promise.resolve({ state: stateJson });
@@ -104,21 +106,22 @@ class Commands {
      *
      * @param {string} template - template directory
      * @param {string[]} files - input files
-     * @param {string} clauseName the name of the clause to invoke
-     * @param {string} contractInput the contract data
-     * @param {string} stateInput the contract state
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} paramsInput the parameters for the clause
-     * @param {boolean} warnings whether to print warnings
+     * @param {string} clauseName - the name of the clause to invoke
+     * @param {string} contractInput - the contract data
+     * @param {string} stateInput - the contract state
+     * @param {string} currentTime - the definition of 'now'
+     * @param {object} paramsInput - the parameters for the clause
+     * @param {boolean} warnings - whether to print warnings
+     * @param {string} target - the target execution platform
      * @returns {object} Promise to the result of invocation
      */
-    static async invoke(template,files,clauseName,contractInput,stateInput,currentTime,paramsInput,warnings) {
+    static async invoke(template,files,clauseName,contractInput,stateInput,currentTime,paramsInput,warnings,target) {
         try {
-            const logicManager = await loadTemplate(template,files);
+            const logicManager = await loadTemplate(template,files,target);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
             const stateJson = getJson(stateInput);
-            const engine = new Engine();
+            const engine = buildengine(target);
             return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime, null);
         } catch (err) {
             return Promise.reject(err);
@@ -130,18 +133,19 @@ class Commands {
      *
      * @param {string} template - template directory
      * @param {string[]} files - input files
-     * @param {string} contractInput the contract data
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} paramsInput the parameters for the clause
-     * @param {boolean} warnings whether to print warnings
+     * @param {string} contractInput - the contract data
+     * @param {string} currentTime - the definition of 'now'
+     * @param {object} paramsInput - the parameters for the clause
+     * @param {boolean} warnings - whether to print warnings
+     * @param {string} target - the target execution platform
      * @returns {object} Promise to the result of execution
      */
-    static async initialize(template,files,contractInput,currentTime,paramsInput,warnings) {
+    static async initialize(template,files,contractInput,currentTime,paramsInput,warnings,target) {
         try {
-            const logicManager = await loadTemplate(template,files);
+            const logicManager = await loadTemplate(template,files,target);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
-            const engine = new Engine();
+            const engine = buildengine(target);
             return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime, null);
         } catch (err) {
             return Promise.reject(err);

@@ -22,6 +22,52 @@ moment.fn.toJSON = Util.momentToJson;
 
 const Engine = require('./engine');
 
+const loader = require('@assemblyscript/loader');
+const bin = require('./binary_encoding.js');
+
+/**
+ * Write a value to a module's memory
+ * @param {*} mod - module
+ * @param {*} value - the value
+ * @return {*} the pointer to the value
+ */
+function write(mod, value) {
+    let { __alloc, __retain, memory} = mod.exports;
+    let value_bin = bin.ejson_to_bytes(value); // ejson --JS--> binary
+    let bytes_ptr = __retain(__alloc(value_bin.byteLength)); // alloc runtime memory
+    Buffer.from(value_bin).copy(Buffer.from(memory.buffer, bytes_ptr)); // copy binary value
+    return bytes_ptr;
+}
+
+/**
+ * Read a value from a module's memory
+ * @param {*} mod - module
+ * @param {*} ptr - pointer to the value
+ * @return {*} the value
+ */
+function read(mod, ptr) {
+    let { memory } = mod.exports;
+    let value = bin.ejson_of_bytes(memory.buffer, ptr); // binary --JS--> ejson
+    return value;
+}
+
+/**
+ * invoke WASM code
+ * @param {*} runtime - the runtime module
+ * @param {*} module - the main module
+ * @param {string} fn_name - the function to invoke
+ * @param {*} arg - the function arguments
+ * @return {*} a pointer to the result
+ */
+async function invoke(runtime, module, fn_name, arg) {
+    let rt = await loader.instantiate(runtime);
+    let m = await loader.instantiate(module, { runtime: rt.instance.exports });
+    let arg_ptr = write(rt, arg);
+    let res_ptr = m.exports[fn_name](arg_ptr);
+    let res = read(rt, res_ptr);
+    return res;
+}
+
 /**
  * <p>
  * EvalEngine class. Execution of template logic against a request object, returning a response to the caller.
@@ -31,13 +77,13 @@ const Engine = require('./engine');
  * @public
  * @memberof module:ergo-engine
  */
-class EvalEngine extends Engine {
+class WasmEngine extends Engine {
     /**
      * Engine kind
      * @return {string} which kind of engine
      */
     kind() {
-        return 'eval';
+        return 'wasm';
     }
 
     /**
@@ -45,7 +91,7 @@ class EvalEngine extends Engine {
      * @return {string} which runtime of engine
      */
     runtime() {
-        return 'es6';
+        return 'wasm';
     }
 
     /**
@@ -67,12 +113,12 @@ class EvalEngine extends Engine {
      * @param {object} call - the execution call
      * @return {object} the result of execution
      */
-    runVMScriptCall(utcOffset,now,options,context,script,call) {
+    async runVMScriptCall(utcOffset,now,options,context,script,call) {
         logger.debug(`Calling eval with context ${context}`);
-        const response = eval(script + call);
+        const response = await invoke(null, script + call, null, null);
         return response;
     }
 
 }
 
-module.exports = EvalEngine;
+module.exports = WasmEngine;
