@@ -95,7 +95,7 @@ class Engine {
     }
 
     /**
-     * Trigger a clause, passing in the request object
+     * Trigger a clause, passing in the request object -- trigger means invoking main
      * @param {LogicManager} logic  - the logic
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
@@ -108,44 +108,11 @@ class Engine {
      * @return {object} the result for the clause
      */
     async trigger(logic, contractId, contract, request, state, currentTime, options) {
-        // Set the current time and UTC Offset
-        const now = Util.setCurrentTime(currentTime);
-        const utcOffset = now.utcOffset();
-        const validOptions = boxedCollections.boxColl(options ? options : {
-            '$class': 'org.accordproject.ergo.options.Options',
-            'wrapVariables': false,
-            'template': false,
-        });
-
-        const validContract = logic.validateContract(contract); // ensure the contract is valid
-        const validRequest = logic.validateInput(request); // ensure the request is valid
-        const validState = logic.validateInput(state); // ensure the state is valid
-
-        Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
-
-        const script = this.cacheJsScript(logic.getScriptManager(), contractId);
-        const callScript = logic.getDispatchCall();
-
-        const context = {
-            data: validContract.serialized,
-            state: validState,
-            request: validRequest,
-            options: validOptions
-        };
-
-        // execute the logic
-        const result = await this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
-        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
-
-        const answer = {
-            'clause': contractId,
-            'request': request, // Keep the original request
-            'response': validResponse,
-            'state': validNewState,
-            'emit': validEmit,
-        };
+        const params = { request: request };
+        const answer = await this.invoke(logic, contractId, 'main', contract, params, state, currentTime, options, null);
+        // Adjust result for triggers -- remove params, add request back
+        delete answer.params;
+        answer.request = request;
         return answer;
     }
 
@@ -167,7 +134,7 @@ class Engine {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
-        const invokeOptions = boxedCollections.boxColl(options ? options : {
+        const validOptions = boxedCollections.boxColl(options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
@@ -185,12 +152,11 @@ class Engine {
             data: validContract.serialized,
             state: validState,
             params: validParams,
-            __options: invokeOptions
+            __options: validOptions
         };
 
         // execute the logic
-        const result = await this.runVMScriptCall(utcOffset,now,invokeOptions,context,script,callScript);
-
+        const result = await this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
