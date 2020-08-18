@@ -98,7 +98,7 @@ class Compiler {
         if (compiled.code) {
             return { 'error' : compiled.error };
         } else {
-            return { 'success' : Buffer.from(compiled.result,'base64').toString(), 'contractName' : compiled.contractName };
+            return { 'success' : compiled.result, 'contractName' : compiled.contractName };
         }
     }
 
