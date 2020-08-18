@@ -85,7 +85,7 @@ class Engine {
      * instantiate
      * @param {module} module - the module
      */
-    instantiate(module) {
+    async instantiate(module) {
         throw new Error('[instantiate] Cannot instantiate module: create engine for a specific platform');
     }
 
@@ -115,10 +115,10 @@ class Engine {
      * @return {module} the cached module
      * @private
      */
-    cacheModule(scriptManager, contractId) {
+    async cacheModule(scriptManager, contractId) {
         if (!this.modules[contractId]) {
             const module = scriptManager.getCompiledModule();
-            const moduleInstance = this.instantiate(module);
+            const moduleInstance = await this.instantiate(module);
             this.modules[contractId] = moduleInstance;
         }
         return this.modules[contractId];
@@ -158,8 +158,7 @@ class Engine {
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
-        const module = this.cacheModule(scriptManager, contractId);
-        const call = getInvokeCall(contractName,clauseName);
+        const module = await this.cacheModule(logic.getScriptManager(), contractId);
         const context = {
             data: validContract.serialized,
             state: validState,

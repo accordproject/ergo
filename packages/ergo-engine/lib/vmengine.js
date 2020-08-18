@@ -74,10 +74,12 @@ class VMEngine extends Engine {
      * @param {object} options to the text generation
      * @param {object} context - global variables to set in the VM
      * @param {object} script - the initial script to load
-     * @param {object} call - the execution call
+     * @param {object} contractName - the contract name
+     * @param {object} clauseName - the clause name in that contract
      * @return {object} the result of execution
      */
-    invokeCall(utcOffset,now,options,context,script,call) {
+    invokeCall(utcOffset,now,options,context,script,contractName,clauseName) {
+        const call = this.getInvokeCall(contractName,clauseName);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
