@@ -107,9 +107,7 @@ class WasmEngine extends Engine {
      */
     async instantiate(module) {
         let rt = await loader.instantiate(runtime);
-        //Fs.writeFileSync(Path.resolve(__dirname,'module.wasm'),module);
-        // XXX Hack! load module after baked-in wasm2wat -> wat2wasm roundtrip
-        const moduleBuffer = Fs.readFileSync(Path.resolve(__dirname,'module.wasm'));
+        const moduleBuffer = Buffer.from(module, 'base64');
         let m = await loader.instantiate(moduleBuffer, { runtime: rt.instance.exports });
         return { rt, m };
     }
