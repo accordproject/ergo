@@ -107,8 +107,7 @@ class WasmEngine extends Engine {
      */
     async instantiate(module) {
         let rt = await loader.instantiate(runtime);
-        const moduleBuffer = Buffer.from(module, 'base64');
-        let m = await loader.instantiate(moduleBuffer, { runtime: rt.instance.exports });
+        let m = await loader.instantiate(module, { runtime: rt.instance.exports });
         return { rt, m };
     }
 
