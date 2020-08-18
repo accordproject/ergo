@@ -115,11 +115,18 @@ let json_of_ergo_success () =
     val fullMessage = Js.string ""
   end
 
+let arraybuffer_of_string str =
+  let open Bigarray in
+  let n = String.length str in
+  let b = Array1.create char c_layout n in
+  let () = String.iteri (Array1.set b) str in
+  Typed_array.Bigstring.to_arrayBuffer b
+
 let json_of_result res warnings =
   let warningsArr = Array.of_list (List.map Js.string warnings) in
   object%js
     val error = json_of_ergo_success ()
-    val result = Js.string (Base64.encode_string res)
+    val result = arraybuffer_of_string res
     val code = Js.bool false
     val contractName = Js.null
     val warnings = Js.array warningsArr
@@ -129,7 +136,7 @@ let json_of_result_with_contract_name cn res warnings =
   let warningsArr = Array.of_list (List.map Js.string warnings) in
   object%js
     val error = json_of_ergo_success ()
-    val result = Js.string (Base64.encode_string res)
+    val result = arraybuffer_of_string res
     val code = Js.bool false
     val contractName = Js.some (Js.string cn)
     val warnings = Js.array warningsArr
@@ -138,7 +145,7 @@ let json_of_result_with_contract_name cn res warnings =
 let json_of_error gconf error =
   object%js
     val error = json_of_ergo_error gconf error
-    val result = Js.string (Base64.encode_string "")
+    val result = arraybuffer_of_string ""
     val code = Js.bool true
     val contractName = Js.null
     val warnings = Js.array [||]
