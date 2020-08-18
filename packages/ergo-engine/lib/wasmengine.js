@@ -18,7 +18,6 @@ const Fs = require('fs');
 const Path = require('path');
 
 const Util = require('@accordproject/ergo-compiler').Util;
-const logger = require('@accordproject/ergo-compiler').Logger;
 const moment = require('moment-mini');
 // Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
 moment.fn.toJSON = Util.momentToJson;

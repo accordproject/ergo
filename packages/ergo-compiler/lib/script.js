@@ -54,7 +54,8 @@ class Script {
             let parser;
 
             try {
-                parser = new JavaScriptParser(this.contents, false, 8);
+                // XXX this.contents is now a Buffer
+                parser = new JavaScriptParser(this.contents.toString(), false, 8);
             } catch (cause) {
                 // consider adding a toHex method in the exception to put out the pure hex values of the file.
                 const error = new SyntaxError('Failed to parse ' + this.identifier + ': ' + cause.message+'\n'+data.errorStatement);

@@ -59,8 +59,8 @@ describe('ScriptManager', () => {
             scriptManager.getLogic().map(x => x.name).should.deep.equal(['test.ergo']);
             scriptManager.allFunctionDeclarations().length.should.equal(2);
             scriptManager.allFunctionDeclarations().map(x => x.getName()).should.deep.equal(['paymentClause','__dispatch']);
-            scriptManager.getCompiledScript().getContents().length.should.equal(50125);
-            scriptManager.getCompiledModule().length.should.equal(50125);
+            scriptManager.getCompiledScript().getContents().length.should.equal(50153);
+            scriptManager.getCompiledModule().length.should.equal(50153);
             scriptManager.allFunctionDeclarations().length.should.equal(150);
         });
 
@@ -176,8 +176,8 @@ describe('ScriptManager', () => {
             const script2 = scriptManager.createScript('test.ergo','.ergo',ergoSample);
             scriptManager.addScript(script1);
             scriptManager.addScript(script2);
-            scriptManager.compileLogic().getContents().length.should.equal(50125);
-            scriptManager.getCompiledModule().length.should.equal(50125);
+            scriptManager.compileLogic().getContents().length.should.equal(50153);
+            scriptManager.getCompiledModule().length.should.equal(50153);
             scriptManager.clearScripts();
             return (() => scriptManager.getCompiledModule()).should.throw('Did not find any compiled logic');
         });
