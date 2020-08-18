@@ -251,16 +251,13 @@ class ScriptManager {
      */
     getCompiledModule() {
         const compiledModule = this.compiledModule;
-        let module = '';
+        // XXX This has to change for multiple modules!
 
         if (compiledModule) {
-            // XXX This has to change for multiple modules!
-            module += compiledModule.getContents();
+            return compiledModule.getContents();
         } else {
             throw new Error('Did not find any compiled logic');
         }
-
-        return module;
     }
 
     /**
