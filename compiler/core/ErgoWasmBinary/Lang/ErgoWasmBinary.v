@@ -27,4 +27,4 @@ Section ErgoWasmBinary.
 End ErgoWasmBinary.
 
 Extract Constant wasm => "string".
-Extract Constant wasm_to_string => "(fun x -> x)".
+Extract Constant wasm_to_string => "(fun x -> Base64.encode_string x)".
