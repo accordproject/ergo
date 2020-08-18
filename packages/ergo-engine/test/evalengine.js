@@ -18,12 +18,12 @@ const runWorkload = require('./commonengine').runWorkload;
 const EvalEngine = require('../lib/evalengine');
 const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 
-describe('#evalengine', () => {
+describe.only('#evalengine', () => {
     it('should behave as a proper Eval Engine', () => {
         const engine = new EvalEngine();
         engine.kind().should.equal('eval');
         engine.instantiate('const a = 1;').should.not.be.null;
-        engine.invokeCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
+        engine.invokeCall(2,null,null,{ a : 1 },'class C { static f() { return context.a + utcOffset; } }','C','f').should.equal(3);
     });
 
     it('should cache a script', () => {
