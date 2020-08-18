@@ -119,7 +119,7 @@ let json_of_result res warnings =
   let warningsArr = Array.of_list (List.map Js.string warnings) in
   object%js
     val error = json_of_ergo_success ()
-    val result = Js.string res
+    val result = Js.string (Base64.encode_string res)
     val code = Js.bool false
     val contractName = Js.null
     val warnings = Js.array warningsArr
@@ -129,7 +129,7 @@ let json_of_result_with_contract_name cn res warnings =
   let warningsArr = Array.of_list (List.map Js.string warnings) in
   object%js
     val error = json_of_ergo_success ()
-    val result = Js.string res
+    val result = Js.string (Base64.encode_string res)
     val code = Js.bool false
     val contractName = Js.some (Js.string cn)
     val warnings = Js.array warningsArr
@@ -138,7 +138,7 @@ let json_of_result_with_contract_name cn res warnings =
 let json_of_error gconf error =
   object%js
     val error = json_of_ergo_error gconf error
-    val result = Js.string ""
+    val result = Js.string (Base64.encode_string "")
     val code = Js.bool true
     val contractName = Js.null
     val warnings = Js.array [||]

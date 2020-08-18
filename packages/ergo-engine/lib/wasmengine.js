@@ -14,6 +14,9 @@
 
 'use strict';
 
+const Fs = require('fs');
+const Path = require('path');
+
 const Util = require('@accordproject/ergo-compiler').Util;
 const logger = require('@accordproject/ergo-compiler').Logger;
 const moment = require('moment-mini');
@@ -53,20 +56,23 @@ function read(mod, ptr) {
 
 /**
  * invoke WASM code
- * @param {*} runtime - the runtime module
- * @param {*} module - the main module
+ * @param {*} rt - the runtime module
+ * @param {*} m - the main module
  * @param {string} fn_name - the function to invoke
  * @param {*} arg - the function arguments
  * @return {*} a pointer to the result
  */
-async function invoke(runtime, module, fn_name, arg) {
-    let rt = await loader.instantiate(runtime);
-    let m = await loader.instantiate(module, { runtime: rt.instance.exports });
+async function invoke(rt, m, fn_name, arg) {
+    // console.log('INVOKE ' + fn_name + '(' + JSON.stringify(arg) + ')');
     let arg_ptr = write(rt, arg);
     let res_ptr = m.exports[fn_name](arg_ptr);
     let res = read(rt, res_ptr);
-    return res;
+    //console.log('RES ' + JSON.stringify(res,null,2));
+    return res.$left;
 }
+
+// XXX Hack! load runtime explicitely here
+const runtime = Fs.readFileSync(Path.resolve(__dirname,'untouched.wasm'));
 
 /**
  * <p>
@@ -99,8 +105,13 @@ class WasmEngine extends Engine {
      * @param {*} module - the module
      * @return {object} the instantiated module
      */
-    instantiate(module) {
-        return module;
+    async instantiate(module) {
+        let rt = await loader.instantiate(runtime);
+        //Fs.writeFileSync(Path.resolve(__dirname,'module.wasm'),module);
+        // XXX Hack! load module after baked-in wasm2wat -> wat2wasm roundtrip
+        const moduleBuffer = Fs.readFileSync(Path.resolve(__dirname,'module.wasm'));
+        let m = await loader.instantiate(moduleBuffer, { runtime: rt.instance.exports });
+        return { rt, m };
     }
 
     /**
@@ -110,12 +121,14 @@ class WasmEngine extends Engine {
      * @param {object} options to the text generation
      * @param {object} context - global variables to set in the VM
      * @param {object} script - the initial script to load
-     * @param {object} call - the execution call
+     * @param {object} contractName - the contract name
+     * @param {object} clauseName - the clause name in that contract
      * @return {object} the result of execution
      */
-    async invokeCall(utcOffset,now,options,context,script,call) {
-        logger.debug(`Calling eval with context ${context}`);
-        const response = await invoke(null, script + call, null, null);
+    async invokeCall(utcOffset,now,options,context,script,contractName,clauseName) {
+        const args = Object.assign({__options:options,__contract:context.data,__state:context.state,__emit:[]}, context.params);
+        // XXX Hack! roundtrip through parse/stringify
+        const response = await invoke(script.rt, script.m, clauseName, JSON.parse(JSON.stringify(args)));
         return response;
     }
 
