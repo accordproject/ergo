@@ -134,7 +134,8 @@ class Engine {
         };
 
         // execute the logic
-        const result = await this.invokeCall(utcOffset,now,validOptions,context,module,contractName,clauseName);
+        const wrappedResult = await this.invokeCall(utcOffset,now,validOptions,context,module,contractName,clauseName);
+        const result = this.unwrapError(wrappedResult);
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
@@ -279,6 +280,23 @@ class Engine {
         return await this.trigger(logic, contractId, contract, request, state, currentTime, options);
     }
 
+    /**
+     * Handle success/failure
+     * @param {object} result - the result from invokation
+     * @return {object} the value if success or throws an error
+     */
+    unwrapError(result) {
+        if (Object.prototype.hasOwnProperty.call(result,'$left')) {
+            return result.$left;
+        } else {
+            const failure = result.$right;
+            let message = 'Unknown Ergo Logic Error (Please file a GitHub issue)';
+            if (failure && failure.$data && failure.$data.message) {
+                message = failure.$data.message;
+            }
+            throw new Error('[Ergo] ' + message);
+        }
+    }
 }
 
 module.exports = Engine;
