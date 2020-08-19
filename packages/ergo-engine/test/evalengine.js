@@ -18,7 +18,7 @@ const runWorkload = require('./commonengine').runWorkload;
 const EvalEngine = require('../lib/evalengine');
 const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 
-describe.only('#evalengine', () => {
+describe('#evalengine', () => {
     it('should behave as a proper Eval Engine', () => {
         const engine = new EvalEngine();
         engine.kind().should.equal('eval');
@@ -26,15 +26,17 @@ describe.only('#evalengine', () => {
         engine.invokeCall(2,null,null,{ a : 1 },'class C { static f() { return context.a + utcOffset; } }','C','f').should.equal(3);
     });
 
-    it('should cache a script', () => {
+    it('should cache a script', async () => {
         const engine = new EvalEngine();
         const logicManager = new LogicManager('es6', null);
         const script = 'const a = 1';
         logicManager.addLogicFile(script,'test2.js');
         logicManager.compileLogicSync(false);
         const scriptManager = logicManager.getScriptManager();
-        engine.cacheModule(scriptManager,'test2.js').should.equal(script);
-        engine.cacheModule(scriptManager,'test2.js').should.equal(script);
+        let script1 = await engine.cacheModule(scriptManager,'test2.js');
+        script1.should.equal(script);
+        script1 = await engine.cacheModule(scriptManager,'test2.js');
+        script1.should.equal(script);
     });
 });
 
