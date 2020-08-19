@@ -14,6 +14,9 @@
 
 'use strict';
 
+const Fs = require('fs');
+const Path = require('path');
+
 const Chai = require('chai');
 const expect = Chai.expect;
 
@@ -24,6 +27,9 @@ Chai.use(require('chai-as-promised'));
 const runWorkload = require('./commonengine').runWorkload;
 const VMEngine = require('../lib/vmengine');
 const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
+
+// Set of tests
+const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.json'), 'utf8'));
 
 describe('#vmengine', () => {
     it('should behave as a proper VM engine', async () => {
@@ -59,5 +65,5 @@ describe('#vmengine', () => {
 });
 
 describe('Execute ES6', () => {
-    runWorkload(VMEngine, 'es6');
+    runWorkload(VMEngine, 'es6', workload);
 });

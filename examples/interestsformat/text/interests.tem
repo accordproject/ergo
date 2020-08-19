@@ -1,1 +1,0 @@
-monthlyPaymentFormula(contract.loanAmount,contract.rate,contract.loanDuration) as "K0,0.0 (CCC)"
