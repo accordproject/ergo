@@ -62,12 +62,10 @@ function read(mod, ptr) {
  * @return {*} a pointer to the result
  */
 async function invoke(rt, m, fn_name, arg) {
-    // console.log('INVOKE ' + fn_name + '(' + JSON.stringify(arg) + ')');
     let arg_ptr = write(rt, arg);
     let res_ptr = m.exports[fn_name](arg_ptr);
     let res = read(rt, res_ptr);
-    //console.log('RES ' + JSON.stringify(res,null,2));
-    return res.$left;
+    return res;
 }
 
 // XXX Hack! load runtime explicitely here
