@@ -14,16 +14,23 @@
 
 'use strict';
 
+const Chai = require('chai');
+const expect = Chai.expect;
+
+Chai.should();
+Chai.use(require('chai-things'));
+Chai.use(require('chai-as-promised'));
+
 const runWorkload = require('./commonengine').runWorkload;
 const VMEngine = require('../lib/vmengine');
 const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 
 describe('#vmengine', () => {
-    it('should behave as a proper VM engine', () => {
+    it('should behave as a proper VM engine', async () => {
         const engine = new VMEngine();
         engine.kind().should.equal('vm2');
         engine.instantiate('const a = 1;').should.not.be.null;
-        engine.invokeCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
+        expect (await engine.invokeCall(2,null,null,{ a : 1 },'class C { static f() { return context.a + utcOffset; } }','C','f')).to.equal(3);
     });
 
     it('should cache a script', () => {

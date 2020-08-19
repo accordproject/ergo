@@ -34,7 +34,7 @@ class Script {
      * @param {ModelManager} modelManager - The ModelManager associated with this Script
      * @param {string} identifier - The identifier of the script
      * @param {string} language - The language type of the script
-     * @param {string} contents - The contents of the script
+     * @param {Buffer} contents - The contents of the script
      * @param {string} contractName - The name of the contract if known or null
      */
     constructor(modelManager, identifier, language, contents, contractName) {
@@ -54,8 +54,7 @@ class Script {
             let parser;
 
             try {
-                // XXX this.contents is now a Buffer
-                parser = new JavaScriptParser(this.contents.toString(), false, 8);
+                parser = new JavaScriptParser(this.getContents(), false, 8);
             } catch (cause) {
                 // consider adding a toHex method in the exception to put out the pure hex values of the file.
                 const error = new SyntaxError('Failed to parse ' + this.identifier + ': ' + cause.message+'\n'+data.errorStatement);
@@ -113,10 +112,14 @@ class Script {
 
     /**
      * Returns the contents of the script
-     * @return {string} the content of the script
+     * @return {*} the content of the script
      */
     getContents() {
-        return this.contents;
+        if (this.language === '.js' || this.language === '.java') {
+            return Buffer.from(this.contents, 'utf8').toString();
+        } else {
+            return this.contents;
+        }
     }
 
     /**

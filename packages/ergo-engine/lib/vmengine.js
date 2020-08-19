@@ -106,8 +106,7 @@ class VMEngine extends Engine {
         let code;
         if (contractName) {
             code = `
-const __result = ${contractName}.${clauseName}(Object.assign({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0}}, context.params));
-unwrapError(__result);
+${contractName}.${clauseName}(Object.assign({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0}}, context.params));
 `;
         } else {
             throw new Error('Cannot invoke contract without a contract name');

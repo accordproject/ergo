@@ -15,6 +15,7 @@
 'use strict';
 
 const Chai = require('chai');
+const expect = Chai.expect;
 
 Chai.should();
 Chai.use(require('chai-things'));
@@ -25,7 +26,7 @@ const Engine = require('../lib/engine');
 describe('#engine', () => {
     it('should fail running when using a base Engine', async () => {
         const engine = new Engine();
-        (() => engine.instantiate('const a = 1;')).should.throw('[instantiate] Cannot instantiate module: create engine for a specific platform');
+        await expect(engine.instantiate('const a = 1;')).to.be.rejectedWith('[instantiate] Cannot instantiate module: create engine for a specific platform');
         return engine.invokeCall(2,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.be.rejectedWith('[invokeCall] Cannot create invoke call for contract: create engine for a specific platform');
     });
 });
