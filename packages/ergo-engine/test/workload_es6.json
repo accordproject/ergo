@@ -365,5 +365,59 @@
     "expected": {
       "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of 667.0\n"
     }
+  },
+  {
+    "name": "helloworldenforce",
+    "dir": "../../../tests/helloworldenforce",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "currentTime": null,
+    "expected": {
+      "error": "[Ergo] Hello world is disabled"
+    }
+  },
+  {
+    "name": "statetest",
+    "dir": "../../../tests/statetest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state1.json",
+    "contractName": "org.accordproject.statetest.StateTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.statetest.MyResponse"
+      },
+      "state": {
+        "$class": "org.accordproject.statetest.State",
+        "counter": 7
+      }
+    }
+  },
+  {
+    "name": "statetest",
+    "dir": "../../../tests/statetest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state2.json",
+    "contractName": "org.accordproject.statetest.StateTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.statetest.MyResponse"
+      },
+      "state": {
+        "$class": "org.accordproject.statetest.State",
+        "counter": 8
+      }
+    }
   }
 ]
