@@ -22,5 +22,76 @@
         "output" : "Bonjour, Fred Blogs (Accord Project)"
       }
     }
+  },
+  {
+    "name": "helloworldenforce",
+    "dir": "../../../tests/helloworldenforce",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "currentTime": null,
+    "expected": {
+      "error": "[Ergo] Hello world is disabled"
+    }
+  },
+  {
+    "name": "constanttest",
+    "dir": "../../../tests/constanttest",
+    "ergo": ["logic/library.ergo","logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.constanttest.EnumTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.constanttest.Response",
+        "thing": 3.14
+      }
+    }
+  },
+  {
+    "name": "statetest",
+    "dir": "../../../tests/statetest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state1.json",
+    "contractName": "org.accordproject.statetest.StateTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.statetest.MyResponse"
+      },
+      "state": {
+        "$class": "org.accordproject.statetest.State",
+        "counter": 7
+      }
+    }
+  },
+  {
+    "name": "statetest",
+    "dir": "../../../tests/statetest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state2.json",
+    "contractName": "org.accordproject.statetest.StateTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.statetest.MyResponse"
+      },
+      "state": {
+        "$class": "org.accordproject.statetest.State",
+        "counter": 8
+      }
+    }
   }
 ]
