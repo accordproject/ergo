@@ -1,1 +1,0 @@
-monthlyPaymentFormula(contract.loanAmount,contract.rate,contract.loanDuration)
