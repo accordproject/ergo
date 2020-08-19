@@ -22,7 +22,7 @@ const EvalEngine = require('../lib/evalengine');
 const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 
 // Set of tests
-const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.json'), 'utf8'));
+const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload_es6.json'), 'utf8'));
 
 describe('#evalengine', () => {
     it('should behave as a proper Eval Engine', () => {
@@ -30,6 +30,7 @@ describe('#evalengine', () => {
         engine.kind().should.equal('eval');
         engine.instantiate('const a = 1;').should.not.be.null;
         engine.invokeCall(2,null,null,{ a : 1 },'class C { static f() { return context.a + utcOffset; } }','C','f').should.equal(3);
+        (() => engine.invokeCall(2,null,null,{ a : 1 },'class C { static f() { return context.a + utcOffset; } }',null,'f')).should.throw('Cannot invoke contract without a contract name');
     });
 
     it('should cache a script', async () => {
