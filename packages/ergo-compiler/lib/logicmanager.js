@@ -142,7 +142,7 @@ class LogicManager {
             const script = new Script(this, 'main.js', '.js', mainScript, null);
             const contractName = script.getContractName();
             if (contractName) { this.setContractName(contractName); }
-            scriptManager.compiledScript = script;
+            scriptManager.compiledModule = script;
         }
     }
 
