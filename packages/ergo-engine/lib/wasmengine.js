@@ -90,14 +90,6 @@ class WasmEngine extends Engine {
     }
 
     /**
-     * Engine runtime
-     * @return {string} which runtime of engine
-     */
-    runtime() {
-        return 'wasm';
-    }
-
-    /**
      * Compile a script for a JavaScript machine
      * @param {*} module - the module
      * @return {object} the instantiated module

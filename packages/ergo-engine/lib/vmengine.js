@@ -51,14 +51,6 @@ class VMEngine extends Engine {
     }
 
     /**
-     * Engine runtime
-     * @return {string} which runtime of engine
-     */
-    runtime() {
-        return 'es6';
-    }
-
-    /**
      * Compile a script for a JavaScript machine
      * @param {string} module - the module
      * @return {object} the VM-ready module

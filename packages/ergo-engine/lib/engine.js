@@ -73,14 +73,6 @@ class Engine {
     }
 
     /**
-     * Engine runtime
-     * @return {string} which runtime of engine
-     */
-    runtime() {
-        return undefined;
-    }
-
-    /**
     /**
      * instantiate
      * @param {module} module - the module

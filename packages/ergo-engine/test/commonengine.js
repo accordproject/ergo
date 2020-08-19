@@ -26,9 +26,6 @@ Chai.use(require('chai-as-promised'));
 const Fs = require('fs');
 const Path = require('path');
 
-// Set of tests
-const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.json'), 'utf8'));
-
 /**
  * Compare actual and expected result components
  *
@@ -87,8 +84,9 @@ const getCurrrentTime = (t) => {
  *
  * @param {object} Engine - the engine class
  * @param {string} target - the target JS kind
+ * @param {object} workload - the tests
  */
-function runWorkload(Engine, target) {
+function runWorkload(Engine, target, workload) {
     let engine = new Engine();
     let logicManager;
 

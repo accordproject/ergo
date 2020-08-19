@@ -1,0 +1,26 @@
+[
+  {
+    "name": "helloworld",
+    "dir": "../../../tests/helloworld3",
+    "ergo": ["logic/logic3.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "params": {
+      "request": {
+        "$class": "org.accordproject.helloworld.Request",
+        "input": "Accord Project"
+      },
+      "hello": "Bonjour,"
+    },
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "invoke": "helloworld",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.helloworld.Response",
+        "output" : "Bonjour, Fred Blogs (Accord Project)"
+      }
+    }
+  }
+]
