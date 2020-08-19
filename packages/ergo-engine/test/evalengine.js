@@ -14,9 +14,15 @@
 
 'use strict';
 
+const Fs = require('fs');
+const Path = require('path');
+
 const runWorkload = require('./commonengine').runWorkload;
 const EvalEngine = require('../lib/evalengine');
 const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
+
+// Set of tests
+const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload.json'), 'utf8'));
 
 describe('#evalengine', () => {
     it('should behave as a proper Eval Engine', () => {
@@ -41,5 +47,5 @@ describe('#evalengine', () => {
 });
 
 describe('Execute ES6', () => {
-    runWorkload(EvalEngine, 'es6');
+    runWorkload(EvalEngine, 'es6', workload);
 });
