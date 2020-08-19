@@ -93,5 +93,39 @@
         "counter": 8
       }
     }
+  },
+  {
+    "name": "volumediscount",
+    "dir": "../../../tests/volumediscount",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.volumediscount.VolumeDiscountContract",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse",
+        "discountRate": 2.8
+      }
+    }
+  },
+  {
+    "name": "volumediscount",
+    "dir": "../../../tests/volumediscount",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request2.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.volumediscount.VolumeDiscountContract",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse",
+        "discountRate": 2.9
+      }
+    }
   }
 ]
