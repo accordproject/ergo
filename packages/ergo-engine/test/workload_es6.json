@@ -419,5 +419,24 @@
         "counter": 8
       }
     }
+  },
+  {
+    "name": "integertest",
+    "dir": "../../../tests/integertest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.integertest.IntegerTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.integertest.Response",
+        "test1": 0,
+        "test2": 0,
+        "test3": 0
+      }
+    }
   }
 ]
