@@ -19,6 +19,8 @@
  * @module ergo-engine
  */
 
-module.exports.Engine = require('./lib/engine.js');
-module.exports.VMEngine = require('./lib/vmengine.js');
+module.exports.Engine = require('./lib/engine');
+module.exports.VMEngine = require('./lib/vmengine');
+module.exports.WasmEngine = require('./lib/wasmengine');
+module.exports.buildengine = require('./lib/buildengine');
 module.exports.version = require('./package.json');

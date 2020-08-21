@@ -14,16 +14,30 @@
 
 'use strict';
 
+const Fs = require('fs');
+const Path = require('path');
+
+const Chai = require('chai');
+const expect = Chai.expect;
+
+Chai.should();
+Chai.use(require('chai-things'));
+Chai.use(require('chai-as-promised'));
+
 const runWorkload = require('./commonengine').runWorkload;
 const VMEngine = require('../lib/vmengine');
 const LogicManager = require('@accordproject/ergo-compiler').LogicManager;
 
+// Set of tests
+const workload = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, 'workload_es6.json'), 'utf8'));
+
 describe('#vmengine', () => {
-    it('should behave as a proper VM engine', () => {
+    it('should behave as a proper VM engine', async () => {
         const engine = new VMEngine();
         engine.kind().should.equal('vm2');
-        engine.compileVMScript('const a = 1;').should.not.be.null;
-        engine.runVMScriptCall(2,null,null,{ a : 1 },'function f() { return context.a + utcOffset; }','f()').should.equal(3);
+        engine.instantiate('const a = 1;').should.not.be.null;
+        expect (await engine.invokeCall(2,null,null,{ a : 1 },'class C { static f() { return context.a + utcOffset; } }','C','f')).to.equal(3);
+        (() => engine.invokeCall(2,null,null,{ a : 1 },'class C { static f() { return context.a + utcOffset; } }',null,'f')).should.throw('Cannot invoke contract without a contract name');
     });
 
     it('should cache a script', () => {
@@ -33,8 +47,8 @@ describe('#vmengine', () => {
         logicManager.addLogicFile(script,'test2.js');
         logicManager.compileLogicSync(false);
         const scriptManager = logicManager.getScriptManager();
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
     });
 
     it('should clear the cache', () => {
@@ -44,13 +58,13 @@ describe('#vmengine', () => {
         logicManager.addLogicFile(script,'test2.js');
         logicManager.compileLogicSync(false);
         const scriptManager = logicManager.getScriptManager();
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
-        engine.clearCacheJsScript();
-        engine.cacheJsScript(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
+        engine.clearCache();
+        engine.cacheModule(scriptManager,'test2.js').should.not.be.null;
     });
 });
 
 describe('Execute ES6', () => {
-    runWorkload(VMEngine, 'es6');
+    runWorkload(VMEngine, 'es6', workload);
 });

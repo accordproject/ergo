@@ -59,17 +59,17 @@ class Compiler {
     }
 
     /**
-     * Compile Ergo to JavaScript
+     * Compile Ergo to target platform
      *
      * @param {Array<{name:string, content:string}>} ergoSources Ergo modules
      * @param {Array<{name:string, content:string}>} ctoSources CTO models
      * @param {Array<{name:string, content:string}>} templateSources formulas! XXX
-     * @param {string} target language (es6|java)
+     * @param {string} target language (es6|java|wasm)
      * @param {boolean} link whether to link the javascript runtime
      * @param {boolean} warnings whether to print warnings
      * @returns {string} The compiled JavaScript code
      */
-    static compileToJavaScript(ergoSources,ctoSources,templateSources,target,link,warnings) {
+    static compileSync(ergoSources,ctoSources,templateSources,target,link,warnings) {
         // Built-in config
         const config= {
             'source' : 'ergo',
@@ -114,7 +114,7 @@ class Compiler {
      * @returns {object} Promise to the compiled JavaScript code
      */
     static compile(ergoSources,ctoSources,templateSources,target,link,warnings) {
-        const result = this.compileToJavaScript(ergoSources,ctoSources,templateSources,target,link,warnings);
+        const result = this.compileSync(ergoSources,ctoSources,templateSources,target,link,warnings);
         return Promise.resolve(result);
     }
 

@@ -17,7 +17,7 @@
 open Ergo_util
 open Lex_util
 
-open Core.ErgoCompiler
+open ErgoCompiler.ErgoCompiler
 
 (** Generic parse *)
 let parse parser lexer buf =

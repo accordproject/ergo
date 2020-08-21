@@ -21,6 +21,8 @@ Require Import QBackendModel.
 Module QBackendRuntime <: QBackendModel.
   Local Open Scope string.
 
+  Definition ergo_foreign_ejson : Set := enhanced_ejson.
+  Definition ergo_foreign_ejson_runtime_op : Set := enhanced_foreign_ejson_runtime_op.
   Definition ergo_foreign_data := enhanced_foreign_data.
   Definition ergo_foreign_type := enhanced_foreign_type.
 

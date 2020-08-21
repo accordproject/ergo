@@ -24,7 +24,7 @@ let args_list gconf =
       ("--target", Arg.String (set_target_lang gconf),
        "<lang> target platform (default: es6) " ^ available_targets_message);
       ("--link", Arg.Unit (set_link gconf),
-       " link the Ergo runtime with the target code (es5,es6,cicero only)");
+       " link the Ergo runtime with the target code (es6 only)");
       ("--monitor", Arg.Set Util.monitoring,
        " produce compilation time information");
       ("--warnings", Arg.Unit (set_warnings gconf),

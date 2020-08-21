@@ -12,12 +12,13 @@
  * limitations under the License.
  *)
 
-open Core.ErgoCompiler
+open ErgoCompiler.ErgoCompiler
 
 type lang =
   | Ergo
   | ES6
   | Java
+  | Wasm
 
 val lang_of_target : string -> lang
 val name_of_lang : lang -> string

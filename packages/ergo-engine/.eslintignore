@@ -4,4 +4,4 @@ node_modules
 out
 umd
 test/data
-lib/momenttojson.js
+lib/binary_encoding.js

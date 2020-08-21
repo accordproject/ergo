@@ -13,7 +13,10 @@
  *)
 
 open Util
-open Core
+open ErgoCompiler
+open Result0
+open Provenance
+open Names
 
 (** Ergo errors *)
 exception Ergo_Error of eerror
@@ -177,7 +180,7 @@ let ignore_warnings ws =
   ()
 
 (** Version number *)
-let ergo_version = string_of_char_list ergo_version
+let ergo_version = string_of_char_list Version.ergo_version
 
 let get_version cmd () =
   print_endline (cmd ^ ", version " ^ ergo_version);
@@ -186,8 +189,8 @@ let get_version cmd () =
 (** fw applied to warnings, f applied to result *)
 let wrap_jerrors f e =
   begin match e with
-  | Failure e -> ergo_raise e
-  | Success (x,w) -> f x w
+  | Result.Failure e -> ergo_raise e
+  | Result.Success (x,w) -> f x w
   end
 
 let return_result_print_warnings on text x warnings =
@@ -212,8 +215,8 @@ let cto_import_decl_of_import_namespace ns =
       let namespace = char_list_of_string (String.sub ns 0 i) in
       let criteria_str = String.sub ns (i+1) (String.length ns - (i+1)) in
       begin match criteria_str with
-      | "*" -> ImportAll (dummy_provenance, namespace)
-      | _ -> ImportName (dummy_provenance,namespace,char_list_of_string criteria_str)
+      | "*" -> Ast.ImportAll (dummy_provenance, namespace)
+      | _ -> Ast.ImportName (dummy_provenance,namespace,char_list_of_string criteria_str)
       end
   end
 
@@ -266,38 +269,38 @@ type label =
   | CTOLabel of string
 
 let label_name_of_ergo_input m =
-  Util.string_of_char_list m.module_namespace
+  Util.string_of_char_list m.Ergo.module_namespace
 let label_name_of_cto_input c =
-  Util.string_of_char_list c.cto_package_namespace
+  Util.string_of_char_list c.CTO.cto_package_namespace
 let label_of_input input : label =
   begin match input with
-  | InputErgo m -> ErgoLabel (label_name_of_ergo_input m)
-  | InputCTO c -> CTOLabel (label_name_of_cto_input c)
+  | Ergo.InputErgo m -> ErgoLabel (label_name_of_ergo_input m)
+  | Ergo.InputCTO c -> CTOLabel (label_name_of_cto_input c)
   end
 
 let file_of_input input : string =
   begin match input with
-  | InputErgo m -> Util.string_of_char_list m.module_file
-  | InputCTO c -> Util.string_of_char_list c.cto_package_file
+  | Ergo.InputErgo m -> Util.string_of_char_list m.module_file
+  | Ergo.InputCTO c -> Util.string_of_char_list c.cto_package_file
   end
 
 let import_cto_name im =
   begin match im with
-  | ImportAll (_, ns)
-  | ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns)]
+  | Ast.ImportAll (_, ns)
+  | Ast.ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns)]
   | _ -> []
   end
 
 let import_ergo_name im =
   begin match im with
-  | ImportAll (_, ns)
-  | ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns);ErgoLabel (Util.string_of_char_list ns);]
+  | Ast.ImportAll (_, ns)
+  | Ast.ImportName (_, ns, _) -> [CTOLabel (Util.string_of_char_list ns);ErgoLabel (Util.string_of_char_list ns);]
   | _ -> []
   end
 
 let module_import_name decl =
   begin match decl with
-  | DImport (_, im) -> import_ergo_name im
+  | Ergo.DImport (_, im) -> import_ergo_name im
   | _ -> []
   end
 
@@ -331,11 +334,11 @@ let lookup_inputs_from_label all_inputs label =
 
 let edges_of_input all_inputs input =
   begin match input with
-  | InputErgo m ->
+  | Ergo.InputErgo m ->
       List.concat
         (List.map (lookup_inputs_from_label all_inputs)
            (module_imports (label_name_of_ergo_input m) m.module_declarations))
-  | InputCTO c ->
+  | Ergo.InputCTO c ->
       List.concat
         (List.map (lookup_inputs_from_label all_inputs)
            (cto_imports (label_name_of_cto_input c) c.cto_package_imports))

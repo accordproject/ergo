@@ -39,7 +39,7 @@ class LogicManager {
 
     /**
      * Create the LogicManager.
-     * @param {String} target  - compiler target (either: 'es6', or 'java')
+     * @param {String} target  - compiler target (either: 'es6', 'java', or 'wasm')
      * @param {Object} options  - e.g., { warnings: true }
      */
     constructor(target, options) {
@@ -86,51 +86,6 @@ class LogicManager {
      */
     getContractName() {
         return this.contractName;
-    }
-
-    /**
-     * Generate the runtime dispatch logic
-     * @return {String} the dispatch code
-     * @private
-     */
-    getDispatchCall() {
-        const target = this.getTarget();
-        let code;
-        if (target === 'es6') {
-            this.getScriptManager().hasDispatch();
-            code = `
-const __result = __dispatch({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0},request:context.request});
-unwrapError(__result);
-        `;
-        } else {
-            throw new Error(`Unsupported target: ${target}`);
-        }
-        return code;
-    }
-
-    /**
-     * Generate the invocation logic
-     * @param {String} clauseName - the clause name
-     * @return {String} the invocation code
-     * @private
-     */
-    getInvokeCall(clauseName) {
-        const target = this.getTarget();
-        let code;
-        if (target === 'es6') {
-            if (this.getContractName()) {
-                const contractName = this.getContractName();
-                code = `
-const __result = ${contractName}.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0}},context.params));
-unwrapError(__result);
-`;
-            } else {
-                throw new Error(`Cannot create invoke call for target: ${target} without a contract name`);
-            }
-        } else {
-            throw new Error(`Unsupported target: ${target}`);
-        }
-        return code;
     }
 
     /**
@@ -246,7 +201,7 @@ unwrapError(__result);
             const script = new Script(this, 'main.js', '.js', mainScript, null);
             const contractName = script.getContractName();
             if (contractName) { this.setContractName(contractName); }
-            scriptManager.compiledScript = script;
+            scriptManager.compiledModule = script;
         }
     }
 

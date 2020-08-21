@@ -31,7 +31,7 @@ class Engine {
      * Create the Engine.
      */
     constructor() {
-        this.scripts = {};
+        this.modules = {};
     }
 
     /**
@@ -39,106 +39,51 @@ class Engine {
      * @return {string} which kind of engine
      */
     kind() {
-        return 'empty';
+        return undefined;
     }
 
     /**
     /**
-     * Compile a script for a JavaScript machine
-     * @param {string} script - the script
+     * instantiate
+     * @param {module} module - the module
      */
-    compileVMScript(script) {
-        throw new Error('[compileVMScript] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
+    async instantiate(module) {
+        throw new Error('[instantiate] Cannot instantiate module: create engine for a specific platform');
     }
 
     /**
-     * Execute a call in a JavaScript machine
+     * Execute a call
      * @param {number} utcOffset - UTC Offset for this execution
      * @param {object} context - global variables to set in the VM
-     * @param {object} script - the initial script to load
+     * @param {object} module - the module to load
      * @param {object} call - the execution call
      */
-    runVMScriptCall(utcOffset,context,script,call) {
-        throw new Error('[runVMScriptCall] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
+    async invokeCall(utcOffset,context,module,call) {
+        throw new Error('[invokeCall] Cannot create invoke call for contract: create engine for a specific platform');
     }
 
     /**
-     * Clear the JavaScript logic cache
+     * Clear the module cache
      * @private
      */
-    clearCacheJsScript() {
-        this.scripts = {};
+    clearCache() {
+        this.modules = {};
     }
 
     /**
-     * Compile and cache JavaScript logic
+     * Instantiate and cache the module
      * @param {ScriptManager} scriptManager  - the script manager
      * @param {string} contractId - the contract identifier
-     * @return {VMScript} the cached script
+     * @return {module} the cached module
      * @private
      */
-    cacheJsScript(scriptManager, contractId) {
-        if (!this.scripts[contractId]) {
-            const allJsScripts = scriptManager.getCompiledJavaScript();
-            const script = this.compileVMScript(allJsScripts);
-            this.scripts[contractId] = script;
+    async cacheModule(scriptManager, contractId) {
+        if (!this.modules[contractId]) {
+            const module = scriptManager.getCompiledModule();
+            const moduleInstance = await this.instantiate(module);
+            this.modules[contractId] = moduleInstance;
         }
-        return this.scripts[contractId];
-    }
-
-    /**
-     * Trigger a clause, passing in the request object
-     * @param {LogicManager} logic  - the logic
-     * @param {string} contractId - the contract identifier
-     * @param {object} contract - the contract data
-     * @param {object} request - the request, a JS object that can be deserialized
-     * using the Composer serializer.
-     * @param {object} state - the contract state, a JS object that can be deserialized
-     * using the Composer serializer.
-     * @param {string} currentTime - the definition of 'now'
-     * @param {object} options to the text generation
-     * @return {object} the result for the clause
-     */
-    trigger(logic, contractId, contract, request, state, currentTime, options) {
-        // Set the current time and UTC Offset
-        const now = Util.setCurrentTime(currentTime);
-        const utcOffset = now.utcOffset();
-        const validOptions = boxedCollections.boxColl(options ? options : {
-            '$class': 'org.accordproject.ergo.options.Options',
-            'wrapVariables': false,
-            'template': false,
-        });
-
-        const validContract = logic.validateContract(contract); // ensure the contract is valid
-        const validRequest = logic.validateInput(request); // ensure the request is valid
-        const validState = logic.validateInput(state); // ensure the state is valid
-
-        Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
-
-        const script = this.cacheJsScript(logic.getScriptManager(), contractId);
-        const callScript = logic.getDispatchCall();
-
-        const context = {
-            data: validContract.serialized,
-            state: validState,
-            request: validRequest,
-            options: validOptions
-        };
-
-        // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
-        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
-
-        const answer = {
-            'clause': contractId,
-            'request': request, // Keep the original request
-            'response': validResponse,
-            'state': validNewState,
-            'emit': validEmit,
-        };
-        return answer;
+        return this.modules[contractId];
     }
 
     /**
@@ -155,11 +100,11 @@ class Engine {
      * @param {object} validateOptions to the validation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, validateOptions) {
+    async invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, validateOptions) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
-        const invokeOptions = boxedCollections.boxColl(options ? options : {
+        const validOptions = boxedCollections.boxColl(options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
@@ -171,18 +116,18 @@ class Engine {
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
-        const script = this.cacheJsScript(logic.getScriptManager(), contractId);
-        const callScript = logic.getInvokeCall(clauseName);
+        const module = await this.cacheModule(logic.getScriptManager(), contractId);
+        const contractName = logic.getContractName();
         const context = {
             data: validContract.serialized,
             state: validState,
             params: validParams,
-            __options: invokeOptions
+            __options: validOptions
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,invokeOptions,context,script,callScript);
-
+        const wrappedResult = await this.invokeCall(utcOffset,now,validOptions,context,module,contractName,clauseName);
+        const result = this.unwrapError(wrappedResult);
         const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
         const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
         const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
@@ -207,12 +152,34 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for the clause initialization
      */
-    init(logic, contractId, contract, params, currentTime, options) {
+    async init(logic, contractId, contract, params, currentTime, options) {
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, null);
+        return await this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, null);
+    }
+
+    /**
+     * Trigger a clause, passing in the request object -- trigger means invoking main
+     * @param {LogicManager} logic  - the logic
+     * @param {string} contractId - the contract identifier
+     * @param {object} contract - the contract data
+     * @param {object} request - the request, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {object} state - the contract state, a JS object that can be deserialized
+     * using the Composer serializer.
+     * @param {string} currentTime - the definition of 'now'
+     * @param {object} options to the text generation
+     * @return {object} the result for the clause
+     */
+    async trigger(logic, contractId, contract, request, state, currentTime, options) {
+        const params = { request: request };
+        const answer = await this.invoke(logic, contractId, 'main', contract, params, state, currentTime, options, null);
+        // Adjust result for triggers -- replace 'params' by 'request'
+        delete answer.params;
+        answer.request = request;
+        return answer;
     }
 
     /**
@@ -225,14 +192,14 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for draft
      */
-    calculate(logic, contractId, name, contract, currentTime, options) {
+    async calculate(logic, contractId, name, contract, currentTime, options) {
         options = options || {};
 
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, options, {convertResourcesToId: true});
+        return await this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, options, {convertResourcesToId: true});
     }
 
     /**
@@ -245,11 +212,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInit(logic, contract, params, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.init(logic, contractId, contract, params, currentTime, options);
-        });
+    async compileAndInit(logic, contract, params, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.init(logic, contractId, contract, params, currentTime, options);
     }
 
     /**
@@ -262,11 +228,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndCalculate(logic, name, contract, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.calculate(logic, contractId, name, contract, currentTime, options);
-        });
+    async compileAndCalculate(logic, name, contract, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.calculate(logic, contractId, name, contract, currentTime, options);
     }
 
     /**
@@ -282,11 +247,10 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInvoke(logic, clauseName, contract, params, state, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, null);
-        });
+    async compileAndInvoke(logic, clauseName, contract, params, state, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, null);
     }
 
     /**
@@ -302,13 +266,29 @@ class Engine {
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    compileAndTrigger(logic, contract, request, state, currentTime, options) {
-        return logic.compileLogic(false).then(() => {
-            const contractId = logic.getContractName();
-            return this.trigger(logic, contractId, contract, request, state, currentTime, options);
-        });
+    async compileAndTrigger(logic, contract, request, state, currentTime, options) {
+        await logic.compileLogic(false);
+        const contractId = logic.getContractName();
+        return await this.trigger(logic, contractId, contract, request, state, currentTime, options);
     }
 
+    /**
+     * Handle success/failure
+     * @param {object} result - the result from invokation
+     * @return {object} the value if success or throws an error
+     */
+    unwrapError(result) {
+        if (Object.prototype.hasOwnProperty.call(result,'$left')) {
+            return result.$left;
+        } else {
+            const failure = result.$right;
+            let message = 'Unknown Ergo Logic Error (Please file a GitHub issue)';
+            if (failure && failure.$data && failure.$data.message) {
+                message = failure.$data.message;
+            }
+            throw new Error('[Ergo] ' + message);
+        }
+    }
 }
 
 module.exports = Engine;

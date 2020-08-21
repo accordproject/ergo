@@ -14,7 +14,7 @@
 
 (* This module contains parsing utilities *)
 
-open Core.ErgoCompiler
+open ErgoCompiler.ErgoCompiler
 
 val parse_ergo_module : Lexing.lexbuf -> ergo_module
 val parse_ergo_declarations : Lexing.lexbuf -> ergo_declaration list

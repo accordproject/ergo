@@ -18,6 +18,8 @@ Require Import ErgoSpec.Backend.Qcert.QcertModel.
 Require Import ErgoSpec.Backend.ForeignErgo.
 
 Module Type QBackendModel.
+  Definition ergo_foreign_ejson : Set := enhanced_ejson.
+  Definition ergo_foreign_ejson_runtime_op : Set := enhanced_foreign_ejson_runtime_op.
   Definition ergo_foreign_data : foreign_data := enhanced_foreign_data.
   Definition ergo_foreign_type : foreign_type := enhanced_foreign_type.
 End QBackendModel.

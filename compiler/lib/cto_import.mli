@@ -12,7 +12,7 @@
  * limitations under the License.
  *)
 
-open Core.ErgoCompiler
+open ErgoCompiler.ErgoCompiler
 
 val cto_import: string -> Cto_j.model -> cto_package
 

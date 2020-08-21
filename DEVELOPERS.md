@@ -53,7 +53,7 @@ To rebuild the compiler from the source, you will need Coq 8.8.2 and OCaml 4.07.
  
 ```sh
 $ opam repo add coq-released https://coq.inria.fr/opam/released
-$ opam install dune menhir base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri
+$ opam install dune menhir base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri wasm.1.0.1
 $ opam install coq.8.8.2 coq-qcert.2.0.0
 ```
 

@@ -1,0 +1,192 @@
+[
+  {
+    "name": "helloworld",
+    "dir": "../../../tests/helloworld3",
+    "ergo": ["logic/logic3.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "params": {
+      "request": {
+        "$class": "org.accordproject.helloworld.Request",
+        "input": "Accord Project"
+      },
+      "hello": "Bonjour,"
+    },
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "invoke": "helloworld",
+    "currentTime": "2019-01-01T16:34:00-05:00",
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.helloworld.Response",
+        "output" : "Bonjour, Fred Blogs (Accord Project)"
+      }
+    }
+  },
+  {
+    "name": "helloworldenforce",
+    "dir": "../../../tests/helloworldenforce",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.helloworld.HelloWorld",
+    "currentTime": null,
+    "expected": {
+      "error": "[Ergo] Hello world is disabled"
+    }
+  },
+  {
+    "name": "constanttest",
+    "dir": "../../../tests/constanttest",
+    "ergo": ["logic/library.ergo","logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.constanttest.EnumTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.constanttest.Response",
+        "thing": 3.14
+      }
+    }
+  },
+  {
+    "name": "statetest",
+    "dir": "../../../tests/statetest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state1.json",
+    "contractName": "org.accordproject.statetest.StateTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.statetest.MyResponse"
+      },
+      "state": {
+        "$class": "org.accordproject.statetest.State",
+        "counter": 7
+      }
+    }
+  },
+  {
+    "name": "statetest",
+    "dir": "../../../tests/statetest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state2.json",
+    "contractName": "org.accordproject.statetest.StateTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.statetest.MyResponse"
+      },
+      "state": {
+        "$class": "org.accordproject.statetest.State",
+        "counter": 8
+      }
+    }
+  },
+  {
+    "name": "volumediscount",
+    "dir": "../../../tests/volumediscount",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.volumediscount.VolumeDiscountContract",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse",
+        "discountRate": 2.8
+      }
+    }
+  },
+  {
+    "name": "volumediscount",
+    "dir": "../../../tests/volumediscount",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request2.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.volumediscount.VolumeDiscountContract",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.volumediscount.VolumeDiscountResponse",
+        "discountRate": 2.9
+      }
+    }
+  },
+  {
+    "name": "integertest",
+    "dir": "../../../tests/integertest",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.integertest.IntegerTest",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.integertest.Response",
+        "test1": 0,
+        "test2": 0,
+        "test3": 0
+      }
+    }
+  },
+  {
+    "name": "pyth",
+    "dir": "../../../tests/pyth",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.pyth.PythContract",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.pyth.Response",
+        "triples": [
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 3,
+            "b": 4,
+            "c": 5
+          }, 
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 4,
+            "b": 3,
+            "c": 5
+          }, 
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 6,
+            "b": 8,
+            "c": 10
+          }, 
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 8,
+            "b": 6,
+            "c": 10
+          }
+        ]
+      }
+    }
+  }
+]

@@ -13,18 +13,20 @@
  *)
 
 open Ergo_util
-open Core.ErgoCompiler
+open ErgoCompiler.ErgoCompiler
 
 type lang =
   | Ergo
   | ES6
   | Java
+  | Wasm
 
 let lang_of_target s =
   begin match s with
   | "ergo" -> Ergo
   | "es6" -> ES6
   | "java" -> Java
+  | "wasm" -> Wasm
   | _ -> ergo_raise (ergo_system_error ("Unknown language: " ^ s))
   end
 
@@ -33,6 +35,7 @@ let name_of_lang s =
   | Ergo -> "ergo"
   | ES6 -> "es6"
   | Java -> "java"
+  | Wasm -> "wasm"
   end
 
 let extension_of_lang lang =
@@ -40,6 +43,7 @@ let extension_of_lang lang =
   | Ergo -> ".ergo"
   | ES6 -> ".js"
   | Java -> ".java"
+  | Wasm -> ".wasm"
   end
 
 let script_lang_of_lang lang =
@@ -47,6 +51,7 @@ let script_lang_of_lang lang =
   | Ergo -> ".ergo"
   | ES6 -> ".js"
   | Java -> ".java"
+  | Wasm -> ".wasm"
   end
 
 let script_lang_of_target s =
@@ -57,9 +62,10 @@ let can_link_runtime lang =
   | Ergo -> false
   | ES6 -> true
   | Java -> false
+  | Wasm -> false
   end
 
-let targets = [ES6;Java]
+let targets = [ES6;Java;Wasm]
 let available_targets = List.map name_of_lang targets
 
 let available_targets_message =
@@ -95,8 +101,8 @@ let get_template gconf = gconf.econf_template
 let get_ctos gconf = gconf.econf_ctos
 let get_modules gconf = gconf.econf_modules
 let get_all gconf =
-  (List.map (fun x -> Core.InputCTO x) (get_ctos gconf))
-  @ (List.map (fun x -> Core.InputErgo x) (get_modules gconf))
+  (List.map (fun x -> Ergo.InputCTO x) (get_ctos gconf))
+  @ (List.map (fun x -> Ergo.InputErgo x) (get_modules gconf))
 let get_all_sorted gconf =
   topo_sort_inputs (get_all gconf)
 
@@ -154,15 +160,7 @@ let get_source_table gconf =
 
 let set_link gconf () = gconf.econf_link <- true
 let should_link gconf =
-  if gconf.econf_link
-  then
-    if can_link_runtime gconf.econf_target
-    then true
-    else ergo_raise
-           (ergo_system_error
-              ("Cannot link for target: " ^ (name_of_lang gconf.econf_target)))
-  else
-    false
+  gconf.econf_link && can_link_runtime gconf.econf_target
 
 let default_config () =
   begin try

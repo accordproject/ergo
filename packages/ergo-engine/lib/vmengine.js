@@ -47,11 +47,11 @@ class VMEngine extends Engine {
 
     /**
      * Compile a script for a JavaScript machine
-     * @param {string} script - the script
-     * @return {object} the VM-ready script object
+     * @param {string} module - the module
+     * @return {object} the VM-ready module
      */
-    compileVMScript(script) {
-        return new VMScript(script);
+    instantiate(module) {
+        return new VMScript(module);
     }
 
     /**
@@ -61,10 +61,12 @@ class VMEngine extends Engine {
      * @param {object} options to the text generation
      * @param {object} context - global variables to set in the VM
      * @param {object} script - the initial script to load
-     * @param {object} call - the execution call
+     * @param {object} contractName - the contract name
+     * @param {object} clauseName - the clause name in that contract
      * @return {object} the result of execution
      */
-    runVMScriptCall(utcOffset,now,options,context,script,call) {
+    invokeCall(utcOffset,now,options,context,script,contractName,clauseName) {
+        const call = this.getInvokeCall(contractName,clauseName);
         const vm = new VM({
             timeout: 1000,
             sandbox: {
@@ -78,6 +80,25 @@ class VMEngine extends Engine {
         vm.freeze(context, 'context');
         vm.run(script);
         return vm.run(call);
+    }
+
+    /**
+     * Generate the invocation logic
+     * @param {String} contractName - the contract name
+     * @param {String} clauseName - the clause name inside that contract
+     * @return {String} the invocation code
+     * @private
+     */
+    getInvokeCall(contractName,clauseName) {
+        let code;
+        if (contractName) {
+            code = `
+${contractName}.${clauseName}(Object.assign({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0}}, context.params));
+`;
+        } else {
+            throw new Error('Cannot invoke contract without a contract name');
+        }
+        return code;
     }
 
 }
