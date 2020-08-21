@@ -146,5 +146,47 @@
         "test3": 0
       }
     }
+  },
+  {
+    "name": "pyth",
+    "dir": "../../../tests/pyth",
+    "ergo": ["logic/logic.ergo"],
+    "models": ["model/model.cto"],
+    "contract": "data.json",
+    "request": "request.json",
+    "state": "state.json",
+    "contractName": "org.accordproject.pyth.PythContract",
+    "currentTime": null,
+    "expected": {
+      "response": {
+        "$class": "org.accordproject.pyth.Response",
+        "triples": [
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 3,
+            "b": 4,
+            "c": 5
+          }, 
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 4,
+            "b": 3,
+            "c": 5
+          }, 
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 6,
+            "b": 8,
+            "c": 10
+          }, 
+          {
+            "$class": "org.accordproject.pyth.Triple",
+            "a": 8,
+            "b": 6,
+            "c": 10
+          }
+        ]
+      }
+    }
   }
 ]
