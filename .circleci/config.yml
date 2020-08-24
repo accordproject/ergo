@@ -27,6 +27,7 @@ common_steps: &common_steps
     - run:
         name: "Initialize opam"
         command: |
+          echo "OCaml: " $OCAML_VERSION
           sudo curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > install.sh
           echo | sudo sh install.sh
           opam init --disable-sandboxing -j 1 -n -y
@@ -43,7 +44,7 @@ common_steps: &common_steps
     - run:
         name: "Install Coq"
         command: |
-          opam install -y -v coq.8.12.0 coq-flocq coq-jsast
+          opam install -y -v coq.8.12.0 coq-jsast.2.0.0
         no_output_timeout: 30m
     - run:
         name: "Install Q*cert"
@@ -83,9 +84,20 @@ jobs:
       - NJOBS: 2
       - NPM_CONFIG_PREFIX: "~/.npm-global"
     <<: *common_steps
+  4.11.0:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    environment:
+      - TERM: dumb
+      - OCAML_VERSION: "4.11.0"
+      - CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+      - NJOBS: 2
+      - NPM_CONFIG_PREFIX: "~/.npm-global"
+    <<: *common_steps
 
 workflows:
   version: 2
   build-deploy:
     jobs:
       - 4.09.1
+      - 4.11.0
