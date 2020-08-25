@@ -347,7 +347,7 @@
     "calculate": "interests",
     "currentTime": "2019-01-01T16:34:00-05:00",
     "expected": {
-      "response": "\"£2,886.0 (GBP)\""
+      "response": "£2,886.0 (GBP)"
     }
   },
   {
