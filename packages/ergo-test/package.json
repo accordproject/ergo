@@ -4,7 +4,8 @@
   "description": "Ergo Test",
   "repository": {
     "type": "git",
-    "url": "https://github.com/accordproject/ergo"
+    "url": "https://github.com/accordproject/ergo",
+    "directory": "packages/ergo-test"
   },
   "main": "index.js",
   "scripts": {
