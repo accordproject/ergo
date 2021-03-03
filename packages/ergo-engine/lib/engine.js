@@ -153,6 +153,7 @@ class Engine {
      * using the Composer serializer.
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
+     * @param {object} request - optional payload for the clause
      * @return {object} the result for the clause
      */
     invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, request = {}) {
@@ -208,6 +209,7 @@ class Engine {
      * @param {object} params - the clause parameters
      * @param {string} currentTime - the definition of 'now'
      * @param {object} options to the text generation
+     * @param {object} request - optional payload for init clause
      * @return {object} the result for the clause initialization
      */
     init(logic, contractId, contract, params, currentTime, options, request = {}) {
