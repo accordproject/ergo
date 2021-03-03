@@ -155,7 +155,7 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for the clause
      */
-    invoke(logic, contractId, clauseName, contract, params, state, currentTime, options) {
+    invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, request = {}) {
         // Set the current time and UTC Offset
         const now = Util.setCurrentTime(currentTime);
         const utcOffset = now.utcOffset();
@@ -168,6 +168,7 @@ class Engine {
         };
 
         const validContract = logic.validateContract(contract, options); // ensure the contract is valid
+        const validRequest = logic.validateInput(request); // ensure the request is valid
         const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
         const validState = logic.validateInput(state); // ensure the state is valid
 
@@ -177,6 +178,7 @@ class Engine {
         const callScript = logic.getInvokeCall(clauseName);
         const context = {
             data: validContract.serialized,
+            request: request,
             state: validState,
             params: validParams
         };
@@ -208,12 +210,12 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for the clause initialization
      */
-    init(logic, contractId, contract, params, currentTime, options) {
+    init(logic, contractId, contract, params, currentTime, options, request = {}) {
         const defaultState = {
             '$class':'org.accordproject.cicero.contract.AccordContractState',
             'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
         };
-        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options);
+        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, request);
     }
 
     /**
