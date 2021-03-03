@@ -137,7 +137,7 @@ unwrapError(__result);
                 const contractName = this.getContractName();
                 code = `
 let contractObj = new ${contractName}();
-const __result = contractObj.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
+const __result = contractObj.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request},context.params));
 unwrapError(__result);
 `;
             } else {
@@ -145,7 +145,7 @@ unwrapError(__result);
             }
         } else if (target === 'es5') {
             code = `
-const __result = ${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[]},context.params));
+const __result = ${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:[],request:context.request},context.params));
 unwrapError(__result);
 `;
         } else {
