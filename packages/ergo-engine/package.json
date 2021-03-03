@@ -4,7 +4,8 @@
   "description": "Ergo Engine",
   "repository": {
     "type": "git",
-    "url": "https://github.com/accordproject/ergo"
+    "url": "https://github.com/accordproject/ergo",
+    "directory": "packages/ergo-engine"
   },
   "main": "index.js",
   "typings": "types/index.d.ts",
@@ -43,6 +44,7 @@
     "@babel/cli": "7.1.5",
     "@babel/core": "7.1.6",
     "@babel/preset-env": "7.1.6",
+    "@types/node": "14.14.6",
     "archiver": "2.1.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-loader": "8.0.4",
