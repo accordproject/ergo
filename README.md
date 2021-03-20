@@ -38,7 +38,7 @@ The most recent Ergo documentation is in the [Ergo Language Guide][docergo].
 
 Top level repository (ergo), with sub packages. Each sub-package is published as an independent npm module using `lerna`:
 * [ergo-cli](https://github.com/accordproject/ergo/tree/master/packages/ergo-cli) : Command line interface for the Ergo compiler
-* [ergo-compiler](https://github.com/accordproject/ergo/tree/master/packages/ergo-core) : Core classes for the Ergo compiler
+* [ergo-compiler](https://github.com/accordproject/ergo/tree/master/packages/ergo-compiler) : Core classes for the Ergo compiler
 * [ergo-engine](https://github.com/accordproject/ergo/tree/master/packages/ergo-engine) : A Node.js VM based execution engine for Ergo
 * [ergo-test](https://github.com/accordproject/ergo/tree/master/packages/ergo-test) : Cucumber based testing for Ergo
 
