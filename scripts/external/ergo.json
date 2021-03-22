@@ -1,0 +1,12 @@
+{
+    "js": "packages/ergo-compiler/lib/externalModels",
+    "ocaml": "extraction/extracted",
+    "models": [
+        "https://models.accordproject.org/cicero/contract.cto",
+        "https://models.accordproject.org/cicero/runtime.cto",
+        "https://models.accordproject.org/time@0.2.0.cto",
+        "https://models.accordproject.org/money.cto",
+        "https://models.accordproject.org/ergo/monitor.cto",
+        "https://models.accordproject.org/ergo/options.cto"
+    ]
+}

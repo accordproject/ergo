@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +12,17 @@
  * limitations under the License.
  */
 
-"use strict";
+'use strict';
 
-const semver = require("semver");
-const targetVersion = process.argv[2];
+const path = require('path');
 
-if (!semver.valid(targetVersion)) {
-  console.error(`Error: the version "${targetVersion}" is invalid!`);
-  process.exit(1);
+const scriptDir = path.join(__dirname,'..','..');
+const ergoModels = require('./ergo.json');
+
+const { process } = require('./processExternals');
+
+async function run() {
+    await process(scriptDir, ergoModels, true); // Add models to markdown-common
+    console.log('DONE!');
 }
-
-const prerelease = semver.prerelease(targetVersion);
-const tag = prerelease ? "unstable" : "stable";
-
-console.log(`::set-output name=tag::--tag=${tag}`);
+run();
