@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
- 
+     <a href="https://github.com/accordproject/ergo/actions/workflows/build.yml"><img src="https://github.com/accordproject/ergo/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>
   <a href="https://circleci.com/gh/accordproject/ergo"><img src="https://circleci.com/gh/accordproject/ergo.svg?style=shield" alt="Build Mechanization Status"></a>
   <a href="https://coveralls.io/github/accordproject/ergo?branch=master"><img src="https://coveralls.io/repos/github/accordproject/cicero/badge.svg?branch=master" alt="Coverage Status"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/accordproject/ergo?color=bright-green" alt="GitHub license"></a>
