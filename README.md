@@ -7,7 +7,7 @@
 <p align="center">
  
   <a href="https://circleci.com/gh/accordproject/ergo"><img src="https://circleci.com/gh/accordproject/ergo.svg?style=shield" alt="Build Mechanization Status"></a>
-  <a href="https://coveralls.io/github/accordproject/ergo?branch=master"><img src="https://coveralls.io/repos/github/accordproject/ergo/badge.svg?branch=master" alt="Coverage Status"></a>
+  <a href="https://coveralls.io/github/accordproject/ergo?branch=master"><img src="https://coveralls.io/repos/github/accordproject/cicero/badge.svg?branch=master" alt="Coverage Status"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/accordproject/ergo?color=bright-green" alt="GitHub license"></a>
   <a href="https://www.npmjs.com/package/@accordproject/ergo-cli"><img src="https://img.shields.io/npm/dm/@accordproject/ergo-cli" alt="downloads"></a>
   <a href="https://badge.fury.io/js/%40accordproject%2Fergo-cli"><img src="https://badge.fury.io/js/%40accordproject%2Fergo-cli.svg" alt="npm version"></a>
