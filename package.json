@@ -3,7 +3,7 @@
   "description": "The Ergo Language for Smart Legal Contracts",
   "version": "0.21.9",
   "scripts": {
-   "postinstall": "npm run models:get && lerna bootstrap",
+    "postinstall": "npm run models:get && lerna bootstrap",
     "prepare": "npm run pkgcheck",
     "models:get": "node ./scripts/external/getExternalModels.js",
     "models:clean": "node ./scripts/external/cleanExternalModels.js",
@@ -18,7 +18,6 @@
     "pkgbump": "node ./scripts/pkgbump.js && node ./scripts/pkgcheck.js --fix",
     "pkgset": "node ./scripts/pkgset.js",
     "depcheck": "node ./scripts/depcheck.js"
-    
   },
   "repository": {
     "type": "git",
