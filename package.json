@@ -9,7 +9,7 @@
     "models:clean": "node ./scripts/external/cleanExternalModels.js",
     "pretest": "npm run depcheck && npm run licchk",
     "test": "lerna run test:cov",
-    "coverage": "istanbul-combine -d coverage -r lcov packages/ergo-cli/coverage/*.json packages/ergo-compiler/coverage/*.json  packages/ergo-engine/coverage/*.json && cat ./coverage/lcov.info | coveralls",
+    "coverage": "istanbul-combine -d coverage -r lcov packages/ergo-cli/coverage/*.json packages/ergo-compiler/coverage/*.json  packages/ergo-engine/coverage/*.json && cat ./coverage/lcov.info",
     "publish": "./scripts/manualrelease.sh",
     "repoclean": "lerna clean",
     "licchk": "license-check-and-add",
