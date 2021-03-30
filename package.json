@@ -38,6 +38,7 @@
     "@accordproject/concerto-core": "0.82.11",
     "colors": "1.1.2",
     "coveralls": "3.0.1",
+    "dayjs": "^1.10.4",
     "event-stream": "3.3.2",
     "istanbul-combine": "0.3.0",
     "istanbul-merge": "1.1.1",
