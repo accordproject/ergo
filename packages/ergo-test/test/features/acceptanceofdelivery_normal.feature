@@ -21,10 +21,12 @@ Feature: Acceptance of delivery Contract
 
   Scenario: The contract gets initialized, with a current time
     When the current time is "2019-01-11T16:34:00-05:00"
+    And the UTC offset is -5
     Then the initial state should be the default state
 
   Scenario: The contract should accept inspection if received within delivery period
     When the current time is "2019-01-11T16:34:00-05:00"
+    And the UTC offset is -5
     And it receives the request
 """
 {

@@ -14,15 +14,15 @@
 
 namespace org.accordproject.volumediscount
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 
 /**
  * Defines the data model for the VolumeDiscount template.
  * This defines the structure of the abstract syntax tree that the parser for the template
  * must generate from input source text.
  */
-asset VolumeDiscountContract extends AccordContract {
+asset VolumeDiscountContract extends ContractData {
   /**
    * First volume
    */

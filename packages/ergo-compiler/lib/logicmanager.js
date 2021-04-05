@@ -284,36 +284,38 @@ unwrapError(__result);
     addErgoBuiltin() {
         this.addModelFile(Builtin.TimeModel, '@org.accordproject.time.cto');
         this.addModelFile(Builtin.MoneyModel, '@org.accordproject.money.cto');
-        this.addModelFile(Builtin.ContractModel, '@org.accordproject.cicero.contract.cto');
-        this.addModelFile(Builtin.RuntimeModel, '@org.accordproject.cicero.runtime.cto');
+        this.addModelFile(Builtin.ContractModel, '@org.accordproject.contract.cto');
+        this.addModelFile(Builtin.RuntimeModel, '@org.accordproject.runtime.cto');
         this.validateModelFiles();
     }
 
     /**
      * Validate input JSON
      * @param {object} input - the input JSON
+     * @param {number} utcOffset - UTC Offset for DateTime values
      * @return {object} the validated input
      */
-    validateInput(input) {
+    validateInput(input, utcOffset) {
         const serializer = this.getSerializer();
 
         if (input === null) { return null; }
 
         // ensure the input is valid
-        const validInput = serializer.fromJSON(input, {validate: false, acceptResourcesForRelationships: true});
+        const validInput = serializer.fromJSON(input, {validate: false, acceptResourcesForRelationships: true, utcOffset});
         validInput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
         validInput.validate();
-        const vJson = serializer.toJSON(validInput, {ergo:true,permitResourcesForRelationships:true});
+        const vJson = serializer.toJSON(validInput, {ergo:true,permitResourcesForRelationships:true, utcOffset});
         return boxedCollections.boxColl(vJson);
     }
 
     /**
      * Validate contract JSON
      * @param {object} contract - the contract JSON
+     * @param {number} utcOffset - UTC Offset for DateTime values
      * @param {object} options - parameters for contract variables validation
      * @return {object} the validated contract
      */
-    validateContract(contract, options) {
+    validateContract(contract, utcOffset, options) {
         options = options || {};
 
         const serializer = this.getSerializer();
@@ -321,7 +323,7 @@ unwrapError(__result);
         if (contract === null) { return null; }
 
         // ensure the contract is valid
-        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true});
+        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true, utcOffset});
         validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
         validContract.validate();
         const vJson = serializer.toJSON(validContract, Object.assign(options, {ergo:true,permitResourcesForRelationships:true}));
@@ -331,13 +333,14 @@ unwrapError(__result);
     /**
      * Validate input JSON record
      * @param {object} input - the input JSON record
+     * @param {number} utcOffset - UTC Offset for DateTime values
      * @return {object} the validated input
      */
-    validateInputRecord(input) {
+    validateInputRecord(input, utcOffset) {
         let validRecord = {};
         for(const key in input) {
             if (input[key] instanceof Object) {
-                validRecord[key] = this.validateInput(input[key]);
+                validRecord[key] = this.validateInput(input[key], utcOffset);
             } else {
                 validRecord[key] = input[key];
             }
@@ -348,19 +351,20 @@ unwrapError(__result);
     /**
      * Validate output JSON
      * @param {object} output - the output JSON
+     * @param {number} utcOffset - UTC Offset for DateTime values
      * @return {object} the validated output
      */
-    validateOutput(output) {
+    validateOutput(output, utcOffset) {
         const serializer = this.getSerializer();
 
         if (output === null) { return null; }
 
         if (output instanceof Object) {
             const vJson = boxedCollections.unboxColl(output);
-            const validOutput = serializer.fromJSON(vJson, {ergo: true, validate: false, acceptResourcesForRelationships: true});
+            const validOutput = serializer.fromJSON(vJson, {ergo: true, validate: false, acceptResourcesForRelationships: true, utcOffset});
             validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
             validOutput.validate();
-            return serializer.toJSON(validOutput, {convertResourcesToRelationships: true});
+            return serializer.toJSON(validOutput, {convertResourcesToRelationships: true, utcOffset});
         } else {
             return output;
         }
@@ -369,13 +373,14 @@ unwrapError(__result);
     /**
      * Validate output JSON array
      * @param {*} output - the output JSON array
+     * @param {number} utcOffset - UTC Offset for DateTime values
      * @return {Array<object>} the validated output array
      */
-    validateOutputArray(output) {
+    validateOutputArray(output, utcOffset) {
         const outputArray = boxedCollections.unboxColl(output);
         let resultArray = [];
         for (let i = 0; i < outputArray.length; i++) {
-            resultArray.push(this.validateOutput(outputArray[i]));
+            resultArray.push(this.validateOutput(outputArray[i], utcOffset));
         }
         return resultArray;
     }

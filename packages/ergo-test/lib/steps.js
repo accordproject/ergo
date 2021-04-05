@@ -31,13 +31,14 @@ const { Before, Given, When, Then } = require('cucumber');
  *
  * @param {object} engine - the execution engine
  * @param {object} logicManager - the Template Logic
- * @param {object} contractJson contract data in JSON
- * @param {string} currentTime the definition of 'now'
+ * @param {object} contractJson - contract data in JSON
+ * @param {string} currentTime - the definition of 'now'
+ * @param {utcOffset} utcOffset - UTC Offset for this execution
  * @returns {object} Promise to the initial state of the contract
  */
-function init(engine,logicManager,contractJson,currentTime) {
+function init(engine,logicManager,contractJson,currentTime,utcOffset) {
     const params = {};
-    return engine.compileAndInit(logicManager,contractJson,params,currentTime);
+    return engine.compileAndInit(logicManager,contractJson,params,currentTime,utcOffset);
 }
 
 /**
@@ -48,23 +49,24 @@ function init(engine,logicManager,contractJson,currentTime) {
  * @param {object} contractJson - contract data in JSON
  * @param {object} stateJson - state data in JSON
  * @param {string} currentTime - the definition of 'now'
+ * @param {utcOffset} utcOffset - UTC Offset for this execution
  * @param {object} requestJson - state data in JSON
  * @returns {object} Promise to the response
  */
-function trigger(engine,logicManager,contractJson,stateJson,currentTime,requestJson) {
-    return engine.compileAndTrigger(logicManager,contractJson,requestJson,stateJson,currentTime);
+function trigger(engine,logicManager,contractJson,stateJson,currentTime,utcOffset,requestJson) {
+    return engine.compileAndTrigger(logicManager,contractJson,requestJson,stateJson,currentTime,utcOffset);
 }
 
 // Defaults
 const defaultState = {
-    '$class':'org.accordproject.cicero.contract.AccordContractState',
-    'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
+    '$class':'org.accordproject.runtime.ContractState'
 };
 
 Before(function () {
     this.engine = new Engine();
     this.rootdir = Util.resolveRootDir(this.parameters);
     this.currentTime = '1970-01-01T00:00:00Z';
+    this.utcOffset = 0;
     this.logicManager = new LogicManager('es6', null);
     this.state = defaultState;
     this.logicManager.addErgoBuiltin();
@@ -76,6 +78,10 @@ Given('the target platform {string}', function (target) {
 
 Given('the current time is {string}', function(currentTime) {
     this.currentTime = currentTime;
+});
+
+Given('the UTC offset is {int}', function(utcOffset) {
+    this.utcOffset = utcOffset;
 });
 
 Given('the Ergo contract {string} in file {string}', function(paramName,paramFile) {
@@ -120,7 +126,7 @@ Then('it should respond with', function (expectedResponse) {
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ response },this.answer);
     } else {
-        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.utcOffset,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('response');
@@ -132,7 +138,7 @@ Then('it should respond with', function (expectedResponse) {
 
 Then('the initial state( of the contract) should be', function (expectedState) {
     const state = JSON.parse(expectedState);
-    return init(this.engine,this.logicManager,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime,this.utcOffset)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -142,7 +148,7 @@ Then('the initial state( of the contract) should be', function (expectedState) {
 
 Then('the initial state( of the contract) should be the default state', function () {
     const state = defaultState;
-    return init(this.engine,this.logicManager,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime,this.utcOffset)
         .then((actualAnswer) => {
             expect(actualAnswer).to.have.property('state');
             expect(actualAnswer).to.not.have.property('error');
@@ -157,7 +163,7 @@ Then('the new state( of the contract) should be', function (expectedState) {
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ state },this.answer);
     } else {
-        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.utcOffset,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('state');
@@ -174,7 +180,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
         expect(this.answer).to.not.have.property('error');
         return Util.compareSuccess({ emit },this.answer);
     } else {
-        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+        return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.utcOffset,this.request)
             .then((actualAnswer) => {
                 this.answer = actualAnswer;
                 expect(actualAnswer).to.have.property('emit');
@@ -186,7 +192,7 @@ Then('the following obligations have( also) been emitted', function (expectedEmi
 
 Then('the following initial obligations have( also) been emitted', function (expectedEmit) {
     const emit = JSON.parse(expectedEmit);
-    return init(this.engine,this.logicManager,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime,this.utcOffset)
         .then((actualAnswer) => {
             this.answer = actualAnswer;
             expect(actualAnswer).to.have.property('emit');
@@ -196,16 +202,15 @@ Then('the following initial obligations have( also) been emitted', function (exp
 });
 
 Then('it should fail with the error', function (expectedError) {
-    return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.request)
+    return trigger(this.engine,this.logicManager,this.contract,this.state,this.currentTime,this.utcOffset,this.request)
         .catch((actualError) => {
             expect(actualError.message).to.equal(expectedError);
         });
 });
 
 Then('it should fail to initialize with the error', function (expectedError) {
-    return init(this.engine,this.logicManager,this.contract,this.currentTime)
+    return init(this.engine,this.logicManager,this.contract,this.currentTime,this.utcOffset)
         .catch((actualError) => {
             expect(actualError.message).to.equal(expectedError);
         });
 });
-

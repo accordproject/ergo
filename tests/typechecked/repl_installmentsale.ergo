@@ -14,8 +14,8 @@
 
 namespace org.accordproject.installmentsale
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 import org.accordproject.money.MonetaryAmount
 
 define concept Installment extends Request {
@@ -37,14 +37,14 @@ define event PaymentObligation extends MyObligation {
    amount : Double
 }
 
-define asset InstallmentSaleState extends AccordContractState {
+define asset InstallmentSaleState extends ContractState {
   status : String,
   balance_remaining : Double,
   next_payment_month : Integer,
   total_paid : Double
 }
 
-define asset InstallmentSaleContract extends AccordContract {
+define asset InstallmentSaleContract extends ContractData {
   BUYER : String,
   SELLER : String,
   INITIAL_DUE : Double,
@@ -57,7 +57,6 @@ define asset InstallmentSaleContract extends AccordContract {
 contract InstallmentSale over InstallmentSaleContract state InstallmentSaleState {
   clause init() : Unit {
     set state InstallmentSaleState{
-      stateId: "org.accordproject.installmentsale.InstallmentSaleState#1",
       status: "WaitingForFirstDayOfNextMonth",
       balance_remaining: contract.TOTAL_DUE_BEFORE_CLOSING,
       total_paid: 0.0,
@@ -71,7 +70,6 @@ contract InstallmentSale over InstallmentSaleContract state InstallmentSaleState
     let total_paid = state.total_paid + request.amount;
 
     set state InstallmentSaleState{
-      stateId: "1",
       status: "WaitingForFirstDayOfNextMonth",
       balance_remaining: balance,
       total_paid: total_paid,
@@ -91,7 +89,6 @@ contract InstallmentSale over InstallmentSaleContract state InstallmentSaleState
     let total_paid = state.total_paid + finalAmount;
 		let balance = 0.0;
     set state InstallmentSaleState{
-      stateId: "1",
       status: "Fulfilled",
       balance_remaining: balance,
       total_paid: total_paid,

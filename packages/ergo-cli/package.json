@@ -48,7 +48,6 @@
     "@accordproject/ergo-test": "0.21.9",
     "chalk": "2.4.1",
     "jsome": "2.5.0",
-    "moment-mini": "2.22.1",
     "winston": "3.2.1",
     "yargs": "13.2.4"
   },

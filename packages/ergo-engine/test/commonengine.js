@@ -75,6 +75,15 @@ function compareSuccess(expected,actual) {
     }
 }
 
+const getCurrrentTime = (t) => {
+    const currentTime = t ? t.now : '1970-01-01T00:00:00Z';
+    const utcOffset = t ? t.offset : 0; // default to UTC
+    return {
+        currentTime,
+        utcOffset,
+    };
+};
+
 /**
  * Run a test workload
  *
@@ -102,7 +111,7 @@ function runWorkload(Engine, target) {
         const contract = test.contract;
         const state = test.state;
         const contractName = test.contractName;
-        const currentTime = test.currentTime ? test.currentTime : '1970-01-01T00:00:00Z';
+        const { currentTime, utcOffset } = getCurrrentTime(test.currentTime);
         const expected = test.expected;
         const options = test.options;
 
@@ -135,12 +144,12 @@ function runWorkload(Engine, target) {
                 const contractJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, contract), 'utf8'));
                 if (state === null) {
                     if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                        return engine.compileAndInit(logicManager, contractJson, currentTime)
+                        return engine.compileAndInit(logicManager, contractJson, currentTime, utcOffset)
                             .catch((actualError) => {
                                 expect(actualError.message).to.equal(expected.error);
                             });
                     } else {
-                        return engine.compileAndInit(logicManager, contractJson, currentTime)
+                        return engine.compileAndInit(logicManager, contractJson, currentTime, utcOffset)
                             .then((actualAnswer) => {
                                 return compareSuccess(expected, actualAnswer);
                             });
@@ -151,12 +160,12 @@ function runWorkload(Engine, target) {
                         const params = test.params;
                         const clauseName = test.invoke;
                         if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
+                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, utcOffset, options)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, options)
+                            return engine.compileAndInvoke(logicManager, clauseName, contractJson, params, stateJson, currentTime, utcOffset, options)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });
@@ -164,12 +173,12 @@ function runWorkload(Engine, target) {
                     } else if (test.calculate) {
                         const formulaName = test.calculate;
                         if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                            return engine.compileAndCalculate(logicManager, formulaName, contractJson, currentTime, options)
+                            return engine.compileAndCalculate(logicManager, formulaName, contractJson, currentTime, utcOffset, options)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndCalculate(logicManager, formulaName, contractJson, currentTime, options)
+                            return engine.compileAndCalculate(logicManager, formulaName, contractJson, currentTime, utcOffset, options)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });
@@ -179,12 +188,12 @@ function runWorkload(Engine, target) {
                         const request = test.request;
                         const requestJson = JSON.parse(Fs.readFileSync(Path.resolve(__dirname, dir, request), 'utf8'));
                         if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
-                            return engine.compileAndTrigger(logicManager, contractJson, requestJson, stateJson, currentTime, options)
+                            return engine.compileAndTrigger(logicManager, contractJson, requestJson, stateJson, currentTime, utcOffset, options)
                                 .catch((actualError) => {
                                     expect(actualError.message).to.equal(expected.error);
                                 });
                         } else {
-                            return engine.compileAndTrigger(logicManager, contractJson, requestJson, stateJson, currentTime, options)
+                            return engine.compileAndTrigger(logicManager, contractJson, requestJson, stateJson, currentTime, utcOffset, options)
                                 .then((actualAnswer) => {
                                     return compareSuccess(expected, actualAnswer);
                                 });

@@ -47,7 +47,7 @@ describe('Validator', () => {
             validInput.$data.someNumber.should.have.property('$nat');
             validInput.$data.someNumber.$nat.should.equal(3);
             validInput.$data.someArray.should.deep.equal({$coll:[{'$nat':0},{'$nat':1},{'$nat':2}],$length:3});
-            validInput.$data.relationship.should.deep.equal({'$class':['org.accordproject.copyrightlicense.Baz'], '$data':{ 'bazId': '1' } });
+            validInput.$data.relationship.should.deep.equal({'$class':['org.accordproject.copyrightlicense.Baz'], '$data':{ 'bazId': '1', '$identifier': '1' } });
             const validOutput = logicManager.validateOutput(validInput);
             validOutput.relationship.should.equal('resource:org.accordproject.copyrightlicense.Baz#1');
         });
@@ -72,7 +72,7 @@ describe('Validator', () => {
             validContract.serialized.$data.someNumber.should.have.property('$nat');
             validContract.serialized.$data.someNumber.$nat.should.equal(3);
             validContract.serialized.$data.someArray.should.deep.equal({$coll:[{'$nat':0},{'$nat':1},{'$nat':2}],$length:3});
-            validContract.serialized.$data.relationship.should.deep.equal({ '$class' : ['org.accordproject.copyrightlicense.Baz'], '$data' : { 'bazId': '1' } });
+            validContract.serialized.$data.relationship.should.deep.equal({ '$class' : ['org.accordproject.copyrightlicense.Baz'], '$data' : { 'bazId': '1', '$identifier': '1' } });
         });
     });
 });

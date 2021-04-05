@@ -12,17 +12,16 @@
  * limitations under the License.
  *)
 
-open Resources
-
 let ergo_stdcto =
-  [ ("$ERGODIR/extraction/stdlib/accordproject.cto", accordproject);
+  [ ("$ERGODIR/extraction/stdlib/concerto.cto", Resources.concerto);
     ("$ERGODIR/extraction/stdlib/contract.cto", Contract.contract);
+    ("$ERGODIR/extraction/stdlib/runtime.cto", Runtime.runtime);
     ("$ERGODIR/extraction/stdlib/money.cto", Money.money);
     ("$ERGODIR/extraction/stdlib/time.cto", Time.time);
     ("$ERGODIR/extraction/stdlib/options.cto", Options.options);
-    ("$ERGODIR/extraction/stdlib/runtime.cto", Runtime.runtime); ]
+    ("$ERGODIR/extraction/stdlib/monitor.cto", Monitor.monitor); ]
 let ergo_stdlib =
-  [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", stdlib);
-    ("$ERGODIR/extraction/stdlib/etime.ergo", etime);
-    ("$ERGODIR/extraction/stdlib/template.ergo", template) ];
+  [ ("$ERGODIR/extraction/stdlib/stdlib.ergo", Resources.stdlib);
+    ("$ERGODIR/extraction/stdlib/etime.ergo", Resources.etime);
+    ("$ERGODIR/extraction/stdlib/template.ergo", Resources.template); ];
 

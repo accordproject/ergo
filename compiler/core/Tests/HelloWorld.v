@@ -134,7 +134,7 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       ""
       ""
-      accordproject_base_namespace
+      accordproject_concerto_namespace
       nil
       (cto_typed_tm::cto_typed_rq::cto_typed_rs::nil).
 
@@ -151,7 +151,7 @@ contract HelloWorld over TemplateModel {
       dummy_provenance
       ""
       ""
-      accordproject_base_namespace
+      accordproject_concerto_namespace
       nil
       (cto_typed_top::nil).
 

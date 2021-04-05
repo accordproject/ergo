@@ -24,20 +24,22 @@ chai.use(require('chai-as-promised'));
 
 describe('Initialize current time', () => {
     it('Should succeed for a well-formed date/time', function () {
-        const currentTime = Util.setCurrentTime('1970-01-01T00:00:00Z');
-        return currentTime.format().should.equal('1970-01-01T00:00:00Z');
+        const { currentTime } = Util.setCurrentTime('1970-01-01T00:00:00Z', 0);
+        return currentTime.format().should.equal('1970-01-01T00:00:00Z', 0);
     });
     it('Should stringify a date time back with its timezone', function () {
-        const currentTime = Util.setCurrentTime('1970-01-01T00:00:00+05:00');
-        return JSON.stringify(currentTime).should.equal('"1970-01-01T00:00:00+05:00"');
+        const { currentTime } = Util.setCurrentTime('1970-01-01T00:00:00+05:00', 5);
+        return currentTime.format().should.equal('1970-01-01T00:00:00+05:00');
     });
     it('Should fail for a non-well-formed date/time', function () {
-        return (() => Util.setCurrentTime('1970-01-01').format()).should.throw('1970-01-01 is not a valid moment with the format \'YYYY-MM-DDTHH:mm:ssZ\'');
+        return (() => Util.setCurrentTime('foobar')).should.throw('Cannot set current time to \'foobar\' with UTC offset \'undefined\'');
     });
     it('Should not fail when currentTime is null', function () {
-        return Util.setCurrentTime(null).format().should.not.be.null;
+        const { currentTime } = Util.setCurrentTime(null);
+        return currentTime.format().should.not.be.null;
     });
     it('Should not fail when currentTime is undefined', function () {
-        return Util.setCurrentTime(undefined).format().should.not.be.null;
+        const { currentTime } = Util.setCurrentTime(null);
+        return currentTime.format().should.not.be.null;
     });
 });

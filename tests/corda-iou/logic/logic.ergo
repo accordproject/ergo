@@ -14,7 +14,7 @@
 
 namespace org.accordproject.sample.corda.iou
 
-import org.accordproject.cicero.runtime.*
+import org.accordproject.runtime.*
 
 contract IOUContract over IOUContractModel {
   clause verify(request : IOURequest) : Response {

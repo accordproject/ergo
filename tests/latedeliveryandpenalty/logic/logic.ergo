@@ -14,7 +14,7 @@
 
 namespace org.accordproject.latedeliveryandpenalty
 
-import org.accordproject.cicero.runtime.*
+import org.accordproject.runtime.*
 import org.accordproject.time.*
 
 // Declare a contract over a template model

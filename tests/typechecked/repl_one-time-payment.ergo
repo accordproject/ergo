@@ -14,8 +14,8 @@
 
 namespace org.accordproject.payment.onetime
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 import org.accordproject.money.MonetaryAmount
 
 define transaction InitRequest extends Request {}
@@ -30,11 +30,11 @@ define enum ContractLifecycleStatus {
   COMPLETED
 }
 
-define asset OneTimePaymentState extends AccordContractState {
+define asset OneTimePaymentState extends ContractState {
   status : ContractLifecycleStatus
 }
 
-define asset OneTimePaymentContract extends AccordContract {
+define asset OneTimePaymentContract extends ContractData {
   buyer : AccordParty,
   seller : AccordParty,
   initialAmount : MonetaryAmount
@@ -51,7 +51,6 @@ contract OneTimePayment over OneTimePaymentContract state OneTimePaymentState {
       description: contract.buyer.partyId ++ " should pay contract amount to " ++ contract.seller.partyId
     };
     set state OneTimePaymentState {
-      stateId: "1",
       status: "OBLIGATION_EMITTED"
     };
     return InitResponse{}
@@ -63,7 +62,6 @@ contract OneTimePayment over OneTimePaymentContract state OneTimePaymentState {
   clause paymentReceived(request : PaymentReceivedRequest): PaymentReceivedResponse {
     enforce state.status = "OBLIGATION_EMITTED";
     set state OneTimePaymentState {
-      stateId: state.stateId,
       status: "COMPLETED"
     };
     return PaymentReceivedResponse{}

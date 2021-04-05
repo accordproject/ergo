@@ -16,6 +16,7 @@ Feature: starOf and endOf with time periods test
 
   Scenario: The contract should return the correct response
     When the current time is "2019-01-01T12:00:00+04:00"
+    And the UTC offset is 4
     And it receives the request
 """
 {
@@ -37,6 +38,7 @@ Feature: starOf and endOf with time periods test
 
   Scenario: The contract should return the correct response
     When the current time is "2019-01-01T12:00:00-11:00"
+    And the UTC offset is -11
     And it receives the request
 """
 {
@@ -58,6 +60,7 @@ Feature: starOf and endOf with time periods test
 
   Scenario: The contract should return the correct response
     When the current time is "2019-01-01T12:00:00-05:00"
+    And the UTC offset is -5
     And it receives the request
 """
 {
@@ -70,7 +73,7 @@ Feature: starOf and endOf with time periods test
 {
     "$class": "org.accordproject.startendtest.TestResponse",
     "now": "2019-01-01T12:00:00.000-05:00",
-    "date": "2018-01-01T23:00:00.000-11:00",
+    "date": "2018-01-02T05:00:00.000-05:00",
     "dateFormat": "2018/03/31",
     "startOfDay": "2018-01-02T00:00:00.000-05:00",
     "endOfDay": "2018-01-02T23:59:59.999-05:00"

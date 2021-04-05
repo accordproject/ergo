@@ -14,29 +14,35 @@
 
 'use strict';
 
-// Moment serialization function to preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
-const momentToJson = function() { return this.format(); };
-
-const Moment = require('moment-mini');
-Moment.fn.toJSON = momentToJson;
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
+const quarterOfYear = require('dayjs/plugin/quarterOfYear');
+dayjs.extend(quarterOfYear);
+const minMax = require('dayjs/plugin/minMax');
+dayjs.extend(minMax);
+const duration = require('dayjs/plugin/duration');
+dayjs.extend(duration);
 
 /**
  * Ensures there is a proper current time
  *
- * @param {string} currentTime - the definition of 'now'
- * @returns {object} if valid, the moment object for the current time
+ * @param {string} [currentTime] - the definition of 'now'
+ * @param {number} [utcOffset] - UTC Offset for this execution
+ * @returns {object} if valid, the dayjs object for the current time
  */
-function setCurrentTime(currentTime) {
-    if (!currentTime) {
-        // Defaults to current local time
-        return Moment();
+function setCurrentTime(currentTime, utcOffset) {
+    // Default UTC offset to local time
+    const utcOffsetResolved = typeof utcOffset === 'number' ? utcOffset : dayjs().utcOffset();
+    const currentTimeUTC = currentTime ? dayjs.utc(currentTime) : dayjs().utc();
+    const currentTimeResolved = currentTimeUTC.utcOffset(utcOffsetResolved);
+    if (!currentTimeResolved.isValid()) {
+        throw new Error(`Cannot set current time to '${currentTime}' with UTC offset '${utcOffset}'`);
     }
-    const now = Moment.parseZone(currentTime, 'YYYY-MM-DDTHH:mm:ssZ', true);
-    if (now.isValid()) {
-        return now;
-    } else {
-        throw new Error(`${currentTime} is not a valid moment with the format 'YYYY-MM-DDTHH:mm:ssZ'`);
-    }
+    return {
+        currentTime: currentTimeResolved,
+        utcOffset: utcOffsetResolved
+    };
 }
 
-module.exports = { momentToJson, setCurrentTime };
+module.exports = { setCurrentTime };

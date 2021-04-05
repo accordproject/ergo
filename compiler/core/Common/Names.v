@@ -73,9 +73,9 @@ Section Names.
   
   Section TypeNames.
     (* Built-in Cicero *)
-    Definition accordproject_base_namespace : string := "org.accordproject.base"%string.
-    Definition accordproject_runtime_namespace : string := "org.accordproject.cicero.runtime"%string.
-    Definition accordproject_contract_namespace : string := "org.accordproject.cicero.contract"%string.
+    Definition accordproject_concerto_namespace : string := "concerto"%string.
+    Definition accordproject_runtime_namespace : string := "org.accordproject.runtime"%string.
+    Definition accordproject_contract_namespace : string := "org.accordproject.contract"%string.
     Definition accordproject_stdlib_namespace : string := "org.accordproject.ergo.stdlib"%string.
     Definition accordproject_time_namespace : string := "org.accordproject.time"%string.
     (* Built-in Ergo *)
@@ -85,27 +85,28 @@ Section Names.
 
     (* Accord Project system types *)
     Definition default_enum_absolute_name : string :=
-      absolute_name_of_local_name accordproject_base_namespace "Enum".
+      absolute_name_of_local_name accordproject_concerto_namespace "Enum".
     Definition default_event_absolute_name : string :=
-      absolute_name_of_local_name accordproject_base_namespace "Event".
+      absolute_name_of_local_name accordproject_concerto_namespace "Event".
     Definition default_transaction_absolute_name : string :=
-      absolute_name_of_local_name accordproject_base_namespace "Transaction".
+      absolute_name_of_local_name accordproject_concerto_namespace "Transaction".
     Definition default_asset_absolute_name : string :=
-      absolute_name_of_local_name accordproject_base_namespace "Asset".
+      absolute_name_of_local_name accordproject_concerto_namespace "Asset".
     Definition default_participant_absolute_name : string :=
-      absolute_name_of_local_name accordproject_base_namespace "Participant".
+      absolute_name_of_local_name accordproject_concerto_namespace "Participant".
 
     (* Accord Project common types *)
+    Definition default_contract_absolute_name : string :=
+      absolute_name_of_local_name accordproject_contract_namespace "ContractData".
+    Definition default_clause_absolute_name : string :=
+      absolute_name_of_local_name accordproject_contract_namespace "ClauseData".
+
     Definition default_request_absolute_name : string :=
       absolute_name_of_local_name accordproject_runtime_namespace "Request".
     Definition default_response_absolute_name : string :=
       absolute_name_of_local_name accordproject_runtime_namespace "Response".
     Definition default_state_absolute_name : string :=
-      absolute_name_of_local_name accordproject_contract_namespace "AccordContractState".
-    Definition default_contract_absolute_name : string :=
-      absolute_name_of_local_name accordproject_contract_namespace "AccordContract".
-    Definition default_clause_absolute_name : string :=
-      absolute_name_of_local_name accordproject_contract_namespace "AccordClause".
+      absolute_name_of_local_name accordproject_runtime_namespace "ContractState".
 
     (* Ergo types *)
     Definition default_error_absolute_name : string :=

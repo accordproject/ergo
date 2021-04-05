@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@accordproject/ergo-compiler": "0.21.9",
-    "moment-mini": "2.22.1",
+    "dayjs": "1.10.4",
     "vm2": "3.5.0"
   },
   "devDependencies": {

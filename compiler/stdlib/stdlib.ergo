@@ -14,7 +14,7 @@
 
 namespace org.accordproject.ergo.stdlib
 
-import org.accordproject.cicero.runtime.*
+import org.accordproject.runtime.*
 import org.accordproject.money.*
 
 // Double operations

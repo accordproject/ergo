@@ -14,8 +14,8 @@
 
 namespace org.accordproject.promissorynote
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 import org.accordproject.money.MonetaryAmount
 import org.accordproject.usa.business.BusinessEntity
 
@@ -30,7 +30,7 @@ transaction Result extends Response {
 /**
  * The template model
  */
-asset PromissoryNoteContract extends AccordContract {
+asset PromissoryNoteContract extends ContractData {
   o MonetaryAmount amount
   o DateTime date
   o String maker

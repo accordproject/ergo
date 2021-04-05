@@ -14,11 +14,11 @@
 
 namespace org.accordproject.safte
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 
 // Contract parameters
-define asset SafteContract extends AccordContract {
+define asset SafteContract extends ContractData {
   companyName : String,
   purchaser : String,
   purchaseAmount : Double,
@@ -32,7 +32,7 @@ define asset SafteContract extends AccordContract {
 define enum SafteStatus {
   PENDING, EXECUTED
 }
-define asset SafteState extends AccordContractState {
+define asset SafteState extends ContractState {
   status : SafteStatus
 }
 
@@ -65,7 +65,6 @@ contract Safte
   state SafteState {
   clause init() : Unit {
     set state SafteState {
-      stateId: "1",
       status: "PENDING"
     };
     return
@@ -76,7 +75,6 @@ contract Safte
     let discountRate = (100.0 - contract.discount) / 100.00;
     let discountPrice = request.tokenPrice * discountRate;
     set state SafteState {
-      stateId: "1",
       status: "EXECUTED"
     };
     return TokenShare{
@@ -89,7 +87,6 @@ contract Safte
     let discountRate = (100.0 - contract.discount) / 100.00;
     let discountPrice = request.sharePrice * discountRate;
     set state SafteState {
-      stateId: "1",
       status: "EXECUTED"
     };
     return EquityShare{
@@ -100,7 +97,6 @@ contract Safte
   clause dissolutionEvent(request : DissolutionEvent) : PayOut {
     enforce state.status = "PENDING";
     set state SafteState {
-      stateId: "1",
       status: "EXECUTED"
     };
     return PayOut{

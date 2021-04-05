@@ -134,7 +134,7 @@ Section ErgoNameResolution.
 
     (* Stdlib modules imported automatically *)
     Definition builtin_imports :=
-      accordproject_base_namespace
+      accordproject_concerto_namespace
         :: accordproject_stdlib_namespace
         :: nil.
     Definition is_builtin_import (ns:namespace_name) : bool :=
@@ -144,7 +144,7 @@ Section ErgoNameResolution.
 
     (* All Stdlib modules, including those not imported automatically *)
     Definition stdlib_imports :=
-      accordproject_base_namespace
+      accordproject_concerto_namespace
         :: accordproject_stdlib_namespace
         :: accordproject_time_namespace
         :: accordproject_options_namespace
@@ -754,7 +754,7 @@ Section ErgoNameResolution.
       else
         (* Add built-in modules to import, first.
            Make sure to add current namespace to the list of imports - i.e., import self. *)
-        (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
+        (DImport dummy_provenance (ImportAll dummy_provenance accordproject_concerto_namespace))
           :: (DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns))
           :: decls.
 
@@ -767,7 +767,7 @@ Section ErgoNameResolution.
       else
         (* Add built-in modules to import, first.
            Make sure to add current namespace to the list of imports - i.e., import self. *)
-        (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
+        (DImport dummy_provenance (ImportAll dummy_provenance accordproject_concerto_namespace))
           ::(DImport dummy_provenance (ImportAll dummy_provenance accordproject_stdlib_namespace))
           ::(DImport dummy_provenance (ImportSelf dummy_provenance ctxt_ns))
           :: decls.
@@ -782,7 +782,7 @@ Section ErgoNameResolution.
       then esuccess ctxt nil
       else
         let builtin_cto_imports :=
-            (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
+            (DImport dummy_provenance (ImportAll dummy_provenance accordproject_concerto_namespace))
               :: (DImport dummy_provenance (ImportSelf dummy_provenance ns))
               :: nil
         in
@@ -798,7 +798,7 @@ Section ErgoNameResolution.
       then esuccess ctxt nil
       else
         let builtin_cto_imports :=
-            (DImport dummy_provenance (ImportAll dummy_provenance accordproject_base_namespace))
+            (DImport dummy_provenance (ImportAll dummy_provenance accordproject_concerto_namespace))
               ::(DImport dummy_provenance (ImportAll dummy_provenance accordproject_stdlib_namespace))
               ::(DImport dummy_provenance (ImportSelf dummy_provenance ns))
               :: nil
@@ -991,7 +991,7 @@ Section ErgoNameResolution.
 
     Definition ergo_hl : lrergo_module :=
       mkModule
-        dummy_provenance "" "" accordproject_base_namespace (DType dummy_provenance ergo_typed_top::nil).
+        dummy_provenance "" "" accordproject_concerto_namespace (DType dummy_provenance ergo_typed_top::nil).
 
     Definition ergo_stdlib : lrergo_module :=
       mkModule

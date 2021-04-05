@@ -14,8 +14,8 @@
 
 namespace org.accordproject.helloworld
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 
 define concept MyRequest extends Request {
   input : String
@@ -25,7 +25,7 @@ define transaction MyResponse extends Response {
   output : String
 }
 
-define transaction HelloWorldClause extends AccordClause {
+define transaction HelloWorldClause extends ClauseData {
   name : String
 }
 

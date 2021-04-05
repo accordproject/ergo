@@ -19,14 +19,4 @@ const { RuntimeModel } = require('./externalModels/RuntimeModel');
 const { MoneyModel } = require('./externalModels/MoneyModel');
 const { TimeModel } = require('./externalModels/TimeModel');
 
-const SystemModel = `namespace org.accordproject.base
-abstract asset Asset {  }
-abstract participant Participant {  }
-abstract transaction Transaction identified by transactionId {
-  o String transactionId
-}
-abstract event Event identified by eventId {
-  o String eventId
-}`;
-
-module.exports = { SystemModel, ContractModel, RuntimeModel, MoneyModel, TimeModel };
+module.exports = { ContractModel, RuntimeModel, MoneyModel, TimeModel };

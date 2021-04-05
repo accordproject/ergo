@@ -14,7 +14,7 @@
 
 namespace io.clause.demo.fragileGoods
 
-import org.accordproject.cicero.runtime.*
+import org.accordproject.runtime.*
 
 define function numberOfShocks(maxAcc : Double, minAcc : Double, accelerometerReadings : Double[]) : Double {
   return
