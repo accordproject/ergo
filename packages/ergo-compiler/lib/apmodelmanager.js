@@ -17,7 +17,6 @@
 const fsPath = require('path');
 
 const ModelManager = require('@accordproject/concerto-core').ModelManager;
-const Builtin = require('./builtin');
 
 /**
  * Accord Project Model Manager. Bootstraps the ModelManager with system files.
@@ -32,7 +31,6 @@ class APModelManager extends ModelManager {
      */
     constructor() {
         super();
-        this.addModelFile(Builtin.SystemModel, 'org.accordproject.base.cto', false, true);
     }
 
     /**

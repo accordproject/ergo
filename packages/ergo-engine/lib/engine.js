@@ -95,23 +95,23 @@ class Engine {
      * using the Composer serializer.
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @return {object} the result for the clause
      */
-    trigger(logic, contractId, contract, request, state, currentTime, options) {
+    trigger(logic, contractId, contract, request, state, currentTime, utcOffset, options) {
         // Set the current time and UTC Offset
-        const now = Util.setCurrentTime(currentTime);
-        const utcOffset = now.utcOffset();
+        const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
         const validOptions = boxedCollections.boxColl(options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
         });
 
-        const validContract = logic.validateContract(contract); // ensure the contract is valid
-        const validRequest = logic.validateInput(request); // ensure the request is valid
-        const validState = logic.validateInput(state); // ensure the state is valid
+        const validContract = logic.validateContract(contract, offset); // ensure the contract is valid
+        const validRequest = logic.validateInput(request, offset); // ensure the request is valid
+        const validState = logic.validateInput(state, offset); // ensure the state is valid
 
         Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
 
@@ -126,10 +126,10 @@ class Engine {
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
-        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
+        const result = this.runVMScriptCall(offset,now,validOptions,context,script,callScript);
+        const validResponse = logic.validateOutput(result.__response, offset); // ensure the response is valid
+        const validNewState = logic.validateOutput(result.__state, offset); // ensure the new state is valid
+        const validEmit = logic.validateOutputArray(result.__emit, offset); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
@@ -150,24 +150,24 @@ class Engine {
      * @param {object} params - the clause parameters
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @param {object} validateOptions to the validation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, validateOptions) {
+    invoke(logic, contractId, clauseName, contract, params, state, currentTime, utcOffset, options, validateOptions) {
         // Set the current time and UTC Offset
-        const now = Util.setCurrentTime(currentTime);
-        const utcOffset = now.utcOffset();
+        const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
         const invokeOptions = boxedCollections.boxColl(options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
         });
 
-        const validContract = logic.validateContract(contract, validateOptions); // ensure the contract is valid
-        const validParams = logic.validateInputRecord(params); // ensure the parameters are valid
-        const validState = logic.validateInput(state); // ensure the state is valid
+        const validContract = logic.validateContract(contract, offset, validateOptions); // ensure the contract is valid
+        const validParams = logic.validateInputRecord(params, offset); // ensure the parameters are valid
+        const validState = logic.validateInput(state, offset); // ensure the state is valid
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
@@ -181,11 +181,11 @@ class Engine {
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,invokeOptions,context,script,callScript);
+        const result = this.runVMScriptCall(offset,now,invokeOptions,context,script,callScript);
 
-        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
+        const validResponse = logic.validateOutput(result.__response, offset); // ensure the response is valid
+        const validNewState = logic.validateOutput(result.__state, offset); // ensure the new state is valid
+        const validEmit = logic.validateOutputArray(result.__emit, offset); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
@@ -203,16 +203,16 @@ class Engine {
      * @param {string} contractId - the contract identifier
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @return {object} the result for the clause initialization
      */
-    init(logic, contractId, contract, params, currentTime, options) {
+    init(logic, contractId, contract, params, currentTime, utcOffset, options) {
         const defaultState = {
-            '$class':'org.accordproject.cicero.contract.AccordContractState',
-            'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
+            '$class':'org.accordproject.runtime.ContractState'
         };
-        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, options, null);
+        return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, utcOffset, options, null);
     }
 
     /**
@@ -221,18 +221,18 @@ class Engine {
      * @param {string} contractId - the contract identifier
      * @param {string} name - the formula name
      * @param {object} contract - the contract data
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @return {object} the result for draft
      */
-    calculate(logic, contractId, name, contract, currentTime, options) {
+    calculate(logic, contractId, name, contract, currentTime, utcOffset, options) {
         options = options || {};
 
         const defaultState = {
-            '$class':'org.accordproject.cicero.contract.AccordContractState',
-            'stateId':'org.accordproject.cicero.contract.AccordContractState#1'
+            '$class':'org.accordproject.runtime.ContractState'
         };
-        return this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, options, {convertResourcesToId: true});
+        return this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, utcOffset, options, {convertResourcesToId: true});
     }
 
     /**
@@ -241,14 +241,15 @@ class Engine {
      * @param {LogicManager} logic  - the logic
      * @param {object} contract - the contract data
      * @param {object} params - the clause parameters
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInit(logic, contract, params, currentTime, options) {
+    compileAndInit(logic, contract, params, currentTime, utcOffset, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.init(logic, contractId, contract, params, currentTime, options);
+            return this.init(logic, contractId, contract, params, currentTime, utcOffset, options);
         });
     }
 
@@ -258,14 +259,15 @@ class Engine {
      * @param {TemplateLogic} logic  - the logic
      * @param {string} name - the formula name
      * @param {object} contract - the contract data
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndCalculate(logic, name, contract, currentTime, options) {
+    compileAndCalculate(logic, name, contract, currentTime, utcOffset, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.calculate(logic, contractId, name, contract, currentTime, options);
+            return this.calculate(logic, contractId, name, contract, currentTime, utcOffset, options);
         });
     }
 
@@ -278,14 +280,15 @@ class Engine {
      * @param {object} params - the clause parameters
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause initialization
      */
-    compileAndInvoke(logic, clauseName, contract, params, state, currentTime, options) {
+    compileAndInvoke(logic, clauseName, contract, params, state, currentTime, utcOffset, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, options, null);
+            return this.invoke(logic, contractId, clauseName, contract, params, state, currentTime, utcOffset, options, null);
         });
     }
 
@@ -298,14 +301,15 @@ class Engine {
      * using the Composer serializer.
      * @param {object} state - the contract state, a JS object that can be deserialized
      * using the Composer serializer.
-     * @param {string} currentTime - the definition of 'now'
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
      * @param {object} options to the text generation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    compileAndTrigger(logic, contract, request, state, currentTime, options) {
+    compileAndTrigger(logic, contract, request, state, currentTime, utcOffset, options) {
         return logic.compileLogic(false).then(() => {
             const contractId = logic.getContractName();
-            return this.trigger(logic, contractId, contract, request, state, currentTime, options);
+            return this.trigger(logic, contractId, contract, request, state, currentTime, utcOffset, options);
         });
     }
 

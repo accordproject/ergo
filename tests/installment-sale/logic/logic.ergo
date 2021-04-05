@@ -14,7 +14,7 @@
 
 namespace org.accordproject.installmentsale
 
-import org.accordproject.cicero.runtime.*
+import org.accordproject.runtime.*
 
 contract InstallmentSale over TemplateModel state InstallmentSaleState {
   clause init() : Response {

@@ -16,7 +16,7 @@
 
 function isEnum(v) {
   if (v.$class) {
-        return either(cast(["org.accordproject.base.Enum"],v));
+        return either(cast(["concerto.Enum"],v));
     } else {
         return false;
     }
@@ -50,7 +50,7 @@ function toStringQ(v, quote) {
         }
         return result + "]";
     }
-    if(moment.isMoment(v)) {
+    if(dayjs.isDayjs(v)) {
         return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('$nat')){
@@ -95,7 +95,7 @@ function toTextQ(v, quote) {
         }
         return result + "";
     }
-    if (moment.isMoment(v)) {
+    if (dayjs.isDayjs(v)) {
         return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('$nat')){

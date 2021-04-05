@@ -157,7 +157,7 @@ Section ErgoImptoES6.
                (contract_name:string)
                (eol:nstring)
                (quotel:nstring) : nstring :=
-      let state_init := ^"{ '$class': 'org.accordproject.cicero.contract.AccordContractState', 'stateId' : 'org.accordproject.cicero.contract.AccordContractState#1' }" in
+      let state_init := ^"{ '$class': 'org.accordproject.runtime.ContractState' }" in
       eol +++ ^"function " +++ ^fun_name +++ ^"(context) {" +++ eol
           +++ ^"  let pcontext = Object.assign(context, { 'state': " +++ state_init +++ ^" });" +++ eol
           +++ ^"  return new " +++ ^contract_name +++ ^"().init(pcontext);" +++ eol
@@ -203,8 +203,8 @@ Section ErgoImptoES6.
       let cname : string :=
           QcertCodeGen.javascript_identifier_sanitizer contract_name
       in
-      ^"" +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.cicero.runtime.Request" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" cname clause_main_name eol quotel
-          +++ wrapper_function_for_init true "__init" "org.accordproject.cicero.runtime.Response" "org.accordproject.cicero.runtime.Emit" "org.accordproject.cicero.runtime.State" cname eol quotel.
+      ^"" +++ wrapper_function_for_clause true "__dispatch" "request" "org.accordproject.runtime.Request" "org.accordproject.runtime.Response" "org.accordproject.runtime.Emit" "org.accordproject.runtime.State" cname clause_main_name eol quotel
+          +++ wrapper_function_for_init true "__init" "org.accordproject.runtime.Response" "org.accordproject.runtime.Emit" "org.accordproject.runtime.State" cname eol quotel.
 
     Definition javascript_of_module_with_dispatch
                (contract_name:string)

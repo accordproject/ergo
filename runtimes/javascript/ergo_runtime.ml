@@ -595,7 +595,7 @@ function natOfFloat(v) {
 
 function isEnum(v) {
   if (v.$class) {
-        return either(cast(["org.accordproject.base.Enum"],v));
+        return either(cast(["concerto.Enum"],v));
     } else {
         return false;
     }
@@ -629,7 +629,7 @@ function toStringQ(v, quote) {
         }
         return result + "]";
     }
-    if(moment.isMoment(v)) {
+    if(dayjs.isDayjs(v)) {
         return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('$nat')){
@@ -674,7 +674,7 @@ function toTextQ(v, quote) {
         }
         return result + "";
     }
-    if (moment.isMoment(v)) {
+    if (dayjs.isDayjs(v)) {
         return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('$nat')){
@@ -724,13 +724,7 @@ var QUARTERS = "quarter";
 var YEARS = "year";
 
 function mustBeDate(date) {
-    if (typeof date == "string") {
-        return moment.parseZone(date).utcOffset(utcOffset, false);
-    } else if (date instanceof Date) {
-        return moment(date).utcOffset(utcOffset, false);
-    } else {
-        return date.clone().utcOffset(utcOffset, false);;
-    }
+    return dayjs(date).utc().utcOffset(utcOffset);
 }
 function mustBeDateArray(dateArray) {
 	  dateArray = unboxColl(dateArray).slice(0, collLength(dateArray));
@@ -741,10 +735,10 @@ function mustBeDateArray(dateArray) {
     return newDateArray;
 }
 function mustBeDuration(d) {
-    if (typeof d == "string") {
-        return moment.duration(d);
+    if (typeof d === 'string') {
+        return dayjs.duration(d);
     } else {
-        return d.clone();
+        return d;
     }
 }
 function mustBeUnit(unit) {
@@ -853,17 +847,17 @@ function dateTimeFormatFromString(s) {
   return s;
 }
 function dateTimeFromString(stringDate) {
-    return moment.parseZone(stringDate).utcOffset(utcOffset, false);
+    return dayjs(stringDate).utc().utcOffset(utcOffset);
 }
 
-var minDateTime = moment.parseZone("0001-01-01 00:00:00").utcOffset(utcOffset, false);
-var maxDateTime = moment.parseZone("3268-01-21 23:59:59").utcOffset(utcOffset, false);
+const minDateTime = dayjs.utc('0001-01-01T00:00:00Z');
+const maxDateTime = dayjs.utc('3268-01-21T23:59:59Z');
 function dateTimeMax(v) {
     var v1 = mustBeDateArray(v);
     if (v1.length === 0) {
         return minDateTime;
     } else {
-        return moment.max(v1);
+        return dayjs.max(v1);
     }
 }
 function dateTimeMin(v) {
@@ -871,7 +865,7 @@ function dateTimeMin(v) {
     if (v1.length === 0) {
         return maxDateTime;
     } else {
-        return moment.min(v1);
+        return dayjs.min(v1);
     }
 }
 
@@ -887,7 +881,7 @@ function dateTimeDurationFromString(stringDuration) {
 	      var parts = stringDuration.split("-");
 	      if (parts.length === 2) {
 	          mustBeUnit(parts[1]);
-            return moment.duration(parseFloat(parts[0]),parts[1]+"s");
+            return dayjs.duration(parseFloat(parts[0]),parts[1]+"s");
         }
     }
     throw new Error("Not well formed duration input: " + stringDuration);
@@ -895,23 +889,23 @@ function dateTimeDurationFromString(stringDuration) {
 
 function dateTimeDurationFromSeconds(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'second');
+    return dayjs.duration(num,'second');
 }
 function dateTimeDurationFromMinutes(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'minute');
+    return dayjs.duration(num,'minute');
 }
 function dateTimeDurationFromHours(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'hour');
+    return dayjs.duration(num,'hour');
 }
 function dateTimeDurationFromDays(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'day');
+    return dayjs.duration(num,'day');
 }
 function dateTimeDurationFromWeeks(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'week');
+    return dayjs.duration(num,'week');
 }
 
 function dateTimePeriodFromString(stringDuration) {
@@ -919,23 +913,23 @@ function dateTimePeriodFromString(stringDuration) {
 }
 function dateTimePeriodFromDays(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'day');
+    return dayjs.duration(num,'day');
 }
 function dateTimePeriodFromWeeks(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'week');
+    return dayjs.duration(num,'week');
 }
 function dateTimePeriodFromMonths(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'month');
+    return dayjs.duration(num,'month');
 }
 function dateTimePeriodFromQuarters(v) {
     var num = unboxNat(v);
-    return moment.duration(num * 3,'month');
+    return dayjs.duration(num * 3,'month');
 }
 function dateTimePeriodFromYears(v) {
     var num = unboxNat(v);
-    return moment.duration(num,'year');
+    return dayjs.duration(num,'year');
 }
 
 function dateTimeFormat(date,f) {
@@ -978,9 +972,8 @@ function dateTimeIsAfter(date1, date2) {
 function dateTimeDiff(date1, date2) {
     date1 = mustBeDate(date1);
     date2 = mustBeDate(date2);
-    return moment.duration(date1.diff(date2,'seconds'),'seconds');
+    return dayjs.duration(date1.diff(date2,'seconds'),'seconds');
 }
-
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

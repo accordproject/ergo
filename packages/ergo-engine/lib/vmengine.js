@@ -14,13 +14,18 @@
 
 'use strict';
 
-const Logger = require('@accordproject/ergo-compiler').Logger;
-const Util = require('@accordproject/ergo-compiler').Util;
-const moment = require('moment-mini');
-// Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
-moment.fn.toJSON = Util.momentToJson;
-
+const logger = require('@accordproject/ergo-compiler').Logger;
 const Engine = require('./engine');
+
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
+const quarterOfYear = require('dayjs/plugin/quarterOfYear');
+dayjs.extend(quarterOfYear);
+const minMax = require('dayjs/plugin/minMax');
+dayjs.extend(minMax);
+const duration = require('dayjs/plugin/duration');
+dayjs.extend(duration);
 
 const {
     VM,
@@ -68,11 +73,11 @@ class VMEngine extends Engine {
         const vm = new VM({
             timeout: 1000,
             sandbox: {
-                moment: moment,
-                logger: Logger,
-                utcOffset: utcOffset,
-                now: now,
-                options: options
+                dayjs,
+                logger,
+                utcOffset,
+                now,
+                options
             }
         });
         vm.freeze(context, 'context');

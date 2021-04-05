@@ -14,8 +14,6 @@
 
 'use strict';
 
-const moment = require('moment-mini');
-
 /**
  * boxing collections
  * @param {*} input - the unboxed input
@@ -29,7 +27,7 @@ function boxColl(input) {
             $coll: coll,
             $length: input.length
         };
-    } else if (typeof input === 'object' && !(input instanceof moment)) {
+    } else if (typeof input === 'object' && !(typeof input.isBefore === 'function')) {
         if (Object.prototype.hasOwnProperty.call(input,'$class') &&
             !Object.prototype.hasOwnProperty.call(input,'$data')) {
             const theClass = [input.$class];

@@ -12,8 +12,9 @@
  * limitations under the License.
  */
 
-namespace org.accordproject.base
-abstract asset Asset {  }
-abstract participant Participant {  }
-abstract transaction Transaction {  }
-abstract event Event {  }
+namespace concerto
+abstract concept Concept {}
+abstract concept Asset identified {}
+abstract concept Participant identified {}
+abstract concept Transaction {}
+abstract concept Event {}

@@ -14,13 +14,19 @@
 
 'use strict';
 
-const Util = require('@accordproject/ergo-compiler').Util;
 const logger = require('@accordproject/ergo-compiler').Logger;
-const moment = require('moment-mini');
-// Make sure Moment serialization preserves utcOffset. See https://momentjs.com/docs/#/displaying/as-json/
-moment.fn.toJSON = Util.momentToJson;
-
 const Engine = require('./engine');
+
+// XXX dayjs should be kept in scope for 'eval'
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
+const quarterOfYear = require('dayjs/plugin/quarterOfYear');
+dayjs.extend(quarterOfYear);
+const minMax = require('dayjs/plugin/minMax');
+dayjs.extend(minMax);
+const duration = require('dayjs/plugin/duration');
+dayjs.extend(duration);
 
 /**
  * <p>

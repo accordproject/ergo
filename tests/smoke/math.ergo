@@ -14,7 +14,7 @@
 
 namespace org.accordproject.smoke
 
-import org.accordproject.cicero.runtime.*
+import org.accordproject.runtime.*
 
 define constant PI = 4.0 * atan(1.0)
 

@@ -14,8 +14,8 @@
 
 namespace org.accordproject.promissorynote
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 import org.accordproject.time.*
 import org.accordproject.money.MonetaryAmount
 
@@ -27,7 +27,7 @@ define transaction Result extends Response {
   outstandingBalance : Double
 }
 
-define asset PromissoryNoteContract extends AccordContract {
+define asset PromissoryNoteContract extends ContractData {
   amount : MonetaryAmount,
   date : DateTime,
   maker : String,

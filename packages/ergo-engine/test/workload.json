@@ -13,7 +13,7 @@
     "request": "request.json",
     "state": "state.json",
     "contractName": "org.accordproject.smoke.Smoke",
-    "currentTime": "2019-01-01T16:34:00-05:00",
+    "currentTime": { "now": "2019-01-01T16:34:00-05:00", "offset": -300 },
     "expected": {
       "response": {
         "output": "Smoke.test successful"
@@ -197,7 +197,7 @@
     "contract": "data.json",
     "state": null,
     "contractName": "org.accordproject.helloworldstate.HelloWorldState",
-    "currentTime": "2019-01-01T16:34:00-05:00",
+    "currentTime": { "now": "2019-01-01T16:34:00-05:00", "offset": -300 },
     "expected": {
       "response": null,
       "state": {
@@ -223,7 +223,7 @@
     "state": "state.json",
     "contractName": "org.accordproject.helloworld.HelloWorld",
     "invoke": "helloworld",
-    "currentTime": "2019-01-01T16:34:00-05:00",
+    "currentTime": { "now": "2019-01-01T16:34:00-05:00", "offset": -300 },
     "expected": {
       "response": {
         "$class": "org.accordproject.helloworld.Response",
@@ -283,7 +283,7 @@
     "state": "state.json",
     "contractName": "org.accordproject.helloworld.HelloWorld",
     "invoke": "helloworld",
-    "currentTime": "2019-01-01T16:34:00-05:00",
+    "currentTime": { "now": "2019-01-01T16:34:00-05:00", "offset": -300 },
     "expected": {
       "error": "Parse error (at file ../../../tests/bad-logic/logic/logic.ergo line 17 col 20). \ncontract HelloWorld ovr TemplateModel {\n                    ^^^                "
     }
@@ -324,7 +324,7 @@
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
     "calculate": "interests",
-    "currentTime": "2019-01-01T16:34:00-05:00",
+    "currentTime": { "now": "2019-01-01T16:34:00-05:00", "offset": -300 },
     "expected": {
       "response": "667.0"
     }
@@ -345,7 +345,7 @@
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
     "calculate": "interests",
-    "currentTime": "2019-01-01T16:34:00-05:00",
+    "currentTime": { "now": "2019-01-01T16:34:00-05:00", "offset": -300 },
     "expected": {
       "response": "£2,886.0 (GBP)"
     }
@@ -361,7 +361,7 @@
     "state": "state.json",
     "contractName": "org.accordproject.interests.Interests",
     "invoke": "toText",
-    "currentTime": "2019-01-01T16:34:00-05:00",
+    "currentTime": { "now": "2019-01-01T16:34:00-05:00", "offset": -300 },
     "expected": {
       "response": "\nThis is a fixed interest loan to the amount of 100000.0\nat the yearly interest rate of 2.5%\nwith a loan term of 15,\nand monthly payments of 667.0\n"
     }

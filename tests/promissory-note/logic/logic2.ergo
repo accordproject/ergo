@@ -14,7 +14,7 @@
 
 namespace org.accordproject.promissorynote
 
-import org.accordproject.cicero.runtime.*
+import org.accordproject.runtime.*
 import org.accordproject.time.*
 
 define function compoundInterestMultiple(annualInterest : Double, numberOfDays : Long) : Double {

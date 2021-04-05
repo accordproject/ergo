@@ -14,7 +14,7 @@
 
 namespace org.accordproject.helloworld
 
-import org.accordproject.cicero.contract.*
+import org.accordproject.contract.*
 
 transaction Request {
   o String input
@@ -58,7 +58,7 @@ concept Clause2 {
   o String name
 }
 
-asset TemplateModel extends AccordContract {
+asset TemplateModel extends ContractData {
   /**
    * The name for the contract
    */

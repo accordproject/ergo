@@ -183,7 +183,7 @@ function buildOCaml(modelManager, output, clean) {
  */
 async function process(dir, workload, clean = false) {
     const ctoFiles = workload.models;
-    const modelManager = await ModelLoader.loadModelManager(null, ctoFiles);
+    const modelManager = await ModelLoader.loadModelManager(ctoFiles);
     if (workload.output) {
         buildExternal(modelManager, path.join(dir,workload.output), clean);
     }

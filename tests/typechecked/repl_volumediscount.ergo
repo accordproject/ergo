@@ -14,10 +14,10 @@
 
 namespace org.accordproject.volumediscount
 
-import org.accordproject.cicero.contract.*
-import org.accordproject.cicero.runtime.*
+import org.accordproject.contract.*
+import org.accordproject.runtime.*
 
-define asset VolumeDiscountContract extends AccordContract {
+define asset VolumeDiscountContract extends ContractData {
   firstVolume : Double,
   secondVolume : Double,
   firstRate : Double,

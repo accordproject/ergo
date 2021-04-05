@@ -32,13 +32,13 @@ all:
 %.ctoj: %.cto
 	./scripts/cto2ctoj.js parse $<
 
-compiler/lib/resources.ml: compiler/stdlib/accordproject.ctoj \
+compiler/lib/resources.ml: compiler/stdlib/concerto.ctoj \
                            compiler/stdlib/stdlib.ergo \
                            compiler/stdlib/etime.ergo \
                            compiler/stdlib/template.ergo \
                            runtimes/javascript/ergo-runtime.js
 	echo '(* generated ocaml file *)' > compiler/lib/resources.ml
-	(for i in accordproject; do \
+	(for i in concerto; do \
          echo "let $$i = {xxx|"; \
          cat compiler/stdlib/$$i.ctoj; \
          echo "|xxx}"; \

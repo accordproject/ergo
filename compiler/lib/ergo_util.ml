@@ -302,24 +302,24 @@ let module_import_name decl =
   end
 
 let ocaml_accordproject_stdlib_namespace = Util.string_of_char_list accordproject_stdlib_namespace
-let ocaml_accordproject_base_namespace = Util.string_of_char_list accordproject_base_namespace
+let ocaml_accordproject_concerto_namespace = Util.string_of_char_list accordproject_concerto_namespace
 let module_imports label_name decls =
   if label_name = ocaml_accordproject_stdlib_namespace
   then
-    (CTOLabel ocaml_accordproject_base_namespace)
+    (CTOLabel ocaml_accordproject_concerto_namespace)
     :: List.concat (List.map module_import_name decls)
   else
-    (CTOLabel ocaml_accordproject_base_namespace)
+    (CTOLabel ocaml_accordproject_concerto_namespace)
     :: (CTOLabel label_name)
     :: (ErgoLabel ocaml_accordproject_stdlib_namespace)
     :: List.concat (List.map module_import_name decls)
 
 let cto_imports label_name decls =
-  if label_name = ocaml_accordproject_base_namespace
+  if label_name = ocaml_accordproject_concerto_namespace
   then
     List.concat (List.map import_cto_name decls)
   else
-    (CTOLabel ocaml_accordproject_base_namespace)
+    (CTOLabel ocaml_accordproject_concerto_namespace)
     :: List.concat (List.map import_cto_name decls)
 
 let lookup_inputs_from_label all_inputs label =
