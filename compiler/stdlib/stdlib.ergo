@@ -129,11 +129,11 @@ define function containsAll(l1:Any[], l2:Any[]) : Boolean {
   return arraySubtract(l1,l2) = []
 }
 
-define transaction ErgoErrorResponse extends ErrorResponse{
+define concept Error{
   message : String
 }
-define function failure(x:String) : ErgoErrorResponse {
-  return ErgoErrorResponse{
+define function failure(x:String) : Error {
+  return Error{
     message: x
   }
 }

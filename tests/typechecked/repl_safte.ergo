@@ -18,7 +18,7 @@ import org.accordproject.contract.*
 import org.accordproject.runtime.*
 
 // Contract parameters
-define asset SafteContract extends ContractData {
+define asset SafteContract extends Contract {
   companyName : String,
   purchaser : String,
   purchaseAmount : Double,
@@ -32,7 +32,7 @@ define asset SafteContract extends ContractData {
 define enum SafteStatus {
   PENDING, EXECUTED
 }
-define asset SafteState extends ContractState {
+define asset SafteState extends State {
   status : SafteStatus
 }
 

@@ -1,1 +1,1 @@
-{ "$class": "org.accordproject.runtime.ContractState" }
+{ "$class": "org.accordproject.runtime.State" }

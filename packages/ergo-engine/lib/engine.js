@@ -210,7 +210,7 @@ class Engine {
      */
     init(logic, contractId, contract, params, currentTime, utcOffset, options) {
         const defaultState = {
-            '$class':'org.accordproject.runtime.ContractState'
+            '$class':'org.accordproject.runtime.State'
         };
         return this.invoke(logic, contractId, 'init', contract, params, defaultState, currentTime, utcOffset, options, null);
     }
@@ -230,7 +230,7 @@ class Engine {
         options = options || {};
 
         const defaultState = {
-            '$class':'org.accordproject.runtime.ContractState'
+            '$class':'org.accordproject.runtime.State'
         };
         return this.invoke(logic, contractId, name, contract, {}, defaultState, currentTime, utcOffset, options, {convertResourcesToId: true});
     }

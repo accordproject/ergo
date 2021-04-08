@@ -37,14 +37,14 @@ define event PaymentObligation extends MyObligation {
    amount : Double
 }
 
-define asset InstallmentSaleState extends ContractState {
+define asset InstallmentSaleState extends State {
   status : String,
   balance_remaining : Double,
   next_payment_month : Integer,
   total_paid : Double
 }
 
-define asset InstallmentSaleContract extends ContractData {
+define asset InstallmentSaleContract extends Contract {
   BUYER : String,
   SELLER : String,
   INITIAL_DUE : Double,

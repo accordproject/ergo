@@ -28,7 +28,7 @@ concept RateRange {
  o Double rate
 }
 
-asset VolumeDiscountContract extends ContractData {
+asset VolumeDiscountContract extends Contract {
   o RateRange[] rates
 }
 

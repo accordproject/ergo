@@ -22,7 +22,7 @@ import org.accordproject.runtime.*
  * This defines the structure of the abstract syntax tree that the parser for the template
  * must generate from input source text.
  */
-asset VolumeDiscountContract extends ContractData {
+asset VolumeDiscountContract extends Contract {
   /**
    * First volume
    */

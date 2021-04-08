@@ -97,20 +97,20 @@ Section Names.
 
     (* Accord Project common types *)
     Definition default_contract_absolute_name : string :=
-      absolute_name_of_local_name accordproject_contract_namespace "ContractData".
+      absolute_name_of_local_name accordproject_contract_namespace "Contract".
     Definition default_clause_absolute_name : string :=
-      absolute_name_of_local_name accordproject_contract_namespace "ClauseData".
+      absolute_name_of_local_name accordproject_contract_namespace "Clause".
 
     Definition default_request_absolute_name : string :=
       absolute_name_of_local_name accordproject_runtime_namespace "Request".
     Definition default_response_absolute_name : string :=
       absolute_name_of_local_name accordproject_runtime_namespace "Response".
     Definition default_state_absolute_name : string :=
-      absolute_name_of_local_name accordproject_runtime_namespace "ContractState".
+      absolute_name_of_local_name accordproject_runtime_namespace "State".
 
     (* Ergo types *)
     Definition default_error_absolute_name : string :=
-      absolute_name_of_local_name accordproject_stdlib_namespace "ErgoErrorResponse".
+      absolute_name_of_local_name accordproject_stdlib_namespace "Error".
     Definition default_options : string :=
       absolute_name_of_local_name accordproject_options_namespace "Options".
 

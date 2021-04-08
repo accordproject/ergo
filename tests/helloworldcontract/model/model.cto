@@ -58,7 +58,7 @@ concept Clause2 {
   o String name
 }
 
-asset TemplateModel extends ContractData {
+asset TemplateModel extends Contract {
   /**
    * The name for the contract
    */
