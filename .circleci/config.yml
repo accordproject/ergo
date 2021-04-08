@@ -83,9 +83,20 @@ jobs:
       - NJOBS: 2
       - NPM_CONFIG_PREFIX: "~/.npm-global"
     <<: *common_steps
+  4.11.2:
+    docker:
+    - image: circleci/openjdk:8-jdk
+    environment:
+      - TERM: dumb
+      - OCAML_VERSION: "4.11.2"
+      - CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+      - NJOBS: 2
+      - NPM_CONFIG_PREFIX: "~/.npm-global"
+    <<: *common_steps
 
 workflows:
   version: 2
   build-deploy:
     jobs:
+      - 4.11.2
       - 4.09.1
