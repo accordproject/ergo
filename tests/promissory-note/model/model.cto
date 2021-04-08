@@ -30,7 +30,7 @@ transaction Result extends Response {
 /**
  * The template model
  */
-asset PromissoryNoteContract extends ContractData {
+asset PromissoryNoteContract extends Contract {
   o MonetaryAmount amount
   o DateTime date
   o String maker

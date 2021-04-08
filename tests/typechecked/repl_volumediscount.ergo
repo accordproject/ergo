@@ -17,7 +17,7 @@ namespace org.accordproject.volumediscount
 import org.accordproject.contract.*
 import org.accordproject.runtime.*
 
-define asset VolumeDiscountContract extends ContractData {
+define asset VolumeDiscountContract extends Contract {
   firstVolume : Double,
   secondVolume : Double,
   firstRate : Double,

@@ -27,7 +27,7 @@ define transaction Result extends Response {
   outstandingBalance : Double
 }
 
-define asset PromissoryNoteContract extends ContractData {
+define asset PromissoryNoteContract extends Contract {
   amount : MonetaryAmount,
   date : DateTime,
   maker : String,

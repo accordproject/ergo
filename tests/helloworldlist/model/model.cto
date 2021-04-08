@@ -44,7 +44,7 @@ concept Item {
 }
 
 @AccordTemplateModel("helloworld")
-asset TemplateModel extends ContractData {
+asset TemplateModel extends Contract {
   /**
    * The name for the contract
    */

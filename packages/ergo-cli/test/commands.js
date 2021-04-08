@@ -41,7 +41,7 @@ describe('#triggerhello', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworldErr', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'helloworldErr', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworldErr', 'state.json') };
-        return Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
+        return Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
     });
     it('should throw when executing a request to a smart Ergo contract without its cto', async function () {
         const ergoPath = Path.join(TESTS_DIR, 'helloworld', 'logic/logic.ergo');
@@ -171,7 +171,7 @@ describe('#invokehelloworld', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'helloworld', 'params.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld', 'state.json') };
-        return Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
+        return Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
     });
     it('should invoke a clause in a smart Ergo contract (JSON parameters)', async function () {
         const ergoPath = Path.join(TESTS_DIR, 'helloworld3', 'logic/logic3.ergo');
@@ -220,7 +220,7 @@ describe('#initinstallmentsale', function () {
         const ctoPath = Path.join(TESTS_DIR, 'installment-sale', 'model/modelErr.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'params.json') };
-        return Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/installment-sale/model/modelErr.cto line 15 column 1');
+        return Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/installment-sale/model/modelErr.cto line 15 column 1');
     });
     it('should throw when initializing a smart Ergo clause without a cto', async function () {
         const ergoPath = Path.join(TESTS_DIR, 'installment-sale', 'logic/logic.ergo');

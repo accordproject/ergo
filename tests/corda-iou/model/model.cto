@@ -22,7 +22,7 @@ transaction IOURequest extends Request {
   o Integer value
 }
 
-asset IOUContractModel extends ContractData {
+asset IOUContractModel extends Contract {
   o String lender
   o String borrower
   o Integer value

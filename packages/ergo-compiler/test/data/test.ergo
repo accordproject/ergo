@@ -15,11 +15,11 @@ define event Greeting {
   message: String
 }
 
-define asset HelloWorldState extends ContractState {
+define asset HelloWorldState extends State {
   counter: Double
 }
 
-define asset TemplateModel extends ClauseData {
+define asset TemplateModel extends Clause {
   name: String
 }
 

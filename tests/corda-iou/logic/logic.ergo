@@ -20,9 +20,9 @@ contract IOUContract over IOUContractModel {
   clause verify(request : IOURequest) : Response {
     // IOU-sepcific contraints
     enforce contract.lender != contract.borrower else
-      throw ErgoErrorResponse{ message: "The lender and the borrower cannot be the same entity." };
+      throw Error{ message: "The lender and the borrower cannot be the same entity." };
     enforce request.value > 0 else
-      throw ErgoErrorResponse{ message: "The IOU's value must be non-negative." };
+      throw Error{ message: "The IOU's value must be non-negative." };
 
     return Response{}
   }

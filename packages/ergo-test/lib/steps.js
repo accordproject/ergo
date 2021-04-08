@@ -26,6 +26,11 @@ const Util = require('./util');
 
 const { Before, Given, When, Then } = require('cucumber');
 
+// Defaults
+const defaultState = {
+    '$class':'org.accordproject.runtime.State'
+};
+
 /**
  * Invoke Ergo contract initialization
  *
@@ -56,11 +61,6 @@ function init(engine,logicManager,contractJson,currentTime,utcOffset) {
 function trigger(engine,logicManager,contractJson,stateJson,currentTime,utcOffset,requestJson) {
     return engine.compileAndTrigger(logicManager,contractJson,requestJson,stateJson,currentTime,utcOffset);
 }
-
-// Defaults
-const defaultState = {
-    '$class':'org.accordproject.runtime.ContractState'
-};
 
 Before(function () {
     this.engine = new Engine();

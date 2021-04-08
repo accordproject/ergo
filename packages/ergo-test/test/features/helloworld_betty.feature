@@ -30,7 +30,7 @@ Feature: Betty Buyer's Hello World
     And the new state of the contract should be
 """
 {
-  "$class":"org.accordproject.runtime.ContractState"
+  "$class":"org.accordproject.runtime.State"
 }
 """
 

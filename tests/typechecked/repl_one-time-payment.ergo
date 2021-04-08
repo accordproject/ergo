@@ -30,11 +30,11 @@ define enum ContractLifecycleStatus {
   COMPLETED
 }
 
-define asset OneTimePaymentState extends ContractState {
+define asset OneTimePaymentState extends State {
   status : ContractLifecycleStatus
 }
 
-define asset OneTimePaymentContract extends ContractData {
+define asset OneTimePaymentContract extends Contract {
   buyer : AccordParty,
   seller : AccordParty,
   initialAmount : MonetaryAmount
