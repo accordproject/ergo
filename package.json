@@ -4,20 +4,13 @@
   "version": "0.21.9",
   "scripts": {
     "postinstall": "npm run models:get && lerna bootstrap",
-    "prepare": "npm run pkgcheck",
     "models:get": "node ./scripts/external/getExternalModels.js",
     "models:clean": "node ./scripts/external/cleanExternalModels.js",
-    "pretest": "npm run depcheck && npm run licchk",
+    "pretest": "npm run licchk",
     "test": "lerna run test:cov",
     "coverage": "istanbul-combine -d coverage -r lcov packages/ergo-cli/coverage/*.json packages/ergo-compiler/coverage/*.json  packages/ergo-engine/coverage/*.json && cat ./coverage/lcov.info",
-    "publish": "./scripts/manualrelease.sh",
     "repoclean": "lerna clean",
-    "licchk": "license-check-and-add",
-    "pkgcheck": "node ./scripts/pkgcheck.js",
-    "pkgstamp": "node ./scripts/pkgstamp.js",
-    "pkgbump": "node ./scripts/pkgbump.js && node ./scripts/pkgcheck.js --fix",
-    "pkgset": "node ./scripts/pkgset.js",
-    "depcheck": "node ./scripts/depcheck.js"
+    "licchk": "license-check-and-add"
   },
   "repository": {
     "type": "git",
