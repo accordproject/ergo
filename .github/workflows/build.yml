@@ -83,7 +83,7 @@ jobs:
           node-version: 14.x
     
       - name: Build
-        run: npx lerna bootstrap
+        run: npm ci
 
       - name: timestamp
         id: timestamp
