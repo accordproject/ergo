@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-engine",
-  "version": "0.21.9",
+  "version": "0.22.0-alpha.1",
   "description": "Ergo Engine",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "index.browser.js"
   ],
   "dependencies": {
-    "@accordproject/ergo-compiler": "0.21.9",
+    "@accordproject/ergo-compiler": "0.22.0-alpha.1",
     "dayjs": "1.10.4",
     "vm2": "3.5.0"
   },
