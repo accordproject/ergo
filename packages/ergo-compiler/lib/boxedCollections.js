@@ -27,7 +27,7 @@ function boxColl(input) {
             $coll: coll,
             $length: input.length
         };
-    } else if (typeof input === 'object' && !(typeof input.isBefore === 'function')) {
+    } else if (input && typeof input === 'object' && !(typeof input.isBefore === 'function')) {
         if (Object.prototype.hasOwnProperty.call(input,'$class') &&
             !Object.prototype.hasOwnProperty.call(input,'$data')) {
             const theClass = [input.$class];
