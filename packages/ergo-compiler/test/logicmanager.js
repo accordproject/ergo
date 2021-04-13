@@ -58,16 +58,28 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('es6');
             logicManager.addModelFile(ctoSample,'test.cto');
             const modelManager = logicManager.getModelManager();
-            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
-            modelManager.getModels()[0].content.length.should.equal(175);
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.contract.cto',
+                '@org.accordproject.runtime.cto',
+                'test.cto'
+            ]);
+            modelManager.getModels()[4].content.length.should.equal(175);
         });
 
         it('should load a model to the model manager (bulk)', () => {
             const logicManager = new LogicManager('es6');
             logicManager.addModelFiles([ctoSample],['test.cto']);
             const modelManager = logicManager.getModelManager();
-            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
-            modelManager.getModels()[0].content.length.should.equal(175);
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.contract.cto',
+                '@org.accordproject.runtime.cto',
+                'test.cto'
+            ]);
+            modelManager.getModels()[4].content.length.should.equal(175);
         });
 
         it('should load a logic file to the script manager', () => {
@@ -194,7 +206,6 @@ describe('LogicManager', () => {
 
         it('should load a logic file to the script manager (with Ergo builtin)', () => {
             const logicManager = new LogicManager('es6');
-            logicManager.addErgoBuiltin();
             logicManager.addLogicFile(ergoSample,'test3.ergo');
             logicManager.compileLogicSync(false);
             logicManager.getInvokeCall('helloworld').length.should.equal(231);
@@ -268,8 +279,14 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('es6');
             const modelManager = logicManager.getModelManager();
             modelManager.addModelFile(ctoSample,null,true);
-            modelManager.getModels().map(x => x.name).should.deep.equal(['org.accordproject.copyrightlicense.cto']);
-            modelManager.getModels()[0].content.length.should.equal(175);
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.contract.cto',
+                '@org.accordproject.runtime.cto',
+                'org.accordproject.copyrightlicense.cto'
+            ]);
+            modelManager.getModels()[4].content.length.should.equal(175);
         });
     });
 
@@ -385,22 +402,47 @@ describe('LogicManager', () => {
         it('should update a model to the model manager', () => {
             const modelManager = logicManager.getModelManager();
             logicManager.updateModel(ctoSample,'test.cto');
-            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
-            modelManager.getModels()[0].content.length.should.equal(175);
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.contract.cto',
+                '@org.accordproject.runtime.cto',
+                'test.cto'
+            ]);
+            modelManager.getModels()[4].content.length.should.equal(175);
             logicManager.updateModel(ctoSample3,'test.cto');
-            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
-            modelManager.getModels()[0].content.length.should.equal(369);
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.contract.cto',
+                '@org.accordproject.runtime.cto',
+                'test.cto'
+            ]);
+            modelManager.getModels()[4].content.length.should.equal(369);
             logicManager.updateModel(ctoSample2,'test.cto');
-            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto']);
-            modelManager.getModels()[0].content.length.should.equal(173);
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.contract.cto',
+                '@org.accordproject.runtime.cto',
+                'test.cto'
+            ]);
+            modelManager.getModels()[4].content.length.should.equal(173);
         });
 
         it('should add a model to the model manager', () => {
             const modelManager = logicManager.getModelManager();
             logicManager.updateModel(ctoSample2,'test2.cto');
-            modelManager.getModels().map(x => x.name).should.deep.equal(['test.cto','test2.cto']);
-            modelManager.getModels()[0].content.length.should.equal(175);
-            modelManager.getModels()[1].content.length.should.equal(173);
+            modelManager.getModels().map(x => x.name).should.deep.equal([
+                '@org.accordproject.time.cto',
+                '@org.accordproject.money.cto',
+                '@org.accordproject.contract.cto',
+                '@org.accordproject.runtime.cto',
+                'test.cto',
+                'test2.cto'
+            ]);
+            modelManager.getModels()[4].content.length.should.equal(175);
+            modelManager.getModels()[5].content.length.should.equal(173);
         });
 
         it('should update a logic file in the script manager', () => {

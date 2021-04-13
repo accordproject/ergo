@@ -25,7 +25,6 @@ const APModelManager = require('../lib/apmodelmanager');
 const Script = require('./script');
 const ScriptManager = require('../lib/scriptmanager');
 const ErgoCompiler = require('./compiler');
-const Builtin = require('./builtin');
 const boxedCollections = require('./boxedCollections');
 
 /**
@@ -47,6 +46,7 @@ class LogicManager {
         this.target = target;
         this.contractName = null;
         this.modelManager = new APModelManager();
+        this.builtInNamespaces = this.modelManager.getNamespaces();
         this.scriptManager = new ScriptManager(this.target, this.modelManager, options);
         this.introspector = new Introspector(this.modelManager);
         this.factory = new Factory(this.modelManager);
@@ -206,12 +206,17 @@ unwrapError(__result);
 
     /**
      * Adds a model file (as a string) to the TemplateLogic.
-     * @param {string} modelFile - The model file as a string
+     * @param {string} modelFileContent - The model file content as a string
      * @param {string} fileName - an optional file name to associate with the model file
      */
-    addModelFile(modelFile, fileName) {
+    addModelFile(modelFileContent, fileName) {
         this.validated = false;
-        this.getModelManager().addModelFile(modelFile,slash(fileName),true);
+        const modelManager = this.getModelManager();
+        const name = slash(fileName);
+        const modelFile = new ModelFile(modelManager, modelFileContent, name);
+        if (!this.builtInNamespaces.includes(modelFile.getNamespace())) {
+            modelManager.addModelFile(modelFile,name,true);
+        }
     }
 
     /**
@@ -223,7 +228,11 @@ unwrapError(__result);
      */
     addModelFiles(modelFiles, modelFileNames) {
         this.validated = false;
-        this.getModelManager().addModelFiles(modelFiles, modelFileNames.map(name => slash(name)), true);
+        modelFiles.map((modelFileContent, index) => {
+            const modelFileName = slash(modelFileNames[index]);
+            this.addModelFile(modelFileContent, modelFileName);
+        });
+        // this.getModelManager().addModelFiles(modelFiles, modelFileNames.map(name => slash(name)), true);
     }
 
     /**
@@ -276,17 +285,6 @@ unwrapError(__result);
         } catch (error) {
             return Promise.reject(error);
         }
-    }
-
-    /**
-     * Add Ergo built-in models
-     */
-    addErgoBuiltin() {
-        this.addModelFile(Builtin.TimeModel, '@org.accordproject.time.cto');
-        this.addModelFile(Builtin.MoneyModel, '@org.accordproject.money.cto');
-        this.addModelFile(Builtin.ContractModel, '@org.accordproject.contract.cto');
-        this.addModelFile(Builtin.RuntimeModel, '@org.accordproject.runtime.cto');
-        this.validateModelFiles();
     }
 
     /**

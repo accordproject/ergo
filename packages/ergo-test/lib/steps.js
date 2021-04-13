@@ -69,7 +69,6 @@ Before(function () {
     this.utcOffset = 0;
     this.logicManager = new LogicManager('es6', null);
     this.state = defaultState;
-    this.logicManager.addErgoBuiltin();
 });
 
 Given('the target platform {string}', function (target) {
