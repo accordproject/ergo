@@ -97,7 +97,6 @@ function runWorkload(Engine, target) {
     beforeEach(async function () {
         engine = new Engine();
         logicManager = new LogicManager(target, null);
-        logicManager.addErgoBuiltin();
     });
 
     afterEach(() => {});

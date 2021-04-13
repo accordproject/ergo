@@ -35,7 +35,6 @@ async function fromDirectory(path, options) {
     }
 
     const logicManager = new LogicManager('es6', options);
-    logicManager.addErgoBuiltin();
 
     const ctoFiles = await FileLoader.loadFilesContents(path, /model[/\\].*\.cto$/);
     ctoFiles.forEach((file) => {
@@ -78,7 +77,6 @@ async function fromZip(buffer, options) {
 
     const zip = await JSZip.loadAsync(buffer);
     const logicManager = new LogicManager('es6', options);
-    logicManager.addErgoBuiltin();
 
     const ctoFiles = await FileLoader.loadZipFilesContents(zip, /model[/\\].*\.cto$/);
     ctoFiles.forEach((file) => {
@@ -117,7 +115,6 @@ async function fromFiles(files, options) {
     }
 
     const logicManager = new LogicManager('es6', options);
-    logicManager.addErgoBuiltin();
 
     let modelPaths = [];
     let logicPaths = [];
