@@ -1,7 +1,7 @@
 {
   "name": "@accordproject/ergo",
   "description": "The Ergo Language for Smart Legal Contracts",
-  "version": "0.22.0-alpha.3",
+  "version": "0.22.0-alpha.4",
   "scripts": {
     "postinstall": "npm run models:get && lerna bootstrap",
     "models:get": "node ./scripts/external/getExternalModels.js",

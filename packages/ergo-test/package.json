@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-test",
-  "version": "0.22.0-alpha.3",
+  "version": "0.22.0-alpha.4",
   "description": "Ergo Test",
   "repository": {
     "type": "git",
@@ -29,8 +29,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/ergo-compiler": "0.22.0-alpha.3",
-    "@accordproject/ergo-engine": "0.22.0-alpha.3",
+    "@accordproject/ergo-compiler": "0.22.0-alpha.4",
+    "@accordproject/ergo-engine": "0.22.0-alpha.4",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-things": "0.2.0",
