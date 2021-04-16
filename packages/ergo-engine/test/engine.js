@@ -24,3 +24,4 @@ describe('#evalengine', () => {
         (() => engine.runVMScriptCall(2,{ a : 1 },'function f() { return context.a + utcOffset; }','f()')).should.throw('[runVMScriptCall] Cannot execute Engine: instantiate either VMEngine or EvalEngine');
     });
 });
+
