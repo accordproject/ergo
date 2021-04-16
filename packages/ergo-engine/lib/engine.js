@@ -117,29 +117,40 @@ class Engine {
         Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
 
         const script = this.cacheJsScript(logic.getScriptManager(), contractId);
-        const callScript = logic.getDispatchCall();
+        if(script.code === ''){
+            const answer = {
+                'clause': contractId,
+                'request': request, // Keep the original request
+                'response': {},
+                'state': {},
+                'emit': [],
+            };
+            return answer;
+        }else{
+            const callScript = logic.getDispatchCall();
 
-        const context = {
-            data: validContract.serialized,
-            state: validState,
-            request: validRequest
-        };
+            const context = {
+                data: validContract.serialized,
+                state: validState,
+                request: validRequest
+            };
 
-        // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
+            // execute the logic
+            const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
 
-        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
+            const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
+            const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
+            const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
 
-        const answer = {
-            'clause': contractId,
-            'request': request, // Keep the original request
-            'response': validResponse,
-            'state': validNewState,
-            'emit': validEmit,
-        };
-        return answer;
+            const answer = {
+                'clause': contractId,
+                'request': request, // Keep the original request
+                'response': validResponse,
+                'state': validNewState,
+                'emit': validEmit,
+            };
+            return answer;
+        }
     }
 
     /**
@@ -172,30 +183,40 @@ class Engine {
         const validState = logic.validateInput(state); // ensure the state is valid
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
-
         const script = this.cacheJsScript(logic.getScriptManager(), contractId);
-        const callScript = logic.getInvokeCall(clauseName);
-        const context = {
-            data: validContract.serialized,
-            state: validState,
-            params: validParams
-        };
-
-        // execute the logic
-        const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
-
-        const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
-
-        const answer = {
-            'clause': contractId,
-            'params': params, // Keep the original params
-            'response': validResponse,
-            'state': validNewState,
-            'emit': validEmit,
-        };
-        return answer;
+        if(script.code === ''){
+            const answer = {
+                'clause': contractId,
+                'params': params, // Keep the original params
+                'response': {},
+                'state': {},
+                'emit': [],
+            };
+            return answer;
+        }else{
+            const callScript = logic.getInvokeCall(clauseName);
+            const context = {
+                data: validContract.serialized,
+                state: validState,
+                params: validParams
+            };
+    
+            // execute the logic
+            const result = this.runVMScriptCall(utcOffset,now,validOptions,context,script,callScript);
+    
+            const validResponse = logic.validateOutput(result.__response); // ensure the response is valid
+            const validNewState = logic.validateOutput(result.__state); // ensure the new state is valid
+            const validEmit = logic.validateOutputArray(result.__emit); // ensure all the emits are valid
+    
+            const answer = {
+                'clause': contractId,
+                'params': params, // Keep the original params
+                'response': validResponse,
+                'state': validNewState,
+                'emit': validEmit,
+            };
+            return answer;
+        }
     }
 
     /**

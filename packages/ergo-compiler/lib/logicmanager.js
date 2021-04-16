@@ -316,6 +316,8 @@ unwrapError(__result);
      * @return {object} the validated input
      */
     validateInput(input) {
+        if(JSON.stringify(input) === '{}') { return {}; }
+        
         const serializer = this.getSerializer();
 
         if (input === null) { return null; }

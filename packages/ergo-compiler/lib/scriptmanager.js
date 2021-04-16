@@ -252,11 +252,11 @@ class ScriptManager {
     getCompiledJavaScript() {
         const compiledScript = this.compiledScript;
         let allJsScripts = '';
-
+        
         if (compiledScript) {
             allJsScripts += compiledScript.getContents();
         } else {
-            throw new Error('Did not find any compiled JavaScript logic');
+            return allJsScripts
         }
 
         return allJsScripts;
