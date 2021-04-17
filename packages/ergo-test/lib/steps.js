@@ -99,7 +99,7 @@ Given('the Ergo logic in file {string}', function(paramFile) {
 Given('the model in file {string}', function(paramFile) {
     const fileName = Path.resolve(this.rootdir, paramFile);
     const modelFile = Fs.readFileSync(fileName, 'utf8');
-    this.logicManager.addModelFile(modelFile,paramFile);
+    this.logicManager.getModelManager().addAPModelFile(modelFile,paramFile);
 });
 
 Given('the contract data', function (actualContract) {

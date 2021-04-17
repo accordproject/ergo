@@ -16,16 +16,11 @@
 
 const slash = require('slash');
 
-const Factory = require('@accordproject/concerto-core').Factory;
 const Introspector = require('@accordproject/concerto-core').Introspector;
-const Serializer = require('@accordproject/concerto-core').Serializer;
-const ResourceValidator = require('@accordproject/concerto-core/lib/serializer/resourcevalidator');
-const ModelFile = require('@accordproject/concerto-core').ModelFile;
 const APModelManager = require('../lib/apmodelmanager');
 const Script = require('./script');
 const ScriptManager = require('../lib/scriptmanager');
 const ErgoCompiler = require('./compiler');
-const boxedCollections = require('./boxedCollections');
 
 /**
  * Packages the logic for a legal clause or contract template and a given target platform. This includes the model, Ergo logic and compiled version of that logic when required.
@@ -46,12 +41,8 @@ class LogicManager {
         this.target = target;
         this.contractName = null;
         this.modelManager = new APModelManager();
-        this.builtInNamespaces = this.modelManager.getNamespaces();
         this.scriptManager = new ScriptManager(this.target, this.modelManager, options);
         this.introspector = new Introspector(this.modelManager);
-        this.factory = new Factory(this.modelManager);
-        this.serializer = new Serializer(this.factory, this.modelManager);
-        this.validated = false;
     }
 
     /**
@@ -143,24 +134,6 @@ unwrapError(__result);
     }
 
     /**
-     * Provides access to the Factory for this TemplateLogic. The Factory
-     * is used to create the types defined in this TemplateLogic.
-     * @return {Factory} the Factory for this TemplateLogic
-     */
-    getFactory() {
-        return this.factory;
-    }
-
-    /**
-     * Provides access to the Serializer for this TemplateLogic. The Serializer
-     * is used to serialize instances of the types defined within this TemplateLogic.
-     * @return {Serializer} the Serializer for this TemplateLogic
-     */
-    getSerializer() {
-        return this.serializer;
-    }
-
-    /**
      * Provides access to the ScriptManager for this TemplateLogic. The ScriptManager
      * manage access to the scripts that have been defined within this TemplateLogic.
      * @return {ScriptManager} the ScriptManager for this TemplateLogic
@@ -205,47 +178,6 @@ unwrapError(__result);
     }
 
     /**
-     * Adds a model file (as a string) to the TemplateLogic.
-     * @param {string} modelFileContent - The model file content as a string
-     * @param {string} fileName - an optional file name to associate with the model file
-     */
-    addModelFile(modelFileContent, fileName) {
-        this.validated = false;
-        const modelManager = this.getModelManager();
-        const name = slash(fileName);
-        const modelFile = new ModelFile(modelManager, modelFileContent, name);
-        if (!this.builtInNamespaces.includes(modelFile.getNamespace())) {
-            modelManager.addModelFile(modelFile,name,true);
-        }
-    }
-
-    /**
-     * Add a set of model files to the TemplateLogic
-     * @param {string[]} modelFiles - An array of Composer files as
-     * strings.
-     * @param {string[]} [modelFileNames] - An optional array of file names to
-     * associate with the model files
-     */
-    addModelFiles(modelFiles, modelFileNames) {
-        this.validated = false;
-        modelFiles.map((modelFileContent, index) => {
-            const modelFileName = slash(modelFileNames[index]);
-            this.addModelFile(modelFileContent, modelFileName);
-        });
-        // this.getModelManager().addModelFiles(modelFiles, modelFileNames.map(name => slash(name)), true);
-    }
-
-    /**
-     * Validate model files
-     */
-    validateModelFiles() {
-        if (!this.validated) {
-            this.getModelManager().validateModelFiles();
-            this.validated = true;
-        }
-    }
-
-    /**
      * Register compiled logic
      */
     registerCompiledLogicSync() {
@@ -265,7 +197,7 @@ unwrapError(__result);
      * @return {object} The script compiled to JavaScript
      */
     compileLogicSync(force) {
-        this.validateModelFiles();
+        this.getModelManager().validateModelFiles();
         const script = this.getScriptManager().compileLogic(force);
         if (script && script.getContractName()) {
             this.setContractName(script.getContractName());
@@ -284,130 +216,6 @@ unwrapError(__result);
             return Promise.resolve(undefined);
         } catch (error) {
             return Promise.reject(error);
-        }
-    }
-
-    /**
-     * Validate input JSON
-     * @param {object} input - the input JSON
-     * @param {number} utcOffset - UTC Offset for DateTime values
-     * @return {object} the validated input
-     */
-    validateInput(input, utcOffset) {
-        const serializer = this.getSerializer();
-
-        if (input === null) { return null; }
-
-        // ensure the input is valid
-        const validInput = serializer.fromJSON(input, {validate: false, acceptResourcesForRelationships: true, utcOffset});
-        validInput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validInput.validate();
-        const vJson = serializer.toJSON(validInput, {ergo:true,permitResourcesForRelationships:true, utcOffset});
-        return boxedCollections.boxColl(vJson);
-    }
-
-    /**
-     * Validate contract JSON
-     * @param {object} contract - the contract JSON
-     * @param {number} utcOffset - UTC Offset for DateTime values
-     * @param {object} options - parameters for contract variables validation
-     * @return {object} the validated contract
-     */
-    validateContract(contract, utcOffset, options) {
-        options = options || {};
-
-        const serializer = this.getSerializer();
-
-        if (contract === null) { return null; }
-
-        // ensure the contract is valid
-        const validContract = serializer.fromJSON(contract, {validate: false, acceptResourcesForRelationships: true, utcOffset});
-        validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-        validContract.validate();
-        const vJson = serializer.toJSON(validContract, Object.assign(options, {ergo:true,permitResourcesForRelationships:true}));
-        return { serialized: boxedCollections.boxColl(vJson), validated: validContract };
-    }
-
-    /**
-     * Validate input JSON record
-     * @param {object} input - the input JSON record
-     * @param {number} utcOffset - UTC Offset for DateTime values
-     * @return {object} the validated input
-     */
-    validateInputRecord(input, utcOffset) {
-        let validRecord = {};
-        for(const key in input) {
-            if (input[key] instanceof Object) {
-                validRecord[key] = this.validateInput(input[key], utcOffset);
-            } else {
-                validRecord[key] = input[key];
-            }
-        }
-        return validRecord;
-    }
-
-    /**
-     * Validate output JSON
-     * @param {object} output - the output JSON
-     * @param {number} utcOffset - UTC Offset for DateTime values
-     * @return {object} the validated output
-     */
-    validateOutput(output, utcOffset) {
-        const serializer = this.getSerializer();
-
-        if (output === null) { return null; }
-
-        if (output instanceof Object) {
-            const vJson = boxedCollections.unboxColl(output);
-            const validOutput = serializer.fromJSON(vJson, {ergo: true, validate: false, acceptResourcesForRelationships: true, utcOffset});
-            validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
-            validOutput.validate();
-            return serializer.toJSON(validOutput, {convertResourcesToRelationships: true, utcOffset});
-        } else {
-            return output;
-        }
-    }
-
-    /**
-     * Validate output JSON array
-     * @param {*} output - the output JSON array
-     * @param {number} utcOffset - UTC Offset for DateTime values
-     * @return {Array<object>} the validated output array
-     */
-    validateOutputArray(output, utcOffset) {
-        const outputArray = boxedCollections.unboxColl(output);
-        let resultArray = [];
-        for (let i = 0; i < outputArray.length; i++) {
-            resultArray.push(this.validateOutput(outputArray[i], utcOffset));
-        }
-        return resultArray;
-    }
-
-    /**
-     * Update of a given model
-     * @param {string} content - the model content
-     * @param {string} name - the model name
-     */
-    updateModel(content, name) {
-        const modelManager = this.getModelManager();
-        const currentModels = modelManager.getModelFiles();
-        // Is this a new model?
-        if (!currentModels.some(x => x.getName() === name)) {
-            modelManager.addModelFile(content, name);
-        } else {
-            const previousModelFile =
-                  (currentModels.filter(x => x.getName() === name))[0];
-            const previousContent = previousModelFile.getDefinitions();
-            if (content !== previousContent) {
-                const previousNamespace = previousModelFile.getNamespace();
-                const newNamespace = new ModelFile(modelManager, content, name).getNamespace();
-                if (previousNamespace === newNamespace) {
-                    modelManager.updateModelFile(content, name, true);
-                } else {
-                    modelManager.deleteModelFile(previousNamespace);
-                    modelManager.addModelFile(content, name, true);
-                }
-            }
         }
     }
 

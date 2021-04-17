@@ -131,7 +131,7 @@ function runWorkload(Engine, target) {
                 for (let i = 0; i < models.length; i++) {
                     const ctoFile = Path.resolve(__dirname, dir, models[i]);
                     const ctoContent = Fs.readFileSync(ctoFile, 'utf8');
-                    logicManager.addModelFile(ctoContent, Path.join(dir, models[i]));
+                    logicManager.getModelManager().addAPModelFile(ctoContent, Path.join(dir, models[i]));
                 }
                 if (test.grammar) {
                     const templateFile = Path.resolve(__dirname, dir, test.grammar);

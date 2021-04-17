@@ -48,15 +48,13 @@ describe('LogicManager', () => {
             const logicManager = new LogicManager('es6');
             logicManager.should.not.be.null;
             logicManager.getIntrospector().should.not.be.null;
-            logicManager.getFactory().should.not.be.null;
-            logicManager.getSerializer().should.not.be.null;
             logicManager.getScriptManager().should.not.be.null;
             logicManager.getModelManager().should.not.be.null;
         });
 
         it('should load a model to the model manager', () => {
             const logicManager = new LogicManager('es6');
-            logicManager.addModelFile(ctoSample,'test.cto');
+            logicManager.getModelManager().addAPModelFile(ctoSample,'test.cto');
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
@@ -70,7 +68,7 @@ describe('LogicManager', () => {
 
         it('should load a model to the model manager (bulk)', () => {
             const logicManager = new LogicManager('es6');
-            logicManager.addModelFiles([ctoSample],['test.cto']);
+            logicManager.getModelManager().addAPModelFiles([ctoSample],['test.cto']);
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
@@ -396,12 +394,12 @@ describe('LogicManager', () => {
         let logicManager;
         beforeEach(async function () {
             logicManager = new LogicManager('es6');
-            logicManager.addModelFile(ctoSample,'test.cto');
+            logicManager.getModelManager().addAPModelFile(ctoSample,'test.cto');
         });
 
         it('should update a model to the model manager', () => {
             const modelManager = logicManager.getModelManager();
-            logicManager.updateModel(ctoSample,'test.cto');
+            logicManager.getModelManager().updateModel(ctoSample,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
                 '@org.accordproject.money.cto',
@@ -410,7 +408,7 @@ describe('LogicManager', () => {
                 'test.cto'
             ]);
             modelManager.getModels()[4].content.length.should.equal(175);
-            logicManager.updateModel(ctoSample3,'test.cto');
+            logicManager.getModelManager().updateModel(ctoSample3,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
                 '@org.accordproject.money.cto',
@@ -419,7 +417,7 @@ describe('LogicManager', () => {
                 'test.cto'
             ]);
             modelManager.getModels()[4].content.length.should.equal(369);
-            logicManager.updateModel(ctoSample2,'test.cto');
+            logicManager.getModelManager().updateModel(ctoSample2,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
                 '@org.accordproject.money.cto',
@@ -432,7 +430,7 @@ describe('LogicManager', () => {
 
         it('should add a model to the model manager', () => {
             const modelManager = logicManager.getModelManager();
-            logicManager.updateModel(ctoSample2,'test2.cto');
+            logicManager.getModelManager().updateModel(ctoSample2,'test2.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
                 '@org.accordproject.money.cto',
@@ -464,115 +462,4 @@ describe('LogicManager', () => {
 
     });
 
-    describe('#validation', () => {
-        let logicManager;
-        beforeEach(async function () {
-            logicManager = new LogicManager('es6');
-            logicManager.addModelFile(ctoSample,'test.cto');
-        });
-
-        it('should succeed validating an input', () => {
-            const input = {
-                '$class': 'org.accordproject.copyrightlicense.PaymentRequest',
-                'input': 'FOO'
-            };
-            const validInput = logicManager.validateInput(input);
-            validInput.should.not.be.null;
-            validInput.$data.should.have.property('$timestamp');
-            validInput.$data.should.deep.include({ 'input': 'FOO' });
-        });
-        it('should propagate null when validating an input', () => {
-            expect(logicManager.validateInput(null)).to.equal(null);
-        });
-        it('should fail validating an input with an unknown class', () => {
-            const input = {
-                '$class': 'org.accordproject.promissorynote.Payment',
-                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
-            };
-            (() => logicManager.validateInput(input)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
-        });
-
-        it('should propagate null when validating a contract', () => {
-            expect(logicManager.validateContract(null)).to.equal(null);
-        });
-
-        it('should succeed validating an output', () => {
-            const output = {
-                '$class': ['org.accordproject.copyrightlicense.PayOut'],
-                '$data' : { 'amount': 200.00 }
-            };
-            const validOutput = logicManager.validateOutput(output);
-            validOutput.should.not.be.null;
-            validOutput.should.have.property('$timestamp');
-            validOutput.should.deep.include({
-                '$class': 'org.accordproject.copyrightlicense.PayOut',
-                'amount': 200.00
-            });
-        });
-        it('should propagate null when validating an output', () => {
-            expect(logicManager.validateOutput(null)).to.equal(null);
-        });
-        it('should propagate strings or numbers when validating an output', () => {
-            expect(logicManager.validateOutput('test string')).to.equal('test string');
-            expect(logicManager.validateOutput(100.0)).to.equal(100.0);
-        });
-        it('should fail validating an output with an unknown class', () => {
-            const output = {
-                '$class': 'org.accordproject.promissorynote.Payment',
-                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
-            };
-            (() => logicManager.validateOutput(output)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
-        });
-
-        it('should succeed validating an input record', () => {
-            const inputRecord = {
-                'request': {
-                    '$class': 'org.accordproject.copyrightlicense.PaymentRequest',
-                    'input': 'FOO'
-                },
-                'x': 100.00,
-                'y': 'foo'
-            };
-            const validInputRecord = logicManager.validateInputRecord(inputRecord);
-            validInputRecord.should.not.be.null;
-            validInputRecord.should.have.property('request');
-            validInputRecord.request.$data.should.have.property('$timestamp');
-            validInputRecord.request.$data.should.deep.include({ 'input': 'FOO' });
-            validInputRecord.should.have.property('x');
-            validInputRecord.x.should.equal(100.00);
-            validInputRecord.should.have.property('y');
-            validInputRecord.y.should.equal('foo');
-        });
-        it('should fail validating an input array', () => {
-            const inputRecord = {
-                'request': {
-                    '$class': 'org.accordproject.promissorynote.Payment',
-                    'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
-                },
-                'x': 100.00,
-                'y': 'foo'
-            };
-            (() => logicManager.validateInputRecord(inputRecord)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
-        });
-
-        it('should succeed validating an output array', () => {
-            const output = {
-                '$class': 'org.accordproject.copyrightlicense.PayOut',
-                'amount': 200.00
-            };
-            const validOutputArray = logicManager.validateOutputArray([output]);
-            validOutputArray.should.not.be.null;
-            validOutputArray.length.should.equal(1);
-            validOutputArray[0].should.have.property('$timestamp');
-            validOutputArray[0].should.deep.include(output);
-            validOutputArray[0].should.deep.include(output);
-        });
-        it('should fail validating an output array', () => {
-            const output = {
-                '$class': 'org.accordproject.promissorynote.Payment',
-                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
-            };
-            (() => logicManager.validateOutputArray([output])).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
-        });
-    });
 });
