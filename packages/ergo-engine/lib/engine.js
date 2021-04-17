@@ -16,7 +16,14 @@
 
 const Logger = require('@accordproject/concerto-core').Logger;
 const Util = require('@accordproject/ergo-compiler').Util;
-const boxedCollections = require('@accordproject/ergo-compiler').boxedCollections;
+const boxedCollections = require('./boxedCollections');
+const {
+    validateContract,
+    validateInput,
+    validateInputRecord,
+    validateOutput,
+    validateOutputArray,
+} = require('./validateES6');
 
 /**
  * <p>
@@ -101,6 +108,8 @@ class Engine {
      * @return {object} the result for the clause
      */
     trigger(logic, contractId, contract, request, state, currentTime, utcOffset, options) {
+        const modelManager = logic.getModelManager();
+
         // Set the current time and UTC Offset
         const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
         const validOptions = boxedCollections.boxColl(options ? options : {
@@ -109,9 +118,9 @@ class Engine {
             'template': false,
         });
 
-        const validContract = logic.validateContract(contract, offset); // ensure the contract is valid
-        const validRequest = logic.validateInput(request, offset); // ensure the request is valid
-        const validState = logic.validateInput(state, offset); // ensure the state is valid
+        const validContract = validateContract(modelManager, contract, offset); // ensure the contract is valid
+        const validRequest = validateInput(modelManager, request, offset); // ensure the request is valid
+        const validState = validateInput(modelManager, state, offset); // ensure the state is valid
 
         Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
 
@@ -127,9 +136,9 @@ class Engine {
 
         // execute the logic
         const result = this.runVMScriptCall(offset,now,validOptions,context,script,callScript);
-        const validResponse = logic.validateOutput(result.__response, offset); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state, offset); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit, offset); // ensure all the emits are valid
+        const validResponse = validateOutput(modelManager, result.__response, offset); // ensure the response is valid
+        const validNewState = validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
+        const validEmit = validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
@@ -157,6 +166,8 @@ class Engine {
      * @return {Promise} a promise that resolves to a result for the clause
      */
     invoke(logic, contractId, clauseName, contract, params, state, currentTime, utcOffset, options, validateOptions) {
+        const modelManager = logic.getModelManager();
+
         // Set the current time and UTC Offset
         const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
         const invokeOptions = boxedCollections.boxColl(options ? options : {
@@ -165,9 +176,9 @@ class Engine {
             'template': false,
         });
 
-        const validContract = logic.validateContract(contract, offset, validateOptions); // ensure the contract is valid
-        const validParams = logic.validateInputRecord(params, offset); // ensure the parameters are valid
-        const validState = logic.validateInput(state, offset); // ensure the state is valid
+        const validContract = validateContract(modelManager, contract, offset, validateOptions); // ensure the contract is valid
+        const validParams = validateInputRecord(modelManager, params, offset); // ensure the parameters are valid
+        const validState = validateInput(modelManager, state, offset); // ensure the state is valid
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
@@ -183,9 +194,9 @@ class Engine {
         // execute the logic
         const result = this.runVMScriptCall(offset,now,invokeOptions,context,script,callScript);
 
-        const validResponse = logic.validateOutput(result.__response, offset); // ensure the response is valid
-        const validNewState = logic.validateOutput(result.__state, offset); // ensure the new state is valid
-        const validEmit = logic.validateOutputArray(result.__emit, offset); // ensure all the emits are valid
+        const validResponse = validateOutput(modelManager, result.__response, offset); // ensure the response is valid
+        const validNewState = validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
+        const validEmit = validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,

@@ -19,7 +19,6 @@
  * @module ergo-compiler
  */
 
-module.exports.boxedCollections = require('./lib/boxedCollections');
 module.exports.APModelManager = require('./lib/apmodelmanager.js');
 module.exports.Compiler = require('./lib/compiler.js');
 module.exports.CompilerException = require('./lib/compilerexception.js');

@@ -38,7 +38,7 @@ async function fromDirectory(path, options) {
 
     const ctoFiles = await FileLoader.loadFilesContents(path, /model[/\\].*\.cto$/);
     ctoFiles.forEach((file) => {
-        logicManager.addModelFile(file.contents, file.name);
+        logicManager.getModelManager().addAPModelFile(file.contents, file.name);
     });
 
     // Update external models
@@ -80,7 +80,7 @@ async function fromZip(buffer, options) {
 
     const ctoFiles = await FileLoader.loadZipFilesContents(zip, /model[/\\].*\.cto$/);
     ctoFiles.forEach((file) => {
-        logicManager.addModelFile(file.contents, file.name);
+        logicManager.getModelManager().addAPModelFile(file.contents, file.name);
     });
 
     // Update external models
@@ -132,7 +132,7 @@ async function fromFiles(files, options) {
     }
     modelPaths.forEach((path) => {
         const file = fs.readFileSync(path, 'utf8');
-        logicManager.addModelFile(file, path);
+        logicManager.getModelManager().addAPModelFile(file, path);
     });
 
     // Update external models
