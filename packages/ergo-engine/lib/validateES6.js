@@ -17,7 +17,6 @@
 const Factory = require('@accordproject/concerto-core').Factory;
 const Serializer = require('@accordproject/concerto-core').Serializer;
 const ResourceValidator = require('@accordproject/concerto-core/lib/serializer/resourcevalidator');
-const boxedCollections = require('./boxedCollections');
 
 /**
  * Validate contract JSON
@@ -40,7 +39,7 @@ function validateContract(modelManager, contract, utcOffset, options) {
     validContract.$validator = new ResourceValidator({permitResourcesForRelationships: true});
     validContract.validate();
     const vJson = serializer.toJSON(validContract, Object.assign(options, {ergo:true,permitResourcesForRelationships:true}));
-    return { serialized: boxedCollections.boxColl(vJson), validated: validContract };
+    return { serialized: vJson, validated: validContract };
 }
 
 /**
@@ -61,7 +60,7 @@ function validateInput(modelManager, input, utcOffset) {
     validInput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
     validInput.validate();
     const vJson = serializer.toJSON(validInput, {ergo:true,permitResourcesForRelationships:true, utcOffset});
-    return boxedCollections.boxColl(vJson);
+    return vJson;
 }
 
 /**
@@ -97,7 +96,7 @@ function validateOutput(modelManager, output, utcOffset) {
     if (output === null) { return null; }
 
     if (output instanceof Object) {
-        const vJson = boxedCollections.unboxColl(output);
+        const vJson = output;
         const validOutput = serializer.fromJSON(vJson, {ergo: true, validate: false, acceptResourcesForRelationships: true, utcOffset});
         validOutput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
         validOutput.validate();
@@ -115,7 +114,7 @@ function validateOutput(modelManager, output, utcOffset) {
  * @return {Array<object>} the validated output array
  */
 function validateOutputArray(modelManager, output, utcOffset) {
-    const outputArray = boxedCollections.unboxColl(output);
+    const outputArray = output.$coll.slice(0,output.$length);
     let resultArray = [];
     for (let i = 0; i < outputArray.length; i++) {
         resultArray.push(validateOutput(modelManager, outputArray[i], utcOffset));

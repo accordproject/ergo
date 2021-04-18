@@ -18,5 +18,6 @@ const { ContractModel } = require('./externalModels/ContractModel');
 const { RuntimeModel } = require('./externalModels/RuntimeModel');
 const { MoneyModel } = require('./externalModels/MoneyModel');
 const { TimeModel } = require('./externalModels/TimeModel');
+const { OptionsModel } = require('./externalModels/OptionsModel');
 
-module.exports = { ContractModel, RuntimeModel, MoneyModel, TimeModel };
+module.exports = { ContractModel, RuntimeModel, MoneyModel, TimeModel, OptionsModel };
