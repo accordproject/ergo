@@ -39,13 +39,11 @@ function compareComponent(expected,actual) {
     if (!expected) {
         expect(actual).to.equal(expected);
     } else {
-        delete expected.timestamp;
-        delete actual.timestamp;
+        delete actual.$timestamp;
         // Some basic deep comparison for arrays, since Chai doesn't do the right thing
         if (Array.isArray(actual)) {
             for (let i = 0; i < expected.length; i++) {
-                delete expected[i].timestamp;
-                delete actual[i].timestamp;
+                delete actual[i].$timestamp;
                 expect(actual[i]).to.deep.include(expected[i]);
             }
         } else {

@@ -61,9 +61,10 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
-            modelManager.getModels()[4].content.length.should.equal(175);
+            modelManager.getModels()[5].content.length.should.equal(175);
         });
 
         it('should load a model to the model manager (bulk)', () => {
@@ -75,9 +76,10 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
-            modelManager.getModels()[4].content.length.should.equal(175);
+            modelManager.getModels()[5].content.length.should.equal(175);
         });
 
         it('should load a logic file to the script manager', () => {
@@ -282,9 +284,10 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'org.accordproject.copyrightlicense.cto'
             ]);
-            modelManager.getModels()[4].content.length.should.equal(175);
+            modelManager.getModels()[5].content.length.should.equal(175);
         });
     });
 
@@ -297,6 +300,7 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
@@ -311,6 +315,7 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
@@ -328,6 +333,7 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
@@ -343,6 +349,7 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
@@ -364,6 +371,7 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
@@ -383,6 +391,7 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
             modelManager.getModels()[0].content.length.should.equal(1330);
@@ -405,27 +414,30 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
-            modelManager.getModels()[4].content.length.should.equal(175);
+            modelManager.getModels()[5].content.length.should.equal(175);
             logicManager.getModelManager().updateModel(ctoSample3,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
                 '@org.accordproject.money.cto',
                 '@org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
-            modelManager.getModels()[4].content.length.should.equal(369);
+            modelManager.getModels()[5].content.length.should.equal(369);
             logicManager.getModelManager().updateModel(ctoSample2,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@org.accordproject.time.cto',
                 '@org.accordproject.money.cto',
                 '@org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
-            modelManager.getModels()[4].content.length.should.equal(173);
+            modelManager.getModels()[5].content.length.should.equal(173);
         });
 
         it('should add a model to the model manager', () => {
@@ -436,11 +448,12 @@ describe('LogicManager', () => {
                 '@org.accordproject.money.cto',
                 '@org.accordproject.contract.cto',
                 '@org.accordproject.runtime.cto',
+                '@org.accordproject.ergo.options.cto',
                 'test.cto',
                 'test2.cto'
             ]);
-            modelManager.getModels()[4].content.length.should.equal(175);
-            modelManager.getModels()[5].content.length.should.equal(173);
+            modelManager.getModels()[5].content.length.should.equal(175);
+            modelManager.getModels()[6].content.length.should.equal(173);
         });
 
         it('should update a logic file in the script manager', () => {

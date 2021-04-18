@@ -38,6 +38,7 @@ class APModelManager extends ModelManager {
         this.addModelFile(Builtin.MoneyModel, '@org.accordproject.money.cto');
         this.addModelFile(Builtin.ContractModel, '@org.accordproject.contract.cto');
         this.addModelFile(Builtin.RuntimeModel, '@org.accordproject.runtime.cto');
+        this.addModelFile(Builtin.OptionsModel, '@org.accordproject.ergo.options.cto');
         this.validateModelFiles();
         this.builtInNamespaces = this.getNamespaces();
     }

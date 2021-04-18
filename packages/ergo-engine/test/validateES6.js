@@ -65,7 +65,7 @@ describe('Validator', () => {
 
         it('should succeed validating an output', () => {
             const output = {
-                '$class': ['org.accordproject.copyrightlicense.PayOut'],
+                '$class': { $coll: ['org.accordproject.copyrightlicense.PayOut'], $length: 1 },
                 '$data' : { 'amount': 200.00 }
             };
             const validOutput = validateES6.validateOutput(modelManager, output);
@@ -85,8 +85,8 @@ describe('Validator', () => {
         });
         it('should fail validating an output with an unknown class', () => {
             const output = {
-                '$class': 'org.accordproject.promissorynote.Payment',
-                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
+                '$class': { $coll: ['org.accordproject.promissorynote.Payment'], $length: 1 },
+                '$data': { 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' } }
             };
             (() => validateES6.validateOutput(modelManager, output)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
@@ -124,22 +124,25 @@ describe('Validator', () => {
 
         it('should succeed validating an output array', () => {
             const output = {
+                '$class': { $coll: ['org.accordproject.copyrightlicense.PayOut'], $length: 1 },
+                '$data': { 'amount': 200.00 }
+            };
+            const expected = {
                 '$class': 'org.accordproject.copyrightlicense.PayOut',
                 'amount': 200.00
             };
-            const validOutputArray = validateES6.validateOutputArray(modelManager, [output]);
+            const validOutputArray = validateES6.validateOutputArray(modelManager, {$coll:[output],$length:1});
             validOutputArray.should.not.be.null;
             validOutputArray.length.should.equal(1);
             validOutputArray[0].should.have.property('$timestamp');
-            validOutputArray[0].should.deep.include(output);
-            validOutputArray[0].should.deep.include(output);
+            validOutputArray[0].should.deep.include(expected);
         });
         it('should fail validating an output array', () => {
             const output = {
-                '$class': 'org.accordproject.promissorynote.Payment',
-                'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
+                '$class': { $coll: ['org.accordproject.promissorynote.Payment'], $length: 1 },
+                '$data': { 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' } }
             };
-            (() => validateES6.validateOutputArray(modelManager, [output])).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => validateES6.validateOutputArray(modelManager, {$coll:[output],$length:1})).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
         });
     });
 
@@ -168,7 +171,7 @@ describe('Validator', () => {
             validInput.$data.someNumber.should.have.property('$nat');
             validInput.$data.someNumber.$nat.should.equal(3);
             validInput.$data.someArray.should.deep.equal({$coll:[{'$nat':0},{'$nat':1},{'$nat':2}],$length:3});
-            validInput.$data.relationship.should.deep.equal({'$class':['org.accordproject.copyrightlicense.Baz'], '$data':{ 'bazId': '1', '$identifier': '1' } });
+            validInput.$data.relationship.should.deep.equal({'$class':{$coll:['org.accordproject.copyrightlicense.Baz'],$length:1}, '$data':{ 'bazId': '1', '$identifier': '1' } });
             const validOutput = validateES6.validateOutput(modelManager, validInput);
             validOutput.relationship.should.equal('resource:org.accordproject.copyrightlicense.Baz#1');
         });
@@ -190,7 +193,7 @@ describe('Validator', () => {
             validContract.serialized.$data.someNumber.should.have.property('$nat');
             validContract.serialized.$data.someNumber.$nat.should.equal(3);
             validContract.serialized.$data.someArray.should.deep.equal({$coll:[{'$nat':0},{'$nat':1},{'$nat':2}],$length:3});
-            validContract.serialized.$data.relationship.should.deep.equal({ '$class' : ['org.accordproject.copyrightlicense.Baz'], '$data' : { 'bazId': '1', '$identifier': '1' } });
+            validContract.serialized.$data.relationship.should.deep.equal({ '$class' : {$coll:['org.accordproject.copyrightlicense.Baz'],$length:1}, '$data' : { 'bazId': '1', '$identifier': '1' } });
         });
     });
 });

@@ -16,7 +16,6 @@
 
 const Logger = require('@accordproject/concerto-core').Logger;
 const Util = require('@accordproject/ergo-compiler').Util;
-const boxedCollections = require('./boxedCollections');
 const {
     validateContract,
     validateInput,
@@ -112,7 +111,7 @@ class Engine {
 
         // Set the current time and UTC Offset
         const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
-        const validOptions = boxedCollections.boxColl(options ? options : {
+        const validOptions = validateInput(modelManager, options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
@@ -170,7 +169,7 @@ class Engine {
 
         // Set the current time and UTC Offset
         const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
-        const invokeOptions = boxedCollections.boxColl(options ? options : {
+        const validOptions = validateInput(modelManager, options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
@@ -188,12 +187,11 @@ class Engine {
             data: validContract.serialized,
             state: validState,
             params: validParams,
-            __options: invokeOptions
+            __options: validOptions
         };
 
         // execute the logic
-        const result = this.runVMScriptCall(offset,now,invokeOptions,context,script,callScript);
-
+        const result = this.runVMScriptCall(offset,now,validOptions,context,script,callScript);
         const validResponse = validateOutput(modelManager, result.__response, offset); // ensure the response is valid
         const validNewState = validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
         const validEmit = validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
@@ -238,7 +236,11 @@ class Engine {
      * @return {object} the result for draft
      */
     calculate(logic, contractId, name, contract, currentTime, utcOffset, options) {
-        options = options || {};
+        options = options || {
+            '$class': 'org.accordproject.ergo.options.Options',
+            'wrapVariables': false,
+            'template': true,
+        };
 
         const defaultState = {
             '$class':'org.accordproject.runtime.State'
