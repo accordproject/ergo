@@ -16,13 +16,7 @@
 
 const Logger = require('@accordproject/concerto-core').Logger;
 const Util = require('@accordproject/ergo-compiler').Util;
-const {
-    validateContract,
-    validateInput,
-    validateInputRecord,
-    validateOutput,
-    validateOutputArray,
-} = require('./validateES6');
+const validateES6 = require('./validateES6');
 
 /**
  * Generate the invocation logic
@@ -142,15 +136,15 @@ class Engine {
 
         // Set the current time and UTC Offset
         const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
-        const validOptions = validateInput(modelManager, options ? options : {
+        const validOptions = validateES6.validateInput(modelManager, options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
         });
 
-        const validContract = validateContract(modelManager, contract, offset); // ensure the contract is valid
-        const validRequest = validateInput(modelManager, request, offset); // ensure the request is valid
-        const validState = validateInput(modelManager, state, offset); // ensure the state is valid
+        const validContract = validateES6.validateContract(modelManager, contract, offset); // ensure the contract is valid
+        const validRequest = validateES6.validateInput(modelManager, request, offset); // ensure the request is valid
+        const validState = validateES6.validateInput(modelManager, state, offset); // ensure the state is valid
 
         Logger.debug('Engine processing request ' + request.$class + ' with state ' + state.$class);
 
@@ -166,9 +160,9 @@ class Engine {
 
         // execute the logic
         const result = this.runVMScriptCall(offset,now,validOptions,context,script,callScript);
-        const validResponse = validateOutput(modelManager, result.__response, offset); // ensure the response is valid
-        const validNewState = validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
-        const validEmit = validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
+        const validResponse = validateES6.validateOutput(modelManager, result.__response, offset); // ensure the response is valid
+        const validNewState = validateES6.validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
+        const validEmit = validateES6.validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
@@ -201,15 +195,15 @@ class Engine {
 
         // Set the current time and UTC Offset
         const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
-        const validOptions = validateInput(modelManager, options ? options : {
+        const validOptions = validateES6.validateInput(modelManager, options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
             'template': false,
         });
 
-        const validContract = validateContract(modelManager, contract, offset, validateOptions); // ensure the contract is valid
-        const validParams = validateInputRecord(modelManager, params, offset); // ensure the parameters are valid
-        const validState = validateInput(modelManager, state, offset); // ensure the state is valid
+        const validContract = validateES6.validateContract(modelManager, contract, offset, validateOptions); // ensure the contract is valid
+        const validParams = validateES6.validateInputRecord(modelManager, params, offset); // ensure the parameters are valid
+        const validState = validateES6.validateInput(modelManager, state, offset); // ensure the state is valid
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
@@ -224,9 +218,9 @@ class Engine {
 
         // execute the logic
         const result = this.runVMScriptCall(offset,now,validOptions,context,script,callScript);
-        const validResponse = validateOutput(modelManager, result.__response, offset); // ensure the response is valid
-        const validNewState = validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
-        const validEmit = validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
+        const validResponse = validateES6.validateOutput(modelManager, result.__response, offset); // ensure the response is valid
+        const validNewState = validateES6.validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
+        const validEmit = validateES6.validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
