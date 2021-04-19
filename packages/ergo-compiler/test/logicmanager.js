@@ -89,6 +89,17 @@ describe('LogicManager', () => {
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(47854);
             logicManager.compileLogicSync(false);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(47854);
+            logicManager.registerCompiledLogicSync();
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(47854);
+            logicManager.registerCompiledLogicSync();
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(47854);
+        });
+
+        it('should register a logic file to the script manager', () => {
+            const logicManager = new LogicManager('es6');
+            logicManager.addLogicFile(ergoSample,'test.ergo');
+            logicManager.registerCompiledLogicSync();
+            logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(47854);
         });
 
         it('should succeed creating a dispatch call for a JS logic file with a contract class (ES6)', () => {
