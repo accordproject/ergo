@@ -21,6 +21,24 @@ const ModelManager = require('@accordproject/concerto-core').ModelManager;
 const ModelFile = require('@accordproject/concerto-core').ModelFile;
 const Builtin = require('./builtin');
 
+const processModelFiles = (modelFiles) => {
+    let models = [];
+    modelFiles.forEach(function (file) {
+        // ignore the system namespace when creating an archive
+        if (file.isSystemModelFile()) {
+            return;
+        }
+        let fileName = file.getName();
+        if (fileName === 'UNKNOWN' || !fileName) {
+            fileName = file.getNamespace() + '.cto';
+        } else {
+            fileName = fsPath.basename(fileName);
+        }
+        models.push({ 'name' : fileName, 'namespace': file.getNamespace(), 'content' : file.definitions });
+    });
+    return models;
+};
+
 /**
  * Accord Project Model Manager. Bootstraps the ModelManager with system files.
  * @class
@@ -34,10 +52,10 @@ class APModelManager extends ModelManager {
      */
     constructor() {
         super();
-        this.addModelFile(Builtin.TimeModel, '@org.accordproject.time.cto');
-        this.addModelFile(Builtin.MoneyModel, '@org.accordproject.money.cto');
-        this.addModelFile(Builtin.ContractModel, '@org.accordproject.contract.cto');
-        this.addModelFile(Builtin.RuntimeModel, '@org.accordproject.runtime.cto');
+        this.addModelFile(Builtin.TimeModel, '@models.accordproject.org.time@0.2.0.cto');
+        this.addModelFile(Builtin.MoneyModel, '@models.accordproject.org.accordproject.money@0.2.0.cto');
+        this.addModelFile(Builtin.ContractModel, '@models.accordproject.org.accordproject.contract.cto');
+        this.addModelFile(Builtin.RuntimeModel, '@models.accordproject.org.accordproject.runtime.cto');
         this.addModelFile(Builtin.OptionsModel, '@org.accordproject.ergo.options.cto');
         this.validateModelFiles();
         this.builtInNamespaces = this.getNamespaces();
@@ -48,23 +66,7 @@ class APModelManager extends ModelManager {
      * @return {Array<{name:string, content:string}>} the name and content of each CTO file
      */
     getModels() {
-        const modelFiles = this.getModelFiles();
-        let models = [];
-        modelFiles.forEach(function (file) {
-            let fileName;
-            // ignore the system namespace when creating an archive
-            if (file.isSystemModelFile()) {
-                return;
-            }
-            if (file.fileName === 'UNKNOWN' || file.fileName === null || !file.fileName) {
-                fileName = file.namespace + '.cto';
-            } else {
-                let fileIdentifier = file.fileName;
-                fileName = fsPath.basename(fileIdentifier);
-            }
-            models.push({ 'name' : fileName, 'content' : file.definitions });
-        });
-        return models;
+        return processModelFiles(this.getModelFiles());
     }
 
     /**
@@ -86,13 +88,20 @@ class APModelManager extends ModelManager {
      * strings.
      * @param {string[]} [modelFileNames] - An optional array of file names to
      * associate with the model files
+     * @param {boolean} offline - do not update external models
      */
-    addAPModelFiles(modelFiles, modelFileNames) {
+    async addAPModelFiles(modelFiles, modelFileNames, offline) {
         modelFiles.map((modelFileContent, index) => {
-            const modelFileName = slash(modelFileNames[index]);
+            const modelFileName = modelFileNames[index];
             this.addAPModelFile(modelFileContent, modelFileName);
         });
-        this.validateModelFiles();
+        if (offline) {
+            this.validateModelFiles();
+            return [];
+        } else {
+            const externalModelFiles = await this.updateExternalModels();
+            return processModelFiles(externalModelFiles);
+        }
     }
 
     /**

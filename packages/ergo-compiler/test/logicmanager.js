@@ -57,10 +57,10 @@ describe('LogicManager', () => {
             logicManager.getModelManager().addAPModelFile(ctoSample,'test.cto');
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
+                '@models.accordproject.org.accordproject.contract.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
@@ -72,10 +72,10 @@ describe('LogicManager', () => {
             logicManager.getModelManager().addAPModelFiles([ctoSample],['test.cto']);
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
+                '@models.accordproject.org.accordproject.contract.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
@@ -264,10 +264,10 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             modelManager.addModelFile(ctoSample,null,true);
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
+                '@models.accordproject.org.accordproject.contract.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'org.accordproject.copyrightlicense.cto'
             ]);
@@ -280,14 +280,14 @@ describe('LogicManager', () => {
             const logicManager = await ErgoLoader.fromDirectory(Path.join(TESTS_DIR,'acceptance-of-delivery'), {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(1330);
+            modelManager.getModels()[0].content.length.should.equal(1328);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(135646);
         });
 
@@ -295,14 +295,14 @@ describe('LogicManager', () => {
             const logicManager = await ErgoLoader.fromDirectory(Path.join(TESTS_DIR,'helloworldcontract'));
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(1330);
+            modelManager.getModels()[0].content.length.should.equal(1328);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(66750);
         });
     });
@@ -313,14 +313,14 @@ describe('LogicManager', () => {
             const logicManager = await ErgoLoader.fromZip(buffer, {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(1330);
+            modelManager.getModels()[0].content.length.should.equal(1328);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(135646);
         });
 
@@ -329,14 +329,14 @@ describe('LogicManager', () => {
             const logicManager = await ErgoLoader.fromZip(buffer);
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(1330);
+            modelManager.getModels()[0].content.length.should.equal(1328);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(66750);
         });
     });
@@ -351,14 +351,14 @@ describe('LogicManager', () => {
             const logicManager = await ErgoLoader.fromFiles(files, {});
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(1330);
+            modelManager.getModels()[0].content.length.should.equal(1328);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(135646);
         });
 
@@ -371,14 +371,14 @@ describe('LogicManager', () => {
             const logicManager = await ErgoLoader.fromFiles(files);
             const modelManager = logicManager.getModelManager();
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
                 '@models.accordproject.org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'model.cto'
             ]);
-            modelManager.getModels()[0].content.length.should.equal(1330);
+            modelManager.getModels()[0].content.length.should.equal(1328);
             logicManager.getScriptManager().getCompiledScript().getContents().length.should.equal(66750);
         });
     });
@@ -394,30 +394,30 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             logicManager.getModelManager().updateModel(ctoSample,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
+                '@models.accordproject.org.accordproject.contract.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
             modelManager.getModels()[5].content.length.should.equal(175);
             logicManager.getModelManager().updateModel(ctoSample3,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
+                '@models.accordproject.org.accordproject.contract.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
             modelManager.getModels()[5].content.length.should.equal(369);
             logicManager.getModelManager().updateModel(ctoSample2,'test.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
+                '@models.accordproject.org.accordproject.contract.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'test.cto'
             ]);
@@ -428,10 +428,10 @@ describe('LogicManager', () => {
             const modelManager = logicManager.getModelManager();
             logicManager.getModelManager().updateModel(ctoSample2,'test2.cto');
             modelManager.getModels().map(x => x.name).should.deep.equal([
-                '@org.accordproject.time.cto',
-                '@org.accordproject.money.cto',
-                '@org.accordproject.contract.cto',
-                '@org.accordproject.runtime.cto',
+                '@models.accordproject.org.time@0.2.0.cto',
+                '@models.accordproject.org.accordproject.money@0.2.0.cto',
+                '@models.accordproject.org.accordproject.contract.cto',
+                '@models.accordproject.org.accordproject.runtime.cto',
                 '@org.accordproject.ergo.options.cto',
                 'test.cto',
                 'test2.cto'
