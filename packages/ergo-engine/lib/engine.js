@@ -192,6 +192,7 @@ class Engine {
     invoke(logic, contractId, clauseName, contract, params, state, currentTime, utcOffset, options, validateOptions) {
         const modelManager = logic.getModelManager();
         const scriptManager = logic.getScriptManager();
+        const contractName = logic.getContractName();
 
         // Set the current time and UTC Offset
         const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
@@ -208,7 +209,7 @@ class Engine {
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
         const script = this.cacheJsScript(scriptManager, contractId);
-        const callScript = getInvokeCall(contractId, clauseName);
+        const callScript = getInvokeCall(contractName, clauseName);
         const context = {
             data: validContract.serialized,
             state: validState,
