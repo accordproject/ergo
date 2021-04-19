@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-engine",
-  "version": "0.22.0-alpha.4",
+  "version": "0.22.0-alpha.5",
   "description": "Ergo Engine",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@accordproject/concerto-core": "1.0.0-alpha.7",
-    "@accordproject/ergo-compiler": "0.22.0-alpha.4",
+    "@accordproject/ergo-compiler": "0.22.0-alpha.5",
     "dayjs": "1.10.4",
     "vm2": "3.5.0"
   },
