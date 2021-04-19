@@ -15,8 +15,8 @@
 'use strict';
 
 const Logger = require('@accordproject/concerto-core').Logger;
-const Util = require('@accordproject/ergo-compiler').Util;
 const validateES6 = require('./validateES6');
+const Util = require('./util');
 
 /**
  * Generate the invocation logic
