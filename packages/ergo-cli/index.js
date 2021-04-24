@@ -71,11 +71,7 @@ require('yargs')
 
         // Run contract
         Commands.trigger(argv.template, files, { file: argv.data }, argv.state ? { file: argv.state } : null,
-<<<<<<< HEAD
-            argv.currentTime, argv.utcOffset, argv.request.map(r => { return { file: r }; }), argv.warnings)
-=======
-            argv.currentTime, argv.request.map(r => { return { file: r }; }), argv.warnings, argv.target)
->>>>>>> e8435333 (feature(wasm) Some initial code for the new Ergo to Wasm compiler)
+            argv.currentTime, argv.utcOffset, argv.request.map(r => { return { file: r }; }), argv.warnings, argv.target)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -134,11 +130,7 @@ require('yargs')
         }
 
         // Run contract
-<<<<<<< HEAD
-        Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, argv.utcOffset, { file: argv.params }, argv.warnings)
-=======
-        Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, { file: argv.params }, argv.warnings, argv.target)
->>>>>>> e8435333 (feature(wasm) Some initial code for the new Ergo to Wasm compiler)
+        Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, argv.utcOffset, { file: argv.params }, argv.warnings, argv.target)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -190,11 +182,7 @@ require('yargs')
         }
 
         // Run contract
-<<<<<<< HEAD
-        Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.utcOffset, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings)
-=======
-        Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings, argv.target)
->>>>>>> e8435333 (feature(wasm) Some initial code for the new Ergo to Wasm compiler)
+        Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.utcOffset, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings, argv.target)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })

@@ -17,7 +17,7 @@ namespace org.accordproject.helloworld
 contract HelloWorld over TemplateModel {
   // Simple Clause
   clause helloworld(request : Request) : Response {
-    enforce false else throw ErgoErrorResponse{ message: "Hello world is disabled" };
+    enforce false else throw Error{ message: "Hello world is disabled" };
     return Response{ output: "Hello " ++ contract.name ++ " (" ++ request.input ++ ")" }
   }
 }

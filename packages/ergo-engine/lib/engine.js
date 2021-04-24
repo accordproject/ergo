@@ -19,36 +19,6 @@ const DateTimeUtil = require('@accordproject/concerto-core').DateTimeUtil;
 const validateES6 = require('./validateES6');
 
 /**
- * Generate the invocation logic
- * @param {String} contractName - the contract name
- * @param {String} clauseName - the clause name
- * @return {String} the invocation code
- * @private
- */
-function getInvokeCall(contractName, clauseName) {
-    const code = `
-const __result = ${contractName}.${clauseName}(Object.assign({}, {__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0}},context.params));
-unwrapError(__result);
-`;
-    return code;
-}
-
-/**
- * Generate the runtime dispatch logic
- * @param {object} scriptManager - the script manager
- * @return {String} the dispatch code
- * @private
- */
-function getDispatchCall(scriptManager) {
-    scriptManager.hasDispatch();
-    let code = `
-const __result = __dispatch({__now:now,__options:options,__contract:context.data,__state:context.state,__emit:{$coll:[],$length:0},request:context.request});
-unwrapError(__result);
-`;
-    return code;
-}
-
-/**
  * <p>
  * Engine class. Execution of template logic against a request object, returning a response to the caller.
  * </p>
@@ -131,7 +101,7 @@ class Engine {
      * @param {object} validateOptions to the validation
      * @return {Promise} a promise that resolves to a result for the clause
      */
-    invoke(logic, contractId, clauseName, contract, params, state, currentTime, utcOffset, options, validateOptions) {
+    async invoke(logic, contractId, clauseName, contract, params, state, currentTime, utcOffset, options, validateOptions) {
         const modelManager = logic.getModelManager();
         const scriptManager = logic.getScriptManager();
         const contractName = logic.getContractName();
@@ -150,7 +120,7 @@ class Engine {
 
         Logger.debug('Engine processing clause ' + clauseName + ' with state ' + state.$class);
 
-        const module = await this.cacheModule(logic.getScriptManager(), contractId);
+        const module = await this.cacheModule(scriptManager, contractId);
         const context = {
             data: validContract.serialized,
             state: validState,
@@ -186,7 +156,7 @@ class Engine {
      * @param {object} options to the text generation
      * @return {object} the result for the clause initialization
      */
-    init(logic, contractId, contract, params, currentTime, utcOffset, options) {
+    async init(logic, contractId, contract, params, currentTime, utcOffset, options) {
         const defaultState = {
             '$class':'org.accordproject.runtime.State'
         };

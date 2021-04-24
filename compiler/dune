@@ -49,5 +49,5 @@
 (library
  (name ergo_lib)
  (public_name coq-ergo-lang)
- (libraries atdgen base64 re.str uri calendar coq-qcert)
+ (libraries atdgen base64 re.str uri calendar coq-qcert wasm)
 )

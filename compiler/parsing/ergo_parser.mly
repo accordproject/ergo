@@ -60,6 +60,7 @@ let make_template_variable_as prov v s =
        (make_template_input prov))
 
 (* Construct AST for variables *)
+let wrap_template_if_block prov name veCond veTrue veFalse =
   ErgoCompiler.ecallfun
     prov
     (relative_name_of_qname (Some "org.accordproject.ergo.template","ifBlockTag"))
