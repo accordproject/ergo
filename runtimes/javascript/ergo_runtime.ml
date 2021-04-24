@@ -629,7 +629,7 @@ function toStringQ(v, quote) {
         }
         return result + "]";
     }
-    if(dayjs.isDayjs(v)) {
+    if(v && typeof v === 'object' && typeof v.isBefore === 'function') {
         return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('$nat')){
@@ -674,7 +674,7 @@ function toTextQ(v, quote) {
         }
         return result + "";
     }
-    if (dayjs.isDayjs(v)) {
+    if(v && typeof v === 'object' && typeof v.isBefore === 'function') {
         return v.format('MM/DD/YYYY');
     }
     if(v.hasOwnProperty('$nat')){

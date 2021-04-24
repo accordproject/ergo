@@ -15,8 +15,8 @@
 'use strict';
 
 const Logger = require('@accordproject/concerto-core').Logger;
+const DateTimeUtil = require('@accordproject/concerto-core').DateTimeUtil;
 const validateES6 = require('./validateES6');
-const Util = require('./util');
 
 /**
  * Generate the invocation logic
@@ -135,7 +135,7 @@ class Engine {
         const scriptManager = logic.getScriptManager();
 
         // Set the current time and UTC Offset
-        const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
+        const { currentTime: now, utcOffset: offset } = DateTimeUtil.setCurrentTime(currentTime, utcOffset);
         const validOptions = validateES6.validateInput(modelManager, options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
@@ -195,7 +195,7 @@ class Engine {
         const contractName = logic.getContractName();
 
         // Set the current time and UTC Offset
-        const { currentTime: now, utcOffset: offset } = Util.setCurrentTime(currentTime, utcOffset);
+        const { currentTime: now, utcOffset: offset } = DateTimeUtil.setCurrentTime(currentTime, utcOffset);
         const validOptions = validateES6.validateInput(modelManager, options ? options : {
             '$class': 'org.accordproject.ergo.options.Options',
             'wrapVariables': false,
