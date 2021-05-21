@@ -16,7 +16,6 @@
 'use strict';
 
 const Commands = require('./lib/commands');
-const Moment = require('moment-mini');
 const Logger = require('@accordproject/ergo-compiler').Logger;
 
 require('yargs')
@@ -36,9 +35,14 @@ require('yargs')
             default: null
         });
         yargs.option('currentTime', {
-            describe: 'the current time',
+            describe: 'set current time',
             type: 'string',
-            default: Moment().format() // Defaults to now
+            default: null
+        });
+        yargs.option('utcOffset', {
+            describe: 'set UTC offset',
+            type: 'number',
+            default: null
         });
         yargs.option('request', {
             describe: 'path to the request data'
@@ -62,7 +66,7 @@ require('yargs')
 
         // Run contract
         Commands.trigger(argv.template, files, { file: argv.data }, argv.state ? { file: argv.state } : null,
-            argv.currentTime, argv.request.map(r => { return { file: r }; }), argv.warnings)
+            argv.currentTime, argv.utcOffset, argv.request.map(r => { return { file: r }; }), argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -84,9 +88,14 @@ require('yargs')
             type: 'string'
         });
         yargs.option('currentTime', {
-            describe: 'the current time',
+            describe: 'set current time',
             type: 'string',
-            default: Moment().format() // Defaults to now
+            default: null
+        });
+        yargs.option('utcOffset', {
+            describe: 'set UTC offset',
+            type: 'number',
+            default: null
         });
         yargs.option('params', {
             describe: 'path to the parameters',
@@ -111,7 +120,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, { file: argv.params }, argv.warnings)
+        Commands.invoke(argv.template, files, argv.clauseName, { file: argv.data }, { file: argv.state }, argv.currentTime, argv.utcOffset, { file: argv.params }, argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
@@ -126,9 +135,14 @@ require('yargs')
             describe: 'path to the contract data'
         });
         yargs.option('currentTime', {
-            describe: 'the current time',
+            describe: 'set current time',
             type: 'string',
-            default: Moment().format() // Defaults to now
+            default: null
+        });
+        yargs.option('utcOffset', {
+            describe: 'set UTC offset',
+            type: 'number',
+            default: null
         });
         yargs.option('params', {
             describe: 'path to the parameters',
@@ -153,7 +167,7 @@ require('yargs')
         }
 
         // Run contract
-        Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings)
+        Commands.initialize(argv.template, files, { file: argv.data }, argv.currentTime, argv.utcOffset, argv.params ? { file: argv.params } : { content: '{}' }, argv.warnings)
             .then((result) => {
                 Logger.info(JSON.stringify(result));
             })
