@@ -32,7 +32,7 @@ describe('#triggerhello', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'helloworld', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld', 'state.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath]);
         result.response.output.should.equal('Hello Fred Blogs (Accord Project)');
     });
     it('should throw when executing a request to a smart Ergo contract with an illegal model', async function () {
@@ -41,21 +41,21 @@ describe('#triggerhello', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworldErr', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'helloworldErr', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworldErr', 'state.json') };
-        return Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
+        return Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath]).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
     });
     it('should throw when executing a request to a smart Ergo contract without its cto', async function () {
         const ergoPath = Path.join(TESTS_DIR, 'helloworld', 'logic/logic.ergo');
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'helloworld', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld', 'state.json') };
-        return Commands.trigger(null, [ergoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('Compilation error (at file ../../tests/helloworld/logic/logic.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+        return Commands.trigger(null, [ergoPath], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath]).should.be.rejectedWith('Compilation error (at file ../../tests/helloworld/logic/logic.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
     });
     it('should fail when Ergo logic is missing', async function () {
         const ctoPath = Path.join(TESTS_DIR, 'helloworld', 'model/model.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'helloworld', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld', 'state.json') };
-        return Commands.trigger(null, [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]).should.be.rejectedWith('No input ergo found');
+        return Commands.trigger(null, [ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath]).should.be.rejectedWith('No input ergo found');
     });
 });
 
@@ -66,7 +66,7 @@ describe('#triggerhellostate', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworldstate', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'helloworldstate', 'request1.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworldstate', 'state1.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath]);
         result.response.output.should.equal('Hello Fred Blogs (Accord Project) (1.0)');
     });
     it('should trigger a smart Ergo contract with state thrice', async function () {
@@ -76,7 +76,7 @@ describe('#triggerhellostate', function () {
         const requestPath = { file: Path.join(TESTS_DIR, 'helloworldstate', 'request1.json') };
         const requestPath2 = { file: Path.join(TESTS_DIR, 'helloworldstate', 'request2.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworldstate', 'state1.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath,requestPath2,requestPath2]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath,requestPath2,requestPath2]);
         result.response.output.should.equal('Hello Fred Blogs (Linux Foundation) (3.0)');
     });
 });
@@ -86,7 +86,7 @@ describe('#triggerinstallmentsale', function () {
         const ergoPath = Path.join(TESTS_DIR, 'installment-sale', 'logic/logic.ergo');
         const ctoPath = Path.join(TESTS_DIR, 'installment-sale', 'model/model.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'data.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', []);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', null, []);
         result.state.balance_remaining.should.equal(10000.00);
     });
     it('should initialize a smart Ergo contract and trigger one request', async function () {
@@ -94,7 +94,7 @@ describe('#triggerinstallmentsale', function () {
         const ctoPath = Path.join(TESTS_DIR, 'installment-sale', 'model/model.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'request.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, null, '1970-01-01T00:00:00Z', null, [requestPath]);
         result.state.balance_remaining.should.equal(7612.499999999999);
     });
 });
@@ -107,7 +107,7 @@ describe('#triggerpromissorynote', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'promissory-note', 'data.json')};
         const requestPath = { file: Path.join(TESTS_DIR, 'promissory-note', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'promissory-note', 'state.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath]);
         result.response.outstandingBalance.should.equal(1425.4396822450633);
     });
 });
@@ -121,7 +121,7 @@ describe('#triggerpromissorynotemodule', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'promissory-note', 'data.json')};
         const requestPath = { file: Path.join(TESTS_DIR, 'promissory-note', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'promissory-note', 'state.json') };
-        const result = await Commands.trigger(null, [ergoPath1, ergoPath2, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath1, ergoPath2, ctoPath1, ctoPath2], contractPath, statePath, '1970-01-01T00:00:00Z', null, [requestPath]);
         result.response.outstandingBalance.should.equal(1425.4396822450633);
     });
 });
@@ -133,7 +133,7 @@ describe('#triggeracceptanceofdelivery', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'acceptance-of-delivery', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'acceptance-of-delivery', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'acceptance-of-delivery', 'state.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-20T16:34:00-05:00', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-20T16:34:00-05:00', null, [requestPath]);
         result.response.status.should.equal('OUTSIDE_INSPECTION_PERIOD');
     });
     it('should trigger a smart Ergo contract', async function () {
@@ -142,7 +142,7 @@ describe('#triggeracceptanceofdelivery', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'acceptance-of-delivery', 'data.json') };
         const requestPath = { file: Path.join(TESTS_DIR, 'acceptance-of-delivery', 'request.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'acceptance-of-delivery', 'state.json') };
-        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-11T16:34:00-05:00', [requestPath]);
+        const result = await Commands.trigger(null, [ergoPath, ctoPath], contractPath, statePath, '2019-01-11T16:34:00-05:00', null, [requestPath]);
         result.response.status.should.equal('PASSED_TESTING');
     });
 });
@@ -153,7 +153,7 @@ describe('#invokehelloworld', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'params.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld3', 'state.json') };
-        const result = await Commands.invoke(templatePath, [], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null);
+        const result = await Commands.invoke(templatePath, [], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', null, paramsPath, null);
         result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
     });
     it('should invoke a clause in a smart Ergo contract', async function () {
@@ -162,7 +162,7 @@ describe('#invokehelloworld', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'params.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld3', 'state.json') };
-        const result = await Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null);
+        const result = await Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', null, paramsPath, null);
         result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
     });
     it('should throw when invoking a clause in a smart Ergo contract with an illegal model', async function () {
@@ -171,7 +171,7 @@ describe('#invokehelloworld', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'helloworld', 'params.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld', 'state.json') };
-        return Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
+        return Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', null, paramsPath).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/helloworldErr/model/modelErr.cto line 15 column 1');
     });
     it('should invoke a clause in a smart Ergo contract (JSON parameters)', async function () {
         const ergoPath = Path.join(TESTS_DIR, 'helloworld3', 'logic/logic3.ergo');
@@ -187,7 +187,7 @@ describe('#invokehelloworld', function () {
                 }`
         };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld', 'state.json') };
-        const result = await Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsJson, null);
+        const result = await Commands.invoke(null, [ergoPath, ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', null, paramsJson);
         result.response.output.should.equal('Bonjour, Fred Blogs (Accord Project)');
     });
     it('should throw when smart Ergo clause without a cto', async function () {
@@ -195,14 +195,14 @@ describe('#invokehelloworld', function () {
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'helloworld3', 'params.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld3', 'state.json') };
-        return Commands.invoke(null, [ergoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file ../../tests/helloworld3/logic/logic3.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
+        return Commands.invoke(null, [ergoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', null, paramsPath).should.be.rejectedWith('Compilation error (at file ../../tests/helloworld3/logic/logic3.ergo line 17 col 25). Cannot find type with name \'TemplateModel\'\ncontract HelloWorld over TemplateModel {\n                         ^^^^^^^^^^^^^  ');
     });
     it('should fail when Ergo logic is missing', async function () {
         const ctoPath = Path.join(TESTS_DIR, 'helloworld', 'model/model.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'helloworld', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'helloworld', 'params.json') };
         const statePath = { file: Path.join(TESTS_DIR, 'helloworld', 'state.json') };
-        return Commands.invoke(null, [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', paramsPath, null).should.be.rejectedWith('No input ergo found');
+        return Commands.invoke(null, [ctoPath], 'helloworld', contractPath, statePath, '1970-01-01T00:00:00Z', null, paramsPath, null).should.be.rejectedWith('No input ergo found');
     });
 });
 
@@ -212,7 +212,7 @@ describe('#initinstallmentsale', function () {
         const ctoPath = Path.join(TESTS_DIR, 'installment-sale', 'model/model.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'params.json') };
-        const result = await Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath);
+        const result = await Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', null, paramsPath);
         result.state.balance_remaining.should.equal(10000.00);
     });
     it('should throw when initializing a smart Ergo contract with an illegal model', async function () {
@@ -220,19 +220,19 @@ describe('#initinstallmentsale', function () {
         const ctoPath = Path.join(TESTS_DIR, 'installment-sale', 'model/modelErr.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'params.json') };
-        return Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/installment-sale/model/modelErr.cto line 15 column 1');
+        return Commands.initialize(null, [ergoPath, ctoPath], contractPath, '1970-01-01T00:00:00Z', null, paramsPath).should.be.rejectedWith('Expected "concerto", "namespace", comment, end of line, or whitespace but "E" found. File ../../tests/installment-sale/model/modelErr.cto line 15 column 1');
     });
     it('should throw when initializing a smart Ergo clause without a cto', async function () {
         const ergoPath = Path.join(TESTS_DIR, 'installment-sale', 'logic/logic.ergo');
         const contractPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'params.json') };
-        return Commands.initialize(null, [ergoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('Compilation error (at file ../../tests/installment-sale/logic/logic.ergo line 19 col 30). Cannot find type with name \'TemplateModel\'\ncontract InstallmentSale over TemplateModel state InstallmentSaleState {\n                              ^^^^^^^^^^^^^                             ');
+        return Commands.initialize(null, [ergoPath], contractPath, '1970-01-01T00:00:00Z', null, paramsPath).should.be.rejectedWith('Compilation error (at file ../../tests/installment-sale/logic/logic.ergo line 19 col 30). Cannot find type with name \'TemplateModel\'\ncontract InstallmentSale over TemplateModel state InstallmentSaleState {\n                              ^^^^^^^^^^^^^                             ');
     });
     it('should fail when Ergo logic is missing', async function () {
         const ctoPath = Path.join(TESTS_DIR, 'installment-sale', 'model/model.cto');
         const contractPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'data.json') };
         const paramsPath = { file: Path.join(TESTS_DIR, 'installment-sale', 'params.json') };
-        return Commands.initialize(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', paramsPath).should.be.rejectedWith('No input ergo found');
+        return Commands.initialize(null, [ctoPath], contractPath, '1970-01-01T00:00:00Z', null, paramsPath).should.be.rejectedWith('No input ergo found');
     });
 });
 

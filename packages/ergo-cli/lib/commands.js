@@ -65,14 +65,15 @@ class Commands {
      *
      * @param {string} template - template directory
      * @param {string[]} files - input files
-     * @param {string} contractInput the contract data
-     * @param {string} stateInput the contract state
-     * @param {string} currentTime the definition of 'now'
-     * @param {string[]} requestsInput the requests
-     * @param {boolean} warnings whether to print warnings
+     * @param {string} contractInput - the contract data
+     * @param {string} stateInput - the contract state
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
+     * @param {string[]} requestsInput - the requests
+     * @param {boolean} warnings - whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static async trigger(template,files,contractInput,stateInput,currentTime,requestsInput,warnings) {
+    static async trigger(template,files,contractInput,stateInput,currentTime,utcOffset,requestsInput,warnings) {
         try {
             const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);
@@ -83,7 +84,7 @@ class Commands {
             const engine = new Engine();
             let initResponse;
             if (stateInput === null) {
-                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, null);
+                initResponse = engine.compileAndInit(logicManager, contractJson, {}, currentTime, utcOffset);
             } else {
                 const stateJson = getJson(stateInput);
                 initResponse = Promise.resolve({ state: stateJson });
@@ -91,7 +92,7 @@ class Commands {
             // Get all the other requests and chain execution through Promise.reduce()
             return requestsJson.reduce((promise,requestJson) => {
                 return promise.then((result) => {
-                    return engine.compileAndTrigger(logicManager, contractJson, requestJson, result.state, currentTime, null);
+                    return engine.compileAndTrigger(logicManager, contractJson, requestJson, result.state, currentTime, utcOffset);
                 });
             }, initResponse);
         } catch (err) {
@@ -104,22 +105,23 @@ class Commands {
      *
      * @param {string} template - template directory
      * @param {string[]} files - input files
-     * @param {string} clauseName the name of the clause to invoke
-     * @param {string} contractInput the contract data
-     * @param {string} stateInput the contract state
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} paramsInput the parameters for the clause
-     * @param {boolean} warnings whether to print warnings
+     * @param {string} clauseName - the name of the clause to invoke
+     * @param {string} contractInput - the contract data
+     * @param {string} stateInput - the contract state
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
+     * @param {object} paramsInput - the parameters for the clause
+     * @param {boolean} warnings - whether to print warnings
      * @returns {object} Promise to the result of invocation
      */
-    static async invoke(template,files,clauseName,contractInput,stateInput,currentTime,paramsInput,warnings) {
+    static async invoke(template,files,clauseName,contractInput,stateInput,currentTime,utcOffset,paramsInput,warnings) {
         try {
             const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
             const stateJson = getJson(stateInput);
             const engine = new Engine();
-            return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime, null);
+            return engine.compileAndInvoke(logicManager, clauseName, contractJson, clauseParams, stateJson, currentTime, utcOffset);
         } catch (err) {
             return Promise.reject(err);
         }
@@ -130,19 +132,20 @@ class Commands {
      *
      * @param {string} template - template directory
      * @param {string[]} files - input files
-     * @param {string} contractInput the contract data
-     * @param {string} currentTime the definition of 'now'
-     * @param {object} paramsInput the parameters for the clause
-     * @param {boolean} warnings whether to print warnings
+     * @param {string} contractInput - the contract data
+     * @param {string} [currentTime] - the definition of 'now', defaults to current time
+     * @param {number} [utcOffset] - UTC Offset for this execution, defaults to local offset
+     * @param {object} paramsInput - the parameters for the clause
+     * @param {boolean} warnings - whether to print warnings
      * @returns {object} Promise to the result of execution
      */
-    static async initialize(template,files,contractInput,currentTime,paramsInput,warnings) {
+    static async initialize(template,files,contractInput,currentTime,utcOffset,paramsInput,warnings) {
         try {
             const logicManager = await loadTemplate(template,files);
             const contractJson = getJson(contractInput);
             const clauseParams = getJson(paramsInput);
             const engine = new Engine();
-            return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime, null);
+            return engine.compileAndInit(logicManager, contractJson, clauseParams, currentTime, utcOffset);
         } catch (err) {
             return Promise.reject(err);
         }
