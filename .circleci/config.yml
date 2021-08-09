@@ -43,7 +43,7 @@ common_steps: &common_steps
     - run:
         name: "Install Coq"
         command: |
-          opam install -y -v coq.8.12.0 coq-flocq coq-jsast
+          opam install -y -v coq.8.12.2 coq-flocq coq-jsast
         no_output_timeout: 30m
     - run:
         name: "Install Q*cert"
