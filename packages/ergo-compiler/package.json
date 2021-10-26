@@ -27,7 +27,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/concerto-core": "1.1.2",
+    "@accordproject/concerto-core": "1.2.2-20211019133821",
     "acorn": "5.1.2",
     "dayjs": "1.10.4",
     "debug": "4.1.0",
