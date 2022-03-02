@@ -26,7 +26,7 @@ Before you can build Ergo, you must install and configure the following prerequi
 * [Lerna](https://lerna.js.org): We use lerna to handle multiple npm packages in the Ergo repository. To install:
 
 ```sh
-$ npm install -g lerna@^3.15.0
+$ npm install -g lerna@^4.0.0
 ```
 
 * [opam](https://opam.ocaml.org): the OCaml package manager, for OCaml 4.11.2. To install:
