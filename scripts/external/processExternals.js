@@ -21,7 +21,7 @@ const url = require('url');
 const handlebars = require('handlebars');
 
 const ModelLoader = require('@accordproject/concerto-core').ModelLoader;
-const CTOParser = require('@accordproject/concerto-core/lib/introspect/parser');
+const CTOParser = require('@accordproject/concerto-cto').Parser;
 
 /**
  * Translate CTO URL to a CTO file name

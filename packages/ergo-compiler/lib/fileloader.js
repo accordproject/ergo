@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const fsPath = require('path');
-const Logger = require('@accordproject/concerto-core').Logger;
+const Logger = require('@accordproject/concerto-util').Logger;
 const promisify = require('util').promisify;
 const readdir = fs.readdir ? promisify(fs.readdir) : undefined;
 const stat = fs.stat ? promisify(fs.stat) : undefined;

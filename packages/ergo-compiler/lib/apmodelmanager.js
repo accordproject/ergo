@@ -17,6 +17,7 @@
 const slash = require('slash');
 const fsPath = require('path');
 
+const Parser = require('@accordproject/concerto-cto').Parser;
 const ModelManager = require('@accordproject/concerto-core').ModelManager;
 const ModelFile = require('@accordproject/concerto-core').ModelFile;
 const Builtin = require('./builtin');
@@ -76,7 +77,8 @@ class APModelManager extends ModelManager {
      */
     addAPModelFile(modelFileContent, fileName) {
         const name = slash(fileName);
-        const modelFile = new ModelFile(this, modelFileContent, name);
+        const ast = Parser.parse(modelFileContent, fileName);
+        const modelFile = new ModelFile(this, ast, modelFileContent, name);
         if (!this.builtInNamespaces.includes(modelFile.getNamespace())) {
             this.addModelFile(modelFile,name,true);
         }
@@ -120,7 +122,8 @@ class APModelManager extends ModelManager {
             const previousContent = previousModelFile.getDefinitions();
             if (content !== previousContent) {
                 const previousNamespace = previousModelFile.getNamespace();
-                const newNamespace = new ModelFile(this, content, name).getNamespace();
+                const ast = Parser.parse(content, name);
+                const newNamespace = new ModelFile(this, ast, content, name).getNamespace();
                 if (previousNamespace === newNamespace) {
                     this.updateModelFile(content, name, true);
                 } else {

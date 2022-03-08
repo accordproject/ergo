@@ -16,7 +16,7 @@
 
 const ErgoCompiler = require('./compiler');
 const Script = require('./script');
-const ParseException = require('@accordproject/concerto-core').ParseException;
+const ParseException = require('@accordproject/concerto-cto').ParseException;
 const CompilerException = require('./compilerexception');
 const TypeException = require('./typeexception');
 const SystemException = require('./systemexception');

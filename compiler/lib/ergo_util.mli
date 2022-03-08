@@ -53,6 +53,10 @@ val mk_provenance_of_loc_pair : string -> Lexing.position -> Lexing.position -> 
 val ergo_version : string
 val get_version : string -> (unit -> unit)
 
+(** Command line args *)
+val patch_cto_extension : string -> string
+val unpatch_cto_extension : string -> string
+
 val parse_args :
   ('conf -> (Arg.key * Arg.spec * Arg.doc) list)
   -> Arg.usage_msg
@@ -61,10 +65,6 @@ val parse_args :
   -> ((string * string) list * (string * string) list * (string * string) list)
 
 val patch_argv : string array -> string array
-
-(** CTO *)
-val cto_import_decl_of_import_namespace : string -> provenance import_decl
-val unpatch_cto_extension : string -> string
 
 (** Topological sort *)
 val labels_of_graph : ('a,'ap,'b) ergo_input list -> (string * string list) list

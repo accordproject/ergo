@@ -14,7 +14,7 @@
 
 'use strict';
 
-const logger = require('@accordproject/ergo-compiler').Logger;
+const Logger = require('@accordproject/ergo-compiler').Logger;
 const Engine = require('./engine');
 
 // XXX dayjs should be kept in scope for 'eval'
@@ -66,7 +66,7 @@ class EvalEngine extends Engine {
      * @return {object} the result of execution
      */
     runVMScriptCall(utcOffset,now,options,context,script,call) {
-        logger.debug(`Calling eval with context ${context}`);
+        Logger.debug(`Calling eval with context ${context}`);
         const response = eval(script + call);
         return response;
     }

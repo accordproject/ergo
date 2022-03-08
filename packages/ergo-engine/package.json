@@ -34,7 +34,7 @@
     "index.browser.js"
   ],
   "dependencies": {
-    "@accordproject/concerto-core": "1.2.1",
+    "@accordproject/concerto-core": "1.2.2-20220301153534",
     "@accordproject/ergo-compiler": "0.22.2",
     "dayjs": "1.10.4",
     "vm2": "3.5.0"
