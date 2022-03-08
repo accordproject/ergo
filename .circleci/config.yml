@@ -19,7 +19,7 @@ common_steps: &common_steps
     - run:
         name: "Install prerequisites"
         command: |
-          sudo npm install -g lerna@^3.15.0
+          sudo npm install -g lerna@^4.0.0
           sudo apt-get update
           sudo apt-get install -y m4
           sudo apt-get install -y pkg-config libncurses5-dev
@@ -27,9 +27,10 @@ common_steps: &common_steps
     - run:
         name: "Initialize opam"
         command: |
+          echo "OCaml: " $OCAML_VERSION
           sudo curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > install.sh
           echo | sudo sh install.sh
-          opam init --disable-sandboxing -j 1 -n -y
+          opam init --disable-sandboxing --jobs=$NJOBS --no-setup --yes --compiler=$OCAML_VERSION
           sed -i "s/^jobs: [0-9]*/jobs: $NJOBS/g" ~/.opam/config
           eval $(opam env)
           opam switch create $OCAML_VERSION || true
@@ -37,19 +38,14 @@ common_steps: &common_steps
           opam repo add coq-released https://coq.inria.fr/opam/released || true
           opam update || true
     - run:
-        name: "Install OCaml deps"
-        command: |
-          opam install -y -v --jobs=2 dune menhir base64 js_of_ocaml js_of_ocaml-ppx yojson atdgen re calendar uri
-    - run:
-        name: "Install Coq"
-        command: |
-          opam install -y -v coq.8.12.2 coq-flocq coq-jsast
-        no_output_timeout: 30m
+        name: "Install OPAM deps"
+        command: opam install . --deps-only --jobs=$NJOBS --yes
+        no_output_timeout: 45m
     - run:
         name: "Install Q*cert"
         command: |
-          opam install -y -v coq-qcert.2.1.0
-        no_output_timeout: 30m
+          opam install -y -v coq-qcert.2.1.1
+        no_output_timeout: 45m
     - save_cache:
         <<: *common_cache_key
         paths:
@@ -65,11 +61,14 @@ common_steps: &common_steps
         command:  |
           eval $(opam env)
           make configure
-          make all
+          make all -j$NJOBS
     - run:
         name: 'Testing'
         command:  |
           npm run test
+    # Save test results
+    - store_test_results:
+        path: /tmp/circleci-test-results
 
 version: 2
 jobs:
@@ -98,5 +97,5 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - 4.11.2
       - 4.09.1
+      - 4.11.2
