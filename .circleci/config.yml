@@ -41,11 +41,6 @@ common_steps: &common_steps
         name: "Install OPAM deps"
         command: opam install . --deps-only --jobs=$NJOBS --yes
         no_output_timeout: 45m
-    - run:
-        name: "Install Q*cert"
-        command: |
-          opam install -y -v coq-qcert.2.1.1
-        no_output_timeout: 45m
     - save_cache:
         <<: *common_cache_key
         paths:
@@ -57,7 +52,7 @@ common_steps: &common_steps
           eval $(opam env)
           make cleanall
     - run:
-        name: 'Build the Ergo compiler'
+        name: 'Build Ergo'
         command:  |
           eval $(opam env)
           make configure
