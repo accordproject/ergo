@@ -203,20 +203,6 @@ let ergo_call contract_name =
   Util.string_of_char_list
     (ErgoCompiler.javascript_identifier_sanitizer (Util.char_list_of_string contract_name))
 
-(** CTO import *)
-let cto_import_decl_of_import_namespace ns =
-  begin match String.rindex_opt ns '.' with
-  | None ->
-      ergo_raise (ergo_system_error ("Malformed import: '" ^ ns ^ "' (should have at least one '.')"))
-  | Some i ->
-      let namespace = char_list_of_string (String.sub ns 0 i) in
-      let criteria_str = String.sub ns (i+1) (String.length ns - (i+1)) in
-      begin match criteria_str with
-      | "*" -> ImportAll (dummy_provenance, namespace)
-      | _ -> ImportName (dummy_provenance,namespace,char_list_of_string criteria_str)
-      end
-  end
-
 (** Command line args *)
 let patch_extension f ext1 ext2 =
   begin try

@@ -28,7 +28,8 @@
   ],
   "license": "Apache-2.0",
   "devDependencies": {
-    "@accordproject/concerto-core": "1.2.1",
+    "@accordproject/concerto-core": "1.2.2-20220301153534",
+    "@accordproject/concerto-cto": "1.2.2-20220301153534",
     "colors": "1.1.2",
     "coveralls": "3.0.1",
     "dayjs": "1.10.4",

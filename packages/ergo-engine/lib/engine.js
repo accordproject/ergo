@@ -14,7 +14,7 @@
 
 'use strict';
 
-const Logger = require('@accordproject/concerto-core').Logger;
+const Logger = require('@accordproject/ergo-compiler').Logger;
 const DateTimeUtil = require('@accordproject/concerto-core').DateTimeUtil;
 const validateES6 = require('./validateES6');
 

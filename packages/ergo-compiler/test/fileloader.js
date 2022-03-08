@@ -24,7 +24,7 @@ const FileLoader = require('../lib/fileloader');
 describe('FileLoader', () => {
 
     describe('#loadFileBuffer', () => {
-        it('should return an instace of Buffer', async () => {
+        it('should return an instance of Buffer', async () => {
             const content = await FileLoader.loadFileBuffer('./test/data', 'logo.png', true);
             expect(content).to.be.instanceOf(Buffer);
         });

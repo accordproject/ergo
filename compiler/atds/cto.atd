@@ -22,69 +22,64 @@
 type json <ocaml module="Yojson.Basic" t="t"> = abstract
 <doc text="Type of arbitrary JSON values.">
 
-type loc = {
-    offset : int;
+type position = {
+    ttype <json name="$class"> : string;
     line : int;
     column: int;
-  } <ocaml field_prefix="cto_loc_">
+    offset : int;
+  } <ocaml field_prefix="cto_position_">
 
-type location = {
-    start : loc;
-    end : loc;
-} <ocaml field_prefix="cto_location_">
+type range = {
+    ttype <json name="$class"> : string;
+    start : position;
+    end : position;
+} <ocaml field_prefix="cto_range_">
 
 type decorator = json
 
-type propType = {
+type typeIdentifier = {
+    ttype <json name="$class"> : string;
     name : string;
-} <ocaml field_prefix="cto_prop_type_">
-type optional = {
-    ttype <json name="type"> : string;
-  }
+    ?namespace : string nullable;
+  } <ocaml field_prefix="cto_type_identifier_">
+
+type identified = {
+    ttype <json name="$class"> : string;
+    ?name : string nullable;
+  } <ocaml field_prefix="cto_identified_">
+
+type property = {
+    ttype <json name="$class"> : string;
+    name : string;
+    ?isOptional : bool nullable;
+    ?isArray : bool nullable;
+    ?ptype <json name="type"> : typeIdentifier nullable;
+    ?decorators : decorator list nullable;
+    ?validator : json nullable;
+    ?defaultValue: json nullable;
+    ?location : range nullable;
+  } <ocaml field_prefix="cto_property_">
+
 type declaration = {
-    ttype <json name="type"> : string;
-    id : id;
-    ?propertyType : propType nullable;
-    ?array : string nullable;
-    optional : optional nullable;
-    decorators : decorator list;
-    location : location;
-  } <ocaml field_prefix="cto_decl_content_">
-
-type definition_content = {
-    ttype <json name="type"> : string;
-    declarations : declaration list;
-  } <ocaml field_prefix="cto_defn_content_">
-
-type id = {
-    ttype <json name="type"> : string;
+    ttype <json name="$class"> : string;
     name : string;
-  } <ocaml field_prefix="cto_id_">
+    properties : property list;
+    ?superType : typeIdentifier nullable;
+    ?isAbstract : bool nullable;
+    ?location : range nullable;
+} <ocaml field_prefix="cto_declaration_">
 
-type classRef = {
-    ttype <json name="type"> : string;
-    name : string;
-  } <ocaml field_prefix="cto_extends_">
-type classExtension = {
-    ttype <json name="type"> : string;
-    class : classRef;    
-  } <ocaml field_prefix="cto_extends_">
-type definition = {
-    ttype <json name="type"> : string;
-    id : id;
-    ?classExtension : classExtension nullable;
-    body : definition_content;
-    ?abstract : json nullable;
-    ?location : location nullable;
-} <ocaml field_prefix="cto_defn_">
 type import = {
+     ttype <json name="$class"> : string;
+     ?name : string nullable;
      namespace : string;
+     ?uri : string nullable;
 } <ocaml field_prefix="cto_import_">
+
 type model = {
-    ttype <json name="type"> : string;
+    ttype <json name="$class"> : string;
     namespace : string;
     imports : import list;
-    body : definition list;
-  } <ocaml field_prefix="cto_">
+    declarations : declaration list;
+  } <ocaml field_prefix="cto_model_">
 <doc text="Type of CTO models">
-

@@ -15,8 +15,8 @@
 'use strict';
 
 const CompilerCore=require('../extracted/compilercore');
-const CTOParser = require('@accordproject/concerto-core/lib/introspect/parser');
-const Logger = require('@accordproject/concerto-core').Logger;
+const Logger = require('@accordproject/concerto-util').Logger;
+const CTOParser = require('@accordproject/concerto-cto').Parser;
 
 /**
  * <p>
