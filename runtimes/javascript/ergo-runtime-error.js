@@ -15,14 +15,14 @@
 /* Unwrapping errors on output */
 function unwrapError(result) {
     if (result.hasOwnProperty('$left')) {
-        return toLeft(result);
+        return getLeft(result);
     } else {
-        var failure = toRight(result);
+        var failure = getRight(result);
         var message = "Unknown Ergo Logic Error (Please file a GitHub issue)";
         if (either(cast(["org.accordproject.ergo.stdlib.Error"],failure))) {
-            message = unbrand(toLeft(cast(["org.accordproject.ergo.stdlib.Error"],failure))).message;
+            message = unbrand(getLeft(cast(["org.accordproject.ergo.stdlib.Error"],failure))).message;
         } else {
-            message = JSON.stringify(toRight(cast(["org.accordproject.ergo.stdlib.Error"],failure)));
+            message = JSON.stringify(getRight(cast(["org.accordproject.ergo.stdlib.Error"],failure)));
         }
         throw new Error("[Ergo] " + message);
     }
