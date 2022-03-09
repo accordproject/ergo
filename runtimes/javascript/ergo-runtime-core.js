@@ -219,17 +219,17 @@ function either(v) {
     }
     throw new Error('TypeError: either called on non-sum');
 }
-function toLeft(v) {
+function getLeft(v) {
     if (typeof v === 'object' && isLeft(v)) {
         return unboxLeft(v);
     }
-    throw new Error('TypeError: toLeft called on non-sum');
+    throw new Error('TypeError: getLeft called on non-sum');
 }
-function toRight(v) {
+function getRight(v) {
     if (typeof v === 'object' && isRight(v)) {
         return unboxRight(v);
     }
-    throw new Error('TypeError: toRight called on non-sum');
+    throw new Error('TypeError: getRight called on non-sum');
 }
 
 /* Brand */

@@ -219,17 +219,17 @@ function either(v) {
     }
     throw new Error('TypeError: either called on non-sum');
 }
-function toLeft(v) {
+function getLeft(v) {
     if (typeof v === 'object' && isLeft(v)) {
         return unboxLeft(v);
     }
-    throw new Error('TypeError: toLeft called on non-sum');
+    throw new Error('TypeError: getLeft called on non-sum');
 }
-function toRight(v) {
+function getRight(v) {
     if (typeof v === 'object' && isRight(v)) {
         return unboxRight(v);
     }
-    throw new Error('TypeError: toRight called on non-sum');
+    throw new Error('TypeError: getRight called on non-sum');
 }
 
 /* Brand */
@@ -1074,14 +1074,14 @@ function logString(v) {
 /* Unwrapping errors on output */
 function unwrapError(result) {
     if (result.hasOwnProperty('$left')) {
-        return toLeft(result);
+        return getLeft(result);
     } else {
-        var failure = toRight(result);
+        var failure = getRight(result);
         var message = "Unknown Ergo Logic Error (Please file a GitHub issue)";
         if (either(cast(["org.accordproject.ergo.stdlib.Error"],failure))) {
-            message = unbrand(toLeft(cast(["org.accordproject.ergo.stdlib.Error"],failure))).message;
+            message = unbrand(getLeft(cast(["org.accordproject.ergo.stdlib.Error"],failure))).message;
         } else {
-            message = JSON.stringify(toRight(cast(["org.accordproject.ergo.stdlib.Error"],failure)));
+            message = JSON.stringify(getRight(cast(["org.accordproject.ergo.stdlib.Error"],failure)));
         }
         throw new Error("[Ergo] " + message);
     }
