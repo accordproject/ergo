@@ -35,7 +35,7 @@ describe('Validator', () => {
         beforeEach(async function () {
             const logicManager = new LogicManager('es6');
             modelManager = logicManager.getModelManager();
-            modelManager.addModelFile(ctoSample,'test.cto');
+            modelManager.addCTOModel(ctoSample,'test.cto');
         });
 
         it('should succeed validating an input', () => {
@@ -151,7 +151,7 @@ describe('Validator', () => {
         beforeEach(async function () {
             const logicManager = new LogicManager('es6');
             modelManager = logicManager.getModelManager();
-            modelManager.addModelFile(ctoSample3,'test3.cto');
+            modelManager.addCTOModel(ctoSample3,'test3.cto');
         });
 
         it('should succeed validating an input', () => {

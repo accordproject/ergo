@@ -33,7 +33,7 @@ describe('Script', () => {
 
     beforeEach(async function () {
         modelManager = new APModelManager();
-        modelManager.addModelFile(ctoSample,'test.cto',true);
+        modelManager.addCTOModel(ctoSample,'test.cto',true);
     });
 
     describe('#constructor', () => {

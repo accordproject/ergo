@@ -53,11 +53,11 @@ class APModelManager extends ModelManager {
      */
     constructor() {
         super();
-        this.addModelFile(Builtin.TimeModel, '@models.accordproject.org.time@0.2.0.cto');
-        this.addModelFile(Builtin.MoneyModel, '@models.accordproject.org.accordproject.money@0.2.0.cto');
-        this.addModelFile(Builtin.ContractModel, '@models.accordproject.org.accordproject.contract.cto');
-        this.addModelFile(Builtin.RuntimeModel, '@models.accordproject.org.accordproject.runtime.cto');
-        this.addModelFile(Builtin.OptionsModel, '@org.accordproject.ergo.options.cto');
+        this.addCTOModel(Builtin.TimeModel, '@models.accordproject.org.time@0.2.0.cto');
+        this.addCTOModel(Builtin.MoneyModel, '@models.accordproject.org.accordproject.money@0.2.0.cto');
+        this.addCTOModel(Builtin.ContractModel, '@models.accordproject.org.accordproject.contract.cto');
+        this.addCTOModel(Builtin.RuntimeModel, '@models.accordproject.org.accordproject.runtime.cto');
+        this.addCTOModel(Builtin.OptionsModel, '@org.accordproject.ergo.options.cto');
         this.validateModelFiles();
         this.builtInNamespaces = this.getNamespaces();
     }
@@ -80,7 +80,7 @@ class APModelManager extends ModelManager {
         const ast = Parser.parse(modelFileContent, fileName);
         const modelFile = new ModelFile(this, ast, modelFileContent, name);
         if (!this.builtInNamespaces.includes(modelFile.getNamespace())) {
-            this.addModelFile(modelFile,name,true);
+            this.addModelFile(modelFile,modelFileContent,name,true);
         }
     }
 
@@ -115,7 +115,7 @@ class APModelManager extends ModelManager {
         const currentModels = this.getModelFiles();
         // Is this a new model?
         if (!currentModels.some(x => x.getName() === name)) {
-            this.addModelFile(content, name);
+            this.addCTOModel(content, name);
         } else {
             const previousModelFile =
                   (currentModels.filter(x => x.getName() === name))[0];
@@ -128,7 +128,7 @@ class APModelManager extends ModelManager {
                     this.updateModelFile(content, name, true);
                 } else {
                     this.deleteModelFile(previousNamespace);
-                    this.addModelFile(content, name, true);
+                    this.addCTOModel(content, name, true);
                 }
             }
         }
