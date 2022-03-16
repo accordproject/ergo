@@ -273,7 +273,7 @@ describe('LogicManager', () => {
         it('should load a model without a name to the model manager', () => {
             const logicManager = new LogicManager('es6');
             const modelManager = logicManager.getModelManager();
-            modelManager.addModelFile(ctoSample,null,true);
+            modelManager.addCTOModel(ctoSample, null, true);
             modelManager.getModels().map(x => x.name).should.deep.equal([
                 '@models.accordproject.org.time@0.2.0.cto',
                 '@models.accordproject.org.accordproject.money@0.2.0.cto',
