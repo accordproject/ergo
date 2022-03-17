@@ -86,7 +86,7 @@ define function durationAs(du:Duration, u:TemporalUnit) : Duration {
       with hours then
         match du.unit
         with seconds then du.amount / 60 / 60
-        with minutes then du.amount * 60
+        with minutes then du.amount / 60
         with ~org.accordproject.time.TemporalUnit.days then du.amount * 24
         with ~org.accordproject.time.TemporalUnit.weeks then du.amount * 24 * 7
         else du.amount * 60 * 60 // Default to seconds
