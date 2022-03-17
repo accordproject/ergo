@@ -34,7 +34,7 @@
     "coveralls": "3.0.1",
     "dayjs": "1.10.4",
     "event-stream": "3.3.2",
-    "jsdoc": "^3.6.7",
+    "jsdoc": "^3.6.10",
     "lerna": "^4.0.0",
     "license-check-and-add": "2.3.6",
     "lodash": "4.17.21",
@@ -44,8 +44,8 @@
     "sleep-promise": "2.0.0"
   },
   "engines": {
-    "node": ">=8",
-    "npm": ">=3"
+    "node": ">=14",
+    "npm": ">=6"
   },
   "license-check-and-add-config": {
     "folder": ".",
