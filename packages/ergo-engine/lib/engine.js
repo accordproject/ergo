@@ -160,13 +160,14 @@ class Engine {
 
         // execute the logic
         const result = this.runVMScriptCall(offset,now,validOptions,context,script,callScript);
+        const outputRequest = validateES6.validateStandard(modelManager, request, offset);
         const validResponse = validateES6.validateOutput(modelManager, result.__response, offset); // ensure the response is valid
         const validNewState = validateES6.validateOutput(modelManager, result.__state, offset); // ensure the new state is valid
         const validEmit = validateES6.validateOutputArray(modelManager, result.__emit, offset); // ensure all the emits are valid
 
         const answer = {
             'clause': contractId,
-            'request': request, // Keep the original request
+            'request': outputRequest,
             'response': validResponse,
             'state': validNewState,
             'emit': validEmit,
