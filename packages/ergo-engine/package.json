@@ -37,8 +37,8 @@
   "dependencies": {
     "@accordproject/concerto-core": "2.0.0-alpha.2",
     "@accordproject/ergo-compiler": "0.23.0-alpha.2",
-    "dayjs": "1.10.4",
-    "vm2": "3.5.0"
+    "dayjs": "1.10.8",
+    "vm2": "3.9.6"
   },
   "devDependencies": {
     "@babel/cli": "7.17.6",

@@ -32,7 +32,7 @@
     "@accordproject/concerto-cto": "2.0.0-alpha.2",
     "colors": "1.1.2",
     "coveralls": "3.0.1",
-    "dayjs": "1.10.4",
+    "dayjs": "1.10.8",
     "event-stream": "3.3.2",
     "jsdoc": "^3.6.10",
     "lerna": "^4.0.0",
