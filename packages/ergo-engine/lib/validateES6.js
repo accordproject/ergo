@@ -64,6 +64,27 @@ function validateInput(modelManager, input, utcOffset) {
 }
 
 /**
+ * Validate standard
+ * @param {object} modelManager - the Concerto model manager
+ * @param {object} input - the input JSON
+ * @param {number} utcOffset - UTC Offset for DateTime values
+ * @return {object} the validated input
+ */
+function validateStandard(modelManager, input, utcOffset) {
+    const factory = new Factory(modelManager);
+    const serializer = new Serializer(factory, modelManager);
+
+    if (input === null) { return null; }
+
+    // ensure the input is valid
+    const validInput = serializer.fromJSON(input, {validate: false, acceptResourcesForRelationships: true, utcOffset});
+    validInput.$validator = new ResourceValidator({permitResourcesForRelationships: true});
+    validInput.validate();
+    const vJson = serializer.toJSON(validInput, {permitResourcesForRelationships:true, utcOffset});
+    return vJson;
+}
+
+/**
  * Validate input JSON record
  * @param {object} modelManager - the Concerto model manager
  * @param {object} input - the input JSON record
@@ -123,6 +144,7 @@ function validateOutputArray(modelManager, output, utcOffset) {
 }
 
 module.exports = {
+    validateStandard,
     validateContract,
     validateInput,
     validateInputRecord,
