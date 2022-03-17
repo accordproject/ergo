@@ -28,7 +28,7 @@ module.exports = {
         path: path.join(__dirname, 'umd'),
         filename: 'ergo-engine.js',
         library: {
-            name: 'markdown-pdf',
+            name: 'ergo-engine',
             type: 'umd',
         },
         umdNamedDefine: true,
