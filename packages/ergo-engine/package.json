@@ -8,6 +8,7 @@
     "directory": "packages/ergo-engine"
   },
   "main": "index.js",
+  "browser": "index.dist.js",
   "scripts": {
     "webpack": "webpack --config webpack.config.js --mode production",
     "prepublishOnly": "npm run webpack",
@@ -21,7 +22,7 @@
   "contributors": [
     {
       "name": "Jerome Simeon",
-      "email": "jerome@clause.io"
+      "email": "jeromesimeon@me.com"
     }
   ],
   "license": "Apache-2.0",
@@ -40,24 +41,28 @@
     "vm2": "3.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.1.5",
-    "@babel/core": "7.1.6",
-    "@babel/preset-env": "7.1.6",
-    "archiver": "2.1.1",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "8.0.4",
-    "babel-preset-env": "1.7.0",
-    "chai": "4.2.0",
+    "@babel/cli": "7.17.6",
+    "@babel/core": "7.17.5",
+    "@babel/preset-env": "7.16.11",
+    "@babel/register": "7.17.0",
+    "@istanbuljs/nyc-config-babel": "3.0.0",
+    "archiver": "3.0.0",
+    "assert": "2.0.0",
+    "babel-loader": "8.2.3",
+    "babel-plugin-istanbul": "6.1.1",
+    "chai": "4.3.6",
     "chai-as-promised": "7.1.1",
     "chai-things": "0.2.0",
-    "eslint": "6.0.1",
-    "jsdoc": "^3.6.7",
+    "constants-browserify": "1.0.0",
+    "eslint": "8.2.0",
+    "jsdoc": "^3.6.10",
     "license-check": "1.1.5",
-    "mocha": "5.2.0",
-    "nyc": "13.3.0",
-    "raw-loader": "0.5.1",
-    "webpack": "4.16.3",
-    "webpack-cli": "3.1.0"
+    "mocha": "8.3.2",
+    "nyc": "15.1.0",
+    "raw-loader": "^4.0.2",
+    "stream-browserify": "3.0.0",
+    "webpack": "5.64.2",
+    "webpack-cli": "4.9.1"
   },
   "license-check-config": {
     "src": [
