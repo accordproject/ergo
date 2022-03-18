@@ -7,6 +7,10 @@
     "url": "https://github.com/accordproject/ergo",
     "directory": "packages/ergo-engine"
   },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
   "main": "index.js",
   "browser": "index.dist.js",
   "scripts": {

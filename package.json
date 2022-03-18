@@ -2,6 +2,10 @@
   "name": "@accordproject/ergo",
   "description": "The Ergo Language for Smart Legal Contracts",
   "version": "0.23.0-alpha.2",
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
   "scripts": {
     "postinstall": "npm run models:get && lerna bootstrap",
     "models:get": "node ./scripts/external/getExternalModels.js",
@@ -42,10 +46,6 @@
     "mkdirp": "^0.5.5",
     "semver": "7.3.5",
     "sleep-promise": "2.0.0"
-  },
-  "engines": {
-    "node": ">=14",
-    "npm": ">=6"
   },
   "license-check-and-add-config": {
     "folder": ".",
