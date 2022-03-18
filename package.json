@@ -1,7 +1,7 @@
 {
   "name": "@accordproject/ergo",
   "description": "The Ergo Language for Smart Legal Contracts",
-  "version": "0.23.0-alpha.2",
+  "version": "0.23.0-alpha.3",
   "engines": {
     "node": ">=14",
     "npm": ">=6"
