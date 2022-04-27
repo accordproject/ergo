@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ergo-compiler",
-  "version": "0.23.0-alpha.2",
+  "version": "0.23.0",
   "description": "Ergo Compiler",
   "repository": {
     "type": "git",
@@ -31,9 +31,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@accordproject/concerto-core": "2.0.0-alpha.2",
-    "@accordproject/concerto-cto": "2.0.0-alpha.2",
-    "@accordproject/concerto-util": "2.0.0-alpha.2",
+    "@accordproject/concerto-core": "2.0.0",
+    "@accordproject/concerto-cto": "2.0.0",
+    "@accordproject/concerto-util": "2.0.0",
     "acorn": "5.1.2",
     "dayjs": "1.10.8",
     "debug": "4.1.0",
