@@ -28,7 +28,7 @@ Feature: Late delivery contract
   Scenario: The contract should fail initializing when an import is missing
     Then it should fail to initialize with the error
 """
-Namespace is not defined for type org.accordproject.test.* File '../../../tests/latedeliveryandpenalty2/model/model2.cto': 
+Namespace is not defined for type "org.accordproject.test.*". File '../../../tests/latedeliveryandpenalty2/model/model2.cto': 
 """
 
   Scenario: The contract should fail executing when an import is missing
@@ -44,6 +44,6 @@ Namespace is not defined for type org.accordproject.test.* File '../../../tests/
 """
     Then it should fail with the error
 """
-Namespace is not defined for type org.accordproject.test.* File '../../../tests/latedeliveryandpenalty2/model/model2.cto': 
+Namespace is not defined for type "org.accordproject.test.*". File '../../../tests/latedeliveryandpenalty2/model/model2.cto': 
 """
 

@@ -56,7 +56,7 @@ describe('Validator', () => {
                 '$class': 'org.accordproject.promissorynote.Payment',
                 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' }
             };
-            (() => validateES6.validateInput(modelManager, input)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => validateES6.validateInput(modelManager, input)).should.throw('Namespace is not defined for type "org.accordproject.promissorynote.Payment".');
         });
 
         it('should propagate null when validating a contract', () => {
@@ -88,7 +88,7 @@ describe('Validator', () => {
                 '$class': { $coll: ['org.accordproject.promissorynote.Payment'], $length: 1 },
                 '$data': { 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' } }
             };
-            (() => validateES6.validateOutput(modelManager, output)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => validateES6.validateOutput(modelManager, output)).should.throw('Namespace is not defined for type "org.accordproject.promissorynote.Payment".');
         });
 
         it('should succeed validating an input record', () => {
@@ -119,7 +119,7 @@ describe('Validator', () => {
                 'x': 100.00,
                 'y': 'foo'
             };
-            (() => validateES6.validateInputRecord(modelManager, inputRecord)).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => validateES6.validateInputRecord(modelManager, inputRecord)).should.throw('Namespace is not defined for type "org.accordproject.promissorynote.Payment".');
         });
 
         it('should succeed validating an output array', () => {
@@ -142,7 +142,7 @@ describe('Validator', () => {
                 '$class': { $coll: ['org.accordproject.promissorynote.Payment'], $length: 1 },
                 '$data': { 'amountPaid': { 'doubleValue' : 100.0, 'currencyCode' : 'USD' } }
             };
-            (() => validateES6.validateOutputArray(modelManager, {$coll:[output],$length:1})).should.throw('Namespace is not defined for type org.accordproject.promissorynote.Payment');
+            (() => validateES6.validateOutputArray(modelManager, {$coll:[output],$length:1})).should.throw('Namespace is not defined for type "org.accordproject.promissorynote.Payment".');
         });
     });
 

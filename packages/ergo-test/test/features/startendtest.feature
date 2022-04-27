@@ -1,5 +1,5 @@
-Feature: starOf and endOf with time periods test
-  This describe the expected behavior for Ergo compiler when using integer literals
+Feature: startOf and endOf with time periods test
+  This describe the expected behavior for Ergo compiler when checking start and end of time periods
 
   Background:
     Given the Ergo contract "org.accordproject.startendtest.StartEndTest" in file "../../../tests/startendtest/logic/logic.ergo"
