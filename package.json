@@ -39,7 +39,7 @@
     "dayjs": "1.10.8",
     "event-stream": "3.3.2",
     "jsdoc": "^3.6.10",
-    "lerna": "^4.0.0",
+    "lerna": "^6.0.0",
     "license-check-and-add": "2.3.6",
     "lodash": "4.17.21",
     "lodash.template": "4.5.0",
