@@ -42,7 +42,7 @@
     "@accordproject/concerto-core": "2.3.0",
     "@accordproject/ergo-compiler": "0.23.0",
     "dayjs": "1.10.8",
-    "vm2": "3.9.11"
+    "vm2": "3.9.15"
   },
   "devDependencies": {
     "@babel/cli": "7.17.6",
